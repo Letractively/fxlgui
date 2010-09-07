@@ -1,0 +1,5 @@
+<module>
+	<inherits name='co.fxl.gui.api.IDisplay' />
+	<inherits name='co.fxl.gui.wizard.api.IWizardWidget' />
+	<source path='' />
+</module>
