@@ -1,0 +1,5 @@
+<module>
+	<inherits name='co.fxl.gui.api.IDisplay' />
+	<inherits name='co.fxl.gui.register.api.IRegisterWidget' />
+	<source path='' />
+</module>
