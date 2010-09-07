@@ -1,0 +1,37 @@
+<project default="jar">
+	<property name="previous" value="1.0"/>
+	<property name="next" value="1.0"/>
+	<target name="jar">
+		<delete file="../fxl-swing-${previous}.jar" />
+		<delete file="../fxl-gwt-${previous}.jar" />
+		<delete file="../fxl-widget-${previous}.jar" />
+		<jar destfile="../fxl-widget-${next}.jar">
+			<fileset dir="../co.fxl.gui.table/bin" />
+			<fileset dir="../co.fxl.gui.table/api" />
+			<fileset dir="../co.fxl.gui.table/component" />
+			<fileset dir="../co.fxl.gui.form/bin" />
+			<fileset dir="../co.fxl.gui.form/api" />
+			<fileset dir="../co.fxl.gui.form/component" />
+			<fileset dir="../co.fxl.gui.navigation/bin" />
+			<fileset dir="../co.fxl.gui.navigation/api" />
+			<fileset dir="../co.fxl.gui.navigation/component" />
+			<fileset dir="../co.fxl.gui.wizard/bin" />
+			<fileset dir="../co.fxl.gui.wizard/api" />
+			<fileset dir="../co.fxl.gui.wizard/component" />
+		</jar>
+		<jar destfile="../fxl-gwt-${next}.jar">
+			<fileset dir="../co.fxl.gui/bin" />
+			<fileset dir="../co.fxl.gui/api" />
+			<fileset dir="../co.fxl.gui/impl" />
+			<fileset dir="../co.fxl.gui.gwt/bin" />
+			<fileset dir="../co.fxl.gui.gwt/component" />
+		</jar>
+		<jar destfile="../fxl-swing-${next}.jar">
+			<fileset dir="../co.fxl.gui/bin" />
+			<fileset dir="../co.fxl.gui/api" />
+			<fileset dir="../co.fxl.gui/impl" />
+			<fileset dir="../co.fxl.gui.swing/bin" />
+			<fileset dir="../co.fxl.gui.swing/component" />
+		</jar>
+	</target>
+</project>
