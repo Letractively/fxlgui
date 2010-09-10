@@ -52,7 +52,6 @@ public class ColumnImpl implements IColumn {
 		this.table = table;
 		this.columnIndex = columnIndex;
 		headerButtonCell = table.gridPanel.cell(columnIndex, 0);
-		headerButtonCell.color().white();
 		headerButton = headerButtonCell.label();
 		IBorder border = headerButtonCell.border();
 		border.width(2);
