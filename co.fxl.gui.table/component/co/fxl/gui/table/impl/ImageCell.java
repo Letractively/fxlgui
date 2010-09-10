@@ -23,8 +23,6 @@ import co.fxl.gui.api.IGridPanel.IGridCell;
 
 class ImageCell extends Cell<IImage> {
 
-	static final int ICON_SIZE = 16;
-
 	ImageCell(int row, IGridCell cell, IImage checkBox) {
 		super(row, cell, checkBox);
 	}
@@ -33,7 +31,6 @@ class ImageCell extends Cell<IImage> {
 	public void update(Object value) {
 		if (!value.equals(RowImpl.EMPTY)) {
 			element.resource(value + ImageCellFactory.PNG);
-			element.width(ICON_SIZE).height(16);
 			element.visible(true);
 		} else {
 			element.visible(false);

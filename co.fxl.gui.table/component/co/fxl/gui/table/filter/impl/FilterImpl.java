@@ -78,6 +78,10 @@ class FilterImpl implements IFilter {
 		title.addTitle("Filter");
 		apply = title.addHyperlink("Apply");
 		clear = title.addHyperlink("Clear");
+		apply.addClickListener(new ApplyClickListener());
+		apply.clickable(false);
+		clear.addClickListener(new ClearClickListener());
+		clear.clickable(false);
 		this.grid = title.content().panel().grid().indent(3);
 	}
 
@@ -140,12 +144,5 @@ class FilterImpl implements IFilter {
 		});
 		filters.add(filter);
 		return filter;
-	}
-
-	void visible(boolean visible) {
-		apply.addClickListener(new ApplyClickListener());
-		apply.clickable(false);
-		clear.addClickListener(new ClearClickListener());
-		clear.clickable(false);
 	}
 }

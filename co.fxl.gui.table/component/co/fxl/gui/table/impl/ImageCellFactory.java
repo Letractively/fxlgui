@@ -31,7 +31,6 @@ class ImageCellFactory extends CellFactory<IImage, String> {
 		IImage image = cell.image();
 		if (!value.equals(RowImpl.EMPTY)) {
 			image.resource(value + PNG);
-			image.width(ImageCell.ICON_SIZE).height(ImageCell.ICON_SIZE);
 		} else
 			image.visible(false);
 		return new ImageCell(row.rowIndex, cell, image);

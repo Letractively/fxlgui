@@ -70,8 +70,6 @@ class FilterTableWidgetImpl extends TableWidgetImpl implements
 	public FilterTableWidgetImpl visible(boolean visible) {
 		FilterTableWidgetImpl table = (FilterTableWidgetImpl) super
 				.visible(visible);
-		if (filter != null)
-			filter.visible(visible);
 		return table;
 	}
 
