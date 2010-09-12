@@ -68,7 +68,7 @@ class SwingFont implements IFont {
 
 		@Override
 		public IFont lucinda() {
-			return name("Lucinda");
+			return name("Lucinda Sans");
 		}
 
 		@Override
