@@ -85,6 +85,7 @@ class GWTFamily extends GWTWidgetStyle implements IFamily {
 
 	@Override
 	public IFont lucinda() {
-		throw new MethodNotImplementedException();
+		addStyleName("lucinda");
+		return font;
 	}
 }

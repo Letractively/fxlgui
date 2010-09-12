@@ -31,8 +31,7 @@ class GWTPasswordField extends GWTElement<PasswordTextBox, IPasswordField>
 
 	GWTPasswordField(GWTContainer<PasswordTextBox> container) {
 		super(container);
-		font().family().arial();
-		font().pixel(12);
+		font(this);
 	}
 
 	public IPasswordField text(String text) {

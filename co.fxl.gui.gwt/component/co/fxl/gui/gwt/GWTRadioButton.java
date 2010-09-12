@@ -42,10 +42,9 @@ class GWTRadioButton extends GWTElement<RadioButton, IRadioButton> implements
 
 	GWTRadioButton(GWTContainer<RadioButton> container) {
 		super(container);
+		font(this);
 		container.widget.setValue(false);
 		container.widget.addStyleName("gwt-RadioButton");
-		font().family().arial();
-		font().pixel(12);
 	}
 
 	@Override

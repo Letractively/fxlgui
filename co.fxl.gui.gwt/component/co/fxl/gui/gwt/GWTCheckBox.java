@@ -28,10 +28,9 @@ class GWTCheckBox extends GWTElement<CheckBox, ICheckBox> implements ICheckBox {
 
 	GWTCheckBox(GWTContainer<CheckBox> container) {
 		super(container);
+		font(this);
 		container.widget.setValue(false);
 		container.widget.addStyleName("gwt-Checkbox");
-		font().family().arial();
-		font().pixel(12);
 	}
 
 	@Override
