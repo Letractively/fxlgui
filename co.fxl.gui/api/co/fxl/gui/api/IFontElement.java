@@ -24,6 +24,10 @@ public interface IFontElement {
 
 		public interface IFamily {
 
+			// TODO Arial, Verdana, Geneva, Helvetica, sans-serif
+			// Georgia, Times New Roman, Times, serif
+			// Courier New, Courier, monospace
+
 			IFont arial();
 
 			IFont timesNewRoman();
