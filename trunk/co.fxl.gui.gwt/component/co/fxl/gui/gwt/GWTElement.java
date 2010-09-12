@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IFontElement;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 
@@ -39,6 +40,10 @@ class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	GWTElement(GWTContainer<T> container) {
 		this.container = container;
+	}
+
+	void font(IFontElement fontElement) {
+		fontElement.font().family().arial();
 	}
 
 	@SuppressWarnings("unchecked")

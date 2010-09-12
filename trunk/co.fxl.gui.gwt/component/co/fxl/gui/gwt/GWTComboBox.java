@@ -34,8 +34,7 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 
 	GWTComboBox(GWTContainer<ListBox> container) {
 		super(container);
-		font().family().arial();
-		font().pixel(12);
+		font(this);
 	}
 
 	@Override
