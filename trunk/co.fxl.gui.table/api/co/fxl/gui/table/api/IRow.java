@@ -25,6 +25,4 @@ public interface IRow<T> {
 	IRow<T> add(Comparable<?>... content);
 
 	IRow<T> select();
-
-	void remove();
 }

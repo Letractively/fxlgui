@@ -20,9 +20,8 @@ package co.fxl.gui.table.filter.impl;
 
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
-import co.fxl.gui.table.filter.api.IRowModel.Constraint;
 
-abstract class FilterTemplate<T> implements IFilterPart<T>, Constraint {
+abstract class FilterTemplate<T> implements IFilterPart<T> {
 
 	interface FilterListener {
 		void onActive(boolean isActive);
@@ -31,18 +30,17 @@ abstract class FilterTemplate<T> implements IFilterPart<T>, Constraint {
 	static final int HEIGHT = 20;
 	int columnIndex;
 	IGridPanel panel;
+	String name;
 
 	FilterTemplate(int columnIndex, IGridPanel panel, String name,
 			int filterIndex) {
 		this.columnIndex = columnIndex;
+		this.name = name;
 		addTitle(panel, name, filterIndex);
 		this.panel = panel.cell(1, filterIndex).panel().grid();
 	}
 
-	@Override
-	public int columnIndex() {
-		return columnIndex;
-	}
+	abstract IConstraint asConstraint();
 
 	static void addTitle(IGridPanel panel, String name, int filterIndex) {
 		IGridCell cell = panel.cell(0, filterIndex);

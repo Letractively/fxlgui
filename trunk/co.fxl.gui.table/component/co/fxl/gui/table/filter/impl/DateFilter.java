@@ -20,11 +20,29 @@ package co.fxl.gui.table.filter.impl;
 
 import java.util.Date;
 
-
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.table.filter.impl.IConstraint.IDateRangeConstraint;
 import co.fxl.gui.table.impl.SimpleDateFormat;
 
 class DateFilter extends RangeFilter<Date> {
+
+	class DateRangeConstraint implements IDateRangeConstraint {
+
+		@Override
+		public String column() {
+			throw new MethodNotImplementedException();
+		}
+
+		@Override
+		public Date lowerBound() {
+			throw new MethodNotImplementedException();
+		}
+
+		@Override
+		public Date upperBound() {
+			throw new MethodNotImplementedException();
+		}
+	}
 
 	static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat();
 	private Date lowerBound = null;
@@ -69,8 +87,8 @@ class DateFilter extends RangeFilter<Date> {
 	}
 
 	@Override
-	public Object[] values() {
+	public IConstraint asConstraint() {
 		update();
-		return new Object[] { lowerBound, upperBound };
+		return new DateRangeConstraint();
 	}
 }

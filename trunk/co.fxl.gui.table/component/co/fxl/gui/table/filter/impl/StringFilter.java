@@ -21,8 +21,22 @@ package co.fxl.gui.table.filter.impl;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.table.filter.impl.IConstraint.IStringPrefixConstraint;
 
 class StringFilter extends FilterTemplate<String> {
+
+	class StringPrefixConstraint implements IStringPrefixConstraint {
+
+		@Override
+		public String column() {
+			return name;
+		}
+
+		@Override
+		public String prefix() {
+			return text;
+		}
+	}
 
 	private ITextField textField;
 	private String text;
@@ -64,8 +78,8 @@ class StringFilter extends FilterTemplate<String> {
 	}
 
 	@Override
-	public Object[] values() {
+	public IConstraint asConstraint() {
 		update();
-		return new Object[] { text };
+		return new StringPrefixConstraint();
 	}
 }

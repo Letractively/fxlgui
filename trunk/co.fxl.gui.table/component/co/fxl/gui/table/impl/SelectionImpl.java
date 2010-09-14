@@ -21,7 +21,6 @@ package co.fxl.gui.table.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -62,6 +61,14 @@ class SelectionImpl implements ISelection<Object> {
 		@Override
 		public void update() {
 		}
+
+		@Override
+		public void visible() {
+		}
+
+		@Override
+		public void clear() {
+		}
 	}
 
 	class MultiSelection implements IMultiSelection<Object>, RowListener {
@@ -90,16 +97,7 @@ class SelectionImpl implements ISelection<Object> {
 
 			@Override
 			public void onClick() {
-				boolean changed = false;
-				for (RowImpl row : widget.rows) {
-					if (selection.contains(row.content.identifier)) {
-						selection.remove(row.content.identifier);
-						row.selected(false);
-						changed = true;
-					}
-				}
-				if (changed)
-					notifyChange();
+				clear();
 			}
 		}
 
@@ -108,20 +106,6 @@ class SelectionImpl implements ISelection<Object> {
 		private ILabel removeSelection;
 
 		MultiSelection(TableWidgetImpl widget) {
-			IGridPanel selectionPanel = widget.selectionPanel();
-			IHorizontalPanel p = selectionPanel.cell(0, 0).panel().horizontal()
-					.add().panel().horizontal().spacing(5);
-			p.add().label().text("Select").font().pixel(PIXEL);
-			selectAll = p.add().label();
-			selectAll.text("All").font().pixel(PIXEL);
-			selectAll.hyperlink()
-					.addClickListener(new SelectAllClickListener());
-			p.add().label().text("|").font().pixel(PIXEL).color().gray();
-			removeSelection = p.add().label();
-			removeSelection.text("None").font().pixel(PIXEL);
-			removeSelection.hyperlink().addClickListener(
-					new RemoveSelectionClickListener());
-			removeSelection.clickable(false);
 		}
 
 		@Override
@@ -158,8 +142,40 @@ class SelectionImpl implements ISelection<Object> {
 		}
 
 		@Override
+		public void visible() {
+			IGridPanel selectionPanel = widget.selectionPanel();
+			IHorizontalPanel p = selectionPanel.cell(0, 0).panel().horizontal()
+					.add().panel().horizontal().spacing(5);
+			p.add().label().text("Select").font().pixel(PIXEL);
+			selectAll = p.add().label();
+			selectAll.text("All").font().pixel(PIXEL);
+			selectAll.hyperlink()
+					.addClickListener(new SelectAllClickListener());
+			p.add().label().text("|").font().pixel(PIXEL).color().gray();
+			removeSelection = p.add().label();
+			removeSelection.text("None").font().pixel(PIXEL);
+			removeSelection.hyperlink().addClickListener(
+					new RemoveSelectionClickListener());
+			removeSelection.clickable(false);
+		}
+
+		@Override
 		public void update() {
 			notifyChange();
+		}
+
+		@Override
+		public void clear() {
+			boolean changed = false;
+			for (RowImpl row : widget.rows) {
+				if (selection.contains(row.content.identifier)) {
+					selection.remove(row.content.identifier);
+					row.selected(false);
+					changed = true;
+				}
+			}
+			if (changed)
+				notifyChange();
 		}
 	}
 

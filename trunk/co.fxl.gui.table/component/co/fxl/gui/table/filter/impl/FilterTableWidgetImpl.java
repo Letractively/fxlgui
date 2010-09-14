@@ -20,9 +20,7 @@ package co.fxl.gui.table.filter.impl;
 
 import java.util.List;
 
-
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.table.filter.api.IFilter;
 import co.fxl.gui.table.filter.api.IFilterTableWidget;
 import co.fxl.gui.table.impl.RowImpl;
 import co.fxl.gui.table.impl.TableWidgetImpl;
@@ -68,9 +66,7 @@ class FilterTableWidgetImpl extends TableWidgetImpl implements
 
 	@Override
 	public FilterTableWidgetImpl visible(boolean visible) {
-		FilterTableWidgetImpl table = (FilterTableWidgetImpl) super
-				.visible(visible);
-		return table;
+		return (FilterTableWidgetImpl) super.visible(visible);
 	}
 
 	@Override

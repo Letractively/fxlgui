@@ -22,19 +22,64 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-
 import co.fxl.gui.api.ILayout;
+import co.fxl.gui.table.api.IRow;
+import co.fxl.gui.table.filter.api.IFilterTableWidget;
 import co.fxl.gui.table.filter.api.ILazyTableWidget;
-import co.fxl.gui.table.filter.api.IRowModel;
-import co.fxl.gui.table.filter.api.IRowModel.Constraint;
-import co.fxl.gui.table.filter.api.IRowModel.Row;
-import co.fxl.gui.table.impl.RowImpl;
 
 class LazyTableWidgetImpl extends FilterTableWidgetImpl implements
 		ILazyTableWidget<Object> {
 
-	private IRowModel<Object> rowModel;
+	class RowModel implements IRowModel<Object> {
+
+		private boolean reset = false;
+		private boolean applyClickable;
+		private boolean clearClickable;
+
+		private void reset() {
+			mainPanel.visible(false);
+			rowListener.clear();
+			init = false;
+			selectionPanel = null;
+			rows.clear();
+			reset = true;
+		}
+
+		RowModel() {
+			applyClickable = filter.apply.clickable();
+			filter.apply.clickable(false);
+			clearClickable = filter.clear.clickable();
+			filter.clear.clickable(false);
+		}
+
+		@Override
+		public IFilterTableWidget<Object> notifyServerCall() {
+			return LazyTableWidgetImpl.this;
+		}
+
+		@Override
+		public IRow<Object> addRow() {
+			if (!reset) {
+				reset();
+			}
+			return LazyTableWidgetImpl.this.addRow();
+		}
+
+		@Override
+		public void onSuccess() {
+			mainPanel.visible(true);
+			filter.apply.clickable(applyClickable);
+			filter.clear.clickable(clearClickable);
+		}
+
+		@Override
+		public void onFail() {
+			throw new MethodNotImplementedException();
+		}
+	}
+
 	private boolean setUpFilter = false;
+	IFilterListener<Object> filterListener;
 	private ComboBoxIntegerFilter sizeFilter;
 
 	LazyTableWidgetImpl(ILayout layout) {
@@ -42,9 +87,31 @@ class LazyTableWidgetImpl extends FilterTableWidgetImpl implements
 	}
 
 	@Override
-	public ILazyTableWidget<Object> rowSource(IRowModel<Object> rowModel) {
-		this.rowModel = rowModel;
+	public ILazyTableWidget<Object> addFilterListener(
+			IFilterListener<Object> listener) {
+		this.filterListener = listener;
 		return this;
+	}
+
+	@Override
+	void filter(List<FilterTemplate<Object>> activeFilters) {
+		if (filterListener != null) {
+			Constraints constraints = new Constraints();
+			for (FilterTemplate<Object> filter : activeFilters) {
+				constraints.add(filter.asConstraint());
+			}
+			constraints.add(sizeFilter.asConstraint());
+			filterListener.onRefresh(resetRowModel(), constraints);
+		} else
+			super.filter(activeFilters);
+	}
+
+	@Override
+	void removeFilters() {
+		if (filterListener != null) {
+			filter(new LinkedList<FilterTemplate<Object>>());
+		} else
+			super.removeFilters();
 	}
 
 	@Override
@@ -64,45 +131,8 @@ class LazyTableWidgetImpl extends FilterTableWidgetImpl implements
 		setUpFilter = true;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	void filter(List<FilterTemplate<Object>> filters) {
-		List<Constraint> constraints = new LinkedList<Constraint>(filters);
-		constraints.remove(sizeFilter);
-		List<Row<Object>> modelRows = rowModel.query(constraints,
-				(Integer) sizeFilter.values()[0]);
-		int i = 0;
-		for (; i < modelRows.size(); i++) {
-			Row<Object> modelRow = modelRows.get(i);
-			if (i < rows.size()) {
-				RowImpl row = rows.get(i);
-				row.content.values.clear();
-				for (int j = 0; j < columns.size(); j++) {
-					Comparable<Object> value = (Comparable<Object>) modelRow
-							.valueAt(j);
-					row.content.values.add(value);
-				}
-				row.content.selected = false;
-				row.content.visible = true;
-			} else {
-				RowImpl row = addRow();
-				for (int j = 0; j < columns.size(); j++) {
-					Comparable<Object> value = (Comparable<Object>) modelRow
-							.valueAt(j);
-					row.add(value);
-				}
-			}
-		}
-		while (i < rows.size()) {
-			rows.get(i).content.visible = false;
-			i++;
-		}
-		updateRowPresentation();
-	}
-
-	@Override
-	void removeFilters() {
-		filter(new LinkedList<FilterTemplate<Object>>());
-		updateRowPresentation();
+	public IRowModel<Object> resetRowModel() {
+		return new RowModel();
 	}
 }

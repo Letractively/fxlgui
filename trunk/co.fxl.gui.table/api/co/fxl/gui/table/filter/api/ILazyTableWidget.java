@@ -18,7 +18,27 @@
  */
 package co.fxl.gui.table.filter.api;
 
+import co.fxl.gui.table.api.IRow;
+
 public interface ILazyTableWidget<T> extends IFilterTableWidget<T> {
 
-	ILazyTableWidget<T> rowSource(IRowModel<T> rowModel);
+	public interface IRowModel<T> {
+
+		IFilterTableWidget<T> notifyServerCall();
+
+		IRow<T> addRow();
+
+		void onSuccess();
+
+		void onFail();
+	}
+
+	public interface IFilterListener<T> {
+
+		void onRefresh(IRowModel<T> rows, IConstraints constraints);
+	}
+
+	IRowModel<T> resetRowModel();
+
+	ILazyTableWidget<T> addFilterListener(IFilterListener<T> listener);
 }

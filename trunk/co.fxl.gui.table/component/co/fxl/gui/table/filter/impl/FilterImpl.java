@@ -23,7 +23,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IImage;
@@ -31,7 +30,7 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.table.api.IColumn;
-import co.fxl.gui.table.filter.api.IFilter;
+import co.fxl.gui.table.filter.api.IFilterTableWidget.IFilter;
 import co.fxl.gui.table.filter.impl.FilterTemplate.FilterListener;
 import co.fxl.gui.table.impl.ColumnImpl;
 
@@ -44,6 +43,7 @@ class FilterImpl implements IFilter {
 			for (IFilterPart<?> filter : filters) {
 				filter.clear();
 			}
+			clear.clickable(false);
 			widget.removeFilters();
 		}
 	}
@@ -60,14 +60,15 @@ class FilterImpl implements IFilter {
 					activeFilters.add((FilterTemplate<Object>) filter);
 			}
 			if (!activeFilters.isEmpty()) {
+				clear.clickable(true);
 				widget.filter(activeFilters);
 			}
 		}
 	}
 
 	private List<IFilterPart<?>> filters = new LinkedList<IFilterPart<?>>();
-	private IClickable<?> apply;
-	private IClickable<?> clear;
+	IClickable<?> apply;
+	IClickable<?> clear;
 	private List<Boolean> activeFlags = new LinkedList<Boolean>();
 	private FilterTableWidgetImpl widget;
 	private IGridPanel grid;
@@ -139,7 +140,6 @@ class FilterImpl implements IFilter {
 				for (boolean flag : activeFlags)
 					overallActive |= flag;
 				apply.clickable(overallActive);
-				clear.clickable(overallActive);
 			}
 		});
 		filters.add(filter);

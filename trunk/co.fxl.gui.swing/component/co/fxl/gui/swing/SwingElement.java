@@ -86,15 +86,18 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 		return new SwingBorder(this);
 	}
 
+	public boolean clickable() {
+		return container.component.isEnabled();
+	}
+
 	@SuppressWarnings("unchecked")
 	public R clickable(boolean clickable) {
-		if (container.component.isEnabled() != clickable)
-			for (ClickListenerMouseAdapter adapter : adapters) {
-				if (clickable) {
-					container.component.addMouseListener(adapter.adapter);
-				} else
-					container.component.removeMouseListener(adapter.adapter);
+		for (ClickListenerMouseAdapter adapter : adapters) {
+			container.component.removeMouseListener(adapter.adapter);
+			if (clickable) {
+				container.component.addMouseListener(adapter.adapter);
 			}
+		}
 		container.component.setEnabled(clickable);
 		container.component
 				.setCursor(clickable ? new Cursor(Cursor.HAND_CURSOR)

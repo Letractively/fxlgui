@@ -21,7 +21,6 @@ package co.fxl.gui.table.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.table.api.IRow;
 
@@ -109,14 +108,13 @@ public class RowImpl implements IRow<Object> {
 	}
 
 	@Override
-	public void remove() {
-		table.remove(this);
-	}
-
-	@Override
 	public IRow<Object> select() {
 		selected(true);
 		table.selection.add(this, content.identifier);
 		return this;
+	}
+
+	boolean selected() {
+		return content.selected;
 	}
 }
