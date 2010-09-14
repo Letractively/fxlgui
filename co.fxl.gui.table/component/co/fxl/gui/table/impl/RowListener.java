@@ -20,13 +20,17 @@ package co.fxl.gui.table.impl;
 
 import co.fxl.gui.api.IClickable;
 
-interface RowListener {
+public interface RowListener {
 
 	void notifyClick(RowImpl rowImpl);
 
 	void notifyAction(RowImpl rowImpl);
 
 	void decorate(IClickable<?> c);
-	
+
 	void update();
+
+	void clear();
+
+	void visible();
 }

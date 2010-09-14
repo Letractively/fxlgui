@@ -65,22 +65,21 @@ public class TableWidgetImpl implements ITableWidget<Object> {
 	}
 
 	private WidgetTitle widgetTitle;
-	private IVerticalPanel mainPanel;
-	IGridPanel gridPanel;
+	protected IVerticalPanel mainPanel;
+	protected IGridPanel gridPanel;
 	private IHorizontalPanel headerPanel;
-	private IGridPanel selectionPanel = null;
+	protected IGridPanel selectionPanel = null;
 	public List<ColumnImpl> columns = new LinkedList<ColumnImpl>();
 	protected List<RowImpl> rows = new LinkedList<RowImpl>();
 	SelectionImpl selection;
-	RowListener rowListener;
+	protected RowListener rowListener;
 	Comparator<RowImpl> comparator = new Comparator<RowImpl>() {
-
 		@Override
 		public int compare(RowImpl arg0, RowImpl arg1) {
 			return arg0.content.index - arg1.content.index;
 		}
 	};
-	private boolean init = false;
+	protected boolean init = false;
 	private boolean addedSpace = false;
 
 	protected TableWidgetImpl(ILayout layout) {
@@ -90,8 +89,10 @@ public class TableWidgetImpl implements ITableWidget<Object> {
 	private void init() {
 		if (init)
 			return;
-		ILayout layout = widgetTitle.content().panel();
-		mainPanel = layout.vertical().stretch(true);
+		if (mainPanel == null) {
+			mainPanel = widgetTitle.content().panel().vertical().stretch(true);
+		}
+		mainPanel.clear();
 		headerPanel = mainPanel.add().panel().horizontal().add().panel()
 				.horizontal();
 		headerPanel.align().begin();
@@ -99,7 +100,12 @@ public class TableWidgetImpl implements ITableWidget<Object> {
 		gridPanel.spacing(0);
 		gridPanel.indent(3);
 		mainPanel.addSpace(6);
+		for (ColumnImpl column : columns) {
+			column.visible();
+		}
 		init = true;
+		if (rowListener != null)
+			rowListener.visible();
 	}
 
 	@Override
@@ -110,7 +116,6 @@ public class TableWidgetImpl implements ITableWidget<Object> {
 
 	@Override
 	public IColumn addColumn() {
-		init();
 		ColumnImpl column = new ColumnImpl(this, columns.size());
 		columns.add(column);
 		return column;
@@ -145,18 +150,6 @@ public class TableWidgetImpl implements ITableWidget<Object> {
 		return new RowImpl(tableWidgetImpl, i);
 	}
 
-	void remove(RowImpl rowImpl) {
-		rows.remove(rowImpl);
-		int index = rowImpl.rowIndex;
-		for (RowImpl row : rows) {
-			if (row.rowIndex > index) {
-				row.rowIndex--;
-				row.update();
-			}
-		}
-		throw new MethodNotImplementedException();
-	}
-
 	public IGridPanel selectionPanel() {
 		if (selectionPanel == null) {
 			init();
@@ -167,6 +160,7 @@ public class TableWidgetImpl implements ITableWidget<Object> {
 
 	@Override
 	public TableWidgetImpl visible(boolean visible) {
+		init();
 		mainPanel.visible(visible);
 		if (!addedSpace)
 			mainPanel.addSpace(12);

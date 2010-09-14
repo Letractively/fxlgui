@@ -16,13 +16,47 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.table.filter.api;
+package co.fxl.gui.table.filter.impl;
 
-import co.fxl.gui.table.api.IColumn;
+import java.util.Date;
 
-public interface IFilter {
+import co.fxl.gui.table.filter.api.IConstraints.IRange;
 
-	IFilter filterable(IColumn column, Object... values);
+interface IConstraint {
 
-	IFilter filterable(IColumn column, Class<?> contentType, Object... values);
+	public interface INamedConstraint extends IConstraint {
+
+		String column();
+	}
+
+	public interface ISizeConstraint extends IConstraint {
+
+		int size();
+	}
+
+	interface IStringPrefixConstraint extends INamedConstraint {
+
+		String prefix();
+	}
+
+	interface IRangeConstraint<T> extends INamedConstraint {
+
+		T lowerBound();
+
+		T upperBound();
+	}
+
+	interface IDoubleRangeConstraint extends IRangeConstraint<Double>,
+			IRange<Double> {
+
+	}
+
+	interface IDateRangeConstraint extends IRangeConstraint<Date>, IRange<Date> {
+
+	}
+
+	interface IIntegerRangeConstraint extends IRangeConstraint<Integer>,
+			IRange<Integer> {
+
+	}
 }

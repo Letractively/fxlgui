@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.table.impl;
 
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -47,28 +48,35 @@ public class ColumnImpl implements IColumn {
 	private IGridCell headerButtonCell;
 	IDecorator<Object, Object> decorator;
 	public Class<?> contentType;
+	private boolean sortable = false;
 
 	ColumnImpl(TableWidgetImpl table, int columnIndex) {
 		this.table = table;
 		this.columnIndex = columnIndex;
-		headerButtonCell = table.gridPanel.cell(columnIndex, 0);
+	}
+
+	void visible() {
+		IGridPanel gridPanel = table.gridPanel;
+		headerButtonCell = gridPanel.cell(columnIndex, 0);
 		headerButton = headerButtonCell.label();
 		IBorder border = headerButtonCell.border();
 		border.width(2);
 		border.style().bottom();
 		headerButton.font().weight().bold().pixel(14);
+		headerButton.text(name);
+		if (sortable)
+			headerButton.addClickListener(new ClickListener());
 	}
 
 	@Override
 	public IColumn name(String name) {
 		this.name = name;
-		headerButton.text(name);
 		return this;
 	}
 
 	@Override
 	public IColumn sortable() {
-		headerButton.addClickListener(new ClickListener());
+		sortable = true;
 		return this;
 	}
 

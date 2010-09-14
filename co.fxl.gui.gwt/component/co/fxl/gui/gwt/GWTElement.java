@@ -85,7 +85,8 @@ class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	@Override
 	public void remove() {
-		container.parent.container.widget.remove(container.widget);
+		// container.parent.container.widget.remove(container.widget);
+		container.widget.removeFromParent();
 	}
 
 	@Override
@@ -137,5 +138,9 @@ class GWTElement<T extends Widget, R> implements IElement<R> {
 	public R clickable(boolean enable) {
 		toggleClickHandler(enable);
 		return (R) this;
+	}
+
+	public boolean clickable() {
+		return registration != null;
 	}
 }

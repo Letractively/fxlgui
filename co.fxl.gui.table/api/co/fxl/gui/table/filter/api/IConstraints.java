@@ -18,25 +18,24 @@
  */
 package co.fxl.gui.table.filter.api;
 
-import java.util.List;
+import java.util.Date;
 
-public interface IRowModel<T> {
+public interface IConstraints {
 
-	public interface Row<T> {
+	public interface IRange<T> {
 
-		Object valueAt(int index);
+		T lowerBound();
 
-		T identifier();
-	}
-
-	public interface Constraint {
-
-		int columnIndex();
-
-		Object[] values();
+		T upperBound();
 	}
 
 	int size();
 
-	List<Row<T>> query(List<Constraint> contraints, int size);
+	boolean isConstrained(String column);
+
+	IRange<Integer> intRange(String column);
+
+	IRange<Date> dateRange(String column);
+
+	String stringValue(String column);
 }

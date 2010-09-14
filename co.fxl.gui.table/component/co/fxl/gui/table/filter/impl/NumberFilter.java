@@ -19,8 +19,27 @@
 package co.fxl.gui.table.filter.impl;
 
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.table.filter.impl.IConstraint.IDoubleRangeConstraint;
 
 class NumberFilter extends RangeFilter<Number> {
+
+	class DoubleRangeFilter implements IDoubleRangeConstraint {
+
+		@Override
+		public String column() {
+			return name;
+		}
+
+		@Override
+		public Double lowerBound() {
+			return lowerBound;
+		}
+
+		@Override
+		public Double upperBound() {
+			return upperBound;
+		}
+	}
 
 	private Double lowerBound = null;
 	private Double upperBound = null;
@@ -74,8 +93,8 @@ class NumberFilter extends RangeFilter<Number> {
 	}
 
 	@Override
-	public Object[] values() {
+	public IConstraint asConstraint() {
 		update();
-		return new Object[] { lowerBound, upperBound };
+		return new DoubleRangeFilter();
 	}
 }
