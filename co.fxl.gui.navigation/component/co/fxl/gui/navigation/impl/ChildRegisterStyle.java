@@ -26,23 +26,23 @@ class ChildRegisterStyle extends RegisterStyle {
 	@Override
 	void decorateWidget(RegisterWidgetImpl widget) {
 		widget.separators(true);
-		widget.headerPanel.spacing(2);
+		widget.headerPanel.spacing(4);
 	}
 
 	@Override
 	void init(ITitle title) {
-		title.font().pixel(12);
+		onBack(title);
 	}
 
 	@Override
 	public void onBack(ITitle title) {
-		title.font().color().gray();
-		title.font().underline(false);
+		title.font().pixel(12).weight().plain().color().blue();
+		title.font().underline(true);
 	}
 
 	@Override
 	public void onFront(ITitle title) {
-		title.font().color().black();
-		title.font().underline(true);
+		title.font().pixel(14).weight().bold().color().black();
+		title.font().underline(false);
 	}
 }
