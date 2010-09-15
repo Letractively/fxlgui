@@ -46,14 +46,15 @@ class LazyTableWidgetImpl extends FilterTableWidgetImpl implements
 		}
 
 		RowModel() {
-			applyClickable = filter.apply.clickable();
-			filter.apply.clickable(false);
-			clearClickable = filter.clear.clickable();
-			filter.clear.clickable(false);
+			notifyServerCall();
 		}
 
 		@Override
 		public IFilterTableWidget<Object> notifyServerCall() {
+			applyClickable = filter.apply.clickable();
+			filter.apply.clickable(false);
+			clearClickable = filter.clear.clickable();
+			filter.clear.clickable(false);
 			return LazyTableWidgetImpl.this;
 		}
 

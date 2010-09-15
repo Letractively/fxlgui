@@ -57,7 +57,6 @@ class SwingLabel extends SwingTextElement<JLabel, ILabel> implements ILabel {
 			}
 		}
 		super.clickable(enable);
-
 		return this;
 	}
 
