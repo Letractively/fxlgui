@@ -58,7 +58,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 
 	@Override
 	public void remove() {
-		container.parent.container.component.remove(container.component);
+		container.parent.remove(container.component);
 	}
 
 	@SuppressWarnings("unchecked")
