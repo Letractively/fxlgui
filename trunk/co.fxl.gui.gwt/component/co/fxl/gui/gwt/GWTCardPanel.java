@@ -21,7 +21,6 @@ package co.fxl.gui.gwt;
 import java.util.LinkedList;
 import java.util.List;
 
-
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IElement;
 
@@ -58,6 +57,12 @@ class GWTCardPanel extends GWTPanel<DeckPanel, ICardPanel> implements
 			Integer index = widgets.indexOf(widget);
 			container.widget.showWidget(index);
 		}
+	}
+
+	@Override
+	public void remove(Widget widget) {
+		super.remove(widget);
+		widgets.remove(widget);
 	}
 
 	@SuppressWarnings("unchecked")

@@ -80,6 +80,10 @@ class SwingPanel<R> extends SwingElement<JPanel, R> implements IPanel<R> {
 		container.component.add(component);
 	}
 
+	void remove(JComponent component) {
+		container.component.remove(component);
+	}
+
 	JFrame frame() {
 		return container.lookupSwingDisplay().frame;
 	}

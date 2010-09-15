@@ -85,8 +85,7 @@ class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	@Override
 	public void remove() {
-		// container.parent.container.widget.remove(container.widget);
-		container.widget.removeFromParent();
+		container.parent.remove(container.widget);
 	}
 
 	@Override

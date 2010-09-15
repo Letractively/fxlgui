@@ -70,6 +70,10 @@ abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R> implements
 
 	abstract void add(Widget widget);
 
+	void remove(Widget widget) {
+		widget.removeFromParent();
+	}
+
 	@Override
 	public IDisplay display() {
 		return container.lookupDisplay();
