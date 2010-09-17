@@ -29,6 +29,7 @@ class FormTextFieldImpl extends FormFieldImpl<ITextField> {
 		textField = addTextField(widget);
 		textField.height(20);
 		textField.border().color().gray();
+		widget.addFillColumn();
 	}
 
 	ITextField addTextField(FormWidgetImpl widget) {

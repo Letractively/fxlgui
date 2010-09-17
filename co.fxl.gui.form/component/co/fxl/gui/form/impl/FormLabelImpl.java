@@ -27,7 +27,8 @@ class FormLabelImpl extends FormFieldImpl<ILabel> {
 	FormLabelImpl(FormWidgetImpl widget, String name) {
 		super(widget, name);
 		textField = addLabel(widget);
-		textField.height(20);
+//		textField.height(20);
+		widget.addFillColumn();
 	}
 
 	ILabel addLabel(FormWidgetImpl widget) {

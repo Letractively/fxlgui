@@ -28,6 +28,7 @@ class FormComboBoxImpl extends FormFieldImpl<IComboBox> {
 		super(widget, name);
 		comboBox = widget.addFormValueComboBox();
 		comboBox.height(20);
+		widget.addFillColumn();
 	}
 
 	@Override
