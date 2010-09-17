@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.table.impl;
 
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 
@@ -28,7 +29,8 @@ class ImageCellFactory extends CellFactory<IImage, String> {
 	@Override
 	public Cell<IImage> create(TableWidgetImpl table, final RowImpl row,
 			final int columnIndex, IGridCell cell, String value) {
-		IImage image = cell.image();
+		IHorizontalPanel p = cell.panel().horizontal();
+		IImage image = p.add().image();
 		if (!value.equals(RowImpl.EMPTY)) {
 			image.resource(value + PNG);
 		} else
