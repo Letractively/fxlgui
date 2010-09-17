@@ -34,6 +34,7 @@ abstract class FormFieldImpl<T extends ITextElement<T>> implements
 		FormEntryLabel formEntryLabel = widget.addFormEntryLabel(name);
 		cell = formEntryLabel.cell;
 		label = formEntryLabel.formEntryLabel;
+		widget.addFillColumn();
 	}
 
 	@Override

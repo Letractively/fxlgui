@@ -22,7 +22,7 @@ import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
-import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPasswordField;
@@ -33,6 +33,7 @@ import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
+import co.fxl.gui.form.api.IImageField;
 
 class FormWidgetImpl implements IFormWidget {
 
@@ -56,19 +57,20 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	FormEntryLabel addFormEntryLabel(String name) {
-		IGridCell cell = grid().cell(0, gridIndex);
-		cell.width(10);
-		IHorizontalPanel titlePanel = cell.panel().horizontal();
-		titlePanel.align().begin();
-		ILabel formEntryLabel = titlePanel.add().label();
-		formEntryLabel.autoWrap(false);
+		IGridCell cell = grid().cell(0, gridIndex).align().end();
+		ILabel formEntryLabel = cell.label();
 		formEntryLabel.text(name);
 		formEntryLabel.font().pixel(12).color().gray();
 		return new FormEntryLabel(cell, formEntryLabel);
 	}
 
 	private IContainer container() {
-		return grid().cell(1, gridIndex++);
+		IGridCell cell = grid().cell(1, gridIndex);
+		gridIndex++;
+		return cell;
+	}
+
+	void addFillColumn() {
 	}
 
 	ITextField addFormValueTextField() {
@@ -101,6 +103,10 @@ class FormWidgetImpl implements IFormWidget {
 		return label;
 	}
 
+	IImage addImage() {
+		return container().panel().horizontal().add().image();
+	}
+
 	@Override
 	public IFormField<ICheckBox> addCheckBox(String name) {
 		return new FormCheckBoxImpl(this, name);
@@ -119,6 +125,11 @@ class FormWidgetImpl implements IFormWidget {
 	@Override
 	public IFormField<IPasswordField> addPasswordField(String name) {
 		return new FormPasswordFieldImpl(this, name);
+	}
+
+	@Override
+	public IImageField addImage(String name) {
+		return new ImageFieldImpl(this, name);
 	}
 
 	@Override
@@ -143,31 +154,19 @@ class FormWidgetImpl implements IFormWidget {
 
 	@Override
 	public ILabel addHyperlink(String name, IClickListener clickListener) {
-		return widgetTitle.addHyperlink(name).addClickListener(clickListener).mouseLeft();
+		return widgetTitle.addHyperlink(name).addClickListener(clickListener)
+				.mouseLeft();
 	}
 
 	@Override
 	public FormWidgetImpl visible(boolean visible) {
-		adjustRows();
 		return this;
-	}
-
-	private void adjustRows() {
-		adjustColumn(0, 140);
-	}
-
-	private void adjustColumn(int c, int inc) {
-		IGridPanel grid = grid();
-		for (int i = 0; i < grid.rows(); i++) {
-			IGridCell element = grid.cell(c, i);
-			element.width(inc);
-		}
 	}
 
 	public IGridPanel grid() {
 		if (gridPanel == null) {
 			gridPanel = widgetTitle.content().panel().grid();
-			gridPanel.indent(2);
+			gridPanel.indent(4);
 		}
 		return gridPanel;
 	}

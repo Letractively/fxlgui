@@ -43,19 +43,23 @@ class LoginWidgetImpl implements ILoginWidget {
 				dialog("No password specified");
 				return;
 			}
-			Authorization authorization = listener.authorize(loginID.text(),
-					password.text());
-			if (authorization == Authorization.UNKNOWN_ID) {
-				dialog("Unknown ID");
-			} else if (authorization == Authorization.WRONG_PASSWORD) {
-				dialog("Wrong password");
-			} else {
-				loggedInAs.text(loginID.text());
-				loginID.text("");
-				password.text("");
-				logoutPanel.visible(true);
-				loginPanel.visible(false);
-			}
+			listener.authorize(loginID.text(), password.text(), new Callback() {
+
+				@Override
+				public void onAuthorization(Authorization authorization) {
+					if (authorization == Authorization.UNKNOWN_ID) {
+						dialog("Unknown ID");
+					} else if (authorization == Authorization.WRONG_PASSWORD) {
+						dialog("Wrong password");
+					} else {
+						loggedInAs.text(loginID.text());
+						loginID.text("");
+						password.text("");
+						logoutPanel.visible(true);
+						loginPanel.visible(false);
+					}
+				}
+			});
 		}
 
 		@Override

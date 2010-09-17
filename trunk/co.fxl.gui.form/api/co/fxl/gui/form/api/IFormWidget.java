@@ -42,6 +42,8 @@ public interface IFormWidget {
 
 	IFormField<IComboBox> addComboBox(String name);
 
+	IImageField addImage(String name);
+
 	ILabel addOKHyperlink();
 
 	ILabel addCancelHyperlink();

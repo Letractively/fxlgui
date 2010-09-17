@@ -20,6 +20,11 @@ package co.fxl.gui.form.api;
 
 public interface ILoginWidget {
 
+	public interface Callback {
+
+		void onAuthorization(Authorization auth);
+	}
+
 	public enum Authorization {
 
 		OK, UNKNOWN_ID, WRONG_PASSWORD;
@@ -27,7 +32,7 @@ public interface ILoginWidget {
 
 	public interface IAuthorizationListener {
 
-		Authorization authorize(String iD, String password);
+		void authorize(String iD, String password, Callback callback);
 
 		void logout();
 	}

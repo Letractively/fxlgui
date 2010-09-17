@@ -28,6 +28,7 @@ class FormTextAreaImpl extends FormFieldImpl<ITextArea> {
 		super(widget, name);
 		textArea = widget.addFormValueTextArea();
 		textArea.border().color().gray();
+		widget.addFillColumn();
 	}
 
 	@Override
