@@ -33,8 +33,6 @@ class LazyTableWidgetImpl extends FilterTableWidgetImpl implements
 	class RowModel implements IRowModel<Object> {
 
 		private boolean reset = false;
-		private boolean applyClickable;
-		private boolean clearClickable;
 
 		private void reset() {
 			mainPanel.visible(false);
@@ -51,10 +49,7 @@ class LazyTableWidgetImpl extends FilterTableWidgetImpl implements
 
 		@Override
 		public IFilterTableWidget<Object> notifyServerCall() {
-			applyClickable = filter.apply.clickable();
-			filter.apply.clickable(false);
-			clearClickable = filter.clear.clickable();
-			filter.clear.clickable(false);
+			filter.holdFilterClicks = true;
 			return LazyTableWidgetImpl.this;
 		}
 
@@ -69,8 +64,7 @@ class LazyTableWidgetImpl extends FilterTableWidgetImpl implements
 		@Override
 		public void onSuccess() {
 			mainPanel.visible(true);
-			filter.apply.clickable(applyClickable);
-			filter.clear.clickable(clearClickable);
+			filter.holdFilterClicks = false;
 		}
 
 		@Override

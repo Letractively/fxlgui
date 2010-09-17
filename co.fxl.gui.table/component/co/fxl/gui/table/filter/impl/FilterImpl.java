@@ -40,6 +40,8 @@ class FilterImpl implements IFilter {
 
 		@Override
 		public void onClick() {
+			if (holdFilterClicks)
+				return;
 			for (IFilterPart<?> filter : filters) {
 				filter.clear();
 			}
@@ -53,6 +55,8 @@ class FilterImpl implements IFilter {
 		@SuppressWarnings("unchecked")
 		@Override
 		public void onClick() {
+			if (holdFilterClicks)
+				return;
 			List<FilterTemplate<Object>> activeFilters = new LinkedList<FilterTemplate<Object>>();
 			for (IFilterPart<?> filter : filters) {
 				boolean active = filter.update();
@@ -72,6 +76,7 @@ class FilterImpl implements IFilter {
 	private List<Boolean> activeFlags = new LinkedList<Boolean>();
 	private FilterTableWidgetImpl widget;
 	private IGridPanel grid;
+	boolean holdFilterClicks = false;
 
 	FilterImpl(FilterTableWidgetImpl widget, ILayout panel) {
 		this.widget = widget;
