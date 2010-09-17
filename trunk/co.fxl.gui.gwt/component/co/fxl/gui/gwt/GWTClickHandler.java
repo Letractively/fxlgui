@@ -31,6 +31,9 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 	}
 
 	public void onClick(ClickEvent event) {
+
+		// TODO when time since last click < 0.5s, fire as double click
+
 		if (keyEquals(key, event.getNativeEvent()))
 			clickListener.onClick();
 	}

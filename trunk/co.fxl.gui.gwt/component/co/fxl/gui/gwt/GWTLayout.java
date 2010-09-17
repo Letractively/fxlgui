@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.gwt;
 
+import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
@@ -62,5 +63,10 @@ class GWTLayout implements ILayout {
 	@Override
 	public ICardPanel card() {
 		return (ICardPanel) (panel.element = new GWTCardPanel(panel));
+	}
+
+	@Override
+	public IAbsolutePanel absolute() {
+		throw new MethodNotImplementedException();
 	}
 }
