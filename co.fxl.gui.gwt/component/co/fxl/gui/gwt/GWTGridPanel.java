@@ -21,7 +21,6 @@ package co.fxl.gui.gwt;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
@@ -44,6 +43,7 @@ class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPanel {
 			super((GWTPanel<?, IGridPanel>) GWTGridPanel.this);
 			this.column = column;
 			this.row = row;
+			// TODO valign().begin();
 		}
 
 		@Override

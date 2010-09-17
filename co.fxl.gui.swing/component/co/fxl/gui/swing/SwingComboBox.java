@@ -30,6 +30,7 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 
 	public SwingComboBox(SwingContainer<JComboBox> container) {
 		super(container);
+		color().white();
 	}
 
 	@Override
