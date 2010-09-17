@@ -21,6 +21,7 @@ package co.fxl.gui.api.template;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
@@ -65,6 +66,16 @@ public class WidgetTitle {
 		}
 		hasCommands = true;
 		ILabel label = commandPanel.add().label().text(text).hyperlink();
+		return label;
+	}
+
+	public IImage addImage(String image) {
+		initHeader();
+		if (hasCommands) {
+			commandPanel.add().label().text("|").font().color().gray();
+		}
+		hasCommands = true;
+		IImage label = commandPanel.add().image().resource(image);
 		return label;
 	}
 

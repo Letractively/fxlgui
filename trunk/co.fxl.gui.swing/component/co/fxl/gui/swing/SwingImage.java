@@ -64,9 +64,4 @@ class SwingImage extends SwingElement<JLabel, IImage> implements IImage {
 		container.component.setIcon(icon);
 		return this;
 	}
-
-	@Override
-	public IImage clickable(boolean enable) {
-		throw new MethodNotImplementedException();
-	}
 }
