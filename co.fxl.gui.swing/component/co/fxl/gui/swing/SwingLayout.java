@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.swing;
 
+import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
@@ -62,5 +63,10 @@ class SwingLayout implements ILayout {
 	@Override
 	public ICardPanel card() {
 		return new SwingCardPanel(panel.container);
+	}
+
+	@Override
+	public IAbsolutePanel absolute() {
+		throw new MethodNotImplementedException();
 	}
 }

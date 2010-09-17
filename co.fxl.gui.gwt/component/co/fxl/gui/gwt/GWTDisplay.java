@@ -142,4 +142,9 @@ public class GWTDisplay implements IDisplay {
 			}
 		};
 	}
+
+	@Override
+	public IDisplay addExceptionHandler(IExceptionHandler handler) {
+		throw new MethodNotImplementedException();
+	}
 }

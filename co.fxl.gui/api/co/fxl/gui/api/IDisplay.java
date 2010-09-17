@@ -22,6 +22,11 @@ import co.fxl.gui.api.IColored.IColor;
 
 public interface IDisplay {
 
+	public interface IExceptionHandler {
+
+		void onException(RuntimeException exception);
+	}
+
 	IDisplay title(String title);
 
 	IDisplay width(int width);
@@ -41,4 +46,6 @@ public interface IDisplay {
 	IWebsite showWebsite();
 
 	IColor color();
+
+	IDisplay addExceptionHandler(IExceptionHandler handler);
 }

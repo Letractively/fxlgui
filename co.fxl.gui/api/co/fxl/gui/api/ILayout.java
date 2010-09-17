@@ -29,6 +29,8 @@ public interface ILayout {
 	IDockPanel dock();
 
 	ICardPanel card();
+	
+	IAbsolutePanel absolute();
 
 	IPanel<?> plugIn(Class<?> layoutType);
 }

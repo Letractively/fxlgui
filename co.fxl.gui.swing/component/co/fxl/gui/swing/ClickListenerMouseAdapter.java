@@ -33,12 +33,18 @@ class ClickListenerMouseAdapter<T> extends KeyTemplate<T> implements IKey<T> {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
+
+			// TODO when time since last click < 0.5s, fire as double click
+
 			if (checkKeys(e))
 				clickListener.onClick();
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+
+			// TODO when time since last click < 0.5s, fire as double click
+
 			if (checkKeys(e))
 				clickListener.onClick();
 		}
