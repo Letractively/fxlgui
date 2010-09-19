@@ -36,7 +36,8 @@ class LazyTableWidgetImpl extends FilterTableWidgetImpl implements
 
 		private void reset() {
 			mainPanel.visible(false);
-			rowListener.clear();
+			if (rowListener != null)
+				rowListener.clear();
 			init = false;
 			selectionPanel = null;
 			rows.clear();
