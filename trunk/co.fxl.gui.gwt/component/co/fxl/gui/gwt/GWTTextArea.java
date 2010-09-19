@@ -44,7 +44,15 @@ class GWTTextArea extends GWTElement<TextArea, ITextArea> implements ITextArea {
 
 	@Override
 	public IColor color() {
-		throw new MethodNotImplementedException();
+		GWTWidgetStyle style = new GWTWidgetStyle("background-color-",
+				container.widget);
+		return new GWTStyleColor(style) {
+
+			@Override
+			void setColor(String color, com.google.gwt.dom.client.Style stylable) {
+				stylable.setBackgroundColor(color);
+			}
+		};
 	}
 
 	@Override
