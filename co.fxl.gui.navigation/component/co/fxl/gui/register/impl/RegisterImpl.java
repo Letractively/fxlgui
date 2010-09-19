@@ -81,14 +81,14 @@ class RegisterImpl implements IRegister, IClickListener {
 			addSeparator();
 		}
 		buttonPanel = widget.headerPanel.add().panel().horizontal();
-		buttonPanel.spacing(4).align().center();
+		buttonPanel.spacing(6).align().center();
 		buttonPanel.addSpace(3);
 		buttonLabel = buttonPanel.add().label();
-		buttonLabel.font().color().gray();
 		buttonLabel.addClickListener(this);
 		buttonPanel.addSpace(3);
 		content = widget.cardPanel.add().panel().vertical();
 		init = true;
+		notifyVisible(false);
 	}
 
 	private void addSeparator() {
@@ -118,6 +118,12 @@ class RegisterImpl implements IRegister, IClickListener {
 		for (IRegisterListener listener : listeners) {
 			listener.onTop(visible);
 		}
+		if (visible) {
+			buttonLabel.font().pixel(14).weight().bold().color().black();
+		} else {
+			buttonLabel.font().pixel(12).weight().plain().color().blue();
+		}
+		buttonLabel.font().underline(!visible);
 	}
 
 	@Override
