@@ -43,7 +43,7 @@ class GWTElement<T extends Widget, R> implements IElement<R> {
 	}
 
 	void font(IFontElement fontElement) {
-		fontElement.font().family().arial();
+		fontElement.font().pixel(13).family().arial();
 	}
 
 	@SuppressWarnings("unchecked")
