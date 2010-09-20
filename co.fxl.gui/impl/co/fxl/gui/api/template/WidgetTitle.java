@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.api.template;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -25,18 +28,38 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.IClickable.IClickListener;
 
-public class WidgetTitle {
+public class WidgetTitle implements IClickListener {
 
+	private String openPNG = "minus.png";
+	private String closedPNG = "plus.png";
 	private IVerticalPanel panel;
 	private IHorizontalPanel titlePanel;
 	private IHorizontalPanel commandPanel;
 	private boolean hasCommands = false;
 	private boolean hasHeaderPanel = false;
 	private IDockPanel headerPanel;
+	private IContainer contentContainer;
+	private boolean open = true;
+	private IImage image;
+	private boolean foldable = true;
+	private ILabel headerLabel;
+	private List<ILabel> labels = new LinkedList<ILabel>();
 
 	public WidgetTitle(ILayout layout) {
 		panel = layout.vertical();
+	}
+
+	public WidgetTitle triangleIcons() {
+		openPNG = "open_folder.png";
+		closedPNG = "closed_folder.png";
+		return this;
+	}
+
+	public WidgetTitle foldable(boolean foldable) {
+		this.foldable = foldable;
+		return this;
 	}
 
 	private void initHeader() {
@@ -45,27 +68,50 @@ public class WidgetTitle {
 		headerPanel = panel.add().panel().dock();
 		titlePanel = headerPanel.center().panel().horizontal().add().panel()
 				.horizontal().spacing(4);
+		if (foldable) {
+			image = titlePanel.add().image().resource(openPNG);
+			image.addClickListener(this);
+		}
 		IContainer cell = headerPanel.right();
 		commandPanel = cell.panel().horizontal().spacing(6);
 		panel.addSpace(10);
 		hasHeaderPanel = true;
 	}
 
+	@Override
+	public void onClick() {
+		open = !open;
+		if (open) {
+			image.resource(openPNG);
+		} else {
+			image.resource(closedPNG);
+		}
+		contentContainer.element().visible(open);
+		for (ILabel l : labels)
+			l.visible(open);
+	}
+
 	public ILabel addTitle(String title) {
 		initHeader();
 		headerPanel.border().style().bottom();
-		ILabel label = titlePanel.add().label().text(title);
-		label.font().weight().bold().pixel(16);
-		return label;
+		headerLabel = titlePanel.add().label().text(title);
+		if (foldable) {
+			headerLabel.addClickListener(this);
+		}
+		headerLabel.font().weight().bold().pixel(16);
+		return headerLabel;
 	}
 
 	public ILabel addHyperlink(String text) {
 		initHeader();
 		if (hasCommands) {
-			commandPanel.add().label().text("|").font().color().gray();
+			ILabel label = commandPanel.add().label().text("|");
+			label.font().color().gray();
+			labels.add(label);
 		}
 		hasCommands = true;
 		ILabel label = commandPanel.add().label().text(text).hyperlink();
+		labels.add(label);
 		return label;
 	}
 
@@ -80,7 +126,7 @@ public class WidgetTitle {
 	}
 
 	public IContainer content() {
-		return panel.add();
+		return contentContainer = panel.add();
 	}
 
 	public WidgetTitle clearHyperlinks() {

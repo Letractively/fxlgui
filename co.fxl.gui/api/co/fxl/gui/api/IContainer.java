@@ -44,5 +44,7 @@ public interface IContainer {
 
 	IElement<?> nativeElement(Object object);
 
+	IElement<?> element();
+
 	Object widget(Class<?> interfaceClass);
 }
