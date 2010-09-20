@@ -19,8 +19,8 @@
 package co.fxl.gui.table.filter.impl;
 
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 abstract class RangeFilter<T> extends FilterTemplate<T> {
@@ -29,17 +29,21 @@ abstract class RangeFilter<T> extends FilterTemplate<T> {
 	private ITextField upperBoundTextField;
 	String lowerBoundText = "";
 	String upperBoundText = "";
+	private IHorizontalPanel panel;
 
 	RangeFilter(int columnIndex, IGridPanel parent, String name, int filterIndex) {
 		super(columnIndex, parent, name, filterIndex);
-		panel.spacing(2);
-		lowerBoundTextField = panel.cell(0, 0).textField().height(HEIGHT);
-		lowerBoundTextField.width(70);
-		IGridCell cell = panel.cell(1, 0);
-		cell.label().text("-");
-		cell.align().begin();
-		upperBoundTextField = panel.cell(2, 0).textField().height(HEIGHT);
-		upperBoundTextField.width(70);
+		panel = parent.cell(1, filterIndex).align().begin().panel()
+				.horizontal().add().panel().horizontal();
+		lowerBoundTextField = addTextField(0);
+		panel.addSpace(4);
+		panel.add().label().text("-");
+		panel.addSpace(4);
+		upperBoundTextField = addTextField(2);
+	}
+
+	private ITextField addTextField(int column) {
+		return panel.add().textField().width(WIDTH_RANGE_CELL);
 	}
 
 	public boolean update() {

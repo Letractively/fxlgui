@@ -27,9 +27,10 @@ abstract class FilterTemplate<T> implements IFilterPart<T> {
 		void onActive(boolean isActive);
 	}
 
+	static final int WIDTH_SINGLE_CELL = 180;
+	static final int WIDTH_RANGE_CELL = 84;
 	static final int HEIGHT = 20;
 	int columnIndex;
-	IGridPanel panel;
 	String name;
 
 	FilterTemplate(int columnIndex, IGridPanel panel, String name,
@@ -37,7 +38,6 @@ abstract class FilterTemplate<T> implements IFilterPart<T> {
 		this.columnIndex = columnIndex;
 		this.name = name;
 		addTitle(panel, name, filterIndex);
-		this.panel = panel.cell(1, filterIndex).panel().grid();
 	}
 
 	abstract IConstraint asConstraint();
