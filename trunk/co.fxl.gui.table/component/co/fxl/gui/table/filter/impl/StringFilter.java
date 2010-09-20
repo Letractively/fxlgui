@@ -43,8 +43,8 @@ class StringFilter extends FilterTemplate<String> {
 
 	StringFilter(int columnIndex, IGridPanel panel, String name, int filterIndex) {
 		super(columnIndex, panel, name, filterIndex);
-		this.textField = panel.add().textField().height(HEIGHT);
-		textField.width(162);
+		this.textField = panel.cell(1, filterIndex).textField().size(WIDTH_SINGLE_CELL,
+				HEIGHT);
 	}
 
 	@Override

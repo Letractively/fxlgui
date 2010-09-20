@@ -43,11 +43,10 @@ class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
 			List<Object> values, int filterIndex) {
 		super(columnIndex, panel, name, filterIndex);
 		this.defaultValue = (Integer) values.get(0);
-		comboBox = panel.add().comboBox().height(HEIGHT);
+		comboBox = panel.cell(1, filterIndex).comboBox().size(WIDTH_SINGLE_CELL, HEIGHT);
 		for (Object object : values) {
 			comboBox.addText(string(object));
 		}
-		comboBox.width(162);
 	}
 
 	private String string(Object object) {
