@@ -84,6 +84,7 @@ public class TableWidgetImpl implements ITableWidget<Object> {
 
 	protected TableWidgetImpl(ILayout layout) {
 		widgetTitle = new WidgetTitle(layout);
+		widgetTitle.foldable(false);
 	}
 
 	private void init() {

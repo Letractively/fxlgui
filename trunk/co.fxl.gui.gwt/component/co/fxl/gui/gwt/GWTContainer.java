@@ -154,4 +154,9 @@ class GWTContainer<T extends Widget> implements IContainer {
 	IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
 		return parent.container.lookupWidgetProvider(interfaceClass);
 	}
+
+	@Override
+	public IElement<?> element() {
+		return new GWTElement(this);
+	}
 }

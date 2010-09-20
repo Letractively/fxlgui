@@ -186,4 +186,9 @@ class SwingContainer<T extends JComponent> implements IContainer {
 	SwingDisplay lookupSwingDisplay() {
 		return parent.container.lookupSwingDisplay();
 	}
+
+	@Override
+	public IElement<?> element() {
+		return new SwingElement(this);
+	}
 }
