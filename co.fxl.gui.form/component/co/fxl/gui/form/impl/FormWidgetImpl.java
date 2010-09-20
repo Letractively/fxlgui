@@ -54,6 +54,7 @@ class FormWidgetImpl implements IFormWidget {
 
 	FormWidgetImpl(ILayout panel) {
 		widgetTitle = new WidgetTitle(panel);
+		widgetTitle.foldable(false);
 	}
 
 	FormEntryLabel addFormEntryLabel(String name) {

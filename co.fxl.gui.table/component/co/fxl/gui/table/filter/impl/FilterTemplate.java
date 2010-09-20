@@ -19,7 +19,6 @@
 package co.fxl.gui.table.filter.impl;
 
 import co.fxl.gui.api.IGridPanel;
-import co.fxl.gui.api.IGridPanel.IGridCell;
 
 abstract class FilterTemplate<T> implements IFilterPart<T> {
 
@@ -43,8 +42,7 @@ abstract class FilterTemplate<T> implements IFilterPart<T> {
 	abstract IConstraint asConstraint();
 
 	static void addTitle(IGridPanel panel, String name, int filterIndex) {
-		IGridCell cell = panel.cell(0, filterIndex);
-		cell.align().end();
-		cell.label().text(name).font().color().gray();
+		panel.cell(0, filterIndex).align().end().label().text(name).font()
+				.color().gray();
 	}
 }

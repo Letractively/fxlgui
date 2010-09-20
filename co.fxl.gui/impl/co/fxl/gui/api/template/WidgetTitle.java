@@ -50,7 +50,7 @@ public class WidgetTitle implements IClickListener {
 	public WidgetTitle(ILayout layout) {
 		panel = layout.vertical();
 	}
-
+	
 	public WidgetTitle triangleIcons() {
 		openPNG = "open_folder.png";
 		closedPNG = "closed_folder.png";
