@@ -19,10 +19,17 @@
 package co.fxl.gui.swing;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JComponent;
@@ -172,6 +179,8 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 	private GridCell gridCell;
 	private GridBagLayout layout;
 	private Insets insets = new Insets(0, 0, 0, 0);
+	private boolean hasClickListener = false;
+	private List<IGridClickListener> gridClickListeners = new LinkedList<IGridClickListener>();
 
 	SwingGridPanel(SwingContainer<JPanel> container) {
 		super(container);
@@ -179,6 +188,34 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 		constraints.anchor = GridBagConstraints.LINE_START;
 		constraints.fill = GridBagConstraints.BOTH;
 		constraints.weightx = 1;
+		setupClickListener();
+	}
+
+	private void setupClickListener() {
+		if (hasClickListener)
+			return;
+		hasClickListener = true;
+		container.component.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		container.component.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				Point p = e.getPoint();
+				Component c = container.component.getComponentAt(p);
+				GridBagConstraints gbc = layout.getConstraints(c);
+				int column = gbc.gridx;
+				int row = gbc.gridy;
+				for (IGridClickListener cl : gridClickListeners) {
+					cl.onClick(column, row);
+				}
+			}
+		});
+	}
+
+	@Override
+	public IGridPanel addGridClickListener(IGridClickListener listener) {
+		setupClickListener();
+		gridClickListeners.add(listener);
+		return this;
 	}
 
 	@Override

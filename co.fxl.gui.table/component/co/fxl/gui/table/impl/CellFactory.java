@@ -51,25 +51,15 @@ abstract class CellFactory<R, T> {
 
 	void addSelectionListeners(final TableWidgetImpl table, final RowImpl row,
 			IClickable<?> c) {
-		final RowListener rowListener = table.rowListener;
-		if (c == null || rowListener == null)
-			return;
-		c.addClickListener(new IClickable.IClickListener() {
-			@Override
-			public void onClick() {
-				rowListener.notifyClick(row);
-			}
-		});
-		// if (rowListener instanceof MultiSelection) {
-		// c.addClickListener(new IClickable.IClickListener() {
-		// @Override
-		// public void onClick() {
-		// rowListener.notifyClick(row);
-		// rowListener.notifyAction(row);
-		// }
-		// }).ctrlPressed();
-		// rowListener.decorate(c);
-		// }
+//		final RowListener rowListener = table.rowListener;
+//		if (c == null || rowListener == null)
+//			return;
+//		c.addClickListener(new IClickable.IClickListener() {
+//			@Override
+//			public void onClick() {
+//				rowListener.notifyClick(row);
+//			}
+//		});
 	}
 
 	static Cell<?> createCellContent(TableWidgetImpl table, RowImpl row,

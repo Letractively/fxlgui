@@ -25,11 +25,14 @@ import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.HTMLTable.Cell;
 import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
 
 class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPanel {
@@ -43,7 +46,6 @@ class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPanel {
 			super((GWTPanel<?, IGridPanel>) GWTGridPanel.this);
 			this.column = column;
 			this.row = row;
-			// TODO valign().begin();
 		}
 
 		@Override
@@ -226,5 +228,19 @@ class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPanel {
 	@Override
 	public int rows() {
 		return cells.get(0).size();
+	}
+
+	@Override
+	public IGridPanel addGridClickListener(final IGridClickListener listener) {
+		final Grid grid = (Grid) container.widget;
+		grid.addStyleName("cursor-pointer");
+		grid.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				Cell cell = grid.getCellForEvent(event);
+				listener.onClick(cell.getCellIndex(), cell.getRowIndex());
+			}
+		});
+		return this;
 	}
 }
