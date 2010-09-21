@@ -20,7 +20,6 @@ package co.fxl.gui.table.impl;
 
 import java.util.Date;
 
-import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IFontElement;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -47,19 +46,6 @@ abstract class CellFactory<R, T> {
 
 	void font(IFontElement fontElement) {
 		fontElement.font().pixel(12);
-	}
-
-	void addSelectionListeners(final TableWidgetImpl table, final RowImpl row,
-			IClickable<?> c) {
-//		final RowListener rowListener = table.rowListener;
-//		if (c == null || rowListener == null)
-//			return;
-//		c.addClickListener(new IClickable.IClickListener() {
-//			@Override
-//			public void onClick() {
-//				rowListener.notifyClick(row);
-//			}
-//		});
 	}
 
 	static Cell<?> createCellContent(TableWidgetImpl table, RowImpl row,

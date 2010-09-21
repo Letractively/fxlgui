@@ -121,7 +121,7 @@ class LoginWidgetImpl implements ILoginWidget {
 
 	private void addLogin() {
 		IHorizontalPanel liPanel = loginPanel.add().panel().horizontal()
-				.spacing(6);
+				.spacing(4);
 		decorate(liPanel.add().label().text("ID"));
 		decorate(loginID = liPanel.add().textField().addCarriageReturnListener(
 				loginListener));
@@ -136,14 +136,13 @@ class LoginWidgetImpl implements ILoginWidget {
 	private void addLogout() {
 		ILabel label;
 		IHorizontalPanel loPanel = logoutPanel.add().panel().horizontal()
-				.spacing(6);
+				.spacing(4);
 		ILabel loggedInHead = loPanel.add().label().text("Logged in as");
 		decorate(loggedInHead).font().color().lightgray();
 		loggedInAs = loPanel.add().label();
 		decorate(loggedInAs).font().weight().bold().color().white();
 		label = loPanel.add().label().text("Logout").hyperlink()
 				.addClickListener(logoutListener).mouseLeft();
-		// label.font().color().mix().white().blue();
 		decorateHyperlink(label);
 	}
 
