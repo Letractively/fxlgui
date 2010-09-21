@@ -98,7 +98,7 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	ICheckBox addFormValueCheckBox() {
-		ICheckBox valuePanel = container().checkBox();
+		ICheckBox valuePanel = container().checkBox().height(30);
 		return valuePanel;
 	}
 
