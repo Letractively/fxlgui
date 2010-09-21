@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.swing;
 
-import java.awt.Dimension;
 import java.awt.Insets;
 
 import javax.swing.JButton;
@@ -50,6 +49,9 @@ import co.fxl.gui.api.WidgetProviderNotFoundException;
 @SuppressWarnings("unchecked")
 class SwingContainer<T extends JComponent> implements IContainer {
 
+	static final Insets INSETS = new Insets(4, 4, 4, 4);
+	static final int MIN_HEIGHT_TEXT_COMPONENT = 24;
+	static final int MIN_HEIGHT_TEXTAREA_COMPONENT = 100;
 	SwingPanel<?> parent;
 	T component;
 
@@ -118,56 +120,19 @@ class SwingContainer<T extends JComponent> implements IContainer {
 
 	@Override
 	public ITextArea textArea() {
-		setComponent((T) new JTextArea() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Insets getInsets() {
-				return new Insets(2, 2, 2, 2);
-			}
-		});
+		setComponent((T) new TextAreaComponent<T>());
 		return new SwingTextArea((SwingContainer<JTextArea>) this);
 	}
 
 	@Override
 	public ITextField textField() {
-		setComponent((T) new JTextField() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Dimension getPreferredSize() {
-				Dimension d = super.getPreferredSize();
-				if (d.height == 0)
-					d.height = 20;
-				return d;
-			}
-
-			@Override
-			public Insets getInsets() {
-				return new Insets(2, 2, 2, 2);
-			}
-		});
+		setComponent((T) new TextFieldComponent<T>());
 		return new SwingTextField((SwingContainer<JTextField>) this);
 	}
 
 	@Override
 	public IPasswordField passwordField() {
-		setComponent((T) new JPasswordField() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Dimension getPreferredSize() {
-				Dimension d = super.getPreferredSize();
-				if (d.height == 0)
-					d.height = 20;
-				return d;
-			}
-
-			@Override
-			public Insets getInsets() {
-				return new Insets(2, 2, 2, 2);
-			}
-		});
+		setComponent((T) new PasswordFieldComponent<T>());
 		return new SwingPasswordField((SwingContainer<JPasswordField>) this);
 	}
 

@@ -77,7 +77,10 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 		@Override
 		public IGridCell height(int height) {
-			throw new MethodNotImplementedException();
+			vlayout.height = height;
+			constraints.weighty = 0;
+			update();
+			return this;
 		}
 
 		@Override

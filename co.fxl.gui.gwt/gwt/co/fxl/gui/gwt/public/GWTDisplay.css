@@ -100,9 +100,9 @@ html {overflow-y: scroll; overflow: -moz-scrollbars-vertical; overflow-x: auto; 
 .cursor-crosshair { cursor: crosshair }
 .cursor-help { cursor: help }
 .cursor-move { cursor: move } 
-.gwt-TextBox { font-size: 13px; margin-bottom: 0px; margin-top: 0px; border-width: 1; }
-.gwt-PasswordTextBox { font-size: 13px; margin-bottom: 0px; margin-top: 0px; border-width: 1; }
-.gwt-Checkbox { font-size: 13px; margin-bottom: 0px; margin-top: 0px; border-width: 1; }
-.gwt-Combobox { font-size: 13px; margin-bottom: 0px; margin-top: 0px; border-width: 1; }
-.gwt-TextArea { font-size: 13px; margin-bottom: 0px; margin-top: 0px; border-width: 1; }
-.gwt-Label { font-size: 13px }
+.gwt-TextBox { font-size: 13px; margin: 0px 0px 0px 0px; border-width: 1; }
+.gwt-PasswordTextBox { font-size: 13px; margin: 0px 0px 0px 0px; border-width: 1; }
+.gwt-Checkbox { font-size: 13px; margin: 0px 0px 0px 0px; border-width: 1; }
+.gwt-Combobox { font-size: 13px; margin: 0px 0px 0px 0px; border-width: 1; }
+.gwt-TextArea { font-size: 13px; margin: 0px 0px 0px 0px; border-width: 1; }
+.gwt-Label { font-size: 13px; margin: 0px 0px 0px 0px; }

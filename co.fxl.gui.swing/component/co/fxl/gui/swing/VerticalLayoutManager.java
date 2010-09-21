@@ -38,6 +38,7 @@ class VerticalLayoutManager implements LayoutManager {
 	Insets insets = new Insets(0, 0, 0, 0);
 	boolean stretch = true;
 	int width = -1;
+	int height = -1;
 
 	VerticalLayoutManager() {
 	}
@@ -61,6 +62,8 @@ class VerticalLayoutManager implements LayoutManager {
 				}
 			}
 		}
+		if (height != -1)
+			dim.height = Math.max(height, dim.height);
 		dim.width += insets.left + insets.right;
 		dim.height += insets.top + insets.bottom;
 		return dim;
