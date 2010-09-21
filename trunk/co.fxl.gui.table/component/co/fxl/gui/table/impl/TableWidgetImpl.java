@@ -28,6 +28,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.IGridPanel.IGridClickListener;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.ISelection;
@@ -105,8 +106,15 @@ public class TableWidgetImpl implements ITableWidget<Object> {
 			column.visible();
 		}
 		init = true;
-		if (rowListener != null)
+		if (rowListener != null) {
 			rowListener.visible();
+			gridPanel.addGridClickListener(new IGridClickListener() {
+				@Override
+				public void onClick(int column, int row) {
+					rowListener.notifyClick(rows.get(row - 1));
+				}
+			});
+		}
 	}
 
 	@Override
