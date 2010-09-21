@@ -28,7 +28,6 @@ abstract class Cell<T> {
 
 	Cell(int row, IGridCell cell, T element) {
 		this.cell = cell;
-//		cell.color().white();
 		IBorder border = cell.border();
 		border.color().lightgray();
 		border.style().bottom();

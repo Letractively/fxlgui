@@ -29,6 +29,7 @@ class BooleanCellFactory extends CellFactory<ICheckBox, Boolean> {
 		ICheckBox checkBox = cell.checkBox();
 		checkBox.checked(value);
 		checkBox.editable(false);
+		font(checkBox);
 		return new CheckBoxCell(row.rowIndex, cell, checkBox);
 	}
 }
