@@ -28,7 +28,7 @@ abstract class FilterTemplate<T> implements IFilterPart<T> {
 
 	static final int WIDTH_SINGLE_CELL = 180;
 	static final int WIDTH_RANGE_CELL = 84;
-	static final int HEIGHT = 20;
+	static final int HEIGHT = 24;
 	int columnIndex;
 	String name;
 

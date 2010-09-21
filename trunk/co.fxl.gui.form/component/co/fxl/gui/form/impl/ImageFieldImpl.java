@@ -17,7 +17,7 @@ class ImageFieldImpl implements IImageField {
 		cell = formEntryLabel.cell;
 		label = formEntryLabel.formEntryLabel;
 		image = widget.addImage();
-		widget.addFillColumn();
+		widget.addFillColumn(); 
 	}
 
 	@Override

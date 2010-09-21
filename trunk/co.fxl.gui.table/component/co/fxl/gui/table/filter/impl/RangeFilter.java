@@ -43,7 +43,7 @@ abstract class RangeFilter<T> extends FilterTemplate<T> {
 	}
 
 	private ITextField addTextField(int column) {
-		return panel.add().textField().width(WIDTH_RANGE_CELL);
+		return panel.add().textField().size(WIDTH_RANGE_CELL, HEIGHT);
 	}
 
 	public boolean update() {

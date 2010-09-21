@@ -58,15 +58,17 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	FormEntryLabel addFormEntryLabel(String name) {
-		IGridCell cell = grid().cell(0, gridIndex).align().end();
+		IGridCell cell = grid().cell(0, gridIndex).align().end().valign()
+				.center().height(30);
 		ILabel formEntryLabel = cell.label();
 		formEntryLabel.text(name);
-		formEntryLabel.font().pixel(12).color().gray();
+		formEntryLabel.font();// .pixel(12).color().gray();
 		return new FormEntryLabel(cell, formEntryLabel);
 	}
 
 	private IContainer container() {
 		IGridCell cell = grid().cell(1, gridIndex);
+		cell.height(30);
 		gridIndex++;
 		return cell;
 	}
@@ -76,6 +78,7 @@ class FormWidgetImpl implements IFormWidget {
 
 	ITextField addFormValueTextField() {
 		ITextField valuePanel = container().textField();
+		valuePanel.height(28);
 		return valuePanel;
 	}
 
@@ -105,7 +108,7 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	IImage addImage() {
-		return container().panel().horizontal().add().image();
+		return container().panel().horizontal().height(30).add().image();
 	}
 
 	@Override

@@ -16,23 +16,27 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.form.impl;
+package co.fxl.gui.swing;
 
-import co.fxl.gui.api.IComboBox;
+import java.awt.Dimension;
+import java.awt.Insets;
 
-class FormComboBoxImpl extends FormFieldImpl<IComboBox> {
+import javax.swing.JPasswordField;
 
-	private IComboBox comboBox;
+final class PasswordFieldComponent<T> extends JPasswordField {
 
-	FormComboBoxImpl(FormWidgetImpl widget, String name) {
-		super(widget, name);
-		comboBox = widget.addFormValueComboBox();
-		comboBox.height(26);
-		widget.addFillColumn();
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	public Dimension getPreferredSize() {
+		Dimension d = super.getPreferredSize();
+		if (d.height == 0)
+			d.height = SwingContainer.MIN_HEIGHT_TEXT_COMPONENT;
+		return d;
 	}
 
 	@Override
-	public IComboBox valueElement() {
-		return comboBox;
+	public Insets getInsets() {
+		return SwingContainer.INSETS;
 	}
 }
