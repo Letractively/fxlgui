@@ -30,6 +30,7 @@ class ComparableCellFactory<T> extends CellFactory<ILabel, T> {
 		String string = toString(value);
 		label.text(string);
 		font(label);
+		label.autoWrap(true);
 		return newLabelCell(row.rowIndex, cell, label);
 	}
 
