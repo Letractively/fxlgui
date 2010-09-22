@@ -30,6 +30,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 
 import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.ICheckBox;
@@ -43,6 +44,7 @@ import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.IRadioButton;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
+import co.fxl.gui.api.IToggleButton;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
 
@@ -98,6 +100,12 @@ class SwingContainer<T extends JComponent> implements IContainer {
 	public ILabel label() {
 		setComponent((T) new JLabel());
 		return new SwingLabel((SwingContainer<JLabel>) this);
+	}
+
+	@Override
+	public IToggleButton toggleButton() {
+		setComponent((T) new JToggleButton());
+		return new SwingToggleButton((SwingContainer<JToggleButton>) this);
 	}
 
 	@Override

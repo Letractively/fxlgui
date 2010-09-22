@@ -40,6 +40,8 @@ public interface IContainer {
 
 	IRadioButton radioButton();
 
+	IToggleButton toggleButton();
+
 	IElement<?> element(IElement<?> element);
 
 	IElement<?> nativeElement(Object object);
