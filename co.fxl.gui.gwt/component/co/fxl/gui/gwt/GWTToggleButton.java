@@ -18,50 +18,43 @@
  */
 package co.fxl.gui.gwt;
 
-import co.fxl.gui.api.ICheckBox;
+import co.fxl.gui.api.IToggleButton;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.ToggleButton;
 
-class GWTCheckBox extends GWTElement<CheckBox, ICheckBox> implements ICheckBox {
+class GWTToggleButton extends GWTElement<ToggleButton, IToggleButton> implements
+		IToggleButton {
 
-	GWTCheckBox(GWTContainer<CheckBox> container) {
+	GWTToggleButton(GWTContainer<ToggleButton> container) {
 		super(container);
 		font(this);
-		container.widget.setValue(false);
-		container.widget.addStyleName("gwt-Checkbox");
+		container.widget.addStyleName("gwt-ToggleButton");
 	}
 
 	@Override
-	public ICheckBox addUpdateListener(final IUpdateListener<Boolean> listener) {
+	public IToggleButton addUpdateListener(
+			final IUpdateListener<Boolean> listener) {
 		container.widget.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				listener.onUpdate(checked());
+				listener.onUpdate(down());
 			}
 		});
 		return this;
 	}
 
 	@Override
-	public IColor color() {
-		GWTWidgetStyle style = new GWTWidgetStyle("background-color-",
-				container.widget);
-		return new GWTStyleColor(style);
-	}
-
-	@Override
-	public ICheckBox checked(boolean checked) {
-		container.widget.setValue(checked);
+	public IToggleButton down(boolean checked) {
+		container.widget.setDown(checked);
 		return this;
 	}
 
 	@Override
-	public ICheckBox editable(boolean editable) {
-		container.widget.setEnabled(editable);
-		return this;
+	public boolean down() {
+		return container.widget.isDown();
 	}
 
 	@Override
@@ -70,14 +63,9 @@ class GWTCheckBox extends GWTElement<CheckBox, ICheckBox> implements ICheckBox {
 	}
 
 	@Override
-	public ICheckBox text(String text) {
+	public IToggleButton text(String text) {
 		container.widget.setText(text);
 		return this;
-	}
-
-	@Override
-	public boolean checked() {
-		return container.widget.getValue();
 	}
 
 	@Override

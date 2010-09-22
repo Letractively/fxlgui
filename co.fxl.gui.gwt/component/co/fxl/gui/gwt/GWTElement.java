@@ -142,4 +142,10 @@ class GWTElement<T extends Widget, R> implements IElement<R> {
 	public boolean clickable() {
 		return registration != null;
 	}
+
+	@SuppressWarnings("unchecked")
+	public R tooltip(String text) {
+		container.widget.setTitle(text);
+		return (R) this;
+	}
 }

@@ -30,6 +30,7 @@ import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.IRadioButton;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
+import co.fxl.gui.api.IToggleButton;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
 
@@ -42,6 +43,7 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.ToggleButton;
 import com.google.gwt.user.client.ui.Widget;
 
 @SuppressWarnings("unchecked")
@@ -137,6 +139,13 @@ class GWTContainer<T extends Widget> implements IContainer {
 		setComponent((T) new PasswordTextBox());
 		return (IPasswordField) (element = new GWTPasswordField(
 				(GWTContainer<PasswordTextBox>) this));
+	}
+
+	@Override
+	public IToggleButton toggleButton() {
+		setComponent((T) new ToggleButton());
+		return (IToggleButton) (element = new GWTToggleButton(
+				(GWTContainer<ToggleButton>) this));
 	}
 
 	@Override
