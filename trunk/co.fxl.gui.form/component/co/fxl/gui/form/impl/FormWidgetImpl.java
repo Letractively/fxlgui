@@ -67,7 +67,7 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	private IContainer container() {
-		IGridCell cell = grid().cell(1, gridIndex);
+		IGridCell cell = grid().cell(1, gridIndex).valign().center();
 		cell.height(30);
 		gridIndex++;
 		return cell;
@@ -108,7 +108,7 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	IImage addImage() {
-		return container().panel().horizontal().height(30).add().image();
+		return container().panel().horizontal().add().image();
 	}
 
 	@Override
