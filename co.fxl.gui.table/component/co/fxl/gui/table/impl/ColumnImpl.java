@@ -57,7 +57,7 @@ public class ColumnImpl implements IColumn {
 
 	void visible() {
 		IGridPanel gridPanel = table.gridPanel;
-		headerButtonCell = gridPanel.cell(columnIndex, 0);
+		headerButtonCell = gridPanel.cell(columnIndex, 0).valign().center();
 		headerButton = headerButtonCell.label();
 		IBorder border = headerButtonCell.border();
 		border.width(2);
