@@ -29,8 +29,8 @@ public class ComboboxDemo extends DemoTemplate implements Decorator {
 	private IComboBox comboBox;
 
 	@Override
-	public void decorate(final IVerticalPanel panel) {
-		example = new ExampleComposite(panel);
+	public void decorate(ExampleDecorator decorator, final IVerticalPanel panel) {
+		example = new ExampleComposite(decorator, panel);
 		IContainer container = example.title("Combobox");
 		comboBox = container.comboBox();
 		comboBox.addText("First");

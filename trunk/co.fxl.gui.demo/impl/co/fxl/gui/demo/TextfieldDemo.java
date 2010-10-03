@@ -30,8 +30,8 @@ class TextfieldDemo extends DemoTemplate implements Decorator {
 	private ITextField textField;
 
 	@Override
-	public void decorate(final IVerticalPanel panel) {
-		example = new ExampleComposite(panel);
+	public void decorate(ExampleDecorator decorator, final IVerticalPanel panel) {
+		example = new ExampleComposite(decorator, panel);
 		IContainer container = example.title("Textfield");
 		textField = container.textField();
 		textField.text(TEXTFIELD_INIT).width(200).font().family().arial().weight().bold();

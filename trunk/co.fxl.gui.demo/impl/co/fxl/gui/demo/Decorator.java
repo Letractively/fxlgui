@@ -22,8 +22,7 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public interface Decorator {
 
-	void decorate(IVerticalPanel panel);
+	void decorate(ExampleDecorator decorator, IVerticalPanel panel);
 
 	void update(IVerticalPanel panel);
-
 }

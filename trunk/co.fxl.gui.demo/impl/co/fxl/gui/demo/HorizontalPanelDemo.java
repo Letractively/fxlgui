@@ -25,15 +25,14 @@ import co.fxl.gui.api.IVerticalPanel;
 class HorizontalPanelDemo extends DemoTemplate implements Decorator {
 
 	@Override
-	public void decorate(final IVerticalPanel vpanel) {
-		ExampleComposite example = new ExampleComposite(vpanel, true);
+	public void decorate(ExampleDecorator decorator, final IVerticalPanel vpanel) {
+		ExampleComposite example = new ExampleComposite(decorator, vpanel, true);
 		IContainer container = example.title("Horizontal Panel");
 		IHorizontalPanel panel = container.panel().horizontal();
 		panel.spacing(10).color().lightgray();
 		panel.add().label().text("Label");
 		panel.add().checkBox().text("Checkbox");
-		panel.add().comboBox().addText("Combobox 1")
-				.addText("Combobox 2");
+		panel.add().comboBox().addText("Combobox 1").addText("Combobox 2");
 		panel.add().radioButton().text("Radio Button");
 		StringBuffer b = new StringBuffer();
 		b.append("IHorizontalPanel horizontalPanel = panel.add().panel().horizontal();");

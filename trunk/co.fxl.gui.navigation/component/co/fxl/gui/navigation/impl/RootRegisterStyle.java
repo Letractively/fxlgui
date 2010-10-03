@@ -53,8 +53,8 @@ class RootRegisterStyle extends RegisterStyle {
 
 	@Override
 	public void onFront(ITitle title) {
-		title.border().width(2).color().white();
-		title.color().white();
+		title.border().width(2).color().rgb(245, 245, 245);
+		title.color().rgb(245, 245, 245);
 		title.font().color().black();
 	}
 }

@@ -24,8 +24,8 @@ import co.fxl.gui.api.IVerticalPanel;
 class VerticalPanelDemo extends DemoTemplate implements Decorator {
 
 	@Override
-	public void decorate(final IVerticalPanel vpanel) {
-		ExampleComposite example = new ExampleComposite(vpanel, true);
+	public void decorate(ExampleDecorator decorator, final IVerticalPanel vpanel) {
+		ExampleComposite example = new ExampleComposite(decorator, vpanel, true);
 		IContainer container = example.title("Vertical Panel");
 		IVerticalPanel panel = container.panel().vertical();
 		panel.spacing(10).color().lightgray();

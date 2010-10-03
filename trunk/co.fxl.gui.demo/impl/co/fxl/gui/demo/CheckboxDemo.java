@@ -30,8 +30,8 @@ class CheckboxDemo extends DemoTemplate implements Decorator {
 	private ICheckBox checkBox;
 
 	@Override
-	public void decorate(final IVerticalPanel panel) {
-		example = new ExampleComposite(panel);
+	public void decorate(ExampleDecorator decorator, final IVerticalPanel panel) {
+		example = new ExampleComposite(decorator, panel);
 		IContainer container = example.title("Checkbox");
 		checkBox = container.checkBox();
 		checkBox.text(TEXTFIELD_INIT);
