@@ -19,10 +19,12 @@
 package co.fxl.gui.demo;
 
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 
 class ExampleComposite {
 
@@ -31,23 +33,30 @@ class ExampleComposite {
 	private ILabel outputHeader;
 	private boolean isComposite;
 	private boolean active = false;
+	private IGridCell sidePanel;
+	private ExampleDecorator decorator;
 
-	ExampleComposite(IVerticalPanel parent) {
-		this(parent, false);
+	ExampleComposite(ExampleDecorator decorator, IVerticalPanel parent) {
+		this(decorator, parent, false);
 	}
 
-	ExampleComposite(IVerticalPanel parent, boolean isComposite) {
-		this(parent, isComposite, false);
+	ExampleComposite(ExampleDecorator decorator, IVerticalPanel parent,
+			boolean isComposite) {
+		this(decorator, parent, isComposite, false);
 	}
 
-	ExampleComposite(IVerticalPanel parent, boolean isComposite, boolean stretch) {
-		this(parent, isComposite, stretch, true);
+	ExampleComposite(ExampleDecorator decorator, IVerticalPanel parent,
+			boolean isComposite, boolean stretch) {
+		this(decorator, parent, isComposite, stretch, true);
 	}
 
-	ExampleComposite(IVerticalPanel parent, boolean isComposite,
-			boolean stretch, boolean showBorder) {
+	ExampleComposite(ExampleDecorator decorator, IVerticalPanel parent,
+			boolean isComposite, boolean stretch, boolean showBorder) {
+		this.decorator = decorator;
+		IGridPanel grid = parent.add().panel().grid();
 		parent.color().white();
-		panel = parent.add().panel().vertical().spacing(10);
+		panel = grid.cell(0, 0).panel().vertical().spacing(10);
+		sidePanel = grid.cell(1, 0);
 		if (showBorder) {
 			IBorder border = parent.border();
 			border.color().lightgray();
@@ -62,6 +71,9 @@ class ExampleComposite {
 				.pixel(14);
 		panel.add().label().text(
 				"The " + (isComposite ? "composite " : "") + "GUI element ");
+		if (decorator != null) {
+			decorator.decorate(sidePanel, name);
+		}
 		return panel.add();
 	}
 

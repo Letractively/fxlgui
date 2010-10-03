@@ -28,9 +28,9 @@ import co.fxl.gui.api.IClickable.IClickListener;
 public class CardPanelDemo extends DemoTemplate implements Decorator {
 
 	@Override
-	public void decorate(final IVerticalPanel vpanel) {
+	public void decorate(ExampleDecorator decorator, final IVerticalPanel vpanel) {
 		vpanel.stretch(true);
-		ExampleComposite example = new ExampleComposite(vpanel, true);
+		ExampleComposite example = new ExampleComposite(decorator, vpanel, true);
 		IContainer container = example.title("Card Panel");
 		IVerticalPanel verticalPanel = container.panel().vertical();
 		verticalPanel.stretch(true);

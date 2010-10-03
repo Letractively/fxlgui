@@ -29,12 +29,20 @@ import co.fxl.gui.table.impl.TableWidgetImplProvider;
 
 public class GUIDemo {
 
+	private ExampleDecorator decorator;
+
 	public GUIDemo() {
 	}
 
-	public GUIDemo(IDisplay display) {
+	public GUIDemo decorator(ExampleDecorator decorator) {
+		this.decorator = decorator;
+		return this;
+	}
+
+	public GUIDemo addHeaderAndContent(IDisplay display) {
 		addHeader(display);
 		addContent(display);
+		return this;
 	}
 
 	public IContainer addHeader(IDisplay display) {
@@ -65,7 +73,7 @@ public class GUIDemo {
 	}
 
 	private void addElements(IMenuWidget widget) {
-		MenuItem item = new MenuItem(widget, "Elements");
+		MenuItem item = new MenuItem(widget, decorator, "Elements");
 		item.nest("Label", new LabelDemo()).active();
 		item.nest("Button", new ButtonDemo());
 		item.nest("Checkbox", new CheckboxDemo());
@@ -78,7 +86,7 @@ public class GUIDemo {
 	}
 
 	private void addPanels(IMenuWidget widget) {
-		MenuItem item = new MenuItem(widget, "Panels");
+		MenuItem item = new MenuItem(widget, decorator, "Panels");
 		item.nest("Horizontal", new HorizontalPanelDemo()).active();
 		item.nest("Vertical", new VerticalPanelDemo());
 		item.nest("Grid", new GridPanelDemo());
@@ -88,6 +96,6 @@ public class GUIDemo {
 	}
 
 	private void addWidgets(IMenuWidget widget) {
-		new MenuItem(widget, "Widgets", new WidgetsDemo());
+		new MenuItem(widget, decorator, "Widgets", new WidgetsDemo());
 	}
 }

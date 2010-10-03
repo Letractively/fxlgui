@@ -24,13 +24,17 @@ import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
 
 class MenuItem {
 
+	private ExampleDecorator exampleDecorator;
 	private IMenuItem parent;
 
-	MenuItem(IMenuWidget widget, String title) {
+	MenuItem(IMenuWidget widget, ExampleDecorator decorator, String title) {
 		parent = widget.addNavigationItem().text(title);
+		this.exampleDecorator = decorator;
 	}
 
-	MenuItem(IMenuWidget widget, String title, final Decorator decorator) {
+	MenuItem(IMenuWidget widget, ExampleDecorator exampleDecorator,
+			String title, final Decorator decorator) {
+		this.exampleDecorator = exampleDecorator;
 		parent = widget.addNavigationItem().text(title);
 		apply(decorator, parent);
 	}
@@ -42,7 +46,7 @@ class MenuItem {
 	}
 
 	void apply(final Decorator decorator, final IMenuItem child) {
-		decorator.decorate(child.contentPanel());
+		decorator.decorate(exampleDecorator, child.contentPanel());
 		child.addListener(new INavigationListener() {
 			@Override
 			public void onActive(boolean active) {

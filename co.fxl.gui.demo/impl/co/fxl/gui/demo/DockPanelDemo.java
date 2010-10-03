@@ -26,8 +26,8 @@ import co.fxl.gui.api.IColored.IColor;
 class DockPanelDemo extends DemoTemplate implements Decorator {
 
 	@Override
-	public void decorate(final IVerticalPanel vpanel) {
-		ExampleComposite example = new ExampleComposite(vpanel, true, true);
+	public void decorate(ExampleDecorator decorator, final IVerticalPanel vpanel) {
+		ExampleComposite example = new ExampleComposite(decorator, vpanel, true, true);
 		IContainer container = example.title("Dock Panel");
 		IDockPanel panel = container.panel().dock();
 		panel(panel.top(), "Top").green();

@@ -24,8 +24,8 @@ import co.fxl.gui.api.IVerticalPanel;
 class LabelDemo extends DemoTemplate implements Decorator {
 
 	@Override
-	public void decorate(IVerticalPanel panel) {
-		ExampleComposite example = new ExampleComposite(panel);
+	public void decorate(ExampleDecorator decorator, IVerticalPanel panel) {
+		ExampleComposite example = new ExampleComposite(decorator, panel);
 		IContainer container = example.title("Label");
 		container.label().text("Label").font().family().arial().weight().bold()
 				.pixel(16).color().red();

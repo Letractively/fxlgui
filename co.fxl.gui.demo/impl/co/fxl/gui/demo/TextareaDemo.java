@@ -24,8 +24,8 @@ import co.fxl.gui.api.IVerticalPanel;
 class TextareaDemo extends DemoTemplate implements Decorator {
 
 	@Override
-	public void decorate(IVerticalPanel panel) {
-		ExampleComposite example = new ExampleComposite(panel);
+	public void decorate(ExampleDecorator decorator, IVerticalPanel panel) {
+		ExampleComposite example = new ExampleComposite(decorator, panel);
 		IContainer container = example.title("Textarea");
 		container.textArea().text("2-row\nTextArea").size(200, 200).border()
 				.width(2);

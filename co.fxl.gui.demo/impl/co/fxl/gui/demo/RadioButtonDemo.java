@@ -28,8 +28,8 @@ class RadioButtonDemo extends DemoTemplate implements Decorator {
 	private ExampleComposite example;
 
 	@Override
-	public void decorate(final IVerticalPanel vpanel) {
-		example = new ExampleComposite(vpanel);
+	public void decorate(ExampleDecorator decorator, final IVerticalPanel vpanel) {
+		example = new ExampleComposite(decorator, vpanel);
 		IContainer container = example.title("Radiobutton");
 		IVerticalPanel verticalPanel = container.panel().vertical();
 		IRadioButton button1 = verticalPanel.add().radioButton().text(

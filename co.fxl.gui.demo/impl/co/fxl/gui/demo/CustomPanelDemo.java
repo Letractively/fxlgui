@@ -19,22 +19,23 @@
 package co.fxl.gui.demo;
 
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.IBordered.IBorder;
 
 class CustomPanelDemo extends DemoTemplate implements Decorator {
 
 	@Override
-	public void decorate(IVerticalPanel parent) {
+	public void decorate(ExampleDecorator decorator, IVerticalPanel parent) {
 		parent.color().white();
+		IBorder border = parent.border();
+		border.color().lightgray();
+		border.style().top();
 		IVerticalPanel panel = parent.add().panel().vertical().spacing(10);
 		panel.stretch(false);
 		panel.add().label().text("Custom/Extension Panels").font().weight()
 				.bold().pixel(14);
 		panel.add().label().text("To use custom panels, we can use the method");
-		panel.add().label()
-				.text("IPanel<?> ILayout.plugIn(Class<?> layoutType);").font()
+		panel.add().label().text("IPanel<?> ILayout.plugIn(Class<?> layoutType);").font()
 				.family().courier();
-		panel.add()
-				.label()
-				.text("If available, the employed GUI API implementation returns an instance of the input panel type.");
+		panel.add().label().text("If available, the employed GUI API implementation returns an instance of the input panel type.");
 	}
 }

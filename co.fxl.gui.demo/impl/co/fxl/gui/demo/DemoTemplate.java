@@ -23,7 +23,7 @@ import co.fxl.gui.api.IVerticalPanel;
 class DemoTemplate implements Decorator {
 
 	@Override
-	public void decorate(IVerticalPanel panel) {
+	public void decorate(ExampleDecorator decorator, IVerticalPanel panel) {
 	}
 
 	@Override

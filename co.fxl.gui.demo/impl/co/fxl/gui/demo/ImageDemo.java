@@ -28,8 +28,8 @@ class ImageDemo extends DemoTemplate implements Decorator {
 	private ExampleComposite example;
 
 	@Override
-	public void decorate(final IVerticalPanel panel) {
-		example = new ExampleComposite(panel);
+	public void decorate(ExampleDecorator decorator, final IVerticalPanel panel) {
+		example = new ExampleComposite(decorator, panel);
 		IContainer container = example.title("Image");
 		IImage button = container.image();
 		button.resource("monalisa.jpg");
