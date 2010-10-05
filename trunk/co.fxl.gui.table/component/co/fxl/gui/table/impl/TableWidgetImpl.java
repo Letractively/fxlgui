@@ -111,7 +111,8 @@ public class TableWidgetImpl implements ITableWidget<Object> {
 			gridPanel.addGridClickListener(new IGridClickListener() {
 				@Override
 				public void onClick(int column, int row) {
-					rowListener.notifyClick(rows.get(row - 1));
+					if (row > 0)
+						rowListener.notifyClick(rows.get(row - 1));
 				}
 			});
 		}
