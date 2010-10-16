@@ -1,0 +1,4 @@
+<module>
+	<inherits name='co.fxl.gui.table.masterdetail.api.IMasterDetailTableWidget' />
+	<source path='' />
+</module>
