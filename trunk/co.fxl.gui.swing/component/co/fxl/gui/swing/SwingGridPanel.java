@@ -38,6 +38,7 @@ import javax.swing.JPanel;
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IClickable.IKey;
 
 class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
@@ -215,10 +216,36 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 	}
 
 	@Override
-	public IGridPanel addGridClickListener(IGridClickListener listener) {
+	public IKey<IGridPanel> addGridClickListener(IGridClickListener listener) {
 		setupClickListener();
 		gridClickListeners.add(listener);
-		return this;
+		return new IKey<IGridPanel>() {
+
+			@Override
+			public IGridPanel altPressed() {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public IGridPanel ctrlPressed() {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public IGridPanel mouseLeft() {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public IGridPanel mouseRight() {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public IGridPanel shiftPressed() {
+				throw new MethodNotImplementedException();
+			}
+		};
 	}
 
 	@Override
