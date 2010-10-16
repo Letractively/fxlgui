@@ -24,6 +24,7 @@ import java.util.Map;
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IClickable.IKey;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -231,7 +232,8 @@ class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPanel {
 	}
 
 	@Override
-	public IGridPanel addGridClickListener(final IGridClickListener listener) {
+	public IKey<IGridPanel> addGridClickListener(
+			final IGridClickListener listener) {
 		final Grid grid = (Grid) container.widget;
 		grid.addStyleName("cursor-pointer");
 		grid.addClickHandler(new ClickHandler() {
@@ -241,6 +243,32 @@ class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPanel {
 				listener.onClick(cell.getCellIndex(), cell.getRowIndex());
 			}
 		});
-		return this;
+		return new IKey<IGridPanel>() {
+
+			@Override
+			public IGridPanel altPressed() {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public IGridPanel ctrlPressed() {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public IGridPanel mouseLeft() {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public IGridPanel mouseRight() {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public IGridPanel shiftPressed() {
+				throw new MethodNotImplementedException();
+			}
+		};
 	}
 }
