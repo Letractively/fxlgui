@@ -1,6 +1,4 @@
 /**
- * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
- *  
  * This file is part of FXL GUI API.
  *  
  * FXL GUI API is free software: you can redistribute it and/or modify
@@ -15,27 +13,26 @@
  *  
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.table.filter.api;
+package co.fxl.gui.table.masterdetail.impl;
 
-import java.util.Date;
+import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IWidgetProvider;
+import co.fxl.gui.table.masterdetail.api.IMasterDetailTableWidget;
 
-public interface IConstraints {
+@SuppressWarnings("unchecked")
+public class MasterDetailTableWidgetImplProvider implements
+		IWidgetProvider<IMasterDetailTableWidget> {
 
-	public interface IRange<T> {
-
-		T lowerBound();
-
-		T upperBound();
+	@Override
+	public IMasterDetailTableWidget createWidget(ILayout layout) {
+		return new MasterDetailTableWidgetImpl(layout);
 	}
 
-	int size();
-	
-	boolean isConstrained(String column);
-
-	IRange<Integer> intRange(String column);
-
-	IRange<Date> dateRange(String column);
-
-	String stringValue(String column);
+	@Override
+	public Class<IMasterDetailTableWidget> widgetType() {
+		return IMasterDetailTableWidget.class;
+	}
 }
