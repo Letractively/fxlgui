@@ -1,0 +1,7 @@
+<module>
+	<inherits name='co.fxl.gui.api.IDisplay' />
+	<inherits name='co.fxl.gui.navigation.group.api.INavigationWidget' />
+	<inherits name='co.fxl.gui.register.impl.RegisterWidgetImpl' />
+	<source path='' />
+</module>
+ 
