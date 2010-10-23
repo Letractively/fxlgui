@@ -25,7 +25,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.IRow;
-import co.fxl.gui.table.filter.api.ILazyTableWidget.IFilterListener;
+import co.fxl.gui.table.filter.api.IFilterTableWidget.IFilterListener;
 
 public interface ITableView<T> {
 

@@ -29,17 +29,16 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.template.SplitLayout;
+import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.IRow;
 import co.fxl.gui.table.api.ISelection.IMultiSelection;
 import co.fxl.gui.table.api.ISelection.IMultiSelection.IChangeListener;
 import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
-import co.fxl.gui.table.filter.api.IConstraints;
 import co.fxl.gui.table.filter.api.IFilterTableWidget;
-import co.fxl.gui.table.filter.api.ILazyTableWidget;
-import co.fxl.gui.table.filter.api.IFilterTableWidget.IFilter;
-import co.fxl.gui.table.filter.api.ILazyTableWidget.IFilterListener;
-import co.fxl.gui.table.filter.api.ILazyTableWidget.IRowModel;
+import co.fxl.gui.table.filter.api.IFilterTableWidget.IFilterListener;
+import co.fxl.gui.table.filter.api.IFilterTableWidget.IRowModel;
+import co.fxl.gui.table.filter.api.IFilterTableWidget.ITableFilter;
 import co.fxl.gui.table.masterdetail.api.ITableView;
 
 class TableViewImpl implements ITableView<Object>, IFilterListener<Object> {
@@ -78,7 +77,7 @@ class TableViewImpl implements ITableView<Object>, IFilterListener<Object> {
 	private static boolean CRUD_ALLOWED = false;
 	private MasterDetailTableWidgetImpl widget;
 	private IFilterTableWidget<Object> table;
-	private IFilter filter;
+	private ITableFilter filter;
 	private NavigationGadget navigationView;
 	private List<ILabel> labels = new LinkedList<ILabel>();
 	@SuppressWarnings("unused")
@@ -87,7 +86,7 @@ class TableViewImpl implements ITableView<Object>, IFilterListener<Object> {
 	private IClickable<?> deleteButton;
 	private IClickable<?> refreshButton;
 	private IFilterListener<Object> filterListener;
-	private IConstraints constraints;
+	private IFilterConstraints constraints;
 	private SplitLayout splitLayout;
 	private List<Object> selection = new LinkedList<Object>();
 	private String constrainedOn;
@@ -120,9 +119,9 @@ class TableViewImpl implements ITableView<Object>, IFilterListener<Object> {
 			return;
 		show();
 		if (constrainedOn == null) {
-			table = (ILazyTableWidget<Object>) splitLayout.mainPanel.add()
-					.widget(ILazyTableWidget.class);
-			((ILazyTableWidget<Object>) table).addFilterListener(this);
+			table = (IFilterTableWidget<Object>) splitLayout.mainPanel.add()
+					.widget(IFilterTableWidget.class);
+			((IFilterTableWidget<Object>) table).addFilterListener(this);
 		} else {
 			table = (IFilterTableWidget<Object>) splitLayout.mainPanel.add()
 					.widget(IFilterTableWidget.class);
@@ -138,7 +137,7 @@ class TableViewImpl implements ITableView<Object>, IFilterListener<Object> {
 		filterListener.onRefresh(rows, constraints);
 	}
 
-	private IFilter filter() {
+	private ITableFilter filter() {
 		if (filter == null) {
 			ILayout filterPanel = splitLayout.sidePanel.add().panel();
 			filter = table.filterPanel(filterPanel);
@@ -241,7 +240,7 @@ class TableViewImpl implements ITableView<Object>, IFilterListener<Object> {
 	}
 
 	@Override
-	public void onRefresh(IRowModel<Object> rows, IConstraints constraints) {
+	public void onRefresh(IRowModel<Object> rows, IFilterConstraints constraints) {
 		this.constraints = constraints;
 		if (filterListener != null)
 			filterListener.onRefresh(rows, constraints);
@@ -268,7 +267,7 @@ class TableViewImpl implements ITableView<Object>, IFilterListener<Object> {
 				public void onClick() {
 					if (holdRefreshClick)
 						return;
-					IRowModel<Object> rows = ((ILazyTableWidget<Object>) table)
+					IRowModel<Object> rows = ((IFilterTableWidget<Object>) table)
 							.resetRowModel();
 					fillRowModel(new RowModel(rows));
 				}
