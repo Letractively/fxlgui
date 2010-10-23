@@ -19,8 +19,10 @@
 package co.fxl.gui.table.impl;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IGridPanel;
@@ -82,6 +84,7 @@ public class TableWidgetImpl implements ITableWidget<Object> {
 	};
 	protected boolean init = false;
 	private boolean addedSpace = false;
+	Map<Object, RowImpl> object2row = new HashMap<Object, RowImpl>();
 
 	protected TableWidgetImpl(ILayout layout) {
 		widgetTitle = new WidgetTitle(layout);

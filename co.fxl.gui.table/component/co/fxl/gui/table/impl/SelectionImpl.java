@@ -213,4 +213,12 @@ class SelectionImpl implements ISelection<Object> {
 		selection.add(identifier);
 		widget.rowListener.update();
 	}
+
+	@Override
+	public ISelection<Object> add(Object object) {
+		RowImpl rowImpl = widget.object2row.get(object);
+		if (rowImpl != null)
+			widget.rowListener.notifyClick(rowImpl);
+		return this;
+	}
 }

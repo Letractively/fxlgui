@@ -98,6 +98,7 @@ public class RowImpl implements IRow<Object> {
 	@Override
 	public IRow<Object> identifier(Object identifier) {
 		content.identifier = identifier;
+		table.object2row.put(identifier, this);
 		return this;
 	}
 

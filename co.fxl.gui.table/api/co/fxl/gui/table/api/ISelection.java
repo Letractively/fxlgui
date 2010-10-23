@@ -48,4 +48,6 @@ public interface ISelection<T> {
 	ISingleSelection<T> single();
 
 	List<T> result();
+
+	ISelection<T> add(T object);
 }

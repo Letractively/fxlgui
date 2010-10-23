@@ -33,6 +33,8 @@ public interface IFilterTableWidget<T> extends ITableWidget<T> {
 		ITableFilter filterable(IColumn column, Class<?> contentType,
 				Object... values);
 
+		ITableFilter constraints(IFilterConstraints constraints);
+
 		ITableFilter apply();
 	}
 
