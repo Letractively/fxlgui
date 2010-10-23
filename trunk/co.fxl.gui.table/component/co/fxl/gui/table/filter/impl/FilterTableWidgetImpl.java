@@ -73,4 +73,7 @@ class FilterTableWidgetImpl extends TableWidgetImpl implements
 	protected RowImpl newRowImpl(TableWidgetImpl tableWidgetImpl, int i) {
 		return new FilterRowImpl(tableWidgetImpl, i);
 	}
+
+	void initFilter() {
+	}
 }

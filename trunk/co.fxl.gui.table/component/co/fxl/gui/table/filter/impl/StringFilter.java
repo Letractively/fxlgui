@@ -21,6 +21,7 @@ package co.fxl.gui.table.filter.impl;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.table.filter.impl.IConstraint.IStringPrefixConstraint;
 
 class StringFilter extends FilterTemplate<String> {
@@ -43,8 +44,8 @@ class StringFilter extends FilterTemplate<String> {
 
 	StringFilter(int columnIndex, IGridPanel panel, String name, int filterIndex) {
 		super(columnIndex, panel, name, filterIndex);
-		this.textField = panel.cell(1, filterIndex).textField().size(WIDTH_SINGLE_CELL,
-				HEIGHT);
+		this.textField = panel.cell(1, filterIndex).textField().size(
+				WIDTH_SINGLE_CELL, HEIGHT);
 	}
 
 	@Override
@@ -81,5 +82,10 @@ class StringFilter extends FilterTemplate<String> {
 	public IConstraint asConstraint() {
 		update();
 		return new StringPrefixConstraint();
+	}
+
+	@Override
+	public void validate(Validation validation) {
+		validation.linkInput(textField);
 	}
 }

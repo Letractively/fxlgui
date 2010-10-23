@@ -64,6 +64,12 @@ class LazyTableWidgetImpl extends FilterTableWidgetImpl implements
 
 		@Override
 		public void onSuccess() {
+			if (!reset) {
+				reset();
+				init();
+				if (rowListener != null)
+					rowListener.update();
+			}
 			mainPanel.visible(true);
 			filter.holdFilterClicks = false;
 		}
@@ -114,16 +120,20 @@ class LazyTableWidgetImpl extends FilterTableWidgetImpl implements
 	public LazyTableWidgetImpl visible(boolean visible) {
 		super.visible(visible);
 		initFilter();
+		if (rows.isEmpty())
+			filter.apply();
 		removeFilters();
 		return this;
 	}
 
-	private void initFilter() {
+	@Override
+	void initFilter() {
 		if (setUpFilter)
 			return;
 		sizeFilter = (ComboBoxIntegerFilter) filter.addFilter(Integer.class,
 				"Size", -1, Arrays
 						.asList(new Object[] { 20, 50, 100, 500, 1000 }));
+		sizeFilter.validate(filter.validation);
 		setUpFilter = true;
 	}
 

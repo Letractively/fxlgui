@@ -18,45 +18,28 @@
  */
 package co.fxl.gui.table.masterdetail.impl;
 
-import co.fxl.gui.api.IHorizontalPanel;
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.template.WidgetTitle;
+import co.fxl.gui.api.template.ViewWidget;
 
-class ViewGadget implements IClickListener {
+class ViewGadget extends ViewWidget implements IClickListener {
 
-	private WidgetTitle widgetTitle;
-	private IVerticalPanel panel;
 	private MasterDetailTableWidgetImpl widget;
 
 	ViewGadget(MasterDetailTableWidgetImpl widget, ILayout layout) {
+		super(layout, "Views");
 		this.widget = widget;
-		widgetTitle = new WidgetTitle(layout);
-		widgetTitle.addTitle("Views");
-		panel = widgetTitle.content().panel().vertical().spacing(2);
 	}
 
 	void addView(final DetailViewImpl view, boolean active) {
-		IHorizontalPanel panel = this.panel.add().panel().horizontal().add()
-				.panel().horizontal().spacing(2);
-		if (active)
-			panel.addSpace(4);
-		ILabel textLabel = panel.add().label().text(view.name);
-		textLabel.font().pixel(13);
-		if (active) {
-			panel.color().red();
-			textLabel.font().weight().bold().color().white();
-			panel.addSpace(4);
-		} else
-			textLabel.hyperlink().addClickListener(new IClickListener() {
+		IClickListener clickListener = new IClickListener() {
 
-				@Override
-				public void onClick() {
-					view.show();
-				}
-			});
+			@Override
+			public void onClick() {
+				view.show();
+			}
+		};
+		addView(view.name, clickListener, active);
 	}
 
 	@Override

@@ -88,7 +88,7 @@ public class TableWidgetImpl implements ITableWidget<Object> {
 		widgetTitle.foldable(false);
 	}
 
-	private void init() {
+	public void init() {
 		if (init)
 			return;
 		if (mainPanel == null) {

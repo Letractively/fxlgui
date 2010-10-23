@@ -21,8 +21,9 @@ package co.fxl.gui.table.filter.impl;
 import java.util.Date;
 
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.template.SimpleDateFormat;
+import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.table.filter.impl.IConstraint.IDateRangeConstraint;
-import co.fxl.gui.table.impl.SimpleDateFormat;
 
 class DateFilter extends RangeFilter<Date> {
 
@@ -90,5 +91,11 @@ class DateFilter extends RangeFilter<Date> {
 	public IConstraint asConstraint() {
 		update();
 		return new DateRangeConstraint();
+	}
+
+	@Override
+	public void validate(Validation validation) {
+		validation.validateDate(lowerBoundTextField);
+		validation.validateDate(upperBoundTextField);
 	}
 }

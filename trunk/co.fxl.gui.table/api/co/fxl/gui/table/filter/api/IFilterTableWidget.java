@@ -25,10 +25,12 @@ import co.fxl.gui.table.api.ITableWidget;
 public interface IFilterTableWidget<T> extends ITableWidget<T> {
 	
 	public interface IFilter {
-
+		
 		IFilter filterable(IColumn column, Object... values);
 
 		IFilter filterable(IColumn column, Class<?> contentType, Object... values);
+		
+		IFilter apply();
 	}
 
 	IFilter filterPanel(ILayout layout);

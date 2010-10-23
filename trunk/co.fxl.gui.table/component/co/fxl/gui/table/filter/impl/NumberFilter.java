@@ -19,6 +19,7 @@
 package co.fxl.gui.table.filter.impl;
 
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.table.filter.impl.IConstraint.IDoubleRangeConstraint;
 
 class NumberFilter extends RangeFilter<Number> {
@@ -96,5 +97,11 @@ class NumberFilter extends RangeFilter<Number> {
 	public IConstraint asConstraint() {
 		update();
 		return new DoubleRangeFilter();
+	}
+
+	@Override
+	public void validate(Validation validation) {
+		validation.linkInput(lowerBoundTextField);
+		validation.linkInput(upperBoundTextField);
 	}
 }
