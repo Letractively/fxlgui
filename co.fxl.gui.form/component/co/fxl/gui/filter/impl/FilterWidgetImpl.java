@@ -30,6 +30,7 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.api.template.WidgetTitle;
+import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
 
 class FilterWidgetImpl implements IFilterWidget {
@@ -73,6 +74,7 @@ class FilterWidgetImpl implements IFilterWidget {
 	private List<FilterImpl> filterList = new LinkedList<FilterImpl>();
 	private ComboBoxIntegerFilter sizeFilter;
 	private boolean addSizeFilter = false;
+	private IFilterConstraints constraints;
 
 	FilterWidgetImpl(ILayout panel) {
 		WidgetTitle title = new WidgetTitle(panel);
@@ -149,6 +151,12 @@ class FilterWidgetImpl implements IFilterWidget {
 	}
 
 	@Override
+	public IFilterWidget constraints(IFilterConstraints constraints) {
+		this.constraints = constraints;
+		return this;
+	}
+
+	@Override
 	public IFilterWidget visible(boolean visible) {
 		for (FilterImpl filter : filterList) {
 			List<Object> list = new LinkedList<Object>(Arrays
@@ -161,6 +169,16 @@ class FilterWidgetImpl implements IFilterWidget {
 			sizeFilter = (ComboBoxIntegerFilter) addFilter(Integer.class,
 					"Size", DEFAULT_SIZES);
 			sizeFilter.validate(validation);
+		}
+		if (constraints != null) {
+			for (FilterPart<?> f : filters) {
+				FilterTemplate<?> ft = (FilterTemplate<?>) f;
+				if (constraints.isConstrained(ft.name)) {
+					ft.fromConstraint(constraints);
+				}
+			}
+			if (constraints.size() != Integer.MAX_VALUE)
+				sizeFilter.set(constraints.size());
 		}
 		return this;
 	}

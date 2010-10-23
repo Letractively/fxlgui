@@ -38,4 +38,6 @@ public interface IFilterConstraints {
 	IRange<Date> dateRange(String column);
 
 	String stringValue(String column);
+
+	Class<?> typeOf(String column);
 }

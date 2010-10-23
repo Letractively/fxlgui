@@ -22,7 +22,7 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.form.api.IFormWidget;
 
-public class FormWidgetProviderImpl implements IWidgetProvider<IFormWidget> {
+public class FormWidgetImplProvider implements IWidgetProvider<IFormWidget> {
 
 	@Override
 	public IFormWidget createWidget(ILayout panel) {

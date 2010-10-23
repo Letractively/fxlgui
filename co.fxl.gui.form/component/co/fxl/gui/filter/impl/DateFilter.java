@@ -23,6 +23,7 @@ import java.util.Date;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.template.SimpleDateFormat;
 import co.fxl.gui.api.template.Validation;
+import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.impl.Constraint.IDateRangeConstraint;
 
 class DateFilter extends RangeFilter<Date> {
@@ -97,5 +98,10 @@ class DateFilter extends RangeFilter<Date> {
 	public void validate(Validation validation) {
 		validation.validateDate(lowerBoundTextField);
 		validation.validateDate(upperBoundTextField);
+	}
+
+	@Override
+	void fromConstraint(IFilterConstraints constraints) {
+		throw new MethodNotImplementedException();
 	}
 }
