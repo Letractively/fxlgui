@@ -38,7 +38,7 @@ class TableFilterImpl implements ITableFilter, IFilterListener {
 	IFilterWidget filterWidget;
 
 	TableFilterImpl(FilterTableWidgetImpl widget, ILayout layout) {
-		this.widget=widget;
+		this.widget = widget;
 		filterWidget = (IFilterWidget) layout.vertical().add().widget(
 				IFilterWidget.class);
 		filterWidget.addSizeFilter();
@@ -78,5 +78,11 @@ class TableFilterImpl implements ITableFilter, IFilterListener {
 	@Override
 	public void onApply(IFilterConstraints constraints) {
 		widget.filter(constraints);
+	}
+
+	@Override
+	public ITableFilter constraints(IFilterConstraints constraints) {
+		filterWidget.constraints(constraints);
+		return this;
 	}
 }
