@@ -25,6 +25,7 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.ISplitPanel;
 import co.fxl.gui.api.IVerticalPanel;
 
 class GWTLayout implements ILayout {
@@ -63,6 +64,16 @@ class GWTLayout implements ILayout {
 	@Override
 	public ICardPanel card() {
 		return (ICardPanel) (panel.element = new GWTCardPanel(panel));
+	}
+
+	@Override
+	public ISplitPanel horizontalSplit() {
+		return (ISplitPanel) (panel.element = new GWTHorizontalSplitPanel(panel));
+	}
+
+	@Override
+	public ISplitPanel verticalSplit() {
+		throw new MethodNotImplementedException();
 	}
 
 	@Override
