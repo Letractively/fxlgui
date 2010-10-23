@@ -112,6 +112,8 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 					@Override
 					public void onClick() {
 						last.tree.delete();
+						last = null;
+						selection = null;
 						root(root);
 					}
 				});
