@@ -205,6 +205,8 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 			public void mouseReleased(MouseEvent e) {
 				Point p = e.getPoint();
 				Component c = container.component.getComponentAt(p);
+				if (c == null)
+					return;
 				GridBagConstraints gbc = layout.getConstraints(c);
 				int column = gbc.gridx;
 				int row = gbc.gridy;
