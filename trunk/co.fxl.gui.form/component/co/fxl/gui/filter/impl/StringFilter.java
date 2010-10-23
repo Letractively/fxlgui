@@ -22,6 +22,7 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.template.Validation;
+import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.impl.Constraint.IStringPrefixConstraint;
 
 class StringFilter extends FilterTemplate<String> {
@@ -87,5 +88,11 @@ class StringFilter extends FilterTemplate<String> {
 	@Override
 	public void validate(Validation validation) {
 		validation.linkInput(textField);
+	}
+
+	@Override
+	void fromConstraint(IFilterConstraints constraints) {
+		String prefix = constraints.stringValue(name);
+		textField.text(prefix);
 	}
 }

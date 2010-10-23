@@ -24,6 +24,7 @@ import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.template.Validation;
+import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.impl.Constraint.IStringPrefixConstraint;
 
 class ComboBoxStringFilter extends FilterTemplate<String> {
@@ -99,5 +100,11 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 	@Override
 	public void validate(Validation validation) {
 		validation.linkInput(comboBox);
+	}
+
+	@Override
+	void fromConstraint(IFilterConstraints constraints) {
+		String prefix = constraints.stringValue(name);
+		comboBox.text(prefix);
 	}
 }

@@ -67,4 +67,13 @@ class FilterConstraintsImpl implements IFilterConstraints {
 			constraints.put(n.column(), n);
 		}
 	}
+
+	@Override
+	public Class<?> typeOf(String column) {
+		INamedConstraint constraint = constraints.get(column);
+		if (constraint instanceof IStringPrefixConstraint) {
+			return String.class;
+		} else
+			throw new MethodNotImplementedException();
+	}
 }

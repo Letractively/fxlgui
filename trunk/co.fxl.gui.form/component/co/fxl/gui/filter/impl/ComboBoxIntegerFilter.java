@@ -24,6 +24,7 @@ import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.template.Validation;
+import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.impl.Constraint.ISizeConstraint;
 
 class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
@@ -98,5 +99,14 @@ class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
 	@Override
 	public void validate(Validation validation) {
 		validation.linkInput(comboBox, defaultValue.toString());
+	}
+
+	void set(int size) {
+		comboBox.text(String.valueOf(size));
+	}
+
+	@Override
+	void fromConstraint(IFilterConstraints constraints) {
+		throw new MethodNotImplementedException();
 	}
 }

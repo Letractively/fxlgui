@@ -43,4 +43,6 @@ public interface IFilterWidget {
 	IFilterWidget apply();
 
 	IFilterWidget visible(boolean visible);
+
+	IFilterWidget constraints(IFilterConstraints constraints);
 }

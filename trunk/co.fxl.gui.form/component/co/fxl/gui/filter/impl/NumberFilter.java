@@ -20,6 +20,7 @@ package co.fxl.gui.filter.impl;
 
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.template.Validation;
+import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.impl.Constraint.IDoubleRangeConstraint;
 
 class NumberFilter extends RangeFilter<Number> {
@@ -102,5 +103,10 @@ class NumberFilter extends RangeFilter<Number> {
 	public void validate(Validation validation) {
 		validation.linkInput(lowerBoundTextField);
 		validation.linkInput(upperBoundTextField);
+	}
+
+	@Override
+	void fromConstraint(IFilterConstraints constraints) {
+		throw new MethodNotImplementedException();
 	}
 }
