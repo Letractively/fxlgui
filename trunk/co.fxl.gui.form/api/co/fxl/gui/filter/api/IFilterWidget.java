@@ -38,5 +38,9 @@ public interface IFilterWidget {
 
 	IFilterWidget addFilterListener(IFilterListener listener);
 
+	IFilterWidget holdFilterClicks(boolean holdFilterClicks);
+
+	IFilterWidget apply();
+
 	IFilterWidget visible(boolean visible);
 }

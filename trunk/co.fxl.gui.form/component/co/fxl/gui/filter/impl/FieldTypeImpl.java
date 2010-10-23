@@ -23,13 +23,14 @@ import java.util.Date;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.filter.api.IFieldType;
 
-class TypeImpl implements IFieldType {
+public class FieldTypeImpl implements IFieldType {
 
-	Class<?> type = String.class;
-	boolean isLong = false;
-	Object[] values = new Object[0];
+	public Class<?> type = String.class;
+	public boolean isLong = false;
+	public Object[] values = new Object[0];
 
-	private IFieldType type(Class<?> clazz) {
+	@Override
+	public IFieldType type(Class<?> clazz) {
 		this.type = clazz;
 		return this;
 	}

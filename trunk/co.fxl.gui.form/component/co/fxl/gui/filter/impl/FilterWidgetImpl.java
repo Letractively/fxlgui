@@ -88,7 +88,7 @@ class FilterWidgetImpl implements IFilterWidget {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void notifyListeners() {
+	void notifyListeners() {
 		List<FilterTemplate<Object>> activeFilters = new LinkedList<FilterTemplate<Object>>();
 		for (FilterPart<?> filter : filters) {
 			boolean active = filter.update();
@@ -168,6 +168,18 @@ class FilterWidgetImpl implements IFilterWidget {
 	@Override
 	public IFilterWidget addSizeFilter() {
 		addSizeFilter = true;
+		return this;
+	}
+
+	@Override
+	public IFilterWidget holdFilterClicks(boolean hold) {
+		holdFilterClicks = hold;
+		return this;
+	}
+
+	@Override
+	public IFilterWidget apply() {
+		notifyListeners();
 		return this;
 	}
 }
