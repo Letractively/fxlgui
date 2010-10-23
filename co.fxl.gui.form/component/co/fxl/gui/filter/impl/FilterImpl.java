@@ -21,9 +21,9 @@ package co.fxl.gui.filter.impl;
 import co.fxl.gui.filter.api.IFieldType;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 
-public class FilterImpl implements IFilter {
+class FilterImpl implements IFilter {
 
-	TypeImpl type = new TypeImpl();
+	FieldTypeImpl type = new FieldTypeImpl();
 	String name;
 
 	@Override
