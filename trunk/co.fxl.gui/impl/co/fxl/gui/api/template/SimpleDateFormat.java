@@ -16,25 +16,33 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.api;
+package co.fxl.gui.api.template;
 
-public interface ILayout {
+import java.util.Date;
 
-	IHorizontalPanel horizontal();
+public class SimpleDateFormat {
 
-	IVerticalPanel vertical();
+	@SuppressWarnings("deprecation")
+	public Date parse(String string) {
+		if (string == null || string.equals(""))
+			return null;
+		String[] s = string.split("\\.");
+		return new Date(Integer.valueOf(s[2]), Integer.valueOf(s[1]), Integer
+				.valueOf(s[0]));
+	}
 
-	IGridPanel grid();
+	@SuppressWarnings("deprecation")
+	public String format(Date date) {
+		if (date == null)
+			return "";
+		return l(date.getDate(), 2) + "." + l(date.getMonth(), 2) + "."
+				+ l(date.getYear(), 4);
+	}
 
-	IDockPanel dock();
-
-	ICardPanel card();
-
-	ISplitPanel horizontalSplit();
-
-	ISplitPanel verticalSplit();
-
-	IAbsolutePanel absolute();
-
-	IPanel<?> plugIn(Class<?> layoutType);
+	private String l(int date, int i) {
+		String s = String.valueOf(date);
+		while (s.length() < i)
+			s = "0" + s;
+		return s;
+	}
 }

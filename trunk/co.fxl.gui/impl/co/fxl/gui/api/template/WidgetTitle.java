@@ -34,7 +34,7 @@ public class WidgetTitle implements IClickListener {
 
 	private String openPNG = "minus.png";
 	private String closedPNG = "plus.png";
-	private IVerticalPanel panel;
+	public IVerticalPanel panel;
 	private IHorizontalPanel titlePanel;
 	private IHorizontalPanel commandPanel;
 	private boolean hasCommands = false;
@@ -44,13 +44,13 @@ public class WidgetTitle implements IClickListener {
 	private boolean open = true;
 	private IImage image;
 	private boolean foldable = true;
-	private ILabel headerLabel;
+	public ILabel headerLabel;
 	private List<ILabel> labels = new LinkedList<ILabel>();
 
 	public WidgetTitle(ILayout layout) {
 		panel = layout.vertical();
 	}
-	
+
 	public WidgetTitle triangleIcons() {
 		openPNG = "open_folder.png";
 		closedPNG = "closed_folder.png";
