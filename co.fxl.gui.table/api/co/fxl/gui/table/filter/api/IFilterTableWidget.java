@@ -19,21 +19,42 @@
 package co.fxl.gui.table.filter.api;
 
 import co.fxl.gui.api.ILayout;
+import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.table.api.IColumn;
+import co.fxl.gui.table.api.IRow;
 import co.fxl.gui.table.api.ITableWidget;
 
 public interface IFilterTableWidget<T> extends ITableWidget<T> {
-	
-	public interface IFilter {
-		
-		IFilter filterable(IColumn column, Object... values);
 
-		IFilter filterable(IColumn column, Class<?> contentType, Object... values);
-		
-		IFilter apply();
+	public interface ITableFilter {
+
+		ITableFilter filterable(IColumn column, Object... values);
+
+		ITableFilter filterable(IColumn column, Class<?> contentType,
+				Object... values);
+
+		ITableFilter apply();
 	}
 
-	IFilter filterPanel(ILayout layout);
+	public interface IRowModel<T> {
 
-	IFilter filter();
+		IFilterTableWidget<T> notifyServerCall();
+
+		IRow<T> addRow();
+
+		void onSuccess();
+
+		void onFail();
+	}
+
+	public interface IFilterListener<T> {
+
+		void onRefresh(IRowModel<T> rows, IFilterConstraints constraints);
+	}
+
+	ITableFilter filterPanel(ILayout layout);
+
+	IRowModel<T> resetRowModel();
+
+	IFilterTableWidget<T> addFilterListener(IFilterListener<T> listener);
 }

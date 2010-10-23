@@ -18,62 +18,105 @@
  */
 package co.fxl.gui.table.filter.impl;
 
-import java.util.List;
-
 import co.fxl.gui.api.ILayout;
+import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.table.api.IRow;
 import co.fxl.gui.table.filter.api.IFilterTableWidget;
-import co.fxl.gui.table.impl.RowImpl;
 import co.fxl.gui.table.impl.TableWidgetImpl;
 
 class FilterTableWidgetImpl extends TableWidgetImpl implements
 		IFilterTableWidget<Object> {
 
-	FilterImpl filter;
+	class RowModel implements IRowModel<Object> {
+
+		private boolean reset = false;
+
+		private void reset() {
+			mainPanel.visible(false);
+			if (rowListener != null)
+				rowListener.clear();
+			init = false;
+			selectionPanel = null;
+			rows.clear();
+			reset = true;
+		}
+
+		RowModel() {
+			notifyServerCall();
+		}
+
+		@Override
+		public IFilterTableWidget<Object> notifyServerCall() {
+			filter.holdFilterClicks(true);
+			return FilterTableWidgetImpl.this;
+		}
+
+		@Override
+		public IRow<Object> addRow() {
+			if (!reset) {
+				reset();
+			}
+			return FilterTableWidgetImpl.this.addRow();
+		}
+
+		@Override
+		public void onSuccess() {
+			if (!reset) {
+				reset();
+				init();
+				if (rowListener != null)
+					rowListener.update();
+			}
+			mainPanel.visible(true);
+			filter.holdFilterClicks(false);
+		}
+
+		@Override
+		public void onFail() {
+			throw new MethodNotImplementedException();
+		}
+	}
+
+	TableFilterImpl filter;
+	IFilterListener<Object> filterListener;
 
 	FilterTableWidgetImpl(ILayout layout) {
 		super(layout);
 	}
 
-	void filter(List<FilterTemplate<Object>> activeFilters) {
-		for (RowImpl row : rows) {
-			((FilterRowImpl) row).filter(activeFilters);
-		}
-		updateRowPresentation();
-	}
-
-	void removeFilters() {
-		for (RowImpl row : rows) {
-			row.content.visible = true;
-			row.update();
-		}
-	}
-
 	@Override
-	public IFilter filterPanel(ILayout layout) {
+	public ITableFilter filterPanel(ILayout layout) {
 		if (filter == null) {
-			filter = new FilterImpl(this, layout);
+			filter = new TableFilterImpl(this, layout);
 		}
 		return filter;
 	}
 
 	@Override
-	public IFilter filter() {
-		if (filter == null) {
-			throw new MethodNotImplementedException("filter not set");
-		}
-		return filter;
+	public IFilterTableWidget<Object> addFilterListener(
+			IFilterListener<Object> listener) {
+		this.filterListener = listener;
+		return this;
+	}
+
+	void filter(IFilterConstraints constraints) {
+		if (filterListener != null) {
+			filterListener.onRefresh(resetRowModel(), constraints);
+		} else
+			throw new MethodNotImplementedException();
 	}
 
 	@Override
 	public FilterTableWidgetImpl visible(boolean visible) {
-		return (FilterTableWidgetImpl) super.visible(visible);
+		super.visible(visible);
+		filter.filterWidget.visible(visible);
+		if (rows.isEmpty())
+			filter.apply();
+		return this;
 	}
 
 	@Override
-	protected RowImpl newRowImpl(TableWidgetImpl tableWidgetImpl, int i) {
-		return new FilterRowImpl(tableWidgetImpl, i);
-	}
-
-	void initFilter() {
+	public IRowModel<Object> resetRowModel() {
+		return new RowModel();
 	}
 }
