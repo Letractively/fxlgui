@@ -25,8 +25,8 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 abstract class RangeFilter<T> extends FilterTemplate<T> {
 
-	private ITextField lowerBoundTextField;
-	private ITextField upperBoundTextField;
+	ITextField lowerBoundTextField;
+	ITextField upperBoundTextField;
 	String lowerBoundText = "";
 	String upperBoundText = "";
 	private IHorizontalPanel panel;

@@ -23,6 +23,7 @@ import java.util.List;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.table.filter.impl.IConstraint.IStringPrefixConstraint;
 
 class ComboBoxStringFilter extends FilterTemplate<String> {
@@ -92,5 +93,10 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 	public IConstraint asConstraint() {
 		update();
 		return new StringConstraint();
+	}
+
+	@Override
+	public void validate(Validation validation) {
+		validation.linkInput(comboBox);
 	}
 }

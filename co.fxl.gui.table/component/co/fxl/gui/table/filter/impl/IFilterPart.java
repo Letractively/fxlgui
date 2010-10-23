@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.table.filter.impl;
 
+import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.table.filter.impl.FilterTemplate.FilterListener;
 
 interface IFilterPart<T> {
@@ -29,4 +30,6 @@ interface IFilterPart<T> {
 	void clear();
 
 	void addUpdateListener(FilterListener l);
+
+	void validate(Validation validation);
 }

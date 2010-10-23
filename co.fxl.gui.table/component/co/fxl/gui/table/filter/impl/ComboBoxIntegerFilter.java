@@ -23,6 +23,7 @@ import java.util.List;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.table.filter.impl.IConstraint.ISizeConstraint;
 
 class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
@@ -43,7 +44,8 @@ class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
 			List<Object> values, int filterIndex) {
 		super(columnIndex, panel, name, filterIndex);
 		this.defaultValue = (Integer) values.get(0);
-		comboBox = panel.cell(1, filterIndex).comboBox().size(WIDTH_SINGLE_CELL, HEIGHT);
+		comboBox = panel.cell(1, filterIndex).comboBox().size(
+				WIDTH_SINGLE_CELL, HEIGHT);
 		for (Object object : values) {
 			comboBox.addText(string(object));
 		}
@@ -91,5 +93,10 @@ class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
 	public IConstraint asConstraint() {
 		update();
 		return new SizeConstraint();
+	}
+
+	@Override
+	public void validate(Validation validation) {
+		validation.linkInput(comboBox, defaultValue.toString());
 	}
 }

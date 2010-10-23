@@ -28,10 +28,10 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.filter.api.IFilterTableWidget.IFilter;
-import co.fxl.gui.table.filter.impl.FilterTemplate.FilterListener;
 import co.fxl.gui.table.impl.ColumnImpl;
 
 class FilterImpl implements IFilter {
@@ -67,6 +67,7 @@ class FilterImpl implements IFilter {
 				clear.clickable(true);
 				widget.filter(activeFilters);
 			}
+			return;
 		}
 	}
 
@@ -77,18 +78,27 @@ class FilterImpl implements IFilter {
 	private FilterTableWidgetImpl widget;
 	private IGridPanel grid;
 	boolean holdFilterClicks = false;
+	Validation validation = new Validation();
 
 	FilterImpl(FilterTableWidgetImpl widget, ILayout panel) {
 		this.widget = widget;
 		WidgetTitle title = new WidgetTitle(panel);
 		title.addTitle("Filter");
 		apply = title.addHyperlink("Apply");
+		validation.linkClickable(apply);
 		clear = title.addHyperlink("Clear");
 		apply.addClickListener(new ApplyClickListener());
 		apply.clickable(false);
 		clear.addClickListener(new ClearClickListener());
 		clear.clickable(false);
 		this.grid = title.content().panel().grid().indent(3);
+	}
+
+	@Override
+	public IFilter apply() {
+		List<FilterTemplate<Object>> activeFilters = new LinkedList<FilterTemplate<Object>>();
+		widget.filter(activeFilters);
+		return this;
 	}
 
 	@Override
@@ -135,18 +145,19 @@ class FilterImpl implements IFilter {
 		else
 			throw new MethodNotImplementedException(contentType.getName());
 		activeFlags.add(false);
-		final int filterIndex = filters.size();
-		filter.addUpdateListener(new FilterListener() {
-
-			@Override
-			public void onActive(boolean isActive) {
-				activeFlags.set(filterIndex, isActive);
-				boolean overallActive = false;
-				for (boolean flag : activeFlags)
-					overallActive |= flag;
-				apply.clickable(overallActive);
-			}
-		});
+		// final int filterIndex = filters.size();
+		// filter.addUpdateListener(new FilterListener() {
+		//
+		// @Override
+		// public void onActive(boolean isActive) {
+		// activeFlags.set(filterIndex, isActive);
+		// boolean overallActive = false;
+		// for (boolean flag : activeFlags)
+		// overallActive |= flag;
+		// apply.clickable(overallActive);
+		// }
+		// });
+		filter.validate(validation);
 		filters.add(filter);
 		return filter;
 	}

@@ -16,33 +16,23 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.table.impl;
+package co.fxl.gui.table.filter.impl;
 
-import java.util.Date;
+import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IWidgetProvider;
+import co.fxl.gui.table.filter.api.ILazyTableWidget;
 
-public class SimpleDateFormat {
+@SuppressWarnings("unchecked")
+public class LazyTableWidgetImplProvider implements
+		IWidgetProvider<ILazyTableWidget> {
 
-	@SuppressWarnings("deprecation")
-	public Date parse(String string) {
-		if (string == null || string.equals(""))
-			return null;
-		String[] s = string.split("\\.");
-		return new Date(Integer.valueOf(s[2]), Integer.valueOf(s[1]), Integer
-				.valueOf(s[0]));
+	@Override
+	public Class<ILazyTableWidget> widgetType() {
+		return ILazyTableWidget.class;
 	}
 
-	@SuppressWarnings("deprecation")
-	public String format(Date date) {
-		if (date == null)
-			return "";
-		return l(date.getDate(), 2) + "." + l(date.getMonth(), 2) + "."
-				+ l(date.getYear(), 4);
-	}
-
-	private String l(int date, int i) {
-		String s = String.valueOf(date);
-		while (s.length() < i)
-			s = "0" + s;
-		return s;
+	@Override
+	public ILazyTableWidget createWidget(ILayout panel) {
+		return new LazyTableWidgetImpl(panel);
 	}
 }
