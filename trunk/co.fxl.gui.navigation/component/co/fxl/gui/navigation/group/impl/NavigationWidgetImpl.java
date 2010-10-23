@@ -64,7 +64,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 
 	void active(NavigationItemImpl item) {
 		if (active != null) {
-			active.showInactive();
+			active.showLabelAsInactive();
 		}
 		active = item;
 	}

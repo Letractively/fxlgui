@@ -57,7 +57,7 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 			button.font().pixel(14).weight().bold();
 			buttonPanel.addSpace(3);
 			button.addClickListener(this);
-			showInactive();
+			showLabelAsInactive();
 		}
 	}
 
@@ -68,7 +68,7 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 		return this;
 	}
 
-	void showInactive() {
+	void showLabelAsInactive() {
 		if (buttonPanel == null)
 			return;
 		applyColor(buttonPanel.color(), widget.colorInactive);
@@ -96,7 +96,7 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 
 	@Override
 	public INavigationItem active() {
-		showActive();
+		showLabelAsActive();
 		if (pages.isEmpty()) {
 			IVerticalPanel panel = addExtraPanel();
 			if (decorator != null) {
@@ -108,7 +108,7 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 		return this;
 	}
 
-	private void showActive() {
+	private void showLabelAsActive() {
 		widget.active(this);
 		if (buttonPanel == null)
 			return;
