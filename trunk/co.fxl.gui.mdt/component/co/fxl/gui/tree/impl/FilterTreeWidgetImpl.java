@@ -25,15 +25,18 @@ import co.fxl.gui.mdt.api.IFilterList;
 import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.IFilterTreeWidget;
 import co.fxl.gui.tree.api.ITree;
+import co.fxl.gui.tree.impl.TreeWidgetImpl.RefreshListener;
 
 class FilterTreeWidgetImpl extends TreeWidgetImpl implements
-		IFilterTreeWidget<Object>, IFilterListener {
+		IFilterTreeWidget<Object>, IFilterListener, RefreshListener {
 
 	ISource<Object> source;
 	private FilterListImpl filterList;
+	private IFilterConstraints constraints;
 
 	FilterTreeWidgetImpl(ILayout layout) {
 		super(layout);
+		addRefreshListener(this);
 	}
 
 	@Override
@@ -55,6 +58,12 @@ class FilterTreeWidgetImpl extends TreeWidgetImpl implements
 
 	@Override
 	public void onApply(IFilterConstraints constraints) {
+		this.constraints = constraints;
+		onRefresh();
+	}
+
+	@Override
+	public void onRefresh() {
 		source.query(constraints, new ICallback<ITree<Object>>() {
 
 			@Override
