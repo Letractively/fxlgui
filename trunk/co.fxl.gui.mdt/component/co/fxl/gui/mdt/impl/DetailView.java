@@ -25,6 +25,7 @@ import co.fxl.gui.filter.api.IFieldType;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.mdt.api.IFilterList;
+import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.IFilterTreeWidget;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.IFilterTreeWidget.ISource;
@@ -116,8 +117,9 @@ class DetailView implements ISource<Object> {
 	}
 
 	@Override
-	public ITree<Object> query(IFilterConstraints constraints) {
+	public void query(IFilterConstraints constraints,
+			final ICallback<ITree<Object>> callback) {
 		widget.constraints = constraints;
-		return widget.source.queryTree(constraints);
+		widget.source.queryTree(constraints, callback);
 	}
 }

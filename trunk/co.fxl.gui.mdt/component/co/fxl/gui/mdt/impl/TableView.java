@@ -35,6 +35,7 @@ import co.fxl.gui.table.filter.api.IFilterTableWidget;
 import co.fxl.gui.table.filter.api.IFilterTableWidget.IFilterListener;
 import co.fxl.gui.table.filter.api.IFilterTableWidget.IRowModel;
 import co.fxl.gui.table.filter.api.IFilterTableWidget.ITableFilter;
+import co.fxl.gui.tree.api.ICallback;
 
 class TableView implements IFilterListener<Object>, IChangeListener<Object> {
 
@@ -117,19 +118,31 @@ class TableView implements IFilterListener<Object>, IChangeListener<Object> {
 	}
 
 	@Override
-	public void onRefresh(IRowModel<Object> rows, IFilterConstraints constraints) {
+	public void onRefresh(final IRowModel<Object> rows,
+			IFilterConstraints constraints) {
 		widget.constraints = constraints;
-		queryList = widget.source.queryList(constraints);
-		List<Object> list = queryList.jdkList();
-		for (Object entity : list) {
-			IRow<Object> row = rows.addRow();
-			row.identifier(entity);
-			for (IAdapter<Object, Object> adapter : adapters) {
-				Object value = adapter.valueOf(entity);
-				row.add((Comparable<?>) value);
+		widget.source.queryList(constraints, new ICallback<IList<Object>>() {
+
+			@Override
+			public void onFail(Throwable throwable) {
+				rows.onFail();
+				throw new MethodNotImplementedException();
 			}
-		}
-		rows.onSuccess();
+
+			@Override
+			public void onSuccess(IList<Object> queryList) {
+				List<Object> list = queryList.jdkList();
+				for (Object entity : list) {
+					IRow<Object> row = rows.addRow();
+					row.identifier(entity);
+					for (IAdapter<Object, Object> adapter : adapters) {
+						Object value = adapter.valueOf(entity);
+						row.add((Comparable<?>) value);
+					}
+				}
+				rows.onSuccess();
+			}
+		});
 	}
 
 	@Override

@@ -22,6 +22,7 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.mdt.api.IFilterList;
+import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.IFilterTreeWidget;
 import co.fxl.gui.tree.api.ITree;
 
@@ -54,7 +55,17 @@ class FilterTreeWidgetImpl extends TreeWidgetImpl implements
 
 	@Override
 	public void onApply(IFilterConstraints constraints) {
-		ITree<Object> tree = source.query(constraints);
-		root(tree);
+		source.query(constraints, new ICallback<ITree<Object>>() {
+
+			@Override
+			public void onFail(Throwable throwable) {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public void onSuccess(ITree<Object> tree) {
+				root(tree);
+			}
+		});
 	}
 }

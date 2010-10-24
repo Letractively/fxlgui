@@ -24,6 +24,7 @@ import java.util.List;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.mdt.api.IList;
 import co.fxl.gui.mdt.api.IMasterDetailTableWidget.IContent;
+import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.ITree;
 
 class TestContent implements IContent<String> {
@@ -197,8 +198,9 @@ class TestContent implements IContent<String> {
 	}
 
 	@Override
-	public IList<String> queryList(final IFilterConstraints constraints) {
-		return new IList<String>() {
+	public void queryList(final IFilterConstraints constraints,
+			ICallback<IList<String>> callback) {
+		callback.onSuccess(new IList<String>() {
 
 			@Override
 			public IList<String> delete(String entity) {
@@ -238,13 +240,25 @@ class TestContent implements IContent<String> {
 				}
 				return result;
 			}
-		};
+		});
 	}
 
 	@Override
-	public ITree<String> queryTree(IFilterConstraints constraints) {
-		List<String> list = queryList(constraints).jdkList();
-		return new Root(list);
+	public void queryTree(IFilterConstraints constraints,
+			final ICallback<ITree<String>> callback) {
+		queryList(constraints, new ICallback<IList<String>>() {
+
+			@Override
+			public void onFail(Throwable throwable) {
+				callback.onFail(throwable);
+			}
+
+			@Override
+			public void onSuccess(IList<String> result) {
+				List<String> list = result.jdkList();
+				callback.onSuccess(new Root(list));
+			}
+		});
 	}
 
 	private String getString(int k) {

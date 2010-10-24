@@ -18,20 +18,9 @@
  */
 package co.fxl.gui.tree.api;
 
-import co.fxl.gui.api.ILayout;
-import co.fxl.gui.filter.api.IFilterConstraints;
-import co.fxl.gui.mdt.api.IFilterList;
+public interface ICallback<R> {
 
-public interface IFilterTreeWidget<T> extends ITreeWidget<T> {
+	void onSuccess(R result);
 
-	public interface ISource<T> {
-
-		void query(IFilterConstraints constraints, ICallback<ITree<T>> callback);
-	}
-
-	IFilterList<T> filterList(ILayout layout);
-
-	IFilterTreeWidget<T> source(ISource<T> source);
-
-	IFilterTreeWidget<T> visible(boolean visible);
+	void onFail(Throwable throwable);
 }
