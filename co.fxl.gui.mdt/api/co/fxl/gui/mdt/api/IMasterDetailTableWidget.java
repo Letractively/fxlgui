@@ -19,15 +19,18 @@
 package co.fxl.gui.mdt.api;
 
 import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.ITree;
 
 public interface IMasterDetailTableWidget<T> {
 
 	public interface IContent<T> {
 
-		ITree<T> queryTree(IFilterConstraints constraints);
+		void queryTree(IFilterConstraints constraints,
+				ICallback<ITree<T>> callback);
 
-		IList<T> queryList(IFilterConstraints constraints);
+		void queryList(IFilterConstraints constraints,
+				ICallback<IList<T>> callback);
 	}
 
 	IMasterDetailTableWidget<T> title(String title);
