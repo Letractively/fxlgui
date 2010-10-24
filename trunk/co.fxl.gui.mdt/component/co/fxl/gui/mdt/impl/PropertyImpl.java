@@ -63,4 +63,9 @@ class PropertyImpl implements IProperty<Object, Object> {
 		this.sortable = sortable;
 		return this;
 	}
+
+	@Override
+	public IProperty<Object, Object> required() {
+		throw new MethodNotImplementedException();
+	}
 }
