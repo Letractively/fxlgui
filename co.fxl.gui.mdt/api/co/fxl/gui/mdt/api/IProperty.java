@@ -30,6 +30,8 @@ public interface IProperty<T, S> {
 	IFieldType type();
 
 	IProperty<T, S> adapter(IAdapter<T, S> adapter);
+	
+	IProperty<T, S> required();
 
 	IProperty<T, S> inTable(boolean inTable);
 
