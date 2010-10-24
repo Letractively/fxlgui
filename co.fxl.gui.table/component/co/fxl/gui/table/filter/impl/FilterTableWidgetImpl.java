@@ -109,7 +109,8 @@ class FilterTableWidgetImpl extends TableWidgetImpl implements
 	@Override
 	public FilterTableWidgetImpl visible(boolean visible) {
 		super.visible(visible);
-		filter.filterWidget.visible(visible);
+		if (filter != null)
+			filter.filterWidget.visible(visible);
 		if (rows.isEmpty())
 			filter.apply();
 		return this;

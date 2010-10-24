@@ -131,6 +131,7 @@ class TableView implements IFilterListener<Object>, IChangeListener<Object> {
 
 			@Override
 			public void onSuccess(IList<Object> queryList) {
+				TableView.this.queryList = queryList;
 				List<Object> list = queryList.jdkList();
 				for (Object entity : list) {
 					IRow<Object> row = rows.addRow();

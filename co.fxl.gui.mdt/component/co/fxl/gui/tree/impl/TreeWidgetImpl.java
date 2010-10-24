@@ -25,6 +25,7 @@ import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -36,6 +37,11 @@ import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 
 class TreeWidgetImpl implements ITreeWidget<Object> {
+
+	interface RefreshListener {
+
+		void onRefresh();
+	}
 
 	private class DetailView {
 
@@ -96,6 +102,7 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 	private boolean expand = false;
 	private Object selection;
 	Map<Object, Node> object2node = new HashMap<Object, Node>();
+	private ILabel refresh;
 
 	TreeWidgetImpl(ILayout layout) {
 		widgetTitle = new WidgetTitle(layout);
@@ -115,13 +122,6 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 						last = null;
 						selection = null;
 						root(root);
-					}
-				});
-		widgetTitle.addHyperlink("Refresh").addClickListener(
-				new IClickListener() {
-					@Override
-					public void onClick() {
-						throw new MethodNotImplementedException();
 					}
 				});
 	}
@@ -225,5 +225,21 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 	@Override
 	public Object selection() {
 		return last.tree.object();
+	}
+
+	TreeWidgetImpl addRefreshListener(final RefreshListener listener) {
+		refresh().addClickListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				listener.onRefresh();
+			}
+		});
+		return this;
+	}
+
+	private ILabel refresh() {
+		if (refresh == null)
+			refresh = widgetTitle.addHyperlink("Refresh");
+		return refresh;
 	}
 }
