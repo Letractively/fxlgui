@@ -30,6 +30,7 @@ class PropertyImpl implements IProperty<Object, Object> {
 	boolean displayInDetailView = true;
 	FieldTypeImpl type = new FieldTypeImpl();
 	boolean sortable = false;
+	boolean required;
 
 	PropertyImpl(String name) {
 		this.name = name;
@@ -66,6 +67,7 @@ class PropertyImpl implements IProperty<Object, Object> {
 
 	@Override
 	public IProperty<Object, Object> required() {
-		throw new MethodNotImplementedException();
+		required = true;
+		return this;
 	}
 }
