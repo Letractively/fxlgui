@@ -67,7 +67,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	@Override
 	public IPropertyGroup<Object> defaultPropertyGroup() {
 		isDefaultPropertyGroup = true;
-		return addPropertyGroup(null);
+		return addPropertyGroup("Details");
 	}
 
 	@Override

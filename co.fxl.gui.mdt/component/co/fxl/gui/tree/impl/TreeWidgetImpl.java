@@ -171,8 +171,8 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 		IGridPanel grid = panel().add().panel().grid().spacing(4);
 		panel = grid.cell(0, 0).width(300).panel().vertical();
 		detailPanel = grid.cell(1, 0).panel().vertical().spacing(10);
-		detailPanel.color().rgb(240, 255, 240);
-		detailPanel.border().color().gray();
+		detailPanel.color().rgb(250, 250, 250);
+		detailPanel.border().style().dotted();
 	}
 
 	@Override

@@ -60,7 +60,7 @@ class Node implements IClickListener {
 			image.addClickListener(this);
 			content.addSpace(4);
 		} else {
-			content.addSpace((depth - 1) * INDENT);
+			content.addSpace(depth * INDENT);
 			image = content.add().image().resource(LEAF);
 			image.addClickListener(showClickListener);
 			content.addSpace(4);

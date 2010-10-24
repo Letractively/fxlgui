@@ -25,6 +25,7 @@ public interface IFilterList<T> {
 
 	IFilter addFilter();
 
+	// TODO @IProperty
 	IFilterList<T> addPropertyFilter(IProperty<T, ?> property);
 
 	IFilterList<T> constraints(IFilterConstraints constraints);
