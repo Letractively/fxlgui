@@ -121,7 +121,7 @@ class RegisterImpl implements IRegister, IClickListener {
 		if (visible) {
 			buttonLabel.font().pixel(14).weight().bold().color().black();
 		} else {
-			buttonLabel.font().pixel(12).weight().plain().color().blue();
+			buttonLabel.font().pixel(14).weight().bold().color().blue();
 		}
 		buttonLabel.font().underline(!visible);
 	}

@@ -19,6 +19,7 @@
 package co.fxl.gui.mdt.impl;
 
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.filter.api.IFieldType;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -68,8 +69,8 @@ class DetailView implements ISource<Object> {
 	}
 
 	private void addDetailViews() {
-		if (widget.isDefaultPropertyGroup) {
-			tree.setDetailView(new IDecorator<Object>() {
+		for (final PropertyGroupImpl group : widget.propertyGroups) {
+			tree.addDetailView(group.name, new IDecorator<Object>() {
 
 				@Override
 				public void clear(IVerticalPanel panel) {
@@ -79,30 +80,31 @@ class DetailView implements ISource<Object> {
 				@Override
 				public void decorate(IVerticalPanel panel, final Object node) {
 					panel.clear();
+					IBorder border = panel.border();
+					border.color().gray();
+					border.style().top();
 					IFormWidget form = (IFormWidget) panel.add().widget(
 							IFormWidget.class);
-					for (PropertyGroupImpl group : widget.propertyGroups) {
-						for (PropertyImpl property : group.properties) {
-							if (property.displayInDetailView) {
-								if (property.type.type.equals(String.class)) {
-									if (property.type.isLong) {
-										form
-												.addTextArea(property.name)
-												.valueElement()
-												.text(
-														String
-																.valueOf(property.adapter
-																		.valueOf(node)));
+					for (PropertyImpl property : group.properties) {
+						if (property.displayInDetailView) {
+							if (property.type.type.equals(String.class)) {
+								if (property.type.isLong) {
+									form
+											.addTextArea(property.name)
+											.valueElement()
+											.text(
+													String
+															.valueOf(property.adapter
+																	.valueOf(node)));
 
-									} else {
-										form
-												.addTextField(property.name)
-												.valueElement()
-												.text(
-														String
-																.valueOf(property.adapter
-																		.valueOf(node)));
-									}
+								} else {
+									form
+											.addTextField(property.name)
+											.valueElement()
+											.text(
+													String
+															.valueOf(property.adapter
+																	.valueOf(node)));
 								}
 							}
 						}
@@ -110,8 +112,6 @@ class DetailView implements ISource<Object> {
 					form.visible(true);
 				}
 			});
-		} else {
-			throw new MethodNotImplementedException();
 		}
 	}
 

@@ -209,23 +209,30 @@ class TestContent implements IContent<String> {
 			@Override
 			public List<String> jdkList() {
 				List<String> result = new LinkedList<String>();
-				for (int i = 0; i < constraints.size() && i < entities.size(); i++) {
+				l: for (int i = 0; i < constraints.size()
+						&& i < entities.size(); i++) {
 					String e = entities.get(i);
-					if (constraints
-							.isConstrained(MasterDetailTableWidgetTest.NAME)) {
-						String name = MasterDetailTableWidgetTest.nameOf(e);
-						if (!name.startsWith(constraints
-								.stringValue(MasterDetailTableWidgetTest.NAME)))
-							continue;
-					}
-					if (constraints
-							.isConstrained(MasterDetailTableWidgetTest.DESCRIPTION)) {
-						String description = MasterDetailTableWidgetTest
-								.descriptionOf(e);
-						if (!description
-								.startsWith(constraints
-										.stringValue(MasterDetailTableWidgetTest.DESCRIPTION)))
-							continue;
+					for (int k = 1; k < 2; k++) {
+						if (constraints
+								.isConstrained(MasterDetailTableWidgetTest
+										.propertyNameOf(k))) {
+							String name = MasterDetailTableWidgetTest
+									.valueNameOf(e);
+							if (!name.startsWith(constraints
+									.stringValue(MasterDetailTableWidgetTest
+											.propertyNameOf(k))))
+								continue l;
+						}
+						if (constraints
+								.isConstrained(MasterDetailTableWidgetTest
+										.propertyDescriptionOf(k))) {
+							String description = MasterDetailTableWidgetTest
+									.valueDescriptionOf(e);
+							if (!description.startsWith(constraints
+									.stringValue(MasterDetailTableWidgetTest
+											.propertyDescriptionOf(k))))
+								continue l;
+						}
 					}
 					result.add(e);
 				}
