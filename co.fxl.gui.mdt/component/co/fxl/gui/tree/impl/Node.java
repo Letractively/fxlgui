@@ -48,6 +48,12 @@ class Node implements IClickListener {
 		this.expand = expand;
 		container = panel.add().panel().horizontal();
 		content = container.add().panel().horizontal().spacing(2);
+		IClickListener showClickListener = new IClickListener() {
+			@Override
+			public void onClick() {
+				Node.this.widget.show(Node.this);
+			}
+		};
 		if (root.children().size() != 0) {
 			content.addSpace(depth * INDENT);
 			image = content.add().image().resource(FOLDER_CLOSED);
@@ -56,17 +62,12 @@ class Node implements IClickListener {
 		} else {
 			content.addSpace((depth - 1) * INDENT);
 			image = content.add().image().resource(LEAF);
+			image.addClickListener(showClickListener);
 			content.addSpace(4);
 		}
 		ILabel label = content.add().label().text(root.name());
 		if (widget.detailPanel != null) {
-			IClickListener clickListener = new IClickListener() {
-				@Override
-				public void onClick() {
-					Node.this.widget.show(Node.this);
-				}
-			};
-			label.addClickListener(clickListener);
+			label.addClickListener(showClickListener);
 		}
 		this.tree = root;
 		this.depth = depth;

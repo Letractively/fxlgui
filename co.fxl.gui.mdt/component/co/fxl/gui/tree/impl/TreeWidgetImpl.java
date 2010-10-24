@@ -192,6 +192,8 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 
 	void show(Node node) {
 		if (last != null) {
+			if (last == node)
+				return;
 			last.selected(false);
 		}
 		last = node;
