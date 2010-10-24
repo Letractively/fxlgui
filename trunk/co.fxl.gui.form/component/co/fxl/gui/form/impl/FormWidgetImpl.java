@@ -28,6 +28,7 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.template.WidgetTitle;
@@ -51,6 +52,8 @@ class FormWidgetImpl implements IFormWidget {
 	private int gridIndex = 0;
 	private WidgetTitle widgetTitle;
 	private IGridPanel gridPanel;
+	boolean hasRequiredAttributes = false;
+	private IVerticalPanel contentPanel;
 
 	FormWidgetImpl(ILayout panel) {
 		widgetTitle = new WidgetTitle(panel);
@@ -164,12 +167,18 @@ class FormWidgetImpl implements IFormWidget {
 
 	@Override
 	public FormWidgetImpl visible(boolean visible) {
+		if (hasRequiredAttributes) {
+			contentPanel.addSpace(10);
+			contentPanel.add().label().text("* Required Attribute").font()
+					.pixel(10);
+		}
 		return this;
 	}
 
 	public IGridPanel grid() {
 		if (gridPanel == null) {
-			gridPanel = widgetTitle.content().panel().grid();
+			contentPanel = widgetTitle.content().panel().vertical();
+			gridPanel = contentPanel.add().panel().grid();
 			gridPanel.indent(4);
 		}
 		return gridPanel;

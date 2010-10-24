@@ -20,12 +20,14 @@ package co.fxl.gui.mdt.impl;
 
 import java.util.Date;
 
+import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.template.SimpleDateFormat;
 import co.fxl.gui.filter.api.IFieldType;
 import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.mdt.api.IFilterList;
 import co.fxl.gui.tree.api.ICallback;
@@ -92,35 +94,30 @@ class DetailView implements ISource<Object> {
 							IFormWidget.class);
 					for (PropertyImpl property : group.properties) {
 						if (property.displayInDetailView) {
+							IFormField<?> formField;
 							if (property.type.type.equals(String.class)) {
+								ITextElement<?> valueElement;
 								if (property.type.isLong) {
-									form
-											.addTextArea(property.name)
-											.valueElement()
-											.text(
-													String
-															.valueOf(property.adapter
-																	.valueOf(node)));
-
+									formField = form.addTextArea(property.name);
+									valueElement = formField.valueElement();
 								} else {
-									form
-											.addTextField(property.name)
-											.valueElement()
-											.text(
-													String
-															.valueOf(property.adapter
-																	.valueOf(node)));
+									formField = form
+											.addTextField(property.name);
+									valueElement = formField.valueElement();
 								}
+								String value = String.valueOf(property.adapter
+										.valueOf(node));
+								valueElement.text(value);
 							} else if (property.type.type.equals(Date.class)) {
-								form
-										.addTextField(property.name)
-										.valueElement()
-										.text(
-												DATE_FORMAT
-														.format((Date) property.adapter
-																.valueOf(node)));
+								formField = form.addTextField(property.name);
+								String value = DATE_FORMAT
+										.format((Date) property.adapter
+												.valueOf(node));
+								formField.valueElement().text(value);
 							} else
 								throw new MethodNotImplementedException();
+							if (property.required)
+								formField.required();
 						}
 					}
 					form.visible(true);

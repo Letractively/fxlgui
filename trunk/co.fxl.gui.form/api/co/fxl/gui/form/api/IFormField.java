@@ -29,4 +29,6 @@ public interface IFormField<T extends ITextElement<T>> {
 	ILabel titleElement();
 
 	T valueElement();
+
+	IFormField<T> required();
 }

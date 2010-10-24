@@ -27,10 +27,12 @@ import co.fxl.gui.form.impl.FormWidgetImpl.FormEntryLabel;
 abstract class FormFieldImpl<T extends ITextElement<T>> implements
 		IFormField<T> {
 
+	private FormWidgetImpl widget;
 	private ILabel label;
 	private IGridCell cell;
 
 	FormFieldImpl(FormWidgetImpl widget, String name) {
+		this.widget=widget;
 		FormEntryLabel formEntryLabel = widget.addFormEntryLabel(name);
 		cell = formEntryLabel.cell;
 		label = formEntryLabel.formEntryLabel;
@@ -45,5 +47,13 @@ abstract class FormFieldImpl<T extends ITextElement<T>> implements
 	@Override
 	public IGridCell cell() {
 		return cell;
+	}
+
+	@Override
+	public IFormField<T> required() {
+		widget.hasRequiredAttributes=true;
+		label.font().weight().bold();
+		label.text(label.text() + " *");
+		return this;
 	}
 }
