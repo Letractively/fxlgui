@@ -83,4 +83,9 @@ class TestTree implements ITree<String> {
 	private void delete(TestTree testTree) {
 		children.remove(testTree);
 	}
+
+	@Override
+	public ITree<String> parent() {
+		throw new MethodNotImplementedException();
+	}
 }

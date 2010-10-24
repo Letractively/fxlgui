@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.swing;
 
+import java.awt.Color;
+
 import javax.swing.JTextArea;
 
 import co.fxl.gui.api.ITextArea;
@@ -45,5 +47,12 @@ class SwingTextArea extends SwingTextInput<JTextArea, ITextArea> implements
 	@Override
 	String processText() {
 		return html.text;
+	}
+
+	@Override
+	public ITextArea editable(boolean editable) {
+		container.component.setBackground(editable ? Color.WHITE : new Color(
+				240, 240, 240));
+		return super.editable(editable);
 	}
 }

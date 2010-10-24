@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.mdt.api;
 
+import java.util.List;
+
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.ITree;
@@ -31,6 +33,8 @@ public interface IMasterDetailTableWidget<T> {
 
 		void queryList(IFilterConstraints constraints,
 				ICallback<IList<T>> callback);
+
+		void queryRelation(T entity, String name, ICallback<List<T>> callback);
 	}
 
 	IMasterDetailTableWidget<T> title(String title);

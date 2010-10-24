@@ -75,6 +75,10 @@ class TestContent implements IContent<String> {
 			return object;
 		}
 
+		@Override
+		public ITree<String> parent() {
+			throw new MethodNotImplementedException();
+		}
 	}
 
 	class Extract implements ITree<String> {
@@ -126,6 +130,11 @@ class TestContent implements IContent<String> {
 		@Override
 		public String object() {
 			return "Partition " + i;
+		}
+
+		@Override
+		public ITree<String> parent() {
+			throw new MethodNotImplementedException();
 		}
 
 	}
@@ -186,6 +195,11 @@ class TestContent implements IContent<String> {
 		@Override
 		public String object() {
 			return "Root";
+		}
+
+		@Override
+		public ITree<String> parent() {
+			throw new MethodNotImplementedException();
 		}
 
 	}
@@ -263,5 +277,11 @@ class TestContent implements IContent<String> {
 
 	private String getString(int k) {
 		return "Entity " + k;
+	}
+
+	@Override
+	public void queryRelation(String entity, String name,
+			ICallback<List<String>> callback) {
+		throw new MethodNotImplementedException();
 	}
 }

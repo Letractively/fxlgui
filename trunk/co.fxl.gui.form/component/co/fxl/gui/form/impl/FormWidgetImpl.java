@@ -18,10 +18,15 @@
  */
 package co.fxl.gui.form.impl;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
@@ -31,6 +36,7 @@ import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
@@ -54,6 +60,8 @@ class FormWidgetImpl implements IFormWidget {
 	private IGridPanel gridPanel;
 	boolean hasRequiredAttributes = false;
 	private IVerticalPanel contentPanel;
+	private ISaveListener saveListener = null;
+	List<FormFieldImpl<?>> fields = new LinkedList<FormFieldImpl<?>>();
 
 	FormWidgetImpl(ILayout panel) {
 		widgetTitle = new WidgetTitle(panel);
@@ -82,26 +90,31 @@ class FormWidgetImpl implements IFormWidget {
 	ITextField addFormValueTextField() {
 		ITextField valuePanel = container().textField();
 		valuePanel.height(28);
+		valuePanel.editable(saveListener != null);
 		return valuePanel;
 	}
 
 	IPasswordField addFormValuePasswordField() {
 		IPasswordField valuePanel = container().passwordField();
+		valuePanel.editable(saveListener != null);
 		return valuePanel;
 	}
 
 	ITextArea addFormValueTextArea() {
 		ITextArea valuePanel = container().textArea();
+		valuePanel.editable(saveListener != null);
 		return valuePanel;
 	}
 
 	IComboBox addFormValueComboBox() {
 		IComboBox valuePanel = container().comboBox();
+		valuePanel.editable(saveListener != null);
 		return valuePanel;
 	}
 
 	ICheckBox addFormValueCheckBox() {
 		ICheckBox valuePanel = container().checkBox().height(30);
+		valuePanel.editable(saveListener != null);
 		return valuePanel;
 	}
 
@@ -169,10 +182,36 @@ class FormWidgetImpl implements IFormWidget {
 	public FormWidgetImpl visible(boolean visible) {
 		if (hasRequiredAttributes) {
 			contentPanel.addSpace(10);
-			contentPanel.add().label().text("* Required Attribute").font()
-					.pixel(10);
+			IGridPanel grid = contentPanel.add().panel().grid();
+			if (saveListener != null) {
+				addSaveButton(grid);
+			}
+			grid.cell(1, 0).align().end().label().text("* Required Attribute")
+					.font().pixel(10);
 		}
 		return this;
+	}
+
+	private void addSaveButton(IGridPanel grid) {
+		IHorizontalPanel panel = grid.cell(0, 0).panel().horizontal()
+				.spacing(2);
+		IButton clickable = panel.add().button();
+		clickable.text("Save").addClickListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				saveListener.onSave();
+			}
+		});
+		Validation validation = new Validation();
+		validation.linkClickable(clickable);
+		for (FormFieldImpl<?> formField : fields) {
+			if (formField.type.type.equals(String.class)) {
+				throw new MethodNotImplementedException();
+			} else if (formField.type.type.equals(String.class)) {
+				throw new MethodNotImplementedException();
+			} else
+				throw new MethodNotImplementedException();
+		}
 	}
 
 	public IGridPanel grid() {
@@ -192,5 +231,11 @@ class FormWidgetImpl implements IFormWidget {
 	@Override
 	public ILabel addTitle(String title) {
 		return widgetTitle.addTitle(title);
+	}
+
+	@Override
+	public IFormWidget saveListener(ISaveListener listener) {
+		saveListener = listener;
+		return this;
 	}
 }

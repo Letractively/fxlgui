@@ -35,4 +35,6 @@ public interface ITree<T> {
 	ITree<T> createNew();
 	
 	void delete();
+
+	ITree<T> parent();
 }

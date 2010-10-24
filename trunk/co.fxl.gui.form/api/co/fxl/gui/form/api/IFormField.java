@@ -21,6 +21,7 @@ package co.fxl.gui.form.api;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.filter.api.IFieldType;
 
 public interface IFormField<T extends ITextElement<T>> {
 
@@ -31,4 +32,6 @@ public interface IFormField<T extends ITextElement<T>> {
 	T valueElement();
 
 	IFormField<T> required();
+
+	IFieldType type();
 }
