@@ -36,7 +36,7 @@ import co.fxl.gui.filter.api.IFilterWidget;
 class FilterWidgetImpl implements IFilterWidget {
 
 	private static final List<Object> DEFAULT_SIZES = Arrays
-			.asList(new Object[] { 20, 50, 100, 500, 1000 });
+			.asList(new Object[] { new Integer(20), 50, 100, 500, 1000 });
 
 	private class ClearClickListener implements IClickListener {
 
@@ -171,14 +171,22 @@ class FilterWidgetImpl implements IFilterWidget {
 			sizeFilter.validate(validation);
 		}
 		if (constraints != null) {
+			boolean constrained = false;
 			for (FilterPart<?> f : filters) {
 				FilterTemplate<?> ft = (FilterTemplate<?>) f;
 				if (constraints.isConstrained(ft.name)) {
 					ft.fromConstraint(constraints);
+					constrained = true;
 				}
 			}
-			if (constraints.size() != Integer.MAX_VALUE)
+			if (constraints.size() != (Integer) DEFAULT_SIZES.get(0)) {
 				sizeFilter.set(constraints.size());
+				constrained = true;
+			}
+			if (constrained) {
+				apply.clickable(true);
+				clear.clickable(true);
+			}
 		}
 		return this;
 	}

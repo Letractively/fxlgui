@@ -26,8 +26,8 @@ class PropertyImpl implements IProperty<Object, Object> {
 
 	String name;
 	IAdapter<Object, Object> adapter;
-	boolean displayInTable = false;
-	boolean displayInDetailView = false;
+	boolean displayInTable = true;
+	boolean displayInDetailView = true;
 	FieldTypeImpl type = new FieldTypeImpl();
 	boolean sortable = false;
 
@@ -42,14 +42,14 @@ class PropertyImpl implements IProperty<Object, Object> {
 	}
 
 	@Override
-	public IProperty<Object, Object> asDetail() {
-		displayInDetailView = true;
+	public IProperty<Object, Object> asDetail(boolean displayInDetailView) {
+		this.displayInDetailView = displayInDetailView;
 		return this;
 	}
 
 	@Override
-	public IProperty<Object, Object> inTable() {
-		displayInTable = true;
+	public IProperty<Object, Object> inTable(boolean displayInTable) {
+		this.displayInTable = displayInTable;
 		return this;
 	}
 
@@ -59,8 +59,8 @@ class PropertyImpl implements IProperty<Object, Object> {
 	}
 
 	@Override
-	public IProperty<Object, ?> sortable() {
-		sortable = true;
+	public IProperty<Object, ?> sortable(boolean sortable) {
+		this.sortable = sortable;
 		return this;
 	}
 }

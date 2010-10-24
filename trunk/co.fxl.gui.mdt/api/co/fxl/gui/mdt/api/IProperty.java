@@ -31,9 +31,9 @@ public interface IProperty<T, S> {
 
 	IProperty<T, S> adapter(IAdapter<T, S> adapter);
 
-	IProperty<T, S> inTable();
+	IProperty<T, S> inTable(boolean inTable);
 
-	IProperty<T, S> asDetail();
+	IProperty<T, S> asDetail(boolean asDetail);
 
-	IProperty<T, ?> sortable();
+	IProperty<T, ?> sortable(boolean sortable);
 }

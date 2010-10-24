@@ -18,9 +18,12 @@
  */
 package co.fxl.gui.mdt.impl;
 
+import java.util.Date;
+
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.template.SimpleDateFormat;
 import co.fxl.gui.filter.api.IFieldType;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.form.api.IFormWidget;
@@ -33,6 +36,7 @@ import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 
 class DetailView implements ISource<Object> {
 
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat();
 	private MasterDetailTableWidgetImpl widget;
 	private IFilterTreeWidget<Object> tree;
 	private IFilterList<Object> filterList;
@@ -107,7 +111,16 @@ class DetailView implements ISource<Object> {
 															.valueOf(property.adapter
 																	.valueOf(node)));
 								}
-							}
+							} else if (property.type.type.equals(Date.class)) {
+								form
+										.addTextField(property.name)
+										.valueElement()
+										.text(
+												DATE_FORMAT
+														.format((Date) property.adapter
+																.valueOf(node)));
+							} else
+								throw new MethodNotImplementedException();
 						}
 					}
 					form.visible(true);

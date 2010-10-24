@@ -66,8 +66,7 @@ class MasterDetailTableWidgetTest {
 				+ index);
 		@SuppressWarnings("unchecked")
 		IProperty<String, String> p1 = (IProperty<String, String>) g
-				.addProperty(propertyNameOf(index)).sortable().inTable()
-				.asDetail();
+				.addProperty(propertyNameOf(index));
 		p1.type().text();
 		p1.adapter(new IAdapter<String, String>() {
 			@Override
@@ -78,8 +77,7 @@ class MasterDetailTableWidgetTest {
 		filterList.addPropertyFilter(p1);
 		@SuppressWarnings("unchecked")
 		IProperty<String, String> p2 = (IProperty<String, String>) g
-				.addProperty(propertyDescriptionOf(index)).sortable().inTable()
-				.asDetail();
+				.addProperty(propertyDescriptionOf(index));
 		p2.type().longText();
 		p2.adapter(new IAdapter<String, String>() {
 			@Override
