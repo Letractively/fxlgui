@@ -59,13 +59,15 @@ class Node implements IClickListener {
 			content.addSpace(4);
 		}
 		ILabel label = content.add().label().text(root.name());
-		if (widget.detailPanel != null)
-			label.addClickListener(new IClickListener() {
+		if (widget.detailPanel != null) {
+			IClickListener clickListener = new IClickListener() {
 				@Override
 				public void onClick() {
 					Node.this.widget.show(Node.this);
 				}
-			});
+			};
+			label.addClickListener(clickListener);
+		}
 		this.tree = root;
 		this.depth = depth;
 		content.addSpace(10);

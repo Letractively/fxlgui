@@ -36,8 +36,8 @@ import co.fxl.gui.tree.impl.FilterTreeWidgetImplProvider;
 
 class MasterDetailTableWidgetTest {
 
-	static final String DESCRIPTION = "Description";
-	static final String NAME = "Name";
+	private static final String DESCRIPTION = "Description";
+	private static final String NAME = "Name";
 
 	void run(IDisplay display) {
 		display.register(new MasterDetailTableWidgetImplProvider());
@@ -53,39 +53,56 @@ class MasterDetailTableWidgetTest {
 				.add().widget(IMasterDetailTableWidget.class);
 		widget.title("Entities");
 		IFilterList<String> filterList = widget.filterList();
-		IPropertyGroup<String> g = widget.defaultPropertyGroup();
-		@SuppressWarnings("unchecked")
-		IProperty<String, String> p1 = (IProperty<String, String>) g
-				.addProperty(NAME).sortable().inTable().asDetail();
-		p1.type().text();
-		p1.adapter(new IAdapter<String, String>() {
-			@Override
-			public String valueOf(String entity) {
-				return nameOf(entity);
-			}
-		});
-		filterList.addPropertyFilter(p1);
-		@SuppressWarnings("unchecked")
-		IProperty<String, String> p2 = (IProperty<String, String>) g
-				.addProperty(DESCRIPTION).sortable().inTable().asDetail();
-		p2.type().longText();
-		p2.adapter(new IAdapter<String, String>() {
-			@Override
-			public String valueOf(String entity) {
-				return descriptionOf(entity);
-			}
-		});
-		filterList.addPropertyFilter(p2);
+		addPropertyGroup(widget, filterList, 1);
+		addPropertyGroup(widget, filterList, 2);
 		widget.content(new TestContent());
 		widget.visible(true);
 		display.fullscreen().visible(true);
 	}
 
-	static String nameOf(String entity) {
+	private void addPropertyGroup(IMasterDetailTableWidget<String> widget,
+			IFilterList<String> filterList, int index) {
+		IPropertyGroup<String> g = widget.addPropertyGroup("Property Group "
+				+ index);
+		@SuppressWarnings("unchecked")
+		IProperty<String, String> p1 = (IProperty<String, String>) g
+				.addProperty(propertyNameOf(index)).sortable().inTable()
+				.asDetail();
+		p1.type().text();
+		p1.adapter(new IAdapter<String, String>() {
+			@Override
+			public String valueOf(String entity) {
+				return valueNameOf(entity);
+			}
+		});
+		filterList.addPropertyFilter(p1);
+		@SuppressWarnings("unchecked")
+		IProperty<String, String> p2 = (IProperty<String, String>) g
+				.addProperty(propertyDescriptionOf(index)).sortable().inTable()
+				.asDetail();
+		p2.type().longText();
+		p2.adapter(new IAdapter<String, String>() {
+			@Override
+			public String valueOf(String entity) {
+				return valueDescriptionOf(entity);
+			}
+		});
+		filterList.addPropertyFilter(p2);
+	}
+
+	static String propertyNameOf(int i) {
+		return NAME + " " + i;
+	}
+
+	static String propertyDescriptionOf(int i) {
+		return DESCRIPTION + " " + i;
+	}
+
+	static String valueNameOf(String entity) {
 		return "Name of " + entity;
 	}
 
-	static String descriptionOf(String entity) {
+	static String valueDescriptionOf(String entity) {
 		return "Description of " + entity;
 	}
 

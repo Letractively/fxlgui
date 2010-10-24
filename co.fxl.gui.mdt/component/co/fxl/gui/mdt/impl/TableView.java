@@ -91,7 +91,7 @@ class TableView implements IFilterListener<Object>, IChangeListener<Object> {
 				Object show = null;
 				List<Object> result = table.selection().result();
 				if (!result.isEmpty())
-					show = result.get(0);
+					show = result.get(result.size() - 1);
 				widget.showDetailView(show);
 			}
 		});

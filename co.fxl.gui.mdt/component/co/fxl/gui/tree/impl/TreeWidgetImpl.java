@@ -62,11 +62,11 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 				register.top();
 		}
 
-		DetailView(IDecorator<Object> decorator) {
-			this.decorator = decorator;
-			contentPanel = detailPanel;
-			onTop = true;
-		}
+		// DetailView(IDecorator<Object> decorator) {
+		// this.decorator = decorator;
+		// contentPanel = detailPanel;
+		// onTop = true;
+		// }
 
 		void setNode(Node node) {
 			if (node == null) {
@@ -141,10 +141,11 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 
 	@Override
 	public ITreeWidget<Object> setDetailView(IDecorator<Object> decorator) {
-		setUpDetailPanel();
-		DetailView detailView = new DetailView(decorator);
-		detailViews.add(detailView);
-		return this;
+		return addDetailView("Details", decorator);
+		// setUpDetailPanel();
+		// DetailView detailView = new DetailView(decorator);
+		// detailViews.add(detailView);
+		// return this;
 	}
 
 	@Override
