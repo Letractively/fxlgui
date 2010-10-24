@@ -28,6 +28,11 @@ import co.fxl.gui.api.IClickable.IClickListener;
 
 public interface IFormWidget {
 
+	public interface ISaveListener {
+
+		void onSave();
+	}
+
 	ILabel addTitle(String title);
 
 	IFormField<ILabel> addLabel(String name);
@@ -51,6 +56,8 @@ public interface IFormWidget {
 	ILabel addHyperlink(String name);
 
 	ILabel addHyperlink(String name, IClickListener clickListener);
+
+	IFormWidget saveListener(ISaveListener listener);
 
 	IFormWidget visible(boolean visible);
 }

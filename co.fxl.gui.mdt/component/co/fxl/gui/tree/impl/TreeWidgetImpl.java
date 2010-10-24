@@ -110,7 +110,7 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 		widgetTitle.addHyperlink("New").addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
-				last.tree.createNew();
+				selection = last.tree.createNew().object();
 				root(root);
 			}
 		});
@@ -118,9 +118,10 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 				new IClickListener() {
 					@Override
 					public void onClick() {
+						ITree<Object> parent = last.tree.parent();
 						last.tree.delete();
 						last = null;
-						selection = null;
+						selection = parent.object();
 						root(root);
 					}
 				});

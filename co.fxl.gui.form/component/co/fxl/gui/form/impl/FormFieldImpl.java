@@ -21,6 +21,8 @@ package co.fxl.gui.form.impl;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.filter.api.IFieldType;
+import co.fxl.gui.filter.impl.FieldTypeImpl;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.impl.FormWidgetImpl.FormEntryLabel;
 
@@ -30,9 +32,12 @@ abstract class FormFieldImpl<T extends ITextElement<T>> implements
 	private FormWidgetImpl widget;
 	private ILabel label;
 	private IGridCell cell;
+	FieldTypeImpl type = new FieldTypeImpl();
+	boolean required = false;
 
 	FormFieldImpl(FormWidgetImpl widget, String name) {
-		this.widget=widget;
+		this.widget = widget;
+		widget.fields.add(this);
 		FormEntryLabel formEntryLabel = widget.addFormEntryLabel(name);
 		cell = formEntryLabel.cell;
 		label = formEntryLabel.formEntryLabel;
@@ -51,9 +56,15 @@ abstract class FormFieldImpl<T extends ITextElement<T>> implements
 
 	@Override
 	public IFormField<T> required() {
-		widget.hasRequiredAttributes=true;
+		required = true;
+		widget.hasRequiredAttributes = true;
 		label.font().weight().bold();
 		label.text(label.text() + " *");
 		return this;
+	}
+
+	@Override
+	public IFieldType type() {
+		return type;
 	}
 }

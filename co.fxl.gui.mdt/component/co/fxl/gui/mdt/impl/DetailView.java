@@ -71,7 +71,6 @@ class DetailView implements ISource<Object> {
 		addDetailViews();
 		tree.source(this);
 		tree.selection(show);
-		
 		tree.expand();
 		tree.visible(true);
 	}
