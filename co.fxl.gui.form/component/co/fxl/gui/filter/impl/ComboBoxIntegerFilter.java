@@ -98,7 +98,7 @@ class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
 
 	@Override
 	public void validate(Validation validation) {
-		validation.linkInput(comboBox, defaultValue.toString());
+		validation.linkInput(comboBox);
 	}
 
 	void set(int size) {

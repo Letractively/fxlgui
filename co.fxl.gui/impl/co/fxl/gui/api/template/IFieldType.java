@@ -16,7 +16,7 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.filter.api;
+package co.fxl.gui.api.template;
 
 public interface IFieldType {
 
