@@ -132,4 +132,8 @@ class DetailView implements ISource<Object> {
 		widget.constraints = constraints;
 		widget.source.queryTree(constraints, callback);
 	}
+
+	void onNew() {
+		tree.clickNew();
+	}
 }
