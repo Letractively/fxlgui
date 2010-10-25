@@ -45,4 +45,6 @@ public interface ITreeWidget<T> {
 	ITreeWidget<T> selection(T selection);
 
 	T selection();
+
+	ITreeWidget<T> clickNew();
 }

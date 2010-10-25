@@ -68,6 +68,16 @@ class TableView implements IFilterListener<Object>, IChangeListener<Object> {
 			tableFilterList.constraints(widget.constraints);
 		table.addFilterListener(this);
 		table.selection().multi().addChangeListener(this);
+		table.addButton("New").addClickListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				Object show = null;
+				List<Object> result = table.selection().result();
+				if (!result.isEmpty())
+					show = result.get(result.size() - 1);
+				widget.showDetailView(show).onNew();
+			}
+		});
 		delete = table.addButton("Delete");
 		delete.addClickListener(new IClickListener() {
 			@Override

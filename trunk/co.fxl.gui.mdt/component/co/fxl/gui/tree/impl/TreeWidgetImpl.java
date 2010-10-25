@@ -103,17 +103,19 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 	private Object selection;
 	Map<Object, Node> object2node = new HashMap<Object, Node>();
 	private ILabel refresh;
+	private IClickListener newClick;
 
 	TreeWidgetImpl(ILayout layout) {
 		widgetTitle = new WidgetTitle(layout);
 		widgetTitle.foldable(false);
-		widgetTitle.addHyperlink("New").addClickListener(new IClickListener() {
-			@Override
-			public void onClick() {
-				selection = last.tree.createNew().object();
-				root(root);
-			}
-		});
+		widgetTitle.addHyperlink("New").addClickListener(
+				newClick = new IClickListener() {
+					@Override
+					public void onClick() {
+						selection = last.tree.createNew().object();
+						root(root);
+					}
+				});
 		widgetTitle.addHyperlink("Delete").addClickListener(
 				new IClickListener() {
 					@Override
@@ -242,5 +244,11 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 		if (refresh == null)
 			refresh = widgetTitle.addHyperlink("Refresh");
 		return refresh;
+	}
+
+	@Override
+	public ITreeWidget<Object> clickNew() {
+		newClick.onClick();
+		return this;
 	}
 }
