@@ -62,6 +62,7 @@ class FormWidgetImpl implements IFormWidget {
 	private IVerticalPanel contentPanel;
 	private ISaveListener saveListener = null;
 	List<FormFieldImpl<?>> fields = new LinkedList<FormFieldImpl<?>>();
+	private String saveTitle;
 
 	FormWidgetImpl(ILayout panel) {
 		widgetTitle = new WidgetTitle(panel);
@@ -180,14 +181,16 @@ class FormWidgetImpl implements IFormWidget {
 
 	@Override
 	public FormWidgetImpl visible(boolean visible) {
-		if (hasRequiredAttributes) {
+		if (saveListener != null || hasRequiredAttributes) {
 			contentPanel.addSpace(10);
 			IGridPanel grid = contentPanel.add().panel().grid();
 			if (saveListener != null) {
 				addSaveButton(grid);
 			}
-			grid.cell(1, 0).align().end().label().text("* Required Attribute")
-					.font().pixel(10);
+			if (hasRequiredAttributes) {
+				grid.cell(1, 0).align().end().label().text(
+						"* Required Attribute").font().pixel(10);
+			}
 		}
 		return this;
 	}
@@ -196,19 +199,24 @@ class FormWidgetImpl implements IFormWidget {
 		IHorizontalPanel panel = grid.cell(0, 0).panel().horizontal()
 				.spacing(2);
 		IButton clickable = panel.add().button();
-		clickable.text("Save").addClickListener(new IClickListener() {
+		clickable.text(saveTitle).addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
 				saveListener.onSave();
 			}
 		});
 		Validation validation = new Validation();
+		if (hasRequiredAttributes)
+			validation.allSpecified();
 		validation.linkClickable(clickable);
 		for (FormFieldImpl<?> formField : fields) {
-			if (formField.type.type.equals(String.class)) {
-				throw new MethodNotImplementedException();
-			} else if (formField.type.type.equals(String.class)) {
-				throw new MethodNotImplementedException();
+			if (!formField.required)
+				continue;
+			Object valueElement = formField.valueElement();
+			if (valueElement instanceof ITextArea) {
+				validation.linkInput((ITextArea) valueElement);
+			} else if (valueElement instanceof ITextField) {
+				validation.linkInput((ITextField) formField.valueElement());
 			} else
 				throw new MethodNotImplementedException();
 		}
@@ -234,7 +242,8 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	@Override
-	public IFormWidget saveListener(ISaveListener listener) {
+	public IFormWidget saveListener(String title, ISaveListener listener) {
+		this.saveTitle = title;
 		saveListener = listener;
 		return this;
 	}

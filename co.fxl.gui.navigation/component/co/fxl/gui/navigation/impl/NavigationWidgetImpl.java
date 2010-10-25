@@ -31,6 +31,7 @@ class NavigationWidgetImpl implements IMenuWidget {
 
 	NavigationWidgetImpl(ILayout panel) {
 		registerWidget = new RegisterWidgetImpl(panel);
+		registerWidget.background(0, 51, 102);
 	}
 
 	@Override
