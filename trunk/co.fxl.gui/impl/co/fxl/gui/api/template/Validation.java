@@ -23,6 +23,7 @@ import java.util.List;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IComboBox;
+import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
@@ -58,19 +59,29 @@ public class Validation {
 	private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat();
 	private List<IClickable<?>> clickables = new LinkedList<IClickable<?>>();
 	private List<Field> fields = new LinkedList<Field>();
+	private boolean allSpecified = false;
 
 	private void updateClickables() {
 		boolean error = false;
-		boolean isSpecified = false;
+		boolean isSpecified = allSpecified ? true : false;
 		for (Field field : fields) {
-			if (field.isSpecified)
-				isSpecified = true;
+			if (allSpecified) {
+				if (!field.isSpecified)
+					isSpecified = false;
+			} else {
+				if (field.isSpecified)
+					isSpecified = true;
+			}
 			if (field.isError)
 				error = true;
 		}
 		for (IClickable<?> c : clickables) {
 			c.clickable(isSpecified && !error);
 		}
+	}
+
+	public void allSpecified() {
+		allSpecified = true;
 	}
 
 	public void upate() {
@@ -108,6 +119,12 @@ public class Validation {
 	}
 
 	public Validation linkInput(ITextField textField) {
+		Field field = new Field(textField);
+		textField.addUpdateListener(field);
+		return this;
+	}
+
+	public Validation linkInput(ITextArea textField) {
 		Field field = new Field(textField);
 		textField.addUpdateListener(field);
 		return this;

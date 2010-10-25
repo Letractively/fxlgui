@@ -43,10 +43,13 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 
 	public RegisterWidgetImpl(ILayout panel) {
 		mainBorders = panel.dock();
-		// mainBorders.color().rgb(245, 245, 245);
 		borders = mainBorders.top().panel().dock();
 		headerPanel = borders.left().panel().horizontal().spacing(0);
 		cardPanel = mainBorders.center().panel().card();
+	}
+
+	public void background(int r, int g, int b) {
+		borders.color().rgb(r, g, b);
 	}
 
 	@Override

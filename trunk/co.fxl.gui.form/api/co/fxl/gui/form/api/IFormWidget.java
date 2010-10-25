@@ -57,7 +57,7 @@ public interface IFormWidget {
 
 	ILabel addHyperlink(String name, IClickListener clickListener);
 
-	IFormWidget saveListener(ISaveListener listener);
+	IFormWidget saveListener(String title, ISaveListener listener);
 
 	IFormWidget visible(boolean visible);
 }

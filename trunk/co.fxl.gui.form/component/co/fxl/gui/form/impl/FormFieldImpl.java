@@ -58,7 +58,7 @@ abstract class FormFieldImpl<T extends ITextElement<T>> implements
 	public IFormField<T> required() {
 		required = true;
 		widget.hasRequiredAttributes = true;
-		label.font().weight().bold();
+		label.font().weight().bold().color().black();
 		label.text(label.text() + " *");
 		return this;
 	}

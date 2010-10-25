@@ -20,6 +20,8 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.ITextArea;
 
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.ui.TextArea;
 
 class GWTTextArea extends GWTElement<TextArea, ITextArea> implements ITextArea {
@@ -37,7 +39,7 @@ class GWTTextArea extends GWTElement<TextArea, ITextArea> implements ITextArea {
 		return this;
 	}
 
-	@Override 
+	@Override
 	public IBorder border() {
 		return new GWTWidgetBorder(container.widget);
 	}
@@ -72,8 +74,16 @@ class GWTTextArea extends GWTElement<TextArea, ITextArea> implements ITextArea {
 	}
 
 	@Override
-	public ITextArea addUpdateListener(IUpdateListener<String> listener) {
-		throw new MethodNotImplementedException();
+	public ITextArea addUpdateListener(
+			final IUpdateListener<String> changeListener) {
+		container.widget.addKeyUpHandler(new KeyUpHandler() {
+
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				changeListener.onUpdate(container.widget.getText());
+			}
+		});
+		return this;
 	}
 
 	@Override
