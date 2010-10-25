@@ -21,8 +21,8 @@ package co.fxl.gui.form.impl;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.IGridPanel.IGridCell;
-import co.fxl.gui.filter.api.IFieldType;
-import co.fxl.gui.filter.impl.FieldTypeImpl;
+import co.fxl.gui.api.template.FieldTypeImpl;
+import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.impl.FormWidgetImpl.FormEntryLabel;
 

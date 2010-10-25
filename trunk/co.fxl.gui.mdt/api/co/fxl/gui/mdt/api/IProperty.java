@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.mdt.api;
 
-import co.fxl.gui.filter.api.IFieldType;
+import co.fxl.gui.api.template.IFieldType;
 
 public interface IProperty<T, S> {
 

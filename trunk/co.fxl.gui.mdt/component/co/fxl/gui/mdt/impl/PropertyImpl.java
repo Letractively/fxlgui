@@ -18,8 +18,8 @@
  */
 package co.fxl.gui.mdt.impl;
 
-import co.fxl.gui.filter.api.IFieldType;
-import co.fxl.gui.filter.impl.FieldTypeImpl;
+import co.fxl.gui.api.template.FieldTypeImpl;
+import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.mdt.api.IProperty;
 
 class PropertyImpl implements IProperty<Object, Object> {

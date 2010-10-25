@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.filter.api;
 
+import co.fxl.gui.api.template.IFieldType;
+
 public interface IFilterWidget {
 
 	public interface IFilterListener {

@@ -23,7 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.filter.api.IFieldType;
+import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;

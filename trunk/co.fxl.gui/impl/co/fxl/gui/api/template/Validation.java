@@ -18,39 +18,64 @@
  */
 package co.fxl.gui.api.template;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IComboBox;
-import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 public class Validation {
 
-	enum State {
-		EMPTY, ERROR, OK;
+	private class Field implements IUpdateListener<String> {
+
+		private ITextElement<?> textElement;
+		private String originalValue;
+		boolean isSpecified = false;
+		boolean isError = false;
+
+		Field(ITextElement<?> textElement) {
+			this.textElement = textElement;
+			fields.add(this);
+			update();
+		}
+
+		void update() {
+			originalValue = textElement.text();
+			isSpecified = false;
+			isError = false;
+		}
+
+		@Override
+		public void onUpdate(String value) {
+			isSpecified = !value.equals(originalValue);
+			updateClickables();
+		}
 	}
 
 	private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat();
 	private List<IClickable<?>> clickables = new LinkedList<IClickable<?>>();
-	private Map<IElement<?>, State> element2state = new HashMap<IElement<?>, State>();
+	private List<Field> fields = new LinkedList<Field>();
 
-	private void update() {
+	private void updateClickables() {
 		boolean error = false;
-		boolean ok = false;
-		for (State state : element2state.values()) {
-			if (state == State.OK)
-				ok = true;
-			if (state == State.ERROR)
+		boolean isSpecified = false;
+		for (Field field : fields) {
+			if (field.isSpecified)
+				isSpecified = true;
+			if (field.isError)
 				error = true;
 		}
 		for (IClickable<?> c : clickables) {
-			c.clickable(ok && !error);
+			c.clickable(isSpecified && !error);
 		}
+	}
+
+	public void upate() {
+		for (Field f : fields)
+			f.update();
 	}
 
 	public Validation linkClickable(IClickable<?> clickable) {
@@ -59,59 +84,38 @@ public class Validation {
 	}
 
 	public Validation validateDate(final ITextField textField) {
-		element2state.put(textField, State.EMPTY);
+		final Field field = new Field(textField);
 		textField.addUpdateListener(new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(String value) {
-				State state = State.EMPTY;
+				field.isError = false;
 				if (value.length() > 0) {
 					try {
-						if (DATE_FORMAT.parse(value) != null)
-							state = State.OK;
+						DATE_FORMAT.parse(value);
 					} catch (Exception e) {
-						state = State.ERROR;
+						field.isError = true;
 					}
 				}
-				if (state == State.ERROR) {
+				if (field.isError) {
 					textField.color().mix().red().white();
 				} else {
 					textField.color().white();
 				}
-				element2state.put(textField, state);
-				update();
+				field.onUpdate(value);
 			}
 		});
 		return this;
 	}
 
-	public Validation linkInput(final ITextField textField) {
-		element2state.put(textField, State.EMPTY);
-		textField.addUpdateListener(new IUpdateListener<String>() {
-			@Override
-			public void onUpdate(String value) {
-				element2state.put(textField,
-						value.trim().length() > 0 ? State.OK : State.EMPTY);
-				update();
-			}
-		});
-		return this;
-	}
-
-	public Validation linkInput(final IComboBox comboBox,
-			final String defaultValue) {
-		element2state.put(comboBox, State.EMPTY);
-		comboBox.addUpdateListener(new IUpdateListener<String>() {
-			@Override
-			public void onUpdate(String value) {
-				element2state.put(comboBox,
-						!value.equals(defaultValue) ? State.OK : State.EMPTY);
-				update();
-			}
-		});
+	public Validation linkInput(ITextField textField) {
+		Field field = new Field(textField);
+		textField.addUpdateListener(field);
 		return this;
 	}
 
 	public Validation linkInput(final IComboBox comboBox) {
-		return linkInput(comboBox, "");
+		Field field = new Field(comboBox);
+		comboBox.addUpdateListener(field);
+		return this;
 	}
 }

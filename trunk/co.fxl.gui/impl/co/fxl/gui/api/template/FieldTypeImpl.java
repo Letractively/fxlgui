@@ -16,12 +16,11 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.filter.impl;
+package co.fxl.gui.api.template;
 
 import java.util.Date;
 
 import co.fxl.gui.api.IImage;
-import co.fxl.gui.filter.api.IFieldType;
 
 public class FieldTypeImpl implements IFieldType {
 

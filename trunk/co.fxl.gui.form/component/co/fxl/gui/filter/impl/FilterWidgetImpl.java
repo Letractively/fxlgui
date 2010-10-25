@@ -58,6 +58,7 @@ class FilterWidgetImpl implements IFilterWidget {
 		public void onClick() {
 			if (holdFilterClicks)
 				return;
+			validation.upate();
 			clear.clickable(true);
 			notifyListeners();
 		}
