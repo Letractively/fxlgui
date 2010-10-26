@@ -63,6 +63,7 @@ class FormWidgetImpl implements IFormWidget {
 	private ISaveListener saveListener = null;
 	List<FormFieldImpl<?>> fields = new LinkedList<FormFieldImpl<?>>();
 	private String saveTitle;
+	private int fixLabelWidth = -1;
 
 	FormWidgetImpl(ILayout panel) {
 		widgetTitle = new WidgetTitle(panel);
@@ -72,6 +73,8 @@ class FormWidgetImpl implements IFormWidget {
 	FormEntryLabel addFormEntryLabel(String name) {
 		IGridCell cell = grid().cell(0, gridIndex).align().end().valign()
 				.center().height(30);
+		if (fixLabelWidth != -1)
+			cell.width(fixLabelWidth);
 		ILabel formEntryLabel = cell.label();
 		formEntryLabel.text(name);
 		formEntryLabel.font();// .pixel(12).color().gray();
@@ -245,6 +248,12 @@ class FormWidgetImpl implements IFormWidget {
 	public IFormWidget saveListener(String title, ISaveListener listener) {
 		this.saveTitle = title;
 		saveListener = listener;
+		return this;
+	}
+
+	@Override
+	public IFormWidget fixLabelColumn(int width) {
+		fixLabelWidth = width;
 		return this;
 	}
 }
