@@ -32,6 +32,8 @@ public interface IFormWidget {
 
 		void onSave();
 	}
+	
+	IFormWidget fixLabelColumn(int width);
 
 	ILabel addTitle(String title);
 

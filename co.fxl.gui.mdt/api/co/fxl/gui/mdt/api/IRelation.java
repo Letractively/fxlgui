@@ -20,11 +20,13 @@ package co.fxl.gui.mdt.api;
 
 import java.util.List;
 
+import co.fxl.gui.tree.api.ICallback;
+
 public interface IRelation<T, R> extends IPropertyGroup<R> {
 
 	public interface IAdapter<T, R> {
 
-		List<R> valueOf(T entity);
+		void valueOf(T entity, ICallback<List<R>> callback);
 	}
 
 	IRelation<T, R> adapter(IAdapter<T, R> adapter);

@@ -19,6 +19,7 @@
 package co.fxl.gui.mdt.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.IVerticalPanel;
@@ -30,6 +31,8 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.mdt.api.IFilterList;
+import co.fxl.gui.table.api.IRow;
+import co.fxl.gui.table.api.ITableWidget;
 import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.IFilterTreeWidget;
 import co.fxl.gui.tree.api.ITree;
@@ -121,6 +124,51 @@ class DetailView implements ISource<Object> {
 						}
 					}
 					form.visible(true);
+				}
+			});
+		}
+		for (final RelationImpl relation : widget.relations) {
+			tree.addDetailView(relation.name, new IDecorator<Object>() {
+
+				@Override
+				public void clear(IVerticalPanel panel) {
+					panel.clear();
+				}
+
+				@Override
+				public void decorate(final IVerticalPanel panel, Object node) {
+					panel.clear();
+					IBorder border = panel.border();
+					border.color().gray();
+					border.style().top();
+					relation.adapter.valueOf(node,
+							new ICallback<List<Object>>() {
+
+								@Override
+								public void onFail(Throwable throwable) {
+									throw new MethodNotImplementedException();
+								}
+
+								@Override
+								public void onSuccess(List<Object> result) {
+									@SuppressWarnings("unchecked")
+									ITableWidget<Object> table = (ITableWidget<Object>) panel
+											.add().widget(ITableWidget.class);
+									for (PropertyImpl property : relation.properties) {
+										table.addColumn().name(property.name)
+												.type(property.type.type);
+									}
+									for (Object e : result) {
+										IRow<Object> row = table.addRow();
+										row.identifier(e);
+										for (PropertyImpl p : relation.properties) {
+											row.add((Comparable<?>) p.adapter
+													.valueOf(e));
+										}
+									}
+									table.visible(true);
+								}
+							});
 				}
 			});
 		}
