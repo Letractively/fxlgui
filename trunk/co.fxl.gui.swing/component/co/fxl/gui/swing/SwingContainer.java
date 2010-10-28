@@ -28,6 +28,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
@@ -42,6 +44,8 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.IRadioButton;
+import co.fxl.gui.api.IScrollPane;
+import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IToggleButton;
@@ -142,6 +146,18 @@ class SwingContainer<T extends JComponent> implements IContainer {
 	public IPasswordField passwordField() {
 		setComponent((T) new PasswordFieldComponent<T>());
 		return new SwingPasswordField((SwingContainer<JPasswordField>) this);
+	}
+
+	@Override
+	public IScrollPane scrollPane() {
+		setComponent((T) new JScrollPane());
+		return new SwingScrollPane((SwingContainer<JScrollPane>) this);
+	}
+
+	@Override
+	public ISplitPane splitPane() {
+		setComponent((T) new JSplitPane());
+		return new SwingSplitPane((SwingContainer<JSplitPane>) this);
 	}
 
 	@Override

@@ -28,6 +28,8 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.IRadioButton;
+import co.fxl.gui.api.IScrollPane;
+import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IToggleButton;
@@ -37,10 +39,12 @@ import co.fxl.gui.api.WidgetProviderNotFoundException;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalSplitPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RadioButton;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.ToggleButton;
@@ -146,6 +150,20 @@ class GWTContainer<T extends Widget> implements IContainer {
 		setComponent((T) new ToggleButton());
 		return (IToggleButton) (element = new GWTToggleButton(
 				(GWTContainer<ToggleButton>) this));
+	}
+
+	@Override
+	public IScrollPane scrollPane() {
+		setComponent((T) new ScrollPanel());
+		return (IScrollPane) (element = new GWTScrollPane(
+				(GWTContainer<ScrollPanel>) this));
+	}
+
+	@Override
+	public ISplitPane splitPane() {
+		setComponent((T) new HorizontalSplitPanel());
+		return (ISplitPane) (element = new GWTSplitPane(
+				(GWTContainer<Widget>) this));
 	}
 
 	@Override

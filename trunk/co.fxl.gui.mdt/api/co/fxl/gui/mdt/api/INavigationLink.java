@@ -16,42 +16,20 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.tree.api;
+package co.fxl.gui.mdt.api;
 
-import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.IVerticalPanel;
+import java.util.List;
 
-public interface ITreeWidget<T> {
+public interface INavigationLink<T> {
 
-	public interface ISelectionListener<T> {
+	public interface INavigationLinkListener<T> {
 
-		void onChange(T selection);
+		void onClick(List<T> selection);
 	}
 
-	public interface IDecorator<T> {
+	INavigationLink<T> inTable(boolean inTable);
 
-		void decorate(IVerticalPanel panel, T node);
+	INavigationLink<T> asDetail(boolean asDetail);
 
-		void clear(IVerticalPanel contentPanel);
-	}
-
-	ITreeWidget<T> title(String title);
-
-	IClickable<?> addHyperlink(String title);
-
-	ITreeWidget<T> setDetailView(IDecorator<T> decorator);
-
-	ITreeWidget<T> addDetailView(String title, IDecorator<T> decorator);
-
-	ITreeWidget<T> root(ITree<T> tree);
-
-	ITreeWidget<T> expand();
-
-	ITreeWidget<T> selection(T selection);
-
-	T selection();
-
-	ITreeWidget<T> addSelectionListener(ISelectionListener<T> listener);
-
-	ITreeWidget<T> clickNew();
+	INavigationLink<T> addClickListener(INavigationLinkListener<T> listener);
 }

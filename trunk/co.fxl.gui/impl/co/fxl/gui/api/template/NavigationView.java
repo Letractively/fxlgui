@@ -16,15 +16,14 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.mdt.light.impl;
+package co.fxl.gui.api.template;
 
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.WidgetTitle;
 
-class NavigationGadget {
+public class NavigationView {
 
 	private static final String LINK_PNG = "link.png";
 	private static final boolean SHOW_NUMBERS = false;
@@ -33,13 +32,13 @@ class NavigationGadget {
 	private IVerticalPanel panel;
 	private int index = 1;
 
-	NavigationGadget(ILayout layout) {
+	public NavigationView(ILayout layout) {
 		widgetTitle = new WidgetTitle(layout);
 		widgetTitle.addTitle("Navigation");
 		panel = widgetTitle.content().panel().vertical().spacing(4);
 	}
 
-	ILabel addHyperlink() {
+	public ILabel addHyperlink() {
 		IHorizontalPanel panel = this.panel.add().panel().horizontal().add()
 				.panel().horizontal();
 		if (SHOW_NUMBERS) {

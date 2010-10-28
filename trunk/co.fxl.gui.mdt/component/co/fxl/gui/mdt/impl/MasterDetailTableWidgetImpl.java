@@ -26,6 +26,7 @@ import co.fxl.gui.api.template.SplitLayout;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.mdt.api.IFilterList;
 import co.fxl.gui.mdt.api.IMasterDetailTableWidget;
+import co.fxl.gui.mdt.api.INavigationLink;
 import co.fxl.gui.mdt.api.IPropertyGroup;
 import co.fxl.gui.mdt.api.IRelation;
 
@@ -39,6 +40,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	String title;
 	SplitLayout splitLayout;
 	IFilterConstraints constraints;
+	List<NavigationLinkImpl> navigationLinks = new LinkedList<NavigationLinkImpl>();
 
 	MasterDetailTableWidgetImpl(ILayout layout) {
 		splitLayout = new SplitLayout(layout);
@@ -102,5 +104,12 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	public IMasterDetailTableWidget<Object> title(String title) {
 		this.title = title;
 		return this;
+	}
+
+	@Override
+	public INavigationLink<Object> addNavigationLink(String name) {
+		NavigationLinkImpl link = new NavigationLinkImpl(name);
+		navigationLinks.add(link);
+		return link;
 	}
 }

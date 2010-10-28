@@ -21,7 +21,6 @@ package co.fxl.gui.form.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPasswordField;
@@ -31,6 +30,7 @@ import co.fxl.gui.api.IPasswordField.ICarriageReturnListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.form.api.IChangePasswordWidget;
 import co.fxl.gui.form.api.IFormWidget;
+import co.fxl.gui.form.api.IFormWidget.ISaveListener;
 
 public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 		IClickListener, IUpdateListener<String>, ICarriageReturnListener {
@@ -42,12 +42,21 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 	private String currentPasswordText;
 	private List<IPasswordListener> listeners = new LinkedList<IPasswordListener>();
 	private IVerticalPanel verticalPanel;
-	private boolean isFirstTitle = true;
+
+	// private boolean isFirstTitle = true;
 
 	public ChangePasswordWidgetImpl(ILayout display) {
 		verticalPanel = display.vertical();
 		verticalPanel.stretch(true);
 		widget = (IFormWidget) verticalPanel.add().widget(IFormWidget.class);
+		widget.fixValueColumn(180);
+		widget.saveListener("Submit", new ISaveListener() {
+
+			@Override
+			public void onSave() {
+				onClick();
+			}
+		});
 	}
 
 	@Override
@@ -58,22 +67,25 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 
 	@Override
 	public IChangePasswordWidget visible(boolean visible) {
-		currentPassword = widget.addPasswordField("Current Password")
-				.valueElement();
+		currentPassword = widget.addPasswordField("Current").valueElement();
 		currentPassword.addUpdateListener((IUpdateListener<String>) this);
 		currentPassword
 				.addCarriageReturnListener((ICarriageReturnListener) this);
-		newPassword = widget.addPasswordField("New Password").valueElement();
+		newPassword = widget.addPasswordField("New").valueElement();
 		newPassword.addUpdateListener((IUpdateListener<String>) this);
 		newPassword.addCarriageReturnListener((ICarriageReturnListener) this);
-		confirmPassword = widget.addPasswordField("Confirm New Password")
-				.valueElement();
+		confirmPassword = widget.addPasswordField("Confirm").valueElement();
 		confirmPassword.addUpdateListener((IUpdateListener<String>) this);
 		confirmPassword
 				.addCarriageReturnListener((ICarriageReturnListener) this);
-		ILabel oKButton = widget.addOKHyperlink();
-		oKButton.text("Change Password");
-		oKButton.addClickListener(this);
+		// ILabel oKButton = widget.addOKHyperlink();
+		// oKButton.text("Change");
+		// oKButton.addClickListener(this);
+		// Validation validation = new Validation();
+		// validation.linkInput(currentPassword, true);
+		// validation.linkInput(newPassword, true);
+		// validation.linkInput(confirmPassword, true);
+		// validation.update();
 		widget.visible(true);
 		return this;
 	}
@@ -88,20 +100,20 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 			showDialog("Field 'Current Password' is empty.");
 			oK = false;
 		}
-		if (!currentPassword.text().equals(currentPasswordText)) {
+		if (oK && !currentPassword.text().equals(currentPasswordText)) {
 			showDialog("Field 'Current Password' is incorrectly specified.");
 			oK = false;
 		}
 		String newPasswordText = newPassword.text();
-		if (newPasswordText.equals("")) {
+		if (oK && newPasswordText.equals("")) {
 			showDialog("Field 'New Password' is empty.");
 			oK = false;
 		}
-		if (confirmPassword.text().equals("")) {
+		if (oK && confirmPassword.text().equals("")) {
 			showDialog("Field 'Confirm Password' is empty.");
 			oK = false;
 		}
-		if (!newPasswordText.equals(confirmPassword.text())) {
+		if (oK && !newPasswordText.equals(confirmPassword.text())) {
 			showDialog("Fields 'New Password' and 'Confirm Password' don't match.");
 			oK = false;
 		}
@@ -146,12 +158,12 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 
 	@Override
 	public ILabel addTitle(String title) {
-		if (isFirstTitle)
-			title = title + ".";
+		// if (isFirstTitle)
+		// title = title + ".";
 		ILabel label = widget.addTitle(title);
-		if (isFirstTitle)
-			label.font().color().gray();
-		isFirstTitle = false;
+		// if (isFirstTitle)
+		// label.font().color().gray();
+		// isFirstTitle = false;
 		return label;
 	}
 }

@@ -19,6 +19,7 @@
 package co.fxl.gui.mdt.impl;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.ITextElement;
@@ -30,6 +31,7 @@ import co.fxl.gui.api.template.SimpleDateFormat;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
+import co.fxl.gui.form.api.IFormWidget.ISaveListener;
 import co.fxl.gui.mdt.api.IFilterList;
 import co.fxl.gui.table.api.IRow;
 import co.fxl.gui.table.api.ITableWidget;
@@ -38,20 +40,30 @@ import co.fxl.gui.tree.api.IFilterTreeWidget;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.IFilterTreeWidget.ISource;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
+import co.fxl.gui.tree.api.ITreeWidget.ISelectionListener;
 
-class DetailView implements ISource<Object> {
+class DetailView extends ViewTemplate implements ISource<Object> {
 
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat();
-	private MasterDetailTableWidgetImpl widget;
 	private IFilterTreeWidget<Object> tree;
 	private IFilterList<Object> filterList;
 
 	@SuppressWarnings("unchecked")
 	DetailView(final MasterDetailTableWidgetImpl widget, Object show) {
-		this.widget = widget;
+		super(widget);
 		tree = (IFilterTreeWidget<Object>) widget.splitLayout.mainPanel.add()
 				.widget(IFilterTreeWidget.class);
 		tree.title(widget.title);
+		tree.addSelectionListener(new ISelectionListener<Object>() {
+
+			@Override
+			public void onChange(Object selection) {
+				List<Object> l = new LinkedList<Object>();
+				l.add(selection);
+				DetailView.this.onChange(l);
+			}
+		});
+		addNavigationLinks();
 		filterList = tree
 				.filterList(widget.splitLayout.sidePanel.add().panel());
 		for (FilterImpl filter : widget.filterList.filters) {
@@ -95,6 +107,13 @@ class DetailView implements ISource<Object> {
 					border.style().top();
 					IFormWidget form = (IFormWidget) panel.add().widget(
 							IFormWidget.class);
+					form.saveListener("Save", new ISaveListener() {
+
+						@Override
+						public void onSave() {
+							throw new MethodNotImplementedException();
+						}
+					});
 					for (PropertyImpl property : group.properties) {
 						if (property.displayInDetailView) {
 							IFormField<?> formField;
@@ -183,5 +202,10 @@ class DetailView implements ISource<Object> {
 
 	void onNew() {
 		tree.clickNew();
+	}
+
+	@Override
+	boolean isRelevant(NavigationLinkImpl link) {
+		return link.asDetail;
 	}
 }

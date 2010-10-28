@@ -73,13 +73,14 @@ public class ViewList {
 				labelPanel.color().red();
 				label.font().weight().bold().color().white();
 			} else {
-				labelPanel.color().remove();
+				labelPanel.color().rgb(245, 245, 245);
 				label.font().weight().plain().color().blue();
 			}
 		}
 
-		public void decorator(WidgetTitleDecorator decorator) {
+		public ViewImpl decorator(WidgetTitleDecorator decorator) {
 			this.decorator = decorator;
+			return this;
 		}
 	}
 
@@ -109,6 +110,11 @@ public class ViewList {
 
 	public ViewList title(String title) {
 		widgetTitle.addTitle(title);
+		return this;
+	}
+
+	public ViewList foldable(boolean foldable) {
+		widgetTitle.foldable(foldable);
 		return this;
 	}
 }
