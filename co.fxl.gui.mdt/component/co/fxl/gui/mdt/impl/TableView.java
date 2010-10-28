@@ -30,16 +30,14 @@ import co.fxl.gui.mdt.api.IList;
 import co.fxl.gui.mdt.api.IProperty.IAdapter;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.IRow;
-import co.fxl.gui.table.api.ISelection.IMultiSelection.IChangeListener;
 import co.fxl.gui.table.filter.api.IFilterTableWidget;
 import co.fxl.gui.table.filter.api.IFilterTableWidget.IFilterListener;
 import co.fxl.gui.table.filter.api.IFilterTableWidget.IRowModel;
 import co.fxl.gui.table.filter.api.IFilterTableWidget.ITableFilter;
 import co.fxl.gui.tree.api.ICallback;
 
-class TableView implements IFilterListener<Object>, IChangeListener<Object> {
+class TableView extends ViewTemplate implements IFilterListener<Object> {
 
-	private MasterDetailTableWidgetImpl widget;
 	private IFilterTableWidget<Object> table;
 	private Map<PropertyImpl, IColumn> property2column = new HashMap<PropertyImpl, IColumn>();
 	private List<IAdapter<Object, Object>> adapters = new LinkedList<IAdapter<Object, Object>>();
@@ -49,13 +47,14 @@ class TableView implements IFilterListener<Object>, IChangeListener<Object> {
 
 	@SuppressWarnings("unchecked")
 	TableView(final MasterDetailTableWidgetImpl widget, Object object) {
-		this.widget = widget;
-		table = (IFilterTableWidget<Object>) widget.splitLayout.mainPanel.add()
+		super(widget);
+		table = (IFilterTableWidget<Object>) splitLayout.mainPanel.add()
 				.widget(IFilterTableWidget.class);
 		table.addTitle(widget.title).font().pixel(18);
 		addProperties();
+		addNavigationLinks();
 		final ITableFilter tableFilterList = table
-				.filterPanel(widget.splitLayout.sidePanel.add().panel());
+				.filterPanel(splitLayout.sidePanel.add().panel());
 		for (FilterImpl filter : widget.filterList.filters) {
 			if (filter.property != null) {
 				IColumn column = property2column.get(filter.property);
@@ -158,6 +157,12 @@ class TableView implements IFilterListener<Object>, IChangeListener<Object> {
 
 	@Override
 	public void onChange(List<Object> selection) {
+		super.onChange(selection);
 		delete.clickable(!selection.isEmpty());
+	}
+
+	@Override
+	boolean isRelevant(NavigationLinkImpl link) {
+		return link.inTable;
 	}
 }

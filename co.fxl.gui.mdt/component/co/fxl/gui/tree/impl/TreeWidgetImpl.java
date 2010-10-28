@@ -24,9 +24,9 @@ import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.template.WidgetTitle;
@@ -104,6 +104,7 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 	Map<Object, Node> object2node = new HashMap<Object, Node>();
 	private ILabel refresh;
 	private IClickListener newClick;
+	private List<ISelectionListener<Object>> selectionListeners = new LinkedList<ISelectionListener<Object>>();
 
 	TreeWidgetImpl(ILayout layout) {
 		widgetTitle = new WidgetTitle(layout);
@@ -112,7 +113,7 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 				newClick = new IClickListener() {
 					@Override
 					public void onClick() {
-						selection = last.tree.createNew().object();
+						selection(last.tree.createNew().object());
 						root(root);
 					}
 				});
@@ -123,7 +124,7 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 						ITree<Object> parent = last.tree.parent();
 						last.tree.delete();
 						last = null;
-						selection = parent.object();
+						selection(parent.object());
 						root(root);
 					}
 				});
@@ -171,12 +172,19 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 	private void setUpDetailPanel() {
 		if (detailPanel != null)
 			return;
-		IGridPanel grid = panel().add().panel().grid().spacing(4);
-		panel = grid.cell(0, 0).width(300).panel().vertical();
-		detailPanel = grid.cell(1, 0).valign().begin().panel().vertical()
-				.spacing(10);
+		ISplitPane grid = panel().add().splitPane().splitPosition(300);
+		IVerticalPanel p = grid.first().panel().vertical();
+		p.border().color().lightgray();
+		panel = p.spacing(10).add().scrollPane().viewPort().panel().vertical();
+		detailPanel = grid.second().panel().vertical().spacing(10);
 		detailPanel.color().rgb(250, 250, 250);
-		detailPanel.border().color().rgb(240, 240, 240);
+		detailPanel.border().color().lightgray();
+		// IGridPanel grid = panel().add().panel().grid().spacing(4);
+		// panel = grid.cell(0, 0).width(300).panel().vertical();
+		// detailPanel = grid.cell(1, 0).valign().begin().panel().vertical()
+		// .spacing(10);
+		// detailPanel.color().rgb(250, 250, 250);
+		// detailPanel.border().color().rgb(240, 240, 240);
 	}
 
 	@Override
@@ -222,6 +230,8 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 	@Override
 	public ITreeWidget<Object> selection(Object selection) {
 		this.selection = selection;
+		for (ISelectionListener<Object> l : selectionListeners)
+			l.onChange(selection);
 		return this;
 	}
 
@@ -249,6 +259,13 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 	@Override
 	public ITreeWidget<Object> clickNew() {
 		newClick.onClick();
+		return this;
+	}
+
+	@Override
+	public ITreeWidget<Object> addSelectionListener(
+			ISelectionListener<Object> listener) {
+		selectionListeners.add(listener);
 		return this;
 	}
 }

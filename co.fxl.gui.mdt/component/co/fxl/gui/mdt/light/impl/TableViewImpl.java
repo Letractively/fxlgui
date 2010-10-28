@@ -28,6 +28,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.template.NavigationView;
 import co.fxl.gui.api.template.SplitLayout;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.mdt.light.api.ITableView;
@@ -78,7 +79,7 @@ class TableViewImpl implements ITableView<Object>, IFilterListener<Object> {
 	private MasterDetailTableWidgetImpl widget;
 	private IFilterTableWidget<Object> table;
 	private ITableFilter filter;
-	private NavigationGadget navigationView;
+	private NavigationView navigationView;
 	private List<ILabel> labels = new LinkedList<ILabel>();
 	@SuppressWarnings("unused")
 	private IClickable<?> newButton;
@@ -175,9 +176,9 @@ class TableViewImpl implements ITableView<Object>, IFilterListener<Object> {
 		}
 	}
 
-	private NavigationGadget navigationView() {
+	private NavigationView navigationView() {
 		if (navigationView == null) {
-			navigationView = new NavigationGadget(splitLayout.sidePanel.add()
+			navigationView = new NavigationView(splitLayout.sidePanel.add()
 					.panel());
 		}
 		return navigationView;

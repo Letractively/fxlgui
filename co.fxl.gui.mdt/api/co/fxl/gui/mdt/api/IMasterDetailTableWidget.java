@@ -50,4 +50,6 @@ public interface IMasterDetailTableWidget<T> {
 	IRelation<T, ?> addRelation(String name);
 
 	IMasterDetailTableWidget<T> visible(boolean visible);
+
+	INavigationLink<T> addNavigationLink(String name);
 }

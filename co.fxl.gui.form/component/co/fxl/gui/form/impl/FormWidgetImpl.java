@@ -64,6 +64,7 @@ class FormWidgetImpl implements IFormWidget {
 	List<FormFieldImpl<?>> fields = new LinkedList<FormFieldImpl<?>>();
 	private String saveTitle;
 	private int fixLabelWidth = -1;
+	private int fixValueWidth = -1;
 
 	FormWidgetImpl(ILayout panel) {
 		widgetTitle = new WidgetTitle(panel);
@@ -83,6 +84,8 @@ class FormWidgetImpl implements IFormWidget {
 
 	private IContainer container() {
 		IGridCell cell = grid().cell(1, gridIndex).valign().center();
+		if (fixValueWidth != -1)
+			cell.width(fixValueWidth);
 		cell.height(30);
 		gridIndex++;
 		return cell;
@@ -209,20 +212,22 @@ class FormWidgetImpl implements IFormWidget {
 			}
 		});
 		Validation validation = new Validation();
-		if (hasRequiredAttributes)
-			validation.allSpecified();
 		validation.linkClickable(clickable);
 		for (FormFieldImpl<?> formField : fields) {
-			if (!formField.required)
-				continue;
 			Object valueElement = formField.valueElement();
 			if (valueElement instanceof ITextArea) {
-				validation.linkInput((ITextArea) valueElement);
+				validation.linkInput((ITextArea) valueElement,
+						formField.required);
 			} else if (valueElement instanceof ITextField) {
-				validation.linkInput((ITextField) formField.valueElement());
+				validation.linkInput((ITextField) formField.valueElement(),
+						formField.required);
+			} else if (valueElement instanceof IPasswordField) {
+				validation.linkInput((IPasswordField) formField.valueElement(),
+						formField.required);
 			} else
 				throw new MethodNotImplementedException();
 		}
+		clickable.clickable(false);
 	}
 
 	public IGridPanel grid() {
@@ -254,6 +259,12 @@ class FormWidgetImpl implements IFormWidget {
 	@Override
 	public IFormWidget fixLabelColumn(int width) {
 		fixLabelWidth = width;
+		return this;
+	}
+
+	@Override
+	public IFormWidget fixValueColumn(int width) {
+		fixValueWidth = width;
 		return this;
 	}
 }

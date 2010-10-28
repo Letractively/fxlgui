@@ -23,6 +23,7 @@ import java.util.List;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IComboBox;
+import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.ITextField;
@@ -36,9 +37,12 @@ public class Validation {
 		private String originalValue;
 		boolean isSpecified = false;
 		boolean isError = false;
+		private boolean required = false;
+		private boolean isNull = false;
 
-		Field(ITextElement<?> textElement) {
+		Field(ITextElement<?> textElement, boolean required) {
 			this.textElement = textElement;
+			this.required = required;
 			fields.add(this);
 			update();
 		}
@@ -47,44 +51,50 @@ public class Validation {
 			originalValue = textElement.text();
 			isSpecified = false;
 			isError = false;
+			isNull = originalValue.equals("");
 		}
 
 		@Override
 		public void onUpdate(String value) {
 			isSpecified = !value.equals(originalValue);
+			isNull = value.equals("");
 			updateClickables();
+			if (required) {
+				if (textElement instanceof ITextField) {
+					ITextField tf = (ITextField) textElement;
+					errorColor(tf, isNull);
+				} else if (textElement instanceof IPasswordField) {
+					IPasswordField tf = (IPasswordField) textElement;
+					errorColor(tf, isNull);
+				} else
+					throw new MethodNotImplementedException();
+			}
 		}
 	}
 
 	private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat();
 	private List<IClickable<?>> clickables = new LinkedList<IClickable<?>>();
 	private List<Field> fields = new LinkedList<Field>();
-	private boolean allSpecified = false;
 
 	private void updateClickables() {
 		boolean error = false;
-		boolean isSpecified = allSpecified ? true : false;
+		boolean isSpecified = false;
+		boolean allRequiredSpecified = true;
 		for (Field field : fields) {
-			if (allSpecified) {
-				if (!field.isSpecified)
-					isSpecified = false;
-			} else {
-				if (field.isSpecified)
-					isSpecified = true;
-			}
+			if (field.isSpecified)
+				isSpecified = true;
+			if (allRequiredSpecified)
+				if (field.required)
+					allRequiredSpecified = !field.isNull;
 			if (field.isError)
 				error = true;
 		}
 		for (IClickable<?> c : clickables) {
-			c.clickable(isSpecified && !error);
+			c.clickable(isSpecified && !error && allRequiredSpecified);
 		}
 	}
 
-	public void allSpecified() {
-		allSpecified = true;
-	}
-
-	public void upate() {
+	public void update() {
 		for (Field f : fields)
 			f.update();
 	}
@@ -95,7 +105,11 @@ public class Validation {
 	}
 
 	public Validation validateDate(final ITextField textField) {
-		final Field field = new Field(textField);
+		return validateDate(textField, false);
+	}
+
+	public Validation validateDate(final ITextField textField, boolean required) {
+		final Field field = new Field(textField, required);
 		textField.addUpdateListener(new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(String value) {
@@ -107,32 +121,65 @@ public class Validation {
 						field.isError = true;
 					}
 				}
-				if (field.isError) {
-					textField.color().mix().red().white();
-				} else {
-					textField.color().white();
-				}
+				errorColor(textField, field.isError);
 				field.onUpdate(value);
 			}
 		});
 		return this;
 	}
 
+	public Validation linkInput(IPasswordField textField) {
+		return linkInput(textField, false);
+	}
+
+	public Validation linkInput(IPasswordField textField, boolean required) {
+		Field field = new Field(textField, required);
+		textField.addUpdateListener(field);
+		return this;
+	}
+
 	public Validation linkInput(ITextField textField) {
-		Field field = new Field(textField);
+		return linkInput(textField, false);
+	}
+
+	public Validation linkInput(ITextField textField, boolean required) {
+		Field field = new Field(textField, required);
 		textField.addUpdateListener(field);
 		return this;
 	}
 
 	public Validation linkInput(ITextArea textField) {
-		Field field = new Field(textField);
+		return linkInput(textField, false);
+	}
+
+	public Validation linkInput(ITextArea textField, boolean required) {
+		Field field = new Field(textField, required);
 		textField.addUpdateListener(field);
 		return this;
 	}
 
 	public Validation linkInput(final IComboBox comboBox) {
-		Field field = new Field(comboBox);
+		Field field = new Field(comboBox, false);
 		comboBox.addUpdateListener(field);
 		return this;
+	}
+
+	private void errorColor(final ITextField textField, boolean hasError) {
+		if (hasError) {
+			textField.color().mix().red().white().white();
+		} else {
+			textField.color().white();
+		}
+	}
+
+	private void errorColor(final IPasswordField textField, boolean hasError) {
+		if (hasError) {
+			textField.color().mix().red().white().white();
+		} else {
+			textField.color().white();
+		}
+	}
+
+	public void reset() {
 	}
 }

@@ -19,17 +19,17 @@
 package co.fxl.gui.navigation.group.impl;
 
 import co.fxl.gui.api.ICardPanel;
+import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationWidget;
 
 public class NavigationWidgetImpl implements INavigationWidget {
 
-	private IVerticalPanel mainPanel;
+	private IDockPanel mainPanel;
 	IHorizontalPanel navigationPanel;
 	ICardPanel history;
 	private NavigationItemImpl active;
@@ -39,13 +39,13 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	int[] colorInactive = new int[] { 228, 228, 255 };
 
 	protected NavigationWidgetImpl(ILayout layout) {
-		mainPanel = layout.vertical();
-		IGridPanel hPanel = mainPanel.add().panel().grid();
+		mainPanel = layout.dock();
+		IGridPanel hPanel = mainPanel.top().panel().grid();
 		hPanel.color().rgb(0, 51, 102);
 		navigationPanel = hPanel.cell(0, 0).panel().horizontal().add().panel()
 				.horizontal();
 		navigationPanel.addSpace(10);
-		history = mainPanel.add().panel().card();
+		history = mainPanel.center().panel().card();
 	}
 
 	@Override
