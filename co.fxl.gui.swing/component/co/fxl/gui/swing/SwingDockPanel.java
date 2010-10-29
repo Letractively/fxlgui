@@ -31,10 +31,9 @@ import co.fxl.gui.api.IDockPanel;
 
 class SwingDockPanel extends SwingPanel<IDockPanel> implements IDockPanel {
 
-	private List<String> positions = new LinkedList<String>(
-			Arrays.asList(new String[] { BorderLayout.CENTER,
-					BorderLayout.NORTH, BorderLayout.WEST, BorderLayout.EAST,
-					BorderLayout.SOUTH }));
+	private List<String> positions = new LinkedList<String>(Arrays
+			.asList(new String[] { BorderLayout.CENTER, BorderLayout.NORTH,
+					BorderLayout.WEST, BorderLayout.EAST, BorderLayout.SOUTH }));
 
 	SwingDockPanel(SwingContainer<JPanel> container) {
 		super(container);
@@ -79,7 +78,7 @@ class SwingDockPanel extends SwingPanel<IDockPanel> implements IDockPanel {
 	}
 
 	@Override
-	void add(JComponent component) {
+	public void add(JComponent component) {
 		String position = positions.remove(0);
 		container.component.add(component, position);
 	}

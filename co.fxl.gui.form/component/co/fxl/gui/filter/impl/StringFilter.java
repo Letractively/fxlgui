@@ -40,7 +40,7 @@ class StringFilter extends FilterTemplate<String> {
 		}
 	}
 
-	private ITextField textField;
+	ITextField textField;
 	private String text;
 
 	StringFilter(IGridPanel panel, String name, int filterIndex) {
@@ -91,8 +91,12 @@ class StringFilter extends FilterTemplate<String> {
 	}
 
 	@Override
-	void fromConstraint(IFilterConstraints constraints) {
-		String prefix = constraints.stringValue(name);
-		textField.text(prefix);
+	boolean fromConstraint(IFilterConstraints constraints) {
+		if (constraints.isAttributeConstrained(name)) {
+			String prefix = constraints.stringValue(name);
+			textField.text(prefix);
+			return true;
+		} else
+			return false;
 	}
 }

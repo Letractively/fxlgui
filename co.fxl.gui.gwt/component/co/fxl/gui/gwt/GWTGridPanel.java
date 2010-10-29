@@ -165,7 +165,7 @@ class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPanel {
 	}
 
 	@Override
-	void add(Widget widget) {
+	public void add(Widget widget) {
 		container.widget.setWidget(gridCell.row, gridCell.column, widget);
 		CellFormatter formatter = gridCell.formatter();
 		formatter.setHeight(gridCell.row, gridCell.column, "100%");

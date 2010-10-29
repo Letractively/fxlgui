@@ -84,12 +84,12 @@ public class ViewList {
 		}
 	}
 
-	private PageWidget widget;
+	private MetaViewList widget;
 	WidgetTitle widgetTitle;
 	private IVerticalPanel panel;
 	private List<ViewImpl> views = new LinkedList<ViewImpl>();
 
-	public ViewList(PageWidget widget, ILayout layout) {
+	public ViewList(MetaViewList widget, ILayout layout) {
 		this.widget = widget;
 		widgetTitle = new WidgetTitle(layout);
 	}

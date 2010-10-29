@@ -290,7 +290,8 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 		return row.get(rowIndex);
 	}
 
-	void add(JComponent component) {
+	@Override
+	public void add(JComponent component) {
 		gridCell.vlayout.insets = insets;
 		gridCell.panel.add(component);
 		container.component.add(gridCell.panel, gridCell.constraints);

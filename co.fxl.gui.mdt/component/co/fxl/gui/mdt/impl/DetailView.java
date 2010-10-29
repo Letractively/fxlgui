@@ -29,6 +29,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.api.template.SimpleDateFormat;
 import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
@@ -51,8 +52,8 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 	@SuppressWarnings("unchecked")
 	DetailView(final MasterDetailTableWidgetImpl widget, Object show) {
 		super(widget);
-		tree = (IFilterTreeWidget<Object>) widget.splitLayout.mainPanel.add()
-				.widget(IFilterTreeWidget.class);
+		tree = (IFilterTreeWidget<Object>) widget.mainPanel.add().widget(
+				IFilterTreeWidget.class);
 		tree.title(widget.title);
 		tree.addSelectionListener(new ISelectionListener<Object>() {
 
@@ -64,10 +65,16 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 			}
 		});
 		addNavigationLinks();
-		filterList = tree
-				.filterList(widget.splitLayout.sidePanel.add().panel());
+		filterList = tree.filterList(widget.sidePanel.add().panel());
 		for (FilterImpl filter : widget.filterList.filters) {
-			if (filter.property != null) {
+			if (filter instanceof RelationFilterImpl) {
+				RelationFilterImpl rfi = (RelationFilterImpl) filter;
+				IRelationFilter<Object, Object> rf = (IRelationFilter<Object, Object>) filterList
+						.addRelationFilter();
+				rf.name(rfi.name);
+				rf.adapter(rfi.adapter);
+				rf.preset(rfi.preset);
+			} else if (filter.property != null) {
 				IFieldType type = filterList.addFilter().name(
 						filter.property.name).type().type(
 						filter.property.type.type);

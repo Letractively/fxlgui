@@ -22,6 +22,7 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
+import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IFilterList;
 import co.fxl.gui.mdt.api.IProperty;
 
@@ -52,8 +53,15 @@ class FilterListImpl implements IFilterList<Object> {
 	}
 
 	@Override
-	public IFilterList<Object> constraints(IFilterConstraints constraints) {
+	public IFilterList<Object> constraints(
+			IFilterConstraints constraints) {
 		filterWidget.constraints(constraints);
 		return this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public IRelationFilter<Object, ?> addRelationFilter() {
+		return (IRelationFilter<Object, ?>) filterWidget.addRelationFilter();
 	}
 }

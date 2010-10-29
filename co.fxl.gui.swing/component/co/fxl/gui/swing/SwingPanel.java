@@ -30,8 +30,10 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.IWidgetProvider;
 
-class SwingPanel<R> extends SwingElement<JPanel, R> implements IPanel<R> {
+class SwingPanel<R> extends SwingElement<JPanel, R> implements IPanel<R>,
+		ComponentParent {
 
 	private final class SwingPanelColor extends SwingColor {
 
@@ -76,11 +78,13 @@ class SwingPanel<R> extends SwingElement<JPanel, R> implements IPanel<R> {
 		return (R) this;
 	}
 
-	void add(JComponent component) {
+	@Override
+	public void add(JComponent component) {
 		container.component.add(component);
 	}
 
-	void remove(JComponent component) {
+	@Override
+	public void remove(JComponent component) {
 		container.component.remove(component);
 	}
 
@@ -91,5 +95,15 @@ class SwingPanel<R> extends SwingElement<JPanel, R> implements IPanel<R> {
 	@Override
 	public IDisplay display() {
 		return container.lookupSwingDisplay();
+	}
+
+	@Override
+	public SwingDisplay lookupSwingDisplay() {
+		return container.lookupSwingDisplay();
+	}
+
+	@Override
+	public IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
+		return container.lookupWidgetProvider(interfaceClass);
 	}
 }

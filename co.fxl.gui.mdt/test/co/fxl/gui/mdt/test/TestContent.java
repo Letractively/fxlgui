@@ -230,7 +230,7 @@ class TestContent implements IContent<String> {
 					String e = entities.get(i);
 					for (int k = 1; k < 2; k++) {
 						if (constraints
-								.isConstrained(MasterDetailTableWidgetTest
+								.isAttributeConstrained(MasterDetailTableWidgetTest
 										.propertyNameOf(k))) {
 							String name = MasterDetailTableWidgetTest
 									.valueNameOf(e);
@@ -240,7 +240,7 @@ class TestContent implements IContent<String> {
 								continue l;
 						}
 						if (constraints
-								.isConstrained(MasterDetailTableWidgetTest
+								.isAttributeConstrained(MasterDetailTableWidgetTest
 										.propertyDescriptionOf(k))) {
 							String description = MasterDetailTableWidgetTest
 									.valueDescriptionOf(e);

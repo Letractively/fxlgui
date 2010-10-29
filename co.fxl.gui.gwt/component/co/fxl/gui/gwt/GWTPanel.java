@@ -22,12 +22,13 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.IWidgetProvider;
 
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 
 abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R> implements
-		IPanel<R> {
+		IPanel<R>, WidgetParent {
 
 	GWTPanel(GWTContainer<T> container) {
 		super(container);
@@ -68,14 +69,26 @@ abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R> implements
 		return new GWTContainer<Widget>(this);
 	}
 
-	abstract void add(Widget widget);
+	@Override
+	public abstract void add(Widget widget);
 
-	void remove(Widget widget) {
-		widget.removeFromParent();
+	@Override
+	public void remove(Widget widget) {
+		container.parent.remove(widget);
 	}
 
 	@Override
 	public IDisplay display() {
 		return container.lookupDisplay();
+	}
+
+	@Override
+	public GWTDisplay lookupDisplay() {
+		return container.lookupDisplay();
+	}
+
+	@Override
+	public IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
+		return container.lookupWidgetProvider(interfaceClass);
 	}
 }

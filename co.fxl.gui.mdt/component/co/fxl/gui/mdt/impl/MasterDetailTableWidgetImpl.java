@@ -22,7 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.template.SplitLayout;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.mdt.api.IFilterList;
 import co.fxl.gui.mdt.api.IMasterDetailTableWidget;
@@ -38,12 +38,15 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	IContent<Object> source;
 	FilterListImpl filterList = new FilterListImpl();
 	String title;
-	SplitLayout splitLayout;
 	IFilterConstraints constraints;
 	List<NavigationLinkImpl> navigationLinks = new LinkedList<NavigationLinkImpl>();
+	boolean hasFilter = false;
+	ILayout layout;
+	IVerticalPanel mainPanel;
+	IVerticalPanel sidePanel;
 
 	MasterDetailTableWidgetImpl(ILayout layout) {
-		splitLayout = new SplitLayout(layout);
+		this.layout = layout;
 	}
 
 	@Override
@@ -74,6 +77,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 
 	@Override
 	public IFilterList<Object> filterList() {
+		hasFilter = true;
 		return filterList;
 	}
 
@@ -96,8 +100,10 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	}
 
 	private void clear() {
-		splitLayout.mainPanel.clear();
-		splitLayout.sidePanel.clear();
+		if (mainPanel != null) {
+			mainPanel.clear();
+			sidePanel.clear();
+		}
 	}
 
 	@Override

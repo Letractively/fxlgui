@@ -20,22 +20,28 @@ package co.fxl.gui.table.filter.api;
 
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.filter.api.IFilterWidget.IFilter;
+import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.IRow;
 import co.fxl.gui.table.api.ITableWidget;
 
 public interface IFilterTableWidget<T> extends ITableWidget<T> {
 
-	public interface ITableFilter {
+	public interface ITableFilter<T> {
 
-		ITableFilter filterable(IColumn column, Object... values);
+		ITableFilter<T> filterable(IColumn column, Object... values);
 
-		ITableFilter filterable(IColumn column, Class<?> contentType,
+		ITableFilter<T> filterable(IColumn column, Class<?> contentType,
 				Object... values);
 
-		ITableFilter constraints(IFilterConstraints constraints);
+		ITableFilter<T> constraints(IFilterConstraints constraints);
 
-		ITableFilter apply();
+		ITableFilter<T> apply();
+
+		IFilter addFilter();
+
+		IRelationFilter<?, ?> addRelationFilter();
 	}
 
 	public interface IRowModel<T> {
@@ -54,7 +60,7 @@ public interface IFilterTableWidget<T> extends ITableWidget<T> {
 		void onRefresh(IRowModel<T> rows, IFilterConstraints constraints);
 	}
 
-	ITableFilter filterPanel(ILayout layout);
+	ITableFilter<T> filterPanel(ILayout layout);
 
 	IRowModel<T> resetRowModel();
 

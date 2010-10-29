@@ -30,10 +30,11 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 
 	SwingScrollPane(SwingContainer<JScrollPane> container) {
 		super(container);
-		container.component
-				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		container.component
-				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		// container.component
+		// .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		// container.component
+		// .setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		container.component.setAlignmentY(JScrollPane.TOP_ALIGNMENT);
 		container.component.setOpaque(false);
 		container.component.setBackground(null);
 		container.component.setBorder(null);

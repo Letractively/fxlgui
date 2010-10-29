@@ -21,53 +21,54 @@ package co.fxl.gui.swing;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.IColored.IColor;
 
-public class SwingDisplay implements IDisplay {
+public class SwingDisplay implements IDisplay, ComponentParent {
 
-	private SwingContainer<JPanel> container;
+	SwingContainer<JComponent> container;
 	JFrame frame = new JFrame();
 	private int widthPixel = 800;
 	private int heightPixel = 600;
 	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
-	private JScrollPane scrollPane;
-	private ILayout layout;
+	// private JScrollPane scrollPane;
+	// private ILayout layout;
 	private static SwingDisplay instance = null;
 
 	private SwingDisplay() {
-		container = new SwingContainer<JPanel>(null) {
-			@Override
-			IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
-				return SwingDisplay.this.widgetProviders.get(interfaceClass);
-			}
+		container = new SwingContainer<JComponent>(this) {
 
-			@Override
-			SwingDisplay lookupSwingDisplay() {
-				return SwingDisplay.this;
+			void setComponent(JComponent component) {
+				super.component = component;
+				if (component instanceof JScrollPane)
+					((JScrollPane) component)
+							.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+				frame.setContentPane(container.component);
+				container.component.setPreferredSize(new Dimension(widthPixel,
+						heightPixel));
+				container.component.setBackground(Color.WHITE);
 			}
 		};
-		layout = container.panel();
+		// layout = container.panel();
 		frame.setSize(widthPixel, heightPixel);
 		frame.setBackground(Color.WHITE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		scrollPane = new JScrollPane(container.component);
-		scrollPane
-				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		frame.setContentPane(scrollPane);
-		scrollPane.setPreferredSize(new Dimension(widthPixel, heightPixel));
-		container.component.setBackground(Color.WHITE);
+		// scrollPane = new JScrollPane(container.component);
+		// scrollPane
+		// .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 	}
 
 	private void resize() {
@@ -77,7 +78,7 @@ public class SwingDisplay implements IDisplay {
 
 	@Override
 	public IDisplay visible(boolean visible) {
-		scrollPane.setVisible(visible);
+		// scrollPane.setVisible(visible);
 		container.component.setVisible(visible);
 		frame.setVisible(visible);
 		return this;
@@ -108,8 +109,8 @@ public class SwingDisplay implements IDisplay {
 	}
 
 	@Override
-	public ILayout layout() {
-		return layout;
+	public IContainer container() {
+		return container;
 	}
 
 	@Override
@@ -149,7 +150,7 @@ public class SwingDisplay implements IDisplay {
 			@Override
 			protected void setColor(Color color) {
 				frame.setBackground(color);
-				scrollPane.setBackground(color);
+				// scrollPane.setBackground(color);
 			}
 		};
 	}
@@ -157,5 +158,46 @@ public class SwingDisplay implements IDisplay {
 	@Override
 	public IDisplay addExceptionHandler(IExceptionHandler handler) {
 		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public void add(JComponent component) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public SwingDisplay lookupSwingDisplay() {
+		return this;
+	}
+
+	@Override
+	public void remove(JComponent component) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
+		return widgetProviders.get(interfaceClass);
+	}
+
+	@Override
+	public IDisplay addResizeListener(final IResizeListener listener) {
+		frame.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent arg0) {
+				listener.onResize(frame.getWidth(), frame.getHeight());
+			}
+		});
+		return this;
+	}
+
+	@Override
+	public int height() {
+		return frame.getHeight();
+	}
+
+	@Override
+	public int width() {
+		return frame.getWidth();
 	}
 }

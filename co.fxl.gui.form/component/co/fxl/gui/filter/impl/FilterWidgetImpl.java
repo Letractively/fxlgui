@@ -32,6 +32,7 @@ import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
+import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
 
 class FilterWidgetImpl implements IFilterWidget {
 
@@ -48,6 +49,7 @@ class FilterWidgetImpl implements IFilterWidget {
 				filter.clear();
 			}
 			clear.clickable(false);
+			apply.clickable(false);
 			notifyListeners();
 		}
 	}
@@ -110,9 +112,13 @@ class FilterWidgetImpl implements IFilterWidget {
 	}
 
 	private FilterPart<?> addFilter(Class<?> contentType, String name,
-			List<Object> values) {
+			List<Object> values, List<Object> preset,
+			IAdapter<Object, Object> adapter) {
 		FilterPart<?> filter;
-		if (!values.isEmpty()) {
+		if (preset != null) {
+			filter = new RelationFilter(grid, name, filters.size(), preset,
+					adapter);
+		} else if (!values.isEmpty()) {
 			if (contentType.equals(String.class)) {
 				filter = new ComboBoxStringFilter(grid, name, values, filters
 						.size());
@@ -146,6 +152,13 @@ class FilterWidgetImpl implements IFilterWidget {
 	}
 
 	@Override
+	public IRelationFilter<Object, Object> addRelationFilter() {
+		RelationFilterImpl filter = new RelationFilterImpl();
+		filterList.add(filter);
+		return filter;
+	}
+
+	@Override
 	public IFilterWidget addFilterListener(IFilterListener listener) {
 		listeners.add(listener);
 		return this;
@@ -164,30 +177,41 @@ class FilterWidgetImpl implements IFilterWidget {
 					.asList(filter.type.values));
 			if (!list.isEmpty())
 				list.add(0, "");
-			addFilter(filter.type.type, filter.name, list);
+			List<Object> preset = null;
+			IAdapter<Object, Object> adapter = null;
+			if (filter instanceof RelationFilterImpl) {
+				RelationFilterImpl rf = (RelationFilterImpl) filter;
+				preset = rf.preset;
+				adapter = rf.adapter;
+			}
+			addFilter(filter.type.type, filter.name, list, preset, adapter);
 		}
 		if (addSizeFilter) {
 			sizeFilter = (ComboBoxIntegerFilter) addFilter(Integer.class,
-					"Size", DEFAULT_SIZES);
+					"Size", DEFAULT_SIZES, null, null);
 			sizeFilter.validate(validation);
 		}
+		boolean constrained = false;
 		if (constraints != null) {
-			boolean constrained = false;
 			for (FilterPart<?> f : filters) {
 				FilterTemplate<?> ft = (FilterTemplate<?>) f;
-				if (constraints.isConstrained(ft.name)) {
-					ft.fromConstraint(constraints);
+				boolean c = ft.fromConstraint((IFilterConstraints) constraints);
+				constrained = constrained | c;
+				if (f instanceof RelationFilter)
 					constrained = true;
-				}
 			}
 			if (constraints.size() != (Integer) DEFAULT_SIZES.get(0)) {
 				sizeFilter.set(constraints.size());
 				constrained = true;
 			}
-			if (constrained) {
-				apply.clickable(true);
-				clear.clickable(true);
-			}
+		}
+		for (FilterPart<?> f : filters) {
+			if (f instanceof RelationFilter)
+				constrained = true;
+		}
+		if (constrained) {
+			apply.clickable(true);
+			clear.clickable(true);
 		}
 		return this;
 	}

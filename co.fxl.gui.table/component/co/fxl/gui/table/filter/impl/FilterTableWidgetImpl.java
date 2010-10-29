@@ -85,7 +85,7 @@ class FilterTableWidgetImpl extends TableWidgetImpl implements
 	}
 
 	@Override
-	public ITableFilter filterPanel(ILayout layout) {
+	public ITableFilter<Object> filterPanel(ILayout layout) {
 		if (filter == null) {
 			filter = new TableFilterImpl(this, layout);
 		}
@@ -93,8 +93,7 @@ class FilterTableWidgetImpl extends TableWidgetImpl implements
 	}
 
 	@Override
-	public IFilterTableWidget<Object> addFilterListener(
-			IFilterListener<Object> listener) {
+	public IFilterTableWidget<Object> addFilterListener(IFilterListener<Object> listener) {
 		this.filterListener = listener;
 		return this;
 	}

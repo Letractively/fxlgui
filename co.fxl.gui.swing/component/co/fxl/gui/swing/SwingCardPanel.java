@@ -70,13 +70,13 @@ class SwingCardPanel extends SwingPanel<ICardPanel> implements ICardPanel {
 	}
 
 	@Override
-	void add(JComponent component) {
+	public void add(JComponent component) {
 		container.component.add(component, currentID);
 		panel2uID.put(component, currentID);
 	}
 
 	@Override
-	void remove(JComponent component) {
+	public void remove(JComponent component) {
 		super.remove(component);
 		panel2uID.remove(component);
 	}

@@ -16,20 +16,27 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.mdt.api;
+package co.fxl.gui.tree.impl;
 
-import co.fxl.gui.filter.api.IFilterConstraints;
-import co.fxl.gui.filter.api.IFilterWidget.IFilter;
-import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
+import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IDisplay.IResizeListener;
 
-public interface IFilterList<T> {
+class ResizeListener implements IResizeListener {
 
-	IFilter addFilter();
+	static ResizeListener instance;
+	static IResizeListener listener;
+	static boolean resizing = false;
 
-	IRelationFilter<T, ?> addRelationFilter();
+	static void setup(IDisplay display, IResizeListener l) {
+		if (instance == null) {
+			instance = new ResizeListener();
+			display.addResizeListener(instance);
+		}
+		listener = l;
+	}
 
-	// TODO @IProperty
-	IFilterList<T> addPropertyFilter(IProperty<T, ?> property);
-
-	IFilterList<T> constraints(IFilterConstraints constraints);
+	@Override
+	public void onResize(int width, int height) {
+		listener.onResize(width, height);
+	}
 }

@@ -19,25 +19,30 @@
 package co.fxl.gui.filter.api;
 
 import java.util.Date;
+import java.util.List;
 
 public interface IFilterConstraints {
 
-	public interface IRange<T> {
+	public interface IRange<R> {
 
-		T lowerBound();
+		R lowerBound();
 
-		T upperBound();
+		R upperBound();
 	}
 
 	int size();
-	
-	boolean isConstrained(String column);
+
+	boolean isAttributeConstrained(String column);
+
+	boolean isRelationConstrained(String column);
 
 	IRange<Integer> intRange(String column);
 
 	IRange<Date> dateRange(String column);
 
 	String stringValue(String column);
+
+	List<?> relationList(String column);
 
 	Class<?> typeOf(String column);
 }

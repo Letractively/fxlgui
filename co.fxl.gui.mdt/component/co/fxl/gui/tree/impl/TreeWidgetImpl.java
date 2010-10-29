@@ -24,11 +24,13 @@ import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.register.api.IRegister;
 import co.fxl.gui.register.api.IRegisterWidget;
@@ -105,6 +107,7 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 	private ILabel refresh;
 	private IClickListener newClick;
 	private List<ISelectionListener<Object>> selectionListeners = new LinkedList<ISelectionListener<Object>>();
+	private ILabel delete;
 
 	TreeWidgetImpl(ILayout layout) {
 		widgetTitle = new WidgetTitle(layout);
@@ -117,7 +120,7 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 						root(root);
 					}
 				});
-		widgetTitle.addHyperlink("Delete").addClickListener(
+		delete = widgetTitle.addHyperlink("Delete").addClickListener(
 				new IClickListener() {
 					@Override
 					public void onClick() {
@@ -127,7 +130,7 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 						selection(parent.object());
 						root(root);
 					}
-				});
+				}).mouseLeft();
 	}
 
 	@Override
@@ -172,8 +175,19 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 	private void setUpDetailPanel() {
 		if (detailPanel != null)
 			return;
-		ISplitPane grid = panel().add().splitPane().splitPosition(300);
+		final ISplitPane grid = panel().add().splitPane().splitPosition(300);
 		IVerticalPanel p = grid.first().panel().vertical();
+		IResizeListener l = new IResizeListener() {
+
+			@Override
+			public void onResize(int width, int height) {
+				resize(grid, height);
+			}
+		};
+		IDisplay d = p.display();
+		int height = d.height();
+		resize(grid, height);
+		ResizeListener.setup(d, l);
 		p.border().color().lightgray();
 		panel = p.spacing(10).add().scrollPane().viewPort().panel().vertical();
 		detailPanel = grid.second().panel().vertical().spacing(10);
@@ -185,6 +199,11 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 		// .spacing(10);
 		// detailPanel.color().rgb(250, 250, 250);
 		// detailPanel.border().color().rgb(240, 240, 240);
+	}
+
+	private void resize(final ISplitPane grid, int height) {
+		int offsetY = grid.offsetY();
+		grid.height(height - offsetY - 30);
 	}
 
 	@Override
@@ -209,8 +228,10 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 			last.selected(false);
 		}
 		last = node;
-		if (node != null)
+		if (node != null) {
 			node.selected(true);
+			selection(node.tree.object());
+		}
 		for (DetailView view : detailViews) {
 			view.setNode(node);
 		}
@@ -232,6 +253,8 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 		this.selection = selection;
 		for (ISelectionListener<Object> l : selectionListeners)
 			l.onChange(selection);
+		if (selection != null && root != null)
+			delete.clickable(!root.object().equals(selection));
 		return this;
 	}
 

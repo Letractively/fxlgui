@@ -103,8 +103,12 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 	}
 
 	@Override
-	void fromConstraint(IFilterConstraints constraints) {
-		String prefix = constraints.stringValue(name);
-		comboBox.text(prefix);
+	boolean fromConstraint(IFilterConstraints constraints) {
+		if (constraints.isAttributeConstrained(name)) {
+			String prefix = constraints.stringValue(name);
+			comboBox.text(prefix);
+			return true;
+		} else
+			return false;
 	}
 }

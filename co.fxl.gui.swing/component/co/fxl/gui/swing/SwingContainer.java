@@ -58,10 +58,10 @@ class SwingContainer<T extends JComponent> implements IContainer {
 	static final Insets INSETS = new Insets(4, 4, 4, 4);
 	static final int MIN_HEIGHT_TEXT_COMPONENT = 24;
 	static final int MIN_HEIGHT_TEXTAREA_COMPONENT = 100;
-	SwingPanel<?> parent;
+	ComponentParent parent;
 	T component;
 
-	SwingContainer(SwingPanel<?> parent) {
+	SwingContainer(ComponentParent parent) {
 		this.parent = parent;
 	}
 
@@ -169,11 +169,11 @@ class SwingContainer<T extends JComponent> implements IContainer {
 	}
 
 	IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
-		return parent.container.lookupWidgetProvider(interfaceClass);
+		return parent.lookupWidgetProvider(interfaceClass);
 	}
 
 	SwingDisplay lookupSwingDisplay() {
-		return parent.container.lookupSwingDisplay();
+		return parent.lookupSwingDisplay();
 	}
 
 	@Override

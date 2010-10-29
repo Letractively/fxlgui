@@ -39,10 +39,15 @@ abstract class FilterTemplate<T> implements FilterPart<T> {
 
 	abstract Constraint asConstraint();
 
-	abstract void fromConstraint(IFilterConstraints constraints);
-
 	static void addTitle(IGridPanel panel, String name, int filterIndex) {
-		panel.cell(0, filterIndex).align().end().label().text(name).font()
+		panel.cell(0, filterIndex).align().end().valign().center().label().text(name).font()
 				.color().gray();
+	}
+
+	boolean fromConstraint(IFilterConstraints constraints) {
+		if (constraints.isAttributeConstrained(name)) {
+			throw new MethodNotImplementedException();
+		} else
+			return false;
 	}
 }
