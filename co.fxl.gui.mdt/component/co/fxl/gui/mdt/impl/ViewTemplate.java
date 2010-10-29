@@ -46,6 +46,7 @@ abstract class ViewTemplate implements IChangeListener<Object> {
 				IVerticalPanel v = widget.layout.vertical();
 				widget.sidePanel = v.add().panel().grid().cell(1, 0).align()
 						.end().panel().vertical().width(300).spacing(10);
+				widget.sidePanel.visible(false);
 				widget.mainPanel = v.add().panel().vertical();
 				// v.addSpace(10);
 				// widget.sidePanel.color().rgb(240, 240, 240);
