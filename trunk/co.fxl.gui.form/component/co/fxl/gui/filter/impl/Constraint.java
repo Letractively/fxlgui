@@ -19,6 +19,7 @@
 package co.fxl.gui.filter.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import co.fxl.gui.filter.api.IFilterConstraints.IRange;
 
@@ -37,6 +38,11 @@ interface Constraint {
 	interface IStringPrefixConstraint extends INamedConstraint {
 
 		String prefix();
+	}
+
+	interface IRelationConstraint extends INamedConstraint {
+
+		List<Object> values();
 	}
 
 	interface IRangeConstraint<T> extends INamedConstraint {

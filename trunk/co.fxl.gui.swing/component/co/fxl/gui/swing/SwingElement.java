@@ -20,10 +20,12 @@ package co.fxl.gui.swing;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
 
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IBordered.IBorder;
@@ -123,5 +125,21 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	@Override
 	public boolean visible() {
 		return container.component.isVisible();
+	}
+
+	@Override
+	public int offsetX() {
+		return (int) point().getX();
+	}
+
+	@Override
+	public int offsetY() {
+		return (int) point().getY();
+	}
+
+	private Point point() {
+		Point pt = SwingUtilities.convertPoint(container.component, new Point(
+				0, 0), container.lookupSwingDisplay().container.component);
+		return pt;
 	}
 }

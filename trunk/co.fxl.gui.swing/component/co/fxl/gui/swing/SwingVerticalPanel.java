@@ -52,7 +52,7 @@ class SwingVerticalPanel extends SwingPanel<IVerticalPanel> implements
 	}
 
 	@Override
-	void add(JComponent component) {
+	public void add(JComponent component) {
 		super.add(component);
 	}
 

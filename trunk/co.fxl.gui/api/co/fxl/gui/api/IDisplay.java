@@ -22,6 +22,11 @@ import co.fxl.gui.api.IColored.IColor;
 
 public interface IDisplay {
 
+	public interface IResizeListener {
+
+		void onResize(int width, int height);
+	}
+
 	public interface IExceptionHandler {
 
 		void onException(RuntimeException exception);
@@ -35,7 +40,7 @@ public interface IDisplay {
 
 	IDisplay visible(boolean visible);
 
-	ILayout layout();
+	IContainer container();
 
 	IDisplay fullscreen();
 
@@ -48,4 +53,10 @@ public interface IDisplay {
 	IColor color();
 
 	IDisplay addExceptionHandler(IExceptionHandler handler);
+
+	IDisplay addResizeListener(IResizeListener listener);
+
+	int width();
+
+	int height();
 }

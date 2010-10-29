@@ -28,11 +28,12 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
+import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.filter.api.IFilterTableWidget.ITableFilter;
 import co.fxl.gui.table.impl.ColumnImpl;
 
-class TableFilterImpl implements ITableFilter, IFilterListener {
+class TableFilterImpl implements ITableFilter<Object>, IFilterListener {
 
 	private FilterTableWidgetImpl widget;
 	IFilterWidget filterWidget;
@@ -46,20 +47,20 @@ class TableFilterImpl implements ITableFilter, IFilterListener {
 	}
 
 	@Override
-	public ITableFilter apply() {
+	public ITableFilter<Object> apply() {
 		filterWidget.apply();
 		return this;
 	}
 
 	@Override
-	public ITableFilter filterable(IColumn column, Object... values) {
+	public ITableFilter<Object> filterable(IColumn column, Object... values) {
 		ColumnImpl columnImpl = (ColumnImpl) column;
 		return filterable(column, columnImpl.contentType, values);
 	}
 
 	@Override
-	public ITableFilter filterable(IColumn column, Class<?> contentType,
-			Object... values) {
+	public ITableFilter<Object> filterable(IColumn column,
+			Class<?> contentType, Object... values) {
 		ColumnImpl columnImpl = (ColumnImpl) column;
 		String name = columnImpl.name;
 		List<Object> list = new LinkedList<Object>(Arrays.asList(values));
@@ -81,8 +82,18 @@ class TableFilterImpl implements ITableFilter, IFilterListener {
 	}
 
 	@Override
-	public ITableFilter constraints(IFilterConstraints constraints) {
+	public ITableFilter<Object> constraints(IFilterConstraints constraints) {
 		filterWidget.constraints(constraints);
 		return this;
+	}
+
+	@Override
+	public IFilter addFilter() {
+		return filterWidget.addFilter();
+	}
+
+	@Override
+	public IRelationFilter<?, ?> addRelationFilter() {
+		return filterWidget.addRelationFilter();
 	}
 }

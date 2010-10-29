@@ -46,7 +46,7 @@ class MasterDetailTableWidgetTest {
 		display.register(new FilterWidgetImplProvider());
 		display.register(new FilterTreeWidgetImplProvider());
 		display.register(new FormWidgetImplProvider());
-		IVerticalPanel panel = display.layout().vertical();
+		IVerticalPanel panel = display.container().panel().vertical();
 		panel.color().rgb(245, 245, 245);
 		@SuppressWarnings("unchecked")
 		IMasterDetailTableWidget<String> widget = (IMasterDetailTableWidget<String>) panel

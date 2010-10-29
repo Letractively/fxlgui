@@ -26,6 +26,7 @@ import java.util.Map;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IList;
 import co.fxl.gui.mdt.api.IProperty.IAdapter;
 import co.fxl.gui.table.api.IColumn;
@@ -48,15 +49,22 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 	@SuppressWarnings("unchecked")
 	TableView(final MasterDetailTableWidgetImpl widget, Object object) {
 		super(widget);
-		table = (IFilterTableWidget<Object>) splitLayout.mainPanel.add()
-				.widget(IFilterTableWidget.class);
+		table = (IFilterTableWidget<Object>) widget.mainPanel.add().widget(
+				IFilterTableWidget.class);
 		table.addTitle(widget.title).font().pixel(18);
 		addProperties();
 		addNavigationLinks();
-		final ITableFilter tableFilterList = table
-				.filterPanel(splitLayout.sidePanel.add().panel());
+		final ITableFilter tableFilterList = table.filterPanel(widget.sidePanel.add()
+				.panel());
 		for (FilterImpl filter : widget.filterList.filters) {
-			if (filter.property != null) {
+			if (filter instanceof RelationFilterImpl) {
+				RelationFilterImpl rfi = (RelationFilterImpl) filter;
+				IRelationFilter<Object, Object> rf = tableFilterList
+						.addRelationFilter();
+				rf.name(rfi.name);
+				rf.adapter(rfi.adapter);
+				rf.preset(rfi.preset);
+			} else if (filter.property != null) {
 				IColumn column = property2column.get(filter.property);
 				tableFilterList.filterable(column, filter.property.type.type,
 						filter.type.values);

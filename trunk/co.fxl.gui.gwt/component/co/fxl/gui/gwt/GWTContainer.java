@@ -53,11 +53,11 @@ import com.google.gwt.user.client.ui.Widget;
 @SuppressWarnings("unchecked")
 class GWTContainer<T extends Widget> implements IContainer {
 
-	GWTPanel<?, ?> parent;
+	WidgetParent parent;
 	T widget;
 	GWTElement<?, ?> element;
 
-	GWTContainer(GWTPanel<?, ?> parent) {
+	GWTContainer(WidgetParent parent) {
 		this.parent = parent;
 	}
 
@@ -175,11 +175,11 @@ class GWTContainer<T extends Widget> implements IContainer {
 	}
 
 	GWTDisplay lookupDisplay() {
-		return parent.container.lookupDisplay();
+		return parent.lookupDisplay();
 	}
 
 	IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
-		return parent.container.lookupWidgetProvider(interfaceClass);
+		return parent.lookupWidgetProvider(interfaceClass);
 	}
 
 	@Override

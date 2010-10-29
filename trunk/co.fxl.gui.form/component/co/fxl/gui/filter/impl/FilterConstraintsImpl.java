@@ -20,10 +20,12 @@ package co.fxl.gui.filter.impl;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.impl.Constraint.INamedConstraint;
+import co.fxl.gui.filter.impl.Constraint.IRelationConstraint;
 import co.fxl.gui.filter.impl.Constraint.ISizeConstraint;
 import co.fxl.gui.filter.impl.Constraint.IStringPrefixConstraint;
 
@@ -45,8 +47,9 @@ class FilterConstraintsImpl implements IFilterConstraints {
 	}
 
 	@Override
-	public boolean isConstrained(String column) {
-		return constraints.containsKey(column);
+	public boolean isAttributeConstrained(String column) {
+		return constraints.get(column) != null
+				&& !(constraints.get(column) instanceof IRelationConstraint);
 	}
 
 	@Override
@@ -75,5 +78,16 @@ class FilterConstraintsImpl implements IFilterConstraints {
 			return String.class;
 		} else
 			throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public List<Object> relationList(String column) {
+		return ((IRelationConstraint) constraints.get(column)).values();
+	}
+
+	@Override
+	public boolean isRelationConstrained(String column) {
+		return constraints.get(column) != null
+				&& constraints.get(column) instanceof IRelationConstraint;
 	}
 }

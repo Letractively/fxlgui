@@ -24,13 +24,13 @@ import java.util.List;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.ILayout;
 
-public class PageWidget {
+public class MetaViewList {
 
 	private SplitLayout layout;
 	List<ViewList> viewLists = new LinkedList<ViewList>();
 	private ICardPanel card;
 
-	public PageWidget(ILayout layout) {
+	public MetaViewList(ILayout layout) {
 		this.layout = new SplitLayout(layout);
 	}
 

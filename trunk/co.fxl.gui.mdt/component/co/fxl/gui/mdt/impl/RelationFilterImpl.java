@@ -18,44 +18,37 @@
  */
 package co.fxl.gui.mdt.impl;
 
-import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.filter.api.IFilterConstraints;
-import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
-import co.fxl.gui.mdt.api.IFilterList;
-import co.fxl.gui.mdt.api.IProperty;
 
-class FilterListImpl implements IFilterList<Object> {
+class RelationFilterImpl extends FilterImpl implements
+		IRelationFilter<Object, Object> {
 
-	List<FilterImpl> filters = new LinkedList<FilterImpl>();
-	IFilterConstraints constraints;
+	IAdapter<Object, Object> adapter;
+	List<Object> preset;
 
+	RelationFilterImpl() {
+		super();
+	}
+
+	@SuppressWarnings("unchecked")
 	@Override
-	public IFilter addFilter() {
-		FilterImpl filter = new FilterImpl();
-		filters.add(filter);
-		return filter;
+	public IRelationFilter<Object, Object> name(String name) {
+		return (IRelationFilter<Object, Object>) super.name(name);
 	}
 
 	@Override
-	public IFilterList<Object> addPropertyFilter(IProperty<Object, ?> property) {
-		FilterImpl filter = new FilterImpl((PropertyImpl) property);
-		filters.add(filter);
+	public IRelationFilter<Object, Object> adapter(
+			IRelationFilter.IAdapter<Object, Object> adapter) {
+		this.adapter = adapter;
 		return this;
 	}
 
 	@Override
-	public IFilterList<Object> constraints(IFilterConstraints constraints) {
-		this.constraints = constraints;
+	public IRelationFilter<Object, Object> preset(List<Object> entities) {
+		this.preset = entities;
 		return this;
 	}
 
-	@Override
-	public IRelationFilter<Object, ?> addRelationFilter() {
-		RelationFilterImpl filter = new RelationFilterImpl();
-		filters.add(filter);
-		return filter;
-	}
 }

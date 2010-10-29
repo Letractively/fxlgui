@@ -16,20 +16,19 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.mdt.api;
+package co.fxl.gui.swing;
 
-import co.fxl.gui.filter.api.IFilterConstraints;
-import co.fxl.gui.filter.api.IFilterWidget.IFilter;
-import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
+import javax.swing.JComponent;
 
-public interface IFilterList<T> {
+import co.fxl.gui.api.IWidgetProvider;
 
-	IFilter addFilter();
+interface ComponentParent {
 
-	IRelationFilter<T, ?> addRelationFilter();
+	void add(JComponent component);
 
-	// TODO @IProperty
-	IFilterList<T> addPropertyFilter(IProperty<T, ?> property);
+	void remove(JComponent component);
 
-	IFilterList<T> constraints(IFilterConstraints constraints);
+	IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass);
+
+	SwingDisplay lookupSwingDisplay();
 }

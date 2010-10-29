@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.filter.api;
 
+import java.util.List;
+
 import co.fxl.gui.api.template.IFieldType;
 
 public interface IFilterWidget {
@@ -34,7 +36,25 @@ public interface IFilterWidget {
 		IFieldType type();
 	}
 
+	public interface IRelationFilter<S, R> extends IFilter {
+
+		public interface IAdapter<S, R> {
+
+			String name(S entity);
+
+			R id(S entity);
+		}
+
+		IRelationFilter<S, R> name(String name);
+
+		IRelationFilter<S, R> preset(List<S> entities);
+
+		IRelationFilter<S, R> adapter(IAdapter<S, R> adapter);
+	}
+
 	IFilter addFilter();
+
+	IRelationFilter<?, ?> addRelationFilter();
 
 	IFilterWidget addSizeFilter();
 

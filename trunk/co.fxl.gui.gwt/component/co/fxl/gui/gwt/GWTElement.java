@@ -84,6 +84,16 @@ class GWTElement<T extends Widget, R> implements IElement<R> {
 	}
 
 	@Override
+	public int offsetX() {
+		return container.widget.getAbsoluteLeft();
+	}
+
+	@Override
+	public int offsetY() {
+		return container.widget.getAbsoluteTop();
+	}
+
+	@Override
 	public void remove() {
 		container.parent.remove(container.widget);
 	}

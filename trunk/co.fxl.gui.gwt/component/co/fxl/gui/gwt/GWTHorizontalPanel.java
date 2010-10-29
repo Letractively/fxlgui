@@ -40,7 +40,7 @@ class GWTHorizontalPanel extends GWTPanel<HorizontalPanel, IHorizontalPanel>
 	}
 
 	@Override
-	void add(Widget widget) {
+	public void add(Widget widget) {
 		container.widget.add(widget);
 	}
 

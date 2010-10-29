@@ -32,7 +32,7 @@ class TreeWidgetSingleViewTest {
 	void run(IDisplay display) {
 		display.register(new TreeWidgetProvider());
 		display.register(new RegisterWidgetImplProvider());
-		IVerticalPanel panel = display.layout().vertical();
+		IVerticalPanel panel = display.container().panel().vertical();
 		panel.color().white();
 		@SuppressWarnings("unchecked")
 		ITreeWidget<String> widget = (ITreeWidget<String>) panel.add().widget(

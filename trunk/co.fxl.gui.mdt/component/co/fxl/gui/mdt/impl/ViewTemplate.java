@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.template.NavigationView;
 import co.fxl.gui.api.template.SplitLayout;
@@ -31,13 +32,26 @@ import co.fxl.gui.table.api.ISelection.IMultiSelection.IChangeListener;
 abstract class ViewTemplate implements IChangeListener<Object> {
 
 	MasterDetailTableWidgetImpl widget;
-	SplitLayout splitLayout;
 	private List<Object> selection;
 	private List<ILabel> labels = new LinkedList<ILabel>();
 
 	ViewTemplate(MasterDetailTableWidgetImpl widget) {
 		this.widget = widget;
-		splitLayout = widget.splitLayout;
+		if (widget.mainPanel == null) {
+			if (widget.hasFilter) {
+				SplitLayout splitLayout = new SplitLayout(widget.layout);
+				widget.mainPanel = splitLayout.mainPanel;
+				widget.sidePanel = splitLayout.sidePanel;
+			} else {
+				IVerticalPanel v = widget.layout.vertical();
+				widget.mainPanel = v.add().panel().vertical();
+				// v.addSpace(10);
+				widget.sidePanel = v.add().panel().grid().cell(1, 0).align()
+						.end().panel().vertical().width(300).spacing(10);
+				// widget.sidePanel.color().rgb(240, 240, 240);
+				// widget.sidePanel.border().color().lightgray();
+			}
+		}
 	}
 
 	void addNavigationLinks() {
@@ -48,7 +62,7 @@ abstract class ViewTemplate implements IChangeListener<Object> {
 			}
 		}
 		if (!links.isEmpty()) {
-			NavigationView t = new NavigationView(splitLayout.sidePanel.add()
+			NavigationView t = new NavigationView(widget.sidePanel.add()
 					.panel());
 			for (NavigationLinkImpl link : links) {
 				ILabel l = t.addHyperlink().text(link.name);

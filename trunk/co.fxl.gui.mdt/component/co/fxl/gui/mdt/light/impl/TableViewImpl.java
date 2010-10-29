@@ -78,7 +78,7 @@ class TableViewImpl implements ITableView<Object>, IFilterListener<Object> {
 	private static boolean CRUD_ALLOWED = false;
 	private MasterDetailTableWidgetImpl widget;
 	private IFilterTableWidget<Object> table;
-	private ITableFilter filter;
+	private ITableFilter<Object> filter;
 	private NavigationView navigationView;
 	private List<ILabel> labels = new LinkedList<ILabel>();
 	@SuppressWarnings("unused")
@@ -138,7 +138,7 @@ class TableViewImpl implements ITableView<Object>, IFilterListener<Object> {
 		filterListener.onRefresh(rows, constraints);
 	}
 
-	private ITableFilter filter() {
+	private ITableFilter<Object> filter() {
 		if (filter == null) {
 			ILayout filterPanel = splitLayout.sidePanel.add().panel();
 			filter = table.filterPanel(filterPanel);

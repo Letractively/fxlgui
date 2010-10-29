@@ -21,48 +21,38 @@ package co.fxl.gui.gwt;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
 import co.fxl.gui.api.IColored.IColor;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.Widget;
 
-public class GWTDisplay implements IDisplay {
+public class GWTDisplay implements IDisplay, WidgetParent {
 
 	private static GWTDisplay instance;
 	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
-	private GWTContainer<Panel> container;
-	private ILayout layout;
+	private GWTContainer<Widget> container;
 
 	private GWTDisplay() {
 		GWT.setUncaughtExceptionHandler(new UncaughtExceptionHandler());
-		container = new GWTContainer<Panel>(null) {
+		container = new GWTContainer<Widget>(this) {
 
-			@Override
-			GWTDisplay lookupDisplay() {
-				return GWTDisplay.this;
-			}
-
-			@Override
-			IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
-				return GWTDisplay.this.widgetProviders.get(interfaceClass);
-			}
-
-			void setComponent(Panel component) {
+			void setComponent(Widget component) {
 				widget = component;
 				widget.setWidth("100%");
 				RootPanel.get().add(component);
 			}
 		};
-		layout = container.panel();
 	}
 
 	@Override
@@ -84,7 +74,8 @@ public class GWTDisplay implements IDisplay {
 		throw new MethodNotImplementedException();
 	}
 
-	IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
+	@Override
+	public IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
 		IWidgetProvider<?> iWidgetProvider = widgetProviders
 				.get(interfaceClass);
 		if (iWidgetProvider == null)
@@ -99,8 +90,8 @@ public class GWTDisplay implements IDisplay {
 	}
 
 	@Override
-	public ILayout layout() {
-		return layout;
+	public IContainer container() {
+		return container;
 	}
 
 	@Override
@@ -146,5 +137,41 @@ public class GWTDisplay implements IDisplay {
 	@Override
 	public IDisplay addExceptionHandler(IExceptionHandler handler) {
 		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public void add(Widget widget) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public GWTDisplay lookupDisplay() {
+		return this;
+	}
+
+	@Override
+	public void remove(Widget widget) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IDisplay addResizeListener(final IResizeListener listener) {
+		Window.addResizeHandler(new ResizeHandler() {
+			@Override
+			public void onResize(ResizeEvent event) {
+				listener.onResize(event.getWidth(), event.getHeight());
+			}
+		});
+		return this;
+	}
+
+	@Override
+	public int height() {
+		return Window.getClientHeight();
+	}
+
+	@Override
+	public int width() {
+		return Window.getClientWidth();
 	}
 }

@@ -20,6 +20,10 @@ package co.fxl.gui.api;
 
 public interface IElement<T> {
 
+	int offsetX();
+
+	int offsetY();
+
 	int width();
 
 	int height();
