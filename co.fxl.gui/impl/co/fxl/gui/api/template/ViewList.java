@@ -60,7 +60,8 @@ public class ViewList {
 			labelPanel.addSpace(4);
 			content = widget.contentPanel().add();
 			if (newListener != null) {
-				image = grid.cell(1, 0).width(30).align().end().image();
+				image = grid.cell(1, 0).width(30).align().end().panel()
+						.horizontal().add().image();
 				image.resource("remove.png").addClickListener(
 						new IClickListener() {
 							@Override
