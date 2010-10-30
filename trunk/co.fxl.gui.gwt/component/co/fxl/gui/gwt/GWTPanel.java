@@ -74,7 +74,7 @@ abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R> implements
 
 	@Override
 	public void remove(Widget widget) {
-		container.parent.remove(widget);
+		container.widget.remove(widget);
 	}
 
 	@Override
