@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.api;
 
-public interface IScrollPane extends IElement<IScrollPane> {
+public interface IScrollPane extends IElement<IScrollPane>, IBordered, IColored {
 
 	IContainer viewPort();
 }

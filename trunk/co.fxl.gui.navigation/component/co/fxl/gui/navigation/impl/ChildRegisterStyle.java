@@ -37,7 +37,7 @@ class ChildRegisterStyle extends RegisterStyle {
 
 	@Override
 	public void onBack(ITitle title) {
-		title.font().pixel(12).weight().plain().color().blue();
+		title.font().pixel(12).weight().bold().color().blue();
 		title.font().underline(true);
 	}
 

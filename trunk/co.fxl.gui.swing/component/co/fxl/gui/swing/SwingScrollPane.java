@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.swing;
 
+import java.awt.Color;
+
 import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
@@ -52,5 +54,17 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 				viewport.add(component);
 			}
 		};
+	}
+
+	@Override
+	public IColor color() {
+		return new SwingColor() {
+			@Override
+			protected void setColor(Color color) {
+				container.component.setOpaque(true);
+				container.component.setBackground(color);
+			}
+		};
+
 	}
 }

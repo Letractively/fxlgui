@@ -55,4 +55,10 @@ class NavigationWidgetImpl implements IMenuWidget {
 	public IPanel<?> fillerPanel() {
 		return registerWidget.addFillerPanel();
 	}
+
+	@Override
+	public IMenuWidget background(int r, int g, int b) {
+		registerWidget.background(r, g, b);
+		return this;
+	}
 }

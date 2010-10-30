@@ -27,6 +27,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.register.api.IRegister;
 import co.fxl.gui.register.api.IRegisterWidget;
 
@@ -40,6 +41,9 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 	public IDockPanel borders;
 	private IHorizontalPanel stretch;
 	private IDockPanel mainBorders;
+	private int br = 0;
+	private int bg = 51;
+	private int bb = 102;
 
 	public RegisterWidgetImpl(ILayout panel) {
 		mainBorders = panel.dock();
@@ -50,6 +54,9 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 
 	public void background(int r, int g, int b) {
 		borders.color().rgb(r, g, b);
+		br = r;
+		bg = g;
+		bb = b;
 	}
 
 	@Override
@@ -90,5 +97,9 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 		border.color().lightgray();
 		border.style().top();
 		return this;
+	}
+
+	public void background(IColor color) {
+		color.rgb(br, bg, bb);
 	}
 }
