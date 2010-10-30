@@ -38,7 +38,7 @@ import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 
-class TreeWidgetImpl implements ITreeWidget<Object> {
+class TreeWidgetImpl implements ITreeWidget<Object>, IResizeListener {
 
 	private static final int BACKGROUND_GRAY = 250;
 
@@ -111,6 +111,9 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 	private IClickListener newClick;
 	private List<ISelectionListener<Object>> selectionListeners = new LinkedList<ISelectionListener<Object>>();
 	private ILabel delete;
+	private IVerticalPanel leftContentPanel;
+	private IVerticalPanel rightContentPanel;
+	private ISplitPane splitPane;
 
 	TreeWidgetImpl(ILayout layout) {
 		widgetTitle = new WidgetTitle(layout);
@@ -178,29 +181,26 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 	private void setUpDetailPanel() {
 		if (detailPanel != null)
 			return;
-		final ISplitPane grid = panel().add().splitPane().splitPosition(300);
-		grid.border().color().lightgray();
-		panel = grid.first().scrollPane().viewPort().panel().vertical()
-				.spacing(10).add().panel().vertical();
-		IResizeListener listener = new IResizeListener() {
-			@Override
-			public void onResize(int width, int height) {
-				resize(grid, height);
-			}
-		};
-		int height = panel.display().height();
-		resize(grid, height);
-		ResizeListener.setup(panel.display(), listener);
-		IScrollPane scrollPane = grid.second().scrollPane();
-		scrollPane.color().rgb(BACKGROUND_GRAY, BACKGROUND_GRAY, BACKGROUND_GRAY);
-		IVerticalPanel top = scrollPane.viewPort().panel().vertical().spacing(
-				10);
-		detailPanel = top.add().panel().vertical();
+		splitPane = panel().add().splitPane().splitPosition(300);
+		splitPane.border().color().lightgray();
+		leftContentPanel = splitPane.first().scrollPane().viewPort().panel()
+				.vertical();
+		panel = leftContentPanel.spacing(10).add().panel().vertical();
+		IScrollPane scrollPane = splitPane.second().scrollPane();
+		scrollPane.color().rgb(BACKGROUND_GRAY, BACKGROUND_GRAY,
+				BACKGROUND_GRAY);
+		rightContentPanel = scrollPane.viewPort().panel().vertical()
+				.spacing(10);
+		detailPanel = rightContentPanel.add().panel().vertical();
+		onResize(-1, panel.display().height());
+		ResizeListener.setup(panel.display(), this);
 	}
 
-	private void resize(final ISplitPane grid, int height) {
-		int offsetY = grid.offsetY();
-		grid.height(height - offsetY - 30);
+	@Override
+	public void onResize(int width, int height) {
+		int offsetY = splitPane.offsetY();
+		int maxFromDisplay = height - offsetY - 30;
+		splitPane.height(maxFromDisplay);
 	}
 
 	@Override
