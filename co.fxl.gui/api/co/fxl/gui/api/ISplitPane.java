@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.api;
 
-public interface ISplitPane extends IElement<ISplitPane> {
+public interface ISplitPane extends IElement<ISplitPane>, IBordered {
 
 	ISplitPane vertical();
 

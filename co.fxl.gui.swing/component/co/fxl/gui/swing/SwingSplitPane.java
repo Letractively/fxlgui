@@ -66,4 +66,9 @@ class SwingSplitPane extends SwingElement<JSplitPane, ISplitPane> implements
 		container.component.setDividerLocation(pixel);
 		return this;
 	}
+
+	@Override
+	public IBorder border() {
+		return new SwingBorder(container.component);
+	}
 }

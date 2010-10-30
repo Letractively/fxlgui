@@ -68,4 +68,9 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 		p.setSplitPosition(pixel + "px");
 		return this;
 	}
+
+	@Override
+	public IBorder border() {
+		return new GWTWidgetBorder(container.widget);
+	}
 }

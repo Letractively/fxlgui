@@ -42,4 +42,21 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 			}
 		};
 	}
+
+	@Override
+	public IBorder border() {
+		return new GWTWidgetBorder(container.widget);
+	}
+
+	@Override
+	public IColor color() {
+		GWTWidgetStyle style = new GWTWidgetStyle("background-color-",
+				container.widget);
+		return new GWTStyleColor(style) {
+			@Override
+			void setColor(String color, com.google.gwt.dom.client.Style stylable) {
+				stylable.setBackgroundColor(color);
+			}
+		};
+	}
 }

@@ -23,4 +23,6 @@ public interface IMenuWidget extends IMenuNode {
 	IToolbar addToolbar();
 
 	IMenuWidget visible(boolean visible);
+
+	IMenuWidget background(int r, int g, int b);
 }

@@ -24,21 +24,23 @@ import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.template.WidgetTitle;
-import co.fxl.gui.register.api.IRegister;
-import co.fxl.gui.register.api.IRegisterWidget;
-import co.fxl.gui.register.api.IRegister.IRegisterListener;
+import co.fxl.gui.navigation.api.IMenuItem;
+import co.fxl.gui.navigation.api.IMenuWidget;
+import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 
 class TreeWidgetImpl implements ITreeWidget<Object> {
+
+	private static final int BACKGROUND_GRAY = 250;
 
 	interface RefreshListener {
 
@@ -54,11 +56,12 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 
 		DetailView(String title, IDecorator<Object> decorator) {
 			this.decorator = decorator;
-			IRegister register = registers.addRegister();
-			register.title().text(title);
-			register.addListener(new IRegisterListener() {
+			IMenuItem register = registers.addNavigationItem();
+			register.text(title);
+			register.addListener(new INavigationListener() {
+
 				@Override
-				public void onTop(boolean visible) {
+				public void onActive(boolean visible) {
 					onTop = visible;
 					if (visible) {
 						update();
@@ -67,7 +70,7 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 			});
 			contentPanel = register.contentPanel().spacing(16);
 			if (detailViews.isEmpty())
-				register.top();
+				register.active();
 		}
 
 		// DetailView(IDecorator<Object> decorator) {
@@ -96,7 +99,7 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 
 	private IVerticalPanel panel;
 	private Node last;
-	private IRegisterWidget registers;
+	private IMenuWidget registers;
 	private List<DetailView> detailViews = new LinkedList<DetailView>();
 	IVerticalPanel detailPanel;
 	private ITree<Object> root;
@@ -168,37 +171,31 @@ class TreeWidgetImpl implements ITreeWidget<Object> {
 		if (registers != null)
 			return;
 		setUpDetailPanel();
-		registers = (IRegisterWidget) detailPanel.add().widget(
-				IRegisterWidget.class);
+		registers = (IMenuWidget) detailPanel.add().widget(IMenuWidget.class);
+		registers.background(BACKGROUND_GRAY, BACKGROUND_GRAY, BACKGROUND_GRAY);
 	}
 
 	private void setUpDetailPanel() {
 		if (detailPanel != null)
 			return;
 		final ISplitPane grid = panel().add().splitPane().splitPosition(300);
-		IVerticalPanel p = grid.first().panel().vertical();
-		IResizeListener l = new IResizeListener() {
-
+		grid.border().color().lightgray();
+		panel = grid.first().scrollPane().viewPort().panel().vertical()
+				.spacing(10).add().panel().vertical();
+		IResizeListener listener = new IResizeListener() {
 			@Override
 			public void onResize(int width, int height) {
 				resize(grid, height);
 			}
 		};
-		IDisplay d = p.display();
-		int height = d.height();
+		int height = panel.display().height();
 		resize(grid, height);
-		ResizeListener.setup(d, l);
-		p.border().color().lightgray();
-		panel = p.spacing(10).add().scrollPane().viewPort().panel().vertical();
-		detailPanel = grid.second().panel().vertical().spacing(10);
-		detailPanel.color().rgb(250, 250, 250);
-		detailPanel.border().color().lightgray();
-		// IGridPanel grid = panel().add().panel().grid().spacing(4);
-		// panel = grid.cell(0, 0).width(300).panel().vertical();
-		// detailPanel = grid.cell(1, 0).valign().begin().panel().vertical()
-		// .spacing(10);
-		// detailPanel.color().rgb(250, 250, 250);
-		// detailPanel.border().color().rgb(240, 240, 240);
+		ResizeListener.setup(panel.display(), listener);
+		IScrollPane scrollPane = grid.second().scrollPane();
+		scrollPane.color().rgb(BACKGROUND_GRAY, BACKGROUND_GRAY, BACKGROUND_GRAY);
+		IVerticalPanel top = scrollPane.viewPort().panel().vertical().spacing(
+				10);
+		detailPanel = top.add().panel().vertical();
 	}
 
 	private void resize(final ISplitPane grid, int height) {
