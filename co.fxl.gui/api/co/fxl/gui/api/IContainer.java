@@ -27,7 +27,7 @@ public interface IContainer {
 	IImage image();
 
 	ILabel label();
- 
+
 	ITextField textField();
 
 	IPasswordField passwordField();
@@ -53,4 +53,6 @@ public interface IContainer {
 	IElement<?> element();
 
 	Object widget(Class<?> interfaceClass);
+
+	IContainer clear();
 }

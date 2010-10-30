@@ -180,4 +180,11 @@ class SwingContainer<T extends JComponent> implements IContainer {
 	public IElement<?> element() {
 		return new SwingElement(this);
 	}
+
+	@Override
+	public IContainer clear() {
+		if (component != null)
+			element().remove();
+		return this;
+	}
 }

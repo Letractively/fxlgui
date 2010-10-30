@@ -184,6 +184,13 @@ class GWTContainer<T extends Widget> implements IContainer {
 
 	@Override
 	public IElement<?> element() {
-		return new GWTElement(this);
+		return element;
+	}
+
+	@Override
+	public IContainer clear() {
+		if (element != null)
+			element.remove();
+		return this;
 	}
 }
