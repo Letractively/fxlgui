@@ -86,6 +86,7 @@ class SwingPanel<R> extends SwingElement<JPanel, R> implements IPanel<R>,
 	@Override
 	public void remove(JComponent component) {
 		container.component.remove(component);
+		frame().validate();
 	}
 
 	JFrame frame() {

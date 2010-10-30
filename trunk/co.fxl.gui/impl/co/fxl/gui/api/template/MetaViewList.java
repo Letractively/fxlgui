@@ -50,4 +50,8 @@ public class MetaViewList {
 		viewLists.add(viewList);
 		return viewList;
 	}
+
+	public void selectFirst() {
+		viewLists.get(0).views.get(0).onClick();
+	}
 }
