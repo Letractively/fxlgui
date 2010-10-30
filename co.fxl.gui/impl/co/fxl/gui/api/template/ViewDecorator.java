@@ -18,7 +18,9 @@
  */
 package co.fxl.gui.api.template;
 
-public interface WidgetTitleDecorator {
+import co.fxl.gui.api.IContainer;
 
-	void decorate(WidgetTitle title);
+public interface ViewDecorator {
+
+	void decorate(IContainer container);
 }
