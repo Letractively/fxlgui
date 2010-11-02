@@ -55,19 +55,26 @@ class WidgetsDemo extends DemoTemplate implements Decorator {
 				"Cell 3.3");
 		table.visible(true);
 		StringBuffer b = new StringBuffer();
-		b.append("ITableWidget table = (ITableWidget) panel.add().widget(ITableWidget.class);");
-		b.append("\ntable.selection().multi().addChangeListener(new IChangeListener<String>() {");
+		b
+				.append("ITableWidget table = (ITableWidget) panel.add().widget(ITableWidget.class);");
+		b
+				.append("\ntable.selection().multi().addChangeListener(new IChangeListener<String>() {");
 		b.append("\n&nbsp;&nbsp;&nbsp;&nbsp;@Override");
-		b.append("\n&nbsp;&nbsp;&nbsp;&nbsp;public void onChange(List<String> selection) {");
-		b.append("\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output.text(\"Selection: \" + selection.toString());");
+		b
+				.append("\n&nbsp;&nbsp;&nbsp;&nbsp;public void onChange(List<String> selection) {");
+		b
+				.append("\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output.text(\"Selection: \" + selection.toString());");
 		b.append("\n&nbsp;&nbsp;&nbsp;&nbsp;}");
 		b.append("\n&nbsp;&nbsp;});");
 		b.append("\ntable.addColumn().name(\"Column 1\").sortable();");
 		b.append("\ntable.addColumn().name(\"Column 2\").sortable();");
 		b.append("\ntable.addColumn().name(\"Column 3\").sortable();");
-		b.append("\ntable.addRow().identifier(\"Row 1\").add(\"Cell 1.1\", \"Cell 2.1\", \"Cell 3.3\");");
-		b.append("\ntable.addRow().identifier(\"Row 2\").add(\"Cell 1.2\", \"Cell 2.2\", \"Cell 3.3\");");
-		b.append("\ntable.addRow().identifier(\"Row 3\").add(\"Cell 1.3\", \"Cell 2.3\", \"Cell 3.3\");");
+		b
+				.append("\ntable.addRow().identifier(\"Row 1\").add(\"Cell 1.1\", \"Cell 2.1\", \"Cell 3.3\");");
+		b
+				.append("\ntable.addRow().identifier(\"Row 2\").add(\"Cell 1.2\", \"Cell 2.2\", \"Cell 3.3\");");
+		b
+				.append("\ntable.addRow().identifier(\"Row 3\").add(\"Cell 1.3\", \"Cell 2.3\", \"Cell 3.3\");");
 		b.append("\ntable.visible(true);");
 		example.codeFragment(b.toString());
 	}
