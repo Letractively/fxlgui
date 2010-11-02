@@ -101,7 +101,9 @@ class ExampleComposite {
 			return false;
 		outputHeader = panel.add().label();
 		outputHeader.text("Output:").font().weight().bold();
-		output = panel.add().textArea();
+		output = panel.add().textArea().size(400, 200);
+		output.editable(false).border().color().black();
+		output.color().mix().white().lightgray();
 		return true;
 	}
 

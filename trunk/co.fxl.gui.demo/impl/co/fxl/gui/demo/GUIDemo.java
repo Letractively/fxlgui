@@ -46,7 +46,7 @@ public class GUIDemo {
 	}
 
 	public IContainer addHeader(IDisplay display) {
-		IVerticalPanel panel = display.layout().vertical();
+		IVerticalPanel panel = display.container().panel().vertical();
 		IVerticalPanel headerPanel = panel.add().panel().vertical().spacing(10);
 		IDockPanel dock = headerPanel.add().panel().dock();
 		headerPanel.color().rgb(0, 51, 102);
@@ -56,7 +56,7 @@ public class GUIDemo {
 	}
 
 	public void addContent(IDisplay display) {
-		IVerticalPanel panel = display.layout().vertical();
+		IVerticalPanel panel = display.container().panel().vertical();
 		display.register(new NavigationWidgetImplProvider());
 		display.register(new TableWidgetImplProvider());
 		display.register(new FilterTableWidgetImplProvider());
