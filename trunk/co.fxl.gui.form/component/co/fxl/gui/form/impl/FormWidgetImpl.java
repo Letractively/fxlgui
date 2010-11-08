@@ -65,6 +65,7 @@ class FormWidgetImpl implements IFormWidget {
 	private String saveTitle;
 	private int fixLabelWidth = -1;
 	private int fixValueWidth = -1;
+	private ILabel requiredAttributeLabel;
 
 	FormWidgetImpl(ILayout panel) {
 		widgetTitle = new WidgetTitle(panel);
@@ -194,8 +195,9 @@ class FormWidgetImpl implements IFormWidget {
 				addSaveButton(grid);
 			}
 			if (hasRequiredAttributes) {
-				grid.cell(1, 0).align().end().label().text(
-						"* Required Attribute").font().pixel(10);
+				requiredAttributeLabel = grid.cell(1, 0).align().end().label()
+						.text("* Required Attribute");
+				requiredAttributeLabel.font().pixel(10);
 			}
 		}
 		return this;
@@ -266,5 +268,10 @@ class FormWidgetImpl implements IFormWidget {
 	public IFormWidget fixValueColumn(int width) {
 		fixValueWidth = width;
 		return this;
+	}
+
+	@Override
+	public ILabel labelRequiredAttribute() {
+		return requiredAttributeLabel;
 	}
 }

@@ -63,5 +63,7 @@ public interface IFormWidget {
 
 	IFormWidget saveListener(String title, ISaveListener listener);
 
+	ILabel labelRequiredAttribute();
+
 	IFormWidget visible(boolean visible);
 }
