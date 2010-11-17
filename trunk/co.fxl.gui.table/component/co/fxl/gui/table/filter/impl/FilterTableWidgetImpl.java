@@ -110,8 +110,11 @@ class FilterTableWidgetImpl extends TableWidgetImpl implements
 		super.visible(visible);
 		if (filter != null)
 			filter.filterWidget.visible(visible);
-		if (rows.isEmpty())
-			filter.apply();
+		if (rows.isEmpty()) {
+			if (filter != null) {
+				filter.apply();	
+			}
+		}
 		return this;
 	}
 
