@@ -47,10 +47,8 @@ class LoginWidgetImpl implements ILoginWidget {
 
 				@Override
 				public void onAuthorization(Authorization authorization) {
-					if (authorization == Authorization.UNKNOWN_ID) {
-						dialog("Unknown ID");
-					} else if (authorization == Authorization.WRONG_PASSWORD) {
-						dialog("Wrong password");
+					if (authorization == Authorization.FAILED) {
+						dialog("Unknown user or password");
 					} else {
 						loggedInAs.text(loginID.text());
 						loginID.text("");
