@@ -21,6 +21,7 @@ package co.fxl.gui.tree.test;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.async.ICallback;
 import co.fxl.gui.tree.api.ITree;
 
 class TestTree implements ITree<String> {
@@ -51,34 +52,34 @@ class TestTree implements ITree<String> {
 		return path + "." + id;
 	}
 
-	@Override
-	public boolean canLoadChildren() {
-		return canLoadChildren;
-	}
-
-	@Override
-	public void loadChildren() {
-		canLoadChildren = false;
-		for (int i = 4; i < 8; i++)
-			children.add(new TestTree(this, name(), i));
-	}
+//	@Override
+//	public boolean canLoadChildren() {
+//		return canLoadChildren;
+//	}
+//
+//	@Override
+//	public void loadChildren() {
+//		canLoadChildren = false;
+//		for (int i = 4; i < 8; i++)
+//			children.add(new TestTree(this, name(), i));
+//	}
 
 	@Override
 	public String object() {
 		return name();
 	}
 
-	@Override
-	public ITree<String> createNew() {
-		TestTree tree = new TestTree(this, name(), children.size());
-		children.add(tree);
-		return tree;
-	}
-
-	@Override
-	public void delete() {
-		parent.delete(this);
-	}
+//	@Override
+//	public ITree<String> createNew() {
+//		TestTree tree = new TestTree(this, name(), children.size());
+//		children.add(tree);
+//		return tree;
+//	}
+//
+//	@Override
+//	public void delete() {
+//		parent.delete(this);
+//	}
 
 	private void delete(TestTree testTree) {
 		children.remove(testTree);
@@ -87,5 +88,26 @@ class TestTree implements ITree<String> {
 	@Override
 	public ITree<String> parent() {
 		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public int childCount() {
+		return children.size();
+	}
+
+	@Override
+	public void createNew(ICallback<ITree<String>> callback) {
+		throw new MethodNotImplementedException();
+		
+	}
+
+	@Override
+	public void delete(ICallback<String> callback) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public void loadChildren(ICallback<List<String>> callback) {
+		throw new MethodNotImplementedException();		
 	}
 }

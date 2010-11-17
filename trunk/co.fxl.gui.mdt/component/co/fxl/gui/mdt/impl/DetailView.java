@@ -36,12 +36,12 @@ import co.fxl.gui.form.api.IFormWidget.ISaveListener;
 import co.fxl.gui.mdt.api.IFilterList;
 import co.fxl.gui.table.api.IRow;
 import co.fxl.gui.table.api.ITableWidget;
-import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.IFilterTreeWidget;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.IFilterTreeWidget.ISource;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 import co.fxl.gui.tree.api.ITreeWidget.ISelectionListener;
+import co.fxl.gui.async.ICallback;
 
 class DetailView extends ViewTemplate implements ISource<Object> {
 

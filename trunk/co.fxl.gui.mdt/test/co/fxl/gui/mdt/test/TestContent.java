@@ -24,7 +24,7 @@ import java.util.List;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.mdt.api.IList;
 import co.fxl.gui.mdt.api.IMasterDetailTableWidget.IContent;
-import co.fxl.gui.tree.api.ICallback;
+import co.fxl.gui.async.ICallback;
 import co.fxl.gui.tree.api.ITree;
 
 class TestContent implements IContent<String> {
@@ -40,8 +40,8 @@ class TestContent implements IContent<String> {
 		}
 
 		@Override
-		public boolean canLoadChildren() {
-			return false;
+		public int childCount() {
+			return 0;
 		}
 
 		@Override
@@ -50,18 +50,17 @@ class TestContent implements IContent<String> {
 		}
 
 		@Override
-		public ITree<String> createNew() {
+		public void createNew(ICallback<ITree<String>> callback) {
 			throw new MethodNotImplementedException();
 		}
 
 		@Override
-		public void delete() {
-			entities.remove(object);
-			parent.children.remove(this);
+		public void delete(ICallback<String> callback) {
+			throw new MethodNotImplementedException();
 		}
 
 		@Override
-		public void loadChildren() {
+		public void loadChildren(ICallback<List<String>> callback) {
 			throw new MethodNotImplementedException();
 		}
 
@@ -96,8 +95,8 @@ class TestContent implements IContent<String> {
 		}
 
 		@Override
-		public boolean canLoadChildren() {
-			return false;
+		public int childCount() {
+			return children.size();
 		}
 
 		@Override
@@ -106,21 +105,20 @@ class TestContent implements IContent<String> {
 		}
 
 		@Override
-		public ITree<String> createNew() {
+		public void createNew(ICallback<ITree<String>> callback) {
 			throw new MethodNotImplementedException();
 		}
 
 		@Override
-		public void delete() {
-			for (ITree<String> c : new LinkedList<ITree<String>>(children))
-				c.delete();
-			root.children.remove(this);
+		public void delete(ICallback<String> callback) {
+			throw new MethodNotImplementedException();
 		}
 
 		@Override
-		public void loadChildren() {
+		public void loadChildren(ICallback<List<String>> callback) {
 			throw new MethodNotImplementedException();
 		}
+
 
 		@Override
 		public String name() {
@@ -162,28 +160,29 @@ class TestContent implements IContent<String> {
 			return extract;
 		}
 
+		
 		@Override
-		public boolean canLoadChildren() {
-			return false;
+		public int childCount() {
+			return children.size();
 		}
 
 		@Override
 		public List<ITree<String>> children() {
 			return children;
 		}
-
+		
 		@Override
-		public ITree<String> createNew() {
+		public void createNew(ICallback<ITree<String>> callback) {
+			throw new MethodNotImplementedException();
+		}
+		
+		@Override
+		public void delete(ICallback<String> callback) {
 			throw new MethodNotImplementedException();
 		}
 
 		@Override
-		public void delete() {
-			throw new MethodNotImplementedException();
-		}
-
-		@Override
-		public void loadChildren() {
+		public void loadChildren(ICallback<List<String>> callback) {
 			throw new MethodNotImplementedException();
 		}
 

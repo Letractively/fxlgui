@@ -35,7 +35,7 @@ import co.fxl.gui.table.filter.api.IFilterTableWidget;
 import co.fxl.gui.table.filter.api.IFilterTableWidget.IFilterListener;
 import co.fxl.gui.table.filter.api.IFilterTableWidget.IRowModel;
 import co.fxl.gui.table.filter.api.IFilterTableWidget.ITableFilter;
-import co.fxl.gui.tree.api.ICallback;
+import co.fxl.gui.async.ICallback;
 
 class TableView extends ViewTemplate implements IFilterListener<Object> {
 

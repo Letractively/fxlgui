@@ -20,21 +20,24 @@ package co.fxl.gui.tree.api;
 
 import java.util.List;
 
+import co.fxl.gui.async.ICallback;
+
 public interface ITree<T> {
 
 	String name();
 
 	T object();
 
-	List<ITree<T>> children();
-
-	boolean canLoadChildren();
-
-	void loadChildren();
-
-	ITree<T> createNew();
+	int childCount();
 	
-	void delete();
-
+	List<ITree<T>> children();
+	
 	ITree<T> parent();
+	
+	void loadChildren(ICallback<List<T>> callback);
+	
+	void createNew(ICallback<ITree<T>> callback);
+	
+	void delete(ICallback<T> callback);
+	
 }

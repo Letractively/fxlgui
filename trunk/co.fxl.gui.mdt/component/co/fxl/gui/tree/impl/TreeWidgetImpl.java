@@ -32,13 +32,16 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.template.WidgetTitle;
+import co.fxl.gui.async.ChainedCallback;
+import co.fxl.gui.async.ICallback;
+import co.fxl.gui.async.UiCallback;
 import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IMenuWidget;
 import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 
-class TreeWidgetImpl implements ITreeWidget<Object>, IResizeListener {
+class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	private static final int BACKGROUND_GRAY = 250;
 
@@ -49,12 +52,12 @@ class TreeWidgetImpl implements ITreeWidget<Object>, IResizeListener {
 
 	private class DetailView {
 
-		private IDecorator<Object> decorator;
-		private Node node;
+		private IDecorator<T> decorator;
+		private Node<T> node;
 		private boolean onTop = false;
 		private IVerticalPanel contentPanel;
 
-		DetailView(String title, IDecorator<Object> decorator) {
+		DetailView(String title, IDecorator<T> decorator) {
 			this.decorator = decorator;
 			IMenuItem register = registers.addNavigationItem();
 			register.text(title);
@@ -79,7 +82,7 @@ class TreeWidgetImpl implements ITreeWidget<Object>, IResizeListener {
 		// onTop = true;
 		// }
 
-		void setNode(Node node) {
+		void setNode(Node<T> node) {
 			if (node == null) {
 				decorator.clear(contentPanel);
 				return;
@@ -98,23 +101,24 @@ class TreeWidgetImpl implements ITreeWidget<Object>, IResizeListener {
 	}
 
 	private IVerticalPanel panel;
-	private Node last;
+	private Node<T> last;
 	private IMenuWidget registers;
 	private List<DetailView> detailViews = new LinkedList<DetailView>();
 	IVerticalPanel detailPanel;
-	private ITree<Object> root;
+	private ITree<T> root;
 	private WidgetTitle widgetTitle;
 	private boolean expand = false;
 	private Object selection;
-	Map<Object, Node> object2node = new HashMap<Object, Node>();
+	Map<Object, Node<T>> object2node = new HashMap<Object, Node<T>>();
 	private ILabel refresh;
 	private IClickListener newClick;
-	private List<ISelectionListener<Object>> selectionListeners = new LinkedList<ISelectionListener<Object>>();
+	private List<ISelectionListener<T>> selectionListeners = new LinkedList<ISelectionListener<T>>();
 	private ILabel delete;
 	private IVerticalPanel leftContentPanel;
 	private IVerticalPanel rightContentPanel;
 	private ISplitPane splitPane;
 
+	
 	TreeWidgetImpl(ILayout layout) {
 		widgetTitle = new WidgetTitle(layout);
 		widgetTitle.foldable(false);
@@ -122,25 +126,50 @@ class TreeWidgetImpl implements ITreeWidget<Object>, IResizeListener {
 				newClick = new IClickListener() {
 					@Override
 					public void onClick() {
-						selection(last.tree.createNew().object());
-						root(root);
+						
+						final ITree<T> lParentNode = last.tree;
+						
+						ChainedCallback<List<T>,ITree<T>> lCallback1 = new ChainedCallback<List<T>,ITree<T>>() {
+							@Override
+							public void onSuccess(List<T> result) {
+								lParentNode.createNew(getNextCallback());
+							}
+						};
+						UiCallback<ITree<T>> lCallback2 = new UiCallback<ITree<T>>() {
+							@Override
+							public void onSuccess(ITree<T> result) {
+								selection(result.object());
+								root(root);
+							}							
+						};
+						lCallback1.setNextCallback(lCallback2);						
+						lParentNode.loadChildren(lCallback1);								
 					}
 				});
 		delete = widgetTitle.addHyperlink("Delete").addClickListener(
 				new IClickListener() {
 					@Override
 					public void onClick() {
-						ITree<Object> parent = last.tree.parent();
-						last.tree.delete();
-						last = null;
-						selection(parent.object());
-						root(root);
+						final ITree<T> parent = last.tree.parent();
+						ICallback<T> callback = new ICallback<T>() {
+							@Override
+							public void onFail(Throwable throwable) {
+								// TODO
+							}
+							@Override
+							public void onSuccess(T result) {
+								last = null;
+								selection(parent.object());
+								root(root);
+							}			
+						};
+						last.tree.delete(callback);
 					}
 				}).mouseLeft();
 	}
 
 	@Override
-	public ITreeWidget<Object> title(String title) {
+	public ITreeWidget<T> title(String title) {
 		widgetTitle.addTitle(title).font().pixel(18);
 		return this;
 	}
@@ -153,7 +182,7 @@ class TreeWidgetImpl implements ITreeWidget<Object>, IResizeListener {
 	}
 
 	@Override
-	public ITreeWidget<Object> setDetailView(IDecorator<Object> decorator) {
+	public ITreeWidget<T> setDetailView(IDecorator<T> decorator) {
 		return addDetailView("Details", decorator);
 		// setUpDetailPanel();
 		// DetailView detailView = new DetailView(decorator);
@@ -162,8 +191,8 @@ class TreeWidgetImpl implements ITreeWidget<Object>, IResizeListener {
 	}
 
 	@Override
-	public ITreeWidget<Object> addDetailView(String title,
-			IDecorator<Object> decorator) {
+	public ITreeWidget<T> addDetailView(String title,
+			IDecorator<T> decorator) {
 		setUpRegisters();
 		DetailView detailView = new DetailView(title, decorator);
 		detailViews.add(detailView);
@@ -204,13 +233,13 @@ class TreeWidgetImpl implements ITreeWidget<Object>, IResizeListener {
 	}
 
 	@Override
-	public ITreeWidget<Object> root(ITree<Object> tree) {
+	public ITreeWidget<T> root(ITree<T> tree) {
 		if (this.root != null) {
 			show(null);
 			panel().clear();
 		}
 		this.root = tree;
-		Node node = new Node(this, panel(), tree, 0, expand);
+		Node<T> node = new Node<T>(this, panel(), tree, 0, expand);
 		if (selection != null) {
 			node = object2node.get(selection);
 		}
@@ -218,7 +247,7 @@ class TreeWidgetImpl implements ITreeWidget<Object>, IResizeListener {
 		return this;
 	}
 
-	void show(Node node) {
+	void show(Node<T> node) {
 		if (last != null) {
 			if (last == node)
 				return;
@@ -235,7 +264,7 @@ class TreeWidgetImpl implements ITreeWidget<Object>, IResizeListener {
 	}
 
 	@Override
-	public ITreeWidget<Object> expand() {
+	public ITreeWidget<T> expand() {
 		this.expand = true;
 		return this;
 	}
@@ -246,9 +275,9 @@ class TreeWidgetImpl implements ITreeWidget<Object>, IResizeListener {
 	}
 
 	@Override
-	public ITreeWidget<Object> selection(Object selection) {
+	public ITreeWidget<T> selection(T selection) {
 		this.selection = selection;
-		for (ISelectionListener<Object> l : selectionListeners)
+		for (ISelectionListener<T> l : selectionListeners)
 			l.onChange(selection);
 		if (selection != null && root != null)
 			delete.clickable(!root.object().equals(selection));
@@ -256,7 +285,7 @@ class TreeWidgetImpl implements ITreeWidget<Object>, IResizeListener {
 	}
 
 	@Override
-	public Object selection() {
+	public T selection() {
 		return last.tree.object();
 	}
 
@@ -277,14 +306,14 @@ class TreeWidgetImpl implements ITreeWidget<Object>, IResizeListener {
 	}
 
 	@Override
-	public ITreeWidget<Object> clickNew() {
+	public ITreeWidget<T> clickNew() {
 		newClick.onClick();
 		return this;
 	}
 
 	@Override
-	public ITreeWidget<Object> addSelectionListener(
-			ISelectionListener<Object> listener) {
+	public ITreeWidget<T> addSelectionListener(
+			ISelectionListener<T> listener) {
 		selectionListeners.add(listener);
 		return this;
 	}
