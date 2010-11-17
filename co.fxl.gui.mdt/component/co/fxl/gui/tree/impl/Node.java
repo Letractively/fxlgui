@@ -18,14 +18,22 @@
  */
 package co.fxl.gui.tree.impl;
 
+import java.util.List;
+
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.async.ICallback;
 import co.fxl.gui.tree.api.ITree;
 
-class Node implements IClickListener {
+/**
+ * Represents the ui of a tree node.
+ *
+ * @param <T>
+ */
+class Node<T> implements IClickListener {
 
 	private static final String FOLDER_CLOSED = "folder_closed.png";
 	private static final String FOLDER_OPEN = "folder_open.png";
@@ -34,14 +42,14 @@ class Node implements IClickListener {
 	private IVerticalPanel panel;
 	private IHorizontalPanel content;
 	private IVerticalPanel childrenPanel = null;
-	ITree<Object> tree;
+	ITree<T> tree;
 	private int depth;
 	private IImage image;
-	private TreeWidgetImpl widget;
+	private TreeWidgetImpl<T> widget;
 	private IHorizontalPanel container;
 	private boolean expand;
 
-	Node(TreeWidgetImpl widget, IVerticalPanel panel, ITree<Object> root,
+	Node(TreeWidgetImpl<T> widget, IVerticalPanel panel, ITree<T> root,
 			int depth, boolean expand) {
 		this.widget = widget;
 		this.panel = panel;
@@ -54,7 +62,7 @@ class Node implements IClickListener {
 				Node.this.widget.show(Node.this);
 			}
 		};
-		if (root.children().size() != 0) {
+		if (root.childCount() != 0) {
 			content.addSpace(depth * INDENT);
 			image = content.add().image().resource(FOLDER_CLOSED);
 			image.addClickListener(this);
@@ -85,32 +93,47 @@ class Node implements IClickListener {
 			clear();
 		}
 	}
+	
 
-	private void expand() {
+	protected void expand() {	
+		if (tree.childCount() > tree.children().size()) {
+			expandLazyNode();
+		} else {
+			expandLoadedNode();
+		}
+	}
+	
+	/**
+	 * Expands not yet loaded node.
+	 */
+	protected void expandLazyNode() {
+		// Lazy load children
+		ICallback<List<T>> lCallback = new ICallback<List<T>>() {
+			@Override
+			public void onFail(Throwable caught) {
+				// TODO 
+			}
+			@Override
+			public void onSuccess(List<T> result) {
+				expandLoadedNode();
+			}		
+		};
+		tree.loadChildren(lCallback);
+	}
+	
+	/**
+	 * Expands already loaded nodes.
+	 */
+	protected void expandLoadedNode() {
 		clear();
 		childrenPanel = panel.add().panel().vertical();
-		for (ITree<Object> child : tree.children()) {
-			new Node(widget, childrenPanel.add().panel().vertical(), child,
+		for (ITree<T> child : tree.children()) {
+			new Node<T>(widget, childrenPanel.add().panel().vertical(), child,
 					depth + 1, expand);
-		}
-		if (tree.canLoadChildren()) {
-			IHorizontalPanel panel = childrenPanel.add().panel().horizontal();
-			panel.addSpace(depth * INDENT + 14);
-			panel.add().label().text("Load").font().pixel(10).color().gray();
-			panel.addSpace(2);
-			final ILabel hyperlink = panel.add().label().text("Children")
-					.hyperlink();
-			hyperlink.addClickListener(new IClickListener() {
-				@Override
-				public void onClick() {
-					tree.loadChildren();
-					expand();
-				}
-			});
-			hyperlink.font().pixel(10);
 		}
 		image.resource(FOLDER_OPEN);
 	}
+	
 
 	private void clear() {
 		if (childrenPanel == null)

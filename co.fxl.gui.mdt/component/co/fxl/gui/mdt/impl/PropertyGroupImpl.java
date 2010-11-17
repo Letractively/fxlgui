@@ -39,4 +39,6 @@ class PropertyGroupImpl implements IPropertyGroup<Object> {
 		properties.add(property);
 		return property;
 	}
+	
+	
 }

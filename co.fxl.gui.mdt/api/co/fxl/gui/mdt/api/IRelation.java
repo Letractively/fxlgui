@@ -20,7 +20,8 @@ package co.fxl.gui.mdt.api;
 
 import java.util.List;
 
-import co.fxl.gui.tree.api.ICallback;
+import co.fxl.gui.async.ICallback;
+
 
 public interface IRelation<T, R> extends IPropertyGroup<R> {
 

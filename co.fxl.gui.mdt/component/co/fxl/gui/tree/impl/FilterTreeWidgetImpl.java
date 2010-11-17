@@ -22,15 +22,15 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.mdt.api.IFilterList;
-import co.fxl.gui.tree.api.ICallback;
+import co.fxl.gui.async.ICallback;
 import co.fxl.gui.tree.api.IFilterTreeWidget;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.impl.TreeWidgetImpl.RefreshListener;
 
-class FilterTreeWidgetImpl extends TreeWidgetImpl implements
-		IFilterTreeWidget<Object>, IFilterListener, RefreshListener {
+class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
+		IFilterTreeWidget<T>, IFilterListener, RefreshListener {
 
-	ISource<Object> source;
+	ISource<T> source;
 	private FilterListImpl filterList;
 	private IFilterConstraints constraints;
 
@@ -40,18 +40,18 @@ class FilterTreeWidgetImpl extends TreeWidgetImpl implements
 	}
 
 	@Override
-	public IFilterList<Object> filterList(ILayout layout) {
+	public IFilterList<T> filterList(ILayout layout) {
 		return filterList = new FilterListImpl(this, layout);
 	}
 
 	@Override
-	public IFilterTreeWidget<Object> source(ISource<Object> source) {
+	public IFilterTreeWidget<T> source(ISource<T> source) {
 		this.source = source;
 		return this;
 	}
 
 	@Override
-	public IFilterTreeWidget<Object> visible(boolean visible) {
+	public IFilterTreeWidget<T> visible(boolean visible) {
 		filterList.apply();
 		return this;
 	}
@@ -64,7 +64,7 @@ class FilterTreeWidgetImpl extends TreeWidgetImpl implements
 
 	@Override
 	public void onRefresh() {
-		source.query(constraints, new ICallback<ITree<Object>>() {
+		source.query(constraints, new ICallback<ITree<T>>() {
 
 			@Override
 			public void onFail(Throwable throwable) {
@@ -72,7 +72,7 @@ class FilterTreeWidgetImpl extends TreeWidgetImpl implements
 			}
 
 			@Override
-			public void onSuccess(ITree<Object> tree) {
+			public void onSuccess(ITree<T> tree) {
 				root(tree);
 			}
 		});

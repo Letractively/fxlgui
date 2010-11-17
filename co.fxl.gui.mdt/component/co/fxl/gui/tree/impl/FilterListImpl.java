@@ -26,11 +26,11 @@ import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IFilterList;
 import co.fxl.gui.mdt.api.IProperty;
 
-class FilterListImpl implements IFilterList<Object> {
+class FilterListImpl<T> implements IFilterList<T> {
 
 	private IFilterWidget filterWidget;
 
-	FilterListImpl(FilterTreeWidgetImpl widget, ILayout layout) {
+	FilterListImpl(FilterTreeWidgetImpl<T> widget, ILayout layout) {
 		filterWidget = (IFilterWidget) layout.vertical().add().widget(
 				IFilterWidget.class);
 		filterWidget.addSizeFilter();
@@ -43,7 +43,7 @@ class FilterListImpl implements IFilterList<Object> {
 	}
 
 	@Override
-	public IFilterList<Object> addPropertyFilter(IProperty<Object, ?> property) {
+	public IFilterList<T> addPropertyFilter(IProperty<T, ?> property) {
 		throw new MethodNotImplementedException();
 	}
 
@@ -53,7 +53,7 @@ class FilterListImpl implements IFilterList<Object> {
 	}
 
 	@Override
-	public IFilterList<Object> constraints(
+	public IFilterList<T> constraints(
 			IFilterConstraints constraints) {
 		filterWidget.constraints(constraints);
 		return this;
@@ -61,7 +61,7 @@ class FilterListImpl implements IFilterList<Object> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public IRelationFilter<Object, ?> addRelationFilter() {
-		return (IRelationFilter<Object, ?>) filterWidget.addRelationFilter();
+	public IRelationFilter<T, ?> addRelationFilter() {
+		return (IRelationFilter<T, ?>) filterWidget.addRelationFilter();
 	}
 }
