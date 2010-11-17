@@ -27,7 +27,7 @@ public interface ILoginWidget {
 
 	public enum Authorization {
 
-		OK, UNKNOWN_ID, WRONG_PASSWORD;
+		OK, FAILED;
 	}
 
 	public interface IAuthorizationListener {
