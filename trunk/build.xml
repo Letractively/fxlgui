@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<project name="fxl" default="compile" basedir=".">
+<project name="fxl" default="buildAll" basedir=".">
 	
-	<property name="gwt.home" value="D:/Java/Gwt/Gwt2.0.3"/>
+	<property environment="env"/>
+	<property name="gwt.home" value="${env.GWT_HOME}"/>
 	<property name="gwt.module" value="co.fxl.gui.demo.GUIDemo"/>
 	
 	<property name="project.dir" value="${basedir}"/>
+	<property name="project.dist.dir" value="${project.dir}/dist"/>
 	<property name="project.build.dir" value="${project.dir}/build"/>
 	<property name="project.build.src.dir" value="${project.build.dir}/src"/>
 	<property name="project.build.bin.dir" value="${project.build.dir}/bin"/>
-	<property name="project.build.jar.dir" value="${project.build.dir}/jar"/>
-	<property name="project.build.jar.file" value="${project.build.jar.dir}/fxl.jar"/>
+	<property name="project.dist.fxl.gwt.jar.file" value="${project.dist.dir}/fxl-gwt.jar"/>
+	<property name="project.dist.fxl.swing.jar.file" value="${project.dist.dir}/fxl-swing.jar"/>
 	
 	<property name="co.fxl.gui.dir" value="${project.dir}/co.fxl.gui"/>
 	<property name="co.fxl.gui.api.src.dir" value="${co.fxl.gui.dir}/api"/>
@@ -29,6 +31,9 @@
 	<property name="co.fxl.gui.gwt.build.src.dir" value="${co.fxl.gui.gwt.dir}/build"/>
 	<property name="co.fxl.gui.gwt.component.src.dir" value="${co.fxl.gui.gwt.dir}/component"/>
 	<property name="co.fxl.gui.gwt.gwt.src.dir" value="${co.fxl.gui.gwt.dir}/gwt"/>
+
+	<property name="co.fxl.gui.swing.dir" value="${project.dir}/co.fxl.gui.swing"/>
+	<property name="co.fxl.gui.swing.component.src.dir" value="${co.fxl.gui.swing.dir}/component"/>
 
 	<property name="co.fxl.gui.mdt.dir" value="${project.dir}/co.fxl.gui.mdt"/>
 	<property name="co.fxl.gui.mdt.api.src.dir" value="${co.fxl.gui.mdt.dir}/api"/>
@@ -50,11 +55,6 @@
 	<property name="co.fxl.gui.wizard.component.src.dir" value="${co.fxl.gui.wizard.dir}/component"/>
 	<property name="co.fxl.gui.wizard.gwt.src.dir" value="${co.fxl.gui.wizard.dir}/gwt"/>		
 
-	<property name="co.fxl.gui.demo.dir" value="${project.dir}/co.fxl.gui.demo"/>
-	<property name="co.fxl.gui.demo.impl.src.dir" value="${co.fxl.gui.demo.dir}/impl"/>
-	<property name="co.fxl.gui.demo.gwt.src.dir" value="${co.fxl.gui.demo.dir}/gwt"/>		
-
-	
 	<path id="gwt.class.path">
 		<pathelement path="${gwt.home}/gwt-user.jar"/>
 		<pathelement path="${gwt.home}/gwt-dev.jar"/>
@@ -72,12 +72,21 @@
 		<pathelement path="${project.build.src.dir}"/>
 	</path>
 	
+	<target name="check">
+		<fail message="Environment variable GWT_HOME not set! Please set GWT_HOME to your GWT implementation." unless="env.GWT_HOME"/>
+	</target>
+	
 	<target name="clean">
 		<delete dir="${project.build.dir}"/>
 	</target>
-		
-	<target name="copyGWT" depends="clean">
+	
+	<target name="init">
+		<mkdir dir="${project.build.dir}"/>
 		<mkdir dir="${project.build.src.dir}"/>
+		<mkdir dir="${project.build.bin.dir}"/>
+	</target>
+				
+	<target name="copyGWT" depends="check">
 		<copy todir="${project.build.src.dir}">
     	<fileset dir="${co.fxl.gui.api.src.dir}"/>
     	<fileset dir="${co.fxl.gui.impl.src.dir}"/>
@@ -87,7 +96,6 @@
     	<fileset dir="${co.fxl.gui.form.api.src.dir}"/>
     	<fileset dir="${co.fxl.gui.form.component.src.dir}"/>
     	<fileset dir="${co.fxl.gui.form.gwt.src.dir}"/>    		
-    	<fileset dir="${co.fxl.gui.gwt.build.src.dir}"/>
     	<fileset dir="${co.fxl.gui.gwt.component.src.dir}"/>
     	<fileset dir="${co.fxl.gui.gwt.gwt.src.dir}"/>
     	<fileset dir="${co.fxl.gui.mdt.api.src.dir}"/>	
@@ -102,22 +110,62 @@
     	<fileset dir="${co.fxl.gui.wizard.api.src.dir}"/>
     	<fileset dir="${co.fxl.gui.wizard.component.src.dir}"/>
     	<fileset dir="${co.fxl.gui.wizard.gwt.src.dir}"/>
-    	<!-- Demo -->
-<!--    	<fileset dir="${co.fxl.gui.demo.impl.src.dir}"/> -->
-<!--    	<fileset dir="${co.fxl.gui.demo.gwt.src.dir}"/> -->
   	</copy>
 	</target>
 	
-	<target name="compile">
-		<mkdir dir="${project.build.bin.dir}"/>		
+	<target name="copySwing" depends="check">
+		<copy todir="${project.build.src.dir}">
+    	<fileset dir="${co.fxl.gui.api.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.impl.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.async.api.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.form.api.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.form.component.src.dir}"/>   		
+   		<fileset dir="${co.fxl.gui.swing.component.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.mdt.api.src.dir}"/>	
+    	<fileset dir="${co.fxl.gui.mdt.component.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.navigation.api.src.dir}"/>	
+    	<fileset dir="${co.fxl.gui.navigation.component.src.dir}"/>	
+    	<fileset dir="${co.fxl.gui.table.api.src.dir}"/>	
+    	<fileset dir="${co.fxl.gui.table.component.src.dir}"/>	
+    	<fileset dir="${co.fxl.gui.wizard.api.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.wizard.component.src.dir}"/>
+    </copy>
+	</target>
+	
+	<target name="compileGWT" depends="copyGWT">	
 		<javac encoding="utf-8" fork="true" failonerror="true" destdir="${project.build.bin.dir}" 
+			  includeAntRuntime="false"
 				includes="**" debug="on" debuglevel="lines,vars,source" source="1.5" target="1.5">
 			<src path="${project.build.src.dir}"/>
 			<classpath refid="project.java.compile.gwt.class.path"/>
 		</javac>
 	</target>
+
+	<target name="compileSwing" depends="copySwing">	
+		<javac encoding="utf-8" fork="true" failonerror="true" destdir="${project.build.bin.dir}" 
+			  includeAntRuntime="false"
+				includes="**" debug="on" debuglevel="lines,vars,source" source="1.5" target="1.5">
+			<src path="${project.build.src.dir}"/>
+		</javac>
+	</target>
+
+	<target name="jarGWT" depends="compileGWT">
+		<jar destfile="${project.dist.fxl.gwt.jar.file}">
+			<fileset dir="${project.build.bin.dir}"/>
+			<fileset dir="${project.build.src.dir}"/>
+		</jar>
+		<delete dir="${project.build.dir}"/>
+	</target>
 	
-	<target name="gwtcompile" depends="compile">
+	<target name="jarSwing" depends="compileSwing">
+		<jar destfile="${project.dist.fxl.swing.jar.file}">
+			<fileset dir="${project.build.bin.dir}"/>
+			<fileset dir="${project.build.src.dir}"/>
+		</jar>
+		<delete dir="${project.build.dir}"/>
+	</target>
+	
+	<target name="gwtcompile" depends="compileGWT">
 		<java classname="com.google.gwt.dev.GWTCompiler" fork="true">
 			<arg line="-out ${project.build.dir}/www"/>
 			<arg value="${gwt.module}"/>
@@ -125,13 +173,26 @@
 		</java>	
 	</target>
 
-	<target name="jar">
-		<jar destfile="${project.build.jar.file}">
-			<fileset dir="${project.build.bin.dir}"/>
-			<fileset dir="${project.build.src.dir}"/>
-		</jar>
+	<target name="buildGWT" depends="check">	
+		<antcall target="clean"/>
+		<delete file="${project.dist.fxl.gwt.jar.file}"/>
+		<antcall target="init"/>
+		<antcall target="copyGWT"/>
+		<antcall target="compileGWT"/>
+		<antcall target="jarGWT"/>
+		<antcall target="clean"/>	
 	</target>
-	
-	<target name="buildGwt" depends="copyGWT,compile,jar"/>	
-
+		
+	<target name="buildSwing" depends="check">
+		<antcall target="clean"/>
+		<delete file="${project.dist.fxl.swing.jar.file}"/>
+		<antcall target="init"/>
+		<antcall target="copySwing"/>
+		<antcall target="compileSwing"/>
+		<antcall target="jarSwing"/>
+		<antcall target="clean"/>	
+	</target>	
+		
+	<target name="buildAll" depends="buildGWT,buildSwing"/>
+		
 </project>

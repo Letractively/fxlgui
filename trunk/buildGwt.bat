@@ -1,1 +1,1 @@
-ant buildGwt
+ant buildGWT
