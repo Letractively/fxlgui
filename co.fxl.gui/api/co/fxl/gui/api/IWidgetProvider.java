@@ -22,5 +22,6 @@ public interface IWidgetProvider<T> {
 
 	Class<T> widgetType();
 
+	// TODO supply IContainer to implementations of IWidgetProvider, not ILayout
 	T createWidget(ILayout layout);
 }

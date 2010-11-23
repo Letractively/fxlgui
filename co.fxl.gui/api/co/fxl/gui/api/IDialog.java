@@ -20,6 +20,20 @@ package co.fxl.gui.api;
 
 public interface IDialog {
 
+	public interface IQuestionDialog {
+
+		public interface IQuestionDialogListener {
+
+			void onYes();
+
+			void onNo();
+		}
+
+		IQuestionDialog question(String message);
+
+		IQuestionDialog addQuestionListener(IQuestionDialogListener l);
+	}
+
 	public interface IType {
 
 		IDialog info();
@@ -36,4 +50,6 @@ public interface IDialog {
 	IType type();
 
 	ILayout panel();
+
+	IQuestionDialog question();
 }

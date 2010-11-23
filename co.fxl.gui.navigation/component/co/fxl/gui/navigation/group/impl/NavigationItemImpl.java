@@ -100,6 +100,7 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 		if (pages.isEmpty()) {
 			IVerticalPanel panel = addExtraPanel();
 			if (decorator != null) {
+				applyColor(panel.color(), widget.colorActive);
 				decorator.decorate(panel);
 			}
 		}
