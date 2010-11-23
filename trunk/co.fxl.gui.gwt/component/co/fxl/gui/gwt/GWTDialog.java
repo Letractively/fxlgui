@@ -93,4 +93,10 @@ class GWTDialog implements IDialog {
 	public IType type() {
 		return new Type();
 	}
+
+	@Override
+	public IQuestionDialog question() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
