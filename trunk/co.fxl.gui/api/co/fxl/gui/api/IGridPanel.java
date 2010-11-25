@@ -18,8 +18,6 @@
  */
 package co.fxl.gui.api;
 
-import co.fxl.gui.api.IClickable.IKey;
-
 public interface IGridPanel extends IPanel<IGridPanel> {
 
 	public interface IGridClickListener {

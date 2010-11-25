@@ -18,7 +18,8 @@
  */
 package co.fxl.gui.api;
 
-public interface IPanel<T> extends IElement<T>, IBordered, IColored {
+public interface IPanel<T> extends IElement<T>, IBordered, IColored,
+		IClickable<T> {
 
 	IContainer add();
 
