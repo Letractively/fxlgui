@@ -38,7 +38,6 @@ import javax.swing.JPanel;
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
-import co.fxl.gui.api.IClickable.IKey;
 
 class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
