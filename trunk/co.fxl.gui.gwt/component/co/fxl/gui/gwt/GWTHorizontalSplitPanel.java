@@ -23,8 +23,8 @@ import co.fxl.gui.api.ISplitPanel;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-class GWTHorizontalSplitPanel extends GWTPanel<HorizontalSplitPanel, ISplitPanel>
-		implements ISplitPanel {
+class GWTHorizontalSplitPanel extends
+		GWTPanel<HorizontalSplitPanel, ISplitPanel> implements ISplitPanel {
 
 	@SuppressWarnings("unchecked")
 	GWTHorizontalSplitPanel(GWTContainer<?> container) {

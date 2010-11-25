@@ -96,7 +96,6 @@ class GWTDialog implements IDialog {
 
 	@Override
 	public IQuestionDialog question() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new MethodNotImplementedException();
 	}
 }
