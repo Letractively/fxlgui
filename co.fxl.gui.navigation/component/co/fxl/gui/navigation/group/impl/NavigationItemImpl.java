@@ -56,7 +56,7 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 			button = buttonPanel.add().label();
 			button.font().pixel(14).weight().bold();
 			buttonPanel.addSpace(3);
-			button.addClickListener(this);
+			buttonPanel.addClickListener(this);
 			showLabelAsInactive();
 		}
 	}
