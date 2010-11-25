@@ -35,8 +35,8 @@ import com.google.gwt.user.client.ui.Widget;
 class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	GWTContainer<T> container;
-	private HandlerRegistration registration;
-	private List<GWTClickHandler<R>> handlers = new LinkedList<GWTClickHandler<R>>();
+	protected HandlerRegistration registration;
+	protected List<GWTClickHandler<R>> handlers = new LinkedList<GWTClickHandler<R>>();
 
 	GWTElement(GWTContainer<T> container) {
 		this.container = container;
@@ -131,7 +131,7 @@ class GWTElement<T extends Widget, R> implements IElement<R> {
 		}
 	}
 
-	private void registerClickHandler() {
+	void registerClickHandler() {
 		registration = ((HasClickHandlers) container.widget)
 				.addClickHandler(new ClickHandler() {
 					@Override

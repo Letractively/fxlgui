@@ -45,6 +45,12 @@ class GWTVerticalPanel extends GWTPanel<VerticalPanel, IVerticalPanel>
 	}
 
 	@Override
+	GWTClickHandler<IVerticalPanel> newGWTClickHandler(
+			IClickListener clickListener) {
+		return new GWTClickHandler<IVerticalPanel>(this, clickListener);
+	}
+
+	@Override
 	public void add(Widget widget) {
 		if (widget instanceof HasVerticalAlignment) {
 			((HasVerticalAlignment) widget).setVerticalAlignment(alignment);

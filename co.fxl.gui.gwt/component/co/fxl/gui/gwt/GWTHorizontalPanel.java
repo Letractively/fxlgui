@@ -40,6 +40,12 @@ class GWTHorizontalPanel extends GWTPanel<HorizontalPanel, IHorizontalPanel>
 	}
 
 	@Override
+	GWTClickHandler<IHorizontalPanel> newGWTClickHandler(
+			IClickListener clickListener) {
+		return new GWTClickHandler<IHorizontalPanel>(this, clickListener);
+	}
+
+	@Override
 	public void add(Widget widget) {
 		container.widget.add(widget);
 	}

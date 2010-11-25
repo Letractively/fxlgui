@@ -18,12 +18,16 @@
  */
 package co.fxl.gui.gwt;
 
+import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IWidgetProvider;
+import co.fxl.gui.api.IClickable.IClickListener;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -32,6 +36,23 @@ abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R> implements
 
 	GWTPanel(GWTContainer<T> container) {
 		super(container);
+	}
+
+	@Override
+	void registerClickHandler() {
+		container.widget.addDomHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+			}
+		}, ClickEvent.getType());
+		registration = container.widget.addHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				for (GWTClickHandler<R> handler : handlers) {
+					handler.onClick(event);
+				}
+			}
+		}, ClickEvent.getType());
 	}
 
 	@Override
