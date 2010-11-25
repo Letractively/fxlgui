@@ -84,7 +84,7 @@ class RegisterImpl implements IRegister, IClickListener {
 		buttonPanel.spacing(6).align().center();
 		buttonPanel.addSpace(3);
 		buttonLabel = buttonPanel.add().label();
-		buttonLabel.addClickListener(this);
+		buttonPanel.addClickListener(this);
 		buttonPanel.addSpace(3);
 		content = widget.cardPanel.add().panel().vertical();
 		init = true;
