@@ -24,10 +24,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IImage;
-import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -79,8 +79,8 @@ class FilterWidgetImpl implements IFilterWidget {
 	private boolean addSizeFilter = false;
 	private IFilterConstraints constraints;
 
-	FilterWidgetImpl(ILayout panel) {
-		WidgetTitle title = new WidgetTitle(panel);
+	FilterWidgetImpl(IContainer panel) {
+		WidgetTitle title = new WidgetTitle(panel.panel());
 		title.addTitle("Filter");
 		apply = title.addHyperlink("Apply");
 		validation.linkClickable(apply);
@@ -120,14 +120,14 @@ class FilterWidgetImpl implements IFilterWidget {
 					adapter);
 		} else if (!values.isEmpty()) {
 			if (contentType.equals(String.class)) {
-				filter = new ComboBoxStringFilter(grid, name, values, filters
-						.size());
+				filter = new ComboBoxStringFilter(grid, name, values,
+						filters.size());
 			} else if (contentType.equals(Integer.class)) {
-				filter = new ComboBoxIntegerFilter(grid, name, values, filters
-						.size());
+				filter = new ComboBoxIntegerFilter(grid, name, values,
+						filters.size());
 			} else if (contentType.equals(IImage.class)) {
-				filter = new ComboBoxStringFilter(grid, name, values, filters
-						.size());
+				filter = new ComboBoxStringFilter(grid, name, values,
+						filters.size());
 			} else
 				throw new MethodNotImplementedException();
 		} else if (contentType.equals(String.class))
@@ -173,8 +173,8 @@ class FilterWidgetImpl implements IFilterWidget {
 	@Override
 	public IFilterWidget visible(boolean visible) {
 		for (FilterImpl filter : filterList) {
-			List<Object> list = new LinkedList<Object>(Arrays
-					.asList(filter.type.values));
+			List<Object> list = new LinkedList<Object>(
+					Arrays.asList(filter.type.values));
 			if (!list.isEmpty())
 				list.add(0, "");
 			List<Object> preset = null;

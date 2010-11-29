@@ -18,13 +18,13 @@
  */
 package co.fxl.gui.form.impl;
 
+import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.ITextField.ICarriageReturnListener;
 import co.fxl.gui.form.api.ILoginWidget;
 
@@ -86,8 +86,8 @@ class LoginWidgetImpl implements ILoginWidget {
 	private IHorizontalPanel logoutPanel;
 	private ILabel loggedInAs;
 
-	LoginWidgetImpl(ILayout display) {
-		cards = display.horizontal().align().end();
+	LoginWidgetImpl(IContainer display) {
+		cards = display.panel().horizontal().align().end();
 		loginPanel = cards.add().panel().horizontal();
 		logoutPanel = cards.add().panel().horizontal();
 		loginPanel.visible(true);
@@ -121,8 +121,8 @@ class LoginWidgetImpl implements ILoginWidget {
 		IHorizontalPanel liPanel = loginPanel.add().panel().horizontal()
 				.spacing(4);
 		decorate(liPanel.add().label().text("ID"));
-		decorate(loginID = liPanel.add().textField().addCarriageReturnListener(
-				loginListener));
+		decorate(loginID = liPanel.add().textField()
+				.addCarriageReturnListener(loginListener));
 		decorate(liPanel.add().label().text("Password"));
 		decorate(password = liPanel.add().passwordField()
 				.addCarriageReturnListener(loginListener));

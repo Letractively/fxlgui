@@ -23,19 +23,18 @@ import java.util.List;
 
 import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.ICheckBox;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.form.api.IFormField;
@@ -67,8 +66,8 @@ class FormWidgetImpl implements IFormWidget {
 	private int fixValueWidth = -1;
 	private ILabel requiredAttributeLabel;
 
-	FormWidgetImpl(ILayout panel) {
-		widgetTitle = new WidgetTitle(panel);
+	FormWidgetImpl(IContainer panel) {
+		widgetTitle = new WidgetTitle(panel.panel());
 		widgetTitle.foldable(false);
 	}
 

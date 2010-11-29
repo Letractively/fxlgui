@@ -18,14 +18,14 @@
  */
 package co.fxl.gui.form.impl;
 
-import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.form.api.IFormWidget;
 
 public class FormWidgetImplProvider implements IWidgetProvider<IFormWidget> {
 
 	@Override
-	public IFormWidget createWidget(ILayout panel) {
+	public IFormWidget createWidget(IContainer panel) {
 		return new FormWidgetImpl(panel);
 	}
 

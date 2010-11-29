@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.form.impl;
 
-import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.form.api.IChangePasswordWidget;
 
@@ -26,7 +26,7 @@ public class ChangePasswordWidgetProviderImpl implements
 		IWidgetProvider<IChangePasswordWidget> {
 
 	@Override
-	public IChangePasswordWidget createWidget(ILayout panel) {
+	public IChangePasswordWidget createWidget(IContainer panel) {
 		return new ChangePasswordWidgetImpl(panel);
 	}
 

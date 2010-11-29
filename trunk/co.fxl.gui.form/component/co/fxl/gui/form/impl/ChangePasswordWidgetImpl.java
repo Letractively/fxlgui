@@ -21,13 +21,13 @@ package co.fxl.gui.form.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.IPasswordField;
-import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.IPasswordField.ICarriageReturnListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.form.api.IChangePasswordWidget;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
@@ -45,8 +45,8 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 
 	// private boolean isFirstTitle = true;
 
-	public ChangePasswordWidgetImpl(ILayout display) {
-		verticalPanel = display.vertical();
+	public ChangePasswordWidgetImpl(IContainer display) {
+		verticalPanel = display.panel().vertical();
 		verticalPanel.stretch(true);
 		widget = (IFormWidget) verticalPanel.add().widget(IFormWidget.class);
 		widget.fixValueColumn(180);
