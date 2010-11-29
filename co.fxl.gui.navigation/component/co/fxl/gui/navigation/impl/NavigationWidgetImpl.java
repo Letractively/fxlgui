@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.navigation.impl;
 
-import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IMenuWidget;
@@ -29,8 +29,8 @@ class NavigationWidgetImpl implements IMenuWidget {
 
 	RegisterWidgetImpl registerWidget;
 
-	NavigationWidgetImpl(ILayout panel) {
-		registerWidget = new RegisterWidgetImpl(panel);
+	NavigationWidgetImpl(IContainer panel) {
+		registerWidget = new RegisterWidgetImpl(panel.panel());
 		registerWidget.background(0, 51, 102);
 	}
 

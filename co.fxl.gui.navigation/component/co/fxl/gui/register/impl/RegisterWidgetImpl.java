@@ -21,13 +21,13 @@ package co.fxl.gui.register.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICardPanel;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
-import co.fxl.gui.api.IBordered.IBorder;
-import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.register.api.IRegister;
 import co.fxl.gui.register.api.IRegisterWidget;
 

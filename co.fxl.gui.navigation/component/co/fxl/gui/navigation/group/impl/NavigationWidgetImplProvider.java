@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.navigation.group.impl;
 
-import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.navigation.group.api.INavigationWidget;
 
@@ -26,7 +26,7 @@ public class NavigationWidgetImplProvider implements
 		IWidgetProvider<INavigationWidget> {
 
 	@Override
-	public INavigationWidget createWidget(ILayout layout) {
+	public INavigationWidget createWidget(IContainer layout) {
 		return new NavigationWidgetImpl(layout);
 	}
 

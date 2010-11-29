@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.navigation.impl;
 
-import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.navigation.api.IMenuWidget;
 
@@ -26,7 +26,7 @@ public class NavigationWidgetImplProvider implements
 		IWidgetProvider<IMenuWidget> {
 
 	@Override
-	public IMenuWidget createWidget(ILayout panel) {
+	public IMenuWidget createWidget(IContainer panel) {
 		return new NavigationWidgetImpl(panel);
 	}
 
