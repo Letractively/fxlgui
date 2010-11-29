@@ -19,11 +19,11 @@
 package co.fxl.gui.navigation.group.impl;
 
 import co.fxl.gui.api.ICardPanel;
+import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
-import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationWidget;
 
@@ -38,8 +38,8 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	int[] colorBackground = new int[] { 0, 51, 102 };
 	int[] colorInactive = new int[] { 228, 228, 255 };
 
-	protected NavigationWidgetImpl(ILayout layout) {
-		mainPanel = layout.dock();
+	protected NavigationWidgetImpl(IContainer layout) {
+		mainPanel = layout.panel().dock();
 		IGridPanel hPanel = mainPanel.top().panel().grid();
 		hPanel.color().rgb(0, 51, 102);
 		navigationPanel = hPanel.cell(0, 0).panel().horizontal().add().panel()

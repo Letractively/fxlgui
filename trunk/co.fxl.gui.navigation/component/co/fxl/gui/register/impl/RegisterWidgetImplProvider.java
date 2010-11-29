@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.register.impl;
 
-import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.register.api.IRegisterWidget;
 
@@ -26,8 +26,8 @@ public class RegisterWidgetImplProvider implements
 		IWidgetProvider<IRegisterWidget> {
 
 	@Override
-	public IRegisterWidget createWidget(ILayout panel) {
-		return new RegisterWidgetImpl(panel);
+	public IRegisterWidget createWidget(IContainer panel) {
+		return new RegisterWidgetImpl(panel.panel());
 	}
 
 	@Override
