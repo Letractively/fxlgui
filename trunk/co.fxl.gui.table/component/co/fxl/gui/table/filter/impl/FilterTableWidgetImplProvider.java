@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.table.filter.impl;
 
-import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.table.filter.api.IFilterTableWidget;
 
@@ -32,7 +32,7 @@ public class FilterTableWidgetImplProvider implements
 	}
 
 	@Override
-	public IFilterTableWidget createWidget(ILayout panel) {
-		return new FilterTableWidgetImpl(panel);
+	public IFilterTableWidget createWidget(IContainer panel) {
+		return new FilterTableWidgetImpl(panel.panel());
 	}
 }
