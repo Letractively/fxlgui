@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.table.impl;
 
-import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.table.api.ITableWidget;
 
@@ -31,7 +31,7 @@ public class TableWidgetImplProvider implements IWidgetProvider<ITableWidget> {
 	}
 
 	@Override
-	public ITableWidget createWidget(ILayout panel) {
-		return new TableWidgetImpl(panel);
+	public ITableWidget createWidget(IContainer panel) {
+		return new TableWidgetImpl(panel.panel());
 	}
 }
