@@ -159,6 +159,7 @@ class GWTContainer<T extends Widget> implements IContainer {
 				(GWTContainer<ScrollPanel>) this));
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public ISplitPane splitPane() {
 		setComponent((T) new HorizontalSplitPanel());
@@ -171,7 +172,7 @@ class GWTContainer<T extends Widget> implements IContainer {
 		IWidgetProvider<?> widgetProvider = lookupWidgetProvider(clazz);
 		if (widgetProvider == null)
 			throw new WidgetProviderNotFoundException(clazz);
-		return widgetProvider.createWidget(panel());
+		return widgetProvider.createWidget(this);
 	}
 
 	GWTDisplay lookupDisplay() {
