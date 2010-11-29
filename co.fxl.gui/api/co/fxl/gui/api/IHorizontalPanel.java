@@ -18,11 +18,6 @@
  */
 package co.fxl.gui.api;
 
-public interface IHorizontalPanel extends IPanel<IHorizontalPanel> {
+public interface IHorizontalPanel extends IFlowPanel<IHorizontalPanel> {
 
-	IAlignment<IHorizontalPanel> align();
-
-	IHorizontalPanel spacing(int pixel);
-
-	IHorizontalPanel addSpace(int pixel);
 }

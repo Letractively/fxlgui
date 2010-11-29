@@ -18,13 +18,7 @@
  */
 package co.fxl.gui.api;
 
-public interface IVerticalPanel extends IPanel<IVerticalPanel> {
+public interface IVerticalPanel extends IFlowPanel<IVerticalPanel> {
 
 	IVerticalPanel stretch(boolean stretch);
-
-	IVerticalPanel spacing(int pixel);
-
-	IVerticalPanel addSpace(int pixel);
-
-	IAlignment<IVerticalPanel> align();
 }

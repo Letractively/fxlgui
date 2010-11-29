@@ -18,10 +18,11 @@
  */
 package co.fxl.gui.api;
 
-public interface IWidgetProvider<T> {
+public interface IFlowPanel<T extends IFlowPanel<T>> extends IPanel<T> {
 
-	Class<T> widgetType();
+	T spacing(int pixel);
 
-	// TODO supply IContainer to implementations of IWidgetProvider, not ILayout
-	T createWidget(IContainer container);
+	T addSpace(int pixel);
+
+	IAlignment<T> align();
 }
