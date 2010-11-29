@@ -69,7 +69,7 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 				tableFilterList.filterable(column, filter.property.type.type,
 						filter.type.values);
 			} else
-				throw new MethodNotImplementedException();
+				throw new MethodNotImplementedException(filter.name);
 		}
 		if (widget.constraints != null)
 			tableFilterList.constraints(widget.constraints);

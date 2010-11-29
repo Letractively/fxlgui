@@ -32,10 +32,8 @@ class TestContent implements IContent<String> {
 	class Leaf implements ITree<String> {
 
 		private String object;
-		private Extract parent;
 
 		Leaf(Extract parent, String s) {
-			this.parent = parent;
 			object = s;
 		}
 
@@ -84,10 +82,8 @@ class TestContent implements IContent<String> {
 
 		private int i;
 		private List<ITree<String>> children = new LinkedList<ITree<String>>();
-		private Root root;
 
 		Extract(Root root, int i, List<String> extract) {
-			this.root = root;
 			this.i = i;
 			for (String s : extract) {
 				children.add(new Leaf(this, s));

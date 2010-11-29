@@ -21,4 +21,10 @@ package co.fxl.gui.mdt.impl;
 @SuppressWarnings("serial")
 class MethodNotImplementedException extends RuntimeException {
 
+	MethodNotImplementedException() {
+	}
+
+	MethodNotImplementedException(String name) {
+		super(name);
+	}
 }

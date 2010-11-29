@@ -21,6 +21,7 @@ package co.fxl.gui.mdt.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -45,8 +46,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	IVerticalPanel mainPanel;
 	IVerticalPanel sidePanel;
 
-	MasterDetailTableWidgetImpl(ILayout layout) {
-		this.layout = layout;
+	MasterDetailTableWidgetImpl(IContainer layout) {
+		this.layout = layout.panel();
 	}
 
 	@Override

@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.ICardPanel;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.mdt.light.api.IDetailView;
 import co.fxl.gui.mdt.light.api.IMasterDetailTableWidget;
@@ -33,8 +34,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	private TableViewImpl masterView;
 	List<DetailViewImpl> views = new LinkedList<DetailViewImpl>();
 
-	MasterDetailTableWidgetImpl(ILayout layout) {
-		cardPanel = layout.card();
+	MasterDetailTableWidgetImpl(IContainer layout) {
+		cardPanel = layout.panel().card();
 		masterView = new TableViewImpl(this, nextCard());
 		masterView.isMaster = true;
 	}
