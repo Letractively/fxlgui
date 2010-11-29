@@ -18,14 +18,14 @@
  */
 package co.fxl.gui.form.impl;
 
-import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.form.api.ILoginWidget;
 
 public class LoginWidgetProviderImpl implements IWidgetProvider<ILoginWidget> {
 
 	@Override
-	public ILoginWidget createWidget(ILayout panel) {
+	public ILoginWidget createWidget(IContainer panel) {
 		return new LoginWidgetImpl(panel);
 	}
 

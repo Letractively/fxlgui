@@ -18,14 +18,14 @@
  */
 package co.fxl.gui.filter.impl;
 
-import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.filter.api.IFilterWidget;
 
 public class FilterWidgetImplProvider implements IWidgetProvider<IFilterWidget> {
 
 	@Override
-	public IFilterWidget createWidget(ILayout layout) {
+	public IFilterWidget createWidget(IContainer layout) {
 		return new FilterWidgetImpl(layout);
 	}
 
