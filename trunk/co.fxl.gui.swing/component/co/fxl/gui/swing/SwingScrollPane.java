@@ -19,12 +19,15 @@
 package co.fxl.gui.swing;
 
 import java.awt.Color;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 
 import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IScrollListener;
 import co.fxl.gui.api.IScrollPane;
 
 class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
@@ -32,10 +35,6 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 
 	SwingScrollPane(SwingContainer<JScrollPane> container) {
 		super(container);
-		// container.component
-		// .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		// container.component
-		// .setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		container.component.setAlignmentY(JScrollPane.TOP_ALIGNMENT);
 		container.component.setOpaque(false);
 		container.component.setBackground(null);
@@ -66,5 +65,35 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 			}
 		};
 
+	}
+
+	@Override
+	public IScrollPane addScrollListener(final IScrollListener listener) {
+		container.component.getVerticalScrollBar().addAdjustmentListener(
+				new AdjustmentListener() {
+					@Override
+					public void adjustmentValueChanged(AdjustmentEvent evt) {
+						if (evt.getValueIsAdjusting()) {
+							return;
+						}
+						int type = evt.getAdjustmentType();
+						int value = evt.getValue();
+						switch (type) {
+						case AdjustmentEvent.UNIT_INCREMENT:
+							listener.onScroll(value);
+							break;
+						case AdjustmentEvent.UNIT_DECREMENT:
+							break;
+						case AdjustmentEvent.BLOCK_INCREMENT:
+							listener.onScroll(value);
+							break;
+						case AdjustmentEvent.BLOCK_DECREMENT:
+							break;
+						case AdjustmentEvent.TRACK:
+							break;
+						}
+					}
+				});
+		return this;
 	}
 }
