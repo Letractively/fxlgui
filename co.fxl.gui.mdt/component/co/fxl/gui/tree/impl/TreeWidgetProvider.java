@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.tree.impl;
 
-import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.tree.api.ITreeWidget;
 
@@ -26,7 +26,7 @@ import co.fxl.gui.tree.api.ITreeWidget;
 public class TreeWidgetProvider implements IWidgetProvider<ITreeWidget> {
 
 	@Override
-	public ITreeWidget createWidget(ILayout panel) {
+	public ITreeWidget createWidget(IContainer panel) {
 		return new TreeWidgetImpl(panel);
 	}
 

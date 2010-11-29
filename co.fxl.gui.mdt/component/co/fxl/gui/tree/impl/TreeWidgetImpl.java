@@ -24,20 +24,20 @@ import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.async.ChainedCallback;
 import co.fxl.gui.async.ICallback;
 import co.fxl.gui.async.UiCallback;
 import co.fxl.gui.navigation.api.IMenuItem;
-import co.fxl.gui.navigation.api.IMenuWidget;
 import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
+import co.fxl.gui.navigation.api.IMenuWidget;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 
@@ -118,18 +118,17 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private IVerticalPanel rightContentPanel;
 	private ISplitPane splitPane;
 
-	
-	TreeWidgetImpl(ILayout layout) {
-		widgetTitle = new WidgetTitle(layout);
+	TreeWidgetImpl(IContainer layout) {
+		widgetTitle = new WidgetTitle(layout.panel());
 		widgetTitle.foldable(false);
 		widgetTitle.addHyperlink("New").addClickListener(
 				newClick = new IClickListener() {
 					@Override
 					public void onClick() {
-						
+
 						final ITree<T> lParentNode = last.tree;
-						
-						ChainedCallback<List<T>,ITree<T>> lCallback1 = new ChainedCallback<List<T>,ITree<T>>() {
+
+						ChainedCallback<List<T>, ITree<T>> lCallback1 = new ChainedCallback<List<T>, ITree<T>>() {
 							@Override
 							public void onSuccess(List<T> result) {
 								lParentNode.createNew(getNextCallback());
@@ -140,14 +139,14 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 							public void onSuccess(ITree<T> result) {
 								selection(result.object());
 								root(root);
-							}							
+							}
 						};
-						lCallback1.setNextCallback(lCallback2);						
-						lParentNode.loadChildren(lCallback1);								
+						lCallback1.setNextCallback(lCallback2);
+						lParentNode.loadChildren(lCallback1);
 					}
 				});
-		delete = widgetTitle.addHyperlink("Delete").addClickListener(
-				new IClickListener() {
+		delete = widgetTitle.addHyperlink("Delete")
+				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
 						final ITree<T> parent = last.tree.parent();
@@ -156,12 +155,13 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 							public void onFail(Throwable throwable) {
 								// TODO
 							}
+
 							@Override
 							public void onSuccess(T result) {
 								last = null;
 								selection(parent.object());
 								root(root);
-							}			
+							}
 						};
 						last.tree.delete(callback);
 					}
@@ -191,8 +191,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	@Override
-	public ITreeWidget<T> addDetailView(String title,
-			IDecorator<T> decorator) {
+	public ITreeWidget<T> addDetailView(String title, IDecorator<T> decorator) {
 		setUpRegisters();
 		DetailView detailView = new DetailView(title, decorator);
 		detailViews.add(detailView);
@@ -286,9 +285,12 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public T selection() {
+		if (last == null)
+			return null;
 		return last.tree.object();
 	}
 
+	@SuppressWarnings("unchecked")
 	TreeWidgetImpl addRefreshListener(final RefreshListener listener) {
 		refresh().addClickListener(new IClickListener() {
 			@Override
@@ -312,8 +314,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	@Override
-	public ITreeWidget<T> addSelectionListener(
-			ISelectionListener<T> listener) {
+	public ITreeWidget<T> addSelectionListener(ISelectionListener<T> listener) {
 		selectionListeners.add(listener);
 		return this;
 	}

@@ -28,12 +28,9 @@ class TestTree implements ITree<String> {
 
 	private String path;
 	private int id;
-	private boolean canLoadChildren = true;
 	List<ITree<String>> children = new LinkedList<ITree<String>>();
-	private TestTree parent;
 
 	TestTree(TestTree parent, String path, int id) {
-		this.parent = parent;
 		this.path = path;
 		this.id = id;
 		if (path.length() > 12)
@@ -80,10 +77,6 @@ class TestTree implements ITree<String> {
 //	public void delete() {
 //		parent.delete(this);
 //	}
-
-	private void delete(TestTree testTree) {
-		children.remove(testTree);
-	}
 
 	@Override
 	public ITree<String> parent() {

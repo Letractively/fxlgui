@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.tree.impl;
 
-import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.tree.api.IFilterTreeWidget;
 
@@ -27,7 +27,7 @@ public class FilterTreeWidgetImplProvider implements
 		IWidgetProvider<IFilterTreeWidget> {
 
 	@Override
-	public IFilterTreeWidget createWidget(ILayout panel) {
+	public IFilterTreeWidget createWidget(IContainer panel) {
 		return new FilterTreeWidgetImpl(panel);
 	}
 

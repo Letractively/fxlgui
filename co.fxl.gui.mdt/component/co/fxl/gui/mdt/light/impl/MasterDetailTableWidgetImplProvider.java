@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.mdt.light.impl;
 
-import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.mdt.light.api.IMasterDetailTableWidget;
 
@@ -27,7 +27,7 @@ public class MasterDetailTableWidgetImplProvider implements
 		IWidgetProvider<IMasterDetailTableWidget> {
 
 	@Override
-	public IMasterDetailTableWidget createWidget(ILayout layout) {
+	public IMasterDetailTableWidget createWidget(IContainer layout) {
 		return new MasterDetailTableWidgetImpl(layout);
 	}
 
