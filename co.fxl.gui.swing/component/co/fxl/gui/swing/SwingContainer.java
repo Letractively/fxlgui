@@ -165,7 +165,7 @@ class SwingContainer<T extends JComponent> implements IContainer {
 		IWidgetProvider<?> widgetProvider = lookupWidgetProvider(clazz);
 		if (widgetProvider == null)
 			throw new WidgetProviderNotFoundException(clazz);
-		return widgetProvider.createWidget(panel());
+		return widgetProvider.createWidget(this);
 	}
 
 	IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
