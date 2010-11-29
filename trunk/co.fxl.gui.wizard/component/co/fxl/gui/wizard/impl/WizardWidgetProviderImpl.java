@@ -18,15 +18,15 @@
  */
 package co.fxl.gui.wizard.impl;
 
-import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.wizard.api.IWizardWidget;
 
 public class WizardWidgetProviderImpl implements IWidgetProvider<IWizardWidget> {
 
 	@Override
-	public IWizardWidget createWidget(ILayout panel) {
-		return new WizardWidgetImpl(panel);
+	public IWizardWidget createWidget(IContainer panel) {
+		return new WizardWidgetImpl(panel.panel());
 	}
 
 	@Override
