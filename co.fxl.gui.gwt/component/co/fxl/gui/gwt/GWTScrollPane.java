@@ -19,8 +19,11 @@
 package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IScrollListener;
 import co.fxl.gui.api.IScrollPane;
 
+import com.google.gwt.event.dom.client.ScrollEvent;
+import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -58,5 +61,16 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 				stylable.setBackgroundColor(color);
 			}
 		};
+	}
+
+	@Override
+	public IScrollPane addScrollListener(IScrollListener listener) {
+		container.widget.addScrollHandler(new ScrollHandler() {
+			@Override
+			public void onScroll(ScrollEvent event) {
+				throw new MethodNotImplementedException();
+			}
+		});
+		return this;
 	}
 }
