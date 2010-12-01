@@ -58,6 +58,12 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	}
 
 	@Override
+	public IPropertyGroup<Object> defaultPropertyGroup() {
+		isDefaultPropertyGroup = true;
+		return addPropertyGroup("Details");
+	}
+
+	@Override
 	public IRelation<Object, ?> addRelation(String name) {
 		RelationImpl relation = new RelationImpl(name);
 		relations.add(relation);
@@ -68,12 +74,6 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	public IMasterDetailTableWidget<Object> content(IContent<Object> source) {
 		this.source = source;
 		return this;
-	}
-
-	@Override
-	public IPropertyGroup<Object> defaultPropertyGroup() {
-		isDefaultPropertyGroup = true;
-		return addPropertyGroup("Details");
 	}
 
 	@Override
