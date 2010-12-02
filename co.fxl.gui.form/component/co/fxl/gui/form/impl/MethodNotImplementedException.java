@@ -21,4 +21,11 @@ package co.fxl.gui.form.impl;
 @SuppressWarnings("serial")
 class MethodNotImplementedException extends RuntimeException {
 
+	MethodNotImplementedException() {
+	}
+
+	MethodNotImplementedException(Class<? extends Object> class1) {
+		super(class1.getName());
+	}
+
 }
