@@ -217,8 +217,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		IScrollPane scrollPane = splitPane.second().scrollPane();
 		scrollPane.color().rgb(BACKGROUND_GRAY, BACKGROUND_GRAY,
 				BACKGROUND_GRAY);
-		rightContentPanel = scrollPane.viewPort().panel().vertical()
-				.spacing(10);
+		rightContentPanel = scrollPane.viewPort().panel().vertical();
+		// .spacing(10);
 		detailPanel = rightContentPanel.add().panel().vertical();
 		onResize(-1, panel.display().height());
 		ResizeListener.setup(panel.display(), this);
