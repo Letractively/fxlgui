@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.navigation.api;
 
+import co.fxl.gui.api.IPanel;
+
 public interface IMenuWidget extends IMenuNode {
 
 	IToolbar addToolbar();

@@ -53,7 +53,8 @@ class NavigationWidgetImpl implements IMenuWidget {
 	}
 
 	public IPanel<?> fillerPanel() {
-		return registerWidget.addFillerPanel();
+		IPanel<?> fillerPanel = registerWidget.addFillerPanel();
+		return fillerPanel;
 	}
 
 	@Override
