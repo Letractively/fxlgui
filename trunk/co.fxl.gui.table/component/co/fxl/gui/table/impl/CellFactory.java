@@ -21,10 +21,10 @@ package co.fxl.gui.table.impl;
 import java.util.Date;
 
 import co.fxl.gui.api.IFontElement;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IPanel;
-import co.fxl.gui.api.IGridPanel.IGridCell;
 
 abstract class CellFactory<R, T> {
 
@@ -66,10 +66,12 @@ abstract class CellFactory<R, T> {
 		} else if (type.equals(Boolean.class)) {
 			return BOOLEAN_FACTORY.create(table, row, columnIndex, cell,
 					(Boolean) value);
-		} else {
+		} else if (type.equals(Long.class) || type.equals(Integer.class)) {
 			return COMPARABLE_FACTORY.create(table, row, columnIndex, cell,
 					(Comparable<?>) value);
-		}
+		} else
+			throw new MethodNotImplementedException(
+					table.columns.get(columnIndex).name);
 	}
 
 	private static Class<?> getType(TableWidgetImpl table, int columnIndex,
