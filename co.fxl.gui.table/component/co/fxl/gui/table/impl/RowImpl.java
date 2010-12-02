@@ -26,7 +26,7 @@ import co.fxl.gui.table.api.IRow;
 
 public class RowImpl implements IRow<Object> {
 
-	static final String EMPTY = " ";
+	static final Comparable<?> EMPTY = null;
 
 	public class Content {
 

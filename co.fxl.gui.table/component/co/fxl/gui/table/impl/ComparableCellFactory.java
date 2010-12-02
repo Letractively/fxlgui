@@ -18,8 +18,8 @@
  */
 package co.fxl.gui.table.impl;
 
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.ILabel;
 
 class ComparableCellFactory<T> extends CellFactory<ILabel, T> {
 
@@ -39,6 +39,8 @@ class ComparableCellFactory<T> extends CellFactory<ILabel, T> {
 	}
 
 	String toString(T value) {
+		if (value == null)
+			return "";
 		return String.valueOf(value);
 	}
 }

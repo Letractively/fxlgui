@@ -18,8 +18,8 @@
  */
 package co.fxl.gui.table.impl;
 
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.ILabel;
 
 class LabelCell extends Cell<ILabel> {
 
@@ -29,6 +29,11 @@ class LabelCell extends Cell<ILabel> {
 
 	@Override
 	public void update(Object value) {
-		element.text(String.valueOf(value));
+		String valueOf;
+		if (value == null) {
+			valueOf = "";
+		} else
+			valueOf = String.valueOf(value);
+		element.text(valueOf);
 	}
 }
