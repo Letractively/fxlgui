@@ -22,12 +22,15 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.ICheckBox;
+import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.IBordered.IBorder;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.api.template.SimpleDateFormat;
+import co.fxl.gui.async.ICallback;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.form.api.IFormField;
@@ -37,11 +40,10 @@ import co.fxl.gui.mdt.api.IFilterList;
 import co.fxl.gui.table.api.IRow;
 import co.fxl.gui.table.api.ITableWidget;
 import co.fxl.gui.tree.api.IFilterTreeWidget;
-import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.IFilterTreeWidget.ISource;
+import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 import co.fxl.gui.tree.api.ITreeWidget.ISelectionListener;
-import co.fxl.gui.async.ICallback;
 
 class DetailView extends ViewTemplate implements ISource<Object> {
 
@@ -75,9 +77,9 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 				rf.adapter(rfi.adapter);
 				rf.preset(rfi.preset);
 			} else if (filter.property != null) {
-				IFieldType type = filterList.addFilter().name(
-						filter.property.name).type().type(
-						filter.property.type.type);
+				IFieldType type = filterList.addFilter()
+						.name(filter.property.name).type()
+						.type(filter.property.type.type);
 				type.selection(filter.property.type.values);
 			} else
 				throw new MethodNotImplementedException();
@@ -124,27 +126,46 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 					for (PropertyImpl property : group.properties) {
 						if (property.displayInDetailView) {
 							IFormField<?> formField;
+							Object valueOf = property.adapter.valueOf(node);
 							if (property.type.type.equals(String.class)) {
 								ITextElement<?> valueElement;
 								if (property.type.isLong) {
 									formField = form.addTextArea(property.name);
+									valueElement = formField.valueElement();
+								} else if (property.type.values.size() > 0) {
+									formField = form.addComboBox(property.name);
+									IComboBox cb = (IComboBox) formField
+											.valueElement();
+									for (Object s : property.type.values)
+										cb.addText((String) s);
 									valueElement = formField.valueElement();
 								} else {
 									formField = form
 											.addTextField(property.name);
 									valueElement = formField.valueElement();
 								}
-								String value = String.valueOf(property.adapter
-										.valueOf(node));
+								String value = valueOf == null ? ""
+										: (valueOf instanceof String ? (String) valueOf
+												: String.valueOf(valueOf));
 								valueElement.text(value);
 							} else if (property.type.type.equals(Date.class)) {
 								formField = form.addTextField(property.name);
 								String value = DATE_FORMAT
-										.format((Date) property.adapter
-												.valueOf(node));
+										.format((Date) valueOf);
+								formField.valueElement().text(value);
+							} else if (property.type.type.equals(Boolean.class)) {
+								formField = form.addCheckBox(property.name);
+								ICheckBox checkBox = (ICheckBox) formField
+										.valueElement();
+								checkBox.checked((Boolean) valueOf);
+							} else if (property.type.type.equals(Long.class)
+									|| property.type.type.equals(Integer.class)) {
+								formField = form.addTextField(property.name);
+								String value = ((Number) valueOf).toString();
 								formField.valueElement().text(value);
 							} else
-								throw new MethodNotImplementedException();
+								throw new MethodNotImplementedException(
+										property.type.type);
 							if (property.required)
 								formField.required();
 						}
