@@ -19,6 +19,8 @@
 package co.fxl.gui.api.template;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import co.fxl.gui.api.IImage;
 
@@ -26,7 +28,7 @@ public class FieldTypeImpl implements IFieldType {
 
 	public Class<?> type = String.class;
 	public boolean isLong = false;
-	public Object[] values = new Object[0];
+	public List<Object> values = new LinkedList<Object>();
 
 	@Override
 	public IFieldType type(Class<?> clazz) {
@@ -57,7 +59,8 @@ public class FieldTypeImpl implements IFieldType {
 
 	@Override
 	public IFieldType selection(Object... values) {
-		this.values = values;
+		for (Object v : values)
+			this.values.add(v);
 		return this;
 	}
 
