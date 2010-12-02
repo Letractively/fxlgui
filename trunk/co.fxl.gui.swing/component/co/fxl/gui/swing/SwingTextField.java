@@ -34,6 +34,8 @@ class SwingTextField extends SwingTextInput<JTextField, ITextField> implements
 
 	@Override
 	public ITextField text(String text) {
+		if (text == null)
+			text = "";
 		setTextOnComponent(text);
 		font.updateFont();
 		return this;
