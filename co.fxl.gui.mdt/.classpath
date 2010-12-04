@@ -9,6 +9,5 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/co.fxl.gui.form"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/co.fxl.gui.navigation"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/co.fxl.gui.table"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/co.fxl.gui.async"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
