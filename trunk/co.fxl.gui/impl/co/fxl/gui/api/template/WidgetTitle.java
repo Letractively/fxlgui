@@ -46,9 +46,15 @@ public class WidgetTitle implements IClickListener {
 	private boolean foldable = true;
 	public ILabel headerLabel;
 	private List<ILabel> labels = new LinkedList<ILabel>();
+	private int space = 10;
 
 	public WidgetTitle(ILayout layout) {
 		panel = layout.vertical();
+	}
+
+	public WidgetTitle space(int space) {
+		this.space = space;
+		return this;
 	}
 
 	public WidgetTitle triangleIcons() {
@@ -75,7 +81,7 @@ public class WidgetTitle implements IClickListener {
 		}
 		IContainer cell = headerPanel.right();
 		commandPanel = cell.panel().horizontal().spacing(6);
-		panel.addSpace(10);
+		panel.addSpace(space);
 		hasHeaderPanel = true;
 	}
 
