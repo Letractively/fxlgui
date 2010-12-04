@@ -36,8 +36,6 @@ public interface IClickable<T> {
 		T altPressed();
 
 		T ctrlPressed();
-		
-		T doubleClick();
 	}
 
 	T clickable(boolean clickable);

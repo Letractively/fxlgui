@@ -18,57 +18,58 @@
  */
 package co.fxl.gui.api.template;
 
-import co.fxl.gui.api.IClickable.IClickListener;
+import java.util.HashMap;
+import java.util.Map;
+
 import co.fxl.gui.api.IClickable.IKey;
 
 public abstract class KeyTemplate<T> implements IKey<T> {
 
-	public enum Type {
-
-		CTRL_KEY, ALT_KEY, SHIFT_KEY, RIGHT_CLICK, DOUBLE_CLICK;
+	protected enum ButtonType {
+		LEFT, RIGHT;
 	}
 
-	private final T element;
-	protected final IClickListener clickListener;
-	protected Type key = null;
+	protected enum KeyType {
+		CTRL_KEY, ALT_KEY, SHIFT_KEY;
+	}
 
-	protected KeyTemplate(T element, IClickListener clickListener) {
+	protected final T element;
+	protected ButtonType buttonType = ButtonType.LEFT;
+	protected Map<KeyType, Boolean> pressedKeys = new HashMap<KeyType, Boolean>();
+
+	protected KeyTemplate(T element) {
 		this.element = element;
-		this.clickListener = clickListener;
+		pressedKeys.put(KeyType.ALT_KEY, false);
+		pressedKeys.put(KeyType.SHIFT_KEY, false);
+		pressedKeys.put(KeyType.CTRL_KEY, false);
 	}
 
 	@Override
 	public T altPressed() {
-		key = Type.ALT_KEY;
+		pressedKeys.put(KeyType.ALT_KEY, true);
 		return element;
 	}
 
 	@Override
 	public T ctrlPressed() {
-		key = Type.CTRL_KEY;
+		pressedKeys.put(KeyType.CTRL_KEY, true);
 		return element;
 	}
 
 	@Override
 	public T mouseLeft() {
-		key = null;
+		buttonType = ButtonType.LEFT;
 		return element;
 	}
 
 	@Override
 	public T mouseRight() {
-		key = Type.RIGHT_CLICK;
-		return element;
+		throw new MethodNotImplementedException();
 	}
 
 	@Override
 	public T shiftPressed() {
-		key = Type.SHIFT_KEY;
+		pressedKeys.put(KeyType.SHIFT_KEY, true);
 		return element;
-	}
-
-	@Override
-	public T doubleClick() {
-		throw new MethodNotImplementedException();
 	}
 }
