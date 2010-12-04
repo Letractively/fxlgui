@@ -39,18 +39,19 @@ class GWTGridPanelClickHandler extends KeyTemplate<IGridPanel> implements
 		this.clickListener = clickListener;
 		Grid grid = (Grid) element.container.widget;
 		grid.addClickHandler(this);
+		grid.addStyleName("cursor-pointer");
 	}
 
 	@Override
 	public void onClick(ClickEvent event) {
 		for (KeyType pressedKey : pressedKeys.keySet()) {
 			Boolean check = pressedKeys.get(pressedKey);
-			if (keyMatches(pressedKey, event.getNativeEvent()) != check)
+			boolean keyMatches = keyMatches(pressedKey, event.getNativeEvent());
+			if (keyMatches != check)
 				return;
 		}
 		@SuppressWarnings("unchecked")
 		Grid grid = (Grid) ((GWTElement<Grid, IGridPanel>) element).container.widget;
-		grid.addStyleName("cursor-pointer");
 		Cell cell = grid.getCellForEvent(event);
 		clickListener.onClick(cell.getCellIndex(), cell.getRowIndex());
 	}
@@ -58,7 +59,7 @@ class GWTGridPanelClickHandler extends KeyTemplate<IGridPanel> implements
 	boolean keyMatches(KeyType key, NativeEvent nativeEvent) {
 		switch (key) {
 		case SHIFT_KEY:
-			return nativeEvent.getCtrlKey();
+			return nativeEvent.getShiftKey();
 		case CTRL_KEY:
 			return nativeEvent.getCtrlKey();
 		default:
