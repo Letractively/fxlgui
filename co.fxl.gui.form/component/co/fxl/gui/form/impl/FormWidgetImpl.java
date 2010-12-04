@@ -73,7 +73,7 @@ class FormWidgetImpl implements IFormWidget {
 
 	FormEntryLabel addFormEntryLabel(String name) {
 		IGridCell cell = grid().cell(0, gridIndex).align().end().valign()
-				.center().height(30);
+				.center();// .height(30);
 		if (fixLabelWidth != -1)
 			cell.width(fixLabelWidth);
 		ILabel formEntryLabel = cell.label().autoWrap(true);
@@ -86,7 +86,7 @@ class FormWidgetImpl implements IFormWidget {
 		IGridCell cell = grid().cell(1, gridIndex).valign().center();
 		if (fixValueWidth != -1)
 			cell.width(fixValueWidth);
-		cell.height(30);
+//		cell.height(30);
 		gridIndex++;
 		return cell;
 	}
