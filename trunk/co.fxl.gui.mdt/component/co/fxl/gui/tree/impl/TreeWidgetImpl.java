@@ -121,7 +121,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private Node<T> node;
 
 	TreeWidgetImpl(IContainer layout) {
-		widgetTitle = new WidgetTitle(layout.panel());
+		widgetTitle = new WidgetTitle(layout.panel()).space(0);
 		widgetTitle.foldable(false);
 		widgetTitle.addHyperlink("New").addClickListener(
 				newClick = new IClickListener() {
@@ -220,19 +220,19 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		if (detailPanel != null)
 			return;
 		splitPane = panel().add().splitPane().splitPosition(300);
-		// splitPane.border().color().lightgray();
+		splitPane.border().color().lightgray();
 		leftContentPanel = splitPane.first().scrollPane().viewPort().panel()
 				.vertical();
 		panel = leftContentPanel.spacing(10).add().panel().vertical();
 		scrollPane = splitPane.second().scrollPane();
 		scrollPane.color().rgb(BACKGROUND_GRAY, BACKGROUND_GRAY,
 				BACKGROUND_GRAY);
-//		scrollPane.border().color().lightgray();
+		// scrollPane.border().color().lightgray();
 		rightContentPanel = scrollPane.viewPort().panel().vertical();
 		// .spacing(10);
 		detailPanel = rightContentPanel.add().panel().vertical();
 		onResize(-1, panel.display().height());
-		ResizeListener.setup(panel.display(), this); 
+		ResizeListener.setup(panel.display(), this);
 	}
 
 	@Override
