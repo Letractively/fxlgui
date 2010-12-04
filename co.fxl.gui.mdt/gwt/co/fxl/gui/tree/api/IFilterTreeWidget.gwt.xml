@@ -1,5 +1,4 @@
 <module>
 	<inherits name='co.fxl.gui.api.IDisplay' />
-	<inherits name='co.fxl.gui.async.ICallback' />
 	<source path='' />
 </module>
