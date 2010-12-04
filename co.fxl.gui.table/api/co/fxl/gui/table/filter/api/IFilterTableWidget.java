@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.table.filter.api;
 
+import java.util.List;
+
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
@@ -33,7 +35,7 @@ public interface IFilterTableWidget<T> extends ITableWidget<T> {
 		ITableFilter<T> filterable(IColumn column, Object... values);
 
 		ITableFilter<T> filterable(IColumn column, Class<?> contentType,
-				Object... values);
+				List<?> values);
 
 		ITableFilter<T> constraints(IFilterConstraints constraints);
 
