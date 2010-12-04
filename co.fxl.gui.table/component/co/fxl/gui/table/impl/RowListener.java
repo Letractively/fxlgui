@@ -24,7 +24,9 @@ public interface RowListener {
 
 	void notifyClick(RowImpl rowImpl);
 
-	void notifyAction(RowImpl rowImpl);
+	void notifyCtrlClick(RowImpl rowImpl);
+
+	void notifyShiftClick(RowImpl rowImpl);
 
 	void decorate(IClickable<?> c);
 

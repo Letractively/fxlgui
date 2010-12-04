@@ -26,11 +26,11 @@ import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridClickListener;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.IGridPanel.IGridClickListener;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.ISelection;
@@ -118,6 +118,20 @@ public class TableWidgetImpl implements ITableWidget<Object> {
 						rowListener.notifyClick(rows.get(row - 1));
 				}
 			});
+			gridPanel.addGridClickListener(new IGridClickListener() {
+				@Override
+				public void onClick(int column, int row) {
+					if (row > 0)
+						rowListener.notifyCtrlClick(rows.get(row - 1));
+				}
+			}).ctrlPressed();
+			gridPanel.addGridClickListener(new IGridClickListener() {
+				@Override
+				public void onClick(int column, int row) {
+					if (row > 0)
+						rowListener.notifyShiftClick(rows.get(row - 1));
+				}
+			}).shiftPressed();
 		}
 	}
 

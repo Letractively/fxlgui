@@ -65,7 +65,13 @@ class SelectionImpl implements ISelection<Object> {
 		}
 
 		@Override
-		public void notifyAction(RowImpl rowImpl) {
+		public void notifyCtrlClick(RowImpl rowImpl) {
+			notifyClick(rowImpl);
+		}
+
+		@Override
+		public void notifyShiftClick(RowImpl rowImpl) {
+			notifyClick(rowImpl);
 		}
 
 		@Override
@@ -118,6 +124,7 @@ class SelectionImpl implements ISelection<Object> {
 		private List<IChangeListener<Object>> listeners = new LinkedList<IChangeListener<Object>>();
 		private ILabel selectAll;
 		private ILabel removeSelection;
+		private RowImpl lastRow = null;
 
 		MultiSelection(TableWidgetImpl widget) {
 		}
@@ -131,12 +138,41 @@ class SelectionImpl implements ISelection<Object> {
 
 		@Override
 		public void notifyClick(RowImpl row) {
+			clear();
+			notifyCtrlClick(row);
+		}
+
+		@Override
+		public void notifyCtrlClick(RowImpl row) {
 			Object identifier = row.content.identifier;
 			boolean removed = selection.remove(identifier);
-			if (!removed)
+			if (!removed) {
 				selection.add(identifier);
+				lastRow = row;
+			} else {
+				lastRow = null;
+			}
 			row.selected(!removed);
 			notifyChange();
+		}
+
+		@Override
+		public void notifyShiftClick(RowImpl row) {
+			if (lastRow == null) {
+				notifyCtrlClick(row);
+			} else {
+				int min = Math.min(row.rowIndex, lastRow.rowIndex);
+				int max = Math.max(row.rowIndex, lastRow.rowIndex);
+				for (int i = min; i <= max; i++) {
+					RowImpl r = widget.rows.get(i - 1);
+					if (!selection.contains(r.content.identifier)) {
+						r.selected(true);
+						selection.add(r.content.identifier);
+					}
+				}
+				lastRow = row;
+				notifyChange();
+			}
 		}
 
 		private void notifyChange() {
@@ -145,10 +181,6 @@ class SelectionImpl implements ISelection<Object> {
 			}
 			selectAll.clickable(selection.size() != widget.rows.size());
 			removeSelection.clickable(!selection.isEmpty());
-		}
-
-		@Override
-		public void notifyAction(RowImpl rowImpl) {
 		}
 
 		@Override
