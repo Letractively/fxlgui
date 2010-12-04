@@ -18,28 +18,41 @@
  */
 package co.fxl.gui.gwt;
 
-import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridClickListener;
 import co.fxl.gui.api.template.KeyTemplate;
 
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HTMLTable.Cell;
 
-class GWTClickHandler<T> extends KeyTemplate<T> {
+class GWTGridPanelClickHandler extends KeyTemplate<IGridPanel> implements
+		ClickHandler {
 
-	private IClickListener clickListener;
+	private IGridClickListener clickListener;
 
-	GWTClickHandler(T element, IClickListener clickListener) {
+	GWTGridPanelClickHandler(GWTGridPanel element,
+			IGridClickListener clickListener) {
 		super(element);
 		this.clickListener = clickListener;
+		Grid grid = (Grid) element.container.widget;
+		grid.addClickHandler(this);
 	}
 
+	@Override
 	public void onClick(ClickEvent event) {
 		for (KeyType pressedKey : pressedKeys.keySet()) {
 			Boolean check = pressedKeys.get(pressedKey);
 			if (keyMatches(pressedKey, event.getNativeEvent()) != check)
 				return;
 		}
-		clickListener.onClick();
+		@SuppressWarnings("unchecked")
+		Grid grid = (Grid) ((GWTElement<Grid, IGridPanel>) element).container.widget;
+		grid.addStyleName("cursor-pointer");
+		Cell cell = grid.getCellForEvent(event);
+		clickListener.onClick(cell.getCellIndex(), cell.getRowIndex());
 	}
 
 	boolean keyMatches(KeyType key, NativeEvent nativeEvent) {
