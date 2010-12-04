@@ -32,6 +32,7 @@ class GWTTextField extends GWTElement<TextBox, ITextField> implements
 	GWTTextField(GWTContainer<TextBox> container) {
 		super(container);
 		font(this);
+		container.widget.addStyleName("gwt-TextBox");
 	}
 
 	public ITextField text(String text) {
