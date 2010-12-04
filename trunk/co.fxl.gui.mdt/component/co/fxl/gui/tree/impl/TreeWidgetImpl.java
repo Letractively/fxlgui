@@ -43,7 +43,7 @@ import co.fxl.gui.tree.api.ITreeWidget;
 
 class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
-	private static final int BACKGROUND_GRAY = 250;
+	private static final int BACKGROUND_GRAY = 247;
 
 	interface RefreshListener {
 
@@ -227,12 +227,12 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		scrollPane = splitPane.second().scrollPane();
 		scrollPane.color().rgb(BACKGROUND_GRAY, BACKGROUND_GRAY,
 				BACKGROUND_GRAY);
-		scrollPane.border().color().lightgray();
+//		scrollPane.border().color().lightgray();
 		rightContentPanel = scrollPane.viewPort().panel().vertical();
 		// .spacing(10);
 		detailPanel = rightContentPanel.add().panel().vertical();
 		onResize(-1, panel.display().height());
-		ResizeListener.setup(panel.display(), this);
+		ResizeListener.setup(panel.display(), this); 
 	}
 
 	@Override

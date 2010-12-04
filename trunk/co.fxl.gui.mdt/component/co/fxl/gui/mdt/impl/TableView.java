@@ -170,6 +170,7 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 		for (Object o : selection) {
 			clickable &= queryList.isDeletable(o);
 		}
+		detail.clickable(selection.size() <= 1);
 		delete.clickable(clickable);
 	}
 
