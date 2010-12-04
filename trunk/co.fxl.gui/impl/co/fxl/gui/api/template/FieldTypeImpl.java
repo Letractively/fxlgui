@@ -58,7 +58,7 @@ public class FieldTypeImpl implements IFieldType {
 	}
 
 	@Override
-	public IFieldType selection(Object... values) {
+	public IFieldType addConstraint(Object... values) {
 		for (Object v : values)
 			this.values.add(v);
 		return this;

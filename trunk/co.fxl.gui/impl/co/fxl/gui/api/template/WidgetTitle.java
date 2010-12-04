@@ -21,6 +21,7 @@ package co.fxl.gui.api.template;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -28,7 +29,6 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.IClickable.IClickListener;
 
 public class WidgetTitle implements IClickListener {
 
@@ -66,6 +66,7 @@ public class WidgetTitle implements IClickListener {
 		if (hasHeaderPanel)
 			return;
 		headerPanel = panel.add().panel().dock();
+		// headerPanel.color().rgb(220, 220, 220);
 		titlePanel = headerPanel.center().panel().horizontal().add().panel()
 				.horizontal().spacing(4);
 		if (foldable) {
