@@ -50,4 +50,9 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 		else
 			throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public T doubleClick() {
+		throw new MethodNotImplementedException();
+	}
 }
