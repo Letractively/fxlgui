@@ -38,8 +38,30 @@ import javax.swing.JPanel;
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.template.KeyTemplate;
 
 class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
+
+	class GridClickListenerAdapter extends KeyTemplate<IGridPanel> {
+
+		private IGridClickListener listener;
+
+		protected GridClickListenerAdapter(IGridPanel element,
+				IGridClickListener listener) {
+			super(element);
+			this.listener = listener;
+		}
+
+		public void onClick(MouseEvent e, int column, int row) {
+			for (KeyType pressedKey : pressedKeys.keySet()) {
+				Boolean check = pressedKeys.get(pressedKey);
+				if (ClickListenerMouseAdapter.keyMatches(pressedKey, e) != check)
+					return;
+			}
+			listener.onClick(column, row);
+		}
+
+	}
 
 	class GridCell extends SwingContainer<JComponent> implements IGridCell {
 
@@ -183,7 +205,7 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 	private GridBagLayout layout;
 	private Insets insets = new Insets(0, 0, 0, 0);
 	private boolean hasClickListener = false;
-	private List<IGridClickListener> gridClickListeners = new LinkedList<IGridClickListener>();
+	private List<GridClickListenerAdapter> gridClickListeners = new LinkedList<GridClickListenerAdapter>();
 
 	SwingGridPanel(SwingContainer<JPanel> container) {
 		super(container);
@@ -191,7 +213,6 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 		constraints.anchor = GridBagConstraints.LINE_START;
 		constraints.fill = GridBagConstraints.BOTH;
 		constraints.weightx = 1;
-		setupClickListener();
 	}
 
 	private void setupClickListener() {
@@ -209,8 +230,8 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 				GridBagConstraints gbc = layout.getConstraints(c);
 				int column = gbc.gridx;
 				int row = gbc.gridy;
-				for (IGridClickListener cl : gridClickListeners) {
-					cl.onClick(column, row);
+				for (GridClickListenerAdapter cl : gridClickListeners) {
+					cl.onClick(e, column, row);
 				}
 			}
 		});
@@ -219,39 +240,10 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 	@Override
 	public IKey<IGridPanel> addGridClickListener(IGridClickListener listener) {
 		setupClickListener();
-		gridClickListeners.add(listener);
-		return new IKey<IGridPanel>() {
-
-			@Override
-			public IGridPanel altPressed() {
-				throw new MethodNotImplementedException();
-			}
-
-			@Override
-			public IGridPanel ctrlPressed() {
-				throw new MethodNotImplementedException();
-			}
-
-			@Override
-			public IGridPanel mouseLeft() {
-				throw new MethodNotImplementedException();
-			}
-
-			@Override
-			public IGridPanel mouseRight() {
-				throw new MethodNotImplementedException();
-			}
-
-			@Override
-			public IGridPanel shiftPressed() {
-				throw new MethodNotImplementedException();
-			}
-
-			@Override
-			public IGridPanel doubleClick() {
-				throw new MethodNotImplementedException();
-			}
-		};
+		GridClickListenerAdapter adp = new GridClickListenerAdapter(this,
+				listener);
+		gridClickListeners.add(adp);
+		return adp;
 	}
 
 	@Override

@@ -33,57 +33,52 @@ class ClickListenerMouseAdapter<T> extends KeyTemplate<T> implements IKey<T> {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-
-			// TODO when time since last click < 0.5s, fire as double click
-
-			if (checkKeys(e))
-				clickListener.onClick();
+			for (KeyType pressedKey : pressedKeys.keySet()) {
+				Boolean check = pressedKeys.get(pressedKey);
+				if (keyMatches(pressedKey, e) != check)
+					return;
+			}
+			clickListener.onClick();
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
-			// TODO when time since last click < 0.5s, fire as double click
-
-			if (checkKeys(e))
-				clickListener.onClick();
+			for (KeyType pressedKey : pressedKeys.keySet()) {
+				Boolean check = pressedKeys.get(pressedKey);
+				if (keyMatches(pressedKey, e) != check)
+					return;
+			}
+			clickListener.onClick();
 		}
 	}
 
 	Adapter adapter = new Adapter();
+	private IClickListener clickListener;
 
 	ClickListenerMouseAdapter(T element, IClickListener clickListener) {
-		super(element, clickListener);
+		super(element);
+		this.clickListener = clickListener;
 	}
 
-	private boolean checkKeys(MouseEvent e) {
-		if (key == null)
-			return true;
-		if (key.equals(Type.CTRL_KEY) && !e.isControlDown())
-			return false;
-		if (key.equals(Type.ALT_KEY) && !e.isAltDown())
-			return false;
-		if (key.equals(Type.SHIFT_KEY) && !e.isShiftDown())
-			return false;
-		if (key.equals(Type.RIGHT_CLICK) && e.getButton() != MouseEvent.BUTTON2)
-			return false;
-		return true;
+	static boolean keyMatches(KeyType key, MouseEvent nativeEvent) {
+		switch (key) {
+		case SHIFT_KEY:
+			return nativeEvent.isShiftDown();
+		case CTRL_KEY:
+			return nativeEvent.isControlDown();
+		default:
+			return nativeEvent.isAltDown();
+		}
 	}
 
-	private boolean checkKeys(ActionEvent e) {
-		if (key == null)
-			return true;
-		if (key.equals(Type.CTRL_KEY)
-				&& !((e.getModifiers() & ActionEvent.CTRL_MASK) > 0))
-			return false;
-		if (key.equals(Type.ALT_KEY)
-				&& !((e.getModifiers() & ActionEvent.ALT_MASK) > 0))
-			return false;
-		if (key.equals(Type.SHIFT_KEY)
-				&& !((e.getModifiers() & ActionEvent.SHIFT_MASK) > 0))
-			return false;
-		if (key.equals(Type.RIGHT_CLICK))
-			throw new MethodNotImplementedException();
-		return true;
+	static boolean keyMatches(KeyType key, ActionEvent e) {
+		switch (key) {
+		case SHIFT_KEY:
+			return (e.getModifiers() & ActionEvent.SHIFT_MASK) > 0;
+		case CTRL_KEY:
+			return (e.getModifiers() & ActionEvent.CTRL_MASK) > 0;
+		default:
+			return (e.getModifiers() & ActionEvent.ALT_MASK) > 0;
+		}
 	}
 }
