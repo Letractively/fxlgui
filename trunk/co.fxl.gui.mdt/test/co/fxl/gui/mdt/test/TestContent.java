@@ -24,7 +24,7 @@ import java.util.List;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.mdt.api.IList;
 import co.fxl.gui.mdt.api.IMasterDetailTableWidget.IContent;
-import co.fxl.gui.async.ICallback;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.tree.api.ITree;
 
 class TestContent implements IContent<String> {
@@ -249,6 +249,11 @@ class TestContent implements IContent<String> {
 				}
 				return result;
 			}
+
+			@Override
+			public boolean isDeletable(String entity) {
+				throw new MethodNotImplementedException();
+			}
 		});
 	}
 
@@ -272,11 +277,5 @@ class TestContent implements IContent<String> {
 
 	private String getString(int k) {
 		return "Entity " + k;
-	}
-
-	@Override
-	public void queryRelation(String entity, String name,
-			ICallback<List<String>> callback) {
-		throw new MethodNotImplementedException();
 	}
 }
