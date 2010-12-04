@@ -22,10 +22,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.table.api.ISelection;
 
 class SelectionImpl implements ISelection<Object> {
@@ -33,6 +33,7 @@ class SelectionImpl implements ISelection<Object> {
 	class SingleSelection implements ISingleSelection<Object>, RowListener {
 
 		private List<ISelectionListener<Object>> listeners = new LinkedList<ISelectionListener<Object>>();
+		private RowImpl selectedRow = null;
 
 		@Override
 		public ISingleSelection<Object> addSelectionListener(
@@ -43,6 +44,19 @@ class SelectionImpl implements ISelection<Object> {
 
 		@Override
 		public void notifyClick(RowImpl row) {
+			if (selectedRow != null) {
+				selectedRow.selected(false);
+				if (selectedRow == row) {
+					for (ISelectionListener<Object> l : listeners) {
+						l.onSelection(null);
+					}
+					selection.clear();
+					selectedRow = null;
+					return;
+				}
+			}
+			selectedRow = row;
+			selectedRow.selected(true);
 			selection.clear();
 			selection.add(row.content.identifier);
 			for (ISelectionListener<Object> l : listeners) {

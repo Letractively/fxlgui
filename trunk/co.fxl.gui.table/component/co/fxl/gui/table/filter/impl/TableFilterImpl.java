@@ -18,8 +18,6 @@
  */
 package co.fxl.gui.table.filter.impl;
 
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.ILayout;
@@ -40,8 +38,8 @@ class TableFilterImpl implements ITableFilter<Object>, IFilterListener {
 
 	TableFilterImpl(FilterTableWidgetImpl widget, ILayout layout) {
 		this.widget = widget;
-		filterWidget = (IFilterWidget) layout.vertical().add().widget(
-				IFilterWidget.class);
+		filterWidget = (IFilterWidget) layout.vertical().add()
+				.widget(IFilterWidget.class);
 		filterWidget.addSizeFilter();
 		filterWidget.addFilterListener(this);
 	}
@@ -60,15 +58,14 @@ class TableFilterImpl implements ITableFilter<Object>, IFilterListener {
 
 	@Override
 	public ITableFilter<Object> filterable(IColumn column,
-			Class<?> contentType, Object... values) {
+			Class<?> contentType, List<?> values) {
 		ColumnImpl columnImpl = (ColumnImpl) column;
 		String name = columnImpl.name;
-		List<Object> list = new LinkedList<Object>(Arrays.asList(values));
 		IFilter filter = filterWidget.addFilter();
 		IFieldType type = filter.name(name).type();
 		type.type(contentType);
-		if (!list.isEmpty())
-			type.selection(list);
+		for (Object o : values)
+			type.addConstraint(o);
 		return this;
 	}
 
