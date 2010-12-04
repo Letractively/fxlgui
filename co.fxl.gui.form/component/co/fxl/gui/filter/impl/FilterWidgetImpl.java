@@ -128,13 +128,16 @@ class FilterWidgetImpl implements IFilterWidget {
 			} else if (contentType.equals(IImage.class)) {
 				filter = new ComboBoxStringFilter(grid, name, values,
 						filters.size());
+			} else if (contentType.equals(Date.class)) {
+				throw new MethodNotImplementedException(contentType.getName());
 			} else
-				throw new MethodNotImplementedException();
+				throw new MethodNotImplementedException(contentType.getName());
 		} else if (contentType.equals(String.class))
 			filter = new StringFilter(grid, name, filters.size());
 		else if (contentType.equals(Date.class))
 			filter = new DateFilter(grid, name, filters.size());
-		else if (contentType.equals(Integer.class))
+		else if (contentType.equals(Integer.class)
+				|| contentType.equals(Long.class))
 			filter = new NumberFilter(grid, name, filters.size());
 		else
 			throw new MethodNotImplementedException(contentType.getName());
@@ -173,8 +176,7 @@ class FilterWidgetImpl implements IFilterWidget {
 	@Override
 	public IFilterWidget visible(boolean visible) {
 		for (FilterImpl filter : filterList) {
-			List<Object> list = new LinkedList<Object>(
-					Arrays.asList(filter.type.values));
+			List<Object> list = new LinkedList<Object>(filter.type.values);
 			if (!list.isEmpty())
 				list.add(0, "");
 			List<Object> preset = null;

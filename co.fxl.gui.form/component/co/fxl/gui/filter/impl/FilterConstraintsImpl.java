@@ -90,4 +90,10 @@ class FilterConstraintsImpl implements IFilterConstraints {
 		return constraints.get(column) != null
 				&& constraints.get(column) instanceof IRelationConstraint;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public IRange<Double> doubleRange(String column) {
+		return (IRange<Double>) constraints.get(column);
+	}
 }

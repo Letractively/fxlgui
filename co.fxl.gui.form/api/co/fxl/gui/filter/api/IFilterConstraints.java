@@ -45,4 +45,6 @@ public interface IFilterConstraints {
 	List<?> relationList(String column);
 
 	Class<?> typeOf(String column);
+
+	IRange<Double> doubleRange(String string);
 }

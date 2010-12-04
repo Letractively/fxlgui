@@ -48,8 +48,8 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 	ComboBoxStringFilter(IGridPanel panel, String name, List<Object> values,
 			int filterIndex) {
 		super(panel, name, filterIndex);
-		comboBox = panel.cell(1, filterIndex).comboBox().size(
-				WIDTH_SINGLE_CELL, HEIGHT);
+		comboBox = panel.cell(1, filterIndex).comboBox();
+		comboBox.size(WIDTH_SINGLE_CELL, HEIGHT);
 		for (Object object : values) {
 			comboBox.addText(string(object));
 		}

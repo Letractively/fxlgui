@@ -69,7 +69,7 @@ class FilterWidgetTest implements IFilterListener {
 		widget.addFilter().name(DESCRIPTION);
 		widget.addFilter().name(DATE).type().date();
 		widget.addFilter().name(INT).type().integer();
-		widget.addFilter().name(STATE).type().selection("Failed", "Passed");
+		widget.addFilter().name(STATE).type().addConstraint("Failed", "Passed");
 		List<Entity> es = new LinkedList<Entity>();
 		es.add(new Entity("First", 0l));
 		es.add(new Entity("Second", 1l));
