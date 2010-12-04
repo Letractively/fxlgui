@@ -19,9 +19,9 @@
 package co.fxl.gui.api.template;
 
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.IGridPanel.IGridCell;
 
 public class SplitLayout {
 

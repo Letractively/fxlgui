@@ -30,7 +30,7 @@ public interface IFieldType {
 
 	IFieldType image();
 
-	IFieldType selection(Object... values);
+	IFieldType addConstraint(Object... values);
 
 	IFieldType type(Class<?> clazz);
 }

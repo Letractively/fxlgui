@@ -25,7 +25,7 @@ public abstract class KeyTemplate<T> implements IKey<T> {
 
 	public enum Type {
 
-		CTRL_KEY, ALT_KEY, SHIFT_KEY, RIGHT_CLICK;
+		CTRL_KEY, ALT_KEY, SHIFT_KEY, RIGHT_CLICK, DOUBLE_CLICK;
 	}
 
 	private final T element;
@@ -65,5 +65,10 @@ public abstract class KeyTemplate<T> implements IKey<T> {
 	public T shiftPressed() {
 		key = Type.SHIFT_KEY;
 		return element;
+	}
+
+	@Override
+	public T doubleClick() {
+		throw new MethodNotImplementedException();
 	}
 }
