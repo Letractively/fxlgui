@@ -92,7 +92,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 		return container.component.isEnabled();
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public R clickable(boolean clickable) {
 		for (ClickListenerMouseAdapter adapter : adapters) {
 			container.component.removeMouseListener(adapter.adapter);

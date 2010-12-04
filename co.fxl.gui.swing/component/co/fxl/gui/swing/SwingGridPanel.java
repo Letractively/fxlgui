@@ -246,6 +246,11 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 			public IGridPanel shiftPressed() {
 				throw new MethodNotImplementedException();
 			}
+
+			@Override
+			public IGridPanel doubleClick() {
+				throw new MethodNotImplementedException();
+			}
 		};
 	}
 
