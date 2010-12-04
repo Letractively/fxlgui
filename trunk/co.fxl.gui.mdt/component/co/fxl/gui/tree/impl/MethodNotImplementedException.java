@@ -21,4 +21,11 @@ package co.fxl.gui.tree.impl;
 class MethodNotImplementedException extends RuntimeException {
 
 	private static final long serialVersionUID = -1983615011921970031L;
+
+	public MethodNotImplementedException() {
+	}
+
+	public MethodNotImplementedException(String string) {
+		super(string);
+	}
 }

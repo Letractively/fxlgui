@@ -23,14 +23,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.api.template.SimpleDateFormat;
-import co.fxl.gui.async.ICallback;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.form.api.IFormField;
@@ -38,12 +39,14 @@ import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
 import co.fxl.gui.mdt.api.IFilterList;
 import co.fxl.gui.table.api.IRow;
+import co.fxl.gui.table.api.ISelection;
+import co.fxl.gui.table.api.ISelection.ISingleSelection;
 import co.fxl.gui.table.api.ITableWidget;
 import co.fxl.gui.tree.api.IFilterTreeWidget;
 import co.fxl.gui.tree.api.IFilterTreeWidget.ISource;
 import co.fxl.gui.tree.api.ITree;
+import co.fxl.gui.tree.api.ITreeWidget;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
-import co.fxl.gui.tree.api.ITreeWidget.ISelectionListener;
 
 class DetailView extends ViewTemplate implements ISource<Object> {
 
@@ -57,7 +60,7 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 		tree = (IFilterTreeWidget<Object>) widget.mainPanel.add().widget(
 				IFilterTreeWidget.class);
 		tree.title(widget.title);
-		tree.addSelectionListener(new ISelectionListener<Object>() {
+		tree.addSelectionListener(new ITreeWidget.ISelectionListener<Object>() {
 
 			@Override
 			public void onChange(Object selection) {
@@ -80,7 +83,8 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 				IFieldType type = filterList.addFilter()
 						.name(filter.property.name).type()
 						.type(filter.property.type.type);
-				type.selection(filter.property.type.values);
+				for (Object o : filter.property.type.values)
+					type.addConstraint(o);
 			} else
 				throw new MethodNotImplementedException();
 		}
@@ -201,6 +205,29 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 									@SuppressWarnings("unchecked")
 									ITableWidget<Object> table = (ITableWidget<Object>) panel
 											.add().widget(ITableWidget.class);
+									final ISelection<Object> selection0 = table
+											.selection();
+									ISingleSelection<Object> selection = selection0
+											.single();
+									final IButton button = panel.add().panel()
+											.horizontal().add().button()
+											.text("Show").clickable(false);
+									co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener<Object> listener = new co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener<Object>() {
+										@Override
+										public void onSelection(Object selection) {
+											button.clickable(selection != null);
+										}
+									};
+									button.addClickListener(new IClickListener() {
+										@Override
+										public void onClick() {
+											List<Object> r = selection0
+													.result();
+											throw new MethodNotImplementedException(
+													r.toString());
+										}
+									});
+									selection.addSelectionListener(listener);
 									for (PropertyImpl property : relation.properties) {
 										table.addColumn().name(property.name)
 												.type(property.type.type);

@@ -31,10 +31,10 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.ChainedCallback;
+import co.fxl.gui.api.template.ICallback;
+import co.fxl.gui.api.template.UiCallback;
 import co.fxl.gui.api.template.WidgetTitle;
-import co.fxl.gui.async.ChainedCallback;
-import co.fxl.gui.async.ICallback;
-import co.fxl.gui.async.UiCallback;
 import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
 import co.fxl.gui.navigation.api.IMenuWidget;
@@ -117,6 +117,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private IVerticalPanel leftContentPanel;
 	private IVerticalPanel rightContentPanel;
 	private ISplitPane splitPane;
+	IScrollPane scrollPane;
+	private Node<T> node;
 
 	TreeWidgetImpl(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel());
@@ -125,9 +127,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				newClick = new IClickListener() {
 					@Override
 					public void onClick() {
-
 						final ITree<T> lParentNode = last.tree;
-
 						ChainedCallback<List<T>, ITree<T>> lCallback1 = new ChainedCallback<List<T>, ITree<T>>() {
 							@Override
 							public void onSuccess(List<T> result) {
@@ -138,7 +138,17 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 							@Override
 							public void onSuccess(ITree<T> result) {
 								selection(result.object());
-								root(root);
+								boolean rememberExpand = expand;
+								expand = false;
+								List<ITree<T>> path = new LinkedList<ITree<T>>();
+								path.add(result);
+								while (result.parent() != null) {
+									result = result.parent();
+									path.add(0, result);
+								}
+								root(root, path);
+								node.path = null;
+								expand = rememberExpand;
 							}
 						};
 						lCallback1.setNextCallback(lCallback2);
@@ -210,13 +220,14 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		if (detailPanel != null)
 			return;
 		splitPane = panel().add().splitPane().splitPosition(300);
-		splitPane.border().color().lightgray();
+		// splitPane.border().color().lightgray();
 		leftContentPanel = splitPane.first().scrollPane().viewPort().panel()
 				.vertical();
 		panel = leftContentPanel.spacing(10).add().panel().vertical();
-		IScrollPane scrollPane = splitPane.second().scrollPane();
+		scrollPane = splitPane.second().scrollPane();
 		scrollPane.color().rgb(BACKGROUND_GRAY, BACKGROUND_GRAY,
 				BACKGROUND_GRAY);
+		scrollPane.border().color().lightgray();
 		rightContentPanel = scrollPane.viewPort().panel().vertical();
 		// .spacing(10);
 		detailPanel = rightContentPanel.add().panel().vertical();
@@ -233,17 +244,22 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> root(ITree<T> tree) {
+		return root(tree, null);
+	}
+
+	public ITreeWidget<T> root(ITree<T> tree, List<ITree<T>> path) {
 		if (this.root != null) {
 			show(null);
 			panel().clear();
 		}
 		this.root = tree;
-		Node<T> node = new Node<T>(this, panel(), tree, 0, expand);
+		node = new Node<T>(this, panel(), tree, 0, expand, path);
 		if (selection != null) {
 			node = object2node.get(selection);
 		}
 		show(node);
 		return this;
+
 	}
 
 	void show(Node<T> node) {

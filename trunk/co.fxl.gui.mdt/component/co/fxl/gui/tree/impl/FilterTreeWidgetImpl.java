@@ -20,7 +20,7 @@ package co.fxl.gui.tree.impl;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.async.ICallback;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.mdt.api.IFilterList;
