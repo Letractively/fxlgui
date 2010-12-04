@@ -42,9 +42,19 @@ public class SplitLayout {
 		mainPanel = vpanel.add().panel().vertical().spacing(10);
 		mainPanel.border().color().lightgray();
 		mainPanel.color().white();
-		IGridCell cell = panel.cell(1, 0).width(300).valign().begin();
-		sidePanel = cell.panel().vertical().add().panel().vertical()
-				.spacing(10);
+		final IGridCell cell = panel.cell(1, 0).width(300).valign().begin();
+		IVerticalPanel vertical = cell.panel().vertical();
+		// final ILabel button =
+		// vertical.add().label().text("Hide").hyperlink();
+		// button.addClickListener(new IClickListener() {
+		// @Override
+		// public void onClick() {
+		// sidePanel.visible(!sidePanel.visible());
+		// cell.width(sidePanel.visible() ? 300 : 80);
+		// button.text(sidePanel.visible() ? "Hide" : "Show");
+		// }
+		// });
+		sidePanel = vertical.add().panel().vertical().spacing(10);
 	}
 
 	public void reset() {
