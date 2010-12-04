@@ -20,21 +20,22 @@ package co.fxl.gui.tree.impl;
 
 import java.util.List;
 
+import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.async.ICallback;
 import co.fxl.gui.tree.api.ITree;
 
 /**
  * Represents the ui of a tree node.
- *
+ * 
  * @param <T>
  */
 class Node<T> implements IClickListener {
-
+ 
+	private static final String DOWN = "refresh.png";
 	private static final String FOLDER_CLOSED = "folder_closed.png";
 	private static final String FOLDER_OPEN = "folder_open.png";
 	private static final String LEAF = "leaf.png";
@@ -48,12 +49,17 @@ class Node<T> implements IClickListener {
 	private TreeWidgetImpl<T> widget;
 	private IHorizontalPanel container;
 	private boolean expand;
+	private IImage imageRefresh;
+	private ILabel label;
+	private ILabel refreshLabel;
+	List<ITree<T>> path;
 
 	Node(TreeWidgetImpl<T> widget, IVerticalPanel panel, ITree<T> root,
-			int depth, boolean expand) {
+			int depth, boolean expand, List<ITree<T>> path) {
 		this.widget = widget;
 		this.panel = panel;
 		this.expand = expand;
+		this.path = path;
 		container = panel.add().panel().horizontal();
 		content = container.add().panel().horizontal().spacing(2);
 		IClickListener showClickListener = new IClickListener() {
@@ -66,6 +72,7 @@ class Node<T> implements IClickListener {
 			content.addSpace(depth * INDENT);
 			image = content.add().image().resource(FOLDER_CLOSED);
 			image.addClickListener(this);
+			image.addClickListener(showClickListener);
 			content.addSpace(4);
 		} else {
 			content.addSpace(depth * INDENT);
@@ -73,15 +80,35 @@ class Node<T> implements IClickListener {
 			image.addClickListener(showClickListener);
 			content.addSpace(4);
 		}
-		ILabel label = content.add().label().text(root.name());
+		label = content.add().label().text(root.name());
 		if (widget.detailPanel != null) {
 			label.addClickListener(showClickListener);
 		}
+		if (root.children().size() != 0 && expand
+				&& root.childCount() > root.children().size()) {
+			String text = " [" + root.children().size() + "/"
+					+ root.childCount() + "]";
+			refreshLabel = content.add().label().text(text);
+			refreshLabel.font().color().gray();
+			content.addSpace(4);
+			imageRefresh = content.add().image().resource(DOWN);
+			imageRefresh.addClickListener(new IClickListener() {
+				@Override
+				public void onClick() {
+					expandLazyNode();
+				}
+			});
+			imageRefresh.addClickListener(showClickListener);
+		}
+		container.addClickListener(showClickListener);
 		this.tree = root;
 		this.depth = depth;
 		content.addSpace(10);
 		if (root.children().size() != 0 && expand)
-			onClick();
+			expandLoadedNode();
+		else if (path != null && path.contains(tree)) {
+			expandLoadedNode();
+		}
 		widget.object2node.put(root.object(), this);
 	}
 
@@ -93,16 +120,15 @@ class Node<T> implements IClickListener {
 			clear();
 		}
 	}
-	
 
-	protected void expand() {	
+	protected void expand() {
 		if (tree.childCount() > tree.children().size()) {
 			expandLazyNode();
 		} else {
 			expandLoadedNode();
 		}
 	}
-	
+
 	/**
 	 * Expands not yet loaded node.
 	 */
@@ -111,29 +137,35 @@ class Node<T> implements IClickListener {
 		ICallback<List<T>> lCallback = new ICallback<List<T>>() {
 			@Override
 			public void onFail(Throwable caught) {
-				// TODO 
+				// TODO
 			}
+
 			@Override
 			public void onSuccess(List<T> result) {
 				expandLoadedNode();
-			}		
+			}
 		};
+		if (imageRefresh != null) {
+			imageRefresh.resource(null);
+			refreshLabel.remove();
+		}
+		expand = false;
 		tree.loadChildren(lCallback);
 	}
-	
+
 	/**
 	 * Expands already loaded nodes.
 	 */
-	protected void expandLoadedNode() {
+	protected void expandLoadedNode() { 
 		clear();
 		childrenPanel = panel.add().panel().vertical();
 		for (ITree<T> child : tree.children()) {
 			new Node<T>(widget, childrenPanel.add().panel().vertical(), child,
-					depth + 1, expand);
+					depth + 1, expand, path);
 		}
-		image.resource(FOLDER_OPEN);
+		if (tree.childCount() > 0)
+			image.resource(FOLDER_OPEN);
 	}
-	
 
 	private void clear() {
 		if (childrenPanel == null)
@@ -142,12 +174,15 @@ class Node<T> implements IClickListener {
 		childrenPanel.remove();
 		childrenPanel = null;
 		image.resource(FOLDER_CLOSED);
+		if (imageRefresh != null)
+			imageRefresh.resource(null);
 	}
 
 	void selected(boolean selected) {
 		if (!selected)
 			container.color().white();
-		else
+		else {
 			container.color().rgb(230, 230, 255);
+		}
 	}
 }

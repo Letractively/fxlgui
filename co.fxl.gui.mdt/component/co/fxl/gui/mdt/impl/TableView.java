@@ -25,6 +25,7 @@ import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IList;
@@ -35,7 +36,6 @@ import co.fxl.gui.table.filter.api.IFilterTableWidget;
 import co.fxl.gui.table.filter.api.IFilterTableWidget.IFilterListener;
 import co.fxl.gui.table.filter.api.IFilterTableWidget.IRowModel;
 import co.fxl.gui.table.filter.api.IFilterTableWidget.ITableFilter;
-import co.fxl.gui.async.ICallback;
 
 class TableView extends ViewTemplate implements IFilterListener<Object> {
 
@@ -46,7 +46,7 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 	private IClickable<?> delete;
 	private IClickable<?> detail;
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	TableView(final MasterDetailTableWidgetImpl widget, Object object) {
 		super(widget);
 		table = (IFilterTableWidget<Object>) widget.mainPanel.add().widget(
@@ -54,8 +54,8 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 		table.addTitle(widget.title).font().pixel(18);
 		addProperties();
 		addNavigationLinks();
-		final ITableFilter tableFilterList = table.filterPanel(widget.sidePanel.add()
-				.panel());
+		final ITableFilter tableFilterList = table.filterPanel(widget.sidePanel
+				.add().panel());
 		for (FilterImpl filter : widget.filterList.filters) {
 			if (filter instanceof RelationFilterImpl) {
 				RelationFilterImpl rfi = (RelationFilterImpl) filter;
@@ -124,8 +124,8 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 			for (PropertyImpl p : g.properties) {
 				if (p.displayInTable) {
 					adapters.add(p.adapter);
-					IColumn column = table.addColumn().name(p.name).type(
-							p.type.type);
+					IColumn column = table.addColumn().name(p.name)
+							.type(p.type.type);
 					if (p.sortable)
 						column.sortable();
 					property2column.put(p, column);
@@ -166,7 +166,11 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 	@Override
 	public void onChange(List<Object> selection) {
 		super.onChange(selection);
-		delete.clickable(!selection.isEmpty());
+		boolean clickable = !selection.isEmpty();
+		for (Object o : selection) {
+			clickable &= queryList.isDeletable(o);
+		}
+		delete.clickable(clickable);
 	}
 
 	@Override
