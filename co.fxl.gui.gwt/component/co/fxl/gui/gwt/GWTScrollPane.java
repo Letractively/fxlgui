@@ -33,6 +33,7 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 	GWTScrollPane(GWTContainer<ScrollPanel> container) {
 		super(container);
 		container.widget.setWidth("100%");
+		container.widget.setAlwaysShowScrollBars(false);
 	}
 
 	@Override
