@@ -335,4 +335,10 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		selectionListeners.add(listener);
 		return this;
 	}
+
+	@Override
+	public ITreeWidget<T> notifyUpdate(T object) {
+		object2node.get(object).update();
+		return this;
+	}
 }

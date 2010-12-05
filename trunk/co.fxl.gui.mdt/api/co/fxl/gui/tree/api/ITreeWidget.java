@@ -54,4 +54,6 @@ public interface ITreeWidget<T> {
 	ITreeWidget<T> addSelectionListener(ISelectionListener<T> listener);
 
 	ITreeWidget<T> clickNew();
+
+	ITreeWidget<T> notifyUpdate(T object);
 }

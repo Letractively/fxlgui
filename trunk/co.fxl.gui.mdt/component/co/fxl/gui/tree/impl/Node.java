@@ -21,11 +21,11 @@ package co.fxl.gui.tree.impl;
 import java.util.List;
 
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.tree.api.ITree;
 
 /**
@@ -34,7 +34,7 @@ import co.fxl.gui.tree.api.ITree;
  * @param <T>
  */
 class Node<T> implements IClickListener {
- 
+
 	private static final String DOWN = "refresh.png";
 	private static final String FOLDER_CLOSED = "folder_closed.png";
 	private static final String FOLDER_OPEN = "folder_open.png";
@@ -112,6 +112,10 @@ class Node<T> implements IClickListener {
 		widget.object2node.put(root.object(), this);
 	}
 
+	void update() {
+		label.text(tree.name());
+	}
+
 	@Override
 	public void onClick() {
 		if (childrenPanel == null) {
@@ -156,7 +160,7 @@ class Node<T> implements IClickListener {
 	/**
 	 * Expands already loaded nodes.
 	 */
-	protected void expandLoadedNode() { 
+	protected void expandLoadedNode() {
 		clear();
 		childrenPanel = panel.add().panel().vertical();
 		for (ITree<T> child : tree.children()) {

@@ -27,6 +27,7 @@ import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.ICallback;
@@ -129,6 +130,7 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 							for (Runnable update : updates)
 								update.run();
 							itree.save(node);
+							tree.notifyUpdate(node);
 						}
 					});
 					for (final PropertyImpl property : group.properties) {
@@ -260,16 +262,44 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 											.selection();
 									ISingleSelection<Object> selection = selection0
 											.single();
-									final IButton button = panel.add().panel()
-											.horizontal().add().button()
-											.text("Show").clickable(false);
+									IHorizontalPanel buttonPanel = panel.add()
+											.panel().horizontal();
+									final IButton add = buttonPanel.add()
+											.button().text("Add")
+											.clickable(false);
+									final IButton remove = buttonPanel.addSpace(10).add()
+											.button().text("Remove")
+											.clickable(false);
+									final IButton details = buttonPanel.addSpace(10).add()
+											.button().text("Show")
+											.clickable(false);
 									co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener<Object> listener = new co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener<Object>() {
 										@Override
 										public void onSelection(Object selection) {
-											button.clickable(selection != null);
+											add.clickable(selection != null);
+											remove.clickable(selection != null);
+											details.clickable(selection != null);
 										}
 									};
-									button.addClickListener(new IClickListener() {
+									add.addClickListener(new IClickListener() {
+										@Override
+										public void onClick() {
+											List<Object> r = selection0
+													.result();
+											throw new MethodNotImplementedException(
+													r.toString());
+										}
+									});
+									remove.addClickListener(new IClickListener() {
+										@Override
+										public void onClick() {
+											List<Object> r = selection0
+													.result();
+											throw new MethodNotImplementedException(
+													r.toString());
+										}
+									});
+									details.addClickListener(new IClickListener() {
 										@Override
 										public void onClick() {
 											List<Object> r = selection0
@@ -281,7 +311,8 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 									selection.addSelectionListener(listener);
 									for (PropertyImpl property : relation.properties) {
 										table.addColumn().name(property.name)
-												.type(property.type.clazz);
+												.type(property.type.clazz)
+												.sortable();
 									}
 									for (Object e : result) {
 										IRow<Object> row = table.addRow();
