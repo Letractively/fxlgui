@@ -186,7 +186,7 @@ class FilterWidgetImpl implements IFilterWidget {
 				preset = rf.preset;
 				adapter = rf.adapter;
 			}
-			addFilter(filter.type.type, filter.name, list, preset, adapter);
+			addFilter(filter.type.clazz, filter.name, list, preset, adapter);
 		}
 		if (addSizeFilter) {
 			sizeFilter = (ComboBoxIntegerFilter) addFilter(Integer.class,
