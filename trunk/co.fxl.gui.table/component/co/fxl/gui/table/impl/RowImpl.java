@@ -59,6 +59,12 @@ public class RowImpl implements IRow<Object> {
 			this.content.values.add((Comparable<Object>) comparable);
 			IGridCell cell = table.gridPanel.cell(currentColumn, rowIndex)
 					.valign().center();
+			// if (!cells.isEmpty() && cells.size() < table.columns.size() - 1)
+			// {
+			// cell.align().center();
+			// } else if (!cells.isEmpty()) {
+			// cell.align().end();
+			// }
 			Cell<?> c = CellFactory.createCellContent(table, this,
 					currentColumn, cell, comparable);
 			cells.add(c);
