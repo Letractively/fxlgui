@@ -18,13 +18,11 @@
  */
 package co.fxl.gui.gwt;
 
-import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.api.IClickable.IClickListener;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
