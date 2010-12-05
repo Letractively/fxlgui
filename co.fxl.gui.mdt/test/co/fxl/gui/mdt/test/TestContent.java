@@ -76,6 +76,11 @@ class TestContent implements IContent<String> {
 		public ITree<String> parent() {
 			throw new MethodNotImplementedException();
 		}
+
+		@Override
+		public void save(String node) {
+			throw new MethodNotImplementedException();
+		}
 	}
 
 	class Extract implements ITree<String> {
@@ -128,6 +133,11 @@ class TestContent implements IContent<String> {
 
 		@Override
 		public ITree<String> parent() {
+			throw new MethodNotImplementedException();
+		}
+
+		@Override
+		public void save(String node) {
 			throw new MethodNotImplementedException();
 		}
 
@@ -194,6 +204,11 @@ class TestContent implements IContent<String> {
 
 		@Override
 		public ITree<String> parent() {
+			throw new MethodNotImplementedException();
+		}
+
+		@Override
+		public void save(String node) {
 			throw new MethodNotImplementedException();
 		}
 

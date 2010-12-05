@@ -39,5 +39,7 @@ public interface ITree<T> {
 	void createNew(ICallback<ITree<T>> callback);
 	
 	void delete(ICallback<T> callback);
+
+	void save(T node);
 	
 }
