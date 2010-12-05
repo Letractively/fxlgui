@@ -22,7 +22,6 @@ import java.util.List;
 
 import co.fxl.gui.api.template.ICallback;
 
-
 public interface IRelation<T, R> extends IPropertyGroup<R> {
 
 	public interface IAdapter<T, R> {
@@ -31,4 +30,6 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 	}
 
 	IRelation<T, R> adapter(IAdapter<T, R> adapter);
+
+	// TODO relation add/remove/details-listener
 }
