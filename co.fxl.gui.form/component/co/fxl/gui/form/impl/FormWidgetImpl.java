@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.form.impl;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -86,7 +87,7 @@ class FormWidgetImpl implements IFormWidget {
 		IGridCell cell = grid().cell(1, gridIndex).valign().center();
 		if (fixValueWidth != -1)
 			cell.width(fixValueWidth);
-//		cell.height(30);
+		// cell.height(30);
 		gridIndex++;
 		return cell;
 	}
@@ -220,8 +221,18 @@ class FormWidgetImpl implements IFormWidget {
 				validation.linkInput((ITextArea) valueElement,
 						formField.required);
 			} else if (valueElement instanceof ITextField) {
-				validation.linkInput((ITextField) formField.valueElement(),
-						formField.required);
+				if (formField.type.clazz.equals(Date.class)) {
+					validation.validateDate(
+							(ITextField) formField.valueElement(),
+							formField.required);
+				} else if (formField.type.clazz.equals(Integer.class)) {
+					validation.validateInteger(
+							(ITextField) formField.valueElement(),
+							formField.required);
+				} else {
+					validation.linkInput((ITextField) formField.valueElement(),
+							formField.required);
+				}
 			} else if (valueElement instanceof IPasswordField) {
 				validation.linkInput((IPasswordField) formField.valueElement(),
 						formField.required);
