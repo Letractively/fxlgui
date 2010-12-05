@@ -38,7 +38,7 @@ abstract class Cell<T> {
 
 	void highlight(int row, boolean selected) {
 		if (!selected)
-			cell.color().white();
+			cell.color().remove();
 		else
 			cell.color().rgb(230, 230, 255);
 	}
