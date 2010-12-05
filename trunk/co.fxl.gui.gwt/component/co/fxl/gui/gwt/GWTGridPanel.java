@@ -74,6 +74,14 @@ class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPanel {
 					DOM.setStyleAttribute(formatter().getElement(row, column),
 							"backgroundColor", color);
 				}
+
+				@Override
+				public IColor remove() {
+					com.google.gwt.dom.client.Style stylable = formatter()
+							.getElement(row, column).getStyle();
+					stylable.setBackgroundColor(null);
+					return this;
+				}
 			};
 		}
 
