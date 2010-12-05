@@ -53,6 +53,7 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat();
 	private IFilterTreeWidget<Object> tree;
 	private IFilterList<Object> filterList;
+	protected ITree<Object> itree;
 
 	@SuppressWarnings("unchecked")
 	DetailView(final MasterDetailTableWidgetImpl widget, Object show) {
@@ -82,7 +83,7 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 			} else if (filter.property != null) {
 				IFieldType type = filterList.addFilter()
 						.name(filter.property.name).type()
-						.type(filter.property.type.type);
+						.type(filter.property.type.clazz);
 				for (Object o : filter.property.type.values)
 					type.addConstraint(o);
 			} else
@@ -120,19 +121,22 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 					border.style().top();
 					IFormWidget form = (IFormWidget) panel.add().widget(
 							IFormWidget.class);
+					final List<Runnable> updates = new LinkedList<Runnable>();
 					form.saveListener("Save", new ISaveListener() {
 
 						@Override
 						public void onSave() {
-							throw new MethodNotImplementedException();
+							for (Runnable update : updates)
+								update.run();
+							itree.save(node);
 						}
 					});
-					for (PropertyImpl property : group.properties) {
+					for (final PropertyImpl property : group.properties) {
 						if (property.displayInDetailView) {
-							IFormField<?> formField;
+							final IFormField<?> formField;
 							Object valueOf = property.adapter.valueOf(node);
-							if (property.type.type.equals(String.class)) {
-								ITextElement<?> valueElement;
+							final ITextElement<?> valueElement;
+							if (property.type.clazz.equals(String.class)) {
 								if (property.type.isLong) {
 									formField = form.addTextArea(property.name);
 									valueElement = formField.valueElement();
@@ -152,24 +156,71 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 										: (valueOf instanceof String ? (String) valueOf
 												: String.valueOf(valueOf));
 								valueElement.text(value);
-							} else if (property.type.type.equals(Date.class)) {
+								updates.add(new Runnable() {
+									@Override
+									public void run() {
+										property.adapter.valueOf(node,
+												valueElement.text());
+									}
+								});
+							} else if (property.type.clazz.equals(Date.class)) {
 								formField = form.addTextField(property.name);
+								formField.type().date();
 								String value = DATE_FORMAT
 										.format((Date) valueOf);
 								formField.valueElement().text(value);
-							} else if (property.type.type.equals(Boolean.class)) {
+								updates.add(new Runnable() {
+									@Override
+									public void run() {
+										Date value = null;
+										String text = formField.valueElement()
+												.text().trim();
+										if (!text.equals("")) {
+											value = DATE_FORMAT.parse(text);
+										}
+										property.adapter.valueOf(node, value);
+									}
+								});
+							} else if (property.type.clazz
+									.equals(Boolean.class)) {
 								formField = form.addCheckBox(property.name);
 								ICheckBox checkBox = (ICheckBox) formField
 										.valueElement();
 								checkBox.checked((Boolean) valueOf);
-							} else if (property.type.type.equals(Long.class)
-									|| property.type.type.equals(Integer.class)) {
+								updates.add(new Runnable() {
+									@Override
+									public void run() {
+										throw new MethodNotImplementedException();
+									}
+								});
+							} else if (property.type.clazz.equals(Long.class)
+									|| property.type.clazz
+											.equals(Integer.class)) {
+								final boolean isLong = property.type.clazz
+										.equals(Long.class);
 								formField = form.addTextField(property.name);
+								// TODO long ...
+								formField.type().integer();
 								String value = ((Number) valueOf).toString();
 								formField.valueElement().text(value);
+								updates.add(new Runnable() {
+									@Override
+									public void run() {
+										Object value = null;
+										String text = formField.valueElement()
+												.text().trim();
+										if (!text.equals("")) {
+											if (isLong)
+												value = Long.valueOf(text);
+											else
+												value = Integer.valueOf(text);
+										}
+										property.adapter.valueOf(node, value);
+									}
+								});
 							} else
 								throw new MethodNotImplementedException(
-										property.type.type);
+										property.type.clazz);
 							if (property.required)
 								formField.required();
 						}
@@ -230,7 +281,7 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 									selection.addSelectionListener(listener);
 									for (PropertyImpl property : relation.properties) {
 										table.addColumn().name(property.name)
-												.type(property.type.type);
+												.type(property.type.clazz);
 									}
 									for (Object e : result) {
 										IRow<Object> row = table.addRow();
@@ -252,7 +303,19 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 	public void query(IFilterConstraints constraints,
 			final ICallback<ITree<Object>> callback) {
 		widget.constraints = constraints;
-		widget.source.queryTree(constraints, callback);
+		widget.source.queryTree(constraints, new ICallback<ITree<Object>>() {
+
+			@Override
+			public void onSuccess(ITree<Object> result) {
+				DetailView.this.itree = result;
+				callback.onSuccess(result);
+			}
+
+			@Override
+			public void onFail(Throwable throwable) {
+				callback.onFail(throwable);
+			}
+		});
 	}
 
 	void onNew() {

@@ -93,4 +93,9 @@ class TestTree implements ITree<String> {
 	public void createNew(ICallback<ITree<String>> callback) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public void save(String node) {
+		throw new MethodNotImplementedException();
+	}
 }

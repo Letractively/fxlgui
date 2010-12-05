@@ -73,6 +73,11 @@ class MasterDetailTableWidgetTest {
 			public String valueOf(String entity) {
 				return valueNameOf(entity);
 			}
+
+			@Override
+			public void valueOf(String entity, String value) {
+				throw new MethodNotImplementedException();
+			}
 		});
 		filterList.addPropertyFilter(p1);
 		@SuppressWarnings("unchecked")
@@ -83,6 +88,11 @@ class MasterDetailTableWidgetTest {
 			@Override
 			public String valueOf(String entity) {
 				return valueDescriptionOf(entity);
+			}
+
+			@Override
+			public void valueOf(String entity, String value) {
+				throw new MethodNotImplementedException();
 			}
 		});
 		filterList.addPropertyFilter(p2);

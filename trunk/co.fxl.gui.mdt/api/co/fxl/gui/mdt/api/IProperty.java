@@ -25,12 +25,14 @@ public interface IProperty<T, S> {
 	public interface IAdapter<T, S> {
 
 		S valueOf(T entity);
+
+		void valueOf(T entity, S value);
 	}
 
 	IFieldType type();
 
 	IProperty<T, S> adapter(IAdapter<T, S> adapter);
-	
+
 	IProperty<T, S> required();
 
 	IProperty<T, S> inTable(boolean inTable);

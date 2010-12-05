@@ -66,7 +66,7 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 				rf.preset(rfi.preset);
 			} else if (filter.property != null) {
 				IColumn column = property2column.get(filter.property);
-				tableFilterList.filterable(column, filter.property.type.type,
+				tableFilterList.filterable(column, filter.property.type.clazz,
 						filter.type.values);
 			} else
 				throw new MethodNotImplementedException(filter.name);
@@ -125,7 +125,7 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 				if (p.displayInTable) {
 					adapters.add(p.adapter);
 					IColumn column = table.addColumn().name(p.name)
-							.type(p.type.type);
+							.type(p.type.clazz);
 					if (p.sortable)
 						column.sortable();
 					property2column.put(p, column);
