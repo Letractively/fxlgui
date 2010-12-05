@@ -263,16 +263,17 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 									ISingleSelection<Object> selection = selection0
 											.single();
 									IHorizontalPanel buttonPanel = panel.add()
-											.panel().horizontal();
+											.panel().horizontal().add().panel()
+											.horizontal();
 									final IButton add = buttonPanel.add()
 											.button().text("Add")
 											.clickable(false);
-									final IButton remove = buttonPanel.addSpace(10).add()
-											.button().text("Remove")
-											.clickable(false);
-									final IButton details = buttonPanel.addSpace(10).add()
-											.button().text("Show")
-											.clickable(false);
+									final IButton remove = buttonPanel
+											.addSpace(10).add().button()
+											.text("Remove").clickable(false);
+									final IButton details = buttonPanel
+											.addSpace(10).add().button()
+											.text("Show").clickable(false);
 									co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener<Object> listener = new co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener<Object>() {
 										@Override
 										public void onSelection(Object selection) {
