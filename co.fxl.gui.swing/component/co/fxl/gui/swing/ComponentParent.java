@@ -28,6 +28,8 @@ interface ComponentParent {
 
 	void remove(JComponent component);
 
+	JComponent getComponent();
+
 	IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass);
 
 	SwingDisplay lookupSwingDisplay();

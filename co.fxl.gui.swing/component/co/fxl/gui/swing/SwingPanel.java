@@ -39,7 +39,7 @@ class SwingPanel<R> extends SwingElement<JPanel, R> implements IPanel<R>,
 
 		@Override
 		protected void setColor(Color color) {
-			container.component.setOpaque(true);
+			container.component.setOpaque(color != null);
 			container.component.setBackground(color);
 		}
 	}
@@ -106,5 +106,10 @@ class SwingPanel<R> extends SwingElement<JPanel, R> implements IPanel<R>,
 	@Override
 	public IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
 		return container.lookupWidgetProvider(interfaceClass);
+	}
+
+	@Override
+	public JComponent getComponent() {
+		return container.component;
 	}
 }

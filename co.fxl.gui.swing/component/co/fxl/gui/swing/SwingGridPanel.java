@@ -119,7 +119,7 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 				@Override
 				protected void setColor(Color color) {
-					panel.setOpaque(true);
+					panel.setOpaque(color != null);
 					panel.setBackground(color);
 				}
 			};
