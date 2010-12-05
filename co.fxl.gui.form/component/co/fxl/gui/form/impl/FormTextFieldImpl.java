@@ -19,7 +19,7 @@
 package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.ITextField;
-
+ 
 class FormTextFieldImpl extends FormFieldImpl<ITextField> {
 
 	ITextField textField;
@@ -27,7 +27,7 @@ class FormTextFieldImpl extends FormFieldImpl<ITextField> {
 	FormTextFieldImpl(FormWidgetImpl widget, String name) {
 		super(widget, name);
 		textField = addTextField(widget);
-		textField.height(26);
+//		textField.height(26);
 		textField.border().color().gray();
 		widget.addFillColumn();
 	}
