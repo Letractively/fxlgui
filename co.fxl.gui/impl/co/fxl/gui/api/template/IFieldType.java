@@ -19,6 +19,8 @@
 package co.fxl.gui.api.template;
 
 public interface IFieldType {
+	
+	// TODO IFieldType longValue();
 
 	IFieldType integer();
 

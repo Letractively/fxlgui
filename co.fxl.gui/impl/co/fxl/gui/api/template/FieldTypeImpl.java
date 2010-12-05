@@ -26,13 +26,13 @@ import co.fxl.gui.api.IImage;
 
 public class FieldTypeImpl implements IFieldType {
 
-	public Class<?> type = String.class;
+	public Class<?> clazz = String.class;
 	public boolean isLong = false;
 	public List<Object> values = new LinkedList<Object>();
 
 	@Override
 	public IFieldType type(Class<?> clazz) {
-		this.type = clazz;
+		this.clazz = clazz;
 		return this;
 	}
 

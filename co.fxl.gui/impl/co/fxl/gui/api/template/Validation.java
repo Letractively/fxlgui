@@ -120,9 +120,34 @@ public class Validation {
 					} catch (Exception e) {
 						field.isError = true;
 					}
+				} else {
+					field.isError = field.required;
 				}
-				errorColor(textField, field.isError);
 				field.onUpdate(value);
+				errorColor(textField, field.isError);
+			}
+		});
+		return this;
+	}
+
+	public Validation validateInteger(final ITextField textField,
+			boolean required) {
+		final Field field = new Field(textField, required);
+		textField.addUpdateListener(new IUpdateListener<String>() {
+			@Override
+			public void onUpdate(String value) {
+				field.isError = false;
+				if (value.length() > 0) {
+					try {
+						Integer.valueOf(value);
+					} catch (Exception e) {
+						field.isError = true;
+					}
+				} else {
+					field.isError = field.required;
+				}
+				field.onUpdate(value);
+				errorColor(textField, field.isError);
 			}
 		});
 		return this;
