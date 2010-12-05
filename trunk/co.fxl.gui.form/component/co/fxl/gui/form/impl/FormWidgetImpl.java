@@ -55,6 +55,8 @@ class FormWidgetImpl implements IFormWidget {
 		}
 	}
 
+	static final int HEIGHT_CELL = 30;
+	static final int HEIGHT_CELL_INNER = 28;
 	private int gridIndex = 0;
 	private WidgetTitle widgetTitle;
 	private IGridPanel gridPanel;
@@ -74,7 +76,7 @@ class FormWidgetImpl implements IFormWidget {
 
 	FormEntryLabel addFormEntryLabel(String name) {
 		IGridCell cell = grid().cell(0, gridIndex).align().end().valign()
-				.center();// .height(30);
+				.center().height(HEIGHT_CELL);
 		if (fixLabelWidth != -1)
 			cell.width(fixLabelWidth);
 		ILabel formEntryLabel = cell.label().autoWrap(true);
@@ -87,7 +89,7 @@ class FormWidgetImpl implements IFormWidget {
 		IGridCell cell = grid().cell(1, gridIndex).valign().center();
 		if (fixValueWidth != -1)
 			cell.width(fixValueWidth);
-		// cell.height(30);
+		cell.height(HEIGHT_CELL);
 		gridIndex++;
 		return cell;
 	}
@@ -97,13 +99,14 @@ class FormWidgetImpl implements IFormWidget {
 
 	ITextField addFormValueTextField() {
 		ITextField valuePanel = container().textField();
-		valuePanel.height(28);
+		valuePanel.height(HEIGHT_CELL_INNER);
 		valuePanel.editable(saveListener != null);
 		return valuePanel;
 	}
 
 	IPasswordField addFormValuePasswordField() {
 		IPasswordField valuePanel = container().passwordField();
+		valuePanel.height(HEIGHT_CELL_INNER);
 		valuePanel.editable(saveListener != null);
 		return valuePanel;
 	}
@@ -116,18 +119,21 @@ class FormWidgetImpl implements IFormWidget {
 
 	IComboBox addFormValueComboBox() {
 		IComboBox valuePanel = container().comboBox();
+		valuePanel.height(HEIGHT_CELL_INNER);
 		valuePanel.editable(saveListener != null);
 		return valuePanel;
 	}
 
 	ICheckBox addFormValueCheckBox() {
-		ICheckBox valuePanel = container().checkBox().height(30);
+		ICheckBox valuePanel = container().checkBox();
+		valuePanel.height(HEIGHT_CELL_INNER);
 		valuePanel.editable(saveListener != null);
 		return valuePanel;
 	}
 
 	ILabel addFormLabel() {
 		ILabel label = container().label();
+		label.height(HEIGHT_CELL_INNER);
 		return label;
 	}
 
