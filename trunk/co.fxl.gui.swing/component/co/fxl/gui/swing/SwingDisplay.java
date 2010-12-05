@@ -200,4 +200,9 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 	public int width() {
 		return frame.getWidth();
 	}
+
+	@Override
+	public JComponent getComponent() {
+		throw new MethodNotImplementedException();
+	}
 }
