@@ -18,12 +18,17 @@
  */
 package co.fxl.gui.api.template;
 
+import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IDisplay.IResizeListener;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
 
-public class SplitLayout {
+public class SplitLayout implements IResizeListener {
 
 	private ILayout layout;
 	public IGridPanel panel;
@@ -42,19 +47,37 @@ public class SplitLayout {
 		mainPanel = vpanel.add().panel().vertical().spacing(10);
 		mainPanel.border().color().lightgray();
 		mainPanel.color().white();
-		final IGridCell cell = panel.cell(1, 0).width(300).valign().begin();
+		IHorizontalPanel horizontal = panel.cell(1, 0).width(20).align()
+				.center().valign().begin().panel().horizontal();
+		horizontal.addSpace(10);
+		final IImage button = horizontal.add().image().resource("minimize.png");
+		final IGridCell cell = panel.cell(2, 0).width(300).valign().begin();
 		IVerticalPanel vertical = cell.panel().vertical();
-		// final ILabel button =
-		// vertical.add().label().text("Hide").hyperlink();
-		// button.addClickListener(new IClickListener() {
-		// @Override
-		// public void onClick() {
-		// sidePanel.visible(!sidePanel.visible());
-		// cell.width(sidePanel.visible() ? 300 : 80);
-		// button.text(sidePanel.visible() ? "Hide" : "Show");
-		// }
-		// });
+		IClickListener clickListener = new IClickListener() {
+			@Override 
+			public void onClick() {
+				sidePanel.visible(!sidePanel.visible());
+				cell.width(sidePanel.visible() ? 300 : 0);
+				button.resource(sidePanel.visible() ? "minimize.png"
+						: "maximize.png");
+			}
+		};
+//		horizontal.addClickListener(clickListener);
+		button.addClickListener(clickListener);
 		sidePanel = vertical.add().panel().vertical().spacing(10);
+		// onResize(-1, panel.display().height());
+		// ResizeListener.setup(panel.display(), this);
+	}
+
+	@Override
+	public void onResize(int width, int height) {
+		resize(height, panel);
+	}
+
+	private void resize(int height, IElement<?> p) {
+		int offsetY = p.offsetY();
+		int maxFromDisplay = height - offsetY - 30;
+		p.height(maxFromDisplay);
 	}
 
 	public void reset() {
