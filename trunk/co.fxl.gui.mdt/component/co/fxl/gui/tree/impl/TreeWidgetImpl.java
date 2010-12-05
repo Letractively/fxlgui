@@ -33,6 +33,7 @@ import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.ChainedCallback;
 import co.fxl.gui.api.template.ICallback;
+import co.fxl.gui.api.template.ResizeListener;
 import co.fxl.gui.api.template.UiCallback;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.navigation.api.IMenuItem;
