@@ -164,14 +164,25 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 						ICallback<T> callback = new ICallback<T>() {
 							@Override
 							public void onFail(Throwable throwable) {
-								// TODO
+								throw new MethodNotImplementedException();
 							}
 
 							@Override
 							public void onSuccess(T result) {
 								last = null;
 								selection(parent.object());
-								root(root);
+								boolean rememberExpand = expand;
+								expand = false;
+								List<ITree<T>> path = new LinkedList<ITree<T>>();
+								ITree<T> r = parent;
+								path.add(r);
+								while (r.parent() != null) {
+									r = r.parent();
+									path.add(0, r);
+								}
+								root(root, path);
+								node.path = null;
+								expand = rememberExpand;
 							}
 						};
 						last.tree.delete(callback);
