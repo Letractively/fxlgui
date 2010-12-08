@@ -17,11 +17,7 @@
 	<property name="co.fxl.gui.api.src.dir" value="${co.fxl.gui.dir}/api"/>
 	<property name="co.fxl.gui.impl.src.dir" value="${co.fxl.gui.dir}/impl"/>
 	<property name="co.fxl.gui.gwt.src.dir" value="${co.fxl.gui.dir}/gwt"/>
-	
-	<property name="co.fxl.gui.async.dir" value="${project.dir}/co.fxl.gui.async"/>
-	<property name="co.fxl.gui.async.api.src.dir" value="${co.fxl.gui.async.dir}/api"/>
-	<property name="co.fxl.gui.async.gwt.src.dir" value="${co.fxl.gui.async.dir}/gwt"/>
-	
+		
 	<property name="co.fxl.gui.form.dir" value="${project.dir}/co.fxl.gui.form"/>
 	<property name="co.fxl.gui.form.api.src.dir" value="${co.fxl.gui.form.dir}/api"/>
 	<property name="co.fxl.gui.form.component.src.dir" value="${co.fxl.gui.form.dir}/component"/>
@@ -90,8 +86,6 @@
 		<copy todir="${project.build.src.dir}">
     	<fileset dir="${co.fxl.gui.api.src.dir}"/>
     	<fileset dir="${co.fxl.gui.impl.src.dir}"/>
-    	<fileset dir="${co.fxl.gui.async.api.src.dir}"/>
-    	<fileset dir="${co.fxl.gui.async.gwt.src.dir}"/>
     	<fileset dir="${co.fxl.gui.gwt.src.dir}"/>
     	<fileset dir="${co.fxl.gui.form.api.src.dir}"/>
     	<fileset dir="${co.fxl.gui.form.component.src.dir}"/>
@@ -117,7 +111,6 @@
 		<copy todir="${project.build.src.dir}">
     	<fileset dir="${co.fxl.gui.api.src.dir}"/>
     	<fileset dir="${co.fxl.gui.impl.src.dir}"/>
-    	<fileset dir="${co.fxl.gui.async.api.src.dir}"/>
     	<fileset dir="${co.fxl.gui.form.api.src.dir}"/>
     	<fileset dir="${co.fxl.gui.form.component.src.dir}"/>   		
    		<fileset dir="${co.fxl.gui.swing.component.src.dir}"/>
