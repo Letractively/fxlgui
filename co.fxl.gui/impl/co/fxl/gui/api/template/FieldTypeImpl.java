@@ -68,4 +68,9 @@ public class FieldTypeImpl implements IFieldType {
 	public IFieldType text() {
 		return type(String.class);
 	}
+
+	@Override
+	public IFieldType longType() {
+		return type(Long.class);
+	}
 }
