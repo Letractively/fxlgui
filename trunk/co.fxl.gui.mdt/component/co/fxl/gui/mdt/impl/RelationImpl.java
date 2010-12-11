@@ -24,6 +24,7 @@ class RelationImpl extends PropertyGroupImpl implements
 		IRelation<Object, Object> {
 
 	IAdapter<Object, Object> adapter;
+	IShowListener<Object> showListener;
 
 	RelationImpl(String name) {
 		super(name);
@@ -32,6 +33,13 @@ class RelationImpl extends PropertyGroupImpl implements
 	@Override
 	public IRelation<Object, Object> adapter(IAdapter<Object, Object> adapter) {
 		this.adapter = adapter;
+		return this;
+	}
+
+	@Override
+	public IRelation<Object, Object> showListener(
+			co.fxl.gui.mdt.api.IRelation.IShowListener<Object> l) {
+		this.showListener = l;
 		return this;
 	}
 }

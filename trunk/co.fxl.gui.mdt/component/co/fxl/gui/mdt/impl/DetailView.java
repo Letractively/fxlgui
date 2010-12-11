@@ -248,6 +248,8 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 					relation.adapter.valueOf(node,
 							new ICallback<List<Object>>() {
 
+								private IButton details;
+
 								@Override
 								public void onFail(Throwable throwable) {
 									throw new MethodNotImplementedException();
@@ -271,15 +273,17 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 									final IButton remove = buttonPanel
 											.addSpace(10).add().button()
 											.text("Remove").clickable(false);
-									final IButton details = buttonPanel
-											.addSpace(10).add().button()
-											.text("Show").clickable(false);
+									if (relation.showListener != null)
+										details = buttonPanel.addSpace(10)
+												.add().button().text("Show")
+												.clickable(false);
 									co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener<Object> listener = new co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener<Object>() {
 										@Override
 										public void onSelection(Object selection) {
 											add.clickable(selection != null);
 											remove.clickable(selection != null);
-											details.clickable(selection != null);
+											if (details != null)
+												details.clickable(selection != null);
 										}
 									};
 									add.addClickListener(new IClickListener() {
@@ -300,15 +304,15 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 													r.toString());
 										}
 									});
-									details.addClickListener(new IClickListener() {
-										@Override
-										public void onClick() {
-											List<Object> r = selection0
-													.result();
-											throw new MethodNotImplementedException(
-													r.toString());
-										}
-									});
+									if (details != null)
+										details.addClickListener(new IClickListener() {
+											@Override
+											public void onClick() {
+												List<Object> r = selection0
+														.result();
+												relation.showListener.onShow(r);
+											}
+										});
 									selection.addSelectionListener(listener);
 									for (PropertyImpl property : relation.properties) {
 										table.addColumn().name(property.name)
