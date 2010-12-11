@@ -20,8 +20,6 @@ package co.fxl.gui.api.template;
 
 public interface IFieldType {
 	
-	// TODO IFieldType longValue();
-
 	IFieldType integer();
 
 	IFieldType date();
@@ -31,6 +29,8 @@ public interface IFieldType {
 	IFieldType longText();
 
 	IFieldType image();
+
+	IFieldType longType();
 
 	IFieldType addConstraint(Object... values);
 
