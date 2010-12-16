@@ -45,6 +45,8 @@ public interface IMasterDetailTableWidget<T> {
 
 	IRelation<T, ?> addRelation(String name);
 
+	IN2MRelation<T, ?> addN2MRelation(String name);
+
 	IMasterDetailTableWidget<T> visible(boolean visible);
 
 	INavigationLink<T> addNavigationLink(String name);

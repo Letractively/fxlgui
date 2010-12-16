@@ -97,7 +97,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		protected void update() {
 			if (node == null)
 				return;
-			decorator.decorate(contentPanel, node.tree.object());
+			if (node.tree.object() != null)
+				decorator.decorate(contentPanel, node.tree.object());
 		}
 	}
 
@@ -306,7 +307,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		this.selection = selection;
 		for (ISelectionListener<T> l : selectionListeners)
 			l.onChange(selection);
-		if (selection != null && root != null)
+		if (selection != null && root != null && root.object() != null)
 			delete.clickable(!root.object().equals(selection));
 		return this;
 	}
