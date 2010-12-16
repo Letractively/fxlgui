@@ -27,6 +27,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.mdt.api.IFilterList;
 import co.fxl.gui.mdt.api.IMasterDetailTableWidget;
+import co.fxl.gui.mdt.api.IN2MRelation;
 import co.fxl.gui.mdt.api.INavigationLink;
 import co.fxl.gui.mdt.api.IPropertyGroup;
 import co.fxl.gui.mdt.api.IRelation;
@@ -35,6 +36,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 
 	List<PropertyGroupImpl> propertyGroups = new LinkedList<PropertyGroupImpl>();
 	List<RelationImpl> relations = new LinkedList<RelationImpl>();
+	List<N2MRelationImpl> n2MRelations = new LinkedList<N2MRelationImpl>();
 	boolean isDefaultPropertyGroup = false;
 	IContent<Object> source;
 	FilterListImpl filterList = new FilterListImpl();
@@ -67,6 +69,13 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	public IRelation<Object, ?> addRelation(String name) {
 		RelationImpl relation = new RelationImpl(name);
 		relations.add(relation);
+		return relation;
+	}
+
+	@Override
+	public IN2MRelation<Object, ?> addN2MRelation(String name) {
+		N2MRelationImpl relation = new N2MRelationImpl(name);
+		n2MRelations.add(relation);
 		return relation;
 	}
 

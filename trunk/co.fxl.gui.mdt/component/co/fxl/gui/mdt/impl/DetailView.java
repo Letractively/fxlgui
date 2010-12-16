@@ -39,6 +39,8 @@ import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
 import co.fxl.gui.mdt.api.IFilterList;
+import co.fxl.gui.n2m.api.IN2MWidget;
+import co.fxl.gui.n2m.api.IN2MWidget.IN2MRelationListener;
 import co.fxl.gui.table.api.IRow;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.api.ISelection.ISingleSelection;
@@ -328,6 +330,64 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 										}
 									}
 									table.visible(true);
+								}
+							});
+				}
+			});
+		}
+		for (final N2MRelationImpl relation : widget.n2MRelations) {
+			tree.addDetailView(relation.name, new IDecorator<Object>() {
+
+				@Override
+				public void clear(IVerticalPanel panel) {
+					panel.clear();
+				}
+
+				@Override
+				public void decorate(final IVerticalPanel panel,
+						final Object node) {
+					panel.clear();
+					IBorder border = panel.border();
+					border.color().gray();
+					border.style().top();
+					relation.adapter.valueOf(node,
+							new ICallback<List<Object>>() {
+
+								@Override
+								public void onFail(Throwable throwable) {
+									throw new MethodNotImplementedException();
+								}
+
+								@Override
+								public void onSuccess(final List<Object> result) {
+									@SuppressWarnings("unchecked")
+									IN2MWidget<Object> table = (IN2MWidget<Object>) panel
+											.add().widget(IN2MWidget.class);
+									table.domain(relation.domain);
+									table.selection(result);
+									table.listener(new IN2MRelationListener<Object>() {
+										@Override
+										public void onChange(
+												List<Object> selection) {
+											relation.adapter
+													.valueOf(
+															node,
+															result,
+															new ICallback<List<Object>>() {
+
+																@Override
+																public void onSuccess(
+																		List<Object> result) {
+																}
+
+																@Override
+																public void onFail(
+																		Throwable throwable) {
+																	throw new MethodNotImplementedException();
+																}
+															});
+										}
+									});
 								}
 							});
 				}
