@@ -149,11 +149,13 @@ class SelectableList {
 	}
 
 	void visible(List<Object> tokens, boolean b) {
+		// TODO effizienter
 		for (Object o : tokens)
 			visible(o, b);
 	}
 
 	void visible(Object selection, boolean b) {
+		// TODO effizienter
 		for (ListItem i : items) {
 			if (i.object == selection)
 				i.visible(b);

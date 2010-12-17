@@ -118,7 +118,7 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 	}
 
 	private void update() {
-		List<Object> items = left.getItems();
+		List<Object> items = right.getItems();
 		if (listener != null && (last == null || !equals(last, items))) {
 			listener.onChange(items);
 		}
