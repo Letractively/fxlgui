@@ -18,11 +18,11 @@
  */
 package co.fxl.gui.table.impl;
 
-import co.fxl.gui.api.IGridPanel;
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.table.api.IColumn;
 
 public class ColumnImpl implements IColumn {
@@ -49,6 +49,7 @@ public class ColumnImpl implements IColumn {
 	IDecorator<Object, Object> decorator;
 	public Class<?> contentType;
 	private boolean sortable = false;
+	IColumnUpdateListener<Object, Object> updateListener;
 
 	ColumnImpl(TableWidgetImpl table, int columnIndex) {
 		this.table = table;
@@ -103,6 +104,13 @@ public class ColumnImpl implements IColumn {
 	@Override
 	public IColumn type(Class<?> type) {
 		contentType = type;
+		return this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public IColumn updateListener(IColumnUpdateListener<?, ?> updateListener) {
+		this.updateListener = (IColumnUpdateListener<Object, Object>) updateListener;
 		return this;
 	}
 }
