@@ -73,4 +73,9 @@ public class FieldTypeImpl implements IFieldType {
 	public IFieldType longType() {
 		return type(Long.class);
 	}
+
+	@Override
+	public IFieldType logic() {
+		return type(Boolean.class);
+	}
 }
