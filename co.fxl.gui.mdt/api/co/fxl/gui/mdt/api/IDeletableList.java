@@ -20,11 +20,11 @@ package co.fxl.gui.mdt.api;
 
 import java.util.List;
 
-public interface IList<T> {
+public interface IDeletableList<T> {
 
-	List<T> jdkList();
+	List<T> asList();
 
 	boolean isDeletable(T entity);
 
-	IList<T> delete(T entity);
+	IDeletableList<T> delete(T entity);
 }
