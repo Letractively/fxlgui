@@ -50,4 +50,6 @@ public interface IMasterDetailTableWidget<T> {
 	IMasterDetailTableWidget<T> visible(boolean visible);
 
 	INavigationLink<T> addNavigationLink(String name);
+
+	IPropertyPage<T> addPropertyPage(String string);
 }

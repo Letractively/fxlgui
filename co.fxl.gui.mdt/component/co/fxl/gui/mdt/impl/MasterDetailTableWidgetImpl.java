@@ -30,6 +30,7 @@ import co.fxl.gui.mdt.api.IMasterDetailTableWidget;
 import co.fxl.gui.mdt.api.IN2MRelation;
 import co.fxl.gui.mdt.api.INavigationLink;
 import co.fxl.gui.mdt.api.IPropertyGroup;
+import co.fxl.gui.mdt.api.IPropertyPage;
 import co.fxl.gui.mdt.api.IRelation;
 
 class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
@@ -47,6 +48,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	ILayout layout;
 	IVerticalPanel mainPanel;
 	IVerticalPanel sidePanel;
+	List<PropertyPageImpl> propertyPages = new LinkedList<PropertyPageImpl>();
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -126,6 +128,13 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	public INavigationLink<Object> addNavigationLink(String name) {
 		NavigationLinkImpl link = new NavigationLinkImpl(name);
 		navigationLinks.add(link);
+		return link;
+	}
+
+	@Override
+	public IPropertyPage<Object> addPropertyPage(String name) {
+		PropertyPageImpl link = new PropertyPageImpl(name);
+		propertyPages.add(link);
 		return link;
 	}
 }

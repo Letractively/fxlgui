@@ -41,6 +41,8 @@ import co.fxl.gui.form.api.IFormWidget.ISaveListener;
 import co.fxl.gui.mdt.api.IFilterList;
 import co.fxl.gui.n2m.api.IN2MWidget;
 import co.fxl.gui.n2m.api.IN2MWidget.IN2MRelationListener;
+import co.fxl.gui.table.api.IColumn;
+import co.fxl.gui.table.api.IColumn.IColumnUpdateListener;
 import co.fxl.gui.table.api.IRow;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.api.ISelection.ISingleSelection;
@@ -251,6 +253,8 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 							new ICallback<List<Object>>() {
 
 								private IButton details;
+								private IButton add;
+								private IButton remove;
 
 								@Override
 								public void onFail(Throwable throwable) {
@@ -269,12 +273,13 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 									IHorizontalPanel buttonPanel = panel.add()
 											.panel().horizontal().add().panel()
 											.horizontal();
-									final IButton add = buttonPanel.add()
-											.button().text("Add")
-											.clickable(false);
-									final IButton remove = buttonPanel
-											.addSpace(10).add().button()
-											.text("Remove").clickable(false);
+									if (relation.addRemoveListener != null) {
+										add = buttonPanel.add().button()
+												.text("Add");
+										remove = buttonPanel.addSpace(10).add()
+												.button().text("Remove")
+												.clickable(false);
+									}
 									if (relation.showListener != null)
 										details = buttonPanel.addSpace(10)
 												.add().button().text("Show")
@@ -282,30 +287,33 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 									co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener<Object> listener = new co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener<Object>() {
 										@Override
 										public void onSelection(Object selection) {
-											add.clickable(selection != null);
-											remove.clickable(selection != null);
+											if (remove != null) {
+												remove.clickable(selection != null);
+											}
 											if (details != null)
 												details.clickable(selection != null);
 										}
 									};
-									add.addClickListener(new IClickListener() {
-										@Override
-										public void onClick() {
-											List<Object> r = selection0
-													.result();
-											throw new MethodNotImplementedException(
-													r.toString());
-										}
-									});
-									remove.addClickListener(new IClickListener() {
-										@Override
-										public void onClick() {
-											List<Object> r = selection0
-													.result();
-											throw new MethodNotImplementedException(
-													r.toString());
-										}
-									});
+									if (add != null)
+										add.addClickListener(new IClickListener() {
+											@Override
+											public void onClick() {
+												List<Object> r = selection0
+														.result();
+												throw new MethodNotImplementedException(
+														r.toString());
+											}
+										});
+									if (remove != null)
+										remove.addClickListener(new IClickListener() {
+											@Override
+											public void onClick() {
+												List<Object> r = selection0
+														.result();
+												throw new MethodNotImplementedException(
+														r.toString());
+											}
+										});
 									if (details != null)
 										details.addClickListener(new IClickListener() {
 											@Override
@@ -316,10 +324,23 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 											}
 										});
 									selection.addSelectionListener(listener);
-									for (PropertyImpl property : relation.properties) {
-										table.addColumn().name(property.name)
+									for (final PropertyImpl property : relation.properties) {
+										IColumn c = table.addColumn()
+												.name(property.name)
 												.type(property.type.clazz)
 												.sortable();
+										if (property.type.clazz
+												.equals(Boolean.class)) {
+											c.updateListener(new IColumnUpdateListener<Object, Boolean>() {
+
+												@Override
+												public void onUpdate(Object o,
+														Boolean value) {
+													property.adapter.valueOf(o,
+															value);
+												}
+											});
+										}
 									}
 									for (Object e : result) {
 										IRow<Object> row = table.addRow();
@@ -393,6 +414,22 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 				}
 			});
 		}
+		for (final PropertyPageImpl relation : widget.propertyPages) {
+			tree.addDetailView(relation.name, new IDecorator<Object>() {
+
+				@Override
+				public void clear(IVerticalPanel panel) {
+					panel.clear();
+				}
+
+				@Override
+				public void decorate(final IVerticalPanel panel,
+						final Object node) {
+					relation.dec.decorate(panel.add(), node);
+				}
+			});
+		}
+		;
 	}
 
 	@Override
