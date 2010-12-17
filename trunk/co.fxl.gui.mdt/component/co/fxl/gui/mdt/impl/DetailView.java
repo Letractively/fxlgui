@@ -393,7 +393,7 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 											relation.adapter
 													.valueOf(
 															node,
-															result,
+															selection,
 															new ICallback<List<Object>>() {
 
 																@Override
