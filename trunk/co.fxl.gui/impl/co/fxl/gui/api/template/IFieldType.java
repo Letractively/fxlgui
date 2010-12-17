@@ -19,7 +19,7 @@
 package co.fxl.gui.api.template;
 
 public interface IFieldType {
-	
+
 	IFieldType integer();
 
 	IFieldType date();
@@ -37,4 +37,6 @@ public interface IFieldType {
 	IFieldType type(Class<?> clazz);
 
 	IFieldType logic();
+
+	Class<?> clazz();
 }

@@ -78,4 +78,9 @@ public class FieldTypeImpl implements IFieldType {
 	public IFieldType logic() {
 		return type(Boolean.class);
 	}
+
+	@Override
+	public Class<?> clazz() {
+		return clazz;
+	}
 }
