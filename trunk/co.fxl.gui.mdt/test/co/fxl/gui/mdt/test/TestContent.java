@@ -22,7 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.filter.api.IFilterConstraints;
-import co.fxl.gui.mdt.api.IList;
+import co.fxl.gui.mdt.api.IDeletableList;
 import co.fxl.gui.mdt.api.IMasterDetailTableWidget.IContent;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.tree.api.ITree;
@@ -223,17 +223,17 @@ class TestContent implements IContent<String> {
 
 	@Override
 	public void queryList(final IFilterConstraints constraints,
-			ICallback<IList<String>> callback) {
-		callback.onSuccess(new IList<String>() {
+			ICallback<IDeletableList<String>> callback) {
+		callback.onSuccess(new IDeletableList<String>() {
 
 			@Override
-			public IList<String> delete(String entity) {
+			public IDeletableList<String> delete(String entity) {
 				entities.remove(entity);
 				return this;
 			}
 
 			@Override
-			public List<String> jdkList() {
+			public List<String> asList() {
 				List<String> result = new LinkedList<String>();
 				l: for (int i = 0; i < constraints.size()
 						&& i < entities.size(); i++) {
@@ -275,7 +275,7 @@ class TestContent implements IContent<String> {
 	@Override
 	public void queryTree(IFilterConstraints constraints,
 			final ICallback<ITree<String>> callback) {
-		queryList(constraints, new ICallback<IList<String>>() {
+		queryList(constraints, new ICallback<IDeletableList<String>>() {
 
 			@Override
 			public void onFail(Throwable throwable) {
@@ -283,8 +283,8 @@ class TestContent implements IContent<String> {
 			}
 
 			@Override
-			public void onSuccess(IList<String> result) {
-				List<String> list = result.jdkList();
+			public void onSuccess(IDeletableList<String> result) {
+				List<String> list = result.asList();
 				callback.onSuccess(new Root(list));
 			}
 		});

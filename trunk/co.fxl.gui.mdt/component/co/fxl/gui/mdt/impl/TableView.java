@@ -28,7 +28,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
-import co.fxl.gui.mdt.api.IList;
+import co.fxl.gui.mdt.api.IDeletableList;
 import co.fxl.gui.mdt.api.IProperty.IAdapter;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.IRow;
@@ -42,7 +42,7 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 	private IFilterTableWidget<Object> table;
 	private Map<PropertyImpl, IColumn> property2column = new HashMap<PropertyImpl, IColumn>();
 	private List<IAdapter<Object, Object>> adapters = new LinkedList<IAdapter<Object, Object>>();
-	private IList<Object> queryList;
+	private IDeletableList<Object> queryList;
 	private IClickable<?> delete;
 	private IClickable<?> detail;
 
@@ -138,7 +138,7 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 	public void onRefresh(final IRowModel<Object> rows,
 			IFilterConstraints constraints) {
 		widget.constraints = constraints;
-		widget.source.queryList(constraints, new ICallback<IList<Object>>() {
+		widget.source.queryList(constraints, new ICallback<IDeletableList<Object>>() {
 
 			@Override
 			public void onFail(Throwable throwable) {
@@ -147,9 +147,9 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 			}
 
 			@Override
-			public void onSuccess(IList<Object> queryList) {
+			public void onSuccess(IDeletableList<Object> queryList) {
 				TableView.this.queryList = queryList;
-				List<Object> list = queryList.jdkList();
+				List<Object> list = queryList.asList();
 				for (Object entity : list) {
 					IRow<Object> row = rows.addRow();
 					row.identifier(entity);
