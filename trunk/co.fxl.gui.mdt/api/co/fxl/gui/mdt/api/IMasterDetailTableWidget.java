@@ -30,7 +30,7 @@ public interface IMasterDetailTableWidget<T> {
 				ICallback<ITree<T>> callback);
 
 		void queryList(IFilterConstraints constraints,
-				ICallback<IList<T>> callback);
+				ICallback<IDeletableList<T>> callback);
 	}
 
 	IMasterDetailTableWidget<T> title(String title);
