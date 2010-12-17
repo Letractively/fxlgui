@@ -1,3 +1,21 @@
+/**
+ * This file is part of FXL GUI API.
+ *  
+ * FXL GUI API is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *  
+ * FXL GUI API is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *  
+ * You should have received a copy of the GNU General Public License
+ * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
+ */
 package co.fxl.gui.n2m.impl;
 
 import java.util.List;
@@ -20,10 +38,10 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 
 	N2MWidgetImpl(IContainer container) {
 		grid = container.panel().grid();
-		left = new SelectableList(grid.cell(0, 0));
+		left = new SelectableList(grid.cell(0, 0), "Available");
 		center = grid.cell(1, 0).width(80).align().center().panel().vertical()
 				.add().panel().vertical().spacing(10);
-		right = new SelectableList(grid.cell(2, 0));
+		right = new SelectableList(grid.cell(2, 0), "Selected");
 		IButton leftButton = center.add().button().text("<")
 				.addClickListener(new IClickListener() {
 					@Override
@@ -117,5 +135,12 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 				return false;
 		}
 		return true;
+	}
+
+	@Override
+	public IN2MWidget<Object> titles(String left, String right) {
+		this.left.title(left);
+		this.right.title(right);
+		return this;
 	}
 }

@@ -24,6 +24,13 @@ import co.fxl.gui.api.template.ICallback;
 
 public interface IRelation<T, R> extends IPropertyGroup<R> {
 
+	public interface IAddRemoveListener<R> {
+
+		void onAdd(R entity);
+
+		void onRemove(R entity);
+	}
+
 	public interface IShowListener<R> {
 
 		void onShow(R entity);
@@ -37,4 +44,6 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 	IRelation<T, R> adapter(IAdapter<T, R> adapter);
 
 	IRelation<T, R> showListener(IShowListener<R> l);
+
+	IRelation<T, R> addRemoveListener(IAddRemoveListener<R> l);
 }
