@@ -20,6 +20,11 @@ package co.fxl.gui.table.api;
 
 public interface IColumn {
 
+	public interface IColumnUpdateListener<T, R> {
+
+		void onUpdate(T entity, R value);
+	}
+
 	public interface IDecorator<T, R> {
 
 		void decorate(T element, R value);
@@ -32,4 +37,6 @@ public interface IColumn {
 	IColumn type(Class<?> type);
 
 	IColumn decorator(IDecorator<?, ?> decorator);
+
+	IColumn updateListener(IColumnUpdateListener<?, ?> updateListener);
 }

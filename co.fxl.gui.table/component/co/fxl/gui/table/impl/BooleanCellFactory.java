@@ -20,6 +20,7 @@ package co.fxl.gui.table.impl;
 
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 class BooleanCellFactory extends CellFactory<ICheckBox, Boolean> {
 
@@ -29,6 +30,17 @@ class BooleanCellFactory extends CellFactory<ICheckBox, Boolean> {
 		ICheckBox checkBox = cell.checkBox();
 		checkBox.checked(value);
 		checkBox.editable(false);
+		final ColumnImpl c = table.columns.get(columnIndex);
+		if (c.updateListener != null) {
+			checkBox.editable(true);
+			checkBox.addUpdateListener(new IUpdateListener<Boolean>() {
+
+				@Override
+				public void onUpdate(Boolean value) {
+					c.updateListener.onUpdate(row.content.identifier, value);
+				}
+			});
+		}
 		font(checkBox);
 		return new CheckBoxCell(row.rowIndex, cell, checkBox);
 	}
