@@ -35,4 +35,6 @@ public interface IFieldType {
 	IFieldType addConstraint(Object... values);
 
 	IFieldType type(Class<?> clazz);
+
+	IFieldType logic();
 }
