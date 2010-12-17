@@ -31,7 +31,7 @@ public interface IFilterConstraints {
 	}
 
 	int size();
-
+	
 	boolean isAttributeConstrained(String column);
 
 	boolean isRelationConstrained(String column);
