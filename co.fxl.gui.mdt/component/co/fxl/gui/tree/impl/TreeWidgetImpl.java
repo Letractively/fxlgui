@@ -288,7 +288,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		}
 		this.root = tree;
 		node = new Node<T>(this, panel(), tree, 0, expand, path);
-		if (selection != null && object2node.get(selection) != null) {
+		if (selection != null) {
 			node = object2node.get(selection);
 		}
 		show(node);

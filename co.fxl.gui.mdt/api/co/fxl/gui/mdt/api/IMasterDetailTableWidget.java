@@ -26,7 +26,7 @@ public interface IMasterDetailTableWidget<T> {
 
 	public interface IContent<T> {
 
-		void queryTree(IFilterConstraints constraints,
+		void queryTree(IFilterConstraints constraints, T selection,
 				ICallback<ITree<T>> callback);
 
 		void queryList(IFilterConstraints constraints,
