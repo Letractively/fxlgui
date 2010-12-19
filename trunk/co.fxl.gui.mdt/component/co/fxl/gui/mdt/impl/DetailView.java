@@ -59,10 +59,12 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 	private IFilterTreeWidget<Object> tree;
 	private IFilterList<Object> filterList;
 	protected ITree<Object> itree;
+	private Object selectionObject;
 
 	@SuppressWarnings("unchecked")
-	DetailView(final MasterDetailTableWidgetImpl widget, Object show) {
+	DetailView(final MasterDetailTableWidgetImpl widget, Object sshow) {
 		super(widget);
+		this.selectionObject = sshow;
 		tree = (IFilterTreeWidget<Object>) widget.mainPanel.add().widget(
 				IFilterTreeWidget.class);
 		for (String s : widget.creatableTypes) {
@@ -107,7 +109,7 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 		});
 		addDetailViews();
 		tree.source(this);
-		tree.selection(show);
+		tree.selection(sshow);
 		tree.expand();
 		tree.visible(true);
 	}
@@ -439,19 +441,20 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 	public void query(IFilterConstraints constraints,
 			final ICallback<ITree<Object>> callback) {
 		widget.constraints = constraints;
-		widget.source.queryTree(constraints, new ICallback<ITree<Object>>() {
+		widget.source.queryTree(constraints, selectionObject,
+				new ICallback<ITree<Object>>() {
 
-			@Override
-			public void onSuccess(ITree<Object> result) {
-				DetailView.this.itree = result;
-				callback.onSuccess(result);
-			}
+					@Override
+					public void onSuccess(ITree<Object> result) {
+						DetailView.this.itree = result;
+						callback.onSuccess(result);
+					}
 
-			@Override
-			public void onFail(Throwable throwable) {
-				callback.onFail(throwable);
-			}
-		});
+					@Override
+					public void onFail(Throwable throwable) {
+						callback.onFail(throwable);
+					}
+				});
 	}
 
 	void onNew() {
