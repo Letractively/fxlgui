@@ -40,4 +40,6 @@ public interface IProperty<T, S> {
 	IProperty<T, S> asDetail(boolean asDetail);
 
 	IProperty<T, ?> sortable(boolean sortable);
+
+	String name();
 }

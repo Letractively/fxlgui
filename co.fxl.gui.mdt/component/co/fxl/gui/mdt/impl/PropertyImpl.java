@@ -70,4 +70,9 @@ class PropertyImpl implements IProperty<Object, Object> {
 		required = true;
 		return this;
 	}
+
+	@Override
+	public String name() {
+		return name;
+	}
 }

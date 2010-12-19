@@ -121,42 +121,61 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private ISplitPane splitPane;
 	IScrollPane scrollPane;
 	private Node<T> node;
+	private boolean hasButtons = false;
+	private List<String> creatableTypes = new LinkedList<String>();
 
 	TreeWidgetImpl(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel()).space(0);
 		widgetTitle.foldable(false);
-		widgetTitle.addHyperlink("New").addClickListener(
-				newClick = new IClickListener() {
-					@Override
-					public void onClick() {
-						final ITree<T> lParentNode = last.tree;
-						ChainedCallback<List<T>, ITree<T>> lCallback1 = new ChainedCallback<List<T>, ITree<T>>() {
-							@Override
-							public void onSuccess(List<T> result) {
-								lParentNode.createNew(getNextCallback());
-							}
-						};
-						UiCallback<ITree<T>> lCallback2 = new UiCallback<ITree<T>>() {
-							@Override
-							public void onSuccess(ITree<T> result) {
-								selection(result.object());
-								boolean rememberExpand = expand;
-								expand = false;
-								List<ITree<T>> path = new LinkedList<ITree<T>>();
-								path.add(result);
-								while (result.parent() != null) {
-									result = result.parent();
-									path.add(0, result);
+	}
+
+	private void addButtons() {
+		if (hasButtons) {
+			return;
+		}
+		hasButtons = true;
+		if (creatableTypes.isEmpty())
+			creatableTypes.add(null);
+		for (final String type : creatableTypes) {
+			widgetTitle.addHyperlink("New" + (type == null ? "" : " " + type))
+					.addClickListener(newClick = new IClickListener() {
+						@Override
+						public void onClick() {
+							final ITree<T> lParentNode = last.tree;
+							ChainedCallback<List<T>, ITree<T>> lCallback1 = new ChainedCallback<List<T>, ITree<T>>() {
+								@Override
+								public void onSuccess(List<T> result) {
+									if (type == null)
+										lParentNode
+												.createNew(getNextCallback());
+									else
+										lParentNode.createNew(type,
+												getNextCallback());
 								}
-								root(root, path);
-								node.path = null;
-								expand = rememberExpand;
-							}
-						};
-						lCallback1.setNextCallback(lCallback2);
-						lParentNode.loadChildren(lCallback1);
-					}
-				});
+							};
+							UiCallback<ITree<T>> lCallback2 = new UiCallback<ITree<T>>() {
+								@Override
+								public void onSuccess(ITree<T> result) {
+									selection(result.object());
+									boolean rememberExpand = expand;
+									expand = false;
+									List<ITree<T>> path = new LinkedList<ITree<T>>();
+									path.add(result);
+									while (result.parent() != null) {
+										result = result.parent();
+										path.add(0, result);
+									}
+									root(root, path);
+									assert node != null;
+									node.path = null;
+									expand = rememberExpand;
+								}
+							};
+							lCallback1.setNextCallback(lCallback2);
+							lParentNode.loadChildren(lCallback1);
+						}
+					});
+		}
 		delete = widgetTitle.addHyperlink("Delete")
 				.addClickListener(new IClickListener() {
 					@Override
@@ -257,7 +276,9 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> root(ITree<T> tree) {
-		return root(tree, null);
+		addButtons();
+		root(tree, null);
+		return this;
 	}
 
 	public ITreeWidget<T> root(ITree<T> tree, List<ITree<T>> path) {
@@ -267,12 +288,11 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		}
 		this.root = tree;
 		node = new Node<T>(this, panel(), tree, 0, expand, path);
-		if (selection != null) {
+		if (selection != null && object2node.get(selection) != null) {
 			node = object2node.get(selection);
 		}
 		show(node);
 		return this;
-
 	}
 
 	void show(Node<T> node) {
@@ -304,9 +324,11 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> selection(T selection) {
+		addButtons();
 		this.selection = selection;
 		for (ISelectionListener<T> l : selectionListeners)
 			l.onChange(selection);
+		assert delete != null;
 		if (selection != null && root != null && root.object() != null)
 			delete.clickable(!root.object().equals(selection));
 		return this;
@@ -319,8 +341,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		return last.tree.object();
 	}
 
-	@SuppressWarnings("unchecked")
-	TreeWidgetImpl addRefreshListener(final RefreshListener listener) {
+	TreeWidgetImpl<T> addRefreshListener(final RefreshListener listener) {
+		addButtons();
 		refresh().addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
@@ -351,6 +373,12 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	@Override
 	public ITreeWidget<T> notifyUpdate(T object) {
 		object2node.get(object).update();
+		return this;
+	}
+
+	@Override
+	public ITreeWidget<T> addCreatableType(String type) {
+		creatableTypes.add(type);
 		return this;
 	}
 }
