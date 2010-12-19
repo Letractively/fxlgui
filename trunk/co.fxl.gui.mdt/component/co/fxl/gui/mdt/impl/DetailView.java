@@ -65,6 +65,9 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 		super(widget);
 		tree = (IFilterTreeWidget<Object>) widget.mainPanel.add().widget(
 				IFilterTreeWidget.class);
+		for (String s : widget.creatableTypes) {
+			tree.addCreatableType(s);
+		}
 		tree.title(widget.title);
 		tree.addSelectionListener(new ITreeWidget.ISelectionListener<Object>() {
 

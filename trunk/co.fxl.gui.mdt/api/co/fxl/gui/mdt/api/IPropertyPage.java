@@ -9,5 +9,7 @@ public interface IPropertyPage<T> {
 		void decorate(IContainer container, T entity);
 	}
 
+	IPropertyPage<T> typeConstraint(Class<?> clazz);
+
 	IPropertyPage<T> decorator(IDecorator<T> dec);
 }

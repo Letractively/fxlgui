@@ -49,6 +49,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	IVerticalPanel mainPanel;
 	IVerticalPanel sidePanel;
 	List<PropertyPageImpl> propertyPages = new LinkedList<PropertyPageImpl>();
+	List<String> creatableTypes = new LinkedList<String>();
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -136,5 +137,11 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 		PropertyPageImpl link = new PropertyPageImpl(name);
 		propertyPages.add(link);
 		return link;
+	}
+
+	@Override
+	public IMasterDetailTableWidget<Object> addCreatableType(String type) {
+		creatableTypes.add(type);
+		return this;
 	}
 }

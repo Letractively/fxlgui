@@ -28,6 +28,7 @@ class PropertyGroupImpl implements IPropertyGroup<Object> {
 
 	String name;
 	List<PropertyImpl> properties = new LinkedList<PropertyImpl>();
+	Class<?> clazz;
 
 	PropertyGroupImpl(String name) {
 		this.name = name;
@@ -39,6 +40,10 @@ class PropertyGroupImpl implements IPropertyGroup<Object> {
 		properties.add(property);
 		return property;
 	}
-	
-	
+
+	@Override
+	public IPropertyGroup<Object> typeConstraint(Class<?> clazz) {
+		this.clazz = clazz;
+		return this;
+	}
 }

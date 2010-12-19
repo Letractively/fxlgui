@@ -56,4 +56,6 @@ public interface ITreeWidget<T> {
 	ITreeWidget<T> clickNew();
 
 	ITreeWidget<T> notifyUpdate(T object);
+
+	ITreeWidget<T> addCreatableType(String type);
 }

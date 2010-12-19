@@ -29,17 +29,18 @@ public interface ITree<T> {
 	T object();
 
 	int childCount();
-	
+
 	List<ITree<T>> children();
-	
+
 	ITree<T> parent();
-	
+
 	void loadChildren(ICallback<List<T>> callback);
-	
+
 	void createNew(ICallback<ITree<T>> callback);
-	
+
+	void createNew(String type, ICallback<ITree<T>> callback);
+
 	void delete(ICallback<T> callback);
 
 	void save(T node);
-	
 }

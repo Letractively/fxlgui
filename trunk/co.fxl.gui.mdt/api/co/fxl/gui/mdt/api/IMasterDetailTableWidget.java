@@ -52,4 +52,7 @@ public interface IMasterDetailTableWidget<T> {
 	INavigationLink<T> addNavigationLink(String name);
 
 	IPropertyPage<T> addPropertyPage(String string);
+
+	IMasterDetailTableWidget<T> addCreatableType(String type);
+
 }
