@@ -28,12 +28,14 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
 
-public class SplitLayout implements IResizeListener {
+public class SplitLayout implements IResizeListener, IClickListener {
 
 	private ILayout layout;
 	public IGridPanel panel;
 	public IVerticalPanel mainPanel;
 	public IVerticalPanel sidePanel;
+	private IGridCell cell;
+	private IImage button;
 
 	public SplitLayout(ILayout layout) {
 		this.layout = layout;
@@ -50,23 +52,26 @@ public class SplitLayout implements IResizeListener {
 		IHorizontalPanel horizontal = panel.cell(1, 0).width(20).align()
 				.center().valign().begin().panel().horizontal();
 		horizontal.addSpace(10);
-		final IImage button = horizontal.add().image().resource("minimize.png");
-		final IGridCell cell = panel.cell(2, 0).width(300).valign().begin();
+		button = horizontal.add().image().resource("minimize.png");
+		cell = panel.cell(2, 0).width(300).valign().begin();
 		IVerticalPanel vertical = cell.panel().vertical();
-		IClickListener clickListener = new IClickListener() {
-			@Override 
-			public void onClick() {
-				sidePanel.visible(!sidePanel.visible());
-				cell.width(sidePanel.visible() ? 300 : 0);
-				button.resource(sidePanel.visible() ? "minimize.png"
-						: "maximize.png");
-			}
-		};
-//		horizontal.addClickListener(clickListener);
-		button.addClickListener(clickListener);
+		// horizontal.addClickListener(clickListener);
+		button.addClickListener(this);
 		sidePanel = vertical.add().panel().vertical().spacing(10);
 		// onResize(-1, panel.display().height());
 		// ResizeListener.setup(panel.display(), this);
+	}
+
+	@Override
+	public void onClick() {
+		boolean visible = !sidePanel.visible();
+		onClick(visible);
+	}
+
+	private void onClick(boolean visible) {
+		sidePanel.visible(visible);
+		cell.width(sidePanel.visible() ? 300 : 0);
+		button.resource(sidePanel.visible() ? "minimize.png" : "maximize.png");
 	}
 
 	@Override
@@ -83,5 +88,14 @@ public class SplitLayout implements IResizeListener {
 	public void reset() {
 		panel.remove();
 		init();
+	}
+
+	public void showSplit(boolean showSplit) {
+		if (!showSplit) {
+			onClick(false);
+			button.resource(null);
+		} else {
+			onClick(true);
+		}
 	}
 }
