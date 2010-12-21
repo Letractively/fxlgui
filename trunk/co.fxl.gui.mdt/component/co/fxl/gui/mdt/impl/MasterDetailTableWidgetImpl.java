@@ -24,6 +24,7 @@ import java.util.List;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.SplitLayout;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.mdt.api.IFilterList;
 import co.fxl.gui.mdt.api.IMasterDetailTableWidget;
@@ -50,6 +51,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	IVerticalPanel sidePanel;
 	List<PropertyPageImpl> propertyPages = new LinkedList<PropertyPageImpl>();
 	List<String> creatableTypes = new LinkedList<String>();
+	SplitLayout splitLayout;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();

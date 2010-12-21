@@ -21,9 +21,9 @@ package co.fxl.gui.mdt.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.template.NavigationView;
 import co.fxl.gui.api.template.SplitLayout;
 import co.fxl.gui.mdt.api.INavigationLink.INavigationLinkListener;
@@ -39,9 +39,9 @@ abstract class ViewTemplate implements IChangeListener<Object> {
 		this.widget = widget;
 		if (widget.mainPanel == null) {
 			if (widget.hasFilter) {
-				SplitLayout splitLayout = new SplitLayout(widget.layout);
-				widget.mainPanel = splitLayout.mainPanel;
-				widget.sidePanel = splitLayout.sidePanel;
+				widget.splitLayout = new SplitLayout(widget.layout);
+				widget.mainPanel = widget.splitLayout.mainPanel;
+				widget.sidePanel = widget.splitLayout.sidePanel;
 			} else {
 				IVerticalPanel v = widget.layout.vertical();
 				widget.mainPanel = v.add().panel().vertical();
