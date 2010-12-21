@@ -49,6 +49,7 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	TableView(final MasterDetailTableWidgetImpl widget, Object object) {
 		super(widget);
+		widget.splitLayout.showSplit(true);
 		table = (IFilterTableWidget<Object>) widget.mainPanel.add().widget(
 				IFilterTableWidget.class);
 		table.addTitle(widget.title).font().pixel(18);
@@ -138,29 +139,30 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 	public void onRefresh(final IRowModel<Object> rows,
 			IFilterConstraints constraints) {
 		widget.constraints = constraints;
-		widget.source.queryList(constraints, new ICallback<IDeletableList<Object>>() {
+		widget.source.queryList(constraints,
+				new ICallback<IDeletableList<Object>>() {
 
-			@Override
-			public void onFail(Throwable throwable) {
-				rows.onFail();
-				throw new MethodNotImplementedException();
-			}
-
-			@Override
-			public void onSuccess(IDeletableList<Object> queryList) {
-				TableView.this.queryList = queryList;
-				List<Object> list = queryList.asList();
-				for (Object entity : list) {
-					IRow<Object> row = rows.addRow();
-					row.identifier(entity);
-					for (IAdapter<Object, Object> adapter : adapters) {
-						Object value = adapter.valueOf(entity);
-						row.add((Comparable<?>) value);
+					@Override
+					public void onFail(Throwable throwable) {
+						rows.onFail();
+						throw new MethodNotImplementedException();
 					}
-				}
-				rows.onSuccess();
-			}
-		});
+
+					@Override
+					public void onSuccess(IDeletableList<Object> queryList) {
+						TableView.this.queryList = queryList;
+						List<Object> list = queryList.asList();
+						for (Object entity : list) {
+							IRow<Object> row = rows.addRow();
+							row.identifier(entity);
+							for (IAdapter<Object, Object> adapter : adapters) {
+								Object value = adapter.valueOf(entity);
+								row.add((Comparable<?>) value);
+							}
+						}
+						rows.onSuccess();
+					}
+				});
 	}
 
 	@Override

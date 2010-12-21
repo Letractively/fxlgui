@@ -110,7 +110,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private ITree<T> root;
 	private WidgetTitle widgetTitle;
 	private boolean expand = false;
-	private Object selection;
+	Object selection;
 	Map<Object, Node<T>> object2node = new HashMap<Object, Node<T>>();
 	private ILabel refresh;
 	private IClickListener newClick;
@@ -120,7 +120,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private IVerticalPanel rightContentPanel;
 	private ISplitPane splitPane;
 	IScrollPane scrollPane;
-	private Node<T> node;
+	Node<T> node;
 	private boolean hasButtons = false;
 	private List<String> creatableTypes = new LinkedList<String>();
 
@@ -289,7 +289,12 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		this.root = tree;
 		node = new Node<T>(this, panel(), tree, 0, expand, path);
 		if (selection != null) {
-			node = object2node.get(selection);
+			for (Node<T> n : object2node.values()) {
+				if (n.tree.object().equals(selection)) {
+					node = n;
+				}
+			}
+			assert node != null;
 		}
 		show(node);
 		return this;

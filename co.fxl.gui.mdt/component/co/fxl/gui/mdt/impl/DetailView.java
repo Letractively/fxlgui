@@ -64,6 +64,7 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 	@SuppressWarnings("unchecked")
 	DetailView(final MasterDetailTableWidgetImpl widget, Object sshow) {
 		super(widget);
+		widget.splitLayout.showSplit(false);
 		this.selectionObject = sshow;
 		tree = (IFilterTreeWidget<Object>) widget.mainPanel.add().widget(
 				IFilterTreeWidget.class);
@@ -81,7 +82,23 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 			}
 		});
 		addNavigationLinks();
-		filterList = tree.filterList(widget.sidePanel.add().panel());
+		// filterList = tree.filterList(widget.sidePanel.add().panel());
+		// setupFilter(widget);
+		tree.addHyperlink("Grid").addClickListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				widget.showTableView(tree.selection());
+			}
+		});
+		addDetailViews();
+		tree.source(this);
+		tree.selection(sshow);
+		tree.expand();
+		tree.visible(true);
+	}
+
+	@SuppressWarnings("unchecked")
+	void setupFilter(final MasterDetailTableWidgetImpl widget) {
 		for (FilterImpl filter : widget.filterList.filters) {
 			if (filter instanceof RelationFilterImpl) {
 				RelationFilterImpl rfi = (RelationFilterImpl) filter;
@@ -101,17 +118,6 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 		}
 		if (widget.constraints != null)
 			filterList.constraints(widget.constraints);
-		tree.addHyperlink("Grid").addClickListener(new IClickListener() {
-			@Override
-			public void onClick() {
-				widget.showTableView(tree.selection());
-			}
-		});
-		addDetailViews();
-		tree.source(this);
-		tree.selection(sshow);
-		tree.expand();
-		tree.visible(true);
 	}
 
 	private void addDetailViews() {
