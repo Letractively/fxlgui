@@ -106,7 +106,7 @@ class Node<T> implements IClickListener {
 		content.addSpace(10);
 		if (root.children().size() != 0 && expand && path == null)
 			expandLoadedNode();
-		else if (path != null && path.contains(tree)) {
+		else if (root.childCount()!=0 && path != null && path.contains(tree)) {
 			expandLazyNode();
 		}
 		widget.object2node.put(root.object(), this);

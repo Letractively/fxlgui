@@ -180,7 +180,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
-						final ITree<T> parent = last.tree.parent();
+						ITree<T> tree = last.tree;
+						final ITree<T> parent = tree.parent();
 						ICallback<T> callback = new ICallback<T>() {
 							@Override
 							public void onFail(Throwable throwable) {
@@ -189,23 +190,10 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 							@Override
 							public void onSuccess(T result) {
-								last = null;
-								selection(parent.object());
-								boolean rememberExpand = expand;
-								expand = false;
-								List<ITree<T>> path = new LinkedList<ITree<T>>();
-								ITree<T> r = parent;
-								path.add(r);
-								while (r.parent() != null) {
-									r = r.parent();
-									path.add(0, r);
-								}
-								root(root, path);
-								node.path = null;
-								expand = rememberExpand;
+								showToParent(root, parent);
 							}
 						};
-						last.tree.delete(callback);
+						tree.delete(callback);
 					}
 				}).mouseLeft();
 	}
@@ -385,5 +373,22 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	public ITreeWidget<T> addCreatableType(String type) {
 		creatableTypes.add(type);
 		return this;
+	}
+
+	void showToParent(ITree<T> tree, final ITree<T> parent) {
+		last = null;
+		selection(parent.object());
+		boolean rememberExpand = expand;
+		expand = false;
+		List<ITree<T>> path = new LinkedList<ITree<T>>();
+		ITree<T> r = parent;
+		path.add(r);
+		while (r.parent() != null) {
+			r = r.parent();
+			path.add(0, r);
+		}
+		root(tree, path);
+		node.path = null;
+		expand = rememberExpand;
 	}
 }

@@ -80,7 +80,12 @@ class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
 
 			@Override
 			public void onSuccess(ITree<T> tree) {
-				root(tree);
+				Node<T> n = object2node.get(selection);
+				if (n != null) {
+					ITree<T> p = n.tree;
+					showToParent(tree, p);
+				} else
+					root(tree);
 			}
 		});
 	}
