@@ -104,7 +104,7 @@ class Node<T> implements IClickListener {
 		this.tree = root;
 		this.depth = depth;
 		content.addSpace(10);
-		if (root.children().size() != 0 && expand)
+		if (root.children().size() != 0 && expand && path == null)
 			expandLoadedNode();
 		else if (path != null && path.contains(tree)) {
 			expandLazyNode();
