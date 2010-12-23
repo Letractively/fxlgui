@@ -76,6 +76,7 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 
 			@Override
 			public void onChange(Object selection) {
+				selectionObject = selection;
 				List<Object> l = new LinkedList<Object>();
 				l.add(selection);
 				DetailView.this.onChange(l);
@@ -149,7 +150,9 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 						}
 					});
 					for (final PropertyImpl property : group.properties) {
-						if (property.displayInDetailView) {
+						boolean hasProperty = property.adapter
+								.hasProperty(node);
+						if (property.displayInDetailView && hasProperty) {
 							final IFormField<?> formField;
 							Object valueOf = property.adapter.valueOf(node);
 							final ITextElement<?> valueElement;
@@ -463,8 +466,11 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 				});
 	}
 
-	void onNew() {
-		tree.clickNew();
+	void onNew(String type) {
+		if (type == null)
+			tree.clickNew();
+		else
+			tree.clickNew(type);
 	}
 
 	@Override

@@ -31,6 +31,8 @@ public interface IMasterDetailTableWidget<T> {
 
 		void queryList(IFilterConstraints constraints,
 				ICallback<IDeletableList<T>> callback);
+
+		String[] getCreatableTypes(T object);
 	}
 
 	IMasterDetailTableWidget<T> title(String title);

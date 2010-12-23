@@ -20,7 +20,5 @@ package co.fxl.gui.mdt.api;
 
 public interface IPropertyGroup<T> {
 
-	IPropertyGroup<T> typeConstraint(Class<?> clazz);
-
 	IProperty<T, ?> addProperty(String name);
 }

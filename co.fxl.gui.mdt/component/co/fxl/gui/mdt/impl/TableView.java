@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.mdt.impl;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -45,6 +46,7 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 	private IDeletableList<Object> queryList;
 	private IClickable<?> delete;
 	private IClickable<?> detail;
+	private Map<String, IClickable<?>> buttons = new HashMap<String, IClickable<?>>();
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	TableView(final MasterDetailTableWidgetImpl widget, Object object) {
@@ -76,16 +78,23 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 			tableFilterList.constraints(widget.constraints);
 		table.addFilterListener(this);
 		table.selection().multi().addChangeListener(this);
-		table.addButton("New").addClickListener(new IClickListener() {
-			@Override
-			public void onClick() {
-				Object show = null;
-				List<Object> result = table.selection().result();
-				if (!result.isEmpty())
-					show = result.get(result.size() - 1);
-				widget.showDetailView(show).onNew();
-			}
-		});
+		if (widget.creatableTypes.isEmpty())
+			widget.creatableTypes.add(null);
+		for (final String type : widget.creatableTypes) {
+			IClickable<?> button = table.addButton(type == null ? "New"
+					: "New " + type);
+			buttons.put(type, button);
+			button.addClickListener(new IClickListener() {
+				@Override
+				public void onClick() {
+					Object show = null;
+					List<Object> result = table.selection().result();
+					if (!result.isEmpty())
+						show = result.get(result.size() - 1);
+					widget.showDetailView(show).onNew(type);
+				}
+			});
+		}
 		delete = table.addButton("Delete");
 		delete.addClickListener(new IClickListener() {
 			@Override
@@ -174,6 +183,25 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 		}
 		detail.clickable(selection.size() <= 1);
 		delete.clickable(clickable);
+		updateCreatable();
+	}
+
+	private void updateCreatable() {
+		if (selection.size() > 1) {
+			for (IClickable<?> c : buttons.values())
+				c.clickable(false);
+			return;
+		}
+		Object o = null;
+		if (!selection.isEmpty())
+			o = selection.get(0);
+		String[] creatableTypes = widget.source.getCreatableTypes(o);
+		List<String> ctypes = creatableTypes != null ? Arrays
+				.asList(creatableTypes) : null;
+		for (String c : buttons.keySet()) {
+			boolean b = ctypes == null || ctypes.contains(c);
+			buttons.get(c).clickable(b);
+		}
 	}
 
 	@Override

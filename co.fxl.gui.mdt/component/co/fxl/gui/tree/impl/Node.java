@@ -37,6 +37,7 @@ class Node<T> implements IClickListener {
 
 	private static final String DOWN = "refresh.png";
 	private static final String FOLDER_CLOSED = "folder_closed.png";
+	private static final String FOLDER_EMPTY = "folder_empty.png";
 	private static final String FOLDER_OPEN = "folder_open.png";
 	private static final String LEAF = "leaf.png";
 	private static final int INDENT = 10;
@@ -76,7 +77,8 @@ class Node<T> implements IClickListener {
 			content.addSpace(4);
 		} else {
 			content.addSpace(depth * INDENT);
-			image = content.add().image().resource(LEAF);
+			image = content.add().image()
+					.resource(root.isLeaf() ? LEAF : FOLDER_EMPTY);
 			image.addClickListener(showClickListener);
 			content.addSpace(4);
 		}
@@ -106,7 +108,7 @@ class Node<T> implements IClickListener {
 		content.addSpace(10);
 		if (root.children().size() != 0 && expand && path == null)
 			expandLoadedNode();
-		else if (root.childCount()!=0 && path != null && path.contains(tree)) {
+		else if (root.childCount() != 0 && path != null && path.contains(tree)) {
 			expandLazyNode();
 		}
 		widget.object2node.put(root.object(), this);

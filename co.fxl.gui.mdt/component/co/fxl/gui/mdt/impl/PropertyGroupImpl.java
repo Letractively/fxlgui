@@ -40,10 +40,4 @@ class PropertyGroupImpl implements IPropertyGroup<Object> {
 		properties.add(property);
 		return property;
 	}
-
-	@Override
-	public IPropertyGroup<Object> typeConstraint(Class<?> clazz) {
-		this.clazz = clazz;
-		return this;
-	}
 }
