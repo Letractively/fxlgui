@@ -38,7 +38,6 @@ class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
 
 	FilterTreeWidgetImpl(IContainer layout) {
 		super(layout);
-		addRefreshListener(this);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -55,6 +54,7 @@ class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
 
 	@Override
 	public IFilterTreeWidget<T> visible(boolean visible) {
+		addRefreshListener(this);
 		if (filterList != null)
 			filterList.apply();
 		else {

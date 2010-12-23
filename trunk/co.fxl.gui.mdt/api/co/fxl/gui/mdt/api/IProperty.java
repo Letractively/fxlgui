@@ -24,6 +24,8 @@ public interface IProperty<T, S> {
 
 	public interface IAdapter<T, S> {
 
+		boolean hasProperty(T entity);
+
 		S valueOf(T entity);
 
 		void valueOf(T entity, S value);

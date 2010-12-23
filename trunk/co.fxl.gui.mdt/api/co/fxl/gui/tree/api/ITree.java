@@ -43,4 +43,8 @@ public interface ITree<T> {
 	void delete(ICallback<T> callback);
 
 	void save(T node);
+
+	String[] getCreatableTypes();
+
+	boolean isLeaf();
 }
