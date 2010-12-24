@@ -132,7 +132,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		widgetTitle.foldable(false);
 	}
 
-	private void addButtons() {
+	void addButtons() {
 		if (hasButtons) {
 			return;
 		}
@@ -201,6 +201,13 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 						tree.delete(callback);
 					}
 				}).mouseLeft();
+		if (this instanceof RefreshListener)
+			refresh().addClickListener(new IClickListener() {
+				@Override
+				public void onClick() {
+					((RefreshListener) TreeWidgetImpl.this).onRefresh();
+				}
+			});
 	}
 
 	@Override
@@ -317,6 +324,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public IClickable<?> addHyperlink(String title) {
+		addButtons();
 		return widgetTitle.addHyperlink(title);
 	}
 
@@ -358,12 +366,6 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	TreeWidgetImpl<T> addRefreshListener(final RefreshListener listener) {
 		addButtons();
-		refresh().addClickListener(new IClickListener() {
-			@Override
-			public void onClick() {
-				listener.onRefresh();
-			}
-		});
 		return this;
 	}
 
