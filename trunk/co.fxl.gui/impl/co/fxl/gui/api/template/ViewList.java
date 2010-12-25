@@ -21,6 +21,7 @@ package co.fxl.gui.api.template;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -28,7 +29,6 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.IClickable.IClickListener;
 
 public class ViewList {
 
@@ -103,10 +103,8 @@ public class ViewList {
 					view.clickable(view != this);
 				}
 			}
-			if (decorator != null) {
-				decorator.decorate(content);
-				decorator = null;
-			}
+			content.clear();
+			decorator.decorate(content);
 			widget.contentPanel().show(content.element());
 		}
 
