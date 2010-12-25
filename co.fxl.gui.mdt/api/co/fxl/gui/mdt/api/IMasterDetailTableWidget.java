@@ -28,6 +28,8 @@ public interface IMasterDetailTableWidget<T> {
 
 		void queryTree(IFilterConstraints constraints, T selection,
 				ICallback<ITree<T>> callback);
+		
+		// TODO queryList(.., String viewName, ...)
 
 		void queryList(IFilterConstraints constraints,
 				ICallback<IDeletableList<T>> callback);
@@ -48,6 +50,10 @@ public interface IMasterDetailTableWidget<T> {
 	IRelation<T, ?> addRelation(String name);
 
 	IN2MRelation<T, ?> addN2MRelation(String name);
+	
+	// TODO IMasterDetailTableWidget defaultTableViewName(String name);
+	
+	// TODO ITableView (extends PropertyGroup) addTableView(String name);
 
 	IMasterDetailTableWidget<T> visible(boolean visible);
 
