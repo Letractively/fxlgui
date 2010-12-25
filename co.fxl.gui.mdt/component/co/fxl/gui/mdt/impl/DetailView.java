@@ -64,7 +64,8 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 	@SuppressWarnings("unchecked")
 	DetailView(final MasterDetailTableWidgetImpl widget, Object sshow) {
 		super(widget);
-		widget.splitLayout.showSplit(false);
+		if (widget.splitLayout != null)
+			widget.splitLayout.showSplit(false);
 		this.selectionObject = sshow;
 		tree = (IFilterTreeWidget<Object>) widget.mainPanel.add().widget(
 				IFilterTreeWidget.class);

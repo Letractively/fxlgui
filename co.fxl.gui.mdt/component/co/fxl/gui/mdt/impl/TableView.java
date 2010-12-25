@@ -51,7 +51,8 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	TableView(final MasterDetailTableWidgetImpl widget, Object object) {
 		super(widget);
-		widget.splitLayout.showSplit(true);
+		if (widget.splitLayout != null)
+			widget.splitLayout.showSplit(true);
 		table = (IFilterTableWidget<Object>) widget.mainPanel.add().widget(
 				IFilterTableWidget.class);
 		table.addTitle(widget.title).font().pixel(18);
