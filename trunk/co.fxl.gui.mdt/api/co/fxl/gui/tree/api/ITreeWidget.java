@@ -60,4 +60,6 @@ public interface ITreeWidget<T> {
 	ITreeWidget<T> notifyUpdate(T object);
 
 	ITreeWidget<T> addCreatableType(String type);
+	
+	ITreeWidget<T> hideRoot();
 }
