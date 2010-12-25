@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.table.filter.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import co.fxl.gui.api.ILayout;
@@ -53,7 +54,7 @@ class TableFilterImpl implements ITableFilter<Object>, IFilterListener {
 	@Override
 	public ITableFilter<Object> filterable(IColumn column, Object... values) {
 		ColumnImpl columnImpl = (ColumnImpl) column;
-		return filterable(column, columnImpl.contentType, values);
+		return filterable(column, columnImpl.contentType, Arrays.asList(values));
 	}
 
 	@Override
