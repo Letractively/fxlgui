@@ -19,12 +19,12 @@
 package co.fxl.gui.form.api;
 
 import co.fxl.gui.api.ICheckBox;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.IClickable.IClickListener;
 
 public interface IFormWidget {
 
@@ -64,6 +64,8 @@ public interface IFormWidget {
 	IFormWidget saveListener(String title, ISaveListener listener);
 
 	ILabel labelRequiredAttribute();
+
+	IFormWidget validate(boolean validate);
 
 	IFormWidget visible(boolean visible);
 }
