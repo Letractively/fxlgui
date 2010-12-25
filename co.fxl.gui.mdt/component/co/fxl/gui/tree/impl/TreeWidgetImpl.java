@@ -108,7 +108,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private IMenuWidget registers;
 	private List<DetailView> detailViews = new LinkedList<DetailView>();
 	IVerticalPanel detailPanel;
-	private ITree<T> root;
+	ITree<T> root;
 	private WidgetTitle widgetTitle;
 	private boolean expand = false;
 	Object selection;
@@ -126,6 +126,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private boolean hasButtons = false;
 	private String defaultCreatableType = null;
 	private List<String> creatableTypes = new LinkedList<String>();
+	private boolean showRoot = true;
 
 	TreeWidgetImpl(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel()).space(0);
@@ -287,7 +288,17 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			panel().clear();
 		}
 		this.root = tree;
-		node = new Node<T>(this, panel(), tree, 0, expand, path);
+		node = null;
+		if (showRoot) {
+			Node<T> n0 = new Node<T>(this, panel(), tree, 0, expand, path);
+			node = n0;
+		} else {
+			for (ITree<T> c : tree.children()) {
+				Node<T> n0 = new Node<T>(this, panel(), c, 0, expand, path);
+				if (node == null)
+					node = n0;
+			}
+		}
 		if (selection != null) {
 			for (Node<T> n : object2node.values()) {
 				if (n.tree.object().equals(selection)) {
@@ -423,6 +434,12 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			type = defaultCreatableType;
 		IClickListener cl = newClick.get(type);
 		cl.onClick();
+		return this;
+	}
+
+	@Override
+	public ITreeWidget<T> hideRoot() {
+		showRoot = false;
 		return this;
 	}
 }

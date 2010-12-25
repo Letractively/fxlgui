@@ -52,6 +52,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	List<PropertyPageImpl> propertyPages = new LinkedList<PropertyPageImpl>();
 	List<String> creatableTypes = new LinkedList<String>();
 	SplitLayout splitLayout;
+	boolean hideDetailRoot = false;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -144,6 +145,12 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	@Override
 	public IMasterDetailTableWidget<Object> addCreatableType(String type) {
 		creatableTypes.add(type);
+		return this;
+	}
+
+	@Override
+	public IMasterDetailTableWidget<Object> hideDetailRoot() {
+		hideDetailRoot = true;
 		return this;
 	}
 }
