@@ -68,6 +68,7 @@ class FormWidgetImpl implements IFormWidget {
 	private int fixLabelWidth = -1;
 	private int fixValueWidth = -1;
 	private ILabel requiredAttributeLabel;
+	private boolean validate = true;
 
 	FormWidgetImpl(IContainer panel) {
 		widgetTitle = new WidgetTitle(panel.panel());
@@ -209,6 +210,12 @@ class FormWidgetImpl implements IFormWidget {
 		return this;
 	}
 
+	@Override
+	public FormWidgetImpl validate(boolean validate) {
+		this.validate = validate;
+		return this;
+	}
+
 	private void addSaveButton(IGridPanel grid) {
 		IHorizontalPanel panel = grid.cell(0, 0).panel().horizontal()
 				.spacing(2);
@@ -220,35 +227,40 @@ class FormWidgetImpl implements IFormWidget {
 				clickable.clickable(false);
 			}
 		});
-		Validation validation = new Validation();
-		validation.linkClickable(clickable);
-		for (FormFieldImpl<?> formField : fields) {
-			Object valueElement = formField.valueElement();
-			if (valueElement instanceof ITextArea) {
-				validation.linkInput((ITextArea) valueElement,
-						formField.required);
-			} else if (valueElement instanceof ITextField) {
-				if (formField.type.clazz.equals(Date.class)) {
-					validation.validateDate(
-							(ITextField) formField.valueElement(),
+		if (validate) {
+			Validation validation = new Validation();
+			validation.linkClickable(clickable);
+			for (FormFieldImpl<?> formField : fields) {
+				Object valueElement = formField.valueElement();
+				if (valueElement instanceof ITextArea) {
+					validation.linkInput((ITextArea) valueElement,
 							formField.required);
-				} else if (formField.type.clazz.equals(Integer.class)) {
-					validation.validateInteger(
-							(ITextField) formField.valueElement(),
+				} else if (valueElement instanceof ITextField) {
+					if (formField.type.clazz.equals(Date.class)) {
+						validation.validateDate(
+								(ITextField) formField.valueElement(),
+								formField.required);
+					} else if (formField.type.clazz.equals(Integer.class)) {
+						validation.validateInteger(
+								(ITextField) formField.valueElement(),
+								formField.required);
+					} else {
+						validation.linkInput(
+								(ITextField) formField.valueElement(),
+								formField.required);
+					}
+				} else if (valueElement instanceof IPasswordField) {
+					validation.linkInput(
+							(IPasswordField) formField.valueElement(),
 							formField.required);
-				} else {
-					validation.linkInput((ITextField) formField.valueElement(),
-							formField.required);
-				}
-			} else if (valueElement instanceof IPasswordField) {
-				validation.linkInput((IPasswordField) formField.valueElement(),
-						formField.required);
-			} else if (valueElement instanceof ICheckBox) {
-			} else if (valueElement instanceof IComboBox) {
-			} else
-				throw new MethodNotImplementedException(valueElement.getClass());
+				} else if (valueElement instanceof ICheckBox) {
+				} else if (valueElement instanceof IComboBox) {
+				} else
+					throw new MethodNotImplementedException(
+							valueElement.getClass());
+			}
+			clickable.clickable(false);
 		}
-		clickable.clickable(false);
 	}
 
 	public IGridPanel grid() {
