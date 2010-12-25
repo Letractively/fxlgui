@@ -21,11 +21,11 @@ package co.fxl.gui.navigation.group.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 
 class NavigationItemImpl implements INavigationItem, IClickListener {
