@@ -18,9 +18,6 @@
  */
 package co.fxl.gui.navigation.group.impl;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -32,7 +29,6 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 
 	private ILabel button;
 	private IDecorator decorator;
-	private List<IVerticalPanel> pages = new LinkedList<IVerticalPanel>();
 	private IHorizontalPanel buttonPanel;
 	private IColor borderColor;
 	private NavigationWidgetImpl widget;
@@ -77,9 +73,8 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 
 	@Override
 	public IVerticalPanel addExtraPanel() {
+		widget.history.clear();
 		IVerticalPanel page = widget.history.add().panel().vertical();
-		pages.add(page);
-		active();
 		return page;
 	}
 
@@ -97,15 +92,9 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 	@Override
 	public INavigationItem active() {
 		showLabelAsActive();
-		if (pages.isEmpty()) {
-			IVerticalPanel panel = addExtraPanel();
-			if (decorator != null) {
-				applyColor(panel.color(), widget.colorActive);
-				decorator.decorate(panel);
-			}
-		}
-		IVerticalPanel page = pages.get(pages.size() - 1);
-		widget.history.show(page);
+		widget.history.clear();
+		applyColor(widget.history.color(), widget.colorActive);
+		decorator.decorate(widget.history);
 		return this;
 	}
 
@@ -123,8 +112,6 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 
 	@Override
 	public INavigationItem back() {
-		IVerticalPanel page = pages.remove(pages.size() - 1);
-		page.remove();
 		active();
 		return this;
 	}
