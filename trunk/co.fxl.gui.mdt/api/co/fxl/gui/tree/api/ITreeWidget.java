@@ -30,7 +30,9 @@ public interface ITreeWidget<T> {
 
 	public interface IDecorator<T> {
 
-		void decorate(IVerticalPanel panel, T node);
+		void decorate(IVerticalPanel panel, ITree<T> tree);
+
+		void decorate(IVerticalPanel panel, Object tree);
 
 		void clear(IVerticalPanel contentPanel);
 	}
@@ -60,6 +62,6 @@ public interface ITreeWidget<T> {
 	ITreeWidget<T> notifyUpdate(T object);
 
 	ITreeWidget<T> addCreatableType(String type);
-	
+
 	ITreeWidget<T> hideRoot();
 }

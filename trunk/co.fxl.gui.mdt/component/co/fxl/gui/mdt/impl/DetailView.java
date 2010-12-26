@@ -247,6 +247,11 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 								}
 							});
 				}
+
+				@Override
+				public void decorate(IVerticalPanel panel, ITree<Object> tree) {
+					decorate(panel, tree.object());
+				}
 			});
 		}
 		for (final N2MRelationImpl relation : widget.n2MRelations) {
@@ -255,6 +260,11 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 				@Override
 				public void clear(IVerticalPanel panel) {
 					panel.clear();
+				}
+
+				@Override
+				public void decorate(IVerticalPanel panel, ITree<Object> tree) {
+					decorate(panel, tree.object());
 				}
 
 				@Override
@@ -313,6 +323,11 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 				@Override
 				public void clear(IVerticalPanel panel) {
 					panel.clear();
+				}
+
+				@Override
+				public void decorate(IVerticalPanel panel, ITree<Object> tree) {
+					decorate(panel, tree.object());
 				}
 
 				@Override

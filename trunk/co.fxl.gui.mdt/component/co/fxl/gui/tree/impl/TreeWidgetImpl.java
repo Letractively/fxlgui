@@ -99,7 +99,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			if (node == null)
 				return;
 			if (node.tree.object() != null)
-				decorator.decorate(contentPanel, node.tree.object());
+				decorator.decorate(contentPanel, node.tree);
 		}
 	}
 
@@ -345,9 +345,11 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		for (ISelectionListener<T> l : selectionListeners)
 			l.onChange(selection);
 		assert delete != null;
-		if (selection != null && root != null && root.object() != null)
-			delete.clickable(!root.object().equals(selection)
-					&& object2node.get(selection).tree.isDeletable());
+		if (selection != null && root != null && root.object() != null) {
+			Node<T> sNode = object2node.get(selection);
+			delete.clickable(!root.object().equals(selection) && sNode == null
+					|| sNode.tree.isDeletable());
+		}
 		this.selection = selection;
 		updateCreatable();
 		return this;
