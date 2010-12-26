@@ -69,6 +69,9 @@ abstract class CellFactory<R, T> {
 		} else if (type.equals(Long.class) || type.equals(Integer.class)) {
 			return COMPARABLE_FACTORY.create(table, row, columnIndex, cell,
 					(Comparable<?>) value);
+		} else if (type.equals(Comparable.class)) {
+			return COMPARABLE_FACTORY.create(table, row, columnIndex, cell,
+					(Comparable<?>) value);
 		} else
 			throw new MethodNotImplementedException(
 					table.columns.get(columnIndex).name);
@@ -79,6 +82,9 @@ abstract class CellFactory<R, T> {
 		ColumnImpl column = table.columns.get(columnIndex);
 		if (column.contentType != null)
 			return column.contentType;
+		assert value != null : "value for column "
+				+ table.columns.get(columnIndex).name
+				+ " can not be determined";
 		return value.getClass();
 	}
 }
