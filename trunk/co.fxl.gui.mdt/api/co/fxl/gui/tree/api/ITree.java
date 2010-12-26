@@ -47,4 +47,6 @@ public interface ITree<T> {
 	String[] getCreatableTypes();
 
 	boolean isLeaf();
+
+	boolean isDeletable();
 }

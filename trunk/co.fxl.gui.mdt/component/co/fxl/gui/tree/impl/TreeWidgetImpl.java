@@ -346,7 +346,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			l.onChange(selection);
 		assert delete != null;
 		if (selection != null && root != null && root.object() != null)
-			delete.clickable(!root.object().equals(selection));
+			delete.clickable(!root.object().equals(selection)
+					&& object2node.get(selection).tree.isDeletable());
 		this.selection = selection;
 		updateCreatable();
 		return this;
