@@ -14,14 +14,25 @@ import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 
-final class DetailViewDecorator implements IDecorator<Object> {
+public abstract class DetailViewDecorator implements IDecorator<Object> {
 
-	private final DetailView detailView;
 	private final PropertyGroupImpl group;
+	private String title = null;
+	private boolean hasRequiredAttributes = true;
 
-	DetailViewDecorator(DetailView detailView, PropertyGroupImpl group) {
-		this.detailView = detailView;
+	public DetailViewDecorator setTitle(String title) {
+		this.title = title;
+		return this;
+	}
+
+	public DetailViewDecorator(PropertyGroupImpl group) {
 		this.group = group;
+	}
+
+	public DetailViewDecorator setHasRequiredAttributes(
+			boolean hasRequiredAttributes) {
+		this.hasRequiredAttributes = hasRequiredAttributes;
+		return this;
 	}
 
 	@Override
@@ -29,13 +40,15 @@ final class DetailViewDecorator implements IDecorator<Object> {
 		panel.clear();
 	}
 
+	protected abstract void save(Object node);
+
 	@Override
 	public void decorate(IVerticalPanel panel, final Object node) {
 		panel.clear();
-		IBorder border = panel.border();
-		border.color().gray();
-		border.style().top();
+		decorateBorder(panel);
 		IFormWidget form = (IFormWidget) panel.add().widget(IFormWidget.class);
+		if (title != null)
+			form.addTitle(title);
 		final List<Runnable> updates = new LinkedList<Runnable>();
 		form.saveListener("Save", new ISaveListener() {
 
@@ -43,15 +56,16 @@ final class DetailViewDecorator implements IDecorator<Object> {
 			public void onSave() {
 				for (Runnable update : updates)
 					update.run();
-				DetailViewDecorator.this.detailView.itree.save(node);
-				DetailViewDecorator.this.detailView.tree.notifyUpdate(node);
+				save(node);
 			}
 		});
 		for (final PropertyImpl property : group.properties) {
-			boolean hasProperty = property.adapter.hasProperty(node);
+			boolean hasProperty = node == null ? true : property.adapter
+					.hasProperty(node);
 			if (property.displayInDetailView && hasProperty) {
 				final IFormField<?> formField;
-				Object valueOf = property.adapter.valueOf(node);
+				Object valueOf = node != null ? property.adapter.valueOf(node)
+						: null;
 				final ITextElement<?> valueElement;
 				if (property.type.clazz.equals(String.class)) {
 					if (property.type.isLong) {
@@ -112,7 +126,8 @@ final class DetailViewDecorator implements IDecorator<Object> {
 					formField = form.addTextField(property.name);
 					// TODO long ...
 					formField.type().integer();
-					String value = ((Number) valueOf).toString();
+					String value = valueOf == null ? "" : ((Number) valueOf)
+							.toString();
 					formField.valueElement().text(value);
 					updates.add(new Runnable() {
 						@Override
@@ -131,10 +146,16 @@ final class DetailViewDecorator implements IDecorator<Object> {
 					});
 				} else
 					throw new MethodNotImplementedException(property.type.clazz);
-				if (property.required)
+				if (property.required && hasRequiredAttributes)
 					formField.required();
 			}
 		}
 		form.visible(true);
+	}
+
+	protected void decorateBorder(IVerticalPanel panel) {
+		IBorder border = panel.border();
+		border.color().gray();
+		border.style().top();
 	}
 }

@@ -24,13 +24,12 @@ import java.util.List;
 import co.fxl.gui.mdt.api.IProperty;
 import co.fxl.gui.mdt.api.IPropertyGroup;
 
-class PropertyGroupImpl implements IPropertyGroup<Object> {
+public class PropertyGroupImpl implements IPropertyGroup<Object> {
 
 	String name;
 	List<PropertyImpl> properties = new LinkedList<PropertyImpl>();
-	Class<?> clazz;
 
-	PropertyGroupImpl(String name) {
+	public PropertyGroupImpl(String name) {
 		this.name = name;
 	}
 
