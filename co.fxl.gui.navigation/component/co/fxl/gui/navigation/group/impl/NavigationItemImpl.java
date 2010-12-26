@@ -73,6 +73,7 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 
 	@Override
 	public IVerticalPanel addExtraPanel() {
+		showLabelAsActive();
 		widget.history.clear();
 		IVerticalPanel page = widget.history.add().panel().vertical();
 		return page;
