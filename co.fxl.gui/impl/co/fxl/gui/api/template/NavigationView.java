@@ -34,11 +34,10 @@ public class NavigationView {
 
 	public NavigationView(ILayout layout) {
 		widgetTitle = new WidgetTitle(layout);
-		widgetTitle.addTitle("Navigation");
-		panel = widgetTitle.content().panel().vertical().spacing(4);
 	}
 
 	public ILabel addHyperlink() {
+		setUp();
 		IHorizontalPanel panel = this.panel.add().panel().horizontal().add()
 				.panel().horizontal();
 		if (SHOW_NUMBERS) {
@@ -52,5 +51,17 @@ public class NavigationView {
 		ILabel textLabel = panel.add().label().hyperlink();
 		textLabel.font().pixel(13).weight().bold();
 		return textLabel;
+	}
+
+	private void setUp() {
+		if (panel != null)
+			return;
+		widgetTitle.addTitle("Navigation");
+		panel = widgetTitle.content().panel().vertical().spacing(4);
+	}
+
+	public NavigationView foldable(boolean b) {
+		widgetTitle.foldable(b);
+		return this;
 	}
 }
