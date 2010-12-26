@@ -49,4 +49,6 @@ public interface ITree<T> {
 	boolean isLeaf();
 
 	boolean isDeletable();
+
+	boolean isUpdateable();
 }

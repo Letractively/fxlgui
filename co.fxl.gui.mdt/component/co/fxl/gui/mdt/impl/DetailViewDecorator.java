@@ -12,6 +12,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
+import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 
 public abstract class DetailViewDecorator implements IDecorator<Object> {
@@ -19,6 +20,11 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	private final PropertyGroupImpl group;
 	private String title = null;
 	private boolean hasRequiredAttributes = true;
+	private boolean isUpdateable = true;
+
+	public void setUpdateable(boolean isUpdateable) {
+		this.isUpdateable = isUpdateable;
+	}
 
 	public DetailViewDecorator setTitle(String title) {
 		this.title = title;
@@ -43,6 +49,12 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	protected abstract void save(Object node);
 
 	@Override
+	public void decorate(IVerticalPanel panel, final ITree<Object> node) {
+		isUpdateable = node.isUpdateable();
+		decorate(panel, node.object());
+	}
+
+	@Override
 	public void decorate(IVerticalPanel panel, final Object node) {
 		panel.clear();
 		decorateBorder(panel);
@@ -50,15 +62,16 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 		if (title != null)
 			form.addTitle(title);
 		final List<Runnable> updates = new LinkedList<Runnable>();
-		form.saveListener("Save", new ISaveListener() {
+		if (isUpdateable)
+			form.saveListener("Save", new ISaveListener() {
 
-			@Override
-			public void onSave() {
-				for (Runnable update : updates)
-					update.run();
-				save(node);
-			}
-		});
+				@Override
+				public void onSave() {
+					for (Runnable update : updates)
+						update.run();
+					save(node);
+				}
+			});
 		for (final PropertyImpl property : group.properties) {
 			boolean hasProperty = node == null ? true : property.adapter
 					.hasProperty(node);
