@@ -20,6 +20,8 @@ package co.fxl.gui.mdt.api;
 
 import java.util.List;
 
+import co.fxl.gui.api.IButton;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.template.ICallback;
 
 public interface IRelation<T, R> extends IPropertyGroup<R> {
@@ -29,6 +31,10 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 		void onAdd(R entity);
 
 		void onRemove(R entity);
+
+		boolean isDetailedAdd();
+
+		IButton decorateAdd(IContainer c);
 	}
 
 	public interface IShowListener<R> {

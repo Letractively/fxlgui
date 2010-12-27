@@ -167,8 +167,14 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 											.panel().horizontal().add().panel()
 											.horizontal();
 									if (relation.addRemoveListener != null) {
-										add = buttonPanel.add().button()
-												.text("Add");
+										if (relation.addRemoveListener
+												.isDetailedAdd()) {
+											add = relation.addRemoveListener
+													.decorateAdd(buttonPanel
+															.add());
+										} else
+											add = buttonPanel.add().button()
+													.text("Add");
 										remove = buttonPanel.addSpace(10).add()
 												.button().text("Remove")
 												.clickable(false);
@@ -193,8 +199,11 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 											public void onClick() {
 												List<Object> r = selection0
 														.result();
-												throw new MethodNotImplementedException(
-														r.toString());
+												Object c = null;
+												if (r.size() > 0)
+													c = r.get(0);
+												relation.addRemoveListener
+														.onAdd(c);
 											}
 										});
 									if (remove != null)
@@ -203,8 +212,8 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 											public void onClick() {
 												List<Object> r = selection0
 														.result();
-												throw new MethodNotImplementedException(
-														r.toString());
+												relation.addRemoveListener
+														.onRemove(r.get(0));
 											}
 										});
 									if (details != null)
