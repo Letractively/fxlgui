@@ -21,7 +21,6 @@ package co.fxl.gui.gwt;
 import java.util.LinkedList;
 import java.util.List;
 
-
 import co.fxl.gui.api.IComboBox;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -94,5 +93,11 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 	@Override
 	public IColor color() {
 		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IComboBox clear() {
+		container.widget.clear();
+		return this;
 	}
 }
