@@ -153,4 +153,9 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 		hideDetailRoot = true;
 		return this;
 	}
+
+	@Override
+	public IMasterDetailTableWidget<Object> refresh() {
+		throw new MethodNotImplementedException();
+	}
 }
