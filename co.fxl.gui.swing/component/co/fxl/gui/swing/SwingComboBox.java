@@ -78,4 +78,10 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 		throw new MethodNotImplementedException();
 	}
 
+	@Override
+	public IComboBox clear() {
+		container.component.removeAllItems();
+		return this;
+	}
+
 }
