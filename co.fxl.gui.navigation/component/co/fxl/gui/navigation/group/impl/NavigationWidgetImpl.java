@@ -104,4 +104,11 @@ public class NavigationWidgetImpl implements INavigationWidget {
 			}
 		};
 	}
+
+	@Override
+	public INavigationWidget refresh() {
+		if (active != null)
+			active.active();
+		return this;
+	}
 }

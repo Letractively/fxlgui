@@ -31,4 +31,6 @@ public interface INavigationWidget {
 	INavigationGroup addGroup();
 
 	INavigationWidget visible(boolean visible);
+
+	INavigationWidget refresh();
 }
