@@ -125,7 +125,9 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 				} else if (property.type.clazz.equals(Boolean.class)) {
 					formField = form.addCheckBox(property.name);
 					ICheckBox checkBox = (ICheckBox) formField.valueElement();
-					checkBox.checked((Boolean) valueOf);
+					Boolean b = (Boolean) valueOf;
+					assert b != null : property.name;
+					checkBox.checked(b);
 					updates.add(new Runnable() {
 						@Override
 						public void run() {
