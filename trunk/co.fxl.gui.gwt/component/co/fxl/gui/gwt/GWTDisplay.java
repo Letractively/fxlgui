@@ -21,13 +21,13 @@ package co.fxl.gui.gwt;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
-import co.fxl.gui.api.IColored.IColor;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ResizeEvent;
@@ -42,9 +42,9 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	private static GWTDisplay instance;
 	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
 	private GWTContainer<Widget> container;
+	private GWTUncaughtExceptionHandler uncaughtExceptionHandler;
 
 	private GWTDisplay() {
-		GWT.setUncaughtExceptionHandler(new UncaughtExceptionHandler());
 		container = new GWTContainer<Widget>(this) {
 
 			void setComponent(Widget component) {
@@ -57,7 +57,6 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 	@Override
 	public IDisplay register(IWidgetProvider<?>... widgetProviders) {
-		GWT.setUncaughtExceptionHandler(new UncaughtExceptionHandler());
 		for (IWidgetProvider<?> widgetProvider : widgetProviders)
 			this.widgetProviders.put(widgetProvider.widgetType(),
 					widgetProvider);
@@ -136,7 +135,17 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 	@Override
 	public IDisplay addExceptionHandler(IExceptionHandler handler) {
-		throw new MethodNotImplementedException();
+		GWTUncaughtExceptionHandler h = setUpUncaughtExceptionHandler();
+		h.add(handler);
+		return this;
+	}
+
+	private GWTUncaughtExceptionHandler setUpUncaughtExceptionHandler() {
+		if (uncaughtExceptionHandler == null) {
+			uncaughtExceptionHandler = new GWTUncaughtExceptionHandler();
+			GWT.setUncaughtExceptionHandler(uncaughtExceptionHandler);
+		}
+		return uncaughtExceptionHandler;
 	}
 
 	@Override
