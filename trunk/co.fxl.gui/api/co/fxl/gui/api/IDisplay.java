@@ -29,7 +29,7 @@ public interface IDisplay {
 
 	public interface IExceptionHandler {
 
-		void onException(RuntimeException exception);
+		void onException(Throwable exception);
 	}
 
 	IDisplay title(String title);
