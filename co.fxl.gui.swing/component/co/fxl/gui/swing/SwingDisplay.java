@@ -30,12 +30,12 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.api.IColored.IColor;
 
 public class SwingDisplay implements IDisplay, ComponentParent {
 
@@ -44,6 +44,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 	private int widthPixel = 800;
 	private int heightPixel = 600;
 	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
+	private SwingUncaughtExceptionHandler uncaughtExceptionHandler;
 	// private JScrollPane scrollPane;
 	// private ILayout layout;
 	private static SwingDisplay instance = null;
@@ -157,7 +158,17 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	@Override
 	public IDisplay addExceptionHandler(IExceptionHandler handler) {
-		throw new MethodNotImplementedException();
+		SwingUncaughtExceptionHandler h = setUpUncaughtExceptionHandler();
+		h.add(handler);
+		return this;
+	}
+
+	private SwingUncaughtExceptionHandler setUpUncaughtExceptionHandler() {
+		if (uncaughtExceptionHandler == null) {
+			uncaughtExceptionHandler = new SwingUncaughtExceptionHandler();
+			Thread.setDefaultUncaughtExceptionHandler(uncaughtExceptionHandler);
+		}
+		return uncaughtExceptionHandler;
 	}
 
 	@Override
