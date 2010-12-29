@@ -29,6 +29,7 @@ class FilterImpl implements IFilter {
 
 	@Override
 	public IFilter name(String name) {
+		assert name != null;
 		this.name = name;
 		return this;
 	}
