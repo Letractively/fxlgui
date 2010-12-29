@@ -109,7 +109,7 @@ class FilterWidgetImpl implements IFilterWidget {
 		validation.linkClickable(apply);
 		clear = title.addHyperlink("Reset");
 		apply.addClickListener(new ApplyClickListener());
-//		apply.clickable(false);
+		// apply.clickable(false);
 		clear.addClickListener(new ClearClickListener());
 		clear.clickable(false);
 		mainPanel = title.content().panel().vertical();
@@ -248,7 +248,8 @@ class FilterWidgetImpl implements IFilterWidget {
 
 	@Override
 	public IFilterWidget visible(boolean visible) {
-		validation.linkInput(configurationComboBox);
+		if (configurationComboBox != null)
+			validation.linkInput(configurationComboBox);
 		configuration = firstConfiguration;
 		return update();
 	}
