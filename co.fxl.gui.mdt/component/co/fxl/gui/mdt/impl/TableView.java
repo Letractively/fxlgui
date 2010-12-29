@@ -47,12 +47,18 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 	private IClickable<?> delete;
 	private IClickable<?> detail;
 	private Map<String, IClickable<?>> buttons = new HashMap<String, IClickable<?>>();
+	private Object selectionObject;
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	TableView(final MasterDetailTableWidgetImpl widget, Object object) {
 		super(widget);
+		selectionObject = object;
 		if (widget.splitLayout != null)
 			widget.splitLayout.showSplit(true);
+		drawTable(widget);
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void drawTable(final MasterDetailTableWidgetImpl widget) {
 		table = (IFilterTableWidget<Object>) widget.mainPanel.add().widget(
 				IFilterTableWidget.class);
 		table.addTitle(widget.title).font().pixel(18);
@@ -133,22 +139,22 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 			}
 		});
 		table.visible(true);
-		if (object != null) {
-			table.selection().add(object);
+		if (selectionObject != null) {
+			table.selection().add(selectionObject);
 		}
 	}
 
 	private void addProperties() {
 		for (PropertyGroupImpl g : this.widget.propertyGroups) {
 			for (PropertyImpl p : g.properties) {
-				if (p.displayInTable) {
-					adapters.add(p.adapter);
-					IColumn column = table.addColumn().name(p.name)
-							.type(p.type.clazz);
-					if (p.sortable)
-						column.sortable();
-					property2column.put(p, column);
-				}
+				if (!p.displayInTable)
+					continue;
+				adapters.add(p.adapter);
+				IColumn column = table.addColumn().name(p.name)
+						.type(p.type.clazz);
+				if (p.sortable)
+					column.sortable();
+				property2column.put(p, column);
 			}
 		}
 	}
