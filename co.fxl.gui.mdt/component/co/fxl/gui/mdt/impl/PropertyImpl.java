@@ -31,6 +31,7 @@ class PropertyImpl implements IProperty<Object, Object> {
 	FieldTypeImpl type = new FieldTypeImpl();
 	boolean sortable = false;
 	boolean required;
+	boolean editable = true;
 
 	PropertyImpl(String name) {
 		this.name = name;
@@ -74,5 +75,11 @@ class PropertyImpl implements IProperty<Object, Object> {
 	@Override
 	public String name() {
 		return name;
+	}
+
+	@Override
+	public IProperty<Object, ?> editable(boolean b) {
+		editable = b;
+		return this;
 	}
 }

@@ -60,18 +60,26 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 		addNavigationLinks();
 		final ITableFilter tableFilterList = table.filterPanel(widget.sidePanel
 				.add().panel());
-		for (FilterImpl filter : widget.filterList.filters) {
-			if (filter instanceof RelationFilterImpl) {
-				RelationFilterImpl rfi = (RelationFilterImpl) filter;
+		int index = 0;
+		for (MDTFilterImpl filter : widget.filterList.filters) {
+			if (!filter.inTable)
+				continue;
+			String config = widget.filterList.configuration2index.get(index++);
+			if (config != null)
+				tableFilterList.addConfiguration(config);
+			if (filter instanceof MDTRelationFilterImpl) {
+				MDTRelationFilterImpl rfi = (MDTRelationFilterImpl) filter;
 				IRelationFilter<Object, Object> rf = tableFilterList
 						.addRelationFilter();
 				rf.name(rfi.name);
 				rf.adapter(rfi.adapter);
 				rf.preset(rfi.preset);
 			} else if (filter.property != null) {
-				IColumn column = property2column.get(filter.property);
-				tableFilterList.filterable(column, filter.property.type.clazz,
-						filter.type.values);
+				if (filter.property.displayInTable) {
+					IColumn column = property2column.get(filter.property);
+					tableFilterList.filterable(column,
+							filter.property.type.clazz, filter.type.values);
+				}
 			} else
 				throw new MethodNotImplementedException(filter.name);
 		}

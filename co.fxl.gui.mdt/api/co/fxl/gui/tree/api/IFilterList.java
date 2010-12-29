@@ -16,39 +16,23 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.mdt.impl;
+package co.fxl.gui.tree.api;
 
-import java.util.List;
-
+import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
+import co.fxl.gui.mdt.api.IProperty;
 
-class RelationFilterImpl extends FilterImpl implements
-		IRelationFilter<Object, Object> {
+public interface IFilterList<T> {
 
-	IAdapter<Object, Object> adapter;
-	List<Object> preset;
+	IFilterList<T> addConfiguration(String configuration);
 
-	RelationFilterImpl() {
-		super();
-	}
+	IFilter addFilter();
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public IRelationFilter<Object, Object> name(String name) {
-		return (IRelationFilter<Object, Object>) super.name(name);
-	}
+	IRelationFilter<?, ?> addRelationFilter();
 
-	@Override
-	public IRelationFilter<Object, Object> adapter(
-			IRelationFilter.IAdapter<Object, Object> adapter) {
-		this.adapter = adapter;
-		return this;
-	}
+	// TODO @IProperty
+	IFilterList<T> addPropertyFilter(IProperty<T, ?> property);
 
-	@Override
-	public IRelationFilter<Object, Object> preset(List<Object> entities) {
-		this.preset = entities;
-		return this;
-	}
-
+	IFilterList<T> constraints(IFilterConstraints constraints);
 }

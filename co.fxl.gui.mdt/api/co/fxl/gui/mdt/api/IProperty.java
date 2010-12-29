@@ -43,5 +43,7 @@ public interface IProperty<T, S> {
 
 	IProperty<T, ?> sortable(boolean sortable);
 
+	IProperty<T, ?> editable(boolean b);
+
 	String name();
 }

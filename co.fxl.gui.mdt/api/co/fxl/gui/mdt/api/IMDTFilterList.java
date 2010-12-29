@@ -22,14 +22,30 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 
-public interface IFilterList<T> {
+public interface IMDTFilterList<T> {
 
-	IFilter addFilter();
+	public interface IMDTFilter extends IFilter {
 
-	IRelationFilter<T, ?> addRelationFilter();
+		IMDTFilter inTable(boolean inTable);
+
+		IMDTFilter asDetail(boolean asDetail);
+	}
+
+	public interface IMDTRelationFilter<R, S> extends IRelationFilter<R, S> {
+
+		IMDTFilter inTable(boolean inTable);
+
+		IMDTFilter asDetail(boolean asDetail);
+	}
+
+	IMDTFilterList<T> addConfiguration(String configuration);
+
+	IMDTFilter addFilter();
+
+	IMDTRelationFilter<?, ?> addRelationFilter();
 
 	// TODO @IProperty
-	IFilterList<T> addPropertyFilter(IProperty<T, ?> property);
+	IMDTFilterList<T> addPropertyFilter(IProperty<T, ?> property);
 
-	IFilterList<T> constraints(IFilterConstraints constraints);
+	IMDTFilterList<T> constraints(IFilterConstraints constraints);
 }

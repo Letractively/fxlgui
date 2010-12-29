@@ -21,7 +21,6 @@ package co.fxl.gui.tree.api;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.filter.api.IFilterConstraints;
-import co.fxl.gui.mdt.api.IFilterList;
 
 public interface IFilterTreeWidget<T> extends ITreeWidget<T> {
 
