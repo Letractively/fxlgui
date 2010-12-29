@@ -23,7 +23,7 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
-import co.fxl.gui.mdt.api.IFilterList;
+import co.fxl.gui.tree.api.IFilterList;
 import co.fxl.gui.tree.api.IFilterTreeWidget;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.impl.TreeWidgetImpl.RefreshListener;
@@ -32,18 +32,16 @@ class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
 		IFilterTreeWidget<T>, IFilterListener, RefreshListener {
 
 	ISource<T> source;
-	@SuppressWarnings("unchecked")
-	private FilterListImpl filterList;
+	private FilterListImpl<T> filterList;
 	private IFilterConstraints constraints;
 
 	FilterTreeWidgetImpl(IContainer layout) {
 		super(layout);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public IFilterList<T> filterList(ILayout layout) {
-		return filterList = new FilterListImpl(this, layout);
+		return filterList = new FilterListImpl<T>(this, layout);
 	}
 
 	@Override

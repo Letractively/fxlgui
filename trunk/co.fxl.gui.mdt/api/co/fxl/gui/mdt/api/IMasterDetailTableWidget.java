@@ -37,7 +37,7 @@ public interface IMasterDetailTableWidget<T> {
 
 	IMasterDetailTableWidget<T> title(String title);
 
-	IFilterList<T> filterList();
+	IMDTFilterList<T> filterList();
 
 	IMasterDetailTableWidget<T> content(IContent<T> source);
 

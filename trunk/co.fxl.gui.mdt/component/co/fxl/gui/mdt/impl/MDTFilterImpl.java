@@ -21,18 +21,23 @@ package co.fxl.gui.mdt.impl;
 import co.fxl.gui.api.template.FieldTypeImpl;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
+import co.fxl.gui.mdt.api.IMDTFilterList.IMDTFilter;
 
-class FilterImpl implements IFilter {
+class MDTFilterImpl implements IMDTFilter {
 
 	String name;
 	FieldTypeImpl type = new FieldTypeImpl();
 	PropertyImpl property;
+	boolean asDetail = false;
+	boolean inTable = false;
 
-	FilterImpl() {
+	MDTFilterImpl() {
 	}
 
-	FilterImpl(PropertyImpl property) {
+	MDTFilterImpl(PropertyImpl property) {
 		this.property = property;
+		asDetail = property.displayInDetailView;
+		inTable = property.displayInTable;
 	}
 
 	@Override
@@ -44,5 +49,17 @@ class FilterImpl implements IFilter {
 	@Override
 	public IFieldType type() {
 		return type;
+	}
+
+	@Override
+	public IMDTFilter inTable(boolean inTable) {
+		this.inTable = inTable;
+		return this;
+	}
+
+	@Override
+	public IMDTFilter asDetail(boolean asDetail) {
+		this.asDetail = asDetail;
+		return this;
 	}
 }

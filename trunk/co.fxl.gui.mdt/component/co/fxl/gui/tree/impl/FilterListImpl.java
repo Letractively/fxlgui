@@ -23,16 +23,16 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
-import co.fxl.gui.mdt.api.IFilterList;
 import co.fxl.gui.mdt.api.IProperty;
+import co.fxl.gui.tree.api.IFilterList;
 
 class FilterListImpl<T> implements IFilterList<T> {
 
 	private IFilterWidget filterWidget;
 
 	FilterListImpl(FilterTreeWidgetImpl<T> widget, ILayout layout) {
-		filterWidget = (IFilterWidget) layout.vertical().add().widget(
-				IFilterWidget.class);
+		filterWidget = (IFilterWidget) layout.vertical().add()
+				.widget(IFilterWidget.class);
 		filterWidget.addSizeFilter();
 		filterWidget.addFilterListener(widget);
 	}
@@ -53,8 +53,7 @@ class FilterListImpl<T> implements IFilterList<T> {
 	}
 
 	@Override
-	public IFilterList<T> constraints(
-			IFilterConstraints constraints) {
+	public IFilterList<T> constraints(IFilterConstraints constraints) {
 		filterWidget.constraints(constraints);
 		return this;
 	}
@@ -63,5 +62,11 @@ class FilterListImpl<T> implements IFilterList<T> {
 	@Override
 	public IRelationFilter<T, ?> addRelationFilter() {
 		return (IRelationFilter<T, ?>) filterWidget.addRelationFilter();
+	}
+
+	@Override
+	public IFilterList<T> addConfiguration(String configuration) {
+		filterWidget.addConfiguration(configuration);
+		return this;
 	}
 }

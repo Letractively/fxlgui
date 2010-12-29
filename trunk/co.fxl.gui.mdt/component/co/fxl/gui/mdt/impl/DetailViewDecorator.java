@@ -7,7 +7,9 @@ import java.util.List;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IComboBox;
+import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextElement;
+import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
@@ -82,16 +84,24 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 				final ITextElement<?> valueElement;
 				if (property.type.clazz.equals(String.class)) {
 					if (property.type.isLong) {
-						formField = form.addTextArea(property.name);
+						IFormField<ITextArea> textArea = form
+								.addTextArea(property.name);
+						if (!property.editable)
+							textArea.valueElement().editable(false);
+						formField = textArea;
 						valueElement = formField.valueElement();
 					} else if (property.type.values.size() > 0) {
 						formField = form.addComboBox(property.name);
 						IComboBox cb = (IComboBox) formField.valueElement();
+						if (!property.editable)
+							cb.editable(false);
 						for (Object s : property.type.values)
 							cb.addText((String) s);
 						valueElement = formField.valueElement();
 					} else {
 						formField = form.addTextField(property.name);
+						if (!property.editable)
+							((ITextField) formField).editable(false);
 						valueElement = formField.valueElement();
 					}
 					String value = valueOf == null ? ""
@@ -106,6 +116,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 					});
 				} else if (property.type.clazz.equals(Date.class)) {
 					formField = form.addTextField(property.name);
+					if (!property.editable)
+						((ITextField) formField).editable(false);
 					formField.type().date();
 					String value = DetailView.DATE_FORMAT
 							.format((Date) valueOf);
@@ -125,6 +137,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 				} else if (property.type.clazz.equals(Boolean.class)) {
 					formField = form.addCheckBox(property.name);
 					ICheckBox checkBox = (ICheckBox) formField.valueElement();
+					if (!property.editable)
+						checkBox.editable(false);
 					Boolean b = (Boolean) valueOf;
 					assert b != null : property.name;
 					checkBox.checked(b);
@@ -139,6 +153,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 					final boolean isLong = property.type.clazz
 							.equals(Long.class);
 					formField = form.addTextField(property.name);
+					if (!property.editable)
+						((ITextField) formField).editable(false);
 					// TODO long ...
 					formField.type().integer();
 					String value = valueOf == null ? "" : ((Number) valueOf)

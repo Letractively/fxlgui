@@ -31,7 +31,7 @@ import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.api.template.SimpleDateFormat;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
-import co.fxl.gui.mdt.api.IFilterList;
+import co.fxl.gui.mdt.api.IMDTFilterList;
 import co.fxl.gui.n2m.api.IN2MWidget;
 import co.fxl.gui.n2m.api.IN2MWidget.IN2MRelationListener;
 import co.fxl.gui.table.api.IColumn;
@@ -50,7 +50,7 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 
 	static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat();
 	IFilterTreeWidget<Object> tree;
-	private IFilterList<Object> filterList;
+	private IMDTFilterList<Object> filterList;
 	protected ITree<Object> itree;
 	private Object selectionObject;
 
@@ -96,9 +96,15 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 
 	@SuppressWarnings("unchecked")
 	void setupFilter(final MasterDetailTableWidgetImpl widget) {
-		for (FilterImpl filter : widget.filterList.filters) {
-			if (filter instanceof RelationFilterImpl) {
-				RelationFilterImpl rfi = (RelationFilterImpl) filter;
+		int index = 0;
+		for (MDTFilterImpl filter : widget.filterList.filters) {
+			if (!filter.asDetail)
+				continue;
+			String config = widget.filterList.configuration2index.get(index++);
+			if (config != null)
+				filterList.addConfiguration(config);
+			if (filter instanceof MDTRelationFilterImpl) {
+				MDTRelationFilterImpl rfi = (MDTRelationFilterImpl) filter;
 				IRelationFilter<Object, Object> rf = (IRelationFilter<Object, Object>) filterList
 						.addRelationFilter();
 				rf.name(rfi.name);

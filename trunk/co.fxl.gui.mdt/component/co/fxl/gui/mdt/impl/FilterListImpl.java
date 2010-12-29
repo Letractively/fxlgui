@@ -18,44 +18,51 @@
  */
 package co.fxl.gui.mdt.impl;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.filter.api.IFilterConstraints;
-import co.fxl.gui.filter.api.IFilterWidget.IFilter;
-import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
-import co.fxl.gui.mdt.api.IFilterList;
+import co.fxl.gui.mdt.api.IMDTFilterList;
 import co.fxl.gui.mdt.api.IProperty;
 
-class FilterListImpl implements IFilterList<Object> {
+class FilterListImpl implements IMDTFilterList<Object> {
 
-	List<FilterImpl> filters = new LinkedList<FilterImpl>();
+	List<MDTFilterImpl> filters = new LinkedList<MDTFilterImpl>();
+	Map<Integer, String> configuration2index = new HashMap<Integer, String>();
 	IFilterConstraints constraints;
 
 	@Override
-	public IFilter addFilter() {
-		FilterImpl filter = new FilterImpl();
+	public IMDTFilter addFilter() {
+		MDTFilterImpl filter = new MDTFilterImpl();
 		filters.add(filter);
 		return filter;
 	}
 
 	@Override
-	public IFilterList<Object> addPropertyFilter(IProperty<Object, ?> property) {
-		FilterImpl filter = new FilterImpl((PropertyImpl) property);
+	public IMDTFilterList<Object> addPropertyFilter(IProperty<Object, ?> property) {
+		MDTFilterImpl filter = new MDTFilterImpl((PropertyImpl) property);
 		filters.add(filter);
 		return this;
 	}
 
 	@Override
-	public IFilterList<Object> constraints(IFilterConstraints constraints) {
+	public IMDTFilterList<Object> constraints(IFilterConstraints constraints) {
 		this.constraints = constraints;
 		return this;
 	}
 
 	@Override
-	public IRelationFilter<Object, ?> addRelationFilter() {
-		RelationFilterImpl filter = new RelationFilterImpl();
+	public IMDTRelationFilter<Object, ?> addRelationFilter() {
+		MDTRelationFilterImpl filter = new MDTRelationFilterImpl();
 		filters.add(filter);
 		return filter;
+	}
+
+	@Override
+	public IMDTFilterList<Object> addConfiguration(String configuration) {
+		configuration2index.put(filters.size(), configuration);
+		return this;
 	}
 }
