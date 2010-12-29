@@ -23,6 +23,8 @@ import java.util.List;
 
 public interface IFilterConstraints {
 
+	public static final String COMMON = "C";
+
 	public interface IRange<R> {
 
 		R lowerBound();

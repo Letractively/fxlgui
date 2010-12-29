@@ -42,7 +42,6 @@ import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
 
 class FilterWidgetImpl implements IFilterWidget {
 
-	private static final String COMMON = "DEFAULT";
 	private static final List<Object> DEFAULT_SIZES = Arrays
 			.asList(new Object[] { new Integer(20), 50, 100, 500, 1000 });
 
@@ -100,8 +99,8 @@ class FilterWidgetImpl implements IFilterWidget {
 	private IVerticalPanel mainPanel;
 	private IContainer gridContainer;
 	private IComboBox configurationComboBox;
-	private String firstConfiguration = COMMON;
-	private String configuration = COMMON;
+	private String firstConfiguration = IFilterConstraints.COMMON;
+	private String configuration = IFilterConstraints.COMMON;
 
 	FilterWidgetImpl(IContainer panel) {
 		WidgetTitle title = new WidgetTitle(panel.panel());
@@ -259,8 +258,8 @@ class FilterWidgetImpl implements IFilterWidget {
 			gridContainer.clear();
 		grid = gridContainer.panel().grid().indent(3);
 		guiFilterElements.clear();
-		addFilters4Configuration(COMMON);
-		if (!configuration.equals(COMMON))
+		addFilters4Configuration(IFilterConstraints.COMMON);
+		if (!configuration.equals(IFilterConstraints.COMMON))
 			addFilters4Configuration(configuration);
 		if (addSizeFilter) {
 			sizeFilter = (ComboBoxIntegerFilter) addFilter(Integer.class,
