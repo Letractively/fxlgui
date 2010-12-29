@@ -32,6 +32,8 @@ public interface IFilterTableWidget<T> extends ITableWidget<T> {
 
 	public interface ITableFilter<T> {
 
+		ITableFilter<T> addConfiguration(String configuration);
+
 		ITableFilter<T> filterable(IColumn column, Object... values);
 
 		ITableFilter<T> filterable(IColumn column, Class<?> contentType,

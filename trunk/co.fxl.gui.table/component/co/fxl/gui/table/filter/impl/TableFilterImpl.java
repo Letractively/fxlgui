@@ -94,4 +94,10 @@ class TableFilterImpl implements ITableFilter<Object>, IFilterListener {
 	public IRelationFilter<?, ?> addRelationFilter() {
 		return filterWidget.addRelationFilter();
 	}
+
+	@Override
+	public ITableFilter<Object> addConfiguration(String configuration) {
+		filterWidget.addConfiguration(configuration);
+		return this;
+	}
 }
