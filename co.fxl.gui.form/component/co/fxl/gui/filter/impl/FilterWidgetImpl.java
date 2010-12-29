@@ -260,7 +260,8 @@ class FilterWidgetImpl implements IFilterWidget {
 		grid = gridContainer.panel().grid().indent(3);
 		guiFilterElements.clear();
 		addFilters4Configuration(COMMON);
-		addFilters4Configuration(configuration);
+		if (!configuration.equals(COMMON))
+			addFilters4Configuration(configuration);
 		if (addSizeFilter) {
 			sizeFilter = (ComboBoxIntegerFilter) addFilter(Integer.class,
 					"Size", DEFAULT_SIZES, null, null);

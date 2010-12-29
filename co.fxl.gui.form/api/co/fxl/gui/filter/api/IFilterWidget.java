@@ -32,7 +32,7 @@ public interface IFilterWidget {
 	public interface IFilter {
 
 		IFilter name(String name);
-
+		
 		IFieldType type();
 	}
 
