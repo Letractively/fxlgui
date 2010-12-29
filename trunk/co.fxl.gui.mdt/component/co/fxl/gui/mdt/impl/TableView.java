@@ -134,6 +134,7 @@ class TableView extends ViewTemplate implements IFilterListener {
 				filterWidget.apply();
 			}
 		});
+		delete.clickable(false);
 		table.addButton("Refresh").addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
@@ -241,6 +242,7 @@ class TableView extends ViewTemplate implements IFilterListener {
 						if (selectionObject != null) {
 							table.selection().add(selectionObject);
 						}
+						updateCreatable();
 					}
 				});
 	}
