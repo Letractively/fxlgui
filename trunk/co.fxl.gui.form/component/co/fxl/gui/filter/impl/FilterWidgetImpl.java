@@ -107,9 +107,9 @@ class FilterWidgetImpl implements IFilterWidget {
 		title.addTitle("Filter");
 		apply = title.addHyperlink("Apply");
 		validation.linkClickable(apply);
-		clear = title.addHyperlink("Clear");
+		clear = title.addHyperlink("Reset");
 		apply.addClickListener(new ApplyClickListener());
-		apply.clickable(false);
+//		apply.clickable(false);
 		clear.addClickListener(new ClearClickListener());
 		clear.clickable(false);
 		mainPanel = title.content().panel().vertical();
@@ -172,6 +172,7 @@ class FilterWidgetImpl implements IFilterWidget {
 	private FilterPart<?> addFilter(Class<?> contentType, final String name,
 			List<Object> values, List<Object> preset,
 			IAdapter<Object, Object> adapter) {
+		assert name != null : contentType.getName();
 		FilterPart<?> filter;
 		if (preset != null) {
 			filter = new RelationFilter(grid, name, guiFilterElements.size(),
@@ -247,6 +248,7 @@ class FilterWidgetImpl implements IFilterWidget {
 
 	@Override
 	public IFilterWidget visible(boolean visible) {
+		validation.linkInput(configurationComboBox);
 		configuration = firstConfiguration;
 		return update();
 	}
@@ -292,19 +294,20 @@ class FilterWidgetImpl implements IFilterWidget {
 
 	private void addFilters4Configuration(String cfg) {
 		List<FilterImpl> l = filterList.get(cfg);
-		for (FilterImpl filter : l) {
-			List<Object> list = new LinkedList<Object>(filter.type.values);
-			if (!list.isEmpty())
-				list.add(0, "");
-			List<Object> preset = null;
-			IAdapter<Object, Object> adapter = null;
-			if (filter instanceof RelationFilterImpl) {
-				RelationFilterImpl rf = (RelationFilterImpl) filter;
-				preset = rf.preset;
-				adapter = rf.adapter;
+		if (l != null)
+			for (FilterImpl filter : l) {
+				List<Object> list = new LinkedList<Object>(filter.type.values);
+				if (!list.isEmpty())
+					list.add(0, "");
+				List<Object> preset = null;
+				IAdapter<Object, Object> adapter = null;
+				if (filter instanceof RelationFilterImpl) {
+					RelationFilterImpl rf = (RelationFilterImpl) filter;
+					preset = rf.preset;
+					adapter = rf.adapter;
+				}
+				addFilter(filter.type.clazz, filter.name, list, preset, adapter);
 			}
-			addFilter(filter.type.clazz, filter.name, list, preset, adapter);
-		}
 	}
 
 	@Override
