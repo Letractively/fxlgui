@@ -32,7 +32,7 @@ import co.fxl.gui.table.api.ISelection.IMultiSelection.IChangeListener;
 abstract class ViewTemplate implements IChangeListener<Object> {
 
 	MasterDetailTableWidgetImpl widget;
-	List<Object> selection;
+	List<Object> selection = new LinkedList<Object>();
 	private List<ILabel> labels = new LinkedList<ILabel>();
 
 	ViewTemplate(MasterDetailTableWidgetImpl widget) {
