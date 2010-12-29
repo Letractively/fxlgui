@@ -52,6 +52,8 @@ public interface IFilterWidget {
 		IRelationFilter<S, R> adapter(IAdapter<S, R> adapter);
 	}
 
+	IFilterWidget addConfiguration(String config);
+
 	IFilter addFilter();
 
 	IRelationFilter<?, ?> addRelationFilter();
