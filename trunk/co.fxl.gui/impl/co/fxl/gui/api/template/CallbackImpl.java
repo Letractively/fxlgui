@@ -16,10 +16,10 @@
  */
 package co.fxl.gui.api.template;
 
-public abstract class UiCallback<T> implements ICallback<T> {
+public abstract class CallbackImpl<T> implements ICallback<T> {
 
 	public void onFail(Throwable throwable) {
-		// TODO: show error in ui
+		throw new MethodNotImplementedException();
 	}
 	
 }
