@@ -33,6 +33,11 @@ class FilterConstraintsImpl implements IFilterConstraints {
 
 	private int size = Integer.MAX_VALUE;
 	private Map<String, INamedConstraint> constraints = new HashMap<String, INamedConstraint>();
+	private String cfg;
+
+	FilterConstraintsImpl(String configuration) {
+		cfg = configuration;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -95,5 +100,10 @@ class FilterConstraintsImpl implements IFilterConstraints {
 	@Override
 	public IRange<Double> doubleRange(String column) {
 		return (IRange<Double>) constraints.get(column);
+	}
+
+	@Override
+	public String configuration() {
+		return cfg;
 	}
 }
