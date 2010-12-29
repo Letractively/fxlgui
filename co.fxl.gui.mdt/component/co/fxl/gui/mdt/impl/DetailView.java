@@ -125,14 +125,15 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 
 	private void addDetailViews() {
 		for (final PropertyGroupImpl group : widget.propertyGroups) {
-			tree.addDetailView(group.name, new DetailViewDecorator(group) {
+			if (group.asDetail)
+				tree.addDetailView(group.name, new DetailViewDecorator(group) {
 
-				@Override
-				protected void save(Object node) {
-					DetailView.this.itree.save(node);
-					DetailView.this.tree.notifyUpdate(node);
-				}
-			});
+					@Override
+					protected void save(Object node) {
+						DetailView.this.itree.save(node);
+						DetailView.this.tree.notifyUpdate(node);
+					}
+				});
 		}
 		for (final RelationImpl relation : widget.relations) {
 			tree.addDetailView(relation.name, new IDecorator<Object>() {
