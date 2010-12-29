@@ -28,6 +28,8 @@ public class PropertyGroupImpl implements IPropertyGroup<Object> {
 
 	String name;
 	List<PropertyImpl> properties = new LinkedList<PropertyImpl>();
+	boolean asDetail = true;
+	boolean inTable = true;
 
 	public PropertyGroupImpl(String name) {
 		this.name = name;
@@ -38,5 +40,17 @@ public class PropertyGroupImpl implements IPropertyGroup<Object> {
 		PropertyImpl property = new PropertyImpl(name);
 		properties.add(property);
 		return property;
+	}
+
+	@Override
+	public IPropertyGroup<Object> inTable(boolean show) {
+		inTable = show;
+		return this;
+	}
+
+	@Override
+	public IPropertyGroup<Object> asDetail(boolean show) {
+		asDetail = show;
+		return this;
 	}
 }

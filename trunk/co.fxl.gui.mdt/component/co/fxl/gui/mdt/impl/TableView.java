@@ -26,21 +26,22 @@ import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.template.ICallback;
+import co.fxl.gui.api.template.CallbackImpl;
+import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.filter.api.IFilterWidget;
+import co.fxl.gui.filter.api.IFilterWidget.IFilter;
+import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IDeletableList;
 import co.fxl.gui.mdt.api.IProperty.IAdapter;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.IRow;
-import co.fxl.gui.table.filter.api.IFilterTableWidget;
-import co.fxl.gui.table.filter.api.IFilterTableWidget.IFilterListener;
-import co.fxl.gui.table.filter.api.IFilterTableWidget.IRowModel;
-import co.fxl.gui.table.filter.api.IFilterTableWidget.ITableFilter;
+import co.fxl.gui.table.api.ITableWidget;
 
-class TableView extends ViewTemplate implements IFilterListener<Object> {
+class TableView extends ViewTemplate implements IFilterListener {
 
-	private IFilterTableWidget<Object> table;
+	private ITableWidget<Object> table;
 	private Map<PropertyImpl, IColumn> property2column = new HashMap<PropertyImpl, IColumn>();
 	private List<IAdapter<Object, Object>> adapters = new LinkedList<IAdapter<Object, Object>>();
 	private IDeletableList<Object> queryList;
@@ -48,50 +49,62 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 	private IClickable<?> detail;
 	private Map<String, IClickable<?>> buttons = new HashMap<String, IClickable<?>>();
 	private Object selectionObject;
+	private IFilterWidget filterWidget;
 
 	TableView(final MasterDetailTableWidgetImpl widget, Object object) {
 		super(widget);
 		selectionObject = object;
 		if (widget.splitLayout != null)
 			widget.splitLayout.showSplit(true);
-		drawTable(widget);
+		addNavigationLinks();
+		setUpFilter();
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void drawTable(final MasterDetailTableWidgetImpl widget) {
-		table = (IFilterTableWidget<Object>) widget.mainPanel.add().widget(
-				IFilterTableWidget.class);
-		table.addTitle(widget.title).font().pixel(18);
-		addProperties();
-		addNavigationLinks();
-		final ITableFilter tableFilterList = table.filterPanel(widget.sidePanel
-				.add().panel());
+	private void setUpFilter() {
+		filterWidget = (IFilterWidget) widget.sidePanel.add().widget(
+				IFilterWidget.class);
 		int index = 0;
 		for (MDTFilterImpl filter : widget.filterList.filters) {
 			if (!filter.inTable)
 				continue;
 			String config = widget.filterList.configuration2index.get(index++);
 			if (config != null)
-				tableFilterList.addConfiguration(config);
+				filterWidget.addConfiguration(config);
 			if (filter instanceof MDTRelationFilterImpl) {
 				MDTRelationFilterImpl rfi = (MDTRelationFilterImpl) filter;
-				IRelationFilter<Object, Object> rf = tableFilterList
+				@SuppressWarnings("unchecked")
+				IRelationFilter<Object, Object> rf = (IRelationFilter<Object, Object>) filterWidget
 						.addRelationFilter();
 				rf.name(rfi.name);
 				rf.adapter(rfi.adapter);
 				rf.preset(rfi.preset);
 			} else if (filter.property != null) {
 				if (filter.property.displayInTable) {
-					IColumn column = property2column.get(filter.property);
-					tableFilterList.filterable(column,
-							filter.property.type.clazz, filter.type.values);
+					IFilter ftr = filterWidget.addFilter().name(
+							filter.property.name);
+					IFieldType f = ftr.type().type(filter.property.type.clazz);
+					if (!filter.property.type.values.isEmpty())
+						for (Object o : filter.property.type.values)
+							f.addConstraint(o);
 				}
 			} else
 				throw new MethodNotImplementedException(filter.name);
 		}
 		if (widget.constraints != null)
-			tableFilterList.constraints(widget.constraints);
-		table.addFilterListener(this);
+			filterWidget.constraints(widget.constraints);
+		filterWidget.addSizeFilter();
+		filterWidget.addFilterListener(this);
+		filterWidget.visible(true);
+		filterWidget.apply();
+	}
+
+	@SuppressWarnings({ "unchecked" })
+	private void drawTable() {
+		buttons.clear();
+		table = (ITableWidget<Object>) widget.mainPanel.add().widget(
+				ITableWidget.class);
+		table.addTitle(widget.title).font().pixel(18);
+		addProperties();
 		table.selection().multi().addChangeListener(this);
 		if (widget.creatableTypes.isEmpty())
 			widget.creatableTypes.add(null);
@@ -118,13 +131,13 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 				for (Object entity : result) {
 					queryList.delete(entity);
 				}
-				tableFilterList.apply();
+				filterWidget.apply();
 			}
 		});
 		table.addButton("Refresh").addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
-				tableFilterList.apply();
+				filterWidget.apply();
 			}
 		});
 		detail = table.addButton("Detail");
@@ -139,13 +152,15 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 			}
 		});
 		table.visible(true);
-		if (selectionObject != null) {
-			table.selection().add(selectionObject);
-		}
 	}
 
 	private void addProperties() {
+		adapters.clear();
+		property2column.clear();
+		String config = getConfig();
 		for (PropertyGroupImpl g : this.widget.propertyGroups) {
+			if (config != null && !g.name.equals(config))
+				continue;
 			for (PropertyImpl p : g.properties) {
 				if (!p.displayInTable)
 					continue;
@@ -159,34 +174,13 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 		}
 	}
 
-	@Override
-	public void onRefresh(final IRowModel<Object> rows,
-			IFilterConstraints constraints) {
-		widget.constraints = constraints;
-		widget.source.queryList(constraints,
-				new ICallback<IDeletableList<Object>>() {
-
-					@Override
-					public void onFail(Throwable throwable) {
-						rows.onFail();
-						throw new MethodNotImplementedException();
-					}
-
-					@Override
-					public void onSuccess(IDeletableList<Object> queryList) {
-						TableView.this.queryList = queryList;
-						List<Object> list = queryList.asList();
-						for (Object entity : list) {
-							IRow<Object> row = rows.addRow();
-							row.identifier(entity);
-							for (IAdapter<Object, Object> adapter : adapters) {
-								Object value = adapter.valueOf(entity);
-								row.add((Comparable<?>) value);
-							}
-						}
-						rows.onSuccess();
-					}
-				});
+	private String getConfig() {
+		if (widget.constraints == null)
+			return null;
+		String configuration = widget.constraints.configuration();
+		if (configuration.equals(IFilterConstraints.COMMON))
+			return null;
+		return configuration;
 	}
 
 	@Override
@@ -222,5 +216,32 @@ class TableView extends ViewTemplate implements IFilterListener<Object> {
 	@Override
 	boolean isRelevant(NavigationLinkImpl link) {
 		return link.inTable;
+	}
+
+	@Override
+	public void onApply(IFilterConstraints constraints) {
+		widget.mainPanel.clear();
+		widget.constraints = constraints;
+		drawTable();
+		widget.source.queryList(constraints,
+				new CallbackImpl<IDeletableList<Object>>() {
+
+					@Override
+					public void onSuccess(IDeletableList<Object> queryList) {
+						TableView.this.queryList = queryList;
+						List<Object> list = queryList.asList();
+						for (Object entity : list) {
+							IRow<Object> row = table.addRow();
+							row.identifier(entity);
+							for (IAdapter<Object, Object> adapter : adapters) {
+								Object value = adapter.valueOf(entity);
+								row.add((Comparable<?>) value);
+							}
+						}
+						if (selectionObject != null) {
+							table.selection().add(selectionObject);
+						}
+					}
+				});
 	}
 }
