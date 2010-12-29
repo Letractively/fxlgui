@@ -20,14 +20,19 @@ package co.fxl.gui.filter.impl;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IImage;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -45,7 +50,7 @@ class FilterWidgetImpl implements IFilterWidget {
 		public void onClick() {
 			if (holdFilterClicks)
 				return;
-			for (FilterPart<?> filter : filters) {
+			for (FilterPart<?> filter : guiFilterElements) {
 				filter.clear();
 			}
 			clear.clickable(false);
@@ -66,7 +71,7 @@ class FilterWidgetImpl implements IFilterWidget {
 		}
 	}
 
-	private List<FilterPart<?>> filters = new LinkedList<FilterPart<?>>();
+	private List<FilterPart<?>> guiFilterElements = new LinkedList<FilterPart<?>>();
 	IClickable<?> apply;
 	IClickable<?> clear;
 	private List<Boolean> activeFlags = new LinkedList<Boolean>();
@@ -74,10 +79,14 @@ class FilterWidgetImpl implements IFilterWidget {
 	boolean holdFilterClicks = false;
 	Validation validation = new Validation();
 	private List<IFilterListener> listeners = new LinkedList<IFilterListener>();
-	private List<FilterImpl> filterList = new LinkedList<FilterImpl>();
+	private Map<String, List<FilterImpl>> filterList = new HashMap<String, List<FilterImpl>>();
 	private ComboBoxIntegerFilter sizeFilter;
 	private boolean addSizeFilter = false;
 	private IFilterConstraints constraints;
+	private IVerticalPanel mainPanel;
+	private IContainer gridContainer;
+	private IComboBox configurationComboBox;
+	private String configuration = "DEFAULT";
 
 	FilterWidgetImpl(IContainer panel) {
 		WidgetTitle title = new WidgetTitle(panel.panel());
@@ -89,13 +98,33 @@ class FilterWidgetImpl implements IFilterWidget {
 		apply.clickable(false);
 		clear.addClickListener(new ClearClickListener());
 		clear.clickable(false);
-		this.grid = title.content().panel().grid().indent(3);
+		mainPanel = title.content().panel().vertical();
+	}
+
+	@Override
+	public IFilterWidget addConfiguration(String config) {
+		if (configurationComboBox == null) {
+			configurationComboBox = mainPanel.add().comboBox();
+			configurationComboBox
+					.addUpdateListener(new IUpdateListener<String>() {
+						@Override
+						public void onUpdate(String value) {
+							configuration = value;
+							if (filterList.get(configuration) != null)
+								visible(true);
+						}
+					});
+			mainPanel.addSpace(4);
+		}
+		configurationComboBox.addText(config);
+		configuration = config;
+		return this;
 	}
 
 	@SuppressWarnings("unchecked")
 	void notifyListeners() {
 		List<FilterTemplate<Object>> activeFilters = new LinkedList<FilterTemplate<Object>>();
-		for (FilterPart<?> filter : filters) {
+		for (FilterPart<?> filter : guiFilterElements) {
 			boolean active = filter.update();
 			if (active)
 				activeFilters.add((FilterTemplate<Object>) filter);
@@ -116,48 +145,57 @@ class FilterWidgetImpl implements IFilterWidget {
 			IAdapter<Object, Object> adapter) {
 		FilterPart<?> filter;
 		if (preset != null) {
-			filter = new RelationFilter(grid, name, filters.size(), preset,
-					adapter);
+			filter = new RelationFilter(grid, name, guiFilterElements.size(),
+					preset, adapter);
 		} else if (!values.isEmpty()) {
 			if (contentType.equals(String.class)) {
 				filter = new ComboBoxStringFilter(grid, name, values,
-						filters.size());
+						guiFilterElements.size());
 			} else if (contentType.equals(Integer.class)) {
 				filter = new ComboBoxIntegerFilter(grid, name, values,
-						filters.size());
+						guiFilterElements.size());
 			} else if (contentType.equals(IImage.class)) {
 				filter = new ComboBoxStringFilter(grid, name, values,
-						filters.size());
+						guiFilterElements.size());
 			} else if (contentType.equals(Date.class)) {
 				throw new MethodNotImplementedException(contentType.getName());
 			} else
 				throw new MethodNotImplementedException(contentType.getName());
 		} else if (contentType.equals(String.class))
-			filter = new StringFilter(grid, name, filters.size());
+			filter = new StringFilter(grid, name, guiFilterElements.size());
 		else if (contentType.equals(Date.class))
-			filter = new DateFilter(grid, name, filters.size());
+			filter = new DateFilter(grid, name, guiFilterElements.size());
 		else if (contentType.equals(Integer.class)
 				|| contentType.equals(Long.class))
-			filter = new NumberFilter(grid, name, filters.size());
+			filter = new NumberFilter(grid, name, guiFilterElements.size());
 		else
 			throw new MethodNotImplementedException(contentType.getName());
 		activeFlags.add(false);
 		filter.validate(validation);
-		filters.add(filter);
+		guiFilterElements.add(filter);
 		return filter;
 	}
 
 	@Override
 	public IFilter addFilter() {
 		FilterImpl filter = new FilterImpl();
-		filterList.add(filter);
+		addFilterImpl(filter);
 		return filter;
+	}
+
+	private void addFilterImpl(FilterImpl filter) {
+		List<FilterImpl> l = filterList.get(configuration);
+		if (l == null) {
+			l = new LinkedList<FilterImpl>();
+			filterList.put(configuration, l);
+		}
+		l.add(filter);
 	}
 
 	@Override
 	public IRelationFilter<Object, Object> addRelationFilter() {
 		RelationFilterImpl filter = new RelationFilterImpl();
-		filterList.add(filter);
+		addFilterImpl(filter);
 		return filter;
 	}
 
@@ -175,7 +213,13 @@ class FilterWidgetImpl implements IFilterWidget {
 
 	@Override
 	public IFilterWidget visible(boolean visible) {
-		for (FilterImpl filter : filterList) {
+		if (gridContainer == null) {
+			gridContainer = mainPanel.add();
+		} else
+			gridContainer.clear();
+		grid = gridContainer.panel().grid().indent(3);
+		List<FilterImpl> l = filterList.get(configuration);
+		for (FilterImpl filter : l) {
 			List<Object> list = new LinkedList<Object>(filter.type.values);
 			if (!list.isEmpty())
 				list.add(0, "");
@@ -195,7 +239,7 @@ class FilterWidgetImpl implements IFilterWidget {
 		}
 		boolean constrained = false;
 		if (constraints != null) {
-			for (FilterPart<?> f : filters) {
+			for (FilterPart<?> f : guiFilterElements) {
 				FilterTemplate<?> ft = (FilterTemplate<?>) f;
 				boolean c = ft.fromConstraint((IFilterConstraints) constraints);
 				constrained = constrained | c;
@@ -207,7 +251,7 @@ class FilterWidgetImpl implements IFilterWidget {
 				constrained = true;
 			}
 		}
-		for (FilterPart<?> f : filters) {
+		for (FilterPart<?> f : guiFilterElements) {
 			if (f instanceof RelationFilter)
 				constrained = true;
 		}
