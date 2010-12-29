@@ -19,7 +19,6 @@
 package co.fxl.gui.swing;
 
 import java.awt.Color;
-import java.awt.Rectangle;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
@@ -28,7 +27,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IScrollListener;
 import co.fxl.gui.api.IScrollPane;
 
