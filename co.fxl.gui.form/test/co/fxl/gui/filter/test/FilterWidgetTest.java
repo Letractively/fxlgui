@@ -65,35 +65,41 @@ class FilterWidgetTest implements IFilterListener {
 				.vertical().add().panel());
 		IFilterWidget widget = (IFilterWidget) split.sidePanel.add().widget(
 				IFilterWidget.class);
+		widget.addFilter().name("common 0");
+		widget.addFilter().name("common 1");
 		for (int i = 0; i < 3; i++) {
 			widget.addConfiguration("Filter Configuration " + i);
 			widget.addFilter().name(NAME + i);
 			widget.addFilter().name(DESCRIPTION + i);
 			widget.addFilter().name(DATE + i).type().date();
-			widget.addFilter().name(INT + i).type().integer();
-			widget.addFilter().name(STATE + i).type()
-					.addConstraint("Failed", "Passed");
-			List<Entity> es = new LinkedList<Entity>();
-			es.add(new Entity("First", 0l));
-			es.add(new Entity("Second", 1l));
-			es.add(new Entity("Third", 2l));
-			es.add(new Entity("Fourth", 3l));
-			@SuppressWarnings("unchecked")
-			IRelationFilter<Entity, Long> ir = (IRelationFilter<Entity, Long>) widget
-					.addRelationFilter().name("Relation" + i);
-			ir.adapter(new IAdapter<Entity, Long>() {
+			if (i < 2) {
+				widget.addFilter().name(INT + i).type().integer();
+				widget.addFilter().name(STATE + i).type()
+						.addConstraint("Failed", "Passed");
+				if (i < 1) {
+					List<Entity> es = new LinkedList<Entity>();
+					es.add(new Entity("First", 0l));
+					es.add(new Entity("Second", 1l));
+					es.add(new Entity("Third", 2l));
+					es.add(new Entity("Fourth", 3l));
+					@SuppressWarnings("unchecked")
+					IRelationFilter<Entity, Long> ir = (IRelationFilter<Entity, Long>) widget
+							.addRelationFilter().name("Relation" + i);
+					ir.adapter(new IAdapter<Entity, Long>() {
 
-				@Override
-				public String name(Entity entity) {
-					return entity.name();
-				}
+						@Override
+						public String name(Entity entity) {
+							return entity.name();
+						}
 
-				@Override
-				public Long id(Entity entity) {
-					return entity.id();
+						@Override
+						public Long id(Entity entity) {
+							return entity.id();
+						}
+					});
+					ir.preset(es);
 				}
-			});
-			ir.preset(es);
+			}
 		}
 		widget.addSizeFilter();
 		widget.addFilterListener(this);

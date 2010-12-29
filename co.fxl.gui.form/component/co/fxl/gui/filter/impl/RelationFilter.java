@@ -21,8 +21,12 @@ package co.fxl.gui.filter.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IDockPanel;
+import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IImage;
+import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
@@ -40,13 +44,23 @@ class RelationFilter extends StringFilter {
 		}
 	};
 	private IAdapter<Object, Object> adapter;
+	private IImage remove;
 
 	RelationFilter(IGridPanel grid, String name, int filterIndex,
-			List<Object> preset, IAdapter<Object, Object> adapter) {
+			List<Object> preset, IAdapter<Object, Object> adapter,
+			IClickListener cl) {
 		super(grid, name, filterIndex);
 		this.adapter = adapter;
 		textField.text(toString(preset)).editable(false).font().weight().bold()
 				.color().gray();
+		remove.addClickListener(cl);
+	}
+
+	@Override
+	ITextField textField(IContainer c, int filterIndex) {
+		IDockPanel dock = c.panel().dock();
+		remove = dock.right().image().resource("remove.png");
+		return dock.center().textField();
 	}
 
 	private String toString(List<Object> preset) {
