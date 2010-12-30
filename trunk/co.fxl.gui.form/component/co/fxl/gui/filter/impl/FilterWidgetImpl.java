@@ -128,6 +128,7 @@ class FilterWidgetImpl implements IFilterWidget {
 								update();
 						}
 					});
+			configurationComboBox.height(FilterTemplate.HEIGHT);
 			mainPanel.addSpace(4);
 			firstConfiguration = config;
 		}
