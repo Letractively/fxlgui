@@ -109,7 +109,7 @@ class FilterWidgetImpl implements IFilterWidget {
 		validation.linkClickable(apply);
 		clear = title.addHyperlink("Reset");
 		apply.addClickListener(new ApplyClickListener());
-		// apply.clickable(false);
+		apply.clickable(false);
 		clear.addClickListener(new ClearClickListener());
 		clear.clickable(false);
 		mainPanel = title.content().panel().vertical();
@@ -289,7 +289,7 @@ class FilterWidgetImpl implements IFilterWidget {
 				constrained = true;
 		}
 		constrained |= !firstConfiguration.equals(configuration);
-		apply.clickable(constrained);
+		// apply.clickable(constrained);
 		clear.clickable(constrained);
 		return this;
 	}
