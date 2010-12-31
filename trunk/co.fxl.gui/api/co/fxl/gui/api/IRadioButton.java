@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.api;
 
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
+
 public interface IRadioButton extends ITextElement<IRadioButton> {
 
 	public interface IGroup {
@@ -30,4 +32,6 @@ public interface IRadioButton extends ITextElement<IRadioButton> {
 	IRadioButton checked(boolean checked);
 
 	boolean checked();
+
+	IRadioButton addUpdateListener(IUpdateListener<Boolean> updateListener);
 }
