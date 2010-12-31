@@ -20,7 +20,6 @@ package co.fxl.gui.tree.api;
 
 import java.util.List;
 
-import co.fxl.gui.api.template.ICallback;
 
 public interface ITree<T> {
 

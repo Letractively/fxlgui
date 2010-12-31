@@ -26,7 +26,6 @@ import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.template.CallbackImpl;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
@@ -38,6 +37,7 @@ import co.fxl.gui.mdt.api.IProperty.IAdapter;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.IRow;
 import co.fxl.gui.table.api.ITableWidget;
+import co.fxl.gui.tree.impl.CallbackTemplate;
 
 class TableView extends ViewTemplate implements IFilterListener {
 
@@ -228,7 +228,7 @@ class TableView extends ViewTemplate implements IFilterListener {
 		widget.constraints = constraints;
 		drawTable();
 		widget.source.queryList(constraints,
-				new CallbackImpl<IDeletableList<Object>>() {
+				new CallbackTemplate<IDeletableList<Object>>() {
 
 					@Override
 					public void onSuccess(IDeletableList<Object> queryList) {

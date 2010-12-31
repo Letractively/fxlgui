@@ -22,7 +22,7 @@ import java.util.List;
 
 import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.template.ICallback;
+import co.fxl.gui.tree.api.ICallback;
 
 public interface IRelation<T, R> extends IPropertyGroup<R> {
 
