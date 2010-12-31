@@ -36,6 +36,7 @@ import co.fxl.gui.mdt.api.IRelation;
 
 class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 
+	private static final String DETAILS = "Details";
 	List<PropertyGroupImpl> propertyGroups = new LinkedList<PropertyGroupImpl>();
 	List<RelationImpl> relations = new LinkedList<RelationImpl>();
 	List<N2MRelationImpl> n2MRelations = new LinkedList<N2MRelationImpl>();
@@ -56,6 +57,9 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
+		// splitLayout = new SplitLayout(this.layout);
+		// mainPanel = splitLayout.mainPanel;
+		// sidePanel = splitLayout.sidePanel;
 	}
 
 	@Override
@@ -68,7 +72,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	@Override
 	public IPropertyGroup<Object> defaultPropertyGroup() {
 		isDefaultPropertyGroup = true;
-		return addPropertyGroup("Details");
+		return addPropertyGroup(DETAILS);
 	}
 
 	@Override
@@ -156,6 +160,12 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 
 	@Override
 	public IMasterDetailTableWidget<Object> refresh() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IMasterDetailTableWidget<Object> addConfiguration(
+			String configuration) {
 		throw new MethodNotImplementedException();
 	}
 }
