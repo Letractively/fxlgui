@@ -21,15 +21,19 @@ package co.fxl.gui.mdt.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.NavigationView;
 import co.fxl.gui.api.template.SplitLayout;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.mdt.api.IMDTFilterList;
 import co.fxl.gui.mdt.api.IMasterDetailTableWidget;
 import co.fxl.gui.mdt.api.IN2MRelation;
 import co.fxl.gui.mdt.api.INavigationLink;
+import co.fxl.gui.mdt.api.INavigationLink.INavigationLinkListener;
 import co.fxl.gui.mdt.api.IPropertyGroup;
 import co.fxl.gui.mdt.api.IPropertyPage;
 import co.fxl.gui.mdt.api.IRelation;
@@ -54,12 +58,35 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	List<String> creatableTypes = new LinkedList<String>();
 	SplitLayout splitLayout;
 	boolean hideDetailRoot = false;
+	List<Object> selection = new LinkedList<Object>();
+	List<ILabel> labels = new LinkedList<ILabel>();
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
-		// splitLayout = new SplitLayout(this.layout);
-		// mainPanel = splitLayout.mainPanel;
-		// sidePanel = splitLayout.sidePanel;
+		splitLayout = new SplitLayout(this.layout);
+		mainPanel = splitLayout.mainPanel;
+		sidePanel = splitLayout.sidePanel;
+	}
+
+	void addNavigationLinks() {
+		if (!navigationLinks.isEmpty()) {
+			NavigationView t = new NavigationView(sidePanel.add().panel());
+			for (NavigationLinkImpl link : navigationLinks) {
+				ILabel l = t.addHyperlink().text(link.name);
+				for (final INavigationLinkListener<Object> cl : link.listeners) {
+					l.addClickListener(new IClickListener() {
+
+						@Override
+						public void onClick() {
+							cl.onClick(selection);
+						}
+					});
+					l.clickable(false);
+				}
+				labels.add(l);
+			}
+		}
+		sidePanel = sidePanel.add().panel().vertical();
 	}
 
 	@Override
@@ -105,6 +132,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	public IMasterDetailTableWidget<Object> visible(boolean visible) {
 		if (!visible)
 			return this;
+		addNavigationLinks();
 		showTableView(null);
 		return this;
 	}

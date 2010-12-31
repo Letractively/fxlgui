@@ -56,7 +56,6 @@ class TableView extends ViewTemplate implements IFilterListener {
 		selectionObject = object;
 		if (widget.splitLayout != null)
 			widget.splitLayout.showSplit(true);
-		addNavigationLinks();
 		setUpFilter();
 	}
 
@@ -197,14 +196,14 @@ class TableView extends ViewTemplate implements IFilterListener {
 	}
 
 	private void updateCreatable() {
-		if (selection.size() > 1) {
+		if (widget.selection.size() > 1) {
 			for (IClickable<?> c : buttons.values())
 				c.clickable(false);
 			return;
 		}
 		Object o = null;
-		if (!selection.isEmpty())
-			o = selection.get(0);
+		if (!widget.selection.isEmpty())
+			o = widget.selection.get(0);
 		String[] creatableTypes = widget.source.getCreatableTypes(o);
 		List<String> ctypes = creatableTypes != null ? Arrays
 				.asList(creatableTypes) : null;

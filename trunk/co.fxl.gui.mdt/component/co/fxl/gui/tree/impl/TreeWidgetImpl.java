@@ -45,6 +45,7 @@ import co.fxl.gui.tree.api.ITreeWidget;
 
 class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
+	private static final int SPLIT_POSITION = 200;
 	private static final int BACKGROUND_GRAY = 247;
 
 	interface RefreshListener {
@@ -252,7 +253,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private void setUpDetailPanel() {
 		if (detailPanel != null)
 			return;
-		splitPane = panel().add().splitPane().splitPosition(300);
+		splitPane = panel().add().splitPane().splitPosition(SPLIT_POSITION);
 		splitPane.border().color().lightgray();
 		leftContentPanel = splitPane.first().scrollPane().viewPort().panel()
 				.vertical();
