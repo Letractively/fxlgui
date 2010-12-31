@@ -38,6 +38,7 @@ public interface IMDTFilterList<T> {
 		IMDTFilter asDetail(boolean asDetail);
 	}
 
+	// TODO move to IMasterDetailTableWidget
 	IMDTFilterList<T> addConfiguration(String configuration);
 
 	IMDTFilter addFilter();
