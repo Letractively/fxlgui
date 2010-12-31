@@ -19,7 +19,10 @@
 package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IRadioButton;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.RadioButton;
 
 class GWTRadioButton extends GWTElement<RadioButton, IRadioButton> implements
@@ -39,6 +42,7 @@ class GWTRadioButton extends GWTElement<RadioButton, IRadioButton> implements
 	}
 
 	static int GROUP_ID = 0;
+	private Boolean last = null;
 
 	GWTRadioButton(GWTContainer<RadioButton> container) {
 		super(container);
@@ -87,5 +91,20 @@ class GWTRadioButton extends GWTElement<RadioButton, IRadioButton> implements
 
 	static String nextGroup() {
 		return "group" + GROUP_ID++;
+	}
+
+	@Override
+	public IRadioButton addUpdateListener(
+			final IUpdateListener<Boolean> updateListener) {
+		container.widget.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				if (last == null || !last.equals(checked()))
+					updateListener.onUpdate(checked());
+				last = checked();
+			}
+		});
+		return this;
 	}
 }
