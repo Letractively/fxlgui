@@ -18,10 +18,15 @@
  */
 package co.fxl.gui.swing;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
+import javax.swing.event.ChangeEvent;
 
 import co.fxl.gui.api.IRadioButton;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 class SwingRadioButton extends SwingTextElement<JRadioButton, IRadioButton>
 		implements IRadioButton {
@@ -77,5 +82,18 @@ class SwingRadioButton extends SwingTextElement<JRadioButton, IRadioButton>
 	@Override
 	public IGroup group() {
 		return new Group();
+	}
+
+	@Override
+	public IRadioButton addUpdateListener(
+			final IUpdateListener<Boolean> updateListener) {
+		container.component.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				updateListener.onUpdate(checked());
+			}
+		});
+		return this;
 	}
 }
