@@ -24,8 +24,8 @@ import java.util.List;
 import co.fxl.gui.api.IRadioButton;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.ui.RadioButton;
 
 class GWTRadioButton extends GWTElement<RadioButton, IRadioButton> implements
@@ -53,17 +53,17 @@ class GWTRadioButton extends GWTElement<RadioButton, IRadioButton> implements
 		font(this);
 		container.widget.setValue(false);
 		container.widget.addStyleName("gwt-RadioButton");
-		container.widget.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				if (isChecked != checked()) {
-					isChecked = checked();
-					for (IUpdateListener<Boolean> l : listeners)
-						l.onUpdate(isChecked);
-				}
-			}
-		});
+		container.widget
+				.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+					@Override
+					public void onValueChange(ValueChangeEvent<Boolean> event) {
+						if (isChecked != checked()) {
+							isChecked = checked();
+							for (IUpdateListener<Boolean> l : listeners)
+								l.onUpdate(isChecked);
+						}
+					}
+				});
 	}
 
 	@Override
