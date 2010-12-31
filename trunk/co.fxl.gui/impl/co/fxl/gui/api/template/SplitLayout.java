@@ -30,6 +30,7 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class SplitLayout implements IResizeListener, IClickListener {
 
+	private static final int WIDTH_SIDE_PANEL = 250;
 	private ILayout layout;
 	public IGridPanel panel;
 	public IVerticalPanel mainPanel;
@@ -53,7 +54,7 @@ public class SplitLayout implements IResizeListener, IClickListener {
 				.center().valign().begin().panel().horizontal();
 		horizontal.addSpace(10);
 		button = horizontal.add().image().resource("minimize.png");
-		cell = panel.cell(2, 0).width(300).valign().begin();
+		cell = panel.cell(2, 0).width(WIDTH_SIDE_PANEL).valign().begin();
 		IVerticalPanel vertical = cell.panel().vertical();
 		// horizontal.addClickListener(clickListener);
 		button.addClickListener(this);
