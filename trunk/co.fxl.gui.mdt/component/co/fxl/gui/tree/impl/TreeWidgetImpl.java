@@ -32,14 +32,12 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.CallbackImpl;
-import co.fxl.gui.api.template.ChainedCallback;
-import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.ResizeListener;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
 import co.fxl.gui.navigation.api.IMenuWidget;
+import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 
@@ -156,7 +154,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 								lParentNode.createNew(type, getNextCallback());
 						}
 					};
-					CallbackImpl<ITree<T>> lCallback2 = new CallbackImpl<ITree<T>>() {
+					CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>() {
 						@Override
 						public void onSuccess(ITree<T> result) {
 							selection(result.object());

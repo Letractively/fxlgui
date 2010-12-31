@@ -2,7 +2,7 @@ package co.fxl.gui.mdt.api;
 
 import java.util.List;
 
-import co.fxl.gui.api.template.ICallback;
+import co.fxl.gui.tree.api.ICallback;
 
 public interface IN2MRelation<T, R> {
 

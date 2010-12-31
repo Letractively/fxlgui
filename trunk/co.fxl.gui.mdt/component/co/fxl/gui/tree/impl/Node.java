@@ -25,7 +25,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.ICallback;
+import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.ITree;
 
 /**
