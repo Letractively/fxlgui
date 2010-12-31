@@ -46,22 +46,24 @@ class TableView extends ViewTemplate implements IFilterListener {
 	private List<IAdapter<Object, Object>> adapters = new LinkedList<IAdapter<Object, Object>>();
 	private IDeletableList<Object> queryList;
 	private IClickable<?> delete;
-	private IClickable<?> detail;
+	// private IClickable<?> detail;
 	private Map<String, IClickable<?>> buttons = new HashMap<String, IClickable<?>>();
 	private Object selectionObject;
 	private IFilterWidget filterWidget;
 
-	TableView(final MasterDetailTableWidgetImpl widget, Object object) {
+	TableView(final MasterDetailTableWidgetImpl widget, Object object,
+			String configuration) {
 		super(widget);
 		selectionObject = object;
 		if (widget.splitLayout != null)
 			widget.splitLayout.showSplit(true);
-		setUpFilter();
+		setUpFilter(configuration);
 	}
 
-	private void setUpFilter() {
+	private void setUpFilter(String configuration) {
 		filterWidget = (IFilterWidget) widget.sidePanel.add().widget(
 				IFilterWidget.class);
+		filterWidget.showConfiguration(false);
 		int index = 0;
 		for (MDTFilterImpl filter : widget.filterList.filters) {
 			if (!filter.inTable)
@@ -94,6 +96,8 @@ class TableView extends ViewTemplate implements IFilterListener {
 		filterWidget.addSizeFilter();
 		filterWidget.addFilterListener(this);
 		filterWidget.visible(true);
+		if (configuration != null)
+			filterWidget.setConfiguration(configuration);
 		filterWidget.apply();
 	}
 
@@ -134,23 +138,23 @@ class TableView extends ViewTemplate implements IFilterListener {
 			}
 		});
 		delete.clickable(false);
-		table.addButton("Refresh").addClickListener(new IClickListener() {
-			@Override
-			public void onClick() {
-				filterWidget.apply();
-			}
-		});
-		detail = table.addButton("Detail");
-		detail.addClickListener(new IClickListener() {
-			@Override
-			public void onClick() {
-				Object show = null;
-				List<Object> result = table.selection().result();
-				if (!result.isEmpty())
-					show = result.get(result.size() - 1);
-				widget.showDetailView(show);
-			}
-		});
+		// table.addButton("Refresh").addClickListener(new IClickListener() {
+		// @Override
+		// public void onClick() {
+		// filterWidget.apply();
+		// }
+		// });
+		// detail = table.addButton("Detail");
+		// detail.addClickListener(new IClickListener() {
+		// @Override
+		// public void onClick() {
+		// Object show = null;
+		// List<Object> result = table.selection().result();
+		// if (!result.isEmpty())
+		// show = result.get(result.size() - 1);
+		// widget.showDetailView(show);
+		// }
+		// });
 		table.visible(true);
 	}
 
@@ -190,7 +194,7 @@ class TableView extends ViewTemplate implements IFilterListener {
 		for (Object o : selection) {
 			clickable &= queryList.isDeletable(o);
 		}
-		detail.clickable(selection.size() <= 1);
+		// detail.clickable(selection.size() <= 1);
 		delete.clickable(clickable);
 		updateCreatable();
 	}
@@ -244,5 +248,16 @@ class TableView extends ViewTemplate implements IFilterListener {
 						updateCreatable();
 					}
 				});
+	}
+
+	@Override
+	public void onUpdate(String value) {
+		filterWidget.setConfiguration(value);
+		onRefresh();
+	}
+
+	@Override
+	public void onRefresh() {
+		filterWidget.apply();
 	}
 }

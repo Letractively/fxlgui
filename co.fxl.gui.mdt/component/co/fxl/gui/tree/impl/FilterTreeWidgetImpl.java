@@ -87,4 +87,10 @@ class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
 			}
 		});
 	}
+
+	@Override
+	public IFilterTreeWidget<T> refresh() {
+		onRefresh();
+		return this;
+	}
 }

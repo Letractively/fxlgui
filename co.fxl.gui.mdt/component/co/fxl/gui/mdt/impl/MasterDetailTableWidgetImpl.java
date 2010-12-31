@@ -22,12 +22,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IRadioButton;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.NavigationView;
 import co.fxl.gui.api.template.SplitLayout;
+import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.mdt.api.IMDTFilterList;
 import co.fxl.gui.mdt.api.IMasterDetailTableWidget;
@@ -46,7 +51,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	List<N2MRelationImpl> n2MRelations = new LinkedList<N2MRelationImpl>();
 	boolean isDefaultPropertyGroup = false;
 	IContent<Object> source;
-	FilterListImpl filterList = new FilterListImpl();
+	MDTFilterListImpl filterList = new MDTFilterListImpl(this);
 	String title;
 	IFilterConstraints constraints;
 	List<NavigationLinkImpl> navigationLinks = new LinkedList<NavigationLinkImpl>();
@@ -60,6 +65,10 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	boolean hideDetailRoot = false;
 	List<Object> selection = new LinkedList<Object>();
 	List<ILabel> labels = new LinkedList<ILabel>();
+	private IComboBox comboBoxConfiguration;
+	private List<String> configurations = new LinkedList<String>();
+	Listener listener;
+	private String configuration = null;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -68,7 +77,77 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 		sidePanel = splitLayout.sidePanel;
 	}
 
-	void addNavigationLinks() {
+	void addViewWidget(IVerticalPanel sidePanel) {
+		WidgetTitle views = new WidgetTitle(sidePanel.add().panel());
+		views.addTitle("Views");
+		views.addHyperlink("Refresh").addClickListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				refresh();
+			}
+		});
+		IVerticalPanel content = views.content().panel().vertical();
+		IHorizontalPanel h1 = content.add().panel().horizontal();
+		final IRadioButton r1 = h1.add().radioButton().text("Grid");
+		r1.checked(true);
+		r1.font().weight().bold();
+		r1.addUpdateListener(new IUpdateListener<Boolean>() {
+			@Override
+			public void onUpdate(Boolean value) {
+				if (true) {
+					Object show = null;
+					if (!selection.isEmpty())
+						show = selection.get(selection.size() - 1);
+					showTableView(show, configuration);
+				}
+			}
+		});
+		if (!configurations.isEmpty()) {
+			h1.addSpace(4);
+			comboBoxConfiguration = h1.add().comboBox();
+			comboBoxConfiguration.size(200, 24);
+			for (String c : configurations)
+				comboBoxConfiguration.addText(c);
+			comboBoxConfiguration
+					.addUpdateListener(new IUpdateListener<String>() {
+
+						@Override
+						public void onUpdate(String value) {
+							configuration = value;
+							r1.checked(true);
+							if (listener instanceof TableView)
+								notifyConfigurationListener(value);
+							else {
+								Object show = null;
+								if (!selection.isEmpty())
+									show = selection.get(selection.size() - 1);
+								showTableView(show, value);
+							}
+						}
+					});
+		}
+		IHorizontalPanel h2 = content.add().panel().horizontal();
+		IRadioButton r2 = h2.add().radioButton().text("Master-Detail");
+		r2.addUpdateListener(new IUpdateListener<Boolean>() {
+			@Override
+			public void onUpdate(Boolean value) {
+				if (true) {
+					Object show = null;
+					if (!selection.isEmpty())
+						show = selection.get(selection.size() - 1);
+					showDetailView(show);
+				}
+			}
+		});
+		r2.font().weight().bold();
+		r1.group().add(r2);
+	}
+
+	void notifyConfigurationListener(String value) {
+		listener.onUpdate(value);
+	}
+
+	void addNavigationLinks(IVerticalPanel sidePanel) {
 		if (!navigationLinks.isEmpty()) {
 			NavigationView t = new NavigationView(sidePanel.add().panel());
 			for (NavigationLinkImpl link : navigationLinks) {
@@ -86,7 +165,6 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 				labels.add(l);
 			}
 		}
-		sidePanel = sidePanel.add().panel().vertical();
 	}
 
 	@Override
@@ -132,14 +210,16 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	public IMasterDetailTableWidget<Object> visible(boolean visible) {
 		if (!visible)
 			return this;
-		addNavigationLinks();
-		showTableView(null);
+		addNavigationLinks(sidePanel);
+		addViewWidget(sidePanel);
+		sidePanel = sidePanel.add().panel().vertical();
+		showTableView(null, null);
 		return this;
 	}
 
-	void showTableView(Object object) {
+	void showTableView(Object object, String configuration) {
 		clear();
-		new TableView(this, object);
+		new TableView(this, object, configuration);
 	}
 
 	DetailView showDetailView(Object show) {
@@ -188,12 +268,14 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 
 	@Override
 	public IMasterDetailTableWidget<Object> refresh() {
-		throw new MethodNotImplementedException();
+		listener.onRefresh();
+		return this;
 	}
 
 	@Override
 	public IMasterDetailTableWidget<Object> addConfiguration(
 			String configuration) {
-		throw new MethodNotImplementedException();
+		configurations.add(configuration);
+		return this;
 	}
 }

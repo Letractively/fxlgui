@@ -27,11 +27,16 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.mdt.api.IMDTFilterList;
 import co.fxl.gui.mdt.api.IProperty;
 
-class FilterListImpl implements IMDTFilterList<Object> {
+class MDTFilterListImpl implements IMDTFilterList<Object> {
 
+	private MasterDetailTableWidgetImpl mdt;
 	List<MDTFilterImpl> filters = new LinkedList<MDTFilterImpl>();
 	Map<Integer, String> configuration2index = new HashMap<Integer, String>();
 	IFilterConstraints constraints;
+
+	MDTFilterListImpl(MasterDetailTableWidgetImpl mdt) {
+		this.mdt = mdt;
+	}
 
 	@Override
 	public IMDTFilter addFilter() {
@@ -41,7 +46,8 @@ class FilterListImpl implements IMDTFilterList<Object> {
 	}
 
 	@Override
-	public IMDTFilterList<Object> addPropertyFilter(IProperty<Object, ?> property) {
+	public IMDTFilterList<Object> addPropertyFilter(
+			IProperty<Object, ?> property) {
 		MDTFilterImpl filter = new MDTFilterImpl((PropertyImpl) property);
 		filters.add(filter);
 		return this;
@@ -62,6 +68,7 @@ class FilterListImpl implements IMDTFilterList<Object> {
 
 	@Override
 	public IMDTFilterList<Object> addConfiguration(String configuration) {
+		mdt.addConfiguration(configuration);
 		configuration2index.put(filters.size(), configuration);
 		return this;
 	}

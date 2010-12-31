@@ -57,11 +57,12 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 	@SuppressWarnings("unchecked")
 	DetailView(final MasterDetailTableWidgetImpl widget, Object sshow) {
 		super(widget);
-//		if (widget.splitLayout != null)
-//			widget.splitLayout.showSplit(false);
+		// if (widget.splitLayout != null)
+		// widget.splitLayout.showSplit(false);
 		this.selectionObject = sshow;
 		tree = (IFilterTreeWidget<Object>) widget.mainPanel.add().widget(
 				IFilterTreeWidget.class);
+		tree.showRefresh(false);
 		if (widget.hideDetailRoot)
 			tree.hideRoot();
 		for (String s : widget.creatableTypes) {
@@ -80,12 +81,12 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 		});
 		// filterList = tree.filterList(widget.sidePanel.add().panel());
 		// setupFilter(widget);
-		tree.addHyperlink("Grid").addClickListener(new IClickListener() {
-			@Override
-			public void onClick() {
-				widget.showTableView(tree.selection());
-			}
-		});
+		// tree.addHyperlink("Grid").addClickListener(new IClickListener() {
+		// @Override
+		// public void onClick() {
+		// widget.showTableView(tree.selection());
+		// }
+		// });
 		addDetailViews();
 		tree.source(this);
 		tree.selection(sshow);
@@ -385,5 +386,15 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 	@Override
 	boolean isRelevant(NavigationLinkImpl link) {
 		return link.asDetail;
+	}
+
+	@Override
+	public void onUpdate(String value) {
+		onRefresh();
+	}
+
+	@Override
+	public void onRefresh() {
+		tree.refresh();
 	}
 }

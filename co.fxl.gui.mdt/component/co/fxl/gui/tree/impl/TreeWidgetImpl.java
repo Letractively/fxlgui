@@ -32,10 +32,10 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.CallbackImpl;
 import co.fxl.gui.api.template.ChainedCallback;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.ResizeListener;
-import co.fxl.gui.api.template.CallbackImpl;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
@@ -47,6 +47,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	private static final int SPLIT_POSITION = 200;
 	private static final int BACKGROUND_GRAY = 247;
+	private boolean showRefresh = true;
 
 	interface RefreshListener {
 
@@ -203,7 +204,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 						tree.delete(callback);
 					}
 				}).mouseLeft();
-		if (this instanceof RefreshListener)
+		if (showRefresh && this instanceof RefreshListener)
 			refresh().addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {
@@ -444,6 +445,12 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	@Override
 	public ITreeWidget<T> hideRoot() {
 		showRoot = false;
+		return this;
+	}
+
+	@Override
+	public ITreeWidget<T> showRefresh(boolean showRefresh) {
+		this.showRefresh = showRefresh;
 		return this;
 	}
 }
