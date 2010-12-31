@@ -58,9 +58,12 @@ class TableView extends ViewTemplate implements IFilterListener {
 		if (widget.splitLayout != null)
 			widget.splitLayout.showSplit(true);
 		setUpFilter(configuration);
+		onRefresh();
 	}
 
 	private void setUpFilter(String configuration) {
+		if (widget.filterList.filters.isEmpty())
+			return;
 		filterWidget = (IFilterWidget) widget.sidePanel.add().widget(
 				IFilterWidget.class);
 		filterWidget.showConfiguration(false);
@@ -98,7 +101,7 @@ class TableView extends ViewTemplate implements IFilterListener {
 		filterWidget.visible(true);
 		if (configuration != null)
 			filterWidget.setConfiguration(configuration);
-		filterWidget.apply();
+		// filterWidget.apply();
 	}
 
 	@SuppressWarnings({ "unchecked" })
@@ -252,12 +255,16 @@ class TableView extends ViewTemplate implements IFilterListener {
 
 	@Override
 	public void onUpdate(String value) {
-		filterWidget.setConfiguration(value);
+		if (filterWidget != null)
+			filterWidget.setConfiguration(value);
 		onRefresh();
 	}
 
 	@Override
 	public void onRefresh() {
-		filterWidget.apply();
+		if (filterWidget != null)
+			filterWidget.apply();
+		else
+			onApply(widget.constraints);
 	}
 }

@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.mdt.api;
 
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.ITree;
@@ -34,6 +35,8 @@ public interface IMasterDetailTableWidget<T> {
 
 		String[] getCreatableTypes(T object);
 	}
+
+	IMasterDetailTableWidget<T> sidePanel(IVerticalPanel panel);
 
 	IMasterDetailTableWidget<T> title(String title);
 
