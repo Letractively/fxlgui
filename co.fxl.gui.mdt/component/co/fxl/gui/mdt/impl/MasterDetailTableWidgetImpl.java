@@ -72,9 +72,21 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
-		splitLayout = new SplitLayout(this.layout);
-		mainPanel = splitLayout.mainPanel;
-		sidePanel = splitLayout.sidePanel;
+	}
+
+	void setUpSidePanel() {
+		if (sidePanel == null) {
+			splitLayout = new SplitLayout(this.layout);
+			mainPanel = splitLayout.mainPanel;
+			sidePanel = splitLayout.sidePanel;
+		}
+	}
+
+	@Override
+	public IMasterDetailTableWidget<Object> sidePanel(IVerticalPanel panel) {
+		mainPanel = layout.vertical();
+		sidePanel = panel;
+		return this;
 	}
 
 	void addViewWidget(IVerticalPanel sidePanel) {
@@ -105,7 +117,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 		if (!configurations.isEmpty()) {
 			h1.addSpace(4);
 			comboBoxConfiguration = h1.add().comboBox();
-			comboBoxConfiguration.size(220, 24);
+			comboBoxConfiguration.size(270, 24);
 			for (String c : configurations)
 				comboBoxConfiguration.addText(c);
 			comboBoxConfiguration
@@ -210,6 +222,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	public IMasterDetailTableWidget<Object> visible(boolean visible) {
 		if (!visible)
 			return this;
+		setUpSidePanel();
 		addNavigationLinks(sidePanel);
 		addViewWidget(sidePanel);
 		sidePanel = sidePanel.add().panel().vertical();
