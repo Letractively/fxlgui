@@ -40,6 +40,8 @@ import co.fxl.gui.table.impl.sort.ISort;
 import co.fxl.gui.table.impl.sort.QuickSort;
 
 public class TableWidgetImpl implements ITableWidget<Object> {
+	
+	// TODO nice-2-have: shift-click: no text marking
 
 	private class ComparableList implements IComparableList {
 
