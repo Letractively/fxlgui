@@ -53,6 +53,10 @@ public interface IFilterWidget {
 	}
 
 	IFilterWidget addConfiguration(String config);
+	
+	IFilterWidget showConfiguration(boolean show);
+	
+	IFilterWidget setConfiguration(String config);
 
 	IFilter addFilter();
 
