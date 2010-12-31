@@ -249,7 +249,8 @@ class FilterWidgetImpl implements IFilterWidget {
 
 	@Override
 	public IFilterWidget visible(boolean visible) {
-		validation.linkInput(configurationComboBox);
+		if (configurationComboBox != null)
+			validation.linkInput(configurationComboBox);
 		configuration = firstConfiguration;
 		return update();
 	}
