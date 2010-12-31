@@ -18,9 +18,6 @@
  */
 package co.fxl.gui.gwt;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import co.fxl.gui.api.IRadioButton;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
@@ -45,25 +42,12 @@ class GWTRadioButton extends GWTElement<RadioButton, IRadioButton> implements
 	}
 
 	static int GROUP_ID = 0;
-	private boolean isChecked = false;
-	private List<IUpdateListener<Boolean>> listeners = new LinkedList<IUpdateListener<Boolean>>();
 
 	GWTRadioButton(GWTContainer<RadioButton> container) {
 		super(container);
 		font(this);
 		container.widget.setValue(false);
 		container.widget.addStyleName("gwt-RadioButton");
-		container.widget
-				.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
-					@Override
-					public void onValueChange(ValueChangeEvent<Boolean> event) {
-						if (isChecked != checked()) {
-							isChecked = checked();
-							for (IUpdateListener<Boolean> l : listeners)
-								l.onUpdate(isChecked);
-						}
-					}
-				});
 	}
 
 	@Override
@@ -111,7 +95,13 @@ class GWTRadioButton extends GWTElement<RadioButton, IRadioButton> implements
 	@Override
 	public IRadioButton addUpdateListener(
 			final IUpdateListener<Boolean> updateListener) {
-		listeners.add(updateListener);
+		container.widget
+				.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+					@Override
+					public void onValueChange(ValueChangeEvent<Boolean> event) {
+						updateListener.onUpdate(event.getValue());
+					}
+				});
 		return this;
 	}
 }
