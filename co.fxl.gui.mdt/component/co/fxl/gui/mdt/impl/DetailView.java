@@ -57,8 +57,8 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 	@SuppressWarnings("unchecked")
 	DetailView(final MasterDetailTableWidgetImpl widget, Object sshow) {
 		super(widget);
-		if (widget.splitLayout != null)
-			widget.splitLayout.showSplit(false);
+//		if (widget.splitLayout != null)
+//			widget.splitLayout.showSplit(false);
 		this.selectionObject = sshow;
 		tree = (IFilterTreeWidget<Object>) widget.mainPanel.add().widget(
 				IFilterTreeWidget.class);
@@ -78,7 +78,6 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 				DetailView.this.onChange(l);
 			}
 		});
-		addNavigationLinks();
 		// filterList = tree.filterList(widget.sidePanel.add().panel());
 		// setupFilter(widget);
 		tree.addHyperlink("Grid").addClickListener(new IClickListener() {

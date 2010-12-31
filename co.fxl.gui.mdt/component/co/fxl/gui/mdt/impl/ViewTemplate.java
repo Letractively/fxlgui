@@ -18,22 +18,16 @@
  */
 package co.fxl.gui.mdt.impl;
 
-import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.NavigationView;
 import co.fxl.gui.api.template.SplitLayout;
-import co.fxl.gui.mdt.api.INavigationLink.INavigationLinkListener;
 import co.fxl.gui.table.api.ISelection.IMultiSelection.IChangeListener;
 
 abstract class ViewTemplate implements IChangeListener<Object> {
 
 	MasterDetailTableWidgetImpl widget;
-	List<Object> selection = new LinkedList<Object>();
-	private List<ILabel> labels = new LinkedList<ILabel>();
 
 	ViewTemplate(MasterDetailTableWidgetImpl widget) {
 		this.widget = widget;
@@ -56,39 +50,12 @@ abstract class ViewTemplate implements IChangeListener<Object> {
 		}
 	}
 
-	void addNavigationLinks() {
-		List<NavigationLinkImpl> links = new LinkedList<NavigationLinkImpl>();
-		for (NavigationLinkImpl link : widget.navigationLinks) {
-			if (isRelevant(link)) {
-				links.add(link);
-			}
-		}
-		if (!links.isEmpty()) {
-			NavigationView t = new NavigationView(widget.sidePanel.add()
-					.panel());
-			for (NavigationLinkImpl link : links) {
-				ILabel l = t.addHyperlink().text(link.name);
-				for (final INavigationLinkListener<Object> cl : link.listeners) {
-					l.addClickListener(new IClickListener() {
-
-						@Override
-						public void onClick() {
-							cl.onClick(selection);
-						}
-					});
-					l.clickable(false);
-				}
-				labels.add(l);
-			}
-		}
-	}
-
 	abstract boolean isRelevant(NavigationLinkImpl link);
 
 	@Override
 	public void onChange(List<Object> selection) {
-		this.selection = selection;
-		for (ILabel label : labels) {
+		widget.selection = selection;
+		for (ILabel label : widget.labels) {
 			label.clickable(!selection.isEmpty());
 		}
 	}
