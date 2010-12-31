@@ -57,7 +57,7 @@ public class NavigationView {
 		if (panel != null)
 			return;
 		widgetTitle.addTitle("Navigation");
-		panel = widgetTitle.content().panel().vertical().spacing(4);
+		panel = widgetTitle.content().panel().vertical();//.spacing(4);
 	}
 
 	public NavigationView foldable(boolean b) {
