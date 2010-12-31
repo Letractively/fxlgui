@@ -40,7 +40,7 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
 
-class FilterWidgetImpl implements IFilterWidget {
+class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 
 	private static final List<Object> DEFAULT_SIZES = Arrays
 			.asList(new Object[] { new Integer(20), 50, 100, 500, 1000 });
@@ -64,7 +64,8 @@ class FilterWidgetImpl implements IFilterWidget {
 			}
 			clear.clickable(false);
 			apply.clickable(false);
-			if (!configuration.equals(firstConfiguration))
+			if (!configuration.equals(firstConfiguration)
+					&& configurationComboBox != null)
 				configurationComboBox.text(firstConfiguration);
 			else
 				update();
@@ -101,6 +102,7 @@ class FilterWidgetImpl implements IFilterWidget {
 	private IComboBox configurationComboBox;
 	private String firstConfiguration = IFilterConstraints.COMMON;
 	private String configuration = IFilterConstraints.COMMON;
+	private boolean showConfiguration = true;
 
 	FilterWidgetImpl(IContainer panel) {
 		WidgetTitle title = new WidgetTitle(panel.panel());
@@ -116,23 +118,24 @@ class FilterWidgetImpl implements IFilterWidget {
 	}
 
 	@Override
+	public void onUpdate(String value) {
+		configuration = value;
+		if (filterList.get(configuration) != null)
+			update();
+	}
+
+	@Override
 	public IFilterWidget addConfiguration(String config) {
-		if (configurationComboBox == null) {
+		if (configurationComboBox == null && showConfiguration) {
 			configurationComboBox = mainPanel.add().comboBox();
-			configurationComboBox
-					.addUpdateListener(new IUpdateListener<String>() {
-						@Override
-						public void onUpdate(String value) {
-							configuration = value;
-							if (filterList.get(configuration) != null)
-								update();
-						}
-					});
+			configurationComboBox.addUpdateListener(this);
 			configurationComboBox.height(FilterTemplate.HEIGHT);
 			mainPanel.addSpace(4);
-			firstConfiguration = config;
 		}
-		configurationComboBox.addText(config);
+		if (configurationComboBox != null)
+			configurationComboBox.addText(config);
+		if (firstConfiguration.equals(IFilterConstraints.COMMON))
+			firstConfiguration = config;
 		configuration = config;
 		return this;
 	}
@@ -288,7 +291,7 @@ class FilterWidgetImpl implements IFilterWidget {
 			if (f instanceof RelationFilter)
 				constrained = true;
 		}
-		constrained |= !firstConfiguration.equals(configuration);
+		// constrained |= !firstConfiguration.equals(configuration);
 		apply.clickable(constrained);
 		clear.clickable(constrained);
 		return this;
@@ -327,6 +330,18 @@ class FilterWidgetImpl implements IFilterWidget {
 	@Override
 	public IFilterWidget apply() {
 		notifyListeners();
+		return this;
+	}
+
+	@Override
+	public IFilterWidget showConfiguration(boolean show) {
+		showConfiguration = show;
+		return this;
+	}
+
+	@Override
+	public IFilterWidget setConfiguration(String config) {
+		onUpdate(config);
 		return this;
 	}
 }
