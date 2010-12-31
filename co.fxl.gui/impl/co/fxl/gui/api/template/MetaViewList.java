@@ -41,7 +41,7 @@ public class MetaViewList {
 		return card;
 	}
 
-	private ILayout addSidePanel() {
+	public ILayout addSidePanel() {
 		return layout.sidePanel.add().panel();
 	}
 

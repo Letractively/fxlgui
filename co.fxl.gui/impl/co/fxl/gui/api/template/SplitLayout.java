@@ -30,7 +30,7 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class SplitLayout implements IResizeListener, IClickListener {
 
-	private static final int WIDTH_SIDE_PANEL = 250;
+	private static final int WIDTH_SIDE_PANEL = 300;
 	private ILayout layout;
 	public IGridPanel panel;
 	public IVerticalPanel mainPanel;
