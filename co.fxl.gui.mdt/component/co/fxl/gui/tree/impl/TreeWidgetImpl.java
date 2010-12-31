@@ -45,7 +45,7 @@ import co.fxl.gui.tree.api.ITreeWidget;
 
 class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
-	private static final int SPLIT_POSITION = 200;
+	private static final int SPLIT_POSITION = 250;
 	private static final int BACKGROUND_GRAY = 247;
 	private boolean showRefresh = true;
 
