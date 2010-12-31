@@ -22,7 +22,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.table.api.ITableWidget;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings("rawtypes")
 public class TableWidgetImplProvider implements IWidgetProvider<ITableWidget> {
 
 	@Override
