@@ -25,12 +25,13 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.SplitLayout;
 import co.fxl.gui.table.api.ISelection.IMultiSelection.IChangeListener;
 
-abstract class ViewTemplate implements IChangeListener<Object> {
+abstract class ViewTemplate implements IChangeListener<Object>, Listener {
 
 	MasterDetailTableWidgetImpl widget;
 
 	ViewTemplate(MasterDetailTableWidgetImpl widget) {
 		this.widget = widget;
+		widget.listener = this;
 		if (widget.mainPanel == null) {
 			if (widget.hasFilter) {
 				widget.splitLayout = new SplitLayout(widget.layout);

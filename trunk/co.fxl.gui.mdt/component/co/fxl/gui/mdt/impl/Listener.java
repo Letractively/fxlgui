@@ -16,24 +16,11 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.tree.api;
+package co.fxl.gui.mdt.impl;
 
-import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.template.ICallback;
-import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
-public interface IFilterTreeWidget<T> extends ITreeWidget<T> {
+interface Listener extends IUpdateListener<String> {
 
-	public interface ISource<T> {
-
-		void query(IFilterConstraints constraints, ICallback<ITree<T>> callback);
-	}
-
-	IFilterList<T> filterList(ILayout layout);
-
-	IFilterTreeWidget<T> source(ISource<T> source);
-
-	IFilterTreeWidget<T> visible(boolean visible);
-
-	IFilterTreeWidget<T> refresh();
+	void onRefresh();
 }
