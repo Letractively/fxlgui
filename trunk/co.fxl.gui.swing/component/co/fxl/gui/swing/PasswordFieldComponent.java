@@ -30,6 +30,8 @@ final class PasswordFieldComponent<T> extends JPasswordField {
 	@Override
 	public Dimension getPreferredSize() {
 		Dimension d = super.getPreferredSize();
+		if (d == null)
+			return null;
 		if (d.height == 0)
 			d.height = SwingContainer.MIN_HEIGHT_TEXT_COMPONENT;
 		return d;
