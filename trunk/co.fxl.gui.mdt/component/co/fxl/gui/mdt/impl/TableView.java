@@ -147,7 +147,7 @@ class TableView extends ViewTemplate implements IFilterListener {
 		// filterWidget.apply();
 		// }
 		// });
-		// detail = table.addButton("Detail");
+		// detail = table.addButton("Details");
 		// detail.addClickListener(new IClickListener() {
 		// @Override
 		// public void onClick() {
@@ -155,6 +155,7 @@ class TableView extends ViewTemplate implements IFilterListener {
 		// List<Object> result = table.selection().result();
 		// if (!result.isEmpty())
 		// show = result.get(result.size() - 1);
+		// widget.r2.checked(true);
 		// widget.showDetailView(show);
 		// }
 		// });
@@ -197,7 +198,7 @@ class TableView extends ViewTemplate implements IFilterListener {
 		for (Object o : selection) {
 			clickable &= queryList.isDeletable(o);
 		}
-		// detail.clickable(selection.size() <= 1);
+		// detail.clickable(selection.size() == 1);
 		delete.clickable(clickable);
 		updateCreatable();
 	}
