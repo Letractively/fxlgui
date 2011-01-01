@@ -254,7 +254,10 @@ class FormWidgetImpl implements IFormWidget {
 							(IPasswordField) formField.valueElement(),
 							formField.required);
 				} else if (valueElement instanceof ICheckBox) {
+					throw new MethodNotImplementedException(
+							valueElement.getClass());
 				} else if (valueElement instanceof IComboBox) {
+					validation.linkInput((IComboBox) valueElement);
 				} else
 					throw new MethodNotImplementedException(
 							valueElement.getClass());
