@@ -64,6 +64,7 @@ class TableView extends ViewTemplate implements IFilterListener {
 	private void setUpFilter(String configuration) {
 		if (widget.filterList.filters.isEmpty())
 			return;
+		widget.sidePanel.addSpace(widget.addSpacing);
 		filterWidget = (IFilterWidget) widget.sidePanel.add().widget(
 				IFilterWidget.class);
 		filterWidget.showConfiguration(false);

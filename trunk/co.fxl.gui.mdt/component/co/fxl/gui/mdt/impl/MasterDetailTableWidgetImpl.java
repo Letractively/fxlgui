@@ -70,6 +70,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	Listener listener;
 	private String configuration = null;
 	IRadioButton r2;
+	int addSpacing = 0;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -86,6 +87,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	@Override
 	public IMasterDetailTableWidget<Object> sidePanel(IVerticalPanel panel) {
 		mainPanel = layout.vertical();
+		addSpacing = 10;
 		sidePanel = panel;
 		return this;
 	}
