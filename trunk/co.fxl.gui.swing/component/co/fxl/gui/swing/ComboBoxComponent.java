@@ -29,7 +29,7 @@ class ComboBoxComponent extends JComboBox {
 	@Override
 	public Dimension getPreferredSize() {
 		Dimension d = super.getPreferredSize();
-		if (d.height == 0)
+		if (d.height < SwingContainer.MIN_HEIGHT_TEXT_COMPONENT)
 			d.height = SwingContainer.MIN_HEIGHT_TEXT_COMPONENT;
 		return d;
 	}
