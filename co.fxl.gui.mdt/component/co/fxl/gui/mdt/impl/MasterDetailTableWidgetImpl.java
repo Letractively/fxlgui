@@ -69,6 +69,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	private List<String> configurations = new LinkedList<String>();
 	Listener listener;
 	private String configuration = null;
+	IRadioButton r2;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -139,7 +140,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 					});
 		}
 		IHorizontalPanel h2 = content.add().panel().horizontal();
-		IRadioButton r2 = h2.add().radioButton().text("Master-Detail");
+		r2 = h2.add().radioButton().text("Master-Detail");
 		r2.addUpdateListener(new IUpdateListener<Boolean>() {
 			@Override
 			public void onUpdate(Boolean value) {
