@@ -21,7 +21,6 @@ package co.fxl.gui.mdt.impl;
 import java.util.List;
 
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
-import co.fxl.gui.mdt.api.IMDTFilterList.IMDTFilter;
 import co.fxl.gui.mdt.api.IMDTFilterList.IMDTRelationFilter;
 
 class MDTRelationFilterImpl extends MDTFilterImpl implements
@@ -29,8 +28,6 @@ class MDTRelationFilterImpl extends MDTFilterImpl implements
 
 	IAdapter<Object, Object> adapter;
 	List<Object> preset;
-	boolean asDetail = false;
-	boolean inTable = false;
 
 	MDTRelationFilterImpl() {
 		super();
@@ -54,17 +51,4 @@ class MDTRelationFilterImpl extends MDTFilterImpl implements
 		this.preset = entities;
 		return this;
 	}
-
-	@Override
-	public IMDTFilter inTable(boolean inTable) {
-		this.inTable = inTable;
-		return this;
-	}
-
-	@Override
-	public IMDTFilter asDetail(boolean asDetail) {
-		this.asDetail = asDetail;
-		return this;
-	}
-
 }
