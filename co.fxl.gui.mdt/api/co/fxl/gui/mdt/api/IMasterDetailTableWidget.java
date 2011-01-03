@@ -25,6 +25,8 @@ import co.fxl.gui.tree.api.ITree;
 
 public interface IMasterDetailTableWidget<T> {
 
+	String DETAILS = "Details";
+
 	public interface IContent<T> {
 
 		void queryTree(IFilterConstraints constraints, T selection,

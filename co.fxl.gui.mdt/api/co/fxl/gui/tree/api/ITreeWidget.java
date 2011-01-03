@@ -29,7 +29,7 @@ public interface ITreeWidget<T> {
 	}
 
 	public interface IDecorator<T> {
-
+		
 		void decorate(IVerticalPanel panel, ITree<T> tree);
 
 		void decorate(IVerticalPanel panel, Object tree);

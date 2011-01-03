@@ -31,6 +31,7 @@ import co.fxl.gui.api.template.SimpleDateFormat;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IMDTFilterList;
+import co.fxl.gui.mdt.api.IMasterDetailTableWidget;
 import co.fxl.gui.n2m.api.IN2MWidget;
 import co.fxl.gui.n2m.api.IN2MWidget.IN2MRelationListener;
 import co.fxl.gui.table.api.IColumn;
@@ -39,9 +40,9 @@ import co.fxl.gui.table.api.IRow;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.api.ISelection.ISingleSelection;
 import co.fxl.gui.table.api.ITableWidget;
+import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.IFilterTreeWidget;
 import co.fxl.gui.tree.api.IFilterTreeWidget.ISource;
-import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
@@ -124,9 +125,14 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 	}
 
 	private void addDetailViews() {
+		List<PropertyGroupImpl> gs = new LinkedList<PropertyGroupImpl>();
 		for (final PropertyGroupImpl group : widget.propertyGroups) {
-			if (group.asDetail)
-				tree.addDetailView(group.name, new DetailViewDecorator(group) {
+			if (group.asDetail
+					&& group.name.equals(IMasterDetailTableWidget.DETAILS))
+				gs.add(group);
+		}
+		tree.addDetailView(IMasterDetailTableWidget.DETAILS,
+				new DetailViewDecorator(gs) {
 
 					@Override
 					protected void save(Object node) {
@@ -134,7 +140,20 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 						DetailView.this.tree.notifyUpdate(node);
 					}
 				});
+		for (final PropertyGroupImpl group : widget.propertyGroups) {
+			if (group.asDetail
+					&& !group.name.equals(IMasterDetailTableWidget.DETAILS)) {
+				tree.addDetailView(group.name, new DetailViewDecorator(gs) {
+
+					@Override
+					protected void save(Object node) {
+						DetailView.this.itree.save(node);
+						DetailView.this.tree.notifyUpdate(node);
+					}
+				});
+			}
 		}
+		;
 		for (final RelationImpl relation : widget.relations) {
 			tree.addDetailView(relation.name, new IDecorator<Object>() {
 
