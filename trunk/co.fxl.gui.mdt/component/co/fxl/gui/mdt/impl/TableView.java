@@ -20,6 +20,7 @@ package co.fxl.gui.mdt.impl;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -231,6 +232,15 @@ class TableView extends ViewTemplate implements IFilterListener {
 	public void onApply(IFilterConstraints constraints) {
 		widget.mainPanel.clear();
 		widget.constraints = constraints;
+		Iterator<MDTFilterImpl> it = widget.filterList.filters.iterator();
+		while (it.hasNext()) {
+			MDTFilterImpl filter = it.next();
+			if (filter instanceof MDTRelationFilterImpl) {
+				if (!constraints.isRelationConstrained(filter.name)) {
+					it.remove();
+				}
+			}
+		}
 		drawTable();
 		widget.source.queryList(constraints,
 				new CallbackTemplate<IDeletableList<Object>>() {
