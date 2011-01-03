@@ -293,4 +293,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 		configurations.add(configuration);
 		return this;
 	}
+
+	IFilterConstraints constraints() {
+		return constraints;
+	}
 }

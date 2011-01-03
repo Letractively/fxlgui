@@ -72,4 +72,9 @@ class MDTFilterListImpl implements IMDTFilterList<Object> {
 		configuration2index.put(filters.size(), configuration);
 		return this;
 	}
+
+	@Override
+	public IFilterConstraints constraints() {
+		return mdt.constraints();
+	}
 }
