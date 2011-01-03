@@ -179,8 +179,9 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 		assert name != null : contentType.getName();
 		FilterPart<?> filter;
 		if (preset != null) {
-			filter = new RelationFilter(grid, name, guiFilterElements.size(),
-					preset, adapter, new IClickListener() {
+			filter = new RelationFilter(this, grid, name,
+					guiFilterElements.size(), preset, adapter,
+					new IClickListener() {
 						@Override
 						public void onClick() {
 							remove(name);

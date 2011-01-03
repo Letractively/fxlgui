@@ -41,18 +41,22 @@ class RelationFilter extends StringFilter {
 			values = null;
 			RelationFilter.super.clear();
 			textField.editable(true).font().weight().plain().color().black();
+			widget.apply();
 		}
 	};
 	private IAdapter<Object, Object> adapter;
 	private IImage remove;
+	private FilterWidgetImpl widget;
 
-	RelationFilter(IGridPanel grid, String name, int filterIndex,
-			List<Object> preset, IAdapter<Object, Object> adapter,
-			IClickListener cl) {
+	RelationFilter(FilterWidgetImpl widget, IGridPanel grid, String name,
+			int filterIndex, List<Object> preset,
+			IAdapter<Object, Object> adapter, IClickListener cl) {
 		super(grid, name, filterIndex);
+		this.widget = widget;
 		this.adapter = adapter;
 		textField.text(toString(preset)).editable(false).font().weight().bold()
 				.color().gray();
+		remove.addClickListener(clear);
 		remove.addClickListener(cl);
 	}
 
@@ -117,10 +121,6 @@ class RelationFilter extends StringFilter {
 	}
 
 	@Override
-	public void addUpdateListener(FilterListener l) {
-	}
-
-	@Override
 	public boolean applies(String value) {
 		throw new MethodNotImplementedException();
 	}
@@ -128,11 +128,6 @@ class RelationFilter extends StringFilter {
 	@Override
 	public void clear() {
 		clear.onClick();
-	}
-
-	@Override
-	public boolean update() {
-		return super.update();
 	}
 
 	@Override
