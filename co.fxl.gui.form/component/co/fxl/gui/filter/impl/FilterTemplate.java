@@ -45,7 +45,7 @@ abstract class FilterTemplate<T> implements FilterPart<T> {
 				.center().label();
 		text.text(name).font().color().gray();
 		int size = 12;
-		if (name.length() > 13)
+		if (name.length() > 12)
 			size = 11;
 		if (name.length() > 16)
 			size = 10;
