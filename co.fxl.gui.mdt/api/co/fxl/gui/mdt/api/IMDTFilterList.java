@@ -49,4 +49,6 @@ public interface IMDTFilterList<T> {
 	IMDTFilterList<T> addPropertyFilter(IProperty<T, ?> property);
 
 	IMDTFilterList<T> constraints(IFilterConstraints constraints);
+
+	IFilterConstraints constraints();
 }
