@@ -63,7 +63,7 @@ class RelationFilter extends StringFilter {
 	@Override
 	ITextField textField(IContainer c, int filterIndex) {
 		IDockPanel dock = c.panel().dock();
-		remove = dock.right().image().resource("remove.png");
+		remove = dock.right().image().resource("remove.png").size(16, 16);
 		return dock.center().textField();
 	}
 
