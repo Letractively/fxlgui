@@ -45,7 +45,6 @@ import co.fxl.gui.mdt.api.IRelation;
 
 class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 
-	private static final String DETAILS = "Details";
 	List<PropertyGroupImpl> propertyGroups = new LinkedList<PropertyGroupImpl>();
 	List<RelationImpl> relations = new LinkedList<RelationImpl>();
 	List<N2MRelationImpl> n2MRelations = new LinkedList<N2MRelationImpl>();

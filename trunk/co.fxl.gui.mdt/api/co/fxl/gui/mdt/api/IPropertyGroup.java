@@ -25,4 +25,6 @@ public interface IPropertyGroup<T> {
 	IPropertyGroup<T> inTable(boolean show);
 
 	IPropertyGroup<T> asDetail(boolean show);
+
+	IPropertyGroup<T> constrainType(Class<?> type);
 }
