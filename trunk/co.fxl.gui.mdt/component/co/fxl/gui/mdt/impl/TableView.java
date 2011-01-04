@@ -124,6 +124,7 @@ class TableView extends ViewTemplate implements IFilterListener {
 			button.addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {
+					widget.r2.checked(true);
 					Object show = null;
 					List<Object> result = table.selection().result();
 					if (!result.isEmpty())
@@ -147,7 +148,7 @@ class TableView extends ViewTemplate implements IFilterListener {
 								for (Object entity : result) {
 									queryList.delete(entity);
 								}
-								filterWidget.apply();
+								onRefresh();
 							}
 
 							@Override
