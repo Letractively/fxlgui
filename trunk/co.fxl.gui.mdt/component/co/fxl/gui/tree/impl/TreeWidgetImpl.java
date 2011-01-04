@@ -42,7 +42,7 @@ import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 
 class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
-	
+
 	// TODO nice-2-have: double click on tree node: expand
 
 	private static final int SPLIT_POSITION = 250;
@@ -146,7 +146,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			IClickListener cl = new IClickListener() {
 				@Override
 				public void onClick() {
-					final ITree<T> lParentNode = last.tree;
+					final ITree<T> lParentNode = last != null ? last.tree
+							: root;
 					ChainedCallback<List<T>, ITree<T>> lCallback1 = new ChainedCallback<List<T>, ITree<T>>() {
 						@Override
 						public void onSuccess(List<T> result) {
@@ -307,7 +308,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					node = n;
 				}
 			}
-			assert node != null;
+			// assert node != null;
 		}
 		show(node);
 		return this;
