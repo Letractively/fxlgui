@@ -27,16 +27,19 @@ public class SimpleDateFormat {
 		if (string == null || string.equals(""))
 			return null;
 		String[] s = string.split("\\.");
-		return new Date(Integer.valueOf(s[2]), Integer.valueOf(s[1]), Integer
-				.valueOf(s[0]));
+		return new Date(Integer.valueOf(s[2]), Integer.valueOf(s[1]),
+				Integer.valueOf(s[0]));
 	}
 
 	@SuppressWarnings("deprecation")
 	public String format(Date date) {
 		if (date == null)
 			return "";
-		return l(date.getDate(), 2) + "." + l(date.getMonth(), 2) + "."
-				+ l(date.getYear(), 4);
+		int day = date.getDate() + 1;
+		int month = date.getMonth() + 1;
+		int year = date.getYear() + 1900;
+		String string = l(day, 2) + "." + l(month, 2) + "." + l(year, 4);
+		return string;
 	}
 
 	private String l(int date, int i) {
