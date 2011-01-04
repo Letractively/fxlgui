@@ -51,4 +51,6 @@ public interface IFilterConstraints {
 	Class<?> typeOf(String column);
 
 	IRange<Double> doubleRange(String string);
+
+	Boolean booleanValue(String uiLabel);
 }
