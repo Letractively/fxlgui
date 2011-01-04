@@ -25,6 +25,27 @@ import co.fxl.gui.api.ILayout;
 
 class SwingDialog implements IDialog {
 
+	public class QuestionDialog implements IQuestionDialog {
+
+		private int result;
+
+		@Override
+		public IQuestionDialog question(String message) {
+			result = JOptionPane.showConfirmDialog(panel.frame, message, title,
+					messageType);
+			return this;
+		}
+
+		@Override
+		public IQuestionDialog addQuestionListener(IQuestionDialogListener l) {
+			if (result == JOptionPane.OK_OPTION)
+				l.onYes();
+			else
+				l.onNo();
+			return this;
+		}
+	}
+
 	public class Type implements IType {
 
 		@Override
@@ -78,7 +99,6 @@ class SwingDialog implements IDialog {
 
 	@Override
 	public IQuestionDialog question() {
-		// TODO Auto-generated method stub
-		return null;
+		return new QuestionDialog();
 	}
 }
