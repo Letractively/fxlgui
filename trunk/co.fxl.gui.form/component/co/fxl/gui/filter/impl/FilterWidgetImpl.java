@@ -208,6 +208,8 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 		else if (contentType.equals(Integer.class)
 				|| contentType.equals(Long.class))
 			filter = new NumberFilter(grid, name, guiFilterElements.size());
+		else if (contentType.equals(Boolean.class))
+			filter = new BooleanFilter(grid, name, guiFilterElements.size());
 		else
 			throw new MethodNotImplementedException(contentType.getName());
 		activeFlags.add(false);

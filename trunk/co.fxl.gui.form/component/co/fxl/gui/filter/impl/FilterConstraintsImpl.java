@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.filter.impl.Constraint.IBooleanConstraint;
 import co.fxl.gui.filter.impl.Constraint.INamedConstraint;
 import co.fxl.gui.filter.impl.Constraint.IRelationConstraint;
 import co.fxl.gui.filter.impl.Constraint.ISizeConstraint;
@@ -105,5 +106,10 @@ class FilterConstraintsImpl implements IFilterConstraints {
 	@Override
 	public String configuration() {
 		return cfg;
+	}
+
+	@Override
+	public Boolean booleanValue(String uiLabel) {
+		return ((IBooleanConstraint) constraints.get(uiLabel)).value();
 	}
 }

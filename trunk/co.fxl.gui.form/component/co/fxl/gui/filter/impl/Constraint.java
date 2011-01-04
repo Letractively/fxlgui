@@ -40,6 +40,11 @@ interface Constraint {
 		String prefix();
 	}
 
+	interface IBooleanConstraint extends INamedConstraint {
+
+		Boolean value();
+	}
+
 	interface IRelationConstraint extends INamedConstraint {
 
 		List<Object> values();
