@@ -27,6 +27,8 @@ import java.util.Map;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IDialog.IQuestionDialog;
+import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IScrollPane;
@@ -189,20 +191,20 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
-						ITree<T> tree = last.tree;
-						final ITree<T> parent = tree.parent();
-						ICallback<T> callback = new ICallback<T>() {
+						IQuestionDialog question = panel.display().showDialog()
+								.question();
+						question.question("Delete Entity?");
+						question.addQuestionListener(new IQuestionDialogListener() {
+
 							@Override
-							public void onFail(Throwable throwable) {
-								throw new MethodNotImplementedException();
+							public void onYes() {
+								delete();
 							}
 
 							@Override
-							public void onSuccess(T result) {
-								showToParent(root, parent);
+							public void onNo() {
 							}
-						};
-						tree.delete(callback);
+						});
 					}
 				}).mouseLeft();
 		if (showRefresh && this instanceof RefreshListener)
@@ -212,6 +214,23 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					((RefreshListener) TreeWidgetImpl.this).onRefresh();
 				}
 			});
+	}
+
+	void delete() {
+		final ITree<T> tree = last.tree;
+		final ITree<T> parent = tree.parent();
+		ICallback<T> callback = new ICallback<T>() {
+			@Override
+			public void onFail(Throwable throwable) {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public void onSuccess(T result) {
+				showToParent(root, parent);
+			}
+		};
+		tree.delete(callback);
 	}
 
 	@Override
