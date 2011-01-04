@@ -39,5 +39,7 @@ public interface ILoginWidget {
 
 	ILoginWidget listener(IAuthorizationListener listener);
 
+	ILoginWidget login(String user, String pwd);
+
 	ILoginWidget visible(boolean visible);
 }

@@ -164,4 +164,12 @@ class LoginWidgetImpl implements ILoginWidget {
 		formField.width(100);
 		formField.border().color().lightgray();
 	}
+
+	@Override
+	public ILoginWidget login(String user, String pwd) {
+		loginID.text(user);
+		password.text(pwd);
+		loginListener.onClick();
+		return this;
+	}
 }
