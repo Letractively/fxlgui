@@ -169,7 +169,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							if (!property.editable)
 								checkBox.editable(false);
 							Boolean b = (Boolean) valueOf;
-							assert b != null : property.name;
+							if (b == null)
+								b = false;
 							checkBox.checked(b);
 							updates.add(new Runnable() {
 								@Override
