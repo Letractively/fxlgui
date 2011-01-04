@@ -27,6 +27,7 @@ import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
@@ -135,11 +136,24 @@ class TableView extends ViewTemplate implements IFilterListener {
 		delete.addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
-				List<Object> result = table.selection().result();
-				for (Object entity : result) {
-					queryList.delete(entity);
-				}
-				filterWidget.apply();
+				widget.mainPanel.display().showDialog().question()
+						.question("Delete Entity?")
+						.addQuestionListener(new IQuestionDialogListener() {
+
+							@Override
+							public void onYes() {
+								List<Object> result = table.selection()
+										.result();
+								for (Object entity : result) {
+									queryList.delete(entity);
+								}
+								filterWidget.apply();
+							}
+
+							@Override
+							public void onNo() {
+							}
+						});
 			}
 		});
 		delete.clickable(false);
