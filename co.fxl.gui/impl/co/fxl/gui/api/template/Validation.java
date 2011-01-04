@@ -21,6 +21,7 @@ package co.fxl.gui.api.template;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IPasswordField;
@@ -31,7 +32,65 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 public class Validation {
 
-	private class Field implements IUpdateListener<String> {
+	class CheckBoxField implements IField, IUpdateListener<Boolean> {
+
+		private ICheckBox valueElement;
+		private boolean originalValue;
+
+		CheckBoxField(ICheckBox valueElement) {
+			this.valueElement = valueElement;
+			originalValue = valueElement.checked();
+			fields.add(this);
+			update();
+		}
+
+		@Override
+		public boolean isError() {
+			return false;
+		}
+
+		@Override
+		public boolean isNull() {
+			return false;
+		}
+
+		@Override
+		public boolean required() {
+			return false;
+		}
+
+		@Override
+		public boolean isSpecified() {
+			return originalValue != valueElement.checked();
+		}
+
+		@Override
+		public void update() {
+			originalValue = valueElement.checked();
+		}
+
+		@Override
+		public void onUpdate(Boolean value) {
+			updateClickables();
+		}
+
+	}
+
+	private interface IField {
+
+		boolean isError();
+
+		boolean isNull();
+
+		boolean required();
+
+		boolean isSpecified();
+
+		void update();
+
+	}
+
+	private class Field implements IField, IUpdateListener<String> {
 
 		private ITextElement<?> textElement;
 		private String originalValue;
@@ -47,7 +106,8 @@ public class Validation {
 			update();
 		}
 
-		void update() {
+		@Override
+		public void update() {
 			originalValue = textElement.text();
 			isSpecified = false;
 			isError = false;
@@ -70,23 +130,43 @@ public class Validation {
 					throw new MethodNotImplementedException();
 			}
 		}
+
+		@Override
+		public boolean isError() {
+			return isError;
+		}
+
+		@Override
+		public boolean isNull() {
+			return isNull;
+		}
+
+		@Override
+		public boolean required() {
+			return required;
+		}
+
+		@Override
+		public boolean isSpecified() {
+			return isSpecified;
+		}
 	}
 
 	private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat();
 	private List<IClickable<?>> clickables = new LinkedList<IClickable<?>>();
-	private List<Field> fields = new LinkedList<Field>();
+	private List<IField> fields = new LinkedList<IField>();
 
 	private void updateClickables() {
 		boolean error = false;
 		boolean isSpecified = false;
 		boolean allRequiredSpecified = true;
-		for (Field field : fields) {
-			if (field.isSpecified)
+		for (IField field : fields) {
+			if (field.isSpecified())
 				isSpecified = true;
 			if (allRequiredSpecified)
-				if (field.required)
-					allRequiredSpecified = !field.isNull;
-			if (field.isError)
+				if (field.required())
+					allRequiredSpecified = !field.isNull();
+			if (field.isError())
 				error = true;
 		}
 		for (IClickable<?> c : clickables) {
@@ -95,7 +175,7 @@ public class Validation {
 	}
 
 	public void update() {
-		for (Field f : fields)
+		for (IField f : fields)
 			f.update();
 	}
 
@@ -206,5 +286,11 @@ public class Validation {
 	}
 
 	public void reset() {
+	}
+
+	public Validation linkInput(ICheckBox valueElement) {
+		CheckBoxField field = new CheckBoxField(valueElement);
+		valueElement.addUpdateListener(field);
+		return this;
 	}
 }
