@@ -162,7 +162,7 @@ class TableView extends ViewTemplate implements IFilterListener {
 		// @Override
 		// public void onClick() {
 		// filterWidget.apply();
-		// }
+		// } 
 		// });
 		// detail = table.addButton("Details");
 		// detail.addClickListener(new IClickListener() {
