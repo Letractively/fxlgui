@@ -32,7 +32,7 @@ class SwingDialog implements IDialog {
 		@Override
 		public IQuestionDialog question(String message) {
 			result = JOptionPane.showConfirmDialog(panel.frame, message, title,
-					messageType);
+					JOptionPane.YES_NO_OPTION);
 			return this;
 		}
 
