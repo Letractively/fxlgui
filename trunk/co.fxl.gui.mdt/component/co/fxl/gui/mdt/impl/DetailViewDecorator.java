@@ -164,7 +164,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							});
 						} else if (property.type.clazz.equals(Boolean.class)) {
 							formField = form.addCheckBox(property.name);
-							ICheckBox checkBox = (ICheckBox) formField
+							final ICheckBox checkBox = (ICheckBox) formField
 									.valueElement();
 							if (!property.editable)
 								checkBox.editable(false);
@@ -175,7 +175,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							updates.add(new Runnable() {
 								@Override
 								public void run() {
-									throw new MethodNotImplementedException();
+									property.adapter.valueOf(node,
+											checkBox.checked());
 								}
 							});
 						} else if (property.type.clazz.equals(Long.class)
