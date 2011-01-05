@@ -239,4 +239,10 @@ class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPanel {
 	public IKey<IGridPanel> addGridClickListener(IGridClickListener listener) {
 		return new GWTGridPanelClickHandler(this, listener);
 	}
+
+	@Override
+	public IGridPanel prepare(int columns, int rows) {
+		container.widget.resize(rows, columns);
+		return this;
+	}
 }
