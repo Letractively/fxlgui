@@ -35,7 +35,7 @@ public class SimpleDateFormat {
 	public String format(Date date) {
 		if (date == null)
 			return "";
-		int day = date.getDate() + 1;
+		int day = date.getDate();
 		int month = date.getMonth() + 1;
 		int year = date.getYear() + 1900;
 		String string = l(day, 2) + "." + l(month, 2) + "." + l(year, 4);
