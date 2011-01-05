@@ -66,4 +66,9 @@ public class PropertyGroupImpl implements IPropertyGroup<Object> {
 			return true;
 		return constrainType.equals(node.getClass());
 	}
+
+	@Override
+	public String name() {
+		return name;
+	}
 }
