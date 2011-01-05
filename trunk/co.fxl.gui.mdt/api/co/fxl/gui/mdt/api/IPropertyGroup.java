@@ -27,4 +27,6 @@ public interface IPropertyGroup<T> {
 	IPropertyGroup<T> asDetail(boolean show);
 
 	IPropertyGroup<T> constrainType(Class<?> type);
+
+	String name();
 }
