@@ -20,7 +20,6 @@ package co.fxl.gui.table.impl;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.table.api.IColumn;
@@ -57,9 +56,8 @@ public class ColumnImpl implements IColumn {
 		this.columnIndex = columnIndex;
 	}
 
-	void visible() {
-		IGridPanel gridPanel = table.gridPanel;
-		headerButtonCell = gridPanel.cell(columnIndex, 0);
+	void visible(IGridCell cell) {
+		headerButtonCell = cell;
 		size(headerButtonCell);
 		headerButtonCell.valign().center();
 		headerButton = headerButtonCell.label();
