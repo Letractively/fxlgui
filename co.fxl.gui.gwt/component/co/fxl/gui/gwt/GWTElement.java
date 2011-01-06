@@ -21,10 +21,10 @@ package co.fxl.gui.gwt;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.IElement;
-import co.fxl.gui.api.IFontElement;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
+import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IFontElement;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -43,6 +43,9 @@ class GWTElement<T extends Widget, R> implements IElement<R> {
 	}
 
 	void font(IFontElement fontElement) {
+		
+		// TODO optimize, use primary style name
+		
 		fontElement.font().pixel(13).family().arial();
 	}
 
