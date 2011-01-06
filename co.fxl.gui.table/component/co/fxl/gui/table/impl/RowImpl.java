@@ -26,7 +26,7 @@ public class RowImpl implements IRow<Object> {
 
 	static final Comparable<?> EMPTY = null;
 
-	public class Content {
+	public static class Content {
 
 		int index;
 		public boolean selected = false;

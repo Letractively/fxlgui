@@ -94,6 +94,7 @@ public class TableWidgetImpl implements ITableWidget<Object>,
 	protected boolean init = false;
 	private boolean addedSpace = false;
 	Map<Object, RowImpl> object2row = new HashMap<Object, RowImpl>();
+	private IRows source;
 
 	protected TableWidgetImpl(ILayout layout) {
 		widgetTitle = new WidgetTitle(layout);
@@ -196,7 +197,10 @@ public class TableWidgetImpl implements ITableWidget<Object>,
 	@Override
 	public TableWidgetImpl visible(boolean visible) {
 		init();
-		gridPanel.rows(rows.size() + 1);
+		int rowCount = rows.size() + 1;
+		if (source != null)
+			rowCount = source.size();
+		gridPanel.rows(rowCount);
 		gridPanel.columns(columns.size());
 		gridPanel.visible(true);
 		mainPanel.visible(visible);
@@ -217,7 +221,13 @@ public class TableWidgetImpl implements ITableWidget<Object>,
 			columns.get(column).visible(cell);
 		} else {
 			cell.valign().center();
+			while (rows.size() <= row) {
+				addRow();
+			}
 			RowImpl rowImpl = rows.get(row - 1);
+			if (rowImpl.content.values == null) {
+				rowImpl.set(source.row(row - 1));
+			}
 			Object comparable = rowImpl.content.values[column];
 			Cell<?> c = CellFactory.createCellContent(this, rowImpl, column,
 					cell, comparable);
@@ -241,6 +251,15 @@ public class TableWidgetImpl implements ITableWidget<Object>,
 	@Override
 	public ITableWidget<Object> height(int height) {
 		gridPanel.height(height);
+		return this;
+	}
+
+	@Override
+	public ITableWidget<Object> source(IRows rows) {
+		this.source = rows;
+		// for (int i = 0; i < rows.size(); i++) {
+		// addRow();
+		// }
 		return this;
 	}
 }
