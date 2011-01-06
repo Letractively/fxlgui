@@ -227,6 +227,7 @@ public class TableWidgetImpl implements ITableWidget<Object>,
 			RowImpl rowImpl = rows.get(row - 1);
 			if (rowImpl.content.values == null) {
 				rowImpl.set(source.row(row - 1));
+				rowImpl.identifier(source.identifier(row - 1));
 			}
 			Object comparable = rowImpl.content.values[column];
 			Cell<?> c = CellFactory.createCellContent(this, rowImpl, column,
