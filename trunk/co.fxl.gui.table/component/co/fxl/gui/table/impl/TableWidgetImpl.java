@@ -40,6 +40,8 @@ import co.fxl.gui.table.impl.sort.ISort;
 import co.fxl.gui.table.impl.sort.QuickSort;
 
 public class TableWidgetImpl implements ITableWidget<Object> {
+	
+	// TODO show status line: showing rows 27-40 of 3000
 
 	// TODO nice-2-have: shift-click: no text marking
 
