@@ -302,4 +302,9 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 	public int rows() {
 		return cells.get(0).size();
 	}
+
+	@Override
+	public IGridPanel prepare(int columns, int rows) {
+		return this;
+	}
 }
