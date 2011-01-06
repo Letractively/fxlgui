@@ -18,11 +18,14 @@
  */
 package co.fxl.gui.mdt.api;
 
+import java.io.Serializable;
 import java.util.List;
 
 public interface IDeletableList<T> {
 
 	List<T> asList();
+
+	Serializable[] tableValues(T entity);
 
 	boolean isDeletable(T entity);
 

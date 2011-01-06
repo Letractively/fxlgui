@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.mdt.impl;
 
+import java.io.PrintStream;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -276,14 +278,24 @@ class TableView extends ViewTemplate implements IFilterListener,
 					public void onSuccess(IDeletableList<Object> queryList) {
 						TableView.this.queryList = queryList;
 						List<Object> list = queryList.asList();
+						long s = System.currentTimeMillis();
+
+						// TODO inject on demand, not always everything on
+						// startup
+
 						for (Object entity : list) {
 							IRow<Object> row = table.addRow();
 							row.identifier(entity);
-							for (IAdapter<Object, Object> adapter : adapters) {
-								Object value = adapter.valueOf(entity);
-								row.add((Comparable<?>) value);
-							}
+							Serializable[] values = queryList
+									.tableValues(entity);
+							row.set((Object[]) values);
 						}
+						PrintStream out = System.out;
+						long time = System.currentTimeMillis() - s;
+						if (time > 500)
+							out = System.err;
+						out.println("TableView: added " + list.size()
+								+ " rows in " + time + "ms");
 						table.visible(true);
 						ResizeListener.setup(widget.mainPanel.display(),
 								TableView.this);
