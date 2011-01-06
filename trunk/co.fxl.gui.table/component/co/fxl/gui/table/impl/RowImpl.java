@@ -21,7 +21,6 @@ package co.fxl.gui.table.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.table.api.IRow;
 
 public class RowImpl implements IRow<Object> {
@@ -41,7 +40,7 @@ public class RowImpl implements IRow<Object> {
 	int rowIndex;
 	private int currentColumn = 0;
 	public Content content = new Content();
-	private List<Cell<?>> cells = new LinkedList<Cell<?>>();
+	List<Cell<?>> cells = new LinkedList<Cell<?>>();
 
 	protected RowImpl(TableWidgetImpl table, int rowIndex) {
 		this.table = table;
@@ -57,20 +56,21 @@ public class RowImpl implements IRow<Object> {
 			if (comparable == null || comparable.equals(""))
 				comparable = EMPTY;
 			this.content.values.add((Comparable<Object>) comparable);
-			IGridCell cell = table.gridPanel.cell(currentColumn, rowIndex)
-					.valign().center();
-			// if (!cells.isEmpty() && cells.size() < table.columns.size() - 1)
-			// {
-			// cell.align().center();
-			// } else if (!cells.isEmpty()) {
-			// cell.align().end();
-			// }
-			Cell<?> c = CellFactory.createCellContent(table, this,
-					currentColumn, cell, comparable);
-			cells.add(c);
-			ColumnImpl column = table.columns.get(currentColumn);
-			if (column.decorator != null)
-				column.decorator.decorate(c.element, comparable);
+			// IGridCell cell = table.gridPanel.cell(currentColumn, rowIndex)
+			// .valign().center();
+			// // if (!cells.isEmpty() && cells.size() < table.columns.size() -
+			// 1)
+			// // {
+			// // cell.align().center();
+			// // } else if (!cells.isEmpty()) {
+			// // cell.align().end();
+			// // }
+			// Cell<?> c = CellFactory.createCellContent(table, this,
+			// currentColumn, cell, comparable);
+			// cells.add(c);
+			// ColumnImpl column = table.columns.get(currentColumn);
+			// if (column.decorator != null)
+			// column.decorator.decorate(c.element, comparable);
 			currentColumn++;
 		}
 		return this;

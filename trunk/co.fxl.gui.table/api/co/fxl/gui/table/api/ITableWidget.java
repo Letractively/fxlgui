@@ -34,4 +34,8 @@ public interface ITableWidget<T> {
 	IRow<T> addRow();
 
 	ITableWidget<?> visible(boolean visible);
+
+	int offsetY();
+
+	ITableWidget<T> height(int height);
 }

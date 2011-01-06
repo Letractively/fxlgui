@@ -26,11 +26,15 @@ import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IGridPanel.IGridClickListener;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.IScrollGrid;
+import co.fxl.gui.api.template.IScrollGrid.ILazyGridDecorator;
+import co.fxl.gui.api.template.LazyScrollGrid;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.ISelection;
@@ -39,8 +43,9 @@ import co.fxl.gui.table.impl.sort.IComparableList;
 import co.fxl.gui.table.impl.sort.ISort;
 import co.fxl.gui.table.impl.sort.QuickSort;
 
-public class TableWidgetImpl implements ITableWidget<Object> {
-	
+public class TableWidgetImpl implements ITableWidget<Object>,
+		ILazyGridDecorator {
+
 	// TODO show status line: showing rows 27-40 of 3000
 
 	// TODO nice-2-have: shift-click: no text marking
@@ -73,7 +78,7 @@ public class TableWidgetImpl implements ITableWidget<Object> {
 
 	private WidgetTitle widgetTitle;
 	protected IVerticalPanel mainPanel;
-	protected IGridPanel gridPanel;
+	protected IScrollGrid gridPanel;
 	private IHorizontalPanel headerPanel;
 	protected IGridPanel selectionPanel = null;
 	public List<ColumnImpl> columns = new LinkedList<ColumnImpl>();
@@ -101,19 +106,17 @@ public class TableWidgetImpl implements ITableWidget<Object> {
 		if (mainPanel == null) {
 			mainPanel = widgetTitle.content().panel().vertical().stretch(true);
 		}
+		init = true;
 		mainPanel.visible(false);
 		mainPanel.clear();
 		headerPanel = mainPanel.add().panel().horizontal().add().panel()
 				.horizontal();
 		headerPanel.align().begin();
-		gridPanel = mainPanel.add().panel().grid();
+		gridPanel = new LazyScrollGrid(mainPanel.add());
 		gridPanel.spacing(0);
 		gridPanel.indent(3);
+		gridPanel.decorator(this);
 		mainPanel.addSpace(6);
-		for (ColumnImpl column : columns) {
-			column.visible();
-		}
-		init = true;
 		if (rowListener != null) {
 			rowListener.visible();
 			gridPanel.addGridClickListener(new IGridClickListener() {
@@ -122,21 +125,21 @@ public class TableWidgetImpl implements ITableWidget<Object> {
 					if (row > 0)
 						rowListener.notifyClick(rows.get(row - 1));
 				}
-			});
+			}, null);
 			gridPanel.addGridClickListener(new IGridClickListener() {
 				@Override
 				public void onClick(int column, int row) {
 					if (row > 0)
 						rowListener.notifyCtrlClick(rows.get(row - 1));
 				}
-			}).ctrlPressed();
+			}, IScrollGrid.CTRL);
 			gridPanel.addGridClickListener(new IGridClickListener() {
 				@Override
 				public void onClick(int column, int row) {
 					if (row > 0)
 						rowListener.notifyShiftClick(rows.get(row - 1));
 				}
-			}).shiftPressed();
+			}, IScrollGrid.SHIFT);
 		}
 	}
 
@@ -193,6 +196,9 @@ public class TableWidgetImpl implements ITableWidget<Object> {
 	@Override
 	public TableWidgetImpl visible(boolean visible) {
 		init();
+		gridPanel.rows(rows.size() + 1);
+		gridPanel.columns(columns.size());
+		gridPanel.visible(true);
 		mainPanel.visible(visible);
 		if (!addedSpace)
 			mainPanel.addSpace(12);
@@ -203,5 +209,36 @@ public class TableWidgetImpl implements ITableWidget<Object> {
 	@Override
 	public IClickable<?> addButton(String name) {
 		return widgetTitle.addHyperlink(name);
+	}
+
+	@Override
+	public void decorate(int column, int row, IGridCell cell) {
+		if (row == 0) {
+			columns.get(column).visible(cell);
+		} else {
+			cell.valign().center();
+			RowImpl rowImpl = rows.get(row - 1);
+			Comparable<Object> comparable = rowImpl.content.values.get(column);
+			Cell<?> c = CellFactory.createCellContent(this, rowImpl, column,
+					cell, comparable);
+			if (rowImpl.cells.size() == column) {
+				rowImpl.cells.add(c);
+			} else
+				throw new MethodNotImplementedException();
+			ColumnImpl ccolumn = columns.get(column);
+			if (ccolumn.decorator != null)
+				ccolumn.decorator.decorate(c.element, comparable);
+		}
+	}
+
+	@Override
+	public int offsetY() {
+		return gridPanel.offsetY();
+	}
+
+	@Override
+	public ITableWidget<Object> height(int height) {
+		gridPanel.height(height);
+		return this;
 	}
 }
