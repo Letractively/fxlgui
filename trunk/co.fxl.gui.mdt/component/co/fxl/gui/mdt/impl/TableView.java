@@ -28,7 +28,9 @@ import java.util.Map;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
+import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.template.IFieldType;
+import co.fxl.gui.api.template.ResizeListener;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
@@ -41,7 +43,8 @@ import co.fxl.gui.table.api.IRow;
 import co.fxl.gui.table.api.ITableWidget;
 import co.fxl.gui.tree.impl.CallbackTemplate;
 
-class TableView extends ViewTemplate implements IFilterListener {
+class TableView extends ViewTemplate implements IFilterListener,
+		IResizeListener {
 
 	private ITableWidget<Object> table;
 	private Map<PropertyImpl, IColumn> property2column = new HashMap<PropertyImpl, IColumn>();
@@ -162,7 +165,7 @@ class TableView extends ViewTemplate implements IFilterListener {
 		// @Override
 		// public void onClick() {
 		// filterWidget.apply();
-		// } 
+		// }
 		// });
 		// detail = table.addButton("Details");
 		// detail.addClickListener(new IClickListener() {
@@ -176,7 +179,16 @@ class TableView extends ViewTemplate implements IFilterListener {
 		// widget.showDetailView(show);
 		// }
 		// });
-		table.visible(true);
+	}
+
+	@Override
+	public void onResize(int width, int height) {
+		int offsetY = table.offsetY();
+		// TODO ... un-hard-code
+		if (offsetY == 0)
+			offsetY = 139;
+		int maxFromDisplay = height - offsetY - 71;
+		table.height(maxFromDisplay);
 	}
 
 	private void addProperties() {
@@ -272,6 +284,10 @@ class TableView extends ViewTemplate implements IFilterListener {
 								row.add((Comparable<?>) value);
 							}
 						}
+						table.visible(true);
+						ResizeListener.setup(widget.mainPanel.display(),
+								TableView.this);
+						onResize(-1, widget.mainPanel.display().height());
 						if (selectionObject != null) {
 							table.selection().add(selectionObject);
 						}
