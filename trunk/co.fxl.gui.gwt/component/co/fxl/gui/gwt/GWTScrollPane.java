@@ -65,11 +65,11 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 	}
 
 	@Override
-	public IScrollPane addScrollListener(IScrollListener listener) {
+	public IScrollPane addScrollListener(final IScrollListener listener) {
 		container.widget.addScrollHandler(new ScrollHandler() {
 			@Override
 			public void onScroll(ScrollEvent event) {
-				throw new MethodNotImplementedException();
+				listener.onScroll(container.widget.getScrollPosition());
 			}
 		});
 		return this;

@@ -229,12 +229,12 @@ class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPanel {
 
 	@Override
 	public int columns() {
-		return cells.size();
+		return container.widget.getColumnCount();
 	}
 
 	@Override
 	public int rows() {
-		return cells.get(0).size();
+		return container.widget.getRowCount();
 	}
 
 	@Override
