@@ -35,6 +35,8 @@ public interface IColumn {
 	IColumn sortable();
 
 	IColumn type(Class<?> type);
+	
+	IColumn width(int width);
 
 	IColumn decorator(IDecorator<?, ?> decorator);
 
