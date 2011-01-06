@@ -33,6 +33,10 @@ public interface IGridPanel extends IPanel<IGridPanel> {
 
 		IGridCell height(int height);
 
+		int height();
+
+		int width();
+
 		IColor color();
 
 		IGridCell visible(boolean visible);
