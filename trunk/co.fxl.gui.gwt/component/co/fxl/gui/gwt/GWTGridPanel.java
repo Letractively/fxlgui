@@ -156,6 +156,16 @@ class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPanel {
 		public IBorder border() {
 			return new GWTWidgetBorder(formatter().getElement(row, column));
 		}
+
+		@Override
+		public int height() {
+			return element.height();
+		}
+
+		@Override
+		public int width() {
+			throw new MethodNotImplementedException();
+		}
 	}
 
 	private Map<Integer, Map<Integer, GridCell>> cells = new HashMap<Integer, Map<Integer, GridCell>>();
