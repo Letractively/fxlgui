@@ -149,6 +149,8 @@ class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPanel {
 				}
 			};
 		}
+		
+		// TODO optimize, use border for grid lines! 1000ms grid -> 600ms grid
 
 		@Override
 		public IBorder border() {

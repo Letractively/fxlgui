@@ -105,4 +105,4 @@ html {overflow-y: scroll; overflow: -moz-scrollbars-vertical; overflow-x: auto; 
 .gwt-Checkbox { font-size: 13px; margin: 0px 0px 0px 0px; border-width: 1; }
 .gwt-Combobox { font-size: 13px; margin: 0px 0px 0px 0px; border-width: 1; }
 .gwt-TextArea { font-size: 13px; margin: 0px 0px 0px 0px; border-width: 1; }
-.gwt-Label { font-size: 13px; margin: 0px 0px 0px 0px; }
+.gwt-Label { font-size: 13px; font-family: arial; margin: 0px 0px 0px 0px; }
