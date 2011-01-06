@@ -37,6 +37,9 @@ abstract class Cell<T> {
 	abstract void update(Object value);
 
 	void highlight(int row, boolean selected) {
+		
+		// TODO doesn't work for IE
+		
 		if (!selected)
 			cell.color().remove();
 		else
