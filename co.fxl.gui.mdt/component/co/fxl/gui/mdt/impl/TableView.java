@@ -19,7 +19,6 @@
 package co.fxl.gui.mdt.impl;
 
 import java.io.PrintStream;
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -41,8 +40,8 @@ import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IDeletableList;
 import co.fxl.gui.mdt.api.IProperty.IAdapter;
 import co.fxl.gui.table.api.IColumn;
-import co.fxl.gui.table.api.IRow;
 import co.fxl.gui.table.api.ITableWidget;
+import co.fxl.gui.table.api.ITableWidget.IRows;
 import co.fxl.gui.tree.impl.CallbackTemplate;
 
 class TableView extends ViewTemplate implements IFilterListener,
@@ -275,21 +274,29 @@ class TableView extends ViewTemplate implements IFilterListener,
 				new CallbackTemplate<IDeletableList<Object>>() {
 
 					@Override
-					public void onSuccess(IDeletableList<Object> queryList) {
+					public void onSuccess(final IDeletableList<Object> queryList) {
 						TableView.this.queryList = queryList;
-						List<Object> list = queryList.asList();
+						final List<Object> list = queryList.asList();
 						long s = System.currentTimeMillis();
+						table.source(new IRows() {
 
-						// TODO inject on demand, not always everything on
-						// startup
+							@Override
+							public Object[] row(int i) {
+								return queryList.tableValues(list.get(i));
+							}
 
-						for (Object entity : list) {
-							IRow<Object> row = table.addRow();
-							row.identifier(entity);
-							Serializable[] values = queryList
-									.tableValues(entity);
-							row.set((Object[]) values);
-						}
+							@Override
+							public int size() {
+								return list.size();
+							}
+						});
+						// for (Object entity : list) {
+						// IRow<Object> row = table.addRow();
+						// row.identifier(entity);
+						// Serializable[] values = queryList
+						// .tableValues(entity);
+						// row.set((Object[]) values);
+						// }
 						PrintStream out = System.out;
 						long time = System.currentTimeMillis() - s;
 						if (time > 500)
