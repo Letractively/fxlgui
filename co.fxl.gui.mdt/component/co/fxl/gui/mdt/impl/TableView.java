@@ -286,6 +286,11 @@ class TableView extends ViewTemplate implements IFilterListener,
 							}
 
 							@Override
+							public Object identifier(int i) {
+								return list.get(i);
+							}
+
+							@Override
 							public int size() {
 								return list.size();
 							}
