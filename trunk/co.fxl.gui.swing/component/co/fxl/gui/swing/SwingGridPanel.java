@@ -197,6 +197,16 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 		public IBorder border() {
 			return new SwingBorder(panel);
 		}
+
+		@Override
+		public int height() {
+			return panel.getPreferredSize().height;
+		}
+
+		@Override
+		public int width() {
+			throw new MethodNotImplementedException();
+		}
 	}
 
 	private GridBagConstraints constraints = new GridBagConstraints();
@@ -295,11 +305,15 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 	@Override
 	public int columns() {
+		if (cells == null)
+			return 0;
 		return cells.size();
 	}
 
 	@Override
 	public int rows() {
+		if (cells == null || cells.isEmpty())
+			return 0;
 		return cells.get(0).size();
 	}
 

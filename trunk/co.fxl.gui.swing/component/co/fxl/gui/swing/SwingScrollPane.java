@@ -76,22 +76,25 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 						if (evt.getValueIsAdjusting()) {
 							return;
 						}
-						int type = evt.getAdjustmentType();
-						int value = evt.getValue();
-						switch (type) {
-						case AdjustmentEvent.UNIT_INCREMENT:
-							listener.onScroll(value);
-							break;
-						case AdjustmentEvent.UNIT_DECREMENT:
-							break;
-						case AdjustmentEvent.BLOCK_INCREMENT:
-							listener.onScroll(value);
-							break;
-						case AdjustmentEvent.BLOCK_DECREMENT:
-							break;
-						case AdjustmentEvent.TRACK:
-							break;
-						}
+						int y = container.component.getVerticalScrollBar()
+								.getValue();
+						listener.onScroll(y);
+						// int type = evt.getAdjustmentType();
+						// int value = evt.getValue();
+						// switch (type) {
+						// case AdjustmentEvent.UNIT_INCREMENT:
+						// listener.onScroll(value);
+						// break;
+						// case AdjustmentEvent.UNIT_DECREMENT:
+						// break;
+						// case AdjustmentEvent.BLOCK_INCREMENT:
+						// listener.onScroll(value);
+						// break;
+						// case AdjustmentEvent.BLOCK_DECREMENT:
+						// break;
+						// case AdjustmentEvent.TRACK:
+						// break;
+						// }
 					}
 				});
 		return this;
