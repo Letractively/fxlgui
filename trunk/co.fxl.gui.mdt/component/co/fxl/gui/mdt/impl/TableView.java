@@ -275,6 +275,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 
 					@Override
 					public void onSuccess(final IDeletableList<Object> queryList) {
+						long s0=System.currentTimeMillis();
 						TableView.this.queryList = queryList;
 						final List<Object> list = queryList.asList();
 						long s = System.currentTimeMillis();
@@ -316,6 +317,8 @@ class TableView extends ViewTemplate implements IFilterListener,
 							table.selection().add(selectionObject);
 						}
 						updateCreatable();
+						time = System.currentTimeMillis() - s0;
+						out.println("TableView: created table in " + time + "ms");
 					}
 				});
 	}
