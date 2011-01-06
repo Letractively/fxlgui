@@ -57,4 +57,6 @@ public interface IGridPanel extends IPanel<IGridPanel> {
 	IGridCell cell(int column, int row);
 
 	IKey<IGridPanel> addGridClickListener(IGridClickListener listener);
+
+	IGridPanel prepare(int columns, int rows);
 }
