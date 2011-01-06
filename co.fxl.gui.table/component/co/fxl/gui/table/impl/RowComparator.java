@@ -37,12 +37,11 @@ class RowComparator implements Comparator<RowImpl> {
 		multiplicator = sortUp ? 1 : -1;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public int compare(RowImpl o1, RowImpl o2) {
-		Comparable<Object> c1 = (Comparable<Object>) o1.content.values
-				.get(column.columnIndex);
-		Comparable<Object> c2 = (Comparable<Object>) o2.content.values
-				.get(column.columnIndex);
+		Comparable<Object> c1 = (Comparable<Object>) o1.content.values[column.columnIndex];
+		Comparable<Object> c2 = (Comparable<Object>) o2.content.values[column.columnIndex];
 		if (c1 == null)
 			return 1;
 		else if (c2 == null)

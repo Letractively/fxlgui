@@ -22,7 +22,9 @@ public interface IRow<T> {
 
 	IRow<T> identifier(T identifier);
 
-	IRow<T> add(Comparable<?>... content);
+	IRow<T> add(Object... content);
+
+	IRow<T> set(Object[] values);
 
 	IRow<T> select();
 }
