@@ -41,7 +41,6 @@ abstract class CellFactory<R, T> {
 		IHorizontalPanel panel = cell.panel().horizontal().spacing(2);
 		panel.align().center();
 		return panel;
-
 	}
 
 	void font(IFontElement fontElement) {
@@ -50,6 +49,7 @@ abstract class CellFactory<R, T> {
 
 	static Cell<?> createCellContent(TableWidgetImpl table, RowImpl row,
 			int columnIndex, IGridCell cell, Object value) {
+		table.columns.get(columnIndex).size(cell);
 		Class<?> type = getType(table, columnIndex, value);
 		if (type.equals(IImage.class)) {
 			return IMAGE_FACTORY.create(table, row, columnIndex, cell,

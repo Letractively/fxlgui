@@ -18,9 +18,9 @@
  */
 package co.fxl.gui.table.impl;
 
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
-import co.fxl.gui.api.IGridPanel.IGridCell;
 
 class ImageCellFactory extends CellFactory<IImage, String> {
 

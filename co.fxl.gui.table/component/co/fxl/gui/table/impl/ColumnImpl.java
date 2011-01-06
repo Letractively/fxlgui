@@ -50,6 +50,7 @@ public class ColumnImpl implements IColumn {
 	public Class<?> contentType;
 	private boolean sortable = false;
 	IColumnUpdateListener<Object, Object> updateListener;
+	int width = -1;
 
 	ColumnImpl(TableWidgetImpl table, int columnIndex) {
 		this.table = table;
@@ -58,7 +59,9 @@ public class ColumnImpl implements IColumn {
 
 	void visible() {
 		IGridPanel gridPanel = table.gridPanel;
-		headerButtonCell = gridPanel.cell(columnIndex, 0).valign().center();
+		headerButtonCell = gridPanel.cell(columnIndex, 0);
+		size(headerButtonCell);
+		headerButtonCell.valign().center();
 		headerButton = headerButtonCell.label();
 		IBorder border = headerButtonCell.border();
 		border.width(2);
@@ -67,6 +70,12 @@ public class ColumnImpl implements IColumn {
 		headerButton.text(name);
 		if (sortable)
 			headerButton.addClickListener(new ClickListener());
+	}
+
+	IGridCell size(IGridCell cell) {
+		if (width != -1)
+			cell.width(width);
+		return cell;
 	}
 
 	@Override
@@ -111,6 +120,12 @@ public class ColumnImpl implements IColumn {
 	@Override
 	public IColumn updateListener(IColumnUpdateListener<?, ?> updateListener) {
 		this.updateListener = (IColumnUpdateListener<Object, Object>) updateListener;
+		return this;
+	}
+
+	@Override
+	public IColumn width(int width) {
+		this.width = width;
 		return this;
 	}
 }
