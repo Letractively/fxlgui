@@ -23,12 +23,12 @@ import co.fxl.gui.api.ILabel;
 
 public interface ITableWidget<T> {
 
-	// public interface IRows {
-	//
-	// Object[] row(int i);
-	//
-	// int size();
-	// }
+	public interface IRows {
+
+		Object[] row(int i);
+
+		int size();
+	}
 
 	ILabel addTitle(String text);
 
@@ -46,5 +46,5 @@ public interface ITableWidget<T> {
 
 	ITableWidget<T> height(int height);
 
-	// ITableWidget<T> source(IRows rows);
+	ITableWidget<T> source(IRows rows);
 }
