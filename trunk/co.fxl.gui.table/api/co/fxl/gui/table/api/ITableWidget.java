@@ -25,6 +25,8 @@ public interface ITableWidget<T> {
 
 	public interface IRows {
 
+		Object identifier(int i);
+
 		Object[] row(int i);
 
 		int size();
