@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.table.impl;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.table.api.IRow;
@@ -32,7 +31,7 @@ public class RowImpl implements IRow<Object> {
 		int index;
 		public boolean selected = false;
 		public boolean visible = true;
-		public List<Comparable<Object>> values = new LinkedList<Comparable<Object>>();
+		public Object[] values;
 		Object identifier;
 	}
 
@@ -40,7 +39,7 @@ public class RowImpl implements IRow<Object> {
 	int rowIndex;
 	private int currentColumn = 0;
 	public Content content = new Content();
-	List<Cell<?>> cells = new LinkedList<Cell<?>>();
+	List<Cell<?>> cells;
 
 	protected RowImpl(TableWidgetImpl table, int rowIndex) {
 		this.table = table;
@@ -49,30 +48,21 @@ public class RowImpl implements IRow<Object> {
 		content.identifier = rowIndex;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public IRow<Object> add(Comparable<?>... content) {
-		for (Comparable<?> comparable : content) {
+	public IRow<Object> add(Object... content) {
+		if (this.content.values == null)
+			this.content.values = new Object[table.columns.size()];
+		for (Object comparable : content) {
 			if (comparable == null || comparable.equals(""))
 				comparable = EMPTY;
-			this.content.values.add((Comparable<Object>) comparable);
-			// IGridCell cell = table.gridPanel.cell(currentColumn, rowIndex)
-			// .valign().center();
-			// // if (!cells.isEmpty() && cells.size() < table.columns.size() -
-			// 1)
-			// // {
-			// // cell.align().center();
-			// // } else if (!cells.isEmpty()) {
-			// // cell.align().end();
-			// // }
-			// Cell<?> c = CellFactory.createCellContent(table, this,
-			// currentColumn, cell, comparable);
-			// cells.add(c);
-			// ColumnImpl column = table.columns.get(currentColumn);
-			// if (column.decorator != null)
-			// column.decorator.decorate(c.element, comparable);
-			currentColumn++;
+			this.content.values[currentColumn++] = comparable;
 		}
+		return this;
+	}
+
+	@Override
+	public IRow<Object> set(Object[] values) {
+		content.values = values;
 		return this;
 	}
 
@@ -84,8 +74,8 @@ public class RowImpl implements IRow<Object> {
 
 	@SuppressWarnings("unchecked")
 	public void update() {
-		for (currentColumn = 0; currentColumn < content.values.size(); currentColumn++) {
-			Comparable<Object> value = content.values.get(currentColumn);
+		for (currentColumn = 0; currentColumn < content.values.length; currentColumn++) {
+			Object value = content.values[currentColumn];
 			Cell<Object> cell = (Cell<Object>) cells.get(currentColumn);
 			cell.update(value);
 			cell.highlight(rowIndex, content.selected);
@@ -110,7 +100,7 @@ public class RowImpl implements IRow<Object> {
 
 	void selected(boolean selected) {
 		content.selected = selected;
-		for (int i = 0; i < content.values.size(); i++) {
+		for (int i = 0; i < content.values.length; i++) {
 			cells.get(i).highlight(rowIndex, content.selected);
 		}
 	}

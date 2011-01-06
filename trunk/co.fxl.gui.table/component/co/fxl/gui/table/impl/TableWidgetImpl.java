@@ -218,9 +218,11 @@ public class TableWidgetImpl implements ITableWidget<Object>,
 		} else {
 			cell.valign().center();
 			RowImpl rowImpl = rows.get(row - 1);
-			Comparable<Object> comparable = rowImpl.content.values.get(column);
+			Object comparable = rowImpl.content.values[column];
 			Cell<?> c = CellFactory.createCellContent(this, rowImpl, column,
 					cell, comparable);
+			if (rowImpl.cells == null)
+				rowImpl.cells = new LinkedList<Cell<?>>();
 			if (rowImpl.cells.size() == column) {
 				rowImpl.cells.add(c);
 			} else
