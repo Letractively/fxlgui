@@ -1,69 +1,63 @@
+/**
+ * This file is part of FXL GUI API.
+ *  
+ * FXL GUI API is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *  
+ * FXL GUI API is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *  
+ * You should have received a copy of the GNU General Public License
+ * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
+ */
 package co.fxl.gui.api.template;
 
+import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.IGridPanel.IGridClickListener;
 import co.fxl.gui.api.IScrollListener;
-import co.fxl.gui.api.IScrollPane;
 
-public class LazyScrollGrid implements IScrollListener, IScrollGrid {
+public class LazyScrollGrid extends ScrollGridTemplate implements
+		IScrollListener {
 
 	private static final int RESIZE_INTERVALL = 50;
-	private static final int INC = 100;
-	private int height = 100;
-	private int maxColumns;
-	private int maxRows;
-	private IScrollPane scrollPanel;
+	private static final int INC = 400;
 	private int paintedRows = 0;
-	private IGridPanel grid;
 	private boolean painting = false;
 	private int scrollPosition = 0;
 	private int offsetHeight = 0;
-	private IContainer container;
-	private ILazyGridDecorator decorator;
 
 	public LazyScrollGrid(IContainer container) {
-		this.container = container;
+		super(container);
 	}
 
 	@Override
-	public LazyScrollGrid columns(int columns) {
-		maxColumns = columns;
-		return this;
-	}
-
-	@Override
-	public LazyScrollGrid rows(int rows) {
-		maxRows = rows;
-		return this;
-	}
-
-	@Override
-	public LazyScrollGrid height(int height) {
-		this.height = height;
-		return this;
-	}
-
-	@Override
-	public LazyScrollGrid decorator(ILazyGridDecorator decorator) {
-		this.decorator = decorator;
-		return this;
-	}
-
-	@Override
-	public LazyScrollGrid visible(boolean visible) {
-		if (visible) {
-			scrollPanel = container.scrollPane();
-			grid = scrollPanel.viewPort().panel().grid();
-			scrollPanel.height(height);
-			grid.spacing(0);
-			grid.indent(0);
-			grid.prepare(maxColumns, Math.min(maxRows, RESIZE_INTERVALL));
-			scrollPanel.addScrollListener(this);
-			onScroll(0);
-			return this;
-		} else
-			throw new MethodNotImplementedException();
+	void setUp() {
+		grid = scrollPanel.viewPort().panel().grid();
+		scrollPanel.height(height);
+		grid.spacing(0);
+		grid.indent(0);
+		grid.prepare(maxColumns, Math.min(maxRows, RESIZE_INTERVALL));
+		scrollPanel.addScrollListener(this);
+		grid.spacing(spacing);
+		grid.indent(indent);
+		for (IGridClickListener l : listeners.keySet()) {
+			String key = listeners.get(l);
+			IKey<IGridPanel> keyCB = grid.addGridClickListener(l);
+			if (SHIFT.equals(key)) {
+				keyCB.shiftPressed();
+			} else if (CTRL.equals(key))
+				keyCB.ctrlPressed();
+		}
+		onScroll(0);
 	}
 
 	@Override
@@ -72,16 +66,20 @@ public class LazyScrollGrid implements IScrollListener, IScrollGrid {
 		if (painting)
 			return;
 		painting = true;
-		for (; paintedRows < maxRows && offsetHeight < scrollPosition; paintedRows++) {
-			int inc = 0;
+		int min = paintedRows;
+		for (; paintedRows < maxRows
+				&& offsetHeight < scrollPosition; paintedRows++) {
+			int inc = 16;
 			resize();
 			for (int column = 0; column < maxColumns; column++) {
-				IElement<?> e = decorator.decorate(column, paintedRows,
-						grid.cell(column, paintedRows));
-				inc = Math.max(inc, e.height());
+				IGridCell cell = grid.cell(column, paintedRows);
+				decorator.decorate(column, paintedRows, cell);
+				inc = Math.max(inc, cell.height());
 			}
 			offsetHeight += inc;
 		}
+		// TODO remove ...
+		System.out.println("painted " + min + " - " + paintedRows);
 		painting = false;
 	}
 
