@@ -168,7 +168,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		Window.addResizeHandler(new ResizeHandler() {
 			@Override
 			public void onResize(ResizeEvent event) {
-				listener.onResize(event.getWidth(), event.getHeight());
+				listener.onResize(width(), height());
 			}
 		});
 		return this;

@@ -30,6 +30,7 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 
 	GWTLabel(GWTContainer<HTML> container) {
 		super(container);
+//		container.widget.setStylePrimaryName("gwt-Label");
 		font(this);
 		autoWrap(false);
 	}
