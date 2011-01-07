@@ -18,47 +18,9 @@
  */
 package co.fxl.gui.api;
 
-import co.fxl.gui.api.IColored.IColor;
+public interface ICursor {
 
-public interface IDisplay {
+	ICursor waiting();
 
-	public interface IResizeListener {
-
-		void onResize(int width, int height);
-	}
-
-	public interface IExceptionHandler {
-
-		void onException(Throwable exception);
-	}
-
-	IDisplay title(String title);
-
-	IDisplay width(int width);
-
-	IDisplay height(int height);
-
-	IDisplay visible(boolean visible);
-
-	IContainer container();
-
-	IDisplay fullscreen();
-
-	IDisplay register(IWidgetProvider<?>... widgetProvider);
-
-	IDialog showDialog();
-
-	IWebsite showWebsite();
-
-	IColor color();
-
-	IDisplay addExceptionHandler(IExceptionHandler handler);
-
-	IDisplay addResizeListener(IResizeListener listener);
-
-	int width();
-
-	int height();
-	
-	ICursor cursor();
+	ICursor pointer();
 }
