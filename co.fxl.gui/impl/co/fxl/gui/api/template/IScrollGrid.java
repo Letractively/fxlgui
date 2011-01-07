@@ -18,12 +18,15 @@
  */
 package co.fxl.gui.api.template;
 
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IGridPanel.IGridClickListener;
 
 public interface IScrollGrid {
 
 	public interface ILazyGridDecorator {
+
+		void decorate(IGridPanel grid);
 
 		void decorate(int column, int row, IGridCell cell);
 	}
