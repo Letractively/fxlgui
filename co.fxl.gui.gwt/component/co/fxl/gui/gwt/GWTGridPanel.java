@@ -32,7 +32,8 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Widget;
 
-public class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPanel {
+public class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements
+		IGridPanel {
 
 	public class GridCell extends GWTContainer<Widget> implements IGridCell {
 
@@ -149,7 +150,7 @@ public class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPan
 				}
 			};
 		}
-		
+
 		// TODO optimize, use border for grid lines! 1000ms grid -> 600ms grid
 
 		@Override
@@ -170,6 +171,8 @@ public class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPan
 
 	private Map<Integer, Map<Integer, GridCell>> cells = new HashMap<Integer, Map<Integer, GridCell>>();
 	private GridCell gridCell;
+	private String borderType;
+	private String borderConfiguration;
 
 	@SuppressWarnings("unchecked")
 	GWTGridPanel(GWTContainer<?> container) {
@@ -182,6 +185,11 @@ public class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPan
 
 	@Override
 	public void add(Widget widget) {
+		if (borderType != null) {
+			DOM.setStyleAttribute(container.widget.getCellFormatter()
+					.getElement(gridCell.row, gridCell.column), borderType,
+					borderConfiguration);
+		}
 		container.widget.setWidget(gridCell.row, gridCell.column, widget);
 		CellFormatter formatter = gridCell.formatter();
 		formatter.setHeight(gridCell.row, gridCell.column, "100%");
@@ -260,6 +268,19 @@ public class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPan
 
 	@Override
 	public IBorder cellBorder() {
-		throw new MethodNotImplementedException();
+		return new GWTBorder() {
+
+			@Override
+			public void remove() {
+				GWTGridPanel.this.borderType = null;
+			}
+
+			@Override
+			protected void update() {
+				GWTGridPanel.this.borderType = borderType;
+				GWTGridPanel.this.borderConfiguration = width + "px " + color
+						+ " " + style;
+			}
+		};
 	}
 }
