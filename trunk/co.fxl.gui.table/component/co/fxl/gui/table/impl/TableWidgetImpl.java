@@ -258,9 +258,10 @@ public class TableWidgetImpl implements ITableWidget<Object>,
 	@Override
 	public ITableWidget<Object> source(IRows rows) {
 		this.source = rows;
-		// for (int i = 0; i < rows.size(); i++) {
-		// addRow();
-		// }
 		return this;
+	}
+
+	@Override
+	public void decorate(IGridPanel grid) {
 	}
 }
