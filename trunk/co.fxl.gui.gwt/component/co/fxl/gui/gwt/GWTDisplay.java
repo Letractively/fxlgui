@@ -23,6 +23,7 @@ import java.util.Map;
 
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IWebsite;
@@ -182,5 +183,25 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	@Override
 	public int width() {
 		return Window.getClientWidth();
+	}
+
+	@Override
+	public ICursor cursor() {
+		return new ICursor() {
+
+			@Override
+			public ICursor waiting() {
+				DOM.setStyleAttribute(RootPanel.get().getElement(), "cursor",
+						"wait");
+				return this;
+			}
+
+			@Override
+			public ICursor pointer() {
+				DOM.setStyleAttribute(RootPanel.get().getElement(), "cursor",
+						"pointer");
+				return this;
+			}
+		};
 	}
 }
