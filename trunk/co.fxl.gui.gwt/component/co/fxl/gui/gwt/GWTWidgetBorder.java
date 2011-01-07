@@ -25,6 +25,7 @@ import com.google.gwt.user.client.ui.Widget;
 class GWTWidgetBorder extends GWTBorder {
 
 	private Element element;
+	private String lastBorderType;
 
 	GWTWidgetBorder(Element element) {
 		this.element = element;
@@ -36,9 +37,8 @@ class GWTWidgetBorder extends GWTBorder {
 
 	@Override
 	public void remove() {
-		DOM.setStyleAttribute(element, "border", "none");
-		DOM.setStyleAttribute(element, "borderTop", "none");
-		DOM.setStyleAttribute(element, "borderBottom", "none");
+		if (lastBorderType != null && !lastBorderType.equals(borderType))
+			DOM.setStyleAttribute(element, lastBorderType, "none");
 	}
 
 	@Override
@@ -46,5 +46,6 @@ class GWTWidgetBorder extends GWTBorder {
 		remove();
 		DOM.setStyleAttribute(element, borderType, width + "px " + color + " "
 				+ style);
+		lastBorderType = borderType;
 	}
 }

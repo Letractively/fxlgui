@@ -32,9 +32,9 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Widget;
 
-class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPanel {
+public class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPanel {
 
-	class GridCell extends GWTContainer<Widget> implements IGridCell {
+	public class GridCell extends GWTContainer<Widget> implements IGridCell {
 
 		int column;
 		int row;
@@ -50,7 +50,7 @@ class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPanel {
 			return element;
 		}
 
-		private CellFormatter formatter() {
+		public CellFormatter formatter() {
 			return container.widget.getCellFormatter();
 		}
 
@@ -256,5 +256,10 @@ class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements IGridPanel {
 	public IGridPanel prepare(int columns, int rows) {
 		container.widget.resize(rows, columns);
 		return this;
+	}
+
+	@Override
+	public IBorder cellBorder() {
+		throw new MethodNotImplementedException();
 	}
 }

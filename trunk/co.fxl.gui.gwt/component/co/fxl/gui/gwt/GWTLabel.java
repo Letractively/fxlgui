@@ -30,9 +30,9 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 
 	GWTLabel(GWTContainer<HTML> container) {
 		super(container);
-//		container.widget.setStylePrimaryName("gwt-Label");
-		font(this);
-		autoWrap(false);
+		container.widget.addStyleName("font-family-arial");
+		container.widget.addStyleName("font-size-13");
+		container.widget.setWordWrap(false);
 	}
 
 	@Override
