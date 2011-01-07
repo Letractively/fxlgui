@@ -32,6 +32,7 @@ import javax.swing.JScrollPane;
 
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IWebsite;
@@ -214,6 +215,11 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	@Override
 	public JComponent getComponent() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public ICursor cursor() {
 		throw new MethodNotImplementedException();
 	}
 }
