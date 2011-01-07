@@ -32,6 +32,7 @@ public class ScrollGridImpl extends ScrollGridTemplate {
 	@Override
 	void setUp() {
 		grid = scrollPanel.viewPort().panel().grid();
+		decorator.decorate(grid);
 		scrollPanel.height(height);
 		grid.spacing(spacing);
 		grid.indent(indent);

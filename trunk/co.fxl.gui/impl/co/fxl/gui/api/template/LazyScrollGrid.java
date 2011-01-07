@@ -42,6 +42,7 @@ public class LazyScrollGrid extends ScrollGridTemplate implements
 	@Override
 	void setUp() {
 		grid = scrollPanel.viewPort().panel().vertical().add().panel().grid();
+		decorator.decorate(grid);
 		scrollPanel.height(height);
 		grid.spacing(0);
 		grid.indent(0);
