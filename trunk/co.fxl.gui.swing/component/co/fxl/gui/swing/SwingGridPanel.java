@@ -321,4 +321,9 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 	public IGridPanel prepare(int columns, int rows) {
 		return this;
 	}
+
+	@Override
+	public IBorder cellBorder() {
+		throw new MethodNotImplementedException();
+	}
 }
