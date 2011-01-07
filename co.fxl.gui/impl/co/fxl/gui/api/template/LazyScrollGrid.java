@@ -65,6 +65,7 @@ public class LazyScrollGrid extends ScrollGridTemplate implements
 		scrollPosition = max;
 		if (painting)
 			return;
+//		grid.display().cursor().waiting();
 		long s = System.currentTimeMillis();
 		painting = true;
 		int min = paintedRows;
@@ -85,6 +86,7 @@ public class LazyScrollGrid extends ScrollGridTemplate implements
 					+ paintedRows + " in " + (System.currentTimeMillis() - s)
 					+ "ms");
 		painting = false;
+//		grid.display().cursor().pointer();
 	}
 
 	private void resize() {
