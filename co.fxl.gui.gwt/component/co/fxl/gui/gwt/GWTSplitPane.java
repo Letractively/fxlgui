@@ -34,7 +34,7 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 	@Override
 	public IContainer first() {
 		return new GWTContainer<Widget>(container.parent) {
-			void setComponent(Widget component) {
+			public void setComponent(Widget component) {
 				super.widget = component;
 				component.setWidth("100%");
 				component.setHeight("100%");
@@ -47,7 +47,7 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 	@Override
 	public IContainer second() {
 		return new GWTContainer<Widget>(container.parent) {
-			void setComponent(Widget component) {
+			public void setComponent(Widget component) {
 				super.widget = component;
 				component.setWidth("100%");
 				component.setHeight("100%");

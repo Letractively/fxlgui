@@ -22,16 +22,16 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 
-class GWTWidgetBorder extends GWTBorder {
+public class GWTWidgetBorder extends GWTBorder {
 
 	private Element element;
 	private String lastBorderType;
 
-	GWTWidgetBorder(Element element) {
+	public GWTWidgetBorder(Element element) {
 		this.element = element;
 	}
 
-	GWTWidgetBorder(Widget widget) {
+	protected GWTWidgetBorder(Widget widget) {
 		this(widget.getElement());
 	}
 

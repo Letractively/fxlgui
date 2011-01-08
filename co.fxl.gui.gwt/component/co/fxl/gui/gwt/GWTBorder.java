@@ -20,7 +20,7 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IBordered.IBorder;
 
-abstract class GWTBorder implements IBorder {
+public abstract class GWTBorder implements IBorder {
 
 	private class BorderStyle implements IBorderStyle {
 
@@ -58,13 +58,10 @@ abstract class GWTBorder implements IBorder {
 		}
 	}
 
-	int width = 1;
-	String color = "black";
-	String style = "solid";
-	String borderType = "border";
-
-	GWTBorder() {
-	}
+	protected int width = 1;
+	protected String color = "black";
+	protected String style = "solid";
+	protected String borderType = "border";
 
 	@Override
 	public abstract void remove();
@@ -83,7 +80,7 @@ abstract class GWTBorder implements IBorder {
 		return new GWTStyleColor(styleS) {
 
 			@Override
-			void setColor(String color) {
+			public void setColor(String color) {
 				GWTBorder.this.color = color;
 				update();
 			}

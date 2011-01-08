@@ -28,12 +28,12 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTMLTable.Cell;
 
-class GWTGridPanelClickHandler extends KeyTemplate<IGridPanel> implements
+public class GWTGridPanelClickHandler extends KeyTemplate<IGridPanel> implements
 		ClickHandler {
 
 	private IGridClickListener clickListener;
 
-	GWTGridPanelClickHandler(GWTGridPanel element,
+	public GWTGridPanelClickHandler(GWTGridPanel element,
 			IGridClickListener clickListener) {
 		super(element);
 		this.clickListener = clickListener;
