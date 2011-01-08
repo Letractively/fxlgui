@@ -66,12 +66,8 @@ public class LazyScrollGrid extends ScrollGridTemplate implements
 		scrollPosition = max;
 		if (painting)
 			return;
-//		grid.display().cursor().waiting();
-		long s = System.currentTimeMillis();
 		painting = true;
-		int min = paintedRows;
-		for (; paintedRows < maxRows
-				&& offsetHeight < scrollPosition + height + INC; paintedRows++) {
+		while (check()) {
 			int inc = 16;
 			resize();
 			for (int column = 0; column < maxColumns; column++) {
@@ -80,14 +76,14 @@ public class LazyScrollGrid extends ScrollGridTemplate implements
 				inc = Math.max(inc, cell.height());
 			}
 			offsetHeight += inc;
+			paintedRows++;
 		}
-		// TODO remove ...
-		if (min != paintedRows)
-			System.out.println("LazyScrollGrid: painted rows " + min + " - "
-					+ paintedRows + " in " + (System.currentTimeMillis() - s)
-					+ "ms");
 		painting = false;
-//		grid.display().cursor().pointer();
+	}
+
+	private boolean check() {
+		return paintedRows < maxRows
+				&& offsetHeight < scrollPosition + height + INC;
 	}
 
 	private void resize() {
