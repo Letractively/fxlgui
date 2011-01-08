@@ -30,7 +30,7 @@ class SwingLabel extends SwingTextElement<JLabel, ILabel> implements ILabel {
 	SwingLabel(SwingContainer<JLabel> container) {
 		super(container);
 		container.component.setVerticalAlignment(SwingConstants.TOP);
-		font().pixel(13);
+		font().pixel(12);
 	}
 
 	@Override
