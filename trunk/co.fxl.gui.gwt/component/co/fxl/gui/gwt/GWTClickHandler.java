@@ -45,7 +45,7 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 	boolean keyMatches(KeyType key, NativeEvent nativeEvent) {
 		switch (key) {
 		case SHIFT_KEY:
-			return nativeEvent.getCtrlKey();
+			return nativeEvent.getShiftKey();
 		case CTRL_KEY:
 			return nativeEvent.getCtrlKey();
 		default:

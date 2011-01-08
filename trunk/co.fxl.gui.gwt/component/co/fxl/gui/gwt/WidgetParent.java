@@ -4,7 +4,7 @@ import co.fxl.gui.api.IWidgetProvider;
 
 import com.google.gwt.user.client.ui.Widget;
 
-interface WidgetParent {
+public interface WidgetParent {
 
 	void add(Widget widget);
 

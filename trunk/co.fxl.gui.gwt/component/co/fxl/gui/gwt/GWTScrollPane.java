@@ -39,7 +39,7 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 	@Override
 	public IContainer viewPort() {
 		return new GWTContainer<Widget>(container.parent) {
-			void setComponent(Widget component) {
+			public void setComponent(Widget component) {
 				super.widget = component;
 				component.setWidth("100%");
 				container.widget.setWidget(component);

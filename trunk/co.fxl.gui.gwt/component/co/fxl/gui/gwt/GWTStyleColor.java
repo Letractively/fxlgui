@@ -36,7 +36,7 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 		return this;
 	}
 
-	void setColor(String color) {
+	protected void setColor(String color) {
 		com.google.gwt.dom.client.Style stylable = stylable();
 		setColor(color, stylable);
 	}

@@ -48,7 +48,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	private GWTDisplay() {
 		container = new GWTContainer<Widget>(this) {
 
-			void setComponent(Widget component) {
+			public void setComponent(Widget component) {
 				widget = component;
 				widget.setWidth("100%");
 				RootPanel.get().add(component);
@@ -127,7 +127,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	public IColor color() {
 		return new GWTStyleColor(null) {
 			@Override
-			void setColor(String color) {
+			public void setColor(String color) {
 				DOM.setStyleAttribute(RootPanel.getBodyElement(),
 						"backgroundColor", color);
 			}

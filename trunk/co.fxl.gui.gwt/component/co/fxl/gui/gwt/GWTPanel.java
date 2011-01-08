@@ -29,10 +29,10 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 
-abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R> implements
-		IPanel<R>, WidgetParent {
+public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
+		implements IPanel<R>, WidgetParent {
 
-	GWTPanel(GWTContainer<T> container) {
+	protected GWTPanel(GWTContainer<T> container) {
 		super(container);
 	}
 

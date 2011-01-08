@@ -27,12 +27,13 @@ import co.fxl.gui.api.IGridPanel;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Widget;
 
-public class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements
+public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 		IGridPanel {
 
 	public class GridCell extends GWTContainer<Widget> implements IGridCell {
@@ -71,7 +72,7 @@ public class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements
 		public IColor color() {
 			return new GWTStyleColor(null) {
 				@Override
-				void setColor(String color) {
+				public void setColor(String color) {
 					DOM.setStyleAttribute(formatter().getElement(row, column),
 							"backgroundColor", color);
 				}
@@ -175,8 +176,8 @@ public class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements
 	private String borderConfiguration;
 
 	@SuppressWarnings("unchecked")
-	GWTGridPanel(GWTContainer<?> container) {
-		super((GWTContainer<Grid>) container);
+	protected GWTGridPanel(GWTContainer<?> container) {
+		super((GWTContainer<HTMLTable>) container);
 		super.container.setComponent(new Grid());
 		super.container.widget.setWidth("100%");
 		indent(0);
@@ -221,11 +222,12 @@ public class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements
 	}
 
 	private void resize() {
-		if (gridCell.column >= container.widget.getColumnCount()) {
-			container.widget.resizeColumns(gridCell.column + 1);
+		Grid grid = (Grid) container.widget;
+		if (gridCell.column >= grid.getColumnCount()) {
+			grid.resizeColumns(gridCell.column + 1);
 		}
-		if (gridCell.row >= container.widget.getRowCount()) {
-			container.widget.resizeRows(gridCell.row + 1);
+		if (gridCell.row >= grid.getRowCount()) {
+			grid.resizeRows(gridCell.row + 1);
 		}
 	}
 
@@ -247,12 +249,14 @@ public class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements
 
 	@Override
 	public int columns() {
-		return container.widget.getColumnCount();
+		Grid grid = (Grid) container.widget;
+		return grid.getColumnCount();
 	}
 
 	@Override
 	public int rows() {
-		return container.widget.getRowCount();
+		Grid grid = (Grid) container.widget;
+		return grid.getRowCount();
 	}
 
 	@Override
@@ -262,7 +266,8 @@ public class GWTGridPanel extends GWTPanel<Grid, IGridPanel> implements
 
 	@Override
 	public IGridPanel prepare(int columns, int rows) {
-		container.widget.resize(rows, columns);
+		Grid grid = (Grid) container.widget;
+		grid.resize(rows, columns);
 		return this;
 	}
 

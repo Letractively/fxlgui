@@ -32,20 +32,20 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Widget;
 
-class GWTElement<T extends Widget, R> implements IElement<R> {
+public class GWTElement<T extends Widget, R> implements IElement<R> {
 
-	GWTContainer<T> container;
+	public GWTContainer<T> container;
 	protected HandlerRegistration registration;
 	protected List<GWTClickHandler<R>> handlers = new LinkedList<GWTClickHandler<R>>();
 
-	GWTElement(GWTContainer<T> container) {
+	protected GWTElement(GWTContainer<T> container) {
 		this.container = container;
 	}
 
 	void font(IFontElement fontElement) {
-		
+
 		// TODO optimize, use primary style name
-		
+
 		fontElement.font().pixel(13).family().arial();
 	}
 

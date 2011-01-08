@@ -51,17 +51,17 @@ import com.google.gwt.user.client.ui.ToggleButton;
 import com.google.gwt.user.client.ui.Widget;
 
 @SuppressWarnings("unchecked")
-class GWTContainer<T extends Widget> implements IContainer {
+public class GWTContainer<T extends Widget> implements IContainer {
 
-	WidgetParent parent;
-	T widget;
-	GWTElement<?, ?> element;
+	public WidgetParent parent;
+	public T widget;
+	protected GWTElement<?, ?> element;
 
-	GWTContainer(WidgetParent parent) {
+	public GWTContainer(WidgetParent parent) {
 		this.parent = parent;
 	}
 
-	void setComponent(T component) {
+	public void setComponent(T component) {
 		this.widget = component;
 		if (parent != null)
 			parent.add(component);
