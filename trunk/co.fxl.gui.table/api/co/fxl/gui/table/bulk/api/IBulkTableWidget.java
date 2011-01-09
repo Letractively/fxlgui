@@ -54,11 +54,13 @@ public interface IBulkTableWidget {
 
 	IColumn column(int column);
 
-	IKey<IBulkTableWidget> addTableListener(ITableListener l);
+	IKey<?> addTableListener(ITableListener l);
 
 	int height();
 
-	int height(int height);
+	IBulkTableWidget height(int height);
+
+	int visibleRows();
 
 	IBulkTableWidget visible(boolean visible);
 }
