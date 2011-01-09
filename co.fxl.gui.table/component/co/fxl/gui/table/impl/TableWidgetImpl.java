@@ -94,7 +94,7 @@ public class TableWidgetImpl implements ITableWidget<Object>,
 	protected boolean init = false;
 	private boolean addedSpace = false;
 	Map<Object, RowImpl> object2row = new HashMap<Object, RowImpl>();
-	private IRows source;
+	private IRows<Object> source;
 
 	protected TableWidgetImpl(ILayout layout) {
 		widgetTitle = new WidgetTitle(layout);
@@ -256,7 +256,7 @@ public class TableWidgetImpl implements ITableWidget<Object>,
 	}
 
 	@Override
-	public ITableWidget<Object> source(IRows rows) {
+	public ITableWidget<Object> source(IRows<Object> rows) {
 		this.source = rows;
 		return this;
 	}
