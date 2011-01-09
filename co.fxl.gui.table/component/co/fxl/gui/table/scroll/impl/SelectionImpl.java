@@ -22,7 +22,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.table.api.ISelection;
@@ -147,22 +146,23 @@ class SelectionImpl implements ISelection<Object> {
 					notifyListeners();
 				}
 			}).ctrlPressed();
-			widget.container.addSpace(10).add().panel().grid();
-			IGridPanel selectionPanel = widget.container.addSpace(10).add()
-					.panel().grid();
-			IHorizontalPanel p = selectionPanel.cell(0, 0).panel().horizontal()
-					.add().panel().horizontal().spacing(5);
-			p.add().label().text("Select").font().pixel(PIXEL);
-			selectAll = p.add().label();
-			selectAll.text("All").font().pixel(PIXEL);
-			selectAll.hyperlink()
-					.addClickListener(new SelectAllClickListener());
-			p.add().label().text("|").font().pixel(PIXEL).color().gray();
-			removeSelection = p.add().label();
-			removeSelection.text("None").font().pixel(PIXEL);
-			removeSelection.hyperlink().addClickListener(
-					new RemoveSelectionClickListener());
-			removeSelection.clickable(false);
+			if (widget.selectionPanel == null) {
+				widget.selectionPanel = widget.container.addSpace(10).add()
+						.panel().grid();
+				IHorizontalPanel p = widget.selectionPanel.cell(0, 0).panel()
+						.horizontal().add().panel().horizontal().spacing(5);
+				p.add().label().text("Select").font().pixel(PIXEL);
+				selectAll = p.add().label();
+				selectAll.text("All").font().pixel(PIXEL);
+				selectAll.hyperlink().addClickListener(
+						new SelectAllClickListener());
+				p.add().label().text("|").font().pixel(PIXEL).color().gray();
+				removeSelection = p.add().label();
+				removeSelection.text("None").font().pixel(PIXEL);
+				removeSelection.hyperlink().addClickListener(
+						new RemoveSelectionClickListener());
+				removeSelection.clickable(false);
+			}
 		}
 
 		ISelection<Object> add(Object object) {
@@ -187,11 +187,15 @@ class SelectionImpl implements ISelection<Object> {
 
 	@Override
 	public ISingleSelection<Object> single() {
+		if (single != null)
+			return single;
 		return single = new SingleSelectionImpl();
 	}
 
 	@Override
 	public IMultiSelection<Object> multi() {
+		if (multi != null)
+			return multi;
 		return multi = new MultiSelectionImpl();
 	}
 

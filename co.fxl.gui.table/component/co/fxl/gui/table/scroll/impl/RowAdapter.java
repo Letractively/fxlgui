@@ -62,7 +62,7 @@ class RowAdapter implements IRows<Object>, IComparableList {
 				return i;
 			}
 		}
-		throw new MethodNotImplementedException();
+		return -1;
 	}
 
 	void clearSelection() {
