@@ -33,6 +33,6 @@ public class ScrollTableWidgetImplProvider implements
 
 	@Override
 	public IScrollTableWidget createWidget(IContainer panel) {
-		return new ScrollTableWidgetImpl(panel.panel());
+		return new ScrollTableWidgetImpl(panel);
 	}
 }
