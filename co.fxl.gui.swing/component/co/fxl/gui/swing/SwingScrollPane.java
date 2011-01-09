@@ -73,9 +73,9 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 				new AdjustmentListener() {
 					@Override
 					public void adjustmentValueChanged(AdjustmentEvent evt) {
-						if (evt.getValueIsAdjusting()) {
-							return;
-						}
+//						if (evt.getValueIsAdjusting()) {
+//							return;
+//						}
 						int y = container.component.getVerticalScrollBar()
 								.getValue();
 						listener.onScroll(y);
