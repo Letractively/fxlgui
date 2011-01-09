@@ -296,12 +296,12 @@ class TableView extends ViewTemplate implements IFilterListener,
 							out = System.err;
 						out.println("TableView: added " + list.size()
 								+ " rows in " + time + "ms");
-						ResizeListener.setup(widget.mainPanel.display(),
-								TableView.this);
-						onResize(-1, widget.mainPanel.display().height());
 						if (selectionObject != null) {
 							table.selection().add(selectionObject);
 						}
+						ResizeListener.setup(widget.mainPanel.display(),
+								TableView.this);
+						onResize(-1, widget.mainPanel.display().height());
 						updateCreatable();
 						time = System.currentTimeMillis() - s0;
 						out.println("TableView: created table in " + time
