@@ -319,7 +319,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 		// TODO ... un-hard-code
 		if (offsetY == 0)
 			offsetY = 139;
-		int maxFromDisplay = height - offsetY - 71;
+		int maxFromDisplay = height - offsetY - 96;
 		if (lastHeight != height) {
 			lastHeight = height;
 			table.height(maxFromDisplay);
