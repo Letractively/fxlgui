@@ -37,7 +37,7 @@ class ScrollTableWidgetTest implements IRows<String> {
 		@SuppressWarnings("unchecked")
 		IScrollTableWidget<String> widget = (IScrollTableWidget<String>) panel
 				.add().widget(IScrollTableWidget.class);
-		widget.selection().single();
+		widget.selection().multi();
 		widget.addTitle("Table");
 		widget.addButton("New");
 		for (int i = 0; i < 3; i++)

@@ -37,7 +37,8 @@ import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableListener;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 
-class ScrollTableWidgetImpl implements IScrollTableWidget<Object> {
+class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
+		IScrollListener {
 
 	// TODO show status line: showing rows 27-40 of 3000
 
@@ -46,16 +47,15 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object> {
 
 	private static final String ARROW_UP = "\u2191";
 	private static final String ARROW_DOWN = "\u2193";
-	private IContainer container;
+	private IVerticalPanel container;
 	private int height = 400;
 	private WidgetTitle widgetTitle;
 	RowAdapter rows;
-	private IVerticalPanel mainPanel;
 	private int paintedRows;
 	private List<ColumnImpl> columns = new LinkedList<ColumnImpl>();
 	private SelectionImpl selection = new SelectionImpl(this);
 	private int scrollPanelHeight;
-	private int scrollOffset = 0;
+	private int scrollOffset = -1;
 	private IVerticalPanel contentPanel;
 	private int sortColumn = -1;
 	private int sortNegator = -1;
@@ -66,17 +66,18 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object> {
 
 	ScrollTableWidgetImpl(IContainer container) {
 		widgetTitle = new WidgetTitle(container.panel()).foldable(false);
-		this.container = widgetTitle.content();
+		this.container = widgetTitle.content().panel().vertical();
 	}
 
 	@Override
 	public int offsetY() {
-		return mainPanel.offsetY();
+		return container.offsetY();
 	}
 
 	@Override
 	public IScrollTableWidget<Object> height(int height) {
 		this.height = height;
+		visible(true);
 		return this;
 	}
 
@@ -89,28 +90,32 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object> {
 	@Override
 	public IScrollTableWidget<Object> visible(boolean visible) {
 		if (visible) {
-			IDockPanel dock = container.panel().dock();
+			container.clear();
+			container.addSpace(20);
+			IDockPanel dock = container.add().panel().dock();
 			dock.height(height);
 			contentPanel = dock.center().panel().vertical();
+			scrollOffset = 0;
+			update();
 			IScrollPane sp = dock.right().scrollPane();
 			sp.size(35, height);
 			IVerticalPanel v = sp.viewPort().panel().vertical();
-			update();
 			double spHeight = height * rows.size();
 			scrollPanelHeight = (int) (spHeight / paintedRows);
 			v.add().panel().horizontal().size(1, scrollPanelHeight);
-			sp.addScrollListener(new IScrollListener() {
-
-				@Override
-				public void onScroll(int maxOffset) {
-					scrollOffset = maxOffset;
-					update();
-				}
-			});
+			sp.addScrollListener(this);
 		} else {
 			throw new MethodNotImplementedException();
 		}
 		return this;
+	}
+
+	@Override
+	public void onScroll(int maxOffset) {
+		boolean scroll = maxOffset != scrollOffset;
+		scrollOffset = maxOffset;
+		if (scroll)
+			update();
 	}
 
 	@Override
@@ -121,6 +126,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object> {
 	}
 
 	private int convert(int maxOffset) {
+		if (scrollPanelHeight == 0)
+			return 0;
 		double index = rows.size();
 		index *= maxOffset;
 		index /= scrollPanelHeight;
@@ -129,6 +136,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object> {
 
 	private void update() {
 		contentPanel.clear();
+		highlighted.clear();
 		grid = (IBulkTableWidget) contentPanel.add().widget(
 				IBulkTableWidget.class);
 		grid.height(height);
@@ -141,11 +149,17 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object> {
 			}
 			grid.column(c).title(name);
 		}
+		if (rowOffset + paintedRows >= rows.size()) {
+			if (rowOffset == 0) {
+				paintedRows = rows.size();
+			} else
+				paintedRows = rows.size() - rowOffset;
+		}
 		for (int r = 0; r < paintedRows; r++) {
-			Object[] row = rows.row(r + rowOffset);
-			for (int c = 0; c < row.length; c++) {
-				grid.cell(c, r).text((String) row[c]);
-			}
+			int index = r + rowOffset;
+			Object[] row = rows.row(index);
+			for (ColumnImpl c : columns)
+				c.decorate(grid.cell(c.index, r), row[c.index]);
 		}
 		visibleRows = paintedRows;
 		grid.visible(true);

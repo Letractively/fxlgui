@@ -19,18 +19,61 @@
 package co.fxl.gui.table.scroll.impl;
 
 import java.util.Comparator;
+import java.util.Date;
 
+import co.fxl.gui.api.template.SimpleDateFormat;
 import co.fxl.gui.table.api.IColumn;
+import co.fxl.gui.table.bulk.api.IBulkTableWidget.ICell;
 
 class ColumnImpl implements IColumn, Comparator<Object[]> {
+
+	private static SimpleDateFormat FORMAT = new SimpleDateFormat();
+
+	public class DateDecorator implements Decorator<Date> {
+
+		@Override
+		public void decorate(ICell cell, Date value) {
+			cell.text(FORMAT.format(value));
+		}
+
+	}
+
+	public class LongDecorator implements Decorator<Long> {
+
+		@Override
+		public void decorate(ICell cell, Long value) {
+			cell.text(String.valueOf(value));
+		}
+
+	}
+
+	public interface Decorator<T> {
+
+		void decorate(ICell cell, T value);
+	}
+
+	public class StringDecorator implements Decorator<String> {
+
+		@Override
+		public void decorate(ICell cell, String value) {
+			cell.text((String) value);
+		}
+	}
 
 	String name;
 	boolean sortable = false;
 	Class<?> type = String.class;
 	int index;
+	@SuppressWarnings("rawtypes")
+	private Decorator decorator;
 
 	ColumnImpl(int index) {
 		this.index = index;
+	}
+
+	@SuppressWarnings("unchecked")
+	void decorate(ICell cell, Object value) {
+		decorator.decorate(cell, value);
 	}
 
 	@Override
@@ -47,7 +90,14 @@ class ColumnImpl implements IColumn, Comparator<Object[]> {
 
 	@Override
 	public IColumn type(Class<?> type) {
-		this.type = type;
+		if (type.equals(String.class)) {
+			decorator = new StringDecorator();
+		} else if (type.equals(Long.class)) {
+			decorator = new LongDecorator();
+		} else if (type.equals(Date.class)) {
+			decorator = new DateDecorator();
+		} else
+			throw new MethodNotImplementedException();
 		return this;
 	}
 
