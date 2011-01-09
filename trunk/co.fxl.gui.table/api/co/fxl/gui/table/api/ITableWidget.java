@@ -23,9 +23,9 @@ import co.fxl.gui.api.ILabel;
 
 public interface ITableWidget<T> {
 
-	public interface IRows {
+	public interface IRows<T> {
 
-		Object identifier(int i);
+		T identifier(int i);
 
 		Object[] row(int i);
 
@@ -48,5 +48,5 @@ public interface ITableWidget<T> {
 
 	ITableWidget<T> height(int height);
 
-	ITableWidget<T> source(IRows rows);
+	ITableWidget<T> source(IRows<T> rows);
 }
