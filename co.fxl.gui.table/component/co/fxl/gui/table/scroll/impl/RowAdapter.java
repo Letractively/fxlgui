@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.table.scroll.impl;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.table.impl.sort.IComparableList;
@@ -94,6 +95,11 @@ class RowAdapter implements IRows<Object>, IComparableList {
 	}
 
 	List<Object> selectedIdentifiers() {
-		throw new MethodNotImplementedException();
+		List<Object> ids = new LinkedList<Object>();
+		for (int i = 0; i < size(); i++) {
+			if (selected[i])
+				ids.add(rows.identifier(i));
+		}
+		return ids;
 	}
 }

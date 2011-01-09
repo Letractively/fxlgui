@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.table.scroll.impl;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.table.api.ISelection;
@@ -58,14 +59,57 @@ class SelectionImpl implements ISelection<Object> {
 
 	class MultiSelectionImpl implements IMultiSelection<Object> {
 
+		// TODO select all | none
+
+		private List<IChangeListener<Object>> listeners = new LinkedList<IChangeListener<Object>>();
+
 		@Override
 		public IMultiSelection<Object> addChangeListener(
 				IMultiSelection.IChangeListener<Object> listener) {
-			throw new MethodNotImplementedException();
+			listeners.add(listener);
+			return this;
+		}
+
+		private void notifyListeners() {
+			for (IChangeListener<Object> l : listeners)
+				l.onChange(result());
 		}
 
 		void update() {
-			throw new MethodNotImplementedException();
+			widget.grid.addTableListener(new ITableListener() {
+
+				@Override
+				public void onClick(int column, int row) {
+					if (row == 0)
+						return;
+					row--;
+					clearSelection();
+					widget.rows.selected(widget.convert2TableRow(row), true);
+					IRow r = widget.grid.row(row);
+					r.highlight(true);
+					widget.highlighted.add(r);
+					notifyListeners();
+				}
+			});
+			widget.grid.addTableListener(new ITableListener() {
+
+				@Override
+				public void onClick(int column, int row) {
+					if (row == 0)
+						return;
+					row--;
+					int tableRow = widget.convert2TableRow(row);
+					boolean selected = !widget.rows.selected(tableRow);
+					widget.rows.selected(tableRow, selected);
+					IRow r = widget.grid.row(row);
+					r.highlight(selected);
+					if (selected) {
+						widget.highlighted.add(r);
+					} else
+						widget.highlighted.remove(r);
+					notifyListeners();
+				}
+			}).ctrlPressed();
 		}
 
 		ISelection<Object> add(Object object) {

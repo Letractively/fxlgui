@@ -49,7 +49,7 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 			rowOffset = 1;
 			if (label == null) {
 				IGridCell cell = grid.cell(column, 0);
-				cell.color().lightgray();
+				cell.color().rgb(255, 240, 240);
 				IBorder b = cell.border();
 				b.color().lightgray();
 				b.style().bottom();
@@ -71,7 +71,7 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 		}
 	}
 
-	private static final int ROW_HEIGHT = 25;
+	private static final int ROW_HEIGHT = 22;
 	private IGridPanel grid;
 	private int rowOffset = 0;
 	private IVerticalPanel mainPanel;
@@ -79,6 +79,7 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 	private int visibleRows = 30;
 	private List<ColumnImpl> columns = new LinkedList<ColumnImpl>();
 	private Map<Integer, Boolean> highlighted = new HashMap<Integer, Boolean>();
+	private int height;
 
 	BulkTableWidgetImpl(IContainer container) {
 		mainPanel = container.panel().vertical();
@@ -157,6 +158,7 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 
 	@Override
 	public IBulkTableWidget height(int height) {
+		this.height = height;
 		mainPanel.height(height);
 		if (numRows != 0) {
 			double d = numRows;
@@ -180,6 +182,7 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 
 	@Override
 	public int visibleRows() {
+		height(height);
 		return visibleRows;
 	}
 }
