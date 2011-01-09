@@ -275,11 +275,11 @@ class TableView extends ViewTemplate implements IFilterListener,
 
 					@Override
 					public void onSuccess(final IDeletableList<Object> queryList) {
-						long s0=System.currentTimeMillis();
+						long s0 = System.currentTimeMillis();
 						TableView.this.queryList = queryList;
 						final List<Object> list = queryList.asList();
 						long s = System.currentTimeMillis();
-						table.source(new IRows() {
+						IRows<Object> rows = new IRows<Object>() {
 
 							@Override
 							public Object[] row(int i) {
@@ -295,7 +295,8 @@ class TableView extends ViewTemplate implements IFilterListener,
 							public int size() {
 								return list.size();
 							}
-						});
+						};
+						table.source(rows);
 						// for (Object entity : list) {
 						// IRow<Object> row = table.addRow();
 						// row.identifier(entity);
@@ -318,7 +319,8 @@ class TableView extends ViewTemplate implements IFilterListener,
 						}
 						updateCreatable();
 						time = System.currentTimeMillis() - s0;
-						out.println("TableView: created table in " + time + "ms");
+						out.println("TableView: created table in " + time
+								+ "ms");
 					}
 				});
 	}
