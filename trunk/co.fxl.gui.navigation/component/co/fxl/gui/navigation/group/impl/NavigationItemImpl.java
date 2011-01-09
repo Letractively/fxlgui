@@ -67,6 +67,7 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 	void showLabelAsInactive() {
 		if (buttonPanel == null)
 			return;
+		buttonPanel.clickable(true);
 		applyColor(buttonPanel.color(), widget.colorInactive);
 		applyColor(borderColor, widget.colorBackground);
 	}
@@ -100,6 +101,7 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 	}
 
 	private void showLabelAsActive() {
+		buttonPanel.clickable(false);
 		widget.active(this);
 		if (buttonPanel == null)
 			return;
