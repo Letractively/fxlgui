@@ -50,12 +50,12 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 
 	@Override
 	public int height() {
-		return container.component.getHeight();
+		return container.component.getPreferredSize().height;
 	}
 
 	@Override
 	public int width() {
-		return container.component.getWidth();
+		return container.component.getPreferredSize().width;
 	}
 
 	@Override
