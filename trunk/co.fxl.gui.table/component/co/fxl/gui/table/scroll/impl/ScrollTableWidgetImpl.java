@@ -24,6 +24,7 @@ import java.util.List;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IScrollListener;
 import co.fxl.gui.api.IScrollPane;
@@ -63,6 +64,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	int rowOffset;
 	int visibleRows;
 	List<IRow> highlighted = new LinkedList<IRow>();
+	IGridPanel selectionPanel;
 
 	ScrollTableWidgetImpl(IContainer container) {
 		widgetTitle = new WidgetTitle(container.panel()).foldable(false);
@@ -90,6 +92,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> visible(boolean visible) {
 		if (visible) {
+			selectionPanel = null;
 			container.clear();
 			container.addSpace(20);
 			IDockPanel dock = container.add().panel().dock();
