@@ -40,14 +40,14 @@ import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IDeletableList;
 import co.fxl.gui.mdt.api.IProperty.IAdapter;
 import co.fxl.gui.table.api.IColumn;
-import co.fxl.gui.table.api.ITableWidget;
-import co.fxl.gui.table.api.ITableWidget.IRows;
+import co.fxl.gui.table.scroll.api.IRows;
+import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 import co.fxl.gui.tree.impl.CallbackTemplate;
 
 class TableView extends ViewTemplate implements IFilterListener,
 		IResizeListener {
 
-	private ITableWidget<Object> table;
+	private IScrollTableWidget<Object> table;
 	private Map<PropertyImpl, IColumn> property2column = new HashMap<PropertyImpl, IColumn>();
 	private List<IAdapter<Object, Object>> adapters = new LinkedList<IAdapter<Object, Object>>();
 	private IDeletableList<Object> queryList;
@@ -114,8 +114,8 @@ class TableView extends ViewTemplate implements IFilterListener,
 	@SuppressWarnings({ "unchecked" })
 	private void drawTable() {
 		buttons.clear();
-		table = (ITableWidget<Object>) widget.mainPanel.add().widget(
-				ITableWidget.class);
+		table = (IScrollTableWidget<Object>) widget.mainPanel.add().widget(
+				IScrollTableWidget.class);
 		table.addTitle(widget.title).font().pixel(18);
 		addProperties();
 		table.selection().multi().addChangeListener(this);
@@ -180,16 +180,6 @@ class TableView extends ViewTemplate implements IFilterListener,
 		// widget.showDetailView(show);
 		// }
 		// });
-	}
-
-	@Override
-	public void onResize(int width, int height) {
-		int offsetY = table.offsetY();
-		// TODO ... un-hard-code
-		if (offsetY == 0)
-			offsetY = 139;
-		int maxFromDisplay = height - offsetY - 71;
-		table.height(maxFromDisplay);
 	}
 
 	private void addProperties() {
@@ -269,12 +259,15 @@ class TableView extends ViewTemplate implements IFilterListener,
 				}
 			}
 		}
-		drawTable();
 		widget.source.queryList(constraints,
 				new CallbackTemplate<IDeletableList<Object>>() {
 
 					@Override
 					public void onSuccess(final IDeletableList<Object> queryList) {
+						if (queryList.asList().isEmpty()) {
+							// TODO ...
+						}
+						drawTable();
 						long s0 = System.currentTimeMillis();
 						TableView.this.queryList = queryList;
 						final List<Object> list = queryList.asList();
@@ -296,21 +289,13 @@ class TableView extends ViewTemplate implements IFilterListener,
 								return list.size();
 							}
 						};
-						table.source(rows);
-						// for (Object entity : list) {
-						// IRow<Object> row = table.addRow();
-						// row.identifier(entity);
-						// Serializable[] values = queryList
-						// .tableValues(entity);
-						// row.set((Object[]) values);
-						// }
+						table.rows(rows);
 						PrintStream out = System.out;
 						long time = System.currentTimeMillis() - s;
 						if (time > 500)
 							out = System.err;
 						out.println("TableView: added " + list.size()
 								+ " rows in " + time + "ms");
-						table.visible(true);
 						ResizeListener.setup(widget.mainPanel.display(),
 								TableView.this);
 						onResize(-1, widget.mainPanel.display().height());
@@ -321,8 +306,24 @@ class TableView extends ViewTemplate implements IFilterListener,
 						time = System.currentTimeMillis() - s0;
 						out.println("TableView: created table in " + time
 								+ "ms");
+						table.visible(true);
 					}
 				});
+	}
+
+	private int lastHeight = -1;
+
+	@Override
+	public void onResize(int width, int height) {
+		int offsetY = table.offsetY();
+		// TODO ... un-hard-code
+		if (offsetY == 0)
+			offsetY = 139;
+		int maxFromDisplay = height - offsetY - 71;
+		if (lastHeight != height) {
+			lastHeight = height;
+			table.height(maxFromDisplay);
+		}
 	}
 
 	@Override
