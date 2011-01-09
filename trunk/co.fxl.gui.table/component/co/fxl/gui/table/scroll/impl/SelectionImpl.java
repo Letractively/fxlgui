@@ -21,6 +21,10 @@ package co.fxl.gui.table.scroll.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IRow;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableListener;
@@ -59,9 +63,37 @@ class SelectionImpl implements ISelection<Object> {
 
 	class MultiSelectionImpl implements IMultiSelection<Object> {
 
-		// TODO select all | none
+		private class SelectAllClickListener implements IClickListener {
 
+			@Override
+			public void onClick() {
+				boolean changed = false;
+				for (int i = 0; i < widget.rows.size(); i++) {
+					if (!widget.rows.selected(i)) {
+						widget.rows.selected(i, true);
+						changed = true;
+					}
+				}
+				if (changed) {
+					widget.highlightAll();
+					notifyListeners();
+				}
+			}
+		}
+
+		private class RemoveSelectionClickListener implements IClickListener {
+
+			@Override
+			public void onClick() {
+				clearSelection();
+				notifyListeners();
+			}
+		}
+
+		private static final int PIXEL = 12;
 		private List<IChangeListener<Object>> listeners = new LinkedList<IChangeListener<Object>>();
+		private ILabel selectAll;
+		private ILabel removeSelection;
 
 		@Override
 		public IMultiSelection<Object> addChangeListener(
@@ -71,8 +103,13 @@ class SelectionImpl implements ISelection<Object> {
 		}
 
 		private void notifyListeners() {
-			for (IChangeListener<Object> l : listeners)
-				l.onChange(result());
+			List<Object> result = result();
+			selectAll.clickable(widget.rows.size() != 0
+					&& widget.rows.size() != result.size());
+			removeSelection.clickable(!result.isEmpty());
+			for (IChangeListener<Object> l : listeners) {
+				l.onChange(result);
+			}
 		}
 
 		void update() {
@@ -110,10 +147,27 @@ class SelectionImpl implements ISelection<Object> {
 					notifyListeners();
 				}
 			}).ctrlPressed();
+			widget.container.addSpace(10).add().panel().grid();
+			IGridPanel selectionPanel = widget.container.addSpace(10).add()
+					.panel().grid();
+			IHorizontalPanel p = selectionPanel.cell(0, 0).panel().horizontal()
+					.add().panel().horizontal().spacing(5);
+			p.add().label().text("Select").font().pixel(PIXEL);
+			selectAll = p.add().label();
+			selectAll.text("All").font().pixel(PIXEL);
+			selectAll.hyperlink()
+					.addClickListener(new SelectAllClickListener());
+			p.add().label().text("|").font().pixel(PIXEL).color().gray();
+			removeSelection = p.add().label();
+			removeSelection.text("None").font().pixel(PIXEL);
+			removeSelection.hyperlink().addClickListener(
+					new RemoveSelectionClickListener());
+			removeSelection.clickable(false);
 		}
 
 		ISelection<Object> add(Object object) {
-			throw new MethodNotImplementedException();
+			widget.rows.selected(object);
+			return SelectionImpl.this;
 		}
 	}
 
