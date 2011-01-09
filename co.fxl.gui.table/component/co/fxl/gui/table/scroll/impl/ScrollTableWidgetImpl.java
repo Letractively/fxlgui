@@ -47,7 +47,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	private static final String ARROW_UP = "\u2191";
 	private static final String ARROW_DOWN = "\u2193";
-	private IVerticalPanel container;
+	IVerticalPanel container;
 	private int height = 400;
 	private WidgetTitle widgetTitle;
 	RowAdapter rows;
@@ -163,7 +163,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		}
 		visibleRows = paintedRows;
 		grid.visible(true);
-		for (int r = 0; r < paintedRows; r++) {
+		for (int r = 0; r < visibleRows; r++) {
 			if (rows.selected(r + rowOffset)) {
 				IRow row = grid.row(r);
 				row.highlight(true);
@@ -173,6 +173,15 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		paintedRows = Math.max(paintedRows, grid.visibleRows());
 		updateSorting();
 		selection.update();
+	}
+
+	public void highlightAll() {
+		highlighted.clear();
+		for (int r = 0; r < visibleRows; r++) {
+			IRow row = grid.row(r);
+			row.highlight(true);
+			highlighted.add(row);
+		}
 	}
 
 	private void updateSorting() {
