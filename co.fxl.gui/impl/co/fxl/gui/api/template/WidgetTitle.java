@@ -50,6 +50,7 @@ public class WidgetTitle implements IClickListener {
 
 	public WidgetTitle(ILayout layout) {
 		panel = layout.vertical();
+		headerPanel = panel.add().panel().dock();
 	}
 
 	public WidgetTitle space(int space) {
@@ -71,7 +72,6 @@ public class WidgetTitle implements IClickListener {
 	private void initHeader() {
 		if (hasHeaderPanel)
 			return;
-		headerPanel = panel.add().panel().dock();
 		// headerPanel.color().rgb(220, 220, 220);
 		titlePanel = headerPanel.center().panel().horizontal().add().panel()
 				.horizontal().spacing(4);
