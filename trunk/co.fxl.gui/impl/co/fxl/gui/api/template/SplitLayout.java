@@ -26,6 +26,7 @@ import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IVerticalPanel;
 
 public class SplitLayout implements IResizeListener, IClickListener {
@@ -40,6 +41,7 @@ public class SplitLayout implements IResizeListener, IClickListener {
 	public IVerticalPanel sidePanel;
 	private IGridCell cell;
 	private IImage button;
+	private IScrollPane sideScrollPanel;
 
 	public SplitLayout(ILayout layout) {
 		this.layout = layout;
@@ -54,16 +56,17 @@ public class SplitLayout implements IResizeListener, IClickListener {
 		mainPanel.border().color().lightgray();
 		mainPanel.color().white();
 		IHorizontalPanel horizontal = panel.cell(1, 0).width(20).align()
-				.center().valign().begin().panel().horizontal();
+				.center().valign().center().panel().horizontal();
 		horizontal.addSpace(10);
 		button = horizontal.add().image().resource("minimize.png");
 		cell = panel.cell(2, 0).width(WIDTH_SIDE_PANEL).valign().begin();
-		IVerticalPanel vertical = cell.panel().vertical();
+//		IVerticalPanel vertical = cell.panel().vertical();
 		// horizontal.addClickListener(clickListener);
 		button.addClickListener(this);
-		sidePanel = vertical.add().panel().vertical().spacing(10);
-		// onResize(-1, panel.display().height());
-		// ResizeListener.setup(panel.display(), this);
+		sideScrollPanel = cell.scrollPane();
+		sidePanel = sideScrollPanel.viewPort().panel().vertical().spacing(10);
+		onResize(-1, panel.display().height());
+		SidePanelResizeListener.setup(panel.display(), this);
 	}
 
 	@Override
@@ -80,7 +83,7 @@ public class SplitLayout implements IResizeListener, IClickListener {
 
 	@Override
 	public void onResize(int width, int height) {
-		resize(height, panel);
+		resize(height, sideScrollPanel);
 	}
 
 	private void resize(int height, IElement<?> p) {
