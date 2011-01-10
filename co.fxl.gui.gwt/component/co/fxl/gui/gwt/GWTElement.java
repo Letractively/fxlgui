@@ -38,7 +38,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	protected HandlerRegistration registration;
 	protected List<GWTClickHandler<R>> handlers = new LinkedList<GWTClickHandler<R>>();
 
-	protected GWTElement(GWTContainer<T> container) {
+	public GWTElement(GWTContainer<T> container) {
 		this.container = container;
 	}
 
