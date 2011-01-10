@@ -162,6 +162,13 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 	}
 
 	@Override
+	public IBulkTableWidget visible(boolean visible) {
+		if (!visible)
+			throw new MethodNotImplementedException();
+		return this;
+	}
+
+	@Override
 	public IBulkTableWidget height(int height) {
 		this.height = height;
 		mainPanel.height(height);
@@ -175,13 +182,6 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 		} else {
 			visibleRows = height / ROW_HEIGHT;
 		}
-		return this;
-	}
-
-	@Override
-	public IBulkTableWidget visible(boolean visible) {
-		if (!visible)
-			throw new MethodNotImplementedException();
 		return this;
 	}
 
