@@ -1,6 +1,4 @@
 /**
- * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
- *  
  * This file is part of FXL GUI API.
  *  
  * FXL GUI API is free software: you can redistribute it and/or modify
@@ -15,43 +13,29 @@
  *  
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.api;
+package co.fxl.gui.api.template;
 
-public interface IDialog {
+import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IDisplay.IResizeListener;
 
-	public interface IQuestionDialog {
+public class SidePanelResizeListener implements IResizeListener {
 
-		public interface IQuestionDialogListener {
+	private static SidePanelResizeListener instance;
+	private static IResizeListener listener;
 
-			void onYes();
-
-			void onNo();
+	public static void setup(IDisplay display, IResizeListener l) {
+		if (instance == null) {
+			instance = new SidePanelResizeListener();
+			display.addResizeListener(instance);
 		}
-
-		IQuestionDialog title(String title);
-
-		IQuestionDialog question(String message);
-
-		IQuestionDialog addQuestionListener(IQuestionDialogListener l);
+		listener = l;
 	}
 
-	public interface IType {
-
-		IDialog info();
-
-		IDialog warn();
-
-		IDialog error();
+	@Override
+	public void onResize(int width, int height) {
+		listener.onResize(width, height);
 	}
-
-	IDialog title(String title);
-
-	IDialog message(String message);
-
-	IType type();
-
-	ILayout panel();
-
-	IQuestionDialog question();
 }
