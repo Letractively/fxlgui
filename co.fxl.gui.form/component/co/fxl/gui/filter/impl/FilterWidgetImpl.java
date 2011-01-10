@@ -43,7 +43,7 @@ import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
 class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 
 	private static final List<Object> DEFAULT_SIZES = Arrays
-			.asList(new Object[] { new Integer(20), 50, 100, 500, 1000 });
+			.asList(new Object[] { 50, 100, 500, 1000, 5000 });
 
 	private class ClearClickListener implements IClickListener {
 
