@@ -67,6 +67,7 @@ class GWTDialog implements IDialog {
 		final DialogBox dialogbox = new DialogBox(false);
 		dialogbox.setText(title);
 		VerticalPanel panel = new VerticalPanel();
+		panel.setSpacing(10);
 		HTML html = new HTML(type + ": " + message);
 		Button button = new Button("Ok");
 		button.addClickHandler(new ClickHandler() {
@@ -96,6 +97,6 @@ class GWTDialog implements IDialog {
 
 	@Override
 	public IQuestionDialog question() {
-		throw new MethodNotImplementedException();
+		return new GWTQuestionDialog();
 	}
 }
