@@ -141,14 +141,15 @@ class TableView extends ViewTemplate implements IFilterListener,
 		delete.addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
+				final List<Object> result = table.selection().result();
+				String msg = result.size() == 1 ? "Delete Entity?"
+						: "Delete Entities?";
 				widget.mainPanel.display().showDialog().question()
-						.question("Delete Entity?").title("Warning")
+						.question(msg).title("Warning")
 						.addQuestionListener(new IQuestionDialogListener() {
 
 							@Override
 							public void onYes() {
-								List<Object> result = table.selection()
-										.result();
 								for (Object entity : result) {
 									queryList.delete(entity);
 								}
