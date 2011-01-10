@@ -47,8 +47,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	// TODO Swing Scroll Panel block increment for single click on arrow is not
 	// enough
 
+	// TODO no flickering in Firefox
+
 	private static final String ARROW_UP = "\u2191";
 	private static final String ARROW_DOWN = "\u2193";
+	private static final int MIN_SCROLL_INCREMENT = 22;
 	IVerticalPanel container;
 	private int height = 400;
 	private WidgetTitle widgetTitle;
@@ -109,7 +112,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				IScrollPane sp = dock.right().scrollPane();
 				sp.size(35, height);
 				IVerticalPanel v = sp.viewPort().panel().vertical();
-				double spHeight = height * rows.size();
+				double spHeight = height * (rows.size() + 1);
 				scrollPanelHeight = (int) (spHeight / paintedRows);
 				v.add().panel().horizontal().size(1, scrollPanelHeight);
 				sp.addScrollListener(this);
@@ -123,9 +126,20 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public void onScroll(int maxOffset) {
 		boolean scroll = maxOffset != scrollOffset;
-		scrollOffset = maxOffset;
-		if (scroll)
+		if (scroll) {
+			// TODO Swing if (maxOffset > scrollOffset
+			// && maxOffset - scrollOffset < MIN_SCROLL_INCREMENT) {
+			// maxOffset = Math.min(scrollOffset + MIN_SCROLL_INCREMENT,
+			// scrollPanelHeight);
+			// }
+			// if (maxOffset < scrollOffset
+			// && maxOffset - scrollOffset < MIN_SCROLL_INCREMENT) {
+			// maxOffset = Math.min(scrollOffset + MIN_SCROLL_INCREMENT,
+			// scrollPanelHeight);
+			// }
+			scrollOffset = maxOffset;
 			update();
+		}
 	}
 
 	@Override
@@ -171,8 +185,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			if (rowOffset + paintedRows >= rows.size()) {
 				if (rowOffset == 0) {
 					paintedRows = rows.size();
-				} else
-					paintedRows = rows.size() - rowOffset;
+				} else {
+					rowOffset++;
+					paintedRows = rows.size() - rowOffset - 1;
+				}
 			}
 			for (int r = 0; r < paintedRows; r++) {
 				int index = r + rowOffset;
