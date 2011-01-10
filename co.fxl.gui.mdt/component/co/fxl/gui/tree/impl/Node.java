@@ -114,7 +114,7 @@ class Node<T> implements IClickListener {
 		widget.object2node.put(root.object(), this);
 	}
 
-	void update() {
+	void update(T object) {
 		label.text(tree.name());
 	}
 
