@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.swing;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import co.fxl.gui.api.IDialog;
@@ -27,21 +30,40 @@ class SwingDialog implements IDialog {
 
 	public class QuestionDialog implements IQuestionDialog {
 
-		private int result;
+		private String message;
+		private List<IQuestionDialogListener> questionListeners = new LinkedList<IQuestionDialogListener>();
+		private String title;
+
+		public void update() {
+			if (message != null && !questionListeners.isEmpty()) {
+				int result = JOptionPane.showConfirmDialog(panel.frame,
+						message, title, JOptionPane.YES_NO_OPTION);
+				for (IQuestionDialogListener l : questionListeners) {
+					if (result == JOptionPane.OK_OPTION)
+						l.onYes();
+					else
+						l.onNo();
+				}
+			}
+		}
 
 		@Override
 		public IQuestionDialog question(String message) {
-			result = JOptionPane.showConfirmDialog(panel.frame, message, title,
-					JOptionPane.YES_NO_OPTION);
+			this.message = message;
+			update();
 			return this;
 		}
 
 		@Override
 		public IQuestionDialog addQuestionListener(IQuestionDialogListener l) {
-			if (result == JOptionPane.OK_OPTION)
-				l.onYes();
-			else
-				l.onNo();
+			questionListeners.add(l);
+			update();
+			return this;
+		}
+
+		@Override
+		public IQuestionDialog title(String title) {
+			this.title = title;
 			return this;
 		}
 	}
