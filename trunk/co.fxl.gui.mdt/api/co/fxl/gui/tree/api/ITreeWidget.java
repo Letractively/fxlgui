@@ -29,7 +29,7 @@ public interface ITreeWidget<T> {
 	}
 
 	public interface IDecorator<T> {
-		
+
 		void decorate(IVerticalPanel panel, ITree<T> tree);
 
 		void decorate(IVerticalPanel panel, Object tree);
@@ -59,7 +59,7 @@ public interface ITreeWidget<T> {
 
 	ITreeWidget<T> clickNew(String type);
 
-	ITreeWidget<T> notifyUpdate(T object);
+	ITreeWidget<T> notifyUpdate(T original, T object);
 
 	ITreeWidget<T> addCreatableType(String type);
 

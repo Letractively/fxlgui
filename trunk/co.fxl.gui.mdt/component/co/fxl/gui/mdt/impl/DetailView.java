@@ -46,6 +46,7 @@ import co.fxl.gui.tree.api.IFilterTreeWidget.ISource;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
+import co.fxl.gui.tree.impl.CallbackTemplate;
 
 class DetailView extends ViewTemplate implements ISource<Object> {
 
@@ -136,8 +137,7 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 
 					@Override
 					protected void save(Object node) {
-						DetailView.this.itree.save(node);
-						DetailView.this.tree.notifyUpdate(node);
+						saveNode(node);
 					}
 				});
 		for (final PropertyGroupImpl group : widget.propertyGroups) {
@@ -147,8 +147,7 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 
 					@Override
 					protected void save(Object node) {
-						DetailView.this.itree.save(node);
-						DetailView.this.tree.notifyUpdate(node);
+						saveNode(node);
 					}
 				});
 			}
@@ -415,5 +414,15 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 	@Override
 	public void onRefresh() {
 		tree.refresh();
+	}
+
+	private void saveNode(final Object node) {
+		itree.save(node, new CallbackTemplate<Object>() {
+
+			@Override
+			public void onSuccess(Object result) {
+				tree.notifyUpdate(node, result);
+			}
+		});
 	}
 }

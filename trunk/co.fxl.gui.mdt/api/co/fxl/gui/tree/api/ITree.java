@@ -20,7 +20,6 @@ package co.fxl.gui.tree.api;
 
 import java.util.List;
 
-
 public interface ITree<T> {
 
 	String name();
@@ -41,7 +40,7 @@ public interface ITree<T> {
 
 	void delete(ICallback<T> callback);
 
-	void save(T node);
+	void save(final T node, final ICallback<T> pCallback);
 
 	String[] getCreatableTypes();
 

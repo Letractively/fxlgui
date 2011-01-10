@@ -142,7 +142,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 			@Override
 			public void onClick() {
 				widget.mainPanel.display().showDialog().question()
-						.question("Delete Entity?")
+						.question("Delete Entity?").title("Warning")
 						.addQuestionListener(new IQuestionDialogListener() {
 
 							@Override
@@ -264,14 +264,10 @@ class TableView extends ViewTemplate implements IFilterListener,
 
 					@Override
 					public void onSuccess(final IDeletableList<Object> queryList) {
-						if (queryList.asList().isEmpty()) {
-							// TODO ...
-						}
+						long s = System.currentTimeMillis();
 						drawTable();
-						long s0 = System.currentTimeMillis();
 						TableView.this.queryList = queryList;
 						final List<Object> list = queryList.asList();
-						long s = System.currentTimeMillis();
 						IRows<Object> rows = new IRows<Object>() {
 
 							@Override
@@ -303,15 +299,14 @@ class TableView extends ViewTemplate implements IFilterListener,
 								TableView.this);
 						onResize(-1, widget.mainPanel.display().height());
 						updateCreatable();
-						time = System.currentTimeMillis() - s0;
+						time = System.currentTimeMillis() - s;
+						table.visible(true);
 						out.println("TableView: created table in " + time
 								+ "ms");
-						table.visible(true);
+						onChange(table.selection().result());
 					}
 				});
 	}
-
-	private int lastHeight = -1;
 
 	@Override
 	public void onResize(int width, int height) {
@@ -320,10 +315,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 		if (offsetY == 0)
 			offsetY = 139;
 		int maxFromDisplay = height - offsetY - 96;
-		if (lastHeight != height) {
-			lastHeight = height;
-			table.height(maxFromDisplay);
-		}
+		table.height(maxFromDisplay);
 	}
 
 	@Override

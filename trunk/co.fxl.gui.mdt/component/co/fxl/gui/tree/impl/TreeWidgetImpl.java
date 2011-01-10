@@ -193,7 +193,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					public void onClick() {
 						IQuestionDialog question = panel.display().showDialog()
 								.question();
-						question.question("Delete Entity?");
+						question.question("Delete Entity?").title("Warning");
 						question.addQuestionListener(new IQuestionDialogListener() {
 
 							@Override
@@ -423,8 +423,12 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	@Override
-	public ITreeWidget<T> notifyUpdate(T object) {
-		object2node.get(object).update();
+	public ITreeWidget<T> notifyUpdate(T originalObject, T object) {
+		if (selection == originalObject)
+			selection = object;
+		Node<T> n = object2node.remove(originalObject);
+		n.update(object);
+		object2node.put(object, n);
 		return this;
 	}
 
