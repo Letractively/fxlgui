@@ -55,12 +55,12 @@ public class SplitLayout implements IResizeListener, IClickListener {
 		mainPanel = vpanel.add().panel().vertical().spacing(10);
 		mainPanel.border().color().lightgray();
 		mainPanel.color().white();
-		IHorizontalPanel horizontal = panel.cell(1, 0).width(20).align()
+		IHorizontalPanel horizontal = panel.cell(1, 0).width(16).align()
 				.center().valign().center().panel().horizontal();
-		horizontal.addSpace(10);
+		// horizontal.addSpace(10);
 		button = horizontal.add().image().resource("minimize.png");
 		cell = panel.cell(2, 0).width(WIDTH_SIDE_PANEL).valign().begin();
-//		IVerticalPanel vertical = cell.panel().vertical();
+		// IVerticalPanel vertical = cell.panel().vertical();
 		// horizontal.addClickListener(clickListener);
 		button.addClickListener(this);
 		sideScrollPanel = cell.scrollPane();
@@ -77,7 +77,7 @@ public class SplitLayout implements IResizeListener, IClickListener {
 
 	private void onClick(boolean visible) {
 		sidePanel.visible(visible);
-		cell.width(sidePanel.visible() ? 300 : 0);
+		cell.width(sidePanel.visible() ? 300 : 1);
 		button.resource(sidePanel.visible() ? "minimize.png" : "maximize.png");
 	}
 
