@@ -62,10 +62,11 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 				container.component.setPreferredSize(new Dimension(widthPixel,
 						heightPixel));
 				container.component.setBackground(Color.WHITE);
+				container.component.setSize(widthPixel, heightPixel);
 			}
 		};
 		// layout = container.panel();
-		frame.setSize(widthPixel, heightPixel);
+		// frame.setSize(widthPixel, heightPixel);
 		frame.setBackground(Color.WHITE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// scrollPane = new JScrollPane(container.component);
@@ -75,7 +76,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	private void resize() {
 		frame.pack();
-		frame.setSize(widthPixel, heightPixel);
+		container.component.setSize(widthPixel, heightPixel);
 	}
 
 	@Override
@@ -194,10 +195,10 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	@Override
 	public IDisplay addResizeListener(final IResizeListener listener) {
-		frame.addComponentListener(new ComponentAdapter() {
+		container.component.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent arg0) {
-				listener.onResize(frame.getWidth(), frame.getHeight());
+				listener.onResize(width(), height());
 			}
 		});
 		return this;
@@ -205,12 +206,12 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	@Override
 	public int height() {
-		return frame.getHeight();
+		return container.component.getHeight();
 	}
 
 	@Override
 	public int width() {
-		return frame.getWidth();
+		return container.component.getWidth();
 	}
 
 	@Override
