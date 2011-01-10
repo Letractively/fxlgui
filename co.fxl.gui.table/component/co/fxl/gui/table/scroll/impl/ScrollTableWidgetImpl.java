@@ -47,11 +47,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	// TODO Swing Scroll Panel block increment for single click on arrow is not
 	// enough
 
-	// TODO no flickering in Firefox
-
 	private static final String ARROW_UP = "\u2191";
 	private static final String ARROW_DOWN = "\u2193";
-	private static final int MIN_SCROLL_INCREMENT = 22;
 	IVerticalPanel container;
 	private int height = 400;
 	private WidgetTitle widgetTitle;
