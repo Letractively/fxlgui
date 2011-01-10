@@ -27,6 +27,7 @@ import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IGridPanel.IGridClickListener;
@@ -49,9 +50,8 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 			rowOffset = 1;
 			if (label == null) {
 				IGridCell cell = grid.cell(column, 0);
-				cell.color().rgb(255, 240, 240);
 				IBorder b = cell.border();
-				b.color().lightgray();
+				b.color().black();
 				b.style().bottom();
 				label = cell.label();
 				label.font().pixel(14).weight().bold();
@@ -86,6 +86,11 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 		grid = mainPanel.add().panel().grid();
 		grid.spacing(0);
 		grid.indent(3);
+	}
+
+	@Override
+	public void remove() {
+		mainPanel.remove();
 	}
 
 	@Override
@@ -184,5 +189,10 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 	public int visibleRows() {
 		height(height);
 		return visibleRows;
+	}
+
+	@Override
+	public IElement<?> element() {
+		return mainPanel;
 	}
 }

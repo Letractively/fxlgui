@@ -19,6 +19,7 @@
 package co.fxl.gui.table.bulk.api;
 
 import co.fxl.gui.api.IClickable.IKey;
+import co.fxl.gui.api.IElement;
 
 public interface IBulkTableWidget {
 
@@ -63,4 +64,8 @@ public interface IBulkTableWidget {
 	int visibleRows();
 
 	IBulkTableWidget visible(boolean visible);
+
+	void remove();
+
+	IElement<?> element();
 }

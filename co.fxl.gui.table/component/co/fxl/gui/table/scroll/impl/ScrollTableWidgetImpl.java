@@ -21,6 +21,7 @@ package co.fxl.gui.table.scroll.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
@@ -57,7 +58,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private SelectionImpl selection = new SelectionImpl(this);
 	private int scrollPanelHeight;
 	private int scrollOffset = -1;
-	private IVerticalPanel contentPanel;
+	private ICardPanel contentPanel;
 	private int sortColumn = -1;
 	private int sortNegator = -1;
 	IBulkTableWidget grid;
@@ -95,18 +96,24 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			selectionPanel = null;
 			container.clear();
 			container.addSpace(20);
-			IDockPanel dock = container.add().panel().dock();
-			dock.height(height);
-			contentPanel = dock.center().panel().vertical();
-			scrollOffset = 0;
-			update();
-			IScrollPane sp = dock.right().scrollPane();
-			sp.size(35, height);
-			IVerticalPanel v = sp.viewPort().panel().vertical();
-			double spHeight = height * rows.size();
-			scrollPanelHeight = (int) (spHeight / paintedRows);
-			v.add().panel().horizontal().size(1, scrollPanelHeight);
-			sp.addScrollListener(this);
+			if (rows.size() == 0) {
+				IVerticalPanel dock = container.add().panel().vertical();
+				dock.height(height);
+				dock.add().label().text("No rows found");
+			} else {
+				IDockPanel dock = container.add().panel().dock();
+				dock.height(height);
+				contentPanel = dock.center().panel().card();
+				scrollOffset = 0;
+				update();
+				IScrollPane sp = dock.right().scrollPane();
+				sp.size(35, height);
+				IVerticalPanel v = sp.viewPort().panel().vertical();
+				double spHeight = height * rows.size();
+				scrollPanelHeight = (int) (spHeight / paintedRows);
+				v.add().panel().horizontal().size(1, scrollPanelHeight);
+				sp.addScrollListener(this);
+			}
 		} else {
 			throw new MethodNotImplementedException();
 		}
@@ -137,45 +144,59 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		return (int) index;
 	}
 
+	private boolean updating = false;
+
 	private void update() {
-		contentPanel.clear();
-		highlighted.clear();
-		grid = (IBulkTableWidget) contentPanel.add().widget(
-				IBulkTableWidget.class);
-		grid.height(height);
-		paintedRows = Math.max(paintedRows, grid.visibleRows());
-		rowOffset = convert(scrollOffset);
-		for (int c = 0; c < columns.size(); c++) {
-			String name = columns.get(c).name;
-			if (sortColumn == c) {
-				name += " " + (sortNegator == 1 ? ARROW_DOWN : ARROW_UP);
+		if (updating)
+			return;
+		updating = true;
+		int usedScrollOffset;
+		do {
+			usedScrollOffset = scrollOffset;
+			highlighted.clear();
+			contentPanel.clear();
+			IBulkTableWidget lastGrid = grid;
+			grid = (IBulkTableWidget) contentPanel.add().widget(
+					IBulkTableWidget.class);
+			grid.height(height);
+			paintedRows = Math.max(paintedRows, grid.visibleRows());
+			rowOffset = convert(usedScrollOffset);
+			for (int c = 0; c < columns.size(); c++) {
+				String name = columns.get(c).name;
+				if (sortColumn == c) {
+					name += " " + (sortNegator == 1 ? ARROW_DOWN : ARROW_UP);
+				}
+				grid.column(c).title(name);
 			}
-			grid.column(c).title(name);
-		}
-		if (rowOffset + paintedRows >= rows.size()) {
-			if (rowOffset == 0) {
-				paintedRows = rows.size();
-			} else
-				paintedRows = rows.size() - rowOffset;
-		}
-		for (int r = 0; r < paintedRows; r++) {
-			int index = r + rowOffset;
-			Object[] row = rows.row(index);
-			for (ColumnImpl c : columns)
-				c.decorate(grid.cell(c.index, r), row[c.index]);
-		}
-		visibleRows = paintedRows;
-		grid.visible(true);
-		for (int r = 0; r < visibleRows; r++) {
-			if (rows.selected(r + rowOffset)) {
-				IRow row = grid.row(r);
-				row.highlight(true);
-				highlighted.add(row);
+			if (rowOffset + paintedRows >= rows.size()) {
+				if (rowOffset == 0) {
+					paintedRows = rows.size();
+				} else
+					paintedRows = rows.size() - rowOffset;
 			}
-		}
-		paintedRows = Math.max(paintedRows, grid.visibleRows());
-		updateSorting();
-		selection.update();
+			for (int r = 0; r < paintedRows; r++) {
+				int index = r + rowOffset;
+				Object[] row = rows.row(index);
+				for (ColumnImpl c : columns)
+					c.decorate(grid.cell(c.index, r), row[c.index]);
+			}
+			visibleRows = paintedRows;
+			grid.visible(true);
+			contentPanel.show(grid.element());
+			if (lastGrid != null)
+				lastGrid.remove();
+			for (int r = 0; r < visibleRows; r++) {
+				if (rows.selected(r + rowOffset)) {
+					IRow row = grid.row(r);
+					row.highlight(true);
+					highlighted.add(row);
+				}
+			}
+			paintedRows = Math.max(paintedRows, grid.visibleRows());
+			updateSorting();
+			selection.update();
+		} while (usedScrollOffset != scrollOffset);
+		updating = false;
 	}
 
 	public void highlightAll() {
