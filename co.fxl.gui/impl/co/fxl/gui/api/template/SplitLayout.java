@@ -34,6 +34,8 @@ public class SplitLayout implements IResizeListener, IClickListener {
 	// TODO nice-2-have: SplitLayout consists of 3 cells, coupled to height of
 	// display
 
+	// TODO Swing: minimize doesn't work
+
 	private static final int WIDTH_SIDE_PANEL = 300;
 	private ILayout layout;
 	public IGridPanel panel;
