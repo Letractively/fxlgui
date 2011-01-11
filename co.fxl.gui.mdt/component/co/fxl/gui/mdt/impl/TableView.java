@@ -306,6 +306,9 @@ class TableView extends ViewTemplate implements IFilterListener,
 
 							@Override
 							public void onClick(int column, int row) {
+								if (row == 0)
+									return;
+								row--;
 								Object show = rows.identifier(row);
 								widget.r2.checked(true);
 								widget.showDetailView(show);
