@@ -21,10 +21,13 @@ package co.fxl.gui.swing;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
-import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IWidgetProvider;
 
 class SwingDialog implements IDialog {
 
@@ -109,9 +112,53 @@ class SwingDialog implements IDialog {
 		return this;
 	}
 
+	private JDialog dialog;
+
 	@Override
-	public ILayout panel() {
-		throw new MethodNotImplementedException();
+	public IContainer container() {
+		return new SwingContainer<JComponent>(new ComponentParent() {
+
+			@Override
+			public void add(JComponent component) {
+				dialog = new JDialog();
+				dialog.setTitle(title);
+				dialog.getContentPane().add(component);
+			}
+
+			@Override
+			public void remove(JComponent component) {
+				dialog.setVisible(false);
+			}
+
+			@Override
+			public JComponent getComponent() {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public IWidgetProvider<?> lookupWidgetProvider(
+					Class<?> interfaceClass) {
+				return panel.lookupWidgetProvider(interfaceClass);
+			}
+
+			@Override
+			public SwingDisplay lookupSwingDisplay() {
+				return panel;
+			}
+		});
+	}
+
+	@Override
+	public IDialog visible(boolean visible) {
+		assert dialog != null;
+		if (visible) {
+			dialog.pack();
+			dialog.setLocationRelativeTo(panel.frame);
+			dialog.setVisible(true);
+		} else {
+			dialog.setVisible(false);
+		}
+		return this;
 	}
 
 	@Override
@@ -123,4 +170,5 @@ class SwingDialog implements IDialog {
 	public IQuestionDialog question() {
 		return new QuestionDialog();
 	}
+
 }
