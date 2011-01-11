@@ -81,6 +81,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 
 	@Override
 	public void decorate(IVerticalPanel panel, final Object node) {
+		assert node != null;
 		panel.clear();
 		decorateBorder(panel);
 		IFormWidget form = (IFormWidget) panel.add().widget(IFormWidget.class);
