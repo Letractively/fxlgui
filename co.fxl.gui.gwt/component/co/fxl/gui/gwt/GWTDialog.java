@@ -18,8 +18,9 @@
  */
 package co.fxl.gui.gwt;
 
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
-import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IWidgetProvider;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -28,6 +29,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 class GWTDialog implements IDialog {
 
@@ -85,9 +87,47 @@ class GWTDialog implements IDialog {
 		return this;
 	}
 
+	DialogBox dialogbox;
+
 	@Override
-	public ILayout panel() {
-		throw new MethodNotImplementedException();
+	public IContainer container() {
+		return new GWTContainer<Widget>(new WidgetParent() {
+
+			@Override
+			public void add(Widget widget) {
+				dialogbox = new DialogBox(false);
+				dialogbox.setText(title);
+				SimplePanel holder = new SimplePanel();
+				holder.add(widget);
+				dialogbox.setWidget(holder);
+				dialogbox.center();
+			}
+
+			@Override
+			public void remove(Widget widget) {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public GWTDisplay lookupDisplay() {
+				return (GWTDisplay) GWTDisplay.instance();
+			}
+
+			@Override
+			public IWidgetProvider<?> lookupWidgetProvider(
+					Class<?> interfaceClass) {
+				return lookupDisplay().lookupWidgetProvider(interfaceClass);
+			}
+		});
+	}
+
+	@Override
+	public IDialog visible(boolean visible) {
+		assert dialogbox != null;
+		if (!visible) {
+			dialogbox.hide();
+		}
+		return this;
 	}
 
 	@Override
