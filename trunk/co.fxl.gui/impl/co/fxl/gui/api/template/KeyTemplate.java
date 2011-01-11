@@ -64,7 +64,8 @@ public abstract class KeyTemplate<T> implements IKey<T> {
 
 	@Override
 	public T mouseRight() {
-		throw new MethodNotImplementedException();
+		buttonType = ButtonType.RIGHT;
+		return element;
 	}
 
 	@Override
