@@ -52,13 +52,14 @@ class TableFilterImpl implements ITableFilter<Object>, IFilterListener {
 	}
 
 	@Override
-	public ITableFilter<Object> filterable(IColumn column, Object... values) {
+	public ITableFilter<Object> filterable(IColumn<Object> column,
+			Object... values) {
 		ColumnImpl columnImpl = (ColumnImpl) column;
 		return filterable(column, columnImpl.contentType, Arrays.asList(values));
 	}
 
 	@Override
-	public ITableFilter<Object> filterable(IColumn column,
+	public ITableFilter<Object> filterable(IColumn<Object> column,
 			Class<?> contentType, List<?> values) {
 		ColumnImpl columnImpl = (ColumnImpl) column;
 		String name = columnImpl.name;

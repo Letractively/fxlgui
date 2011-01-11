@@ -32,10 +32,13 @@ class SelectionImpl implements ISelection<Object> {
 
 	class SingleSelectionImpl implements ISingleSelection<Object> {
 
+		private List<ISelectionListener<Object>> listeners = new LinkedList<ISelectionListener<Object>>();
+
 		@Override
 		public ISingleSelection<Object> addSelectionListener(
 				ISelectionListener<Object> selectionListener) {
-			throw new MethodNotImplementedException();
+			listeners.add(selectionListener);
+			return this;
 		}
 
 		void update() {
@@ -51,6 +54,9 @@ class SelectionImpl implements ISelection<Object> {
 					IRow r = widget.grid.row(row);
 					r.highlight(true);
 					widget.highlighted.add(r);
+					for (ISelectionListener<Object> l : listeners) {
+						l.onSelection(widget.rows.selectedIdentifiers().get(0));
+					}
 				}
 			});
 		}

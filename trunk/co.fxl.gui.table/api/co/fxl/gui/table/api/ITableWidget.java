@@ -38,7 +38,7 @@ public interface ITableWidget<T> {
 
 	ISelection<T> selection();
 
-	IColumn addColumn();
+	IColumn<T> addColumn();
 
 	IRow<T> addRow();
 

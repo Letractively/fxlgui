@@ -151,7 +151,7 @@ public class TableWidgetImpl implements ITableWidget<Object>,
 	}
 
 	@Override
-	public IColumn addColumn() {
+	public IColumn<Object> addColumn() {
 		ColumnImpl column = new ColumnImpl(this, columns.size());
 		columns.add(column);
 		return column;

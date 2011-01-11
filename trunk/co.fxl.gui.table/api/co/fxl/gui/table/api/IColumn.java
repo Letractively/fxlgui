@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.table.api;
 
-public interface IColumn {
+public interface IColumn<T> {
 
 	public interface IColumnUpdateListener<T, R> {
 
@@ -30,15 +30,15 @@ public interface IColumn {
 		void decorate(T element, R value);
 	}
 
-	IColumn name(String name);
+	IColumn<T> name(String name);
 
-	IColumn sortable();
+	IColumn<T> sortable();
 
-	IColumn type(Class<?> type);
-	
-	IColumn width(int width);
+	IColumn<T> type(Class<?> type);
 
-	IColumn decorator(IDecorator<?, ?> decorator);
+	IColumn<T> width(int width);
 
-	IColumn updateListener(IColumnUpdateListener<?, ?> updateListener);
+	IColumn<T> decorator(IDecorator<?, ?> decorator);
+
+	IColumn<T> updateListener(IColumnUpdateListener<T, ?> updateListener);
 }

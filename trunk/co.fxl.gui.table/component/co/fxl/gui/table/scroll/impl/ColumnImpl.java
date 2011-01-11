@@ -21,17 +21,25 @@ package co.fxl.gui.table.scroll.impl;
 import java.util.Comparator;
 import java.util.Date;
 
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.template.SimpleDateFormat;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ICell;
 
-class ColumnImpl implements IColumn, Comparator<Object[]> {
+class ColumnImpl implements IColumn<Object>, Comparator<Object[]> {
 
 	public class BooleanDecorator implements Decorator<Boolean> {
 
 		@Override
-		public void decorate(ICell cell, Boolean value) {
+		public void decorate(final Object identifier, ICell cell, Boolean value) {
 			cell.checkBox(value);
+			if (updateListener != null)
+				cell.updateListener(new IUpdateListener<Boolean>() {
+					@Override
+					public void onUpdate(Boolean value) {
+						updateListener.onUpdate(identifier, value);
+					}
+				});
 		}
 	}
 
@@ -40,7 +48,7 @@ class ColumnImpl implements IColumn, Comparator<Object[]> {
 	public class DateDecorator implements Decorator<Date> {
 
 		@Override
-		public void decorate(ICell cell, Date value) {
+		public void decorate(Object identifier, ICell cell, Date value) {
 			cell.text(FORMAT.format(value));
 		}
 
@@ -49,7 +57,7 @@ class ColumnImpl implements IColumn, Comparator<Object[]> {
 	public class NumberDecorator implements Decorator<Number> {
 
 		@Override
-		public void decorate(ICell cell, Number value) {
+		public void decorate(Object identifier, ICell cell, Number value) {
 			cell.text(String.valueOf(value));
 		}
 
@@ -57,13 +65,13 @@ class ColumnImpl implements IColumn, Comparator<Object[]> {
 
 	public interface Decorator<T> {
 
-		void decorate(ICell cell, T value);
+		void decorate(Object identifier, ICell cell, T value);
 	}
 
 	public class StringDecorator implements Decorator<String> {
 
 		@Override
-		public void decorate(ICell cell, String value) {
+		public void decorate(Object identifier, ICell cell, String value) {
 			cell.text((String) value);
 		}
 	}
@@ -74,30 +82,31 @@ class ColumnImpl implements IColumn, Comparator<Object[]> {
 	int index;
 	@SuppressWarnings("rawtypes")
 	private Decorator decorator;
+	private IColumnUpdateListener<Object, Object> updateListener;
 
 	ColumnImpl(int index) {
 		this.index = index;
 	}
 
 	@SuppressWarnings("unchecked")
-	void decorate(ICell cell, Object value) {
-		decorator.decorate(cell, value);
+	void decorate(Object identifier, ICell cell, Object value) {
+		decorator.decorate(identifier, cell, value);
 	}
 
 	@Override
-	public IColumn name(String name) {
+	public IColumn<Object> name(String name) {
 		this.name = name;
 		return this;
 	}
 
 	@Override
-	public IColumn sortable() {
+	public IColumn<Object> sortable() {
 		sortable = true;
 		return this;
 	}
 
 	@Override
-	public IColumn type(Class<?> type) {
+	public IColumn<Object> type(Class<?> type) {
 		if (type.equals(String.class)) {
 			decorator = new StringDecorator();
 		} else if (type.equals(Long.class) || type.equals(Integer.class)) {
@@ -112,18 +121,21 @@ class ColumnImpl implements IColumn, Comparator<Object[]> {
 	}
 
 	@Override
-	public IColumn width(int width) {
+	public IColumn<Object> width(int width) {
 		throw new MethodNotImplementedException();
 	}
 
 	@Override
-	public IColumn decorator(IDecorator<?, ?> decorator) {
+	public IColumn<Object> decorator(IDecorator<?, ?> decorator) {
 		throw new MethodNotImplementedException();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public IColumn updateListener(IColumnUpdateListener<?, ?> updateListener) {
-		throw new MethodNotImplementedException();
+	public IColumn<Object> updateListener(
+			IColumnUpdateListener<Object, ?> updateListener) {
+		this.updateListener = (co.fxl.gui.table.api.IColumn.IColumnUpdateListener<Object, Object>) updateListener;
+		return this;
 	}
 
 	@SuppressWarnings("unchecked")
