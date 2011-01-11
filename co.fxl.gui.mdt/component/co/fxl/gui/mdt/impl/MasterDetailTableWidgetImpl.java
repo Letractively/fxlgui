@@ -232,6 +232,10 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 		return this;
 	}
 
+	void showTableView(Object object) {
+		showTableView(object, configuration);
+	}
+
 	void showTableView(Object object, String configuration) {
 		clear();
 		new TableView(this, object, configuration);

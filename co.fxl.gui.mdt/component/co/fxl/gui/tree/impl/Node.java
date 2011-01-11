@@ -20,7 +20,9 @@ package co.fxl.gui.tree.impl;
 
 import java.util.List;
 
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
@@ -54,13 +56,15 @@ class Node<T> implements IClickListener {
 	private ILabel refreshLabel;
 	List<ITree<T>> path;
 
-	Node(TreeWidgetImpl<T> widget, IVerticalPanel panel, ITree<T> root,
-			int depth, boolean expand, List<ITree<T>> path) {
+	Node(final TreeWidgetImpl<T> widget, IVerticalPanel panel,
+			final ITree<T> root, int depth, boolean expand, List<ITree<T>> path) {
 		this.widget = widget;
 		this.panel = panel;
 		this.expand = expand;
 		this.path = path;
 		container = panel.add().panel().horizontal();
+		IClickable<?> clickable = container;
+		injectTreeListener(clickable);
 		content = container.add().panel().horizontal().spacing(2);
 		IClickListener showClickListener = new IClickListener() {
 			@Override
@@ -73,15 +77,18 @@ class Node<T> implements IClickListener {
 			image = content.add().image().resource(FOLDER_CLOSED);
 			image.addClickListener(this);
 			image.addClickListener(showClickListener);
+			injectTreeListener(image);
 			content.addSpace(4);
 		} else {
 			content.addSpace(depth * INDENT);
 			image = content.add().image()
 					.resource(root.isLeaf() ? LEAF : FOLDER_EMPTY);
 			image.addClickListener(showClickListener);
+			injectTreeListener(image);
 			content.addSpace(4);
 		}
 		label = content.add().label().text(root.name());
+		injectTreeListener(label);
 		if (widget.detailPanel != null) {
 			label.addClickListener(showClickListener);
 		}
@@ -111,6 +118,19 @@ class Node<T> implements IClickListener {
 			expandLazyNode();
 		}
 		widget.object2node.put(root.object(), this);
+	}
+
+	private void injectTreeListener(IClickable<?> clickable) {
+		if (widget.treeClickListener != null) {
+			IKey<?> key = clickable.addClickListener(new IClickListener() {
+
+				@Override
+				public void onClick() {
+					widget.treeClickListener.onClick(tree);
+				}
+			});
+			widget.treeClickAdapter.forward((IKey<Object>) key);
+		}
 	}
 
 	void update(T object) {

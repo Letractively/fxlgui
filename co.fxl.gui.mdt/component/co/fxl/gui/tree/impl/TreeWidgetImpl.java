@@ -26,6 +26,7 @@ import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog.IQuestionDialog;
 import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
@@ -34,6 +35,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.KeyAdapter;
 import co.fxl.gui.api.template.ResizeListener;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.navigation.api.IMenuItem;
@@ -131,6 +133,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private String defaultCreatableType = null;
 	private List<String> creatableTypes = new LinkedList<String>();
 	private boolean showRoot = true;
+	ITreeClickListener<T> treeClickListener;
+	KeyAdapter<Object> treeClickAdapter;
 
 	TreeWidgetImpl(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel()).space(0);
@@ -472,5 +476,12 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	public ITreeWidget<T> showRefresh(boolean showRefresh) {
 		this.showRefresh = showRefresh;
 		return this;
+	}
+
+	@Override
+	public IKey<?> addTreeClickListener(ITreeClickListener<T> listener) {
+		treeClickListener = listener;
+		treeClickAdapter = new KeyAdapter<Object>();
+		return treeClickAdapter;
 	}
 }
