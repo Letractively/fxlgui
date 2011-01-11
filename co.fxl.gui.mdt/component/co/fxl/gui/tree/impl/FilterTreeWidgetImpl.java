@@ -69,12 +69,7 @@ class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
 
 	@Override
 	public void onRefresh() {
-		source.query(constraints, new ICallback<ITree<T>>() {
-
-			@Override
-			public void onFail(Throwable throwable) {
-				throw new MethodNotImplementedException();
-			}
+		source.query(constraints, new CallbackTemplate<ITree<T>>() {
 
 			@Override
 			public void onSuccess(ITree<T> tree) {

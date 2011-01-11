@@ -145,7 +145,8 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 			tree.addDetailView(relation.name, new RelationDecorator(relation));
 		}
 		for (final N2MRelationImpl relation : widget.n2MRelations) {
-			tree.addDetailView(relation.name, new N2MRelationDecorator(relation));
+			tree.addDetailView(relation.name,
+					new N2MRelationDecorator(relation));
 		}
 		for (final PropertyPageImpl relation : widget.propertyPages) {
 			tree.addDetailView(relation.name, new IDecorator<Object>() {
@@ -173,19 +174,14 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 	@Override
 	public void query(IFilterConstraints constraints,
 			final ICallback<ITree<Object>> callback) {
-		widget.constraints = constraints;
+		// widget.constraints = constraints;
 		widget.source.queryTree(constraints, selectionObject,
-				new ICallback<ITree<Object>>() {
+				new CallbackTemplate<ITree<Object>>() {
 
 					@Override
 					public void onSuccess(ITree<Object> result) {
 						DetailView.this.itree = result;
 						callback.onSuccess(result);
-					}
-
-					@Override
-					public void onFail(Throwable throwable) {
-						callback.onFail(throwable);
 					}
 				});
 	}

@@ -74,7 +74,7 @@ class SelectableList {
 		}
 
 		void visible(boolean b) {
-			if (selection == this)
+			if (selection != null && selection.equals(this))
 				selection = null;
 			visible = b;
 		}
@@ -157,7 +157,7 @@ class SelectableList {
 	void visible(Object selection, boolean b) {
 		// TODO effizienter
 		for (ListItem i : items) {
-			if (i.object == selection)
+			if (i.object.equals(selection))
 				i.visible(b);
 		}
 		draw();
