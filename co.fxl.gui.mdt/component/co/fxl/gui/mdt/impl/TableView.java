@@ -194,7 +194,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 				if (!p.displayInTable)
 					continue;
 				adapters.add(p.adapter);
-				IColumn column = table.addColumn().name(p.name)
+				IColumn<Object> column = table.addColumn().name(p.name)
 						.type(p.type.clazz);
 				if (p.sortable)
 					column.sortable();

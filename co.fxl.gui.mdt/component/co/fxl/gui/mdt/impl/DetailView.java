@@ -21,10 +21,6 @@ package co.fxl.gui.mdt.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.IBordered.IBorder;
-import co.fxl.gui.api.IButton;
-import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.api.template.SimpleDateFormat;
@@ -32,14 +28,6 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IMDTFilterList;
 import co.fxl.gui.mdt.api.IMasterDetailTableWidget;
-import co.fxl.gui.n2m.api.IN2MWidget;
-import co.fxl.gui.n2m.api.IN2MWidget.IN2MRelationListener;
-import co.fxl.gui.table.api.IColumn;
-import co.fxl.gui.table.api.IColumn.IColumnUpdateListener;
-import co.fxl.gui.table.api.IRow;
-import co.fxl.gui.table.api.ISelection;
-import co.fxl.gui.table.api.ISelection.ISingleSelection;
-import co.fxl.gui.table.api.ITableWidget;
 import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.IFilterTreeWidget;
 import co.fxl.gui.tree.api.IFilterTreeWidget.ISource;
@@ -154,202 +142,10 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 		}
 		;
 		for (final RelationImpl relation : widget.relations) {
-			tree.addDetailView(relation.name, new IDecorator<Object>() {
-
-				@Override
-				public void clear(IVerticalPanel panel) {
-					panel.clear();
-				}
-
-				@Override
-				public void decorate(final IVerticalPanel panel, Object node) {
-					panel.clear();
-					IBorder border = panel.border();
-					border.color().gray();
-					border.style().top();
-					relation.adapter.valueOf(node,
-							new ICallback<List<Object>>() {
-
-								private IButton details;
-								private IButton add;
-								private IButton remove;
-
-								@Override
-								public void onFail(Throwable throwable) {
-									throw new MethodNotImplementedException();
-								}
-
-								@Override
-								public void onSuccess(List<Object> result) {
-									@SuppressWarnings("unchecked")
-									ITableWidget<Object> table = (ITableWidget<Object>) panel
-											.add().widget(ITableWidget.class);
-									final ISelection<Object> selection0 = table
-											.selection();
-									ISingleSelection<Object> selection = selection0
-											.single();
-									IHorizontalPanel buttonPanel = panel.add()
-											.panel().horizontal().add().panel()
-											.horizontal();
-									if (relation.addRemoveListener != null) {
-										if (relation.addRemoveListener
-												.isDetailedAdd()) {
-											add = relation.addRemoveListener
-													.decorateAdd(buttonPanel
-															.add());
-										} else
-											add = buttonPanel.add().button()
-													.text("Add");
-										remove = buttonPanel.addSpace(10).add()
-												.button().text("Remove")
-												.clickable(false);
-									}
-									if (relation.showListener != null)
-										details = buttonPanel.addSpace(10)
-												.add().button().text("Show")
-												.clickable(false);
-									co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener<Object> listener = new co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener<Object>() {
-										@Override
-										public void onSelection(Object selection) {
-											if (remove != null) {
-												remove.clickable(selection != null);
-											}
-											if (details != null)
-												details.clickable(selection != null);
-										}
-									};
-									if (add != null)
-										add.addClickListener(new IClickListener() {
-											@Override
-											public void onClick() {
-												List<Object> r = selection0
-														.result();
-												Object c = null;
-												if (r.size() > 0)
-													c = r.get(0);
-												relation.addRemoveListener
-														.onAdd(c);
-											}
-										});
-									if (remove != null)
-										remove.addClickListener(new IClickListener() {
-											@Override
-											public void onClick() {
-												List<Object> r = selection0
-														.result();
-												relation.addRemoveListener
-														.onRemove(r.get(0));
-											}
-										});
-									if (details != null)
-										details.addClickListener(new IClickListener() {
-											@Override
-											public void onClick() {
-												List<Object> r = selection0
-														.result();
-												relation.showListener.onShow(r);
-											}
-										});
-									selection.addSelectionListener(listener);
-									for (final PropertyImpl property : relation.properties) {
-										IColumn c = table.addColumn()
-												.name(property.name)
-												.type(property.type.clazz)
-												.sortable();
-										if (property.type.clazz
-												.equals(Boolean.class)) {
-											c.updateListener(new IColumnUpdateListener<Object, Boolean>() {
-
-												@Override
-												public void onUpdate(Object o,
-														Boolean value) {
-													property.adapter.valueOf(o,
-															value);
-												}
-											});
-										}
-									}
-									for (Object e : result) {
-										IRow<Object> row = table.addRow();
-										row.identifier(e);
-										for (PropertyImpl p : relation.properties) {
-											row.add((Comparable<?>) p.adapter
-													.valueOf(e));
-										}
-									}
-									table.visible(true);
-								}
-							});
-				}
-
-				@Override
-				public void decorate(IVerticalPanel panel, ITree<Object> tree) {
-					decorate(panel, tree.object());
-				}
-			});
+			tree.addDetailView(relation.name, new RelationDecorator(relation));
 		}
 		for (final N2MRelationImpl relation : widget.n2MRelations) {
-			tree.addDetailView(relation.name, new IDecorator<Object>() {
-
-				@Override
-				public void clear(IVerticalPanel panel) {
-					panel.clear();
-				}
-
-				@Override
-				public void decorate(IVerticalPanel panel, ITree<Object> tree) {
-					decorate(panel, tree.object());
-				}
-
-				@Override
-				public void decorate(final IVerticalPanel panel,
-						final Object node) {
-					panel.clear();
-					IBorder border = panel.border();
-					border.color().gray();
-					border.style().top();
-					relation.adapter.valueOf(node,
-							new ICallback<List<Object>>() {
-
-								@Override
-								public void onFail(Throwable throwable) {
-									throw new MethodNotImplementedException();
-								}
-
-								@Override
-								public void onSuccess(final List<Object> result) {
-									@SuppressWarnings("unchecked")
-									IN2MWidget<Object> table = (IN2MWidget<Object>) panel
-											.add().widget(IN2MWidget.class);
-									table.domain(relation.domain);
-									table.selection(result);
-									table.listener(new IN2MRelationListener<Object>() {
-										@Override
-										public void onChange(
-												List<Object> selection) {
-											relation.adapter
-													.valueOf(
-															node,
-															selection,
-															new ICallback<List<Object>>() {
-
-																@Override
-																public void onSuccess(
-																		List<Object> result) {
-																}
-
-																@Override
-																public void onFail(
-																		Throwable throwable) {
-																	throw new MethodNotImplementedException();
-																}
-															});
-										}
-									});
-								}
-							});
-				}
-			});
+			tree.addDetailView(relation.name, new N2MRelationDecorator(relation));
 		}
 		for (final PropertyPageImpl relation : widget.propertyPages) {
 			tree.addDetailView(relation.name, new IDecorator<Object>() {
