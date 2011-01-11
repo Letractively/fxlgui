@@ -117,6 +117,18 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 					numRows = row + 1;
 				return this;
 			}
+
+			@Override
+			public ICell checkBox(Boolean value) {
+				IGridCell cell = grid.cell(column, row + rowOffset);
+				cell.checkBox().checked(value).editable(false);
+				IBorder b = cell.border();
+				b.color().lightgray();
+				b.style().bottom();
+				if (row + 1 > numRows)
+					numRows = row + 1;
+				return this;
+			}
 		};
 	}
 
