@@ -19,9 +19,11 @@
 package co.fxl.gui.table.scroll.api;
 
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.ISelection;
+import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableListener;
 
 public interface IScrollTableWidget<T> {
 
@@ -38,6 +40,8 @@ public interface IScrollTableWidget<T> {
 	IScrollTableWidget<T> height(int height);
 
 	IScrollTableWidget<T> rows(IRows<T> rows);
+
+	IKey<?> addTableListener(ITableListener l);
 
 	IScrollTableWidget<?> visible(boolean visible);
 }

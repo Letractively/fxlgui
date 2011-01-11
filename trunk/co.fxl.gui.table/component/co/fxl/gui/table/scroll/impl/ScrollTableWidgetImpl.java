@@ -18,11 +18,14 @@
  */
 package co.fxl.gui.table.scroll.impl;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
@@ -30,6 +33,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IScrollListener;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.KeyAdapter;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.ISelection;
@@ -156,6 +160,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	private boolean updating = false;
+	private Map<ITableListener, KeyAdapter<Object>> listeners = new HashMap<ITableListener, KeyAdapter<Object>>();
 
 	private void update() {
 		if (updating)
@@ -209,6 +214,12 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			paintedRows = Math.max(paintedRows, grid.visibleRows());
 			updateSorting();
 			selection.update();
+			for (ITableListener l : listeners.keySet()) {
+				KeyAdapter<Object> adp = listeners.get(l);
+				@SuppressWarnings("unchecked")
+				IKey<Object> key = (IKey<Object>) grid.addTableListener(l);
+				adp.forward(key);
+			}
 		} while (usedScrollOffset != scrollOffset);
 		updating = false;
 	}
@@ -268,5 +279,20 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	int convert2GridRow(int row) {
 		return row - rowOffset;
+	}
+
+	@Override
+	public IKey<?> addTableListener(final ITableListener l) {
+		ITableListener l2 = new ITableListener() {
+
+			@Override
+			public void onClick(int column, int row) {
+				int convert2TableRow = convert2TableRow(row);
+				l.onClick(column, convert2TableRow);
+			}
+		};
+		KeyAdapter<Object> keyAdapter = new KeyAdapter<Object>();
+		listeners.put(l2, keyAdapter);
+		return keyAdapter;
 	}
 }
