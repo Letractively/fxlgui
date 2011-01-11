@@ -20,6 +20,7 @@ package co.fxl.gui.table.bulk.api;
 
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 public interface IBulkTableWidget {
 
@@ -49,6 +50,8 @@ public interface IBulkTableWidget {
 		ICell text(String text);
 
 		ICell checkBox(Boolean value);
+
+		ICell updateListener(IUpdateListener<Boolean> updateListener);
 	}
 
 	ICell cell(int column, int row);

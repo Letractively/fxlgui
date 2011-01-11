@@ -24,7 +24,7 @@ import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.table.api.IColumn;
 
-public class ColumnImpl implements IColumn {
+public class ColumnImpl implements IColumn<Object> {
 
 	private class ClickListener implements IClickListener {
 
@@ -77,13 +77,13 @@ public class ColumnImpl implements IColumn {
 	}
 
 	@Override
-	public IColumn name(String name) {
+	public IColumn<Object> name(String name) {
 		this.name = name;
 		return this;
 	}
 
 	@Override
-	public IColumn sortable() {
+	public IColumn<Object> sortable() {
 		sortable = true;
 		return this;
 	}
@@ -103,26 +103,27 @@ public class ColumnImpl implements IColumn {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public IColumn decorator(IDecorator<?, ?> decorator) {
+	public IColumn<Object> decorator(IDecorator<?, ?> decorator) {
 		this.decorator = (IDecorator<Object, Object>) decorator;
 		return this;
 	}
 
 	@Override
-	public IColumn type(Class<?> type) {
+	public IColumn<Object> type(Class<?> type) {
 		contentType = type;
 		return this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public IColumn updateListener(IColumnUpdateListener<?, ?> updateListener) {
+	public IColumn<Object> updateListener(
+			IColumnUpdateListener<Object, ?> updateListener) {
 		this.updateListener = (IColumnUpdateListener<Object, Object>) updateListener;
 		return this;
 	}
 
 	@Override
-	public IColumn width(int width) {
+	public IColumn<Object> width(int width) {
 		this.width = width;
 		return this;
 	}

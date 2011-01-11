@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
@@ -32,6 +33,7 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IGridPanel.IGridClickListener;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 
@@ -106,6 +108,8 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 	public ICell cell(final int column, final int row) {
 		return new ICell() {
 
+			private ICheckBox checkBox;
+
 			@Override
 			public ICell text(String text) {
 				IGridCell cell = grid.cell(column, row + rowOffset);
@@ -121,12 +125,22 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 			@Override
 			public ICell checkBox(Boolean value) {
 				IGridCell cell = grid.cell(column, row + rowOffset);
-				cell.checkBox().checked(value).editable(false);
+				checkBox = cell.checkBox().checked(value).editable(false);
 				IBorder b = cell.border();
 				b.color().lightgray();
 				b.style().bottom();
 				if (row + 1 > numRows)
 					numRows = row + 1;
+				return this;
+			}
+
+			@Override
+			public ICell updateListener(IUpdateListener<Boolean> updateListener) {
+				if (checkBox != null) {
+					checkBox.editable(true);
+					checkBox.addUpdateListener(updateListener);
+				} else
+					throw new MethodNotImplementedException();
 				return this;
 			}
 		};

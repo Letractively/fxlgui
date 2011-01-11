@@ -22,7 +22,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.table.filter.api.IFilterTableWidget;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings("rawtypes")
 public class FilterTableWidgetImplProvider implements
 		IWidgetProvider<IFilterTableWidget> {
 

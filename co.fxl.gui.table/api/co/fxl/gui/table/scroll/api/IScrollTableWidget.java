@@ -31,7 +31,7 @@ public interface IScrollTableWidget<T> {
 
 	ISelection<T> selection();
 
-	IColumn addColumn();
+	IColumn<T> addColumn();
 
 	int offsetY();
 

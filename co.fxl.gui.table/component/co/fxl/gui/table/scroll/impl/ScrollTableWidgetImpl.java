@@ -140,7 +140,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	@Override
-	public IColumn addColumn() {
+	public IColumn<Object> addColumn() {
 		ColumnImpl column = new ColumnImpl(columns.size());
 		columns.add(column);
 		return column;
@@ -191,7 +191,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				int index = r + rowOffset;
 				Object[] row = rows.row(index);
 				for (ColumnImpl c : columns)
-					c.decorate(grid.cell(c.index, r), row[c.index]);
+					c.decorate(rows.identifier(index), grid.cell(c.index, r),
+							row[c.index]);
 			}
 			visibleRows = paintedRows;
 			grid.visible(true);
