@@ -58,9 +58,17 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 				if (ClickListenerMouseAdapter.keyMatches(pressedKey, e) != check)
 					return;
 			}
+			if (e.getButton() != getButton())
+				return;
 			listener.onClick(column, row);
 		}
 
+		private int getButton() {
+			if (buttonType == ButtonType.LEFT)
+				return MouseEvent.BUTTON1;
+			else
+				return MouseEvent.BUTTON3;
+		}
 	}
 
 	class GridCell extends SwingContainer<JComponent> implements IGridCell {

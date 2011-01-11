@@ -38,7 +38,16 @@ class ClickListenerMouseAdapter<T> extends KeyTemplate<T> implements IKey<T> {
 				if (keyMatches(pressedKey, e) != check)
 					return;
 			}
+			if (e.getButton() != getMouseButton())
+				return;
 			clickListener.onClick();
+		}
+
+		private int getMouseButton() {
+			if (buttonType == ButtonType.LEFT)
+				return MouseEvent.BUTTON1;
+			else
+				return MouseEvent.BUTTON3;
 		}
 
 		@Override
@@ -48,6 +57,7 @@ class ClickListenerMouseAdapter<T> extends KeyTemplate<T> implements IKey<T> {
 				if (keyMatches(pressedKey, e) != check)
 					return;
 			}
+			// TODO left/right button
 			clickListener.onClick();
 		}
 	}
