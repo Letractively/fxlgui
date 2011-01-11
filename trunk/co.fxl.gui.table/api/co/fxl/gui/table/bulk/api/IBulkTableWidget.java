@@ -47,6 +47,8 @@ public interface IBulkTableWidget {
 	public interface ICell {
 
 		ICell text(String text);
+
+		ICell checkBox(Boolean value);
 	}
 
 	ICell cell(int column, int row);

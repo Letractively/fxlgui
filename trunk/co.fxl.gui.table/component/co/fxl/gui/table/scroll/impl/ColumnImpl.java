@@ -27,6 +27,14 @@ import co.fxl.gui.table.bulk.api.IBulkTableWidget.ICell;
 
 class ColumnImpl implements IColumn, Comparator<Object[]> {
 
+	public class BooleanDecorator implements Decorator<Boolean> {
+
+		@Override
+		public void decorate(ICell cell, Boolean value) {
+			cell.checkBox(value);
+		}
+	}
+
 	private static SimpleDateFormat FORMAT = new SimpleDateFormat();
 
 	public class DateDecorator implements Decorator<Date> {
@@ -96,8 +104,10 @@ class ColumnImpl implements IColumn, Comparator<Object[]> {
 			decorator = new LongDecorator();
 		} else if (type.equals(Date.class)) {
 			decorator = new DateDecorator();
+		} else if (type.equals(Boolean.class)) {
+			decorator = new BooleanDecorator();
 		} else
-			throw new MethodNotImplementedException();
+			throw new MethodNotImplementedException(type.getName());
 		return this;
 	}
 

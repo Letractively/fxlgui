@@ -21,4 +21,12 @@ package co.fxl.gui.table.scroll.impl;
 @SuppressWarnings("serial")
 class MethodNotImplementedException extends RuntimeException {
 
+	MethodNotImplementedException() {
+		super();
+	}
+
+	MethodNotImplementedException(String name) {
+		super(name);
+	}
+
 }
