@@ -219,11 +219,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	void delete() {
 		final ITree<T> tree = last.tree;
 		final ITree<T> parent = tree.parent();
-		ICallback<T> callback = new ICallback<T>() {
-			@Override
-			public void onFail(Throwable throwable) {
-				throw new MethodNotImplementedException();
-			}
+		ICallback<T> callback = new CallbackTemplate<T>() {
 
 			@Override
 			public void onSuccess(T result) {

@@ -37,6 +37,7 @@ import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
+import co.fxl.gui.tree.impl.CallbackTemplate;
 
 final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 
@@ -58,16 +59,11 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 		IBorder border = panel.border();
 		border.color().gray();
 		border.style().top();
-		ICallback<List<Object>> callback = new ICallback<List<Object>>() {
+		ICallback<List<Object>> callback = new CallbackTemplate<List<Object>>() {
 
 			private IButton details;
 			private IButton add;
 			private IButton remove;
-
-			@Override
-			public void onFail(Throwable throwable) {
-				throw new MethodNotImplementedException();
-			}
 
 			@SuppressWarnings("unchecked")
 			@Override

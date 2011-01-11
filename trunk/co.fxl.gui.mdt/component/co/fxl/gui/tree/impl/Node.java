@@ -35,7 +35,6 @@ import co.fxl.gui.tree.api.ITree;
  */
 class Node<T> implements IClickListener {
 
-	private static final String DOWN = "refresh.png";
 	private static final String FOLDER_CLOSED = "folder_closed.png";
 	private static final String FOLDER_EMPTY = "folder_empty.png";
 	private static final String FOLDER_OPEN = "folder_open.png";
@@ -135,16 +134,8 @@ class Node<T> implements IClickListener {
 		}
 	}
 
-	/**
-	 * Expands not yet loaded node.
-	 */
 	protected void expandLazyNode() {
-		// Lazy load children
-		ICallback<List<T>> lCallback = new ICallback<List<T>>() {
-			@Override
-			public void onFail(Throwable caught) {
-				// TODO
-			}
+		ICallback<List<T>> lCallback = new CallbackTemplate<List<T>>() {
 
 			@Override
 			public void onSuccess(List<T> result) {
@@ -159,9 +150,6 @@ class Node<T> implements IClickListener {
 		tree.loadChildren(lCallback);
 	}
 
-	/**
-	 * Expands already loaded nodes.
-	 */
 	protected void expandLoadedNode() {
 		clear();
 		childrenPanel = panel.add().panel().vertical();
