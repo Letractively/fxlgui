@@ -51,7 +51,9 @@ public interface IDialog {
 
 	IType type();
 
-	ILayout panel();
+	IContainer container();
 
 	IQuestionDialog question();
+
+	IDialog visible(boolean visible);
 }
