@@ -34,6 +34,7 @@ import co.fxl.gui.tree.api.IFilterTreeWidget.ISource;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
+import co.fxl.gui.tree.api.ITreeWidget.ITreeClickListener;
 import co.fxl.gui.tree.impl.CallbackTemplate;
 
 class DetailView extends ViewTemplate implements ISource<Object> {
@@ -52,6 +53,13 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 		this.selectionObject = sshow;
 		tree = (IFilterTreeWidget<Object>) widget.mainPanel.add().widget(
 				IFilterTreeWidget.class);
+		tree.addTreeClickListener(new ITreeClickListener<Object>() {
+
+			@Override
+			public void onClick(ITree<Object> tree) {
+				widget.showTableView(tree.object());
+			}
+		}).altPressed();
 		tree.showRefresh(false);
 		if (widget.hideDetailRoot)
 			tree.hideRoot();

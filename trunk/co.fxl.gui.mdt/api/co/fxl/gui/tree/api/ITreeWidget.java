@@ -19,9 +19,15 @@
 package co.fxl.gui.tree.api;
 
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IVerticalPanel;
 
 public interface ITreeWidget<T> {
+
+	public interface ITreeClickListener<T> {
+
+		void onClick(ITree<T> tree);
+	}
 
 	public interface ISelectionListener<T> {
 
@@ -54,6 +60,8 @@ public interface ITreeWidget<T> {
 	T selection();
 
 	ITreeWidget<T> addSelectionListener(ISelectionListener<T> listener);
+
+	IKey<?> addTreeClickListener(ITreeClickListener<T> listener);
 
 	ITreeWidget<T> clickNew();
 

@@ -40,6 +40,7 @@ import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IDeletableList;
 import co.fxl.gui.mdt.api.IProperty.IAdapter;
 import co.fxl.gui.table.api.IColumn;
+import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableListener;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 import co.fxl.gui.tree.impl.CallbackTemplate;
@@ -48,7 +49,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 		IResizeListener {
 
 	private IScrollTableWidget<Object> table;
-	private Map<PropertyImpl, IColumn> property2column = new HashMap<PropertyImpl, IColumn>();
+	private Map<PropertyImpl, IColumn<Object>> property2column = new HashMap<PropertyImpl, IColumn<Object>>();
 	private List<IAdapter<Object, Object>> adapters = new LinkedList<IAdapter<Object, Object>>();
 	private IDeletableList<Object> queryList;
 	private IClickable<?> delete;
@@ -269,7 +270,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 						drawTable();
 						TableView.this.queryList = queryList;
 						final List<Object> list = queryList.asList();
-						IRows<Object> rows = new IRows<Object>() {
+						final IRows<Object> rows = new IRows<Object>() {
 
 							@Override
 							public Object[] row(int i) {
@@ -301,6 +302,15 @@ class TableView extends ViewTemplate implements IFilterListener,
 						onResize(-1, widget.mainPanel.display().height());
 						updateCreatable();
 						time = System.currentTimeMillis() - s;
+						table.addTableListener(new ITableListener() {
+
+							@Override
+							public void onClick(int column, int row) {
+								Object show = rows.identifier(row);
+								widget.r2.checked(true);
+								widget.showDetailView(show);
+							}
+						}).altPressed();
 						table.visible(true);
 						out.println("TableView: created table in " + time
 								+ "ms");
