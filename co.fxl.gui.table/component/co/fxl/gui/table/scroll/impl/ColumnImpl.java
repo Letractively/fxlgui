@@ -46,10 +46,10 @@ class ColumnImpl implements IColumn, Comparator<Object[]> {
 
 	}
 
-	public class LongDecorator implements Decorator<Long> {
+	public class NumberDecorator implements Decorator<Number> {
 
 		@Override
-		public void decorate(ICell cell, Long value) {
+		public void decorate(ICell cell, Number value) {
 			cell.text(String.valueOf(value));
 		}
 
@@ -100,8 +100,8 @@ class ColumnImpl implements IColumn, Comparator<Object[]> {
 	public IColumn type(Class<?> type) {
 		if (type.equals(String.class)) {
 			decorator = new StringDecorator();
-		} else if (type.equals(Long.class)) {
-			decorator = new LongDecorator();
+		} else if (type.equals(Long.class) || type.equals(Integer.class)) {
+			decorator = new NumberDecorator();
 		} else if (type.equals(Date.class)) {
 			decorator = new DateDecorator();
 		} else if (type.equals(Boolean.class)) {
