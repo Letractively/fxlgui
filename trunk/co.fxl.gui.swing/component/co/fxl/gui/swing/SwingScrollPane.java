@@ -27,7 +27,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IScrollListener;
 import co.fxl.gui.api.IScrollPane;
 
 class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
@@ -104,5 +103,10 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 					}
 				});
 		return this;
+	}
+
+	@Override
+	public IScrollPane scrollTo(int pos) {
+		throw new MethodNotImplementedException();
 	}
 }
