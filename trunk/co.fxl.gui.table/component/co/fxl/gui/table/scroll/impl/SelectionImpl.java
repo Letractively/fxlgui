@@ -152,10 +152,8 @@ class SelectionImpl implements ISelection<Object> {
 					notifyListeners();
 				}
 			}).ctrlPressed();
-			if (widget.selectionPanel == null) {
-				widget.selectionPanel = widget.container.addSpace(10).add()
-						.panel().grid();
-				IHorizontalPanel p = widget.selectionPanel.cell(0, 0).panel()
+			if (!widget.selectionIsSetup) {
+				IHorizontalPanel p = widget.statusPanel().cell(0, 0).panel()
 						.horizontal().add().panel().horizontal().spacing(5);
 				p.add().label().text("Select").font().pixel(PIXEL);
 				selectAll = p.add().label();
@@ -168,6 +166,7 @@ class SelectionImpl implements ISelection<Object> {
 				removeSelection.hyperlink().addClickListener(
 						new RemoveSelectionClickListener());
 				removeSelection.clickable(false);
+				widget.selectionIsSetup = true;
 			}
 		}
 

@@ -24,6 +24,13 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 public interface IBulkTableWidget {
 
+	public interface IMouseWheelListener {
+
+		void onDown(int turns);
+
+		void onUp(int turns);
+	}
+
 	public interface ITableListener {
 
 		void onClick(int column, int row);
@@ -66,7 +73,7 @@ public interface IBulkTableWidget {
 
 	IBulkTableWidget height(int height);
 
-	int visibleRows();
+	IBulkTableWidget addMouseWheelListener(IMouseWheelListener l);
 
 	IBulkTableWidget visible(boolean visible);
 

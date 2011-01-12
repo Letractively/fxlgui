@@ -44,4 +44,6 @@ public interface IScrollTableWidget<T> {
 	IKey<?> addTableListener(ITableListener l);
 
 	IScrollTableWidget<?> visible(boolean visible);
+
+	IScrollTableWidget<?> addTooltip(String tooltip);
 }
