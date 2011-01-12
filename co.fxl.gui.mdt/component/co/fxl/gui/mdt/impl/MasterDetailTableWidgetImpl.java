@@ -70,6 +70,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	private String configuration = null;
 	IRadioButton r2;
 	int addSpacing = 0;
+	private boolean showDetailViewByDefault = false;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -221,6 +222,12 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	}
 
 	@Override
+	public IMasterDetailTableWidget<Object> showDetailViewByDefault() {
+		showDetailViewByDefault = true;
+		return this;
+	}
+
+	@Override
 	public IMasterDetailTableWidget<Object> visible(boolean visible) {
 		if (!visible)
 			return this;
@@ -228,7 +235,13 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 		addNavigationLinks(sidePanel);
 		addViewWidget(sidePanel);
 		sidePanel = sidePanel.add().panel().vertical();
-		showTableView(null, null);
+		if (!showDetailViewByDefault)
+			showTableView(null, null);
+		else {
+			r2.checked(true);
+			// TODO remove quickfix refresh
+			showDetailView(null).onRefresh();
+		}
 		return this;
 	}
 

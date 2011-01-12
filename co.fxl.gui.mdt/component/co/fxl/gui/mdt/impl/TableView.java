@@ -314,6 +314,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 								widget.showDetailView(show);
 							}
 						}).altPressed();
+						table.addTooltip("Use ALT + Click to switch views.");
 						table.visible(true);
 						out.println("TableView: created table in " + time
 								+ "ms");
@@ -329,7 +330,8 @@ class TableView extends ViewTemplate implements IFilterListener,
 		if (offsetY == 0)
 			offsetY = 139;
 		int maxFromDisplay = height - offsetY - 96;
-		table.height(maxFromDisplay);
+		if (maxFromDisplay > 10)
+			table.height(maxFromDisplay);
 	}
 
 	@Override
