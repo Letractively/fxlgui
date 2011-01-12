@@ -48,6 +48,13 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 		}
 
 		@Override
+		public IGridCell clear() {
+			gridCell = this;
+			GWTGridPanel.this.container.widget.remove(container.widget);
+			return this;
+		}
+
+		@Override
 		public IElement<?> element() {
 			return element;
 		}
@@ -118,11 +125,6 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 					return GridCell.this;
 				}
 			};
-		}
-
-		@Override
-		public IGridCell clear() {
-			throw new MethodNotImplementedException();
 		}
 
 		@Override

@@ -39,16 +39,16 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 			if (keyMatches(pressedKey, event.getNativeEvent()) != check)
 				return;
 		}
-		if (event.getNativeButton() != getButton())
+		if (!buttonMatches(event))
 			return;
 		clickListener.onClick();
 	}
 
-	private int getButton() {
-		if (buttonType == ButtonType.RIGHT)
-			return NativeEvent.BUTTON_RIGHT;
+	private boolean buttonMatches(ClickEvent event) {
+		if (buttonType == ButtonType.LEFT)
+			return true;
 		else
-			return NativeEvent.BUTTON_LEFT;
+			throw new MethodNotImplementedException();
 	}
 
 	boolean keyMatches(KeyType key, NativeEvent nativeEvent) {
