@@ -27,10 +27,10 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
+import co.fxl.gui.api.IElement;
 
 class SwingElement<T extends JComponent, R> implements IElement<R> {
 
@@ -141,5 +141,12 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 		Point pt = SwingUtilities.convertPoint(container.component, new Point(
 				0, 0), container.lookupSwingDisplay().container.component);
 		return pt;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R tooltip(String tooltip) {
+		container.component.setToolTipText(tooltip);
+		return (R) this;
 	}
 }
