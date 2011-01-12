@@ -50,7 +50,7 @@ public class GWTGridPanelClickHandler extends KeyTemplate<IGridPanel> implements
 			if (keyMatches != check)
 				return;
 		}
-		if (event.getNativeButton() != getButton())
+		if (!buttonMatches(event))
 			return;
 		@SuppressWarnings("unchecked")
 		Grid grid = (Grid) ((GWTElement<Grid, IGridPanel>) element).container.widget;
@@ -58,11 +58,11 @@ public class GWTGridPanelClickHandler extends KeyTemplate<IGridPanel> implements
 		clickListener.onClick(cell.getCellIndex(), cell.getRowIndex());
 	}
 
-	private int getButton() {
-		if (buttonType == ButtonType.RIGHT)
-			return NativeEvent.BUTTON_RIGHT;
+	private boolean buttonMatches(ClickEvent event) {
+		if (buttonType == ButtonType.LEFT)
+			return true;
 		else
-			return NativeEvent.BUTTON_LEFT;
+			throw new MethodNotImplementedException();
 	}
 
 	boolean keyMatches(KeyType key, NativeEvent nativeEvent) {
