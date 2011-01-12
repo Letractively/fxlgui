@@ -73,15 +73,12 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 		}
 	}
 
-	private static final int ROW_HEIGHT = 22;
 	private IGridPanel grid;
 	private int rowOffset = 0;
 	private IVerticalPanel mainPanel;
 	private int numRows = 0;
-	private int visibleRows = 30;
 	private List<ColumnImpl> columns = new LinkedList<ColumnImpl>();
 	private Map<Integer, Boolean> highlighted = new HashMap<Integer, Boolean>();
-	private int height;
 
 	BulkTableWidgetImpl(IContainer container) {
 		mainPanel = container.panel().vertical();
@@ -196,29 +193,18 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 
 	@Override
 	public IBulkTableWidget height(int height) {
-		this.height = height;
 		mainPanel.height(height);
-		if (numRows != 0) {
-			double d = numRows;
-			int mainPanelHeight = mainPanel.height();
-			d *= mainPanelHeight;
-			int gridHeight = grid.height();
-			d /= gridHeight;
-			visibleRows = (int) d;
-		} else {
-			visibleRows = height / ROW_HEIGHT;
-		}
 		return this;
-	}
-
-	@Override
-	public int visibleRows() {
-		height(height);
-		return visibleRows;
 	}
 
 	@Override
 	public IElement<?> element() {
 		return mainPanel;
+	}
+
+	@Override
+	public IBulkTableWidget addMouseWheelListener(IMouseWheelListener l) {
+		// TODO ...
+		return this;
 	}
 }

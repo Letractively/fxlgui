@@ -29,15 +29,18 @@ import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.IScrollListener;
 import co.fxl.gui.api.IScrollPane;
+import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.KeyAdapter;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
+import co.fxl.gui.table.bulk.api.IBulkTableWidget.IMouseWheelListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IRow;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableListener;
 import co.fxl.gui.table.scroll.api.IRows;
@@ -51,8 +54,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	// TODO Swing Scroll Panel block increment for single click on arrow is not
 	// enough
 
+	private static final int HEADER_ROW_HEIGHT = 24;
+	private static final int ROW_HEIGHT = 22;
 	private static final String ARROW_UP = "\u2191";
 	private static final String ARROW_DOWN = "\u2193";
+	protected static final int SCROLL_MULT = 33;
 	IVerticalPanel container;
 	private int height = 400;
 	private WidgetTitle widgetTitle;
@@ -67,9 +73,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private int sortNegator = -1;
 	IBulkTableWidget grid;
 	int rowOffset;
-	int visibleRows;
 	List<IRow> highlighted = new LinkedList<IRow>();
-	IGridPanel selectionPanel;
+	private IGridPanel statusPanel;
+	private String tooltip = "Use CTRL + Click to select multiple rows.";
 
 	ScrollTableWidgetImpl(IContainer container) {
 		widgetTitle = new WidgetTitle(container.panel()).foldable(false);
@@ -97,7 +103,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> visible(boolean visible) {
 		if (visible) {
-			selectionPanel = null;
+			statusPanel = null;
+			selectionIsSetup = false;
 			container.clear();
 			container.addSpace(20);
 			if (rows.size() == 0) {
@@ -110,18 +117,26 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				contentPanel = dock.center().panel().card();
 				scrollOffset = 0;
 				update();
-				IScrollPane sp = dock.right().scrollPane();
+				sp = dock.right().scrollPane();
 				sp.size(35, height);
 				IVerticalPanel v = sp.viewPort().panel().vertical();
-				double spHeight = height * (rows.size() + 1);
+				h = v.add().panel().horizontal();
+				spHeight = height * rows.size();
 				scrollPanelHeight = (int) (spHeight / paintedRows);
-				v.add().panel().horizontal().size(1, scrollPanelHeight);
+				h.size(1, scrollPanelHeight);
 				sp.addScrollListener(this);
 			}
 		} else {
 			throw new MethodNotImplementedException();
 		}
 		return this;
+	}
+
+	IGridPanel statusPanel() {
+		if (statusPanel == null) {
+			statusPanel = container.addSpace(10).add().panel().grid();
+		}
+		return statusPanel;
 	}
 
 	@Override
@@ -140,6 +155,12 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			// }
 			scrollOffset = maxOffset;
 			update();
+			// if (paintedRows <= rows.size()) {
+			// scrollPanelHeight = 1;
+			// } else {
+			scrollPanelHeight = (int) (spHeight / paintedRows);
+			// }
+			h.size(1, scrollPanelHeight);
 		}
 	}
 
@@ -161,6 +182,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	private boolean updating = false;
 	private Map<ITableListener, KeyAdapter<Object>> listeners = new HashMap<ITableListener, KeyAdapter<Object>>();
+	boolean selectionIsSetup = false;
+	private IScrollPane sp;
+	private IHorizontalPanel h;
+	private double spHeight;
 
 	private void update() {
 		if (updating)
@@ -175,7 +200,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			grid = (IBulkTableWidget) contentPanel.add().widget(
 					IBulkTableWidget.class);
 			grid.height(height);
-			paintedRows = Math.max(paintedRows, grid.visibleRows());
+			paintedRows = computeRowsToPaint();
 			rowOffset = convert(usedScrollOffset);
 			for (int c = 0; c < columns.size(); c++) {
 				String name = columns.get(c).name;
@@ -184,14 +209,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				}
 				grid.column(c).title(name);
 			}
-			if (rowOffset + paintedRows >= rows.size()) {
-				if (rowOffset == 0) {
-					paintedRows = rows.size();
-				} else {
-					rowOffset++;
-					paintedRows = rows.size() - rowOffset - 1;
-				}
-			}
 			for (int r = 0; r < paintedRows; r++) {
 				int index = r + rowOffset;
 				Object[] row = rows.row(index);
@@ -199,19 +216,44 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					c.decorate(rows.identifier(index), grid.cell(c.index, r),
 							row[c.index]);
 			}
-			visibleRows = paintedRows;
 			grid.visible(true);
+			grid.addMouseWheelListener(new IMouseWheelListener() {
+
+				@Override
+				public void onUp(int turns) {
+					int pos = Math.max(0, scrollOffset - turns * SCROLL_MULT);
+					sp.scrollTo(pos);
+					// onScroll(pos);
+				}
+
+				@Override
+				public void onDown(int turns) {
+					int pos = Math.min(scrollPanelHeight, scrollOffset + turns
+							* SCROLL_MULT);
+					sp.scrollTo(pos);
+					// onScroll(pos);
+				}
+			});
+			grid.element().tooltip(tooltip);
 			contentPanel.show(grid.element());
 			if (lastGrid != null)
 				lastGrid.remove();
-			for (int r = 0; r < visibleRows; r++) {
+			for (int r = 0; r < paintedRows; r++) {
 				if (rows.selected(r + rowOffset)) {
 					IRow row = grid.row(r);
 					row.highlight(true);
 					highlighted.add(row);
 				}
 			}
-			paintedRows = Math.max(paintedRows, grid.visibleRows());
+			IGridCell clear = statusPanel().cell(1, 0).clear();
+			int rt = rowOffset + paintedRows;
+			if (rowOffset > 0 || rt < rows.size()) {
+				if (rt > rows.size())
+					rt = rows.size();
+				String status = "Displaying rows " + (rowOffset + 1) + " - "
+						+ rt + " of " + rows.size();
+				clear.align().end().label().text(status).font().pixel(10);
+			}
 			updateSorting();
 			selection.update();
 			for (ITableListener l : listeners.keySet()) {
@@ -224,9 +266,22 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		updating = false;
 	}
 
+	private int computeRowsToPaint() {
+		int paintedRows = 0;
+		int prognosedHeight = HEADER_ROW_HEIGHT;
+		while (prognosedHeight < height) {
+			prognosedHeight += ROW_HEIGHT;
+			paintedRows++;
+		}
+		paintedRows--;
+		if (paintedRows > rows.size())
+			paintedRows = rows.size();
+		return paintedRows;
+	}
+
 	public void highlightAll() {
 		highlighted.clear();
-		for (int r = 0; r < visibleRows; r++) {
+		for (int r = 0; r < paintedRows; r++) {
 			IRow row = grid.row(r);
 			row.highlight(true);
 			highlighted.add(row);
@@ -294,5 +349,16 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		KeyAdapter<Object> keyAdapter = new KeyAdapter<Object>();
 		listeners.put(l2, keyAdapter);
 		return keyAdapter;
+	}
+
+	@Override
+	public IScrollTableWidget<?> addTooltip(String tooltip) {
+
+		// TODO tooltip doesn't work for BulkTableWidgetImpl
+
+		this.tooltip += "\n" + tooltip;
+		if (grid != null)
+			grid.element().tooltip(tooltip);
+		return this;
 	}
 }
