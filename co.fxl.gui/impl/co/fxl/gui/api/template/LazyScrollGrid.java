@@ -23,7 +23,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IGridPanel.IGridClickListener;
-import co.fxl.gui.api.IScrollListener;
+import co.fxl.gui.api.IScrollPane.IScrollListener;
 
 public class LazyScrollGrid extends ScrollGridTemplate implements
 		IScrollListener {

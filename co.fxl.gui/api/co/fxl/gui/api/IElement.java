@@ -40,5 +40,7 @@ public interface IElement<T> {
 
 	void remove();
 
+	T tooltip(String tooltip);
+
 	Object nativeElement();
 }

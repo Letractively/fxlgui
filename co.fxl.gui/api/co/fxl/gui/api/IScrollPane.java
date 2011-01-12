@@ -20,7 +20,14 @@ package co.fxl.gui.api;
 
 public interface IScrollPane extends IElement<IScrollPane>, IBordered, IColored {
 
+	public interface IScrollListener {
+
+		void onScroll(int maxOffset);
+	}
+
 	IContainer viewPort();
 
 	IScrollPane addScrollListener(IScrollListener listener);
+
+	IScrollPane scrollTo(int pos);
 }
