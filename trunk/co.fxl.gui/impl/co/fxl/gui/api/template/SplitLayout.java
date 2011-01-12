@@ -54,9 +54,7 @@ public class SplitLayout implements IResizeListener, IClickListener {
 		panel = layout.grid();
 		IVerticalPanel vpanel = panel.cell(0, 0).valign().begin().panel()
 				.vertical().spacing(10);
-		mainPanel = vpanel.add().panel().vertical().spacing(10);
-		mainPanel.border().color().lightgray();
-		mainPanel.color().white();
+		mainPanel = addMainPanel(vpanel).spacing(10);
 		IHorizontalPanel horizontal = panel.cell(1, 0).width(16).align()
 				.center().valign().center().panel().horizontal();
 		// horizontal.addSpace(10);
@@ -69,6 +67,13 @@ public class SplitLayout implements IResizeListener, IClickListener {
 		sidePanel = sideScrollPanel.viewPort().panel().vertical().spacing(10);
 		onResize(-1, panel.display().height());
 		SidePanelResizeListener.setup(panel.display(), this);
+	}
+
+	protected IVerticalPanel addMainPanel(IVerticalPanel vpanel) {
+		mainPanel = vpanel.add().panel().vertical();
+		mainPanel.border().color().lightgray();
+		mainPanel.color().white();
+		return mainPanel;
 	}
 
 	@Override
