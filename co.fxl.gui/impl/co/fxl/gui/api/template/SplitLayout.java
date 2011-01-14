@@ -18,18 +18,15 @@
  */
 package co.fxl.gui.api.template;
 
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDisplay.IResizeListener;
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
-import co.fxl.gui.api.IHorizontalPanel;
-import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IVerticalPanel;
 
-public class SplitLayout implements IResizeListener, IClickListener {
+public class SplitLayout implements IResizeListener// , IClickListener
+{
 
 	// TODO nice-2-have: SplitLayout consists of 3 cells, coupled to height of
 	// display
@@ -42,8 +39,9 @@ public class SplitLayout implements IResizeListener, IClickListener {
 	public IVerticalPanel mainPanel;
 	public IVerticalPanel sidePanel;
 	private IGridCell cell;
-	private IImage button;
+	// private IImage button;
 	private IScrollPane sideScrollPanel;
+	private IGridCell cell0;
 
 	public SplitLayout(ILayout layout) {
 		this.layout = layout;
@@ -52,20 +50,22 @@ public class SplitLayout implements IResizeListener, IClickListener {
 
 	private void init() {
 		panel = layout.grid();
-		IVerticalPanel vpanel = panel.cell(0, 0).valign().begin().panel()
-				.vertical().spacing(10);
+		cell0 = panel.cell(0, 0);
+		IVerticalPanel vpanel = cell0.valign().begin().panel().vertical()
+				.spacing(10);
 		mainPanel = addMainPanel(vpanel).spacing(10);
-		IHorizontalPanel horizontal = panel.cell(1, 0).width(16).align()
-				.center().valign().center().panel().horizontal();
-		// horizontal.addSpace(10);
-		button = horizontal.add().image().resource("minimize.png");
-		cell = panel.cell(2, 0).width(WIDTH_SIDE_PANEL).valign().begin();
+		// IHorizontalPanel horizontal = panel.cell(1, 0).width(16).align()
+		// .center().valign().center().panel().horizontal();
+		// // horizontal.addSpace(10);
+		// button = horizontal.add().image().resource("minimize.png");
+		cell = panel.cell(1, 0).width(WIDTH_SIDE_PANEL).valign().begin()
+				.align().end();
 		// IVerticalPanel vertical = cell.panel().vertical();
 		// horizontal.addClickListener(clickListener);
-		button.addClickListener(this);
+		// button.addClickListener(this);
 		sideScrollPanel = cell.scrollPane();
 		sidePanel = sideScrollPanel.viewPort().panel().vertical().spacing(10);
-		onResize(-1, panel.display().height());
+		onResize(panel.display().width(), panel.display().height());
 		SidePanelResizeListener.setup(panel.display(), this);
 	}
 
@@ -76,27 +76,29 @@ public class SplitLayout implements IResizeListener, IClickListener {
 		return mainPanel;
 	}
 
-	@Override
-	public void onClick() {
-		boolean visible = !sidePanel.visible();
-		onClick(visible);
-	}
+	// @Override
+	// public void onClick() {
+	// boolean visible = !sidePanel.visible();
+	// onClick(visible);
+	// }
 
-	private void onClick(boolean visible) {
-		sidePanel.visible(visible);
-		cell.width(sidePanel.visible() ? 300 : 1);
-		button.resource(sidePanel.visible() ? "minimize.png" : "maximize.png");
-	}
+	// private void onClick(boolean visible) {
+	// sidePanel.visible(visible);
+	// cell.width(sidePanel.visible() ? 300 : 1);
+	// button.resource(sidePanel.visible() ? "minimize.png" : "maximize.png");
+	// }
 
 	@Override
 	public void onResize(int width, int height) {
-		resize(height, sideScrollPanel);
+		resizeSidePanel(height, cell);
+		cell0.width(width - WIDTH_SIDE_PANEL);
 	}
 
-	private void resize(int height, IElement<?> p) {
-		int offsetY = p.offsetY();
+	private void resizeSidePanel(int height, IGridCell p) {
+		int offsetY = panel.offsetY();
 		int maxFromDisplay = height - offsetY - 30;
-		p.height(maxFromDisplay);
+		if (maxFromDisplay > 0)
+			p.height(maxFromDisplay);
 	}
 
 	public void reset() {
@@ -105,11 +107,11 @@ public class SplitLayout implements IResizeListener, IClickListener {
 	}
 
 	public void showSplit(boolean showSplit) {
-		if (!showSplit) {
-			onClick(false);
-			button.resource(null);
-		} else {
-			onClick(true);
-		}
+		// if (!showSplit) {
+		// onClick(false);
+		// button.resource(null);
+		// } else {
+		// onClick(true);
+		// }
 	}
 }
