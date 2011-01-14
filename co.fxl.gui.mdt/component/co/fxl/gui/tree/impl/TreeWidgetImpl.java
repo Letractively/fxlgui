@@ -294,6 +294,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	public void onResize(int width, int height) {
 		int offsetY = splitPane.offsetY();
 		int maxFromDisplay = height - offsetY - 30;
+		if (maxFromDisplay > 0)
 		splitPane.height(maxFromDisplay);
 	}
 
