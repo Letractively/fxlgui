@@ -88,6 +88,7 @@ class Node<T> implements IClickListener {
 			content.addSpace(4);
 		}
 		label = content.add().label().text(root.name());
+		label.font().pixel(12);
 		injectTreeListener(label);
 		if (widget.detailPanel != null) {
 			label.addClickListener(showClickListener);
