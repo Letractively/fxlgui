@@ -44,10 +44,13 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 	private IMDTFilterList<Object> filterList;
 	protected ITree<Object> itree;
 	private Object selectionObject;
+	private String createType;
 
 	@SuppressWarnings("unchecked")
-	DetailView(final MasterDetailTableWidgetImpl widget, Object sshow) {
+	DetailView(final MasterDetailTableWidgetImpl widget, Object sshow,
+			String createType) {
 		super(widget);
+		this.createType = createType;
 		// if (widget.splitLayout != null)
 		// widget.splitLayout.showSplit(false);
 		this.selectionObject = sshow;
@@ -190,6 +193,10 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 					public void onSuccess(ITree<Object> result) {
 						DetailView.this.itree = result;
 						callback.onSuccess(result);
+						if (createType != null) {
+							onNew(createType);
+							createType = null;
+						}
 					}
 				});
 	}

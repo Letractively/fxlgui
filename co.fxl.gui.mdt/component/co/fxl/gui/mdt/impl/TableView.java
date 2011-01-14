@@ -43,10 +43,11 @@ import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableListener;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
+import co.fxl.gui.table.scroll.api.IScrollTableWidget.ISortListener;
 import co.fxl.gui.tree.impl.CallbackTemplate;
 
 class TableView extends ViewTemplate implements IFilterListener,
-		IResizeListener {
+		IResizeListener, ISortListener {
 
 	private IScrollTableWidget<Object> table;
 	private Map<PropertyImpl, IColumn<Object>> property2column = new HashMap<PropertyImpl, IColumn<Object>>();
@@ -134,7 +135,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 					List<Object> result = table.selection().result();
 					if (!result.isEmpty())
 						show = result.get(result.size() - 1);
-					widget.showDetailView(show).onNew(type);
+					widget.showDetailView(show, type);
 				}
 			});
 		}
@@ -197,8 +198,12 @@ class TableView extends ViewTemplate implements IFilterListener,
 				adapters.add(p.adapter);
 				IColumn<Object> column = table.addColumn().name(p.name)
 						.type(p.type.clazz);
-				if (p.sortable)
+				if (p.sortable) {
 					column.sortable();
+					if (widget.constraints.sortOrder() != null
+							&& widget.constraints.sortOrder().equals(p.name))
+						column.tagSortOrder(widget.constraints.sortDirection());
+				}
 				property2column.put(p, column);
 			}
 		}
@@ -315,12 +320,21 @@ class TableView extends ViewTemplate implements IFilterListener,
 							}
 						}).altPressed();
 						table.addTooltip("Use ALT + Click to switch views.");
+						table.sortListener(TableView.this);
 						table.visible(true);
 						out.println("TableView: created table in " + time
 								+ "ms");
 						onChange(table.selection().result());
 					}
 				});
+	}
+
+	@Override
+	public void onSort(String columnName, boolean up) {
+		widget.constraints.sortOrder(columnName);
+		widget.constraints.sortDirection(up);
+		filterWidget.constraints(widget.constraints());
+		onApply(widget.constraints);
 	}
 
 	@Override

@@ -256,7 +256,12 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 
 	DetailView showDetailView(Object show) {
 		clear();
-		return new DetailView(this, show);
+		return new DetailView(this, show, null);
+	}
+
+	public void showDetailView(Object show, String createType) {
+		clear();
+		new DetailView(this, show, createType);
 	}
 
 	private void clear() {
