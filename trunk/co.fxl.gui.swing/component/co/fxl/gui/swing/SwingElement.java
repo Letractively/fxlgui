@@ -21,6 +21,8 @@ package co.fxl.gui.swing;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -92,14 +94,14 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 		return container.component.isEnabled();
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked" })
 	public R clickable(boolean clickable) {
-		for (ClickListenerMouseAdapter adapter : adapters) {
-			container.component.removeMouseListener(adapter.adapter);
-			if (clickable) {
-				container.component.addMouseListener(adapter.adapter);
-			}
-		}
+		// for (ClickListenerMouseAdapter adapter : adapters) {
+		// container.component.removeMouseListener(adapter.adapter);
+		// if (clickable) {
+		// container.component.addMouseListener(adapter.adapter);
+		// }
+		// }
 		container.component.setEnabled(clickable);
 		container.component
 				.setCursor(clickable ? new Cursor(Cursor.HAND_CURSOR)
@@ -109,11 +111,20 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 
 	@SuppressWarnings("unchecked")
 	public IKey<R> addClickListener(IClickListener listener) {
-		container.component.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		clickable(true);
+		// container.component.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		ClickListenerMouseAdapter<R> adapter = new ClickListenerMouseAdapter<R>(
 				(R) this, listener);
 		adapters.add(adapter);
-		container.component.addMouseListener(adapter.adapter);
+		if (container.component.getMouseListeners().length == 0)
+			container.component.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					for (ClickListenerMouseAdapter<R> adapter : adapters) {
+						adapter.adapter.mouseReleased(e);
+					}
+				}
+			});
 		return adapter;
 	}
 
