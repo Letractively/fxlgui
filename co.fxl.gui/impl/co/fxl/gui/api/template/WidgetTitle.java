@@ -18,8 +18,10 @@
  */
 package co.fxl.gui.api.template;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
@@ -47,10 +49,24 @@ public class WidgetTitle implements IClickListener {
 	public ILabel headerLabel;
 	private List<ILabel> labels = new LinkedList<ILabel>();
 	private int space = 10;
+	private Map<ILabel, Boolean> clickableState = new HashMap<ILabel, Boolean>();
+	private boolean holdOnClicks = false;
 
 	public WidgetTitle(ILayout layout) {
 		panel = layout.vertical();
 		headerPanel = panel.add().panel().dock();
+	}
+
+	public WidgetTitle holdOnClick() {
+		holdOnClicks = true;
+		return this;
+	}
+
+	public WidgetTitle reset() {
+		for (ILabel l : clickableState.keySet()) {
+			l.clickable(clickableState.get(l));
+		}
+		return this;
 	}
 
 	public WidgetTitle space(int space) {
@@ -117,9 +133,24 @@ public class WidgetTitle implements IClickListener {
 			labels.add(label);
 		}
 		hasCommands = true;
-		ILabel label = commandPanel.add().label().text(text).hyperlink();
+		final ILabel label = commandPanel.add().label().text(text).hyperlink();
 		label.font().pixel(12);
 		labels.add(label);
+		if (holdOnClicks) {
+			label.addClickListener(new IClickListener() {
+
+				@Override
+				public void onClick() {
+					LinkedList<ILabel> ls = new LinkedList<ILabel>(
+							clickableState.keySet());
+					for (ILabel hyperlink : ls) {
+						clickableState.put(hyperlink, label.clickable());
+						hyperlink.clickable(false);
+					}
+				}
+			});
+			clickableState.put(label, true);
+		}
 		return label;
 	}
 
