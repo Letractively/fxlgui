@@ -59,6 +59,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private static final String ARROW_UP = "\u2191";
 	private static final String ARROW_DOWN = "\u2193";
 	protected static final int SCROLL_MULT = 33;
+	protected static final int MAX_SORT_SIZE = 100;
 	IVerticalPanel container;
 	private int height = 400;
 	private WidgetTitle widgetTitle;
@@ -188,6 +189,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IScrollPane sp;
 	private IPanel<?> h;
 	private double spHeight;
+	private ISortListener sortListener;
 
 	private void update() {
 		if (updating)
@@ -205,7 +207,13 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			paintedRows = computeRowsToPaint();
 			rowOffset = convert(usedScrollOffset);
 			for (int c = 0; c < columns.size(); c++) {
-				String name = columns.get(c).name;
+				ColumnImpl columnImpl = columns.get(c);
+				if (columnImpl.tagSortOrder != null) {
+					sortColumn = columnImpl.index;
+					sortNegator = columnImpl.tagSortOrder ? -1 : 1;
+					columnImpl.tagSortOrder = null;
+				}
+				String name = columnImpl.name;
 				if (sortColumn == c) {
 					name += " " + (sortNegator == 1 ? ARROW_DOWN : ARROW_UP);
 				}
@@ -306,9 +314,20 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						return;
 					ColumnImpl columnImpl = columns.get(column);
 					if (columnImpl.sortable) {
-						sortColumn = columnImpl.index;
-						sortNegator = rows.sort(columnImpl);
-						update();
+						if (rows.size() < MAX_SORT_SIZE || sortListener == null) {
+							sortColumn = columnImpl.index;
+							sortNegator = rows.sort(columnImpl);
+							update();
+						} else {
+							if (sortColumn != -1) {
+								sortNegator = sortColumn == column ? sortNegator
+										* -1
+										: 1;
+							}
+							sortColumn = columnImpl.index;
+							sortListener.onSort(columnImpl.name,
+									sortNegator == 1);
+						}
 					}
 				}
 			});
@@ -361,6 +380,13 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		this.tooltip += "\n" + tooltip;
 		if (grid != null)
 			grid.element().tooltip(tooltip);
+		return this;
+	}
+
+	@Override
+	public IScrollTableWidget<?> sortListener(
+			co.fxl.gui.table.scroll.api.IScrollTableWidget.ISortListener l) {
+		sortListener = l;
 		return this;
 	}
 }

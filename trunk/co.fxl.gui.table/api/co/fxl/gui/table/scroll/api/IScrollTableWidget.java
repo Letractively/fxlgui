@@ -27,6 +27,11 @@ import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableListener;
 
 public interface IScrollTableWidget<T> {
 
+	public interface ISortListener {
+
+		void onSort(String columnName, boolean up);
+	}
+
 	ILabel addTitle(String text);
 
 	IClickable<?> addButton(String name);
@@ -42,6 +47,8 @@ public interface IScrollTableWidget<T> {
 	IScrollTableWidget<T> rows(IRows<T> rows);
 
 	IKey<?> addTableListener(ITableListener l);
+
+	IScrollTableWidget<?> sortListener(ISortListener l);
 
 	IScrollTableWidget<?> visible(boolean visible);
 

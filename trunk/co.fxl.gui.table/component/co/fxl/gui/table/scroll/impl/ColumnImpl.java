@@ -83,6 +83,7 @@ class ColumnImpl implements IColumn<Object>, Comparator<Object[]> {
 	@SuppressWarnings("rawtypes")
 	private Decorator decorator;
 	private IColumnUpdateListener<Object, Object> updateListener;
+	Boolean tagSortOrder;
 
 	ColumnImpl(int index) {
 		this.index = index;
@@ -90,7 +91,13 @@ class ColumnImpl implements IColumn<Object>, Comparator<Object[]> {
 
 	@SuppressWarnings("unchecked")
 	void decorate(Object identifier, ICell cell, Object value) {
-		decorator.decorate(identifier, cell, value);
+		try {
+			decorator.decorate(identifier, cell, value);
+		} catch (ClassCastException e) {
+			throw new RuntimeException("Column " + name + ", index: " + index
+					+ ", received invalid value " + value + " ("
+					+ value.getClass().getName() + ")");
+		}
 	}
 
 	@Override
@@ -151,5 +158,11 @@ class ColumnImpl implements IColumn<Object>, Comparator<Object[]> {
 		else if (o2 == null)
 			return 1;
 		return o1.compareTo(o2);
+	}
+
+	@Override
+	public IColumn<Object> tagSortOrder(boolean up) {
+		tagSortOrder = up;
+		return this;
 	}
 }

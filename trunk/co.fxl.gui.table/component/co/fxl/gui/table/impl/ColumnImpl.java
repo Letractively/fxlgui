@@ -127,4 +127,9 @@ public class ColumnImpl implements IColumn<Object> {
 		this.width = width;
 		return this;
 	}
+
+	@Override
+	public IColumn<Object> tagSortOrder(boolean up) {
+		throw new MethodNotImplementedException();
+	}
 }
