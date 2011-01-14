@@ -21,13 +21,13 @@ package co.fxl.gui.register.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.IHorizontalPanel;
-import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IFontElement.IFont;
+import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.register.api.IRegister;
 
 class RegisterImpl implements IRegister, IClickListener {
@@ -120,8 +120,10 @@ class RegisterImpl implements IRegister, IClickListener {
 		}
 		if (visible) {
 			buttonLabel.font().pixel(14).weight().bold().color().black();
+			buttonPanel.clickable(false);
 		} else {
 			buttonLabel.font().pixel(14).weight().bold().color().black();
+			buttonPanel.clickable(true);
 		}
 		// buttonLabel.font().underline(!visible);
 	}

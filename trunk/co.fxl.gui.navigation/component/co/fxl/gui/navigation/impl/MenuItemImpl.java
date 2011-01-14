@@ -21,7 +21,6 @@ package co.fxl.gui.navigation.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.navigation.api.IMenuItem;
@@ -85,10 +84,11 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 
 	@Override
 	public void onTop(boolean visible) {
-		if (visible)
+		if (visible) {
 			style.onFront(register.title());
-		else
+		} else {
 			style.onBack(register.title());
+		}
 		for (INavigationListener listener : listeners)
 			listener.onActive(visible);
 	}
