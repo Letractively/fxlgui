@@ -40,5 +40,7 @@ public interface IColumn<T> {
 
 	IColumn<T> decorator(IDecorator<?, ?> decorator);
 
+	IColumn<T> tagSortOrder(boolean up);
+
 	IColumn<T> updateListener(IColumnUpdateListener<T, ?> updateListener);
 }
