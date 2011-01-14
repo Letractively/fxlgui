@@ -35,6 +35,8 @@ class FilterConstraintsImpl implements IFilterConstraints {
 	private int size = Integer.MAX_VALUE;
 	private Map<String, INamedConstraint> constraints = new HashMap<String, INamedConstraint>();
 	private String cfg;
+	private String sortOrder;
+	private boolean sortDirection = false;
 
 	FilterConstraintsImpl(String configuration) {
 		cfg = configuration;
@@ -111,5 +113,27 @@ class FilterConstraintsImpl implements IFilterConstraints {
 	@Override
 	public Boolean booleanValue(String uiLabel) {
 		return ((IBooleanConstraint) constraints.get(uiLabel)).value();
+	}
+
+	@Override
+	public IFilterConstraints sortOrder(String columnName) {
+		sortOrder = columnName;
+		return this;
+	}
+
+	@Override
+	public String sortOrder() {
+		return sortOrder;
+	}
+
+	@Override
+	public boolean sortDirection() {
+		return sortDirection;
+	}
+
+	@Override
+	public IFilterConstraints sortDirection(boolean sortDirection) {
+		this.sortDirection = sortDirection;
+		return this;
 	}
 }

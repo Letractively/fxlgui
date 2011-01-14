@@ -53,4 +53,12 @@ public interface IFilterConstraints {
 	IRange<Double> doubleRange(String string);
 
 	Boolean booleanValue(String uiLabel);
+
+	IFilterConstraints sortOrder(String columnName);
+
+	String sortOrder();
+
+	boolean sortDirection();
+
+	IFilterConstraints sortDirection(boolean sortDirection);
 }
