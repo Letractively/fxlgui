@@ -42,11 +42,8 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		this.container = container;
 	}
 
-	void font(IFontElement fontElement) {
-
-		// TODO optimize, use primary style name
-
-		fontElement.font().pixel(13).family().arial();
+	void defaultFont() {
+		((IFontElement) this).font().pixel(12).family().arial();
 	}
 
 	@SuppressWarnings("unchecked")
