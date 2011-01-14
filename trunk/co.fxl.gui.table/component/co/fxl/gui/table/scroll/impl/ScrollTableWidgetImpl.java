@@ -30,8 +30,8 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
-import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
@@ -117,14 +117,16 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				contentPanel = dock.center().panel().card();
 				scrollOffset = 0;
 				update();
+				if (paintedRows == rows.size())
+					return this;
 				sp = dock.right().scrollPane();
 				sp.size(35, height);
-				IVerticalPanel v = sp.viewPort().panel().vertical();
-				h = v.add().panel().horizontal();
-				spHeight = height * rows.size();
+				h = sp.viewPort().panel().vertical();
+				spHeight = height * (rows.size() + 1);
 				scrollPanelHeight = (int) (spHeight / paintedRows);
 				h.size(1, scrollPanelHeight);
 				sp.addScrollListener(this);
+				h.add().label().text("&#160;");
 			}
 		} else {
 			throw new MethodNotImplementedException();
@@ -158,9 +160,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			// if (paintedRows <= rows.size()) {
 			// scrollPanelHeight = 1;
 			// } else {
-			scrollPanelHeight = (int) (spHeight / paintedRows);
-			// }
-			h.size(1, scrollPanelHeight);
+			// scrollPanelHeight = (int) (spHeight / paintedRows);
+			// // }
+			// h.size(1, scrollPanelHeight);
 		}
 	}
 
@@ -184,7 +186,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private Map<ITableListener, KeyAdapter<Object>> listeners = new HashMap<ITableListener, KeyAdapter<Object>>();
 	boolean selectionIsSetup = false;
 	private IScrollPane sp;
-	private IHorizontalPanel h;
+	private IPanel<?> h;
 	private double spHeight;
 
 	private void update() {
@@ -274,8 +276,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			paintedRows++;
 		}
 		paintedRows--;
-		if (paintedRows > rows.size())
-			paintedRows = rows.size();
+		if (rowOffset + paintedRows >= rows.size())
+			paintedRows = rows.size() - rowOffset;
 		return paintedRows;
 	}
 
