@@ -20,6 +20,7 @@ package co.fxl.gui.filter.impl;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.template.Validation;
@@ -46,8 +47,9 @@ class StringFilter extends FilterTemplate<String> {
 
 	StringFilter(IGridPanel panel, String name, int filterIndex) {
 		super(panel, name, filterIndex);
-		textField = textField(panel.cell(1, filterIndex), filterIndex);
-		textField.size(WIDTH_SINGLE_CELL, HEIGHT);
+		IGridCell width = panel.cell(1, filterIndex);//.width(WIDTH_SINGLE_CELL);
+		textField = textField(width.panel().vertical().add(), filterIndex);
+//		textField.height(HEIGHT);
 	}
 
 	ITextField textField(IContainer c, int filterIndex) {

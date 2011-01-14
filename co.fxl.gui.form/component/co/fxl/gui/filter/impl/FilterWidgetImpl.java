@@ -129,7 +129,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 		if (configurationComboBox == null && showConfiguration) {
 			configurationComboBox = mainPanel.add().comboBox();
 			configurationComboBox.addUpdateListener(this);
-			configurationComboBox.height(FilterTemplate.HEIGHT);
+//			configurationComboBox.height(FilterTemplate.HEIGHT);
 			mainPanel.addSpace(4);
 		}
 		if (configurationComboBox != null)
@@ -266,7 +266,8 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 			gridContainer = mainPanel.add();
 		} else
 			gridContainer.clear();
-		grid = gridContainer.panel().grid().indent(3);
+		grid = gridContainer.panel().vertical().spacing(3).add().panel().grid()
+				.spacing(3);
 		guiFilterElements.clear();
 		addFilters4Configuration(IFilterConstraints.COMMON);
 		if (!configuration.equals(IFilterConstraints.COMMON))
