@@ -119,9 +119,9 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private boolean expand = false;
 	Object selection;
 	Map<Object, Node<T>> object2node = new HashMap<Object, Node<T>>();
-	private ILabel refresh;
+	private IClickable<ILabel> refresh;
 	private Map<String, IClickListener> newClick = new HashMap<String, IClickListener>();
-	private Map<String, ILabel> newClickHyperlink = new HashMap<String, ILabel>();
+	private Map<String, IClickable<ILabel>> newClickHyperlink = new HashMap<String, IClickable<ILabel>>();
 	private List<ISelectionListener<T>> selectionListeners = new LinkedList<ISelectionListener<T>>();
 	private ILabel delete;
 	private IVerticalPanel leftContentPanel;
@@ -139,6 +139,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	TreeWidgetImpl(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel()).space(0);
 		widgetTitle.foldable(false);
+		widgetTitle.holdOnClick();
 	}
 
 	void addButtons() {
@@ -164,8 +165,15 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 						}
 					};
 					CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>() {
+
+						public void onFail(Throwable throwable) {
+							widgetTitle.reset();
+							super.onFail(throwable);
+						}
+
 						@Override
 						public void onSuccess(ITree<T> result) {
+							widgetTitle.reset();
 							selection(result.object());
 							boolean rememberExpand = expand;
 							expand = false;
@@ -182,11 +190,12 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 						}
 					};
 					lCallback1.setNextCallback(lCallback2);
+					assert lParentNode != null : "Parent node cannot be resolved, cannot load children";
 					lParentNode.loadChildren(lCallback1);
 				}
 			};
 			newClick.put(type, cl);
-			ILabel hl = widgetTitle.addHyperlink("New"
+			IClickable<ILabel> hl = widgetTitle.addHyperlink("New"
 					+ (type == null ? "" : " " + type));
 			newClickHyperlink.put(type, hl);
 			hl.addClickListener(cl);
@@ -203,10 +212,12 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 							@Override
 							public void onYes() {
 								delete();
+								widgetTitle.reset();
 							}
 
 							@Override
 							public void onNo() {
+								widgetTitle.reset();
 							}
 						});
 					}
@@ -216,6 +227,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				@Override
 				public void onClick() {
 					((RefreshListener) TreeWidgetImpl.this).onRefresh();
+					widgetTitle.reset();
 				}
 			});
 	}
@@ -295,7 +307,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		int offsetY = splitPane.offsetY();
 		int maxFromDisplay = height - offsetY - 30;
 		if (maxFromDisplay > 0)
-		splitPane.height(maxFromDisplay);
+			splitPane.height(maxFromDisplay);
 	}
 
 	@Override
@@ -406,7 +418,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		return this;
 	}
 
-	private ILabel refresh() {
+	private IClickable<ILabel> refresh() {
 		if (refresh == null)
 			refresh = widgetTitle.addHyperlink("Refresh");
 		return refresh;
