@@ -101,11 +101,11 @@ html, body {height:100%; width:100%;}
 .cursor-crosshair { cursor: crosshair }
 .cursor-help { cursor: help }
 .cursor-move { cursor: move } 
-.gwt-TextBox-FXL { padding: 3px; border-width: 1; }
-.gwt-PasswordTextBox-FXL { padding: 3px; border-width: 1; }
-.gwt-Checkbox-FXL { border-width: 1; }
-.gwt-Combobox-FXL { border-width: 1; }
-.gwt-TextArea-FXL { padding: 3px; border-width: 1; }
+.gwt-TextBox-FXL { padding: 3px; }
+.gwt-PasswordTextBox-FXL { padding: 3px; }
+.gwt-Checkbox-FXL { }
+.gwt-Combobox-FXL { }
+.gwt-TextArea-FXL { padding: 3px; }
 .gwt-Label-FXL { white-space: nowrap; }
 .gwt-ToggleButton-FXL { }
 .gwt-RadioButton-FXL { }
