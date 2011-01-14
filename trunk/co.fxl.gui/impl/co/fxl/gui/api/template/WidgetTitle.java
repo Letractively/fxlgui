@@ -118,6 +118,7 @@ public class WidgetTitle implements IClickListener {
 		}
 		hasCommands = true;
 		ILabel label = commandPanel.add().label().text(text).hyperlink();
+		label.font().pixel(12);
 		labels.add(label);
 		return label;
 	}
