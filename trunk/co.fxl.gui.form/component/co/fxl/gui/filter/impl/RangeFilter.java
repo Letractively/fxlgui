@@ -19,6 +19,7 @@
 package co.fxl.gui.filter.impl;
 
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
@@ -33,18 +34,21 @@ abstract class RangeFilter<T> extends FilterTemplate<T> {
 
 	RangeFilter(IGridPanel parent, String name, int filterIndex) {
 		super(parent, name, filterIndex);
-		panel = parent.cell(1, filterIndex).align().begin().panel()
-				.horizontal().add().panel().horizontal();
+		IGridCell cell = parent.cell(1, filterIndex);
+//		cell.width(WIDTH_RANGE_CELL);// , HEIGHT);
+		panel = cell.align().begin().panel().vertical().add().panel()
+				.horizontal();
 		lowerBoundTextField = addTextField(0);
+//		lowerBoundTextField.height(HEIGHT);
 		panel.addSpace(4);
 		panel.add().label().text("-");
 		panel.addSpace(4);
 		upperBoundTextField = addTextField(2);
+//		upperBoundTextField.height(HEIGHT);
 	}
 
 	private ITextField addTextField(int column) {
 		ITextField textField = panel.add().textField();
-		textField.size(WIDTH_RANGE_CELL, HEIGHT);
 		return textField;
 	}
 
