@@ -34,6 +34,8 @@ final class TextFieldComponent<T> extends JTextField {
 			return null;
 		if (d.height == 0)
 			d.height = SwingContainer.MIN_HEIGHT_TEXT_COMPONENT;
+		if (d.width == 0)
+			d.width = SwingContainer.MIN_WIDTH_TEXT_COMPONENT;
 		return d;
 	}
 

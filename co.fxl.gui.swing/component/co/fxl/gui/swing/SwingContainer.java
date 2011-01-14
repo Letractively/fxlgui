@@ -58,6 +58,7 @@ class SwingContainer<T extends JComponent> implements IContainer {
 	static final Insets INSETS = new Insets(4, 4, 4, 4);
 	static final int MIN_HEIGHT_TEXT_COMPONENT = 24;
 	static final int MIN_HEIGHT_TEXTAREA_COMPONENT = 100;
+	static final int MIN_WIDTH_TEXT_COMPONENT = 40;
 	ComponentParent parent;
 	T component;
 
