@@ -197,7 +197,7 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 		CellFormatter formatter = gridCell.formatter();
 		formatter.setHeight(gridCell.row, gridCell.column, "100%");
 		widget.setWidth("100%");
-		widget.setHeight("100%");
+		// widget.setHeight("100%");
 	}
 
 	@Override

@@ -33,8 +33,9 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 
 	GWTComboBox(GWTContainer<ListBox> container) {
 		super(container);
-		font(this);
+		container.widget.addStyleName("gwt-Combobox-FXL");
 		container.widget.setHeight("24px");
+		defaultFont();
 	}
 
 	@Override

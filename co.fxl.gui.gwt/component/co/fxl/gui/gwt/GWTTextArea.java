@@ -28,9 +28,9 @@ class GWTTextArea extends GWTElement<TextArea, ITextArea> implements ITextArea {
 
 	GWTTextArea(GWTContainer<TextArea> container) {
 		super(container);
-		font(this);
+		container.widget.addStyleName("gwt-TextArea-FXL");
+		defaultFont();
 		height(100);
-		border().remove();
 	}
 
 	@Override
