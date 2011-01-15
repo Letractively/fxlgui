@@ -71,6 +71,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	IRadioButton r2;
 	int addSpacing = 0;
 	private boolean showDetailViewByDefault = false;
+	boolean allowCreate = true;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -322,6 +323,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 
 	@Override
 	public IMasterDetailTableWidget<Object> allowCreate(boolean allowCreate) {
-		throw new MethodNotImplementedException();
+		this.allowCreate = allowCreate;
+		return this;
 	}
 }

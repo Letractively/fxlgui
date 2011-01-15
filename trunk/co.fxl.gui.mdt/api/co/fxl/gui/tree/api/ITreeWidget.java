@@ -74,4 +74,6 @@ public interface ITreeWidget<T> {
 	ITreeWidget<T> hideRoot();
 
 	ITreeWidget<T> showRefresh(boolean showRefresh);
+
+	ITreeWidget<T> allowCreate(boolean allowCreate);
 }

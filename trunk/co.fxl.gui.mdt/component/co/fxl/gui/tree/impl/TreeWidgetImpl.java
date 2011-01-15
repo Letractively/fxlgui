@@ -135,6 +135,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private boolean showRoot = true;
 	ITreeClickListener<T> treeClickListener;
 	KeyAdapter<Object> treeClickAdapter;
+	boolean allowCreate = true;
 
 	TreeWidgetImpl(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel()).space(0);
@@ -147,58 +148,61 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			return;
 		}
 		hasButtons = true;
-		if (creatableTypes.isEmpty())
-			creatableTypes.add(null);
-		for (final String type : creatableTypes) {
-			IClickListener cl = new IClickListener() {
-				@Override
-				public void onClick() {
-					final ITree<T> lParentNode = last != null ? last.tree
-							: root;
-					ChainedCallback<List<T>, ITree<T>> lCallback1 = new ChainedCallback<List<T>, ITree<T>>() {
-						@Override
-						public void onSuccess(List<T> result) {
-							if (type == null)
-								lParentNode.createNew(getNextCallback());
-							else
-								lParentNode.createNew(type, getNextCallback());
-						}
-					};
-					CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>() {
-
-						public void onFail(Throwable throwable) {
-							widgetTitle.reset();
-							super.onFail(throwable);
-						}
-
-						@Override
-						public void onSuccess(ITree<T> result) {
-							widgetTitle.reset();
-							selection(result.object());
-							boolean rememberExpand = expand;
-							expand = false;
-							List<ITree<T>> path = new LinkedList<ITree<T>>();
-							path.add(result);
-							while (result.parent() != null) {
-								result = result.parent();
-								path.add(0, result);
+		if (allowCreate) {
+			if (creatableTypes.isEmpty())
+				creatableTypes.add(null);
+			for (final String type : creatableTypes) {
+				IClickListener cl = new IClickListener() {
+					@Override
+					public void onClick() {
+						final ITree<T> lParentNode = last != null ? last.tree
+								: root;
+						ChainedCallback<List<T>, ITree<T>> lCallback1 = new ChainedCallback<List<T>, ITree<T>>() {
+							@Override
+							public void onSuccess(List<T> result) {
+								if (type == null)
+									lParentNode.createNew(getNextCallback());
+								else
+									lParentNode.createNew(type,
+											getNextCallback());
 							}
-							root(root, path);
-							assert node != null;
-							node.path = null;
-							expand = rememberExpand;
-						}
-					};
-					lCallback1.setNextCallback(lCallback2);
-					assert lParentNode != null : "Parent node cannot be resolved, cannot load children";
-					lParentNode.loadChildren(lCallback1);
-				}
-			};
-			newClick.put(type, cl);
-			IClickable<ILabel> hl = widgetTitle.addHyperlink("New"
-					+ (type == null ? "" : " " + type));
-			newClickHyperlink.put(type, hl);
-			hl.addClickListener(cl);
+						};
+						CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>() {
+
+							public void onFail(Throwable throwable) {
+								widgetTitle.reset();
+								super.onFail(throwable);
+							}
+
+							@Override
+							public void onSuccess(ITree<T> result) {
+								widgetTitle.reset();
+								selection(result.object());
+								boolean rememberExpand = expand;
+								expand = false;
+								List<ITree<T>> path = new LinkedList<ITree<T>>();
+								path.add(result);
+								while (result.parent() != null) {
+									result = result.parent();
+									path.add(0, result);
+								}
+								root(root, path);
+								assert node != null;
+								node.path = null;
+								expand = rememberExpand;
+							}
+						};
+						lCallback1.setNextCallback(lCallback2);
+						assert lParentNode != null : "Parent node cannot be resolved, cannot load children";
+						lParentNode.loadChildren(lCallback1);
+					}
+				};
+				newClick.put(type, cl);
+				IClickable<ILabel> hl = widgetTitle.addHyperlink("New"
+						+ (type == null ? "" : " " + type));
+				newClickHyperlink.put(type, hl);
+				hl.addClickListener(cl);
+			}
 		}
 		delete = widgetTitle.addHyperlink("Delete")
 				.addClickListener(new IClickListener() {
@@ -503,5 +507,11 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		treeClickListener = listener;
 		treeClickAdapter = new KeyAdapter<Object>();
 		return treeClickAdapter;
+	}
+
+	@Override
+	public ITreeWidget<T> allowCreate(boolean allowCreate) {
+		this.allowCreate = allowCreate;
+		return this;
 	}
 }

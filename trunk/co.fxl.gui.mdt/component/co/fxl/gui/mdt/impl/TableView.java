@@ -121,23 +121,25 @@ class TableView extends ViewTemplate implements IFilterListener,
 		table.addTitle(widget.title).font().pixel(18);
 		addProperties();
 		table.selection().multi().addChangeListener(this);
-		if (widget.creatableTypes.isEmpty())
-			widget.creatableTypes.add(null);
-		for (final String type : widget.creatableTypes) {
-			IClickable<?> button = table.addButton(type == null ? "New"
-					: "New " + type);
-			buttons.put(type, button);
-			button.addClickListener(new IClickListener() {
-				@Override
-				public void onClick() {
-					widget.r2.checked(true);
-					Object show = null;
-					List<Object> result = table.selection().result();
-					if (!result.isEmpty())
-						show = result.get(result.size() - 1);
-					widget.showDetailView(show, type);
-				}
-			});
+		if (widget.allowCreate) {
+			if (widget.creatableTypes.isEmpty())
+				widget.creatableTypes.add(null);
+			for (final String type : widget.creatableTypes) {
+				IClickable<?> button = table.addButton(type == null ? "New"
+						: "New " + type);
+				buttons.put(type, button);
+				button.addClickListener(new IClickListener() {
+					@Override
+					public void onClick() {
+						widget.r2.checked(true);
+						Object show = null;
+						List<Object> result = table.selection().result();
+						if (!result.isEmpty())
+							show = result.get(result.size() - 1);
+						widget.showDetailView(show, type);
+					}
+				});
+			}
 		}
 		delete = table.addButton("Delete");
 		delete.addClickListener(new IClickListener() {
