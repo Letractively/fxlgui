@@ -72,6 +72,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	int addSpacing = 0;
 	private boolean showDetailViewByDefault = false;
 	boolean allowCreate = true;
+	boolean allowMultiSelection = true;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -176,9 +177,11 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 							cl.onClick(selection);
 						}
 					});
-					l.clickable(false);
 				}
-				labels.add(l);
+				if (link.requiresSelection) {
+					l.clickable(false);
+					labels.add(l);
+				}
 			}
 		}
 	}
@@ -324,6 +327,18 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	@Override
 	public IMasterDetailTableWidget<Object> allowCreate(boolean allowCreate) {
 		this.allowCreate = allowCreate;
+		return this;
+	}
+
+	@Override
+	public List<Object> selection() {
+		return selection;
+	}
+
+	@Override
+	public IMasterDetailTableWidget<Object> allowMultiSelection(
+			boolean multiSelection) {
+		allowMultiSelection = multiSelection;
 		return this;
 	}
 }

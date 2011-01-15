@@ -40,6 +40,7 @@ import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IDeletableList;
 import co.fxl.gui.mdt.api.IProperty.IAdapter;
 import co.fxl.gui.table.api.IColumn;
+import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableListener;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
@@ -47,7 +48,7 @@ import co.fxl.gui.table.scroll.api.IScrollTableWidget.ISortListener;
 import co.fxl.gui.tree.impl.CallbackTemplate;
 
 class TableView extends ViewTemplate implements IFilterListener,
-		IResizeListener, ISortListener {
+		IResizeListener, ISortListener, ISelectionListener<Object> {
 
 	private IScrollTableWidget<Object> table;
 	private Map<PropertyImpl, IColumn<Object>> property2column = new HashMap<PropertyImpl, IColumn<Object>>();
@@ -120,7 +121,10 @@ class TableView extends ViewTemplate implements IFilterListener,
 				IScrollTableWidget.class);
 		table.addTitle(widget.title).font().pixel(18);
 		addProperties();
-		table.selection().multi().addChangeListener(this);
+		if (widget.allowMultiSelection)
+			table.selection().multi().addChangeListener(this);
+		else
+			table.selection().single().addSelectionListener(this);
 		if (widget.allowCreate) {
 			if (widget.creatableTypes.isEmpty())
 				widget.creatableTypes.add(null);
@@ -230,6 +234,13 @@ class TableView extends ViewTemplate implements IFilterListener,
 		// detail.clickable(selection.size() == 1);
 		delete.clickable(clickable);
 		updateCreatable();
+	}
+
+	@Override
+	public void onSelection(Object selection) {
+		List<Object> s = new LinkedList<Object>();
+		s.add(selection);
+		onChange(s);
 	}
 
 	private void updateCreatable() {

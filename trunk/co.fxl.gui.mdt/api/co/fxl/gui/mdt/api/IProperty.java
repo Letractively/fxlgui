@@ -19,6 +19,7 @@
 package co.fxl.gui.mdt.api;
 
 import co.fxl.gui.api.template.IFieldType;
+import co.fxl.gui.tree.api.ICallback;
 
 public interface IProperty<T, S> {
 
@@ -33,7 +34,7 @@ public interface IProperty<T, S> {
 
 	public interface IUpdateListener<T> {
 
-		boolean update(T entity);
+		void update(T entity, ICallback<Boolean> cb);
 	}
 
 	IFieldType type();

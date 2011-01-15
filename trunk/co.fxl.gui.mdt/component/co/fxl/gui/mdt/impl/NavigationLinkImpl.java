@@ -11,6 +11,7 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 	boolean inTable = true;
 	boolean asDetail = false;
 	List<INavigationLinkListener<Object>> listeners = new LinkedList<INavigationLinkListener<Object>>();
+	boolean requiresSelection = true;
 
 	NavigationLinkImpl(String name) {
 		this.name = name;
@@ -32,6 +33,12 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 	@Override
 	public INavigationLink<Object> inTable(boolean inTable) {
 		this.inTable = inTable;
+		return this;
+	}
+
+	@Override
+	public INavigationLink<Object> requiresSelection(boolean requiresSelection) {
+		this.requiresSelection = requiresSelection;
 		return this;
 	}
 
