@@ -31,9 +31,16 @@ public interface IProperty<T, S> {
 		void valueOf(T entity, S value);
 	}
 
+	public interface IUpdateListener<T> {
+
+		boolean update(T entity);
+	}
+
 	IFieldType type();
 
 	IProperty<T, S> adapter(IAdapter<T, S> adapter);
+
+	IProperty<T, S> updateListener(IUpdateListener<T> listener);
 
 	IProperty<T, S> required();
 
