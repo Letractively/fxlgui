@@ -66,6 +66,7 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 		tree.showRefresh(false);
 		if (widget.hideDetailRoot)
 			tree.hideRoot();
+		tree.allowCreate(widget.allowCreate);
 		for (String s : widget.creatableTypes) {
 			tree.addCreatableType(s);
 		}
