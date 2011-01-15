@@ -73,11 +73,9 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 	}
 
 	@Override
-	public IVerticalPanel addExtraPanel() {
+	public IVerticalPanel extraPanel() {
 		showLabelAsActive();
-		widget.history.clear();
-		IVerticalPanel page = widget.history.add().panel().vertical();
-		return page;
+		return widget.panel1().clear();
 	}
 
 	@Override
@@ -94,9 +92,9 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 	@Override
 	public INavigationItem active() {
 		showLabelAsActive();
-		widget.history.clear();
-		applyColor(widget.history.color(), widget.colorActive);
-		decorator.decorate(widget.history);
+		widget.panel0().clear();
+		applyColor(widget.panel0().color(), widget.colorActive);
+		decorator.decorate(widget.panel0());
 		return this;
 	}
 
@@ -115,7 +113,8 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 
 	@Override
 	public INavigationItem back() {
-		active();
+		widget.panel1().clear();
+		widget.panel0();
 		return this;
 	}
 }
