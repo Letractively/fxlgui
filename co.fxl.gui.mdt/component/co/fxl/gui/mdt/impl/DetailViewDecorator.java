@@ -36,6 +36,7 @@ import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
+import co.fxl.gui.tree.impl.CallbackTemplate;
 
 public abstract class DetailViewDecorator implements IDecorator<Object> {
 
@@ -129,15 +130,38 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 													new IClickListener() {
 														@Override
 														public void onClick() {
-															boolean update = property.listener
-																	.update(node);
-															if (update) {
-																tf.valueElement()
-																		.text((String) property.adapter
-																				.valueOf(node));
-															}
+															property.listener
+																	.update(node,
+																			new CallbackTemplate<Boolean>() {
+
+																				@Override
+																				public void onSuccess(
+																						Boolean update) {
+																					tf.valueElement()
+																							.text((String) property.adapter
+																									.valueOf(node));
+																					if (update) {
+																						save(node);
+																					}
+																				}
+																			});
 														}
 													});
+									// tf.externalStatusAdapter(new
+									// IExternalStatusAdapter() {
+									//
+									// @Override
+									// public boolean isNull() {
+									// throw new
+									// MethodNotImplementedException();
+									// }
+									//
+									// @Override
+									// public boolean hasChanged() {
+									// throw new
+									// MethodNotImplementedException();
+									// }
+									// });
 								}
 							} else if (property.type.isLong) {
 								IFormField<ITextArea> textArea = form

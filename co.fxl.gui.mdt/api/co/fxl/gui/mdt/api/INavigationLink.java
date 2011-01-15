@@ -32,4 +32,6 @@ public interface INavigationLink<T> {
 	INavigationLink<T> asDetail(boolean asDetail);
 
 	INavigationLink<T> addClickListener(INavigationLinkListener<T> listener);
+
+	INavigationLink<T> requiresSelection(boolean requiresSelection);
 }
