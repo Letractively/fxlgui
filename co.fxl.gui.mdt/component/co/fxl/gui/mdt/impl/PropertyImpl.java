@@ -32,6 +32,7 @@ class PropertyImpl implements IProperty<Object, Object> {
 	boolean sortable = false;
 	boolean required;
 	boolean editable = true;
+	IUpdateListener<Object> listener;
 
 	PropertyImpl(String name) {
 		this.name = name;
@@ -80,6 +81,13 @@ class PropertyImpl implements IProperty<Object, Object> {
 	@Override
 	public IProperty<Object, ?> editable(boolean b) {
 		editable = b;
+		return this;
+	}
+
+	@Override
+	public IProperty<Object, Object> updateListener(
+			co.fxl.gui.mdt.api.IProperty.IUpdateListener<Object> listener) {
+		this.listener = listener;
 		return this;
 	}
 }

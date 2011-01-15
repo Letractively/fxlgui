@@ -24,7 +24,9 @@ import java.util.List;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICheckBox;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.ITextField;
@@ -105,11 +107,39 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							: property.adapter.hasProperty(node);
 					if (property.displayInDetailView && hasProperty) {
 						final IFormField<?> formField;
-						Object valueOf = node != null ? property.adapter
+						final Object valueOf = node != null ? property.adapter
 								.valueOf(node) : null;
 						final ITextElement<?> valueElement;
 						if (property.type.clazz.equals(String.class)) {
-							if (property.type.isLong) {
+							if (property.type.isRelation) {
+								if (!property.editable) {
+									IFormField<ITextField> tf = form
+											.addTextField(property.name);
+									formField = tf;
+									valueElement = formField.valueElement();
+									tf.valueElement().editable(false);
+								} else {
+									final IFormField<ILabel> tf = form
+											.addLabel(property.name);
+									formField = tf;
+									valueElement = formField.valueElement();
+									tf.valueElement()
+											.hyperlink()
+											.addClickListener(
+													new IClickListener() {
+														@Override
+														public void onClick() {
+															boolean update = property.listener
+																	.update(node);
+															if (update) {
+																tf.valueElement()
+																		.text((String) property.adapter
+																				.valueOf(node));
+															}
+														}
+													});
+								}
+							} else if (property.type.isLong) {
 								IFormField<ITextArea> textArea = form
 										.addTextArea(property.name);
 								if (!property.editable)
@@ -126,7 +156,9 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 									cb.addText((String) s);
 								valueElement = formField.valueElement();
 							} else {
-								formField = form.addTextField(property.name);
+								IFormField<ITextField> tf = form
+										.addTextField(property.name);
+								formField = tf;
 								if (!property.editable)
 									((ITextField) formField).editable(false);
 								valueElement = formField.valueElement();
@@ -143,7 +175,9 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 								}
 							});
 						} else if (property.type.clazz.equals(Date.class)) {
-							formField = form.addTextField(property.name);
+							IFormField<ITextField> tf = form
+									.addTextField(property.name);
+							formField = tf;
 							if (!property.editable)
 								((ITextField) formField).editable(false);
 							formField.type().date();
@@ -184,7 +218,9 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 								|| property.type.clazz.equals(Integer.class)) {
 							final boolean isLong = property.type.clazz
 									.equals(Long.class);
-							formField = form.addTextField(property.name);
+							IFormField<ITextField> tf = form
+									.addTextField(property.name);
+							formField = tf;
 							if (!property.editable)
 								((ITextField) formField).editable(false);
 							// TODO long ...
