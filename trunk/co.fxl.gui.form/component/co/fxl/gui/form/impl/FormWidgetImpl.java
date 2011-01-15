@@ -55,8 +55,8 @@ class FormWidgetImpl implements IFormWidget {
 		}
 	}
 
-//	static final int HEIGHT_CELL = 30;
-//	static final int HEIGHT_CELL_INNER = 28;
+	// static final int HEIGHT_CELL = 30;
+	// static final int HEIGHT_CELL_INNER = 28;
 	private int gridIndex = 0;
 	private WidgetTitle widgetTitle;
 	private IGridPanel gridPanel;
@@ -122,21 +122,21 @@ class FormWidgetImpl implements IFormWidget {
 
 	IComboBox addFormValueComboBox() {
 		IComboBox valuePanel = container().comboBox();
-//		valuePanel.height(HEIGHT_CELL_INNER);
+		// valuePanel.height(HEIGHT_CELL_INNER);
 		valuePanel.editable(saveListener != null);
 		return valuePanel;
 	}
 
 	ICheckBox addFormValueCheckBox() {
 		ICheckBox valuePanel = container().checkBox();
-//		valuePanel.height(HEIGHT_CELL_INNER);
+		// valuePanel.height(HEIGHT_CELL_INNER);
 		valuePanel.editable(saveListener != null);
 		return valuePanel;
 	}
 
 	ILabel addFormLabel() {
 		ILabel label = container().label();
-//		label.height(HEIGHT_CELL_INNER);
+		// label.height(HEIGHT_CELL_INNER);
 		return label;
 	}
 
@@ -259,6 +259,7 @@ class FormWidgetImpl implements IFormWidget {
 					validation.linkInput((ICheckBox) valueElement);
 				} else if (valueElement instanceof IComboBox) {
 					validation.linkInput((IComboBox) valueElement);
+				} else if (valueElement instanceof ILabel) {
 				} else
 					throw new MethodNotImplementedException(
 							valueElement.getClass());
