@@ -64,6 +64,8 @@ public interface IMasterDetailTableWidget<T> {
 
 	IPropertyPage<T> addPropertyPage(String string);
 
+	IMasterDetailTableWidget<T> allowCreate(boolean allowCreate);
+
 	IMasterDetailTableWidget<T> addCreatableType(String type);
 
 	IMasterDetailTableWidget<T> hideDetailRoot();

@@ -319,4 +319,9 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	IFilterConstraints constraints() {
 		return constraints;
 	}
+
+	@Override
+	public IMasterDetailTableWidget<Object> allowCreate(boolean allowCreate) {
+		throw new MethodNotImplementedException();
+	}
 }
