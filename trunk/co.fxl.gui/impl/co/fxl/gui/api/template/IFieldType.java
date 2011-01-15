@@ -38,5 +38,7 @@ public interface IFieldType {
 
 	IFieldType logic();
 
+	IFieldType relation();
+
 	Class<?> clazz();
 }

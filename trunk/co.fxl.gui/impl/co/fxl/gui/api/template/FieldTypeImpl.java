@@ -29,6 +29,7 @@ public class FieldTypeImpl implements IFieldType {
 	public Class<?> clazz = String.class;
 	public boolean isLong = false;
 	public List<Object> values = new LinkedList<Object>();
+	public boolean isRelation = false;
 
 	@Override
 	public IFieldType type(Class<?> clazz) {
@@ -82,5 +83,11 @@ public class FieldTypeImpl implements IFieldType {
 	@Override
 	public Class<?> clazz() {
 		return clazz;
+	}
+
+	@Override
+	public IFieldType relation() {
+		isRelation = true;
+		return this;
 	}
 }
