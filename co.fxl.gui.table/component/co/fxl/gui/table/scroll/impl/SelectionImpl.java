@@ -62,7 +62,8 @@ class SelectionImpl implements ISelection<Object> {
 		}
 
 		ISelection<Object> add(Object object) {
-			throw new MethodNotImplementedException();
+			widget.rows.selected(object, true);
+			return SelectionImpl.this;
 		}
 	}
 
