@@ -18,9 +18,9 @@
  */
 package co.fxl.gui.form.impl;
 
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextElement;
-import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.template.FieldTypeImpl;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.form.api.IFormField;
@@ -34,6 +34,9 @@ abstract class FormFieldImpl<T extends ITextElement<T>> implements
 	private IGridCell cell;
 	FieldTypeImpl type = new FieldTypeImpl();
 	boolean required = false;
+
+	// List<IExternalStatusAdapter> externalStatusAdapters = new
+	// LinkedList<IExternalStatusAdapter>();
 
 	FormFieldImpl(FormWidgetImpl widget, String name) {
 		this.widget = widget;
@@ -62,6 +65,19 @@ abstract class FormFieldImpl<T extends ITextElement<T>> implements
 		label.text(label.text() + " *");
 		return this;
 	}
+
+	//
+	// @Override
+	// public IFormField<T> externalStatusAdapter(IExternalStatusAdapter l) {
+	// externalStatusAdapters.add(l);
+	// return this;
+	// }
+	//
+	// @Override
+	// public IFormField<T> updateStatus() {
+	// widget.validation.update();
+	// return this;
+	// }
 
 	@Override
 	public IFieldType type() {

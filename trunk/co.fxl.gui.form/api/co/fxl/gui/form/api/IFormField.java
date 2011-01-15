@@ -18,12 +18,19 @@
  */
 package co.fxl.gui.form.api;
 
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextElement;
-import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.template.IFieldType;
 
 public interface IFormField<T extends ITextElement<T>> {
+
+	public interface IExternalStatusAdapter {
+
+		boolean hasChanged();
+
+		boolean isNull();
+	}
 
 	IGridCell cell();
 
