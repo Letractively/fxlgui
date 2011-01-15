@@ -76,7 +76,7 @@ public class Validation {
 
 	}
 
-	private interface IField {
+	public interface IField {
 
 		boolean isError();
 
@@ -172,6 +172,10 @@ public class Validation {
 		for (IClickable<?> c : clickables) {
 			c.clickable(isSpecified && !error && allRequiredSpecified);
 		}
+	}
+
+	public void addField(IField field) {
+		fields.add(field);
 	}
 
 	public void update() {
