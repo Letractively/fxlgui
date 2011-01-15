@@ -107,9 +107,9 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	FilterWidgetImpl(IContainer panel) {
 		WidgetTitle title = new WidgetTitle(panel.panel());
 		title.addTitle("Filter");
-		apply = title.addHyperlink("Apply");
+		apply = title.addHyperlink("Update");
 		validation.linkClickable(apply);
-		clear = title.addHyperlink("Reset");
+		clear = title.addHyperlink("Clear");
 		apply.addClickListener(new ApplyClickListener());
 		// apply.clickable(false);
 		clear.addClickListener(new ClearClickListener());
@@ -251,6 +251,11 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	public IFilterWidget constraints(IFilterConstraints constraints) {
 		this.constraints = constraints;
 		return this;
+	}
+
+	@Override
+	public IFilterWidget addLiveFilterListener(IFilterListener listener) {
+		throw new MethodNotImplementedException();
 	}
 
 	@Override

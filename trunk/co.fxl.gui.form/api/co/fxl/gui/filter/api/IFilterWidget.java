@@ -32,7 +32,7 @@ public interface IFilterWidget {
 	public interface IFilter {
 
 		IFilter name(String name);
-		
+
 		IFieldType type();
 	}
 
@@ -53,9 +53,9 @@ public interface IFilterWidget {
 	}
 
 	IFilterWidget addConfiguration(String config);
-	
+
 	IFilterWidget showConfiguration(boolean show);
-	
+
 	IFilterWidget setConfiguration(String config);
 
 	IFilter addFilter();
@@ -65,6 +65,8 @@ public interface IFilterWidget {
 	IFilterWidget addSizeFilter();
 
 	IFilterWidget addFilterListener(IFilterListener listener);
+
+	IFilterWidget addLiveFilterListener(IFilterListener listener);
 
 	IFilterWidget holdFilterClicks(boolean holdFilterClicks);
 
