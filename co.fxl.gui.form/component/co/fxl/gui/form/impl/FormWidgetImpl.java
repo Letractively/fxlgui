@@ -69,6 +69,7 @@ class FormWidgetImpl implements IFormWidget {
 	private int fixValueWidth = -1;
 	private ILabel requiredAttributeLabel;
 	private boolean validate = true;
+	Validation validation;
 
 	FormWidgetImpl(IContainer panel) {
 		widgetTitle = new WidgetTitle(panel.panel());
@@ -230,9 +231,9 @@ class FormWidgetImpl implements IFormWidget {
 			}
 		});
 		if (validate) {
-			Validation validation = new Validation();
+			validation = new Validation();
 			validation.linkClickable(clickable);
-			for (FormFieldImpl<?> formField : fields) {
+			for (final FormFieldImpl<?> formField : fields) {
 				Object valueElement = formField.valueElement();
 				if (valueElement instanceof ITextArea) {
 					validation.linkInput((ITextArea) valueElement,
@@ -263,6 +264,35 @@ class FormWidgetImpl implements IFormWidget {
 				} else
 					throw new MethodNotImplementedException(
 							valueElement.getClass());
+				// for (final IExternalStatusAdapter a :
+				// formField.externalStatusAdapters) {
+				// validation.addField(new Validation.IField() {
+				//
+				// @Override
+				// public boolean isError() {
+				// return false;
+				// }
+				//
+				// @Override
+				// public boolean isNull() {
+				// return a.isNull();
+				// }
+				//
+				// @Override
+				// public boolean required() {
+				// return formField.required;
+				// }
+				//
+				// @Override
+				// public boolean isSpecified() {
+				// return a.hasChanged();
+				// }
+				//
+				// @Override
+				// public void update() {
+				// }
+				// });
+				// }
 			}
 			clickable.clickable(false);
 		}
