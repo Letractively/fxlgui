@@ -21,6 +21,7 @@ package co.fxl.gui.tree.api;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.IPageListener;
 
 public interface ITreeWidget<T> {
 
@@ -76,4 +77,6 @@ public interface ITreeWidget<T> {
 	ITreeWidget<T> showRefresh(boolean showRefresh);
 
 	ITreeWidget<T> allowCreate(boolean allowCreate);
+
+	ITreeWidget<T> pageListener(IPageListener l);
 }

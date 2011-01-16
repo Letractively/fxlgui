@@ -23,6 +23,7 @@ import java.util.List;
 
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.IFieldType;
+import co.fxl.gui.api.template.IPageListener;
 import co.fxl.gui.api.template.SimpleDateFormat;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
@@ -37,7 +38,7 @@ import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 import co.fxl.gui.tree.api.ITreeWidget.ITreeClickListener;
 import co.fxl.gui.tree.impl.CallbackTemplate;
 
-class DetailView extends ViewTemplate implements ISource<Object> {
+class DetailView extends ViewTemplate implements ISource<Object>, IPageListener {
 
 	static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat();
 	IFilterTreeWidget<Object> tree;
@@ -45,11 +46,13 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 	protected ITree<Object> itree;
 	private Object selectionObject;
 	private String createType;
+	private IPageListener pageListener;
 
 	@SuppressWarnings("unchecked")
 	DetailView(final MasterDetailTableWidgetImpl widget, Object sshow,
 			String createType) {
 		super(widget);
+		widget.pageListener = this;
 		this.createType = createType;
 		// if (widget.splitLayout != null)
 		// widget.splitLayout.showSplit(false);
@@ -93,6 +96,7 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 		tree.source(this);
 		tree.selection(sshow);
 		tree.expand();
+		tree.pageListener(this);
 		tree.visible(true);
 	}
 
@@ -132,14 +136,15 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 					&& group.name.equals(IMasterDetailTableWidget.DETAILS))
 				gs.add(group);
 		}
-		tree.addDetailView(IMasterDetailTableWidget.DETAILS,
-				new DetailViewDecorator(gs) {
+		DetailViewDecorator decorator = new DetailViewDecorator(gs) {
 
-					@Override
-					protected void save(Object node) {
-						saveNode(node);
-					}
-				});
+			@Override
+			protected void save(Object node) {
+				saveNode(node);
+			}
+		};
+		pageListener = decorator;
+		tree.addDetailView(IMasterDetailTableWidget.DETAILS, decorator);
 		for (final PropertyGroupImpl group : widget.propertyGroups) {
 			if (group.asDetail
 					&& !group.name.equals(IMasterDetailTableWidget.DETAILS)) {
@@ -152,7 +157,6 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 				});
 			}
 		}
-		;
 		for (final RelationImpl relation : widget.relations) {
 			tree.addDetailView(relation.name, new RelationDecorator(relation));
 		}
@@ -232,5 +236,10 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 				tree.notifyUpdate(node, result);
 			}
 		});
+	}
+
+	@Override
+	public boolean notifyChange() {
+		return pageListener.notifyChange();
 	}
 }

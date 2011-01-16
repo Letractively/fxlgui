@@ -30,6 +30,7 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IRadioButton;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.IPageListener;
 import co.fxl.gui.api.template.NavigationView;
 import co.fxl.gui.api.template.SplitLayout;
 import co.fxl.gui.api.template.WidgetTitle;
@@ -43,7 +44,8 @@ import co.fxl.gui.mdt.api.IPropertyGroup;
 import co.fxl.gui.mdt.api.IPropertyPage;
 import co.fxl.gui.mdt.api.IRelation;
 
-class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
+class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
+		IPageListener {
 
 	List<PropertyGroupImpl> propertyGroups = new LinkedList<PropertyGroupImpl>();
 	List<RelationImpl> relations = new LinkedList<RelationImpl>();
@@ -73,6 +75,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	private boolean showDetailViewByDefault = false;
 	boolean allowCreate = true;
 	boolean allowMultiSelection = true;
+	IPageListener pageListener;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -111,7 +114,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 		r1.addUpdateListener(new IUpdateListener<Boolean>() {
 			@Override
 			public void onUpdate(Boolean value) {
-				if (true) {
+				if (value) {
+					pageListener().notifyChange();
 					Object show = null;
 					if (!selection.isEmpty())
 						show = selection.get(selection.size() - 1);
@@ -130,6 +134,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 
 						@Override
 						public void onUpdate(String value) {
+							pageListener().notifyChange();
 							configuration = value;
 							r1.checked(true);
 							if (listener instanceof TableView)
@@ -148,7 +153,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 		r2.addUpdateListener(new IUpdateListener<Boolean>() {
 			@Override
 			public void onUpdate(Boolean value) {
-				if (true) {
+				if (value) {
 					Object show = null;
 					if (!selection.isEmpty())
 						show = selection.get(selection.size() - 1);
@@ -174,6 +179,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 
 						@Override
 						public void onClick() {
+							pageListener().notifyChange();
 							cl.onClick(selection);
 						}
 					});
@@ -273,6 +279,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 			mainPanel.clear();
 			sidePanel.clear();
 		}
+		pageListener = null;
 	}
 
 	@Override
@@ -340,5 +347,18 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 			boolean multiSelection) {
 		allowMultiSelection = multiSelection;
 		return this;
+	}
+
+	@Override
+	public IPageListener pageListener() {
+		return this;
+	}
+
+	@Override
+	public boolean notifyChange() {
+		if (pageListener == null) {
+			return true;
+		}
+		return pageListener.notifyChange();
 	}
 }
