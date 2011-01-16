@@ -25,6 +25,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
+import co.fxl.gui.api.template.IPageListener;
 
 public interface IFormWidget {
 
@@ -68,4 +69,6 @@ public interface IFormWidget {
 	IFormWidget validate(boolean validate);
 
 	IFormWidget visible(boolean visible);
+
+	IPageListener pageListener();
 }

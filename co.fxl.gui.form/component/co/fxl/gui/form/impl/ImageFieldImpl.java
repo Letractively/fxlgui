@@ -1,8 +1,8 @@
 package co.fxl.gui.form.impl;
 
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.form.api.IImageField;
 import co.fxl.gui.form.impl.FormWidgetImpl.FormEntryLabel;
 
