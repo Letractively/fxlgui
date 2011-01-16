@@ -179,8 +179,11 @@ class SwingContainer<T extends JComponent> implements IContainer {
 		return parent.lookupSwingDisplay();
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public IElement<?> element() {
+		if (element == null)
+			return new SwingElement(this);
 		return element;
 	}
 
