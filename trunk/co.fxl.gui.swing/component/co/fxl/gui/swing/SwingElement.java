@@ -38,6 +38,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 
 	SwingContainer<T> container;
 	private List<ClickListenerMouseAdapter<R>> adapters = new LinkedList<ClickListenerMouseAdapter<R>>();
+	private boolean clickListenerAdded = false;
 
 	SwingElement(SwingContainer<T> container) {
 		this.container = container;
@@ -116,7 +117,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 		ClickListenerMouseAdapter<R> adapter = new ClickListenerMouseAdapter<R>(
 				(R) this, listener);
 		adapters.add(adapter);
-		if (container.component.getMouseListeners().length == 0)
+		if (!clickListenerAdded) {
 			container.component.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseReleased(MouseEvent e) {
@@ -126,6 +127,8 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 						}
 				}
 			});
+			clickListenerAdded = true;
+		}
 		return adapter;
 	}
 

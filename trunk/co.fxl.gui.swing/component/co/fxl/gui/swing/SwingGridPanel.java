@@ -36,7 +36,6 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import co.fxl.gui.api.IAlignment;
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.template.KeyTemplate;
 
@@ -98,11 +97,6 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 			constraints.weighty = weight;
 			update();
 			return this;
-		}
-
-		@Override
-		public IElement<?> element() {
-			return new SwingElement<JComponent, IElement<?>>(this);
 		}
 
 		@Override
