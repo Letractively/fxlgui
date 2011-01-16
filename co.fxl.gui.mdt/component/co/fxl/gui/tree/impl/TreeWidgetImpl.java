@@ -60,16 +60,18 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener,
 		void onRefresh();
 	}
 
-	private class DetailView {
+	private class DetailView implements co.fxl.gui.tree.api.ITreeWidget.IView {
 
 		private IDecorator<T> decorator;
 		private Node<T> node;
-		private boolean onTop = false;
+		boolean onTop = false;
 		private IVerticalPanel contentPanel;
+		private IMenuItem register;
+		private Class<?> constrainType;
 
 		DetailView(String title, IDecorator<T> decorator) {
 			this.decorator = decorator;
-			IMenuItem register = registers.addNavigationItem();
+			register = registers.addNavigationItem();
 			register.text(title);
 			register.addListener(new INavigationListener() {
 
@@ -108,6 +110,15 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener,
 				return;
 			if (node.tree.object() != null)
 				decorator.decorate(contentPanel, node.tree);
+		}
+
+		public void enabled(boolean enabled) {
+			register.enabled(enabled);
+		}
+
+		@Override
+		public void constrainType(Class<?> clazz) {
+			this.constrainType = clazz;
 		}
 	}
 
@@ -269,7 +280,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener,
 
 	@Override
 	public ITreeWidget<T> setDetailView(IDecorator<T> decorator) {
-		return addDetailView("Details", decorator);
+		addDetailView("Details", decorator);
+		return this;
 		// setUpDetailPanel();
 		// DetailView detailView = new DetailView(decorator);
 		// detailViews.add(detailView);
@@ -277,11 +289,11 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener,
 	}
 
 	@Override
-	public ITreeWidget<T> addDetailView(String title, IDecorator<T> decorator) {
+	public IView addDetailView(String title, IDecorator<T> decorator) {
 		setUpRegisters();
 		DetailView detailView = new DetailView(title, decorator);
 		detailViews.add(detailView);
-		return this;
+		return detailView;
 	}
 
 	private void setUpRegisters() {
@@ -370,7 +382,20 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener,
 			selection(node.tree.object());
 		} else
 			selection(null);
-		for (DetailView view : detailViews) {
+		for (int i = 0; i < detailViews.size(); i++) {
+			DetailView view = detailViews.get(i);
+			if (node != null) {
+				Class<? extends Object> type = node.tree.object().getClass();
+				if (view.constrainType != null
+						&& !view.constrainType.equals(type)) {
+					if (view.onTop) {
+						assert i > 0 : "First register cannot be type constrained";
+						detailViews.get(0).register.active();
+					}
+					view.enabled(false);
+				} else
+					view.enabled(true);
+			}
 			view.setNode(node);
 		}
 	}

@@ -158,7 +158,7 @@ class DetailView extends ViewTemplate implements ISource<Object>, IPageListener 
 			}
 		}
 		for (final RelationImpl relation : widget.relations) {
-			tree.addDetailView(relation.name, new RelationDecorator(relation));
+			tree.addDetailView(relation.name, new RelationDecorator(relation)).constrainType(relation.constrainType);
 		}
 		for (final N2MRelationImpl relation : widget.n2MRelations) {
 			tree.addDetailView(relation.name,
