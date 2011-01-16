@@ -18,7 +18,8 @@
  */
 package co.fxl.gui.api;
 
-public interface ILabel extends IClickable<ILabel>, ITextElement<ILabel> {
+public interface ILabel extends IClickable<ILabel>, ITextElement<ILabel>,
+		IMouseOverElement<ILabel> {
 
 	ILabel autoWrap(boolean autoWrap);
 
