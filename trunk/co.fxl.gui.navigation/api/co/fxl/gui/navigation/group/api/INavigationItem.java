@@ -35,5 +35,5 @@ public interface INavigationItem {
 
 	INavigationItem back();
 
-	IVerticalPanel extraPanel();
+	IVerticalPanel addExtraPanel();
 }

@@ -73,7 +73,7 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 	}
 
 	@Override
-	public IVerticalPanel extraPanel() {
+	public IVerticalPanel addExtraPanel() {
 		showLabelAsActive();
 		return widget.panel1().clear();
 	}
