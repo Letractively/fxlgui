@@ -36,9 +36,13 @@ public interface IBulkTableWidget {
 		void onClick(int column, int row);
 	}
 
-	public interface ILabelClickListener {
+	public interface ILabelMouseListener {
 
-		void onClick(int row);
+		void onOver(int column, int row);
+
+		void onOut(int column, int row);
+
+		void onClick(int column, int row);
 	}
 
 	public interface IColumn {
@@ -74,17 +78,19 @@ public interface IBulkTableWidget {
 
 	IKey<?> addTableListener(ITableListener l);
 
-	IKey<?> addLabelClickListener(int column, ILabelClickListener l);
-
 	int height();
 
 	IBulkTableWidget height(int height);
 
 	IBulkTableWidget addMouseWheelListener(IMouseWheelListener l);
 
+	IBulkTableWidget labelMouseListener(int column, ILabelMouseListener l);
+
 	IBulkTableWidget visible(boolean visible);
 
 	void remove();
 
 	IElement<?> element();
+
+	IBulkTableWidget showAsLink(int column, int row, boolean asLink);
 }

@@ -20,6 +20,8 @@ package co.fxl.gui.table.scroll.impl;
 
 import java.util.Comparator;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.template.SimpleDateFormat;
@@ -85,8 +87,11 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	private Decorator decorator;
 	private IColumnUpdateListener<Object, Object> updateListener;
 	Boolean tagSortOrder;
+	private ScrollTableWidgetImpl widget;
+	List<IScrollTableListener<Object>> clickListeners = new LinkedList<IScrollTableListener<Object>>();
 
-	ScrollTableColumnImpl(int index) {
+	ScrollTableColumnImpl(ScrollTableWidgetImpl widget, int index) {
+		this.widget = widget;
 		this.index = index;
 	}
 
@@ -170,6 +175,8 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	@Override
 	public IScrollTableColumn<Object> addClickListener(
 			IScrollTableListener<Object> l) {
-		throw new MethodNotImplementedException();
+		widget.addClickListeners = true;
+		clickListeners.add(l);
+		return this;
 	}
 }
