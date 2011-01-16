@@ -22,7 +22,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.tree.api.ITreeWidget;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings("rawtypes")
 public class TreeWidgetProvider implements IWidgetProvider<ITreeWidget> {
 
 	@Override

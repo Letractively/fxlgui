@@ -42,6 +42,7 @@ import co.fxl.gui.table.filter.api.IFilterTableWidget.IFilterListener;
 import co.fxl.gui.table.filter.api.IFilterTableWidget.IRowModel;
 import co.fxl.gui.table.filter.api.IFilterTableWidget.ITableFilter;
 
+@SuppressWarnings("rawtypes")
 class TableViewImpl implements ITableView<Object>, IFilterListener<Object> {
 
 	class RowModel implements IRowModel<Object> {
@@ -192,6 +193,7 @@ class TableViewImpl implements ITableView<Object>, IFilterListener<Object> {
 		return label;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public IColumn addColumn(String name, Class<?> type) {
 		init();
@@ -202,6 +204,7 @@ class TableViewImpl implements ITableView<Object>, IFilterListener<Object> {
 		return column;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public IColumn addColumn(String name, String[] texts) {
 		IColumn column = table.addColumn();
@@ -210,6 +213,7 @@ class TableViewImpl implements ITableView<Object>, IFilterListener<Object> {
 		return column;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public IColumn addImageColumn(String name, String[] images) {
 		IColumn column = table.addColumn();
