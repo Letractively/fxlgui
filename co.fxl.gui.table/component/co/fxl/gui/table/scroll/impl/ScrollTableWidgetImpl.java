@@ -39,15 +39,17 @@ import co.fxl.gui.api.template.KeyAdapter;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
+import co.fxl.gui.table.bulk.api.IBulkTableWidget.ILabelMouseListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IMouseWheelListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IRow;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableListener;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
+import co.fxl.gui.table.scroll.api.IScrollTableColumn.IScrollTableListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 
 class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
-		IScrollListener {
+		IScrollListener, ILabelMouseListener {
 
 	// TODO show status line: showing rows 27-40 of 3000
 
@@ -169,7 +171,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	@Override
 	public IScrollTableColumn<Object> addColumn() {
-		ScrollTableColumnImpl column = new ScrollTableColumnImpl(columns.size());
+		ScrollTableColumnImpl column = new ScrollTableColumnImpl(this,
+				columns.size());
 		columns.add(column);
 		return column;
 	}
@@ -190,6 +193,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IPanel<?> h;
 	private double spHeight;
 	private ISortListener sortListener;
+	boolean addClickListeners = false;
 
 	private void update() {
 		if (updating)
@@ -242,6 +246,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					sp.scrollTo(pos);
 				}
 			});
+			if (addClickListeners) {
+				for (ScrollTableColumnImpl c : columns)
+					if (!c.clickListeners.isEmpty())
+						grid.labelMouseListener(c.index, this);
+			}
 			grid.element().tooltip(tooltip);
 			contentPanel.show(grid.element());
 			if (lastGrid != null)
@@ -386,5 +395,31 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			co.fxl.gui.table.scroll.api.IScrollTableWidget.ISortListener l) {
 		sortListener = l;
 		return this;
+	}
+
+	@Override
+	public void onOver(int column, int row) {
+		if (!clickListeners(column).isEmpty()) {
+			grid.showAsLink(column, row, true);
+		}
+	}
+
+	@Override
+	public void onOut(int column, int row) {
+		if (!clickListeners(column).isEmpty()) {
+			grid.showAsLink(column, row, false);
+		}
+	}
+
+	@Override
+	public void onClick(int column, int row) {
+		if (!clickListeners(column).isEmpty()) {
+			for (IScrollTableListener<Object> l : clickListeners(column))
+				l.onClick(rows.identifier(convert2TableRow(row)));
+		}
+	}
+
+	private List<IScrollTableListener<Object>> clickListeners(int column) {
+		return columns.get(column).clickListeners;
 	}
 }

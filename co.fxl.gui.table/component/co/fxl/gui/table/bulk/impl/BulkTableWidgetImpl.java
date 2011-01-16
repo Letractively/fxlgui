@@ -25,6 +25,7 @@ import java.util.Map;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICheckBox;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
@@ -33,6 +34,7 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IGridPanel.IGridClickListener;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
@@ -209,7 +211,43 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 	}
 
 	@Override
-	public IKey<?> addLabelClickListener(int column, ILabelClickListener l) {
-		throw new MethodNotImplementedException();
+	public IBulkTableWidget labelMouseListener(final int column,
+			final ILabelMouseListener listener) {
+		for (int row = 0; row < grid.rows(); row++) {
+			final int rowF = row;
+			IGridCell cell = grid.cell(column, row);
+			ILabel l = (ILabel) cell.element();
+			l.addMouseOverListener(new IMouseOverListener() {
+
+				@Override
+				public void onMouseOver() {
+					listener.onOver(column, rowF);
+				}
+
+				@Override
+				public void onMouseOut() {
+					listener.onOut(column, rowF);
+				}
+			});
+			l.addClickListener(new IClickListener() {
+
+				@Override
+				public void onClick() {
+					listener.onClick(column, rowF);
+				}
+			});
+		}
+		return this;
+	}
+
+	@Override
+	public IBulkTableWidget showAsLink(int column, int row, boolean asLink) {
+		ILabel l = (ILabel) grid.cell(column, row).element();
+		l.font().underline(asLink);
+		if (asLink)
+			l.font().color().blue();
+		else
+			l.font().color().black();
+		return this;
 	}
 }
