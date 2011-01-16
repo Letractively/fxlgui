@@ -30,7 +30,7 @@ public class PropertyGroupImpl implements IPropertyGroup<Object> {
 	List<PropertyImpl> properties = new LinkedList<PropertyImpl>();
 	boolean asDetail = true;
 	boolean inTable = true;
-	private Class<?> constrainType;
+	Class<?> constrainType;
 
 	public PropertyGroupImpl(String name) {
 		this.name = name;

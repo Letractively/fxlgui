@@ -25,6 +25,11 @@ import co.fxl.gui.api.template.IPageListener;
 
 public interface ITreeWidget<T> {
 
+	public interface IView {
+
+		void constrainType(Class<?> clazz);
+	}
+
 	public interface ITreeClickListener<T> {
 
 		void onClick(ITree<T> tree);
@@ -50,7 +55,7 @@ public interface ITreeWidget<T> {
 
 	ITreeWidget<T> setDetailView(IDecorator<T> decorator);
 
-	ITreeWidget<T> addDetailView(String title, IDecorator<T> decorator);
+	IView addDetailView(String title, IDecorator<T> decorator);
 
 	ITreeWidget<T> root(ITree<T> tree);
 
