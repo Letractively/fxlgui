@@ -21,6 +21,7 @@ package co.fxl.gui.mdt.api;
 import java.util.List;
 
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.IPageListener;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.ITree;
@@ -77,5 +78,7 @@ public interface IMasterDetailTableWidget<T> {
 	List<T> selection();
 
 	IMasterDetailTableWidget<T> allowMultiSelection(boolean multiSelection);
+
+	IPageListener pageListener();
 
 }

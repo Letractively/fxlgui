@@ -69,6 +69,8 @@ class Node<T> implements IClickListener {
 		IClickListener showClickListener = new IClickListener() {
 			@Override
 			public void onClick() {
+				if (!widget.notifyChange())
+					return;
 				Node.this.widget.show(Node.this);
 			}
 		};

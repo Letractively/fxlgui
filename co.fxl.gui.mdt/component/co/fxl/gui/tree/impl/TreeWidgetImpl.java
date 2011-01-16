@@ -35,6 +35,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.IPageListener;
 import co.fxl.gui.api.template.KeyAdapter;
 import co.fxl.gui.api.template.ResizeListener;
 import co.fxl.gui.api.template.WidgetTitle;
@@ -45,7 +46,8 @@ import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 
-class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
+class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener,
+		IPageListener {
 
 	// TODO nice-2-have: double click on tree node: expand
 
@@ -136,6 +138,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	ITreeClickListener<T> treeClickListener;
 	KeyAdapter<Object> treeClickAdapter;
 	boolean allowCreate = true;
+	IPageListener pageListener;
 
 	TreeWidgetImpl(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel()).space(0);
@@ -155,6 +158,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				IClickListener cl = new IClickListener() {
 					@Override
 					public void onClick() {
+						if (!notifyChange())
+							return;
 						final ITree<T> lParentNode = last != null ? last.tree
 								: root;
 						ChainedCallback<List<T>, ITree<T>> lCallback1 = new ChainedCallback<List<T>, ITree<T>>() {
@@ -513,5 +518,18 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	public ITreeWidget<T> allowCreate(boolean allowCreate) {
 		this.allowCreate = allowCreate;
 		return this;
+	}
+
+	@Override
+	public ITreeWidget<T> pageListener(IPageListener l) {
+		pageListener = l;
+		return this;
+	}
+
+	@Override
+	public boolean notifyChange() {
+		if (pageListener == null)
+			return true;
+		return pageListener.notifyChange();
 	}
 }
