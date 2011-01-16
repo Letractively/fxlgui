@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.swing;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
@@ -80,6 +83,22 @@ class SwingLabel extends SwingTextElement<JLabel, ILabel> implements ILabel {
 	@Override
 	public ILabel autoWrap(boolean autoWrap) {
 		html.autoWrap = autoWrap;
+		return this;
+	}
+
+	@Override
+	public ILabel addMouseOverListener(final IMouseOverListener l) {
+		container.component.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				l.onMouseOver();
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				l.onMouseOut();
+			}
+		});
 		return this;
 	}
 }
