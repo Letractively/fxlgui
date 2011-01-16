@@ -44,6 +44,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	private String title = null;
 	private boolean hasRequiredAttributes = true;
 	private boolean isUpdateable = true;
+	private IFormWidget form;
 
 	public void setUpdateable(boolean isUpdateable) {
 		this.isUpdateable = isUpdateable;
@@ -82,12 +83,16 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 		decorate(panel, node.object());
 	}
 
+	public IFormWidget form() {
+		return form;
+	}
+
 	@Override
 	public void decorate(IVerticalPanel panel, final Object node) {
 		assert node != null;
 		panel.clear();
 		decorateBorder(panel);
-		IFormWidget form = (IFormWidget) panel.add().widget(IFormWidget.class);
+		form = (IFormWidget) panel.add().widget(IFormWidget.class);
 		if (title != null)
 			form.addTitle(title);
 		final List<Runnable> updates = new LinkedList<Runnable>();
@@ -120,33 +125,37 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 									valueElement = formField.valueElement();
 									tf.valueElement().editable(false);
 								} else {
-									final IFormField<ILabel> tf = form
-											.addLabel(property.name);
+									final IFormField<ITextField> tf = form
+											.addTextField(property.name);
+									tf.valueElement().editable(false);
 									formField = tf;
 									valueElement = formField.valueElement();
-									tf.valueElement()
-											.hyperlink()
-											.addClickListener(
-													new IClickListener() {
-														@Override
-														public void onClick() {
-															property.listener
-																	.update(node,
-																			new CallbackTemplate<Boolean>() {
+									final ILabel assign = formField
+											.addButton(valueOf == null ? "Assign"
+													: "Change");
+									assign.addClickListener(new IClickListener() {
+										@Override
+										public void onClick() {
+											property.listener
+													.update(node,
+															new CallbackTemplate<Boolean>() {
 
-																				@Override
-																				public void onSuccess(
-																						Boolean update) {
-																					tf.valueElement()
-																							.text((String) property.adapter
-																									.valueOf(node));
-																					if (update) {
-																						save(node);
-																					}
-																				}
-																			});
-														}
-													});
+																@Override
+																public void onSuccess(
+																		Boolean update) {
+																	if (update) {
+																		String newString = (String) property.adapter
+																				.valueOf(node);
+																		tf.valueElement()
+																				.text(newString);
+																		assign.text(newString == null ? "Assign"
+																				: "Change");
+																		save(node);
+																	}
+																}
+															});
+										}
+									});
 									// tf.externalStatusAdapter(new
 									// IExternalStatusAdapter() {
 									//
@@ -274,7 +283,11 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							formField.required();
 					}
 				}
+		supplement(form);
 		form.visible(true);
+	}
+
+	public void supplement(IFormWidget form) {
 	}
 
 	protected void decorateBorder(IVerticalPanel panel) {
