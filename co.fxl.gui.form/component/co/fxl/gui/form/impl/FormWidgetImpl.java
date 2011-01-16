@@ -342,6 +342,13 @@ class FormWidgetImpl implements IFormWidget {
 
 	@Override
 	public IPageListener pageListener() {
+		if (validation == null)
+			return new IPageListener() {
+				@Override
+				public boolean notifyChange() {
+					return true;
+				}
+			};
 		return validation;
 	}
 }
