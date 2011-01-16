@@ -24,6 +24,8 @@ public interface IChangePasswordWidget {
 
 	public interface IPasswordListener {
 
+		void onCancel();
+
 		void onChange(String password);
 	}
 

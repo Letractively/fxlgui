@@ -57,6 +57,14 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 				onClick();
 			}
 		});
+		widget.addCancelHyperlink().addClickListener(new IClickListener() {
+
+			@Override
+			public void onClick() {
+				for (IPasswordListener pl : listeners)
+					pl.onCancel();
+			}
+		});
 	}
 
 	@Override
@@ -67,14 +75,14 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 
 	@Override
 	public IChangePasswordWidget visible(boolean visible) {
-		currentPassword = widget.addPasswordField("Current").valueElement();
+		currentPassword = widget.addPasswordField("Current").required().valueElement();
 		currentPassword.addUpdateListener((IUpdateListener<String>) this);
 		currentPassword
 				.addCarriageReturnListener((ICarriageReturnListener) this);
-		newPassword = widget.addPasswordField("New").valueElement();
+		newPassword = widget.addPasswordField("New").required().valueElement();
 		newPassword.addUpdateListener((IUpdateListener<String>) this);
 		newPassword.addCarriageReturnListener((ICarriageReturnListener) this);
-		confirmPassword = widget.addPasswordField("Confirm").valueElement();
+		confirmPassword = widget.addPasswordField("Confirm").required().valueElement();
 		confirmPassword.addUpdateListener((IUpdateListener<String>) this);
 		confirmPassword
 				.addCarriageReturnListener((ICarriageReturnListener) this);

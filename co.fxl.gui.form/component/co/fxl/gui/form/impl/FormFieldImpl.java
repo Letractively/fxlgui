@@ -34,17 +34,26 @@ abstract class FormFieldImpl<T extends ITextElement<T>> implements
 	private IGridCell cell;
 	FieldTypeImpl type = new FieldTypeImpl();
 	boolean required = false;
+	private int row;
+	private int column = 2;
 
 	// List<IExternalStatusAdapter> externalStatusAdapters = new
 	// LinkedList<IExternalStatusAdapter>();
 
-	FormFieldImpl(FormWidgetImpl widget, String name) {
+	FormFieldImpl(FormWidgetImpl widget, int index, String name) {
 		this.widget = widget;
 		widget.fields.add(this);
 		FormEntryLabel formEntryLabel = widget.addFormEntryLabel(name);
 		cell = formEntryLabel.cell;
 		label = formEntryLabel.formEntryLabel;
 		widget.addFillColumn();
+		this.row = index;
+	}
+
+	@Override
+	public ILabel addButton(String title) {
+		return widget.grid().cell(column, row).valign().center().label()
+				.hyperlink().text(title);
 	}
 
 	@Override

@@ -24,8 +24,8 @@ class FormComboBoxImpl extends FormFieldImpl<IComboBox> {
 
 	private IComboBox comboBox;
 
-	FormComboBoxImpl(FormWidgetImpl widget, String name) {
-		super(widget, name);
+	FormComboBoxImpl(FormWidgetImpl widget, int index, String name) {
+		super(widget, index, name);
 		comboBox = widget.addFormValueComboBox();
 //		comboBox.height(26);
 		widget.addFillColumn();
