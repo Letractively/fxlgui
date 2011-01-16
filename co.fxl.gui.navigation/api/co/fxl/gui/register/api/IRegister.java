@@ -18,10 +18,10 @@
  */
 package co.fxl.gui.register.api;
 
-import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IFontElement.IFont;
+import co.fxl.gui.api.IVerticalPanel;
 
 public interface IRegister {
 
@@ -32,7 +32,7 @@ public interface IRegister {
 		IFont font();
 
 		IColor color();
-		
+
 		IBorder border();
 	}
 
@@ -50,4 +50,6 @@ public interface IRegister {
 	IRegister top();
 
 	IRegister visible(boolean visible);
+
+	IRegister enabled(boolean enabled);
 }

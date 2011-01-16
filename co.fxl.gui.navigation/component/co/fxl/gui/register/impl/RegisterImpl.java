@@ -152,4 +152,22 @@ class RegisterImpl implements IRegister, IClickListener {
 		buttonPanel.visible(visible);
 		return this;
 	}
+
+	private boolean disabled = false;
+
+	@Override
+	public IRegister enabled(boolean enabled) {
+		if (!enabled) {
+			buttonLabel.font().color().lightgray();
+			buttonPanel.clickable(false);
+			disabled = true;
+		} else {
+			if (disabled) {
+				buttonLabel.font().color().black();
+				buttonPanel.clickable(true);
+				disabled = false;
+			}
+		}
+		return this;
+	}
 }
