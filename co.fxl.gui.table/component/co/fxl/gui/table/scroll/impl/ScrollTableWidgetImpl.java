@@ -233,7 +233,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				public void onUp(int turns) {
 					int pos = Math.max(0, scrollOffset - turns * SCROLL_MULT);
 					sp.scrollTo(pos);
-					// onScroll(pos);
 				}
 
 				@Override
@@ -241,7 +240,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					int pos = Math.min(scrollPanelHeight, scrollOffset + turns
 							* SCROLL_MULT);
 					sp.scrollTo(pos);
-					// onScroll(pos);
 				}
 			});
 			grid.element().tooltip(tooltip);
