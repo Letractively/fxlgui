@@ -54,7 +54,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 	}
 
 	@Override
-	public void decorate(final IVerticalPanel panel, Object node) {
+	public void decorate(final IVerticalPanel panel, final Object node) {
 		panel.clear();
 		IBorder border = panel.border();
 		border.color().gray();
@@ -76,8 +76,8 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 						.add().panel().horizontal();
 				if (relation.addRemoveListener != null) {
 					if (relation.addRemoveListener.isDetailedAdd()) {
-						add = relation.addRemoveListener
-								.decorateAdd(buttonPanel.add());
+						add = relation.addRemoveListener.decorateAdd(node,
+								buttonPanel.add());
 					} else
 						add = buttonPanel.add().button().text("Add");
 					remove = buttonPanel.addSpace(10).add().button()
@@ -104,7 +104,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 							Object c = null;
 							if (r.size() > 0)
 								c = r.get(0);
-							relation.addRemoveListener.onAdd(c);
+							relation.addRemoveListener.onAdd(node, c);
 						}
 					});
 				if (remove != null)
@@ -112,7 +112,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 						@Override
 						public void onClick() {
 							List<Object> r = selection0.result();
-							relation.addRemoveListener.onRemove(r.get(0));
+							relation.addRemoveListener.onRemove(node, r.get(0));
 						}
 					});
 				if (details != null)
