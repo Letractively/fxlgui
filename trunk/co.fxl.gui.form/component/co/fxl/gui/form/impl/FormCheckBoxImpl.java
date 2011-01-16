@@ -24,10 +24,10 @@ class FormCheckBoxImpl extends FormFieldImpl<ICheckBox> {
 
 	private ICheckBox checkBox;
 
-	FormCheckBoxImpl(FormWidgetImpl widget, String name) {
-		super(widget, name);
+	FormCheckBoxImpl(FormWidgetImpl widget, int index, String name) {
+		super(widget, index, name);
 		checkBox = widget.addFormValueCheckBox();
-//		checkBox.height(26);
+		// checkBox.height(26);
 		widget.addFillColumn();
 	}
 

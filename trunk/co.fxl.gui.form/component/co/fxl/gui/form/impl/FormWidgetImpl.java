@@ -147,22 +147,22 @@ class FormWidgetImpl implements IFormWidget {
 
 	@Override
 	public IFormField<ICheckBox> addCheckBox(String name) {
-		return new FormCheckBoxImpl(this, name);
+		return new FormCheckBoxImpl(this, gridIndex, name);
 	}
 
 	@Override
 	public IFormField<ITextArea> addTextArea(String name) {
-		return new FormTextAreaImpl(this, name);
+		return new FormTextAreaImpl(this, gridIndex, name);
 	}
 
 	@Override
 	public IFormField<ITextField> addTextField(String name) {
-		return new FormTextFieldImpl(this, name);
+		return new FormTextFieldImpl(this, gridIndex, name);
 	}
 
 	@Override
 	public IFormField<IPasswordField> addPasswordField(String name) {
-		return new FormPasswordFieldImpl(this, name);
+		return new FormPasswordFieldImpl(this, gridIndex, name);
 	}
 
 	@Override
@@ -172,12 +172,12 @@ class FormWidgetImpl implements IFormWidget {
 
 	@Override
 	public IFormField<IComboBox> addComboBox(String name) {
-		return new FormComboBoxImpl(this, name);
+		return new FormComboBoxImpl(this, gridIndex, name);
 	}
 
 	@Override
 	public IFormField<ILabel> addLabel(String name) {
-		return new FormLabelImpl(this, name);
+		return new FormLabelImpl(this, gridIndex, name);
 	}
 
 	@Override

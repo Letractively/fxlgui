@@ -25,12 +25,12 @@ import co.fxl.gui.api.template.IFieldType;
 
 public interface IFormField<T extends ITextElement<T>> {
 
-	public interface IExternalStatusAdapter {
-
-		boolean hasChanged();
-
-		boolean isNull();
-	}
+	// public interface IExternalStatusAdapter {
+	//
+	// boolean hasChanged();
+	//
+	// boolean isNull();
+	// }
 
 	IGridCell cell();
 
@@ -41,4 +41,6 @@ public interface IFormField<T extends ITextElement<T>> {
 	IFormField<T> required();
 
 	IFieldType type();
+
+	ILabel addButton(String title);
 }

@@ -24,8 +24,8 @@ class FormTextFieldImpl extends FormFieldImpl<ITextField> {
 
 	ITextField textField;
 
-	FormTextFieldImpl(FormWidgetImpl widget, String name) {
-		super(widget, name);
+	FormTextFieldImpl(FormWidgetImpl widget, int index, String name) {
+		super(widget, index, name);
 		textField = addTextField(widget);
 //		textField.height(26);
 //		textField.border().color().gray();
