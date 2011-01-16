@@ -37,13 +37,13 @@ import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.KeyAdapter;
 import co.fxl.gui.api.template.WidgetTitle;
-import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IMouseWheelListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IRow;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableListener;
 import co.fxl.gui.table.scroll.api.IRows;
+import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 
 class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
@@ -65,7 +65,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private WidgetTitle widgetTitle;
 	RowAdapter rows;
 	private int paintedRows;
-	private List<ColumnImpl> columns = new LinkedList<ColumnImpl>();
+	private List<ScrollTableColumnImpl> columns = new LinkedList<ScrollTableColumnImpl>();
 	private SelectionImpl selection = new SelectionImpl(this);
 	private int scrollPanelHeight;
 	private int scrollOffset = -1;
@@ -168,8 +168,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	@Override
-	public IColumn<Object> addColumn() {
-		ColumnImpl column = new ColumnImpl(columns.size());
+	public IScrollTableColumn<Object> addColumn() {
+		ScrollTableColumnImpl column = new ScrollTableColumnImpl(columns.size());
 		columns.add(column);
 		return column;
 	}
@@ -207,7 +207,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			paintedRows = computeRowsToPaint();
 			rowOffset = convert(usedScrollOffset);
 			for (int c = 0; c < columns.size(); c++) {
-				ColumnImpl columnImpl = columns.get(c);
+				ScrollTableColumnImpl columnImpl = columns.get(c);
 				if (columnImpl.tagSortOrder != null) {
 					sortColumn = columnImpl.index;
 					sortNegator = columnImpl.tagSortOrder ? -1 : 1;
@@ -222,7 +222,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			for (int r = 0; r < paintedRows; r++) {
 				int index = r + rowOffset;
 				Object[] row = rows.row(index);
-				for (ColumnImpl c : columns)
+				for (ScrollTableColumnImpl c : columns)
 					c.decorate(rows.identifier(index), grid.cell(c.index, r),
 							row[c.index]);
 			}
@@ -300,7 +300,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	private void updateSorting() {
 		boolean sortable = false;
-		for (ColumnImpl c : columns) {
+		for (ScrollTableColumnImpl c : columns) {
 			if (c.sortable) {
 				sortable |= c.sortable;
 			}
@@ -312,7 +312,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				public void onClick(int column, int row) {
 					if (row != 0)
 						return;
-					ColumnImpl columnImpl = columns.get(column);
+					ScrollTableColumnImpl columnImpl = columns.get(column);
 					if (columnImpl.sortable) {
 						if (rows.size() < MAX_SORT_SIZE || sortListener == null) {
 							sortColumn = columnImpl.index;

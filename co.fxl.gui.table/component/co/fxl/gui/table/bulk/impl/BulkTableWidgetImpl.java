@@ -207,4 +207,9 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 		// TODO ...
 		return this;
 	}
+
+	@Override
+	public IKey<?> addLabelClickListener(int column, ILabelClickListener l) {
+		throw new MethodNotImplementedException();
+	}
 }
