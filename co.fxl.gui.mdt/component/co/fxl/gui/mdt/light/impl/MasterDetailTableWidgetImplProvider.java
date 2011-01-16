@@ -22,7 +22,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.mdt.light.api.IMasterDetailTableWidget;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings("rawtypes")
 public class MasterDetailTableWidgetImplProvider implements
 		IWidgetProvider<IMasterDetailTableWidget> {
 

@@ -331,6 +331,9 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener,
 			show(null);
 			panel().clear();
 		}
+		if (path != null) {
+			selection = path.get(path.size() - 1).object();
+		}
 		this.root = tree;
 		node = null;
 		if (showRoot) {

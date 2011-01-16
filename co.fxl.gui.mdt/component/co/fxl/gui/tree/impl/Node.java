@@ -30,11 +30,6 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.ITree;
 
-/**
- * Represents the ui of a tree node.
- * 
- * @param <T>
- */
 class Node<T> implements IClickListener {
 
 	private static final String FOLDER_CLOSED = "folder_closed.png";
@@ -123,6 +118,7 @@ class Node<T> implements IClickListener {
 		widget.object2node.put(root.object(), this);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void injectTreeListener(IClickable<?> clickable) {
 		if (widget.treeClickListener != null) {
 			IKey<?> key = clickable.addClickListener(new IClickListener() {

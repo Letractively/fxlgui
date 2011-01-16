@@ -21,8 +21,8 @@ package co.fxl.gui.mdt.light.api;
 import java.util.List;
 
 import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.IRow;
 import co.fxl.gui.table.filter.api.IFilterTableWidget.IFilterListener;
@@ -41,11 +41,11 @@ public interface ITableView<T> {
 
 	List<T> selection();
 
-	IColumn addColumn(String name, Class<?> type);
+	IColumn<T> addColumn(String name, Class<?> type);
 
-	IColumn addColumn(String name, String[] texts);
+	IColumn<T> addColumn(String name, String[] texts);
 
-	IColumn addImageColumn(String name, String[] images);
+	IColumn<T> addImageColumn(String name, String[] images);
 
 	ITableView<T> filterListener(IFilterListener<T> listener);
 
