@@ -48,7 +48,7 @@ public class NavigationView {
 			panel.add().image().resource(LINK_PNG);
 			panel.addSpace(4);
 		}
-		ILabel textLabel = panel.add().label().hyperlink();
+		final ILabel textLabel = panel.add().label();
 		textLabel.font().pixel(13).weight().bold();
 		return textLabel;
 	}
@@ -57,7 +57,7 @@ public class NavigationView {
 		if (panel != null)
 			return;
 		widgetTitle.addTitle("Navigation");
-		panel = widgetTitle.content().panel().vertical();//.spacing(4);
+		panel = widgetTitle.content().panel().vertical();// .spacing(4);
 	}
 
 	public NavigationView foldable(boolean b) {
