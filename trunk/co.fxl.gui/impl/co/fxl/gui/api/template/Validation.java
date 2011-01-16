@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.api.template;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
-public class Validation {
+public class Validation implements IPageListener {
 
 	class CheckBoxField implements IField, IUpdateListener<Boolean> {
 
@@ -155,6 +156,7 @@ public class Validation {
 	private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat();
 	private List<IClickable<?>> clickables = new LinkedList<IClickable<?>>();
 	private List<IField> fields = new LinkedList<IField>();
+	private boolean clickable;
 
 	private void updateClickables() {
 		boolean error = false;
@@ -169,8 +171,9 @@ public class Validation {
 			if (field.isError())
 				error = true;
 		}
+		clickable = isSpecified && !error && allRequiredSpecified;
 		for (IClickable<?> c : clickables) {
-			c.clickable(isSpecified && !error && allRequiredSpecified);
+			c.clickable(clickable);
 		}
 	}
 
@@ -198,12 +201,10 @@ public class Validation {
 			@Override
 			public void onUpdate(String value) {
 				field.isError = false;
-				if (value.length() > 0) {
-					try {
-						DATE_FORMAT.parse(value);
-					} catch (Exception e) {
+				if (value.trim().length() > 0) {
+					Date d = DATE_FORMAT.parse(value.trim());
+					if (d == null)
 						field.isError = true;
-					}
 				} else {
 					field.isError = field.required;
 				}
@@ -296,5 +297,11 @@ public class Validation {
 		CheckBoxField field = new CheckBoxField(valueElement);
 		valueElement.addUpdateListener(field);
 		return this;
+	}
+
+	@Override
+	public boolean notifyChange() {
+		update();
+		return !clickable;
 	}
 }
