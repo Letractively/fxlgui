@@ -36,6 +36,7 @@ import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.IPageListener;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.form.api.IFormField;
@@ -337,5 +338,10 @@ class FormWidgetImpl implements IFormWidget {
 	@Override
 	public ILabel labelRequiredAttribute() {
 		return requiredAttributeLabel;
+	}
+
+	@Override
+	public IPageListener pageListener() {
+		return validation;
 	}
 }

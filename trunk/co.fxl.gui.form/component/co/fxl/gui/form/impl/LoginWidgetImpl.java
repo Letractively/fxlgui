@@ -26,9 +26,10 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.ITextField.ICarriageReturnListener;
+import co.fxl.gui.api.template.IPageListener;
 import co.fxl.gui.form.api.ILoginWidget;
 
-class LoginWidgetImpl implements ILoginWidget {
+class LoginWidgetImpl implements ILoginWidget, IPageListener {
 
 	class LoginListener implements IClickListener, ICarriageReturnListener,
 			co.fxl.gui.api.IPasswordField.ICarriageReturnListener {
@@ -50,6 +51,8 @@ class LoginWidgetImpl implements ILoginWidget {
 					if (authorization == Authorization.FAILED) {
 						dialog("Unknown user or password");
 					} else {
+						if (!notifyChange())
+							return;
 						loggedInAs.text(loginID.text());
 						loginID.text("");
 						password.text("");
@@ -70,6 +73,8 @@ class LoginWidgetImpl implements ILoginWidget {
 
 		@Override
 		public void onClick() {
+			if (!notifyChange())
+				return;
 			listener.logout();
 			loginPanel.visible(true);
 			logoutPanel.visible(false);
@@ -85,6 +90,7 @@ class LoginWidgetImpl implements ILoginWidget {
 	private LogoutListener logoutListener = new LogoutListener();
 	private IHorizontalPanel logoutPanel;
 	private ILabel loggedInAs;
+	private IPageListener pageListener;
 
 	LoginWidgetImpl(IContainer display) {
 		cards = display.panel().horizontal().align().end();
@@ -171,5 +177,18 @@ class LoginWidgetImpl implements ILoginWidget {
 		password.text(pwd);
 		loginListener.onClick();
 		return this;
+	}
+
+	@Override
+	public ILoginWidget pageListener(IPageListener l) {
+		pageListener = l;
+		return this;
+	}
+
+	@Override
+	public boolean notifyChange() {
+		if (pageListener == null)
+			return true;
+		return pageListener.notifyChange();
 	}
 }

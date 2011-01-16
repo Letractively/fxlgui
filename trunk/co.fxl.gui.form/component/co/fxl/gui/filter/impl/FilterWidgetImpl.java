@@ -41,6 +41,8 @@ import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
 
 class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
+	
+	// TODO Swing: cells are too small
 
 	private static final List<Object> DEFAULT_SIZES = Arrays
 			.asList(new Object[] { 50, 100, 500, 1000, 5000 });

@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.form.api;
 
+import co.fxl.gui.api.template.IPageListener;
+
 public interface ILoginWidget {
 
 	public interface Callback {
@@ -42,4 +44,6 @@ public interface ILoginWidget {
 	ILoginWidget login(String user, String pwd);
 
 	ILoginWidget visible(boolean visible);
+
+	ILoginWidget pageListener(IPageListener l);
 }
