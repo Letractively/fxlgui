@@ -26,15 +26,17 @@ import co.fxl.gui.tree.api.ICallback;
 
 public interface IRelation<T, R> extends IPropertyGroup<R> {
 
-	public interface IAddRemoveListener<R> {
+	public interface IAddRemoveListener<T, R> {
 
-		void onAdd(R entity);
+		// TODO callback
 
-		void onRemove(R entity);
+		void onAdd(T base, R entity);
+
+		void onRemove(T base, R entity);
 
 		boolean isDetailedAdd();
 
-		IButton decorateAdd(IContainer c);
+		IButton decorateAdd(T base, IContainer c);
 	}
 
 	public interface IShowListener<R> {
@@ -51,5 +53,5 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 
 	IRelation<T, R> showListener(IShowListener<R> l);
 
-	IRelation<T, R> addRemoveListener(IAddRemoveListener<R> l);
+	IRelation<T, R> addRemoveListener(IAddRemoveListener<T, R> l);
 }
