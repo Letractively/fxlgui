@@ -61,6 +61,8 @@ class SwingContainer<T extends JComponent> implements IContainer {
 	static final int MIN_WIDTH_TEXT_COMPONENT = 40;
 	ComponentParent parent;
 	T component;
+	@SuppressWarnings("rawtypes")
+	SwingElement element;
 
 	SwingContainer(ComponentParent parent) {
 		this.parent = parent;
@@ -92,7 +94,7 @@ class SwingContainer<T extends JComponent> implements IContainer {
 
 	@Override
 	public IElement<?> element(IElement<?> element) {
-		throw new MethodNotImplementedException();
+		return element;
 	}
 
 	@Override
@@ -104,7 +106,7 @@ class SwingContainer<T extends JComponent> implements IContainer {
 	@Override
 	public ILabel label() {
 		setComponent((T) new JLabel());
-		return new SwingLabel((SwingContainer<JLabel>) this);
+		return (ILabel) (element = new SwingLabel((SwingContainer<JLabel>) this));
 	}
 
 	@Override
@@ -177,16 +179,16 @@ class SwingContainer<T extends JComponent> implements IContainer {
 		return parent.lookupSwingDisplay();
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
 	public IElement<?> element() {
-		return new SwingElement(this);
+		return element;
 	}
 
 	@Override
 	public IContainer clear() {
 		if (component != null)
 			element().remove();
+		element = null;
 		return this;
 	}
 }
