@@ -177,13 +177,12 @@ public class Validation implements IPageListener {
 		}
 	}
 
-	public void addField(IField field) {
-		fields.add(field);
-	}
-
 	public void update() {
-		for (IField f : fields)
+		assert fields != null : "validation.fields is not set";
+		for (IField f : fields) {
+			assert f != null : "field is null";
 			f.update();
+		}
 	}
 
 	public Validation linkClickable(IClickable<?> clickable) {
