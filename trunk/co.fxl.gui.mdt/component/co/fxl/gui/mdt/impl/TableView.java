@@ -43,6 +43,8 @@ import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableListener;
 import co.fxl.gui.table.scroll.api.IRows;
+import co.fxl.gui.table.scroll.api.IScrollTableColumn;
+import co.fxl.gui.table.scroll.api.IScrollTableColumn.IScrollTableListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.ISortListener;
 import co.fxl.gui.tree.impl.CallbackTemplate;
@@ -195,6 +197,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 		adapters.clear();
 		property2column.clear();
 		String config = getConfig();
+		int index = 0;
 		for (PropertyGroupImpl g : this.widget.propertyGroups) {
 			if (config != null && !g.name.equals(config))
 				continue;
@@ -202,8 +205,8 @@ class TableView extends ViewTemplate implements IFilterListener,
 				if (!p.displayInTable)
 					continue;
 				adapters.add(p.adapter);
-				IColumn<Object> column = table.addColumn().name(p.name)
-						.type(p.type.clazz);
+				IScrollTableColumn<Object> column = table.addColumn();
+				column.name(p.name).type(p.type.clazz);
 				if (p.sortable) {
 					column.sortable();
 					if (widget.constraints.sortOrder() != null
@@ -211,6 +214,17 @@ class TableView extends ViewTemplate implements IFilterListener,
 						column.tagSortOrder(widget.constraints.sortDirection());
 				}
 				property2column.put(p, column);
+				if (index == 0) {
+					column.addClickListener(new IScrollTableListener<Object>() {
+
+						@Override
+						public void onClick(Object identifier) {
+							widget.r2.checked(true);
+							widget.showDetailView(identifier);
+						}
+					});
+				}
+				index++;
 			}
 		}
 	}
