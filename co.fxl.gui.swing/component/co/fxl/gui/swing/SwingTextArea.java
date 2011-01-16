@@ -27,6 +27,8 @@ import co.fxl.gui.api.ITextArea;
 class SwingTextArea extends SwingTextInput<JTextArea, ITextArea> implements
 		ITextArea {
 
+	// TODO add scrollpanel
+
 	SwingTextArea(SwingContainer<JTextArea> container) {
 		super(container);
 		jTextArea().setLineWrap(true);
