@@ -178,9 +178,7 @@ public class Validation implements IPageListener {
 	}
 
 	public void update() {
-		assert fields != null : "validation.fields is not set";
 		for (IField f : fields) {
-			assert f != null : "field is null";
 			f.update();
 		}
 	}
