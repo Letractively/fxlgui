@@ -30,7 +30,7 @@ class RowAdapter implements IRows<Object>, IComparableList {
 	private QuickSort quickSort = new QuickSort();
 	private IRows<Object> rows;
 	private int[] indices;
-	private ColumnImpl comparator;
+	private ScrollTableColumnImpl comparator;
 	private int negator = 1;
 	private boolean[] selected;
 
@@ -87,7 +87,7 @@ class RowAdapter implements IRows<Object>, IComparableList {
 		return indices.length;
 	}
 
-	int sort(ColumnImpl column) {
+	int sort(ScrollTableColumnImpl column) {
 		if (comparator != null) {
 			negator = comparator == column ? negator * -1 : 1;
 		}

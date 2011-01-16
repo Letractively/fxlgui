@@ -18,38 +18,14 @@
  */
 package co.fxl.gui.table.scroll.api;
 
-import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.IClickable.IKey;
-import co.fxl.gui.api.ILabel;
-import co.fxl.gui.table.api.ISelection;
-import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableListener;
+import co.fxl.gui.table.api.IColumn;
 
-public interface IScrollTableWidget<T> {
+public interface IScrollTableColumn<T> extends IColumn<T> {
 
-	public interface ISortListener {
+	public interface IScrollTableListener<T> {
 
-		void onSort(String columnName, boolean up);
+		void onClick(T identifier);
 	}
 
-	ILabel addTitle(String text);
-
-	IClickable<?> addButton(String name);
-
-	ISelection<T> selection();
-
-	IScrollTableColumn<T> addColumn();
-
-	int offsetY();
-
-	IScrollTableWidget<T> height(int height);
-
-	IScrollTableWidget<T> rows(IRows<T> rows);
-
-	IKey<?> addTableListener(ITableListener l);
-
-	IScrollTableWidget<?> sortListener(ISortListener l);
-
-	IScrollTableWidget<?> visible(boolean visible);
-
-	IScrollTableWidget<?> addTooltip(String tooltip);
+	IScrollTableColumn<T> addClickListener(IScrollTableListener<T> l);
 }

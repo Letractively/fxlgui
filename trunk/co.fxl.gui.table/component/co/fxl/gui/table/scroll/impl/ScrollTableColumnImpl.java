@@ -25,8 +25,10 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.template.SimpleDateFormat;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ICell;
+import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 
-class ColumnImpl implements IColumn<Object>, Comparator<Object[]> {
+class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
+		Comparator<Object[]> {
 
 	public class BooleanDecorator implements Decorator<Boolean> {
 
@@ -51,7 +53,6 @@ class ColumnImpl implements IColumn<Object>, Comparator<Object[]> {
 		public void decorate(Object identifier, ICell cell, Date value) {
 			cell.text(value == null ? null : FORMAT.format(value));
 		}
-
 	}
 
 	public class NumberDecorator implements Decorator<Number> {
@@ -85,7 +86,7 @@ class ColumnImpl implements IColumn<Object>, Comparator<Object[]> {
 	private IColumnUpdateListener<Object, Object> updateListener;
 	Boolean tagSortOrder;
 
-	ColumnImpl(int index) {
+	ScrollTableColumnImpl(int index) {
 		this.index = index;
 	}
 
@@ -164,5 +165,11 @@ class ColumnImpl implements IColumn<Object>, Comparator<Object[]> {
 	public IColumn<Object> tagSortOrder(boolean up) {
 		tagSortOrder = up;
 		return this;
+	}
+
+	@Override
+	public IScrollTableColumn<Object> addClickListener(
+			IScrollTableListener<Object> l) {
+		throw new MethodNotImplementedException();
 	}
 }

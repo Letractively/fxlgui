@@ -36,6 +36,11 @@ public interface IBulkTableWidget {
 		void onClick(int column, int row);
 	}
 
+	public interface ILabelClickListener {
+
+		void onClick(int row);
+	}
+
 	public interface IColumn {
 
 		IColumn title(String title);
@@ -68,6 +73,8 @@ public interface IBulkTableWidget {
 	IColumn column(int column);
 
 	IKey<?> addTableListener(ITableListener l);
+
+	IKey<?> addLabelClickListener(int column, ILabelClickListener l);
 
 	int height();
 
