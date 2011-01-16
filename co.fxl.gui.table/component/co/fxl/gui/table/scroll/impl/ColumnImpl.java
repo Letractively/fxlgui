@@ -49,7 +49,7 @@ class ColumnImpl implements IColumn<Object>, Comparator<Object[]> {
 
 		@Override
 		public void decorate(Object identifier, ICell cell, Date value) {
-			cell.text(FORMAT.format(value));
+			cell.text(value == null ? null : FORMAT.format(value));
 		}
 
 	}

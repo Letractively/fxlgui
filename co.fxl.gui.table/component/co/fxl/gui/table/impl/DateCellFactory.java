@@ -20,8 +20,8 @@ package co.fxl.gui.table.impl;
 
 import java.util.Date;
 
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.template.SimpleDateFormat;
 
 class DateCellFactory extends ComparableCellFactory<Date> {
