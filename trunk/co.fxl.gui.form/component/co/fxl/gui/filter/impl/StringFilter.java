@@ -48,8 +48,8 @@ class StringFilter extends FilterTemplate<String> {
 	StringFilter(IGridPanel panel, String name, int filterIndex) {
 		super(panel, name, filterIndex);
 		IGridCell width = panel.cell(1, filterIndex);//.width(WIDTH_SINGLE_CELL);
-		textField = textField(width.panel().vertical().add(), filterIndex);
-//		textField.height(HEIGHT);
+		textField = textField(width, filterIndex);
+		// textField.height(HEIGHT);
 	}
 
 	ITextField textField(IContainer c, int filterIndex) {

@@ -36,15 +36,14 @@ abstract class RangeFilter<T> extends FilterTemplate<T> {
 		super(parent, name, filterIndex);
 		IGridCell cell = parent.cell(1, filterIndex);
 //		cell.width(WIDTH_RANGE_CELL);// , HEIGHT);
-		panel = cell.align().begin().panel().vertical().add().panel()
-				.horizontal();
+		panel = cell.align().begin().panel().horizontal();
 		lowerBoundTextField = addTextField(0);
-//		lowerBoundTextField.height(HEIGHT);
+		// lowerBoundTextField.height(HEIGHT);
 		panel.addSpace(4);
 		panel.add().label().text("-");
 		panel.addSpace(4);
 		upperBoundTextField = addTextField(2);
-//		upperBoundTextField.height(HEIGHT);
+		// upperBoundTextField.height(HEIGHT);
 	}
 
 	private ITextField addTextField(int column) {

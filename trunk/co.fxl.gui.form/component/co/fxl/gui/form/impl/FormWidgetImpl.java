@@ -100,16 +100,14 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	ITextField addFormValueTextField() {
-		ITextField valuePanel = container().panel().vertical().add()
-				.textField();
+		ITextField valuePanel = container().textField();
 		// valuePanel.height(HEIGHT_CELL_INNER);
 		valuePanel.editable(saveListener != null);
 		return valuePanel;
 	}
 
 	IPasswordField addFormValuePasswordField() {
-		IPasswordField valuePanel = container().panel().vertical().add()
-				.passwordField();
+		IPasswordField valuePanel = container().passwordField();
 		// valuePanel.height(HEIGHT_CELL_INNER);
 		valuePanel.editable(saveListener != null);
 		return valuePanel;
