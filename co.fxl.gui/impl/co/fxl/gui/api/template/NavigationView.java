@@ -48,7 +48,7 @@ public class NavigationView {
 			panel.add().image().resource(LINK_PNG);
 			panel.addSpace(4);
 		}
-		final ILabel textLabel = panel.add().label();
+		final ILabel textLabel = panel.add().label().hyperlink();
 		textLabel.font().pixel(13).weight().bold();
 		return textLabel;
 	}
