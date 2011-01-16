@@ -209,7 +209,8 @@ class TableView extends ViewTemplate implements IFilterListener,
 				column.name(p.name).type(p.type.clazz);
 				if (p.sortable) {
 					column.sortable();
-					if (widget.constraints.sortOrder() != null
+					if (widget.constraints != null
+							&& widget.constraints.sortOrder() != null
 							&& widget.constraints.sortOrder().equals(p.name))
 						column.tagSortOrder(widget.constraints.sortDirection());
 				}

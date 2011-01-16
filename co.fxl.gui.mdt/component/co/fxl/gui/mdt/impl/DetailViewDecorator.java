@@ -307,6 +307,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object>,
 
 	@Override
 	public boolean notifyChange() {
+		if (form == null)
+			return true;
 		boolean notifyChange = form.pageListener().notifyChange();
 		if (notifyChange)
 			return true;
@@ -326,6 +328,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object>,
 					public void onNo() {
 					}
 				});
+		form = null;
 		return true;
 	}
 }
