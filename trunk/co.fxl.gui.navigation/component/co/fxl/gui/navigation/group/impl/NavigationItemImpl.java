@@ -86,7 +86,8 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 
 	@Override
 	public void onClick() {
-		active();
+		if (widget.notifyChange())
+			active();
 	}
 
 	@Override
