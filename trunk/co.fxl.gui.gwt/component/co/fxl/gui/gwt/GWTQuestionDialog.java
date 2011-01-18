@@ -38,6 +38,7 @@ class GWTQuestionDialog implements IQuestionDialog {
 	private String message;
 	private List<IQuestionDialogListener> questionListeners = new LinkedList<IQuestionDialogListener>();
 	private String title;
+	private boolean allowCancel = false;
 
 	private void update() {
 		if (message == null || questionListeners.isEmpty())
@@ -72,6 +73,19 @@ class GWTQuestionDialog implements IQuestionDialog {
 			}
 		});
 		panel.add(no);
+		if (allowCancel) {
+			Button cancel = new Button("Cancel");
+			cancel.addClickHandler(new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					dialog.hide();
+					for (IQuestionDialogListener l : questionListeners)
+						l.onCancel();
+				}
+			});
+			panel.add(cancel);
+		}
 		dialog.setWidget(v);
 		dialog.center();
 	}
@@ -93,6 +107,12 @@ class GWTQuestionDialog implements IQuestionDialog {
 	@Override
 	public IQuestionDialog title(String title) {
 		this.title = title;
+		return this;
+	}
+
+	@Override
+	public IQuestionDialog allowCancel() {
+		allowCancel = true;
 		return this;
 	}
 

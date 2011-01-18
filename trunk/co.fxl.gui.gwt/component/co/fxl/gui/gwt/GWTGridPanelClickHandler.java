@@ -52,6 +52,7 @@ public class GWTGridPanelClickHandler extends KeyTemplate<IGridPanel> implements
 		}
 		if (!buttonMatches(event))
 			return;
+		event.preventDefault();
 		@SuppressWarnings("unchecked")
 		Grid grid = (Grid) ((GWTElement<Grid, IGridPanel>) element).container.widget;
 		Cell cell = grid.getCellForEvent(event);
