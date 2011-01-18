@@ -23,13 +23,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.api.template.SplitLayout;
 import co.fxl.gui.filter.api.IFilterConstraints;
-import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
-import co.fxl.gui.filter.impl.FilterWidgetImplProvider;
+import co.fxl.gui.filter.api.IMiniFilterWidget;
+import co.fxl.gui.filter.impl.MiniFilterWidgetImplProvider;
 
 class FilterWidgetTest implements IFilterListener {
 
@@ -60,47 +59,46 @@ class FilterWidgetTest implements IFilterListener {
 	private static final String STATE = "State";
 
 	void run(IDisplay display) {
-		display.register(new FilterWidgetImplProvider());
-		SplitLayout split = new SplitLayout(display.container().panel()
-				.vertical().add().panel());
-		IFilterWidget widget = (IFilterWidget) split.sidePanel.add().widget(
-				IFilterWidget.class);
+		display.register(new MiniFilterWidgetImplProvider());
+		IMiniFilterWidget widget = (IMiniFilterWidget) display.container()
+				.widget(IMiniFilterWidget.class);
 		widget.addFilter().name("common 0");
 		widget.addFilter().name("common 1");
-		for (int i = 0; i < 3; i++) {
-			widget.addConfiguration("Filter Configuration " + i);
-			widget.addFilter().name(NAME + i);
-			widget.addFilter().name(DESCRIPTION + i);
-			widget.addFilter().name(DATE + i).type().date();
-			if (i < 2) {
-				widget.addFilter().name(INT + i).type().integer();
-				widget.addFilter().name(STATE + i).type()
-						.addConstraint("Failed", "Passed");
-				if (i < 1) {
-					List<Entity> es = new LinkedList<Entity>();
-					es.add(new Entity("First", 0l));
-					es.add(new Entity("Second", 1l));
-					es.add(new Entity("Third", 2l));
-					es.add(new Entity("Fourth", 3l));
-					@SuppressWarnings("unchecked")
-					IRelationFilter<Entity, Long> ir = (IRelationFilter<Entity, Long>) widget
-							.addRelationFilter().name("Relation" + i);
-					ir.adapter(new IAdapter<Entity, Long>() {
+		int i = 0;
+		// for (int i = 0; i < 3; i++) {
+		// widget.addConfiguration("Filter Configuration " + i);
+		widget.addFilter().name(NAME + i);
+		widget.addFilter().name(DESCRIPTION + i);
+		widget.addFilter().name(DATE + i).type().date();
+		if (i < 2) {
+			widget.addFilter().name(INT + i).type().integer();
+			widget.addFilter().name(STATE + i).type()
+					.addConstraint("Failed", "Passed");
+			if (i < 1) {
+				List<Entity> es = new LinkedList<Entity>();
+				es.add(new Entity("First", 0l));
+				es.add(new Entity("Second", 1l));
+				es.add(new Entity("Third", 2l));
+				es.add(new Entity("Fourth", 3l));
+				@SuppressWarnings("unchecked")
+				IRelationFilter<Entity, Long> ir = (IRelationFilter<Entity, Long>) widget
+						.addRelationFilter().name("Relation" + i);
+				ir.adapter(new IAdapter<Entity, Long>() {
 
-						@Override
-						public String name(Entity entity) {
-							return entity.name();
-						}
+					@Override
+					public String name(Entity entity) {
+						return entity.name();
+					}
 
-						@Override
-						public Long id(Entity entity) {
-							return entity.id();
-						}
-					});
-					ir.preset(es);
-				}
+					@Override
+					public Long id(Entity entity) {
+						return entity.id();
+					}
+				});
+				ir.preset(es);
 			}
 		}
+		// }
 		widget.addSizeFilter();
 		widget.addFilterListener(this);
 		widget.visible(true);

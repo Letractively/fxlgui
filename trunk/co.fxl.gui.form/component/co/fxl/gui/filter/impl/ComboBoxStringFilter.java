@@ -21,11 +21,11 @@ package co.fxl.gui.filter.impl;
 import java.util.List;
 
 import co.fxl.gui.api.IComboBox;
-import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.impl.Constraint.IStringPrefixConstraint;
+import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 
 class ComboBoxStringFilter extends FilterTemplate<String> {
 
@@ -45,12 +45,12 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 	IComboBox comboBox;
 	private String text;
 
-	ComboBoxStringFilter(IGridPanel panel, String name, List<Object> values,
+	ComboBoxStringFilter(FilterGrid panel, String name, List<Object> values,
 			int filterIndex) {
 		super(panel, name, filterIndex);
-		comboBox = panel.cell(1, filterIndex)//.width(WIDTH_SINGLE_CELL)
-				.comboBox();
-		// comboBox.height(HEIGHT);
+		comboBox = panel.cell(filterIndex)// .width(WIDTH_SINGLE_CELL)
+				.comboBox().width(WIDTH_SINGLE_CELL);
+		comboBox.height(HEIGHT);
 		for (Object object : values) {
 			comboBox.addText(string(object));
 		}

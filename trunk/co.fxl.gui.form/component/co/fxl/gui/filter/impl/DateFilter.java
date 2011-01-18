@@ -20,12 +20,12 @@ package co.fxl.gui.filter.impl;
 
 import java.util.Date;
 
-import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.template.SimpleDateFormat;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterConstraints.IRange;
 import co.fxl.gui.filter.impl.Constraint.IDateRangeConstraint;
+import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 
 class DateFilter extends RangeFilter<Date> {
 
@@ -51,7 +51,7 @@ class DateFilter extends RangeFilter<Date> {
 	private Date lowerBound = null;
 	private Date upperBound = null;
 
-	DateFilter(IGridPanel parent, String name, int filterIndex) {
+	DateFilter(FilterGrid parent, String name, int filterIndex) {
 		super(parent, name, filterIndex);
 	}
 

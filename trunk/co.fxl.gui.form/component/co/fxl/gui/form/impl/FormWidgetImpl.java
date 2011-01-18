@@ -36,6 +36,7 @@ import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.IPageListener;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.api.template.WidgetTitle;
@@ -225,8 +226,14 @@ class FormWidgetImpl implements IFormWidget {
 		clickable.text(saveTitle).addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
-				saveListener.onSave();
-				clickable.clickable(false);
+				saveListener.save(new CallbackTemplate<Boolean>() {
+
+					@Override
+					public void onSuccess(Boolean result) {
+						validation.update();
+						clickable.clickable(false);
+					}
+				});
 			}
 		});
 		if (validate) {

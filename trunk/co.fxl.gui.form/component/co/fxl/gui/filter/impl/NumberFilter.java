@@ -18,9 +18,9 @@
  */
 package co.fxl.gui.filter.impl;
 
-import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.filter.impl.Constraint.IDoubleRangeConstraint;
+import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 
 class NumberFilter extends RangeFilter<Number> {
 
@@ -45,7 +45,7 @@ class NumberFilter extends RangeFilter<Number> {
 	private Double lowerBound = null;
 	private Double upperBound = null;
 
-	NumberFilter(IGridPanel parent, String name, int filterIndex) {
+	NumberFilter(FilterGrid parent, String name, int filterIndex) {
 		super(parent, name, filterIndex);
 	}
 

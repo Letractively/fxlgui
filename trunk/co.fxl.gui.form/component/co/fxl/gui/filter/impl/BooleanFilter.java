@@ -21,15 +21,15 @@ package co.fxl.gui.filter.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 
 class BooleanFilter extends ComboBoxStringFilter {
 
 	private static final String FALSE = "no";
 	private static final String TRUE = "yes";
 
-	BooleanFilter(IGridPanel panel, String name, int filterIndex) {
+	BooleanFilter(FilterGrid panel, String name, int filterIndex) {
 		super(panel, name, values(), filterIndex);
 	}
 

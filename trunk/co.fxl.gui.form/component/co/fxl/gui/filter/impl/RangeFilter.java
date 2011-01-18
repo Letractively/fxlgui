@@ -18,11 +18,11 @@
  */
 package co.fxl.gui.filter.impl;
 
-import co.fxl.gui.api.IGridPanel;
-import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
+import co.fxl.gui.filter.impl.FilterPanel.ICell;
 
 abstract class RangeFilter<T> extends FilterTemplate<T> {
 
@@ -32,11 +32,11 @@ abstract class RangeFilter<T> extends FilterTemplate<T> {
 	String upperBoundText = "";
 	private IHorizontalPanel panel;
 
-	RangeFilter(IGridPanel parent, String name, int filterIndex) {
+	RangeFilter(FilterGrid parent, String name, int filterIndex) {
 		super(parent, name, filterIndex);
-		IGridCell cell = parent.cell(1, filterIndex);
-//		cell.width(WIDTH_RANGE_CELL);// , HEIGHT);
-		panel = cell.align().begin().panel().horizontal();
+		ICell cell = parent.cell(filterIndex);
+		// cell.width(WIDTH_RANGE_CELL);// , HEIGHT);
+		panel = cell.horizontal();
 		lowerBoundTextField = addTextField(0);
 		// lowerBoundTextField.height(HEIGHT);
 		panel.addSpace(4);
@@ -47,7 +47,8 @@ abstract class RangeFilter<T> extends FilterTemplate<T> {
 	}
 
 	private ITextField addTextField(int column) {
-		ITextField textField = panel.add().textField();
+		ITextField textField = panel.add().textField().width(WIDTH_RANGE_CELL)
+				.height(HEIGHT);
 		return textField;
 	}
 

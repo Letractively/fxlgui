@@ -22,15 +22,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
-import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
 import co.fxl.gui.filter.impl.Constraint.IRelationConstraint;
+import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
+import co.fxl.gui.filter.impl.FilterPanel.ICell;
 
 class RelationFilter extends StringFilter {
 
@@ -48,7 +48,7 @@ class RelationFilter extends StringFilter {
 	private IImage remove;
 	private FilterWidgetImpl widget;
 
-	RelationFilter(FilterWidgetImpl widget, IGridPanel grid, String name,
+	RelationFilter(FilterWidgetImpl widget, FilterGrid grid, String name,
 			int filterIndex, List<Object> preset,
 			IAdapter<Object, Object> adapter, IClickListener cl) {
 		super(grid, name, filterIndex);
@@ -61,8 +61,8 @@ class RelationFilter extends StringFilter {
 	}
 
 	@Override
-	ITextField textField(IContainer c, int filterIndex) {
-		IDockPanel dock = c.panel().dock();
+	ITextField textField(ICell c, int filterIndex) {
+		IDockPanel dock = c.dock();
 		remove = dock.right().image().resource("remove.png").size(16, 16);
 		return dock.center().textField();
 	}
