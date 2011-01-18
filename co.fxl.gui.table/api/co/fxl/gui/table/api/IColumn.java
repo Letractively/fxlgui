@@ -33,7 +33,8 @@ public interface IColumn<T> {
 	IColumn<T> name(String name);
 
 	IColumn<T> sortable();
-
+	
+	// TODO use IFieldType
 	IColumn<T> type(Class<?> type);
 
 	IColumn<T> width(int width);
