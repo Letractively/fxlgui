@@ -30,18 +30,16 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
-import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.Validation;
-import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
+import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 
 class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
-	
+
 	// TODO Swing: cells are too small
 
 	private static final List<Object> DEFAULT_SIZES = Arrays
@@ -91,7 +89,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	IClickable<?> apply;
 	IClickable<?> clear;
 	private List<Boolean> activeFlags = new LinkedList<Boolean>();
-	private IGridPanel grid;
+	private FilterGrid grid;
 	boolean holdFilterClicks = false;
 	Validation validation = new Validation();
 	private List<IFilterListener> listeners = new LinkedList<IFilterListener>();
@@ -99,15 +97,14 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	private ComboBoxIntegerFilter sizeFilter;
 	private boolean addSizeFilter = false;
 	private IFilterConstraints constraints;
-	private IVerticalPanel mainPanel;
-	private IContainer gridContainer;
+	private FilterPanel mainPanel;
 	private IComboBox configurationComboBox;
 	private String firstConfiguration = IFilterConstraints.COMMON;
 	private String configuration = IFilterConstraints.COMMON;
 	private boolean showConfiguration = true;
 
 	FilterWidgetImpl(IContainer panel) {
-		WidgetTitle title = new WidgetTitle(panel.panel());
+		FilterPanel title = newFilterPanel(panel);
 		title.addTitle("Filter");
 		apply = title.addHyperlink("Update");
 		validation.linkClickable(apply);
@@ -116,7 +113,11 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 		// apply.clickable(false);
 		clear.addClickListener(new ClearClickListener());
 		clear.clickable(false);
-		mainPanel = title.content().panel().vertical();
+		mainPanel = title;
+	}
+
+	FilterPanel newFilterPanel(IContainer panel) {
+		return new FilterPanelImpl(panel);
 	}
 
 	@Override
@@ -129,10 +130,9 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	@Override
 	public IFilterWidget addConfiguration(String config) {
 		if (configurationComboBox == null && showConfiguration) {
-			configurationComboBox = mainPanel.add().comboBox();
+			configurationComboBox = mainPanel.addComboBox();
 			configurationComboBox.addUpdateListener(this);
-//			configurationComboBox.height(FilterTemplate.HEIGHT);
-			mainPanel.addSpace(4);
+			// configurationComboBox.height(FilterTemplate.HEIGHT);
 		}
 		if (configurationComboBox != null)
 			configurationComboBox.addText(config);
@@ -269,12 +269,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	}
 
 	private IFilterWidget update() {
-		if (gridContainer == null) {
-			gridContainer = mainPanel.add();
-		} else
-			gridContainer.clear();
-		grid = gridContainer.panel().vertical().spacing(3).add().panel().grid()
-				.spacing(3);
+		grid = mainPanel.filterGrid();
 		guiFilterElements.clear();
 		addFilters4Configuration(IFilterConstraints.COMMON);
 		if (!configuration.equals(IFilterConstraints.COMMON))
@@ -305,6 +300,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 		// constrained |= !firstConfiguration.equals(configuration);
 		apply.clickable(constrained);
 		clear.clickable(constrained);
+		mainPanel.visible();
 		return this;
 	}
 

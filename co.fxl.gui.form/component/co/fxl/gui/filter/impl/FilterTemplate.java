@@ -18,9 +18,8 @@
  */
 package co.fxl.gui.filter.impl;
 
-import co.fxl.gui.api.IGridPanel;
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 
 abstract class FilterTemplate<T> implements FilterPart<T> {
 
@@ -28,28 +27,20 @@ abstract class FilterTemplate<T> implements FilterPart<T> {
 		void onActive(boolean isActive);
 	}
 
-//	static final int WIDTH_SINGLE_CELL = 180;
-//	static final int WIDTH_RANGE_CELL = 84;
-	static final int HEIGHT = 24;
+	static final int WIDTH_SINGLE_CELL = 180;
+	static final int WIDTH_RANGE_CELL = 84;
+	static final int HEIGHT = 28;
 	String name;
 
-	FilterTemplate(IGridPanel panel, String name, int filterIndex) {
+	FilterTemplate(FilterGrid panel, String name, int filterIndex) {
 		this.name = name;
 		addTitle(panel, name, filterIndex);
 	}
 
 	abstract Constraint asConstraint();
 
-	static void addTitle(IGridPanel panel, String name, int filterIndex) {
-		ILabel text = panel.cell(0, filterIndex).align().end().valign()
-				.center().label();
-		text.text(name).font().color().gray();
-		int size = 12;
-		if (name.length() > 11)
-			size = 11;
-		if (name.length() > 16)
-			size = 10;
-		text.font().pixel(size);
+	static void addTitle(FilterGrid panel, String name, int filterIndex) {
+		panel.title(filterIndex, name);
 	}
 
 	boolean fromConstraint(IFilterConstraints constraints) {

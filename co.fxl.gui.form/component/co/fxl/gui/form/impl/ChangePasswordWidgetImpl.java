@@ -28,6 +28,7 @@ import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.IPasswordField.ICarriageReturnListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.form.api.IChangePasswordWidget;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
@@ -53,7 +54,8 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 		widget.saveListener("Submit", new ISaveListener() {
 
 			@Override
-			public void onSave() {
+			public void save(ICallback<Boolean> cb) {
+				// TODO ...
 				onClick();
 			}
 		});
@@ -75,14 +77,16 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 
 	@Override
 	public IChangePasswordWidget visible(boolean visible) {
-		currentPassword = widget.addPasswordField("Current").required().valueElement();
+		currentPassword = widget.addPasswordField("Current").required()
+				.valueElement();
 		currentPassword.addUpdateListener((IUpdateListener<String>) this);
 		currentPassword
 				.addCarriageReturnListener((ICarriageReturnListener) this);
 		newPassword = widget.addPasswordField("New").required().valueElement();
 		newPassword.addUpdateListener((IUpdateListener<String>) this);
 		newPassword.addCarriageReturnListener((ICarriageReturnListener) this);
-		confirmPassword = widget.addPasswordField("Confirm").required().valueElement();
+		confirmPassword = widget.addPasswordField("Confirm").required()
+				.valueElement();
 		confirmPassword.addUpdateListener((IUpdateListener<String>) this);
 		confirmPassword
 				.addCarriageReturnListener((ICarriageReturnListener) this);

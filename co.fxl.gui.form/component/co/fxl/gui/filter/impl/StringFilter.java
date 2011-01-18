@@ -18,14 +18,13 @@
  */
 package co.fxl.gui.filter.impl;
 
-import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IGridPanel;
-import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.impl.Constraint.IStringPrefixConstraint;
+import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
+import co.fxl.gui.filter.impl.FilterPanel.ICell;
 
 class StringFilter extends FilterTemplate<String> {
 
@@ -45,15 +44,15 @@ class StringFilter extends FilterTemplate<String> {
 	ITextField textField;
 	private String text;
 
-	StringFilter(IGridPanel panel, String name, int filterIndex) {
+	StringFilter(FilterGrid panel, String name, int filterIndex) {
 		super(panel, name, filterIndex);
-		IGridCell width = panel.cell(1, filterIndex);//.width(WIDTH_SINGLE_CELL);
+		ICell width = panel.cell(filterIndex);// .width(WIDTH_SINGLE_CELL);
 		textField = textField(width, filterIndex);
 		// textField.height(HEIGHT);
 	}
 
-	ITextField textField(IContainer c, int filterIndex) {
-		return c.textField();
+	ITextField textField(ICell c, int filterIndex) {
+		return c.textField().width(WIDTH_SINGLE_CELL);
 	}
 
 	@Override

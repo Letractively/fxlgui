@@ -19,11 +19,17 @@
 package co.fxl.gui.filter.impl;
 
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.filter.api.IMiniFilterWidget;
 
-class MiniFilterWidgetImpl extends FilterWidgetImpl {
+class MiniFilterWidgetImpl extends FilterWidgetImpl implements
+		IMiniFilterWidget {
 
 	MiniFilterWidgetImpl(IContainer panel) {
 		super(panel);
-		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	FilterPanel newFilterPanel(IContainer panel) {
+		return new MiniFilterPanel(panel);
 	}
 }

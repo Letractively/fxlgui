@@ -25,13 +25,14 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IPageListener;
 
 public interface IFormWidget {
 
 	public interface ISaveListener {
 
-		void onSave();
+		void save(ICallback<Boolean> cb);
 	}
 
 	IFormWidget fixLabelColumn(int width);
