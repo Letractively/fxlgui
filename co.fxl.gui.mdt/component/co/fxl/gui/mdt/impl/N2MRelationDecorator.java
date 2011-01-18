@@ -21,12 +21,12 @@ package co.fxl.gui.mdt.impl;
 import java.util.List;
 
 import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.n2m.api.IN2MWidget;
 import co.fxl.gui.n2m.api.IN2MWidget.IN2MRelationListener;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
-import co.fxl.gui.tree.impl.CallbackTemplate;
 
 final class N2MRelationDecorator implements IDecorator<Object> {
 	private final N2MRelationImpl relation;

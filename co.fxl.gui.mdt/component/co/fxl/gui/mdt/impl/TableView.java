@@ -30,6 +30,7 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
 import co.fxl.gui.api.IDisplay.IResizeListener;
+import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.api.template.ResizeListener;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -47,7 +48,6 @@ import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn.IScrollTableListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.ISortListener;
-import co.fxl.gui.tree.impl.CallbackTemplate;
 
 class TableView extends ViewTemplate implements IFilterListener,
 		IResizeListener, ISortListener, ISelectionListener<Object> {
@@ -142,7 +142,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 						List<Object> result = table.selection().result();
 						if (!result.isEmpty())
 							show = result.get(result.size() - 1);
-						widget.showDetailView(show, type);
+						widget.showDetailView(show, true, type);
 					}
 				});
 			}
@@ -168,6 +168,11 @@ class TableView extends ViewTemplate implements IFilterListener,
 
 							@Override
 							public void onNo() {
+							}
+
+							@Override
+							public void onCancel() {
+								throw new MethodNotImplementedException();
 							}
 						});
 			}
