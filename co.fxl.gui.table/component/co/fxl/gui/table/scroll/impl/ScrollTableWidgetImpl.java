@@ -37,6 +37,9 @@ import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.KeyAdapter;
 import co.fxl.gui.api.template.WidgetTitle;
+import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
+import co.fxl.gui.filter.api.IMiniFilterWidget;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ILabelMouseListener;
@@ -49,7 +52,7 @@ import co.fxl.gui.table.scroll.api.IScrollTableColumn.IScrollTableListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 
 class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
-		IScrollListener, ILabelMouseListener {
+		IScrollListener, ILabelMouseListener, IFilterListener {
 
 	// TODO show status line: showing rows 27-40 of 3000
 
@@ -109,7 +112,22 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			statusPanel = null;
 			selectionIsSetup = false;
 			container.clear();
-			container.addSpace(20);
+			container.addSpace(10);
+			IMiniFilterWidget filter = null;
+			for (ScrollTableColumnImpl c : columns) {
+				if (c.filterable) {
+					if (filter == null) {
+						filter = (IMiniFilterWidget) container.add().widget(
+								IMiniFilterWidget.class);
+					}
+					filter.addFilter().name(c.name).type().type(c.type);
+				}
+			}
+			if (filter != null) {
+				filter.addFilterListener(this);
+				filter.visible(true);
+				container.addSpace(10);
+			}
 			if (rows.size() == 0) {
 				IVerticalPanel dock = container.add().panel().vertical();
 				dock.height(height);
@@ -399,14 +417,14 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	@Override
 	public void onOver(int column, int row) {
-		if (!clickListeners(column).isEmpty()) {
+		if (row > 0 && !clickListeners(column).isEmpty()) {
 			grid.showAsLink(column, row, true);
 		}
 	}
 
 	@Override
 	public void onOut(int column, int row) {
-		if (!clickListeners(column).isEmpty()) {
+		if (row > 0 && !clickListeners(column).isEmpty()) {
 			grid.showAsLink(column, row, false);
 		}
 	}
@@ -421,5 +439,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	private List<IScrollTableListener<Object>> clickListeners(int column) {
 		return columns.get(column).clickListeners;
+	}
+
+	@Override
+	public void onApply(IFilterConstraints constraints) {
+		throw new MethodNotImplementedException();
 	}
 }

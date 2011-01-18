@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.table.scroll.impl;
 
+import java.sql.Timestamp;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
@@ -89,6 +90,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	Boolean tagSortOrder;
 	private ScrollTableWidgetImpl widget;
 	List<IScrollTableListener<Object>> clickListeners = new LinkedList<IScrollTableListener<Object>>();
+	boolean filterable;
 
 	ScrollTableColumnImpl(ScrollTableWidgetImpl widget, int index) {
 		this.widget = widget;
@@ -125,6 +127,8 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		} else if (type.equals(Long.class) || type.equals(Integer.class)) {
 			decorator = new NumberDecorator();
 		} else if (type.equals(Date.class)) {
+			decorator = new DateDecorator();
+		} else if (type.equals(Timestamp.class)) {
 			decorator = new DateDecorator();
 		} else if (type.equals(Boolean.class)) {
 			decorator = new BooleanDecorator();
@@ -177,6 +181,12 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 			IScrollTableListener<Object> l) {
 		widget.addClickListeners = true;
 		clickListeners.add(l);
+		return this;
+	}
+
+	@Override
+	public IScrollTableColumn<Object> filterable() {
+		filterable = true;
 		return this;
 	}
 }
