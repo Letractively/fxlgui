@@ -121,6 +121,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 								IMiniFilterWidget.class);
 					}
 					filter.addFilter().name(c.name).type().type(c.type);
+					// TODO value constraint: choice of x elements
 				}
 			}
 			if (filter != null) {
