@@ -27,9 +27,13 @@ public interface IDialog {
 			void onYes();
 
 			void onNo();
+
+			void onCancel();
 		}
 
 		IQuestionDialog title(String title);
+
+		IQuestionDialog allowCancel();
 
 		IQuestionDialog question(String message);
 

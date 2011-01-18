@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.api.template;
 
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -157,10 +156,11 @@ public class Validation implements IPageListener {
 	private List<IClickable<?>> clickables = new LinkedList<IClickable<?>>();
 	private List<IField> fields = new LinkedList<IField>();
 	private boolean clickable;
+	private boolean isSpecified = false;
 
 	private void updateClickables() {
 		boolean error = false;
-		boolean isSpecified = false;
+		isSpecified = false;
 		boolean allRequiredSpecified = true;
 		for (IField field : fields) {
 			if (field.isSpecified())
@@ -199,9 +199,11 @@ public class Validation implements IPageListener {
 			public void onUpdate(String value) {
 				field.isError = false;
 				if (value.trim().length() > 0) {
-					Date d = DATE_FORMAT.parse(value.trim());
-					if (d == null)
+					try {
+						DATE_FORMAT.parse(value.trim());
+					} catch (Exception e) {
 						field.isError = true;
+					}
 				} else {
 					field.isError = field.required;
 				}
@@ -298,7 +300,7 @@ public class Validation implements IPageListener {
 
 	@Override
 	public boolean notifyChange() {
-		update();
-		return !clickable;
+		updateClickables();
+		return !isSpecified;
 	}
 }
