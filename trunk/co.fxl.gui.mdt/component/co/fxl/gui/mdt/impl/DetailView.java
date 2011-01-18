@@ -22,6 +22,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.CallbackTemplate;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.api.template.IPageListener;
 import co.fxl.gui.api.template.SimpleDateFormat;
@@ -29,14 +31,12 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IMDTFilterList;
 import co.fxl.gui.mdt.api.IMasterDetailTableWidget;
-import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.IFilterTreeWidget;
 import co.fxl.gui.tree.api.IFilterTreeWidget.ISource;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 import co.fxl.gui.tree.api.ITreeWidget.ITreeClickListener;
-import co.fxl.gui.tree.impl.CallbackTemplate;
 
 class DetailView extends ViewTemplate implements ISource<Object>, IPageListener {
 
@@ -47,12 +47,14 @@ class DetailView extends ViewTemplate implements ISource<Object>, IPageListener 
 	private Object selectionObject;
 	private String createType;
 	private IPageListener pageListener;
+	private boolean create;
 
 	@SuppressWarnings("unchecked")
 	DetailView(final MasterDetailTableWidgetImpl widget, Object sshow,
-			String createType) {
+			boolean create, String createType) {
 		super(widget);
 		widget.pageListener = this;
+		this.create = create;
 		this.createType = createType;
 		// if (widget.splitLayout != null)
 		// widget.splitLayout.showSplit(false);
@@ -158,7 +160,8 @@ class DetailView extends ViewTemplate implements ISource<Object>, IPageListener 
 			}
 		}
 		for (final RelationImpl relation : widget.relations) {
-			tree.addDetailView(relation.name, new RelationDecorator(relation)).constrainType(relation.constrainType);
+			tree.addDetailView(relation.name, new RelationDecorator(relation))
+					.constrainType(relation.constrainType);
 		}
 		for (final N2MRelationImpl relation : widget.n2MRelations) {
 			tree.addDetailView(relation.name,
@@ -198,9 +201,9 @@ class DetailView extends ViewTemplate implements ISource<Object>, IPageListener 
 					public void onSuccess(ITree<Object> result) {
 						DetailView.this.itree = result;
 						callback.onSuccess(result);
-						if (createType != null) {
+						if (create) {
 							onNew(createType);
-							createType = null;
+							create = false;
 						}
 					}
 				});

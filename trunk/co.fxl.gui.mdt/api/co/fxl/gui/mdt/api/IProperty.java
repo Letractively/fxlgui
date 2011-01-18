@@ -18,8 +18,8 @@
  */
 package co.fxl.gui.mdt.api;
 
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IFieldType;
-import co.fxl.gui.tree.api.ICallback;
 
 public interface IProperty<T, S> {
 
@@ -52,6 +52,8 @@ public interface IProperty<T, S> {
 	IProperty<T, ?> sortable(boolean sortable);
 
 	IProperty<T, ?> editable(boolean b);
+
+	IProperty<T, ?> filterable();
 
 	String name();
 }

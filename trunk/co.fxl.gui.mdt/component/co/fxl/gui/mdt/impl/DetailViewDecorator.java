@@ -33,16 +33,17 @@ import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.CallbackTemplate;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IPageListener;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
-import co.fxl.gui.tree.impl.CallbackTemplate;
 
 public abstract class DetailViewDecorator implements IDecorator<Object>,
-		IPageListener, ISaveListener {
+		IPageListener {
 
 	private final List<PropertyGroupImpl> gs;
 	private String title = null;
@@ -50,7 +51,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object>,
 	private boolean isUpdateable = true;
 	IFormWidget form;
 	private IDisplay display;
-	private Object node;
+	// private Object node;
 	final List<Runnable> updates = new LinkedList<Runnable>();
 
 	public void setUpdateable(boolean isUpdateable) {
@@ -95,16 +96,9 @@ public abstract class DetailViewDecorator implements IDecorator<Object>,
 	}
 
 	@Override
-	public void onSave() {
-		for (Runnable update : updates)
-			update.run();
-		save(node);
-	}
-
-	@Override
 	public void decorate(IVerticalPanel panel, final Object node) {
 		display = panel.display();
-		this.node = node;
+		// this.node = node;
 		updates.clear();
 		assert node != null;
 		panel.clear();
@@ -113,7 +107,16 @@ public abstract class DetailViewDecorator implements IDecorator<Object>,
 		if (title != null)
 			form.addTitle(title);
 		if (isUpdateable)
-			form.saveListener("Save", this);
+			form.saveListener("Save", new ISaveListener() {
+
+				@Override
+				public void save(ICallback<Boolean> cb) {
+					for (Runnable update : updates)
+						update.run();
+					DetailViewDecorator.this.save(node);
+					cb.onSuccess(true);
+				}
+			});
 		for (PropertyGroupImpl g : gs)
 			if (g.applies(node))
 				for (final PropertyImpl property : g.properties) {
@@ -305,6 +308,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object>,
 		border.style().top();
 	}
 
+	private boolean result = true;
+
 	@Override
 	public boolean notifyChange() {
 		if (form == null)
@@ -312,23 +317,29 @@ public abstract class DetailViewDecorator implements IDecorator<Object>,
 		boolean notifyChange = form.pageListener().notifyChange();
 		if (notifyChange)
 			return true;
+		result = true;
 		display.showDialog()
 				.title("Warning")
 				.question()
 				.question(
-						"You have made changes that have not been saved! Save?")
+						"You have made changes that have not been saved! Discard Changes?")
 				.addQuestionListener(new IQuestionDialogListener() {
 
 					@Override
 					public void onYes() {
-						onSave();
+						// onSave();
+						form = null;
 					}
 
 					@Override
 					public void onNo() {
+						result = false;
+					}
+
+					@Override
+					public void onCancel() {
 					}
 				});
-		form = null;
-		return true;
+		return result;
 	}
 }

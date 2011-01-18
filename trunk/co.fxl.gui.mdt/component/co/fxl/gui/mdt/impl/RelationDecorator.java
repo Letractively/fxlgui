@@ -26,18 +26,18 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.CallbackTemplate;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.ResizeListener;
-import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.IColumn.IColumnUpdateListener;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.api.ISelection.ISingleSelection;
 import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
 import co.fxl.gui.table.scroll.api.IRows;
+import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
-import co.fxl.gui.tree.api.ICallback;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
-import co.fxl.gui.tree.impl.CallbackTemplate;
 
 final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 
@@ -125,8 +125,10 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 					});
 				selection.addSelectionListener(listener);
 				for (final PropertyImpl property : relation.properties) {
-					IColumn<Object> c = table.addColumn().name(property.name)
-							.type(property.type.clazz).sortable();
+					IScrollTableColumn<Object> c = table.addColumn();
+					c.name(property.name).type(property.type.clazz).sortable();
+					if (property.filterable)
+						c.filterable();
 					if (property.type.clazz.equals(Boolean.class)) {
 						c.updateListener(new IColumnUpdateListener<Object, Boolean>() {
 

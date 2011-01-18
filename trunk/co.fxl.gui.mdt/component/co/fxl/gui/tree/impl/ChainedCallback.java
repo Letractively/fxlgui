@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.tree.impl;
 
-import co.fxl.gui.tree.api.ICallback;
+import co.fxl.gui.api.template.ICallback;
 
 public abstract class ChainedCallback<T, R> implements ICallback<T> {
 

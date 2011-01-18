@@ -33,6 +33,7 @@ class PropertyImpl implements IProperty<Object, Object> {
 	boolean required;
 	boolean editable = true;
 	IUpdateListener<Object> listener;
+	boolean filterable;
 
 	PropertyImpl(String name) {
 		this.name = name;
@@ -88,6 +89,12 @@ class PropertyImpl implements IProperty<Object, Object> {
 	public IProperty<Object, Object> updateListener(
 			co.fxl.gui.mdt.api.IProperty.IUpdateListener<Object> listener) {
 		this.listener = listener;
+		return this;
+	}
+
+	@Override
+	public IProperty<Object, ?> filterable() {
+		filterable = true;
 		return this;
 	}
 }
