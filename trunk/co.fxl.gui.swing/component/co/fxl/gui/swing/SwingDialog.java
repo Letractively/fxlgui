@@ -36,14 +36,19 @@ class SwingDialog implements IDialog {
 		private String message;
 		private List<IQuestionDialogListener> questionListeners = new LinkedList<IQuestionDialogListener>();
 		private String title;
+		private boolean allowCancel = false;
 
 		public void update() {
 			if (message != null && !questionListeners.isEmpty()) {
 				int result = JOptionPane.showConfirmDialog(panel.frame,
-						message, title, JOptionPane.YES_NO_OPTION);
+						message, title,
+						allowCancel ? JOptionPane.YES_NO_CANCEL_OPTION
+								: JOptionPane.YES_NO_OPTION);
 				for (IQuestionDialogListener l : questionListeners) {
 					if (result == JOptionPane.OK_OPTION)
 						l.onYes();
+					else if (result == JOptionPane.CANCEL_OPTION)
+						l.onCancel();
 					else
 						l.onNo();
 				}
@@ -67,6 +72,12 @@ class SwingDialog implements IDialog {
 		@Override
 		public IQuestionDialog title(String title) {
 			this.title = title;
+			return this;
+		}
+
+		@Override
+		public IQuestionDialog allowCancel() {
+			allowCancel = true;
 			return this;
 		}
 	}

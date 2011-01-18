@@ -77,19 +77,19 @@ class SwingContainer<T extends JComponent> implements IContainer {
 	@Override
 	public IButton button() {
 		setComponent((T) new JButton());
-		return new SwingButton((SwingContainer<JButton>) this);
+		return (IButton) (element = new SwingButton((SwingContainer<JButton>) this));
 	}
 
 	@Override
 	public ICheckBox checkBox() {
 		setComponent((T) new JCheckBox());
-		return new SwingCheckBox((SwingContainer<JCheckBox>) this);
+		return (ICheckBox) (element = new SwingCheckBox((SwingContainer<JCheckBox>) this));
 	}
 
 	@Override
 	public IComboBox comboBox() {
 		setComponent((T) new ComboBoxComponent());
-		return new SwingComboBox((SwingContainer<JComboBox>) this);
+		return (IComboBox) (element = new SwingComboBox((SwingContainer<JComboBox>) this));
 	}
 
 	@Override
@@ -100,7 +100,7 @@ class SwingContainer<T extends JComponent> implements IContainer {
 	@Override
 	public IImage image() {
 		setComponent((T) new JLabel());
-		return new SwingImage((SwingContainer<JLabel>) this);
+		return (IImage) (element = new SwingImage((SwingContainer<JLabel>) this));
 	}
 
 	@Override
@@ -112,7 +112,7 @@ class SwingContainer<T extends JComponent> implements IContainer {
 	@Override
 	public IToggleButton toggleButton() {
 		setComponent((T) new JToggleButton());
-		return new SwingToggleButton((SwingContainer<JToggleButton>) this);
+		return (IToggleButton) (element = new SwingToggleButton((SwingContainer<JToggleButton>) this));
 	}
 
 	@Override
@@ -130,37 +130,37 @@ class SwingContainer<T extends JComponent> implements IContainer {
 	@Override
 	public IRadioButton radioButton() {
 		setComponent((T) new JRadioButton());
-		return new SwingRadioButton((SwingContainer<JRadioButton>) this);
+		return (IRadioButton) (element = new SwingRadioButton((SwingContainer<JRadioButton>) this));
 	}
 
 	@Override
 	public ITextArea textArea() {
 		setComponent((T) new TextAreaComponent<T>());
-		return new SwingTextArea((SwingContainer<JTextArea>) this);
+		return (ITextArea) (element = new SwingTextArea((SwingContainer<JTextArea>) this));
 	}
 
 	@Override
 	public ITextField textField() {
 		setComponent((T) new TextFieldComponent<T>());
-		return new SwingTextField((SwingContainer<JTextField>) this);
+		return (ITextField) (element = new SwingTextField((SwingContainer<JTextField>) this));
 	}
 
 	@Override
 	public IPasswordField passwordField() {
 		setComponent((T) new PasswordFieldComponent<T>());
-		return new SwingPasswordField((SwingContainer<JPasswordField>) this);
+		return (IPasswordField) (element = new SwingPasswordField((SwingContainer<JPasswordField>) this));
 	}
 
 	@Override
 	public IScrollPane scrollPane() {
 		setComponent((T) new JScrollPane());
-		return new SwingScrollPane((SwingContainer<JScrollPane>) this);
+		return (IScrollPane) (element = new SwingScrollPane((SwingContainer<JScrollPane>) this));
 	}
 
 	@Override
 	public ISplitPane splitPane() {
 		setComponent((T) new JSplitPane());
-		return new SwingSplitPane((SwingContainer<JSplitPane>) this);
+		return (ISplitPane) (element = new SwingSplitPane((SwingContainer<JSplitPane>) this));
 	}
 
 	@Override
