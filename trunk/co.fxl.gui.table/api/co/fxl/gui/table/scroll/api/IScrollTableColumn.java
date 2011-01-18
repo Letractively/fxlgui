@@ -27,5 +27,7 @@ public interface IScrollTableColumn<T> extends IColumn<T> {
 		void onClick(T identifier);
 	}
 
+	IScrollTableColumn<T> filterable();
+
 	IScrollTableColumn<T> addClickListener(IScrollTableListener<T> l);
 }
