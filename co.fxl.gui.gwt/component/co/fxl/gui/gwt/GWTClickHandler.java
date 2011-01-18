@@ -41,6 +41,7 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 		}
 		if (!buttonMatches(event))
 			return;
+		event.preventDefault();
 		clickListener.onClick();
 	}
 
