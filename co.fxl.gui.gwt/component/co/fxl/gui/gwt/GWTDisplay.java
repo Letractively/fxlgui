@@ -29,6 +29,7 @@ import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
+import co.fxl.gui.api.template.DateFormat;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ResizeEvent;
