@@ -161,9 +161,17 @@ class TableView extends ViewTemplate implements IFilterListener,
 							@Override
 							public void onYes() {
 								for (Object entity : result) {
-									queryList.delete(entity);
+									queryList
+											.delete(entity,
+													new CallbackTemplate<IDeletableList<Object>>() {
+
+														@Override
+														public void onSuccess(
+																IDeletableList<Object> result) {
+															onRefresh();
+														}
+													});
 								}
-								onRefresh();
 							}
 
 							@Override
