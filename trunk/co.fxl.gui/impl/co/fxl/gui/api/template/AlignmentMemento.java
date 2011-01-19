@@ -1,6 +1,4 @@
 /**
- * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
- *  
  * This file is part of FXL GUI API.
  *  
  * FXL GUI API is free software: you can redistribute it and/or modify
@@ -15,15 +13,43 @@
  *  
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.api;
+package co.fxl.gui.api.template;
 
-public interface IPanel<T> extends IElement<T>, IBordered, IColored,
-		IClickable<T> {
+import co.fxl.gui.api.IAlignment;
 
-	IContainer add();
+public class AlignmentMemento<T> implements IAlignment<T> {
 
-	ILayout layout();
+	public enum Type {
+		BEGIN, CENTER, END;
+	}
 
-	T clear();
+	private T t;
+	public Type type = Type.BEGIN;
+
+	public AlignmentMemento(T t) {
+		this.t = t;
+	}
+
+	@Override
+	public T begin() {
+		return set(Type.BEGIN);
+	}
+
+	private T set(Type type) {
+		this.type = type;
+		return t;
+	}
+
+	@Override
+	public T center() {
+		return set(Type.CENTER);
+	}
+
+	@Override
+	public T end() {
+		return set(Type.END);
+	}
 }

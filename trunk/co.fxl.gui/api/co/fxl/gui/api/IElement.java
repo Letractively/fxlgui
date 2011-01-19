@@ -43,4 +43,6 @@ public interface IElement<T> {
 	T tooltip(String tooltip);
 
 	Object nativeElement();
+
+	IDisplay display();
 }
