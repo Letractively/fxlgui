@@ -49,7 +49,7 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 			int filterIndex) {
 		super(panel, name, filterIndex);
 		comboBox = panel.cell(filterIndex)// .width(WIDTH_SINGLE_CELL)
-				.comboBox().width(WIDTH_SINGLE_CELL);
+				.comboBox().width(WIDTH_SINGLE_CELL + 2);
 		comboBox.height(HEIGHT);
 		for (Object object : values) {
 			comboBox.addText(string(object));

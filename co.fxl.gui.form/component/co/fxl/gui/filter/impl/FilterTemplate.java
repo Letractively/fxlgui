@@ -27,9 +27,9 @@ abstract class FilterTemplate<T> implements FilterPart<T> {
 		void onActive(boolean isActive);
 	}
 
-	static final int WIDTH_SINGLE_CELL = 180;
-	static final int WIDTH_RANGE_CELL = 84;
-	static final int HEIGHT = 28;
+	static final int WIDTH_SINGLE_CELL = 200;
+	static final int WIDTH_RANGE_CELL = 93;
+	static final int HEIGHT = 22;
 	String name;
 
 	FilterTemplate(FilterGrid panel, String name, int filterIndex) {

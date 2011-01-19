@@ -20,7 +20,7 @@ package co.fxl.gui.filter.impl;
 
 import java.util.Date;
 
-import co.fxl.gui.api.template.SimpleDateFormat;
+import co.fxl.gui.api.template.DateFormat;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterConstraints.IRange;
@@ -47,7 +47,7 @@ class DateFilter extends RangeFilter<Date> {
 		}
 	}
 
-	static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat();
+	static DateFormat DATE_FORMAT = DateFormat.instance;
 	private Date lowerBound = null;
 	private Date upperBound = null;
 

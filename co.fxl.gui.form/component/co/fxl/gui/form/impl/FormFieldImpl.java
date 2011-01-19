@@ -52,8 +52,9 @@ abstract class FormFieldImpl<T extends ITextElement<T>> implements
 
 	@Override
 	public ILabel addButton(String title) {
-		return widget.grid().cell(column, row).valign().center().label()
-				.hyperlink().text(title);
+		return widget.grid().cell(column, row).valign().center().panel()
+				.horizontal().add().panel().horizontal().addSpace(12).add()
+				.label().hyperlink().text(title);
 	}
 
 	@Override

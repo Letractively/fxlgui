@@ -36,7 +36,7 @@ abstract class RangeFilter<T> extends FilterTemplate<T> {
 		super(parent, name, filterIndex);
 		ICell cell = parent.cell(filterIndex);
 		// cell.width(WIDTH_RANGE_CELL);// , HEIGHT);
-		panel = cell.horizontal();
+		panel = cell.horizontal().add().panel().horizontal();
 		lowerBoundTextField = addTextField(0);
 		// lowerBoundTextField.height(HEIGHT);
 		panel.addSpace(4);

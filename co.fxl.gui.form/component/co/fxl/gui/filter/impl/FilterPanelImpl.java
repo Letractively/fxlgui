@@ -80,14 +80,13 @@ class FilterPanelImpl implements FilterPanel {
 			ILabel text = grid.cell(0, filterIndex).align().end().valign()
 					.center().label();
 			text.text(name).font().color().gray();
-			int size = 12;
+			int size = 11;
 			if (name.length() > 11)
-				size = 11;
-			if (name.length() > 16)
 				size = 10;
+			if (name.length() > 16)
+				size = 9;
 			text.font().pixel(size);
 		}
-
 	}
 
 	private WidgetTitle title;
