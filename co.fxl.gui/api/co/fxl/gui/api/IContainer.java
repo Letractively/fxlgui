@@ -55,4 +55,6 @@ public interface IContainer {
 	Object widget(Class<?> interfaceClass);
 
 	IContainer clear();
+
+	IDisplay display();
 }
