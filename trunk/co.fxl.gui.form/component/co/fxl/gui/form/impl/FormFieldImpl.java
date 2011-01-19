@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.form.impl;
 
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextElement;
@@ -26,7 +27,7 @@ import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.impl.FormWidgetImpl.FormEntryLabel;
 
-abstract class FormFieldImpl<T extends ITextElement<T>> implements
+public abstract class FormFieldImpl<T extends ITextElement<T>> implements
 		IFormField<T> {
 
 	private FormWidgetImpl widget;
@@ -40,7 +41,7 @@ abstract class FormFieldImpl<T extends ITextElement<T>> implements
 	// List<IExternalStatusAdapter> externalStatusAdapters = new
 	// LinkedList<IExternalStatusAdapter>();
 
-	FormFieldImpl(FormWidgetImpl widget, int index, String name) {
+	public FormFieldImpl(FormWidgetImpl widget, int index, String name) {
 		this.widget = widget;
 		widget.fields.add(this);
 		FormEntryLabel formEntryLabel = widget.addFormEntryLabel(name);
@@ -52,9 +53,13 @@ abstract class FormFieldImpl<T extends ITextElement<T>> implements
 
 	@Override
 	public ILabel addButton(String title) {
+		return addContainer().label().hyperlink().text(title);
+	}
+
+	@Override
+	public IContainer addContainer() {
 		return widget.grid().cell(column, row).valign().center().panel()
-				.horizontal().add().panel().horizontal().addSpace(12).add()
-				.label().hyperlink().text(title);
+				.horizontal().add().panel().horizontal().addSpace(12).add();
 	}
 
 	@Override

@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.form.api;
 
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextElement;
@@ -43,4 +44,6 @@ public interface IFormField<T extends ITextElement<T>> {
 	IFieldType type();
 
 	ILabel addButton(String title);
+
+	IContainer addContainer();
 }

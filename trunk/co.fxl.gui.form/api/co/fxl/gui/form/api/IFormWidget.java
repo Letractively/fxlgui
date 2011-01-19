@@ -69,6 +69,8 @@ public interface IFormWidget {
 
 	IFormWidget validate(boolean validate);
 
+	IFormWidget notifyUpdate();
+
 	IFormWidget visible(boolean visible);
 
 	IPageListener pageListener();
