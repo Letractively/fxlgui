@@ -27,9 +27,9 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.IPasswordField.ICarriageReturnListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
-import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.form.api.IChangePasswordWidget;
+import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
 
@@ -42,15 +42,17 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 	private IPasswordField confirmPassword;
 	private String currentPasswordText;
 	private List<IPasswordListener> listeners = new LinkedList<IPasswordListener>();
-	private IVerticalPanel verticalPanel;
+	private IContainer display;
+
+	// private IVerticalPanel verticalPanel;
 
 	// private boolean isFirstTitle = true;
 
 	public ChangePasswordWidgetImpl(IContainer display) {
-		verticalPanel = display.panel().vertical();
-		verticalPanel.stretch(true);
-		widget = (IFormWidget) verticalPanel.add().widget(IFormWidget.class);
-//		widget.fixValueColumn(180);
+		this.display = display;
+		// verticalPanel = display.panel().vertical();
+		widget = (IFormWidget) display.widget(IFormWidget.class);
+		// widget.fixValueColumn(180);
 		widget.saveListener("Submit", new ISaveListener() {
 
 			@Override
@@ -77,8 +79,9 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 
 	@Override
 	public IChangePasswordWidget visible(boolean visible) {
-		currentPassword = widget.addPasswordField("Current").required()
-				.valueElement();
+		IFormField<IPasswordField> pw = widget.addPasswordField("Current");
+		pw.addContainer().label();
+		currentPassword = pw.required().valueElement();
 		currentPassword.addUpdateListener((IUpdateListener<String>) this);
 		currentPassword
 				.addCarriageReturnListener((ICarriageReturnListener) this);
@@ -138,8 +141,8 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 	}
 
 	private void showDialog(String string) {
-		verticalPanel.display().showDialog().title("Change Password Error")
-				.type().error().message(string);
+		display.display().showDialog().title("Change Password Error").type()
+				.error().message(string);
 	}
 
 	private void clear() {
