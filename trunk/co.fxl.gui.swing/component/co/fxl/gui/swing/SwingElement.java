@@ -32,6 +32,7 @@ import javax.swing.SwingUtilities;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
+import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
 
 class SwingElement<T extends JComponent, R> implements IElement<R> {
@@ -163,5 +164,10 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	public R tooltip(String tooltip) {
 		container.component.setToolTipText(tooltip);
 		return (R) this;
+	}
+
+	@Override
+	public IDisplay display() {
+		return container.display();
 	}
 }
