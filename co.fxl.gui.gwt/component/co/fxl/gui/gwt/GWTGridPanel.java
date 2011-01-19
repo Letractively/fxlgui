@@ -178,7 +178,7 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 	private String borderConfiguration;
 
 	@SuppressWarnings("unchecked")
-	protected GWTGridPanel(GWTContainer<?> container) {
+	public GWTGridPanel(GWTContainer<?> container) {
 		super((GWTContainer<HTMLTable>) container);
 		super.container.setComponent(new Grid());
 		super.container.widget.setWidth("100%");

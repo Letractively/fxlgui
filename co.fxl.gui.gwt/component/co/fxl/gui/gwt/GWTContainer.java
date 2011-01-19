@@ -109,7 +109,9 @@ public class GWTContainer<T extends Widget> implements IContainer {
 
 	@Override
 	public IElement<?> nativeElement(Object object) {
-		throw new MethodNotImplementedException();
+		setComponent((T) object);
+		return (IElement<?>) (element = new GWTElement<T, IElement<?>>(
+				(GWTContainer<T>) this));
 	}
 
 	@Override
