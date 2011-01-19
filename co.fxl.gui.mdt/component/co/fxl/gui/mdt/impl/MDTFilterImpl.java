@@ -62,4 +62,10 @@ class MDTFilterImpl implements IMDTFilter {
 		this.asDetail = asDetail;
 		return this;
 	}
+
+	@Override
+	public IFilter type(IFieldType type) {
+		this.type = (FieldTypeImpl) type;
+		return this;
+	}
 }
