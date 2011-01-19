@@ -152,7 +152,7 @@ public class Validation implements IPageListener {
 		}
 	}
 
-	private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat();
+	private final static DateFormat DATE_FORMAT = new DateFormat();
 	private List<IClickable<?>> clickables = new LinkedList<IClickable<?>>();
 	private List<IField> fields = new LinkedList<IField>();
 	private boolean clickable;

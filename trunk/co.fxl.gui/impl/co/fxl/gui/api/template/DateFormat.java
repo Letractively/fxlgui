@@ -20,9 +20,11 @@ package co.fxl.gui.api.template;
 
 import java.util.Date;
 
-public class SimpleDateFormat {
+public class DateFormat {
 
-	public SimpleDateFormat() {
+	public static DateFormat instance = new DateFormat();
+
+	protected DateFormat() {
 	}
 
 	@SuppressWarnings("deprecation")
