@@ -358,4 +358,10 @@ class FormWidgetImpl implements IFormWidget {
 			};
 		return validation;
 	}
+
+	@Override
+	public IFormWidget notifyUpdate() {
+		validation.notifyChange();
+		return this;
+	}
 }
