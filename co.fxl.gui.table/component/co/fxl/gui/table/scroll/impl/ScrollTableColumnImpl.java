@@ -25,7 +25,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
-import co.fxl.gui.api.template.SimpleDateFormat;
+import co.fxl.gui.api.template.DateFormat;
+import co.fxl.gui.api.template.FieldTypeImpl;
+import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ICell;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
@@ -48,7 +50,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		}
 	}
 
-	private static SimpleDateFormat FORMAT = new SimpleDateFormat();
+	private static DateFormat FORMAT = DateFormat.instance;
 
 	public class DateDecorator implements Decorator<Date> {
 
@@ -82,7 +84,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 	String name;
 	boolean sortable = false;
-	Class<?> type = String.class;
+	FieldTypeImpl type = new FieldTypeImpl();
 	int index;
 	@SuppressWarnings("rawtypes")
 	private Decorator decorator;
@@ -99,6 +101,20 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 	@SuppressWarnings("unchecked")
 	void decorate(Object identifier, ICell cell, Object value) {
+		if (decorator == null) {
+			if (type.clazz.equals(String.class)) {
+				decorator = new StringDecorator();
+			} else if (type.clazz.equals(Long.class) || type.clazz.equals(Integer.class)) {
+				decorator = new NumberDecorator();
+			} else if (type.clazz.equals(Date.class)) {
+				decorator = new DateDecorator();
+			} else if (type.clazz.equals(Timestamp.class)) {
+				decorator = new DateDecorator();
+			} else if (type.clazz.equals(Boolean.class)) {
+				decorator = new BooleanDecorator();
+			} else
+				throw new MethodNotImplementedException(type.clazz.getName());
+		}
 		try {
 			decorator.decorate(identifier, cell, value);
 		} catch (ClassCastException e) {
@@ -121,20 +137,8 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	}
 
 	@Override
-	public IColumn<Object> type(Class<?> type) {
-		if (type.equals(String.class)) {
-			decorator = new StringDecorator();
-		} else if (type.equals(Long.class) || type.equals(Integer.class)) {
-			decorator = new NumberDecorator();
-		} else if (type.equals(Date.class)) {
-			decorator = new DateDecorator();
-		} else if (type.equals(Timestamp.class)) {
-			decorator = new DateDecorator();
-		} else if (type.equals(Boolean.class)) {
-			decorator = new BooleanDecorator();
-		} else
-			throw new MethodNotImplementedException(type.getName());
-		return this;
+	public IFieldType type() {
+		return type;
 	}
 
 	@Override
@@ -187,6 +191,12 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	@Override
 	public IScrollTableColumn<Object> filterable() {
 		filterable = true;
+		return this;
+	}
+
+	@Override
+	public IColumn<Object> type(IFieldType type) {
+		this.type = (FieldTypeImpl) type;
 		return this;
 	}
 }

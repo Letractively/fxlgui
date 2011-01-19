@@ -21,6 +21,7 @@ package co.fxl.gui.table.scroll.api;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableListener;
 
@@ -52,4 +53,6 @@ public interface IScrollTableWidget<T> {
 	IScrollTableWidget<?> visible(boolean visible);
 
 	IScrollTableWidget<?> addTooltip(String tooltip);
+
+	IScrollTableWidget<?> addFilterListener(IFilterListener l);
 }

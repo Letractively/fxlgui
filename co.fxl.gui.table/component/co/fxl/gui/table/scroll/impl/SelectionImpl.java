@@ -49,7 +49,11 @@ class SelectionImpl implements ISelection<Object> {
 					if (row == 0)
 						return;
 					row--;
+					boolean alreadySelected = widget.rows.selected(widget
+							.convert2TableRow(row));
 					clearSelection();
+					if (alreadySelected)
+						return;
 					widget.rows.selected(widget.convert2TableRow(row), true);
 					IRow r = widget.grid.row(row);
 					r.highlight(true);

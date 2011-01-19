@@ -41,8 +41,8 @@ class ScrollTableWidgetTest implements IRows<String> {
 		widget.addTitle("Table");
 		widget.addButton("New");
 		for (int i = 0; i < 3; i++)
-			widget.addColumn().name("Column " + i).type(String.class)
-					.sortable();
+			widget.addColumn().name("Column " + i).sortable().type()
+					.type(String.class);
 		widget.rows(this);
 		widget.visible(true);
 		display.visible(true);

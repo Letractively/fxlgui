@@ -22,6 +22,8 @@ import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.template.FieldTypeImpl;
+import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.table.api.IColumn;
 
 public class ColumnImpl implements IColumn<Object> {
@@ -109,9 +111,25 @@ public class ColumnImpl implements IColumn<Object> {
 	}
 
 	@Override
-	public IColumn<Object> type(Class<?> type) {
-		contentType = type;
-		return this;
+	public IFieldType type() {
+		return new FieldTypeImpl() {
+
+			@Override
+			public IFieldType addConstraint(Object... values) {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public IFieldType type(Class<?> clazz) {
+				contentType = clazz;
+				return this;
+			}
+
+			@Override
+			public IFieldType relation() {
+				throw new MethodNotImplementedException();
+			}
+		};
 	}
 
 	@SuppressWarnings("unchecked")
@@ -130,6 +148,11 @@ public class ColumnImpl implements IColumn<Object> {
 
 	@Override
 	public IColumn<Object> tagSortOrder(boolean up) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IColumn<Object> type(IFieldType type) {
 		throw new MethodNotImplementedException();
 	}
 }

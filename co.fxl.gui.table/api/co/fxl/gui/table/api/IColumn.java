@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.table.api;
 
+import co.fxl.gui.api.template.IFieldType;
+
 public interface IColumn<T> {
 
 	public interface IColumnUpdateListener<T, R> {
@@ -33,9 +35,10 @@ public interface IColumn<T> {
 	IColumn<T> name(String name);
 
 	IColumn<T> sortable();
-	
-	// TODO use IFieldType
-	IColumn<T> type(Class<?> type);
+
+	IFieldType type();
+
+	IColumn<Object> type(IFieldType type);
 
 	IColumn<T> width(int width);
 
