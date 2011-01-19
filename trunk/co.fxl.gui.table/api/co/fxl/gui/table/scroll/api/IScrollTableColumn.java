@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.table.scroll.api;
 
+import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.table.api.IColumn;
 
 public interface IScrollTableColumn<T> extends IColumn<T> {
@@ -26,6 +27,8 @@ public interface IScrollTableColumn<T> extends IColumn<T> {
 
 		void onClick(T identifier);
 	}
+
+	IAlignment<IScrollTableColumn<T>> align();
 
 	IScrollTableColumn<T> filterable();
 

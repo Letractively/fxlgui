@@ -24,7 +24,10 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.api.template.AlignmentMemento;
+import co.fxl.gui.api.template.AlignmentMemento.Type;
 import co.fxl.gui.api.template.DateFormat;
 import co.fxl.gui.api.template.FieldTypeImpl;
 import co.fxl.gui.api.template.IFieldType;
@@ -93,6 +96,8 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	private ScrollTableWidgetImpl widget;
 	List<IScrollTableListener<Object>> clickListeners = new LinkedList<IScrollTableListener<Object>>();
 	boolean filterable;
+	private AlignmentMemento<IScrollTableColumn<Object>> alignment = new AlignmentMemento<IScrollTableColumn<Object>>(
+			this);
 
 	ScrollTableColumnImpl(ScrollTableWidgetImpl widget, int index) {
 		this.widget = widget;
@@ -104,7 +109,8 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		if (decorator == null) {
 			if (type.clazz.equals(String.class)) {
 				decorator = new StringDecorator();
-			} else if (type.clazz.equals(Long.class) || type.clazz.equals(Integer.class)) {
+			} else if (type.clazz.equals(Long.class)
+					|| type.clazz.equals(Integer.class)) {
 				decorator = new NumberDecorator();
 			} else if (type.clazz.equals(Date.class)) {
 				decorator = new DateDecorator();
@@ -122,6 +128,8 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 					+ ", received invalid value " + value + " ("
 					+ value.getClass().getName() + ")");
 		}
+		if (!alignment.type.equals(Type.BEGIN))
+			throw new MethodNotImplementedException();
 	}
 
 	@Override
@@ -198,5 +206,10 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	public IColumn<Object> type(IFieldType type) {
 		this.type = (FieldTypeImpl) type;
 		return this;
+	}
+
+	@Override
+	public IAlignment<IScrollTableColumn<Object>> align() {
+		return alignment;
 	}
 }
