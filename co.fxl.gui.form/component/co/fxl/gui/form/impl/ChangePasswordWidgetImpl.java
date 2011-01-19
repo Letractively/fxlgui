@@ -50,7 +50,7 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 		verticalPanel = display.panel().vertical();
 		verticalPanel.stretch(true);
 		widget = (IFormWidget) verticalPanel.add().widget(IFormWidget.class);
-		widget.fixValueColumn(180);
+//		widget.fixValueColumn(180);
 		widget.saveListener("Submit", new ISaveListener() {
 
 			@Override
