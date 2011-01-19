@@ -308,7 +308,7 @@ class FormWidgetImpl implements IFormWidget {
 		if (gridPanel == null) {
 			contentPanel = widgetTitle.content().panel().vertical();
 			gridPanel = contentPanel.add().panel().grid();
-			gridPanel.indent(4);
+			gridPanel.indent(2);
 		}
 		return gridPanel;
 	}

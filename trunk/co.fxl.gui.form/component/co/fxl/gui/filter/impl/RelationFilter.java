@@ -40,7 +40,8 @@ class RelationFilter extends StringFilter {
 		public void onClick() {
 			values = null;
 			RelationFilter.super.clear();
-			textField.editable(true).font().weight().plain().color().black();
+			textField.editable(true).width(RelationFilter.super.width()).font()
+					.weight().plain().color().black();
 			widget.apply();
 		}
 	};
@@ -61,9 +62,15 @@ class RelationFilter extends StringFilter {
 	}
 
 	@Override
+	int width() {
+		return WIDTH_SINGLE_CELL - 20;
+	}
+
+	@Override
 	ITextField textField(ICell c, int filterIndex) {
 		IDockPanel dock = c.dock();
-		remove = dock.right().image().resource("remove.png").size(16, 16);
+		remove = dock.right().panel().vertical().addSpace(4).add().image()
+				.resource("remove.png").size(16, 16);
 		return dock.center().textField();
 	}
 

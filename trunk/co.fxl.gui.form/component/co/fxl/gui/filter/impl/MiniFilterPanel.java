@@ -76,6 +76,7 @@ class MiniFilterPanel implements FilterPanel {
 		}
 
 		void visible() {
+			cardPanel.show(index2cell.get(0).container.element());
 			comboBox.addUpdateListener(this);
 		}
 
@@ -111,7 +112,7 @@ class MiniFilterPanel implements FilterPanel {
 	private boolean hasHyperlinks = false;
 
 	MiniFilterPanel(IContainer c) {
-		panel = c.panel().dock().right().panel().horizontal();
+		panel = c.panel().horizontal().add().panel().horizontal();
 		titlePanel = panel.add().panel().horizontal();
 		mainPanel = panel.addSpace(4).add().panel().horizontal();
 		hyperLinkPanel = panel.addSpace(4).add().panel().horizontal();
@@ -130,7 +131,8 @@ class MiniFilterPanel implements FilterPanel {
 	@Override
 	public IClickable<?> addHyperlink(String string) {
 		if (hasHyperlinks) {
-			hyperLinkPanel.addSpace(4).add().label().text("|");
+			hyperLinkPanel.addSpace(4).add().label().text("|").font().color()
+					.gray();
 		}
 		hasHyperlinks = true;
 		return hyperLinkPanel.addSpace(4).add().label().text(string)

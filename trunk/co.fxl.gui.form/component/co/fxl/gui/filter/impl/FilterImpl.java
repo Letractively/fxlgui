@@ -38,4 +38,10 @@ class FilterImpl implements IFilter {
 	public IFieldType type() {
 		return type;
 	}
+
+	@Override
+	public IFilter type(IFieldType type) {
+		this.type = (FieldTypeImpl) type;
+		return this;
+	}
 }

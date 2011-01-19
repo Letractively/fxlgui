@@ -34,6 +34,8 @@ public interface IFilterWidget {
 		IFilter name(String name);
 
 		IFieldType type();
+
+		IFilter type(IFieldType type);
 	}
 
 	public interface IRelationFilter<S, R> extends IFilter {
