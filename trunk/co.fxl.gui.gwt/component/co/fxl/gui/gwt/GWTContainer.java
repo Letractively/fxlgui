@@ -22,6 +22,7 @@ import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
@@ -195,5 +196,10 @@ public class GWTContainer<T extends Widget> implements IContainer {
 		if (element != null)
 			element.remove();
 		return this;
+	}
+
+	@Override
+	public IDisplay display() {
+		return parent.lookupDisplay();
 	}
 }
