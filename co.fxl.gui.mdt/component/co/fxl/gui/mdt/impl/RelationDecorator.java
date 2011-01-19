@@ -43,13 +43,10 @@ import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 
-final class RelationDecorator implements IDecorator<Object>, IResizeListener,
-		IFilterListener {
+final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 
 	private final RelationImpl relation;
 	private IScrollTableWidget<Object> table;
-	private IVerticalPanel panel;
-	private Object node;
 
 	RelationDecorator(RelationImpl relation) {
 		this.relation = relation;
@@ -67,8 +64,6 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 
 	private void decorate(final IVerticalPanel panel,
 			final IFilterConstraints constraints, final Object node) {
-		this.panel = panel;
-		this.node = node;
 		panel.clear();
 		IBorder border = panel.border();
 		border.color().gray();
@@ -138,8 +133,16 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 												public void onYes() {
 													List<Object> r = selection0
 															.result();
-													result.delete(r.get(0));
-													onApply(constraints);
+													result.delete(
+															r.get(0),
+															new CallbackTemplate<IDeletableList<Object>>() {
+
+																@Override
+																public void onSuccess(
+																		IDeletableList<Object> result) {
+																	table.rows(toRows(result));
+																}
+															});
 												}
 
 												@Override
@@ -178,8 +181,29 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 						});
 					}
 				}
+				table.rows(toRows(result));
+				ResizeListener.setup(panel.display(), RelationDecorator.this);
+				onResize(-1, panel.display().height());
+				table.addFilterListener(new IFilterListener() {
+
+					@Override
+					public void onApply(IFilterConstraints constraints) {
+						relation.adapter.valueOf(node, constraints,
+								new CallbackTemplate<IDeletableList<Object>>() {
+
+									@Override
+									public void onSuccess(
+											IDeletableList<Object> r) {
+										table.rows(toRows(r));
+									}
+								});
+					}
+				});
+			}
+
+			IRows<Object> toRows(final IDeletableList<Object> result) {
 				final List<Object> lresult = result.asList();
-				table.rows(new IRows<Object>() {
+				return new IRows<Object>() {
 
 					@Override
 					public Object identifier(int i) {
@@ -201,18 +225,10 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 					public int size() {
 						return lresult.size();
 					}
-				});
-				ResizeListener.setup(panel.display(), RelationDecorator.this);
-				onResize(-1, panel.display().height());
-				table.addFilterListener(RelationDecorator.this);
+				};
 			}
 		};
 		relation.adapter.valueOf(node, constraints, callback);
-	}
-
-	@Override
-	public void onApply(IFilterConstraints constraints) {
-		decorate(panel, constraints, node);
 	}
 
 	@Override

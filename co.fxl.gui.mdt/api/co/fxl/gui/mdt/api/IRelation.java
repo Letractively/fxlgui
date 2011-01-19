@@ -25,7 +25,7 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 
 public interface IRelation<T, R> extends IPropertyGroup<R> {
 
-	public interface IAddRemoveListener<T, R> {
+	public interface IAddListener<T, R> {
 
 		// TODO callback
 
@@ -51,5 +51,5 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 
 	IRelation<T, R> showListener(IShowListener<R> l);
 
-	IRelation<T, R> addRemoveListener(IAddRemoveListener<T, R> l);
+	IRelation<T, R> addListener(IAddListener<T, R> l);
 }

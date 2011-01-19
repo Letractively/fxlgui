@@ -21,6 +21,8 @@ package co.fxl.gui.mdt.api;
 import java.io.Serializable;
 import java.util.List;
 
+import co.fxl.gui.api.template.ICallback;
+
 public interface IDeletableList<T> {
 
 	List<T> asList();
@@ -29,5 +31,5 @@ public interface IDeletableList<T> {
 
 	boolean isDeletable(T entity);
 
-	IDeletableList<T> delete(T entity);
+	void delete(T entity, ICallback<IDeletableList<T>> cb);
 }
