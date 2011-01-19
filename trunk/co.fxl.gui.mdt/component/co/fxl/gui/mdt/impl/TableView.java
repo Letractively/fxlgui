@@ -228,16 +228,16 @@ class TableView extends ViewTemplate implements IFilterListener,
 						column.tagSortOrder(widget.constraints.sortDirection());
 				}
 				property2column.put(p, column);
-				if (index == 0) {
-					column.addClickListener(new IScrollTableListener<Object>() {
-
-						@Override
-						public void onClick(Object identifier) {
-							widget.r2.checked(true);
-							widget.showDetailView(identifier);
-						}
-					});
-				}
+//				if (index == 0) {
+//					column.addClickListener(new IScrollTableListener<Object>() {
+//
+//						@Override
+//						public void onClick(Object identifier) {
+//							widget.r2.checked(true);
+//							widget.showDetailView(identifier);
+//						}
+//					});
+//				}
 				index++;
 			}
 		}

@@ -47,6 +47,9 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 
 	private final RelationImpl relation;
 	private IScrollTableWidget<Object> table;
+	private IVerticalPanel panel;
+	private IFilterConstraints constraints;
+	private Object node;
 
 	RelationDecorator(RelationImpl relation) {
 		this.relation = relation;
@@ -64,6 +67,9 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 
 	private void decorate(final IVerticalPanel panel,
 			final IFilterConstraints constraints, final Object node) {
+		this.panel = panel;
+		this.constraints = constraints;
+		this.node = node;
 		panel.clear();
 		IBorder border = panel.border();
 		border.color().gray();
@@ -113,7 +119,14 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 							Object c = null;
 							if (r.size() > 0)
 								c = r.get(0);
-							relation.addRemoveListener.onAdd(node, c);
+							relation.addRemoveListener.onAdd(node, c,
+									new CallbackTemplate<Boolean>() {
+
+										@Override
+										public void onSuccess(Boolean result) {
+											refresh();
+										}
+									});
 						}
 					});
 				if (remove != null)
@@ -229,6 +242,10 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 			}
 		};
 		relation.adapter.valueOf(node, constraints, callback);
+	}
+
+	private void refresh() {
+		decorate(panel, constraints, node);
 	}
 
 	@Override

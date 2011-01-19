@@ -27,9 +27,7 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 
 	public interface IAddListener<T, R> {
 
-		// TODO callback
-
-		void onAdd(T base, R entity);
+		void onAdd(T base, R entity, ICallback<Boolean> refresh);
 
 		boolean isDetailedAdd();
 
