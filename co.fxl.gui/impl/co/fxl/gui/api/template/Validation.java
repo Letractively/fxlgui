@@ -74,6 +74,11 @@ public class Validation implements IPageListener {
 			updateClickables();
 		}
 
+		@Override
+		public void notifyChange() {
+			onUpdate(valueElement.checked());
+		}
+
 	}
 
 	public interface IField {
@@ -87,6 +92,8 @@ public class Validation implements IPageListener {
 		boolean isSpecified();
 
 		void update();
+
+		void notifyChange();
 
 	}
 
@@ -116,19 +123,30 @@ public class Validation implements IPageListener {
 
 		@Override
 		public void onUpdate(String value) {
+			update(value, true);
+		}
+
+		protected void update(String value, boolean wColors) {
 			isSpecified = !value.equals(originalValue);
 			isNull = value.equals("");
 			updateClickables();
 			if (required) {
 				if (textElement instanceof ITextField) {
 					ITextField tf = (ITextField) textElement;
-					errorColor(tf, isNull);
+					if (wColors)
+						errorColor(tf, isNull);
 				} else if (textElement instanceof IPasswordField) {
 					IPasswordField tf = (IPasswordField) textElement;
-					errorColor(tf, isNull);
+					if (wColors)
+						errorColor(tf, isNull);
 				} else
 					throw new MethodNotImplementedException();
 			}
+		}
+
+		@Override
+		public void notifyChange() {
+			update(textElement.text(), false);
 		}
 
 		@Override
@@ -300,6 +318,9 @@ public class Validation implements IPageListener {
 
 	@Override
 	public boolean notifyChange() {
+		for (IField f : fields) {
+			f.notifyChange();
+		}
 		updateClickables();
 		return !isSpecified;
 	}
