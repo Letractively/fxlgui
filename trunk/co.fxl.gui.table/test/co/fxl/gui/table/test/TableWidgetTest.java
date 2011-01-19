@@ -38,8 +38,8 @@ class TableWidgetTest {
 		widget.addTitle("Table");
 		widget.addButton("New");
 		for (int i = 0; i < 3; i++)
-			widget.addColumn().name("Column " + i).type(String.class)
-					.sortable();
+			widget.addColumn().name("Column " + i).sortable().type()
+					.type(String.class);
 		for (int j = 0; j < 10; j++) {
 			widget.addRow().add("C0").add("C1").add("C2");
 		}

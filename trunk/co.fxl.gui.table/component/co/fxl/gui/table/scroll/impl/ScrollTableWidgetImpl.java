@@ -37,7 +37,6 @@ import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.KeyAdapter;
 import co.fxl.gui.api.template.WidgetTitle;
-import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IMiniFilterWidget;
 import co.fxl.gui.table.api.ISelection;
@@ -52,9 +51,7 @@ import co.fxl.gui.table.scroll.api.IScrollTableColumn.IScrollTableListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 
 class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
-		IScrollListener, ILabelMouseListener, IFilterListener {
-
-	// TODO show status line: showing rows 27-40 of 3000
+		IScrollListener, ILabelMouseListener {
 
 	// TODO Swing Scroll Panel block increment for single click on arrow is not
 	// enough
@@ -82,6 +79,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	List<IRow> highlighted = new LinkedList<IRow>();
 	private IGridPanel statusPanel;
 	private String tooltip = "Use CTRL + Click to select multiple rows.";
+	private boolean visible;
 
 	ScrollTableWidgetImpl(IContainer container) {
 		widgetTitle = new WidgetTitle(container.panel()).foldable(false);
@@ -103,6 +101,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> rows(IRows<Object> rows) {
 		this.rows = new RowAdapter(rows);
+		if (visible) {
+			visible(true);
+		}
 		return this;
 	}
 
@@ -112,28 +113,30 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			statusPanel = null;
 			selectionIsSetup = false;
 			container.clear();
-			container.addSpace(10);
-			IMiniFilterWidget filter = null;
-			for (ScrollTableColumnImpl c : columns) {
-				if (c.filterable) {
-					if (filter == null) {
-						filter = (IMiniFilterWidget) container.add().widget(
-								IMiniFilterWidget.class);
-					}
-					filter.addFilter().name(c.name).type().type(c.type);
-					// TODO value constraint: choice of x elements
-				}
-			}
-			if (filter != null) {
-				filter.addFilterListener(this);
-				filter.visible(true);
-				container.addSpace(10);
-			}
+			filter = null;
 			if (rows.size() == 0) {
+				container.addSpace(20);
 				IVerticalPanel dock = container.add().panel().vertical();
 				dock.height(height);
 				dock.add().label().text("No rows found");
 			} else {
+				for (ScrollTableColumnImpl c : columns) {
+					if (c.filterable) {
+						if (filter == null) {
+							container.addSpace(10);
+							filter = (IMiniFilterWidget) container.add()
+									.widget(IMiniFilterWidget.class);
+						}
+						filter.addFilter().name(c.name).type(c.type);
+						// TODO value constraint: choice of x elements
+					}
+				}
+				if (filter != null) {
+					filter.addSizeFilter();
+					filter.visible(true);
+					container.addSpace(10);
+				} else
+					container.addSpace(20);
 				IDockPanel dock = container.add().panel().dock();
 				dock.height(height);
 				contentPanel = dock.center().panel().card();
@@ -150,7 +153,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				sp.addScrollListener(this);
 				h.add().label().text("&#160;");
 			}
+			visible = true;
 		} else {
+			visible = false;
 			throw new MethodNotImplementedException();
 		}
 		return this;
@@ -213,6 +218,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private double spHeight;
 	private ISortListener sortListener;
 	boolean addClickListeners = false;
+	private IMiniFilterWidget filter;
 
 	private void update() {
 		if (updating)
@@ -443,7 +449,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	@Override
-	public void onApply(IFilterConstraints constraints) {
-		throw new MethodNotImplementedException();
+	public IScrollTableWidget<?> addFilterListener(IFilterListener l) {
+		if (filter != null)
+			filter.addFilterListener(l);
+		return this;
 	}
 }
