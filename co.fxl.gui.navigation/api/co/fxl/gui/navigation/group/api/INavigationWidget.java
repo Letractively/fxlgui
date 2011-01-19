@@ -36,4 +36,6 @@ public interface INavigationWidget {
 	INavigationWidget pageListener(IPageListener l);
 
 	INavigationWidget refresh();
+
+	INavigationItem activeItem();
 }
