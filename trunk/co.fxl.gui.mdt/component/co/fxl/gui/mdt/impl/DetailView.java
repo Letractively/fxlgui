@@ -26,7 +26,7 @@ import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.api.template.IPageListener;
-import co.fxl.gui.api.template.SimpleDateFormat;
+import co.fxl.gui.api.template.DateFormat;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IMDTFilterList;
@@ -40,7 +40,7 @@ import co.fxl.gui.tree.api.ITreeWidget.ITreeClickListener;
 
 class DetailView extends ViewTemplate implements ISource<Object>, IPageListener {
 
-	static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat();
+	static final DateFormat DATE_FORMAT = DateFormat.instance;
 	IFilterTreeWidget<Object> tree;
 	private IMDTFilterList<Object> filterList;
 	protected ITree<Object> itree;

@@ -211,7 +211,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 					continue;
 				adapters.add(p.adapter);
 				IScrollTableColumn<Object> column = table.addColumn();
-				column.name(p.name).type(p.type.clazz);
+				column.name(p.name).type(p.type);
 				if (p.sortable) {
 					column.sortable();
 					if (widget.constraints != null

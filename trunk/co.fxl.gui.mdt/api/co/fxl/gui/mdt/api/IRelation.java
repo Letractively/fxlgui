@@ -18,11 +18,10 @@
  */
 package co.fxl.gui.mdt.api;
 
-import java.util.List;
-
 import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.template.ICallback;
+import co.fxl.gui.filter.api.IFilterConstraints;
 
 public interface IRelation<T, R> extends IPropertyGroup<R> {
 
@@ -31,8 +30,6 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 		// TODO callback
 
 		void onAdd(T base, R entity);
-
-		void onRemove(T base, R entity);
 
 		boolean isDetailedAdd();
 
@@ -46,7 +43,8 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 
 	public interface IAdapter<T, R> {
 
-		void valueOf(T entity, ICallback<List<R>> callback);
+		void valueOf(T entity, IFilterConstraints constraints,
+				ICallback<IDeletableList<T>> callback);
 	}
 
 	IRelation<T, R> adapter(IAdapter<T, R> adapter);

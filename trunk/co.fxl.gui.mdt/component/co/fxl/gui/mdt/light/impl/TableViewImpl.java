@@ -22,12 +22,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.template.NavigationView;
 import co.fxl.gui.api.template.SplitLayout;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -166,8 +166,8 @@ class TableViewImpl implements ITableView<Object>, IFilterListener<Object> {
 				}
 			});
 		} else {
-			table.selection().single().addSelectionListener(
-					new ISelectionListener<Object>() {
+			table.selection().single()
+					.addSelectionListener(new ISelectionListener<Object>() {
 
 						@Override
 						public void onSelection(Object selection) {
@@ -187,8 +187,8 @@ class TableViewImpl implements ITableView<Object>, IFilterListener<Object> {
 
 	@Override
 	public IClickable<?> addNavigationLink(String name) {
-		ILabel label = navigationView().addHyperlink().text(name).clickable(
-				false);
+		ILabel label = navigationView().addHyperlink().text(name)
+				.clickable(false);
 		labels.add(label);
 		return label;
 	}
@@ -217,7 +217,7 @@ class TableViewImpl implements ITableView<Object>, IFilterListener<Object> {
 	@Override
 	public IColumn addImageColumn(String name, String[] images) {
 		IColumn column = table.addColumn();
-		column.name(name).type(IImage.class).sortable();
+		column.name(name).sortable().type().type(IImage.class);
 		filter().filterable(column, String.class, (Object[]) images);
 		return column;
 	}
@@ -280,14 +280,14 @@ class TableViewImpl implements ITableView<Object>, IFilterListener<Object> {
 		} else if (isMaster) {
 			IVerticalPanel vPanel = splitLayout.sidePanel.add().panel()
 					.vertical();
-			vPanel.add().label().text(
-					"Constraint on " + constrainedOn + " is active.");
+			vPanel.add().label()
+					.text("Constraint on " + constrainedOn + " is active.");
 			IHorizontalPanel hPanel = vPanel.add().panel().horizontal().add()
 					.panel().horizontal();
 			hPanel.add().label().text("Click");
 			hPanel.addSpace(6);
-			hPanel.add().label().hyperlink().text("here").addClickListener(
-					removeListener);
+			hPanel.add().label().hyperlink().text("here")
+					.addClickListener(removeListener);
 			hPanel.addSpace(6);
 			hPanel.add().label().text("to remove.");
 		}
