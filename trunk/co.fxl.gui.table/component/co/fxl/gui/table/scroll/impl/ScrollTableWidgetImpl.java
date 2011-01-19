@@ -110,6 +110,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> visible(boolean visible) {
 		if (visible) {
+			this.visible = true;
 			statusPanel = null;
 			selectionIsSetup = false;
 			container.clear();
@@ -153,9 +154,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				sp.addScrollListener(this);
 				h.add().label().text("&#160;");
 			}
-			visible = true;
 		} else {
-			visible = false;
+			this.visible = false;
 			throw new MethodNotImplementedException();
 		}
 		return this;
