@@ -56,5 +56,7 @@ public interface IScrollTableWidget<T> {
 
 	IScrollTableWidget<T> addFilterListener(IFilterListener l);
 
+	IScrollTableWidget<T> allowColumnSelection(boolean allowColumnSelection);
+
 	IScrollTableWidget<T> refresh();
 }

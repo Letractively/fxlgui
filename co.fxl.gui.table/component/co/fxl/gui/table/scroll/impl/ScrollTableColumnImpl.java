@@ -53,8 +53,6 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		}
 	}
 
-	private static DateFormat FORMAT = DateFormat.instance;
-
 	public class DateDecorator implements Decorator<Date> {
 
 		@Override
@@ -85,6 +83,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		}
 	}
 
+	private static DateFormat FORMAT = DateFormat.instance;
 	String name;
 	boolean sortable = false;
 	FieldTypeImpl type = new FieldTypeImpl();
@@ -98,6 +97,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	boolean filterable;
 	private AlignmentMemento<IScrollTableColumn<Object>> alignment = new AlignmentMemento<IScrollTableColumn<Object>>(
 			this);
+	boolean visible = true;
 
 	ScrollTableColumnImpl(ScrollTableWidgetImpl widget, int index) {
 		this.widget = widget;

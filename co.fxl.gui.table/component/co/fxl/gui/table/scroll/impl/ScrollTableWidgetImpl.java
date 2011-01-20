@@ -25,11 +25,13 @@ import java.util.Map;
 
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IScrollPane;
@@ -219,6 +221,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private ISortListener sortListener;
 	boolean addClickListeners = false;
 	private IMiniFilterWidget filter;
+	private boolean allowColumnSelection = true;
 
 	private void update() {
 		if (updating)
@@ -235,7 +238,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			grid.height(height);
 			paintedRows = computeRowsToPaint();
 			rowOffset = convert(usedScrollOffset);
+			int current = 0;
 			for (int c = 0; c < columns.size(); c++) {
+				if (!columns.get(c).visible)
+					continue;
 				ScrollTableColumnImpl columnImpl = columns.get(c);
 				if (columnImpl.tagSortOrder != null) {
 					sortColumn = columnImpl.index;
@@ -246,14 +252,16 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				if (sortColumn == c) {
 					name += " " + (sortNegator == 1 ? ARROW_DOWN : ARROW_UP);
 				}
-				grid.column(c).title(name);
+				grid.column(current++).title(name);
 			}
 			for (int r = 0; r < paintedRows; r++) {
 				int index = r + rowOffset;
 				Object[] row = rows.row(index);
+				current = 0;
 				for (ScrollTableColumnImpl c : columns)
-					c.decorate(rows.identifier(index), grid.cell(c.index, r),
-							row[c.index]);
+					if (c.visible)
+						c.decorate(rows.identifier(index),
+								grid.cell(current++, r), row[c.index]);
 			}
 			grid.visible(true);
 			grid.addMouseWheelListener(new IMouseWheelListener() {
@@ -272,9 +280,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				}
 			});
 			if (addClickListeners) {
+				current = 0;
 				for (ScrollTableColumnImpl c : columns)
-					if (!c.clickListeners.isEmpty())
-						grid.labelMouseListener(c.index, this);
+					if (!c.clickListeners.isEmpty() && c.visible)
+						grid.labelMouseListener(current++, this);
 			}
 			grid.element().tooltip(tooltip);
 			contentPanel.show(grid.element());
@@ -287,16 +296,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					highlighted.add(row);
 				}
 			}
-			IGridCell clear = statusPanel().cell(1, 0).clear();
-			int rt = rowOffset + paintedRows;
-			if (rowOffset > 0 || rt < rows.size()) {
-				if (rt > rows.size())
-					rt = rows.size();
-				String status = "Displaying rows " + (rowOffset + 1) + " - "
-						+ rt + " of " + rows.size();
-				clear.align().end().label().text(status).font().pixel(10);
-			}
-			updateSorting();
+			addDisplayingNote();
+			if (allowColumnSelection)
+				addColumnSelection();
+			addSorting();
 			selection.update();
 			for (ITableListener l : listeners.keySet()) {
 				KeyAdapter<Object> adp = listeners.get(l);
@@ -306,6 +309,50 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			}
 		} while (usedScrollOffset != scrollOffset);
 		updating = false;
+	}
+
+	private void addDisplayingNote() {
+		IGridCell clear = statusPanel().cell(2, 0).clear();
+		int rt = rowOffset + paintedRows;
+		if (rowOffset > 0 || rt < rows.size()) {
+			if (rt > rows.size())
+				rt = rows.size();
+			String status = "Displaying rows " + (rowOffset + 1) + " - " + rt
+					+ " of " + rows.size();
+			clear.align().end().label().text(status).font().pixel(10);
+		}
+	}
+
+	private void addColumnSelection() {
+		IGridCell clear = statusPanel().cell(1, 0).clear().align().center();
+		IHorizontalPanel p = clear.panel().horizontal().add().panel()
+				.horizontal();
+		p.add().label().text("Columns:").font().pixel(11).weight().bold();
+		for (final ScrollTableColumnImpl c : columns) {
+			p.addSpace(4);
+			IHorizontalPanel b = p.add().panel().horizontal().spacing(4);
+			if (c.visible)
+				b.color().gray();
+			ILabel l = b.add().label().text(c.name).autoWrap(true);
+			l.font().pixel(11);
+			if (c.visible)
+				l.font().color().white();
+			else
+				l.font().color().gray();
+			b.addClickListener(new IClickListener() {
+				@Override
+				public void onClick() {
+					c.visible = !c.visible;
+					boolean allInvisible = true;
+					for (ScrollTableColumnImpl c1 : columns)
+						allInvisible &= !c1.visible;
+					if (allInvisible)
+						c.visible = true;
+					else
+						update();
+				}
+			});
+		}
 	}
 
 	private int computeRowsToPaint() {
@@ -330,7 +377,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		}
 	}
 
-	private void updateSorting() {
+	private void addSorting() {
 		boolean sortable = false;
 		for (ScrollTableColumnImpl c : columns) {
 			if (c.sortable) {
@@ -344,7 +391,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				public void onClick(int column, int row) {
 					if (row != 0)
 						return;
-					ScrollTableColumnImpl columnImpl = columns.get(column);
+
+					ScrollTableColumnImpl columnImpl = columns
+							.get(realColumn(column));
 					if (columnImpl.sortable) {
 						if (rows.size() < MAX_SORT_SIZE || sortListener == null) {
 							sortColumn = columnImpl.index;
@@ -364,6 +413,14 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				}
 			});
 		}
+	}
+
+	private int realColumn(int column) {
+		int c = column;
+		for (int i = 0; i < column; i++)
+			if (!columns.get(i).visible)
+				c++;
+		return c;
 	}
 
 	@Override
@@ -396,7 +453,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			@Override
 			public void onClick(int column, int row) {
 				int convert2TableRow = convert2TableRow(row);
-				l.onClick(column, convert2TableRow);
+				l.onClick(realColumn(column), convert2TableRow);
 			}
 		};
 		KeyAdapter<Object> keyAdapter = new KeyAdapter<Object>();
@@ -445,7 +502,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	private List<IScrollTableListener<Object>> clickListeners(int column) {
-		return columns.get(column).clickListeners;
+		return columns.get(realColumn(column)).clickListeners;
 	}
 
 	@Override
@@ -461,6 +518,13 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			filter.apply();
 		else
 			visible(true);
+		return this;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> allowColumnSelection(
+			boolean allowColumnSelection) {
+		this.allowColumnSelection = allowColumnSelection;
 		return this;
 	}
 }
