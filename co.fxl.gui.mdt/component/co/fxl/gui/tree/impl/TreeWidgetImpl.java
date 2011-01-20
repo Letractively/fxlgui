@@ -170,48 +170,55 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener,
 				IClickListener cl = new IClickListener() {
 					@Override
 					public void onClick() {
-						if (!notifyChange())
-							return;
-						final ITree<T> lParentNode = last != null ? last.tree
-								: root;
-						ChainedCallback<List<T>, ITree<T>> lCallback1 = new ChainedCallback<List<T>, ITree<T>>() {
-							@Override
-							public void onSuccess(List<T> result) {
-								if (type == null)
-									lParentNode.createNew(getNextCallback());
-								else
-									lParentNode.createNew(type,
-											getNextCallback());
-							}
-						};
-						CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>() {
-
-							public void onFail(Throwable throwable) {
-								widgetTitle.reset();
-								super.onFail(throwable);
-							}
+						notifyChange(new CallbackTemplate<Boolean>() {
 
 							@Override
-							public void onSuccess(ITree<T> result) {
-								widgetTitle.reset();
-								selection(result.object());
-								boolean rememberExpand = expand;
-								expand = false;
-								List<ITree<T>> path = new LinkedList<ITree<T>>();
-								path.add(result);
-								while (result.parent() != null) {
-									result = result.parent();
-									path.add(0, result);
+							public void onSuccess(Boolean result) {
+								if (result) {
+									final ITree<T> lParentNode = last != null ? last.tree
+											: root;
+									ChainedCallback<List<T>, ITree<T>> lCallback1 = new ChainedCallback<List<T>, ITree<T>>() {
+										@Override
+										public void onSuccess(List<T> result) {
+											if (type == null)
+												lParentNode
+														.createNew(getNextCallback());
+											else
+												lParentNode.createNew(type,
+														getNextCallback());
+										}
+									};
+									CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>() {
+
+										public void onFail(Throwable throwable) {
+											widgetTitle.reset();
+											super.onFail(throwable);
+										}
+
+										@Override
+										public void onSuccess(ITree<T> result) {
+											widgetTitle.reset();
+											selection(result.object());
+											boolean rememberExpand = expand;
+											expand = false;
+											List<ITree<T>> path = new LinkedList<ITree<T>>();
+											path.add(result);
+											while (result.parent() != null) {
+												result = result.parent();
+												path.add(0, result);
+											}
+											root(root, path);
+											assert node != null;
+											node.path = null;
+											expand = rememberExpand;
+										}
+									};
+									lCallback1.setNextCallback(lCallback2);
+									assert lParentNode != null : "Parent node cannot be resolved, cannot load children";
+									lParentNode.loadChildren(lCallback1);
 								}
-								root(root, path);
-								assert node != null;
-								node.path = null;
-								expand = rememberExpand;
 							}
-						};
-						lCallback1.setNextCallback(lCallback2);
-						assert lParentNode != null : "Parent node cannot be resolved, cannot load children";
-						lParentNode.loadChildren(lCallback1);
+						});
 					}
 				};
 				newClick.put(type, cl);
@@ -561,9 +568,10 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener,
 	}
 
 	@Override
-	public boolean notifyChange() {
-		if (pageListener == null)
-			return true;
-		return pageListener.notifyChange();
+	public void notifyChange(ICallback<Boolean> callback) {
+		if (pageListener == null) {
+			callback.onSuccess(true);
+		} else
+			pageListener.notifyChange(callback);
 	}
 }

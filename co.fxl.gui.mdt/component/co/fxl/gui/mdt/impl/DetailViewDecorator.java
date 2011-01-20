@@ -308,38 +308,44 @@ public abstract class DetailViewDecorator implements IDecorator<Object>,
 		border.style().top();
 	}
 
-	private boolean result = true;
-
 	@Override
-	public boolean notifyChange() {
-		if (form == null)
-			return true;
-		boolean notifyChange = form.pageListener().notifyChange();
-		if (notifyChange)
-			return true;
-		result = true;
-		display.showDialog()
-				.title("Warning")
-				.question()
-				.question(
-						"You have made changes that have not been saved! Discard Changes?")
-				.addQuestionListener(new IQuestionDialogListener() {
+	public void notifyChange(final ICallback<Boolean> callback) {
+		if (form == null) {
+			callback.onSuccess(true);
+			return;
+		}
+		form.pageListener().notifyChange(new CallbackTemplate<Boolean>() {
 
-					@Override
-					public void onYes() {
-						// onSave();
-						form = null;
-					}
+			@Override
+			public void onSuccess(Boolean result) {
+				if (result)
+					callback.onSuccess(true);
+				else {
+					display.showDialog()
+							.title("Warning")
+							.question()
+							.question(
+									"You have made changes that have not been saved! Discard Changes?")
+							.addQuestionListener(new IQuestionDialogListener() {
 
-					@Override
-					public void onNo() {
-						result = false;
-					}
+								@Override
+								public void onYes() {
+									// onSave();
+									form = null;
+									callback.onSuccess(true);
+								}
 
-					@Override
-					public void onCancel() {
-					}
-				});
-		return result;
+								@Override
+								public void onNo() {
+									callback.onSuccess(false);
+								}
+
+								@Override
+								public void onCancel() {
+								}
+							});
+				}
+			}
+		});
 	}
 }
