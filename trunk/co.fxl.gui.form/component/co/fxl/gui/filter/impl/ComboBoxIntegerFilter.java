@@ -45,8 +45,8 @@ class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
 		super(panel, name, filterIndex);
 		this.defaultValue = (Integer) values.get(0);
 		comboBox = panel.cell(filterIndex)// .width(WIDTH_SINGLE_CELL)
-				.comboBox().width(WIDTH_SINGLE_CELL);
-		comboBox.height(HEIGHT);
+				.comboBox().width(WIDTH_COMBOBOX_CELL);
+		panel.heights().decorate(comboBox);
 		for (Object object : values) {
 			comboBox.addText(string(object));
 		}

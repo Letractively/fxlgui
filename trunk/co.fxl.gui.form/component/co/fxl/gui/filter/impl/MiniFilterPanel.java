@@ -29,6 +29,7 @@ import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.form.impl.Heights;
 
 class MiniFilterPanel implements FilterPanel {
 
@@ -105,6 +106,11 @@ class MiniFilterPanel implements FilterPanel {
 		@Override
 		public void register(ITextField tf) {
 			widget.register(tf);
+		}
+
+		@Override
+		public Heights heights() {
+			return widget.heights;
 		};
 	}
 
@@ -158,6 +164,7 @@ class MiniFilterPanel implements FilterPanel {
 	@Override
 	public IComboBox addComboBox() {
 		IComboBox comboBox = mainPanel.add().comboBox();
+		widget.heights.decorate(comboBox);
 		mainPanel.addSpace(4);
 		return comboBox;
 	}

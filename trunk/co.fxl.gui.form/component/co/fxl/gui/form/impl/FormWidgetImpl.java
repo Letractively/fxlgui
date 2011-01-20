@@ -73,6 +73,7 @@ class FormWidgetImpl implements IFormWidget {
 	private ILabel requiredAttributeLabel;
 	private boolean validate = true;
 	Validation validation;
+	private Heights heights = new Heights(2);
 
 	FormWidgetImpl(IContainer panel) {
 		widgetTitle = new WidgetTitle(panel.panel());
@@ -94,7 +95,7 @@ class FormWidgetImpl implements IFormWidget {
 		IGridCell cell = grid().cell(1, gridIndex).valign().center();
 		if (fixValueWidth != -1)
 			cell.width(fixValueWidth);
-		// cell.height(HEIGHT_CELL);
+		heights.decorate(cell);
 		gridIndex++;
 		return cell;
 	}
@@ -104,14 +105,14 @@ class FormWidgetImpl implements IFormWidget {
 
 	ITextField addFormValueTextField() {
 		ITextField valuePanel = container().textField();
-		// valuePanel.height(HEIGHT_CELL_INNER);
+		heights.decorate(valuePanel);
 		valuePanel.editable(saveListener != null);
 		return valuePanel;
 	}
 
 	IPasswordField addFormValuePasswordField() {
 		IPasswordField valuePanel = container().passwordField();
-		// valuePanel.height(HEIGHT_CELL_INNER);
+		heights.decorate(valuePanel);
 		valuePanel.editable(saveListener != null);
 		return valuePanel;
 	}
@@ -124,21 +125,21 @@ class FormWidgetImpl implements IFormWidget {
 
 	IComboBox addFormValueComboBox() {
 		IComboBox valuePanel = container().comboBox();
-		// valuePanel.height(HEIGHT_CELL_INNER);
+		heights.decorate(valuePanel);
 		valuePanel.editable(saveListener != null);
 		return valuePanel;
 	}
 
 	ICheckBox addFormValueCheckBox() {
 		ICheckBox valuePanel = container().checkBox();
-		// valuePanel.height(HEIGHT_CELL_INNER);
+		heights.valuePanel(valuePanel);
 		valuePanel.editable(saveListener != null);
 		return valuePanel;
 	}
 
 	ILabel addFormLabel() {
 		ILabel label = container().label();
-		// label.height(HEIGHT_CELL_INNER);
+		heights.decorate(label);
 		return label;
 	}
 

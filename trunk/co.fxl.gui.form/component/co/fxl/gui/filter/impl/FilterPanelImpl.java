@@ -29,6 +29,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.WidgetTitle;
+import co.fxl.gui.form.impl.Heights;
 
 class FilterPanelImpl implements FilterPanel {
 
@@ -37,6 +38,7 @@ class FilterPanelImpl implements FilterPanel {
 		private IGridCell cell;
 
 		CellImpl(IGridCell cell) {
+			widget.heights.decorate(cell);
 			this.cell = cell;
 		}
 
@@ -66,9 +68,9 @@ class FilterPanelImpl implements FilterPanel {
 		private IGridPanel grid;
 
 		FilterGridImpl(IContainer gridContainer) {
-			grid = gridContainer.panel().vertical().spacing(3).add().panel()
+			grid = gridContainer.panel().vertical().align().end().spacing(3).add().panel()
 					.grid().spacing(3);
-		};
+		}
 
 		@Override
 		public ICell cell(int row) {
@@ -77,20 +79,26 @@ class FilterPanelImpl implements FilterPanel {
 
 		@Override
 		public void title(int filterIndex, String name) {
-			ILabel text = grid.cell(0, filterIndex).align().end().valign()
-					.center().label();
+			IGridCell cell = grid.cell(0, filterIndex);
+			widget.heights.decorate(cell);
+			ILabel text = cell.align().end().valign().center().label();
 			text.text(name).font().color().gray();
 			int size = 11;
-			if (name.length() > 11)
-				size = 10;
-			if (name.length() > 16)
-				size = 9;
+			// if (name.length() > 11)
+			// size = 10;
+			// if (name.length() > 16)
+			size = 10;
 			text.font().pixel(size);
 		}
 
 		@Override
 		public void register(ITextField tf) {
 			widget.register(tf);
+		}
+
+		@Override
+		public Heights heights() {
+			return widget.heights;
 		}
 	}
 
@@ -118,7 +126,7 @@ class FilterPanelImpl implements FilterPanel {
 	@Override
 	public FilterGrid filterGrid() {
 		if (gridContainer == null) {
-			gridContainer = mainPanel.add();
+			gridContainer = mainPanel.align().end().add();
 		} else
 			gridContainer.clear();
 		return new FilterGridImpl(gridContainer);

@@ -23,6 +23,7 @@ import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextField;
+import co.fxl.gui.form.impl.Heights;
 
 interface FilterPanel {
 
@@ -35,17 +36,17 @@ interface FilterPanel {
 		ITextField textField();
 
 		IDockPanel dock();
-
 	}
 
 	interface FilterGrid {
+
+		Heights heights();
 
 		ICell cell(int row);
 
 		void title(int filterIndex, String name);
 
 		void register(ITextField tf);
-
 	}
 
 	void addTitle(String string);
