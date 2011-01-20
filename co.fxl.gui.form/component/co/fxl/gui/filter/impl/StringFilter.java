@@ -48,6 +48,7 @@ class StringFilter extends FilterTemplate<String> {
 		super(panel, name, filterIndex);
 		ICell width = panel.cell(filterIndex);// .width(WIDTH_SINGLE_CELL);
 		textField = textField(width, filterIndex).width(width());
+		panel.register(textField);
 		// textField.height(HEIGHT);
 	}
 

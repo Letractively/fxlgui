@@ -31,6 +31,8 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IImage;
+import co.fxl.gui.api.ITextField;
+import co.fxl.gui.api.ITextField.ICarriageReturnListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -77,11 +79,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 
 		@Override
 		public void onClick() {
-			if (holdFilterClicks)
-				return;
-			validation.update();
-			clear.clickable(true);
-			notifyListeners();
+			onApplyClick();
 		}
 	}
 
@@ -117,7 +115,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	}
 
 	FilterPanel newFilterPanel(IContainer panel) {
-		return new FilterPanelImpl(panel);
+		return new FilterPanelImpl(this, panel);
 	}
 
 	@Override
@@ -350,5 +348,24 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	public IFilterWidget setConfiguration(String config) {
 		onUpdate(config);
 		return this;
+	}
+
+	void register(ITextField tf) {
+		tf.addCarriageReturnListener(new ICarriageReturnListener() {
+
+			@Override
+			public void onCarriageReturn() {
+				if (apply.clickable())
+					onApplyClick();
+			}
+		});
+	}
+
+	private void onApplyClick() {
+		if (holdFilterClicks)
+			return;
+		validation.update();
+		clear.clickable(true);
+		notifyListeners();
 	}
 }

@@ -30,6 +30,6 @@ class MiniFilterWidgetImpl extends FilterWidgetImpl implements
 
 	@Override
 	FilterPanel newFilterPanel(IContainer panel) {
-		return new MiniFilterPanel(panel);
+		return new MiniFilterPanel(this, panel);
 	}
 }

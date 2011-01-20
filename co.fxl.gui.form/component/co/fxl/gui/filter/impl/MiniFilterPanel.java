@@ -100,6 +100,11 @@ class MiniFilterPanel implements FilterPanel {
 		public void onUpdate(String value) {
 			cardPanel.show(index2cell.get(name2index.get(value)).container
 					.element());
+		}
+
+		@Override
+		public void register(ITextField tf) {
+			widget.register(tf);
 		};
 	}
 
@@ -110,8 +115,10 @@ class MiniFilterPanel implements FilterPanel {
 	private IContainer gridContainer;
 	private FilterGridImpl grid;
 	private boolean hasHyperlinks = false;
+	private MiniFilterWidgetImpl widget;
 
-	MiniFilterPanel(IContainer c) {
+	MiniFilterPanel(MiniFilterWidgetImpl widget, IContainer c) {
+		this.widget = widget;
 		panel = c.panel().horizontal().add().panel().horizontal();
 		titlePanel = panel.add().panel().horizontal();
 		mainPanel = panel.addSpace(4).add().panel().horizontal();
