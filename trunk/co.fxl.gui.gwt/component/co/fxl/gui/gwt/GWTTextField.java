@@ -31,6 +31,7 @@ class GWTTextField extends GWTElement<TextBox, ITextField> implements
 
 	GWTTextField(GWTContainer<TextBox> container) {
 		super(container);
+		assert container != null : "GWTTextField.new: container is null";
 		container.widget.addStyleName("gwt-TextBox-FXL");
 		defaultFont();
 	}
@@ -111,6 +112,8 @@ class GWTTextField extends GWTElement<TextBox, ITextField> implements
 	@Override
 	public ITextField addCarriageReturnListener(
 			final ICarriageReturnListener listener) {
+		assert container != null : "GWTTextField.addCarriageReturnListener: container is null";
+		assert container.widget != null : "GWTTextField.addCarriageReturnListener: container.widget is null";
 		container.widget.addKeyPressHandler(new KeyPressHandler() {
 
 			@Override
