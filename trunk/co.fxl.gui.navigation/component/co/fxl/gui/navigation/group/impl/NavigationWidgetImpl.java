@@ -25,6 +25,7 @@ import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IPageListener;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
@@ -138,10 +139,11 @@ public class NavigationWidgetImpl implements INavigationWidget, IPageListener {
 	}
 
 	@Override
-	public boolean notifyChange() {
-		if (pageListener == null)
-			return true;
-		return pageListener.notifyChange();
+	public void notifyChange(ICallback<Boolean> callback) {
+		if (pageListener == null) {
+			callback.onSuccess(true);
+		} else
+			pageListener.notifyChange(callback);
 	}
 
 	@Override
