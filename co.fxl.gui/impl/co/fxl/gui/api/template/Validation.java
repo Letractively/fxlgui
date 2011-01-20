@@ -317,11 +317,11 @@ public class Validation implements IPageListener {
 	}
 
 	@Override
-	public boolean notifyChange() {
+	public void notifyChange(ICallback<Boolean> callback) {
 		for (IField f : fields) {
 			f.notifyChange();
 		}
 		updateClickables();
-		return !isSpecified;
+		callback.onSuccess(!isSpecified);
 	}
 }
