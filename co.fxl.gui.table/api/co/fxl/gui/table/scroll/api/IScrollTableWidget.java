@@ -48,11 +48,13 @@ public interface IScrollTableWidget<T> {
 
 	IKey<?> addTableListener(ITableListener l);
 
-	IScrollTableWidget<?> sortListener(ISortListener l);
+	IScrollTableWidget<T> sortListener(ISortListener l);
 
-	IScrollTableWidget<?> visible(boolean visible);
+	IScrollTableWidget<T> visible(boolean visible);
 
-	IScrollTableWidget<?> addTooltip(String tooltip);
+	IScrollTableWidget<T> addTooltip(String tooltip);
 
-	IScrollTableWidget<?> addFilterListener(IFilterListener l);
+	IScrollTableWidget<T> addFilterListener(IFilterListener l);
+
+	IScrollTableWidget<T> refresh();
 }

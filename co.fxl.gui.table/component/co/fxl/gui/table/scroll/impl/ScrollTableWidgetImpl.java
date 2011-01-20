@@ -405,7 +405,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	@Override
-	public IScrollTableWidget<?> addTooltip(String tooltip) {
+	public IScrollTableWidget<Object> addTooltip(String tooltip) {
 
 		// TODO tooltip doesn't work for BulkTableWidgetImpl
 
@@ -416,7 +416,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	@Override
-	public IScrollTableWidget<?> sortListener(
+	public IScrollTableWidget<Object> sortListener(
 			co.fxl.gui.table.scroll.api.IScrollTableWidget.ISortListener l) {
 		sortListener = l;
 		return this;
@@ -449,9 +449,18 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	@Override
-	public IScrollTableWidget<?> addFilterListener(IFilterListener l) {
+	public IScrollTableWidget<Object> addFilterListener(IFilterListener l) {
 		if (filter != null)
 			filter.addFilterListener(l);
+		return this;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> refresh() {
+		if (filter != null)
+			filter.apply();
+		else
+			visible(true);
 		return this;
 	}
 }
