@@ -23,12 +23,12 @@ import java.util.List;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
-import co.fxl.gui.api.template.CallbackTemplate;
-import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.CallbackTemplate;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.tree.api.ITree;
 
 class Node<T> implements IClickListener {
@@ -65,9 +65,14 @@ class Node<T> implements IClickListener {
 		IClickListener showClickListener = new IClickListener() {
 			@Override
 			public void onClick() {
-				if (!widget.notifyChange())
-					return;
-				Node.this.widget.show(Node.this);
+				widget.notifyChange(new CallbackTemplate<Boolean>() {
+
+					@Override
+					public void onSuccess(Boolean result) {
+						if (result)
+							Node.this.widget.show(Node.this);
+					}
+				});
 			}
 		};
 		if (root.childCount() != 0) {

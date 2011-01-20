@@ -23,10 +23,10 @@ import java.util.List;
 
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
+import co.fxl.gui.api.template.DateFormat;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.api.template.IPageListener;
-import co.fxl.gui.api.template.DateFormat;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IMDTFilterList;
@@ -242,7 +242,7 @@ class DetailView extends ViewTemplate implements ISource<Object>, IPageListener 
 	}
 
 	@Override
-	public boolean notifyChange() {
-		return pageListener.notifyChange();
+	public void notifyChange(ICallback<Boolean> callback) {
+		pageListener.notifyChange(callback);
 	}
 }
