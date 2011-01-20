@@ -86,8 +86,14 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 
 	@Override
 	public void onClick() {
-		if (widget.notifyChange())
-			active();
+		widget.notifyChange(new co.fxl.gui.api.template.CallbackTemplate<Boolean>() {
+
+			@Override
+			public void onSuccess(Boolean result) {
+				if (result)
+					active();
+			}
+		});
 	}
 
 	@Override
