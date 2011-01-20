@@ -47,9 +47,6 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 
 	private final RelationImpl relation;
 	private IScrollTableWidget<Object> table;
-	private IVerticalPanel panel;
-	private IFilterConstraints constraints;
-	private Object node;
 
 	RelationDecorator(RelationImpl relation) {
 		this.relation = relation;
@@ -67,9 +64,6 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 
 	private void decorate(final IVerticalPanel panel,
 			final IFilterConstraints constraints, final Object node) {
-		this.panel = panel;
-		this.constraints = constraints;
-		this.node = node;
 		panel.clear();
 		IBorder border = panel.border();
 		border.color().gray();
@@ -124,7 +118,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 
 										@Override
 										public void onSuccess(Boolean result) {
-											refresh();
+											table.refresh();
 										}
 									});
 						}
@@ -244,17 +238,13 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 		relation.adapter.valueOf(node, constraints, callback);
 	}
 
-	private void refresh() {
-		decorate(panel, constraints, node);
-	}
-
 	@Override
 	public void onResize(int width, int height) {
 		int offsetY = table.offsetY();
 		// TODO ... un-hard-code
 		if (offsetY == 0)
 			offsetY = 139;
-		int maxFromDisplay = height - offsetY - 160;
+		int maxFromDisplay = height - offsetY - 180;
 		if (maxFromDisplay > 0)
 			table.height(maxFromDisplay);
 	}
