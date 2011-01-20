@@ -165,6 +165,8 @@ public class WidgetTitle implements IClickListener {
 	}
 
 	public IContainer content() {
+		if (contentContainer != null)
+			return contentContainer;
 		return contentContainer = panel.add();
 	}
 
