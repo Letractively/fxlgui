@@ -39,6 +39,7 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
+import co.fxl.gui.form.impl.Heights;
 
 class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 
@@ -100,6 +101,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	private String firstConfiguration = IFilterConstraints.COMMON;
 	private String configuration = IFilterConstraints.COMMON;
 	private boolean showConfiguration = true;
+	Heights heights = new Heights(0);
 
 	FilterWidgetImpl(IContainer panel) {
 		FilterPanel title = newFilterPanel(panel);

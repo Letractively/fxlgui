@@ -48,12 +48,13 @@ class StringFilter extends FilterTemplate<String> {
 		super(panel, name, filterIndex);
 		ICell width = panel.cell(filterIndex);// .width(WIDTH_SINGLE_CELL);
 		textField = textField(width, filterIndex).width(width());
+		panel.heights().decorate(textField);
 		panel.register(textField);
 		// textField.height(HEIGHT);
 	}
 
 	ITextField textField(ICell c, int filterIndex) {
-		return c.textField().height(HEIGHT);
+		return c.textField();
 	}
 
 	int width() {

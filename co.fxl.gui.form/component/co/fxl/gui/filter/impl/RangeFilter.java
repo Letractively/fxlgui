@@ -31,26 +31,27 @@ abstract class RangeFilter<T> extends FilterTemplate<T> {
 	String lowerBoundText = "";
 	String upperBoundText = "";
 	private IHorizontalPanel panel;
+	private FilterGrid parent;
 
 	RangeFilter(FilterGrid parent, String name, int filterIndex) {
 		super(parent, name, filterIndex);
+		this.parent = parent;
 		ICell cell = parent.cell(filterIndex);
 		// cell.width(WIDTH_RANGE_CELL);// , HEIGHT);
 		panel = cell.horizontal().add().panel().horizontal();
 		lowerBoundTextField = addTextField(0);
-		parent.register(lowerBoundTextField);
 		// lowerBoundTextField.height(HEIGHT);
 		panel.addSpace(4);
 		panel.add().label().text("-");
 		panel.addSpace(4);
 		upperBoundTextField = addTextField(2);
-		parent.register(upperBoundTextField);
 		// upperBoundTextField.height(HEIGHT);
 	}
 
 	private ITextField addTextField(int column) {
-		ITextField textField = panel.add().textField().width(WIDTH_RANGE_CELL)
-				.height(HEIGHT);
+		ITextField textField = panel.add().textField().width(WIDTH_RANGE_CELL);
+		parent.heights().decorate(textField);
+		parent.register(textField);
 		return textField;
 	}
 
