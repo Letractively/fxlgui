@@ -22,18 +22,12 @@ import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IVerticalPanel;
 
 import com.google.gwt.user.client.ui.AbsolutePanel;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
-import com.google.gwt.user.client.ui.HasVerticalAlignment.VerticalAlignmentConstant;
 
 class GWTVerticalPanel extends GWTPanel<VerticalPanel, IVerticalPanel>
 		implements IVerticalPanel {
 
-	private VerticalAlignmentConstant alignment = VerticalPanel.ALIGN_TOP;
-	private HorizontalAlignmentConstant halignment = VerticalPanel.ALIGN_LEFT;
 	private boolean stretch = true;
 
 	@SuppressWarnings("unchecked")
@@ -42,6 +36,8 @@ class GWTVerticalPanel extends GWTPanel<VerticalPanel, IVerticalPanel>
 		super.container.setComponent(new VerticalPanel());
 		super.container.widget.setBorderWidth(0);
 		spacing(0);
+		align().begin();
+		super.container.widget.setVerticalAlignment(VerticalPanel.ALIGN_TOP);
 	}
 
 	@Override
@@ -52,13 +48,6 @@ class GWTVerticalPanel extends GWTPanel<VerticalPanel, IVerticalPanel>
 
 	@Override
 	public void add(Widget widget) {
-		if (widget instanceof HasVerticalAlignment) {
-			((HasVerticalAlignment) widget).setVerticalAlignment(alignment);
-		}
-		if (widget instanceof HasHorizontalAlignment) {
-			((HasHorizontalAlignment) widget)
-					.setHorizontalAlignment(halignment);
-		}
 		if (stretch)
 			widget.setWidth("100%");
 		container.widget.add(widget);
@@ -90,19 +79,22 @@ class GWTVerticalPanel extends GWTPanel<VerticalPanel, IVerticalPanel>
 
 			@Override
 			public IVerticalPanel end() {
-				halignment = VerticalPanel.ALIGN_RIGHT;
+				container.widget
+						.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
 				return GWTVerticalPanel.this;
 			}
 
 			@Override
 			public IVerticalPanel center() {
-				halignment = VerticalPanel.ALIGN_CENTER;
+				container.widget
+						.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
 				return GWTVerticalPanel.this;
 			}
 
 			@Override
 			public IVerticalPanel begin() {
-				halignment = VerticalPanel.ALIGN_LEFT;
+				container.widget
+						.setHorizontalAlignment(VerticalPanel.ALIGN_LEFT);
 				return GWTVerticalPanel.this;
 			}
 		};
