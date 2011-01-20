@@ -87,13 +87,20 @@ class FilterPanelImpl implements FilterPanel {
 				size = 9;
 			text.font().pixel(size);
 		}
+
+		@Override
+		public void register(ITextField tf) {
+			widget.register(tf);
+		}
 	}
 
 	private WidgetTitle title;
 	private IVerticalPanel mainPanel;
 	private IContainer gridContainer;
+	private FilterWidgetImpl widget;
 
-	FilterPanelImpl(IContainer panel) {
+	FilterPanelImpl(FilterWidgetImpl widget, IContainer panel) {
+		this.widget = widget;
 		title = new WidgetTitle(panel.panel());
 		mainPanel = title.content().panel().vertical();
 	}
