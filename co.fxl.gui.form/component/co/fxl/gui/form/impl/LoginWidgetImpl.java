@@ -26,6 +26,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.ITextField.ICarriageReturnListener;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IPageListener;
 import co.fxl.gui.form.api.ILoginWidget;
 
@@ -51,13 +52,19 @@ class LoginWidgetImpl implements ILoginWidget, IPageListener {
 					if (authorization == Authorization.FAILED) {
 						dialog("Unknown user or password");
 					} else {
-						if (!notifyChange())
-							return;
-						loggedInAs.text(loginID.text());
-						loginID.text("");
-						password.text("");
-						logoutPanel.visible(true);
-						loginPanel.visible(false);
+						notifyChange(new co.fxl.gui.api.template.CallbackTemplate<Boolean>() {
+
+							@Override
+							public void onSuccess(Boolean result) {
+								if (result) {
+									loggedInAs.text(loginID.text());
+									loginID.text("");
+									password.text("");
+									logoutPanel.visible(true);
+									loginPanel.visible(false);
+								}
+							}
+						});
 					}
 				}
 			});
@@ -73,11 +80,17 @@ class LoginWidgetImpl implements ILoginWidget, IPageListener {
 
 		@Override
 		public void onClick() {
-			if (!notifyChange())
-				return;
-			listener.logout();
-			loginPanel.visible(true);
-			logoutPanel.visible(false);
+			notifyChange(new co.fxl.gui.api.template.CallbackTemplate<Boolean>() {
+
+				@Override
+				public void onSuccess(Boolean result) {
+					if (result) {
+						listener.logout();
+						loginPanel.visible(true);
+						logoutPanel.visible(false);
+					}
+				}
+			});
 		}
 	}
 
@@ -186,9 +199,10 @@ class LoginWidgetImpl implements ILoginWidget, IPageListener {
 	}
 
 	@Override
-	public boolean notifyChange() {
+	public void notifyChange(ICallback<Boolean> callback) {
 		if (pageListener == null)
-			return true;
-		return pageListener.notifyChange();
+			callback.onSuccess(true);
+		else
+			pageListener.notifyChange(callback);
 	}
 }
