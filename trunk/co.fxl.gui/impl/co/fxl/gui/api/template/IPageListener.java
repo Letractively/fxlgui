@@ -20,5 +20,5 @@ package co.fxl.gui.api.template;
 
 public interface IPageListener {
 
-	boolean notifyChange();
+	void notifyChange(ICallback<Boolean> callback);
 }
