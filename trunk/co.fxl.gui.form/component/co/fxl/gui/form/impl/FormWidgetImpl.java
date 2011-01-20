@@ -37,6 +37,7 @@ import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IPageListener;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.api.template.WidgetTitle;
@@ -352,8 +353,8 @@ class FormWidgetImpl implements IFormWidget {
 		if (validation == null)
 			return new IPageListener() {
 				@Override
-				public boolean notifyChange() {
-					return true;
+				public void notifyChange(ICallback<Boolean> callback) {
+					callback.onSuccess(true);
 				}
 			};
 		return validation;
@@ -361,7 +362,12 @@ class FormWidgetImpl implements IFormWidget {
 
 	@Override
 	public IFormWidget notifyUpdate() {
-		validation.notifyChange();
+		validation.notifyChange(new CallbackTemplate<Boolean>() {
+
+			@Override
+			public void onSuccess(Boolean result) {
+			}
+		});
 		return this;
 	}
 }
