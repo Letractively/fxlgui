@@ -25,7 +25,6 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
-import co.fxl.gui.api.ISplitPanel;
 import co.fxl.gui.api.IVerticalPanel;
 
 class SwingLayout implements ILayout {
@@ -67,17 +66,7 @@ class SwingLayout implements ILayout {
 	}
 
 	@Override
-	public ISplitPanel horizontalSplit() {
-		return new SwingHorizontalSplitPanel(panel.container);
-	}
-
-	@Override
-	public ISplitPanel verticalSplit() {
-		throw new MethodNotImplementedException();
-	}
-
-	@Override
 	public IAbsolutePanel absolute() {
-		throw new MethodNotImplementedException();
+		return new SwingAbsolutePanel(panel.container);
 	}
 }
