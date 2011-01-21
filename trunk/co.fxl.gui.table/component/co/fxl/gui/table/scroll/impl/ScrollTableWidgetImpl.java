@@ -223,6 +223,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IMiniFilterWidget filter;
 	private boolean allowColumnSelection = true;
 
+	@SuppressWarnings("unused")
 	void update() {
 		if (updating)
 			return;
@@ -305,8 +306,12 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				}
 			}
 			addDisplayingNote();
-			if (allowColumnSelection)
-				new ColumnSelection(this);
+			if (allowColumnSelection) {
+				if (ALLOW_RESIZE)
+					new ResizableColumnSelection(this);
+				else
+					new ColumnSelection(this);
+			}
 			addSorting();
 			selection.update();
 			for (ITableListener l : listeners.keySet()) {
