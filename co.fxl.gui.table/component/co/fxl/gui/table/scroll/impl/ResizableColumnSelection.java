@@ -23,8 +23,8 @@ import java.util.List;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
-import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.ISplitPane;
@@ -32,6 +32,7 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 class ResizableColumnSelection {
 
+	private static final int DIVIDER_WIDTH = 7;
 	private static final int MINIMUM = 50;
 
 	private final class SplitListener implements IUpdateListener<Integer> {
@@ -59,13 +60,12 @@ class ResizableColumnSelection {
 	ResizableColumnSelection(final ScrollTableWidgetImpl widget) {
 		IGridCell clear = widget.statusPanel().cell(1, 0).clear().align()
 				.center();
-		IHorizontalPanel p = clear.panel().horizontal().add().panel()
-				.horizontal();
-		p.add().label().text("Columns:").font().pixel(11).weight().bold();
+		IDockPanel dock = clear.panel().dock();
+		dock.left().label().text("Columns:").font().pixel(11).weight().bold();
 		int width = 800;
 		final int initialWidth = (width - (widget.columns.size() - 1) * 7)
 				/ widget.columns.size();
-		IContainer last = p.add();
+		IContainer last = dock.center();
 		for (int i = 0; i < widget.columns.size(); i++) {
 			final ScrollTableColumnImpl c = widget.columns.get(i);
 			ISplitPane split = null;
@@ -73,10 +73,15 @@ class ResizableColumnSelection {
 			if (i == widget.columns.size() - 1) {
 				b = last.panel().vertical().align().center();
 			} else {
-				split = last.splitPane().height(28);
+				split = last.splitPane().height(28);// .mininumSize(MINIMUM);
+				split.splitPosition(initialWidth);
 				if (i == 0)
 					split.width(width);
 				b = split.first().panel().vertical().align().center();
+				// int remaining = widget.columns.size() - i - 1;
+				// int minSize = remaining * MINIMUM + (remaining - 1)
+				// * DIVIDER_WIDTH;
+				// split.mininumSize(minSize);
 			}
 			if (c.visible)
 				b.color().gray();
@@ -100,8 +105,7 @@ class ResizableColumnSelection {
 				}
 			});
 			if (split != null) {
-				split.splitPosition(initialWidth);
-				width -= initialWidth - 7;
+				width -= initialWidth - DIVIDER_WIDTH;
 				last = split.second();
 			}
 		}
