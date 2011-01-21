@@ -57,7 +57,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	// TODO Swing Scroll Panel block increment for single click on arrow is not
 	// enough
 
-	private static final boolean ALLOW_RESIZE = true;
+	private static final boolean ALLOW_RESIZE = false;
 	private static final int HEADER_ROW_HEIGHT = 24;
 	private static final int ROW_HEIGHT = 22;
 	private static final String ARROW_UP = "\u2191";
