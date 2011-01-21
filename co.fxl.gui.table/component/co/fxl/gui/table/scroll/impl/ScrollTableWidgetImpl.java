@@ -327,13 +327,13 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private void addDisplayingNote() {
 		IGridCell clear = statusPanel().cell(2, 0).clear();
 		int rt = rowOffset + paintedRows;
-		if (rowOffset > 0 || rt < rows.size()) {
-			if (rt > rows.size())
-				rt = rows.size();
-			String status = "Displaying rows " + (rowOffset + 1) + " - " + rt
-					+ " of " + rows.size();
-			clear.align().end().label().text(status).font().pixel(10);
-		}
+		// if (rowOffset > 0 || rt < rows.size()) {
+		if (rt > rows.size())
+			rt = rows.size();
+		String status = "Displaying rows " + (rowOffset + 1) + " - " + rt
+				+ " of " + rows.size();
+		clear.align().end().label().text(status).font().pixel(10);
+		// }
 	}
 
 	private int computeRowsToPaint() {
