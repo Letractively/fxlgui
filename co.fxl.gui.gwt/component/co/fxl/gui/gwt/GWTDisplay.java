@@ -29,7 +29,6 @@ import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
-import co.fxl.gui.api.template.DateFormat;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ResizeEvent;
@@ -205,4 +204,8 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 			}
 		};
 	}
+
+	public static native String getUserAgent() /*-{
+												return navigator.userAgent;
+												}-*/;
 }
