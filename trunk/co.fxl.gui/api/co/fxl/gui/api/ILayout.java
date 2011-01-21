@@ -30,10 +30,6 @@ public interface ILayout {
 
 	ICardPanel card();
 
-	ISplitPanel horizontalSplit();
-
-	ISplitPanel verticalSplit();
-
 	IAbsolutePanel absolute();
 
 	IPanel<?> plugIn(Class<?> layoutType);
