@@ -83,6 +83,7 @@ class SwingLabel extends SwingTextElement<JLabel, ILabel> implements ILabel {
 	@Override
 	public ILabel autoWrap(boolean autoWrap) {
 		html.autoWrap = autoWrap;
+		update();
 		return this;
 	}
 
