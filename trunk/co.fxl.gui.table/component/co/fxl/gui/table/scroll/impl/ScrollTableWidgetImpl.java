@@ -25,13 +25,11 @@ import java.util.Map;
 
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
-import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IScrollPane;
@@ -43,6 +41,7 @@ import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IMiniFilterWidget;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
+import co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ILabelMouseListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IMouseWheelListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IRow;
@@ -58,6 +57,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	// TODO Swing Scroll Panel block increment for single click on arrow is not
 	// enough
 
+	private static final boolean ALLOW_RESIZE = true;
 	private static final int HEADER_ROW_HEIGHT = 24;
 	private static final int ROW_HEIGHT = 22;
 	private static final String ARROW_UP = "\u2191";
@@ -69,7 +69,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private WidgetTitle widgetTitle;
 	RowAdapter rows;
 	private int paintedRows;
-	private List<ScrollTableColumnImpl> columns = new LinkedList<ScrollTableColumnImpl>();
+	List<ScrollTableColumnImpl> columns = new LinkedList<ScrollTableColumnImpl>();
 	private SelectionImpl selection = new SelectionImpl(this);
 	private int scrollPanelHeight;
 	private int scrollOffset = -1;
@@ -223,7 +223,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IMiniFilterWidget filter;
 	private boolean allowColumnSelection = true;
 
-	private void update() {
+	void update() {
 		if (updating)
 			return;
 		updating = true;
@@ -252,7 +252,15 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				if (sortColumn == c) {
 					name += " " + (sortNegator == 1 ? ARROW_DOWN : ARROW_UP);
 				}
-				grid.column(current++).title(name);
+				IColumn column = grid.column(current++).title(name);
+				if (columnImpl.widthInt != -1)
+					column.width(columnImpl.widthInt);
+				else {
+					if (columnImpl.widthDouble == -1 && ALLOW_RESIZE)
+						columnImpl.widthDouble = 1d / columns.size();
+					if (columnImpl.widthDouble != -1)
+						column.width(columnImpl.widthDouble);
+				}
 			}
 			for (int r = 0; r < paintedRows; r++) {
 				int index = r + rowOffset;
@@ -298,7 +306,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			}
 			addDisplayingNote();
 			if (allowColumnSelection)
-				addColumnSelection();
+				new ColumnSelection(this);
 			addSorting();
 			selection.update();
 			for (ITableListener l : listeners.keySet()) {
@@ -320,38 +328,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			String status = "Displaying rows " + (rowOffset + 1) + " - " + rt
 					+ " of " + rows.size();
 			clear.align().end().label().text(status).font().pixel(10);
-		}
-	}
-
-	private void addColumnSelection() {
-		IGridCell clear = statusPanel().cell(1, 0).clear().align().center();
-		IHorizontalPanel p = clear.panel().horizontal().add().panel()
-				.horizontal();
-		p.add().label().text("Columns:").font().pixel(11).weight().bold();
-		for (final ScrollTableColumnImpl c : columns) {
-			p.addSpace(4);
-			IHorizontalPanel b = p.add().panel().horizontal().spacing(4);
-			if (c.visible)
-				b.color().gray();
-			ILabel l = b.add().label().text(c.name).autoWrap(true);
-			l.font().pixel(11);
-			if (c.visible)
-				l.font().color().white();
-			else
-				l.font().color().gray();
-			b.addClickListener(new IClickListener() {
-				@Override
-				public void onClick() {
-					c.visible = !c.visible;
-					boolean allInvisible = true;
-					for (ScrollTableColumnImpl c1 : columns)
-						allInvisible &= !c1.visible;
-					if (allInvisible)
-						c.visible = true;
-					else
-						update();
-				}
-			});
 		}
 	}
 

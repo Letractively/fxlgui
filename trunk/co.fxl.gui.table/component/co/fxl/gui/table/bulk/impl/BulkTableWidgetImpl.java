@@ -44,6 +44,7 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 	private final class ColumnImpl implements IColumn {
 		private final int column;
 		private ILabel label;
+		private double widthDouble;
 
 		private ColumnImpl(int column) {
 			this.column = column;
@@ -66,7 +67,9 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 
 		@Override
 		public IColumn width(double width) {
-			throw new MethodNotImplementedException();
+			// TODO ...
+			widthDouble = width;
+			return this;
 		}
 
 		@Override

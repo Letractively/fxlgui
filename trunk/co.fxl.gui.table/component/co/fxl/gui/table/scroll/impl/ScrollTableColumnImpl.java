@@ -98,6 +98,8 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	private AlignmentMemento<IScrollTableColumn<Object>> alignment = new AlignmentMemento<IScrollTableColumn<Object>>(
 			this);
 	boolean visible = true;
+	int widthInt = -1;
+	double widthDouble = -1;
 
 	ScrollTableColumnImpl(ScrollTableWidgetImpl widget, int index) {
 		this.widget = widget;
@@ -151,7 +153,14 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 	@Override
 	public IColumn<Object> width(int width) {
-		throw new MethodNotImplementedException();
+		this.widthInt = width;
+		return this;
+	}
+
+	@Override
+	public IColumn<Object> width(double width) {
+		this.widthDouble = width;
+		return this;
 	}
 
 	@Override

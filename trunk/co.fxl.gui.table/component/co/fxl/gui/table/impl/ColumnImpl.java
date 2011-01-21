@@ -155,4 +155,9 @@ public class ColumnImpl implements IColumn<Object> {
 	public IColumn<Object> type(IFieldType type) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public IColumn<Object> width(double width) {
+		throw new MethodNotImplementedException();
+	}
 }

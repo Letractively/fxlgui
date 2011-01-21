@@ -42,6 +42,8 @@ public interface IColumn<T> {
 
 	IColumn<T> width(int width);
 
+	IColumn<Object> width(double width);
+
 	IColumn<T> decorator(IDecorator<?, ?> decorator);
 
 	IColumn<T> tagSortOrder(boolean up);
