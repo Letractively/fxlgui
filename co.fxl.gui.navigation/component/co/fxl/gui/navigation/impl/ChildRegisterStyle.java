@@ -26,7 +26,7 @@ class ChildRegisterStyle extends RegisterStyle {
 	@Override
 	void decorateWidget(RegisterWidgetImpl widget) {
 		widget.separators(true);
-		widget.headerPanel.spacing(4);
+//		widget.headerPanel.spacing(4);
 		widget.background(245, 245, 245);
 	}
 

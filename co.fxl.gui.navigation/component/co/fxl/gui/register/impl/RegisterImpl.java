@@ -81,7 +81,7 @@ class RegisterImpl implements IRegister, IClickListener {
 			addSeparator();
 		}
 		buttonPanel = widget.headerPanel.add().panel().horizontal();
-		buttonPanel.spacing(6).align().center();
+		buttonPanel.spacing(widget.spacing).align().center();
 		buttonPanel.addSpace(3);
 		buttonLabel = buttonPanel.add().label();
 		buttonPanel.addClickListener(this);
@@ -119,10 +119,10 @@ class RegisterImpl implements IRegister, IClickListener {
 			listener.onTop(visible);
 		}
 		if (visible) {
-			buttonLabel.font().pixel(14).weight().bold().color().black();
+			buttonLabel.font().pixel(widget.fontSize).weight().bold().color().black();
 			buttonPanel.clickable(false);
 		} else {
-			buttonLabel.font().pixel(14).weight().bold().color().black();
+			buttonLabel.font().pixel(widget.fontSize).weight().bold().color().black();
 			buttonPanel.clickable(true);
 		}
 		// buttonLabel.font().underline(!visible);
