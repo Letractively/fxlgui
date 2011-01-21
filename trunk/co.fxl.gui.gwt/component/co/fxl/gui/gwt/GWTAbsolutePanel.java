@@ -18,22 +18,44 @@
  */
 package co.fxl.gui.gwt;
 
-import co.fxl.gui.api.ISplitPanel;
+import co.fxl.gui.api.IAbsolutePanel;
+import co.fxl.gui.api.IElement;
 
-import com.google.gwt.user.client.ui.HorizontalSplitPanel;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Widget;
 
-class GWTHorizontalSplitPanel extends
-		GWTPanel<HorizontalSplitPanel, ISplitPanel> implements ISplitPanel {
+class GWTAbsolutePanel extends GWTPanel<AbsolutePanel, IAbsolutePanel>
+		implements IAbsolutePanel {
+
+	private int x;
+	private int y;
 
 	@SuppressWarnings("unchecked")
-	GWTHorizontalSplitPanel(GWTContainer<?> container) {
-		super((GWTContainer<HorizontalSplitPanel>) container);
-		super.container.setComponent(new HorizontalSplitPanel());
+	GWTAbsolutePanel(GWTContainer<?> container) {
+		super((GWTContainer<AbsolutePanel>) container);
+		super.container.setComponent(new AbsolutePanel());
+	}
+
+	@Override
+	public IAbsolutePanel addResizeListener(IResizeListener listener) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IAbsolutePanel offset(int x, int y) {
+		this.x = x;
+		this.y = y;
+		return this;
+	}
+
+	@Override
+	public IAbsolutePanel offset(IElement<?> element, int x, int y) {
+		throw new MethodNotImplementedException();
 	}
 
 	@Override
 	public void add(Widget widget) {
-		container.widget.add(widget);
+		widget.setWidth("100%");
+		container.widget.add(widget, x, y);
 	}
 }

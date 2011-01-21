@@ -20,6 +20,7 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ISplitPane;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
 import com.google.gwt.user.client.ui.Widget;
