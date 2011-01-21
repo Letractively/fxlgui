@@ -32,6 +32,8 @@ class NavigationWidgetImpl implements IMenuWidget {
 	NavigationWidgetImpl(IContainer panel) {
 		registerWidget = new RegisterWidgetImpl(panel.panel());
 		registerWidget.background(0, 51, 102);
+		registerWidget.spacing = 4;
+		registerWidget.fontSize = 12;
 	}
 
 	@Override

@@ -44,6 +44,8 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 	private int br = 0;
 	private int bg = 51;
 	private int bb = 102;
+	public int spacing = 6;
+	public int fontSize = 14;
 
 	public RegisterWidgetImpl(ILayout panel) {
 		mainBorders = panel.dock();
