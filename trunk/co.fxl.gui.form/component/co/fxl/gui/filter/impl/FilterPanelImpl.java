@@ -81,7 +81,8 @@ class FilterPanelImpl implements FilterPanel {
 		public void title(int filterIndex, String name) {
 			IGridCell cell = grid.cell(0, filterIndex);
 			widget.heights.decorate(cell);
-			ILabel text = cell.align().end().valign().center().label();
+			ILabel text = cell.align().end().valign().center().label()
+					.autoWrap(true);
 			text.text(name).font().color().gray();
 			int size = 11;
 			// if (name.length() > 11)
