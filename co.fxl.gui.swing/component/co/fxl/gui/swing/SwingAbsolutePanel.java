@@ -18,14 +18,47 @@
  */
 package co.fxl.gui.swing;
 
+import java.awt.Point;
+
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import co.fxl.gui.api.ISplitPanel;
+import co.fxl.gui.api.IAbsolutePanel;
+import co.fxl.gui.api.IElement;
 
-class SwingHorizontalSplitPanel extends SwingPanel<ISplitPanel> implements ISplitPanel {
+class SwingAbsolutePanel extends SwingPanel<IAbsolutePanel> implements
+		IAbsolutePanel {
 
-	SwingHorizontalSplitPanel(SwingContainer<JPanel> container) {
+	private int x;
+	private int y;
+
+	SwingAbsolutePanel(SwingContainer<JPanel> container) {
 		super(container);
+		setLayout(null);
+	}
+
+	@Override
+	public IAbsolutePanel addResizeListener(IResizeListener listener) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public IAbsolutePanel offset(int x, int y) {
+		this.x = x;
+		this.y = y;
+		return this;
+	}
+
+	@Override
+	public IAbsolutePanel offset(IElement<?> element, int x, int y) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public void add(JComponent component) {
+		super.add(component);
+		component.setLocation(new Point(x, y));
+		container.component.add(component);
+	}
+
 }

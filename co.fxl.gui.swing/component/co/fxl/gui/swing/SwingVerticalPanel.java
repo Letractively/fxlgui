@@ -36,6 +36,7 @@ class SwingVerticalPanel extends SwingPanel<IVerticalPanel> implements
 	SwingVerticalPanel(SwingContainer<JPanel> container) {
 		super(container);
 		setLayout(layoutManager = new VerticalLayoutManager());
+		container.component.setOpaque(false);
 	}
 
 	@Override
