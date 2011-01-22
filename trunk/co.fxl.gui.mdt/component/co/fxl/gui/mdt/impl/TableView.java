@@ -45,7 +45,6 @@ import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableListener;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
-import co.fxl.gui.table.scroll.api.IScrollTableColumn.IScrollTableListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.ISortListener;
 
@@ -228,16 +227,16 @@ class TableView extends ViewTemplate implements IFilterListener,
 						column.tagSortOrder(widget.constraints.sortDirection());
 				}
 				property2column.put(p, column);
-//				if (index == 0) {
-//					column.addClickListener(new IScrollTableListener<Object>() {
-//
-//						@Override
-//						public void onClick(Object identifier) {
-//							widget.r2.checked(true);
-//							widget.showDetailView(identifier);
-//						}
-//					});
-//				}
+				// if (index == 0) {
+				// column.addClickListener(new IScrollTableListener<Object>() {
+				//
+				// @Override
+				// public void onClick(Object identifier) {
+				// widget.r2.checked(true);
+				// widget.showDetailView(identifier);
+				// }
+				// });
+				// }
 				index++;
 			}
 		}
@@ -295,7 +294,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 	}
 
 	@Override
-	public void onApply(IFilterConstraints constraints) {
+	public void onApply(final IFilterConstraints constraints) {
 		widget.mainPanel.clear();
 		widget.constraints = constraints;
 		Iterator<MDTFilterImpl> it = widget.filterList.filters.iterator();
@@ -360,8 +359,16 @@ class TableView extends ViewTemplate implements IFilterListener,
 								widget.showDetailView(show);
 							}
 						}).altPressed();
+						table.addFilterListener(new IFilterListener() {
+
+							@Override
+							public void onApply(IFilterConstraints constraints) {
+								TableView.this.onApply(constraints);
+							}
+						});
 						table.addTooltip("Use ALT + Click to switch views.");
 						table.sortListener(TableView.this);
+						table.constraints(constraints);
 						table.visible(true);
 						out.println("TableView: created table in " + time
 								+ "ms");
