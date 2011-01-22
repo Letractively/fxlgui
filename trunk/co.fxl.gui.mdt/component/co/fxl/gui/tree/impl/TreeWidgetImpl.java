@@ -373,7 +373,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener,
 		}
 		if (selection != null) {
 			for (Node<T> n : object2node.values()) {
-				if (n.tree.object().equals(selection)) {
+				T object = n.tree.object();
+				if (object.equals(selection)) {
 					node = n;
 				}
 			}
