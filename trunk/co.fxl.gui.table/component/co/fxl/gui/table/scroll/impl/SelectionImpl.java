@@ -158,8 +158,9 @@ class SelectionImpl implements ISelection<Object> {
 				}
 			}).ctrlPressed();
 			if (!widget.selectionIsSetup) {
-				IHorizontalPanel p = widget.statusPanel().cell(0, 0).panel()
-						.horizontal().add().panel().horizontal().spacing(5);
+				IHorizontalPanel p = widget.statusPanel().cell(0, 0).valign()
+						.center().width(120).panel().horizontal().add().panel()
+						.horizontal().spacing(5);
 				p.add().label().text("Select").font().pixel(PIXEL);
 				selectAll = p.add().label();
 				selectAll.text("All").font().pixel(PIXEL);

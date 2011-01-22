@@ -27,7 +27,7 @@ class ColumnSelection {
 
 	ColumnSelection(final ScrollTableWidgetImpl widget) {
 		IGridCell clear = widget.statusPanel().cell(1, 0).clear().align()
-				.center();
+				.begin().valign().center();
 		IHorizontalPanel p = clear.panel().horizontal().add().panel()
 				.horizontal();
 		p.add().label().text("Columns:").font().pixel(11).weight().bold();
