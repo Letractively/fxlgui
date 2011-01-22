@@ -25,11 +25,13 @@ import java.util.Map;
 
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IScrollPane;
@@ -37,6 +39,7 @@ import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.KeyAdapter;
 import co.fxl.gui.api.template.WidgetTitle;
+import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IMiniFilterWidget;
 import co.fxl.gui.table.api.ISelection;
@@ -223,6 +226,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	boolean addClickListeners = false;
 	private IMiniFilterWidget filter;
 	private boolean allowColumnSelection = true;
+	private IFilterConstraints constraints;
+	private IFilterListener filterListener;
 
 	@SuppressWarnings("unused")
 	void update() {
@@ -254,7 +259,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				if (sortColumn == c) {
 					name += " " + (sortNegator == 1 ? ARROW_DOWN : ARROW_UP);
 				}
-				IColumn column = grid.column(current++).title(name);
+				IColumn column = grid.column(current++);
+				columnImpl.decorator().prepare(column);
+				column.title(name);
 				if (columnImpl.widthInt != -1)
 					column.width(columnImpl.widthInt);
 				else {
@@ -327,14 +334,43 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	private void addDisplayingNote() {
 		IGridCell clear = statusPanel().cell(2, 0).clear();
+		clear.align().end();
+		IHorizontalPanel p = clear.panel().horizontal();
+		if (constraints != null && constraints.rowIterator().hasPrevious()) {
+			ILabel l = p.add().label().text("<<");
+			l.hyperlink().font().pixel(10);
+			p.addSpace(4);
+			l.addClickListener(new IClickListener() {
+				@Override
+				public void onClick() {
+					int nextPreviousRow = constraints.rowIterator()
+							.nextPreviousRow();
+					constraints.rowIterator().firstRow(nextPreviousRow);
+					filterListener.onApply(constraints);
+				}
+			});
+		}
 		int rt = rowOffset + paintedRows;
-		// if (rowOffset > 0 || rt < rows.size()) {
 		if (rt > rows.size())
 			rt = rows.size();
-		String status = "Displaying rows " + (rowOffset + 1) + " - " + rt
-				+ " of " + rows.size();
-		clear.align().end().label().text(status).font().pixel(10);
-		// }
+		int firstRow = constraints != null ? constraints.rowIterator()
+				.firstRow() : 0;
+		String status = "Displaying rows " + (firstRow + rowOffset + 1) + " - "
+				+ (firstRow + rt) + " of " + rows.size();
+		p.add().label().text(status).font().pixel(10);
+		if (constraints != null && constraints.rowIterator().hasNext()) {
+			p.addSpace(4);
+			ILabel l = p.add().label().text(">>");
+			l.hyperlink().font().pixel(10);
+			l.addClickListener(new IClickListener() {
+				@Override
+				public void onClick() {
+					constraints.rowIterator().firstRow(
+							constraints.rowIterator().nextFirstRow());
+					filterListener.onApply(constraints);
+				}
+			});
+		}
 	}
 
 	private int computeRowsToPaint() {
@@ -488,9 +524,18 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	@Override
-	public IScrollTableWidget<Object> addFilterListener(IFilterListener l) {
-		if (filter != null)
-			filter.addFilterListener(l);
+	public IScrollTableWidget<Object> addFilterListener(final IFilterListener l) {
+		filterListener = new IFilterListener() {
+
+			@Override
+			public void onApply(IFilterConstraints constraints) {
+				ScrollTableWidgetImpl.this.constraints = constraints;
+				l.onApply(constraints);
+			}
+		};
+		if (filter != null) {
+			filter.addFilterListener(filterListener);
+		}
 		return this;
 	}
 
@@ -507,6 +552,12 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public IScrollTableWidget<Object> allowColumnSelection(
 			boolean allowColumnSelection) {
 		this.allowColumnSelection = allowColumnSelection;
+		return this;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> constraints(IFilterConstraints constraints) {
+		this.constraints = constraints;
 		return this;
 	}
 }

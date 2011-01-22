@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.table.bulk.api;
 
+import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
@@ -52,6 +53,8 @@ public interface IBulkTableWidget {
 		IColumn width(double width);
 
 		IColumn width(int width);
+
+		IAlignment<IColumn> align();
 	}
 
 	public interface IRow {

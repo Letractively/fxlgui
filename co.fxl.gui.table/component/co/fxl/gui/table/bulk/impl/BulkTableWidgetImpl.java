@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -37,6 +38,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.AlignmentMemento;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 
 class BulkTableWidgetImpl implements IBulkTableWidget {
@@ -45,6 +47,8 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 		private final int column;
 		private ILabel label;
 		private double widthDouble;
+		private AlignmentMemento<IColumn> align = new AlignmentMemento<IColumn>(
+				this);
 
 		private ColumnImpl(int column) {
 			this.column = column;
@@ -60,6 +64,7 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 				b.style().bottom();
 				label = cell.label();
 				label.font().pixel(14).weight().bold();
+				align.forward(cell.align());
 			}
 			label.text(title);
 			return this;
@@ -75,6 +80,11 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 		@Override
 		public IColumn width(int width) {
 			throw new MethodNotImplementedException();
+		}
+
+		@Override
+		public IAlignment<IColumn> align() {
+			return align;
 		}
 	}
 
@@ -115,6 +125,7 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 			@Override
 			public ICell text(String text) {
 				IGridCell cell = grid.cell(column, row + rowOffset);
+				align(column, cell);
 				cell.label().text(text);
 				IBorder b = cell.border();
 				b.color().lightgray();
@@ -127,6 +138,7 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 			@Override
 			public ICell checkBox(Boolean value) {
 				IGridCell cell = grid.cell(column, row + rowOffset);
+				align(column, cell);
 				checkBox = cell.checkBox().checked(value).editable(false);
 				IBorder b = cell.border();
 				b.color().lightgray();
@@ -134,6 +146,10 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 				if (row + 1 > numRows)
 					numRows = row + 1;
 				return this;
+			}
+
+			private void align(final int column, IGridCell cell) {
+				columns.get(column).align.forward(cell.align());
 			}
 
 			@Override

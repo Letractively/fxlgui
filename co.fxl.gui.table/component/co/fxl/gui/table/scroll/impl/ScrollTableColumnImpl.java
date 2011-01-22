@@ -32,6 +32,7 @@ import co.fxl.gui.api.template.DateFormat;
 import co.fxl.gui.api.template.FieldTypeImpl;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.table.api.IColumn;
+import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ICell;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 
@@ -51,6 +52,12 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 					}
 				});
 		}
+
+		@Override
+		public void prepare(
+				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
+			column.align().center();
+		}
 	}
 
 	public class DateDecorator implements Decorator<Date> {
@@ -58,6 +65,12 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		@Override
 		public void decorate(Object identifier, ICell cell, Date value) {
 			cell.text(value == null ? null : FORMAT.format(value));
+		}
+
+		@Override
+		public void prepare(
+				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
+			column.align().center();
 		}
 	}
 
@@ -68,11 +81,18 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 			cell.text(String.valueOf(value));
 		}
 
+		@Override
+		public void prepare(
+				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
+			column.align().center();
+		}
 	}
 
 	public interface Decorator<T> {
 
 		void decorate(Object identifier, ICell cell, T value);
+
+		void prepare(IBulkTableWidget.IColumn column);
 	}
 
 	public class StringDecorator implements Decorator<String> {
@@ -80,6 +100,11 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		@Override
 		public void decorate(Object identifier, ICell cell, String value) {
 			cell.text((String) value);
+		}
+
+		@Override
+		public void prepare(
+				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
 		}
 	}
 
@@ -108,6 +133,19 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 	@SuppressWarnings("unchecked")
 	void decorate(Object identifier, ICell cell, Object value) {
+		try {
+			decorator().decorate(identifier, cell, value);
+		} catch (ClassCastException e) {
+			throw new RuntimeException("Column " + name + ", index: " + index
+					+ ", received invalid value " + value + " ("
+					+ value.getClass().getName() + ")");
+		}
+		if (!alignment.type.equals(Type.BEGIN))
+			throw new MethodNotImplementedException();
+	}
+
+	@SuppressWarnings("rawtypes")
+	Decorator decorator() {
 		if (decorator == null) {
 			if (type.clazz.equals(String.class)) {
 				decorator = new StringDecorator();
@@ -123,15 +161,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 			} else
 				throw new MethodNotImplementedException(type.clazz.getName());
 		}
-		try {
-			decorator.decorate(identifier, cell, value);
-		} catch (ClassCastException e) {
-			throw new RuntimeException("Column " + name + ", index: " + index
-					+ ", received invalid value " + value + " ("
-					+ value.getClass().getName() + ")");
-		}
-		if (!alignment.type.equals(Type.BEGIN))
-			throw new MethodNotImplementedException();
+		return decorator;
 	}
 
 	@Override
