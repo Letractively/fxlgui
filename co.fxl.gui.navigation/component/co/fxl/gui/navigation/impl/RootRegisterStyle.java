@@ -30,7 +30,7 @@ class RootRegisterStyle extends RegisterStyle {
 	@Override
 	void decorateWidget(RegisterWidgetImpl widget) {
 		this.widget = widget;
-		background(widget.headerPanel.color());
+		widget.headerPanel.color().rgb(200, 200, 200);
 		IPanel<?> filler = widget.addFillerPanel();
 		background(filler.color());
 		widget.separators(false);
@@ -48,14 +48,14 @@ class RootRegisterStyle extends RegisterStyle {
 	@Override
 	public void onBack(ITitle title) {
 		// title.border().width(2).color().rgb(245, 245, 245);
-		// title.color().rgb(245, 245, 245);
-		title.font().underline(false).weight().plain();// .color().black();
+		title.color().mix().rgb(200, 200, 200);
+		title.font().underline(false).weight().plain().color().black();// .color().black();
 	}
 
 	@Override
 	public void onFront(ITitle title) {
 		// background(title.border().width(2).color());
-		// title.color().rgb(228, 228, 255);
-		title.font().underline(true).weight().bold();// .color().white();
+		title.color().rgb(247, 247, 247);
+		title.font().underline(false).weight().bold().color().black();// .color().white();
 	}
 }
