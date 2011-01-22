@@ -52,4 +52,13 @@ public class AlignmentMemento<T> implements IAlignment<T> {
 	public T end() {
 		return set(Type.END);
 	}
+
+	public void forward(IAlignment<?> align) {
+		if (type == Type.BEGIN)
+			align.begin();
+		else if (type == Type.CENTER)
+			align.center();
+		else if (type == Type.END)
+			align.end();
+	}
 }
