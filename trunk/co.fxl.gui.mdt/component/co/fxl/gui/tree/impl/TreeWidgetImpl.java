@@ -314,7 +314,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener,
 			return;
 		setUpDetailPanel();
 		registers = (IMenuWidget) detailPanel.add().widget(IMenuWidget.class);
-		registers.background(BACKGROUND_GRAY, BACKGROUND_GRAY, BACKGROUND_GRAY);
+//		registers.background(BACKGROUND_GRAY, BACKGROUND_GRAY, BACKGROUND_GRAY);
 	}
 
 	private void setUpDetailPanel() {
