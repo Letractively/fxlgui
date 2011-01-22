@@ -118,10 +118,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			container.clear();
 			filter = null;
 			if (rows.size() == 0) {
-				container.addSpace(20);
-				IVerticalPanel dock = container.add().panel().vertical();
+				IVerticalPanel dock = container.add().panel().vertical()
+						.spacing(10);
 				dock.height(height);
-				dock.add().label().text("No rows found");
+				dock.add().label().text("No rows found").font().pixel(10)
+						.color().gray();
 			} else {
 				for (ScrollTableColumnImpl c : columns) {
 					if (c.filterable) {
