@@ -32,11 +32,72 @@ import co.fxl.gui.filter.impl.Constraint.IStringPrefixConstraint;
 
 class FilterConstraintsImpl implements IFilterConstraints {
 
+	public class RowIterator implements IRowIterator {
+
+		private int firstRow = 0;
+		private boolean hasNext = false;
+		private boolean hasPrevious;
+		private int nextPreviousRow;
+		private int nextFirstRow;
+
+		@Override
+		public int firstRow() {
+			return firstRow;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return hasNext;
+		}
+
+		@Override
+		public void hasNext(boolean hasNext) {
+			this.hasNext = hasNext;
+		}
+
+		@Override
+		public int nextFirstRow() {
+			return nextFirstRow;
+		}
+
+		@Override
+		public void nextFirstRow(int nextFirstRow) {
+			this.nextFirstRow = nextFirstRow;
+		}
+
+		@Override
+		public boolean hasPrevious() {
+			return hasPrevious;
+		}
+
+		@Override
+		public void hasPrevious(boolean hasPrevious) {
+			this.hasPrevious = hasPrevious;
+		}
+
+		@Override
+		public int nextPreviousRow() {
+			return nextPreviousRow;
+		}
+
+		@Override
+		public void nextPreviousRow(int nextPreviousRow) {
+			this.nextPreviousRow = nextPreviousRow;
+		}
+
+		@Override
+		public void firstRow(int firstRow) {
+			this.firstRow = firstRow;
+		}
+
+	}
+
 	private int size = Integer.MAX_VALUE;
 	private Map<String, INamedConstraint> constraints = new HashMap<String, INamedConstraint>();
 	private String cfg;
 	private String sortOrder;
 	private boolean sortDirection = false;
+	private IRowIterator it = new RowIterator();
 
 	FilterConstraintsImpl(String configuration) {
 		cfg = configuration;
@@ -136,4 +197,10 @@ class FilterConstraintsImpl implements IFilterConstraints {
 		this.sortDirection = sortDirection;
 		return this;
 	}
+
+	@Override
+	public IRowIterator rowIterator() {
+		return it;
+	}
+
 }

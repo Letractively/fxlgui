@@ -25,6 +25,29 @@ public interface IFilterConstraints {
 
 	public static final String COMMON = "C";
 
+	public interface IRowIterator {
+
+		int firstRow();
+
+		void firstRow(int firstRow);
+
+		boolean hasNext();
+
+		void hasNext(boolean hasNext);
+
+		int nextFirstRow();
+
+		void nextFirstRow(int nextFirstRow);
+
+		boolean hasPrevious();
+
+		void hasPrevious(boolean hasPrevious);
+
+		int nextPreviousRow();
+
+		void nextPreviousRow(int nextPreviousRow);
+	}
+
 	public interface IRange<R> {
 
 		R lowerBound();
@@ -61,4 +84,6 @@ public interface IFilterConstraints {
 	boolean sortDirection();
 
 	IFilterConstraints sortDirection(boolean sortDirection);
+
+	IRowIterator rowIterator();
 }
