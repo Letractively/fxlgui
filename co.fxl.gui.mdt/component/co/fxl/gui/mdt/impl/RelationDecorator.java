@@ -206,6 +206,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 								});
 					}
 				});
+				table.constraints(constraints);
 			}
 
 			IRows<Object> toRows(final IDeletableList<Object> result) {
