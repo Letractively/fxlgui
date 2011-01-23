@@ -71,7 +71,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	Listener listener;
 	private String configuration = null;
 	IRadioButton r2;
-	int addSpacing = 0;
+//	int addSpacing = 0;
 	private boolean showDetailViewByDefault = false;
 	boolean allowCreate = true;
 	boolean allowMultiSelection = true;
@@ -91,7 +91,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	@Override
 	public IMasterDetailTableWidget<Object> sidePanel(IVerticalPanel panel) {
 		mainPanel = layout.vertical();
-		addSpacing = 10;
+//		addSpacing = 10;
 		sidePanel = panel;
 		return this;
 	}
