@@ -83,7 +83,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	int rowOffset;
 	List<IRow> highlighted = new LinkedList<IRow>();
 	private IGridPanel statusPanel;
-	private String tooltip = "Use CTRL + Click to select multiple rows.";
+	private String tooltip = "";// Use CTRL + Click to select multiple rows.";
 	private boolean visible;
 
 	ScrollTableWidgetImpl(IContainer container) {

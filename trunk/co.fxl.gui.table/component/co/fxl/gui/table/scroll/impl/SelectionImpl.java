@@ -137,7 +137,7 @@ class SelectionImpl implements ISelection<Object> {
 					widget.highlighted.add(r);
 					notifyListeners();
 				}
-			});
+			}).ctrlPressed();
 			widget.grid.addTableListener(new ITableListener() {
 
 				@Override
@@ -156,7 +156,7 @@ class SelectionImpl implements ISelection<Object> {
 						widget.highlighted.remove(r);
 					notifyListeners();
 				}
-			}).ctrlPressed();
+			});// .ctrlPressed();
 			if (!widget.selectionIsSetup) {
 				IHorizontalPanel p = widget.statusPanel().cell(0, 0).valign()
 						.center().width(120).panel().horizontal().add().panel()
