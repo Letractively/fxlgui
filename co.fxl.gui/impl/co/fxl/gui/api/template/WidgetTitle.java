@@ -26,17 +26,17 @@ import java.util.Map;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.IVerticalPanel;
 
 public class WidgetTitle implements IClickListener {
 
 	private String openPNG = "minus.png";
 	private String closedPNG = "plus.png";
-	public IVerticalPanel panel;
+	public IGridPanel panel;
 	private IHorizontalPanel titlePanel;
 	private IHorizontalPanel commandPanel;
 	private boolean hasCommands = false;
@@ -53,8 +53,8 @@ public class WidgetTitle implements IClickListener {
 	private boolean holdOnClicks = false;
 
 	public WidgetTitle(ILayout layout) {
-		panel = layout.vertical();
-		headerPanel = panel.add().panel().dock();
+		panel = layout.grid();
+		headerPanel = panel.cell(0, 0).panel().dock();
 	}
 
 	public WidgetTitle holdOnClick() {
@@ -97,7 +97,7 @@ public class WidgetTitle implements IClickListener {
 		}
 		IContainer cell = headerPanel.right();
 		commandPanel = cell.panel().horizontal().spacing(6);
-		panel.addSpace(space);
+		// panel.addSpace(space);
 		hasHeaderPanel = true;
 	}
 
@@ -167,7 +167,8 @@ public class WidgetTitle implements IClickListener {
 	public IContainer content() {
 		if (contentContainer != null)
 			return contentContainer;
-		return contentContainer = panel.add();
+		return contentContainer = space == 0 ? panel.cell(0, 0) : panel
+				.cell(0, 1).panel().vertical().addSpace(space).add();
 	}
 
 	public WidgetTitle clearHyperlinks() {
