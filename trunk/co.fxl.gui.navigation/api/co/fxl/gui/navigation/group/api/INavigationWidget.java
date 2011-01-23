@@ -19,7 +19,6 @@
 package co.fxl.gui.navigation.group.api;
 
 import co.fxl.gui.api.IColored.IColor;
-import co.fxl.gui.api.template.IPageListener;
 
 public interface INavigationWidget {
 
@@ -32,8 +31,6 @@ public interface INavigationWidget {
 	INavigationGroup addGroup();
 
 	INavigationWidget visible(boolean visible);
-
-	INavigationWidget pageListener(IPageListener l);
 
 	INavigationWidget refresh();
 

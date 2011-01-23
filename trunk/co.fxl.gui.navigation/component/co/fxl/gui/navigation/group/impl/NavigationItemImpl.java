@@ -18,14 +18,14 @@
  */
 package co.fxl.gui.navigation.group.impl;
 
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 
-class NavigationItemImpl implements INavigationItem, IClickListener {
+class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 
 	private ILabel button;
 	private IDecorator decorator;
@@ -85,15 +85,8 @@ class NavigationItemImpl implements INavigationItem, IClickListener {
 	}
 
 	@Override
-	public void onClick() {
-		widget.notifyChange(new co.fxl.gui.api.template.CallbackTemplate<Boolean>() {
-
-			@Override
-			public void onSuccess(Boolean result) {
-				if (result)
-					active();
-			}
-		});
+	public void onAllowedClick() {
+		active();
 	}
 
 	@Override

@@ -25,13 +25,11 @@ import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.ICallback;
-import co.fxl.gui.api.template.IPageListener;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.group.api.INavigationWidget;
 
-public class NavigationWidgetImpl implements INavigationWidget, IPageListener {
+public class NavigationWidgetImpl implements INavigationWidget {
 
 	private IDockPanel mainPanel;
 	IHorizontalPanel navigationPanel;
@@ -43,7 +41,6 @@ public class NavigationWidgetImpl implements INavigationWidget, IPageListener {
 	int[] colorInactive = new int[] { 228, 228, 255 };
 	private IVerticalPanel panel0;
 	private IVerticalPanel panel1;
-	private IPageListener pageListener;
 
 	protected NavigationWidgetImpl(IContainer layout) {
 		mainPanel = layout.panel().dock();
@@ -130,20 +127,6 @@ public class NavigationWidgetImpl implements INavigationWidget, IPageListener {
 		if (active != null)
 			active.active();
 		return this;
-	}
-
-	@Override
-	public INavigationWidget pageListener(IPageListener l) {
-		pageListener = l;
-		return this;
-	}
-
-	@Override
-	public void notifyChange(ICallback<Boolean> callback) {
-		if (pageListener == null) {
-			callback.onSuccess(true);
-		} else
-			pageListener.notifyChange(callback);
 	}
 
 	@Override
