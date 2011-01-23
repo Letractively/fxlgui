@@ -132,11 +132,14 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	}
 
 	private void toggleClickHandler(boolean toggle) {
+		container.widget.removeStyleName("cursor-pointer");
 		if (registration != null) {
 			registration.removeHandler();
-			registration2.removeHandler();
-			container.widget.removeStyleName("cursor-pointer");
 			registration = null;
+		}
+		if (registration2 != null) {
+			registration2.removeHandler();
+			registration2 = null;
 		}
 		if (toggle) {
 			container.widget.addStyleName("cursor-pointer");
