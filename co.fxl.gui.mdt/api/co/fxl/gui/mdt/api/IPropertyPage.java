@@ -12,4 +12,6 @@ public interface IPropertyPage<T> {
 	IPropertyPage<T> typeConstraint(Class<?> clazz);
 
 	IPropertyPage<T> decorator(IDecorator<T> dec);
+
+	IPropertyPage<T> constrainType(Class<?> class1);
 }

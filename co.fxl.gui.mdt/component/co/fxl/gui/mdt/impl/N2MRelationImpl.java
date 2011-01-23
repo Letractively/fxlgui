@@ -18,15 +18,13 @@
  */
 package co.fxl.gui.mdt.impl;
 
-import java.util.List;
-
 import co.fxl.gui.mdt.api.IN2MRelation;
 
 class N2MRelationImpl implements IN2MRelation<Object, Object> {
 
 	IAdapter<Object, Object> adapter;
 	String name;
-	List<Object> domain;
+	Class<?> constrainType;
 
 	N2MRelationImpl(String name) {
 		this.name = name;
@@ -39,8 +37,14 @@ class N2MRelationImpl implements IN2MRelation<Object, Object> {
 	}
 
 	@Override
-	public IN2MRelation<Object, Object> domain(List<Object> domain) {
-		this.domain = domain;
+	public IN2MRelation<Object, Object> constrainType(Class<?> class1) {
+		constrainType = class1;
 		return this;
+	}
+
+	boolean applies(Object node) {
+		if (constrainType == null)
+			return true;
+		return constrainType.equals(node.getClass());
 	}
 }

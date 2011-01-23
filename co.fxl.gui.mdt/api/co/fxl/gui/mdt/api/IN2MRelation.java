@@ -8,13 +8,15 @@ public interface IN2MRelation<T, R> {
 
 	public interface IAdapter<T, R> {
 
+		void domain(T entity, ICallback<List<R>> callback);
+
 		void valueOf(T entity, ICallback<List<R>> callback);
 
 		void valueOf(T entity, List<R> values, ICallback<List<R>> callback);
 	}
 
-	IN2MRelation<T, R> domain(List<R> domain);
-
 	IN2MRelation<T, R> adapter(IAdapter<T, R> adapter);
-	
+
+	IN2MRelation<T, R> constrainType(Class<?> class1);
+
 }

@@ -21,8 +21,8 @@ package co.fxl.gui.mdt.impl;
 import java.util.List;
 
 import co.fxl.gui.api.IBordered.IBorder;
-import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.n2m.api.IN2MWidget;
 import co.fxl.gui.n2m.api.IN2MWidget.IN2MRelationListener;
 import co.fxl.gui.tree.api.ITree;
@@ -50,43 +50,59 @@ final class N2MRelationDecorator implements IDecorator<Object> {
 		IBorder border = panel.border();
 		border.color().gray();
 		border.style().top();
-		relation.adapter.valueOf(node, new CallbackTemplate<List<Object>>() {
+		relation.adapter.domain(node, new CallbackTemplate<List<Object>>() {
 
 			@Override
-			public void onSuccess(final List<Object> result) {
-				update(panel, node, result);
-			}
+			public void onSuccess(final List<Object> domain) {
+				relation.adapter.valueOf(node,
+						new CallbackTemplate<List<Object>>() {
 
-			private void update(final IVerticalPanel panel, final Object node,
-					final List<Object> result) {
-				panel.clear();
-				@SuppressWarnings("unchecked")
-				IN2MWidget<Object> table = (IN2MWidget<Object>) panel.add()
-						.widget(IN2MWidget.class);
-				table.domain(relation.domain);
-				table.selection(result);
-				table.listener(new IN2MRelationListener<Object>() {
-					@Override
-					public void onChange(List<Object> selection) {
-						relation.adapter.valueOf(node, selection,
-								new CallbackTemplate<List<Object>>() {
+							@Override
+							public void onSuccess(final List<Object> result) {
+								update(panel, node, result);
+							}
 
+							private void update(final IVerticalPanel panel,
+									final Object node, final List<Object> result) {
+								panel.clear();
+								@SuppressWarnings("unchecked")
+								IN2MWidget<Object> table = (IN2MWidget<Object>) panel
+										.add().widget(IN2MWidget.class);
+								table.domain(domain);
+								table.selection(result);
+								table.listener(new IN2MRelationListener<Object>() {
 									@Override
-									public void onSuccess(List<Object> result) {
-										CallbackTemplate<List<Object>> callback = new CallbackTemplate<List<Object>>() {
+									public void onChange(List<Object> selection) {
+										relation.adapter
+												.valueOf(
+														node,
+														selection,
+														new CallbackTemplate<List<Object>>() {
 
-											@Override
-											public void onSuccess(
-													List<Object> result) {
-												update(panel, node, result);
-											}
-										};
-										relation.adapter.valueOf(node, result,
-												callback);
+															@Override
+															public void onSuccess(
+																	List<Object> result) {
+																CallbackTemplate<List<Object>> callback = new CallbackTemplate<List<Object>>() {
+
+																	@Override
+																	public void onSuccess(
+																			List<Object> result) {
+																		update(panel,
+																				node,
+																				result);
+																	}
+																};
+																relation.adapter
+																		.valueOf(
+																				node,
+																				result,
+																				callback);
+															}
+														});
 									}
 								});
-					}
-				});
+							}
+						});
 			}
 		});
 	}

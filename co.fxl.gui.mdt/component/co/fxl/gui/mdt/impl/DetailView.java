@@ -165,7 +165,8 @@ class DetailView extends ViewTemplate implements ISource<Object>, IPageListener 
 		}
 		for (final N2MRelationImpl relation : widget.n2MRelations) {
 			tree.addDetailView(relation.name,
-					new N2MRelationDecorator(relation));
+					new N2MRelationDecorator(relation)).constrainType(
+					relation.constrainType);
 		}
 		for (final PropertyPageImpl relation : widget.propertyPages) {
 			tree.addDetailView(relation.name, new IDecorator<Object>() {
@@ -183,11 +184,10 @@ class DetailView extends ViewTemplate implements ISource<Object>, IPageListener 
 				@Override
 				public void decorate(final IVerticalPanel panel,
 						final Object node) {
-					relation.dec.decorate(panel.add(), node);
+					relation.dec.decorate(panel.clear().add(), node);
 				}
-			});
+			}).constrainType(relation.constrainType);
 		}
-		;
 	}
 
 	@Override
