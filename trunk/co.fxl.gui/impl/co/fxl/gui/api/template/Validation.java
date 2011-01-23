@@ -135,12 +135,18 @@ public class Validation implements IPageListener {
 					ITextField tf = (ITextField) textElement;
 					if (wColors)
 						errorColor(tf, isNull);
+				} else if (textElement instanceof ITextArea) {
+					ITextArea tf = (ITextArea) textElement;
+					if (wColors)
+						errorColor(tf, isNull);
 				} else if (textElement instanceof IPasswordField) {
 					IPasswordField tf = (IPasswordField) textElement;
 					if (wColors)
 						errorColor(tf, isNull);
 				} else
-					throw new MethodNotImplementedException();
+					throw new MethodNotImplementedException(textElement
+							.getClass().getName()
+							+ " not supported by validation");
 			}
 		}
 
@@ -232,7 +238,7 @@ public class Validation implements IPageListener {
 		return this;
 	}
 
-	public Validation validateInteger(final ITextField textField,
+	public Validation validateLong(final ITextField textField,
 			boolean required) {
 		final Field field = new Field(textField, required);
 		textField.addUpdateListener(new IUpdateListener<String>() {
@@ -241,7 +247,7 @@ public class Validation implements IPageListener {
 				field.isError = false;
 				if (value.length() > 0) {
 					try {
-						Integer.valueOf(value);
+						Long.valueOf(value);
 					} catch (Exception e) {
 						field.isError = true;
 					}
@@ -291,6 +297,14 @@ public class Validation implements IPageListener {
 		return this;
 	}
 
+	private void errorColor(ITextArea textField, boolean hasError) {
+		if (hasError) {
+			textField.color().mix().red().white().white();
+		} else {
+			textField.color().white();
+		}
+	}
+
 	private void errorColor(final ITextField textField, boolean hasError) {
 		if (hasError) {
 			textField.color().mix().red().white().white();
@@ -322,6 +336,7 @@ public class Validation implements IPageListener {
 			f.notifyChange();
 		}
 		updateClickables();
-		callback.onSuccess(!isSpecified);
+		if (callback != null)
+			callback.onSuccess(!isSpecified);
 	}
 }
