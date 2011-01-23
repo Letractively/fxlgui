@@ -486,7 +486,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 		// TODO tooltip doesn't work for BulkTableWidgetImpl
 
-		this.tooltip += "\n" + tooltip;
+		this.tooltip += (this.tooltip.equals("") ? "" : "\n") + tooltip;
 		if (grid != null)
 			grid.element().tooltip(tooltip);
 		return this;
