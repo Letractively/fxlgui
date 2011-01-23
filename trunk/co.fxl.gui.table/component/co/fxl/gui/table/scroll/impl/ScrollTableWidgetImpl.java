@@ -337,7 +337,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private void addDisplayingNote() {
 		IGridCell clear = statusPanel().cell(2, 0).clear().valign().center();
 		clear.align().end();
-		IHorizontalPanel p = clear.panel().horizontal().align().end();
+		IHorizontalPanel p = clear.panel().horizontal().align().end().add()
+				.panel().horizontal().align().end();
 		if (constraints != null && constraints.rowIterator().hasPrevious()) {
 			ILabel l = p.add().label().text("<<");
 			l.hyperlink().font().pixel(10);
