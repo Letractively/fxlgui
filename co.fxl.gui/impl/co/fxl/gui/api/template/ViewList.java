@@ -39,7 +39,7 @@ public class ViewList {
 		void onRemove(ViewImpl view);
 	}
 
-	public class ViewImpl implements IClickListener {
+	public class ViewImpl extends LazyClickListener {
 
 		private ILabel label;
 		private IGridPanel grid;
@@ -97,7 +97,7 @@ public class ViewList {
 		}
 
 		@Override
-		public void onClick() {
+		public void onAllowedClick() {
 			for (ViewList viewList : widget.viewLists) {
 				for (ViewImpl view : viewList.views) {
 					view.clickable(view != this);

@@ -1,4 +1,6 @@
 /**
+ * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
+ *  
  * This file is part of FXL GUI API.
  *  
  * FXL GUI API is free software: you can redistribute it and/or modify
@@ -13,12 +15,24 @@
  *  
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
- *
- * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
 package co.fxl.gui.api.template;
 
-public interface IPageListener {
+import co.fxl.gui.api.IClickable.IClickListener;
 
-	void notifyChange(ICallback<Boolean> callback);
+public abstract class LazyClickListener extends CallbackTemplate<Boolean>
+		implements IClickListener {
+
+	@Override
+	public void onClick() {
+		DiscardChangesDialog.show(this);
+	}
+
+	@Override
+	public void onSuccess(Boolean result) {
+		if (result)
+			onAllowedClick();
+	}
+
+	protected abstract void onAllowedClick();
 }
