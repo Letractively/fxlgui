@@ -40,6 +40,8 @@ class ClickListenerMouseAdapter<T> extends KeyTemplate<T> implements IKey<T> {
 			}
 			if (e.getButton() != getMouseButton())
 				return;
+			if (isDoubleClick && e.getClickCount() < 2)
+				return;
 			clickListener.onClick();
 		}
 
