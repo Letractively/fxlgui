@@ -64,7 +64,7 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 			public void onClick(ITree<Object> tree) {
 				widget.showTableView(tree.object());
 			}
-		}).altPressed();
+		}).doubleClick();
 		tree.showRefresh(false);
 		if (widget.hideDetailRoot)
 			tree.hideRoot();

@@ -74,7 +74,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 	private void setUpFilter(String configuration) {
 		if (widget.filterList.filters.isEmpty())
 			return;
-		widget.sidePanel.addSpace(0);//widget.addSpacing);
+		widget.sidePanel.addSpace(0);// widget.addSpacing);
 		filterWidget = (IFilterWidget) widget.sidePanel.add().widget(
 				IFilterWidget.class);
 		filterWidget.showConfiguration(false);
@@ -349,7 +349,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 						onResize(-1, widget.mainPanel.display().height());
 						updateCreatable();
 						time = System.currentTimeMillis() - s;
-						table.addTableListener(new ITableListener() {
+						ITableListener showClickListener = new ITableListener() {
 
 							@Override
 							public void onClick(int column, int row) {
@@ -360,7 +360,8 @@ class TableView extends ViewTemplate implements IFilterListener,
 								widget.r2.checked(true);
 								widget.showDetailView(show);
 							}
-						}).altPressed();
+						};
+						table.addTableListener(showClickListener).doubleClick();
 						table.addFilterListener(new IFilterListener() {
 
 							@Override
@@ -368,7 +369,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 								TableView.this.onApply(constraints);
 							}
 						});
-						table.addTooltip("Use ALT + Click to switch views.");
+						table.addTooltip("Double click to switch views.");
 						table.sortListener(TableView.this);
 						table.constraints(constraints);
 						table.visible(true);
