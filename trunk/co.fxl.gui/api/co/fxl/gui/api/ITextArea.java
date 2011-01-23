@@ -22,4 +22,8 @@ public interface ITextArea extends ITextElement<ITextArea>, IColored,
 		IBordered, IUpdateable<String> {
 
 	ITextArea editable(boolean editable);
+
+	int cursorPosition();
+
+	ITextArea cursorPosition(int position);
 }
