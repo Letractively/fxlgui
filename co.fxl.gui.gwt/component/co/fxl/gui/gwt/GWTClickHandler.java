@@ -23,6 +23,7 @@ import co.fxl.gui.api.template.KeyTemplate;
 
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.DoubleClickEvent;
 
 class GWTClickHandler<T> extends KeyTemplate<T> {
 
@@ -41,11 +42,34 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 		}
 		if (!buttonMatches(event))
 			return;
+		if (isDoubleClick)
+			return;
+		event.preventDefault();
+		clickListener.onClick();
+	}
+
+	public void onDoubleClick(DoubleClickEvent event) {
+		for (KeyType pressedKey : pressedKeys.keySet()) {
+			Boolean check = pressedKeys.get(pressedKey);
+			if (keyMatches(pressedKey, event.getNativeEvent()) != check)
+				return;
+		}
+		if (!buttonMatches(event))
+			return;
+		if (!isDoubleClick)
+			return;
 		event.preventDefault();
 		clickListener.onClick();
 	}
 
 	private boolean buttonMatches(ClickEvent event) {
+		if (buttonType == ButtonType.LEFT)
+			return true;
+		else
+			throw new MethodNotImplementedException();
+	}
+
+	private boolean buttonMatches(DoubleClickEvent event) {
 		if (buttonType == ButtonType.LEFT)
 			return true;
 		else

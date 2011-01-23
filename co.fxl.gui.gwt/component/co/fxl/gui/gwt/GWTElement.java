@@ -29,7 +29,10 @@ import co.fxl.gui.api.IFontElement;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.DoubleClickEvent;
+import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.dom.client.HasDoubleClickHandlers;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -37,6 +40,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	public GWTContainer<T> container;
 	protected HandlerRegistration registration;
+	protected HandlerRegistration registration2;
 	protected List<GWTClickHandler<R>> handlers = new LinkedList<GWTClickHandler<R>>();
 
 	public GWTElement(GWTContainer<T> container) {
@@ -130,6 +134,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	private void toggleClickHandler(boolean toggle) {
 		if (registration != null) {
 			registration.removeHandler();
+			registration2.removeHandler();
 			container.widget.removeStyleName("cursor-pointer");
 			registration = null;
 		}
@@ -146,6 +151,15 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 					public void onClick(ClickEvent event) {
 						for (GWTClickHandler<R> handler : handlers) {
 							handler.onClick(event);
+						}
+					}
+				});
+		registration2 = ((HasDoubleClickHandlers) container.widget)
+				.addDoubleClickHandler(new DoubleClickHandler() {
+					@Override
+					public void onDoubleClick(DoubleClickEvent event) {
+						for (GWTClickHandler<R> handler : handlers) {
+							handler.onDoubleClick(event);
 						}
 					}
 				});
