@@ -21,15 +21,19 @@ package co.fxl.gui.mdt.impl;
 import java.util.List;
 
 import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
+import co.fxl.gui.api.template.ResizeListener;
 import co.fxl.gui.n2m.api.IN2MWidget;
 import co.fxl.gui.n2m.api.IN2MWidget.IN2MRelationListener;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 
-final class N2MRelationDecorator implements IDecorator<Object> {
+final class N2MRelationDecorator implements IDecorator<Object>, IResizeListener {
+
 	private final N2MRelationImpl relation;
+	private IN2MWidget<Object> table;
 
 	N2MRelationDecorator(N2MRelationImpl relation) {
 		this.relation = relation;
@@ -62,14 +66,17 @@ final class N2MRelationDecorator implements IDecorator<Object> {
 								update(panel, node, result);
 							}
 
+							@SuppressWarnings("unchecked")
 							private void update(final IVerticalPanel panel,
 									final Object node, final List<Object> result) {
 								panel.clear();
-								@SuppressWarnings("unchecked")
-								IN2MWidget<Object> table = (IN2MWidget<Object>) panel
+								table = (IN2MWidget<Object>) panel
 										.add().widget(IN2MWidget.class);
 								table.domain(domain);
 								table.selection(result);
+								ResizeListener.setup(panel.display(),
+										N2MRelationDecorator.this);
+								onResize(-1, panel.display().height());
 								table.listener(new IN2MRelationListener<Object>() {
 									@Override
 									public void onChange(List<Object> selection) {
@@ -105,5 +112,16 @@ final class N2MRelationDecorator implements IDecorator<Object> {
 						});
 			}
 		});
+	}
+
+	@Override
+	public void onResize(int width, int height) {
+		int offsetY = table.offsetY();
+		// TODO ... un-hard-code
+		if (offsetY == 0)
+			offsetY = 139;
+		int maxFromDisplay = height - offsetY - 120;
+		if (maxFromDisplay > 0)
+			table.height(maxFromDisplay);
 	}
 }

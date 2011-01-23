@@ -110,15 +110,20 @@ class SelectableList {
 	private IButton allButton;
 	private String title;
 	private boolean isSelected;
+	private IScrollPane scrollPane;
 
 	SelectableList(IGridCell cell, String string, boolean isSelected) {
-		IScrollPane scrollPane = cell.scrollPane();
+		scrollPane = cell.scrollPane();
 		scrollPane.height(400);
 		scrollPane.color().white();
 		panel = scrollPane.viewPort().panel().vertical().spacing(3);
 		scrollPane.border().color().gray();
 		title = string;
 		this.isSelected = isSelected;
+	}
+
+	void height(int height) {
+		scrollPane.height(height);
 	}
 
 	void domain(List<Object> tokens, boolean visible) {
