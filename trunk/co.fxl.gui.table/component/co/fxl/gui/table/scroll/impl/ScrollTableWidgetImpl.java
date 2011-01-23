@@ -130,7 +130,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				for (ScrollTableColumnImpl c : columns) {
 					if (c.filterable) {
 						if (filter == null) {
-							container.addSpace(10);
+							// container.addSpace(10);
 							filter = (IMiniFilterWidget) container.add()
 									.widget(IMiniFilterWidget.class);
 						}
@@ -142,8 +142,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					filter.addSizeFilter();
 					filter.visible(true);
 					container.addSpace(10);
-				} else
-					container.addSpace(20);
+				}
 				IDockPanel dock = container.add().panel().dock();
 				dock.height(height);
 				contentPanel = dock.center().panel().card();
