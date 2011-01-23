@@ -36,6 +36,7 @@ class GWTTextArea extends GWTElement<TextArea, ITextArea> implements ITextArea {
 	@Override
 	public ITextArea text(String text) {
 		container.widget.setText(text);
+		// TODO inform update-listeners
 		return this;
 	}
 

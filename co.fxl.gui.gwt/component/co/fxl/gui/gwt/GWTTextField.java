@@ -40,6 +40,7 @@ class GWTTextField extends GWTElement<TextBox, ITextField> implements
 		if (text == null)
 			text = "";
 		container.widget.setText(text);
+		// TODO inform update-listeners
 		return this;
 	}
 
