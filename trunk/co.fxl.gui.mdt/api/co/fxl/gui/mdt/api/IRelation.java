@@ -50,4 +50,6 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 	IRelation<T, R> showListener(IShowListener<R> l);
 
 	IRelation<T, R> addListener(IAddListener<T, R> l);
+
+	IRelation<T, R> allowColumnSelection(boolean allowColumnSelection);
 }

@@ -30,6 +30,9 @@ public interface IProperty<T, S> {
 		S valueOf(T entity);
 
 		void valueOf(T entity, S value);
+
+		// TODO not supported yet
+		boolean editable(T entity);
 	}
 
 	public interface IUpdateListener<T> {

@@ -109,14 +109,16 @@ class SelectableList {
 	private IButton button;
 	private IButton allButton;
 	private String title;
+	private boolean isSelected;
 
-	SelectableList(IGridCell cell, String string) {
+	SelectableList(IGridCell cell, String string, boolean isSelected) {
 		IScrollPane scrollPane = cell.scrollPane();
 		scrollPane.height(400);
 		scrollPane.color().white();
 		panel = scrollPane.viewPort().panel().vertical().spacing(3);
 		scrollPane.border().color().gray();
 		title = string;
+		this.isSelected = isSelected;
 	}
 
 	void domain(List<Object> tokens, boolean visible) {
@@ -156,9 +158,17 @@ class SelectableList {
 
 	void visible(Object selection, boolean b) {
 		// TODO effizienter
-		for (ListItem i : items) {
-			if (i.object.equals(selection))
+		int x = 0;
+		for (; x < items.size(); x++) {
+			ListItem i = items.get(x);
+			if (i.object.equals(selection)) {
 				i.visible(b);
+				break;
+			}
+		}
+		if (isSelected) {
+			ListItem o = items.remove(x);
+			items.add(o);
 		}
 		draw();
 	}

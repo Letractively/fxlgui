@@ -25,6 +25,7 @@ class PropertyPageImpl implements IPropertyPage<Object> {
 	IDecorator<Object> dec;
 	String name;
 	Class<?> clazz;
+	Class<?> constrainType;
 
 	PropertyPageImpl(String name) {
 		this.name = name;
@@ -40,6 +41,12 @@ class PropertyPageImpl implements IPropertyPage<Object> {
 	@Override
 	public IPropertyPage<Object> typeConstraint(Class<?> clazz) {
 		this.clazz = clazz;
+		return this;
+	}
+
+	@Override
+	public IPropertyPage<Object> constrainType(Class<?> class1) {
+		this.constrainType = class1;
 		return this;
 	}
 

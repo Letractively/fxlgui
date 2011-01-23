@@ -38,10 +38,10 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 
 	N2MWidgetImpl(IContainer container) {
 		grid = container.panel().grid();
-		left = new SelectableList(grid.cell(0, 0), "Available");
+		left = new SelectableList(grid.cell(0, 0), "Available", false);
 		center = grid.cell(1, 0).width(80).align().center().panel().vertical()
 				.add().panel().vertical().spacing(10);
-		right = new SelectableList(grid.cell(2, 0), "Selected");
+		right = new SelectableList(grid.cell(2, 0), "Selected", true);
 		IButton leftButton = center.add().button().text("<")
 				.addClickListener(new IClickListener() {
 					@Override

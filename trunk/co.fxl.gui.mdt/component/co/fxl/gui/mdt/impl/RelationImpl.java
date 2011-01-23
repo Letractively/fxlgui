@@ -26,6 +26,7 @@ class RelationImpl extends PropertyGroupImpl implements
 	IAdapter<Object, Object> adapter;
 	IShowListener<Object> showListener;
 	IAddListener<Object, Object> addRemoveListener;
+	boolean allowColumnSelection = true;
 
 	RelationImpl(String name) {
 		super(name);
@@ -48,6 +49,13 @@ class RelationImpl extends PropertyGroupImpl implements
 	public IRelation<Object, Object> addListener(
 			co.fxl.gui.mdt.api.IRelation.IAddListener<Object, Object> l) {
 		this.addRemoveListener = l;
+		return this;
+	}
+
+	@Override
+	public IRelation<Object, Object> allowColumnSelection(
+			boolean allowColumnSelection) {
+		this.allowColumnSelection = allowColumnSelection;
 		return this;
 	}
 }

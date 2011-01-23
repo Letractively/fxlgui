@@ -45,6 +45,7 @@ import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 public abstract class DetailViewDecorator implements IDecorator<Object>,
 		IPageListener {
 
+	public static final String DISCARD_CHANGES = "You have made changes that have not been saved! Discard Changes?";
 	private final List<PropertyGroupImpl> gs;
 	private String title = null;
 	private boolean hasRequiredAttributes = true;
@@ -321,16 +322,12 @@ public abstract class DetailViewDecorator implements IDecorator<Object>,
 				if (result)
 					callback.onSuccess(true);
 				else {
-					display.showDialog()
-							.title("Warning")
-							.question()
-							.question(
-									"You have made changes that have not been saved! Discard Changes?")
+					display.showDialog().title("Warning").question()
+							.question(DISCARD_CHANGES)
 							.addQuestionListener(new IQuestionDialogListener() {
 
 								@Override
 								public void onYes() {
-									// onSave();
 									form = null;
 									callback.onSuccess(true);
 								}

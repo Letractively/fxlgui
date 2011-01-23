@@ -189,6 +189,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 					}
 				}
 				table.rows(toRows(result));
+				table.allowColumnSelection(relation.allowColumnSelection);
 				ResizeListener.setup(panel.display(), RelationDecorator.this);
 				onResize(-1, panel.display().height());
 				table.addFilterListener(new IFilterListener() {
@@ -245,7 +246,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 		// TODO ... un-hard-code
 		if (offsetY == 0)
 			offsetY = 139;
-		int maxFromDisplay = height - offsetY - 180;
+		int maxFromDisplay = height - offsetY - 100;
 		if (maxFromDisplay > 0)
 			table.height(maxFromDisplay);
 	}
