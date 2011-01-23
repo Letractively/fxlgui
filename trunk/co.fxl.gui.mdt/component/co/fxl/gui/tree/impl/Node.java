@@ -72,15 +72,14 @@ class Node<T> implements IClickListener {
 		if (root.childCount() != 0) {
 			content.addSpace(depth * INDENT);
 			image = content.add().image().resource(FOLDER_CLOSED);
-			image.addClickListener(this);
-			image.addClickListener(showClickListener);
+			// image.addClickListener(showClickListener);
 			injectTreeListener(image);
 			content.addSpace(4);
 		} else {
 			content.addSpace(depth * INDENT);
 			image = content.add().image()
 					.resource(root.isLeaf() ? LEAF : FOLDER_EMPTY);
-			image.addClickListener(showClickListener);
+			// image.addClickListener(showClickListener);
 			injectTreeListener(image);
 			content.addSpace(4);
 		}
@@ -88,7 +87,7 @@ class Node<T> implements IClickListener {
 		label.font().pixel(12);
 		injectTreeListener(label);
 		if (widget.detailPanel != null) {
-			label.addClickListener(showClickListener);
+			// label.addClickListener(showClickListener);
 		}
 		// if (root.children().size() != 0 && expand
 		// && root.childCount() > root.children().size()) {
@@ -106,6 +105,7 @@ class Node<T> implements IClickListener {
 		// });
 		// imageRefresh.addClickListener(showClickListener);
 		// }
+		container.addClickListener(this);
 		container.addClickListener(showClickListener);
 		this.tree = root;
 		this.depth = depth;
@@ -138,6 +138,11 @@ class Node<T> implements IClickListener {
 
 	@Override
 	public void onClick() {
+		if (tree.childCount() == 0)
+			return;
+		if (widget.selection != null && !tree.object().equals(widget.selection)) {
+			return;
+		}
 		if (childrenPanel == null) {
 			expand();
 		} else {
