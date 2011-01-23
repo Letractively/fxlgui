@@ -171,7 +171,8 @@ class SelectionImpl implements ISelection<Object> {
 				removeSelection.text("None").font().pixel(PIXEL);
 				removeSelection.hyperlink().addClickListener(
 						new RemoveSelectionClickListener());
-				removeSelection.clickable(false);
+				removeSelection.clickable(!widget.rows.selectedIdentifiers()
+						.isEmpty());
 				widget.selectionIsSetup = true;
 			}
 		}
