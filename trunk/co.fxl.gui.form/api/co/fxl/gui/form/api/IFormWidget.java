@@ -26,7 +26,6 @@ import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.template.ICallback;
-import co.fxl.gui.api.template.IPageListener;
 
 public interface IFormWidget {
 
@@ -72,6 +71,6 @@ public interface IFormWidget {
 	IFormWidget notifyUpdate();
 
 	IFormWidget visible(boolean visible);
-
-	IPageListener pageListener();
+	
+	IFormWidget showDiscardChanges();
 }

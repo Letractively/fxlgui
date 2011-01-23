@@ -37,8 +37,6 @@ import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
-import co.fxl.gui.api.template.ICallback;
-import co.fxl.gui.api.template.IPageListener;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.form.api.IFormField;
@@ -74,6 +72,7 @@ class FormWidgetImpl implements IFormWidget {
 	private boolean validate = true;
 	Validation validation;
 	private Heights heights = new Heights(2);
+	private boolean showDiscardChanges = false;
 
 	FormWidgetImpl(IContainer panel) {
 		widgetTitle = new WidgetTitle(panel.panel());
@@ -241,6 +240,7 @@ class FormWidgetImpl implements IFormWidget {
 		});
 		if (validate) {
 			validation = new Validation();
+			validation.showDiscardChanges();
 			validation.linkClickable(clickable);
 			for (final FormFieldImpl<?> formField : fields) {
 				Object valueElement = formField.valueElement();
@@ -351,18 +351,6 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	@Override
-	public IPageListener pageListener() {
-		if (validation == null)
-			return new IPageListener() {
-				@Override
-				public void notifyChange(ICallback<Boolean> callback) {
-					callback.onSuccess(true);
-				}
-			};
-		return validation;
-	}
-
-	@Override
 	public IFormWidget notifyUpdate() {
 		validation.notifyChange(new CallbackTemplate<Boolean>() {
 
@@ -370,6 +358,12 @@ class FormWidgetImpl implements IFormWidget {
 			public void onSuccess(Boolean result) {
 			}
 		});
+		return this;
+	}
+
+	@Override
+	public IFormWidget showDiscardChanges() {
+		showDiscardChanges = true;
 		return this;
 	}
 }
