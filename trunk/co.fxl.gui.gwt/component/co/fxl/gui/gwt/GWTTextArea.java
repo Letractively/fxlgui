@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.gwt;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import co.fxl.gui.api.ITextArea;
 
 import com.google.gwt.event.dom.client.KeyUpEvent;
@@ -25,6 +28,8 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.ui.TextArea;
 
 class GWTTextArea extends GWTElement<TextArea, ITextArea> implements ITextArea {
+
+	private List<IUpdateListener<String>> changeListeners = new LinkedList<IUpdateListener<String>>();
 
 	GWTTextArea(GWTContainer<TextArea> container) {
 		super(container);
@@ -35,8 +40,12 @@ class GWTTextArea extends GWTElement<TextArea, ITextArea> implements ITextArea {
 
 	@Override
 	public ITextArea text(String text) {
+		String previous = container.widget.getText();
 		container.widget.setText(text);
-		// TODO inform update-listeners
+		if (!previous.equals(text)) {
+			for (IUpdateListener<String> ul : changeListeners)
+				ul.onUpdate(text);
+		}
 		return this;
 	}
 
@@ -77,6 +86,7 @@ class GWTTextArea extends GWTElement<TextArea, ITextArea> implements ITextArea {
 	@Override
 	public ITextArea addUpdateListener(
 			final IUpdateListener<String> changeListener) {
+		changeListeners.add(changeListener);
 		container.widget.addKeyUpHandler(new KeyUpHandler() {
 
 			@Override

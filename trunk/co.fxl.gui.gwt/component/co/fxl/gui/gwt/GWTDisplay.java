@@ -52,7 +52,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 			public void setComponent(Widget component) {
 				widget = component;
 				widget.setWidth("100%");
-				RootPanel.get().add(component);
+				RootPanel.get().add(component, 0, 0);
 			}
 		};
 		DiscardChangesDialog.display = this;
