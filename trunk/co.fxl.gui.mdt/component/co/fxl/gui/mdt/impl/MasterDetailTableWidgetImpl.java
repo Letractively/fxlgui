@@ -75,6 +75,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	private boolean showDetailViewByDefault = false;
 	boolean allowCreate = true;
 	boolean allowMultiSelection = true;
+	private IRadioButton r1;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -107,7 +108,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 		});
 		IVerticalPanel content = views.content().panel().vertical();
 		IHorizontalPanel h1 = content.add().panel().horizontal();
-		final IRadioButton r1 = h1.add().radioButton().text("Grid");
+		r1 = h1.add().radioButton().text("Grid");
 		r1.checked(true);
 		r1.font().weight().bold();
 		r1.addUpdateListener(new IUpdateListener<Boolean>() {
@@ -272,6 +273,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	}
 
 	void showTableView(Object object) {
+		r1.checked(true);
 		showTableView(object, configuration);
 	}
 
