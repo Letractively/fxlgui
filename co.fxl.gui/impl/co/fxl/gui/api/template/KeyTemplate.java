@@ -36,6 +36,7 @@ public abstract class KeyTemplate<T> implements IKey<T> {
 	protected final T element;
 	protected ButtonType buttonType = ButtonType.LEFT;
 	protected Map<KeyType, Boolean> pressedKeys = new HashMap<KeyType, Boolean>();
+	protected boolean isDoubleClick = false;
 
 	protected KeyTemplate(T element) {
 		this.element = element;
@@ -71,6 +72,12 @@ public abstract class KeyTemplate<T> implements IKey<T> {
 	@Override
 	public T shiftPressed() {
 		pressedKeys.put(KeyType.SHIFT_KEY, true);
+		return element;
+	}
+
+	@Override
+	public T doubleClick() {
+		isDoubleClick = true;
 		return element;
 	}
 }

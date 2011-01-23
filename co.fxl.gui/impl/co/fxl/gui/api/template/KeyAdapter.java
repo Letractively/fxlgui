@@ -17,6 +17,8 @@ public class KeyAdapter<T> extends KeyTemplate<T> {
 			key.ctrlPressed();
 		if (pressedKeys.get(KeyType.SHIFT_KEY))
 			key.shiftPressed();
+		if (isDoubleClick)
+			key.doubleClick();
 	}
 
 }
