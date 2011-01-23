@@ -74,7 +74,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 	private void setUpFilter(String configuration) {
 		if (widget.filterList.filters.isEmpty())
 			return;
-		widget.sidePanel.addSpace(widget.addSpacing);
+		widget.sidePanel.addSpace(0);//widget.addSpacing);
 		filterWidget = (IFilterWidget) widget.sidePanel.add().widget(
 				IFilterWidget.class);
 		filterWidget.showConfiguration(false);
@@ -393,7 +393,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 		// TODO ... un-hard-code
 		if (offsetY == 0)
 			offsetY = 139;
-		int maxFromDisplay = height - offsetY - 96;
+		int maxFromDisplay = height - offsetY - 70;
 		if (maxFromDisplay > 10)
 			table.height(maxFromDisplay);
 	}

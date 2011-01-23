@@ -166,7 +166,7 @@ class SelectableList {
 				break;
 			}
 		}
-		if (isSelected) {
+		if (isSelected && x < items.size()) {
 			ListItem o = items.remove(x);
 			items.add(o);
 		}
