@@ -59,6 +59,8 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 			}
 			if (e.getButton() != getButton())
 				return;
+			if (isDoubleClick && e.getClickCount() < 2)
+				return;
 			listener.onClick(column, row);
 		}
 
