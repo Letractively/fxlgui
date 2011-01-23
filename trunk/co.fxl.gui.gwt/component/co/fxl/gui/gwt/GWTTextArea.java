@@ -92,4 +92,15 @@ class GWTTextArea extends GWTElement<TextArea, ITextArea> implements ITextArea {
 		return this;
 	}
 
+	@Override
+	public int cursorPosition() {
+		return container.widget.getCursorPos();
+	}
+
+	@Override
+	public ITextArea cursorPosition(int position) {
+		container.widget.setCursorPos(position);
+		return this;
+	}
+
 }
