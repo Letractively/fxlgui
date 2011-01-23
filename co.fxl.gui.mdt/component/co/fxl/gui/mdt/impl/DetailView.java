@@ -26,7 +26,6 @@ import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.DateFormat;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IFieldType;
-import co.fxl.gui.api.template.IPageListener;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IMDTFilterList;
@@ -38,7 +37,7 @@ import co.fxl.gui.tree.api.ITreeWidget;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 import co.fxl.gui.tree.api.ITreeWidget.ITreeClickListener;
 
-class DetailView extends ViewTemplate implements ISource<Object>, IPageListener {
+class DetailView extends ViewTemplate implements ISource<Object> {
 
 	static final DateFormat DATE_FORMAT = DateFormat.instance;
 	IFilterTreeWidget<Object> tree;
@@ -46,14 +45,12 @@ class DetailView extends ViewTemplate implements ISource<Object>, IPageListener 
 	protected ITree<Object> itree;
 	private Object selectionObject;
 	private String createType;
-	private IPageListener pageListener;
 	private boolean create;
 
 	@SuppressWarnings("unchecked")
 	DetailView(final MasterDetailTableWidgetImpl widget, Object sshow,
 			boolean create, String createType) {
 		super(widget);
-		widget.pageListener = this;
 		this.create = create;
 		this.createType = createType;
 		// if (widget.splitLayout != null)
@@ -98,7 +95,6 @@ class DetailView extends ViewTemplate implements ISource<Object>, IPageListener 
 		tree.source(this);
 		tree.selection(sshow);
 		tree.expand();
-		tree.pageListener(this);
 		tree.visible(true);
 	}
 
@@ -145,7 +141,6 @@ class DetailView extends ViewTemplate implements ISource<Object>, IPageListener 
 				saveNode(node);
 			}
 		};
-		pageListener = decorator;
 		tree.addDetailView(IMasterDetailTableWidget.DETAILS, decorator);
 		for (final PropertyGroupImpl group : widget.propertyGroups) {
 			if (group.asDetail
@@ -239,10 +234,5 @@ class DetailView extends ViewTemplate implements ISource<Object>, IPageListener 
 				tree.notifyUpdate(node, result);
 			}
 		});
-	}
-
-	@Override
-	public void notifyChange(ICallback<Boolean> callback) {
-		pageListener.notifyChange(callback);
 	}
 }
