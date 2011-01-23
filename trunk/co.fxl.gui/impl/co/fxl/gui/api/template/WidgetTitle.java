@@ -167,7 +167,7 @@ public class WidgetTitle implements IClickListener {
 	public IContainer content() {
 		if (contentContainer != null)
 			return contentContainer;
-		return contentContainer = space == 0 ? panel.cell(0, 0) : panel
+		return contentContainer = space == 0 ? panel.cell(0, 1) : panel
 				.cell(0, 1).panel().vertical().addSpace(space).add();
 	}
 
