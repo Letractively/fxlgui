@@ -246,7 +246,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 		// TODO ... un-hard-code
 		if (offsetY == 0)
 			offsetY = 139;
-		int maxFromDisplay = height - offsetY - 100;
+		int maxFromDisplay = height - offsetY - 120;
 		if (maxFromDisplay > 0)
 			table.height(maxFromDisplay);
 	}
