@@ -143,4 +143,16 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 		this.right.title(right);
 		return this;
 	}
+
+	@Override
+	public int offsetY() {
+		return grid.offsetY();
+	}
+
+	@Override
+	public IN2MWidget<Object> height(int maxFromDisplay) {
+		left.height(maxFromDisplay);
+		right.height(maxFromDisplay);
+		return this;
+	}
 }

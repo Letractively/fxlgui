@@ -37,4 +37,7 @@ public interface IN2MWidget<T> {
 
 	IN2MWidget<T> listener(IN2MRelationListener<T> listener);
 
+	int offsetY();
+
+	IN2MWidget<T> height(int maxFromDisplay);
 }
