@@ -30,7 +30,7 @@ import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
-public class Validation implements IPageListener {
+public class Validation {
 
 	class CheckBoxField implements IField, IUpdateListener<Boolean> {
 
@@ -181,6 +181,7 @@ public class Validation implements IPageListener {
 	private List<IField> fields = new LinkedList<IField>();
 	private boolean clickable;
 	private boolean isSpecified = false;
+	private boolean showDiscardChanges = false;
 
 	private void updateClickables() {
 		boolean error = false;
@@ -198,6 +199,9 @@ public class Validation implements IPageListener {
 		clickable = isSpecified && !error && allRequiredSpecified;
 		for (IClickable<?> c : clickables) {
 			c.clickable(clickable);
+		}
+		if (showDiscardChanges) {
+			DiscardChangesDialog.active = isSpecified;
 		}
 	}
 
@@ -238,8 +242,7 @@ public class Validation implements IPageListener {
 		return this;
 	}
 
-	public Validation validateLong(final ITextField textField,
-			boolean required) {
+	public Validation validateLong(final ITextField textField, boolean required) {
 		final Field field = new Field(textField, required);
 		textField.addUpdateListener(new IUpdateListener<String>() {
 			@Override
@@ -330,7 +333,6 @@ public class Validation implements IPageListener {
 		return this;
 	}
 
-	@Override
 	public void notifyChange(ICallback<Boolean> callback) {
 		for (IField f : fields) {
 			f.notifyChange();
@@ -338,5 +340,9 @@ public class Validation implements IPageListener {
 		updateClickables();
 		if (callback != null)
 			callback.onSuccess(!isSpecified);
+	}
+
+	public void showDiscardChanges() {
+		showDiscardChanges = true;
 	}
 }
