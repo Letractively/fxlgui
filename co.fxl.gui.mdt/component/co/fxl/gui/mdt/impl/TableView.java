@@ -279,7 +279,9 @@ class TableView extends ViewTemplate implements IFilterListener,
 		Object o = null;
 		if (!widget.selection.isEmpty())
 			o = widget.selection.get(0);
-		String[] creatableTypes = widget.source.getCreatableTypes(o);
+		String[] creatableTypes = o == null ? widget.source
+				.getDefaultCreatableTypes() : widget.source
+				.getCreatableTypes(o);
 		List<String> ctypes = creatableTypes != null ? Arrays
 				.asList(creatableTypes) : null;
 		for (String c : buttons.keySet()) {
