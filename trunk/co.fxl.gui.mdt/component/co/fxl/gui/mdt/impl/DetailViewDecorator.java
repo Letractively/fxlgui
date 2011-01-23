@@ -26,8 +26,6 @@ import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
-import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
-import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextElement;
@@ -35,23 +33,19 @@ import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.ICallback;
-import co.fxl.gui.api.template.IPageListener;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 
-public abstract class DetailViewDecorator implements IDecorator<Object>,
-		IPageListener {
+public abstract class DetailViewDecorator implements IDecorator<Object> {
 
-	public static final String DISCARD_CHANGES = "You have made changes that have not been saved! Discard Changes?";
 	private final List<PropertyGroupImpl> gs;
 	private String title = null;
 	private boolean hasRequiredAttributes = true;
 	private boolean isUpdateable = true;
 	IFormWidget form;
-	private IDisplay display;
 	// private Object node;
 	final List<Runnable> updates = new LinkedList<Runnable>();
 
@@ -98,7 +92,6 @@ public abstract class DetailViewDecorator implements IDecorator<Object>,
 
 	@Override
 	public void decorate(IVerticalPanel panel, final Object node) {
-		display = panel.display();
 		// this.node = node;
 		updates.clear();
 		assert node != null;
@@ -297,6 +290,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object>,
 					}
 				}
 		supplement(form);
+		form.showDiscardChanges();
 		form.visible(true);
 	}
 
@@ -307,42 +301,5 @@ public abstract class DetailViewDecorator implements IDecorator<Object>,
 		IBorder border = panel.border();
 		border.color().gray();
 		border.style().top();
-	}
-
-	@Override
-	public void notifyChange(final ICallback<Boolean> callback) {
-		if (form == null) {
-			callback.onSuccess(true);
-			return;
-		}
-		form.pageListener().notifyChange(new CallbackTemplate<Boolean>() {
-
-			@Override
-			public void onSuccess(Boolean result) {
-				if (result)
-					callback.onSuccess(true);
-				else {
-					display.showDialog().title("Warning").question()
-							.question(DISCARD_CHANGES)
-							.addQuestionListener(new IQuestionDialogListener() {
-
-								@Override
-								public void onYes() {
-									form = null;
-									callback.onSuccess(true);
-								}
-
-								@Override
-								public void onNo() {
-									callback.onSuccess(false);
-								}
-
-								@Override
-								public void onCancel() {
-								}
-							});
-				}
-			}
-		});
 	}
 }

@@ -29,6 +29,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.ICallback;
+import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.tree.api.ITree;
 
 class Node<T> implements IClickListener {
@@ -62,17 +63,10 @@ class Node<T> implements IClickListener {
 		IClickable<?> clickable = container;
 		injectTreeListener(clickable);
 		content = container.add().panel().horizontal().spacing(2);
-		IClickListener showClickListener = new IClickListener() {
+		IClickListener showClickListener = new LazyClickListener() {
 			@Override
-			public void onClick() {
-				widget.notifyChange(new CallbackTemplate<Boolean>() {
-
-					@Override
-					public void onSuccess(Boolean result) {
-						if (result)
-							Node.this.widget.show(Node.this);
-					}
-				});
+			public void onAllowedClick() {
+				Node.this.widget.show(Node.this);
 			}
 		};
 		if (root.childCount() != 0) {

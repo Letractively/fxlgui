@@ -37,8 +37,8 @@ import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.ICallback;
-import co.fxl.gui.api.template.IPageListener;
 import co.fxl.gui.api.template.KeyAdapter;
+import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.api.template.ResizeListener;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.navigation.api.IMenuItem;
@@ -47,8 +47,7 @@ import co.fxl.gui.navigation.api.IMenuWidget;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 
-class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener,
-		IPageListener {
+class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	// TODO nice-2-have: double click on tree node: expand
 
@@ -150,7 +149,6 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener,
 	ITreeClickListener<T> treeClickListener;
 	KeyAdapter<Object> treeClickAdapter;
 	boolean allowCreate = true;
-	IPageListener pageListener;
 
 	TreeWidgetImpl(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel()).space(0);
@@ -167,58 +165,49 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener,
 			if (creatableTypes.isEmpty())
 				creatableTypes.add(null);
 			for (final String type : creatableTypes) {
-				IClickListener cl = new IClickListener() {
+				IClickListener cl = new LazyClickListener() {
 					@Override
-					public void onClick() {
-						notifyChange(new CallbackTemplate<Boolean>() {
+					public void onAllowedClick() {
+						final ITree<T> lParentNode = last != null ? last.tree
+								: root;
+						ChainedCallback<List<T>, ITree<T>> lCallback1 = new ChainedCallback<List<T>, ITree<T>>() {
+							@Override
+							public void onSuccess(List<T> result) {
+								if (type == null)
+									lParentNode.createNew(getNextCallback());
+								else
+									lParentNode.createNew(type,
+											getNextCallback());
+							}
+						};
+						CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>() {
+
+							public void onFail(Throwable throwable) {
+								widgetTitle.reset();
+								super.onFail(throwable);
+							}
 
 							@Override
-							public void onSuccess(Boolean result) {
-								if (result) {
-									final ITree<T> lParentNode = last != null ? last.tree
-											: root;
-									ChainedCallback<List<T>, ITree<T>> lCallback1 = new ChainedCallback<List<T>, ITree<T>>() {
-										@Override
-										public void onSuccess(List<T> result) {
-											if (type == null)
-												lParentNode
-														.createNew(getNextCallback());
-											else
-												lParentNode.createNew(type,
-														getNextCallback());
-										}
-									};
-									CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>() {
-
-										public void onFail(Throwable throwable) {
-											widgetTitle.reset();
-											super.onFail(throwable);
-										}
-
-										@Override
-										public void onSuccess(ITree<T> result) {
-											widgetTitle.reset();
-											selection(result.object());
-											boolean rememberExpand = expand;
-											expand = false;
-											List<ITree<T>> path = new LinkedList<ITree<T>>();
-											path.add(result);
-											while (result.parent() != null) {
-												result = result.parent();
-												path.add(0, result);
-											}
-											root(root, path);
-											assert node != null;
-											node.path = null;
-											expand = rememberExpand;
-										}
-									};
-									lCallback1.setNextCallback(lCallback2);
-									assert lParentNode != null : "Parent node cannot be resolved, cannot load children";
-									lParentNode.loadChildren(lCallback1);
+							public void onSuccess(ITree<T> result) {
+								widgetTitle.reset();
+								selection(result.object());
+								boolean rememberExpand = expand;
+								expand = false;
+								List<ITree<T>> path = new LinkedList<ITree<T>>();
+								path.add(result);
+								while (result.parent() != null) {
+									result = result.parent();
+									path.add(0, result);
 								}
+								root(root, path);
+								assert node != null;
+								node.path = null;
+								expand = rememberExpand;
 							}
-						});
+						};
+						lCallback1.setNextCallback(lCallback2);
+						assert lParentNode != null : "Parent node cannot be resolved, cannot load children";
+						lParentNode.loadChildren(lCallback1);
 					}
 				};
 				newClick.put(type, cl);
@@ -314,7 +303,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener,
 			return;
 		setUpDetailPanel();
 		registers = (IMenuWidget) detailPanel.add().widget(IMenuWidget.class);
-//		registers.background(BACKGROUND_GRAY, BACKGROUND_GRAY, BACKGROUND_GRAY);
+		// registers.background(BACKGROUND_GRAY, BACKGROUND_GRAY,
+		// BACKGROUND_GRAY);
 	}
 
 	private void setUpDetailPanel() {
@@ -372,12 +362,18 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener,
 			}
 		}
 		if (selection != null) {
-			for (Node<T> n : object2node.values()) {
-				T object = n.tree.object();
-				if (object.equals(selection)) {
-					node = n;
-				}
-			}
+			Node<T> n = object2node.get(selection);
+			if (n != null)
+				node = n;
+			else
+				throw new MethodNotImplementedException(
+						"Selection in tree widget not found in expanded tree");
+			// for (Node<T> n : object2node.values()) {
+			// T object = n.tree.object();
+			// if (object.equals(selection)) {
+			// node = n;
+			// }
+			// }
 			// assert node != null;
 		}
 		show(node);
@@ -396,19 +392,27 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener,
 			selection(node.tree.object());
 		} else
 			selection(null);
+		boolean showFirst = false;
 		for (int i = 0; i < detailViews.size(); i++) {
 			DetailView view = detailViews.get(i);
 			if (node != null) {
 				Class<? extends Object> type = node.tree.object().getClass();
-				if (view.constrainType != null
-						&& !view.constrainType.equals(type)) {
-					if (view.onTop) {
-						assert i > 0 : "First register cannot be type constrained";
-						detailViews.get(0).register.active();
-					}
-					view.enabled(false);
-				} else
-					view.enabled(true);
+				boolean hide = view.constrainType != null
+						&& !view.constrainType.equals(type);
+				if (hide && view.onTop) {
+					showFirst = true;
+				}
+			}
+		}
+		if (showFirst)
+			detailViews.get(0).register.active();
+		for (int i = 0; i < detailViews.size(); i++) {
+			DetailView view = detailViews.get(i);
+			if (node != null) {
+				Class<? extends Object> type = node.tree.object().getClass();
+				boolean hide = view.constrainType != null
+						&& !view.constrainType.equals(type);
+				view.enabled(!hide);
 			}
 			view.setNode(node);
 		}
@@ -560,19 +564,5 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener,
 	public ITreeWidget<T> allowCreate(boolean allowCreate) {
 		this.allowCreate = allowCreate;
 		return this;
-	}
-
-	@Override
-	public ITreeWidget<T> pageListener(IPageListener l) {
-		pageListener = l;
-		return this;
-	}
-
-	@Override
-	public void notifyChange(ICallback<Boolean> callback) {
-		if (pageListener == null) {
-			callback.onSuccess(true);
-		} else
-			pageListener.notifyChange(callback);
 	}
 }

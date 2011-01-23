@@ -30,8 +30,8 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IRadioButton;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.ICallback;
-import co.fxl.gui.api.template.IPageListener;
+import co.fxl.gui.api.template.DiscardChangesDialog;
+import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.api.template.NavigationView;
 import co.fxl.gui.api.template.SplitLayout;
 import co.fxl.gui.api.template.WidgetTitle;
@@ -45,8 +45,7 @@ import co.fxl.gui.mdt.api.IPropertyGroup;
 import co.fxl.gui.mdt.api.IPropertyPage;
 import co.fxl.gui.mdt.api.IRelation;
 
-class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
-		IPageListener {
+class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 
 	List<PropertyGroupImpl> propertyGroups = new LinkedList<PropertyGroupImpl>();
 	List<RelationImpl> relations = new LinkedList<RelationImpl>();
@@ -76,7 +75,6 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	private boolean showDetailViewByDefault = false;
 	boolean allowCreate = true;
 	boolean allowMultiSelection = true;
-	IPageListener pageListener;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -116,22 +114,20 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 			@Override
 			public void onUpdate(Boolean value) {
 				if (value) {
-					pageListener()
-							.notifyChange(
-									new co.fxl.gui.api.template.CallbackTemplate<Boolean>() {
+					DiscardChangesDialog
+							.show(new co.fxl.gui.api.template.CallbackTemplate<Boolean>() {
 
-										@Override
-										public void onSuccess(Boolean result) {
-											if (result) {
-												Object show = null;
-												if (!selection.isEmpty())
-													show = selection.get(selection
-															.size() - 1);
-												showTableView(show,
-														configuration);
-											}
-										}
-									});
+								@Override
+								public void onSuccess(Boolean result) {
+									if (result) {
+										Object show = null;
+										if (!selection.isEmpty())
+											show = selection.get(selection
+													.size() - 1);
+										showTableView(show, configuration);
+									}
+								}
+							});
 				}
 			}
 		});
@@ -146,31 +142,26 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 						@Override
 						public void onUpdate(final String value) {
-							pageListener()
-									.notifyChange(
-											new co.fxl.gui.api.template.CallbackTemplate<Boolean>() {
+							DiscardChangesDialog
+									.show(new co.fxl.gui.api.template.CallbackTemplate<Boolean>() {
 
-												@Override
-												public void onSuccess(
-														Boolean result) {
-													if (result) {
-														configuration = value;
-														r1.checked(true);
-														if (listener instanceof TableView)
-															notifyConfigurationListener(value);
-														else {
-															Object show = null;
-															if (!selection
-																	.isEmpty())
-																show = selection
-																		.get(selection
-																				.size() - 1);
-															showTableView(show,
-																	value);
-														}
-													}
+										@Override
+										public void onSuccess(Boolean result) {
+											if (result) {
+												configuration = value;
+												r1.checked(true);
+												if (listener instanceof TableView)
+													notifyConfigurationListener(value);
+												else {
+													Object show = null;
+													if (!selection.isEmpty())
+														show = selection.get(selection
+																.size() - 1);
+													showTableView(show, value);
 												}
-											});
+											}
+										}
+									});
 						}
 					});
 		}
@@ -201,21 +192,11 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 			for (NavigationLinkImpl link : navigationLinks) {
 				ILabel l = t.addHyperlink().text(link.name);
 				for (final INavigationLinkListener<Object> cl : link.listeners) {
-					l.addClickListener(new IClickListener() {
+					l.addClickListener(new LazyClickListener() {
 
 						@Override
-						public void onClick() {
-							pageListener()
-									.notifyChange(
-											new co.fxl.gui.api.template.CallbackTemplate<Boolean>() {
-
-												@Override
-												public void onSuccess(
-														Boolean result) {
-													if (result)
-														cl.onClick(selection);
-												}
-											});
+						public void onAllowedClick() {
+							cl.onClick(selection);
 						}
 					});
 				}
@@ -314,7 +295,6 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 			mainPanel.clear();
 			sidePanel.clear();
 		}
-		pageListener = null;
 	}
 
 	@Override
@@ -382,18 +362,5 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 			boolean multiSelection) {
 		allowMultiSelection = multiSelection;
 		return this;
-	}
-
-	@Override
-	public IPageListener pageListener() {
-		return this;
-	}
-
-	@Override
-	public void notifyChange(ICallback<Boolean> callback) {
-		if (pageListener == null) {
-			callback.onSuccess(true);
-		} else
-			pageListener.notifyChange(callback);
 	}
 }
