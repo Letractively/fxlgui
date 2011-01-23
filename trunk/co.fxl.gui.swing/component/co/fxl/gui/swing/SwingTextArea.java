@@ -57,4 +57,16 @@ class SwingTextArea extends SwingTextInput<JTextArea, ITextArea> implements
 				240, 240, 240));
 		return super.editable(editable);
 	}
+
+	@Override
+	public int cursorPosition() {
+		return container.component.getCaretPosition();
+	}
+
+	@Override
+	public ITextArea cursorPosition(int position) {
+		container.component.setCaretPosition(position);
+		container.component.requestFocus();
+		return this;
+	}
 }
