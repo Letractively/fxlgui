@@ -22,15 +22,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IBordered.IBorder;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.register.api.IRegister;
 
-class RegisterImpl implements IRegister, IClickListener {
+class RegisterImpl extends LazyClickListener implements IRegister {
 
 	private class Title implements ITitle {
 
@@ -119,10 +119,10 @@ class RegisterImpl implements IRegister, IClickListener {
 			listener.onTop(visible);
 		}
 		if (visible) {
-//			buttonLabel.font().pixel(widget.fontSize).weight().bold().color().black();
+			// buttonLabel.font().pixel(widget.fontSize).weight().bold().color().black();
 			buttonPanel.clickable(false);
 		} else {
-//			buttonLabel.font().pixel(widget.fontSize).weight().bold().color().black();
+			// buttonLabel.font().pixel(widget.fontSize).weight().bold().color().black();
 			buttonPanel.clickable(true);
 		}
 		// buttonLabel.font().underline(!visible);
@@ -135,7 +135,7 @@ class RegisterImpl implements IRegister, IClickListener {
 	}
 
 	@Override
-	public void onClick() {
+	public void onAllowedClick() {
 		top();
 	}
 
