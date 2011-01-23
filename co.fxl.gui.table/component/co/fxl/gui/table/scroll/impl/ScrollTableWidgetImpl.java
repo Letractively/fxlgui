@@ -281,21 +281,23 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 								grid.cell(current++, r), row[c.index]);
 			}
 			grid.visible(true);
-			grid.addMouseWheelListener(new IMouseWheelListener() {
+			if (sp != null)
+				grid.addMouseWheelListener(new IMouseWheelListener() {
 
-				@Override
-				public void onUp(int turns) {
-					int pos = Math.max(0, scrollOffset - turns * SCROLL_MULT);
-					sp.scrollTo(pos);
-				}
+					@Override
+					public void onUp(int turns) {
+						int pos = Math.max(0, scrollOffset - turns
+								* SCROLL_MULT);
+						sp.scrollTo(pos);
+					}
 
-				@Override
-				public void onDown(int turns) {
-					int pos = Math.min(scrollPanelHeight, scrollOffset + turns
-							* SCROLL_MULT);
-					sp.scrollTo(pos);
-				}
-			});
+					@Override
+					public void onDown(int turns) {
+						int pos = Math.min(scrollPanelHeight, scrollOffset
+								+ turns * SCROLL_MULT);
+						sp.scrollTo(pos);
+					}
+				});
 			if (addClickListeners) {
 				current = 0;
 				for (ScrollTableColumnImpl c : columns)
