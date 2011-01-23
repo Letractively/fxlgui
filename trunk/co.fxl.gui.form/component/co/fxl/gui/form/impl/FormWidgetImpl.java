@@ -253,7 +253,7 @@ class FormWidgetImpl implements IFormWidget {
 								(ITextField) formField.valueElement(),
 								formField.required);
 					} else if (formField.type.clazz.equals(Integer.class)) {
-						validation.validateInteger(
+						validation.validateLong(
 								(ITextField) formField.valueElement(),
 								formField.required);
 					} else {
