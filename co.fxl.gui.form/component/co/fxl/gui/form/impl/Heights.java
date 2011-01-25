@@ -30,7 +30,7 @@ public class Heights {
 
 	private static final int CELL_HEIGHT = 36;
 	private static final int TEXTFIELD_HEIGHT = 32;
-	private static final int COMBOBOX_HEIGHT = 32;
+	private static final int COMBOBOX_HEIGHT = 24;
 	private int inc;
 
 	public Heights(int inc) {
