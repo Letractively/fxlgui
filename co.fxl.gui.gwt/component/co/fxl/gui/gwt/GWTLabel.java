@@ -25,6 +25,7 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.HTML;
 
 class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
@@ -37,6 +38,10 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 		container.widget.addStyleName("gwt-Label-FXL");
 		container.widget.setWordWrap(false);
 		defaultFont();
+	}
+
+	private void update() {
+		container.widget.setHTML(html.toString());
 	}
 
 	@Override
@@ -73,8 +78,21 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 		return this;
 	}
 
+	native String disableSelection(Element target) /*-{
+													if (typeof target.onselectstart!="undefined") //IE route
+													target.onselectstart=function(){return false}
+													else if (typeof target.style.MozUserSelect!="undefined") //Firefox route
+													target.style.MozUserSelect="none"
+													else //All other route (ie: Opera)
+													target.onmousedown=function(){return false}
+													target.style.cursor = "default"
+													}-*/;
+
 	@Override
 	GWTClickHandler<ILabel> newGWTClickHandler(IClickListener clickListener) {
+		html.selectable = false;
+		disableSelection(container.widget.getElement());
+		update();
 		return new GWTClickHandler<ILabel>(this, clickListener);
 	}
 

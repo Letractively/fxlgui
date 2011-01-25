@@ -45,6 +45,7 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 		if (isDoubleClick)
 			return;
 		event.preventDefault();
+		event.stopPropagation();
 		clickListener.onClick();
 	}
 
@@ -59,6 +60,7 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 		if (!isDoubleClick)
 			return;
 		event.preventDefault();
+		event.stopPropagation();
 		clickListener.onClick();
 	}
 
