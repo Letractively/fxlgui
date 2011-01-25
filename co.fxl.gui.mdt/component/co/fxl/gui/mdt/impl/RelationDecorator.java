@@ -20,7 +20,6 @@ package co.fxl.gui.mdt.impl;
 
 import java.util.List;
 
-import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
@@ -65,9 +64,9 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 	private void decorate(final IVerticalPanel panel,
 			final IFilterConstraints constraints, final Object node) {
 		panel.clear();
-		IBorder border = panel.border();
-		border.color().gray();
-		border.style().top();
+		// IBorder border = panel.border();
+		// border.color().gray();
+		// border.style().top();
 		ICallback<IDeletableList<Object>> callback = new CallbackTemplate<IDeletableList<Object>>() {
 
 			private IButton details;

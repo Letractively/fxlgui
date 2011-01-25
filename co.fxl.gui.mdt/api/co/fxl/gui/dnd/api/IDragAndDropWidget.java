@@ -16,23 +16,16 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.mdt.light.impl;
+package co.fxl.gui.dnd.api;
 
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.mdt.light.api.IMasterDetailTableWidget;
+import co.fxl.gui.api.IElement;
 
-@SuppressWarnings("rawtypes")
-public class MasterDetailTableWidgetImplProvider implements
-		IWidgetProvider<IMasterDetailTableWidget> {
+public interface IDragAndDropWidget<T extends IElement<?>> {
 
-	@Override
-	public IMasterDetailTableWidget createWidget(IContainer layout) {
-		return new MasterDetailTableWidgetImpl(layout);
-	}
+	IContainer container();
 
-	@Override
-	public Class<IMasterDetailTableWidget> widgetType() {
-		return IMasterDetailTableWidget.class;
-	}
+	IDragAndDropWidget<T> draggable(T element);
+
+	IDropTarget<T> dropTarget(T element);
 }

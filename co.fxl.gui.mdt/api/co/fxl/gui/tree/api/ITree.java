@@ -51,4 +51,6 @@ public interface ITree<T> {
 	boolean isDeletable();
 
 	boolean isUpdateable();
+
+	boolean isReassignable();
 }
