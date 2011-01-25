@@ -116,4 +116,12 @@ class RowAdapter implements IRows<Object>, IComparableList {
 		}
 		return ids;
 	}
+
+	int find(Object object) {
+		for (int i = 0; i < rows.size(); i++) {
+			if (identifier(i).equals(object))
+				return i;
+		}
+		return -1;
+	}
 }

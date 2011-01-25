@@ -67,6 +67,7 @@ class SelectionImpl implements ISelection<Object> {
 
 		ISelection<Object> add(Object object) {
 			widget.rows.selected(object, true);
+			widget.initialRowOffset(object);
 			return SelectionImpl.this;
 		}
 	}
@@ -179,6 +180,7 @@ class SelectionImpl implements ISelection<Object> {
 
 		ISelection<Object> add(Object object) {
 			widget.rows.selected(object);
+			widget.initialRowOffset(object);
 			return SelectionImpl.this;
 		}
 	}
