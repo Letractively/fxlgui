@@ -19,6 +19,7 @@
 package co.fxl.gui.swing;
 
 import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
@@ -32,6 +33,18 @@ import co.fxl.gui.api.IScrollPane;
 class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 		IScrollPane {
 
+	private IContainer viewPort = new SwingContainer<JComponent>(
+			container.parent) {
+
+		void setComponent(JComponent component) {
+			super.component = component;
+			JViewport viewport = container.component.getViewport();
+			viewport.setOpaque(false);
+			viewport.setBackground(null);
+			viewport.add(component);
+		}
+	};
+
 	SwingScrollPane(SwingContainer<JScrollPane> container) {
 		super(container);
 		container.component.setAlignmentY(JScrollPane.TOP_ALIGNMENT);
@@ -42,16 +55,7 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 
 	@Override
 	public IContainer viewPort() {
-		return new SwingContainer<JComponent>(container.parent) {
-
-			void setComponent(JComponent component) {
-				super.component = component;
-				JViewport viewport = container.component.getViewport();
-				viewport.setOpaque(false);
-				viewport.setBackground(null);
-				viewport.add(component);
-			}
-		};
+		return viewPort;
 	}
 
 	@Override
@@ -107,6 +111,9 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 
 	@Override
 	public IScrollPane scrollTo(int pos) {
-		throw new MethodNotImplementedException();
+		// TODO doesn't work
+		container.component.getVerticalScrollBar().scrollRectToVisible(
+				new Rectangle(0, pos, 1, 1));
+		return this;
 	}
 }
