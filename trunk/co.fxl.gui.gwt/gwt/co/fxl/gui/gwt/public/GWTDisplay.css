@@ -1,5 +1,15 @@
-html {overflow-y: hidden; overflow: -moz-scrollbars-none; overflow-x: auto; }
+html {overflow-y: hidden; overflow: -moz-scrollbars-none; overflow-x: auto;  user-select: none; -moz-user-select: none; -webkit-user-select: none; }
 html, body {height:100%; width:100%;}
+::selection {
+    background-color: transparent;
+}
+*.unselectable {
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   -o-user-select: none;
+   user-select: none;
+}
 .font-size-1px { font-size: 1px }
 .font-size-2px { font-size: 2px }
 .font-size-3px { font-size: 3px }
