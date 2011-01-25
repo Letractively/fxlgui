@@ -24,6 +24,7 @@ public class HTMLText {
 	public boolean center = false;
 	public boolean underline = false;
 	public boolean autoWrap = true;
+	public boolean selectable = true;
 
 	public void setText(String text) {
 		if (text == null)
@@ -84,6 +85,14 @@ public class HTMLText {
 			toString = underline(toString);
 		if (!autoWrap)
 			toString = noWrap(toString);
-		return html(toString);
+		toString = html(toString);
+		if (!selectable)
+			toString = unselectable(toString);
+		return toString;
+	}
+
+	private String unselectable(String toString) {
+		return "<div unselectable=\"on\" class=\"unselectable\">" + toString
+				+ "</div>";
 	}
 }
