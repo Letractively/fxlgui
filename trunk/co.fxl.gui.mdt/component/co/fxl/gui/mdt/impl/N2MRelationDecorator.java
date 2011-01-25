@@ -20,7 +20,6 @@ package co.fxl.gui.mdt.impl;
 
 import java.util.List;
 
-import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
@@ -51,9 +50,9 @@ final class N2MRelationDecorator implements IDecorator<Object>, IResizeListener 
 
 	@Override
 	public void decorate(final IVerticalPanel panel, final Object node) {
-		IBorder border = panel.border();
-		border.color().gray();
-		border.style().top();
+		// IBorder border = panel.border();
+		// border.color().gray();
+		// border.style().top();
 		relation.adapter.domain(node, new CallbackTemplate<List<Object>>() {
 
 			@Override

@@ -16,20 +16,20 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.mdt.light.api;
+package co.fxl.gui.dnd.api;
 
-import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.IElement;
 
-public interface IDetailView<T> {
+public interface IDropTarget<T extends IElement<?>> {
 
-	public interface IDecorator<T> {
+	public interface IDragHandler<T> {
 
-		void decorate(T bo, IVerticalPanel panel, IVerticalPanel sidePanel);
+		void onOver(T element);
+
+		void onOut(T element);
+
+		void onDrop(T element);
 	}
 
-	IDetailView<T> title(String title);
-
-	IDetailView<T> name(String title);
-
-	IDetailView<T> decorator(IDecorator<T> decorate);
+	IDropTarget<T> dragHandler(IDragHandler<T> handler);
 }
