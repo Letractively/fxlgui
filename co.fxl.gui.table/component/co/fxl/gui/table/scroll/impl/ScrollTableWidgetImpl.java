@@ -80,11 +80,12 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private int sortColumn = -1;
 	private int sortNegator = -1;
 	IBulkTableWidget grid;
-	int rowOffset;
+	int rowOffset = 0;
 	List<IRow> highlighted = new LinkedList<IRow>();
 	private IGridPanel statusPanel;
 	private String tooltip = "";// Use CTRL + Click to select multiple rows.";
 	private boolean visible;
+	private int initialRowOffset = -1;
 
 	ScrollTableWidgetImpl(IContainer container) {
 		widgetTitle = new WidgetTitle(container.panel()).foldable(false);
@@ -158,6 +159,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				h.size(1, scrollPanelHeight);
 				sp.addScrollListener(this);
 				h.add().label().text("&#160;");
+				if (initialRowOffset != -1) {
+					int convertFromRowOffset = convertFromRowOffset(initialRowOffset);
+					sp.scrollTo(convertFromRowOffset);
+					initialRowOffset = -1;
+				}
 			}
 		} else {
 			this.visible = false;
@@ -206,12 +212,21 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		return column;
 	}
 
-	private int convert(int maxOffset) {
+	private int convertToRowOffset(int maxOffset) {
 		if (scrollPanelHeight == 0)
 			return 0;
 		double index = rows.size();
 		index *= maxOffset;
 		index /= scrollPanelHeight;
+		return (int) index;
+	}
+
+	private int convertFromRowOffset(int rowOffset) {
+		if (scrollPanelHeight == 0)
+			return 0;
+		double index = rowOffset;
+		index *= scrollPanelHeight;
+		index /= rows.size();
 		return (int) index;
 	}
 
@@ -228,6 +243,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IFilterConstraints constraints;
 	private IFilterListener filterListener;
 
+	void initialRowOffset(Object object) {
+		initialRowOffset = rows.find(object);
+	}
+
 	@SuppressWarnings("unused")
 	void update() {
 		if (updating)
@@ -243,7 +262,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					IBulkTableWidget.class);
 			grid.height(height);
 			paintedRows = computeRowsToPaint();
-			rowOffset = convert(usedScrollOffset);
+			rowOffset = convertToRowOffset(usedScrollOffset);
 			int current = 0;
 			for (int c = 0; c < columns.size(); c++) {
 				if (!columns.get(c).visible)
