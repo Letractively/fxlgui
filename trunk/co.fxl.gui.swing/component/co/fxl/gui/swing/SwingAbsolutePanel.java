@@ -51,14 +51,16 @@ class SwingAbsolutePanel extends SwingPanel<IAbsolutePanel> implements
 
 	@Override
 	public IAbsolutePanel offset(IElement<?> element, int x, int y) {
-		throw new MethodNotImplementedException();
+		JComponent component = (JComponent) element.nativeElement();
+		super.add(component);
+		component.setBounds(x, y, component.getPreferredSize().width,
+				component.getPreferredSize().height);
+		return this;
 	}
 
 	@Override
 	public void add(JComponent component) {
 		super.add(component);
 		component.setLocation(new Point(x, y));
-		container.component.add(component);
 	}
-
 }
