@@ -50,7 +50,9 @@ class GWTAbsolutePanel extends GWTPanel<AbsolutePanel, IAbsolutePanel>
 
 	@Override
 	public IAbsolutePanel offset(IElement<?> element, int x, int y) {
-		throw new MethodNotImplementedException();
+		Widget widget = (Widget) element.nativeElement();
+		container.widget.setWidgetPosition(widget, x, y);
+		return this;
 	}
 
 	@Override
