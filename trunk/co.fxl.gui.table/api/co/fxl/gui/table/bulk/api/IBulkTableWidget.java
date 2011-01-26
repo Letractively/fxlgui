@@ -83,6 +83,8 @@ public interface IBulkTableWidget {
 
 	int height();
 
+	int contentHeight();
+
 	IBulkTableWidget height(int height);
 
 	IBulkTableWidget addMouseWheelListener(IMouseWheelListener l);

@@ -86,6 +86,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private String tooltip = "";// Use CTRL + Click to select multiple rows.";
 	private boolean visible;
 	private int initialRowOffset = -1;
+	private int initialPaintedRows;
 
 	ScrollTableWidgetImpl(IContainer container) {
 		widgetTitle = new WidgetTitle(container.panel()).foldable(false);
@@ -151,10 +152,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				update();
 				if (paintedRows == rows.size())
 					return this;
+				initialPaintedRows = paintedRows;
 				sp = dock.right().scrollPane();
 				sp.size(35, height);
 				h = sp.viewPort().panel().vertical();
-				spHeight = height * (rows.size() + 1);
+				spHeight = height * (rows.size() + 1 + paintedRows);
 				scrollPanelHeight = (int) (spHeight / paintedRows);
 				h.size(1, scrollPanelHeight);
 				sp.addScrollListener(this);
@@ -215,10 +217,12 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private int convertToRowOffset(int maxOffset) {
 		if (scrollPanelHeight == 0)
 			return 0;
-		double index = rows.size();
-		index *= maxOffset;
-		index /= scrollPanelHeight;
-		return (int) index;
+		double rowHeight = height / initialPaintedRows;
+		double index = maxOffset / rowHeight;
+		int index2 = (int) index;
+		if (index2 >= rows.size())
+			index2 = rows.size() - 1;
+		return index2;
 	}
 
 	private int convertFromRowOffset(int rowOffset) {
@@ -261,8 +265,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			grid = (IBulkTableWidget) contentPanel.add().widget(
 					IBulkTableWidget.class);
 			grid.height(height);
-			paintedRows = computeRowsToPaint();
 			rowOffset = convertToRowOffset(usedScrollOffset);
+			paintedRows = computeRowsToPaint();
 			int current = 0;
 			for (int c = 0; c < columns.size(); c++) {
 				if (!columns.get(c).visible)
@@ -348,6 +352,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				IKey<Object> key = (IKey<Object>) grid.addTableListener(l);
 				adp.forward(key);
 			}
+//			if (grid.contentHeight() < height - 50 && h != null) {
+//				scrollPanelHeight -= height - 50 - grid.contentHeight();
+//				h.size(1, scrollPanelHeight);
+//			}
 		} while (usedScrollOffset != scrollOffset);
 		updating = false;
 	}

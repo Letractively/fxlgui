@@ -228,6 +228,11 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 	}
 
 	@Override
+	public int contentHeight() {
+		return grid.height();
+	}
+
+	@Override
 	public IBulkTableWidget addMouseWheelListener(IMouseWheelListener l) {
 		// TODO ...
 		return this;
