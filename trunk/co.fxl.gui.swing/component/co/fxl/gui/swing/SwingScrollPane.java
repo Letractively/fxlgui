@@ -28,12 +28,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IScrollPane;
 
 class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 		IScrollPane {
 
-	private IContainer viewPort = new SwingContainer<JComponent>(
+	private SwingContainer<JComponent> viewPort = new SwingContainer<JComponent>(
 			container.parent) {
 
 		void setComponent(JComponent component) {
@@ -114,6 +115,14 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 		// TODO doesn't work
 		container.component.getVerticalScrollBar().scrollRectToVisible(
 				new Rectangle(0, pos, 1, 1));
+		return this;
+	}
+
+	@Override
+	public IScrollPane scrollIntoView(IElement<?> element) {
+		JComponent c = (JComponent) element.nativeElement();
+		viewPort.component.scrollRectToVisible(c.getBounds(null));
+		container.component.repaint();
 		return this;
 	}
 }
