@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -33,7 +34,6 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
@@ -86,7 +86,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IGridPanel statusPanel;
 	private String tooltip = "";// Use CTRL + Click to select multiple rows.";
 	private boolean visible;
-	private int initialRowOffset = -1;
+	private int initialRowOffset = 100;
 	private int initialPaintedRows;
 	private int maxRowIndex;
 
@@ -159,15 +159,16 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				maxRowIndex = rows.size() - paintedRows;
 				sp = dock.right().scrollPane();
 				sp.size(35, height);
-				h = sp.viewPort().panel().vertical();
+				h = sp.viewPort().panel().absolute();
 				spHeight = height * (rows.size() + paintedRows);
 				scrollPanelHeight = (int) (spHeight / paintedRows);
 				h.size(1, scrollPanelHeight);
 				sp.addScrollListener(this);
-				h.add().label().text("&#160;");
+				ILabel blankToken = h.add().label().text("&#160;");
 				if (initialRowOffset != -1) {
 					int convertFromRowOffset = convertFromRowOffset(initialRowOffset);
-					sp.scrollTo(convertFromRowOffset);
+					h.offset(blankToken, 0, convertFromRowOffset);
+					sp.scrollIntoView(blankToken);
 					initialRowOffset = -1;
 				}
 			}
@@ -243,7 +244,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private Map<ITableListener, KeyAdapter<Object>> listeners = new HashMap<ITableListener, KeyAdapter<Object>>();
 	boolean selectionIsSetup = false;
 	private IScrollPane sp;
-	private IPanel<?> h;
+	private IAbsolutePanel h;
 	private double spHeight;
 	private ISortListener sortListener;
 	boolean addClickListeners = false;
