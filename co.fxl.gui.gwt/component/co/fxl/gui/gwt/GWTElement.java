@@ -34,6 +34,7 @@ import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.dom.client.HasDoubleClickHandlers;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Widget;
 
 public class GWTElement<T extends Widget, R> implements IElement<R> {
@@ -132,7 +133,8 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	}
 
 	private void toggleClickHandler(boolean toggle) {
-		container.widget.removeStyleName("cursor-pointer");
+		DOM.setStyleAttribute(container.widget.getElement(), "cursor",
+				"pointer");
 		if (registration != null) {
 			registration.removeHandler();
 			registration = null;
@@ -142,7 +144,8 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 			registration2 = null;
 		}
 		if (toggle) {
-			container.widget.addStyleName("cursor-pointer");
+			DOM.setStyleAttribute(container.widget.getElement(), "cursor",
+					"hand");
 			registerClickHandler();
 		}
 	}

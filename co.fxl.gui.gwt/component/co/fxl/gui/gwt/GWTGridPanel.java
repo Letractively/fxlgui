@@ -290,4 +290,9 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 			}
 		};
 	}
+
+	@Override
+	public IGridRow row(int row) {
+		throw new MethodNotImplementedException();
+	}
 }
