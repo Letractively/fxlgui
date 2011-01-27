@@ -330,4 +330,19 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 	public IBorder cellBorder() {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public IGridRow row(final int row) {
+		return new IGridRow() {
+
+			@Override
+			public int height() {
+				int max = 0;
+				for (int column = 0; column < columns(); column++) {
+					max = Math.max(max, cell(column, row).height());
+				}
+				return max;
+			}
+		};
+	}
 }
