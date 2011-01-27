@@ -22,7 +22,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
@@ -261,27 +260,29 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 									.addTextField(property.name);
 							formField = tf;
 							if (!property.editable)
-								((ITextField) formField).editable(false);
+								((IFormField<ITextField>) formField)
+										.valueElement().editable(false);
 							// TODO long ...
 							formField.type().integer();
 							String value = valueOf == null ? ""
 									: ((Number) valueOf).toString();
 							formField.valueElement().text(value);
-							updates.add(new Runnable() {
-								@Override
-								public void run() {
-									Object value = null;
-									String text = formField.valueElement()
-											.text().trim();
-									if (!text.equals("")) {
-										if (isLong)
-											value = Long.valueOf(text);
-										else
-											value = Integer.valueOf(text);
+							if (property.editable)
+								updates.add(new Runnable() {
+									@Override
+									public void run() {
+										Object value = null;
+										String text = formField.valueElement()
+												.text().trim();
+										if (!text.equals("")) {
+											if (isLong)
+												value = Long.valueOf(text);
+											else
+												value = Integer.valueOf(text);
+										}
+										property.adapter.valueOf(node, value);
 									}
-									property.adapter.valueOf(node, value);
-								}
-							});
+								});
 						} else
 							throw new MethodNotImplementedException(
 									property.type.clazz);
@@ -298,8 +299,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	}
 
 	protected void decorateBorder(IVerticalPanel panel) {
-//		IBorder border = panel.border();
-//		border.color().gray();
-//		border.style().top();
+		// IBorder border = panel.border();
+		// border.color().gray();
+		// border.style().top();
 	}
 }
