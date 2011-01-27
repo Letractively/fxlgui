@@ -30,4 +30,6 @@ public interface IScrollPane extends IElement<IScrollPane>, IBordered, IColored 
 	IScrollPane addScrollListener(IScrollListener listener);
 
 	IScrollPane scrollTo(int pos);
+
+	IScrollPane scrollIntoView(IElement<?> element);
 }
