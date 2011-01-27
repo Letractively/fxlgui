@@ -209,6 +209,7 @@ public class Validation {
 		for (IField f : fields) {
 			f.update();
 		}
+		updateClickables();
 	}
 
 	public Validation linkClickable(IClickable<?> clickable) {
