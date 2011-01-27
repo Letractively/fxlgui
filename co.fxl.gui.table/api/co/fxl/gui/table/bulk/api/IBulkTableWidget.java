@@ -83,7 +83,11 @@ public interface IBulkTableWidget {
 
 	int height();
 
-	int contentHeight();
+	int tableHeight();
+
+	int rowCount();
+
+	int rowHeight(int row);
 
 	IBulkTableWidget height(int height);
 
@@ -98,4 +102,6 @@ public interface IBulkTableWidget {
 	IElement<?> element();
 
 	IBulkTableWidget showAsLink(int column, int row, boolean asLink);
+
+	IBulkTableWidget deferr(Runnable runnable);
 }

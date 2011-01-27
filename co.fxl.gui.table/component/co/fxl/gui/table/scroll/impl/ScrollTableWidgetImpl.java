@@ -67,6 +67,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private static final String ARROW_DOWN = "\u2193";
 	protected static final int SCROLL_MULT = 33;
 	protected static final int MAX_SORT_SIZE = 100;
+	private boolean adjustHeight = true;
 	IVerticalPanel container;
 	private int height = 400;
 	private WidgetTitle widgetTitle;
@@ -87,6 +88,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private boolean visible;
 	private int initialRowOffset = -1;
 	private int initialPaintedRows;
+	private int maxRowIndex;
 
 	ScrollTableWidgetImpl(IContainer container) {
 		widgetTitle = new WidgetTitle(container.panel()).foldable(false);
@@ -117,6 +119,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> visible(boolean visible) {
 		if (visible) {
+			adjustHeight = true;
 			this.visible = true;
 			statusPanel = null;
 			selectionIsSetup = false;
@@ -153,10 +156,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				if (paintedRows == rows.size())
 					return this;
 				initialPaintedRows = paintedRows;
+				maxRowIndex = rows.size() - paintedRows;
 				sp = dock.right().scrollPane();
 				sp.size(35, height);
 				h = sp.viewPort().panel().vertical();
-				spHeight = height * (rows.size() + 1 + paintedRows);
+				spHeight = height * (rows.size() + paintedRows);
 				scrollPanelHeight = (int) (spHeight / paintedRows);
 				h.size(1, scrollPanelHeight);
 				sp.addScrollListener(this);
@@ -215,18 +219,19 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	private int convertToRowOffset(int maxOffset) {
-		if (scrollPanelHeight == 0)
+		if (scrollPanelHeight == 0 || height == 0)
 			return 0;
 		double rowHeight = height / initialPaintedRows;
-		double index = maxOffset / rowHeight;
+		double index = maxOffset / rowHeight; // rows.size() * (maxOffset +
+												// height) / scrollPanelHeight;
 		int index2 = (int) index;
-		if (index2 >= rows.size())
-			index2 = rows.size() - 1;
+		if (index2 > maxRowIndex)
+			index2 = maxRowIndex;
 		return index2;
 	}
 
 	private int convertFromRowOffset(int rowOffset) {
-		if (scrollPanelHeight == 0)
+		if (scrollPanelHeight == 0 || height == 0)
 			return 0;
 		double index = rowOffset;
 		index *= scrollPanelHeight;
@@ -251,7 +256,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		initialRowOffset = rows.find(object);
 	}
 
-	@SuppressWarnings("unused")
 	void update() {
 		if (updating)
 			return;
@@ -267,40 +271,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			grid.height(height);
 			rowOffset = convertToRowOffset(usedScrollOffset);
 			paintedRows = computeRowsToPaint();
-			int current = 0;
-			for (int c = 0; c < columns.size(); c++) {
-				if (!columns.get(c).visible)
-					continue;
-				ScrollTableColumnImpl columnImpl = columns.get(c);
-				if (columnImpl.tagSortOrder != null) {
-					sortColumn = columnImpl.index;
-					sortNegator = columnImpl.tagSortOrder ? -1 : 1;
-					columnImpl.tagSortOrder = null;
-				}
-				String name = columnImpl.name;
-				if (sortColumn == c) {
-					name += " " + (sortNegator == 1 ? ARROW_DOWN : ARROW_UP);
-				}
-				IColumn column = grid.column(current++);
-				columnImpl.decorator().prepare(column);
-				column.title(name);
-				if (columnImpl.widthInt != -1)
-					column.width(columnImpl.widthInt);
-				else {
-					if (columnImpl.widthDouble == -1 && ALLOW_RESIZE)
-						columnImpl.widthDouble = 1d / columns.size();
-					if (columnImpl.widthDouble != -1)
-						column.width(columnImpl.widthDouble);
-				}
-			}
+			updateHeaderRow(grid);
 			for (int r = 0; r < paintedRows; r++) {
 				int index = r + rowOffset;
-				Object[] row = rows.row(index);
-				current = 0;
-				for (ScrollTableColumnImpl c : columns)
-					if (c.visible)
-						c.decorate(rows.identifier(index),
-								grid.cell(current++, r), row[c.index]);
+				updateSingleContentRow(grid, r, index);
 			}
 			grid.visible(true);
 			if (sp != null)
@@ -321,7 +295,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					}
 				});
 			if (addClickListeners) {
-				current = 0;
+				int current = 0;
 				for (ScrollTableColumnImpl c : columns)
 					if (!c.clickListeners.isEmpty() && c.visible)
 						grid.labelMouseListener(current++, this);
@@ -352,12 +326,70 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				IKey<Object> key = (IKey<Object>) grid.addTableListener(l);
 				adp.forward(key);
 			}
-//			if (grid.contentHeight() < height - 50 && h != null) {
-//				scrollPanelHeight -= height - 50 - grid.contentHeight();
-//				h.size(1, scrollPanelHeight);
-//			}
+			if (adjustHeight && h != null
+					&& rowOffset >= maxRowIndex - initialPaintedRows) {
+				dynamicallyGrowHeight();
+			}
 		} while (usedScrollOffset != scrollOffset);
 		updating = false;
+	}
+
+	private void updateSingleContentRow(IBulkTableWidget grid,
+			int visibleGridIndex, int contentIndex) {
+		Object[] row = rows.row(contentIndex);
+		int current = 0;
+		for (ScrollTableColumnImpl c : columns)
+			if (c.visible)
+				c.decorate(rows.identifier(contentIndex),
+						grid.cell(current++, visibleGridIndex), row[c.index]);
+	}
+
+	@SuppressWarnings("unused")
+	private void updateHeaderRow(IBulkTableWidget grid) {
+		int current = 0;
+		for (int c = 0; c < columns.size(); c++) {
+			if (!columns.get(c).visible)
+				continue;
+			ScrollTableColumnImpl columnImpl = columns.get(c);
+			if (columnImpl.tagSortOrder != null) {
+				sortColumn = columnImpl.index;
+				sortNegator = columnImpl.tagSortOrder ? -1 : 1;
+				columnImpl.tagSortOrder = null;
+			}
+			String name = columnImpl.name;
+			if (sortColumn == c) {
+				name += " " + (sortNegator == 1 ? ARROW_DOWN : ARROW_UP);
+			}
+			IColumn column = grid.column(current++);
+			columnImpl.decorator().prepare(column);
+			column.title(name);
+			if (columnImpl.widthInt != -1)
+				column.width(columnImpl.widthInt);
+			else {
+				if (columnImpl.widthDouble == -1 && ALLOW_RESIZE)
+					columnImpl.widthDouble = 1d / columns.size();
+				if (columnImpl.widthDouble != -1)
+					column.width(columnImpl.widthDouble);
+			}
+		}
+	}
+
+	private void dynamicallyGrowHeight() {
+		adjustHeight = false;
+		grid.deferr(new Runnable() {
+			public void run() {
+				int gridRow = 1;
+				int overflow = grid.tableHeight() - height;
+				do {
+					int rowHeight = grid.rowHeight(gridRow++);
+					overflow -= rowHeight;
+					maxRowIndex++;
+				} while (overflow > 0 && maxRowIndex < rows.size());
+				maxRowIndex++;
+				scrollPanelHeight += ROW_HEIGHT;
+				h.size(1, scrollPanelHeight);
+			}
+		});
 	}
 
 	private void addDisplayingNote() {

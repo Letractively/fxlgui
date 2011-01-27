@@ -228,7 +228,7 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 	}
 
 	@Override
-	public int contentHeight() {
+	public int tableHeight() {
 		return grid.height();
 	}
 
@@ -277,5 +277,21 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 		else
 			l.font().color().black();
 		return this;
+	}
+
+	@Override
+	public IBulkTableWidget deferr(Runnable runnable) {
+		runnable.run();
+		return this;
+	}
+
+	@Override
+	public int rowCount() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public int rowHeight(int row) {
+		return grid.row(row).height();
 	}
 }
