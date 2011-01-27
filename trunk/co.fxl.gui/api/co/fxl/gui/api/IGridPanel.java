@@ -20,6 +20,11 @@ package co.fxl.gui.api;
 
 public interface IGridPanel extends IPanel<IGridPanel> {
 
+	public interface IGridRow {
+
+		int height();
+	}
+
 	public interface IGridClickListener {
 
 		void onClick(int column, int row);
@@ -65,4 +70,6 @@ public interface IGridPanel extends IPanel<IGridPanel> {
 	IGridPanel prepare(int columns, int rows);
 
 	IBorder cellBorder();
+
+	IGridRow row(int row);
 }
