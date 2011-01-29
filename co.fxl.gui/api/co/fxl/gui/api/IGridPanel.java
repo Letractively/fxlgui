@@ -20,6 +20,11 @@ package co.fxl.gui.api;
 
 public interface IGridPanel extends IPanel<IGridPanel> {
 
+	public interface IGridColumn {
+
+		IGridColumn expand();
+	}
+
 	public interface IGridRow {
 
 		int height();
@@ -72,4 +77,6 @@ public interface IGridPanel extends IPanel<IGridPanel> {
 	IBorder cellBorder();
 
 	IGridRow row(int row);
+
+	IGridColumn column(int column);
 }
