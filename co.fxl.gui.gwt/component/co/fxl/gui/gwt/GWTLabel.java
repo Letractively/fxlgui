@@ -25,6 +25,7 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.HTML;
 
@@ -32,6 +33,7 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 
 	private boolean isHyperlink = false;
 	private HTMLText html = new HTMLText();
+	private boolean selectionDisabled = false;
 
 	GWTLabel(GWTContainer<HTML> container) {
 		super(container);
@@ -90,8 +92,12 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 
 	@Override
 	GWTClickHandler<ILabel> newGWTClickHandler(IClickListener clickListener) {
+		DOM.setStyleAttribute(container.widget.getElement(), "cursor", "hand");
 		html.selectable = false;
-		disableSelection(container.widget.getElement());
+		if (!selectionDisabled) {
+			disableSelection(container.widget.getElement());
+			selectionDisabled = true;
+		}
 		update();
 		return new GWTClickHandler<ILabel>(this, clickListener);
 	}
