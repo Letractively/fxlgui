@@ -55,8 +55,6 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 		super(widget);
 		this.create = create;
 		this.createType = createType;
-		// if (widget.splitLayout != null)
-		// widget.splitLayout.showSplit(false);
 		this.selectionObject = sshow;
 		tree = (IFilterTreeWidget<Object>) widget.mainPanel.add().widget(
 				IFilterTreeWidget.class);
@@ -242,5 +240,10 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 	@Override
 	public void onDelete() {
 		onDelete(null);
+	}
+
+	@Override
+	public void onApply(IFilterConstraints constraints) {
+		throw new MethodNotImplementedException();
 	}
 }

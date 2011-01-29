@@ -31,13 +31,9 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.template.CallbackTemplate;
-import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.api.template.ResizeListener;
 import co.fxl.gui.filter.api.IFilterConstraints;
-import co.fxl.gui.filter.api.IFilterWidget;
-import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
-import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IDeletableList;
 import co.fxl.gui.mdt.api.IProperty.IAdapter;
 import co.fxl.gui.table.api.IColumn;
@@ -48,8 +44,8 @@ import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.ISortListener;
 
-class TableView extends ViewTemplate implements IFilterListener,
-		IResizeListener, ISortListener, ISelectionListener<Object> {
+class TableView extends ViewTemplate implements IResizeListener, ISortListener,
+		ISelectionListener<Object> {
 
 	private IScrollTableWidget<Object> table;
 	private Map<PropertyImpl, IColumn<Object>> property2column = new HashMap<PropertyImpl, IColumn<Object>>();
@@ -59,7 +55,6 @@ class TableView extends ViewTemplate implements IFilterListener,
 	// private IClickable<?> detail;
 	private Map<String, IClickable<?>> buttons = new HashMap<String, IClickable<?>>();
 	private Object selectionObject;
-	private IFilterWidget filterWidget;
 
 	TableView(final MasterDetailTableWidgetImpl widget, Object object,
 			String configuration) {
@@ -69,50 +64,6 @@ class TableView extends ViewTemplate implements IFilterListener,
 			widget.splitLayout.showSplit(true);
 		setUpFilter(configuration);
 		onDelete();
-	}
-
-	private void setUpFilter(String configuration) {
-		if (widget.filterList.filters.isEmpty())
-			return;
-		widget.sidePanel.addSpace(0);// widget.addSpacing);
-		filterWidget = (IFilterWidget) widget.sidePanel.add().widget(
-				IFilterWidget.class);
-		filterWidget.showConfiguration(false);
-		int index = 0;
-		for (MDTFilterImpl filter : widget.filterList.filters) {
-			if (!filter.inTable)
-				continue;
-			String config = widget.filterList.configuration2index.get(index++);
-			if (config != null)
-				filterWidget.addConfiguration(config);
-			if (filter instanceof MDTRelationFilterImpl) {
-				MDTRelationFilterImpl rfi = (MDTRelationFilterImpl) filter;
-				@SuppressWarnings("unchecked")
-				IRelationFilter<Object, Object> rf = (IRelationFilter<Object, Object>) filterWidget
-						.addRelationFilter();
-				rf.name(rfi.name);
-				rf.adapter(rfi.adapter);
-				rf.preset(rfi.preset);
-			} else if (filter.property != null) {
-				if (filter.property.displayInTable) {
-					IFilter ftr = filterWidget.addFilter().name(
-							filter.property.name);
-					IFieldType f = ftr.type().type(filter.property.type.clazz);
-					if (!filter.property.type.values.isEmpty())
-						for (Object o : filter.property.type.values)
-							f.addConstraint(o);
-				}
-			} else
-				throw new MethodNotImplementedException(filter.name);
-		}
-		if (widget.constraints != null)
-			filterWidget.constraints(widget.constraints);
-		filterWidget.addSizeFilter();
-		filterWidget.addFilterListener(this);
-		filterWidget.visible(true);
-		if (configuration != null)
-			filterWidget.setConfiguration(configuration);
-		// filterWidget.apply();
 	}
 
 	@SuppressWarnings({ "unchecked" })
