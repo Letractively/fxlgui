@@ -24,18 +24,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 
 class SwingDockPanel extends SwingPanel<IDockPanel> implements IDockPanel {
 
-	private List<String> positions = new LinkedList<String>(Arrays
-			.asList(new String[] { BorderLayout.CENTER, BorderLayout.NORTH,
-					BorderLayout.WEST, BorderLayout.EAST, BorderLayout.SOUTH }));
+	private List<String> positions = new LinkedList<String>(
+			Arrays.asList(new String[] { BorderLayout.CENTER,
+					BorderLayout.NORTH, BorderLayout.WEST, BorderLayout.EAST,
+					BorderLayout.SOUTH }));
 
-	SwingDockPanel(SwingContainer<JPanel> container) {
+	SwingDockPanel(SwingContainer<PanelComponent> container) {
 		super(container);
 		setLayout(new BorderLayout());
 	}

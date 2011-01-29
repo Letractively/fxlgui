@@ -23,7 +23,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.Box;
-import javax.swing.JPanel;
 
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -54,7 +53,7 @@ class SwingHorizontalPanel extends SwingPanel<IHorizontalPanel> implements
 
 	Component stretch;
 
-	SwingHorizontalPanel(SwingContainer<JPanel> container) {
+	SwingHorizontalPanel(SwingContainer<PanelComponent> container) {
 		super(container);
 		setLayout(new HorizontalLayoutManager(this));
 		align().begin();

@@ -221,7 +221,7 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 	private boolean hasClickListener = false;
 	private List<GridClickListenerAdapter> gridClickListeners = new LinkedList<GridClickListenerAdapter>();
 
-	SwingGridPanel(SwingContainer<JPanel> container) {
+	SwingGridPanel(SwingContainer<PanelComponent> container) {
 		super(container);
 		setLayout(layout = new GridBagLayout());
 		constraints.anchor = GridBagConstraints.LINE_START;

@@ -25,7 +25,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -127,8 +126,9 @@ class SwingContainer<T extends JComponent> implements IContainer {
 
 	@Override
 	public ILayout panel() {
-		setComponent((T) new JPanel());
-		SwingPanel<?> panel = new SwingDockPanel((SwingContainer<JPanel>) this);
+		setComponent((T) new PanelComponent());
+		SwingPanel<?> panel = new SwingDockPanel(
+				(SwingContainer<PanelComponent>) this);
 		return new SwingLayout(panel);
 	}
 

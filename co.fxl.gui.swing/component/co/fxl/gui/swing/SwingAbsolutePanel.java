@@ -21,7 +21,6 @@ package co.fxl.gui.swing;
 import java.awt.Point;
 
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 
 import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.IElement;
@@ -32,7 +31,7 @@ class SwingAbsolutePanel extends SwingPanel<IAbsolutePanel> implements
 	private int x;
 	private int y;
 
-	SwingAbsolutePanel(SwingContainer<JPanel> container) {
+	SwingAbsolutePanel(SwingContainer<PanelComponent> container) {
 		super(container);
 		setLayout(null);
 	}
