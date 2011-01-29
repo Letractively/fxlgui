@@ -116,6 +116,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		return this;
 	}
 
+	private IGridPanel topPanel;
+
 	@Override
 	public IScrollTableWidget<Object> visible(boolean visible) {
 		if (visible) {
@@ -129,14 +131,16 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				IVerticalPanel dock = container.add().panel().vertical()
 						.spacing(10);
 				dock.height(height);
-				dock.add().label().text("No rows found").font().pixel(10)
-						.color().gray();
+				topPanel = dock.add().panel().grid();
+				topPanel.cell(0, 0).label().text("No rows found").font()
+						.pixel(10).color().gray();
 			} else {
 				for (ScrollTableColumnImpl c : columns) {
 					if (c.filterable) {
 						if (filter == null) {
+							topPanel = container.add().panel().grid();
 							// container.addSpace(10);
-							filter = (IMiniFilterWidget) container.add()
+							filter = (IMiniFilterWidget) topPanel.cell(0, 0)
 									.widget(IMiniFilterWidget.class);
 						}
 						filter.addFilter().name(c.name).type(c.type);
@@ -172,6 +176,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					initialRowOffset = -1;
 				}
 			}
+			if (buttonDecorator != null)
+				buttonPanel(buttonDecorator);
 		} else {
 			this.visible = false;
 			throw new MethodNotImplementedException();
@@ -252,6 +258,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private boolean allowColumnSelection = true;
 	private IFilterConstraints constraints;
 	private IFilterListener filterListener;
+	private IButtonPanelDecorator buttonDecorator;
 
 	void initialRowOffset(Object object) {
 		initialRowOffset = rows.find(object);
@@ -620,6 +627,15 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> constraints(IFilterConstraints constraints) {
 		this.constraints = constraints;
+		return this;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> buttonPanel(IButtonPanelDecorator dec) {
+		if (topPanel != null) {
+			dec.decorate(topPanel.cell(1, 0));
+		} else
+			buttonDecorator = dec;
 		return this;
 	}
 }
