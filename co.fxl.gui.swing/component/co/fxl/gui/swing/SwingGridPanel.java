@@ -345,4 +345,16 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 			}
 		};
 	}
+
+	@Override
+	public IGridColumn column(int column) {
+		return new IGridColumn() {
+
+			@Override
+			public IGridColumn expand() {
+				// TODO ...
+				return this;
+			}
+		};
+	}
 }
