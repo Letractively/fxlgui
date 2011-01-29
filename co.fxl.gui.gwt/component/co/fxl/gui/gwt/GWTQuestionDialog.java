@@ -44,7 +44,7 @@ class GWTQuestionDialog implements IQuestionDialog {
 		if (message == null || questionListeners.isEmpty())
 			return;
 		final DialogBox dialog = new DialogBox(false, true);
-		dialog.setTitle(title);
+		dialog.setText(title);
 		VerticalPanel v = new VerticalPanel();
 		v.setSpacing(10);
 		v.add(new Label(message));
