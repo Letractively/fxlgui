@@ -144,12 +144,17 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 				else {
 					cell.label();
 				}
+				decorate(column, row, cell);
+				return this;
+			}
+
+			private void decorate(final int column, final int row,
+					IGridCell cell) {
 				IBorder b = cell.border();
 				b.color().lightgray();
 				b.style().bottom();
 				if (row + 1 > numRows)
 					numRows = row + 1;
-				return this;
 			}
 
 			private void align(final int column, IGridCell cell) {
@@ -164,6 +169,13 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 				} else
 					throw new MethodNotImplementedException();
 				return this;
+			}
+
+			@Override
+			public IContainer container() {
+				IGridCell cell = grid.cell(column, row + rowOffset);
+				decorate(column, row, cell);
+				return cell;
 			}
 		};
 	}
@@ -189,6 +201,11 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 			public boolean isHighlight() {
 				Boolean highlight = highlighted.get(row);
 				return highlight != null && highlight;
+			}
+
+			@Override
+			public int gridIndex() {
+				return row + 1;
 			}
 		};
 	}

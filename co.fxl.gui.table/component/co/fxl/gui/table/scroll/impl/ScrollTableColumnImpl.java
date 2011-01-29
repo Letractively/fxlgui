@@ -126,6 +126,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	boolean visible = true;
 	int widthInt = -1;
 	double widthDouble = -1;
+	boolean editable = false;
 
 	ScrollTableColumnImpl(ScrollTableWidgetImpl widget, int index) {
 		this.widget = widget;
@@ -251,5 +252,11 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	@Override
 	public IAlignment<IScrollTableColumn<Object>> align() {
 		return alignment;
+	}
+
+	@Override
+	public IScrollTableColumn<Object> editable() {
+		editable = true;
+		return this;
 	}
 }
