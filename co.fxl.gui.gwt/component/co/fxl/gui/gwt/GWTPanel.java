@@ -26,6 +26,7 @@ import co.fxl.gui.api.IWidgetProvider;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -38,6 +39,7 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 
 	@Override
 	void registerClickHandler() {
+		DOM.setStyleAttribute(container.widget.getElement(), "cursor", "hand");
 		container.widget.addDomHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {

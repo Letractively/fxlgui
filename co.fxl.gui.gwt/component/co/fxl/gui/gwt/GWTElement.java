@@ -144,13 +144,12 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 			registration2 = null;
 		}
 		if (toggle) {
-			DOM.setStyleAttribute(container.widget.getElement(), "cursor",
-					"hand");
 			registerClickHandler();
 		}
 	}
 
 	void registerClickHandler() {
+		DOM.setStyleAttribute(container.widget.getElement(), "cursor", "hand");
 		registration = ((HasClickHandlers) container.widget)
 				.addClickHandler(new ClickHandler() {
 					@Override
