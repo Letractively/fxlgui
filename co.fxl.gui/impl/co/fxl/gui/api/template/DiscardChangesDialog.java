@@ -23,9 +23,17 @@ import co.fxl.gui.api.IDisplay;
 
 public class DiscardChangesDialog {
 
+	public interface DiscardChangesListener {
+
+		void onDiscardChanges(ICallback<Boolean> cb);
+
+		void onKeepChanges(ICallback<Boolean> cb);
+	}
+
 	public static final String DISCARD_CHANGES = "You have made changes that have not been saved! Discard Changes?";
 	public static boolean active = false;
 	public static IDisplay display;
+	public static DiscardChangesListener listener;
 
 	public static void show(final ICallback<Boolean> callback) {
 		if (!active)
@@ -38,12 +46,34 @@ public class DiscardChangesDialog {
 						@Override
 						public void onYes() {
 							active = false;
-							callback.onSuccess(true);
+							if (listener != null) {
+								listener.onDiscardChanges(new CallbackTemplate<Boolean>() {
+
+									@Override
+									public void onSuccess(Boolean result) {
+										if (result)
+											listener = null;
+										callback.onSuccess(true);
+									}
+								});
+							} else
+								callback.onSuccess(true);
 						}
 
 						@Override
 						public void onNo() {
-							callback.onSuccess(false);
+							if (listener != null) {
+								listener.onKeepChanges(new CallbackTemplate<Boolean>() {
+
+									@Override
+									public void onSuccess(Boolean result) {
+										if (result)
+											listener = null;
+										callback.onSuccess(false);
+									}
+								});
+							} else
+								callback.onSuccess(false);
 						}
 
 						@Override
