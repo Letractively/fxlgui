@@ -342,6 +342,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	public ITreeWidget<T> root(ITree<T> tree, List<ITree<T>> path) {
+		assert tree != null : "Tree cannot be null";
 		if (this.root != null) {
 			show(null);
 			panel().clear();
@@ -387,7 +388,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			last.selected(false);
 		}
 		last = node;
-		if (node != null) {
+		if (node != null && node.tree != null) {
 			node.selected(true);
 			selection(node.tree.object());
 		} else
@@ -507,6 +508,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> notifyUpdate(T originalObject) {
+		assert originalObject != null : "Illegal argument for Tree.notifyUpdate";
 		Node<T> n = object2node.get(originalObject);
 		assert n != null : "Expanded tree node cannot be updated for object "
 				+ originalObject;
