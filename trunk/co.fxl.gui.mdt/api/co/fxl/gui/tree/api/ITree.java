@@ -53,4 +53,6 @@ public interface ITree<T> {
 	boolean isUpdateable();
 
 	boolean isReassignable();
+	
+	boolean isNew();
 }

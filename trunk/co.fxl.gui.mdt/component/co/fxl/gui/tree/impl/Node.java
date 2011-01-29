@@ -32,7 +32,7 @@ import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.tree.api.ITree;
 
-class Node<T> implements IClickListener {
+class Node<T> extends LazyClickListener {
 
 	private static final String FOLDER_CLOSED = "folder_closed.png";
 	private static final String FOLDER_EMPTY = "folder_empty.png";
@@ -63,12 +63,6 @@ class Node<T> implements IClickListener {
 		IClickable<?> clickable = container;
 		injectTreeListener(clickable);
 		content = container.add().panel().horizontal().spacing(2);
-		IClickListener showClickListener = new LazyClickListener() {
-			@Override
-			public void onAllowedClick() {
-				Node.this.widget.show(Node.this);
-			}
-		};
 		content.addSpace(depth * INDENT);
 		image = content.add().image();
 		if (root.childCount() != 0) {
@@ -77,11 +71,14 @@ class Node<T> implements IClickListener {
 			image.resource(root.isLeaf() ? LEAF : FOLDER_EMPTY);
 		}
 		image.addClickListener(this);
-		image.addClickListener(showClickListener);
 		injectTreeListener(image);
 		content.addSpace(4);
-		label = content.add().label().text(root.name());
+		String name = root.name();
+		boolean isNull = name == null || name.trim().equals("");
+		label = content.add().label().text(isNull ? "unnamed" : name);
 		label.font().pixel(12);
+		if (isNull)
+			label.font().weight().italic().color().gray();
 		injectTreeListener(label);
 		if (widget.detailPanel != null) {
 			// label.addClickListener(showClickListener);
@@ -103,11 +100,10 @@ class Node<T> implements IClickListener {
 		// imageRefresh.addClickListener(showClickListener);
 		// }
 		label.addClickListener(this);
-		label.addClickListener(showClickListener);
 		this.tree = root;
 		this.depth = depth;
 		content.addSpace(10);
-		if (root.children().size() != 0 && expand && path == null)
+		if (root.children().size() != 0 && expand)
 			expandLoadedNode();
 		else if (root.childCount() != 0 && path != null && path.contains(tree)) {
 			expandLazyNode();
@@ -131,10 +127,16 @@ class Node<T> implements IClickListener {
 
 	void update(T object) {
 		label.text(tree.name());
+		label.font().weight().plain().color().black();
 	}
 
 	@Override
-	public void onClick() {
+	public void onAllowedClick() {
+		expandCollapse();
+		widget.show(Node.this);
+	}
+
+	private void expandCollapse() {
 		if (tree.childCount() == 0)
 			return;
 		if (widget.selection != null && !tree.object().equals(widget.selection)) {

@@ -267,7 +267,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 		else {
 			r2.checked(true);
 			// TODO remove quickfix refresh
-			showDetailView(null).onRefresh();
+			showDetailView(null).onDelete();
 		}
 		return this;
 	}
@@ -333,7 +333,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 
 	@Override
 	public IMasterDetailTableWidget<Object> refresh() {
-		listener.onRefresh();
+		listener.onDelete();
 		return this;
 	}
 
