@@ -182,10 +182,11 @@ public class Validation {
 	private boolean clickable;
 	private boolean isSpecified = false;
 	private boolean showDiscardChanges = false;
+	private boolean isNew = false;
 
 	private void updateClickables() {
 		boolean error = false;
-		isSpecified = false;
+		isSpecified = isNew;
 		boolean allRequiredSpecified = true;
 		for (IField field : fields) {
 			if (field.isSpecified())
@@ -209,6 +210,7 @@ public class Validation {
 		for (IField f : fields) {
 			f.update();
 		}
+		isNew = false;
 		updateClickables();
 	}
 
@@ -345,5 +347,9 @@ public class Validation {
 
 	public void showDiscardChanges() {
 		showDiscardChanges = true;
+	}
+
+	public void isNew() {
+		isNew = true;
 	}
 }
