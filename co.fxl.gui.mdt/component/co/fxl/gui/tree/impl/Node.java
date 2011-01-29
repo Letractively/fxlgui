@@ -55,12 +55,14 @@ class Node<T> extends LazyClickListener {
 
 	Node(final TreeWidgetImpl<T> widget, IVerticalPanel panel,
 			final ITree<T> root, int depth, boolean expand, List<ITree<T>> path) {
+		assert root != null : "Tree cannot be null";
 		this.widget = widget;
 		this.panel = panel;
 		this.expand = expand;
 		this.path = path;
 		container = panel.add().panel().horizontal();
 		IClickable<?> clickable = container;
+		clickable.addClickListener(this);
 		injectTreeListener(clickable);
 		content = container.add().panel().horizontal().spacing(2);
 		content.addSpace(depth * INDENT);
@@ -177,6 +179,7 @@ class Node<T> extends LazyClickListener {
 		clear();
 		childrenPanel = panel.add().panel().vertical();
 		for (ITree<T> child : tree.children()) {
+			assert child != null : "Tree child cannot be null";
 			new Node<T>(widget, childrenPanel.add().panel().vertical(), child,
 					depth + 1, expand, path);
 		}

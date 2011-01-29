@@ -75,6 +75,7 @@ class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
 			public void onSuccess(ITree<T> tree) {
 				Node<T> n = object2node.get(selection);
 				if (n != null) {
+					assert n.tree != null : "Tree cannot be null";
 					ITree<T> p = n.tree;
 					showToParent(tree, p);
 				} else
@@ -93,6 +94,7 @@ class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
 				Node<T> n = object2node.get(selection);
 				if (n != null) {
 					ITree<T> p = n.tree;
+					assert p != null : "Tree cannot be null";
 					showToParent(tree, p);
 				} else
 					root(tree);
