@@ -72,7 +72,7 @@ public interface ITreeWidget<T> {
 
 	ITreeWidget<T> clickNew(String type);
 
-	ITreeWidget<T> notifyUpdate(T original, T object);
+	ITreeWidget<T> notifyUpdate(T originalObject);
 
 	ITreeWidget<T> addCreatableType(String type);
 

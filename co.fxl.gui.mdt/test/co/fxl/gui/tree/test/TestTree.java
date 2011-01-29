@@ -137,4 +137,9 @@ class TestTree implements ITree<String> {
 	public boolean isReassignable() {
 		return true;
 	}
+
+	@Override
+	public boolean isNew() {
+		throw new MethodNotImplementedException();
+	}
 }

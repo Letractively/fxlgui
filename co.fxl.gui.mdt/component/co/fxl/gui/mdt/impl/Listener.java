@@ -22,5 +22,5 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 interface Listener extends IUpdateListener<String> {
 
-	void onRefresh();
+	void onDelete();
 }

@@ -30,6 +30,7 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IMDTFilterList;
 import co.fxl.gui.mdt.api.IMasterDetailTableWidget;
+import co.fxl.gui.mdt.impl.DetailViewDecorator.DeleteListener;
 import co.fxl.gui.tree.api.IFilterTreeWidget;
 import co.fxl.gui.tree.api.IFilterTreeWidget.ISource;
 import co.fxl.gui.tree.api.ITree;
@@ -37,7 +38,8 @@ import co.fxl.gui.tree.api.ITreeWidget;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 import co.fxl.gui.tree.api.ITreeWidget.ITreeClickListener;
 
-class DetailView extends ViewTemplate implements ISource<Object> {
+class DetailView extends ViewTemplate implements ISource<Object>,
+		DeleteListener {
 
 	static final DateFormat DATE_FORMAT = DateFormat.instance;
 	IFilterTreeWidget<Object> tree;
@@ -137,10 +139,10 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 		DetailViewDecorator decorator = new DetailViewDecorator(gs) {
 
 			@Override
-			protected void save(Object node) {
-				saveNode(node);
+			protected void save(Object node, ICallback<Boolean> cb) {
+				saveNode(node, cb);
 			}
-		};
+		}.refreshListener(this);
 		tree.addDetailView(IMasterDetailTableWidget.DETAILS, decorator);
 		for (final PropertyGroupImpl group : widget.propertyGroups) {
 			if (group.asDetail
@@ -148,10 +150,10 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 				tree.addDetailView(group.name, new DetailViewDecorator(gs) {
 
 					@Override
-					protected void save(Object node) {
-						saveNode(node);
+					protected void save(Object node, ICallback<Boolean> cb) {
+						saveNode(node, cb);
 					}
-				});
+				}.refreshListener(this));
 			}
 		}
 		for (final RelationImpl relation : widget.relations) {
@@ -218,21 +220,27 @@ class DetailView extends ViewTemplate implements ISource<Object> {
 
 	@Override
 	public void onUpdate(String value) {
-		onRefresh();
+		onDelete();
 	}
 
 	@Override
-	public void onRefresh() {
-		tree.refresh();
+	public void onDelete(ICallback<Boolean> cb) {
+		tree.refresh(cb);
 	}
 
-	private void saveNode(final Object node) {
+	private void saveNode(final Object node, final ICallback<Boolean> cb) {
 		itree.save(node, new CallbackTemplate<Object>() {
 
 			@Override
 			public void onSuccess(Object result) {
-				tree.notifyUpdate(node, result);
+				tree.notifyUpdate(result);
+				cb.onSuccess(true);
 			}
 		});
+	}
+
+	@Override
+	public void onDelete() {
+		onDelete(null);
 	}
 }

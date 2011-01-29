@@ -35,5 +35,5 @@ public interface IFilterTreeWidget<T> extends ITreeWidget<T> {
 
 	IFilterTreeWidget<T> visible(boolean visible);
 
-	IFilterTreeWidget<T> refresh();
+	IFilterTreeWidget<T> refresh(co.fxl.gui.api.template.ICallback<Boolean> cb);
 }

@@ -192,7 +192,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 								widgetTitle.reset();
 								selection(result.object());
 								boolean rememberExpand = expand;
-								expand = false;
+								expand = true;
 								List<ITree<T>> path = new LinkedList<ITree<T>>();
 								path.add(result);
 								while (result.parent() != null) {
@@ -450,14 +450,16 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	private void updateCreatable() {
 		if (root == null) {
-			for (IClickable<ILabel> c : newClickHyperlink.values()) {
-				c.clickable(false);
-			}
+			disableAllNew();
 			return;
 		}
 		ITree<T> tree = root;
 		if (selection != null && object2node.get(selection) != null) {
 			tree = object2node.get(selection).tree;
+			if (tree.isNew()) {
+				disableAllNew();
+				return;
+			}
 		}
 		String[] creatableTypes = tree.getCreatableTypes();
 		List<String> ctypes = creatableTypes != null ? Arrays
@@ -465,6 +467,12 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		for (String c : newClickHyperlink.keySet()) {
 			boolean b = ctypes == null || ctypes.contains(c);
 			newClickHyperlink.get(c).clickable(b);
+		}
+	}
+
+	private void disableAllNew() {
+		for (IClickable<ILabel> c : newClickHyperlink.values()) {
+			c.clickable(false);
 		}
 	}
 
@@ -498,12 +506,14 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	@Override
-	public ITreeWidget<T> notifyUpdate(T originalObject, T object) {
-		if (selection == originalObject)
-			selection = object;
-		Node<T> n = object2node.remove(originalObject);
-		n.update(object);
-		object2node.put(object, n);
+	public ITreeWidget<T> notifyUpdate(T originalObject) {
+		Node<T> n = object2node.get(originalObject);
+		assert n != null : "Expanded tree node cannot be updated for object "
+				+ originalObject;
+		n.update(originalObject);
+		if (selection == originalObject) {
+			updateCreatable();
+		}
 		return this;
 	}
 

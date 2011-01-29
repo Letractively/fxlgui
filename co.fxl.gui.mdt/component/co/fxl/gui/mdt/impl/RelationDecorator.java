@@ -24,6 +24,7 @@ import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
 import co.fxl.gui.api.IDisplay.IResizeListener;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
@@ -80,98 +81,6 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 						IScrollTableWidget.class);
 				final ISelection<Object> selection0 = table.selection();
 				ISingleSelection<Object> selection = selection0.single();
-				IHorizontalPanel buttonPanel = panel.add().panel().horizontal()
-						.add().panel().horizontal();
-				if (relation.addRemoveListener != null) {
-					if (relation.addRemoveListener.isDetailedAdd()) {
-						add = relation.addRemoveListener.decorateAdd(node,
-								buttonPanel.add());
-					} else
-						add = buttonPanel.add().button().text("Add");
-					remove = buttonPanel.addSpace(10).add().button()
-							.text("Remove").clickable(false);
-				}
-				if (relation.showListener != null)
-					details = buttonPanel.addSpace(10).add().button()
-							.text("Show").clickable(false);
-				ISelectionListener<Object> listener = new ISelectionListener<Object>() {
-					@Override
-					public void onSelection(Object selection) {
-						if (remove != null) {
-							remove.clickable(selection != null);
-						}
-						if (details != null)
-							details.clickable(selection != null);
-					}
-				};
-				if (add != null)
-					add.addClickListener(new IClickListener() {
-						@Override
-						public void onClick() {
-							List<Object> r = selection0.result();
-							Object c = null;
-							if (r.size() > 0)
-								c = r.get(0);
-							relation.addRemoveListener.onAdd(node, c,
-									new CallbackTemplate<Boolean>() {
-
-										@Override
-										public void onSuccess(Boolean result) {
-											table.refresh();
-										}
-									});
-						}
-					});
-				if (remove != null)
-					remove.addClickListener(new IClickListener() {
-						@Override
-						public void onClick() {
-							String msg = "Remove Entity?";
-							panel.display()
-									.showDialog()
-									.question()
-									.question(msg)
-									.title("Warning")
-									.addQuestionListener(
-											new IQuestionDialogListener() {
-
-												@Override
-												public void onYes() {
-													List<Object> r = selection0
-															.result();
-													result.delete(
-															r.get(0),
-															new CallbackTemplate<IDeletableList<Object>>() {
-
-																@Override
-																public void onSuccess(
-																		IDeletableList<Object> result) {
-																	table.rows(toRows(result));
-																}
-															});
-												}
-
-												@Override
-												public void onNo() {
-												}
-
-												@Override
-												public void onCancel() {
-													throw new MethodNotImplementedException();
-												}
-											});
-
-						}
-					});
-				if (details != null)
-					details.addClickListener(new IClickListener() {
-						@Override
-						public void onClick() {
-							List<Object> r = selection0.result();
-							relation.showListener.onShow(r);
-						}
-					});
-				selection.addSelectionListener(listener);
 				for (final PropertyImpl property : relation.properties) {
 					IScrollTableColumn<Object> c = table.addColumn();
 					c.name(property.name).type(property.type).sortable();
@@ -207,6 +116,113 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 					}
 				});
 				table.constraints(constraints);
+				addButtons(panel, node, result, selection0, selection);
+			}
+
+			private void addButtons(final IVerticalPanel panel,
+					final Object node, final IDeletableList<Object> result,
+					final ISelection<Object> selection0,
+					final ISingleSelection<Object> selection) {
+				table.buttonPanel(new co.fxl.gui.table.scroll.api.IScrollTableWidget.IButtonPanelDecorator() {
+
+					@Override
+					public void decorate(IGridPanel.IGridCell container) {
+						IHorizontalPanel buttonPanel = container.align().end()
+								.panel().horizontal().align().end().add()
+								.panel().horizontal().align().end();
+						if (relation.addRemoveListener != null) {
+							if (relation.addRemoveListener.isDetailedAdd()) {
+								add = relation.addRemoveListener.decorateAdd(
+										node, buttonPanel.add());
+							} else
+								add = buttonPanel.add().button().text("Add");
+							remove = buttonPanel.addSpace(10).add().button()
+									.text("Remove").clickable(false);
+						}
+						if (relation.showListener != null)
+							details = buttonPanel.addSpace(10).add().button()
+									.text("Show").clickable(false);
+						ISelectionListener<Object> listener = new ISelectionListener<Object>() {
+							@Override
+							public void onSelection(Object selection) {
+								if (remove != null) {
+									remove.clickable(selection != null);
+								}
+								if (details != null)
+									details.clickable(selection != null);
+							}
+						};
+						if (add != null)
+							add.addClickListener(new IClickListener() {
+								@Override
+								public void onClick() {
+									List<Object> r = selection0.result();
+									Object c = null;
+									if (r.size() > 0)
+										c = r.get(0);
+									relation.addRemoveListener.onAdd(node, c,
+											new CallbackTemplate<Boolean>() {
+
+												@Override
+												public void onSuccess(
+														Boolean result) {
+													table.refresh();
+												}
+											});
+								}
+							});
+						if (remove != null)
+							remove.addClickListener(new IClickListener() {
+								@Override
+								public void onClick() {
+									String msg = "Remove Entity?";
+									panel.display()
+											.showDialog()
+											.question()
+											.question(msg)
+											.title("Warning")
+											.addQuestionListener(
+													new IQuestionDialogListener() {
+
+														@Override
+														public void onYes() {
+															List<Object> r = selection0
+																	.result();
+															result.delete(
+																	r.get(0),
+																	new CallbackTemplate<IDeletableList<Object>>() {
+
+																		@Override
+																		public void onSuccess(
+																				IDeletableList<Object> result) {
+																			table.rows(toRows(result));
+																		}
+																	});
+														}
+
+														@Override
+														public void onNo() {
+														}
+
+														@Override
+														public void onCancel() {
+															throw new MethodNotImplementedException();
+														}
+													});
+
+								}
+							});
+						if (details != null)
+							details.addClickListener(new IClickListener() {
+								@Override
+								public void onClick() {
+									List<Object> r = selection0.result();
+									relation.showListener.onShow(r);
+								}
+							});
+						selection.addSelectionListener(listener);
+					}
+				});
 			}
 
 			IRows<Object> toRows(final IDeletableList<Object> result) {
@@ -245,7 +261,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 		// TODO ... un-hard-code
 		if (offsetY == 0)
 			offsetY = 139;
-		int maxFromDisplay = height - offsetY - 120;
+		int maxFromDisplay = height - offsetY - 124;
 		if (maxFromDisplay > 0)
 			table.height(maxFromDisplay);
 	}

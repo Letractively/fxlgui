@@ -84,8 +84,22 @@ class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
 	}
 
 	@Override
-	public IFilterTreeWidget<T> refresh() {
-		onRefresh();
+	public IFilterTreeWidget<T> refresh(
+			final co.fxl.gui.api.template.ICallback<Boolean> cb) {
+		source.query(constraints, new CallbackTemplate<ITree<T>>() {
+
+			@Override
+			public void onSuccess(ITree<T> tree) {
+				Node<T> n = object2node.get(selection);
+				if (n != null) {
+					ITree<T> p = n.tree;
+					showToParent(tree, p);
+				} else
+					root(tree);
+				if (cb != null)
+					cb.onSuccess(true);
+			}
+		});
 		return this;
 	}
 }

@@ -68,7 +68,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 		if (widget.splitLayout != null)
 			widget.splitLayout.showSplit(true);
 		setUpFilter(configuration);
-		onRefresh();
+		onDelete();
 	}
 
 	private void setUpFilter(String configuration) {
@@ -167,7 +167,7 @@ class TableView extends ViewTemplate implements IFilterListener,
 														@Override
 														public void onSuccess(
 																IDeletableList<Object> result) {
-															onRefresh();
+															onDelete();
 														}
 													});
 								}
@@ -403,11 +403,11 @@ class TableView extends ViewTemplate implements IFilterListener,
 	public void onUpdate(String value) {
 		if (filterWidget != null)
 			filterWidget.setConfiguration(value);
-		onRefresh();
+		onDelete();
 	}
 
 	@Override
-	public void onRefresh() {
+	public void onDelete() {
 		if (filterWidget != null)
 			filterWidget.apply();
 		else

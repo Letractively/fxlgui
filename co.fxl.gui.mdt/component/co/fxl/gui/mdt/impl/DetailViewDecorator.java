@@ -31,6 +31,8 @@ import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
+import co.fxl.gui.api.template.DiscardChangesDialog;
+import co.fxl.gui.api.template.DiscardChangesDialog.DiscardChangesListener;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
@@ -40,6 +42,11 @@ import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 
 public abstract class DetailViewDecorator implements IDecorator<Object> {
 
+	public interface DeleteListener {
+
+		void onDelete(ICallback<Boolean> cb);
+	}
+
 	private final List<PropertyGroupImpl> gs;
 	private String title = null;
 	private boolean hasRequiredAttributes = true;
@@ -47,6 +54,9 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	IFormWidget form;
 	// private Object node;
 	final List<Runnable> updates = new LinkedList<Runnable>();
+	private boolean isNew;
+	private ITree<Object> tree;
+	private DeleteListener deleteListener;
 
 	public void setUpdateable(boolean isUpdateable) {
 		this.isUpdateable = isUpdateable;
@@ -59,6 +69,11 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 
 	public DetailViewDecorator(List<PropertyGroupImpl> gs) {
 		this.gs = gs;
+	}
+
+	DetailViewDecorator refreshListener(DeleteListener refreshListener) {
+		this.deleteListener = refreshListener;
+		return this;
 	}
 
 	public DetailViewDecorator(PropertyGroupImpl pGroup) {
@@ -77,11 +92,13 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 		panel.clear();
 	}
 
-	protected abstract void save(Object node);
+	protected abstract void save(Object node, ICallback<Boolean> cb);
 
 	@Override
 	public void decorate(IVerticalPanel panel, final ITree<Object> node) {
+		this.tree = node;
 		isUpdateable = node.isUpdateable();
+		isNew = node.isNew();
 		decorate(panel, node.object());
 	}
 
@@ -91,12 +108,39 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 
 	@Override
 	public void decorate(IVerticalPanel panel, final Object node) {
-		// this.node = node;
 		updates.clear();
 		assert node != null;
 		panel.clear();
 		decorateBorder(panel);
 		form = (IFormWidget) panel.add().widget(IFormWidget.class);
+		form.isNew(isNew);
+		if (isNew) {
+			DiscardChangesDialog.listener = new DiscardChangesListener() {
+
+				@Override
+				public void onKeepChanges(ICallback<Boolean> cb) {
+					cb.onSuccess(false);
+				}
+
+				@Override
+				public void onDiscardChanges(final ICallback<Boolean> cb) {
+					tree.delete(new CallbackTemplate<Object>() {
+
+						@Override
+						public void onSuccess(Object result) {
+							deleteListener
+									.onDelete(new CallbackTemplate<Boolean>() {
+
+										@Override
+										public void onSuccess(Boolean result) {
+											cb.onSuccess(true);
+										}
+									});
+						}
+					});
+				}
+			};
+		}
 		if (title != null)
 			form.addTitle(title);
 		if (isUpdateable)
@@ -106,8 +150,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 				public void save(ICallback<Boolean> cb) {
 					for (Runnable update : updates)
 						update.run();
-					DetailViewDecorator.this.save(node);
-					cb.onSuccess(true);
+					DetailViewDecorator.this.save(node, cb);
 				}
 			});
 		for (PropertyGroupImpl g : gs)
@@ -154,27 +197,19 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 																				.text(newString);
 																		assign.text(newString == null ? "Assign"
 																				: "Change");
-																		save(node);
+																		save(node,
+																				new CallbackTemplate<Boolean>() {
+																					@Override
+																					public void onSuccess(
+																							Boolean result) {
+																						throw new MethodNotImplementedException();
+																					}
+																				});
 																	}
 																}
 															});
 										}
 									});
-									// tf.externalStatusAdapter(new
-									// IExternalStatusAdapter() {
-									//
-									// @Override
-									// public boolean isNull() {
-									// throw new
-									// MethodNotImplementedException();
-									// }
-									//
-									// @Override
-									// public boolean hasChanged() {
-									// throw new
-									// MethodNotImplementedException();
-									// }
-									// });
 								}
 							} else if (property.type.isLong) {
 								IFormField<ITextArea> textArea = form
@@ -196,8 +231,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 								IFormField<ITextField> tf = form
 										.addTextField(property.name);
 								formField = tf;
-								if (!property.editable)
-									((ITextField) formField).editable(false);
+								decorateEditable(property, formField);
 								valueElement = formField.valueElement();
 							}
 							String value = valueOf == null ? ""
@@ -207,6 +241,9 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							updates.add(new Runnable() {
 								@Override
 								public void run() {
+									if (property.adapter.valueOf(node) == null
+											&& valueElement.text().equals(""))
+										return;
 									property.adapter.valueOf(node,
 											valueElement.text());
 								}
@@ -215,8 +252,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							IFormField<ITextField> tf = form
 									.addTextField(property.name);
 							formField = tf;
-							if (!property.editable)
-								((ITextField) formField).editable(false);
+							decorateEditable(property, formField);
 							formField.type().date();
 							String value = valueOf == null ? ""
 									: DetailView.DATE_FORMAT
@@ -259,9 +295,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							IFormField<ITextField> tf = form
 									.addTextField(property.name);
 							formField = tf;
-							if (!property.editable)
-								((IFormField<ITextField>) formField)
-										.valueElement().editable(false);
+							decorateEditable(property, formField);
 							// TODO long ...
 							formField.type().integer();
 							String value = valueOf == null ? ""
@@ -293,6 +327,16 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 		supplement(form);
 		form.showDiscardChanges();
 		form.visible(true);
+	}
+
+	private void decorateEditable(final PropertyImpl property,
+			final IFormField<?> formField) {
+		if (!property.editable) {
+			assert formField instanceof IFormField : "cast error in detail view";
+			@SuppressWarnings("unchecked")
+			IFormField<ITextField> iFormField = (IFormField<ITextField>) formField;
+			iFormField.valueElement().editable(false);
+		}
 	}
 
 	public void supplement(IFormWidget form) {
