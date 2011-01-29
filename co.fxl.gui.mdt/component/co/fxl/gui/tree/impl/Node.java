@@ -82,9 +82,9 @@ class Node<T> extends LazyClickListener {
 		if (isNull)
 			label.font().weight().italic().color().gray();
 		injectTreeListener(label);
-		if (widget.detailPanel != null) {
-			// label.addClickListener(showClickListener);
-		}
+		// if (widget.detailPanel != null) {
+		// // label.addClickListener(showClickListener);
+		// }
 		// if (root.children().size() != 0 && expand
 		// && root.childCount() > root.children().size()) {
 		// String text = " [" + root.children().size() + "/"

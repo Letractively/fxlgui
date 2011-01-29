@@ -32,7 +32,6 @@ import co.fxl.gui.api.IDialog.IQuestionDialog;
 import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
@@ -84,6 +83,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				}
 			});
 			contentPanel = register.contentPanel().spacing(16);
+			contentPanel.color().rgb(BACKGROUND_GRAY, BACKGROUND_GRAY,
+					BACKGROUND_GRAY);
 			if (detailViews.isEmpty())
 				register.active();
 		}
@@ -126,7 +127,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private Node<T> last;
 	private IMenuWidget registers;
 	private List<DetailView> detailViews = new LinkedList<DetailView>();
-	IVerticalPanel detailPanel;
+	// IVerticalPanel detailPanel;
 	ITree<T> root;
 	private WidgetTitle widgetTitle;
 	private boolean expand = false;
@@ -138,9 +139,9 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private List<ISelectionListener<T>> selectionListeners = new LinkedList<ISelectionListener<T>>();
 	private ILabel delete;
 	private IVerticalPanel leftContentPanel;
-	private IVerticalPanel rightContentPanel;
+	// private IVerticalPanel rightContentPanel;
 	private ISplitPane splitPane;
-	IScrollPane scrollPane;
+	// IScrollPane scrollPane;
 	Node<T> node;
 	private boolean hasButtons = false;
 	private String defaultCreatableType = null;
@@ -301,27 +302,12 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private void setUpRegisters() {
 		if (registers != null)
 			return;
-		setUpDetailPanel();
-		registers = (IMenuWidget) detailPanel.add().widget(IMenuWidget.class);
-		// registers.background(BACKGROUND_GRAY, BACKGROUND_GRAY,
-		// BACKGROUND_GRAY);
-	}
-
-	private void setUpDetailPanel() {
-		if (detailPanel != null)
-			return;
 		splitPane = panel().add().splitPane().splitPosition(SPLIT_POSITION);
 		splitPane.border().color().lightgray();
 		leftContentPanel = splitPane.first().scrollPane().viewPort().panel()
 				.vertical();
 		panel = leftContentPanel.spacing(10).add().panel().vertical();
-		scrollPane = splitPane.second().scrollPane();
-		scrollPane.color().rgb(BACKGROUND_GRAY, BACKGROUND_GRAY,
-				BACKGROUND_GRAY);
-		// scrollPane.border().color().lightgray();
-		rightContentPanel = scrollPane.viewPort().panel().vertical();
-		// .spacing(10);
-		detailPanel = rightContentPanel.add().panel().vertical();
+		registers = (IMenuWidget) splitPane.second().widget(IMenuWidget.class);
 		onResize(-1, panel.display().height());
 		ResizeListener.setup(panel.display(), this);
 	}
