@@ -20,6 +20,8 @@ package co.fxl.gui.table.scroll.api;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IKey;
+import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
@@ -27,6 +29,11 @@ import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableListener;
 
 public interface IScrollTableWidget<T> {
+
+	public interface IButtonPanelDecorator {
+
+		void decorate(IGridPanel.IGridCell container);
+	}
 
 	public interface ISortListener {
 
@@ -62,4 +69,6 @@ public interface IScrollTableWidget<T> {
 	IScrollTableWidget<T> allowColumnSelection(boolean allowColumnSelection);
 
 	IScrollTableWidget<T> refresh();
+
+	IScrollTableWidget<T> buttonPanel(IButtonPanelDecorator iDecorator);
 }
