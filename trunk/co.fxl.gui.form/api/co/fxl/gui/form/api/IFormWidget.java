@@ -66,11 +66,13 @@ public interface IFormWidget {
 
 	ILabel labelRequiredAttribute();
 
+	IFormWidget isNew(boolean validate);
+
 	IFormWidget validate(boolean validate);
 
 	IFormWidget notifyUpdate();
 
 	IFormWidget visible(boolean visible);
-	
+
 	IFormWidget showDiscardChanges();
 }
