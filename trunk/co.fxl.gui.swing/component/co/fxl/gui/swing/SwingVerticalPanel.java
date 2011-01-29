@@ -23,7 +23,6 @@ import java.awt.Insets;
 
 import javax.swing.Box;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IVerticalPanel;
@@ -33,7 +32,7 @@ class SwingVerticalPanel extends SwingPanel<IVerticalPanel> implements
 
 	private VerticalLayoutManager layoutManager;
 
-	SwingVerticalPanel(SwingContainer<JPanel> container) {
+	SwingVerticalPanel(SwingContainer<PanelComponent> container) {
 		super(container);
 		setLayout(layoutManager = new VerticalLayoutManager());
 		container.component.setOpaque(false);

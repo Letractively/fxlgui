@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IContainer;
@@ -40,7 +39,7 @@ class SwingCardPanel extends SwingPanel<ICardPanel> implements ICardPanel {
 	JComponent chosen;
 	private String currentID;
 
-	SwingCardPanel(SwingContainer<JPanel> container) {
+	SwingCardPanel(SwingContainer<PanelComponent> container) {
 		super(container);
 		setLayout(cardLayout = new ResizeCardLayout(this));
 	}

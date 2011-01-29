@@ -24,7 +24,6 @@ import java.awt.LayoutManager;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
@@ -32,8 +31,8 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IWidgetProvider;
 
-class SwingPanel<R> extends SwingElement<JPanel, R> implements IPanel<R>,
-		ComponentParent {
+class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
+		IPanel<R>, ComponentParent {
 
 	private final class SwingPanelColor extends SwingColor {
 
@@ -44,13 +43,27 @@ class SwingPanel<R> extends SwingElement<JPanel, R> implements IPanel<R>,
 		}
 	}
 
-	SwingPanel(SwingContainer<JPanel> container) {
+	SwingPanel(SwingContainer<PanelComponent> container) {
 		super(container);
 		container.component.setOpaque(false);
 	}
 
 	void setLayout(LayoutManager layoutManager) {
 		container.component.setLayout(layoutManager);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R height(int height) {
+		container.component.preferredHeight = height;
+		return (R) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R width(int width) {
+		container.component.preferredWidth = width;
+		return (R) this;
 	}
 
 	@Override

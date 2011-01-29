@@ -18,11 +18,9 @@
  */
 package co.fxl.gui.swing;
 
-import javax.swing.JPanel;
-
 class SwingDummyPanel extends SwingPanel<SwingDummyPanel> {
 
-	SwingDummyPanel(SwingContainer<JPanel> container) {
+	SwingDummyPanel(SwingContainer<PanelComponent> container) {
 		super(container);
 	}
 }
