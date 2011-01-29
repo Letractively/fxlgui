@@ -68,8 +68,8 @@ class FilterPanelImpl implements FilterPanel {
 		private IGridPanel grid;
 
 		FilterGridImpl(IContainer gridContainer) {
-			grid = gridContainer.panel().vertical().align().end().spacing(3).add().panel()
-					.grid().spacing(3);
+			grid = gridContainer.panel().vertical().align().end().spacing(3)
+					.add().panel().grid().spacing(3);
 		}
 
 		@Override
@@ -79,7 +79,7 @@ class FilterPanelImpl implements FilterPanel {
 
 		@Override
 		public void title(int filterIndex, String name) {
-			IGridCell cell = grid.cell(0, filterIndex);
+			IGridCell cell = grid.cell(0, filterIndex).width(50);
 			widget.heights.decorate(cell);
 			ILabel text = cell.align().end().valign().center().label()
 					.autoWrap(true);
