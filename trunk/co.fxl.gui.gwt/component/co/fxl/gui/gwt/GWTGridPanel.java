@@ -295,4 +295,16 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 	public IGridRow row(int row) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public IGridColumn column(final int column) {
+		return new IGridColumn() {
+
+			@Override
+			public IGridColumn expand() {
+				container.widget.getColumnFormatter().setWidth(column, "100%");
+				return this;
+			}
+		};
+	}
 }
