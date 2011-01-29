@@ -73,6 +73,7 @@ class FormWidgetImpl implements IFormWidget {
 	Validation validation;
 	private Heights heights = new Heights(2);
 	private boolean showDiscardChanges = false;
+	private boolean isNew;
 
 	FormWidgetImpl(IContainer panel) {
 		widgetTitle = new WidgetTitle(panel.panel());
@@ -240,6 +241,9 @@ class FormWidgetImpl implements IFormWidget {
 		});
 		if (validate) {
 			validation = new Validation();
+			if (isNew) {
+				validation.isNew();
+			}
 			validation.showDiscardChanges();
 			validation.linkClickable(clickable);
 			for (final FormFieldImpl<?> formField : fields) {
@@ -303,7 +307,11 @@ class FormWidgetImpl implements IFormWidget {
 				// });
 				// }
 			}
-			clickable.clickable(false);
+			validation.notifyChange(new CallbackTemplate<Boolean>() {
+				@Override
+				public void onSuccess(Boolean result) {
+				}
+			});
 		}
 	}
 
@@ -364,6 +372,12 @@ class FormWidgetImpl implements IFormWidget {
 	@Override
 	public IFormWidget showDiscardChanges() {
 		showDiscardChanges = true;
+		return this;
+	}
+
+	@Override
+	public IFormWidget isNew(boolean validate) {
+		isNew = validate;
 		return this;
 	}
 }
