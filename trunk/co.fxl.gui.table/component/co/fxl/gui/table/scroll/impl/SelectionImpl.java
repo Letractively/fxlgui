@@ -49,14 +49,16 @@ class SelectionImpl implements ISelection<Object> {
 					if (row == 0)
 						return;
 					row--;
-					boolean alreadySelected = widget.rows.selected(widget
-							.convert2TableRow(row));
+					int convert2TableRow = widget.convert2TableRow(row);
+					boolean alreadySelected = widget.rows
+							.selected(convert2TableRow);
 					clearSelection();
 					if (alreadySelected)
 						return;
-					widget.rows.selected(widget.convert2TableRow(row), true);
+					widget.rows.selected(convert2TableRow, true);
 					IRow r = widget.grid.row(row);
 					r.highlight(true);
+					widget.editable(row + 1, true);
 					widget.highlighted.add(r);
 					for (ISelectionListener<Object> l : listeners) {
 						l.onSelection(widget.rows.selectedIdentifiers().get(0));
@@ -187,8 +189,11 @@ class SelectionImpl implements ISelection<Object> {
 
 	void clearSelection() {
 		widget.rows.clearSelection();
-		for (IRow r : widget.highlighted)
+		for (IRow r : widget.highlighted) {
+			int gridIndex = r.gridIndex();
 			r.highlight(false);
+			widget.editable(gridIndex, false);
+		}
 	}
 
 	private ScrollTableWidgetImpl widget;

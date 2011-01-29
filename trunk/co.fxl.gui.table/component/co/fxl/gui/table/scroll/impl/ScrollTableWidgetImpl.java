@@ -31,7 +31,6 @@ import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
-import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IScrollPane;
@@ -44,6 +43,7 @@ import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IMiniFilterWidget;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
+import co.fxl.gui.table.bulk.api.IBulkTableWidget.ICell;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ILabelMouseListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IMouseWheelListener;
@@ -401,7 +401,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	private void addDisplayingNote() {
-		IGridCell clear = statusPanel().cell(2, 0).clear().valign().center();
+		IGridPanel.IGridCell clear = statusPanel().cell(2, 0).clear().valign()
+				.center();
 		clear.align().end();
 		IHorizontalPanel p = clear.panel().horizontal().align().end().add()
 				.panel().horizontal().align().end();
@@ -637,5 +638,21 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		} else
 			buttonDecorator = dec;
 		return this;
+	}
+
+	void editable(int gridRowIndex, boolean editable) {
+		for (ScrollTableColumnImpl c : columns) {
+			if (c.editable) {
+				ICell cell = grid.cell(c.index, gridRowIndex);
+				IContainer container = cell.container().clear();
+				if (editable) {
+					container.textField().text("edit");
+				} else {
+					int dataRow = convert2TableRow(gridRowIndex);
+					c.decorate(rows.identifier(dataRow), cell,
+							rows.row(dataRow)[c.index]);
+				}
+			}
+		}
 	}
 }

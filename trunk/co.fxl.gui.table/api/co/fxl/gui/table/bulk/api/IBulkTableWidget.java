@@ -20,6 +20,7 @@ package co.fxl.gui.table.bulk.api;
 
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IClickable.IKey;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
@@ -62,6 +63,8 @@ public interface IBulkTableWidget {
 		IRow highlight(boolean highlight);
 
 		boolean isHighlight();
+
+		int gridIndex();
 	}
 
 	public interface ICell {
@@ -71,6 +74,8 @@ public interface IBulkTableWidget {
 		ICell checkBox(Boolean value);
 
 		ICell updateListener(IUpdateListener<Boolean> updateListener);
+
+		IContainer container();
 	}
 
 	ICell cell(int column, int row);
