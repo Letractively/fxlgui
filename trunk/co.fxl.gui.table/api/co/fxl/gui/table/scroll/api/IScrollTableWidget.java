@@ -44,7 +44,7 @@ public interface IScrollTableWidget<T> {
 
 	public interface IRowListener<T> {
 
-		void onClick(Object identifier, ICallback<T> callback);
+		void onClick(Object identifier, int rowIndex, ICallback<T> callback);
 	}
 
 	public interface ICommandButtons {

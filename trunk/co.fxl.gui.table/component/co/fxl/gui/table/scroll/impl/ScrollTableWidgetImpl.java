@@ -63,8 +63,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private static final boolean ALLOW_RESIZE = false;
 	private static final int HEADER_ROW_HEIGHT = 24;
 	private static final int ROW_HEIGHT = 22;
-	private static final String ARROW_UP = "\u2191";
-	private static final String ARROW_DOWN = "\u2193";
+	static final String ARROW_UP = "\u2191";
+	static final String ARROW_DOWN = "\u2193";
 	protected static final int SCROLL_MULT = 33;
 	protected static final int MAX_SORT_SIZE = 100;
 	private boolean adjustHeight = true;
@@ -89,6 +89,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private int initialRowOffset = 100;
 	private int initialPaintedRows;
 	private int maxRowIndex;
+	private IRows<Object> actualRows;
 
 	ScrollTableWidgetImpl(IContainer container) {
 		widgetTitle = new WidgetTitle(container.panel()).foldable(false);
@@ -109,7 +110,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	@Override
 	public IScrollTableWidget<Object> rows(IRows<Object> rows) {
-		this.rows = new RowAdapter(rows);
+		this.actualRows = rows;
 		if (visible) {
 			visible(true);
 		}
@@ -121,6 +122,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> visible(boolean visible) {
 		if (visible) {
+			rows = new RowAdapter(actualRows);
 			adjustHeight = true;
 			this.visible = true;
 			statusPanel = null;
@@ -157,23 +159,23 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				contentPanel = dock.center().panel().card();
 				scrollOffset = 0;
 				update();
-				if (paintedRows == rows.size())
-					return this;
-				initialPaintedRows = paintedRows;
-				maxRowIndex = rows.size() - paintedRows;
-				sp = dock.right().scrollPane();
-				sp.size(35, height);
-				h = sp.viewPort().panel().absolute();
-				spHeight = height * (rows.size() + paintedRows);
-				scrollPanelHeight = (int) (spHeight / paintedRows);
-				h.size(1, scrollPanelHeight);
-				sp.addScrollListener(this);
-				ILabel blankToken = h.add().label().text("&#160;");
-				if (initialRowOffset != -1) {
-					int convertFromRowOffset = convertFromRowOffset(initialRowOffset);
-					h.offset(blankToken, 0, convertFromRowOffset);
-					sp.scrollIntoView(blankToken);
-					initialRowOffset = -1;
+				if (paintedRows != rows.size()) {
+					initialPaintedRows = paintedRows;
+					maxRowIndex = rows.size() - paintedRows;
+					sp = dock.right().scrollPane();
+					sp.size(35, height);
+					h = sp.viewPort().panel().absolute();
+					spHeight = height * (rows.size() + paintedRows);
+					scrollPanelHeight = (int) (spHeight / paintedRows);
+					h.size(1, scrollPanelHeight);
+					sp.addScrollListener(this);
+					ILabel blankToken = h.add().label().text("&#160;");
+					if (initialRowOffset != -1) {
+						int convertFromRowOffset = convertFromRowOffset(initialRowOffset);
+						h.offset(blankToken, 0, convertFromRowOffset);
+						sp.scrollIntoView(blankToken);
+						initialRowOffset = -1;
+					}
 				}
 			}
 			if (buttonDecorator != null)

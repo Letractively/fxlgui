@@ -1,5 +1,7 @@
 package co.fxl.gui.table.scroll.impl;
 
+import co.fxl.gui.api.IButton;
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -14,6 +16,29 @@ import co.fxl.gui.table.scroll.api.IScrollTableWidget.IRowListener;
 
 class CommandButtons implements ICommandButtons, IButtonPanelDecorator,
 		ISelectionListener<Object> {
+
+	private final class Update<T> implements IClickListener {
+
+		private IRowListener<T> l;
+
+		Update(IRowListener<T> l) {
+			this.l = l;
+		}
+
+		@Override
+		public void onClick() {
+			l.onClick(selection, selectionIndex, new CallbackTemplate<T>() {
+				@Override
+				public void onSuccess(T result) {
+					execute();
+				}
+			});
+		}
+
+		private void execute() {
+			widget.visible(true);
+		}
+	}
 
 	private final class Move implements IClickListener {
 
@@ -31,7 +56,7 @@ class CommandButtons implements ICommandButtons, IButtonPanelDecorator,
 				l.onClick(selection, false, new CallbackTemplate<Boolean>() {
 					@Override
 					public void onSuccess(Boolean result) {
-						if (true)
+						if (result)
 							execute();
 					}
 				});
@@ -41,9 +66,16 @@ class CommandButtons implements ICommandButtons, IButtonPanelDecorator,
 
 		private void execute() {
 			int index = widget.rows.find(selection);
-			widget.rows.swap(index, index + inc);
+			int secondIndex;
+			if (inc == Integer.MIN_VALUE)
+				secondIndex = 0;
+			else if (inc == Integer.MAX_VALUE)
+				secondIndex = widget.rows.size() - 1;
+			else
+				secondIndex = index + inc;
+			widget.rows.swap(index, secondIndex);
 			widget.update();
-			updateButtons(index + inc);
+			updateButtons(secondIndex);
 		}
 	}
 
@@ -59,9 +91,11 @@ class CommandButtons implements ICommandButtons, IButtonPanelDecorator,
 	private IMoveRowListener<Boolean> listenOnMoveDownListener;
 	private IRowListener<Boolean> listenOnShowListener;
 	private Object selection;
-	private IImage imageUp;
 	private IHorizontalPanel panel;
-	private IImage imageDown;
+	private IClickable<?> imageUp;
+	private IClickable<?> imageDown;
+	private int selectionIndex;
+	private IButton remove;
 
 	CommandButtons(ScrollTableWidgetImpl widget) {
 		this.widget = widget;
@@ -108,28 +142,34 @@ class CommandButtons implements ICommandButtons, IButtonPanelDecorator,
 		widget.selection().single().addSelectionListener(this);
 		panel = container.panel().horizontal().align().end().add().panel()
 				.horizontal().align().end().spacing(4);
+		if (listenOnAdd) {
+			IButton image = panel.add().button().text("Add");
+			image.addClickListener(new Update<IInsert>(listenOnAddListener));
+		}
+		if (listenOnRemove) {
+			remove = panel.add().button().text("Remove");
+			remove.addClickListener(new Update<Boolean>(listenOnRemoveListener));
+			remove.clickable(false);
+		}
 		if (listenOnMoveUp) {
 			imageUp = addMoveImage("up.png", listenOnMoveUpListener, -1);
 		}
 		if (listenOnMoveDown) {
 			imageDown = addMoveImage("down.png", listenOnMoveDownListener, 1);
 		}
-		if (listenOnAdd) {
-			throw new MethodNotImplementedException();
-		}
-		if (listenOnRemove) {
-			throw new MethodNotImplementedException();
-		}
 		if (listenOnShow) {
 			throw new MethodNotImplementedException();
 		}
 	}
 
-	private IImage addMoveImage(String resource,
+	private IClickable<?> addMoveImage(String resource,
 			IMoveRowListener<Boolean> listenOnMoveUpListener2, int i) {
 		IImage image = panel.add().image().resource(resource);
 		image.addClickListener(new Move(listenOnMoveUpListener2, i))
 				.mouseLeft();
+		image.addClickListener(
+				new Move(listenOnMoveUpListener2, i == -1 ? Integer.MIN_VALUE
+						: Integer.MAX_VALUE)).doubleClick();
 		image.clickable(false);
 		return image;
 	}
@@ -137,19 +177,24 @@ class CommandButtons implements ICommandButtons, IButtonPanelDecorator,
 	@Override
 	public void onSelection(Object selection) {
 		this.selection = selection;
+		selectionIndex = widget.rows.find(selection);
 		updateButtons();
 	}
 
 	private void updateButtons() {
-		int index = widget.rows.find(selection);
-		updateButtons(index);
+		updateButtons(selectionIndex);
 	}
 
 	private void updateButtons(int index) {
 		if (imageUp != null)
 			imageUp.clickable(index > 0 && selection != null);
-		if (imageDown != null)
-			imageDown
-					.clickable(index < widget.rows.size() && selection != null);
+		if (imageDown != null) {
+			boolean c = index < widget.rows.size() - 1 && selection != null;
+			imageDown.clickable(c);
+		}
+		if (remove != null) {
+			boolean c = selection != null;
+			remove.clickable(c);
+		}
 	}
 }
