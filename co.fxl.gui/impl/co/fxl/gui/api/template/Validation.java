@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.api.template;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -231,7 +232,9 @@ public class Validation {
 				field.isError = false;
 				if (value.trim().length() > 0) {
 					try {
-						DATE_FORMAT.parse(value.trim());
+						Date d = DATE_FORMAT.parse(value.trim());
+						if (d == null)
+							field.isError = true;
 					} catch (Exception e) {
 						field.isError = true;
 					}

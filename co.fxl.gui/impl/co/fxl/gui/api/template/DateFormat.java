@@ -32,8 +32,16 @@ public class DateFormat {
 		if (string == null || string.equals(""))
 			return null;
 		String[] s = string.split("\\.");
-		return new Date(Integer.valueOf(s[2]), Integer.valueOf(s[1]),
-				Integer.valueOf(s[0]));
+		Integer year = Integer.valueOf(s[2]);
+		if (year < 0)
+			return null;
+		Integer month = Integer.valueOf(s[1]);
+		if (month < 1 || month > 12)
+			return null;
+		Integer day = Integer.valueOf(s[0]);
+		if (day < 1 || day > 31)
+			return null;
+		return new Date(year, month, day);
 	}
 
 	@SuppressWarnings("deprecation")
