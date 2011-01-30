@@ -24,10 +24,13 @@ import java.util.List;
 
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.filter.impl.MiniFilterWidgetImplProvider;
 import co.fxl.gui.table.bulk.impl.BulkTableWidgetImplProvider;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
+import co.fxl.gui.table.scroll.api.IScrollTableWidget.IInsert;
+import co.fxl.gui.table.scroll.api.IScrollTableWidget.IRowListener;
 import co.fxl.gui.table.scroll.impl.ScrollTableWidgetImplProvider;
 
 class ScrollTableWidgetCommandTest implements IRows<String> {
@@ -50,6 +53,28 @@ class ScrollTableWidgetCommandTest implements IRows<String> {
 					.type().type(String.class);
 		widget.rows(this);
 		widget.commandButtons().listenOnMoveUp(null).listenOnMoveDown(null);
+		widget.commandButtons().listenOnAdd(
+				new IRowListener<IScrollTableWidget.IInsert>() {
+
+					@Override
+					public void onClick(Object identifier, int index,
+							ICallback<IInsert> callback) {
+						if (identifier == null) {
+							content.add(index, newContent(content.size()));
+						} else
+							content.add(newContent(content.size()));
+						callback.onSuccess(null);
+					}
+				});
+		widget.commandButtons().listenOnRemove(new IRowListener<Boolean>() {
+
+			@Override
+			public void onClick(Object identifier, int index,
+					ICallback<Boolean> callback) {
+				content.remove(index);
+				callback.onSuccess(true);
+			}
+		});
 		widget.visible(true);
 		display.visible(true);
 	}
@@ -67,9 +92,12 @@ class ScrollTableWidgetCommandTest implements IRows<String> {
 	private List<Object[]> content = new LinkedList<Object[]>();
 
 	void createContent() {
-		for (int i = 0; i < 1000; i++)
-			content.add(new Object[] { "C0/" + i, "C1/" + (i + 47),
-					"C2/" + (i + 95) });
+		for (int i = 0; i < 10; i++)
+			content.add(newContent(i));
+	}
+
+	private Object[] newContent(int i) {
+		return new Object[] { "C0/" + i, "C1/" + (i + 47), "C2/" + (i + 95) };
 	}
 
 	@Override
