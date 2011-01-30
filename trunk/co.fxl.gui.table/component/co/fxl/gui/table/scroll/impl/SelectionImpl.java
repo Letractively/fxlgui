@@ -26,7 +26,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IRow;
-import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableListener;
+import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableClickListener;
 
 class SelectionImpl implements ISelection<Object> {
 
@@ -42,7 +42,7 @@ class SelectionImpl implements ISelection<Object> {
 		}
 
 		void update() {
-			widget.grid.addTableListener(new ITableListener() {
+			widget.grid.addTableListener(new ITableClickListener() {
 
 				@Override
 				public void onClick(int column, int row) {
@@ -53,12 +53,15 @@ class SelectionImpl implements ISelection<Object> {
 					boolean alreadySelected = widget.rows
 							.selected(convert2TableRow);
 					clearSelection();
-					if (alreadySelected)
+					if (alreadySelected) {
+						for (ISelectionListener<Object> l : listeners) {
+							l.onSelection(null);
+						}
 						return;
+					}
 					widget.rows.selected(convert2TableRow, true);
 					IRow r = widget.grid.row(row);
 					r.highlight(true);
-					widget.editable(row + 1, true);
 					widget.highlighted.add(r);
 					for (ISelectionListener<Object> l : listeners) {
 						l.onSelection(widget.rows.selectedIdentifiers().get(0));
@@ -126,7 +129,7 @@ class SelectionImpl implements ISelection<Object> {
 		}
 
 		void update() {
-			widget.grid.addTableListener(new ITableListener() {
+			widget.grid.addTableListener(new ITableClickListener() {
 
 				@Override
 				public void onClick(int column, int row) {
@@ -141,7 +144,7 @@ class SelectionImpl implements ISelection<Object> {
 					notifyListeners();
 				}
 			}).ctrlPressed();
-			widget.grid.addTableListener(new ITableListener() {
+			widget.grid.addTableListener(new ITableClickListener() {
 
 				@Override
 				public void onClick(int column, int row) {
@@ -190,9 +193,9 @@ class SelectionImpl implements ISelection<Object> {
 	void clearSelection() {
 		widget.rows.clearSelection();
 		for (IRow r : widget.highlighted) {
-			int gridIndex = r.gridIndex();
+			// int gridIndex = r.gridIndex();
 			r.highlight(false);
-			widget.editable(gridIndex, false);
+			// widget.editable(gridIndex, false);
 		}
 	}
 

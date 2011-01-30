@@ -211,7 +211,7 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 	}
 
 	@Override
-	public IKey<?> addTableListener(final ITableListener l) {
+	public IKey<?> addTableListener(final ITableClickListener l) {
 		return grid.addGridClickListener(new IGridClickListener() {
 
 			@Override
