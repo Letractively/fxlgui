@@ -38,7 +38,7 @@ import co.fxl.gui.mdt.api.IDeletableList;
 import co.fxl.gui.mdt.api.IProperty.IAdapter;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
-import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableListener;
+import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableClickListener;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
@@ -300,7 +300,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 						onResize(-1, widget.mainPanel.display().height());
 						updateCreatable();
 						time = System.currentTimeMillis() - s;
-						ITableListener showClickListener = new ITableListener() {
+						ITableClickListener showClickListener = new ITableClickListener() {
 
 							@Override
 							public void onClick(int column, int row) {
@@ -312,7 +312,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 								widget.showDetailView(show);
 							}
 						};
-						table.addTableListener(showClickListener).doubleClick();
+						table.addTableClickListener(showClickListener).doubleClick();
 						table.addFilterListener(new IFilterListener() {
 
 							@Override
