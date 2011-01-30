@@ -325,7 +325,6 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 					}
 				}
 		supplement(form);
-		form.showDiscardChanges();
 		form.visible(true);
 	}
 
