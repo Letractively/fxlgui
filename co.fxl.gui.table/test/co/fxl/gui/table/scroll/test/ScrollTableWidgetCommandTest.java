@@ -29,7 +29,6 @@ import co.fxl.gui.filter.impl.MiniFilterWidgetImplProvider;
 import co.fxl.gui.table.bulk.impl.BulkTableWidgetImplProvider;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
-import co.fxl.gui.table.scroll.api.IScrollTableWidget.IInsert;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IRowListener;
 import co.fxl.gui.table.scroll.impl.ScrollTableWidgetImplProvider;
 
@@ -53,19 +52,18 @@ class ScrollTableWidgetCommandTest implements IRows<String> {
 					.type().type(String.class);
 		widget.rows(this);
 		widget.commandButtons().listenOnMoveUp(null).listenOnMoveDown(null);
-		widget.commandButtons().listenOnAdd(
-				new IRowListener<IScrollTableWidget.IInsert>() {
+		widget.commandButtons().listenOnAdd(new IRowListener<Boolean>() {
 
-					@Override
-					public void onClick(Object identifier, int index,
-							ICallback<IInsert> callback) {
-						if (identifier == null) {
-							content.add(index, newContent(content.size()));
-						} else
-							content.add(newContent(content.size()));
-						callback.onSuccess(null);
-					}
-				});
+			@Override
+			public void onClick(Object identifier, int index,
+					ICallback<Boolean> callback) {
+				if (identifier == null) {
+					content.add(index, newContent(content.size()));
+				} else
+					content.add(newContent(content.size()));
+				callback.onSuccess(true);
+			}
+		});
 		widget.commandButtons().listenOnRemove(new IRowListener<Boolean>() {
 
 			@Override

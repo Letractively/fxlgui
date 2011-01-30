@@ -49,7 +49,7 @@ public interface IScrollTableWidget<T> {
 
 	public interface ICommandButtons {
 
-		ICommandButtons listenOnAdd(IRowListener<IInsert> l);
+		ICommandButtons listenOnAdd(IRowListener<Boolean> l);
 
 		ICommandButtons listenOnRemove(IRowListener<Boolean> l);
 
