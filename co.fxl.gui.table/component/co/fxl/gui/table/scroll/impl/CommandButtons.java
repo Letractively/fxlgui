@@ -3,6 +3,7 @@ package co.fxl.gui.table.scroll.impl;
 import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -10,6 +11,7 @@ import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IButtonPanelDecorator;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.ICommandButtons;
+import co.fxl.gui.table.scroll.api.IScrollTableWidget.IDecorator;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IMoveRowListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IRowListener;
 
@@ -100,10 +102,24 @@ class CommandButtons implements ICommandButtons, IButtonPanelDecorator,
 	private IClickable<?> imageDown;
 	private int selectionIndex;
 	private IButton remove;
+	private IDecorator listenOnAddListenerDecorator = new IDecorator() {
+		@Override
+		public IClickable<?> decorate(IContainer c) {
+			return c.button().text("Add");
+		}
+	};
 
 	CommandButtons(ScrollTableWidgetImpl widget) {
 		this.widget = widget;
 		widget.buttonPanel(this);
+	}
+
+	@Override
+	public ICommandButtons listenOnAdd(IDecorator dec, IRowListener<Boolean> l) {
+		listenOnAdd = true;
+		listenOnAddListenerDecorator = dec;
+		listenOnAddListener = l;
+		return this;
 	}
 
 	@Override
@@ -147,7 +163,8 @@ class CommandButtons implements ICommandButtons, IButtonPanelDecorator,
 		panel = container.panel().horizontal().align().end().add().panel()
 				.horizontal().align().end().spacing(4);
 		if (listenOnAdd) {
-			IButton image = panel.add().button().text("Add");
+			IClickable<?> image = listenOnAddListenerDecorator.decorate(panel
+					.add());
 			image.addClickListener(new Update(listenOnAddListener));
 		}
 		if (listenOnRemove) {

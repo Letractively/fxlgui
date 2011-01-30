@@ -20,6 +20,7 @@ package co.fxl.gui.table.scroll.api;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IKey;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.template.ICallback;
@@ -47,7 +48,14 @@ public interface IScrollTableWidget<T> {
 		void onClick(Object identifier, int rowIndex, ICallback<T> callback);
 	}
 
+	public interface IDecorator {
+
+		IClickable<?> decorate(IContainer c);
+	}
+
 	public interface ICommandButtons {
+
+		ICommandButtons listenOnAdd(IDecorator dec, IRowListener<Boolean> l);
 
 		ICommandButtons listenOnAdd(IRowListener<Boolean> l);
 
