@@ -662,7 +662,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public co.fxl.gui.table.scroll.api.IScrollTableWidget.ICommandButtons commandButtons() {
 		if (commandButtons == null) {
-			commandButtons = new CommandButtons(this);
+			commandButtons = new CommandButtonsImpl(this);
 		}
 		return commandButtons;
 	}
