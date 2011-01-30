@@ -208,7 +208,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 
 				@Override
 				public void onClick(Object identifier, int rowIndex,
-						ICallback<Boolean> callback) {
+						final ICallback<Boolean> callback) {
 					String msg = "Remove Entity?";
 					panel.display().showDialog().question().question(msg)
 							.title("Warning")
@@ -225,12 +225,14 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 												public void onSuccess(
 														IDeletableList<Object> result) {
 													table.rows(toRows(result));
+													callback.onSuccess(true);
 												}
 											});
 								}
 
 								@Override
 								public void onNo() {
+									callback.onSuccess(false);
 								}
 
 								@Override
