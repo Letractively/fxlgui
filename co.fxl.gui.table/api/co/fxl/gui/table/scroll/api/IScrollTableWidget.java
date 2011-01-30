@@ -20,15 +20,45 @@ package co.fxl.gui.table.scroll.api;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IKey;
-import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.table.api.ISelection;
-import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableListener;
+import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableClickListener;
 
 public interface IScrollTableWidget<T> {
+
+	public interface IInsert {
+
+		boolean isInserted();
+
+		int insertedAt();
+	}
+
+	public interface IMoveRowListener<T> {
+
+		void onClick(Object identifier, boolean maxMove, ICallback<T> callback);
+	}
+
+	public interface IRowListener<T> {
+
+		void onClick(Object identifier, ICallback<T> callback);
+	}
+
+	public interface ICommandButtons {
+
+		ICommandButtons listenOnAdd(IRowListener<IInsert> l);
+
+		ICommandButtons listenOnRemove(IRowListener<Boolean> l);
+
+		ICommandButtons listenOnMoveUp(IMoveRowListener<Boolean> l);
+
+		ICommandButtons listenOnMoveDown(IMoveRowListener<Boolean> l);
+
+		ICommandButtons listenOnShow(IRowListener<Boolean> l);
+	}
 
 	public interface IButtonPanelDecorator {
 
@@ -54,7 +84,7 @@ public interface IScrollTableWidget<T> {
 
 	IScrollTableWidget<T> rows(IRows<T> rows);
 
-	IKey<?> addTableListener(ITableListener l);
+	IKey<?> addTableClickListener(ITableClickListener l);
 
 	IScrollTableWidget<T> sortListener(ISortListener l);
 
@@ -71,4 +101,6 @@ public interface IScrollTableWidget<T> {
 	IScrollTableWidget<T> refresh();
 
 	IScrollTableWidget<T> buttonPanel(IButtonPanelDecorator iDecorator);
+
+	ICommandButtons commandButtons();
 }

@@ -33,7 +33,7 @@ public interface IBulkTableWidget {
 		void onUp(int turns);
 	}
 
-	public interface ITableListener {
+	public interface ITableClickListener {
 
 		void onClick(int column, int row);
 	}
@@ -84,7 +84,7 @@ public interface IBulkTableWidget {
 
 	IColumn column(int column);
 
-	IKey<?> addTableListener(ITableListener l);
+	IKey<?> addTableListener(ITableClickListener l);
 
 	int height();
 

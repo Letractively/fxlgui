@@ -48,7 +48,7 @@ import co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ILabelMouseListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IMouseWheelListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IRow;
-import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableListener;
+import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableClickListener;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn.IScrollTableListener;
@@ -247,7 +247,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	private boolean updating = false;
-	private Map<ITableListener, KeyAdapter<Object>> listeners = new HashMap<ITableListener, KeyAdapter<Object>>();
+	private Map<ITableClickListener, KeyAdapter<Object>> listeners = new HashMap<ITableClickListener, KeyAdapter<Object>>();
 	boolean selectionIsSetup = false;
 	private IScrollPane sp;
 	private IAbsolutePanel h;
@@ -259,6 +259,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IFilterConstraints constraints;
 	private IFilterListener filterListener;
 	private IButtonPanelDecorator buttonDecorator;
+	private ICommandButtons commandButtons;
 
 	void initialRowOffset(Object object) {
 		initialRowOffset = rows.find(object);
@@ -328,7 +329,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			}
 			addSorting();
 			selection.update();
-			for (ITableListener l : listeners.keySet()) {
+			for (ITableClickListener l : listeners.keySet()) {
 				KeyAdapter<Object> adp = listeners.get(l);
 				@SuppressWarnings("unchecked")
 				IKey<Object> key = (IKey<Object>) grid.addTableListener(l);
@@ -473,7 +474,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			}
 		}
 		if (sortable) {
-			grid.addTableListener(new ITableListener() {
+			grid.addTableListener(new ITableClickListener() {
 
 				@Override
 				public void onClick(int column, int row) {
@@ -535,8 +536,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	@Override
-	public IKey<?> addTableListener(final ITableListener l) {
-		ITableListener l2 = new ITableListener() {
+	public IKey<?> addTableClickListener(final ITableClickListener l) {
+		ITableClickListener l2 = new ITableClickListener() {
 
 			@Override
 			public void onClick(int column, int row) {
@@ -634,7 +635,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> buttonPanel(IButtonPanelDecorator dec) {
 		if (topPanel != null) {
-			dec.decorate(topPanel.cell(1, 0));
+			dec.decorate(topPanel.cell(1, 0).align().end());
 		} else
 			buttonDecorator = dec;
 		return this;
@@ -654,5 +655,13 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				}
 			}
 		}
+	}
+
+	@Override
+	public co.fxl.gui.table.scroll.api.IScrollTableWidget.ICommandButtons commandButtons() {
+		if (commandButtons == null) {
+			commandButtons = new CommandButtons(this);
+		}
+		return commandButtons;
 	}
 }
