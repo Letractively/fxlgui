@@ -15,7 +15,7 @@ import co.fxl.gui.table.scroll.api.IScrollTableWidget.IDecorator;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IMoveRowListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IRowListener;
 
-class CommandButtons implements ICommandButtons, IButtonPanelDecorator,
+class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 		ISelectionListener<Object> {
 
 	private final class Update implements IClickListener {
@@ -109,7 +109,7 @@ class CommandButtons implements ICommandButtons, IButtonPanelDecorator,
 		}
 	};
 
-	CommandButtons(ScrollTableWidgetImpl widget) {
+	CommandButtonsImpl(ScrollTableWidgetImpl widget) {
 		this.widget = widget;
 		widget.buttonPanel(this);
 	}
