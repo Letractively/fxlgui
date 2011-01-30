@@ -184,8 +184,7 @@ class SelectionImpl implements ISelection<Object> {
 		}
 
 		ISelection<Object> add(Object object) {
-			widget.rows.selected(object);
-			widget.initialRowOffset(object);
+			widget.preselected = object;
 			return SelectionImpl.this;
 		}
 	}
