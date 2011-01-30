@@ -73,6 +73,4 @@ public interface IFormWidget {
 	IFormWidget notifyUpdate();
 
 	IFormWidget visible(boolean visible);
-
-	IFormWidget showDiscardChanges();
 }
