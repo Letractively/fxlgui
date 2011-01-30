@@ -10,29 +10,33 @@ import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IButtonPanelDecorator;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.ICommandButtons;
-import co.fxl.gui.table.scroll.api.IScrollTableWidget.IInsert;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IMoveRowListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IRowListener;
 
 class CommandButtons implements ICommandButtons, IButtonPanelDecorator,
 		ISelectionListener<Object> {
 
-	private final class Update<T> implements IClickListener {
+	private final class Update implements IClickListener {
 
-		private IRowListener<T> l;
+		private IRowListener<Boolean> l;
 
-		Update(IRowListener<T> l) {
+		Update(IRowListener<Boolean> l) {
 			this.l = l;
 		}
 
 		@Override
 		public void onClick() {
-			l.onClick(selection, selectionIndex, new CallbackTemplate<T>() {
-				@Override
-				public void onSuccess(T result) {
-					execute();
-				}
-			});
+			if (l != null)
+				l.onClick(selection, selectionIndex,
+						new CallbackTemplate<Boolean>() {
+							@Override
+							public void onSuccess(Boolean result) {
+								if (result != null && result)
+									execute();
+							}
+						});
+			else
+				execute();
 		}
 
 		private void execute() {
@@ -85,7 +89,7 @@ class CommandButtons implements ICommandButtons, IButtonPanelDecorator,
 	private boolean listenOnMoveUp;
 	private boolean listenOnMoveDown;
 	private boolean listenOnShow;
-	private IRowListener<IInsert> listenOnAddListener;
+	private IRowListener<Boolean> listenOnAddListener;
 	private IRowListener<Boolean> listenOnRemoveListener;
 	private IMoveRowListener<Boolean> listenOnMoveUpListener;
 	private IMoveRowListener<Boolean> listenOnMoveDownListener;
@@ -103,7 +107,7 @@ class CommandButtons implements ICommandButtons, IButtonPanelDecorator,
 	}
 
 	@Override
-	public ICommandButtons listenOnAdd(IRowListener<IInsert> l) {
+	public ICommandButtons listenOnAdd(IRowListener<Boolean> l) {
 		listenOnAdd = true;
 		listenOnAddListener = l;
 		return this;
@@ -144,11 +148,11 @@ class CommandButtons implements ICommandButtons, IButtonPanelDecorator,
 				.horizontal().align().end().spacing(4);
 		if (listenOnAdd) {
 			IButton image = panel.add().button().text("Add");
-			image.addClickListener(new Update<IInsert>(listenOnAddListener));
+			image.addClickListener(new Update(listenOnAddListener));
 		}
 		if (listenOnRemove) {
 			remove = panel.add().button().text("Remove");
-			remove.addClickListener(new Update<Boolean>(listenOnRemoveListener));
+			remove.addClickListener(new Update(listenOnRemoveListener));
 			remove.clickable(false);
 		}
 		if (listenOnMoveUp) {
