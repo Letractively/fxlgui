@@ -76,6 +76,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		// .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		DateFormat.instance = new SwingDateFormat();
 		DiscardChangesDialog.display = this;
+		fullscreen();
 	}
 
 	private void resize() {
