@@ -72,7 +72,6 @@ class FormWidgetImpl implements IFormWidget {
 	private boolean validate = true;
 	Validation validation;
 	private Heights heights = new Heights(2);
-	private boolean showDiscardChanges = false;
 	private boolean isNew;
 
 	FormWidgetImpl(IContainer panel) {
@@ -367,12 +366,6 @@ class FormWidgetImpl implements IFormWidget {
 			public void onSuccess(Boolean result) {
 			}
 		});
-		return this;
-	}
-
-	@Override
-	public IFormWidget showDiscardChanges() {
-		showDiscardChanges = true;
 		return this;
 	}
 
