@@ -39,8 +39,8 @@ public class DiscardChangesDialog {
 		if (!active)
 			callback.onSuccess(true);
 		else
-			display.showDialog().title("Warning").question()
-					.question(DISCARD_CHANGES)
+			display.showDialog().question().question(DISCARD_CHANGES)
+					.title("Warning")
 					.addQuestionListener(new IQuestionDialogListener() {
 
 						@Override
