@@ -292,9 +292,6 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 							out = System.err;
 						out.println("TableView: added " + list.size()
 								+ " rows in " + time + "ms");
-						if (selectionObject != null) {
-							table.selection().add(selectionObject);
-						}
 						ResizeListener.setup(widget.mainPanel.display(),
 								TableView.this);
 						onResize(-1, widget.mainPanel.display().height());
@@ -323,6 +320,9 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 						table.addTooltip("Double click to switch views.");
 						table.sortListener(TableView.this);
 						table.constraints(constraints);
+						if (selectionObject != null) {
+							table.selection().add(selectionObject);
+						}
 						table.visible(true);
 						out.println("TableView: created table in " + time
 								+ "ms");
