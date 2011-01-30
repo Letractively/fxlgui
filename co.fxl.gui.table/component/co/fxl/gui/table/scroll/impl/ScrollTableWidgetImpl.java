@@ -123,6 +123,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public IScrollTableWidget<Object> visible(boolean visible) {
 		if (visible) {
 			rows = new RowAdapter(actualRows);
+			if (preselected != null) {
+				rows.selected(preselected);
+				initialRowOffset(preselected);
+				preselected = null;
+			}
 			adjustHeight = true;
 			this.visible = true;
 			statusPanel = null;
@@ -262,6 +267,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IFilterListener filterListener;
 	private IButtonPanelDecorator buttonDecorator;
 	private ICommandButtons commandButtons;
+	Object preselected;
 
 	void initialRowOffset(Object object) {
 		initialRowOffset = rows.find(object);
