@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.api.template;
 
-
 public abstract class CallbackTemplate<T> implements ICallback<T> {
 
 	public void onFail(Throwable throwable) {

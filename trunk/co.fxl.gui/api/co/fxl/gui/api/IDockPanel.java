@@ -19,6 +19,8 @@
 package co.fxl.gui.api;
 
 public interface IDockPanel extends IPanel<IDockPanel> {
+	
+	IDockPanel spacing(int pixel);
 
 	IContainer center();
 
