@@ -91,6 +91,11 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 					}
 				}
 				table.allowColumnSelection(relation.allowColumnSelection);
+				table.constraints(constraints);
+				addButtons(panel, node, result, selection0, selection);
+				table.rows(toRows(result));
+				ResizeListener.setup(panel.display(), RelationDecorator.this);
+				onResize(-1, panel.display().height());
 				table.addFilterListener(new IFilterListener() {
 
 					@Override
@@ -106,11 +111,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 								});
 					}
 				});
-				table.constraints(constraints);
-				addButtons(panel, node, result, selection0, selection);
-				table.rows(toRows(result));
-				ResizeListener.setup(panel.display(), RelationDecorator.this);
-				onResize(-1, panel.display().height());
+				table.visible(true);
 			}
 
 			private void addButtons(final IVerticalPanel panel,
@@ -138,7 +139,10 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 			@Override
 			public Object[] row(int i) {
 				Object e = identifier(i);
-				Object[] row = new Object[relation.properties.size()];
+				Object[] row = result.tableValues(e);
+				if (row != null)
+					return row;
+				row = new Object[relation.properties.size()];
 				int j = 0;
 				for (PropertyImpl p : relation.properties) {
 					row[j++] = (Comparable<?>) p.adapter.valueOf(e);

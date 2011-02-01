@@ -49,13 +49,16 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 	private String createType;
 	private boolean create;
 
-	@SuppressWarnings("unchecked")
 	DetailView(final MasterDetailTableWidgetImpl widget, Object sshow,
 			boolean create, String createType) {
 		super(widget);
 		this.create = create;
 		this.createType = createType;
 		this.selectionObject = sshow;
+	}
+
+	@SuppressWarnings("unchecked")
+	void refresh() {
 		tree = (IFilterTreeWidget<Object>) widget.mainPanel.add().widget(
 				IFilterTreeWidget.class);
 		tree.addTreeClickListener(new ITreeClickListener<Object>() {
@@ -83,17 +86,9 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 				DetailView.this.onChange(l);
 			}
 		});
-		// filterList = tree.filterList(widget.sidePanel.add().panel());
-		// setupFilter(widget);
-		// tree.addHyperlink("Grid").addClickListener(new IClickListener() {
-		// @Override
-		// public void onClick() {
-		// widget.showTableView(tree.selection());
-		// }
-		// });
 		addDetailViews();
 		tree.source(this);
-		tree.selection(sshow);
+		tree.selection(selectionObject);
 		tree.expand();
 		tree.visible(true);
 	}
@@ -189,7 +184,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 	public void query(IFilterConstraints constraints,
 			final ICallback<ITree<Object>> callback) {
 		// widget.constraints = constraints;
-		widget.source.queryTree(constraints, selectionObject,
+		widget.source.queryTree(widget.constraints, selectionObject,
 				new CallbackTemplate<ITree<Object>>() {
 
 					@Override
@@ -244,6 +239,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 
 	@Override
 	public void onApply(IFilterConstraints constraints) {
-		throw new MethodNotImplementedException();
+		widget.constraints = constraints;
+		refresh();
 	}
 }

@@ -21,21 +21,24 @@ package co.fxl.gui.mdt.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IRadioButton;
-import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.DiscardChangesDialog;
+import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.api.template.LazyClickListener;
+import co.fxl.gui.api.template.LazyUpdateListener;
 import co.fxl.gui.api.template.NavigationView;
 import co.fxl.gui.api.template.SplitLayout;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.filter.api.IFilterWidget;
+import co.fxl.gui.filter.api.IFilterWidget.IFilter;
+import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
+import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IMDTFilterList;
 import co.fxl.gui.mdt.api.IMasterDetailTableWidget;
 import co.fxl.gui.mdt.api.IN2MRelation;
@@ -45,7 +48,8 @@ import co.fxl.gui.mdt.api.IPropertyGroup;
 import co.fxl.gui.mdt.api.IPropertyPage;
 import co.fxl.gui.mdt.api.IRelation;
 
-class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
+class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
+		IFilterListener {
 
 	List<PropertyGroupImpl> propertyGroups = new LinkedList<PropertyGroupImpl>();
 	List<RelationImpl> relations = new LinkedList<RelationImpl>();
@@ -69,13 +73,15 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	private IComboBox comboBoxConfiguration;
 	private List<String> configurations = new LinkedList<String>();
 	Listener listener;
-	private String configuration = null;
+	String configuration = null;
 	IRadioButton r2;
-//	int addSpacing = 0;
+	// int addSpacing = 0;
 	private boolean showDetailViewByDefault = false;
 	boolean allowCreate = true;
 	boolean allowMultiSelection = true;
 	private IRadioButton r1;
+	IFilterWidget filterWidget;
+	private ViewTemplate activeView;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -92,7 +98,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	@Override
 	public IMasterDetailTableWidget<Object> sidePanel(IVerticalPanel panel) {
 		mainPanel = layout.vertical();
-//		addSpacing = 10;
+		// addSpacing = 10;
 		sidePanel = panel;
 		return this;
 	}
@@ -100,9 +106,9 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 	void addViewWidget(IVerticalPanel sidePanel) {
 		WidgetTitle views = new WidgetTitle(sidePanel.add().panel());
 		views.addTitle("Views");
-		views.addHyperlink("Refresh").addClickListener(new IClickListener() {
+		views.addHyperlink("Refresh").addClickListener(new LazyClickListener() {
 			@Override
-			public void onClick() {
+			public void onAllowedClick() {
 				refresh();
 			}
 		});
@@ -111,66 +117,47 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 		r1 = h1.add().radioButton().text("Grid");
 		r1.checked(true);
 		r1.font().weight().bold();
-		r1.addUpdateListener(new IUpdateListener<Boolean>() {
+		r1.addUpdateListener(new LazyUpdateListener<Boolean>() {
 			@Override
-			public void onUpdate(Boolean value) {
-				if (value) {
-					DiscardChangesDialog
-							.show(new co.fxl.gui.api.template.CallbackTemplate<Boolean>() {
-
-								@Override
-								public void onSuccess(Boolean result) {
-									if (result) {
-										Object show = null;
-										if (!selection.isEmpty())
-											show = selection.get(selection
-													.size() - 1);
-										showTableView(show, configuration);
-									}
-								}
-							});
-				}
+			public void onAllowedUpdate(Boolean value) {
+				Object show = null;
+				if (!selection.isEmpty())
+					show = selection.get(selection.size() - 1);
+				showTableView(show);
 			}
 		});
 		if (!configurations.isEmpty()) {
 			h1.addSpace(4);
 			comboBoxConfiguration = h1.add().comboBox();
 			comboBoxConfiguration.size(220, 24);
-			for (String c : configurations)
+			for (String c : configurations) {
+				if (configuration == null)
+					configuration = c;
 				comboBoxConfiguration.addText(c);
+			}
 			comboBoxConfiguration
-					.addUpdateListener(new IUpdateListener<String>() {
+					.addUpdateListener(new LazyUpdateListener<String>() {
 
 						@Override
-						public void onUpdate(final String value) {
-							DiscardChangesDialog
-									.show(new co.fxl.gui.api.template.CallbackTemplate<Boolean>() {
-
-										@Override
-										public void onSuccess(Boolean result) {
-											if (result) {
-												configuration = value;
-												r1.checked(true);
-												if (listener instanceof TableView)
-													notifyConfigurationListener(value);
-												else {
-													Object show = null;
-													if (!selection.isEmpty())
-														show = selection.get(selection
-																.size() - 1);
-													showTableView(show, value);
-												}
-											}
-										}
-									});
+						public void onAllowedUpdate(final String value) {
+							configuration = value;
+							r1.checked(true);
+							if (listener instanceof TableView)
+								notifyConfigurationListener(value);
+							else {
+								Object show = null;
+								if (!selection.isEmpty())
+									show = selection.get(selection.size() - 1);
+								showTableView(show);
+							}
 						}
 					});
 		}
 		IHorizontalPanel h2 = content.add().panel().horizontal();
 		r2 = h2.add().radioButton().text("Master-Detail");
-		r2.addUpdateListener(new IUpdateListener<Boolean>() {
+		r2.addUpdateListener(new LazyUpdateListener<Boolean>() {
 			@Override
-			public void onUpdate(Boolean value) {
+			public void onAllowedUpdate(Boolean value) {
 				if (value) {
 					Object show = null;
 					if (!selection.isEmpty())
@@ -181,6 +168,50 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 		});
 		r2.font().weight().bold();
 		r1.group().add(r2);
+	}
+
+	void setUpFilter(String configuration) {
+		if (filterList.filters.isEmpty())
+			return;
+		sidePanel.addSpace(0);// addSpacing);
+		filterWidget = (IFilterWidget) sidePanel.add().widget(
+				IFilterWidget.class);
+		filterWidget.showConfiguration(false);
+		int index = 0;
+		for (MDTFilterImpl filter : filterList.filters) {
+			if (!filter.inTable)
+				continue;
+			String config = filterList.configuration2index.get(index++);
+			if (config != null)
+				filterWidget.addConfiguration(config);
+			if (filter instanceof MDTRelationFilterImpl) {
+				MDTRelationFilterImpl rfi = (MDTRelationFilterImpl) filter;
+				@SuppressWarnings("unchecked")
+				IRelationFilter<Object, Object> rf = (IRelationFilter<Object, Object>) filterWidget
+						.addRelationFilter();
+				rf.name(rfi.name);
+				rf.adapter(rfi.adapter);
+				rf.preset(rfi.preset);
+			} else if (filter.property != null) {
+				if (filter.property.displayInTable) {
+					IFilter ftr = filterWidget.addFilter().name(
+							filter.property.name);
+					IFieldType f = ftr.type().type(filter.property.type.clazz);
+					if (!filter.property.type.values.isEmpty())
+						for (Object o : filter.property.type.values)
+							f.addConstraint(o);
+				}
+			} else
+				throw new MethodNotImplementedException(filter.name);
+		}
+		if (constraints != null)
+			filterWidget.constraints(constraints);
+		filterWidget.addSizeFilter();
+		filterWidget.addFilterListener(this);
+		filterWidget.visible(true);
+		if (configuration != null)
+			filterWidget.setConfiguration(configuration);
+		// filterWidget.apply();
 	}
 
 	void notifyConfigurationListener(String value) {
@@ -261,9 +292,10 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 		setUpSidePanel();
 		addNavigationLinks(sidePanel);
 		addViewWidget(sidePanel);
+		setUpFilter(configuration);
 		sidePanel = sidePanel.add().panel().vertical();
 		if (!showDetailViewByDefault)
-			showTableView(null, null);
+			showTableView(null);
 		else {
 			r2.checked(true);
 			// TODO remove quickfix refresh
@@ -274,22 +306,24 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 
 	void showTableView(Object object) {
 		r1.checked(true);
-		showTableView(object, configuration);
-	}
-
-	void showTableView(Object object, String configuration) {
 		clear();
-		new TableView(this, object, configuration);
+		activeView = new TableView(this, object);
+		((TableView) activeView).onDelete();
 	}
 
 	DetailView showDetailView(Object show) {
 		clear();
-		return new DetailView(this, show, false, null);
+		DetailView dView = (DetailView) (activeView = new DetailView(this,
+				show, false, null));
+		dView.refresh();
+		return dView;
 	}
 
 	public void showDetailView(Object show, boolean create, String createType) {
 		clear();
-		new DetailView(this, show, create, createType);
+		DetailView dView = (DetailView) (activeView = new DetailView(this,
+				show, create, createType));
+		dView.refresh();
 	}
 
 	private void clear() {
@@ -364,5 +398,10 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object> {
 			boolean multiSelection) {
 		allowMultiSelection = multiSelection;
 		return this;
+	}
+
+	@Override
+	public void onApply(IFilterConstraints constraints) {
+		activeView.onApply(constraints);
 	}
 }

@@ -22,19 +22,14 @@ import java.util.List;
 
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.api.template.SplitLayout;
-import co.fxl.gui.filter.api.IFilterWidget;
-import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
-import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.table.api.ISelection.IMultiSelection.IChangeListener;
 
 abstract class ViewTemplate implements IChangeListener<Object>, Listener,
 		IFilterListener {
 
 	MasterDetailTableWidgetImpl widget;
-	IFilterWidget filterWidget;
 
 	ViewTemplate(MasterDetailTableWidgetImpl widget) {
 		this.widget = widget;
@@ -66,49 +61,5 @@ abstract class ViewTemplate implements IChangeListener<Object>, Listener,
 		for (ILabel label : widget.labels) {
 			label.clickable(!selection.isEmpty());
 		}
-	}
-
-	void setUpFilter(String configuration) {
-		if (widget.filterList.filters.isEmpty())
-			return;
-		widget.sidePanel.addSpace(0);// widget.addSpacing);
-		filterWidget = (IFilterWidget) widget.sidePanel.add().widget(
-				IFilterWidget.class);
-		filterWidget.showConfiguration(false);
-		int index = 0;
-		for (MDTFilterImpl filter : widget.filterList.filters) {
-			if (!filter.inTable)
-				continue;
-			String config = widget.filterList.configuration2index.get(index++);
-			if (config != null)
-				filterWidget.addConfiguration(config);
-			if (filter instanceof MDTRelationFilterImpl) {
-				MDTRelationFilterImpl rfi = (MDTRelationFilterImpl) filter;
-				@SuppressWarnings("unchecked")
-				IRelationFilter<Object, Object> rf = (IRelationFilter<Object, Object>) filterWidget
-						.addRelationFilter();
-				rf.name(rfi.name);
-				rf.adapter(rfi.adapter);
-				rf.preset(rfi.preset);
-			} else if (filter.property != null) {
-				if (filter.property.displayInTable) {
-					IFilter ftr = filterWidget.addFilter().name(
-							filter.property.name);
-					IFieldType f = ftr.type().type(filter.property.type.clazz);
-					if (!filter.property.type.values.isEmpty())
-						for (Object o : filter.property.type.values)
-							f.addConstraint(o);
-				}
-			} else
-				throw new MethodNotImplementedException(filter.name);
-		}
-		if (widget.constraints != null)
-			filterWidget.constraints(widget.constraints);
-		filterWidget.addSizeFilter();
-		filterWidget.addFilterListener(this);
-		filterWidget.visible(true);
-		if (configuration != null)
-			filterWidget.setConfiguration(configuration);
-		// filterWidget.apply();
 	}
 }

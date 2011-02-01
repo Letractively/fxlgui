@@ -230,7 +230,6 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 							@Override
 							public void onYes() {
 								delete();
-								widgetTitle.reset();
 							}
 
 							@Override
@@ -263,6 +262,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			@Override
 			public void onSuccess(T result) {
 				showToParent(root, parent);
+				widgetTitle.reset();
 			}
 		};
 		tree.delete(callback);
@@ -500,7 +500,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				+ originalObject;
 		n.update(originalObject);
 		if (selection == originalObject) {
-			updateCreatable();
+			selection(originalObject);
 		}
 		return this;
 	}
