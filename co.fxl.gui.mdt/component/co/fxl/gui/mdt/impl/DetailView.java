@@ -18,8 +18,10 @@
  */
 package co.fxl.gui.mdt.impl;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
@@ -37,6 +39,7 @@ import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 import co.fxl.gui.tree.api.ITreeWidget.ITreeClickListener;
+import co.fxl.gui.tree.api.ITreeWidget.IView;
 
 class DetailView extends ViewTemplate implements ISource<Object>,
 		DeleteListener {
@@ -122,6 +125,19 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 			filterList.constraints(widget.constraints);
 	}
 
+	private class Register {
+		String name;
+		IDecorator<Object> dec;
+		Class<?> c;
+
+		private Register(String name, IDecorator<Object> dec,
+				Class<?> constraint) {
+			this.name = name;
+			this.dec = dec;
+			this.c = constraint;
+		}
+	}
+
 	private void addDetailViews() {
 		List<PropertyGroupImpl> gs = new LinkedList<PropertyGroupImpl>();
 		for (final PropertyGroupImpl group : widget.propertyGroups) {
@@ -136,47 +152,61 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 				saveNode(node, cb);
 			}
 		}.refreshListener(this);
+		Map<String, Register> registers = new HashMap<String, Register>();
 		tree.addDetailView(IMasterDetailTableWidget.DETAILS, decorator);
 		for (final PropertyGroupImpl group : widget.propertyGroups) {
 			if (group.asDetail
 					&& !group.name.equals(IMasterDetailTableWidget.DETAILS)) {
-				tree.addDetailView(group.name, new DetailViewDecorator(gs) {
+				registers.put(group.name, new Register(group.name,
+						new DetailViewDecorator(gs) {
 
-					@Override
-					protected void save(Object node, ICallback<Boolean> cb) {
-						saveNode(node, cb);
-					}
-				}.refreshListener(this));
+							@Override
+							protected void save(Object node,
+									ICallback<Boolean> cb) {
+								saveNode(node, cb);
+							}
+						}.refreshListener(this), null));
 			}
 		}
-		for (final RelationImpl relation : widget.relations) {
-			tree.addDetailView(relation.name, new RelationDecorator(relation))
-					.constrainType(relation.constrainType);
+		for (final PropertyPageImpl relation : widget.propertyPages) {
+			registers.put(relation.name, new Register(relation.name,
+					new IDecorator<Object>() {
+
+						@Override
+						public void clear(IVerticalPanel panel) {
+							panel.clear();
+						}
+
+						@Override
+						public void decorate(IVerticalPanel panel,
+								ITree<Object> tree) {
+							decorate(panel, tree.object());
+						}
+
+						@Override
+						public void decorate(final IVerticalPanel panel,
+								final Object node) {
+							relation.dec.decorate(panel.clear().add(), node);
+						}
+					}, relation.constrainType));
 		}
 		for (final N2MRelationImpl relation : widget.n2MRelations) {
-			tree.addDetailView(relation.name,
-					new N2MRelationDecorator(relation)).constrainType(
-					relation.constrainType);
+			registers
+					.put(relation.name, new Register(relation.name,
+							new N2MRelationDecorator(relation),
+							relation.constrainType));
 		}
-		for (final PropertyPageImpl relation : widget.propertyPages) {
-			tree.addDetailView(relation.name, new IDecorator<Object>() {
-
-				@Override
-				public void clear(IVerticalPanel panel) {
-					panel.clear();
-				}
-
-				@Override
-				public void decorate(IVerticalPanel panel, ITree<Object> tree) {
-					decorate(panel, tree.object());
-				}
-
-				@Override
-				public void decorate(final IVerticalPanel panel,
-						final Object node) {
-					relation.dec.decorate(panel.clear().add(), node);
-				}
-			}).constrainType(relation.constrainType);
+		for (final RelationImpl relation : widget.relations) {
+			registers.put(relation.name, new Register(relation.name,
+					new RelationDecorator(relation), relation.constrainType));
+		}
+		for (String r : widget.registerOrder) {
+			Register reg = registers.get(r);
+			if (reg != null) {
+				IView dv = tree.addDetailView(r, reg.dec);
+				if (reg.c != null)
+					dv.constrainType(reg.c);
+			}
 		}
 	}
 
