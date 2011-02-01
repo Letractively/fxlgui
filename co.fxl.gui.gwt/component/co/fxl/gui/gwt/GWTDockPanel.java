@@ -22,7 +22,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 
@@ -37,7 +36,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 class GWTDockPanel extends GWTPanel<DockPanel, IDockPanel> implements
 		IDockPanel {
-	
+
 	private List<DockLayoutConstant> positions = new LinkedList<DockLayoutConstant>(
 			Arrays.asList(new DockLayoutConstant[] { DockPanel.CENTER,
 					DockPanel.NORTH, DockPanel.WEST, DockPanel.EAST,
@@ -112,5 +111,11 @@ class GWTDockPanel extends GWTPanel<DockPanel, IDockPanel> implements
 	public IContainer right() {
 		setPosition(DockPanel.EAST);
 		return add();
+	}
+
+	@Override
+	public IDockPanel spacing(int pixel) {
+		super.container.widget.setSpacing(pixel);
+		return this;
 	}
 }
