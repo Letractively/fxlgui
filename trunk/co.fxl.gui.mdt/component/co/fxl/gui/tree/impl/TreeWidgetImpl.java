@@ -96,11 +96,11 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		// }
 
 		void setNode(Node<T> node) {
+			this.node = node;
 			if (node == null) {
 				decorator.clear(contentPanel);
 				return;
 			}
-			this.node = node;
 			if (onTop) {
 				update();
 			}
@@ -109,8 +109,12 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		protected void update() {
 			if (node == null)
 				return;
-			if (node.tree.object() != null)
+			if (node.tree.object() != null) {
+				if (node.tree.object() == root.object() && !showRoot) {
+					return;
+				}
 				decorator.decorate(contentPanel, node.tree);
+			}
 		}
 
 		public void enabled(boolean enabled) {
@@ -131,8 +135,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	ITree<T> root;
 	private WidgetTitle widgetTitle;
 	private boolean expand = false;
-	Object selection;
-	Map<Object, Node<T>> object2node = new HashMap<Object, Node<T>>();
+	T selection;
+	Map<T, Node<T>> object2node = new HashMap<T, Node<T>>();
 	private IClickable<ILabel> refresh;
 	private Map<String, IClickListener> newClick = new HashMap<String, IClickListener>();
 	private Map<String, IClickable<ILabel>> newClickHyperlink = new HashMap<String, IClickable<ILabel>>();
@@ -352,9 +356,13 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			Node<T> n = object2node.get(selection);
 			if (n != null)
 				node = n;
-			// else
-			// throw new MethodNotImplementedException(
-			// "Selection in tree widget not found in expanded tree");
+			else if (selection != root.object() || showRoot)
+				throw new MethodNotImplementedException(
+						"Selection in tree widget '" + selection + "' ("
+								+ selection.getClass()
+								+ ") not found in expanded tree");
+			else
+				node = null;
 			// for (Node<T> n : object2node.values()) {
 			// T object = n.tree.object();
 			// if (object.equals(selection)) {
@@ -386,7 +394,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				Class<? extends Object> type = node.tree.object().getClass();
 				boolean hide = view.constrainType != null
 						&& !view.constrainType.equals(type);
-				if (hide && view.onTop) {
+				if (hide && i > 0 && view.onTop) {
 					showFirst = true;
 				}
 			}
@@ -526,7 +534,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			path.add(0, r);
 		}
 		root(tree, path);
-		node.path = null;
+		if (node != null)
+			node.path = null;
 		expand = rememberExpand;
 	}
 

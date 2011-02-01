@@ -82,6 +82,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	private IRadioButton r1;
 	IFilterWidget filterWidget;
 	private ViewTemplate activeView;
+	List<String> registerOrder = new LinkedList<String>();
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -242,6 +243,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	@Override
 	public IPropertyGroup<Object> addPropertyGroup(String name) {
+		registerOrder.add(name);
 		PropertyGroupImpl propertyGroup = new PropertyGroupImpl(name);
 		propertyGroups.add(propertyGroup);
 		return propertyGroup;
@@ -255,6 +257,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	@Override
 	public IRelation<Object, ?> addRelation(String name) {
+		registerOrder.add(name);
 		RelationImpl relation = new RelationImpl(name);
 		relations.add(relation);
 		return relation;
@@ -262,6 +265,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	@Override
 	public IN2MRelation<Object, ?> addN2MRelation(String name) {
+		registerOrder.add(name);
 		N2MRelationImpl relation = new N2MRelationImpl(name);
 		n2MRelations.add(relation);
 		return relation;
@@ -348,6 +352,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	@Override
 	public IPropertyPage<Object> addPropertyPage(String name) {
+		registerOrder.add(name);
 		PropertyPageImpl link = new PropertyPageImpl(name);
 		propertyPages.add(link);
 		return link;
