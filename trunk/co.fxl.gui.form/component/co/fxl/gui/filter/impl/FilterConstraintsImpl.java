@@ -215,7 +215,7 @@ class FilterConstraintsImpl implements IFilterConstraints {
 
 	@Override
 	public boolean isSpecified() {
-		throw new MethodNotImplementedException();
+		return !constraints.isEmpty();
 	}
 
 }
