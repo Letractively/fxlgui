@@ -34,6 +34,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.ITextField.ICarriageReturnListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
@@ -48,12 +49,14 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	private static final List<Object> DEFAULT_SIZES = Arrays
 			.asList(new Object[] { 50, 100, 500, 1000, 5000 });
 
-	private class ClearClickListener implements IClickListener {
+	private class ClearClickListener extends LazyClickListener {
 
 		@Override
-		public void onClick() {
+		public void onAllowedClick() {
 			if (holdFilterClicks)
 				return;
+			if (constraints != null)
+				constraints.clear();
 			for (List<FilterImpl> l : filterList.values()) {
 				Iterator<FilterImpl> it = l.iterator();
 				while (it.hasNext()) {
@@ -76,10 +79,10 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 		}
 	}
 
-	private class ApplyClickListener implements IClickListener {
+	private class ApplyClickListener extends LazyClickListener {
 
 		@Override
-		public void onClick() {
+		public void onAllowedClick() {
 			onApplyClick();
 		}
 	}

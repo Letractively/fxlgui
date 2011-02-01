@@ -203,4 +203,19 @@ class FilterConstraintsImpl implements IFilterConstraints {
 		return it;
 	}
 
+	@Override
+	public String toString() {
+		return constraints.toString();
+	}
+
+	@Override
+	public void clear() {
+		constraints.clear();
+	}
+
+	@Override
+	public boolean isSpecified() {
+		throw new MethodNotImplementedException();
+	}
+
 }

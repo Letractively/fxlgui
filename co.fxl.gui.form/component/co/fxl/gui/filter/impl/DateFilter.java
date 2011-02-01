@@ -45,6 +45,11 @@ class DateFilter extends RangeFilter<Date> {
 		public Date upperBound() {
 			return upperBound;
 		}
+		
+		@Override
+		public String toString() {
+			return lowerBound+"-"+upperBound;
+		}
 	}
 
 	static DateFormat DATE_FORMAT = DateFormat.instance;
