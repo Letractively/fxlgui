@@ -56,14 +56,11 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 	private Map<String, IClickable<?>> buttons = new HashMap<String, IClickable<?>>();
 	private Object selectionObject;
 
-	TableView(final MasterDetailTableWidgetImpl widget, Object object,
-			String configuration) {
+	TableView(final MasterDetailTableWidgetImpl widget, Object object) {
 		super(widget);
 		selectionObject = object;
 		if (widget.splitLayout != null)
 			widget.splitLayout.showSplit(true);
-		setUpFilter(configuration);
-		onDelete();
 	}
 
 	@SuppressWarnings({ "unchecked" })
@@ -72,7 +69,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 		table = (IScrollTableWidget<Object>) widget.mainPanel.add().widget(
 				IScrollTableWidget.class);
 		table.addTitle(widget.title).font().pixel(18);
-		addProperties();
+		addColumns();
 		if (widget.allowMultiSelection)
 			table.selection().multi().addChangeListener(this);
 		else
@@ -156,7 +153,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 		// });
 	}
 
-	private void addProperties() {
+	private void addColumns() {
 		adapters.clear();
 		property2column.clear();
 		String config = getConfig();
@@ -194,6 +191,8 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 	}
 
 	private String getConfig() {
+		if (widget.configuration != null)
+			return widget.configuration;
 		if (widget.constraints == null)
 			return null;
 		String configuration = widget.constraints.configuration();
@@ -309,7 +308,14 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 								widget.showDetailView(show);
 							}
 						};
-						table.addTableClickListener(showClickListener).doubleClick();
+						table.addTableClickListener(showClickListener)
+								.doubleClick();
+						table.addTooltip("Double click to switch views.");
+						table.sortListener(TableView.this);
+						table.constraints(constraints);
+						if (selectionObject != null) {
+							table.selection().add(selectionObject);
+						}
 						table.addFilterListener(new IFilterListener() {
 
 							@Override
@@ -317,12 +323,6 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 								TableView.this.onApply(constraints);
 							}
 						});
-						table.addTooltip("Double click to switch views.");
-						table.sortListener(TableView.this);
-						table.constraints(constraints);
-						if (selectionObject != null) {
-							table.selection().add(selectionObject);
-						}
 						table.visible(true);
 						out.println("TableView: created table in " + time
 								+ "ms");
@@ -335,7 +335,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 	public void onSort(String columnName, boolean up) {
 		widget.constraints.sortOrder(columnName);
 		widget.constraints.sortDirection(up);
-		filterWidget.constraints(widget.constraints());
+		widget.filterWidget.constraints(widget.constraints());
 		onApply(widget.constraints);
 	}
 
@@ -352,15 +352,15 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 
 	@Override
 	public void onUpdate(String value) {
-		if (filterWidget != null)
-			filterWidget.setConfiguration(value);
+		if (widget.filterWidget != null)
+			widget.filterWidget.setConfiguration(value);
 		onDelete();
 	}
 
 	@Override
 	public void onDelete() {
-		if (filterWidget != null)
-			filterWidget.apply();
+		if (widget.filterWidget != null)
+			widget.filterWidget.apply();
 		else
 			onApply(widget.constraints);
 	}
