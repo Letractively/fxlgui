@@ -34,10 +34,12 @@ class SwingDockPanel extends SwingPanel<IDockPanel> implements IDockPanel {
 			Arrays.asList(new String[] { BorderLayout.CENTER,
 					BorderLayout.NORTH, BorderLayout.WEST, BorderLayout.EAST,
 					BorderLayout.SOUTH }));
+	private BorderLayout layoutManager;
 
 	SwingDockPanel(SwingContainer<PanelComponent> container) {
 		super(container);
-		setLayout(new BorderLayout());
+		layoutManager = new BorderLayout();
+		setLayout(layoutManager);
 	}
 
 	private void setPosition(String position) {
@@ -81,5 +83,13 @@ class SwingDockPanel extends SwingPanel<IDockPanel> implements IDockPanel {
 	public void add(JComponent component) {
 		String position = positions.remove(0);
 		container.component.add(component, position);
+	}
+
+	@Override
+	public IDockPanel spacing(int pixel) {
+		container.component.getInsets().set(pixel, pixel, pixel, pixel);
+		layoutManager.setHgap(pixel);
+		layoutManager.setVgap(pixel);
+		return this;
 	}
 }
