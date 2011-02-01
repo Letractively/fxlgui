@@ -34,6 +34,11 @@ class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
 		public int size() {
 			return text;
 		}
+
+		@Override
+		public String toString() {
+			return String.valueOf(text);
+		}
 	}
 
 	IComboBox comboBox;

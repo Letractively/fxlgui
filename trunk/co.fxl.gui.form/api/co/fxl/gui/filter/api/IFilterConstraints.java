@@ -86,4 +86,8 @@ public interface IFilterConstraints {
 	IFilterConstraints sortDirection(boolean sortDirection);
 
 	IRowIterator rowIterator();
+
+	void clear();
+
+	boolean isSpecified();
 }

@@ -40,6 +40,11 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 		public String prefix() {
 			return text;
 		}
+
+		@Override
+		public String toString() {
+			return text;
+		}
 	}
 
 	IComboBox comboBox;
