@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.table.scroll.impl;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,6 +34,7 @@ import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
@@ -86,7 +88,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IGridPanel statusPanel;
 	private String tooltip = "";// Use CTRL + Click to select multiple rows.";
 	private boolean visible;
-	private int initialRowOffset = 100;
 	private int initialPaintedRows;
 	private int maxRowIndex;
 	private IRows<Object> actualRows;
@@ -104,7 +105,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> height(int height) {
 		this.height = height;
-		visible(true);
+		if (visible)
+			visible(true);
 		return this;
 	}
 
@@ -125,40 +127,45 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			rows = new RowAdapter(actualRows);
 			if (preselected != null) {
 				rows.selected(preselected);
-				initialRowOffset(preselected);
-				preselected = null;
 			}
 			adjustHeight = true;
 			this.visible = true;
 			statusPanel = null;
 			selectionIsSetup = false;
 			container.clear();
+			topPanel = null;
 			filter = null;
+			for (ScrollTableColumnImpl c : columns) {
+				if (c.filterable) {
+					if (filter == null) {
+						if (topPanel == null)
+							topPanel = container.add().panel().grid();
+						// container.addSpace(10);
+						filter = (IMiniFilterWidget) topPanel.cell(0, 0)
+								.widget(IMiniFilterWidget.class);
+					}
+					filter.addFilter().name(c.name).type(c.type);
+					// TODO value constraint: choice of x elements
+				}
+			}
+			if (filter != null) {
+				if (filterListener != null)
+					filter.addFilterListener(filterListener);
+				filter.addSizeFilter();
+				if (constraints != null)
+					filter.constraints(constraints);
+				filter.visible(true);
+				container.addSpace(10);
+			}
 			if (rows.size() == 0) {
 				IVerticalPanel dock = container.add().panel().vertical()
 						.spacing(10);
 				dock.height(height);
-				topPanel = dock.add().panel().grid();
+				if (topPanel == null)
+					topPanel = dock.add().panel().grid();
 				topPanel.cell(0, 0).label().text("No rows found").font()
 						.pixel(10).color().gray();
 			} else {
-				for (ScrollTableColumnImpl c : columns) {
-					if (c.filterable) {
-						if (filter == null) {
-							topPanel = container.add().panel().grid();
-							// container.addSpace(10);
-							filter = (IMiniFilterWidget) topPanel.cell(0, 0)
-									.widget(IMiniFilterWidget.class);
-						}
-						filter.addFilter().name(c.name).type(c.type);
-						// TODO value constraint: choice of x elements
-					}
-				}
-				if (filter != null) {
-					filter.addSizeFilter();
-					filter.visible(true);
-					container.addSpace(10);
-				}
 				IDockPanel dock = container.add().panel().dock();
 				dock.height(height);
 				contentPanel = dock.center().panel().card();
@@ -174,17 +181,20 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					scrollPanelHeight = (int) (spHeight / paintedRows);
 					h.size(1, scrollPanelHeight);
 					sp.addScrollListener(this);
-					ILabel blankToken = h.add().label().text("&#160;");
-					if (initialRowOffset != -1) {
+					h.add().label().text("&#160;");
+					IPanel<?> quader = h.add().panel().absolute();
+					quader.size(4, 4);
+					if (preselected != null) {
+						int initialRowOffset = rows.find(preselected);
 						int convertFromRowOffset = convertFromRowOffset(initialRowOffset);
-						h.offset(blankToken, 0, convertFromRowOffset);
-						sp.scrollIntoView(blankToken);
-						initialRowOffset = -1;
+						h.offset(quader, 0, convertFromRowOffset);
+						sp.scrollIntoView(quader);
 					}
 				}
 			}
 			if (buttonDecorator != null)
 				buttonPanel(buttonDecorator);
+			preselected = null;
 		} else {
 			this.visible = false;
 			throw new MethodNotImplementedException();
@@ -235,7 +245,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private int convertToRowOffset(int maxOffset) {
 		if (scrollPanelHeight == 0 || height == 0)
 			return 0;
-		double rowHeight = height / initialPaintedRows;
+		double rowHeight = height / initialPaintedRows == 0 ? 1
+				: initialPaintedRows;
 		double index = maxOffset / rowHeight; // rows.size() * (maxOffset +
 												// height) / scrollPanelHeight;
 		int index2 = (int) index;
@@ -247,10 +258,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private int convertFromRowOffset(int rowOffset) {
 		if (scrollPanelHeight == 0 || height == 0)
 			return 0;
-		double index = rowOffset;
-		index *= scrollPanelHeight;
-		index /= rows.size();
-		return (int) index;
+		double rowHeight = height / initialPaintedRows == 0 ? 1
+				: initialPaintedRows;
+		return (int) (rowOffset * rowHeight * scrollPanelHeight / (scrollPanelHeight - height));
 	}
 
 	private boolean updating = false;
@@ -268,10 +278,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IButtonPanelDecorator buttonDecorator;
 	private ICommandButtons commandButtons;
 	Object preselected;
-
-	void initialRowOffset(Object object) {
-		initialRowOffset = rows.find(object);
-	}
 
 	void update() {
 		if (updating)
@@ -355,10 +361,14 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			int visibleGridIndex, int contentIndex) {
 		Object[] row = rows.row(contentIndex);
 		int current = 0;
+		assert columns.size() == row.length : "Wrong number of columns: "
+				+ columns.size() + " vs " + row.length + " ("
+				+ Arrays.toString(row) + ")";
 		for (ScrollTableColumnImpl c : columns)
-			if (c.visible)
+			if (c.visible) {
 				c.decorate(rows.identifier(contentIndex),
 						grid.cell(current++, visibleGridIndex), row[c.index]);
+			}
 	}
 
 	@SuppressWarnings("unused")

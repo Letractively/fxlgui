@@ -71,8 +71,8 @@ class SelectionImpl implements ISelection<Object> {
 		}
 
 		ISelection<Object> add(Object object) {
-			widget.rows.selected(object, true);
-			widget.initialRowOffset(object);
+			assert widget.preselected == null : "Only one row can be preselected";
+			widget.preselected = object;
 			return SelectionImpl.this;
 		}
 	}
