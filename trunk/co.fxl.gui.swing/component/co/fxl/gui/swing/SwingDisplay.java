@@ -71,6 +71,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		// frame.setSize(widthPixel, heightPixel);
 		frame.setBackground(Color.WHITE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setMinimumSize(new Dimension(800, 600));
 		// scrollPane = new JScrollPane(container.component);
 		// scrollPane
 		// .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
