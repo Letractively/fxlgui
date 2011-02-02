@@ -115,6 +115,8 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 	}
 
 	void notifyVisible(boolean visible) {
+		if (disabled)
+			return;
 		for (IRegisterListener listener : listeners) {
 			listener.onTop(visible);
 		}
@@ -158,7 +160,7 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 	@Override
 	public IRegister enabled(boolean enabled) {
 		if (!enabled) {
-			buttonLabel.font().color().lightgray();
+			buttonLabel.font().color().white();
 			buttonPanel.clickable(false);
 			disabled = true;
 		} else {
