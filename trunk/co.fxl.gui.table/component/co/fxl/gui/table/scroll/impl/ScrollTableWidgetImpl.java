@@ -120,6 +120,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	private IGridPanel topPanel;
+	boolean showNoRowsFound = true;
 
 	@Override
 	public IScrollTableWidget<Object> visible(boolean visible) {
@@ -163,8 +164,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				dock.height(height);
 				if (topPanel == null)
 					topPanel = dock.add().panel().grid();
-				topPanel.cell(0, 0).label().text("No rows found").font()
-						.pixel(10).color().gray();
+				if (showNoRowsFound) {
+					topPanel.cell(0, 0).label().text("No rows found").font()
+							.pixel(10).color().gray();
+				}
 			} else {
 				IDockPanel dock = container.add().panel().dock();
 				dock.height(height);
