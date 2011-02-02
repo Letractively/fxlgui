@@ -103,6 +103,12 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 		}
 	}
 
+	private static final IDecorator DEFAULT_DECORATOR = new IDecorator() {
+		@Override
+		public IClickable<?> decorate(IContainer c) {
+			return c.button().text("Add");
+		}
+	};
 	private ScrollTableWidgetImpl widget;
 	private boolean listenOnAdd;
 	private boolean listenOnRemove;
@@ -120,12 +126,7 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 	private IClickable<?> imageDown;
 	private int selectionIndex;
 	private IButton remove;
-	private IDecorator listenOnAddListenerDecorator = new IDecorator() {
-		@Override
-		public IClickable<?> decorate(IContainer c) {
-			return c.button().text("Add");
-		}
-	};
+	private IDecorator listenOnAddListenerDecorator = DEFAULT_DECORATOR;
 
 	CommandButtonsImpl(ScrollTableWidgetImpl widget) {
 		this.widget = widget;
@@ -136,6 +137,7 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 	public ICommandButtons listenOnAdd(IDecorator dec, IRowListener<Boolean> l) {
 		listenOnAdd = true;
 		listenOnAddListenerDecorator = dec;
+		widget.showNoRowsFound = false;
 		listenOnAddListener = l;
 		return this;
 	}
