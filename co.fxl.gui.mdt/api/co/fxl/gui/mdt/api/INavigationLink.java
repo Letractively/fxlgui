@@ -34,4 +34,6 @@ public interface INavigationLink<T> {
 	INavigationLink<T> addClickListener(INavigationLinkListener<T> listener);
 
 	INavigationLink<T> requiresSelection(boolean requiresSelection);
+
+	INavigationLink<T> typeConstraint(Class<?> typeConstraint);
 }

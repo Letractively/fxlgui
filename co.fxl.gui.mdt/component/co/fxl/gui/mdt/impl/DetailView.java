@@ -62,6 +62,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 
 	@SuppressWarnings("unchecked")
 	void refresh() {
+		widget.mainPanel.clear();
 		tree = (IFilterTreeWidget<Object>) widget.mainPanel.add().widget(
 				IFilterTreeWidget.class);
 		tree.addTreeClickListener(new ITreeClickListener<Object>() {

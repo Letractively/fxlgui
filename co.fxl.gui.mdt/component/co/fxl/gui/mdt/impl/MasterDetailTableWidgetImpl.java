@@ -18,8 +18,10 @@
  */
 package co.fxl.gui.mdt.impl;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
@@ -69,7 +71,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	SplitLayout splitLayout;
 	boolean hideDetailRoot = false;
 	List<Object> selection = new LinkedList<Object>();
-	List<ILabel> labels = new LinkedList<ILabel>();
+	Map<ILabel, NavigationLinkImpl> labels = new HashMap<ILabel, NavigationLinkImpl>();
 	private IComboBox comboBoxConfiguration;
 	private List<String> configurations = new LinkedList<String>();
 	Listener listener;
@@ -146,6 +148,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 							if (listener instanceof TableView)
 								notifyConfigurationListener(value);
 							else {
+								filterWidget.setConfiguration(value);
 								Object show = null;
 								if (!selection.isEmpty())
 									show = selection.get(selection.size() - 1);
@@ -233,9 +236,9 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 						}
 					});
 				}
-				if (link.requiresSelection) {
+				if (link.requiresSelection || link.typeConstraint != null) {
 					l.clickable(false);
-					labels.add(l);
+					labels.put(l, link);
 				}
 			}
 		}
@@ -407,6 +410,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	@Override
 	public void onApply(IFilterConstraints constraints) {
+		this.constraints = constraints;
 		activeView.onApply(constraints);
 	}
 }
