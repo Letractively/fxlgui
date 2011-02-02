@@ -12,6 +12,7 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 	boolean asDetail = false;
 	List<INavigationLinkListener<Object>> listeners = new LinkedList<INavigationLinkListener<Object>>();
 	boolean requiresSelection = true;
+	Class<?> typeConstraint;
 
 	NavigationLinkImpl(String name) {
 		this.name = name;
@@ -39,6 +40,12 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 	@Override
 	public INavigationLink<Object> requiresSelection(boolean requiresSelection) {
 		this.requiresSelection = requiresSelection;
+		return this;
+	}
+
+	@Override
+	public INavigationLink<Object> typeConstraint(Class<?> typeConstraint) {
+		this.typeConstraint = typeConstraint;
 		return this;
 	}
 

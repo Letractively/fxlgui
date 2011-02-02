@@ -58,8 +58,10 @@ abstract class ViewTemplate implements IChangeListener<Object>, Listener,
 	@Override
 	public void onChange(List<Object> selection) {
 		widget.selection = selection;
-		for (ILabel label : widget.labels) {
-			label.clickable(!selection.isEmpty());
+		for (ILabel label : widget.labels.keySet()) {
+			NavigationLinkImpl l = widget.labels.get(label);
+			boolean clickable = !selection.isEmpty() && (l.typeConstraint==null || l.typeConstraint.equals(selection.get(0).getClass()));
+			label.clickable(clickable);
 		}
 	}
 }
