@@ -133,7 +133,8 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 
 			@Override
 			public Object identifier(int i) {
-				return lresult.get(i);
+				Object object = lresult.get(i);
+				return object;
 			}
 
 			@Override
@@ -145,7 +146,8 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 				row = new Object[relation.properties.size()];
 				int j = 0;
 				for (PropertyImpl p : relation.properties) {
-					row[j++] = (Comparable<?>) p.adapter.valueOf(e);
+					Object valueOf = p.adapter.valueOf(e);
+					row[j++] = valueOf;
 				}
 				return row;
 			}
