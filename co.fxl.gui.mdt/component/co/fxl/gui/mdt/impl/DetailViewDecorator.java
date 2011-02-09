@@ -177,39 +177,41 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 									tf.valueElement().editable(false);
 									formField = tf;
 									valueElement = formField.valueElement();
-									final ILabel assign = formField
-											.addButton(valueOf == null ? "Assign"
-													: "Change");
-									assign.addClickListener(new IClickListener() {
-										@Override
-										public void onClick() {
-											property.listener
-													.update(node,
-															new CallbackTemplate<Boolean>() {
+									if (property.listener != null) {
+										final ILabel assign = formField
+												.addButton(valueOf == null ? "Assign"
+														: "Change");
+										assign.addClickListener(new IClickListener() {
+											@Override
+											public void onClick() {
+												property.listener
+														.update(node,
+																new CallbackTemplate<Boolean>() {
 
-																@Override
-																public void onSuccess(
-																		Boolean update) {
-																	if (update) {
-																		String newString = (String) property.adapter
-																				.valueOf(node);
-																		tf.valueElement()
-																				.text(newString);
-																		assign.text(newString == null ? "Assign"
-																				: "Change");
-																		save(node,
-																				new CallbackTemplate<Boolean>() {
-																					@Override
-																					public void onSuccess(
-																							Boolean result) {
-																						throw new MethodNotImplementedException();
-																					}
-																				});
+																	@Override
+																	public void onSuccess(
+																			Boolean update) {
+																		if (update) {
+																			String newString = (String) property.adapter
+																					.valueOf(node);
+																			tf.valueElement()
+																					.text(newString);
+																			assign.text(newString == null ? "Assign"
+																					: "Change");
+																			save(node,
+																					new CallbackTemplate<Boolean>() {
+																						@Override
+																						public void onSuccess(
+																								Boolean result) {
+																							throw new MethodNotImplementedException();
+																						}
+																					});
+																		}
 																	}
-																}
-															});
-										}
-									});
+																});
+											}
+										});
+									}
 								}
 							} else if (property.type.isLong) {
 								IFormField<ITextArea> textArea = form

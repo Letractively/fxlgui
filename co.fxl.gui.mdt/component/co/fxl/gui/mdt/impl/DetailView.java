@@ -69,7 +69,8 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 
 			@Override
 			public void onClick(ITree<Object> tree) {
-				widget.showTableView(tree.object());
+				if (tree.isLeaf())
+					widget.showTableView(tree.object());
 			}
 		}).doubleClick();
 		tree.showRefresh(false);
@@ -127,13 +128,11 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 	}
 
 	private class Register {
-		String name;
 		IDecorator<Object> dec;
 		Class<?> c;
 
 		private Register(String name, IDecorator<Object> dec,
 				Class<?> constraint) {
-			this.name = name;
 			this.dec = dec;
 			this.c = constraint;
 		}
