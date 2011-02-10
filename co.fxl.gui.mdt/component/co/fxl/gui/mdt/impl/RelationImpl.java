@@ -27,6 +27,7 @@ class RelationImpl extends PropertyGroupImpl implements
 	IShowListener<Object> showListener;
 	IAddListener<Object, Object> addRemoveListener;
 	boolean allowColumnSelection = true;
+	boolean sortable = true;
 
 	RelationImpl(String name) {
 		super(name);
@@ -56,6 +57,12 @@ class RelationImpl extends PropertyGroupImpl implements
 	public IRelation<Object, Object> allowColumnSelection(
 			boolean allowColumnSelection) {
 		this.allowColumnSelection = allowColumnSelection;
+		return this;
+	}
+
+	@Override
+	public IRelation<Object, Object> sortable(boolean sortable) {
+		this.sortable = sortable;
 		return this;
 	}
 }
