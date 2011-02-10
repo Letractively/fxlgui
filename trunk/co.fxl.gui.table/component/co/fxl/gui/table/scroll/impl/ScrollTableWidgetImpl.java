@@ -134,13 +134,13 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			statusPanel = null;
 			selectionIsSetup = false;
 			container.clear();
-			topPanel = null;
+			topPanel = container.add().panel().grid();
 			filter = null;
 			for (ScrollTableColumnImpl c : columns) {
 				if (c.filterable) {
 					if (filter == null) {
-						if (topPanel == null)
-							topPanel = container.add().panel().grid();
+						// if (topPanel == null)
+						// topPanel = container.add().panel().grid();
 						// container.addSpace(10);
 						filter = (IMiniFilterWidget) topPanel.cell(0, 0)
 								.widget(IMiniFilterWidget.class);
@@ -196,8 +196,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					}
 				}
 			}
-			if (buttonDecorator != null)
+			if (buttonDecorator != null) {
 				buttonPanel(buttonDecorator);
+			}
 			preselected = null;
 		} else {
 			this.visible = false;
@@ -280,7 +281,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IFilterConstraints constraints;
 	private IFilterListener filterListener;
 	private IButtonPanelDecorator buttonDecorator;
-	private ICommandButtons commandButtons;
+	private CommandButtonsImpl commandButtons;
 	Object preselected;
 
 	void update() {
@@ -449,7 +450,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		int firstRow = constraints != null ? constraints.rowIterator()
 				.firstRow() : 0;
 		String status = "Displaying rows " + (firstRow + rowOffset + 1) + " - "
-				+ (firstRow + rt) + " of " + rows.size();
+				+ (firstRow + rt) + " of " + (firstRow + 1) + "-"
+				+ (firstRow + rows.size());
 		p.add().label().text(status).font().pixel(10);
 		if (constraints != null && constraints.rowIterator().hasNext()) {
 			p.addSpace(4);
@@ -683,6 +685,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public co.fxl.gui.table.scroll.api.IScrollTableWidget.ICommandButtons commandButtons() {
 		if (commandButtons == null) {
 			commandButtons = new CommandButtonsImpl(this);
+			buttonDecorator = commandButtons;
 		}
 		return commandButtons;
 	}
