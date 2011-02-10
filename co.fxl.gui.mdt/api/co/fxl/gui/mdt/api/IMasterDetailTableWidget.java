@@ -79,4 +79,6 @@ public interface IMasterDetailTableWidget<T> {
 	List<T> selection();
 
 	IMasterDetailTableWidget<T> allowMultiSelection(boolean multiSelection);
+
+	IMasterDetailTableWidget<T> showCommands(boolean showCommands);
 }

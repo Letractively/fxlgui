@@ -85,6 +85,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	IFilterWidget filterWidget;
 	private ViewTemplate activeView;
 	List<String> registerOrder = new LinkedList<String>();
+	boolean showCommands = true;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -412,5 +413,11 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	public void onApply(IFilterConstraints constraints) {
 		this.constraints = constraints;
 		activeView.onApply(constraints);
+	}
+
+	@Override
+	public IMasterDetailTableWidget<Object> showCommands(boolean showCommands) {
+		this.showCommands = showCommands;
+		return this;
 	}
 }

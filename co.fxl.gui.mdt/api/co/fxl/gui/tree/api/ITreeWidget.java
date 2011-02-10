@@ -81,4 +81,6 @@ public interface ITreeWidget<T> {
 	ITreeWidget<T> showRefresh(boolean showRefresh);
 
 	ITreeWidget<T> allowCreate(boolean allowCreate);
+
+	ITreeWidget<T> showCommands(boolean showCommands);
 }

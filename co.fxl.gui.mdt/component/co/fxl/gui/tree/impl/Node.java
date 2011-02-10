@@ -130,6 +130,7 @@ class Node<T> extends LazyClickListener {
 	void update(T object) {
 		label.text(tree.name());
 		label.font().weight().plain().color().black();
+		expand();
 	}
 
 	@Override

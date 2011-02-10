@@ -65,6 +65,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 		widget.mainPanel.clear();
 		tree = (IFilterTreeWidget<Object>) widget.mainPanel.add().widget(
 				IFilterTreeWidget.class);
+		tree.showCommands(widget.showCommands);
 		tree.addTreeClickListener(new ITreeClickListener<Object>() {
 
 			@Override
@@ -247,8 +248,17 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 	}
 
 	@Override
-	public void onDelete(ICallback<Boolean> cb) {
-		tree.refresh(cb);
+	public void onDelete(final ITree<Object> tree, final ICallback<Boolean> cb) {
+		if (tree != null && tree.parent() != null)
+			DetailView.this.tree.selection(tree.parent().object());
+		this.tree.refresh(new CallbackTemplate<Boolean>() {
+
+			@Override
+			public void onSuccess(Boolean result) {
+				if (cb != null)
+					cb.onSuccess(true);
+			}
+		});
 	}
 
 	private void saveNode(final Object node, final ICallback<Boolean> cb) {
@@ -264,7 +274,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 
 	@Override
 	public void onDelete() {
-		onDelete(null);
+		onDelete(null, null);
 	}
 
 	@Override
