@@ -19,6 +19,7 @@
 package co.fxl.gui.table.api;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ISelection<T> {
 
@@ -48,6 +49,8 @@ public interface ISelection<T> {
 	ISingleSelection<T> single();
 
 	List<T> result();
+
+	Map<Integer, T> indexedResult();
 
 	ISelection<T> add(T object);
 }

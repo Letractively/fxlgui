@@ -20,6 +20,7 @@ package co.fxl.gui.table.impl;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -268,5 +269,10 @@ class SelectionImpl implements ISelection<Object> {
 		if (rowImpl != null)
 			widget.rowListener.notifyClick(rowImpl);
 		return this;
+	}
+
+	@Override
+	public Map<Integer, Object> indexedResult() {
+		throw new MethodNotImplementedException();
 	}
 }
