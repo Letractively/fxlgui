@@ -53,7 +53,7 @@ public class DiscardChangesDialog {
 									public void onSuccess(Boolean result) {
 										if (result)
 											listener = null;
-										callback.onSuccess(true);
+										callback.onSuccess(result);
 									}
 								});
 							} else
