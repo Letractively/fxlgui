@@ -450,7 +450,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		int firstRow = constraints != null ? constraints.rowIterator()
 				.firstRow() : 0;
 		String status = "Displaying rows " + (firstRow + rowOffset + 1) + " - "
-				+ (firstRow + rt) + " of " + (firstRow + 1) + "-"
+				+ (firstRow + rt) + " of " + (firstRow + 1) + " - "
 				+ (firstRow + rows.size());
 		p.add().label().text(status).font().pixel(10);
 		if (constraints != null && constraints.rowIterator().hasNext()) {

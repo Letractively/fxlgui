@@ -18,8 +18,10 @@
  */
 package co.fxl.gui.table.scroll.impl;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -238,5 +240,15 @@ class SelectionImpl implements ISelection<Object> {
 			single.update();
 		if (multi != null)
 			multi.update();
+	}
+
+	@Override
+	public Map<Integer, Object> indexedResult() {
+		List<Integer> indices = widget.rows.selectedIndices();
+		Map<Integer, Object> result = new HashMap<Integer, Object>();
+		for (Integer i : indices) {
+			result.put(i, widget.rows.identifier(i));
+		}
+		return result;
 	}
 }

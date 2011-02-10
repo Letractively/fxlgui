@@ -117,6 +117,15 @@ class RowAdapter implements IRows<Object>, IComparableList {
 		return ids;
 	}
 
+	List<Integer> selectedIndices() {
+		List<Integer> ids = new LinkedList<Integer>();
+		for (int i = 0; i < size(); i++) {
+			if (selected[i])
+				ids.add(i);
+		}
+		return ids;
+	}
+
 	int find(Object object) {
 		for (int i = 0; i < rows.size(); i++) {
 			if (identifier(i).equals(object))
