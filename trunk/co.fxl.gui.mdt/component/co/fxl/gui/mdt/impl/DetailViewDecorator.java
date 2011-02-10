@@ -44,7 +44,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 
 	public interface DeleteListener {
 
-		void onDelete(ICallback<Boolean> cb);
+		void onDelete(ITree<Object> tree, ICallback<Boolean> cb);
 	}
 
 	private final List<PropertyGroupImpl> gs;
@@ -124,20 +124,20 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 
 				@Override
 				public void onDiscardChanges(final ICallback<Boolean> cb) {
-					tree.delete(new CallbackTemplate<Object>() {
+					// tree.delete(new CallbackTemplate<Object>() {
+					//
+					// @Override
+					// public void onSuccess(Object result) {
+					deleteListener.onDelete(tree,
+							new CallbackTemplate<Boolean>() {
 
-						@Override
-						public void onSuccess(Object result) {
-							deleteListener
-									.onDelete(new CallbackTemplate<Boolean>() {
-
-										@Override
-										public void onSuccess(Boolean result) {
-											cb.onSuccess(true);
-										}
-									});
-						}
-					});
+								@Override
+								public void onSuccess(Boolean result) {
+									cb.onSuccess(false);
+								}
+							});
+					// }
+					// });
 				}
 			};
 		}

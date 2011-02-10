@@ -74,7 +74,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 			table.selection().multi().addChangeListener(this);
 		else
 			table.selection().single().addSelectionListener(this);
-		if (widget.allowCreate) {
+		if (widget.showCommands && widget.allowCreate) {
 			if (widget.creatableTypes.isEmpty())
 				widget.creatableTypes.add(null);
 			for (final String type : widget.creatableTypes) {
@@ -94,45 +94,47 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 				});
 			}
 		}
-		delete = table.addButton("Delete");
-		delete.addClickListener(new IClickListener() {
-			@Override
-			public void onClick() {
-				final List<Object> result = table.selection().result();
-				String msg = result.size() == 1 ? "Delete Entity?"
-						: "Delete Entities?";
-				widget.mainPanel.display().showDialog().question()
-						.question(msg).title("Warning")
-						.addQuestionListener(new IQuestionDialogListener() {
+		if (widget.showCommands) {
+			delete = table.addButton("Delete");
+			delete.addClickListener(new IClickListener() {
+				@Override
+				public void onClick() {
+					final List<Object> result = table.selection().result();
+					String msg = result.size() == 1 ? "Delete Entity?"
+							: "Delete Entities?";
+					widget.mainPanel.display().showDialog().question()
+							.question(msg).title("Warning")
+							.addQuestionListener(new IQuestionDialogListener() {
 
-							@Override
-							public void onYes() {
-								for (Object entity : result) {
-									queryList
-											.delete(entity,
-													new CallbackTemplate<IDeletableList<Object>>() {
+								@Override
+								public void onYes() {
+									for (Object entity : result) {
+										queryList
+												.delete(entity,
+														new CallbackTemplate<IDeletableList<Object>>() {
 
-														@Override
-														public void onSuccess(
-																IDeletableList<Object> result) {
-															onDelete();
-														}
-													});
+															@Override
+															public void onSuccess(
+																	IDeletableList<Object> result) {
+																onDelete();
+															}
+														});
+									}
 								}
-							}
 
-							@Override
-							public void onNo() {
-							}
+								@Override
+								public void onNo() {
+								}
 
-							@Override
-							public void onCancel() {
-								throw new MethodNotImplementedException();
-							}
-						});
-			}
-		});
-		delete.clickable(false);
+								@Override
+								public void onCancel() {
+									throw new MethodNotImplementedException();
+								}
+							});
+				}
+			});
+			delete.clickable(false);
+		}
 		// table.addButton("Refresh").addClickListener(new IClickListener() {
 		// @Override
 		// public void onClick() {
@@ -206,17 +208,21 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 		super.onChange(selection);
 		boolean clickable = !selection.isEmpty();
 		for (Object o : selection) {
+			assert o != null;
 			clickable &= queryList.isDeletable(o);
 		}
 		// detail.clickable(selection.size() == 1);
-		delete.clickable(clickable);
-		updateCreatable();
+		if (widget.showCommands) {
+			delete.clickable(clickable);
+			updateCreatable();
+		}
 	}
 
 	@Override
 	public void onSelection(Object selection) {
 		List<Object> s = new LinkedList<Object>();
-		s.add(selection);
+		if (selection != null)
+			s.add(selection);
 		onChange(s);
 	}
 

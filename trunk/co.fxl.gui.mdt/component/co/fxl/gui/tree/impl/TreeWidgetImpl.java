@@ -53,6 +53,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private static final int SPLIT_POSITION = 250;
 	private static final int BACKGROUND_GRAY = 247;
 	private boolean showRefresh = true;
+	private boolean showCommands = true;
 
 	interface RefreshListener {
 
@@ -154,6 +155,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	ITreeClickListener<T> treeClickListener;
 	KeyAdapter<Object> treeClickAdapter;
 	boolean allowCreate = true;
+	private IClickListener deleteListener;
 
 	TreeWidgetImpl(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel()).space(0);
@@ -166,7 +168,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			return;
 		}
 		hasButtons = true;
-		if (allowCreate) {
+		if (showCommands && allowCreate) {
 			if (creatableTypes.isEmpty())
 				creatableTypes.add(null);
 			for (final String type : creatableTypes) {
@@ -222,40 +224,43 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				hl.addClickListener(cl);
 			}
 		}
-		delete = widgetTitle.addHyperlink("Delete")
-				.addClickListener(new IClickListener() {
-					@Override
-					public void onClick() {
-						IQuestionDialog question = panel.display().showDialog()
-								.question();
-						question.question("Delete Entity?").title("Warning");
-						question.addQuestionListener(new IQuestionDialogListener() {
-
-							@Override
-							public void onYes() {
-								delete();
-							}
-
-							@Override
-							public void onNo() {
-								widgetTitle.reset();
-							}
-
-							@Override
-							public void onCancel() {
-								throw new MethodNotImplementedException();
-							}
-						});
-					}
-				}).mouseLeft();
-		if (showRefresh && this instanceof RefreshListener)
-			refresh().addClickListener(new IClickListener() {
+		if (showCommands) {
+			deleteListener = new IClickListener() {
 				@Override
 				public void onClick() {
-					((RefreshListener) TreeWidgetImpl.this).onRefresh();
-					widgetTitle.reset();
+					IQuestionDialog question = panel.display().showDialog()
+							.question();
+					question.question("Delete Entity?").title("Warning");
+					question.addQuestionListener(new IQuestionDialogListener() {
+
+						@Override
+						public void onYes() {
+							delete();
+						}
+
+						@Override
+						public void onNo() {
+							widgetTitle.reset();
+						}
+
+						@Override
+						public void onCancel() {
+							throw new MethodNotImplementedException();
+						}
+					});
 				}
-			});
+			};
+			delete = widgetTitle.addHyperlink("Delete")
+					.addClickListener(deleteListener).mouseLeft();
+			if (showRefresh && this instanceof RefreshListener)
+				refresh().addClickListener(new IClickListener() {
+					@Override
+					public void onClick() {
+						((RefreshListener) TreeWidgetImpl.this).onRefresh();
+						widgetTitle.reset();
+					}
+				});
+		}
 	}
 
 	void delete() {
@@ -343,9 +348,11 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		this.root = tree;
 		node = null;
 		if (showRoot) {
+			object2node.clear();
 			Node<T> n0 = new Node<T>(this, panel(), tree, 0, expand, path);
 			node = n0;
 		} else {
+			object2node.clear();
 			for (ITree<T> c : tree.children()) {
 				Node<T> n0 = new Node<T>(this, panel(), c, 0, expand, path);
 				if (node == null)
@@ -377,8 +384,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	void show(Node<T> node) {
 		if (last != null) {
-			if (last == node)
-				return;
+			// if (last == node)
+			// return;
 			last.selected(false);
 		}
 		last = node;
@@ -407,7 +414,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				Class<? extends Object> type = node.tree.object().getClass();
 				boolean hide = view.constrainType != null
 						&& !view.constrainType.equals(type);
-				view.enabled(!hide);
+				view.enabled(!hide && (i == 0 || !node.tree.isNew()));
 			}
 			view.setNode(node);
 		}
@@ -430,16 +437,18 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		addButtons();
 		for (ISelectionListener<T> l : selectionListeners)
 			l.onChange(selection);
-		assert delete != null;
 		if (selection != null && root != null && root.object() != null) {
 			Node<T> sNode = object2node.get(selection);
-			delete.clickable(!root.object().equals(selection)
-					&& (sNode == null || sNode.tree.isDeletable()));
+			if (showCommands)
+				delete.clickable(!root.object().equals(selection)
+						&& (sNode == null || sNode.tree.isDeletable()));
 		} else {
-			delete.clickable(false);
+			if (showCommands)
+				delete.clickable(false);
 		}
 		this.selection = selection;
-		updateCreatable();
+		if (showCommands)
+			updateCreatable();
 		return this;
 	}
 
@@ -509,6 +518,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		n.update(originalObject);
 		if (selection == originalObject) {
 			selection(originalObject);
+			show(n);
 		}
 		return this;
 	}
@@ -570,6 +580,12 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	@Override
 	public ITreeWidget<T> allowCreate(boolean allowCreate) {
 		this.allowCreate = allowCreate;
+		return this;
+	}
+
+	@Override
+	public ITreeWidget<T> showCommands(boolean showCommands) {
+		this.showCommands = showCommands;
 		return this;
 	}
 }
