@@ -99,7 +99,8 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 			delete.addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {
-					final List<Object> result = table.selection().result();
+					final Map<Integer, Object> result = table.selection()
+							.indexedResult();
 					String msg = result.size() == 1 ? "Delete Entity?"
 							: "Delete Entities?";
 					widget.mainPanel.display().showDialog().question()
@@ -108,9 +109,11 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 
 								@Override
 								public void onYes() {
-									for (Object entity : result) {
+									for (Integer i : result.keySet()) {
+										Object entity = result.get(i);
 										queryList
-												.delete(entity,
+												.delete(i,
+														entity,
 														new CallbackTemplate<IDeletableList<Object>>() {
 
 															@Override

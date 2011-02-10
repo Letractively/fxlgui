@@ -19,6 +19,7 @@
 package co.fxl.gui.mdt.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IContainer;
@@ -77,7 +78,9 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 				ISingleSelection<Object> selection = selection0.single();
 				for (final PropertyImpl property : relation.properties) {
 					IScrollTableColumn<Object> c = table.addColumn();
-					c.name(property.name).type(property.type).sortable();
+					c.name(property.name).type(property.type);
+					if (relation.sortable)
+						c.sortable();
 					if (property.filterable)
 						c.filterable();
 					if (property.type.clazz.equals(Boolean.class)) {
@@ -180,7 +183,8 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 			@Override
 			public void onClick(Object identifier, int rowIndex,
 					ICallback<Boolean> callback) {
-				relation.addRemoveListener.onAdd(node, identifier,
+				relation.addRemoveListener.onAdd(node, identifier == null ? -1
+						: rowIndex, identifier,
 						new CallbackTemplate<Boolean>() {
 
 							@Override
@@ -222,9 +226,12 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 
 								@Override
 								public void onYes() {
-									List<Object> r = selection0.result();
+									Map<Integer, Object> r = selection0
+											.indexedResult();
+									int index = r.keySet().iterator().next();
 									result.delete(
-											r.get(0),
+											index,
+											r.get(index),
 											new CallbackTemplate<IDeletableList<Object>>() {
 
 												@Override

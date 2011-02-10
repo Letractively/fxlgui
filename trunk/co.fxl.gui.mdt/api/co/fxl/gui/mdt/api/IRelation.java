@@ -27,7 +27,7 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 
 	public interface IAddListener<T, R> {
 
-		void onAdd(T base, R entity, ICallback<Boolean> refresh);
+		void onAdd(T base, int index, R entity, ICallback<Boolean> refresh);
 
 		boolean isDetailedAdd();
 
@@ -52,4 +52,6 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 	IRelation<T, R> addListener(IAddListener<T, R> l);
 
 	IRelation<T, R> allowColumnSelection(boolean allowColumnSelection);
+
+	IRelation<T, R> sortable(boolean sortable);
 }
