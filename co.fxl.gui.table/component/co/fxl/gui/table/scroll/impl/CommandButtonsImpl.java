@@ -26,6 +26,7 @@ import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
+import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableClickListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IButtonPanelDecorator;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.ICommandButtons;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IDecorator;
@@ -243,8 +244,19 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 		}
 		if (listenOnEdit) {
 			edit = panel.add().button().text("Edit");
-			edit.addClickListener(new Update(listenOnEditListener));
+			final Update clickListener = new Update(listenOnEditListener);
+			edit.addClickListener(clickListener);
 			edit.clickable(widget.preselected != null);
+			widget.addTableClickListener(new ITableClickListener() {
+				@Override
+				public void onClick(int column, int row) {
+					row--;
+					widget.rows.selected(row);
+					selection = widget.rows.identifier(row);
+					selectionIndex = row;
+					clickListener.onClick();
+				}
+			}).doubleClick();
 		}
 		if (listenOnMoveUp) {
 			imageUpMax = addMoveImage(ScrollTableWidgetImpl.ARROW_UP,
