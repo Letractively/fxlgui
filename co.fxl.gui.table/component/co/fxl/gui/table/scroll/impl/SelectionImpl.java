@@ -57,7 +57,8 @@ class SelectionImpl implements ISelection<Object> {
 					clearSelection();
 					if (alreadySelected) {
 						for (ISelectionListener<Object> l : listeners) {
-							l.onSelection(convert2TableRow, null);
+							l.onSelection(convert2TableRow,
+									widget.rows.identifier(convert2TableRow));
 						}
 						return;
 					}
