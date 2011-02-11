@@ -103,6 +103,8 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 						c.sortable();
 					if (property.filterable)
 						c.filterable();
+					if (property.editable)
+						c.editable();
 					if (property.type.clazz.equals(Boolean.class)) {
 						c.updateListener(new IColumnUpdateListener<Object, Boolean>() {
 
