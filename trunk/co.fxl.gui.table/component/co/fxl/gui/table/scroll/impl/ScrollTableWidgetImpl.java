@@ -167,6 +167,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				container.addSpace(10);
 				showNoRowsFound = false;
 			}
+			if (buttonDecorator != null) {
+				buttonPanel(buttonDecorator);
+			}
 			if (rows.size() == 0) {
 				IVerticalPanel dock = container.add().panel().vertical()
 						.spacing(10);
@@ -203,9 +206,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						sp.scrollIntoView(quader);
 					}
 				}
-			}
-			if (buttonDecorator != null) {
-				buttonPanel(buttonDecorator);
 			}
 			preselected = null;
 		} else {
