@@ -132,6 +132,7 @@ class SwingDialog implements IDialog {
 			@Override
 			public void add(JComponent component) {
 				dialog = new JDialog();
+				dialog.setModal(true);
 				dialog.setTitle(title);
 				dialog.getContentPane().add(component);
 			}
