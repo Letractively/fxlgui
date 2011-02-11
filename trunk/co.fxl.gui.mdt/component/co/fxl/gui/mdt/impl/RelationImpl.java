@@ -29,6 +29,7 @@ class RelationImpl extends PropertyGroupImpl implements
 	boolean allowColumnSelection = true;
 	boolean sortable = true;
 	IUpDownListener<Object, Object> upDownListener;
+	boolean editable = false;
 
 	RelationImpl(String name) {
 		super(name);
@@ -76,6 +77,7 @@ class RelationImpl extends PropertyGroupImpl implements
 
 	@Override
 	public IRelation<Object, Object> editable(boolean editable) {
-		throw new MethodNotImplementedException();
+		this.editable = editable;
+		return this;
 	}
 }

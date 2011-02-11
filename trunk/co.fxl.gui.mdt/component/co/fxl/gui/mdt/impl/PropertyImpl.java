@@ -31,7 +31,7 @@ class PropertyImpl implements IProperty<Object, Object> {
 	FieldTypeImpl type = new FieldTypeImpl();
 	boolean sortable = false;
 	boolean required;
-	boolean editable = true;
+	boolean editable = false;
 	IUpdateListener<Object> listener;
 	boolean filterable;
 
