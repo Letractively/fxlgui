@@ -19,8 +19,9 @@
 package co.fxl.gui.mdt.impl;
 
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.api.template.ICallback;
 
 interface Listener extends IUpdateListener<String> {
 
-	void onDelete();
+	void onDelete(ICallback<Boolean> cb);
 }

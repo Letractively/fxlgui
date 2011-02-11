@@ -35,17 +35,23 @@ import co.fxl.gui.mdt.api.IDeletableList;
 import co.fxl.gui.table.api.IColumn.IColumnUpdateListener;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.api.ISelection.ISingleSelection;
+import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
+import co.fxl.gui.table.scroll.api.IScrollTableWidget.IMoveRowListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IRowListener;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 
-final class RelationDecorator implements IDecorator<Object>, IResizeListener {
+final class RelationDecorator implements IDecorator<Object>, IResizeListener,
+		ISelectionListener<Object> {
 
 	private final RelationImpl relation;
 	private IScrollTableWidget<Object> table;
+	private Object node;
+	private int selectionIndex;
+	private Object selection;
 
 	RelationDecorator(RelationImpl relation) {
 		this.relation = relation;
@@ -58,7 +64,18 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 
 	@Override
 	public void decorate(final IVerticalPanel panel, final Object node) {
+		if (this.node != null && !node.equals(this.node)) {
+			selectionIndex = -1;
+			selection = null;
+		}
+		this.node = node;
 		decorate(panel, null, node);
+	}
+
+	@Override
+	public void onSelection(int index, Object selection) {
+		this.selectionIndex = index;
+		this.selection = selection;
 	}
 
 	private void decorate(final IVerticalPanel panel,
@@ -76,6 +93,9 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 						IScrollTableWidget.class);
 				final ISelection<Object> selection0 = table.selection();
 				ISingleSelection<Object> selection = selection0.single();
+				selection0
+						.add(selectionIndex, RelationDecorator.this.selection);
+				selection.addSelectionListener(RelationDecorator.this);
 				for (final PropertyImpl property : relation.properties) {
 					IScrollTableColumn<Object> c = table.addColumn();
 					c.name(property.name).type(property.type);
@@ -123,9 +143,9 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 					final ISingleSelection<Object> selection) {
 				addAddButton(node);
 				addRemoveButton(panel, result, selection0);
+				addUpDownButtons(node, panel, result, selection0);
 				addShowButton();
 			}
-
 		};
 		relation.adapter.valueOf(node, constraints, callback);
 	}
@@ -255,6 +275,47 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener {
 							});
 				}
 			});
+		}
+	}
+
+	private void addUpDownButtons(final Object node,
+			final IVerticalPanel panel, final IDeletableList<Object> result,
+			final ISelection<Object> selection0) {
+		if (relation.upDownListener != null) {
+			table.commandButtons().listenOnMoveUp(
+					new IMoveRowListener<Boolean>() {
+
+						@Override
+						public void onClick(int rowIndex, Object identifier,
+								boolean maxMove, ICallback<Boolean> callback) {
+							relation.upDownListener.onUp(node, rowIndex,
+									identifier, maxMove,
+									new CallbackTemplate<Boolean>() {
+
+										@Override
+										public void onSuccess(Boolean result) {
+										}
+									});
+						}
+					});
+			table.commandButtons().listenOnMoveDown(
+					new IMoveRowListener<Boolean>() {
+
+						@Override
+						public void onClick(int rowIndex, Object identifier,
+								boolean maxMove,
+								final ICallback<Boolean> callback) {
+							relation.upDownListener.onDown(node, rowIndex,
+									identifier, maxMove,
+									new CallbackTemplate<Boolean>() {
+
+										@Override
+										public void onSuccess(Boolean result) {
+											callback.onSuccess(result);
+										}
+									});
+						}
+					});
 		}
 	}
 

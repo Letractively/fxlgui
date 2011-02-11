@@ -34,6 +34,15 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 		IButton decorateAdd(T base, IContainer c);
 	}
 
+	public interface IUpDownListener<T, R> {
+
+		void onUp(T base, int index, R entity, boolean max,
+				ICallback<Boolean> refresh);
+
+		void onDown(T base, int index, R entity, boolean max,
+				ICallback<Boolean> refresh);
+	}
+
 	public interface IShowListener<R> {
 
 		void onShow(R entity);
@@ -50,6 +59,8 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 	IRelation<T, R> showListener(IShowListener<R> l);
 
 	IRelation<T, R> addListener(IAddListener<T, R> l);
+
+	IRelation<T, R> upDownListener(IUpDownListener<T, R> l);
 
 	IRelation<T, R> allowColumnSelection(boolean allowColumnSelection);
 

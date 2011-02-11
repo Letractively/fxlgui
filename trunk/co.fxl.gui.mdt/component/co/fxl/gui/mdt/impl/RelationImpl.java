@@ -28,6 +28,7 @@ class RelationImpl extends PropertyGroupImpl implements
 	IAddListener<Object, Object> addRemoveListener;
 	boolean allowColumnSelection = true;
 	boolean sortable = true;
+	IUpDownListener<Object, Object> upDownListener;
 
 	RelationImpl(String name) {
 		super(name);
@@ -63,6 +64,13 @@ class RelationImpl extends PropertyGroupImpl implements
 	@Override
 	public IRelation<Object, Object> sortable(boolean sortable) {
 		this.sortable = sortable;
+		return this;
+	}
+
+	@Override
+	public IRelation<Object, Object> upDownListener(
+			co.fxl.gui.mdt.api.IRelation.IUpDownListener<Object, Object> l) {
+		upDownListener = l;
 		return this;
 	}
 }
