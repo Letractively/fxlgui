@@ -148,7 +148,7 @@ class SwingContainer<T extends JComponent> implements IContainer {
 
 	@Override
 	public ITextField textField() {
-		setComponent((T) new TextFieldComponent<T>());
+		setComponent((T) new TextFieldComponent());
 		return (ITextField) (element = new SwingTextField(
 				(SwingContainer<JTextField>) this));
 	}

@@ -25,6 +25,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Point;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
@@ -82,6 +84,23 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 			super(SwingGridPanel.this);
 			this.constraints = (GridBagConstraints) constraints.clone();
 			panel.setOpaque(false);
+		}
+
+		@Override
+		void setComponent(final JComponent component) {
+			if (component instanceof TextFieldComponent) {
+				super.setComponent(component);
+				final TextFieldComponent tfc = (TextFieldComponent) component;
+				ComponentAdapter adp = new ComponentAdapter() {
+					@Override
+					public void componentResized(ComponentEvent e) {
+						int width = panel.getPreferredSize().width;
+						tfc.setPreferredWidth(width);
+					}
+				};
+				panel.addComponentListener(adp);
+			} else
+				super.setComponent(component);
 		}
 
 		private void update() {
