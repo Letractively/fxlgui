@@ -30,6 +30,7 @@ class RelationImpl extends PropertyGroupImpl implements
 	boolean sortable = true;
 	IUpDownListener<Object, Object> upDownListener;
 	boolean editable = false;
+	IEditListener<Object, Object> editListener;
 
 	RelationImpl(String name) {
 		super(name);
@@ -78,6 +79,13 @@ class RelationImpl extends PropertyGroupImpl implements
 	@Override
 	public IRelation<Object, Object> editable(boolean editable) {
 		this.editable = editable;
+		return this;
+	}
+
+	@Override
+	public IRelation<Object, Object> editListener(
+			co.fxl.gui.mdt.api.IRelation.IEditListener<Object, Object> editListener) {
+		this.editListener = editListener;
 		return this;
 	}
 }

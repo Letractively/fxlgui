@@ -147,6 +147,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 				addRemoveButton(panel, result, selection0);
 				addUpDownButtons(node, panel, result, selection0);
 				addShowButton();
+				addEditButton();
 			}
 		};
 		relation.adapter.valueOf(node, constraints, callback);
@@ -328,6 +329,18 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 				public void onClick(Object identifier, int rowIndex,
 						ICallback<Boolean> callback) {
 					relation.showListener.onShow(identifier);
+				}
+			});
+	}
+
+	private void addEditButton() {
+		if (relation.editListener != null)
+			table.commandButtons().listenOnEdit(new IRowListener<Boolean>() {
+				@Override
+				public void onClick(Object identifier, int rowIndex,
+						ICallback<Boolean> callback) {
+					relation.editListener.onEdit(node, rowIndex, identifier,
+							callback);
 				}
 			});
 	}

@@ -43,6 +43,11 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 				ICallback<Boolean> refresh);
 	}
 
+	public interface IEditListener<T, R> {
+
+		void onEdit(T base, int index, R entity, ICallback<Boolean> refresh);
+	}
+
 	public interface IShowListener<R> {
 
 		void onShow(R entity);
@@ -67,4 +72,6 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 	IRelation<T, R> sortable(boolean sortable);
 
 	IRelation<T, R> editable(boolean editable);
+
+	IRelation<T, R> editListener(IEditListener<T, R> editListener);
 }
