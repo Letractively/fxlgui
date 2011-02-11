@@ -73,4 +73,9 @@ class RelationImpl extends PropertyGroupImpl implements
 		upDownListener = l;
 		return this;
 	}
+
+	@Override
+	public IRelation<Object, Object> editable(boolean editable) {
+		throw new MethodNotImplementedException();
+	}
 }

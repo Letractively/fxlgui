@@ -65,4 +65,6 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 	IRelation<T, R> allowColumnSelection(boolean allowColumnSelection);
 
 	IRelation<T, R> sortable(boolean sortable);
+
+	IRelation<T, R> editable(boolean editable);
 }
