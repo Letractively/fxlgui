@@ -32,7 +32,7 @@ final class TextFieldComponent extends JTextField {
 	public Dimension getPreferredSize() {
 		Dimension d = super.getPreferredSize();
 		if (d == null)
-			return null;
+			d = new Dimension();
 		if (d.height == 0)
 			d.height = SwingContainer.MIN_HEIGHT_TEXT_COMPONENT;
 		if (d.width == 0)
