@@ -23,9 +23,10 @@ import java.awt.Insets;
 
 import javax.swing.JTextField;
 
-final class TextFieldComponent<T> extends JTextField {
+final class TextFieldComponent extends JTextField {
 
 	private static final long serialVersionUID = 1L;
+	private int preferredWidth = -1;
 
 	@Override
 	public Dimension getPreferredSize() {
@@ -36,11 +37,17 @@ final class TextFieldComponent<T> extends JTextField {
 			d.height = SwingContainer.MIN_HEIGHT_TEXT_COMPONENT;
 		if (d.width == 0)
 			d.width = SwingContainer.MIN_WIDTH_TEXT_COMPONENT;
+		if (preferredWidth != -1)
+			d.width = preferredWidth;
 		return d;
 	}
 
 	@Override
 	public Insets getInsets() {
 		return SwingContainer.INSETS;
+	}
+
+	void setPreferredWidth(int width) {
+		this.preferredWidth = width;
 	}
 }
