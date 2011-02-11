@@ -27,7 +27,7 @@ public interface ISelection<T> {
 
 		public interface ISelectionListener<T> {
 
-			void onSelection(T selection);
+			void onSelection(int index, T selection);
 		}
 
 		ISingleSelection<T> addSelectionListener(
@@ -53,4 +53,6 @@ public interface ISelection<T> {
 	Map<Integer, T> indexedResult();
 
 	ISelection<T> add(T object);
+
+	ISelection<T> add(int selectionIndex, Object selection);
 }

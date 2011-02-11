@@ -127,7 +127,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (visible) {
 			rows = new RowAdapter(actualRows);
 			if (preselected != null) {
-				rows.selected(preselected);
+				if (preselectedIndex != -1)
+					rows.selected(preselectedIndex, preselected);
+				else
+					rows.selected(preselected);
 			}
 			adjustHeight = true;
 			this.visible = true;
@@ -283,6 +286,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IButtonPanelDecorator buttonDecorator;
 	private CommandButtonsImpl commandButtons;
 	Object preselected;
+	int preselectedIndex = -1;
 
 	void update() {
 		if (updating)
@@ -688,5 +692,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			buttonDecorator = commandButtons;
 		}
 		return commandButtons;
+	}
+
+	void notifySelection(int selectionIndex, Object selection2) {
+		this.selection.notifySelection(selectionIndex, selection2);
 	}
 }

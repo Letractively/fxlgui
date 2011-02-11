@@ -49,7 +49,7 @@ class SelectionImpl implements ISelection<Object> {
 				selectedRow.selected(false);
 				if (selectedRow == row) {
 					for (ISelectionListener<Object> l : listeners) {
-						l.onSelection(null);
+						l.onSelection(-1, null);
 					}
 					selection.clear();
 					selectedRow = null;
@@ -61,7 +61,7 @@ class SelectionImpl implements ISelection<Object> {
 			selection.clear();
 			selection.add(row.content.identifier);
 			for (ISelectionListener<Object> l : listeners) {
-				l.onSelection(row.content.identifier);
+				l.onSelection(row.rowIndex, row.content.identifier);
 			}
 		}
 
@@ -273,6 +273,11 @@ class SelectionImpl implements ISelection<Object> {
 
 	@Override
 	public Map<Integer, Object> indexedResult() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public ISelection<Object> add(int selectionIndex, Object selection) {
 		throw new MethodNotImplementedException();
 	}
 }
