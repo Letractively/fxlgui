@@ -24,7 +24,6 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
-import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IButtonPanelDecorator;
@@ -124,7 +123,8 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 			widget.update();
 			updateButtons(secondIndex);
 			if (l != null)
-				l.onClick(index, selection, false,
+				l.onClick(index, selection, inc == Integer.MAX_VALUE
+						|| inc == Integer.MIN_VALUE,
 						new CallbackTemplate<Boolean>() {
 							@Override
 							public void onSuccess(Boolean result) {
@@ -158,6 +158,10 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 	private IButton remove;
 	private IDecorator listenOnAddListenerDecorator = DEFAULT_DECORATOR;
 	private IButton edit;
+	private boolean listenOnEdit;
+	private IRowListener<Boolean> listenOnEditListener;
+	private IClickable<?> imageUpMax;
+	private IClickable<?> imageDownMax;
 
 	CommandButtonsImpl(ScrollTableWidgetImpl widget) {
 		this.widget = widget;
@@ -213,6 +217,13 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 	}
 
 	@Override
+	public ICommandButtons listenOnEdit(IRowListener<Boolean> l) {
+		listenOnEdit = true;
+		listenOnEditListener = l;
+		return this;
+	}
+
+	@Override
 	public void decorate(IGridCell container) {
 		widget.selection().single().addSelectionListener(this);
 		panel = container.panel().horizontal().align().end().add().panel()
@@ -227,37 +238,51 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 			remove.addClickListener(new Update(listenOnRemoveListener));
 			remove.clickable(widget.preselected != null);
 		}
-		if (listenOnMoveUp) {
-			imageUp = addMoveImage("up.png", listenOnMoveUpListener, -1);
-		}
-		if (listenOnMoveDown) {
-			imageDown = addMoveImage("down.png", listenOnMoveDownListener, 1);
-		}
 		if (listenOnShow) {
 			throw new MethodNotImplementedException();
 		}
-		boolean editable = false;
-		for (ScrollTableColumnImpl c : widget.columns) {
-			if (c.editable)
-				editable = true;
+		if (listenOnEdit) {
+			edit = panel.add().button().text("Edit");
+			edit.addClickListener(new Update(listenOnEditListener));
+			edit.clickable(widget.preselected != null);
 		}
-		if (editable) {
-			new Edit();
+		if (listenOnMoveUp) {
+			imageUpMax = addMoveImage(ScrollTableWidgetImpl.ARROW_UP,
+					listenOnMoveUpListener, Integer.MIN_VALUE);
+			imageUp = addMoveImage(ScrollTableWidgetImpl.ARROW_UP,
+					listenOnMoveUpListener, -1);
 		}
+		if (listenOnMoveDown) {
+			imageDown = addMoveImage(ScrollTableWidgetImpl.ARROW_DOWN,
+					listenOnMoveDownListener, 1);
+			imageDownMax = addMoveImage(ScrollTableWidgetImpl.ARROW_DOWN,
+					listenOnMoveDownListener, Integer.MAX_VALUE);
+		}
+		// boolean editable = false;
+		// for (ScrollTableColumnImpl c : widget.columns) {
+		// if (c.editable)
+		// editable = true;
+		// }
+		// if (editable) {
+		// new Edit();
+		// }
 	}
 
 	private IClickable<?> addMoveImage(String resource,
 			IMoveRowListener<Boolean> listenOnMoveUpListener2, int i) {
-		IImage image = panel.add().image().resource(resource);
+		IButton image = panel
+				.add()
+				.button()
+				.text(resource
+						+ (i == Integer.MAX_VALUE || i == Integer.MIN_VALUE ? resource
+								: ""));
+		image.font().weight().bold();
 		image.addClickListener(new Move(listenOnMoveUpListener2, i))
 				.mouseLeft();
-		// image.addClickListener(
-		// new Move(listenOnMoveUpListener2, i == -1 ? Integer.MIN_VALUE
-		// : Integer.MAX_VALUE)).doubleClick();
 		boolean canClick = widget.preselected != null;
 		if (canClick) {
-			canClick &= i == 1 || widget.preselectedIndex > 0;
-			canClick &= i == -1
+			canClick &= i > 0 || widget.preselectedIndex > 0;
+			canClick &= i < 0
 					|| widget.preselectedIndex < widget.rows.size() - 1;
 		}
 		image.clickable(canClick);
@@ -276,10 +301,14 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 	}
 
 	private void updateButtons(int index) {
-		if (imageUp != null)
-			imageUp.clickable(index > 0 && selection != null);
+		if (imageUp != null) {
+			boolean up = index > 0 && selection != null;
+			imageUp.clickable(up);
+			imageUpMax.clickable(up);
+		}
 		if (imageDown != null) {
 			boolean c = index < widget.rows.size() - 1 && selection != null;
+			imageDownMax.clickable(c);
 			imageDown.clickable(c);
 		}
 		if (remove != null) {
