@@ -74,7 +74,7 @@ public interface IMasterDetailTableWidget<T> {
 
 	IMasterDetailTableWidget<T> hideDetailRoot();
 
-	IMasterDetailTableWidget<T> refresh();
+	IMasterDetailTableWidget<T> refresh(ICallback<Boolean> cb);
 
 	List<T> selection();
 

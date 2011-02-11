@@ -30,6 +30,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IRadioButton;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.api.template.LazyUpdateListener;
@@ -113,7 +114,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		views.addHyperlink("Refresh").addClickListener(new LazyClickListener() {
 			@Override
 			public void onAllowedClick() {
-				refresh();
+				refresh(null);
 			}
 		});
 		IVerticalPanel content = views.content().panel().vertical();
@@ -307,7 +308,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		else {
 			r2.checked(true);
 			// TODO remove quickfix refresh
-			showDetailView(null).onDelete();
+			showDetailView(null).onDelete(null);
 		}
 		return this;
 	}
@@ -316,7 +317,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		r1.checked(true);
 		clear();
 		activeView = new TableView(this, object);
-		((TableView) activeView).onDelete();
+		((TableView) activeView).onDelete(null);
 	}
 
 	DetailView showDetailView(Object show) {
@@ -375,8 +376,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	}
 
 	@Override
-	public IMasterDetailTableWidget<Object> refresh() {
-		listener.onDelete();
+	public IMasterDetailTableWidget<Object> refresh(ICallback<Boolean> cb) {
+		listener.onDelete(cb);
 		return this;
 	}
 

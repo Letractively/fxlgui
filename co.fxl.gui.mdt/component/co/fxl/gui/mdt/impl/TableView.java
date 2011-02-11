@@ -31,6 +31,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.template.CallbackTemplate;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.ResizeListener;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
@@ -119,7 +120,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 															@Override
 															public void onSuccess(
 																	IDeletableList<Object> result) {
-																onDelete();
+																onDelete(null);
 															}
 														});
 									}
@@ -222,7 +223,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 	}
 
 	@Override
-	public void onSelection(Object selection) {
+	public void onSelection(int index, Object selection) {
 		List<Object> s = new LinkedList<Object>();
 		if (selection != null)
 			s.add(selection);
@@ -363,11 +364,11 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 	public void onUpdate(String value) {
 		if (widget.filterWidget != null)
 			widget.filterWidget.setConfiguration(value);
-		onDelete();
+		onDelete(null);
 	}
 
 	@Override
-	public void onDelete() {
+	public void onDelete(ICallback<Boolean> cb) {
 		if (widget.filterWidget != null)
 			widget.filterWidget.apply();
 		else

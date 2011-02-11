@@ -244,7 +244,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 
 	@Override
 	public void onUpdate(String value) {
-		onDelete();
+		onDelete(null);
 	}
 
 	@Override
@@ -273,8 +273,8 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 	}
 
 	@Override
-	public void onDelete() {
-		onDelete(null, null);
+	public void onDelete(ICallback<Boolean> cb) {
+		onDelete(null, cb);
 	}
 
 	@Override
