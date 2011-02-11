@@ -57,8 +57,7 @@ class SelectionImpl implements ISelection<Object> {
 					clearSelection();
 					if (alreadySelected) {
 						for (ISelectionListener<Object> l : listeners) {
-							l.onSelection(convert2TableRow,
-									widget.rows.identifier(convert2TableRow));
+							l.onSelection(-1, null);
 						}
 						return;
 					}
@@ -66,8 +65,8 @@ class SelectionImpl implements ISelection<Object> {
 					IRow r = widget.grid.row(row);
 					r.highlight(true);
 					widget.highlighted.add(r);
-					notifyListeners(convert2TableRow, widget.rows
-							.selectedIdentifiers().get(0));
+					notifyListeners(convert2TableRow,
+							widget.rows.identifier(convert2TableRow));
 				}
 			});
 		}

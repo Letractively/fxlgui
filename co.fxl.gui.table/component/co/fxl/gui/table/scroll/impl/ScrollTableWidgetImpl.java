@@ -127,9 +127,14 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (visible) {
 			rows = new RowAdapter(actualRows);
 			if (preselected != null) {
-				if (preselectedIndex != -1)
-					rows.selected(preselectedIndex, preselected);
-				else
+				if (preselectedIndex != -1) {
+					boolean found = rows
+							.selected(preselectedIndex, preselected);
+					if (!found) {
+						preselectedIndex = -1;
+						preselected = null;
+					}
+				} else
 					rows.selected(preselected);
 			}
 			adjustHeight = true;

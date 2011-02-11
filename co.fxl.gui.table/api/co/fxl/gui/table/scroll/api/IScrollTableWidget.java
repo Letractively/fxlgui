@@ -67,6 +67,8 @@ public interface IScrollTableWidget<T> {
 		ICommandButtons listenOnMoveDown(IMoveRowListener<Boolean> l);
 
 		ICommandButtons listenOnShow(IRowListener<Boolean> l);
+
+		ICommandButtons listenOnEdit(IRowListener<Boolean> l);
 	}
 
 	public interface IButtonPanelDecorator {
