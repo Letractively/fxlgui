@@ -133,4 +133,8 @@ class RowAdapter implements IRows<Object>, IComparableList {
 		}
 		return -1;
 	}
+
+	void selected(int preselectedIndex, Object preselected) {
+		selected[preselectedIndex] = true;
+	}
 }

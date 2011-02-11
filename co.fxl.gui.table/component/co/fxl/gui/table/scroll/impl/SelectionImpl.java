@@ -57,7 +57,7 @@ class SelectionImpl implements ISelection<Object> {
 					clearSelection();
 					if (alreadySelected) {
 						for (ISelectionListener<Object> l : listeners) {
-							l.onSelection(null);
+							l.onSelection(convert2TableRow, null);
 						}
 						return;
 					}
@@ -65,15 +65,28 @@ class SelectionImpl implements ISelection<Object> {
 					IRow r = widget.grid.row(row);
 					r.highlight(true);
 					widget.highlighted.add(r);
-					for (ISelectionListener<Object> l : listeners) {
-						l.onSelection(widget.rows.selectedIdentifiers().get(0));
-					}
+					notifyListeners(convert2TableRow, widget.rows
+							.selectedIdentifiers().get(0));
 				}
 			});
 		}
 
+		private void notifyListeners(int convert2TableRow, Object o) {
+			for (ISelectionListener<Object> l : listeners) {
+				l.onSelection(convert2TableRow, o);
+			}
+		}
+
 		ISelection<Object> add(Object object) {
 			assert widget.preselected == null : "Only one row can be preselected";
+			widget.preselectedIndex = -1;
+			widget.preselected = object;
+			return SelectionImpl.this;
+		}
+
+		ISelection<Object> add(int selectionIndex, Object object) {
+			assert widget.preselected == null : "Only one row can be preselected";
+			widget.preselectedIndex = selectionIndex;
 			widget.preselected = object;
 			return SelectionImpl.this;
 		}
@@ -189,6 +202,10 @@ class SelectionImpl implements ISelection<Object> {
 			widget.preselected = object;
 			return SelectionImpl.this;
 		}
+
+		public ISelection<Object> add(int selectionIndex, Object object) {
+			throw new MethodNotImplementedException();
+		}
 	}
 
 	void clearSelection() {
@@ -235,6 +252,14 @@ class SelectionImpl implements ISelection<Object> {
 			return multi.add(object);
 	}
 
+	@Override
+	public ISelection<Object> add(int selectionIndex, Object object) {
+		if (single != null)
+			return single.add(selectionIndex, object);
+		else
+			return multi.add(selectionIndex, object);
+	}
+
 	void update() {
 		if (single != null)
 			single.update();
@@ -250,5 +275,14 @@ class SelectionImpl implements ISelection<Object> {
 			result.put(i, widget.rows.identifier(i));
 		}
 		return result;
+	}
+
+	void notifySelection(int selectionIndex, Object selection2) {
+		if (single != null) {
+			clearSelection();
+			widget.rows.selected(selectionIndex, selection2);
+			single.notifyListeners(selectionIndex, selection2);
+		} else
+			multi.notifyListeners();
 	}
 }

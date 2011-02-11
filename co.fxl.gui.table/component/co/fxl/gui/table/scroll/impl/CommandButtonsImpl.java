@@ -76,20 +76,7 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 
 		@Override
 		public void onClick() {
-			if (l != null)
-				l.onClick(selection, false, new CallbackTemplate<Boolean>() {
-					@Override
-					public void onSuccess(Boolean result) {
-						if (result)
-							execute();
-					}
-				});
-			else
-				execute();
-		}
-
-		private void execute() {
-			int index = widget.rows.find(selection);
+			int index = selectionIndex;
 			int secondIndex;
 			if (inc == Integer.MIN_VALUE)
 				secondIndex = 0;
@@ -98,8 +85,16 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 			else
 				secondIndex = index + inc;
 			widget.rows.swap(index, secondIndex);
+			widget.notifySelection(secondIndex, selection);
 			widget.update();
 			updateButtons(secondIndex);
+			if (l != null)
+				l.onClick(index, selection, false,
+						new CallbackTemplate<Boolean>() {
+							@Override
+							public void onSuccess(Boolean result) {
+							}
+						});
 		}
 	}
 
@@ -120,17 +115,21 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 	private IMoveRowListener<Boolean> listenOnMoveUpListener;
 	private IMoveRowListener<Boolean> listenOnMoveDownListener;
 	private IRowListener<Boolean> listenOnShowListener;
+	private int selectionIndex;
 	private Object selection;
 	private IHorizontalPanel panel;
 	private IClickable<?> imageUp;
 	private IClickable<?> imageDown;
-	private int selectionIndex;
 	private IButton remove;
 	private IDecorator listenOnAddListenerDecorator = DEFAULT_DECORATOR;
 
 	CommandButtonsImpl(ScrollTableWidgetImpl widget) {
 		this.widget = widget;
 		widget.buttonPanel(this);
+		if (widget.preselected != null) {
+			selectionIndex = widget.preselectedIndex;
+			selection = widget.preselected;
+		}
 	}
 
 	@Override
@@ -190,7 +189,7 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 		if (listenOnRemove) {
 			remove = panel.add().button().text("Remove");
 			remove.addClickListener(new Update(listenOnRemoveListener));
-			remove.clickable(false);
+			remove.clickable(widget.preselected != null);
 		}
 		if (listenOnMoveUp) {
 			imageUp = addMoveImage("up.png", listenOnMoveUpListener, -1);
@@ -208,17 +207,23 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 		IImage image = panel.add().image().resource(resource);
 		image.addClickListener(new Move(listenOnMoveUpListener2, i))
 				.mouseLeft();
-		image.addClickListener(
-				new Move(listenOnMoveUpListener2, i == -1 ? Integer.MIN_VALUE
-						: Integer.MAX_VALUE)).doubleClick();
-		image.clickable(false);
+//		image.addClickListener(
+//				new Move(listenOnMoveUpListener2, i == -1 ? Integer.MIN_VALUE
+//						: Integer.MAX_VALUE)).doubleClick();
+		boolean canClick = widget.preselected != null;
+		if (canClick) {
+			canClick &= i == 1 || widget.preselectedIndex > 0;
+			canClick &= i == -1
+					|| widget.preselectedIndex < widget.rows.size() - 1;
+		}
+		image.clickable(canClick);
 		return image;
 	}
 
 	@Override
-	public void onSelection(Object selection) {
+	public void onSelection(int index, Object selection) {
 		this.selection = selection;
-		selectionIndex = widget.rows.find(selection);
+		selectionIndex = index;
 		updateButtons();
 	}
 

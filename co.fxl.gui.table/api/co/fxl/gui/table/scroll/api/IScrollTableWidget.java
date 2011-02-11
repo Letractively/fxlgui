@@ -40,7 +40,8 @@ public interface IScrollTableWidget<T> {
 
 	public interface IMoveRowListener<T> {
 
-		void onClick(Object identifier, boolean maxMove, ICallback<T> callback);
+		void onClick(int rowIndex, Object identifier, boolean maxMove,
+				ICallback<T> callback);
 	}
 
 	public interface IRowListener<T> {
