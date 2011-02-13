@@ -27,6 +27,8 @@ public interface ITreeWidget<T> {
 	public interface IView {
 
 		void constrainType(Class<?> clazz);
+
+		void constrainType(Class<?>[] clazz);
 	}
 
 	public interface ITreeClickListener<T> {

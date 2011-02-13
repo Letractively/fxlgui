@@ -30,7 +30,7 @@ public class PropertyGroupImpl implements IPropertyGroup<Object> {
 	List<PropertyImpl> properties = new LinkedList<PropertyImpl>();
 	boolean asDetail = true;
 	boolean inTable = true;
-	Class<?> constrainType;
+	Class<?>[] constrainType;
 
 	public PropertyGroupImpl(String name) {
 		this.name = name;
@@ -57,18 +57,27 @@ public class PropertyGroupImpl implements IPropertyGroup<Object> {
 
 	@Override
 	public IPropertyGroup<Object> constrainType(Class<?> type) {
-		constrainType = type;
+		constrainType = new Class<?>[] { type };
 		return this;
 	}
 
 	boolean applies(Object node) {
 		if (constrainType == null)
 			return true;
-		return constrainType.equals(node.getClass());
+		for (Class<?> c : constrainType)
+			if (c == null || c.equals(node.getClass()))
+				return true;
+		return false;
 	}
 
 	@Override
 	public String name() {
 		return name;
+	}
+
+	@Override
+	public IPropertyGroup<Object> constrainType(Class<?>[] type) {
+		constrainType = type;
+		return this;
 	}
 }

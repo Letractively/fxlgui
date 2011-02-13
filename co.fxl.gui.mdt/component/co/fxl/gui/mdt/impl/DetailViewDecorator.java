@@ -23,7 +23,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.ICheckBox;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextArea;
@@ -34,6 +33,7 @@ import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.DiscardChangesDialog;
 import co.fxl.gui.api.template.DiscardChangesDialog.DiscardChangesListener;
 import co.fxl.gui.api.template.ICallback;
+import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
@@ -92,7 +92,11 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 		panel.clear();
 	}
 
-	protected abstract void save(Object node, ICallback<Boolean> cb);
+	protected void save(ITree<Object> tree, ICallback<Boolean> cb) {
+	}
+
+	protected void save(Object object, ICallback<Boolean> cb) {
+	}
 
 	@Override
 	public void decorate(IVerticalPanel panel, final ITree<Object> node) {
@@ -133,7 +137,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 
 								@Override
 								public void onSuccess(Boolean result) {
-									cb.onSuccess(false);
+									cb.onSuccess(true);
 								}
 							});
 					// }
@@ -150,6 +154,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 				public void save(ICallback<Boolean> cb) {
 					for (Runnable update : updates)
 						update.run();
+					DetailViewDecorator.this.save(tree, cb);
 					DetailViewDecorator.this.save(node, cb);
 				}
 			});
@@ -181,9 +186,9 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 										final ILabel assign = formField
 												.addButton(valueOf == null ? "Assign"
 														: "Change");
-										assign.addClickListener(new IClickListener() {
+										assign.addClickListener(new LazyClickListener() {
 											@Override
-											public void onClick() {
+											public void onAllowedClick() {
 												property.listener
 														.update(node,
 																new CallbackTemplate<Boolean>() {
@@ -198,14 +203,17 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 																					.text(newString);
 																			assign.text(newString == null ? "Assign"
 																					: "Change");
+																			CallbackTemplate<Boolean> cb = new CallbackTemplate<Boolean>() {
+																				@Override
+																				public void onSuccess(
+																						Boolean result) {
+																					throw new MethodNotImplementedException();
+																				}
+																			};
+																			save(tree,
+																					cb);
 																			save(node,
-																					new CallbackTemplate<Boolean>() {
-																						@Override
-																						public void onSuccess(
-																								Boolean result) {
-																							throw new MethodNotImplementedException();
-																						}
-																					});
+																					cb);
 																		}
 																	}
 																});

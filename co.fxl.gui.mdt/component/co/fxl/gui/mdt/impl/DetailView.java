@@ -130,12 +130,18 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 
 	private class Register {
 		IDecorator<Object> dec;
-		Class<?> c;
+		Class<?>[] c;
 
 		private Register(String name, IDecorator<Object> dec,
-				Class<?> constraint) {
+				Class<?>[] constraint) {
 			this.dec = dec;
 			this.c = constraint;
+		}
+
+		public Register(String name, IDecorator<Object> dec2,
+				Class<?> constrainType) {
+			this.dec = dec2;
+			this.c = new Class<?>[] { constrainType };
 		}
 	}
 
@@ -149,7 +155,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 		DetailViewDecorator decorator = new DetailViewDecorator(gs) {
 
 			@Override
-			protected void save(Object node, ICallback<Boolean> cb) {
+			protected void save(ITree<Object> node, ICallback<Boolean> cb) {
 				saveNode(node, cb);
 			}
 		}.refreshListener(this);
@@ -162,11 +168,11 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 						new DetailViewDecorator(gs) {
 
 							@Override
-							protected void save(Object node,
+							protected void save(ITree<Object> node,
 									ICallback<Boolean> cb) {
 								saveNode(node, cb);
 							}
-						}.refreshListener(this), null));
+						}.refreshListener(this), (Class<?>) null));
 			}
 		}
 		for (final PropertyPageImpl relation : widget.propertyPages) {
@@ -261,7 +267,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 		});
 	}
 
-	private void saveNode(final Object node, final ICallback<Boolean> cb) {
+	private void saveNode(final ITree<Object> node, final ICallback<Boolean> cb) {
 		itree.save(node, new CallbackTemplate<Object>() {
 
 			@Override

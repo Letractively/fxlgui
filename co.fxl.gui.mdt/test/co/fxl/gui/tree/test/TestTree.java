@@ -109,7 +109,7 @@ class TestTree implements ITree<String> {
 	}
 
 	@Override
-	public void save(String node, ICallback<String> pCallback) {
+	public void save(ITree<String> node, ICallback<String> pCallback) {
 		throw new MethodNotImplementedException();
 	}
 
