@@ -63,7 +63,7 @@ class PropertyImpl implements IProperty<Object, Object> {
 	}
 
 	@Override
-	public IProperty<Object, ?> sortable(boolean sortable) {
+	public IProperty<Object, Object> sortable(boolean sortable) {
 		this.sortable = sortable;
 		return this;
 	}
@@ -80,7 +80,7 @@ class PropertyImpl implements IProperty<Object, Object> {
 	}
 
 	@Override
-	public IProperty<Object, ?> editable(boolean b) {
+	public IProperty<Object, Object> editable(boolean b) {
 		editable = b;
 		return this;
 	}
@@ -93,7 +93,7 @@ class PropertyImpl implements IProperty<Object, Object> {
 	}
 
 	@Override
-	public IProperty<Object, ?> filterable() {
+	public IProperty<Object, Object> filterable() {
 		filterable = true;
 		return this;
 	}

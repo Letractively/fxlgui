@@ -67,7 +67,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		boolean onTop = false;
 		private IVerticalPanel contentPanel;
 		private IMenuItem register;
-		private Class<?> constrainType;
+		private Class<?>[] constrainType;
 
 		DetailView(String title, IDecorator<T> decorator) {
 			this.decorator = decorator;
@@ -124,7 +124,14 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 		@Override
 		public void constrainType(Class<?> clazz) {
-			this.constrainType = clazz;
+			if (clazz != null)
+				this.constrainType = new Class<?>[] { clazz };
+		}
+
+		@Override
+		public void constrainType(Class<?>[] clazz) {
+			if (clazz.length > 1 || (clazz.length == 1 && clazz[0] != null))
+				this.constrainType = clazz;
 		}
 	}
 
@@ -271,7 +278,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			@Override
 			public void onSuccess(T result) {
 				showToParent(root, parent);
-				widgetTitle.reset();
+				// widgetTitle.reset();
 			}
 		};
 		tree.delete(callback);
@@ -363,12 +370,12 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			Node<T> n = object2node.get(selection);
 			if (n != null)
 				node = n;
-			else if (selection != root.object() || showRoot)
-				throw new MethodNotImplementedException(
-						"Selection in tree widget '" + selection + "' ("
-								+ selection.getClass()
-								+ ") not found in expanded tree");
-			else
+			else if (selection != root.object() || showRoot) {
+				node = null;
+				new MethodNotImplementedException("Selection in tree widget '"
+						+ selection + "' (" + selection.getClass()
+						+ ") not found in expanded tree").printStackTrace();
+			} else
 				node = null;
 			// for (Node<T> n : object2node.values()) {
 			// T object = n.tree.object();
@@ -399,8 +406,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			DetailView view = detailViews.get(i);
 			if (node != null) {
 				Class<? extends Object> type = node.tree.object().getClass();
-				boolean hide = view.constrainType != null
-						&& !view.constrainType.equals(type);
+				boolean hide = isHide(view, type);
 				if (hide && i > 0 && view.onTop) {
 					showFirst = true;
 				}
@@ -412,12 +418,21 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			DetailView view = detailViews.get(i);
 			if (node != null) {
 				Class<? extends Object> type = node.tree.object().getClass();
-				boolean hide = view.constrainType != null
-						&& !view.constrainType.equals(type);
+				boolean hide = isHide(view, type);
 				view.enabled(!hide && (i == 0 || !node.tree.isNew()));
 			}
 			view.setNode(node);
 		}
+	}
+
+	private boolean isHide(DetailView view, Class<? extends Object> type) {
+		if (view.constrainType == null)
+			return false;
+		for (Class<?> c : view.constrainType) {
+			if (c.equals(type))
+				return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -439,9 +454,13 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			l.onChange(selection);
 		if (selection != null && root != null && root.object() != null) {
 			Node<T> sNode = object2node.get(selection);
+			if (sNode != null) {
+				last = sNode;
+				sNode.selected(true);
+			}
 			if (showCommands)
 				delete.clickable(!root.object().equals(selection)
-						&& (sNode == null || sNode.tree.isDeletable()));
+						&& (sNode != null && sNode.tree.isDeletable()));
 		} else {
 			if (showCommands)
 				delete.clickable(false);
@@ -520,6 +539,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			selection(originalObject);
 			show(n);
 		}
+		updateCreatable();
 		return this;
 	}
 
@@ -533,7 +553,13 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	void showToParent(ITree<T> tree, final ITree<T> parent) {
 		last = null;
-		selection(parent.object());
+		T set = null;
+		if (showRoot
+				|| (parent.object() != null && root != null && !parent.object()
+						.equals(root.object()))) {
+			set = parent.object();
+		}
+		selection(set);
 		boolean rememberExpand = expand;
 		expand = false;
 		List<ITree<T>> path = new LinkedList<ITree<T>>();

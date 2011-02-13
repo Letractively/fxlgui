@@ -52,11 +52,11 @@ public interface IProperty<T, S> {
 
 	IProperty<T, S> asDetail(boolean asDetail);
 
-	IProperty<T, ?> sortable(boolean sortable);
+	IProperty<T, S> sortable(boolean sortable);
 
-	IProperty<T, ?> editable(boolean b);
+	IProperty<T, S> editable(boolean b);
 
-	IProperty<T, ?> filterable();
+	IProperty<T, S> filterable();
 
 	String name();
 }
