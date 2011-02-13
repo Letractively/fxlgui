@@ -250,6 +250,8 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 			widget.addTableClickListener(new ITableClickListener() {
 				@Override
 				public void onClick(int column, int row) {
+					if (row == 0)
+						return;
 					row--;
 					widget.rows.selected(row);
 					selection = widget.rows.identifier(row);
