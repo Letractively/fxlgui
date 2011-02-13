@@ -200,7 +200,9 @@ class FormWidgetImpl implements IFormWidget {
 	@Override
 	public FormWidgetImpl visible(boolean visible) {
 		if (saveListener != null || hasRequiredAttributes) {
-			assert !fields.isEmpty() : "no fields added to form";
+			if (fields.isEmpty())
+				return this;
+			// assert !fields.isEmpty() : "no fields added to form";
 			contentPanel.addSpace(10);
 			IGridPanel grid = contentPanel.add().panel().grid();
 			if (saveListener != null) {
