@@ -121,7 +121,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 		if (!clickListenerAdded) {
 			container.component.addMouseListener(new MouseAdapter() {
 				@Override
-				public void mouseClicked(MouseEvent e) {
+				public void mouseReleased(MouseEvent e) {
 					if (container.component.isEnabled())
 						for (ClickListenerMouseAdapter<R> adapter : adapters) {
 							adapter.adapter.mouseReleased(e);
