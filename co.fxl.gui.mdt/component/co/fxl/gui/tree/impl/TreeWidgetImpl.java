@@ -372,9 +372,9 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				node = n;
 			else if (selection != root.object() || showRoot) {
 				node = null;
-				new MethodNotImplementedException("Selection in tree widget '"
-						+ selection + "' (" + selection.getClass()
-						+ ") not found in expanded tree").printStackTrace();
+//				new MethodNotImplementedException("Selection in tree widget '"
+//						+ selection + "' (" + selection.getClass()
+//						+ ") not found in expanded tree").printStackTrace();
 			} else
 				node = null;
 			// for (Node<T> n : object2node.values()) {
