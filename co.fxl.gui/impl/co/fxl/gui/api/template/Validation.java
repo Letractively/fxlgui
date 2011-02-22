@@ -179,6 +179,7 @@ public class Validation {
 
 	private final static DateFormat DATE_FORMAT = new DateFormat();
 	private List<IClickable<?>> clickables = new LinkedList<IClickable<?>>();
+	private List<IClickable<?>> reset = new LinkedList<IClickable<?>>();
 	private List<IField> fields = new LinkedList<IField>();
 	private boolean clickable;
 	private boolean isSpecified = false;
@@ -202,6 +203,10 @@ public class Validation {
 		for (IClickable<?> c : clickables) {
 			c.clickable(clickable);
 		}
+		clickable = isSpecified;
+		for (IClickable<?> c : reset) {
+			c.clickable(clickable);
+		}
 		if (showDiscardChanges) {
 			DiscardChangesDialog.active = isSpecified;
 		}
@@ -217,6 +222,11 @@ public class Validation {
 
 	public Validation linkClickable(IClickable<?> clickable) {
 		clickables.add(clickable);
+		return this;
+	}
+
+	public Validation linkReset(IClickable<?> clickable) {
+		reset.add(clickable);
 		return this;
 	}
 
@@ -331,6 +341,7 @@ public class Validation {
 	}
 
 	public void reset() {
+		throw new MethodNotImplementedException();
 	}
 
 	public Validation linkInput(ICheckBox valueElement) {
@@ -355,4 +366,5 @@ public class Validation {
 	public void isNew() {
 		isNew = true;
 	}
+
 }
