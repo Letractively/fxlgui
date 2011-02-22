@@ -160,7 +160,15 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 
 				@Override
 				public void cancel(ICallback<Boolean> cb) {
-					cb.onSuccess(true);
+					if (isNew) {
+						throw new MethodNotImplementedException();
+					} else
+						cb.onSuccess(true);
+				}
+
+				@Override
+				public boolean allowsCancel() {
+					return true;
 				}
 			});
 		for (PropertyGroupImpl g : gs)
