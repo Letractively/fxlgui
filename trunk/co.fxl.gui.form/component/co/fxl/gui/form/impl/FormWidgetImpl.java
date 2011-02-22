@@ -227,6 +227,7 @@ class FormWidgetImpl implements IFormWidget {
 		IHorizontalPanel panel = grid.cell(0, 0).panel().horizontal()
 				.spacing(2);
 		final IButton clickable = panel.add().button();
+		final IButton clickable1 = panel.add().button();
 		clickable.text(saveTitle).addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
@@ -236,6 +237,21 @@ class FormWidgetImpl implements IFormWidget {
 					public void onSuccess(Boolean result) {
 						validation.update();
 						clickable.clickable(false);
+						clickable1.clickable(false);
+					}
+				});
+			}
+		});
+		clickable1.text("Cancel").addClickListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				saveListener.cancel(new CallbackTemplate<Boolean>() {
+
+					@Override
+					public void onSuccess(Boolean result) {
+						validation.reset();
+						clickable.clickable(false);
+						clickable1.clickable(false);
 					}
 				});
 			}
@@ -247,6 +263,7 @@ class FormWidgetImpl implements IFormWidget {
 			}
 			validation.showDiscardChanges();
 			validation.linkClickable(clickable);
+			validation.linkReset(clickable1);
 			for (final FormFieldImpl<?> formField : fields) {
 				Object valueElement = formField.valueElement();
 				if (valueElement instanceof ITextArea) {
