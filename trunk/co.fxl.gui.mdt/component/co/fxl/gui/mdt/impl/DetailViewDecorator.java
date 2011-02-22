@@ -157,6 +157,11 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 					DetailViewDecorator.this.save(tree, cb);
 					DetailViewDecorator.this.save(node, cb);
 				}
+
+				@Override
+				public void cancel(ICallback<Boolean> cb) {
+					cb.onSuccess(true);
+				}
 			});
 		for (PropertyGroupImpl g : gs)
 			if (g.applies(node))

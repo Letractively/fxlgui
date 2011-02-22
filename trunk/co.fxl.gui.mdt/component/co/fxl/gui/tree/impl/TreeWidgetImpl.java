@@ -367,14 +367,15 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			}
 		}
 		if (selection != null) {
-			Node<T> n = object2node.get(selection);
+			Node<T> n = getObject2node(selection);
 			if (n != null)
 				node = n;
 			else if (selection != root.object() || showRoot) {
 				node = null;
-//				new MethodNotImplementedException("Selection in tree widget '"
-//						+ selection + "' (" + selection.getClass()
-//						+ ") not found in expanded tree").printStackTrace();
+				// new
+				// MethodNotImplementedException("Selection in tree widget '"
+				// + selection + "' (" + selection.getClass()
+				// + ") not found in expanded tree").printStackTrace();
 			} else
 				node = null;
 			// for (Node<T> n : object2node.values()) {
@@ -453,7 +454,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		for (ISelectionListener<T> l : selectionListeners)
 			l.onChange(selection);
 		if (selection != null && root != null && root.object() != null) {
-			Node<T> sNode = object2node.get(selection);
+			Node<T> sNode = getObject2node(selection);
 			if (sNode != null) {
 				last = sNode;
 				sNode.selected(true);
@@ -477,8 +478,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			return;
 		}
 		ITree<T> tree = root;
-		if (selection != null && object2node.get(selection) != null) {
-			tree = object2node.get(selection).tree;
+		if (selection != null && getObject2node(selection) != null) {
+			tree = getObject2node(selection).tree;
 			if (tree.isNew()) {
 				disableAllNew();
 				return;
@@ -531,7 +532,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	@Override
 	public ITreeWidget<T> notifyUpdate(T originalObject) {
 		assert originalObject != null : "Illegal argument for Tree.notifyUpdate";
-		Node<T> n = object2node.get(originalObject);
+		Node<T> n = getObject2node(originalObject);
 		assert n != null : "Expanded tree node cannot be updated for object "
 				+ originalObject;
 		n.update(originalObject);
@@ -613,5 +614,14 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	public ITreeWidget<T> showCommands(boolean showCommands) {
 		this.showCommands = showCommands;
 		return this;
+	}
+
+	Node<T> getObject2node(T selection) {
+		for (T t : object2node.keySet()) {
+			Node<T> node = object2node.get(t);
+			if (node.tree.object().equals(selection))
+				return node;
+		}
+		return null;
 	}
 }
