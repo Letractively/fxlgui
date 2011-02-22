@@ -73,7 +73,7 @@ class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
 
 			@Override
 			public void onSuccess(ITree<T> tree) {
-				Node<T> n = object2node.get(selection);
+				Node<T> n = getObject2node(selection);
 				if (n != null) {
 					assert n.tree != null : "Tree cannot be null";
 					ITree<T> p = n.tree;
@@ -91,7 +91,7 @@ class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
 
 			@Override
 			public void onSuccess(ITree<T> tree) {
-				Node<T> n = object2node.get(selection);
+				Node<T> n = getObject2node(selection);
 				if (n != null) {
 					ITree<T> p = n.tree;
 					assert p != null : "Tree cannot be null";
