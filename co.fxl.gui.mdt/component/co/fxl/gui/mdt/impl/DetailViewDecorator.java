@@ -161,7 +161,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 				@Override
 				public void cancel(ICallback<Boolean> cb) {
 					if (isNew) {
-						throw new MethodNotImplementedException();
+						deleteListener.onDelete(tree, cb);
 					} else
 						cb.onSuccess(true);
 				}
