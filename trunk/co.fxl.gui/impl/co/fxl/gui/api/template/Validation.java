@@ -82,7 +82,7 @@ public class Validation {
 
 		@Override
 		public void reset() {
-			throw new MethodNotImplementedException();
+			valueElement.checked(originalValue);
 		}
 
 	}
@@ -185,7 +185,7 @@ public class Validation {
 
 		@Override
 		public void reset() {
-			throw new MethodNotImplementedException();
+			textElement.text(originalValue);
 		}
 	}
 
