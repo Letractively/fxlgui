@@ -357,6 +357,7 @@ public class Validation {
 			f.reset();
 		}
 		updateClickables();
+		DiscardChangesDialog.active = false;
 	}
 
 	public Validation linkInput(ICheckBox valueElement) {
