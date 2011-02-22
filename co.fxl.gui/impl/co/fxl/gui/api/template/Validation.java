@@ -80,6 +80,11 @@ public class Validation {
 			onUpdate(valueElement.checked());
 		}
 
+		@Override
+		public void reset() {
+			throw new MethodNotImplementedException();
+		}
+
 	}
 
 	public interface IField {
@@ -95,6 +100,8 @@ public class Validation {
 		void update();
 
 		void notifyChange();
+
+		void reset();
 
 	}
 
@@ -174,6 +181,11 @@ public class Validation {
 		@Override
 		public boolean isSpecified() {
 			return isSpecified;
+		}
+
+		@Override
+		public void reset() {
+			throw new MethodNotImplementedException();
 		}
 	}
 
@@ -341,7 +353,10 @@ public class Validation {
 	}
 
 	public void reset() {
-		throw new MethodNotImplementedException();
+		for (IField f : fields) {
+			f.reset();
+		}
+		updateClickables();
 	}
 
 	public Validation linkInput(ICheckBox valueElement) {
