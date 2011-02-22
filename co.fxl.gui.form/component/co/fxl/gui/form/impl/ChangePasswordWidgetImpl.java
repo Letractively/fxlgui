@@ -65,6 +65,11 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 			public void cancel(ICallback<Boolean> cb) {
 				throw new MethodNotImplementedException();
 			}
+
+			@Override
+			public boolean allowsCancel() {
+				return false;
+			}
 		});
 		widget.addCancelHyperlink().addClickListener(new IClickListener() {
 

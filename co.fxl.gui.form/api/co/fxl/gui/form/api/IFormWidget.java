@@ -32,6 +32,8 @@ public interface IFormWidget {
 	public interface ISaveListener {
 
 		void save(ICallback<Boolean> cb);
+		
+		boolean allowsCancel();
 
 		void cancel(ICallback<Boolean> cb);
 	}
