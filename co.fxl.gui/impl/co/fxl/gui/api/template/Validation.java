@@ -381,6 +381,9 @@ public class Validation {
 
 	public void isNew() {
 		isNew = true;
+		for (IClickable<?> c : reset) {
+			c.clickable(true);
+		}
 	}
 
 }
