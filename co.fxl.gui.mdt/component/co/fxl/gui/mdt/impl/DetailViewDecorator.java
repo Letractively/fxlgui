@@ -45,6 +45,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	public interface DeleteListener {
 
 		void onDelete(ITree<Object> tree, ICallback<Boolean> cb);
+
+		void onDelete(Object tree, ICallback<Boolean> cb);
 	}
 
 	private final List<PropertyGroupImpl> gs;
@@ -71,7 +73,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 		this.gs = gs;
 	}
 
-	DetailViewDecorator refreshListener(DeleteListener refreshListener) {
+	public DetailViewDecorator refreshListener(DeleteListener refreshListener) {
 		this.deleteListener = refreshListener;
 		return this;
 	}
@@ -79,6 +81,11 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	public DetailViewDecorator(PropertyGroupImpl pGroup) {
 		gs = new LinkedList<PropertyGroupImpl>();
 		gs.add(pGroup);
+	}
+
+	public DetailViewDecorator isNew(boolean isNew) {
+		this.isNew = isNew;
+		return this;
 	}
 
 	public DetailViewDecorator setHasRequiredAttributes(
@@ -160,8 +167,9 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 
 				@Override
 				public void cancel(ICallback<Boolean> cb) {
-					if (isNew) {
+					if (deleteListener != null) {
 						deleteListener.onDelete(tree, cb);
+						deleteListener.onDelete(node, cb);
 					} else
 						cb.onSuccess(true);
 				}

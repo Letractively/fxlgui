@@ -288,4 +288,8 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 		widget.constraints = constraints;
 		refresh();
 	}
+
+	@Override
+	public void onDelete(Object tree, ICallback<Boolean> cb) {
+	}
 }
