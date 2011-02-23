@@ -261,9 +261,6 @@ class FormWidgetImpl implements IFormWidget {
 		});
 		if (validate) {
 			validation = new Validation();
-			if (isNew) {
-				validation.isNew();
-			}
 			validation.showDiscardChanges();
 			validation.linkClickable(clickable);
 			validation.linkReset(clickable1);
@@ -333,6 +330,9 @@ class FormWidgetImpl implements IFormWidget {
 				public void onSuccess(Boolean result) {
 				}
 			});
+			if (isNew) {
+				validation.isNew();
+			}
 		}
 	}
 
