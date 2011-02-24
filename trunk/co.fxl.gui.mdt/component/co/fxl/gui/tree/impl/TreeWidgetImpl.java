@@ -257,7 +257,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				}
 			};
 			delete = widgetTitle.addHyperlink("Delete");
-			delete.addClickListener(deleteListener).mouseLeft();
+			delete.addClickListener(deleteListener);
 			if (showRefresh && this instanceof RefreshListener)
 				refresh().addClickListener(new IClickListener() {
 					@Override
