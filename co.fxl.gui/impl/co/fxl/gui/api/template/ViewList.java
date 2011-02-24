@@ -139,7 +139,7 @@ public class ViewList {
 
 	public ViewList(MetaViewList widget, ILayout layout) {
 		this.widget = widget;
-		widgetTitle = new WidgetTitle(layout);
+		widgetTitle = new WidgetTitle(layout).grayBackground();
 	}
 
 	public ViewImpl addView() {
