@@ -142,7 +142,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			statusPanel = null;
 			selectionIsSetup = false;
 			container.clear();
-			topPanel = container.add().panel().grid();
+			topPanel();
 			filter = null;
 			for (ScrollTableColumnImpl c : columns) {
 				if (c.filterable) {
@@ -215,12 +215,23 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		return this;
 	}
 
+	private void topPanel() {
+		if (topPanel == null) {
+			topPanel = container.add().panel().grid();
+			// topPanel.spacing(6);
+			// IBorder border = topPanel.border();
+			// border.color().lightgray();
+			// border.style().bottom();
+		}
+	}
+
 	IGridPanel statusPanel() {
 		if (statusPanel == null) {
 			statusPanel = container.addSpace(10).add().panel().grid();
-//			statusPanel.spacing(6);
-//			statusPanel.color().rgb(245, 245, 245);
-//			statusPanel.border().color().lightgray();
+			// statusPanel.spacing(6);
+			// IBorder border = statusPanel.border();
+			// border.color().lightgray();
+			// border.style().top();
 		}
 		return statusPanel;
 	}
