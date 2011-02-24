@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -110,8 +111,11 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	void addViewWidget(IVerticalPanel sidePanel) {
 		WidgetTitle views = new WidgetTitle(sidePanel.add().panel());
+		views.grayBackground();
 		views.addTitle("Views");
-		views.addHyperlink("Refresh").addClickListener(new LazyClickListener() {
+		IClickable<?> hl = views.addHyperlink("Refresh");
+		hl.clickable(true);
+		hl.addClickListener(new LazyClickListener() {
 			@Override
 			public void onAllowedClick() {
 				refresh(null);
