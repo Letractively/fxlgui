@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
@@ -34,8 +35,45 @@ import co.fxl.gui.api.ILayout;
 
 public class WidgetTitle implements IClickListener {
 
-	private String openPNG = "minus.png";
-	private String closedPNG = "plus.png";
+	class CommandLink implements IClickable<IClickable<?>> {
+
+		private ILabel label;
+
+		public CommandLink(ILabel headerLabel) {
+			this.label = headerLabel;
+		}
+
+		@Override
+		public IClickable<?> clickable(boolean clickable) {
+			label.clickable(clickable);
+			if (grayBackground) {
+				if (clickable) {
+					label.font().color().white();
+					label.font().underline(true);
+				} else {
+					label.font().color().lightgray();
+					label.font().underline(false);
+				}
+			}
+			return this;
+		}
+
+		@Override
+		public boolean clickable() {
+			return label.clickable();
+		}
+
+		@Override
+		public co.fxl.gui.api.IClickable.IKey<IClickable<?>> addClickListener(
+				co.fxl.gui.api.IClickable.IClickListener clickListener) {
+			label.addClickListener(clickListener);
+			return null;
+		}
+
+	}
+
+	private String openPNG = "open.png";
+	private String closedPNG = "closed.png";
 	public IGridPanel panel;
 	private IHorizontalPanel titlePanel;
 	private IHorizontalPanel commandPanel;
@@ -51,6 +89,7 @@ public class WidgetTitle implements IClickListener {
 	private int space = 10;
 	private Map<ILabel, Boolean> clickableState = new HashMap<ILabel, Boolean>();
 	private boolean holdOnClicks = false;
+	private boolean grayBackground = false;
 
 	public WidgetTitle(ILayout layout) {
 		panel = layout.grid();
@@ -85,12 +124,24 @@ public class WidgetTitle implements IClickListener {
 		return this;
 	}
 
+	public WidgetTitle grayBackground() {
+		headerPanel.color().gray();
+		if (titlePanel != null)
+			titlePanel.color().gray();
+		if (headerLabel != null)
+			headerLabel.font().color().white();
+		grayBackground = true;
+		return this;
+	}
+
 	private void initHeader() {
 		if (hasHeaderPanel)
 			return;
 		// headerPanel.color().rgb(220, 220, 220);
-		titlePanel = headerPanel.center().panel().horizontal().add().panel()
-				.horizontal().spacing(4);
+		IHorizontalPanel horizontal = headerPanel.center().panel().horizontal();
+		if (grayBackground)
+			horizontal.color().gray();
+		titlePanel = horizontal.add().panel().horizontal().spacing(4);
 		if (foldable) {
 			image = titlePanel.add().image().resource(openPNG);
 			image.addClickListener(this);
@@ -116,24 +167,32 @@ public class WidgetTitle implements IClickListener {
 
 	public ILabel addTitle(String title) {
 		initHeader();
-		headerPanel.border().style().bottom();
+		if (!grayBackground)
+			headerPanel.border().style().bottom();
 		headerLabel = titlePanel.add().label().text(title);
 		if (foldable) {
 			headerLabel.addClickListener(this);
 		}
-		headerLabel.font().weight().bold().pixel(16);
+		headerLabel.font().weight().bold().pixel(14);
+		if (grayBackground)
+			headerLabel.font().color().white();
 		return headerLabel;
 	}
 
-	public ILabel addHyperlink(String text) {
+	public IClickable<?> addHyperlink(String text) {
 		initHeader();
 		if (hasCommands) {
 			ILabel label = commandPanel.add().label().text("|");
-			label.font().color().gray();
+			if (grayBackground)
+				label.font().color().lightgray();
+			else
+				label.font().color().gray();
 			labels.add(label);
 		}
 		hasCommands = true;
-		final ILabel label = commandPanel.add().label().text(text).hyperlink();
+		final ILabel label = commandPanel.add().label().text(text);
+		if (!grayBackground)
+			label.hyperlink();
 		label.font().pixel(12);
 		labels.add(label);
 		if (holdOnClicks) {
@@ -151,7 +210,9 @@ public class WidgetTitle implements IClickListener {
 			});
 			clickableState.put(label, true);
 		}
-		return label;
+		CommandLink cl = new CommandLink(label);
+		cl.clickable(true);
+		return cl;
 	}
 
 	public IImage addImage(String image) {
