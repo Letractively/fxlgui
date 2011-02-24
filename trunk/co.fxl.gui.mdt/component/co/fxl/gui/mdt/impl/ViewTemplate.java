@@ -20,8 +20,8 @@ package co.fxl.gui.mdt.impl;
 
 import java.util.List;
 
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.NavigationView.Link;
 import co.fxl.gui.api.template.SplitLayout;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.table.api.ISelection.IMultiSelection.IChangeListener;
@@ -58,9 +58,11 @@ abstract class ViewTemplate implements IChangeListener<Object>, Listener,
 	@Override
 	public void onChange(List<Object> selection) {
 		widget.selection = selection;
-		for (ILabel label : widget.labels.keySet()) {
+		for (Link label : widget.labels.keySet()) {
 			NavigationLinkImpl l = widget.labels.get(label);
-			boolean clickable = !selection.isEmpty() && (l.typeConstraint==null || l.typeConstraint.equals(selection.get(0).getClass()));
+			boolean clickable = !selection.isEmpty()
+					&& (l.typeConstraint == null || l.typeConstraint
+							.equals(selection.get(0).getClass()));
 			label.clickable(clickable);
 		}
 	}
