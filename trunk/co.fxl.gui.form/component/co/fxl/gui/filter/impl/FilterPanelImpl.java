@@ -110,7 +110,7 @@ class FilterPanelImpl implements FilterPanel {
 
 	FilterPanelImpl(FilterWidgetImpl widget, IContainer panel) {
 		this.widget = widget;
-		title = new WidgetTitle(panel.panel());
+		title = new WidgetTitle(panel.panel()).grayBackground();
 		mainPanel = title.content().panel().vertical();
 	}
 

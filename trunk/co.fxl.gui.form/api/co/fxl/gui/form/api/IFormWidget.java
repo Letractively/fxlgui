@@ -19,6 +19,7 @@
 package co.fxl.gui.form.api;
 
 import co.fxl.gui.api.ICheckBox;
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.ILabel;
@@ -32,7 +33,7 @@ public interface IFormWidget {
 	public interface ISaveListener {
 
 		void save(ICallback<Boolean> cb);
-		
+
 		boolean allowsCancel();
 
 		void cancel(ICallback<Boolean> cb);
@@ -58,13 +59,13 @@ public interface IFormWidget {
 
 	IImageField addImage(String name);
 
-	ILabel addOKHyperlink();
+	IClickable<?> addOKHyperlink();
 
-	ILabel addCancelHyperlink();
+	IClickable<?> addCancelHyperlink();
 
-	ILabel addHyperlink(String name);
+	IClickable<?> addHyperlink(String name);
 
-	ILabel addHyperlink(String name, IClickListener clickListener);
+	IClickable<?> addHyperlink(String name, IClickListener clickListener);
 
 	IFormWidget saveListener(String title, ISaveListener listener);
 
