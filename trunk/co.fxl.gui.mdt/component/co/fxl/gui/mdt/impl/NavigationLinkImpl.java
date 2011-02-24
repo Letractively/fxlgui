@@ -13,6 +13,7 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 	List<INavigationLinkListener<Object>> listeners = new LinkedList<INavigationLinkListener<Object>>();
 	boolean requiresSelection = true;
 	Class<?> typeConstraint;
+	String imageResource;
 
 	NavigationLinkImpl(String name) {
 		this.name = name;
@@ -46,6 +47,12 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 	@Override
 	public INavigationLink<Object> typeConstraint(Class<?> typeConstraint) {
 		this.typeConstraint = typeConstraint;
+		return this;
+	}
+
+	@Override
+	public INavigationLink<Object> imageResource(String imageResource) {
+		this.imageResource = imageResource;
 		return this;
 	}
 

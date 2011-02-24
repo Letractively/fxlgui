@@ -228,7 +228,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		if (!navigationLinks.isEmpty()) {
 			NavigationView t = new NavigationView(sidePanel.add().panel());
 			for (NavigationLinkImpl link : navigationLinks) {
-				ILabel l = t.addHyperlink().text(link.name);
+				ILabel l = t.addHyperlink(link.imageResource).text(link.name);
 				for (final INavigationLinkListener<Object> cl : link.listeners) {
 					l.addClickListener(new LazyClickListener() {
 

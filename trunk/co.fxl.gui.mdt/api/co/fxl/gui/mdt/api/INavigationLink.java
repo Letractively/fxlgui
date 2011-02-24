@@ -36,4 +36,6 @@ public interface INavigationLink<T> {
 	INavigationLink<T> requiresSelection(boolean requiresSelection);
 
 	INavigationLink<T> typeConstraint(Class<?> typeConstraint);
+
+	INavigationLink<T> imageResource(String imageResource);
 }
