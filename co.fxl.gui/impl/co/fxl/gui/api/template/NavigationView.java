@@ -18,12 +18,52 @@
  */
 package co.fxl.gui.api.template;
 
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
 
 public class NavigationView {
+
+	public class Link implements IClickable<Object> {
+
+		IImage image;
+		private ILabel label;
+
+		private Link(IImage image, ILabel textLabel) {
+			this.image = image;
+			this.label = textLabel;
+			label.hyperlink();
+		}
+
+		public Link text(String text) {
+			label.text(text);
+			return this;
+		}
+
+		public Link clickable(boolean clickable) {
+			label.clickable(clickable);
+//			if (clickable)
+//				label.font().color().blue();
+//			else
+//				label.font().color().gray();
+			return this;
+		}
+
+		@Override
+		public boolean clickable() {
+			throw new MethodNotImplementedException();
+		}
+
+		@Override
+		public co.fxl.gui.api.IClickable.IKey<Object> addClickListener(
+				co.fxl.gui.api.IClickable.IClickListener clickListener) {
+			label.addClickListener(clickListener);
+			return null;
+		}
+	}
 
 	private static final String LINK_PNG = "link.png";
 	private static final boolean SHOW_NUMBERS = false;
@@ -36,33 +76,34 @@ public class NavigationView {
 		widgetTitle = new WidgetTitle(layout);
 	}
 
-	public ILabel addHyperlink() {
+	public Link addHyperlink() {
 		return addHyperlink(null);
 	}
 
-	public ILabel addHyperlink(String imageResource) {
+	public Link addHyperlink(String imageResource) {
 		setUp();
 		IHorizontalPanel panel = this.panel.add().panel().horizontal().add()
 				.panel().horizontal();
+		IImage image = null;
 		if (SHOW_NUMBERS) {
 			String s = String.valueOf(index++) + ".";
 			panel.add().label().text(s).font().pixel(13).color().gray();
 			panel.addSpace(4);
 		} else if (SHOW_TRIANGLE) {
-			panel.add().image()
+			image = panel.add().image()
 					.resource(imageResource == null ? LINK_PNG : imageResource);
 			panel.addSpace(4);
 		}
-		final ILabel textLabel = panel.add().label().hyperlink();
-		textLabel.font().pixel(13).weight().bold();
-		return textLabel;
+		final ILabel textLabel = panel.add().label();// .hyperlink();
+		textLabel.font().pixel(13);// .weight().bold();
+		return new Link(image, textLabel);
 	}
 
 	private void setUp() {
 		if (panel != null)
 			return;
 		widgetTitle.addTitle("Navigation");
-		panel = widgetTitle.content().panel().vertical();// .spacing(4);
+		panel = widgetTitle.content().panel().vertical().spacing(2);
 	}
 
 	public NavigationView foldable(boolean b) {
