@@ -37,6 +37,10 @@ public class NavigationView {
 	}
 
 	public ILabel addHyperlink() {
+		return addHyperlink(null);
+	}
+
+	public ILabel addHyperlink(String imageResource) {
 		setUp();
 		IHorizontalPanel panel = this.panel.add().panel().horizontal().add()
 				.panel().horizontal();
@@ -45,7 +49,8 @@ public class NavigationView {
 			panel.add().label().text(s).font().pixel(13).color().gray();
 			panel.addSpace(4);
 		} else if (SHOW_TRIANGLE) {
-			panel.add().image().resource(LINK_PNG);
+			panel.add().image()
+					.resource(imageResource == null ? LINK_PNG : imageResource);
 			panel.addSpace(4);
 		}
 		final ILabel textLabel = panel.add().label().hyperlink();
