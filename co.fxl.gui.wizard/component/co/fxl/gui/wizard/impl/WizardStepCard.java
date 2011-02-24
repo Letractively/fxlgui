@@ -18,9 +18,9 @@
  */
 package co.fxl.gui.wizard.impl;
 
-import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.wizard.api.IWizardStepCard;
 
 class WizardStepCard implements IWizardStepCard {
@@ -28,7 +28,7 @@ class WizardStepCard implements IWizardStepCard {
 	private WizardStepImpl wizardStepImpl;
 	IVerticalPanel contentPanel;
 	IVerticalPanel sideWidgetPanel;
-	private ILabel clickable;
+	private IClickable<?> clickable;
 
 	void setWizardStep(WizardStepImpl wizardStepImpl) {
 		this.wizardStepImpl = wizardStepImpl;
@@ -51,8 +51,8 @@ class WizardStepCard implements IWizardStepCard {
 	@Override
 	public IWizardStepCard title(String title) {
 		if (clickable != null) {
-			clickable.text(title);
-			return this;
+			// TODO ... clickable.text(title);
+			throw new MethodNotImplementedException();
 		}
 		clickable = this.wizardStepImpl.widgetTitle.addHyperlink(title);
 		clickable.addClickListener(new IClickListener() {
