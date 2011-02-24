@@ -31,7 +31,6 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog.IQuestionDialog;
 import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
 import co.fxl.gui.api.IDisplay.IResizeListener;
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
@@ -145,11 +144,11 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private boolean expand = false;
 	T selection;
 	Map<T, Node<T>> object2node = new HashMap<T, Node<T>>();
-	private IClickable<ILabel> refresh;
+	private IClickable<?> refresh;
 	private Map<String, IClickListener> newClick = new HashMap<String, IClickListener>();
-	private Map<String, IClickable<ILabel>> newClickHyperlink = new HashMap<String, IClickable<ILabel>>();
+	private Map<String, IClickable<?>> newClickHyperlink = new HashMap<String, IClickable<?>>();
 	private List<ISelectionListener<T>> selectionListeners = new LinkedList<ISelectionListener<T>>();
-	private ILabel delete;
+	private IClickable<?> delete;
 	private IVerticalPanel leftContentPanel;
 	// private IVerticalPanel rightContentPanel;
 	private ISplitPane splitPane;
@@ -225,7 +224,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					}
 				};
 				newClick.put(type, cl);
-				IClickable<ILabel> hl = widgetTitle.addHyperlink("New"
+				IClickable<?> hl = widgetTitle.addHyperlink("New"
 						+ (type == null ? "" : " " + type));
 				newClickHyperlink.put(type, hl);
 				hl.addClickListener(cl);
@@ -257,8 +256,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					});
 				}
 			};
-			delete = widgetTitle.addHyperlink("Delete")
-					.addClickListener(deleteListener).mouseLeft();
+			delete = widgetTitle.addHyperlink("Delete");
+			delete.addClickListener(deleteListener).mouseLeft();
 			if (showRefresh && this instanceof RefreshListener)
 				refresh().addClickListener(new IClickListener() {
 					@Override
@@ -495,7 +494,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	private void disableAllNew() {
-		for (IClickable<ILabel> c : newClickHyperlink.values()) {
+		for (IClickable<?> c : newClickHyperlink.values()) {
 			c.clickable(false);
 		}
 	}
@@ -512,7 +511,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		return this;
 	}
 
-	private IClickable<ILabel> refresh() {
+	private IClickable<?> refresh() {
 		if (refresh == null)
 			refresh = widgetTitle.addHyperlink("Refresh");
 		return refresh;
