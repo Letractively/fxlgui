@@ -74,6 +74,7 @@ public class NavigationView {
 
 	public NavigationView(ILayout layout) {
 		widgetTitle = new WidgetTitle(layout);
+		widgetTitle.grayBackground();
 	}
 
 	public Link addHyperlink() {
