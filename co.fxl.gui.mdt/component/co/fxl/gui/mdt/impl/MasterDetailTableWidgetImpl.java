@@ -26,7 +26,6 @@ import java.util.Map;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IRadioButton;
 import co.fxl.gui.api.IVerticalPanel;
@@ -35,6 +34,7 @@ import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.api.template.LazyUpdateListener;
 import co.fxl.gui.api.template.NavigationView;
+import co.fxl.gui.api.template.NavigationView.Link;
 import co.fxl.gui.api.template.SplitLayout;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -72,7 +72,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	SplitLayout splitLayout;
 	boolean hideDetailRoot = false;
 	List<Object> selection = new LinkedList<Object>();
-	Map<ILabel, NavigationLinkImpl> labels = new HashMap<ILabel, NavigationLinkImpl>();
+	Map<Link, NavigationLinkImpl> labels = new HashMap<Link, NavigationLinkImpl>();
 	private IComboBox comboBoxConfiguration;
 	private List<String> configurations = new LinkedList<String>();
 	Listener listener;
@@ -228,7 +228,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		if (!navigationLinks.isEmpty()) {
 			NavigationView t = new NavigationView(sidePanel.add().panel());
 			for (NavigationLinkImpl link : navigationLinks) {
-				ILabel l = t.addHyperlink(link.imageResource).text(link.name);
+				Link l = t.addHyperlink(link.imageResource).text(link.name);
 				for (final INavigationLinkListener<Object> cl : link.listeners) {
 					l.addClickListener(new LazyClickListener() {
 
