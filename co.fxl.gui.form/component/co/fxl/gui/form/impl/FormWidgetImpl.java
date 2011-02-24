@@ -24,6 +24,7 @@ import java.util.List;
 
 import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.ICheckBox;
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
@@ -182,19 +183,20 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	@Override
-	public ILabel addOKHyperlink() {
+	public IClickable<?> addOKHyperlink() {
 		return addHyperlink("OK");
 	}
 
 	@Override
-	public ILabel addCancelHyperlink() {
+	public IClickable<?> addCancelHyperlink() {
 		return addHyperlink("Cancel");
 	}
 
 	@Override
-	public ILabel addHyperlink(String name, IClickListener clickListener) {
-		return widgetTitle.addHyperlink(name).addClickListener(clickListener)
-				.mouseLeft();
+	public IClickable<?> addHyperlink(String name, IClickListener clickListener) {
+		IClickable<?> addHyperlink = widgetTitle.addHyperlink(name);
+		addHyperlink.addClickListener(clickListener).mouseLeft();
+		return addHyperlink;
 	}
 
 	@Override
@@ -347,7 +349,7 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	@Override
-	public ILabel addHyperlink(String name) {
+	public IClickable<?> addHyperlink(String name) {
 		return widgetTitle.addHyperlink(name);
 	}
 
