@@ -149,6 +149,13 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 		public Link clickable(boolean clickable) {
 			image.clickable(clickable);
 			label.clickable(clickable);
+			if (clickable) {
+				label.font().color().white();
+				label.font().underline(true);
+			} else {
+				label.font().color().lightgray();
+				label.font().underline(false);
+			}
 			return this;
 		}
 
@@ -169,12 +176,14 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 	private static IClickable<?> clickable(IContainer c, String string) {
 		IHorizontalPanel p = c.panel().horizontal();
 		p.spacing(4);
-		p.color().white();
-		p.border().color().gray();
+		p.color().gray();
+		// p.border().color().gray();
 		IImage image = p.add().image().resource(string + "_free.png");
 		// p.addSpace(4);
-		ILabel label = p.add().label().text(string).hyperlink();
-		return new Link(image, label);
+		ILabel label = p.add().label().text(string);
+		Link l = new Link(image, label);
+		l.clickable(true);
+		return l;
 	}
 
 	private static IClickable<?> clickable(IClickable<?> c, String string) {
