@@ -140,6 +140,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			adjustHeight = true;
 			this.visible = true;
 			statusPanel = null;
+			topPanel = null;
 			selectionIsSetup = false;
 			container.clear();
 			topPanel();
