@@ -100,6 +100,7 @@ public class WidgetTitle implements IClickListener {
 	public WidgetTitle(ILayout layout) {
 		panel = layout.grid();
 		headerPanel = panel.cell(0, 0).panel().dock();
+		headerPanel.visible(false);
 	}
 
 	public WidgetTitle holdOnClick() {
@@ -131,7 +132,8 @@ public class WidgetTitle implements IClickListener {
 	}
 
 	public WidgetTitle grayBackground() {
-		headerPanel.color().gray();
+		if (headerPanel != null)
+			headerPanel.color().gray();
 		if (titlePanel != null)
 			titlePanel.color().gray();
 		if (headerLabel != null)
@@ -143,6 +145,7 @@ public class WidgetTitle implements IClickListener {
 	private void initHeader() {
 		if (hasHeaderPanel)
 			return;
+		headerPanel.visible(true);
 		// headerPanel.color().rgb(220, 220, 220);
 		IHorizontalPanel horizontal = headerPanel.center().panel().horizontal();
 		if (grayBackground)
