@@ -70,7 +70,7 @@ class RelationFilter extends StringFilter {
 	ITextField textField(ICell c, int filterIndex) {
 		IDockPanel dock = c.dock();
 		remove = dock.right().panel().vertical().addSpace(4).add().image()
-				.resource("remove.png").size(16, 16);
+				.resource("remove_free.png").size(16, 16);
 		return dock.center().textField();
 	}
 
