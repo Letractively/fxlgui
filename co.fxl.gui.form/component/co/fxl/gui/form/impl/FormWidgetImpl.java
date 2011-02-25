@@ -226,8 +226,8 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	private void addSaveButton(IGridPanel grid) {
-		IHorizontalPanel panel = grid.cell(0, 0).panel().horizontal()
-				.spacing(2);
+		IHorizontalPanel panel = grid.cell(0, 0).panel().horizontal().add()
+				.panel().horizontal().spacing(2);
 		final IButton clickable = panel.add().button();
 		final IButton clickable1 = panel.add().button();
 		// TODO un-hack
