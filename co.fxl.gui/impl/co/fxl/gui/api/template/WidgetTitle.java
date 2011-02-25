@@ -38,14 +38,18 @@ public class WidgetTitle implements IClickListener {
 	class CommandLink implements IClickable<IClickable<?>> {
 
 		private ILabel label;
+		private IImage image;
 
-		public CommandLink(ILabel headerLabel) {
+		public CommandLink(IImage image, ILabel headerLabel) {
+			this.image = image;
 			this.label = headerLabel;
 		}
 
 		@Override
 		public IClickable<?> clickable(boolean clickable) {
 			label.clickable(clickable);
+			if (image != null)
+				image.clickable(clickable);
 			if (grayBackground) {
 				if (clickable) {
 					label.font().color().white();
@@ -67,6 +71,8 @@ public class WidgetTitle implements IClickListener {
 		public co.fxl.gui.api.IClickable.IKey<IClickable<?>> addClickListener(
 				co.fxl.gui.api.IClickable.IClickListener clickListener) {
 			label.addClickListener(clickListener);
+			if (image != null)
+				image.addClickListener(clickListener);
 			return null;
 		}
 
@@ -180,8 +186,12 @@ public class WidgetTitle implements IClickListener {
 	}
 
 	public IClickable<?> addHyperlink(String text) {
+		return addHyperlink(null, text);
+	}
+
+	public IClickable<?> addHyperlink(String imageResource, String text) {
 		initHeader();
-		if (hasCommands) {
+		if (hasCommands && imageResource == null) {
 			ILabel label = commandPanel.add().label().text("|");
 			if (grayBackground)
 				label.font().color().lightgray();
@@ -190,6 +200,10 @@ public class WidgetTitle implements IClickListener {
 			labels.add(label);
 		}
 		hasCommands = true;
+		IImage image = null;
+		if (imageResource != null) {
+			image = commandPanel.add().image().resource(imageResource);
+		}
 		final ILabel label = commandPanel.add().label().text(text);
 		if (!grayBackground)
 			label.hyperlink();
@@ -210,7 +224,7 @@ public class WidgetTitle implements IClickListener {
 			});
 			clickableState.put(label, true);
 		}
-		CommandLink cl = new CommandLink(label);
+		CommandLink cl = new CommandLink(image, label);
 		cl.clickable(true);
 		return cl;
 	}
