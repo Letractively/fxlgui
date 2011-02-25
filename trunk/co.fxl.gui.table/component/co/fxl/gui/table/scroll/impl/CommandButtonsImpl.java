@@ -18,12 +18,13 @@
  */
 package co.fxl.gui.table.scroll.impl;
 
-import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IImage;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableClickListener;
@@ -41,7 +42,7 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 		private int previousEdit = -1;
 
 		Edit() {
-			edit = panel.add().button().text("Edit");
+			edit = clickable(panel.add(), "Edit");
 			edit.addClickListener(new IClickListener() {
 
 				@Override
@@ -52,7 +53,7 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 					}
 					previousEdit = selectionIndex;
 					widget.editable(previousEdit, true);
-					edit.text("Save");
+					clickable(edit, "Save");
 					// TODO validation
 				}
 			});
@@ -64,7 +65,7 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 						public void onSelection(int index, Object selection) {
 							if (previousEdit != -1) {
 								widget.editable(previousEdit, false);
-								edit.text("Edit");
+								clickable(edit, "Edit");
 							}
 						}
 					});
@@ -134,10 +135,57 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 		}
 	}
 
+	static class Link implements IClickable<Link> {
+
+		private IImage image;
+		private ILabel label;
+
+		Link(IImage image, ILabel label) {
+			this.image = image;
+			this.label = label;
+		}
+
+		@Override
+		public Link clickable(boolean clickable) {
+			image.clickable(clickable);
+			label.clickable(clickable);
+			return this;
+		}
+
+		@Override
+		public boolean clickable() {
+			return label.clickable();
+		}
+
+		@Override
+		public co.fxl.gui.api.IClickable.IKey<Link> addClickListener(
+				co.fxl.gui.api.IClickable.IClickListener clickListener) {
+			image.addClickListener(clickListener);
+			label.addClickListener(clickListener);
+			return null;
+		}
+	}
+
+	private static IClickable<?> clickable(IContainer c, String string) {
+		IHorizontalPanel p = c.panel().horizontal();
+		IImage image = p.add().image().resource(string + ".png");
+		p.addSpace(4);
+		ILabel label = p.add().label().text(string).hyperlink();
+		return new Link(image, label);
+	}
+
+	private static IClickable<?> clickable(IClickable<?> c, String string) {
+		Link l = (Link) c;
+		l.image.resource(string + ".png");
+		l.label.text(string);
+		return l;
+	}
+
 	private static final IDecorator DEFAULT_DECORATOR = new IDecorator() {
 		@Override
 		public IClickable<?> decorate(IContainer c) {
-			return c.button().text("Add");
+			String string = "Add";
+			return clickable(c, string);
 		}
 	};
 	private ScrollTableWidgetImpl widget;
@@ -156,9 +204,9 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 	private IHorizontalPanel panel;
 	private IClickable<?> imageUp;
 	private IClickable<?> imageDown;
-	private IButton remove;
+	private IClickable<?> remove;
 	private IDecorator listenOnAddListenerDecorator = DEFAULT_DECORATOR;
-	private IButton edit;
+	private IClickable<?> edit;
 	private boolean listenOnEdit;
 	private IRowListener<Boolean> listenOnEditListener;
 	private IClickable<?> imageUpMax;
@@ -235,7 +283,8 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 			image.addClickListener(new Update(listenOnAddListener));
 		}
 		if (listenOnRemove) {
-			remove = panel.add().button().text("Remove");
+			// remove = panel.add().button().text("Remove");
+			remove = clickable(panel.add(), "Remove");
 			remove.addClickListener(new Update(listenOnRemoveListener));
 			remove.clickable(widget.preselected != null);
 		}
@@ -243,7 +292,7 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 			throw new MethodNotImplementedException();
 		}
 		if (listenOnEdit) {
-			edit = panel.add().button().text("Edit");
+			edit = clickable(panel.add(), "Edit");
 			final Update clickListener = new Update(listenOnEditListener);
 			edit.addClickListener(clickListener);
 			edit.clickable(widget.preselected != null);
@@ -284,15 +333,23 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 
 	private IClickable<?> addMoveImage(String resource,
 			IMoveRowListener<Boolean> listenOnMoveUpListener2, int i) {
-		IButton image = panel
-				.add()
-				.button()
-				.text(resource
-						+ (i == Integer.MAX_VALUE || i == Integer.MIN_VALUE ? resource
-								: ""));
-		image.font().weight().bold();
-		image.addClickListener(new Move(listenOnMoveUpListener2, i))
-				.mouseLeft();
+		String res = null;
+		// resource
+		// + (i == Integer.MAX_VALUE || i == Integer.MIN_VALUE ? resource
+		// : "");
+		if (resource.equals(ScrollTableWidgetImpl.ARROW_UP)
+				&& i == Integer.MIN_VALUE)
+			res = "Top";
+		if (resource.equals(ScrollTableWidgetImpl.ARROW_UP) && i == -1)
+			res = "Up";
+		if (resource.equals(ScrollTableWidgetImpl.ARROW_DOWN) && i == 1)
+			res = "Down";
+		if (resource.equals(ScrollTableWidgetImpl.ARROW_DOWN)
+				&& i == Integer.MAX_VALUE)
+			res = "Bottom";
+		IClickable<?> image = clickable(panel.add(), res);
+		// image.font().weight().bold();
+		image.addClickListener(new Move(listenOnMoveUpListener2, i));
 		boolean canClick = widget.preselected != null;
 		if (canClick) {
 			canClick &= i > 0 || widget.preselectedIndex > 0;
