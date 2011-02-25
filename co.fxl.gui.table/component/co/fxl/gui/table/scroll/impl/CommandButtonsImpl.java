@@ -168,8 +168,11 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 
 	private static IClickable<?> clickable(IContainer c, String string) {
 		IHorizontalPanel p = c.panel().horizontal();
+		p.spacing(4);
+		p.color().white();
+		p.border().color().gray();
 		IImage image = p.add().image().resource(string + "_free.png");
-		p.addSpace(4);
+		// p.addSpace(4);
 		ILabel label = p.add().label().text(string).hyperlink();
 		return new Link(image, label);
 	}
