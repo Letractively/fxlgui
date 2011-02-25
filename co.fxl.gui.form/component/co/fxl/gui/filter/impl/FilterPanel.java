@@ -51,7 +51,7 @@ interface FilterPanel {
 
 	void addTitle(String string);
 
-	IClickable<?> addHyperlink(String string);
+	IClickable<?> addHyperlink(String imageResource, String string);
 
 	IComboBox addComboBox();
 

@@ -120,8 +120,8 @@ class FilterPanelImpl implements FilterPanel {
 	}
 
 	@Override
-	public IClickable<?> addHyperlink(String string) {
-		return title.addHyperlink(string);
+	public IClickable<?> addHyperlink(String imageResource, String string) {
+		return title.addHyperlink(imageResource, string);
 	}
 
 	@Override

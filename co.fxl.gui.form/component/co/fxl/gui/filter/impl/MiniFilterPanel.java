@@ -120,7 +120,7 @@ class MiniFilterPanel implements FilterPanel {
 	private IHorizontalPanel hyperLinkPanel;
 	private IContainer gridContainer;
 	private FilterGridImpl grid;
-	private boolean hasHyperlinks = false;
+//	private boolean hasHyperlinks = false;
 	private MiniFilterWidgetImpl widget;
 
 	MiniFilterPanel(MiniFilterWidgetImpl widget, IContainer c) {
@@ -142,14 +142,13 @@ class MiniFilterPanel implements FilterPanel {
 	}
 
 	@Override
-	public IClickable<?> addHyperlink(String string) {
-		if (hasHyperlinks) {
-			hyperLinkPanel.addSpace(4).add().label().text("|").font().color()
-					.gray();
-		}
-		hasHyperlinks = true;
-		return hyperLinkPanel.addSpace(4).add().label().text(string)
-				.hyperlink();
+	public IClickable<?> addHyperlink(String imageResource, String string) {
+		// if (hasHyperlinks) {
+		// hyperLinkPanel.addSpace(4).add().label().text("|").font().color()
+		// .gray();
+		// }
+		// hasHyperlinks = true;
+		return hyperLinkPanel.addSpace(4).add().image().resource(imageResource);// .label().text(string).hyperlink();
 	}
 
 	@Override
