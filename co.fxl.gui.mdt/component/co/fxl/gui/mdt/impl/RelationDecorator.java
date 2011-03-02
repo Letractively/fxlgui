@@ -106,7 +106,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 					boolean b = relation.editable && property.editable;
 					if (b)
 						c.editable();
-					if (b && property.type.clazz.equals(Boolean.class)) {
+					if (property.editable && property.type.clazz.equals(Boolean.class)) {
 						c.updateListener(new IColumnUpdateListener<Object, Boolean>() {
 
 							@Override
