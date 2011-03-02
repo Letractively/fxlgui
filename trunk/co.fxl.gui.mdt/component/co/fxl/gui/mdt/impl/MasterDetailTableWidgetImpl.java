@@ -183,7 +183,6 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	void setUpFilter(String configuration) {
 		if (filterList.filters.isEmpty())
 			return;
-		sidePanel.addSpace(0);// addSpacing);
 		filterWidget = (IFilterWidget) sidePanel.add().widget(
 				IFilterWidget.class);
 		filterWidget.showConfiguration(false);
