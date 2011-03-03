@@ -31,7 +31,7 @@ public class DiscardChangesDialog {
 	}
 
 	public static final String DISCARD_CHANGES = "You have made changes that have not been saved! Discard Changes?";
-	public static boolean active = false;
+	private static boolean active = false;
 	public static IDisplay display;
 	public static DiscardChangesListener listener;
 
@@ -80,5 +80,9 @@ public class DiscardChangesDialog {
 						public void onCancel() {
 						}
 					});
+	}
+
+	public static void active(boolean active) {
+		DiscardChangesDialog.active = active;
 	}
 }

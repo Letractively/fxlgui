@@ -220,7 +220,7 @@ public class Validation {
 			c.clickable(clickable);
 		}
 		if (showDiscardChanges) {
-			DiscardChangesDialog.active = isSpecified;
+			DiscardChangesDialog.active(isSpecified);
 		}
 	}
 
@@ -357,7 +357,7 @@ public class Validation {
 			f.reset();
 		}
 		updateClickables();
-		DiscardChangesDialog.active = false;
+		DiscardChangesDialog.active(false);
 	}
 
 	public Validation linkInput(ICheckBox valueElement) {
