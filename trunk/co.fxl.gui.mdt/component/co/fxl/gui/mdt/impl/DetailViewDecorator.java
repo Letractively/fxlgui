@@ -228,7 +228,6 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 																				@Override
 																				public void onSuccess(
 																						Boolean result) {
-																					throw new MethodNotImplementedException();
 																				}
 																			};
 																			save(tree,
