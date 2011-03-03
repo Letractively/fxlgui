@@ -81,4 +81,6 @@ public interface IMasterDetailTableWidget<T> {
 	IMasterDetailTableWidget<T> allowMultiSelection(boolean multiSelection);
 
 	IMasterDetailTableWidget<T> showCommands(boolean showCommands);
+
+	IMasterDetailTableWidget<T> filterable(boolean filterable);
 }
