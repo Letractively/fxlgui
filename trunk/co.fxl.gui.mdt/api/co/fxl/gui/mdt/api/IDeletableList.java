@@ -33,5 +33,6 @@ public interface IDeletableList<T> {
 
 	void delete(int index, T entity, ICallback<IDeletableList<T>> cb);
 
-	void delete(Integer[] index, T[] entity, ICallback<IDeletableList<T>> cb);
+	void delete(List<Integer> index, List<T> entity,
+			ICallback<IDeletableList<T>> cb);
 }

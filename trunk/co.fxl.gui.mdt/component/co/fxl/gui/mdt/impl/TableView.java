@@ -118,8 +118,8 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 										entities.add(entity);
 									}
 									queryList
-											.delete(indices.toArray(new Integer[0]),
-													entities.toArray(new Object[0]),
+											.delete(indices,
+													entities,
 													new CallbackTemplate<IDeletableList<Object>>() {
 
 														@Override
