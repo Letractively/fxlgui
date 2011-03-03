@@ -88,6 +88,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	private ViewTemplate activeView;
 	List<String> registerOrder = new LinkedList<String>();
 	boolean showCommands = true;
+	private boolean filterable = true;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -181,7 +182,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	}
 
 	void setUpFilter(String configuration) {
-		if (filterList.filters.isEmpty())
+		if (filterList.filters.isEmpty() || !filterable)
 			return;
 		filterWidget = (IFilterWidget) sidePanel.add().widget(
 				IFilterWidget.class);
@@ -422,6 +423,12 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	@Override
 	public IMasterDetailTableWidget<Object> showCommands(boolean showCommands) {
 		this.showCommands = showCommands;
+		return this;
+	}
+
+	@Override
+	public IMasterDetailTableWidget<Object> filterable(boolean filterable) {
+		this.filterable = filterable;
 		return this;
 	}
 }
