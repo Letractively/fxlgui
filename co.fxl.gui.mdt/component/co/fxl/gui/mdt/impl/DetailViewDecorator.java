@@ -348,10 +348,15 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 										property.adapter.valueOf(node, value);
 									}
 								});
-						} else
-							throw new MethodNotImplementedException(
-									property.type.clazz);
-						if (property.required && hasRequiredAttributes)
+						} else {
+							formField = null;
+							new MethodNotImplementedException(
+									"type in detail view not supported: "
+											+ property.type.clazz)
+									.printStackTrace();
+						}
+						if (property != null && formField != null
+								&& property.required && hasRequiredAttributes)
 							formField.required();
 					}
 				}

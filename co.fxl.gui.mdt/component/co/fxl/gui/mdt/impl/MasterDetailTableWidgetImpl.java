@@ -155,7 +155,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 							if (listener instanceof TableView)
 								notifyConfigurationListener(value);
 							else {
-								filterWidget.setConfiguration(value);
+								if (filterWidget != null)
+									filterWidget.setConfiguration(value);
 								Object show = null;
 								if (!selection.isEmpty())
 									show = selection.get(selection.size() - 1);
