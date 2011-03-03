@@ -110,20 +110,24 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 
 								@Override
 								public void onYes() {
+									List<Integer> indices = new LinkedList<Integer>();
+									List<Object> entities = new LinkedList<Object>();
 									for (Integer i : result.keySet()) {
 										Object entity = result.get(i);
-										queryList
-												.delete(i,
-														entity,
-														new CallbackTemplate<IDeletableList<Object>>() {
-
-															@Override
-															public void onSuccess(
-																	IDeletableList<Object> result) {
-																onDelete(null);
-															}
-														});
+										indices.add(i);
+										entities.add(entity);
 									}
+									queryList
+											.delete(indices.toArray(new Integer[0]),
+													entities.toArray(new Object[0]),
+													new CallbackTemplate<IDeletableList<Object>>() {
+
+														@Override
+														public void onSuccess(
+																IDeletableList<Object> result) {
+															onDelete(null);
+														}
+													});
 								}
 
 								@Override

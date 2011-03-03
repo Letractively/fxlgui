@@ -32,4 +32,6 @@ public interface IDeletableList<T> {
 	boolean isDeletable(T entity);
 
 	void delete(int index, T entity, ICallback<IDeletableList<T>> cb);
+
+	void delete(Integer[] index, T[] entity, ICallback<IDeletableList<T>> cb);
 }
