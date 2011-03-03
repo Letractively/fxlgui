@@ -327,14 +327,14 @@ class FormWidgetImpl implements IFormWidget {
 				// });
 				// }
 			}
+			if (isNew) {
+				validation.isNew();
+			}
 			validation.notifyChange(new CallbackTemplate<Boolean>() {
 				@Override
 				public void onSuccess(Boolean result) {
 				}
 			});
-			if (isNew) {
-				validation.isNew();
-			}
 		}
 	}
 
