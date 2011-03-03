@@ -354,9 +354,9 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 									"type in detail view not supported: "
 											+ property.type.clazz)
 									.printStackTrace();
-							throw new MethodNotImplementedException(
-									"type in detail view not supported: "
-											+ property.type.clazz);
+//							throw new MethodNotImplementedException(
+//									"type in detail view not supported: "
+//											+ property.type.clazz);
 						}
 						if (property != null && formField != null
 								&& property.required && hasRequiredAttributes)
