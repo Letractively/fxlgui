@@ -19,6 +19,7 @@
 package co.fxl.gui.swing;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ComponentAdapter;
@@ -234,6 +235,8 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 	@Override
 	public IDisplay block(boolean waiting) {
 		this.waiting = waiting;
+		frame.setCursor(new Cursor(waiting ? Cursor.WAIT_CURSOR
+				: Cursor.DEFAULT_CURSOR));
 		// TODO ...
 		return this;
 	}

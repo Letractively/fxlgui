@@ -25,6 +25,7 @@ import java.awt.event.MouseEvent;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.template.KeyTemplate;
 
 class ClickListenerMouseAdapter<T> extends KeyTemplate<T> implements IKey<T> {
@@ -41,6 +42,9 @@ class ClickListenerMouseAdapter<T> extends KeyTemplate<T> implements IKey<T> {
 			if (e.getButton() != getMouseButton())
 				return;
 			if (isDoubleClick && e.getClickCount() < 2)
+				return;
+			SwingDisplay d = (SwingDisplay) ((IElement<?>) element).display();
+			if (d.waiting)
 				return;
 			clickListener.onClick();
 		}
@@ -60,6 +64,9 @@ class ClickListenerMouseAdapter<T> extends KeyTemplate<T> implements IKey<T> {
 					return;
 			}
 			// TODO left/right button
+			SwingDisplay d = (SwingDisplay) ((IElement<?>) element).display();
+			if (d.waiting)
+				return;
 			clickListener.onClick();
 		}
 	}
