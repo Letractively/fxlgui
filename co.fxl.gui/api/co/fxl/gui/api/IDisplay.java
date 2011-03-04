@@ -59,6 +59,8 @@ public interface IDisplay {
 	int width();
 
 	int height();
-	
+
 	ICursor cursor();
+
+	IDisplay waiting(boolean waiting);
 }
