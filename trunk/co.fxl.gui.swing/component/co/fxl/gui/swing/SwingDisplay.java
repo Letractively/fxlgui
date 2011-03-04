@@ -234,6 +234,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 	@Override
 	public IDisplay block(boolean waiting) {
 		this.waiting = waiting;
-		throw new MethodNotImplementedException();
+		// TODO ...
+		return this;
 	}
 }
