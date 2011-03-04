@@ -279,7 +279,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 			addFilters4Configuration(configuration);
 		if (addSizeFilter) {
 			sizeFilter = (ComboBoxIntegerFilter) addFilter(Integer.class,
-					"Size", DEFAULT_SIZES, null, null);
+					"Max Rows", DEFAULT_SIZES, null, null);
 			sizeFilter.validate(validation);
 		}
 		boolean constrained = false;
