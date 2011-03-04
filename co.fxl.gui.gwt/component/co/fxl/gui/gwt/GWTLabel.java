@@ -61,11 +61,10 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 	@Override
 	public ILabel clickable(boolean enable) {
 		if (isHyperlink) {
+			font().underline(enable);
 			if (enable) {
-				font().underline(true);
 				font().color().blue();
 			} else {
-				font().underline(false);
 				font().color().gray();
 			}
 		}
