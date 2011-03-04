@@ -213,7 +213,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 												}-*/;
 
 	@Override
-	public IDisplay waiting(boolean waiting) {
+	public IDisplay block(boolean waiting) {
 		this.waiting = waiting;
 		DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", "wait");
 		throw new MethodNotImplementedException();
