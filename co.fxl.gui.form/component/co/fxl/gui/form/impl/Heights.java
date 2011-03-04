@@ -58,7 +58,7 @@ public class Heights {
 	}
 
 	public void valuePanel(ICheckBox valuePanel) {
-//		valuePanel.height(inc + TEXTFIELD_HEIGHT);
+		// valuePanel.height(inc + TEXTFIELD_HEIGHT);
 	}
 
 	public void decorate(ILabel label) {
