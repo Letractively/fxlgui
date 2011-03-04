@@ -45,6 +45,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
 	private GWTContainer<Widget> container;
 	private GWTUncaughtExceptionHandler uncaughtExceptionHandler;
+	boolean waiting = false;
 
 	private GWTDisplay() {
 		container = new GWTContainer<Widget>(this) {
@@ -210,4 +211,11 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	public static native String getUserAgent() /*-{
 												return navigator.userAgent;
 												}-*/;
+
+	@Override
+	public IDisplay waiting(boolean waiting) {
+		this.waiting = waiting;
+		DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", "wait");
+		throw new MethodNotImplementedException();
+	}
 }
