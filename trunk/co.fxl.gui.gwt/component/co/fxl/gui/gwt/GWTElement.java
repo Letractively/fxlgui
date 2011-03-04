@@ -122,9 +122,9 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	}
 
 	public IKey<R> addClickListener(IClickListener clickListener) {
-		toggleClickHandler(true);
 		GWTClickHandler<R> handler = newGWTClickHandler(clickListener);
 		handlers.add(handler);
+		toggleClickHandler(true);
 		return handler;
 	}
 
@@ -134,7 +134,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	private void toggleClickHandler(boolean toggle) {
 		DOM.setStyleAttribute(container.widget.getElement(), "cursor",
-				"default");
+				toggle ? "hand" : "default");
 		if (registration != null) {
 			registration.removeHandler();
 			registration = null;
@@ -149,7 +149,6 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	}
 
 	void registerClickHandler() {
-		DOM.setStyleAttribute(container.widget.getElement(), "cursor", "hand");
 		registration = ((HasClickHandlers) container.widget)
 				.addClickHandler(new ClickHandler() {
 					@Override
