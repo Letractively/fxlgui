@@ -62,5 +62,5 @@ public interface IDisplay {
 
 	ICursor cursor();
 
-	IDisplay waiting(boolean waiting);
+	IDisplay block(boolean waiting);
 }
