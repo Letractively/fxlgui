@@ -134,7 +134,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	private void toggleClickHandler(boolean toggle) {
 		DOM.setStyleAttribute(container.widget.getElement(), "cursor",
-				"pointer");
+				"default");
 		if (registration != null) {
 			registration.removeHandler();
 			registration = null;
