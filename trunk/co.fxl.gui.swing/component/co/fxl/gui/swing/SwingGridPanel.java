@@ -38,6 +38,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import co.fxl.gui.api.IAlignment;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.template.KeyTemplate;
 
@@ -62,6 +63,9 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 			if (e.getButton() != getButton())
 				return;
 			if (isDoubleClick && e.getClickCount() < 2)
+				return;
+			SwingDisplay d = (SwingDisplay) ((IElement<?>) element).display();
+			if (d.waiting)
 				return;
 			listener.onClick(column, row );
 		}
