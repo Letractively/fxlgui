@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.gwt;
 
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridClickListener;
 import co.fxl.gui.api.template.KeyTemplate;
@@ -57,6 +58,9 @@ public class GWTGridPanelClickHandler extends KeyTemplate<IGridPanel> implements
 		@SuppressWarnings("unchecked")
 		Grid grid = (Grid) ((GWTElement<Grid, IGridPanel>) element).container.widget;
 		Cell cell = grid.getCellForEvent(event);
+		GWTDisplay d = (GWTDisplay) ((IElement<?>) element).display();
+		if (d.waiting)
+			return;
 		clickListener.onClick(cell.getCellIndex(), cell.getRowIndex());
 	}
 

@@ -202,7 +202,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 			@Override
 			public ICursor pointer() {
 				DOM.setStyleAttribute(RootPanel.get().getElement(), "cursor",
-						"pointer");
+						"default");
 				return this;
 			}
 		};
@@ -215,6 +215,8 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	@Override
 	public IDisplay block(boolean waiting) {
 		this.waiting = waiting;
+		DOM.setStyleAttribute(RootPanel.get().getElement(), "cursor",
+				waiting ? "wait" : "default");
 		// TODO ...
 		return this;
 	}
