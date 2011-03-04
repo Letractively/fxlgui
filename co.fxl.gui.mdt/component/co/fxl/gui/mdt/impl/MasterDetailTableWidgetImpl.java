@@ -125,6 +125,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		IVerticalPanel content = views.content().panel().vertical();
 		IHorizontalPanel h1 = content.add().panel().horizontal();
 		r1 = h1.add().radioButton().text("Grid");
+		IHorizontalPanel h2 = content.add().panel().horizontal();
+		r2 = h2.add().radioButton().text("Master-Detail");
 		r1.checked(true);
 		r1.font().weight().bold();
 		r1.addUpdateListener(new LazyUpdateListener<Boolean>() {
@@ -134,6 +136,11 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 				if (!selection.isEmpty())
 					show = selection.get(selection.size() - 1);
 				showTableView(show);
+			}
+
+			@Override
+			public void onCancelledUpdate(Boolean value) {
+				r2.checked(true);
 			}
 		});
 		if (!configurations.isEmpty()) {
@@ -165,8 +172,6 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 						}
 					});
 		}
-		IHorizontalPanel h2 = content.add().panel().horizontal();
-		r2 = h2.add().radioButton().text("Master-Detail");
 		r2.addUpdateListener(new LazyUpdateListener<Boolean>() {
 			@Override
 			public void onAllowedUpdate(Boolean value) {
