@@ -48,6 +48,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 	private int heightPixel = 600;
 	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
 	private SwingUncaughtExceptionHandler uncaughtExceptionHandler;
+	boolean waiting;
 	// private JScrollPane scrollPane;
 	// private ILayout layout;
 	private static SwingDisplay instance = null;
@@ -227,6 +228,12 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	@Override
 	public ICursor cursor() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IDisplay waiting(boolean waiting) {
+		this.waiting = waiting;
 		throw new MethodNotImplementedException();
 	}
 }
