@@ -35,7 +35,12 @@ public abstract class LazyUpdateListener<T> extends CallbackTemplate<Boolean>
 	public void onSuccess(Boolean result) {
 		if (result)
 			onAllowedUpdate(value);
+		else
+			onCancelledUpdate(value);
 	}
 
 	protected abstract void onAllowedUpdate(T value);
+
+	protected void onCancelledUpdate(T value) {
+	}
 }
