@@ -25,7 +25,6 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.HTML;
 
@@ -91,7 +90,6 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 
 	@Override
 	GWTClickHandler<ILabel> newGWTClickHandler(IClickListener clickListener) {
-		DOM.setStyleAttribute(container.widget.getElement(), "cursor", "hand");
 		html.selectable = false;
 		if (!selectionDisabled) {
 			disableSelection(container.widget.getElement());
