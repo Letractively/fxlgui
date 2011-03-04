@@ -92,6 +92,7 @@ public class WidgetTitle implements IClickListener {
 	private boolean foldable = true;
 	public ILabel headerLabel;
 	private List<ILabel> labels = new LinkedList<ILabel>();
+	private List<IImage> images = new LinkedList<IImage>();
 	private int space = 10;
 	private Map<ILabel, Boolean> clickableState = new HashMap<ILabel, Boolean>();
 	private boolean holdOnClicks = false;
@@ -172,6 +173,8 @@ public class WidgetTitle implements IClickListener {
 		contentContainer.element().visible(open);
 		for (ILabel l : labels)
 			l.visible(open);
+		for (IImage l : images)
+			l.visible(open);
 	}
 
 	public ILabel addTitle(String title) {
@@ -206,6 +209,7 @@ public class WidgetTitle implements IClickListener {
 		IImage image = null;
 		if (imageResource != null) {
 			image = commandPanel.add().image().resource(imageResource);
+			images.add(image);
 		}
 		final ILabel label = commandPanel.add().label().text(text);
 		if (!grayBackground)
