@@ -46,7 +46,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 
 	// TODO Swing: cells are too small
 
-	private static final List<Object> DEFAULT_SIZES = Arrays
+	static final List<Object> DEFAULT_SIZES = Arrays
 			.asList(new Object[] { 50, 100, 500, 1000, 5000 });
 
 	private class ClearClickListener extends LazyClickListener {
