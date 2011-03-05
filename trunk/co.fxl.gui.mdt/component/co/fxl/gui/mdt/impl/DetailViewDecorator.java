@@ -59,6 +59,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	private boolean isNew;
 	private ITree<Object> tree;
 	private DeleteListener deleteListener;
+	private boolean alwaysShowCancel = false;
 
 	public void setUpdateable(boolean isUpdateable) {
 		this.isUpdateable = isUpdateable;
@@ -353,9 +354,9 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 									"type in detail view not supported: "
 											+ property.type.clazz)
 									.printStackTrace();
-//							throw new MethodNotImplementedException(
-//									"type in detail view not supported: "
-//											+ property.type.clazz);
+							// throw new MethodNotImplementedException(
+							// "type in detail view not supported: "
+							// + property.type.clazz);
 						}
 						if (property != null && formField != null
 								&& property.required && hasRequiredAttributes)
@@ -363,6 +364,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 					}
 				}
 		supplement(form);
+		if (alwaysShowCancel)
+			form.alwaysAllowCancel();
 		form.visible(true);
 	}
 
@@ -383,5 +386,10 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 		// IBorder border = panel.border();
 		// border.color().gray();
 		// border.style().top();
+	}
+
+	public DetailViewDecorator alwaysShowCancel() {
+		alwaysShowCancel = true;
+		return this;
 	}
 }
