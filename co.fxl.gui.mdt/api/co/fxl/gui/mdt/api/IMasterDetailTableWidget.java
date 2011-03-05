@@ -74,6 +74,8 @@ public interface IMasterDetailTableWidget<T> {
 
 	IMasterDetailTableWidget<T> addCreatableType(String type);
 
+	IMasterDetailTableWidget<T> addCreatableType(String type, String imageResource);
+
 	IMasterDetailTableWidget<T> hideDetailRoot();
 
 	IMasterDetailTableWidget<T> refresh(ICallback<Boolean> cb);

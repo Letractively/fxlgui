@@ -82,7 +82,8 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 				widget.creatableTypes.add(null);
 			for (final String type : widget.creatableTypes) {
 				IClickable<?> button = table.addButton(type == null ? "New"
-						: "New " + type);
+						: "New " + type, type == null ? null
+						: widget.creatableTypeIcons.get(type));
 				buttons.put(type, button);
 				button.addClickListener(new IClickListener() {
 					@Override
@@ -98,7 +99,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 			}
 		}
 		if (widget.showCommands) {
-			delete = table.addButton("Delete");
+			delete = table.addButton("Delete", "remove.png");
 			delete.addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {

@@ -162,6 +162,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	KeyAdapter<Object> treeClickAdapter;
 	boolean allowCreate = true;
 	private IClickListener deleteListener;
+	private Map<String, String> creatableTypeIcons = new HashMap<String, String>();
 
 	TreeWidgetImpl(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel()).space(0);
@@ -224,7 +225,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					}
 				};
 				newClick.put(type, cl);
-				IClickable<?> hl = widgetTitle.addHyperlink("New"
+				IClickable<?> hl = widgetTitle.addHyperlink(type == null ? null
+						: creatableTypeIcons.get(type), "New"
 						+ (type == null ? "" : " " + type));
 				newClickHyperlink.put(type, hl);
 				hl.addClickListener(cl);
@@ -256,7 +258,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					});
 				}
 			};
-			delete = widgetTitle.addHyperlink("Delete");
+			delete = widgetTitle.addHyperlink("remove.png", "Delete");
 			delete.addClickListener(deleteListener);
 			if (showRefresh && this instanceof RefreshListener)
 				refresh().addClickListener(new IClickListener() {
@@ -548,6 +550,15 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		if (defaultCreatableType == null)
 			defaultCreatableType = type;
 		creatableTypes.add(type);
+		return this;
+	}
+
+	@Override
+	public ITreeWidget<T> addCreatableType(String type, String image) {
+		if (defaultCreatableType == null)
+			defaultCreatableType = type;
+		creatableTypes.add(type);
+		creatableTypeIcons.put(type, image);
 		return this;
 	}
 

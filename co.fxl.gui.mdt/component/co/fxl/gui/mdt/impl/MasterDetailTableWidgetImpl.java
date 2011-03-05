@@ -91,6 +91,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	private boolean filterable = true;
 	PropertyPageImpl overviewPage = null;
 	boolean allowGridView = true;
+	Map<String, String> creatableTypeIcons = new HashMap<String, String>();
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -380,6 +381,14 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	@Override
 	public IMasterDetailTableWidget<Object> addCreatableType(String type) {
 		creatableTypes.add(type);
+		return this;
+	}
+
+	@Override
+	public IMasterDetailTableWidget<Object> addCreatableType(String type,
+			String imageResource) {
+		creatableTypes.add(type);
+		creatableTypeIcons.put(type, imageResource);
 		return this;
 	}
 
