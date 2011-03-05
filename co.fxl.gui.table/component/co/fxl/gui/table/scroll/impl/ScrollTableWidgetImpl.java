@@ -573,6 +573,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	@Override
+	public IClickable<?> addButton(String name, String imageResource) {
+		return widgetTitle.addHyperlink(imageResource, name);
+	}
+
+	@Override
 	public ISelection<Object> selection() {
 		return selection;
 	}
