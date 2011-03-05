@@ -78,6 +78,8 @@ public interface ITreeWidget<T> {
 
 	ITreeWidget<T> addCreatableType(String type);
 
+	ITreeWidget<T> addCreatableType(String s, String string);
+
 	ITreeWidget<T> hideRoot();
 
 	ITreeWidget<T> showRefresh(boolean showRefresh);
