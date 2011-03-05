@@ -38,6 +38,7 @@ import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
+import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.form.api.IFormField;
@@ -74,6 +75,7 @@ class FormWidgetImpl implements IFormWidget {
 	Validation validation;
 	private Heights heights = new Heights(2);
 	private boolean isNew;
+	private boolean alwaysAllowCancel = false;
 
 	FormWidgetImpl(IContainer panel) {
 		widgetTitle = new WidgetTitle(panel.panel());
@@ -242,21 +244,23 @@ class FormWidgetImpl implements IFormWidget {
 					public void onSuccess(Boolean result) {
 						validation.update();
 						clickable.clickable(false);
-						clickable1.clickable(false);
+						if (!alwaysAllowCancel)
+							clickable1.clickable(false);
 					}
 				});
 			}
 		});
-		clickable1.text("Cancel").addClickListener(new IClickListener() {
+		clickable1.text("Cancel").addClickListener(new LazyClickListener() {
 			@Override
-			public void onClick() {
+			public void onAllowedClick() {
 				saveListener.cancel(new CallbackTemplate<Boolean>() {
 
 					@Override
 					public void onSuccess(Boolean result) {
 						validation.reset();
 						clickable.clickable(false);
-						clickable1.clickable(false);
+						if (!alwaysAllowCancel)
+							clickable1.clickable(false);
 					}
 				});
 			}
@@ -265,7 +269,8 @@ class FormWidgetImpl implements IFormWidget {
 			validation = new Validation();
 			validation.showDiscardChanges();
 			validation.linkClickable(clickable);
-			validation.linkReset(clickable1);
+			if (!alwaysAllowCancel)
+				validation.linkReset(clickable1);
 			for (final FormFieldImpl<?> formField : fields) {
 				Object valueElement = formField.valueElement();
 				if (valueElement instanceof ITextArea) {
@@ -396,6 +401,12 @@ class FormWidgetImpl implements IFormWidget {
 	@Override
 	public IFormWidget isNew(boolean validate) {
 		isNew = validate;
+		return this;
+	}
+
+	@Override
+	public IFormWidget alwaysAllowCancel() {
+		alwaysAllowCancel = true;
 		return this;
 	}
 }
