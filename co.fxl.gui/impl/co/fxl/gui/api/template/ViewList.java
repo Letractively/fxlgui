@@ -47,22 +47,28 @@ public class ViewList {
 		private ViewDecorator decorator;
 		private IContainer content;
 		private Object bo;
+		private IImage removeImage;
 		private IImage image;
 
-		ViewImpl() {
+		ViewImpl(String imageResource) {
 			grid = ViewList.this.panel.add().panel().grid();
 			labelPanel = grid.cell(0, 0).panel().horizontal().add().panel()
 					.horizontal().spacing(2);
-			labelPanel.addSpace(4);
+			if (imageResource != null) {
+				image = labelPanel.addSpace(4).add().image()
+						.resource(imageResource);
+				image.addClickListener(this);
+			} else
+				labelPanel.addSpace(4);
 			label = labelPanel.add().label().hyperlink();
 			label.addClickListener(this);
 			label.font().pixel(13);
 			labelPanel.addSpace(4);
 			content = widget.contentPanel().add();
 			if (newListener != null) {
-				image = grid.cell(1, 0).width(30).align().end().panel()
+				removeImage = grid.cell(1, 0).width(30).align().end().panel()
 						.horizontal().add().image();
-				image.resource("remove.png").addClickListener(
+				removeImage.resource("remove.png").addClickListener(
 						new IClickListener() {
 							@Override
 							public void onClick() {
@@ -78,7 +84,7 @@ public class ViewList {
 									widget.selectFirst();
 							}
 						});
-				image.visible(false);
+				removeImage.visible(false);
 			}
 		}
 
@@ -110,17 +116,19 @@ public class ViewList {
 
 		private void clickable(boolean clickable) {
 			label.clickable(clickable);
+			if (image != null)
+				image.clickable(clickable);
 			if (!clickable) {
 				labelPanel.color().red();
 				label.font().weight().bold().color().white();
-				if (image != null) {
-					image.visible(true);
+				if (removeImage != null) {
+					removeImage.visible(true);
 				}
 			} else {
 				labelPanel.color().rgb(245, 245, 245);
 				label.font().weight().plain().color().blue();
-				if (image != null) {
-					image.visible(false);
+				if (removeImage != null) {
+					removeImage.visible(false);
 				}
 			}
 		}
@@ -143,11 +151,15 @@ public class ViewList {
 	}
 
 	public ViewImpl addView() {
+		return addView(null);
+	}
+
+	public ViewImpl addView(String imageResource) {
 		if (widgetTitle.headerLabel == null)
 			title("Views");
 		if (panel == null)
 			panel = widgetTitle.content().panel().vertical().spacing(2);
-		ViewImpl view = new ViewImpl();
+		ViewImpl view = new ViewImpl(imageResource);
 		views.add(view);
 		return view;
 	}
