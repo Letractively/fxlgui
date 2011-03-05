@@ -58,8 +58,8 @@ public class ViewList {
 				image = labelPanel.addSpace(4).add().image()
 						.resource(imageResource);
 				image.addClickListener(this);
-			} else
-				labelPanel.addSpace(4);
+			}
+			labelPanel.addSpace(4);
 			label = labelPanel.add().label().hyperlink();
 			label.addClickListener(this);
 			label.font().pixel(13);
