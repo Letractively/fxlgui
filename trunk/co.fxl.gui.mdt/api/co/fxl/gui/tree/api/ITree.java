@@ -55,4 +55,6 @@ public interface ITree<T> {
 	boolean isReassignable();
 
 	boolean isNew();
+	
+	String icon();
 }
