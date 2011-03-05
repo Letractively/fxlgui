@@ -66,14 +66,14 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 		tree = (IFilterTreeWidget<Object>) widget.mainPanel.add().widget(
 				IFilterTreeWidget.class);
 		tree.showCommands(widget.showCommands);
-		tree.addTreeClickListener(new ITreeClickListener<Object>() {
-
-			@Override
-			public void onClick(ITree<Object> tree) {
-				if (tree.isLeaf())
-					widget.showTableView(tree.object());
-			}
-		}).doubleClick();
+//		tree.addTreeClickListener(new ITreeClickListener<Object>() {
+//
+//			@Override
+//			public void onClick(ITree<Object> tree) {
+//				if (tree.isLeaf())
+//					widget.showTableView(tree.object());
+//			}
+//		}).doubleClick();
 		tree.showRefresh(false);
 		if (widget.hideDetailRoot)
 			tree.hideRoot();
@@ -128,6 +128,30 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 			filterList.constraints(widget.constraints);
 	}
 
+	private final class PropertyPageDecorator implements IDecorator<Object> {
+
+		private PropertyPageImpl propertyPage;
+
+		PropertyPageDecorator(PropertyPageImpl propertyPage) {
+			this.propertyPage = propertyPage;
+		}
+
+		@Override
+		public void clear(IVerticalPanel panel) {
+			panel.clear();
+		}
+
+		@Override
+		public void decorate(IVerticalPanel panel, ITree<Object> tree) {
+			decorate(panel, tree.object());
+		}
+
+		@Override
+		public void decorate(final IVerticalPanel panel, final Object node) {
+			propertyPage.dec.decorate(panel.clear().add(), node);
+		}
+	}
+
 	private class Register {
 		IDecorator<Object> dec;
 		Class<?>[] c;
@@ -146,6 +170,13 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 	}
 
 	private void addDetailViews() {
+		if (widget.overviewPage != null) {
+			IDecorator<Object> d = new PropertyPageDecorator(
+					widget.overviewPage);
+			IView dv = tree.addDetailView(widget.overviewPage.name, d);
+			if (widget.overviewPage.constrainType != null)
+				dv.constrainType(widget.overviewPage.constrainType);
+		}
 		List<PropertyGroupImpl> gs = new LinkedList<PropertyGroupImpl>();
 		for (final PropertyGroupImpl group : widget.propertyGroups) {
 			if (group.asDetail
@@ -176,26 +207,9 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 			}
 		}
 		for (final PropertyPageImpl relation : widget.propertyPages) {
-			registers.put(relation.name, new Register(relation.name,
-					new IDecorator<Object>() {
-
-						@Override
-						public void clear(IVerticalPanel panel) {
-							panel.clear();
-						}
-
-						@Override
-						public void decorate(IVerticalPanel panel,
-								ITree<Object> tree) {
-							decorate(panel, tree.object());
-						}
-
-						@Override
-						public void decorate(final IVerticalPanel panel,
-								final Object node) {
-							relation.dec.decorate(panel.clear().add(), node);
-						}
-					}, relation.constrainType));
+			registers.put(relation.name,
+					new Register(relation.name, new PropertyPageDecorator(
+							relation), relation.constrainType));
 		}
 		for (final N2MRelationImpl relation : widget.n2MRelations) {
 			registers
