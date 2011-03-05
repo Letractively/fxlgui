@@ -380,6 +380,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	@Override
 	public IMasterDetailTableWidget<Object> addCreatableType(String type) {
+		assert type != null;
 		creatableTypes.add(type);
 		return this;
 	}
@@ -387,6 +388,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	@Override
 	public IMasterDetailTableWidget<Object> addCreatableType(String type,
 			String imageResource) {
+		assert type != null;
 		creatableTypes.add(type);
 		creatableTypeIcons.put(type, imageResource);
 		return this;
