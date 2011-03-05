@@ -165,12 +165,13 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				if (constraints != null)
 					filter.constraints(constraints);
 				filter.visible(true);
-				container.addSpace(10);
 				showNoRowsFound = false;
 			}
 			if (buttonDecorator != null) {
 				buttonPanel(buttonDecorator);
 			}
+			if (filter != null || buttonDecorator != null)
+				container.addSpace(10);
 			if (rows.size() == 0) {
 				IVerticalPanel dock = container.add().panel().vertical()
 						.spacing(10);
