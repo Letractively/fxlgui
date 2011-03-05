@@ -361,12 +361,17 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 						if (property != null && formField != null
 								&& property.required && hasRequiredAttributes)
 							formField.required();
+						supplement(form, property.name, formField);
 					}
 				}
 		supplement(form);
 		if (alwaysShowCancel)
 			form.alwaysAllowCancel();
 		form.visible(true);
+	}
+
+	public void supplement(IFormWidget form, String name,
+			IFormField<?> formField) {
 	}
 
 	private void decorateEditable(final PropertyImpl property,
