@@ -34,8 +34,8 @@ import co.fxl.gui.table.scroll.api.IScrollTableWidget.IDecorator;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IMoveRowListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IRowListener;
 
-class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
-		ISelectionListener<Object> {
+public class CommandButtonsImpl implements ICommandButtons,
+		IButtonPanelDecorator, ISelectionListener<Object> {
 
 	class Edit {
 
@@ -173,7 +173,7 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 		}
 	}
 
-	private static IClickable<?> clickable(IContainer c, String string) {
+	public static IClickable<?> clickable(IContainer c, String string) {
 		IHorizontalPanel p = c.panel().horizontal();
 		p.spacing(4);
 		p.color().gray();
@@ -210,6 +210,7 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 	private IRowListener<Boolean> listenOnRemoveListener;
 	private IMoveRowListener<Boolean> listenOnMoveUpListener;
 	private IMoveRowListener<Boolean> listenOnMoveDownListener;
+	@SuppressWarnings("unused")
 	private IRowListener<Boolean> listenOnShowListener;
 	private int selectionIndex;
 	private Object selection;
