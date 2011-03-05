@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.api.template;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -31,8 +34,11 @@ public class NavigationView {
 
 		IImage image;
 		private ILabel label;
+		private IHorizontalPanel panel;
+		private List<ILabel> additionalLabels = new LinkedList<ILabel>();
 
-		private Link(IImage image, ILabel textLabel) {
+		private Link(IHorizontalPanel panel, IImage image, ILabel textLabel) {
+			this.panel = panel;
 			this.image = image;
 			this.label = textLabel;
 			label.hyperlink();
@@ -45,10 +51,12 @@ public class NavigationView {
 
 		public Link clickable(boolean clickable) {
 			label.clickable(clickable);
-//			if (clickable)
-//				label.font().color().blue();
-//			else
-//				label.font().color().gray();
+			for (ILabel l : additionalLabels)
+				l.clickable(clickable);
+			// if (clickable)
+			// label.font().color().blue();
+			// else
+			// label.font().color().gray();
 			return this;
 		}
 
@@ -62,6 +70,14 @@ public class NavigationView {
 				co.fxl.gui.api.IClickable.IClickListener clickListener) {
 			label.addClickListener(clickListener);
 			return null;
+		}
+
+		public ILabel addHyperlink(String text) {
+			panel.addSpace(4);
+			panel.add().label().text("|").font().color().gray();
+			ILabel l = panel.addSpace(4).add().label().text(text).hyperlink();
+			additionalLabels.add(l);
+			return l;
 		}
 	}
 
@@ -97,7 +113,7 @@ public class NavigationView {
 		}
 		final ILabel textLabel = panel.add().label();// .hyperlink();
 		textLabel.font().pixel(13);// .weight().bold();
-		return new Link(image, textLabel);
+		return new Link(panel, image, textLabel);
 	}
 
 	private void setUp() {

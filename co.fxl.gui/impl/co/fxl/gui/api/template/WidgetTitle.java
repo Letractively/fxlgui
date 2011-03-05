@@ -258,4 +258,9 @@ public class WidgetTitle implements IClickListener {
 		hasCommands = false;
 		return this;
 	}
+
+	public WidgetTitle visible(boolean b) {
+		panel.visible(b);
+		return this;
+	}
 }
