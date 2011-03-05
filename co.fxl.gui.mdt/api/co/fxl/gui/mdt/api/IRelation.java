@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.mdt.api;
 
-import co.fxl.gui.api.IButton;
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -31,7 +31,7 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 
 		boolean isDetailedAdd();
 
-		IButton decorateAdd(T base, IContainer c);
+		IClickable<?> decorateAdd(T base, IContainer c);
 	}
 
 	public interface IUpDownListener<T, R> {
