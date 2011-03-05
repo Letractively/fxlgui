@@ -85,6 +85,8 @@ public interface IScrollTableWidget<T> {
 
 	IClickable<?> addButton(String name);
 
+	IClickable<?> addButton(String name, String imageResource);
+
 	ISelection<T> selection();
 
 	IScrollTableColumn<T> addColumn();
