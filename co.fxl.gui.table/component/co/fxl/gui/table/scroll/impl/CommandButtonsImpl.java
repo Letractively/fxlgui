@@ -178,7 +178,7 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 		p.spacing(4);
 		p.color().gray();
 		// p.border().color().gray();
-		IImage image = p.add().image().resource(string + "_free.png");
+		IImage image = p.add().image().resource(string + ".png");
 		// p.addSpace(4);
 		ILabel label = p.add().label().text(string);
 		Link l = new Link(image, label);
@@ -188,7 +188,7 @@ class CommandButtonsImpl implements ICommandButtons, IButtonPanelDecorator,
 
 	private static IClickable<?> clickable(IClickable<?> c, String string) {
 		Link l = (Link) c;
-		l.image.resource(string + "_free.png");
+		l.image.resource(string + ".png");
 		l.label.text(string);
 		return l;
 	}
