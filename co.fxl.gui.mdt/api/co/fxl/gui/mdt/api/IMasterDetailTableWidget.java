@@ -54,6 +54,8 @@ public interface IMasterDetailTableWidget<T> {
 
 	IPropertyGroup<T> defaultPropertyGroup();
 
+	IPropertyPage<T> overviewPage();
+
 	IPropertyGroup<T> addPropertyGroup(String name);
 
 	IRelation<T, ?> addRelation(String name);
@@ -83,4 +85,6 @@ public interface IMasterDetailTableWidget<T> {
 	IMasterDetailTableWidget<T> showCommands(boolean showCommands);
 
 	IMasterDetailTableWidget<T> filterable(boolean filterable);
+
+	IMasterDetailTableWidget<T> allowGridView(boolean allowGridView);
 }

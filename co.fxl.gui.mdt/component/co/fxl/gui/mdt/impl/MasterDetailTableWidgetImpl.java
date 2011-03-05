@@ -89,6 +89,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	List<String> registerOrder = new LinkedList<String>();
 	boolean showCommands = true;
 	private boolean filterable = true;
+	PropertyPageImpl overviewPage = null;
+	boolean allowGridView = true;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -112,6 +114,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	void addViewWidget(IVerticalPanel sidePanel) {
 		WidgetTitle views = new WidgetTitle(sidePanel.add().panel());
+		if (!allowGridView)
+			views.visible(false);
 		views.grayBackground();
 		views.addTitle("Views");
 		IClickable<?> hl = views.addHyperlink("refresh_free.png", "Refresh");
@@ -435,6 +439,21 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	@Override
 	public IMasterDetailTableWidget<Object> filterable(boolean filterable) {
 		this.filterable = filterable;
+		return this;
+	}
+
+	@Override
+	public IPropertyPage<Object> overviewPage() {
+		if (overviewPage == null)
+			overviewPage = new PropertyPageImpl("Overview");
+		return overviewPage;
+	}
+
+	@Override
+	public IMasterDetailTableWidget<Object> allowGridView(boolean allowGridView) {
+		this.allowGridView = allowGridView;
+		if (!allowGridView)
+			showDetailViewByDefault = true;
 		return this;
 	}
 }
