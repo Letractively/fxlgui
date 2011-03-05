@@ -37,6 +37,9 @@ class Node<T> extends LazyClickListener {
 	private static final String FOLDER_CLOSED = "folder_closed.png";
 	private static final String FOLDER_EMPTY = "folder_empty.png";
 	private static final String FOLDER_OPEN = "folder_open.png";
+	private static final String CLOSED = "closed.png";
+	private static final String EMPTY = "empty.png";
+	private static final String OPEN = "open.png";
 	private static final String LEAF = "leaf.png";
 	private static final int INDENT = 10;
 	private IVerticalPanel panel;
@@ -68,9 +71,21 @@ class Node<T> extends LazyClickListener {
 		content.addSpace(depth * INDENT);
 		image = content.add().image();
 		if (root.childCount() != 0) {
-			image.resource(FOLDER_CLOSED);
+			if (root.icon() != null) {
+				image.resource(CLOSED);
+				IImage i2 = content.add().image().resource(root.icon());
+				i2.addClickListener(this);
+				injectTreeListener(i2);
+			} else
+				image.resource(FOLDER_CLOSED);
 		} else {
-			image.resource(root.isLeaf() ? LEAF : FOLDER_EMPTY);
+			if (root.icon() != null) {
+				image.resource(EMPTY);
+				IImage i2 = content.add().image().resource(root.icon());
+				i2.addClickListener(this);
+				injectTreeListener(i2);
+			} else
+				image.resource(root.isLeaf() ? LEAF : FOLDER_EMPTY);
 		}
 		image.addClickListener(this);
 		injectTreeListener(image);
@@ -184,8 +199,12 @@ class Node<T> extends LazyClickListener {
 			new Node<T>(widget, childrenPanel.add().panel().vertical(), child,
 					depth + 1, expand, path);
 		}
-		if (tree.childCount() > 0)
-			image.resource(FOLDER_OPEN);
+		if (tree.childCount() > 0) {
+			if (tree.icon() != null) {
+				image.resource(OPEN);
+			} else
+				image.resource(FOLDER_OPEN);
+		}
 	}
 
 	private void clear() {
@@ -194,7 +213,10 @@ class Node<T> extends LazyClickListener {
 		childrenPanel.clear();
 		childrenPanel.remove();
 		childrenPanel = null;
-		image.resource(FOLDER_CLOSED);
+		if (tree.icon() != null) {
+			image.resource(CLOSED);
+		} else
+			image.resource(FOLDER_CLOSED);
 		if (imageRefresh != null)
 			imageRefresh.resource(null);
 	}

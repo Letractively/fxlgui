@@ -142,4 +142,9 @@ class TestTree implements ITree<String> {
 	public boolean isNew() {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public String icon() {
+		throw new MethodNotImplementedException();
+	}
 }
