@@ -22,6 +22,7 @@ import java.util.Date;
 
 public class DateFormat {
 
+	public static int yearIncrement = 1900;
 	public static DateFormat instance = new DateFormat();
 
 	protected DateFormat() {
@@ -50,7 +51,7 @@ public class DateFormat {
 			return "";
 		int day = date.getDate();
 		int month = date.getMonth() + 1;
-		int year = date.getYear() + 1900;
+		int year = date.getYear() + yearIncrement;
 		String string = l(day, 2) + "." + l(month, 2) + "." + l(year, 4);
 		return string;
 	}
