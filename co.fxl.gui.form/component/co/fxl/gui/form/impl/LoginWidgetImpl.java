@@ -51,11 +51,10 @@ class LoginWidgetImpl implements ILoginWidget {
 					if (authorization == Authorization.FAILED) {
 						dialog("Unknown user or password");
 					} else {
+						addLogout();
 						loggedInAs.text(loginID.text());
 						loginID.text("");
 						password.text("");
-						logoutPanel.visible(true);
-						loginPanel.visible(false);
 					}
 				}
 			});
@@ -72,31 +71,26 @@ class LoginWidgetImpl implements ILoginWidget {
 		@Override
 		public void onAllowedClick() {
 			listener.logout();
-			loginPanel.visible(true);
-			logoutPanel.visible(false);
+			addLogin();
 		}
 	}
 
 	private IHorizontalPanel cards;
-	private IHorizontalPanel loginPanel;
 	private IAuthorizationListener listener;
 	private ITextField loginID;
 	private IPasswordField password;
 	private LoginListener loginListener = new LoginListener();
 	private LogoutListener logoutListener = new LogoutListener();
-	private IHorizontalPanel logoutPanel;
 	private ILabel loggedInAs;
+	private IStatusPanelDecorator decorator;
 
 	LoginWidgetImpl(IContainer display) {
 		cards = display.panel().horizontal().align().end();
-		loginPanel = cards.add().panel().horizontal();
-		logoutPanel = cards.add().panel().horizontal();
-		loginPanel.visible(true);
-		logoutPanel.visible(false);
+		addLogin();
 	}
 
 	void dialog(String string) {
-		IDialog dialog = loginPanel.display().showDialog();
+		IDialog dialog = cards.display().showDialog();
 		dialog.title("Login Failed");
 		dialog.type().error().message(string);
 	}
@@ -111,16 +105,15 @@ class LoginWidgetImpl implements ILoginWidget {
 	public ILoginWidget visible(boolean visible) {
 		if (loginID == null) {
 			addLogin();
-			addLogout();
-			loginPanel.visible(true);
-			logoutPanel.visible(false);
 		}
 		return this;
 	}
 
 	private void addLogin() {
-		IHorizontalPanel liPanel = loginPanel.add().panel().horizontal()
-				.spacing(4);
+		cards.clear();
+		IHorizontalPanel liPanel = cards.add().panel().horizontal().spacing(4);
+		if (decorator != null)
+			decorator.decorateBegin(liPanel, false);
 		decorate(liPanel.add().label().text("ID"));
 		decorate(loginID = liPanel.add().textField()
 				.addCarriageReturnListener(loginListener));
@@ -130,19 +123,24 @@ class LoginWidgetImpl implements ILoginWidget {
 		ILabel label = liPanel.add().label().text("Login").hyperlink()
 				.addClickListener(loginListener).mouseLeft();
 		decorateHyperlink(label);
+		if (decorator != null)
+			decorator.decorateEnd(liPanel, false);
 	}
 
 	private void addLogout() {
-		ILabel label;
-		IHorizontalPanel loPanel = logoutPanel.add().panel().horizontal()
-				.spacing(4);
+		cards.clear();
+		IHorizontalPanel loPanel = cards.add().panel().horizontal().spacing(4);
+		if (decorator != null)
+			decorator.decorateBegin(loPanel, true);
 		ILabel loggedInHead = loPanel.add().label().text("Logged in as");
 		decorate(loggedInHead).font().color().lightgray();
 		loggedInAs = loPanel.add().label();
 		decorate(loggedInAs).font().weight().bold().color().white();
-		label = loPanel.add().label().text("Logout").hyperlink()
+		ILabel label = loPanel.add().label().text("Logout").hyperlink()
 				.addClickListener(logoutListener).mouseLeft();
 		decorateHyperlink(label);
+		if (decorator != null)
+			decorator.decorateEnd(loPanel, true);
 	}
 
 	private ILabel decorate(ILabel label) {
@@ -171,6 +169,12 @@ class LoginWidgetImpl implements ILoginWidget {
 		loginID.text(user);
 		password.text(pwd);
 		loginListener.onClick();
+		return this;
+	}
+
+	@Override
+	public ILoginWidget statusPanelDecorator(IStatusPanelDecorator decorator) {
+		this.decorator = decorator;
 		return this;
 	}
 }
