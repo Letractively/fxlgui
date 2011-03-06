@@ -25,12 +25,37 @@ import java.util.Map;
 
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.impl.Constraint.IBooleanConstraint;
+import co.fxl.gui.filter.impl.Constraint.IDoubleRangeConstraint;
 import co.fxl.gui.filter.impl.Constraint.INamedConstraint;
 import co.fxl.gui.filter.impl.Constraint.IRelationConstraint;
 import co.fxl.gui.filter.impl.Constraint.ISizeConstraint;
 import co.fxl.gui.filter.impl.Constraint.IStringPrefixConstraint;
 
 class FilterConstraintsImpl implements IFilterConstraints {
+
+	private class IntegerRangeConstraintImpl implements IRange<Integer> {
+
+		private Integer upperBound = null;
+		private Integer lowerBound = null;
+
+		IntegerRangeConstraintImpl(IDoubleRangeConstraint iNamedConstraint) {
+			if (iNamedConstraint.upperBound() != null)
+				upperBound = iNamedConstraint.upperBound().intValue();
+			if (iNamedConstraint.lowerBound() != null)
+				lowerBound = iNamedConstraint.lowerBound().intValue();
+		}
+
+		@Override
+		public Integer lowerBound() {
+			return lowerBound;
+		}
+
+		@Override
+		public Integer upperBound() {
+			return upperBound;
+		}
+
+	}
 
 	public class RowIterator implements IRowIterator {
 
@@ -112,7 +137,12 @@ class FilterConstraintsImpl implements IFilterConstraints {
 	@SuppressWarnings("unchecked")
 	@Override
 	public IRange<Integer> intRange(String column) {
-		return (IRange<Integer>) constraints.get(column);
+		INamedConstraint iNamedConstraint = constraints.get(column);
+		if (iNamedConstraint instanceof IDoubleRangeConstraint) {
+			return new IntegerRangeConstraintImpl(
+					(IDoubleRangeConstraint) iNamedConstraint);
+		}
+		return (IRange<Integer>) iNamedConstraint;
 	}
 
 	@Override
