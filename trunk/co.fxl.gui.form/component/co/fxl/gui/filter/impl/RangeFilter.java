@@ -21,6 +21,8 @@ package co.fxl.gui.filter.impl;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.filter.api.IFilterConstraints.IRange;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.filter.impl.FilterPanel.ICell;
 
@@ -62,11 +64,15 @@ abstract class RangeFilter<T> extends FilterTemplate<T> {
 	}
 
 	void setUpperBound(String text) {
+		if (text.endsWith(".0"))
+			text = text.substring(0, text.length() - 2);
 		upperBoundTextField.text(text);
 		upperBoundText = text;
 	}
 
 	void setLowerBound(String text) {
+		if (text.endsWith(".0"))
+			text = text.substring(0, text.length() - 2);
 		lowerBoundTextField.text(text);
 		lowerBoundText = text;
 	}
@@ -89,5 +95,17 @@ abstract class RangeFilter<T> extends FilterTemplate<T> {
 		};
 		lowerBoundTextField.addUpdateListener(listener);
 		upperBoundTextField.addUpdateListener(listener);
+	}
+
+	boolean fromConstraint(IFilterConstraints constraints) {
+		if (constraints.isAttributeConstrained(name)) {
+			IRange<Double> range = constraints.doubleRange(name);
+			if (range.upperBound() != null)
+				setUpperBound(String.valueOf(range.upperBound()));
+			if (range.lowerBound() != null)
+				setLowerBound(String.valueOf(range.lowerBound()));
+			return true;
+		} else
+			return false;
 	}
 }
