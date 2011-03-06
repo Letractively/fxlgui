@@ -43,11 +43,10 @@ import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
 import co.fxl.gui.navigation.api.IMenuWidget;
 import co.fxl.gui.tree.api.ITree;
+import co.fxl.gui.tree.api.ITreeNavigation;
 import co.fxl.gui.tree.api.ITreeWidget;
 
 class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
-
-	// TODO nice-2-have: double click on tree node: expand
 
 	private static final int SPLIT_POSITION = 250;
 	private static final int BACKGROUND_GRAY = 247;
@@ -633,5 +632,10 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				return node;
 		}
 		return null;
+	}
+
+	@Override
+	public ITreeNavigation navigation() {
+		throw new MethodNotImplementedException();
 	}
 }
