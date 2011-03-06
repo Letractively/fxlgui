@@ -87,4 +87,6 @@ public interface ITreeWidget<T> {
 	ITreeWidget<T> allowCreate(boolean allowCreate);
 
 	ITreeWidget<T> showCommands(boolean showCommands);
+
+	ITreeNavigation navigation();
 }
