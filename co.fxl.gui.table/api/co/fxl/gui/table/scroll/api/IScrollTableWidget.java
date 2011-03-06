@@ -116,4 +116,6 @@ public interface IScrollTableWidget<T> {
 	IScrollTableWidget<T> buttonPanel(IButtonPanelDecorator iDecorator);
 
 	ICommandButtons commandButtons();
+
+	IScrollTableWidget<T> showDisplayedRange(boolean showDisplayedRange);
 }
