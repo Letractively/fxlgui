@@ -48,7 +48,7 @@ public class ColumnImpl implements IColumn<Object> {
 	public String name;
 	private IGridCell headerButtonCell;
 	IDecorator<Object, Object> decorator;
-	public Class<?> contentType;
+	public Class<?> contentType = String.class;
 	private boolean sortable = false;
 	IColumnUpdateListener<Object, Object> updateListener;
 	int width = -1;

@@ -308,6 +308,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private CommandButtonsImpl commandButtons;
 	Object preselected;
 	int preselectedIndex = -1;
+	private boolean showDisplayedRange = true;
 
 	void update() {
 		if (updating)
@@ -450,6 +451,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	private void addDisplayingNote() {
+		if (!showDisplayedRange)
+			return;
 		IGridPanel.IGridCell clear = statusPanel().cell(2, 0).clear().valign()
 				.center();
 		clear.align().end();
@@ -723,5 +726,12 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	void notifySelection(int selectionIndex, Object selection2) {
 		this.selection.notifySelection(selectionIndex, selection2);
+	}
+
+	@Override
+	public IScrollTableWidget<Object> showDisplayedRange(
+			boolean showDisplayedRange) {
+		this.showDisplayedRange = showDisplayedRange;
+		return this;
 	}
 }
