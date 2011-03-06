@@ -86,7 +86,6 @@ class LoginWidgetImpl implements ILoginWidget {
 
 	LoginWidgetImpl(IContainer display) {
 		cards = display.panel().horizontal().align().end();
-		addLogin();
 	}
 
 	void dialog(String string) {
