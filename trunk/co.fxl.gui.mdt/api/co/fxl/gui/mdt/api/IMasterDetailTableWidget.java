@@ -24,6 +24,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.tree.api.ITree;
+import co.fxl.gui.tree.api.ITreeWidget;
 
 public interface IMasterDetailTableWidget<T> {
 
@@ -74,13 +75,16 @@ public interface IMasterDetailTableWidget<T> {
 
 	IMasterDetailTableWidget<T> addCreatableType(String type);
 
-	IMasterDetailTableWidget<T> addCreatableType(String type, String imageResource);
+	IMasterDetailTableWidget<T> addCreatableType(String type,
+			String imageResource);
 
 	IMasterDetailTableWidget<T> hideDetailRoot();
 
 	IMasterDetailTableWidget<T> refresh(ICallback<Boolean> cb);
 
 	List<T> selection();
+
+	IMasterDetailTableWidget<T> selection(List<T> list);
 
 	IMasterDetailTableWidget<T> allowMultiSelection(boolean multiSelection);
 
@@ -89,4 +93,6 @@ public interface IMasterDetailTableWidget<T> {
 	IMasterDetailTableWidget<T> filterable(boolean filterable);
 
 	IMasterDetailTableWidget<T> allowGridView(boolean allowGridView);
+	
+	ITreeWidget<T> tree();
 }

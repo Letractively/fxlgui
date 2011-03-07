@@ -43,7 +43,6 @@ import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
 import co.fxl.gui.navigation.api.IMenuWidget;
 import co.fxl.gui.tree.api.ITree;
-import co.fxl.gui.tree.api.ITreeNavigation;
 import co.fxl.gui.tree.api.ITreeWidget;
 
 class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
@@ -451,6 +450,10 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	@Override
 	public ITreeWidget<T> selection(T selection) {
 		addButtons();
+		if (this.selection != null) {
+			Node<T> sNode = getObject2node(this.selection);
+			sNode.selected(false);
+		}
 		for (ISelectionListener<T> l : selectionListeners)
 			l.onChange(selection);
 		if (selection != null && root != null && root.object() != null) {
@@ -632,10 +635,5 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				return node;
 		}
 		return null;
-	}
-
-	@Override
-	public ITreeNavigation navigation() {
-		throw new MethodNotImplementedException();
 	}
 }

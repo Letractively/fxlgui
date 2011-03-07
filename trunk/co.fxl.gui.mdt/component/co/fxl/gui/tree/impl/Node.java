@@ -55,6 +55,8 @@ class Node<T> extends LazyClickListener {
 	private ILabel label;
 	private ILabel refreshLabel;
 	List<ITree<T>> path;
+	private boolean expandLoadedNode = false;
+	private IImage icon;
 
 	Node(final TreeWidgetImpl<T> widget, IVerticalPanel panel,
 			final ITree<T> root, int depth, boolean expand, List<ITree<T>> path) {
@@ -73,23 +75,23 @@ class Node<T> extends LazyClickListener {
 		if (root.childCount() != 0) {
 			if (root.icon() != null) {
 				image.resource(CLOSED);
-				IImage i2 = content.add().image().resource(root.icon());
-				i2.addClickListener(this);
-				injectTreeListener(i2);
+				icon = content.add().image().resource(root.icon());
+				icon.addClickListener(this);
+				injectTreeListener(icon);
 			} else
 				image.resource(FOLDER_CLOSED);
 		} else {
 			if (root.icon() != null) {
 				image.resource(EMPTY);
-				IImage i2 = content.add().image().resource(root.icon());
-				i2.addClickListener(this);
-				injectTreeListener(i2);
+				icon = content.add().image().resource(root.icon());
+				icon.addClickListener(this);
+				injectTreeListener(icon);
 			} else
 				image.resource(root.isLeaf() ? LEAF : FOLDER_EMPTY);
 		}
 		image.addClickListener(this);
 		injectTreeListener(image);
-		content.addSpace(4);
+		content.addSpace(2);
 		String name = root.name();
 		boolean isNull = name == null || name.trim().equals("");
 		label = content.add().label().text(isNull ? "unnamed" : name);
@@ -120,6 +122,7 @@ class Node<T> extends LazyClickListener {
 		this.tree = root;
 		this.depth = depth;
 		content.addSpace(10);
+		childrenPanel = panel.add().panel().vertical();
 		if (root.children().size() != 0 && expand)
 			expandLoadedNode();
 		else if (root.childCount() != 0 && path != null && path.contains(tree)) {
@@ -143,6 +146,8 @@ class Node<T> extends LazyClickListener {
 	}
 
 	void update(T object) {
+		if (icon != null)
+			icon.resource(tree.icon());
 		label.text(tree.name());
 		label.font().weight().plain().color().black();
 		expand();
@@ -160,7 +165,7 @@ class Node<T> extends LazyClickListener {
 		if (widget.selection != null && !tree.object().equals(widget.selection)) {
 			return;
 		}
-		if (childrenPanel == null) {
+		if (!expandLoadedNode) {
 			expand();
 		} else {
 			clear();
@@ -193,7 +198,7 @@ class Node<T> extends LazyClickListener {
 
 	protected void expandLoadedNode() {
 		clear();
-		childrenPanel = panel.add().panel().vertical();
+		expandLoadedNode = true;
 		for (ITree<T> child : tree.children()) {
 			assert child != null : "Tree child cannot be null";
 			new Node<T>(widget, childrenPanel.add().panel().vertical(), child,
@@ -208,11 +213,10 @@ class Node<T> extends LazyClickListener {
 	}
 
 	private void clear() {
-		if (childrenPanel == null)
+		if (!expandLoadedNode)
 			return;
 		childrenPanel.clear();
-		childrenPanel.remove();
-		childrenPanel = null;
+		expandLoadedNode = false;
 		if (tree.icon() != null) {
 			image.resource(CLOSED);
 		} else
