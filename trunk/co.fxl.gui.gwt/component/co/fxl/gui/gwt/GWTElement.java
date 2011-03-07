@@ -122,6 +122,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	}
 
 	public IKey<R> addClickListener(IClickListener clickListener) {
+//		assert handlers.isEmpty() : "Multiple click listeners are not yet supported";
 		GWTClickHandler<R> handler = newGWTClickHandler(clickListener);
 		handlers.add(handler);
 		toggleClickHandler(true);
