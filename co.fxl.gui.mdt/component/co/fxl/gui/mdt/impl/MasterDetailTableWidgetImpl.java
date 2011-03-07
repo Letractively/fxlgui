@@ -51,6 +51,7 @@ import co.fxl.gui.mdt.api.INavigationLink.INavigationLinkListener;
 import co.fxl.gui.mdt.api.IPropertyGroup;
 import co.fxl.gui.mdt.api.IPropertyPage;
 import co.fxl.gui.mdt.api.IRelation;
+import co.fxl.gui.tree.api.ITreeWidget;
 
 class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		IFilterListener {
@@ -322,8 +323,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 			showTableView(null);
 		else {
 			r2.checked(true);
-			// TODO remove quickfix refresh
-			showDetailView(null).onDelete(null);
+			showDetailView(null);
 		}
 		return this;
 	}
@@ -429,6 +429,13 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	}
 
 	@Override
+	public IMasterDetailTableWidget<Object> selection(List<Object> selection) {
+		this.selection = selection;
+		activeView.selection(selection);
+		return this;
+	}
+
+	@Override
 	public IMasterDetailTableWidget<Object> allowMultiSelection(
 			boolean multiSelection) {
 		allowMultiSelection = multiSelection;
@@ -466,5 +473,10 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		if (!allowGridView)
 			showDetailViewByDefault = true;
 		return this;
+	}
+
+	@Override
+	public ITreeWidget<Object> tree() {
+		return ((DetailView) activeView).tree;
 	}
 }

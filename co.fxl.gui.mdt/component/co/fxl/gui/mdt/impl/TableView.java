@@ -381,4 +381,9 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 		else
 			onApply(widget.constraints);
 	}
+
+	@Override
+	void selection(List<Object> selection) {
+		throw new MethodNotImplementedException();
+	}
 }

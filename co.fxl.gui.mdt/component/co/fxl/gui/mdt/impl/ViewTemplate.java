@@ -66,4 +66,6 @@ abstract class ViewTemplate implements IChangeListener<Object>, Listener,
 			label.clickable(clickable);
 		}
 	}
+
+	abstract void selection(List<Object> selection);
 }

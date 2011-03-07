@@ -305,4 +305,12 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 	@Override
 	public void onDelete(Object tree, ICallback<Boolean> cb) {
 	}
+
+	@Override
+	void selection(List<Object> selection) {
+		if (selection.size() > 1) {
+			throw new MethodNotImplementedException();
+		}
+		tree.selection(selection.get(0));
+	}
 }
