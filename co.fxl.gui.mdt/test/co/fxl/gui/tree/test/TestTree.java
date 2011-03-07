@@ -147,4 +147,14 @@ class TestTree implements ITree<String> {
 	public String icon() {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public boolean isLoaded() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public void load(ICallback<Void> callback) {
+		throw new MethodNotImplementedException();
+	}
 }

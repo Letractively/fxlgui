@@ -42,7 +42,6 @@ class Node<T> extends LazyClickListener {
 	private static final String OPEN = "open.png";
 	private static final String LEAF = "leaf.png";
 	private static final int INDENT = 10;
-	private IVerticalPanel panel;
 	private IHorizontalPanel content;
 	private IVerticalPanel childrenPanel = null;
 	ITree<T> tree;
@@ -62,7 +61,6 @@ class Node<T> extends LazyClickListener {
 			final ITree<T> root, int depth, boolean expand, List<ITree<T>> path) {
 		assert root != null : "Tree cannot be null";
 		this.widget = widget;
-		this.panel = panel;
 		this.expand = expand;
 		this.path = path;
 		container = panel.add().panel().horizontal();

@@ -389,13 +389,26 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		return this;
 	}
 
-	void show(Node<T> node) {
+	void show(final Node<T> node) {
 		if (last != null) {
 			// if (last == node)
 			// return;
 			last.selected(false);
 		}
 		last = node;
+		if (!node.tree.isLoaded()) {
+			node.tree.load(new CallbackTemplate<Void>() {
+
+				@Override
+				public void onSuccess(Void result) {
+					showAfterLoad(node);
+				}
+			});
+		} else
+			showAfterLoad(node);
+	}
+
+	void showAfterLoad(Node<T> node) {
 		if (node != null && node.tree != null) {
 			node.selected(true);
 			selection(node.tree.object());

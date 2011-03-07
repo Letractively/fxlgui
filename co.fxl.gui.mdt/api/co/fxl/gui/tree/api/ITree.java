@@ -34,6 +34,10 @@ public interface ITree<T> {
 
 	ITree<T> parent();
 
+	boolean isLoaded();
+
+	void load(ICallback<Void> callback);
+
 	void loadChildren(ICallback<List<T>> callback);
 
 	void createNew(ICallback<ITree<T>> callback);
@@ -55,6 +59,6 @@ public interface ITree<T> {
 	boolean isReassignable();
 
 	boolean isNew();
-	
+
 	String icon();
 }
