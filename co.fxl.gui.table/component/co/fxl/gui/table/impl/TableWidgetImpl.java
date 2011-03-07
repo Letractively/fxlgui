@@ -32,9 +32,9 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.DynamicHeightGrid;
 import co.fxl.gui.api.template.IScrollGrid;
 import co.fxl.gui.api.template.IScrollGrid.ILazyGridDecorator;
-import co.fxl.gui.api.template.LazyScrollGrid;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.ISelection;
@@ -113,7 +113,7 @@ public class TableWidgetImpl implements ITableWidget<Object>,
 		headerPanel = mainPanel.add().panel().horizontal().add().panel()
 				.horizontal();
 		headerPanel.align().begin();
-		gridPanel = new LazyScrollGrid(mainPanel.add());
+		gridPanel = new DynamicHeightGrid(mainPanel.add());
 		gridPanel.spacing(0);
 		gridPanel.indent(3);
 		gridPanel.decorator(this);
