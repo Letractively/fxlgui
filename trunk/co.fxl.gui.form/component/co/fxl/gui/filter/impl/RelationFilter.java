@@ -43,11 +43,14 @@ class RelationFilter extends StringFilter {
 			textField.editable(true).width(RelationFilter.super.width()).font()
 					.weight().plain().color().black();
 			widget.apply();
+			if (cl != null)
+				cl.onClick();
 		}
 	};
 	private IAdapter<Object, Object> adapter;
 	private IImage remove;
 	private FilterWidgetImpl widget;
+	private IClickListener cl;
 
 	RelationFilter(FilterWidgetImpl widget, FilterGrid grid, String name,
 			int filterIndex, List<Object> preset,
@@ -55,10 +58,10 @@ class RelationFilter extends StringFilter {
 		super(grid, name, filterIndex);
 		this.widget = widget;
 		this.adapter = adapter;
-		textField.text(toString(preset)).editable(false).font().weight().bold()
-				.color().gray();
+		textField.text(toString(preset) ).editable(false).font()
+				.weight().bold().color().gray();
+		this.cl = cl;
 		remove.addClickListener(clear);
-		remove.addClickListener(cl);
 	}
 
 	@Override

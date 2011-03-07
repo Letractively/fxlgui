@@ -46,8 +46,8 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 
 	// TODO Swing: cells are too small
 
-	static final List<Object> DEFAULT_SIZES = Arrays
-			.asList(new Object[] { 50, 100, 500, 1000, 5000 });
+	static final List<Object> DEFAULT_SIZES = Arrays.asList(new Object[] { 50,
+			100, 500, 1000, 5000 });
 
 	private class ClearClickListener extends LazyClickListener {
 
@@ -166,15 +166,19 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	}
 
 	private void remove(String name) {
+		boolean removed = false;
 		for (String cfg : filterList.keySet()) {
 			List<FilterImpl> filters = filterList.get(cfg);
 			Iterator<FilterImpl> it = filters.iterator();
 			while (it.hasNext()) {
 				FilterImpl n = it.next();
-				if (n.name.equals(name))
+				if (n.name.equals(name)) {
 					it.remove();
+					removed = true;
+				}
 			}
 		}
+		assert removed : "Filter " + name + " could not be removed";
 		update();
 	}
 
