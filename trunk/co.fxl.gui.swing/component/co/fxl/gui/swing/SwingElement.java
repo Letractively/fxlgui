@@ -113,6 +113,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 
 	@SuppressWarnings("unchecked")
 	public IKey<R> addClickListener(IClickListener listener) {
+//		assert !clickListenerAdded : "Multiple click listeners are not yet supported";
 		clickable(true);
 		// container.component.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		ClickListenerMouseAdapter<R> adapter = new ClickListenerMouseAdapter<R>(
