@@ -206,12 +206,13 @@ public class WidgetTitle implements IClickListener {
 			labels.add(label);
 		}
 		hasCommands = true;
+		IHorizontalPanel iPanel = commandPanel.add().panel().horizontal();
 		IImage image = null;
 		if (imageResource != null) {
-			image = commandPanel.add().image().resource(imageResource);
+			image = iPanel.add().image().resource(imageResource);
 			images.add(image);
 		}
-		final ILabel label = commandPanel.add().label().text(text);
+		final ILabel label = iPanel.addSpace(2).add().label().text(text);
 		if (!grayBackground)
 			label.hyperlink();
 		label.font().pixel(12);
