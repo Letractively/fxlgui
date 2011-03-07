@@ -396,7 +396,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			last.selected(false);
 		}
 		last = node;
-		if (!node.tree.isLoaded()) {
+		if (node != null && !node.tree.isLoaded()) {
 			node.tree.load(new CallbackTemplate<Void>() {
 
 				@Override
