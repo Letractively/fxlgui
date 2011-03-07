@@ -99,9 +99,9 @@ public class NavigationView {
 
 	public NavigationView addLine() {
 		setUp();
-		panel.addSpace(4);
-		IVerticalPanel p = panel.add().panel().vertical().height(1);
-		p.color().lightgray();
+		panel.addSpace(2);
+//		IVerticalPanel p = panel.add().panel().vertical().height(1);
+//		p.color().lightgray();
 		panel.addSpace(2);
 		return this;
 	}
