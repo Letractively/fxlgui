@@ -36,4 +36,6 @@ public interface INavigationItem {
 	INavigationItem back();
 
 	IVerticalPanel addExtraPanel();
+
+	boolean isActive();
 }
