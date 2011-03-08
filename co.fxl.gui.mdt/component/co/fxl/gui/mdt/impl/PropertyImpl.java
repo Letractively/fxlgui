@@ -34,6 +34,7 @@ class PropertyImpl implements IProperty<Object, Object> {
 	boolean editable = false;
 	IUpdateListener<Object> listener;
 	boolean filterable;
+	IConstraintAdapter<Object, Object> constraintAdapter;
 
 	PropertyImpl(String name) {
 		this.name = name;
@@ -95,6 +96,13 @@ class PropertyImpl implements IProperty<Object, Object> {
 	@Override
 	public IProperty<Object, Object> filterable() {
 		filterable = true;
+		return this;
+	}
+
+	@Override
+	public IProperty<Object, Object> constraintAdapter(
+			co.fxl.gui.mdt.api.IProperty.IConstraintAdapter<Object, Object> adapter) {
+		constraintAdapter = adapter;
 		return this;
 	}
 }
