@@ -401,6 +401,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 				@Override
 				public void onSuccess(Void result) {
+					node.update(node.tree.object());
 					showAfterLoad(node);
 				}
 			});
