@@ -115,6 +115,7 @@ public class Validation {
 		private boolean isNull = false;
 
 		Field(ITextElement<?> textElement, boolean required) {
+			assert textElement != null : "Illegal call to Validation.Field.new";
 			this.textElement = textElement;
 			this.required = required;
 			fields.add(this);
@@ -126,7 +127,7 @@ public class Validation {
 			originalValue = textElement.text();
 			isSpecified = false;
 			isError = false;
-			isNull = originalValue.equals("");
+			isNull = "".equals(originalValue);
 		}
 
 		@Override
