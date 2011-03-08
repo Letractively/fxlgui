@@ -42,6 +42,7 @@ class Node<T> extends LazyClickListener {
 	private static final String OPEN = "open.png";
 	private static final String LEAF = "leaf.png";
 	private static final int INDENT = 10;
+	private static final String OPENORCLOSED = "openorclosed.png";
 	private IHorizontalPanel content;
 	private IVerticalPanel childrenPanel = null;
 	ITree<T> tree;
@@ -72,7 +73,7 @@ class Node<T> extends LazyClickListener {
 		image = content.add().image();
 		if (root.childCount() != 0) {
 			if (root.icon() != null) {
-				image.resource(CLOSED);
+				image.resource(!root.isLoaded() ? OPENORCLOSED : CLOSED);
 				icon = content.add().image().resource(root.icon());
 				icon.addClickListener(this);
 				injectTreeListener(icon);
@@ -80,7 +81,7 @@ class Node<T> extends LazyClickListener {
 				image.resource(FOLDER_CLOSED);
 		} else {
 			if (root.icon() != null) {
-				image.resource(EMPTY);
+				image.resource(!root.isLoaded() ? OPENORCLOSED : EMPTY);
 				icon = content.add().image().resource(root.icon());
 				icon.addClickListener(this);
 				injectTreeListener(icon);
