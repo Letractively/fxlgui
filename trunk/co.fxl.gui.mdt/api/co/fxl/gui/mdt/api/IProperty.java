@@ -18,10 +18,17 @@
  */
 package co.fxl.gui.mdt.api;
 
+import java.util.List;
+
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IFieldType;
 
 public interface IProperty<T, S> {
+
+	public interface IConstraintAdapter<T, S> {
+
+		List<S> constraints(T entity);
+	}
 
 	public interface IAdapter<T, S> {
 
@@ -43,6 +50,8 @@ public interface IProperty<T, S> {
 	IFieldType type();
 
 	IProperty<T, S> adapter(IAdapter<T, S> adapter);
+
+	IProperty<T, S> constraintAdapter(IConstraintAdapter<T, S> adapter);
 
 	IProperty<T, S> updateListener(IUpdateListener<T> listener);
 

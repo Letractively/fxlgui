@@ -255,7 +255,12 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 										.valueElement();
 								if (!property.editable)
 									cb.editable(false);
-								for (Object s : property.type.values)
+								List<Object> vs = property.type.values;
+								if (property.constraintAdapter != null) {
+									vs = property.constraintAdapter
+											.constraints(node);
+								}
+								for (Object s : vs)
 									cb.addText((String) s);
 								valueElement = formField.valueElement();
 							} else {
