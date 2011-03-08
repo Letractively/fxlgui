@@ -230,4 +230,9 @@ class Node<T> extends LazyClickListener {
 			container.color().rgb(230, 230, 255);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(tree.object());
+	}
 }

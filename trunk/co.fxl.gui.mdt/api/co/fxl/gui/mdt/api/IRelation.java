@@ -56,7 +56,7 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 	public interface IAdapter<T, R> {
 
 		void valueOf(T entity, IFilterConstraints constraints,
-				ICallback<IDeletableList<T>> callback);
+				ICallback<IDeletableList<R>> callback);
 	}
 
 	IRelation<T, R> adapter(IAdapter<T, R> adapter);
