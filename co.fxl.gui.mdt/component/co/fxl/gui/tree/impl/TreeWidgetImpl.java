@@ -465,6 +465,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		addButtons();
 		if (this.selection != null) {
 			Node<T> sNode = getObject2node(this.selection);
+			assert sNode != null : this.selection + " not found in "
+					+ object2node.values().toString();
 			sNode.selected(false);
 		}
 		for (ISelectionListener<T> l : selectionListeners)
