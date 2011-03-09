@@ -25,4 +25,6 @@ public interface INavigationGroup {
 	INavigationGroup name(String name);
 
 	INavigationGroup visible(boolean visible);
+
+	boolean visible();
 }
