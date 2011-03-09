@@ -46,6 +46,7 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 	private final class ColumnImpl implements IColumn {
 		private final int column;
 		private ILabel label;
+		@SuppressWarnings("unused")
 		private double widthDouble;
 		private AlignmentMemento<IColumn> align = new AlignmentMemento<IColumn>(
 				this);

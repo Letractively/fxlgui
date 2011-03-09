@@ -210,7 +210,6 @@ public class CommandButtonsImpl implements ICommandButtons,
 	private IRowListener<Boolean> listenOnRemoveListener;
 	private IMoveRowListener<Boolean> listenOnMoveUpListener;
 	private IMoveRowListener<Boolean> listenOnMoveDownListener;
-	@SuppressWarnings("unused")
 	private IRowListener<Boolean> listenOnShowListener;
 	private int selectionIndex;
 	private Object selection;
@@ -224,6 +223,7 @@ public class CommandButtonsImpl implements ICommandButtons,
 	private IRowListener<Boolean> listenOnEditListener;
 	private IClickable<?> imageUpMax;
 	private IClickable<?> imageDownMax;
+	private IClickable<?> show;
 
 	CommandButtonsImpl(ScrollTableWidgetImpl widget) {
 		this.widget = widget;
@@ -302,7 +302,9 @@ public class CommandButtonsImpl implements ICommandButtons,
 			remove.clickable(widget.preselected != null);
 		}
 		if (listenOnShow) {
-			throw new MethodNotImplementedException();
+			show = clickable(panel.add(), "Show");
+			show.addClickListener(new Update(listenOnShowListener));
+			show.clickable(widget.preselected != null);
 		}
 		if (listenOnEdit) {
 			edit = clickable(panel.add(), "Edit");
@@ -398,6 +400,10 @@ public class CommandButtonsImpl implements ICommandButtons,
 		if (remove != null) {
 			boolean c = selection != null;
 			remove.clickable(c);
+		}
+		if (show != null) {
+			boolean c = selection != null;
+			show.clickable(c);
 		}
 		if (edit != null) {
 			boolean c = selection != null;
