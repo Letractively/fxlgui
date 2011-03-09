@@ -136,6 +136,7 @@ public class Validation {
 		}
 
 		protected void update(String value, boolean wColors) {
+			assert value != null : "Field received null";
 			isSpecified = !value.equals(originalValue);
 			isNull = value.equals("");
 			updateClickables();
