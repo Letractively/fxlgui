@@ -20,6 +20,7 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IWebsite;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 
 class GWTWebsite implements IWebsite {
@@ -30,5 +31,10 @@ class GWTWebsite implements IWebsite {
 	public IWebsite uRI(String uRI) {
 		Window.open(uRI, uRI, PARAMS);
 		return this;
+	}
+
+	@Override
+	public IWebsite localURI(String uRI) {
+		return uRI(GWT.getModuleBaseURL() + uRI);
 	}
 }
