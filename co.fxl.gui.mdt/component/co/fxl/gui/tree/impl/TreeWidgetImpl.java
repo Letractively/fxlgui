@@ -384,17 +384,23 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			// }
 			// assert node != null;
 		}
-		show(node);
+		show(node, true);
 		return this;
 	}
 
 	void show(final Node<T> node) {
+		show(node, true);
+	}
+
+	void show(final Node<T> node, boolean callSelection) {
+		if (last == node)
+			return;
 		if (last != null) {
 			// if (last == node)
 			// return;
 			last.selected(false);
 		}
-		showLoading(node, true, null);
+		showLoading(node, callSelection, null);
 	}
 
 	void showLoading(final Node<T> node, final boolean callSelection,
@@ -425,9 +431,9 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		if (callSelection) {
 			if (node != null && node.tree != null) {
 				node.selected(true);
-				selection(node.tree.object());
+				selection(node.tree.object(), false);
 			} else
-				selection(null);
+				selection(null, false);
 		}
 		boolean showFirst = false;
 		for (int i = 0; i < detailViews.size(); i++) {
@@ -487,6 +493,10 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> selection(T selection) {
+		return selection(selection, true);
+	}
+
+	private ITreeWidget<T> selection(T selection, boolean recurse) {
 		addButtons();
 		boolean update = false;
 		if (this.selection != null) {
@@ -513,7 +523,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		this.selection = selection;
 		if (showCommands)
 			updateCreatable();
-		if (update)
+		if (update && recurse)
 			showLoading(last, false, new CallbackTemplate<Void>() {
 				@Override
 				public void onSuccess(Void result) {
@@ -637,7 +647,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 						.equals(root.object()))) {
 			set = parent.object();
 		}
-		selection(set);
+//		selection(set);
 		boolean rememberExpand = expand;
 		expand = false;
 		List<ITree<T>> path = new LinkedList<ITree<T>>();
