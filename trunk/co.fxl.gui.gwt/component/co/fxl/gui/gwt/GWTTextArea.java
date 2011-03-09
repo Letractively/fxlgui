@@ -77,7 +77,7 @@ class GWTTextArea extends GWTElement<TextArea, ITextArea> implements ITextArea {
 		String text = container.widget.getText();
 		if (text == null)
 			return "";
-		return container.widget.getText();
+		return text;
 	}
 
 	@Override
