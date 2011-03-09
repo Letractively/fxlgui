@@ -81,7 +81,10 @@ class GWTTextField extends GWTElement<TextBox, ITextField> implements
 
 	@Override
 	public String text() {
-		return container.widget.getText();
+		String text = container.widget.getText();
+		if (text == null)
+			return "";
+		return text;
 	}
 
 	@Override
