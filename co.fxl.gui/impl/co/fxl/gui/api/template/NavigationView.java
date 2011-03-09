@@ -62,7 +62,7 @@ public class NavigationView {
 
 		@Override
 		public boolean clickable() {
-			throw new MethodNotImplementedException();
+			return label.clickable();
 		}
 
 		@Override
@@ -100,8 +100,8 @@ public class NavigationView {
 	public NavigationView addLine() {
 		setUp();
 		panel.addSpace(2);
-//		IVerticalPanel p = panel.add().panel().vertical().height(1);
-//		p.color().lightgray();
+		// IVerticalPanel p = panel.add().panel().vertical().height(1);
+		// p.color().lightgray();
 		panel.addSpace(2);
 		return this;
 	}
