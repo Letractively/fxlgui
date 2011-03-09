@@ -24,6 +24,8 @@ public class DateFormat {
 
 	public static int yearIncrement = 1900;
 	public static int monthIncrement = 1;
+	public static int yearIncrementDec = 0;
+	public static int monthIncrementDec = 0;
 	public static DateFormat instance = new DateFormat();
 
 	protected DateFormat() {
@@ -43,7 +45,7 @@ public class DateFormat {
 		Integer day = Integer.valueOf(s[0]);
 		if (day < 1 || day > 31)
 			return null;
-		return new Date(year, month, day);
+		return new Date(year - yearIncrementDec, month - monthIncrementDec, day);
 	}
 
 	@SuppressWarnings("deprecation")
