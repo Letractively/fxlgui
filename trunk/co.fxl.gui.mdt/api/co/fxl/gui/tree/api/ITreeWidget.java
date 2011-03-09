@@ -60,7 +60,9 @@ public interface ITreeWidget<T> {
 
 	ITreeWidget<T> root(ITree<T> tree);
 
-	ITreeWidget<T> expand();
+	ITreeWidget<T> expand(boolean expand);
+
+	ITreeWidget<T> expand(T current, boolean expand);
 
 	ITreeWidget<T> selection(T selection);
 
@@ -75,6 +77,8 @@ public interface ITreeWidget<T> {
 	ITreeWidget<T> clickNew(String type);
 
 	ITreeWidget<T> notifyUpdate(T originalObject);
+
+	ITreeWidget<T> notifyUpdate(T originalObject, boolean recurse);
 
 	ITreeWidget<T> addCreatableType(String type);
 

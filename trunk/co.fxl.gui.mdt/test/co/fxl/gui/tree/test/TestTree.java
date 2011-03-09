@@ -154,7 +154,12 @@ class TestTree implements ITree<String> {
 	}
 
 	@Override
-	public void load(ICallback<Void> callback) {
+	public void load(ICallback<Boolean> callback) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public co.fxl.gui.tree.api.ITree.IDecorator decorator() {
 		throw new MethodNotImplementedException();
 	}
 }
