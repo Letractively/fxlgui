@@ -152,17 +152,21 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 	}
 
 	private class Register {
+
+		String name;
 		IDecorator<Object> dec;
 		Class<?>[] c;
 
 		private Register(String name, IDecorator<Object> dec,
 				Class<?>[] constraint) {
+			this.name = name;
 			this.dec = dec;
 			this.c = constraint;
 		}
 
 		public Register(String name, IDecorator<Object> dec2,
 				Class<?> constrainType) {
+			this.name = name;
 			this.dec = dec2;
 			this.c = new Class<?>[] { constrainType };
 		}
@@ -189,12 +193,12 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 				saveNode(node, cb);
 			}
 		}.refreshListener(this);
-		Map<String, Register> registers = new HashMap<String, Register>();
+		Map<Object, Register> registers = new HashMap<Object, Register>();
 		tree.addDetailView(IMasterDetailTableWidget.DETAILS, decorator);
 		for (final PropertyGroupImpl group : widget.propertyGroups) {
 			if (group.asDetail
 					&& !group.name.equals(IMasterDetailTableWidget.DETAILS)) {
-				registers.put(group.name, new Register(group.name,
+				registers.put(group, new Register(group.name,
 						new DetailViewDecorator(gs) {
 
 							@Override
@@ -206,24 +210,24 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 			}
 		}
 		for (final PropertyPageImpl relation : widget.propertyPages) {
-			registers.put(relation.name,
+			registers.put(relation,
 					new Register(relation.name, new PropertyPageDecorator(
 							relation), relation.constrainType));
 		}
 		for (final N2MRelationImpl relation : widget.n2MRelations) {
 			registers
-					.put(relation.name, new Register(relation.name,
+					.put(relation, new Register(relation.name,
 							new N2MRelationDecorator(relation),
 							relation.constrainType));
 		}
 		for (final RelationImpl relation : widget.relations) {
-			registers.put(relation.name, new Register(relation.name,
+			registers.put(relation, new Register(relation.name,
 					new RelationDecorator(relation), relation.constrainType));
 		}
-		for (String r : widget.registerOrder) {
+		for (Object r : widget.registerOrder) {
 			Register reg = registers.get(r);
 			if (reg != null) {
-				IView dv = tree.addDetailView(r, reg.dec);
+				IView dv = tree.addDetailView(reg.name, reg.dec);
 				if (reg.c != null)
 					dv.constrainType(reg.c);
 			}
