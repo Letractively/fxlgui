@@ -149,7 +149,17 @@ class Node<T> extends LazyClickListener {
 			icon.resource(tree.icon());
 		label.text(tree.name());
 		label.font().weight().plain().color().black();
-		expand();
+		if (tree.childCount() != 0) {
+			if (tree.icon() != null) {
+				image.resource(CLOSED);
+			} else
+				image.resource(FOLDER_CLOSED);
+		} else {
+			if (tree.icon() != null) {
+				image.resource(EMPTY);
+			} else
+				image.resource(tree.isLeaf() ? LEAF : FOLDER_EMPTY);
+		}
 	}
 
 	@Override
