@@ -133,7 +133,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	private IVerticalPanel panel;
-	private Node<T> last;
+	Node<T> last;
 	private IMenuWidget registers;
 	private List<DetailView> detailViews = new LinkedList<DetailView>();
 	// IVerticalPanel detailPanel;
