@@ -242,6 +242,8 @@ class FormWidgetImpl implements IFormWidget {
 
 					@Override
 					public void onSuccess(Boolean result) {
+						if (!result)
+							return;
 						validation.update();
 						clickable.clickable(false);
 						if (!alwaysAllowCancel)
