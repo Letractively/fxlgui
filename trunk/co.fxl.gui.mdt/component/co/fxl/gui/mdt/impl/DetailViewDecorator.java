@@ -154,7 +154,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 			};
 		}
 		if (title != null)
-			form.addTitle(title);
+			form.addTitle(title).font().pixel(18);
 		if (isUpdateable)
 			form.saveListener("Save", new ISaveListener() {
 

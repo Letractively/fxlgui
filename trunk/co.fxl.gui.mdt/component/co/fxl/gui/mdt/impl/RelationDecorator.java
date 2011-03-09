@@ -80,7 +80,6 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 
 	private void decorate(final IVerticalPanel panel,
 			final IFilterConstraints constraints, final Object node) {
-		panel.clear();
 		// IBorder border = panel.border();
 		// border.color().gray();
 		// border.style().top();
@@ -89,6 +88,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 			@SuppressWarnings("unchecked")
 			@Override
 			public void onSuccess(final IDeletableList<Object> result) {
+				panel.clear();
 				table = (IScrollTableWidget<Object>) panel.add().widget(
 						IScrollTableWidget.class);
 				final ISelection<Object> selection0 = table.selection();

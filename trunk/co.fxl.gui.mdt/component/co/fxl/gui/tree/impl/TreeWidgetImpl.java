@@ -394,10 +394,11 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			// return;
 			last.selected(false);
 		}
-		showLoading(node, true);
+		showLoading(node, true, null);
 	}
 
-	void showLoading(final Node<T> node, final boolean callSelection) {
+	void showLoading(final Node<T> node, final boolean callSelection,
+			final ICallback<Void> cb) {
 		if (node != null && !node.tree.isLoaded()) {
 			node.tree.load(new CallbackTemplate<Boolean>() {
 
@@ -408,11 +409,15 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					last = node;
 					if (result)
 						node.expand();
+					if (cb != null)
+						cb.onSuccess(null);
 				}
 			});
 		} else {
 			showAfterLoad(node, callSelection);
 			last = node;
+			if (cb != null)
+				cb.onSuccess(null);
 		}
 	}
 
@@ -491,8 +496,6 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			if (sNode != null)
 				sNode.selected(false);
 		}
-		for (ISelectionListener<T> l : selectionListeners)
-			l.onChange(selection);
 		if (selection != null && root != null && root.object() != null) {
 			Node<T> sNode = getObject2node(selection);
 			if (sNode != null) {
@@ -511,8 +514,20 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		if (showCommands)
 			updateCreatable();
 		if (update)
-			showLoading(last, false);
+			showLoading(last, false, new CallbackTemplate<Void>() {
+				@Override
+				public void onSuccess(Void result) {
+					notifyChange();
+				}
+			});
+		else
+			notifyChange();
 		return this;
+	}
+
+	void notifyChange() {
+		for (ISelectionListener<T> l : selectionListeners)
+			l.onChange(this.selection);
 	}
 
 	private void updateCreatable() {
