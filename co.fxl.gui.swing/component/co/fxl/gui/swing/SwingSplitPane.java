@@ -25,7 +25,6 @@ import javax.swing.JSplitPane;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ISplitPane;
-import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 class SwingSplitPane extends SwingElement<JSplitPane, ISplitPane> implements
 		ISplitPane {
