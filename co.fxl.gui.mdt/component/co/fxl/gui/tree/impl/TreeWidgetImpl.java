@@ -394,28 +394,36 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			// return;
 			last.selected(false);
 		}
+		showLoading(node, true);
+	}
+
+	void showLoading(final Node<T> node, final boolean callSelection) {
 		if (node != null && !node.tree.isLoaded()) {
-			node.tree.load(new CallbackTemplate<Void>() {
+			node.tree.load(new CallbackTemplate<Boolean>() {
 
 				@Override
-				public void onSuccess(Void result) {
+				public void onSuccess(Boolean result) {
 					node.update(node.tree.object());
-					showAfterLoad(node);
+					showAfterLoad(node, callSelection);
 					last = node;
+					if (result)
+						node.expand();
 				}
 			});
 		} else {
-			showAfterLoad(node);
+			showAfterLoad(node, callSelection);
 			last = node;
 		}
 	}
 
-	void showAfterLoad(Node<T> node) {
-		if (node != null && node.tree != null) {
-			node.selected(true);
-			selection(node.tree.object());
-		} else
-			selection(null);
+	void showAfterLoad(Node<T> node, boolean callSelection) {
+		if (callSelection) {
+			if (node != null && node.tree != null) {
+				node.selected(true);
+				selection(node.tree.object());
+			} else
+				selection(null);
+		}
 		boolean showFirst = false;
 		for (int i = 0; i < detailViews.size(); i++) {
 			DetailView view = detailViews.get(i);
@@ -451,8 +459,18 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	@Override
-	public ITreeWidget<T> expand() {
-		this.expand = true;
+	public ITreeWidget<T> expand(boolean expand) {
+		this.expand = expand;
+		return this;
+	}
+
+	@Override
+	public ITreeWidget<T> expand(T selection, boolean expand) {
+		Node<T> sNode = getObject2node(selection);
+		if (expand)
+			sNode.expand();
+		else
+			sNode.clear();
 		return this;
 	}
 
@@ -465,6 +483,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	@Override
 	public ITreeWidget<T> selection(T selection) {
 		addButtons();
+		boolean update = false;
 		if (this.selection != null) {
 			Node<T> sNode = getObject2node(this.selection);
 			// assert sNode != null : this.selection + " not found in "
@@ -479,6 +498,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			if (sNode != null) {
 				last = sNode;
 				sNode.selected(true);
+				update = true;
 			}
 			if (showCommands)
 				delete.clickable(!root.object().equals(selection)
@@ -490,6 +510,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		this.selection = selection;
 		if (showCommands)
 			updateCreatable();
+		if (update)
+			showLoading(last, false);
 		return this;
 	}
 
@@ -552,6 +574,11 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> notifyUpdate(T originalObject) {
+		return notifyUpdate(originalObject, false);
+	}
+
+	@Override
+	public ITreeWidget<T> notifyUpdate(T originalObject, boolean recurse) {
 		assert originalObject != null : "Illegal argument for Tree.notifyUpdate";
 		Node<T> n = getObject2node(originalObject);
 		assert n != null : "Expanded tree node cannot be updated for object "
@@ -562,6 +589,11 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			show(n);
 		}
 		updateCreatable();
+		if (recurse && n.expandLoadedNode) {
+			for (ITree<T> t : n.tree.children()) {
+				notifyUpdate(t.object(), recurse);
+			}
+		}
 		return this;
 	}
 
@@ -647,10 +679,13 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	Node<T> getObject2node(T selection) {
-		// System.out.println(object2node.values() + " searching " + selection);
 		for (T t : object2node.keySet()) {
 			Node<T> node = object2node.get(t);
-			if (node.tree.object().equals(selection))
+			assert node != null : selection + " not found in "
+					+ object2node.values();
+			ITree<T> tree = node.tree;
+			T object = tree.object();
+			if (object.equals(selection))
 				return node;
 		}
 		return null;

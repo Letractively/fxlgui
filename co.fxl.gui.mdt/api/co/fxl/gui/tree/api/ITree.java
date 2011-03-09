@@ -20,9 +20,15 @@ package co.fxl.gui.tree.api;
 
 import java.util.List;
 
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.template.ICallback;
 
 public interface ITree<T> {
+
+	public interface IDecorator {
+
+		void decorate(ILabel label);
+	}
 
 	String name();
 
@@ -36,7 +42,7 @@ public interface ITree<T> {
 
 	boolean isLoaded();
 
-	void load(ICallback<Void> callback);
+	void load(ICallback<Boolean> callback);
 
 	void loadChildren(ICallback<List<T>> callback);
 
@@ -61,4 +67,6 @@ public interface ITree<T> {
 	boolean isNew();
 
 	String icon();
+
+	IDecorator decorator();
 }

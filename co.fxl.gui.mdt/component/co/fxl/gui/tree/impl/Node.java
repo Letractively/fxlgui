@@ -55,7 +55,7 @@ class Node<T> extends LazyClickListener {
 	private ILabel label;
 	private ILabel refreshLabel;
 	List<ITree<T>> path;
-	private boolean expandLoadedNode = false;
+	boolean expandLoadedNode = false;
 	private IImage icon;
 
 	Node(final TreeWidgetImpl<T> widget, IVerticalPanel panel,
@@ -128,6 +128,12 @@ class Node<T> extends LazyClickListener {
 			expandLazyNode();
 		}
 		widget.object2node.put(root.object(), this);
+		decorate();
+	}
+
+	void decorate() {
+		if (tree!=null && tree.decorator() != null)
+			tree.decorator().decorate(label);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -160,6 +166,7 @@ class Node<T> extends LazyClickListener {
 			} else
 				image.resource(tree.isLeaf() ? LEAF : FOLDER_EMPTY);
 		}
+		decorate();
 	}
 
 	@Override
@@ -221,7 +228,7 @@ class Node<T> extends LazyClickListener {
 		}
 	}
 
-	private void clear() {
+	void clear() {
 		if (!expandLoadedNode)
 			return;
 		childrenPanel.clear();

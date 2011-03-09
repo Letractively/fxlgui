@@ -94,7 +94,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 		addDetailViews();
 		tree.source(this);
 		tree.selection(selectionObject);
-		tree.expand();
+		tree.expand(true);
 		tree.visible(true);
 	}
 
