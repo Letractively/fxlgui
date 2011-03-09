@@ -394,7 +394,6 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			// return;
 			last.selected(false);
 		}
-		last = node;
 		if (node != null && !node.tree.isLoaded()) {
 			node.tree.load(new CallbackTemplate<Void>() {
 
@@ -402,10 +401,13 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				public void onSuccess(Void result) {
 					node.update(node.tree.object());
 					showAfterLoad(node);
+					last = node;
 				}
 			});
-		} else
+		} else {
 			showAfterLoad(node);
+			last = node;
+		}
 	}
 
 	void showAfterLoad(Node<T> node) {
@@ -645,7 +647,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	Node<T> getObject2node(T selection) {
-//		System.out.println(object2node.values() + " searching " + selection);
+		// System.out.println(object2node.values() + " searching " + selection);
 		for (T t : object2node.keySet()) {
 			Node<T> node = object2node.get(t);
 			if (node.tree.object().equals(selection))
