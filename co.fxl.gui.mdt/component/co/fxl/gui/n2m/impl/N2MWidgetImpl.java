@@ -35,6 +35,10 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 	private IVerticalPanel center;
 	private IN2MRelationListener<Object> listener;
 	private List<Object> last = null;
+	private IButton leftButton;
+	private IButton buttonRight;
+	private IButton buttonLeftAll;
+	private IButton buttonRightAll;
 
 	N2MWidgetImpl(IContainer container) {
 		grid = container.panel().grid();
@@ -42,7 +46,7 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 		center = grid.cell(1, 0).width(80).align().center().panel().vertical()
 				.add().panel().vertical().spacing(10);
 		right = new SelectableList(grid.cell(2, 0), "Selected", true);
-		IButton leftButton = center.add().button().text("<")
+		leftButton = center.add().button().text("<")
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
@@ -53,7 +57,7 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 					}
 				}).mouseLeft();
 		right.link(leftButton);
-		IButton buttonRight = center.add().button().text(">")
+		buttonRight = center.add().button().text(">")
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
@@ -65,7 +69,7 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 				}).mouseLeft();
 		left.link(buttonRight);
 		center.addSpace(20);
-		IButton buttonLeftAll = center.add().button().text("<<")
+		buttonLeftAll = center.add().button().text("<<")
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
@@ -76,7 +80,7 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 					}
 				}).mouseLeft();
 		right.linkAll(buttonLeftAll);
-		IButton buttonRightAll = center.add().button().text(">>")
+		buttonRightAll = center.add().button().text(">>")
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
@@ -153,6 +157,17 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 	public IN2MWidget<Object> height(int maxFromDisplay) {
 		left.height(maxFromDisplay);
 		right.height(maxFromDisplay);
+		return this;
+	}
+
+	@Override
+	public IN2MWidget<Object> editable(boolean editable) {
+		if (!editable) {
+			leftButton.clickable(false);
+			buttonLeftAll.clickable(false);
+			buttonRight.clickable(false);
+			buttonRightAll.clickable(false);
+		}
 		return this;
 	}
 }

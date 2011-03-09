@@ -13,6 +13,8 @@ public interface IN2MRelation<T, R> {
 		void valueOf(T entity, ICallback<List<R>> callback);
 
 		void valueOf(T entity, List<R> values, ICallback<List<R>> callback);
+
+		boolean editable(T entity);
 	}
 
 	IN2MRelation<T, R> adapter(IAdapter<T, R> adapter);

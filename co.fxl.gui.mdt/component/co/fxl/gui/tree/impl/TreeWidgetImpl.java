@@ -353,12 +353,11 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		}
 		this.root = tree;
 		node = null;
+		object2node.clear();
 		if (showRoot) {
-			object2node.clear();
 			Node<T> n0 = new Node<T>(this, panel(), tree, 0, expand, path);
 			node = n0;
 		} else {
-			object2node.clear();
 			for (ITree<T> c : tree.children()) {
 				Node<T> n0 = new Node<T>(this, panel(), c, 0, expand, path);
 				if (node == null)
@@ -369,7 +368,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			Node<T> n = getObject2node(selection);
 			if (n != null)
 				node = n;
-			else if (selection != root.object() || showRoot) {
+			else if (!selection.equals(root.object()) || showRoot) {
 				node = null;
 				// new
 				// MethodNotImplementedException("Selection in tree widget '"
@@ -466,9 +465,10 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		addButtons();
 		if (this.selection != null) {
 			Node<T> sNode = getObject2node(this.selection);
-			assert sNode != null : this.selection + " not found in "
-					+ object2node.values().toString();
-			sNode.selected(false);
+			// assert sNode != null : this.selection + " not found in "
+			// + object2node.values().toString();
+			if (sNode != null)
+				sNode.selected(false);
 		}
 		for (ISelectionListener<T> l : selectionListeners)
 			l.onChange(selection);
@@ -645,6 +645,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	Node<T> getObject2node(T selection) {
+//		System.out.println(object2node.values() + " searching " + selection);
 		for (T t : object2node.keySet()) {
 			Node<T> node = object2node.get(t);
 			if (node.tree.object().equals(selection))

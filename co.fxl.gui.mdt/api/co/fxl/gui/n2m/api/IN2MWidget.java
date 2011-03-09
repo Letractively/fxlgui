@@ -40,4 +40,6 @@ public interface IN2MWidget<T> {
 	int offsetY();
 
 	IN2MWidget<T> height(int maxFromDisplay);
+
+	IN2MWidget<T> editable(boolean editable);
 }
