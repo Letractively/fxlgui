@@ -641,13 +641,13 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	void showToParent(ITree<T> tree, final ITree<T> parent) {
 		last = null;
-		T set = null;
-		if (showRoot
-				|| (parent.object() != null && root != null && !parent.object()
-						.equals(root.object()))) {
-			set = parent.object();
-		}
-//		selection(set);
+		// T set = null;
+		// if (showRoot
+		// || (parent.object() != null && root != null && !parent.object()
+		// .equals(root.object()))) {
+		// set = parent.object();
+		// }
+		// selection(set);
 		boolean rememberExpand = expand;
 		expand = false;
 		List<ITree<T>> path = new LinkedList<ITree<T>>();
