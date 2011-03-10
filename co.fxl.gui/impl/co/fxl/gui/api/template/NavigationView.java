@@ -79,6 +79,10 @@ public class NavigationView {
 			additionalLabels.add(l);
 			return l;
 		}
+
+		public void imageResource(String string) {
+			image.resource(string);
+		}
 	}
 
 	private static final String LINK_PNG = "link.png";
