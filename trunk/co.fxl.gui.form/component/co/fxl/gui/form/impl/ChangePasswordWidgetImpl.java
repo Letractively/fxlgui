@@ -71,7 +71,8 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 				return true;
 			}
 		});
-		widget.isNew(true);
+		widget.alwaysAllowCancel();
+		widget.isNew(false);
 	}
 
 	@Override
