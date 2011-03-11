@@ -37,16 +37,20 @@ public class WidgetTitle implements IClickListener {
 
 	class CommandLink implements IClickable<IClickable<?>> {
 
+		// private IHorizontalPanel iPanel;
 		private ILabel label;
 		private IImage image;
 
-		public CommandLink(IImage image, ILabel headerLabel) {
+		public CommandLink(IHorizontalPanel iPanel, IImage image,
+				ILabel headerLabel) {
+			// this.iPanel = iPanel;
 			this.image = image;
 			this.label = headerLabel;
 		}
 
 		@Override
 		public IClickable<?> clickable(boolean clickable) {
+			// iPanel.visible(clickable);
 			label.clickable(clickable);
 			if (image != null)
 				image.clickable(clickable);
@@ -65,6 +69,7 @@ public class WidgetTitle implements IClickListener {
 		@Override
 		public boolean clickable() {
 			return label.clickable();
+			// return iPanel.visible();
 		}
 
 		@Override
@@ -148,10 +153,10 @@ public class WidgetTitle implements IClickListener {
 			return;
 		headerPanel.visible(true);
 		// headerPanel.color().rgb(220, 220, 220);
-		IHorizontalPanel horizontal = headerPanel.center().panel().horizontal();
+		IHorizontalPanel horizontal = headerPanel.center().panel().horizontal().align().begin();
 		if (grayBackground)
 			horizontal.color().gray();
-		titlePanel = horizontal.add().panel().horizontal().spacing(4);
+		titlePanel = horizontal.add().panel().horizontal().align().begin().spacing(4);
 		if (foldable) {
 			image = titlePanel.add().image().resource(openPNG);
 			image.addClickListener(this);
@@ -232,7 +237,7 @@ public class WidgetTitle implements IClickListener {
 			});
 			clickableState.put(label, true);
 		}
-		CommandLink cl = new CommandLink(image, label);
+		CommandLink cl = new CommandLink(iPanel, image, label);
 		cl.clickable(true);
 		return cl;
 	}
