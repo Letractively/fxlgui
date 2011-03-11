@@ -136,9 +136,8 @@ public class Validation {
 		}
 
 		protected void update(String value, boolean wColors) {
-			assert value != null : "Field received null";
-			isSpecified = !value.equals(originalValue);
-			isNull = value.equals("");
+			isSpecified = value != null && !value.equals(originalValue);
+			isNull = value == null || value.equals("");
 			updateClickables();
 			if (required) {
 				if (textElement instanceof ITextField) {
@@ -162,7 +161,8 @@ public class Validation {
 
 		@Override
 		public void notifyChange() {
-			update(textElement.text(), false);
+			String text = textElement.text();
+			update(text, false);
 		}
 
 		@Override

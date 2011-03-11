@@ -112,8 +112,8 @@ public class NavigationView {
 
 	public Link addHyperlink(String imageResource) {
 		setUp();
-		IHorizontalPanel panel = this.panel.add().panel().horizontal().add()
-				.panel().horizontal();
+		IHorizontalPanel panel = this.panel.add().panel().horizontal().align().begin().add()
+				.panel().horizontal().align().begin();
 		IImage image = null;
 		if (SHOW_NUMBERS) {
 			String s = String.valueOf(index++) + ".";

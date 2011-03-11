@@ -63,4 +63,6 @@ public interface IDisplay {
 	ICursor cursor();
 
 	IDisplay block(boolean waiting);
+
+	IDisplay invokeLater(Runnable runnable);
 }
