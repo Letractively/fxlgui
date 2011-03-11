@@ -69,6 +69,8 @@ class SwingTextInput<T extends JTextComponent, R> extends
 
 	public String text() {
 		html.text = container.component.getText();
+		if (html.text == null)
+			html.text = "";
 		return html.text;
 	}
 

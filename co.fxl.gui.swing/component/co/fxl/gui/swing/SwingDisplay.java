@@ -30,6 +30,7 @@ import java.util.Map;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
@@ -238,6 +239,12 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		frame.setCursor(new Cursor(waiting ? Cursor.WAIT_CURSOR
 				: Cursor.DEFAULT_CURSOR));
 		// TODO ...
+		return this;
+	}
+
+	@Override
+	public IDisplay invokeLater(Runnable runnable) {
+		SwingUtilities.invokeLater(runnable);
 		return this;
 	}
 }
