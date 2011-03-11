@@ -32,6 +32,9 @@ import co.fxl.gui.api.WidgetProviderNotFoundException;
 import co.fxl.gui.api.template.DiscardChangesDialog;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.core.client.impl.SchedulerImpl;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.DOM;
@@ -218,6 +221,18 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		DOM.setStyleAttribute(RootPanel.get().getElement(), "cursor",
 				waiting ? "wait" : "default");
 		// TODO ...
+		return this;
+	}
+
+	@Override
+	public IDisplay invokeLater(final Runnable runnable) {
+		Scheduler s = new SchedulerImpl();
+		s.scheduleDeferred(new ScheduledCommand() {
+			@Override
+			public void execute() {
+				runnable.run();
+			}
+		});
 		return this;
 	}
 }
