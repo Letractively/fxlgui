@@ -61,6 +61,7 @@ class Node<T> extends LazyClickListener {
 	Node(final TreeWidgetImpl<T> widget, IVerticalPanel panel,
 			final ITree<T> root, int depth, boolean expand, List<ITree<T>> path) {
 		assert root != null : "Tree cannot be null";
+		this.tree = root;
 		this.widget = widget;
 		this.expand = expand;
 		this.path = path;
@@ -73,7 +74,8 @@ class Node<T> extends LazyClickListener {
 		image = content.add().image();
 		if (root.childCount() != 0) {
 			if (root.icon() != null) {
-				image.resource(!root.isLoaded() ? OPENORCLOSED : CLOSED);
+				image.resource(!root.isLoaded() ? getOpenOrClosedIcon()
+						: CLOSED);
 				icon = content.add().image().resource(root.icon());
 				icon.addClickListener(this);
 				injectTreeListener(icon);
@@ -81,7 +83,7 @@ class Node<T> extends LazyClickListener {
 				image.resource(FOLDER_CLOSED);
 		} else {
 			if (root.icon() != null) {
-				image.resource(!root.isLoaded() ? OPENORCLOSED : EMPTY);
+				image.resource(!root.isLoaded() ? getOpenOrClosedIcon() : EMPTY);
 				icon = content.add().image().resource(root.icon());
 				icon.addClickListener(this);
 				injectTreeListener(icon);
@@ -118,7 +120,6 @@ class Node<T> extends LazyClickListener {
 		// imageRefresh.addClickListener(showClickListener);
 		// }
 		label.addClickListener(this);
-		this.tree = root;
 		this.depth = depth;
 		content.addSpace(10);
 		childrenPanel = panel.add().panel().vertical();
@@ -131,8 +132,14 @@ class Node<T> extends LazyClickListener {
 		decorate();
 	}
 
+	String getOpenOrClosedIcon() {
+		if (tree.isLeaf())
+			return EMPTY;
+		return OPENORCLOSED;
+	}
+
 	void decorate() {
-		if (tree!=null && tree.decorator() != null)
+		if (tree != null && tree.decorator() != null)
 			tree.decorator().decorate(label);
 	}
 
@@ -234,7 +241,10 @@ class Node<T> extends LazyClickListener {
 		childrenPanel.clear();
 		expandLoadedNode = false;
 		if (tree.icon() != null) {
-			image.resource(CLOSED);
+			if (tree.childCount() != 0)
+				image.resource(CLOSED);
+			else
+				image.resource(EMPTY);
 		} else
 			image.resource(FOLDER_CLOSED);
 		if (imageRefresh != null)
