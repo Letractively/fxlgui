@@ -140,7 +140,7 @@ public class CommandButtonsImpl implements ICommandButtons,
 		private IImage image;
 		private ILabel label;
 
-		Link(IImage image, ILabel label) {
+		Link(IHorizontalPanel p, IImage image, ILabel label) {
 			this.image = image;
 			this.label = label;
 		}
@@ -181,7 +181,7 @@ public class CommandButtonsImpl implements ICommandButtons,
 		IImage image = p.add().image().resource(string.toLowerCase() + ".png");
 		// p.addSpace(4);
 		ILabel label = p.add().label().text(string);
-		Link l = new Link(image, label);
+		Link l = new Link(p, image, label);
 		l.clickable(true);
 		return l;
 	}
