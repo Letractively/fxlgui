@@ -384,15 +384,21 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			// }
 			// assert node != null;
 		}
-		show(node, true);
+		show(node, true, new CallbackTemplate<Void>() {
+
+			@Override
+			public void onSuccess(Void result) {
+				notifyChange();
+			}
+		});
 		return this;
 	}
 
 	void show(final Node<T> node) {
-		show(node, true);
+		show(node, true, null);
 	}
 
-	void show(final Node<T> node, boolean callSelection) {
+	void show(final Node<T> node, boolean callSelection, ICallback<Void> cb) {
 		if (last == node)
 			return;
 		if (last != null) {
@@ -400,7 +406,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			// return;
 			last.selected(false);
 		}
-		showLoading(node, callSelection, null);
+		showLoading(node, callSelection, cb);
 	}
 
 	void showLoading(final Node<T> node, final boolean callSelection,

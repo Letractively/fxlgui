@@ -372,8 +372,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	@Override
 	public IPropertyPage<Object> addPropertyPage(String name) {
-		registerOrder.add(name);
 		PropertyPageImpl link = new PropertyPageImpl(name);
+		registerOrder.add(link);
 		propertyPages.add(link);
 		return link;
 	}
