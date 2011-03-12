@@ -28,6 +28,7 @@ import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.group.api.INavigationWidget;
@@ -83,13 +84,20 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		return this;
 	}
 
-	void active(NavigationItemImpl item) {
+	void active(NavigationItemImpl item,
+			co.fxl.gui.api.template.ICallback<Void> cb) {
 		if (active != null) {
 			active.showLabelAsInactive();
 		}
 		active = item;
 		for (INavigationListener l : listeners)
-			l.onNavigation(active);
+			l.onNavigation(active, cb != null ? cb
+					: new CallbackTemplate<Void>() {
+						@Override
+						public void onSuccess(Void result) {
+							throw new MethodNotImplementedException();
+						}
+					});
 	}
 
 	@Override

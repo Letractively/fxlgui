@@ -22,6 +22,7 @@ import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 
@@ -74,7 +75,7 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 
 	@Override
 	public IVerticalPanel addExtraPanel() {
-		showLabelAsActive();
+		showLabelAsActive(null);
 		return widget.panel1().clear();
 	}
 
@@ -91,20 +92,24 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 
 	@Override
 	public INavigationItem active() {
-		showLabelAsActive();
-		widget.panel0().clear();
-		applyColor(widget.panel0().color(), widget.colorActive);
-		decorator.decorate(widget.panel0());
+		showLabelAsActive(new CallbackTemplate<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				widget.panel0().clear();
+				applyColor(widget.panel0().color(), widget.colorActive);
+				decorator.decorate(widget.panel0());
+			}
+		});
 		return this;
 	}
 
-	private void showLabelAsActive() {
+	private void showLabelAsActive(co.fxl.gui.api.template.ICallback<Void> cb) {
 		buttonPanel.clickable(false);
-		widget.active(this);
 		if (buttonPanel == null)
 			return;
 		applyColor(buttonPanel.color(), widget.colorActive);
 		applyColor(borderColor, widget.colorActive);
+		widget.active(this, cb);
 	}
 
 	private void applyColor(IColor color, int[] rgb) {
