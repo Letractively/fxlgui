@@ -74,7 +74,6 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	SplitLayout splitLayout;
 	boolean hideDetailRoot = false;
 	List<Object> selection = new LinkedList<Object>();
-	Map<Link, NavigationLinkImpl> labels = new HashMap<Link, NavigationLinkImpl>();
 	private IComboBox comboBoxConfiguration;
 	private List<String> configurations = new LinkedList<String>();
 	Listener listener;
@@ -86,7 +85,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	boolean allowMultiSelection = true;
 	private IRadioButton r1;
 	IFilterWidget filterWidget;
-	private ViewTemplate activeView;
+	ViewTemplate activeView;
 	List<Object> registerOrder = new LinkedList<Object>();
 	boolean showCommands = true;
 	private boolean filterable = true;
@@ -254,10 +253,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 						}
 					});
 				}
-				if (link.requiresSelection || link.typeConstraint != null) {
-					l.clickable(false);
-					labels.put(l, link);
-				}
+				link.setLabel(l);
 			}
 		}
 	}
@@ -332,6 +328,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		r1.checked(true);
 		clear();
 		activeView = new TableView(this, object);
+		activeView.updateLinks();
 		((TableView) activeView).onDelete(null);
 	}
 
@@ -339,6 +336,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		clear();
 		DetailView dView = (DetailView) (activeView = new DetailView(this,
 				show, false, null));
+		activeView.updateLinks();
 		dView.refresh();
 		return dView;
 	}
@@ -347,6 +345,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		clear();
 		DetailView dView = (DetailView) (activeView = new DetailView(this,
 				show, create, createType));
+		activeView.updateLinks();
 		dView.refresh();
 	}
 
@@ -478,5 +477,10 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	@Override
 	public ITreeWidget<Object> tree() {
 		return ((DetailView) activeView).tree;
+	}
+
+	@Override
+	public String getActiveConfiguration() {
+		return configuration;
 	}
 }

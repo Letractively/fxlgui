@@ -49,6 +49,8 @@ public interface IMasterDetailTableWidget<T> {
 
 	IMasterDetailTableWidget<T> addConfiguration(String configuration);
 
+	String getActiveConfiguration();
+
 	IMDTFilterList<T> filterList();
 
 	IMasterDetailTableWidget<T> content(IContent<T> source);
