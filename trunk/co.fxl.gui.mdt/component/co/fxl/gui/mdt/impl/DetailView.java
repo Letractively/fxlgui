@@ -261,11 +261,6 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 	}
 
 	@Override
-	boolean isRelevant(NavigationLinkImpl link) {
-		return link.asDetail;
-	}
-
-	@Override
 	public void onUpdate(String value) {
 		onDelete(null);
 	}

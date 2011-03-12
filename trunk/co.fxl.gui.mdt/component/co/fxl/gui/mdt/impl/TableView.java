@@ -258,11 +258,6 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 	}
 
 	@Override
-	boolean isRelevant(NavigationLinkImpl link) {
-		return link.inTable;
-	}
-
-	@Override
 	public void onApply(final IFilterConstraints constraints) {
 		widget.mainPanel.clear();
 		widget.constraints = constraints;
