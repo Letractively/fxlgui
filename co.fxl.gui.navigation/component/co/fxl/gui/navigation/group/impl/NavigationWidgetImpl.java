@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.navigation.group.impl;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
@@ -41,6 +44,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	int[] colorInactive = new int[] { 228, 228, 255 };
 	private IVerticalPanel panel0;
 	private IVerticalPanel panel1;
+	private List<INavigationListener> listeners = new LinkedList<INavigationListener>();
 
 	protected NavigationWidgetImpl(IContainer layout) {
 		mainPanel = layout.panel().dock();
@@ -84,6 +88,8 @@ public class NavigationWidgetImpl implements INavigationWidget {
 			active.showLabelAsInactive();
 		}
 		active = item;
+		for (INavigationListener l : listeners)
+			l.onNavigation(active);
 	}
 
 	@Override
@@ -136,6 +142,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 
 	@Override
 	public INavigationWidget addNavigationListener(INavigationListener l) {
-		throw new MethodNotImplementedException();
+		listeners.add(l);
+		return this;
 	}
 }
