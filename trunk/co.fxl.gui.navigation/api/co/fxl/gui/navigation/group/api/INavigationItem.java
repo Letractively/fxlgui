@@ -29,6 +29,8 @@ public interface INavigationItem {
 
 	INavigationItem name(String name);
 
+	String name();
+
 	INavigationItem initDecorator(IDecorator decorator);
 
 	INavigationItem active();
