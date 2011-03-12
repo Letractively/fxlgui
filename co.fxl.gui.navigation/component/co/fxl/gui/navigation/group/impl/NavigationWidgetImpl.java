@@ -133,4 +133,9 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	public INavigationItem activeItem() {
 		return active;
 	}
+
+	@Override
+	public INavigationWidget addNavigationListener(INavigationListener l) {
+		throw new MethodNotImplementedException();
+	}
 }

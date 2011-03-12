@@ -22,6 +22,11 @@ import co.fxl.gui.api.IColored.IColor;
 
 public interface INavigationWidget {
 
+	public interface INavigationListener {
+
+		void onNavigation(INavigationItem activeItem);
+	}
+
 	IColor colorBackground();
 
 	IColor colorActive();
@@ -35,4 +40,6 @@ public interface INavigationWidget {
 	INavigationWidget refresh();
 
 	INavigationItem activeItem();
+
+	INavigationWidget addNavigationListener(INavigationListener l);
 }

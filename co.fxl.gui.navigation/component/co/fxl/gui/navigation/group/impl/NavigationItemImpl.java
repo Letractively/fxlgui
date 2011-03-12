@@ -122,4 +122,9 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	public boolean isActive() {
 		return widget.activeItem() == this;
 	}
+
+	@Override
+	public String name() {
+		throw new MethodNotImplementedException();
+	}
 }
