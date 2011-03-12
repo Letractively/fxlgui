@@ -125,6 +125,6 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 
 	@Override
 	public String name() {
-		throw new MethodNotImplementedException();
+		return button.text();
 	}
 }
