@@ -31,6 +31,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog.IQuestionDialog;
 import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
 import co.fxl.gui.api.IDisplay.IResizeListener;
+import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
@@ -321,7 +322,11 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		leftContentPanel = splitPane.first().scrollPane().viewPort().panel()
 				.vertical();
 		panel = leftContentPanel.spacing(10).add().panel().vertical();
-		registers = (IMenuWidget) splitPane.second().scrollPane().viewPort().widget(IMenuWidget.class);
+		IScrollPane scrollPane = splitPane.second().scrollPane();
+		scrollPane.color().rgb(BACKGROUND_GRAY, BACKGROUND_GRAY,
+				BACKGROUND_GRAY);
+		registers = (IMenuWidget) scrollPane.viewPort().widget(
+				IMenuWidget.class);
 		ResizeListener.setup(panel.display(), this);
 		onResize(-1, panel.display().height());
 	}
