@@ -95,7 +95,6 @@ public class NavigationWidgetImpl implements INavigationWidget {
 					: new CallbackTemplate<Void>() {
 						@Override
 						public void onSuccess(Void result) {
-							throw new MethodNotImplementedException();
 						}
 					});
 	}
