@@ -33,8 +33,8 @@ public class SplitLayout implements IResizeListener// , IClickListener
 
 	// TODO Swing: minimize doesn't work
 
-	private static final int WIDTH_SIDE_PANEL = 330;
-	private static final int  SCROLLBAR_WIDTH = 30;
+	private static final int SCROLLBAR_WIDTH = 18;
+	private static final int WIDTH_SIDE_PANEL = 300 + SCROLLBAR_WIDTH;
 	private ILayout layout;
 	public IGridPanel panel;
 	public IVerticalPanel mainPanel;
@@ -66,7 +66,7 @@ public class SplitLayout implements IResizeListener// , IClickListener
 		// button.addClickListener(this);
 		sideScrollPanel = cell.scrollPane();
 		sidePanel = sideScrollPanel.viewPort().panel().vertical().spacing(10);
-		sidePanel.width(WIDTH_SIDE_PANEL- SCROLLBAR_WIDTH);
+		sidePanel.width(WIDTH_SIDE_PANEL - SCROLLBAR_WIDTH);
 		SidePanelResizeListener.setup(panel.display(), this);
 		onResize(panel.display().width(), panel.display().height());
 	}
