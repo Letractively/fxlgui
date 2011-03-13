@@ -29,7 +29,9 @@ import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
+import co.fxl.gui.api.template.DateFormat;
 import co.fxl.gui.api.template.DiscardChangesDialog;
+import co.fxl.gui.api.template.SplitLayout;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -44,6 +46,13 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class GWTDisplay implements IDisplay, WidgetParent {
 
+	static {
+		DateFormat.MONTH_INCREMENT_DEC = 1;
+		DateFormat.YEAR_INCREMENT_DEC = 1900;
+		SplitLayout.SCROLLBAR_WIDTH = 8;
+		SplitLayout.WIDTH_SIDE_PANEL = 308;
+	}
+ 
 	private static GWTDisplay instance;
 	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
 	private GWTContainer<Widget> container;
