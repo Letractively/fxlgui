@@ -64,4 +64,9 @@ class SwingImage extends SwingElement<JLabel, IImage> implements IImage {
 		container.component.setIcon(icon);
 		return this;
 	}
+
+	@Override
+	public IImage localURI(String uRI) {
+		throw new MethodNotImplementedException();
+	}
 }
