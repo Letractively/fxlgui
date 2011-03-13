@@ -37,7 +37,6 @@ import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.KeyAdapter;
 import co.fxl.gui.api.template.LazyClickListener;
-import co.fxl.gui.api.template.ResizeListener;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
@@ -322,14 +321,15 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		leftContentPanel = splitPane.first().scrollPane().viewPort().panel()
 				.vertical();
 		panel = leftContentPanel.spacing(10).add().panel().vertical();
-		registers = (IMenuWidget) splitPane.second().widget(IMenuWidget.class);
-		onResize(-1, panel.display().height());
+		registers = (IMenuWidget) splitPane.second().scrollPane().viewPort().widget(IMenuWidget.class);
 		ResizeListener.setup(panel.display(), this);
+		onResize(-1, panel.display().height());
 	}
 
 	@Override
 	public void onResize(int width, int height) {
 		int offsetY = splitPane.offsetY();
+		offsetY = Math.max(offsetY, 130);
 		int maxFromDisplay = height - offsetY - 30;
 		if (maxFromDisplay > 0)
 			splitPane.height(maxFromDisplay);
