@@ -52,6 +52,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 	private Object node;
 	private int selectionIndex;
 	private Object selection;
+	private IVerticalPanel panel;
 
 	RelationDecorator(RelationImpl relation) {
 		this.relation = relation;
@@ -80,6 +81,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 
 	private void decorate(final IVerticalPanel panel,
 			final IFilterConstraints constraints, final Object node) {
+		this.panel = panel;
 		// IBorder border = panel.border();
 		// border.color().gray();
 		// border.style().top();
@@ -195,13 +197,10 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 
 	@Override
 	public void onResize(int width, int height) {
-		int offsetY = table.offsetY();
-		// TODO ... un-hard-code
-		if (offsetY == 0)
-			offsetY = 139;
+		int offsetY = Math.max(panel.offsetY(), 180);
 		int maxFromDisplay = height - offsetY - 124;
-		if (maxFromDisplay > 0)
-			table.height(maxFromDisplay);
+		maxFromDisplay = Math.max(maxFromDisplay, 60);
+		table.height(maxFromDisplay);
 	}
 
 	@Override
