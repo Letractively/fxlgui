@@ -279,6 +279,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 						drawTable();
 						TableView.this.queryList = queryList;
 						final List<Object> list = queryList.asList();
+						widget.rowsInTable=list.size();
 						final IRows<Object> rows = new IRows<Object>() {
 
 							@Override

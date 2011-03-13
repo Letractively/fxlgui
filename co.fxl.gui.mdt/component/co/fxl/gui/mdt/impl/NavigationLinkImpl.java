@@ -16,6 +16,7 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 	Class<?> typeConstraint;
 	String imageResource;
 	private Link label;
+	private boolean requiresRows = false;
 
 	NavigationLinkImpl(String name) {
 		this.name = name;
@@ -34,6 +35,8 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 		if (widget.activeView instanceof DetailView && !asDetail)
 			clickable = false;
 		if (widget.activeView instanceof TableView && !inTable)
+			clickable = false;
+		if (widget.rowsInTable == 0 && requiresRows)
 			clickable = false;
 		label.clickable(clickable);
 	}
@@ -72,6 +75,12 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 	@Override
 	public INavigationLink<Object> imageResource(String imageResource) {
 		this.imageResource = imageResource;
+		return this;
+	}
+
+	@Override
+	public INavigationLink<Object> requiresRows(boolean requiresRows) {
+		this.requiresRows = requiresRows;
 		return this;
 	}
 
