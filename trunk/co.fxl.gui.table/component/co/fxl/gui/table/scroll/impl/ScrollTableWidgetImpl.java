@@ -181,6 +181,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				if (showNoRowsFound) {
 					topPanel.cell(0, 0).label().text("No rows found").font()
 							.pixel(10).color().gray();
+					dock.height(height);
 				}
 			} else {
 				IDockPanel dock = container.add().panel().dock();
