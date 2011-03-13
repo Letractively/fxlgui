@@ -33,8 +33,8 @@ public class SplitLayout implements IResizeListener// , IClickListener
 
 	// TODO Swing: minimize doesn't work
 
-	private static final int SCROLLBAR_WIDTH = 18;
-	private static final int WIDTH_SIDE_PANEL = 300 + SCROLLBAR_WIDTH;
+	public static int SCROLLBAR_WIDTH = 20;
+	public static int WIDTH_SIDE_PANEL = 320;
 	private ILayout layout;
 	public IGridPanel panel;
 	public IVerticalPanel mainPanel;
