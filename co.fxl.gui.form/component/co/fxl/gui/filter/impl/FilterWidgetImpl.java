@@ -65,8 +65,8 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 					}
 				}
 			}
-			for (FilterPart<?> filter : guiFilterElements) {
-				filter.clear();
+			for (int i = guiFilterElements.size() - 1; i >= 0; i--) {
+				guiFilterElements.get(i).clear();
 			}
 			clear.clickable(false);
 			apply.clickable(false);
@@ -166,7 +166,6 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	}
 
 	private void remove(String name) {
-		boolean removed = false;
 		for (String cfg : filterList.keySet()) {
 			List<FilterImpl> filters = filterList.get(cfg);
 			Iterator<FilterImpl> it = filters.iterator();
@@ -174,11 +173,9 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 				FilterImpl n = it.next();
 				if (n.name.equals(name)) {
 					it.remove();
-					removed = true;
 				}
 			}
 		}
-		assert removed : "Filter " + name + " could not be removed";
 		update();
 	}
 
