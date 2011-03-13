@@ -25,7 +25,7 @@ import com.google.gwt.user.client.Window;
 
 class GWTWebsite implements IWebsite {
 
-	private static final String PARAMS = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
+	private static final String PARAMS = "";//"menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
 
 	@Override
 	public IWebsite uRI(String uRI) {
