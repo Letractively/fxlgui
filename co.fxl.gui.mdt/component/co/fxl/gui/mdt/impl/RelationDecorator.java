@@ -106,7 +106,8 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 					boolean b = relation.editable && property.editable;
 					if (b)
 						c.editable();
-					if (property.editable && property.type.clazz.equals(Boolean.class)) {
+					if (property.editable
+							&& property.type.clazz.equals(Boolean.class)) {
 						c.updateListener(new IColumnUpdateListener<Object, Boolean>() {
 
 							@Override
@@ -120,8 +121,6 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 				table.constraints(constraints);
 				addButtons(panel, node, result, selection0, selection);
 				table.rows(toRows(result));
-				ResizeListener.setup(panel.display(), RelationDecorator.this);
-				onResize(-1, panel.display().height());
 				table.addFilterListener(new IFilterListener() {
 
 					@Override
@@ -137,7 +136,15 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 								});
 					}
 				});
-				table.visible(true);
+				ResizeListener.setup(panel.display(), RelationDecorator.this);
+				panel.display().invokeLater(new Runnable() {
+
+					@Override
+					public void run() {
+						onResize(-1, panel.display().height());
+						table.visible(true);
+					}
+				});
 			}
 
 			private void addButtons(final IVerticalPanel panel,
