@@ -43,4 +43,9 @@ class SwingWebsite implements IWebsite {
 	public IWebsite localURI(String uRI) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public IWebsite title(String title) {
+		throw new MethodNotImplementedException();
+	}
 }
