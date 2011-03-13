@@ -159,6 +159,7 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 			}
 
 			private void align(final int column, IGridCell cell) {
+				cell.valign().center();
 				columns.get(column).align.forward(cell.align());
 			}
 
