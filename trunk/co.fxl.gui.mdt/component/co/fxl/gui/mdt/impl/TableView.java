@@ -273,13 +273,15 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 		widget.source.queryList(constraints,
 				new CallbackTemplate<IDeletableList<Object>>() {
 
+					private long time;
+
 					@Override
 					public void onSuccess(final IDeletableList<Object> queryList) {
-						long s = System.currentTimeMillis();
+						final long s = System.currentTimeMillis();
 						drawTable();
 						TableView.this.queryList = queryList;
 						final List<Object> list = queryList.asList();
-						widget.rowsInTable=list.size();
+						widget.rowsInTable = list.size();
 						final IRows<Object> rows = new IRows<Object>() {
 
 							@Override
@@ -298,48 +300,55 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 							}
 						};
 						table.rows(rows);
-						PrintStream out = System.out;
-						long time = System.currentTimeMillis() - s;
-						if (time > 500)
-							out = System.err;
+						time = System.currentTimeMillis() - s;
+						final PrintStream out = time > 500 ? System.err
+								: System.out;
 						out.println("TableView: added " + list.size()
 								+ " rows in " + time + "ms");
 						ResizeListener.setup(widget.mainPanel.display(),
 								TableView.this);
-						onResize(-1, widget.mainPanel.display().height());
-						updateCreatable();
-						time = System.currentTimeMillis() - s;
-						ITableClickListener showClickListener = new ITableClickListener() {
+						widget.mainPanel.display().invokeLater(new Runnable() {
 
 							@Override
-							public void onClick(int column, int row) {
-								if (row == 0)
-									return;
-								row--;
-								Object show = rows.identifier(row);
-								widget.r2.checked(true);
-								widget.showDetailView(show);
-							}
-						};
-						table.addTableClickListener(showClickListener)
-								.doubleClick();
-						table.addTooltip("Double click to switch views.");
-						table.sortListener(TableView.this);
-						table.constraints(constraints);
-						if (selectionObject != null) {
-							table.selection().add(selectionObject);
-						}
-						table.addFilterListener(new IFilterListener() {
+							public void run() {
+								onResize(-1, widget.mainPanel.display()
+										.height());
+								updateCreatable();
+								time = System.currentTimeMillis() - s;
+								ITableClickListener showClickListener = new ITableClickListener() {
 
-							@Override
-							public void onApply(IFilterConstraints constraints) {
-								TableView.this.onApply(constraints);
+									@Override
+									public void onClick(int column, int row) {
+										if (row == 0)
+											return;
+										row--;
+										Object show = rows.identifier(row);
+										widget.r2.checked(true);
+										widget.showDetailView(show);
+									}
+								};
+								table.addTableClickListener(showClickListener)
+										.doubleClick();
+								table.addTooltip("Double click to switch views.");
+								table.sortListener(TableView.this);
+								table.constraints(constraints);
+								if (selectionObject != null) {
+									table.selection().add(selectionObject);
+								}
+								table.addFilterListener(new IFilterListener() {
+
+									@Override
+									public void onApply(
+											IFilterConstraints constraints) {
+										TableView.this.onApply(constraints);
+									}
+								});
+								table.visible(true);
+								out.println("TableView: created table in "
+										+ time + "ms");
+								onChange(table.selection().result());
 							}
 						});
-						table.visible(true);
-						out.println("TableView: created table in " + time
-								+ "ms");
-						onChange(table.selection().result());
 					}
 				});
 	}
@@ -353,12 +362,16 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 	}
 
 	@Override
-	public void onResize(int width, int height) {
+	public void onResize(int width, final int height) {
 		int offsetY = table.offsetY();
 		// TODO ... un-hard-code
+		System.out.println("offsetY=" + offsetY);
 		if (offsetY == 0)
 			offsetY = 139;
+		System.out.println("offsetY=" + offsetY);
 		int maxFromDisplay = height - offsetY - 70;
+		System.out.println("TableView.onResize.maxFromDisplay="
+				+ maxFromDisplay);
 		if (maxFromDisplay > 10)
 			table.height(maxFromDisplay);
 	}
