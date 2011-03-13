@@ -20,6 +20,7 @@ package co.fxl.gui.table.bulk.api;
 
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IClickable.IKey;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
