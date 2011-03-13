@@ -20,6 +20,8 @@ package co.fxl.gui.api;
 
 public interface IImage extends IClickable<IImage>, IElement<IImage> {
 
+	IImage localURI(String uRI);
+
 	IImage uRI(String uRI);
 
 	IImage resource(String iD);
