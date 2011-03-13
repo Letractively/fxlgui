@@ -92,6 +92,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	PropertyPageImpl overviewPage = null;
 	boolean allowGridView = true;
 	Map<String, String> creatableTypeIcons = new HashMap<String, String>();
+	int rowsInTable = 0;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
