@@ -36,6 +36,12 @@ class GWTImage extends GWTElement<Image, IImage> implements IImage {
 	}
 
 	@Override
+	public IImage localURI(String uri) {
+		container.widget.setUrl(GWT.getModuleBaseURL() + uri);
+		return this;
+	}
+
+	@Override
 	public IImage resource(String name) {
 		if (name == null) {
 			container.widget.setVisible(false);
