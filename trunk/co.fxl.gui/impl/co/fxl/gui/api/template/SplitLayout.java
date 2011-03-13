@@ -33,7 +33,8 @@ public class SplitLayout implements IResizeListener// , IClickListener
 
 	// TODO Swing: minimize doesn't work
 
-	private static final int WIDTH_SIDE_PANEL = 300;
+	private static final int WIDTH_SIDE_PANEL = 330;
+	private static final int  SCROLLBAR_WIDTH = 30;
 	private ILayout layout;
 	public IGridPanel panel;
 	public IVerticalPanel mainPanel;
@@ -65,8 +66,22 @@ public class SplitLayout implements IResizeListener// , IClickListener
 		// button.addClickListener(this);
 		sideScrollPanel = cell.scrollPane();
 		sidePanel = sideScrollPanel.viewPort().panel().vertical().spacing(10);
-		onResize(panel.display().width(), panel.display().height());
+		sidePanel.width(WIDTH_SIDE_PANEL- SCROLLBAR_WIDTH);
 		SidePanelResizeListener.setup(panel.display(), this);
+		onResize(panel.display().width(), panel.display().height());
+	}
+
+	@Override
+	public void onResize(int width, int height) {
+		resizeSidePanel(height);
+		cell0.width(width - WIDTH_SIDE_PANEL);
+	}
+
+	private void resizeSidePanel(int height) {
+		int offsetY = sideScrollPanel.offsetY();
+		int maxFromDisplay = height - offsetY - 30;
+		if (maxFromDisplay > 0)
+			sideScrollPanel.height(maxFromDisplay);
 	}
 
 	protected IVerticalPanel addMainPanel(IVerticalPanel vpanel) {
@@ -87,19 +102,6 @@ public class SplitLayout implements IResizeListener// , IClickListener
 	// cell.width(sidePanel.visible() ? 300 : 1);
 	// button.resource(sidePanel.visible() ? "minimize.png" : "maximize.png");
 	// }
-
-	@Override
-	public void onResize(int width, int height) {
-		resizeSidePanel(height, cell);
-		cell0.width(width - WIDTH_SIDE_PANEL);
-	}
-
-	private void resizeSidePanel(int height, IGridCell p) {
-		int offsetY = panel.offsetY();
-		int maxFromDisplay = height - offsetY - 30;
-		if (maxFromDisplay > 0)
-			p.height(maxFromDisplay);
-	}
 
 	public void reset() {
 		panel.remove();
