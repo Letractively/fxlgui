@@ -86,7 +86,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 
 	void active(NavigationItemImpl item,
 			co.fxl.gui.api.template.ICallback<Void> cb) {
-		if (active != null) {
+		if (active != null && active != item) {
 			active.showLabelAsInactive();
 		}
 		active = item;
