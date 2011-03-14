@@ -83,6 +83,7 @@ public class WidgetTitle implements IClickListener {
 
 	}
 
+	public static final int LARGE_FONT = 18;
 	private String openPNG = "open.png";
 	private String closedPNG = "closed.png";
 	public IGridPanel panel;
@@ -153,10 +154,12 @@ public class WidgetTitle implements IClickListener {
 			return;
 		headerPanel.visible(true);
 		// headerPanel.color().rgb(220, 220, 220);
-		IHorizontalPanel horizontal = headerPanel.center().panel().horizontal().align().begin();
+		IHorizontalPanel horizontal = headerPanel.center().panel().horizontal()
+				.align().begin();
 		if (grayBackground)
 			horizontal.color().gray();
-		titlePanel = horizontal.add().panel().horizontal().align().begin().spacing(4);
+		titlePanel = horizontal.add().panel().horizontal().align().begin()
+				.spacing(4);
 		if (foldable) {
 			image = titlePanel.add().image().resource(openPNG);
 			image.addClickListener(this);
