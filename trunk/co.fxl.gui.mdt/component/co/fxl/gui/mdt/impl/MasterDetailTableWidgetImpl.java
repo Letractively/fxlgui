@@ -194,9 +194,10 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	}
 
 	void setUpFilter(String configuration) {
+		IVerticalPanel filterPanel = sidePanel.add().panel().vertical(); 
 		if (filterList.filters.isEmpty() || !filterable)
-			return;
-		filterWidget = (IFilterWidget) sidePanel.add().widget(
+			filterPanel.visible(false);
+		filterWidget = (IFilterWidget) filterPanel.add().widget(
 				IFilterWidget.class);
 		filterWidget.showConfiguration(false);
 		int index = 0;
