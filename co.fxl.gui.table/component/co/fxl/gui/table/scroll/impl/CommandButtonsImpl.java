@@ -272,9 +272,21 @@ public class CommandButtonsImpl implements ICommandButtons,
 	}
 
 	@Override
-	public ICommandButtons listenOnShow(IRowListener<Boolean> l) {
+	public ICommandButtons listenOnShow(final IRowListener<Boolean> l) {
 		listenOnShow = true;
 		listenOnShowListener = l;
+		widget.addTableClickListener(new ITableClickListener() {
+			@Override
+			public void onClick(int column, int row) {
+				l.onClick(widget.rows.identifier(row), row,
+						new CallbackTemplate<Boolean>() {
+
+							@Override
+							public void onSuccess(Boolean result) {
+							}
+						});
+			}
+		}).doubleClick();
 		return this;
 	}
 
