@@ -95,12 +95,12 @@ class GWTTextField extends GWTElement<TextBox, ITextField> implements
 
 	@Override
 	public int height() {
-		return super.height() + 8;
+		return super.height();
 	}
 
 	@Override
 	public ITextField height(int height) {
-		return (ITextField) super.height(height - 8);
+		return (ITextField) super.height(height);
 	}
 
 	@Override
