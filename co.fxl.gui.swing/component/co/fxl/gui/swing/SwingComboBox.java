@@ -34,6 +34,16 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 	}
 
 	@Override
+	public IComboBox height(int height) {
+		return super.height(height - 2);
+	}
+
+	@Override
+	public int height() {
+		return super.height() + 2;
+	}
+
+	@Override
 	public IComboBox text(String choice) {
 		if (container.component.isEditable()) {
 			container.component.setSelectedItem(choice);
