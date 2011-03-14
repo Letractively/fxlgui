@@ -202,6 +202,12 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	@Override
+	public IClickable<?> addHyperlink(String image, String name) {
+		IClickable<?> addHyperlink = widgetTitle.addHyperlink(image, name);
+		return addHyperlink;
+	}
+
+	@Override
 	public FormWidgetImpl visible(boolean visible) {
 		if (saveListener != null || hasRequiredAttributes) {
 			if (fields.isEmpty())
