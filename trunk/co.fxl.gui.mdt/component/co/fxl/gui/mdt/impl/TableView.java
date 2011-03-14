@@ -33,6 +33,7 @@ import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.ResizeListener;
+import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.mdt.api.IDeletableList;
@@ -71,7 +72,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 				IScrollTableWidget.class);
 		table.addTitle(
 				widget.title != null ? widget.title : widget.configuration)
-				.font().pixel(18);
+				.font().pixel(WidgetTitle.LARGE_FONT);
 		addColumns();
 		if (widget.allowMultiSelection)
 			table.selection().multi().addChangeListener(this);
