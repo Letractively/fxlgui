@@ -246,7 +246,8 @@ class FilterConstraintsImpl implements IFilterConstraints {
 
 	@Override
 	public boolean isSpecified() {
-		return !constraints.isEmpty();
+		return !constraints.isEmpty()
+				|| size != (Integer) FilterWidgetImpl.DEFAULT_SIZES.get(0);
 	}
 
 }
