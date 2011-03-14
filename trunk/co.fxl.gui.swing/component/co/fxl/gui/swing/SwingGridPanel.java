@@ -67,7 +67,7 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 			SwingDisplay d = (SwingDisplay) ((IElement<?>) element).display();
 			if (d.waiting)
 				return;
-			listener.onClick(column, row );
+			listener.onClick(column, row);
 		}
 
 		private int getButton() {
@@ -285,7 +285,8 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 	@Override
 	public IGridPanel spacing(int pixel) {
-		constraints.insets = new Insets(pixel, pixel, pixel, pixel);
+		constraints.insets = new Insets(pixel / 2, pixel / 2, pixel / 2,
+				pixel / 2);
 		return this;
 	}
 

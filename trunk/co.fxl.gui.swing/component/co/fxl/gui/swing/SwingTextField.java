@@ -33,6 +33,16 @@ class SwingTextField extends SwingTextInput<JTextField, ITextField> implements
 	}
 
 	@Override
+	public ITextField height(int height) {
+		return super.height(height + 1);
+	}
+
+	@Override
+	public int height() {
+		return super.height() - 1;
+	}
+
+	@Override
 	public ITextField text(String text) {
 		if (text == null)
 			text = "";
