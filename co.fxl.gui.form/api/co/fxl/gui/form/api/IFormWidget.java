@@ -65,6 +65,8 @@ public interface IFormWidget {
 
 	IClickable<?> addHyperlink(String name);
 
+	IClickable<?> addHyperlink(String imageResource, String title);
+
 	IClickable<?> addHyperlink(String name, IClickListener clickListener);
 
 	IFormWidget saveListener(String title, ISaveListener listener);
