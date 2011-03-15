@@ -84,6 +84,7 @@ public class WidgetTitle implements IClickListener {
 	}
 
 	public static final int LARGE_FONT = 18;
+	private static final String FOLDABLE = "Click to minimize/maximize";
 	private String openPNG = "open.png";
 	private String closedPNG = "closed.png";
 	public IGridPanel panel;
@@ -163,6 +164,7 @@ public class WidgetTitle implements IClickListener {
 		if (foldable) {
 			image = titlePanel.add().image().resource(openPNG);
 			image.addClickListener(this);
+			image.tooltip(FOLDABLE);
 		}
 		IContainer cell = headerPanel.right();
 		commandPanel = cell.panel().horizontal().spacing(6);
@@ -192,6 +194,7 @@ public class WidgetTitle implements IClickListener {
 		headerLabel = titlePanel.add().label().text(title);
 		if (foldable) {
 			headerLabel.addClickListener(this);
+			headerLabel.tooltip(FOLDABLE);
 		}
 		headerLabel.font().weight().bold().pixel(14);
 		if (grayBackground)
