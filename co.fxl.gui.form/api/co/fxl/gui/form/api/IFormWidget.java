@@ -71,6 +71,8 @@ public interface IFormWidget {
 
 	IFormWidget saveListener(String title, ISaveListener listener);
 
+	IFormWidget clickable(boolean clickable);
+
 	ILabel labelRequiredAttribute();
 
 	IFormWidget isNew(boolean validate);

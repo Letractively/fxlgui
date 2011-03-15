@@ -76,6 +76,7 @@ class FormWidgetImpl implements IFormWidget {
 	private Heights heights = new Heights(2);
 	private boolean isNew;
 	private boolean alwaysAllowCancel = false;
+	private IButton saveButton;
 
 	FormWidgetImpl(IContainer panel) {
 		widgetTitle = new WidgetTitle(panel.panel());
@@ -236,12 +237,12 @@ class FormWidgetImpl implements IFormWidget {
 	private void addSaveButton(IGridPanel grid) {
 		IHorizontalPanel panel = grid.cell(0, 0).panel().horizontal().add()
 				.panel().horizontal().spacing(2);
-		final IButton clickable = panel.add().button();
+		saveButton = panel.add().button();
 		final IButton clickable1 = panel.add().button();
 		// TODO un-hack
 		if (!saveListener.allowsCancel())
 			clickable1.visible(false);
-		clickable.text(saveTitle).addClickListener(new IClickListener() {
+		saveButton.text(saveTitle).addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
 				saveListener.save(new CallbackTemplate<Boolean>() {
@@ -251,7 +252,7 @@ class FormWidgetImpl implements IFormWidget {
 						if (!result)
 							return;
 						validation.update();
-						clickable.clickable(false);
+						saveButton.clickable(false);
 						if (!alwaysAllowCancel)
 							clickable1.clickable(false);
 					}
@@ -266,7 +267,7 @@ class FormWidgetImpl implements IFormWidget {
 					@Override
 					public void onSuccess(Boolean result) {
 						validation.reset();
-						clickable.clickable(false);
+						saveButton.clickable(false);
 						if (!alwaysAllowCancel)
 							clickable1.clickable(false);
 					}
@@ -276,7 +277,7 @@ class FormWidgetImpl implements IFormWidget {
 		if (validate) {
 			validation = new Validation();
 			validation.showDiscardChanges();
-			validation.linkClickable(clickable);
+			validation.linkClickable(saveButton);
 			if (!alwaysAllowCancel)
 				validation.linkReset(clickable1);
 			for (final FormFieldImpl<?> formField : fields) {
@@ -415,6 +416,12 @@ class FormWidgetImpl implements IFormWidget {
 	@Override
 	public IFormWidget alwaysAllowCancel() {
 		alwaysAllowCancel = true;
+		return this;
+	}
+
+	@Override
+	public IFormWidget clickable(boolean clickable) {
+		saveButton.clickable(clickable);
 		return this;
 	}
 }
