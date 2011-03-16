@@ -64,6 +64,8 @@ public interface ITree<T> {
 
 	boolean isReassignable();
 
+	void reassign(ITree<T> newParent, final ICallback<ITree<T>> pCallback);
+
 	boolean isNew();
 
 	String icon();

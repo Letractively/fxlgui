@@ -161,6 +161,10 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	boolean allowCreate = true;
 	private IClickListener deleteListener;
 	private Map<String, String> creatableTypeIcons = new HashMap<String, String>();
+	Node<T> cutted;
+	private boolean allowCutPaste = false;
+	private IClickable<?> cut;
+	private IClickable<?> paste;
 
 	TreeWidgetImpl(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel()).space(0);
@@ -231,6 +235,30 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			}
 		}
 		if (showCommands) {
+			if (allowCutPaste) {
+				cut = widgetTitle.addHyperlink("cut.png", "Cut");
+				cut.addClickListener(new IClickListener() {
+					@Override
+					public void onClick() {
+						cutted = getObject2node(selection);
+						cutted.decorate();
+					}
+				});
+				paste = widgetTitle.addHyperlink("paste.png", "Paste");
+				paste.addClickListener(new IClickListener() {
+					@Override
+					public void onClick() {
+						cutted.tree.reassign(getObject2node(selection).tree,
+								new CallbackTemplate<ITree<T>>() {
+
+									@Override
+									public void onSuccess(ITree<T> result) {
+										root(result);
+									}
+								});
+					}
+				});
+			}
 			deleteListener = new IClickListener() {
 				@Override
 				public void onClick() {
@@ -358,6 +386,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		}
 		this.root = tree;
 		node = null;
+		cutted = null;
 		object2node.clear();
 		if (showRoot) {
 			Node<T> n0 = new Node<T>(this, panel(), tree, 0, expand, path);
@@ -571,6 +600,11 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			boolean b = ctypes == null || ctypes.contains(c);
 			newClickHyperlink.get(c).clickable(b);
 		}
+		if (paste != null)
+			paste.clickable(cutted != null);
+		if (cut != null)
+			cut.clickable(selection != null
+					&& getObject2node(selection).tree.isReassignable());
 	}
 
 	private void disableAllNew() {
@@ -725,5 +759,11 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				return node;
 		}
 		return null;
+	}
+
+	@Override
+	public ITreeWidget<T> allowCutPaste(boolean allowCutPaste) {
+		this.allowCutPaste = allowCutPaste;
+		return this;
 	}
 }
