@@ -437,6 +437,11 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		return this;
 	}
 
+	void notifyLinks(List<Object> selection) {
+		for (NavigationLinkImpl l : navigationLinks)
+			l.notifySelection(selection);
+	}
+
 	@Override
 	public IMasterDetailTableWidget<Object> allowMultiSelection(
 			boolean multiSelection) {

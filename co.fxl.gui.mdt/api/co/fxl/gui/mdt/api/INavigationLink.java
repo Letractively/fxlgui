@@ -22,6 +22,11 @@ import java.util.List;
 
 public interface INavigationLink<T> {
 
+	public interface INavigationLinkSelectionListener<T> {
+
+		void onUpdate(INavigationLink<T> link, List<T> selection);
+	}
+
 	public interface INavigationLinkListener<T> {
 
 		void onClick(List<T> selection);
@@ -40,4 +45,11 @@ public interface INavigationLink<T> {
 	INavigationLink<T> typeConstraint(Class<?> typeConstraint);
 
 	INavigationLink<T> imageResource(String imageResource);
+
+	INavigationLink<T> text(String text);
+
+	INavigationLink<T> addSelectionListener(
+			INavigationLinkSelectionListener<T> l);
+
+	INavigationLink<T> clickable(boolean b);
 }

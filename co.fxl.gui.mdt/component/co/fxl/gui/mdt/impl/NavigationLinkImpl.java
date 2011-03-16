@@ -12,6 +12,7 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 	boolean inTable = true;
 	boolean asDetail = true;
 	List<INavigationLinkListener<Object>> listeners = new LinkedList<INavigationLinkListener<Object>>();
+	private List<INavigationLinkSelectionListener<Object>> selectionListeners = new LinkedList<INavigationLinkSelectionListener<Object>>();
 	boolean requiresSelection = true;
 	Class<?> typeConstraint;
 	String imageResource;
@@ -38,7 +39,7 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 			clickable = false;
 		if (widget.rowsInTable == 0 && requiresRows)
 			clickable = false;
-		label.clickable(clickable);
+		clickable(clickable);
 	}
 
 	@Override
@@ -84,4 +85,29 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 		return this;
 	}
 
+	@Override
+	public INavigationLink<Object> text(String text) {
+		this.name = text;
+		if (label != null)
+			label.text(text);
+		return this;
+	}
+
+	@Override
+	public INavigationLink<Object> addSelectionListener(
+			co.fxl.gui.mdt.api.INavigationLink.INavigationLinkSelectionListener<Object> l) {
+		selectionListeners.add(l);
+		return this;
+	}
+
+	void notifySelection(List<Object> selection) {
+		for (INavigationLinkSelectionListener<Object> l : selectionListeners)
+			l.onUpdate(this, selection);
+	}
+
+	@Override
+	public INavigationLink<Object> clickable(boolean b) {
+		label.clickable(b);
+		return this;
+	}
 }

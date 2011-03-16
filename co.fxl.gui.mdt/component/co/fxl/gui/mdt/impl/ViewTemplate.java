@@ -62,6 +62,7 @@ abstract class ViewTemplate implements IChangeListener<Object>, Listener,
 		for (NavigationLinkImpl label : widget.navigationLinks) {
 			label.updateLabel(widget);
 		}
+		widget.notifyLinks(widget.selection);
 	}
 
 	abstract void selection(List<Object> selection);
