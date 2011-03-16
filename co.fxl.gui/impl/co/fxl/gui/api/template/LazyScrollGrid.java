@@ -46,7 +46,7 @@ public class LazyScrollGrid extends ScrollGridTemplate implements
 		scrollPanel.height(height);
 		grid.spacing(0);
 		grid.indent(0);
-		grid.prepare(maxColumns, Math.min(maxRows, RESIZE_INTERVALL));
+		grid.resize(maxColumns, Math.min(maxRows, RESIZE_INTERVALL));
 		scrollPanel.addScrollListener(this);
 		grid.spacing(spacing);
 		grid.indent(indent);
@@ -89,7 +89,7 @@ public class LazyScrollGrid extends ScrollGridTemplate implements
 	private void resize() {
 		if (grid.rows() > paintedRows)
 			return;
-		grid.prepare(maxColumns,
+		grid.resize(maxColumns,
 				Math.min(paintedRows + RESIZE_INTERVALL, maxRows));
 	}
 }

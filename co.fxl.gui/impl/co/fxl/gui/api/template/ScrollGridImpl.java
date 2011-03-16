@@ -36,7 +36,7 @@ public class ScrollGridImpl extends ScrollGridTemplate {
 		scrollPanel.height(height);
 		grid.spacing(spacing);
 		grid.indent(indent);
-		grid.prepare(maxColumns, maxRows);
+		grid.resize(maxColumns, maxRows);
 		for (int row = 0; row < maxRows; row++) {
 			for (int column = 0; column < maxColumns; column++) {
 				decorator.decorate(column, row, grid.cell(column, row));
