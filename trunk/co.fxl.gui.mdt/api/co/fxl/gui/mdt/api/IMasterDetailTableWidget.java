@@ -95,6 +95,8 @@ public interface IMasterDetailTableWidget<T> {
 	IMasterDetailTableWidget<T> filterable(boolean filterable);
 
 	IMasterDetailTableWidget<T> allowGridView(boolean allowGridView);
-	
+
 	ITreeWidget<T> tree();
+
+	IMasterDetailTableWidget<T> allowCutPaste(boolean allowCutPaste);
 }
