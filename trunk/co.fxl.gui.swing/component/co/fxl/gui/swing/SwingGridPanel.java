@@ -346,7 +346,11 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 	}
 
 	@Override
-	public IGridPanel prepare(int columns, int rows) {
+	public IGridPanel resize(int columns, int rows) {
+		if (columns < columns())
+			throw new MethodNotImplementedException();
+		if (rows < rows())
+			throw new MethodNotImplementedException();
 		return this;
 	}
 
