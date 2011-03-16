@@ -168,4 +168,9 @@ class TestTree implements ITree<String> {
 			ICallback<ITree<String>> pCallback) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public boolean isReassignableTo(ITree<String> tree) {
+		throw new MethodNotImplementedException();
+	}
 }

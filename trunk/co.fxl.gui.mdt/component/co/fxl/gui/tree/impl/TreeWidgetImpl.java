@@ -603,7 +603,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			newClickHyperlink.get(c).clickable(b);
 		}
 		if (paste != null)
-			paste.clickable(cutted != null);
+			paste.clickable(cutted != null && selection != null
+					&& cutted.tree.isReassignableTo(getObject2node(selection).tree));
 		if (cut != null)
 			cut.clickable(selection != null
 					&& getObject2node(selection).tree.isReassignable());
