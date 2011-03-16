@@ -267,7 +267,7 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 	}
 
 	@Override
-	public IGridPanel prepare(int columns, int rows) {
+	public IGridPanel resize(int columns, int rows) {
 		Grid grid = (Grid) container.widget;
 		grid.resize(rows, columns);
 		return this;
