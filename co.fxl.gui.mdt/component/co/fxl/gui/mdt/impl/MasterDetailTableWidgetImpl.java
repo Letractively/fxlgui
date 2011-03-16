@@ -93,6 +93,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	boolean allowGridView = true;
 	Map<String, String> creatableTypeIcons = new HashMap<String, String>();
 	int rowsInTable = 0;
+	boolean allowCutPaste = false;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -194,7 +195,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	}
 
 	void setUpFilter(String configuration) {
-		IVerticalPanel filterPanel = sidePanel.add().panel().vertical(); 
+		IVerticalPanel filterPanel = sidePanel.add().panel().vertical();
 		if (filterList.filters.isEmpty() || !filterable)
 			filterPanel.visible(false);
 		filterWidget = (IFilterWidget) filterPanel.add().widget(
@@ -484,5 +485,11 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	@Override
 	public String getActiveConfiguration() {
 		return configuration;
+	}
+
+	@Override
+	public IMasterDetailTableWidget<Object> allowCutPaste(boolean allowCutPaste) {
+		this.allowCutPaste = allowCutPaste;
+		return this;
 	}
 }
