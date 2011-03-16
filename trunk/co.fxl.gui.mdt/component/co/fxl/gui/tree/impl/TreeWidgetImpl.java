@@ -237,23 +237,24 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		if (showCommands) {
 			if (allowCutPaste) {
 				cut = widgetTitle.addHyperlink("cut.png", "Cut");
-				cut.addClickListener(new IClickListener() {
+				cut.addClickListener(new LazyClickListener() {
 					@Override
-					public void onClick() {
+					public void onAllowedClick() {
 						cutted = getObject2node(selection);
 						cutted.decorate();
 					}
 				});
 				paste = widgetTitle.addHyperlink("paste.png", "Paste");
-				paste.addClickListener(new IClickListener() {
+				paste.addClickListener(new LazyClickListener() {
 					@Override
-					public void onClick() {
+					public void onAllowedClick() {
 						cutted.tree.reassign(getObject2node(selection).tree,
 								new CallbackTemplate<ITree<T>>() {
 
 									@Override
 									public void onSuccess(ITree<T> result) {
-										root(result);
+										showToParent(root, cutted.tree);
+										widgetTitle.reset();
 									}
 								});
 					}
@@ -287,9 +288,9 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			delete = widgetTitle.addHyperlink("remove.png", "Delete");
 			delete.addClickListener(deleteListener);
 			if (showRefresh && this instanceof RefreshListener)
-				refresh().addClickListener(new IClickListener() {
+				refresh().addClickListener(new LazyClickListener() {
 					@Override
-					public void onClick() {
+					public void onAllowedClick() {
 						((RefreshListener) TreeWidgetImpl.this).onRefresh();
 						widgetTitle.reset();
 					}
