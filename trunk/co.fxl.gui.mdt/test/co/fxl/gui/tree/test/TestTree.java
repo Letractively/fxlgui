@@ -164,7 +164,7 @@ class TestTree implements ITree<String> {
 	}
 
 	@Override
-	public void reassign(ITree<String> newParent,
+	public void reassign(ITree<String> newParent, boolean b,
 			ICallback<ITree<String>> pCallback) {
 		throw new MethodNotImplementedException();
 	}
