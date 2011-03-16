@@ -242,6 +242,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					public void onAllowedClick() {
 						cutted = getObject2node(selection);
 						cutted.decorate();
+						widgetTitle.reset();
 					}
 				});
 				paste = widgetTitle.addHyperlink("paste.png", "Paste");
