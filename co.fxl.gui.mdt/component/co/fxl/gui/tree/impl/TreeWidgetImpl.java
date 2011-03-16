@@ -164,7 +164,9 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	Node<T> cutted;
 	private boolean allowCutPaste = false;
 	private IClickable<?> cut;
+	private IClickable<?> copy;
 	private IClickable<?> paste;
+	protected boolean isCopy;
 
 	TreeWidgetImpl(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel()).space(0);
@@ -241,6 +243,17 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					@Override
 					public void onAllowedClick() {
 						cutted = getObject2node(selection);
+						isCopy = false;
+						cutted.decorate();
+						widgetTitle.reset();
+					}
+				});
+				copy = widgetTitle.addHyperlink("copy.png", "Copy");
+				copy.addClickListener(new LazyClickListener() {
+					@Override
+					public void onAllowedClick() {
+						cutted = getObject2node(selection);
+						isCopy = true;
 						cutted.decorate();
 						widgetTitle.reset();
 					}
@@ -250,7 +263,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					@Override
 					public void onAllowedClick() {
 						cutted.tree.reassign(getObject2node(selection).tree,
-								new CallbackTemplate<ITree<T>>() {
+								isCopy, new CallbackTemplate<ITree<T>>() {
 
 									@Override
 									public void onSuccess(ITree<T> result) {
@@ -603,11 +616,18 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			newClickHyperlink.get(c).clickable(b);
 		}
 		if (paste != null)
-			paste.clickable(cutted != null && selection != null
-					&& cutted.tree.isReassignableTo(getObject2node(selection).tree));
-		if (cut != null)
-			cut.clickable(selection != null
-					&& getObject2node(selection).tree.isReassignable());
+			paste.clickable(cutted != null
+					&& selection != null
+					&& cutted.tree
+							.isReassignableTo(getObject2node(selection).tree));
+		boolean cuttable = selection != null
+				&& getObject2node(selection).tree.isReassignable();
+		if (cut != null) {
+			cut.clickable(cuttable);
+		}
+		if (copy != null) {
+			copy.clickable(cuttable);
+		}
 	}
 
 	private void disableAllNew() {
