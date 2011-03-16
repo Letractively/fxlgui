@@ -142,7 +142,7 @@ class Node<T> extends LazyClickListener {
 		if (widget.cutted != null && tree.equals(widget.cutted.tree)) {
 			container.border().style().dotted();
 		} else
-			container.border().remove();
+			container.border().color().white();
 		if (tree != null && tree.decorator() != null)
 			tree.decorator().decorate(label);
 	}
