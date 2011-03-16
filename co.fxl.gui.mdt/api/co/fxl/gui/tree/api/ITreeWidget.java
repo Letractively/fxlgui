@@ -90,5 +90,7 @@ public interface ITreeWidget<T> {
 
 	ITreeWidget<T> allowCreate(boolean allowCreate);
 
+	ITreeWidget<T> allowCutPaste(boolean allowCutPaste);
+
 	ITreeWidget<T> showCommands(boolean showCommands);
 }

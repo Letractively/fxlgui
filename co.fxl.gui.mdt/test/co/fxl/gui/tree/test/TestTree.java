@@ -162,4 +162,10 @@ class TestTree implements ITree<String> {
 	public co.fxl.gui.tree.api.ITree.IDecorator decorator() {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public void reassign(ITree<String> newParent,
+			ICallback<ITree<String>> pCallback) {
+		throw new MethodNotImplementedException();
+	}
 }
