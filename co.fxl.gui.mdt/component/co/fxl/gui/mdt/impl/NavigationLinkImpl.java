@@ -34,7 +34,7 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 		boolean clickable = (!requiresSelection && typeConstraint == null)
 				|| (!widget.selection.isEmpty() && (typeConstraint == null || typeConstraint
 						.equals(widget.selection.get(0).getClass())));
-		if (exclusionConstraint != null) {
+		if (!widget.selection.isEmpty() && exclusionConstraint != null) {
 			clickable &= !exclusionConstraint.equals(widget.selection.get(0)
 					.getClass());
 		}
