@@ -116,6 +116,11 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 							public void onUpdate(Object o, Boolean value) {
 								property.adapter.valueOf(o, value);
 							}
+
+							@Override
+							public boolean isEditable(Object entity) {
+								return property.adapter.editable(entity);
+							}
 						});
 					}
 				}
