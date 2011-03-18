@@ -34,6 +34,7 @@ import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ICell;
+import co.fxl.gui.table.bulk.api.IBulkTableWidget.IUpdateAdapter;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 
 class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
@@ -45,13 +46,21 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		public void decorate(final Object identifier, ICell cell, Boolean value) {
 			cell.checkBox(value);
 			if (value != null)
-				if (updateListener != null)
+				if (updateListener != null) {
 					cell.updateListener(new IUpdateListener<Boolean>() {
 						@Override
 						public void onUpdate(Boolean value) {
 							updateListener.onUpdate(identifier, value);
 						}
 					});
+					cell.updateAdapter(new IUpdateAdapter<Boolean>() {
+
+						@Override
+						public boolean isEditable() {
+							return updateListener.isEditable(identifier);
+						}
+					});
+				}
 		}
 
 		@Override

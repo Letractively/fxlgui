@@ -122,6 +122,7 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 		return new ICell() {
 
 			private ICheckBox checkBox;
+			private IUpdateAdapter<Boolean> updateAdapter;
 
 			@Override
 			public ICell text(String text) {
@@ -164,10 +165,23 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 			}
 
 			@Override
-			public ICell updateListener(IUpdateListener<Boolean> updateListener) {
+			public ICell updateListener(
+					final IUpdateListener<Boolean> updateListener) {
 				if (checkBox != null) {
 					checkBox.editable(true);
-					checkBox.addUpdateListener(updateListener);
+					checkBox.addUpdateListener(new IUpdateListener<Boolean>() {
+						@Override
+						public void onUpdate(Boolean value) {
+							if (updateAdapter == null)
+								updateListener.onUpdate(value);
+							else {
+								if (!updateAdapter.isEditable())
+									checkBox.checked(!value);
+								else
+									updateListener.onUpdate(value);
+							}
+						}
+					});
 				} else
 					throw new MethodNotImplementedException();
 				return this;
@@ -178,6 +192,12 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 				IGridCell cell = grid.cell(column, row + rowOffset);
 				decorate(column, row, cell);
 				return cell;
+			}
+
+			@Override
+			public ICell updateAdapter(IUpdateAdapter<Boolean> updateAdapter) {
+				this.updateAdapter = updateAdapter;
+				return this;
 			}
 		};
 	}

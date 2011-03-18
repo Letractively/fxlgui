@@ -24,6 +24,8 @@ public interface IColumn<T> {
 
 	public interface IColumnUpdateListener<T, R> {
 
+		boolean isEditable(T entity);
+
 		void onUpdate(T entity, R value);
 	}
 
