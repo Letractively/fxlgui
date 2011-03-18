@@ -87,6 +87,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 			public void onChange(Object selection) {
 				selectionObject = selection;
 				List<Object> l = new LinkedList<Object>();
+				if(selection!=null)
 				l.add(selection);
 				DetailView.this.onChange(l);
 			}

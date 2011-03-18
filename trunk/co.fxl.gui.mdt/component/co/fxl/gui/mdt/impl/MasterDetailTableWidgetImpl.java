@@ -230,7 +230,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		}
 		if (constraints != null)
 			filterWidget.constraints(constraints);
-		filterWidget.addSizeFilter();
+		if (!filterList.filters.isEmpty() && filterable)
+			filterWidget.addSizeFilter();
 		filterWidget.addFilterListener(this);
 		filterWidget.visible(true);
 		if (configuration != null)
