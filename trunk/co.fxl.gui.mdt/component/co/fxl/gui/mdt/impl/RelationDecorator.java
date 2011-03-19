@@ -220,7 +220,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 					ICallback<Boolean> callback) {
 				relation.addRemoveListener.onAdd(node, identifier == null ? -1
 						: rowIndex, identifier,
-						new CallbackTemplate<Boolean>() {
+						new CallbackTemplate<Boolean>(callback) {
 
 							@Override
 							public void onSuccess(Boolean result) {
@@ -267,7 +267,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 									result.delete(
 											index,
 											r.get(index),
-											new CallbackTemplate<IDeletableList<Object>>() {
+											new CallbackTemplate<IDeletableList<Object>>(callback) {
 
 												@Override
 												public void onSuccess(
@@ -305,7 +305,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 								boolean maxMove, ICallback<Boolean> callback) {
 							relation.upDownListener.onUp(node, rowIndex,
 									identifier, maxMove,
-									new CallbackTemplate<Boolean>() {
+									new CallbackTemplate<Boolean>(callback) {
 
 										@Override
 										public void onSuccess(Boolean result) {
@@ -322,7 +322,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 								final ICallback<Boolean> callback) {
 							relation.upDownListener.onDown(node, rowIndex,
 									identifier, maxMove,
-									new CallbackTemplate<Boolean>() {
+									new CallbackTemplate<Boolean>(callback) {
 
 										@Override
 										public void onSuccess(Boolean result) {

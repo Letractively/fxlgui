@@ -241,7 +241,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 			final ICallback<ITree<Object>> callback) {
 		// widget.constraints = constraints;
 		widget.source.queryTree(widget.constraints, selectionObject,
-				new CallbackTemplate<ITree<Object>>() {
+				new CallbackTemplate<ITree<Object>>(callback) {
 
 					@Override
 					public void onSuccess(ITree<Object> result) {
@@ -271,7 +271,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 	public void onDelete(final ITree<Object> tree, final ICallback<Boolean> cb) {
 		if (tree != null && tree.parent() != null)
 			DetailView.this.tree.selection(tree.parent().object());
-		this.tree.refresh(new CallbackTemplate<Boolean>() {
+		this.tree.refresh(new CallbackTemplate<Boolean>(cb) {
 
 			@Override
 			public void onSuccess(Boolean result) {
@@ -282,7 +282,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 	}
 
 	private void saveNode(final ITree<Object> node, final ICallback<Boolean> cb) {
-		itree.save(node, new CallbackTemplate<Object>() {
+		itree.save(node, new CallbackTemplate<Object>(cb) {
 
 			@Override
 			public void onSuccess(Object result) {

@@ -198,7 +198,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 											getNextCallback());
 							}
 						};
-						CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>() {
+						CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>(lCallback1) {
 
 							public void onFail(Throwable throwable) {
 								widgetTitle.reset();
@@ -461,7 +461,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	void showLoading(final Node<T> node, final boolean callSelection,
 			final ICallback<Void> cb) {
 		if (node != null && !node.tree.isLoaded()) {
-			node.tree.load(new CallbackTemplate<Boolean>() {
+			node.tree.load(new CallbackTemplate<Boolean>(cb) {
 
 				@Override
 				public void onSuccess(Boolean result) {

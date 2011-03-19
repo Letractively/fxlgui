@@ -87,7 +87,7 @@ class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
 	@Override
 	public IFilterTreeWidget<T> refresh(
 			final co.fxl.gui.api.template.ICallback<Boolean> cb) {
-		source.query(constraints, new CallbackTemplate<ITree<T>>() {
+		source.query(constraints, new CallbackTemplate<ITree<T>>(cb) {
 
 			@Override
 			public void onSuccess(ITree<T> tree) {
