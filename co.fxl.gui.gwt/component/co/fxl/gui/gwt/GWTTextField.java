@@ -64,14 +64,7 @@ class GWTTextField extends GWTElement<TextBox, ITextField> implements
 
 	@Override
 	public IColor color() {
-		GWTWidgetStyle style = new GWTWidgetStyle("background-color-",
-				container.widget);
-		return new GWTStyleColor(style) {
-			@Override
-			void setColor(String color, com.google.gwt.dom.client.Style stylable) {
-				stylable.setBackgroundColor(color);
-			}
-		};
+		return newBackgroundColor();
 	}
 
 	@Override
