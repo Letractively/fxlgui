@@ -37,7 +37,7 @@ import co.fxl.gui.api.IElement;
 
 class SwingElement<T extends JComponent, R> implements IElement<R> {
 
-	SwingContainer<T> container;
+	protected SwingContainer<T> container;
 	private List<ClickListenerMouseAdapter<R>> adapters = new LinkedList<ClickListenerMouseAdapter<R>>();
 	private boolean clickListenerAdded = false;
 
@@ -113,7 +113,8 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 
 	@SuppressWarnings("unchecked")
 	public IKey<R> addClickListener(IClickListener listener) {
-//		assert !clickListenerAdded : "Multiple click listeners are not yet supported";
+		// assert !clickListenerAdded :
+		// "Multiple click listeners are not yet supported";
 		clickable(true);
 		// container.component.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		ClickListenerMouseAdapter<R> adapter = new ClickListenerMouseAdapter<R>(

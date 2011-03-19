@@ -24,6 +24,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JTextField;
 
 import co.fxl.gui.api.ITextField;
+import co.fxl.gui.api.IUpdateable;
 
 class SwingTextField extends SwingTextInput<JTextField, ITextField> implements
 		ITextField {
@@ -71,5 +72,11 @@ class SwingTextField extends SwingTextInput<JTextField, ITextField> implements
 
 	private JTextField jTextField() {
 		return ((JTextField) container.component);
+	}
+
+	@Override
+	public IUpdateable<String> addUpdateListener(
+			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
+		return super.addStringUpdateListener(listener);
 	}
 }
