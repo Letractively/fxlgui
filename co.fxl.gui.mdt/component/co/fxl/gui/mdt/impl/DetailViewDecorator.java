@@ -141,7 +141,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 					// @Override
 					// public void onSuccess(Object result) {
 					deleteListener.onDelete(tree,
-							new CallbackTemplate<Boolean>() {
+							new CallbackTemplate<Boolean>(cb) {
 
 								@Override
 								public void onSuccess(Boolean result) {
