@@ -23,6 +23,7 @@ import java.util.List;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFontElement;
@@ -45,10 +46,11 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	protected List<GWTClickHandler<R>> handlers = new LinkedList<GWTClickHandler<R>>();
 
 	public GWTElement(GWTContainer<T> container) {
+		assert container != null : "GWTElement.new";
 		this.container = container;
 	}
 
-	void defaultFont() {
+	protected void defaultFont() {
 		((IFontElement) this).font().pixel(12).family().arial();
 	}
 
@@ -122,7 +124,8 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	}
 
 	public IKey<R> addClickListener(IClickListener clickListener) {
-//		assert handlers.isEmpty() : "Multiple click listeners are not yet supported";
+		// assert handlers.isEmpty() :
+		// "Multiple click listeners are not yet supported";
 		GWTClickHandler<R> handler = newGWTClickHandler(clickListener);
 		handlers.add(handler);
 		toggleClickHandler(true);
@@ -183,5 +186,16 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	@Override
 	public IDisplay display() {
 		return container.display();
+	}
+
+	protected IColor newBackgroundColor() {
+		GWTWidgetStyle style = new GWTWidgetStyle("background-color-",
+				container.widget);
+		return new GWTStyleColor(style) {
+			@Override
+			void setColor(String color, com.google.gwt.dom.client.Style stylable) {
+				stylable.setBackgroundColor(color);
+			}
+		};
 	}
 }

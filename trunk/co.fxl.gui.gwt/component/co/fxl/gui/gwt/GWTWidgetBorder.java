@@ -31,7 +31,7 @@ public class GWTWidgetBorder extends GWTBorder {
 		this.element = element;
 	}
 
-	protected GWTWidgetBorder(Widget widget) {
+	public GWTWidgetBorder(Widget widget) {
 		this(widget.getElement());
 	}
 

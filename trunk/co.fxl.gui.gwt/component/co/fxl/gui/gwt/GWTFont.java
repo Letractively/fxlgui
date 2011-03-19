@@ -22,9 +22,9 @@ import co.fxl.gui.api.IFontElement.IFont;
 
 import com.google.gwt.user.client.ui.Widget;
 
-class GWTFont extends GWTWidgetStyle implements IFont {
+public class GWTFont extends GWTWidgetStyle implements IFont {
 
-	GWTFont(Widget label) {
+	public GWTFont(Widget label) {
 		super("font-size-", label);
 	}
 
