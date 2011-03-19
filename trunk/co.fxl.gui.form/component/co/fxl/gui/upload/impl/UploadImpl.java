@@ -16,20 +16,42 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.input.api;
+package co.fxl.gui.upload.impl;
 
-import java.util.Date;
+import co.fxl.gui.upload.api.IUpload;
 
-import co.fxl.gui.api.IBordered;
-import co.fxl.gui.api.IColored;
-import co.fxl.gui.api.ITextElement;
-import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.IUpdateable;
+public class UploadImpl implements IUpload {
 
-public interface IDateTextFieldWidget extends ITextElement<ITextField>,
-		IColored, IBordered, IUpdateable<Date> {
+	private String url;
+	private String name;
+	private String description;
+	private boolean isFileUpload;
 
-	IDateTextFieldWidget date(Date date);
+	public UploadImpl(String text, String text2, String text3,
+			boolean isFileUpload) {
+		url = text;
+		name = text2;
+		description = text3;
+		this.isFileUpload = isFileUpload;
+	}
 
-	Date date();
+	@Override
+	public String uRL() {
+		return url;
+	}
+
+	@Override
+	public String name() {
+		return name;
+	}
+
+	@Override
+	public String description() {
+		return description;
+	}
+
+	@Override
+	public boolean isFileUpload() {
+		return isFileUpload;
+	}
 }

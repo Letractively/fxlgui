@@ -16,20 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.input.api;
+package co.fxl.gui.upload.impl;
 
-import java.util.Date;
+@SuppressWarnings("serial")
+class MethodNotImplementedException extends RuntimeException {
 
-import co.fxl.gui.api.IBordered;
-import co.fxl.gui.api.IColored;
-import co.fxl.gui.api.ITextElement;
-import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.IUpdateable;
-
-public interface IDateTextFieldWidget extends ITextElement<ITextField>,
-		IColored, IBordered, IUpdateable<Date> {
-
-	IDateTextFieldWidget date(Date date);
-
-	Date date();
 }
