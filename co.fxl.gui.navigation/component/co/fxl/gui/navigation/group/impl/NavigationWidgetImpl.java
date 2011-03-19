@@ -92,7 +92,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		active = item;
 		for (INavigationListener l : listeners)
 			l.onNavigation(active, cb != null ? cb
-					: new CallbackTemplate<Void>() {
+					: new CallbackTemplate<Void>(cb) {
 						@Override
 						public void onSuccess(Void result) {
 						}
