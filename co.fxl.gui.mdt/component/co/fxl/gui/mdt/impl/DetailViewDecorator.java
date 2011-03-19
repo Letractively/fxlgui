@@ -186,7 +186,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 					boolean hasProperty = node == null ? true
 							: property.adapter.hasProperty(node);
 					if (property.displayInDetailView && hasProperty) {
-						final IFormField<?> formField;
+						final IFormField<? extends ITextElement<?>> formField;
 						final Object valueOf = node != null ? property.adapter
 								.valueOf(node) : null;
 						final ITextElement<?> valueElement;
