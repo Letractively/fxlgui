@@ -38,9 +38,6 @@ public abstract class FormFieldImpl<T extends ITextElement<T>> implements
 	private int row;
 	private int column = 2;
 
-	// List<IExternalStatusAdapter> externalStatusAdapters = new
-	// LinkedList<IExternalStatusAdapter>();
-
 	public FormFieldImpl(FormWidgetImpl widget, int index, String name) {
 		this.widget = widget;
 		widget.fields.add(this);
@@ -80,19 +77,6 @@ public abstract class FormFieldImpl<T extends ITextElement<T>> implements
 		label.text(label.text() + " *");
 		return this;
 	}
-
-	//
-	// @Override
-	// public IFormField<T> externalStatusAdapter(IExternalStatusAdapter l) {
-	// externalStatusAdapters.add(l);
-	// return this;
-	// }
-	//
-	// @Override
-	// public IFormField<T> updateStatus() {
-	// widget.validation.update();
-	// return this;
-	// }
 
 	@Override
 	public IFieldType type() {
