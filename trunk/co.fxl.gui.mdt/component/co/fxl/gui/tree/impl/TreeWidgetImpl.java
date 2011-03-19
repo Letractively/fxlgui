@@ -243,20 +243,26 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				cut.addClickListener(new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
+						widgetTitle.reset();
+						Node<T> lastCutted = cutted;
 						cutted = getObject2node(selection);
+						if (lastCutted != null)
+							lastCutted.decorate();
 						isCopy = false;
 						cutted.decorate();
-						widgetTitle.reset();
 					}
 				});
 				copy = widgetTitle.addHyperlink("copy.png", "Copy");
 				copy.addClickListener(new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
+						widgetTitle.reset();
+						Node<T> lastCutted = cutted;
 						cutted = getObject2node(selection);
+						if (lastCutted != null)
+							lastCutted.decorate();
 						isCopy = true;
 						cutted.decorate();
-						widgetTitle.reset();
 					}
 				});
 				paste = widgetTitle.addHyperlink("paste.png", "Paste");
@@ -268,8 +274,11 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 									@Override
 									public void onSuccess(ITree<T> result) {
-										showToParent(root, cutted.tree);
 										widgetTitle.reset();
+										paste.clickable(false);
+										final ITree<T> tree = cutted.tree;
+										cutted = null;
+										showToParent(root, tree);
 									}
 								});
 					}
