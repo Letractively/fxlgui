@@ -186,7 +186,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 					boolean hasProperty = node == null ? true
 							: property.adapter.hasProperty(node);
 					if (property.displayInDetailView && hasProperty) {
-						final IFormField<? extends ITextElement<?>> formField;
+						final IFormField<?> formField;
 						final Object valueOf = node != null ? property.adapter
 								.valueOf(node) : null;
 						final ITextElement<?> valueElement;
@@ -196,14 +196,14 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 									IFormField<ITextField> tf = form
 											.addTextField(property.name);
 									formField = tf;
-									valueElement = formField.valueElement();
+									valueElement = (ITextElement<?>) formField.valueElement();
 									tf.valueElement().editable(false);
 								} else {
 									final IFormField<ITextField> tf = form
 											.addTextField(property.name);
 									tf.valueElement().editable(false);
 									formField = tf;
-									valueElement = formField.valueElement();
+									valueElement = (ITextElement<?>) formField.valueElement();
 									if (property.listener != null) {
 										final ILabel assign = formField
 												.addButton(valueOf == null ? "Assign"
@@ -248,7 +248,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 								if (!property.editable)
 									textArea.valueElement().editable(false);
 								formField = textArea;
-								valueElement = formField.valueElement();
+								valueElement = (ITextElement<?>) formField.valueElement();
 							} else if (property.type.values.size() > 0) {
 								formField = form.addComboBox(property.name);
 								IComboBox cb = (IComboBox) formField
@@ -262,13 +262,13 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 								}
 								for (Object s : vs)
 									cb.addText((String) s);
-								valueElement = formField.valueElement();
+								valueElement = (ITextElement<?>) formField.valueElement();
 							} else {
 								IFormField<ITextField> tf = form
 										.addTextField(property.name);
 								formField = tf;
 								decorateEditable(property, formField);
-								valueElement = formField.valueElement();
+								valueElement = (ITextElement<?>) formField.valueElement();
 							}
 							String value = valueOf == null ? ""
 									: (valueOf instanceof String ? (String) valueOf
@@ -293,12 +293,12 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							String value = valueOf == null ? ""
 									: DetailView.DATE_FORMAT
 											.format((Date) valueOf);
-							formField.valueElement().text(value);
+							((ITextElement<?>) formField.valueElement()).text(value);
 							updates.add(new Runnable() {
 								@Override
 								public void run() {
 									Date value = null;
-									String text = formField.valueElement()
+									String text = ((ITextElement<?>) formField.valueElement())
 											.text().trim();
 									if (!text.trim().equals("")) {
 										value = DetailView.DATE_FORMAT
@@ -336,13 +336,13 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							formField.type().integer();
 							String value = valueOf == null ? ""
 									: ((Number) valueOf).toString();
-							formField.valueElement().text(value);
+							((ITextElement<?>) formField.valueElement()).text(value);
 							if (property.editable)
 								updates.add(new Runnable() {
 									@Override
 									public void run() {
 										Object value = null;
-										String text = formField.valueElement()
+										String text = ((ITextElement<?>) formField.valueElement())
 												.text().trim();
 										if (!text.equals("")) {
 											if (isLong)
