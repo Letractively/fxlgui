@@ -198,7 +198,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 											getNextCallback());
 							}
 						};
-						CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>(lCallback1) {
+						CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>(
+								lCallback1) {
 
 							public void onFail(Throwable throwable) {
 								widgetTitle.reset();
@@ -274,9 +275,9 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					}
 				});
 			}
-			deleteListener = new IClickListener() {
+			deleteListener = new LazyClickListener() {
 				@Override
-				public void onClick() {
+				public void onAllowedClick() {
 					IQuestionDialog question = panel.display().showDialog()
 							.question();
 					question.question("Delete Entity?").title("Warning");
