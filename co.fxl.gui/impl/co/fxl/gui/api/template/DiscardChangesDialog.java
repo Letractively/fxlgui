@@ -47,7 +47,7 @@ public class DiscardChangesDialog {
 						public void onYes() {
 							active = false;
 							if (listener != null) {
-								listener.onDiscardChanges(new CallbackTemplate<Boolean>() {
+								listener.onDiscardChanges(new CallbackTemplate<Boolean>(callback) {
 
 									@Override
 									public void onSuccess(Boolean result) {
@@ -63,7 +63,7 @@ public class DiscardChangesDialog {
 						@Override
 						public void onNo() {
 							if (listener != null) {
-								listener.onKeepChanges(new CallbackTemplate<Boolean>() {
+								listener.onKeepChanges(new CallbackTemplate<Boolean>(callback) {
 
 									@Override
 									public void onSuccess(Boolean result) {

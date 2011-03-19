@@ -20,7 +20,20 @@ package co.fxl.gui.api.template;
 
 public abstract class CallbackTemplate<T> implements ICallback<T> {
 
+	private ICallback<?> cb;
+
+	public CallbackTemplate() {
+	}
+
+	public CallbackTemplate(ICallback<?> cb) {
+		this.cb = cb;
+	}
+
+	@Override
 	public void onFail(Throwable throwable) {
-		throw new RuntimeException(throwable);
+		if (cb == null)
+			throw new RuntimeException(throwable);
+		else
+			cb.onFail(throwable);
 	}
 }
