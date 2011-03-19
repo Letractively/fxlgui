@@ -18,9 +18,13 @@
  */
 package co.fxl.gui.form.impl;
 
+import java.util.Date;
+
+import co.fxl.gui.api.IUpdateable;
+import co.fxl.gui.form.api.IDateField;
 import co.fxl.gui.input.api.IDateTextFieldWidget;
 
-class FormDateFieldImpl extends FormFieldImpl<IDateTextFieldWidget> {
+class FormDateFieldImpl extends FormFieldImpl<IDateField> implements IDateField {
 
 	IDateTextFieldWidget textField;
 
@@ -36,7 +40,25 @@ class FormDateFieldImpl extends FormFieldImpl<IDateTextFieldWidget> {
 	}
 
 	@Override
-	public IDateTextFieldWidget valueElement() {
-		return textField;
+	public IDateField valueElement() {
+		return this;
+	}
+
+	@Override
+	public IUpdateable<Date> addUpdateListener(
+			co.fxl.gui.api.IUpdateable.IUpdateListener<Date> listener) {
+		textField.addUpdateListener(listener);
+		return this;
+	}
+
+	@Override
+	public IDateField date(Date date) {
+		textField.date(date);
+		return this;
+	}
+
+	@Override
+	public Date date() {
+		return textField.date();
 	}
 }
