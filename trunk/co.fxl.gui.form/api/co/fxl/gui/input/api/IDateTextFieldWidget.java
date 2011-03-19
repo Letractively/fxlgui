@@ -23,11 +23,11 @@ import java.util.Date;
 import co.fxl.gui.api.IBordered;
 import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.ITextElement;
-import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable;
 
-public interface IDateTextFieldWidget extends ITextElement<ITextField>,
-		IColored, IBordered, IUpdateable<Date> {
+public interface IDateTextFieldWidget extends
+		ITextElement<IDateTextFieldWidget>, IColored, IBordered,
+		IUpdateable<Date> {
 
 	IDateTextFieldWidget date(Date date);
 
