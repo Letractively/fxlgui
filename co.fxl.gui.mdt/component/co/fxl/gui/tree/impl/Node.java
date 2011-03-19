@@ -21,7 +21,6 @@ package co.fxl.gui.tree.impl;
 import java.util.List;
 
 import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -150,10 +149,10 @@ class Node<T> extends LazyClickListener {
 	@SuppressWarnings("unchecked")
 	private void injectTreeListener(IClickable<?> clickable) {
 		if (widget.treeClickListener != null) {
-			IKey<?> key = clickable.addClickListener(new IClickListener() {
+			IKey<?> key = clickable.addClickListener(new LazyClickListener() {
 
 				@Override
-				public void onClick() {
+				public void onAllowedClick() {
 					widget.treeClickListener.onClick(tree);
 				}
 			});
