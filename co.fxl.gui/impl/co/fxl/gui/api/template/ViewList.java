@@ -22,7 +22,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.ICardPanel;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
@@ -72,9 +71,9 @@ public class ViewList {
 				removeImage = grid.cell(1, 0).width(30).align().end().panel()
 						.horizontal().add().image();
 				removeImage.resource("remove.png").addClickListener(
-						new IClickListener() {
+						new LazyClickListener() {
 							@Override
-							public void onClick() {
+							public void onAllowedClick() {
 								grid.remove();
 								newListener.onRemove(ViewImpl.this);
 								int i = views.indexOf(ViewImpl.this);
@@ -173,12 +172,13 @@ public class ViewList {
 
 	public ViewList modifiable(NewListener listener) {
 		newListener = listener;
-		widgetTitle.addHyperlink("New").addClickListener(new IClickListener() {
-			@Override
-			public void onClick() {
-				newListener.onNew(addView());
-			}
-		});
+		widgetTitle.addHyperlink("New").addClickListener(
+				new LazyClickListener() {
+					@Override
+					public void onAllowedClick() {
+						newListener.onNew(addView());
+					}
+				});
 		return this;
 	}
 
