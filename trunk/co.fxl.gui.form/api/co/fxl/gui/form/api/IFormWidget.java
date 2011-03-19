@@ -27,7 +27,6 @@ import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.template.ICallback;
-import co.fxl.gui.input.api.IDateTextFieldWidget;
 
 public interface IFormWidget {
 
@@ -50,7 +49,7 @@ public interface IFormWidget {
 
 	IFormField<ITextField> addTextField(String name);
 
-	IFormField<IDateTextFieldWidget> addDateField(String name);
+	IFormField<IDateField> addDateField(String name);
 
 	IFormField<IPasswordField> addPasswordField(String name);
 
