@@ -24,7 +24,7 @@ import javax.swing.text.JTextComponent;
 
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
-class SwingTextInput<T extends JTextComponent, R> extends
+public class SwingTextInput<T extends JTextComponent, R> extends
 		SwingTextElement<T, R> {
 
 	private final class UpdateListener implements DocumentListener {
@@ -50,7 +50,7 @@ class SwingTextInput<T extends JTextComponent, R> extends
 		}
 	}
 
-	SwingTextInput(SwingContainer<T> container) {
+	protected SwingTextInput(SwingContainer<T> container) {
 		super(container);
 	}
 
@@ -74,7 +74,7 @@ class SwingTextInput<T extends JTextComponent, R> extends
 		return html.text;
 	}
 
-	public R addUpdateListener(final IUpdateListener<String> updateListener) {
+	public R addStringUpdateListener(final IUpdateListener<String> updateListener) {
 		container.component.getDocument().addDocumentListener(
 				new UpdateListener(updateListener));
 		@SuppressWarnings("unchecked")

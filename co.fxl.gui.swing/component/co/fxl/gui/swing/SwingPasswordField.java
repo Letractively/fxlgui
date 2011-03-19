@@ -25,6 +25,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import co.fxl.gui.api.IPasswordField;
+import co.fxl.gui.api.IUpdateable;
 
 class SwingPasswordField extends SwingTextInput<JPasswordField, IPasswordField>
 		implements IPasswordField {
@@ -60,5 +61,11 @@ class SwingPasswordField extends SwingTextInput<JPasswordField, IPasswordField>
 
 	private JTextField jTextField() {
 		return ((JTextField) container.component);
+	}
+
+	@Override
+	public IUpdateable<String> addUpdateListener(
+			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
+		return super.addStringUpdateListener(listener);
 	}
 }

@@ -23,6 +23,7 @@ import java.awt.Color;
 import javax.swing.JTextArea;
 
 import co.fxl.gui.api.ITextArea;
+import co.fxl.gui.api.IUpdateable;
 
 class SwingTextArea extends SwingTextInput<JTextArea, ITextArea> implements
 		ITextArea {
@@ -68,5 +69,11 @@ class SwingTextArea extends SwingTextInput<JTextArea, ITextArea> implements
 		container.component.setCaretPosition(position);
 		container.component.requestFocus();
 		return this;
+	}
+
+	@Override
+	public IUpdateable<String> addUpdateListener(
+			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
+		return super.addStringUpdateListener(listener);
 	}
 }
