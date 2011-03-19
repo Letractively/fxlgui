@@ -88,4 +88,12 @@ class GWTDateTextFieldWidget extends
 		throw new MethodNotImplementedException();
 	}
 
+	@Override
+	public IDateTextFieldWidget editable(boolean editable) {
+		if (!editable) {
+			throw new MethodNotImplementedException();
+		}
+		return this;
+	}
+
 }
