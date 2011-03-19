@@ -80,7 +80,10 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		@Override
 		public void prepare(
 				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
-			column.align().center();
+			if (index == 0)
+				column.align().begin();
+			else
+				column.align().center();
 		}
 	}
 
