@@ -36,6 +36,7 @@ public class SwingDateTextFieldWidgetProvider implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public IDateTextFieldWidget createWidget(IContainer container) {
+		container.textField();
 		return new SwingDateTextFieldWidget(
 				(SwingContainer<JTextField>) container);
 	}
