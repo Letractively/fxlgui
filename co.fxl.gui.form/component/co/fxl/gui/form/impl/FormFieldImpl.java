@@ -21,14 +21,12 @@ package co.fxl.gui.form.impl;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.template.FieldTypeImpl;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.impl.FormWidgetImpl.FormEntryLabel;
 
-public abstract class FormFieldImpl<T extends ITextElement<T>> implements
-		IFormField<T> {
+public abstract class FormFieldImpl<T> implements IFormField<T> {
 
 	private FormWidgetImpl widget;
 	private ILabel label;
