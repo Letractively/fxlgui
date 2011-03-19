@@ -16,9 +16,15 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.input.impl;
+package co.fxl.gui.upload.api;
 
-@SuppressWarnings("serial")
-class MethodNotImplementedException extends RuntimeException {
+public interface IUpload {
 
+	boolean isFileUpload();
+
+	String uRL();
+
+	String name();
+
+	String description();
 }

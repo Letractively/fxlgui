@@ -16,21 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.input.impl;
+package co.fxl.gui.upload.api;
 
-import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.input.api.IDateTextFieldWidget;
+public interface IUploadWidget {
 
-public class DateTextFieldWidgetImplProvider implements IWidgetProvider<IDateTextFieldWidget> {
+	IUploadWidget addKeyValuePair(String key, String value);
 
-	@Override
-	public Class<IDateTextFieldWidget> widgetType() {
-		return IDateTextFieldWidget.class;
-	}
+	IUploadWidget addUploadListener(IUploadListener l);
 
-	@Override
-	public IDateTextFieldWidget createWidget(IContainer container) {
-		return new DateTextFieldWidgetImpl(container);
-	}
+	IUploadWidget visible(boolean visible);
 }
