@@ -323,6 +323,7 @@ class FormWidgetImpl implements IFormWidget {
 				} else if (valueElement instanceof IComboBox) {
 					validation.linkInput((IComboBox) valueElement);
 				} else if (valueElement instanceof ILabel) {
+				} else if (valueElement instanceof IDateField) {
 				} else
 					throw new MethodNotImplementedException(
 							valueElement.getClass());
