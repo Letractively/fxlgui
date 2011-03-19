@@ -32,4 +32,6 @@ public interface IDateTextFieldWidget extends
 	IDateTextFieldWidget date(Date date);
 
 	Date date();
+
+	IDateTextFieldWidget editable(boolean editable);
 }

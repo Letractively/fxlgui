@@ -16,26 +16,27 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.form.api;
+package co.fxl.gui.form.impl;
 
-import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IGridPanel.IGridCell;
-import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.template.IFieldType;
+import co.fxl.gui.input.api.IDateTextFieldWidget;
 
-public interface IFormField<T> {
+class FormDateFieldImpl extends FormFieldImpl<IDateTextFieldWidget> {
 
-	IGridCell cell();
+	IDateTextFieldWidget textField;
 
-	ILabel titleElement();
+	FormDateFieldImpl(FormWidgetImpl widget, int index, String name) {
+		super(widget, index, name);
+		textField = addTextField(widget);
+		textField.border().color().gray();
+		widget.addFillColumn();
+	}
 
-	T valueElement();
+	IDateTextFieldWidget addTextField(FormWidgetImpl widget) {
+		return widget.addFormValueDateField();
+	}
 
-	IFormField<T> required();
-
-	IFieldType type();
-
-	ILabel addButton(String title);
-
-	IContainer addContainer();
+	@Override
+	public IDateTextFieldWidget valueElement() {
+		return textField;
+	}
 }
