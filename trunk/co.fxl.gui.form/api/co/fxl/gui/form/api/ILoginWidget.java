@@ -18,15 +18,15 @@
  */
 package co.fxl.gui.form.api;
 
-import co.fxl.gui.api.IFlowPanel;
+import co.fxl.gui.api.ILinearPanel;
 
 public interface ILoginWidget {
 
 	public interface IStatusPanelDecorator {
 
-		void decorateBegin(IFlowPanel<?> panel, boolean loggedIn);
+		void decorateBegin(ILinearPanel<?> panel, boolean loggedIn);
 
-		void decorateEnd(IFlowPanel<?> panel, boolean loggedIn);
+		void decorateEnd(ILinearPanel<?> panel, boolean loggedIn);
 	}
 
 	public interface Callback {
