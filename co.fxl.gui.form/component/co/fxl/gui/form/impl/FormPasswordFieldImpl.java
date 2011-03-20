@@ -19,6 +19,7 @@
 package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.IPasswordField;
+import co.fxl.gui.form.api.IFormField;
 
 class FormPasswordFieldImpl extends FormFieldImpl<IPasswordField> {
 
@@ -30,6 +31,12 @@ class FormPasswordFieldImpl extends FormFieldImpl<IPasswordField> {
 //		passwordField.height(26);
 		passwordField.border().color().gray();
 		widget.addFillColumn();
+	}
+
+	@Override
+	public IFormField<IPasswordField> editable(boolean editable) {
+		valueElement().editable(editable);
+		return this;
 	}
 
 	@Override

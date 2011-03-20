@@ -19,6 +19,7 @@
 package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.form.api.IFormField;
 
 class FormLabelImpl extends FormFieldImpl<ILabel> {
 
@@ -29,6 +30,11 @@ class FormLabelImpl extends FormFieldImpl<ILabel> {
 		textField = addLabel(widget);
 //		textField.height(20);
 		widget.addFillColumn();
+	}
+
+	@Override
+	public IFormField<ILabel> editable(boolean editable) {
+		return this;
 	}
 
 	ILabel addLabel(FormWidgetImpl widget) {

@@ -21,16 +21,22 @@ package co.fxl.gui.form.impl;
 import java.util.Date;
 
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.template.DateFormat;
+import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.input.api.ICalendarWidget;
 
 class FormDateFieldImpl extends FormTextFieldImpl {
 
+	private ILabel button;
+
 	FormDateFieldImpl(final FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
-		addButton("Calendar").addClickListener(new IClickListener() {
+		button = addButton("Calendar");
+		button.addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
 				final IPopUp popUp = widget.gridPanel.display().showPopUp();
@@ -45,5 +51,11 @@ class FormDateFieldImpl extends FormTextFieldImpl {
 				});
 			}
 		});
+	}
+
+	@Override
+	public IFormField<ITextField> editable(boolean editable) {
+		button.clickable(editable);
+		return super.editable(editable);
 	}
 }
