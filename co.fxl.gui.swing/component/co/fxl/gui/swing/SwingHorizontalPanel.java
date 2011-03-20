@@ -26,9 +26,10 @@ import javax.swing.Box;
 
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.swing.HorizontalLayoutManager.Stretch;
 
 class SwingHorizontalPanel extends SwingPanel<IHorizontalPanel> implements
-		IHorizontalPanel {
+		IHorizontalPanel, Stretch {
 
 	public class Alignment implements IAlignment<IHorizontalPanel> {
 
@@ -80,5 +81,10 @@ class SwingHorizontalPanel extends SwingPanel<IHorizontalPanel> implements
 	@Override
 	public IAlignment<IHorizontalPanel> align() {
 		return new Alignment();
+	}
+
+	@Override
+	public Component stretch() {
+		return stretch;
 	}
 }
