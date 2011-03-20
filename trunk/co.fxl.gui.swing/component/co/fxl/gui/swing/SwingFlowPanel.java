@@ -1,12 +1,29 @@
 package co.fxl.gui.swing;
 
+import java.awt.Component;
+import java.awt.FlowLayout;
+
 import co.fxl.gui.api.IFlowPanel;
+import co.fxl.gui.swing.HorizontalLayoutManager.Stretch;
 
-class SwingFlowPanel extends SwingHorizontalPanel implements IFlowPanel {
+class SwingFlowPanel extends SwingPanel<IFlowPanel> implements IFlowPanel,
+		Stretch {
 
-	// TODO line break
+	Component stretch;
 
 	SwingFlowPanel(SwingContainer<PanelComponent> container) {
 		super(container);
+		setLayout(new HorizontalLayoutManager(this));
+		flowLayout().setHgap(0);
+		flowLayout().setVgap(0);
+	}
+
+	private FlowLayout flowLayout() {
+		return (FlowLayout) container.component.getLayout();
+	}
+
+	@Override
+	public Component stretch() {
+		return stretch;
 	}
 }

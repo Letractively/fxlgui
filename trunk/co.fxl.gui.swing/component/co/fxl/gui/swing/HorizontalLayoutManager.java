@@ -25,20 +25,25 @@ import java.awt.Rectangle;
 
 final class HorizontalLayoutManager extends FlowLayout {
 
-	private static final long serialVersionUID = 1L;
-	private final SwingHorizontalPanel panel;
+	interface Stretch {
 
-	HorizontalLayoutManager(SwingHorizontalPanel panel) {
+		Component stretch();
+	}
+
+	private static final long serialVersionUID = 1L;
+	private final Stretch panel;
+
+	HorizontalLayoutManager(Stretch panel) {
 		this.panel = panel;
 	}
 
 	@Override
 	public void layoutContainer(Container container) {
 		super.layoutContainer(container);
-		if (panel.stretch != null && container.getComponentCount() > 0) {
+		if (panel.stretch() != null && container.getComponentCount() > 0) {
 			Component c = container
 					.getComponent(container.getComponentCount() - 1);
-			if (c == panel.stretch) {
+			if (c == panel.stretch()) {
 				Rectangle b = c.getBounds();
 				b.width = c.getParent().getWidth() - b.x;
 				c.setBounds(b);
