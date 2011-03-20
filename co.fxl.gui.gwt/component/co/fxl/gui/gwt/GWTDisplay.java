@@ -253,6 +253,6 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 	@Override
 	public IPopUp showPopUp() {
-		throw new MethodNotImplementedException();
+		return new GWTPopUp(this);
 	}
 }
