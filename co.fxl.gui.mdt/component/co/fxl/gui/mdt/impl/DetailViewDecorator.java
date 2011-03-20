@@ -291,7 +291,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							});
 						} else if (property.type.clazz.equals(Date.class)) {
 							IFormField<ITextField> tf = form
-									.addTextField(property.name);
+									.addDateField(property.name);
 							formField = tf;
 							decorateEditable(property, formField);
 							formField.type().date();
