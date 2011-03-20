@@ -1,6 +1,6 @@
 <module>
 	<inherits name='co.fxl.gui.api.IDisplay' />
-	<inherits name='co.fxl.gui.input.api.IDateTextFieldWidget' />
+	<inherits name='co.fxl.gui.input.api.ICalendarWidget' />
 	<source path='' />
 </module>
  

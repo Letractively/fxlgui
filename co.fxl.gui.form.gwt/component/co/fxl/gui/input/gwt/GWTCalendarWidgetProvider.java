@@ -21,23 +21,23 @@ package co.fxl.gui.input.gwt;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.gwt.GWTContainer;
-import co.fxl.gui.input.api.IDateTextFieldWidget;
+import co.fxl.gui.input.api.ICalendarWidget;
 
-import com.google.gwt.user.datepicker.client.DatePicker;
+import com.google.gwt.user.datepicker.client.DateBox;
 
-public class GWTDateTextFieldWidgetProvider implements
-		IWidgetProvider<IDateTextFieldWidget> {
+public class GWTCalendarWidgetProvider implements
+		IWidgetProvider<ICalendarWidget> {
 
 	@Override
-	public Class<IDateTextFieldWidget> widgetType() {
-		return IDateTextFieldWidget.class;
+	public Class<ICalendarWidget> widgetType() {
+		return ICalendarWidget.class;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public IDateTextFieldWidget createWidget(IContainer container) {
-		GWTContainer<DatePicker> c = (GWTContainer<DatePicker>) container;
-		c.setComponent(new DatePicker());
-		return new GWTDateTextFieldWidget(c);
+	public ICalendarWidget createWidget(IContainer container) {
+		GWTContainer<DateBox> c = (GWTContainer<DateBox>) container;
+		c.setComponent(new DateBox());
+		return new GWTCalendarWidget(c);
 	}
 }
