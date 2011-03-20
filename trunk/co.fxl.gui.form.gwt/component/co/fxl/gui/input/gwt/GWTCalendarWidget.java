@@ -23,19 +23,16 @@ import java.util.Date;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.gwt.GWTContainer;
 import co.fxl.gui.gwt.GWTElement;
-import co.fxl.gui.gwt.GWTFont;
-import co.fxl.gui.gwt.GWTWidgetBorder;
-import co.fxl.gui.input.api.IDateTextFieldWidget;
+import co.fxl.gui.input.api.ICalendarWidget;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.user.datepicker.client.DatePicker;
+import com.google.gwt.user.datepicker.client.DateBox;
 
-class GWTDateTextFieldWidget extends
-		GWTElement<DatePicker, IDateTextFieldWidget> implements
-		IDateTextFieldWidget {
+class GWTCalendarWidget extends GWTElement<DateBox, ICalendarWidget> implements
+		ICalendarWidget {
 
-	GWTDateTextFieldWidget(GWTContainer<DatePicker> container) {
+	GWTCalendarWidget(GWTContainer<DateBox> container) {
 		super(container);
 		defaultFont();
 	}
@@ -53,7 +50,7 @@ class GWTDateTextFieldWidget extends
 	}
 
 	@Override
-	public IDateTextFieldWidget date(Date date) {
+	public ICalendarWidget date(Date date) {
 		container.widget.setValue(date);
 		return this;
 	}
@@ -62,38 +59,4 @@ class GWTDateTextFieldWidget extends
 	public Date date() {
 		return container.widget.getValue();
 	}
-
-	@Override
-	public String text() {
-		throw new MethodNotImplementedException();
-	}
-
-	@Override
-	public IFont font() {
-		return new GWTFont(container.widget);
-	}
-
-	@Override
-	public IColor color() {
-		return newBackgroundColor();
-	}
-
-	@Override
-	public IBorder border() {
-		return new GWTWidgetBorder(container.widget);
-	}
-
-	@Override
-	public IDateTextFieldWidget text(String text) {
-		throw new MethodNotImplementedException();
-	}
-
-	@Override
-	public IDateTextFieldWidget editable(boolean editable) {
-		if (!editable) {
-			throw new MethodNotImplementedException();
-		}
-		return this;
-	}
-
 }
