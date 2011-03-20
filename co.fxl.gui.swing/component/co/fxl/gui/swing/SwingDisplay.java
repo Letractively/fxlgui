@@ -37,6 +37,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.template.DateFormat;
@@ -251,5 +252,10 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 	@Override
 	public boolean supports(Class<?> widgetClass) {
 		return widgetProviders.containsKey(widgetClass);
+	}
+
+	@Override
+	public IPopUp showPopUp() {
+		throw new MethodNotImplementedException();
 	}
 }
