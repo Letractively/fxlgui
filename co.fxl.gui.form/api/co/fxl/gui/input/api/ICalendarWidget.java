@@ -20,18 +20,11 @@ package co.fxl.gui.input.api;
 
 import java.util.Date;
 
-import co.fxl.gui.api.IBordered;
-import co.fxl.gui.api.IColored;
-import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.IUpdateable;
 
-public interface IDateTextFieldWidget extends
-		ITextElement<IDateTextFieldWidget>, IColored, IBordered,
-		IUpdateable<Date> {
+public interface ICalendarWidget extends IUpdateable<Date> {
 
-	IDateTextFieldWidget date(Date date);
+	ICalendarWidget date(Date date);
 
 	Date date();
-
-	IDateTextFieldWidget editable(boolean editable);
 }

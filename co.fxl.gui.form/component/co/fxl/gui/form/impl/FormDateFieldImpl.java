@@ -18,8 +18,13 @@
  */
 package co.fxl.gui.form.impl;
 
+import java.util.Date;
+
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.api.template.DateFormat;
+import co.fxl.gui.input.api.ICalendarWidget;
 
 class FormDateFieldImpl extends FormTextFieldImpl {
 
@@ -29,13 +34,15 @@ class FormDateFieldImpl extends FormTextFieldImpl {
 			@Override
 			public void onClick() {
 				final IPopUp popUp = widget.gridPanel.display().showPopUp();
-				popUp.container().button().text("Close")
-						.addClickListener(new IClickListener() {
-							@Override
-							public void onClick() {
-								popUp.visible(false);
-							}
-						});
+				ICalendarWidget calendar = (ICalendarWidget) popUp.container()
+						.widget(ICalendarWidget.class);
+				calendar.addUpdateListener(new IUpdateListener<Date>() {
+					@Override
+					public void onUpdate(Date value) {
+						FormDateFieldImpl.this.valueElement().text(
+								DateFormat.instance.format(value));
+					}
+				});
 			}
 		});
 	}
