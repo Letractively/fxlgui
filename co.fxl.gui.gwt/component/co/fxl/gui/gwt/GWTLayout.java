@@ -21,6 +21,7 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IDockPanel;
+import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
@@ -68,5 +69,10 @@ class GWTLayout implements ILayout {
 	@Override
 	public IAbsolutePanel absolute() {
 		return (IAbsolutePanel) (panel.element = new GWTAbsolutePanel(panel));
+	}
+
+	@Override
+	public IFlowPanel flow() {
+		return (IFlowPanel) (panel.element = new GWTFlowPanel(panel));
 	}
 }
