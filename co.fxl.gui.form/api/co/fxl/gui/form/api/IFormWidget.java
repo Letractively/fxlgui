@@ -49,7 +49,7 @@ public interface IFormWidget {
 
 	IFormField<ITextField> addTextField(String name);
 
-	IFormField<IDateField> addDateField(String name);
+	IFormField<ITextField> addDateField(String name);
 
 	IFormField<IPasswordField> addPasswordField(String name);
 
