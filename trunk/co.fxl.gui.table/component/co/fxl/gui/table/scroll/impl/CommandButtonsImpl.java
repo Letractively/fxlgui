@@ -175,11 +175,11 @@ public class CommandButtonsImpl implements ICommandButtons,
 
 	public static IClickable<?> clickable(IContainer c, String string) {
 		IHorizontalPanel p = c.panel().horizontal();
-//		p.spacing(4);
-//		p.color().gray();
+		// p.spacing(4);
+		// p.color().gray();
 		// p.border().color().gray();
 		IImage image = p.add().image().resource(string.toLowerCase() + ".png");
-		 p.addSpace(2);
+		p.addSpace(2);
 		ILabel label = p.add().label().text(string);
 		Link l = new Link(p, image, label);
 		l.clickable(true);
@@ -278,7 +278,7 @@ public class CommandButtonsImpl implements ICommandButtons,
 		widget.addTableClickListener(new ITableClickListener() {
 			@Override
 			public void onClick(int column, int row) {
-				l.onClick(widget.rows.identifier(row), row,
+				l.onClick(widget.rows.identifier(row - 1), row,
 						new CallbackTemplate<Boolean>() {
 
 							@Override
