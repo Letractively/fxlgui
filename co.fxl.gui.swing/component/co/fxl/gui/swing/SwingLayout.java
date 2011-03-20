@@ -21,6 +21,7 @@ package co.fxl.gui.swing;
 import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IDockPanel;
+import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
@@ -68,5 +69,10 @@ class SwingLayout implements ILayout {
 	@Override
 	public IAbsolutePanel absolute() {
 		return new SwingAbsolutePanel(panel.container);
+	}
+
+	@Override
+	public IFlowPanel flow() {
+		return new SwingFlowPanel(panel.container);
 	}
 }
