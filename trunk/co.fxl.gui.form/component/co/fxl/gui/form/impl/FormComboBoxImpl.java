@@ -19,6 +19,7 @@
 package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.IComboBox;
+import co.fxl.gui.form.api.IFormField;
 
 class FormComboBoxImpl extends FormFieldImpl<IComboBox> {
 
@@ -29,6 +30,12 @@ class FormComboBoxImpl extends FormFieldImpl<IComboBox> {
 		comboBox = widget.addFormValueComboBox();
 //		comboBox.height(26);
 		widget.addFillColumn();
+	}
+
+	@Override
+	public IFormField<IComboBox> editable(boolean editable) {
+		valueElement().editable(editable);
+		return this;
 	}
 
 	@Override

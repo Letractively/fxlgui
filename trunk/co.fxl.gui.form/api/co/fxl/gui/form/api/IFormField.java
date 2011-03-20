@@ -38,4 +38,6 @@ public interface IFormField<T> {
 	ILabel addButton(String title);
 
 	IContainer addContainer();
+
+	IFormField<T> editable(boolean editable);
 }

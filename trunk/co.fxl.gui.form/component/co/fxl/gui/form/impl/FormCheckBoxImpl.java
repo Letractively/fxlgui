@@ -19,6 +19,7 @@
 package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.ICheckBox;
+import co.fxl.gui.form.api.IFormField;
 
 class FormCheckBoxImpl extends FormFieldImpl<ICheckBox> {
 
@@ -29,6 +30,12 @@ class FormCheckBoxImpl extends FormFieldImpl<ICheckBox> {
 		checkBox = widget.addFormValueCheckBox();
 		// checkBox.height(26);
 		widget.addFillColumn();
+	}
+
+	@Override
+	public IFormField<ICheckBox> editable(boolean editable) {
+		valueElement().editable(editable);
+		return this;
 	}
 
 	@Override
