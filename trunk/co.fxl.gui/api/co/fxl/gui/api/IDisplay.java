@@ -44,6 +44,8 @@ public interface IDisplay {
 
 	IDisplay fullscreen();
 
+	boolean supports(Class<?> widgetClass);
+
 	IDisplay register(IWidgetProvider<?>... widgetProvider);
 
 	IDialog showDialog();
