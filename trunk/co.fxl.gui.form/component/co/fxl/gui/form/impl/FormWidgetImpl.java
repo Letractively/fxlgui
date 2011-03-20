@@ -44,7 +44,6 @@ import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IImageField;
-import co.fxl.gui.input.api.IDateTextFieldWidget;
 
 class FormWidgetImpl implements IFormWidget {
 
@@ -109,14 +108,6 @@ class FormWidgetImpl implements IFormWidget {
 
 	ITextField addFormValueTextField() {
 		ITextField valuePanel = container().textField();
-		heights.decorate(valuePanel);
-		valuePanel.editable(saveListener != null);
-		return valuePanel;
-	}
-
-	IDateTextFieldWidget addFormValueDateField() {
-		IDateTextFieldWidget valuePanel = (IDateTextFieldWidget) container()
-				.widget(IDateTextFieldWidget.class);
 		heights.decorate(valuePanel);
 		valuePanel.editable(saveListener != null);
 		return valuePanel;

@@ -25,7 +25,6 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.input.api.IDateTextFieldWidget;
 
 public class Heights {
 
@@ -64,9 +63,5 @@ public class Heights {
 
 	public void decorate(ILabel label) {
 		label.height(inc + TEXTFIELD_HEIGHT);
-	}
-
-	public void decorate(IDateTextFieldWidget textField) {
-		textField.height(inc + TEXTFIELD_HEIGHT - 8);
 	}
 }
