@@ -52,6 +52,8 @@ public interface IDisplay {
 
 	IWebsite showWebsite();
 
+	IPopUp showPopUp();
+
 	IColor color();
 
 	IDisplay addExceptionHandler(IExceptionHandler handler);
