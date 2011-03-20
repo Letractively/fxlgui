@@ -40,12 +40,12 @@ class SwingDateTextFieldWidget extends
 
 	@Override
 	public IDateTextFieldWidget height(int height) {
-		return super.height(height + 1);
+		return super.height(height + 8);
 	}
 
 	@Override
 	public int height() {
-		return super.height() - 1;
+		return super.height() - 8;
 	}
 
 	@Override
