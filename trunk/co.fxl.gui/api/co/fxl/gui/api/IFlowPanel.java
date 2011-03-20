@@ -18,6 +18,6 @@
  */
 package co.fxl.gui.api;
 
-public interface IFlowPanel {
+public interface IFlowPanel extends IPanel<IFlowPanel> {
 
 }
