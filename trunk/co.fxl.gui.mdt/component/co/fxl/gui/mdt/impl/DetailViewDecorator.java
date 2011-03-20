@@ -392,7 +392,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 			assert formField instanceof IFormField : "cast error in detail view";
 			@SuppressWarnings("unchecked")
 			IFormField<ITextField> iFormField = (IFormField<ITextField>) formField;
-			iFormField.valueElement().editable(false);
+			iFormField.editable(false);
 		}
 	}
 
