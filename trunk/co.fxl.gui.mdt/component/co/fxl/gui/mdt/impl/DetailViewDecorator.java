@@ -185,8 +185,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 				for (final PropertyImpl property : g.properties) {
 					boolean hasProperty = node == null ? true
 							: property.adapter.hasProperty(node);
-					if (property.displayInDetailView && hasProperty
-							&& (!property.onlyNewEntity || isNew)) {
+					if (property.displayInDetailView && hasProperty) {
 						final IFormField<?> formField;
 						final Object valueOf = node != null ? property.adapter
 								.valueOf(node) : null;
