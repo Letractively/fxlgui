@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.api;
 
-public interface IVerticalPanel extends IFlowPanel<IVerticalPanel> {
+public interface IVerticalPanel extends ILinearPanel<IVerticalPanel> {
 
 	IVerticalPanel stretch(boolean stretch);
 }

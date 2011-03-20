@@ -24,6 +24,8 @@ public interface ILayout {
 
 	IVerticalPanel vertical();
 
+	IFlowPanel flow();
+
 	IGridPanel grid();
 
 	IDockPanel dock();

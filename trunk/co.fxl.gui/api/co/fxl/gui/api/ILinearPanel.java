@@ -18,6 +18,11 @@
  */
 package co.fxl.gui.api;
 
-public interface IFlowPanel {
+public interface ILinearPanel<T extends ILinearPanel<T>> extends IPanel<T> {
 
+	T spacing(int pixel);
+
+	T addSpace(int pixel);
+
+	IAlignment<T> align();
 }
