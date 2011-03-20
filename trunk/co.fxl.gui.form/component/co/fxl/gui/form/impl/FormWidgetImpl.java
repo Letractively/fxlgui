@@ -63,7 +63,7 @@ class FormWidgetImpl implements IFormWidget {
 	// static final int HEIGHT_CELL_INNER = 28;
 	private int gridIndex = 0;
 	private WidgetTitle widgetTitle;
-	private IGridPanel gridPanel;
+	IGridPanel gridPanel;
 	boolean hasRequiredAttributes = false;
 	private IVerticalPanel contentPanel;
 	private ISaveListener saveListener = null;

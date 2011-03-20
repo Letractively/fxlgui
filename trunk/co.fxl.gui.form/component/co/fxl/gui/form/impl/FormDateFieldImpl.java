@@ -19,15 +19,23 @@
 package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IPopUp;
 
 class FormDateFieldImpl extends FormTextFieldImpl {
 
-	FormDateFieldImpl(FormWidgetImpl widget, int index, String name) {
+	FormDateFieldImpl(final FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
 		addButton("Calendar").addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
-				throw new MethodNotImplementedException();
+				final IPopUp popUp = widget.gridPanel.display().showPopUp();
+				popUp.container().button().text("Close")
+						.addClickListener(new IClickListener() {
+							@Override
+							public void onClick() {
+								popUp.visible(false);
+							}
+						});
 			}
 		});
 	}
