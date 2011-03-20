@@ -247,4 +247,9 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		SwingUtilities.invokeLater(runnable);
 		return this;
 	}
+
+	@Override
+	public boolean supports(Class<?> widgetClass) {
+		return widgetProviders.containsKey(widgetClass);
+	}
 }
