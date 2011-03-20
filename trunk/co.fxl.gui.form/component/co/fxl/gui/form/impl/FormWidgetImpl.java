@@ -41,7 +41,6 @@ import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.api.template.WidgetTitle;
-import co.fxl.gui.form.api.IDateField;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IImageField;
@@ -176,7 +175,7 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	@Override
-	public IFormField<IDateField> addDateField(String name) {
+	public IFormField<ITextField> addDateField(String name) {
 		return new FormDateFieldImpl(this, gridIndex, name);
 	}
 
@@ -323,8 +322,6 @@ class FormWidgetImpl implements IFormWidget {
 				} else if (valueElement instanceof IComboBox) {
 					validation.linkInput((IComboBox) valueElement);
 				} else if (valueElement instanceof ILabel) {
-				} else if (valueElement instanceof IDateField) {
-					// TODO link input
 				} else
 					throw new MethodNotImplementedException(
 							valueElement.getClass());

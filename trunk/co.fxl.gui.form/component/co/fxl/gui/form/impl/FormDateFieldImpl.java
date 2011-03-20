@@ -18,47 +18,17 @@
  */
 package co.fxl.gui.form.impl;
 
-import java.util.Date;
+import co.fxl.gui.api.IClickable.IClickListener;
 
-import co.fxl.gui.api.IUpdateable;
-import co.fxl.gui.form.api.IDateField;
-import co.fxl.gui.input.api.IDateTextFieldWidget;
-
-class FormDateFieldImpl extends FormFieldImpl<IDateField> implements IDateField {
-
-	IDateTextFieldWidget textField;
+class FormDateFieldImpl extends FormTextFieldImpl {
 
 	FormDateFieldImpl(FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
-		textField = addTextField(widget);
-		textField.border().color().gray();
-		widget.addFillColumn();
-	}
-
-	IDateTextFieldWidget addTextField(FormWidgetImpl widget) {
-		return widget.addFormValueDateField();
-	}
-
-	@Override
-	public IDateField valueElement() {
-		return this;
-	}
-
-	@Override
-	public IUpdateable<Date> addUpdateListener(
-			co.fxl.gui.api.IUpdateable.IUpdateListener<Date> listener) {
-		textField.addUpdateListener(listener);
-		return this;
-	}
-
-	@Override
-	public IDateField date(Date date) {
-		textField.date(date);
-		return this;
-	}
-
-	@Override
-	public Date date() {
-		return textField.date();
+		addButton("Calendar").addClickListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				throw new MethodNotImplementedException();
+			}
+		});
 	}
 }
