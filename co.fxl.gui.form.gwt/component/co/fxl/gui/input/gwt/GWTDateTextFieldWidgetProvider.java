@@ -36,6 +36,8 @@ public class GWTDateTextFieldWidgetProvider implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public IDateTextFieldWidget createWidget(IContainer container) {
-		return new GWTDateTextFieldWidget((GWTContainer<DatePicker>) container);
+		GWTContainer<DatePicker> c = (GWTContainer<DatePicker>) container;
+		c.setComponent(new DatePicker());
+		return new GWTDateTextFieldWidget(c);
 	}
 }
