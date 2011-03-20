@@ -244,4 +244,9 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		});
 		return this;
 	}
+
+	@Override
+	public boolean supports(Class<?> widgetClass) {
+		return widgetProviders.containsKey(widgetClass);
+	}
 }
