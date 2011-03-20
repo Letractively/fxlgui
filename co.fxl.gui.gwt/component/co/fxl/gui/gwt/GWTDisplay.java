@@ -26,6 +26,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
@@ -52,7 +53,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		SplitLayout.SCROLLBAR_WIDTH = 8;
 		SplitLayout.WIDTH_SIDE_PANEL = 308;
 	}
- 
+
 	private static GWTDisplay instance;
 	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
 	private GWTContainer<Widget> container;
@@ -248,5 +249,10 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	@Override
 	public boolean supports(Class<?> widgetClass) {
 		return widgetProviders.containsKey(widgetClass);
+	}
+
+	@Override
+	public IPopUp showPopUp() {
+		throw new MethodNotImplementedException();
 	}
 }
