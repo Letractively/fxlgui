@@ -272,6 +272,12 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	@Override
 	public IPropertyGroup<Object> defaultPropertyGroup() {
+		if (isDefaultPropertyGroup) {
+			for (IPropertyGroup<Object> g : propertyGroups)
+				if (g.name().equals(DETAILS))
+					return g;
+			throw new MethodNotImplementedException();
+		}
 		isDefaultPropertyGroup = true;
 		return addPropertyGroup(DETAILS);
 	}

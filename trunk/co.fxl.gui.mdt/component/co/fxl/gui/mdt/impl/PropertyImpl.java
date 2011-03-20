@@ -35,6 +35,7 @@ class PropertyImpl implements IProperty<Object, Object> {
 	IUpdateListener<Object> listener;
 	boolean filterable;
 	IConstraintAdapter<Object, Object> constraintAdapter;
+	boolean onlyNewEntity = false;
 
 	PropertyImpl(String name) {
 		this.name = name;
@@ -103,6 +104,12 @@ class PropertyImpl implements IProperty<Object, Object> {
 	public IProperty<Object, Object> constraintAdapter(
 			co.fxl.gui.mdt.api.IProperty.IConstraintAdapter<Object, Object> adapter) {
 		constraintAdapter = adapter;
+		return this;
+	}
+
+	@Override
+	public IProperty<Object, Object> onlyNewEntity(boolean onlyNewEntity) {
+		this.onlyNewEntity = onlyNewEntity;
 		return this;
 	}
 }

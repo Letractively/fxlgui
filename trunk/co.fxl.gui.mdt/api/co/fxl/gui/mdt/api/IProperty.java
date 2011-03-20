@@ -68,4 +68,6 @@ public interface IProperty<T, S> {
 	IProperty<T, S> filterable();
 
 	String name();
+
+	IProperty<T, S> onlyNewEntity(boolean onlyNewEntity);
 }
