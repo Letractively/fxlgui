@@ -25,6 +25,7 @@ import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IDockPanel;
+import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
@@ -33,7 +34,7 @@ import co.fxl.gui.register.api.IRegisterWidget;
 
 public class RegisterWidgetImpl implements IRegisterWidget {
 
-	public IHorizontalPanel headerPanel;
+	public IFlowPanel headerPanel;
 	ICardPanel cardPanel;
 	List<RegisterImpl> registers = new LinkedList<RegisterImpl>();
 	int selection = -1;
@@ -50,7 +51,7 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 	public RegisterWidgetImpl(ILayout panel) {
 		mainBorders = panel.dock();
 		borders = mainBorders.top().panel().dock();
-		headerPanel = borders.left().panel().horizontal().spacing(0);
+		headerPanel = borders.left().panel().flow();
 		cardPanel = mainBorders.center().panel().card();
 	}
 
