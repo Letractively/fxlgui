@@ -18,6 +18,6 @@
  */
 package co.fxl.gui.api;
 
-public interface IHorizontalPanel extends IFlowPanel<IHorizontalPanel> {
+public interface IHorizontalPanel extends ILinearPanel<IHorizontalPanel> {
 
 }
