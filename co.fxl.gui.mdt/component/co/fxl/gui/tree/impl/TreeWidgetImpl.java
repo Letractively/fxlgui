@@ -433,7 +433,9 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				// MethodNotImplementedException("Selection in tree widget '"
 				// + selection + "' (" + selection.getClass()
 				// + ") not found in expanded tree").printStackTrace();
-			} else
+			} else if (!root.children().isEmpty())
+				node = getObject2node(root.children().get(0).object());
+			else
 				node = null;
 			// for (Node<T> n : object2node.values()) {
 			// T object = n.tree.object();
