@@ -234,6 +234,10 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 		public int width() {
 			throw new MethodNotImplementedException();
 		}
+
+		void remove() {
+			SwingGridPanel.this.container.component.remove(panel);
+		}
 	}
 
 	private GridBagConstraints constraints = new GridBagConstraints();
@@ -349,8 +353,13 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 	public IGridPanel resize(int columns, int rows) {
 		if (columns < columns())
 			throw new MethodNotImplementedException();
-		if (rows < rows())
-			throw new MethodNotImplementedException();
+		if (rows < rows()) {
+			for (int r = rows; r < rows(); r++) {
+				for (int c = 0; c < columns; c++) {
+					((GridCell) getCell(c, r)).remove();
+				}
+			}
+		}
 		return this;
 	}
 
