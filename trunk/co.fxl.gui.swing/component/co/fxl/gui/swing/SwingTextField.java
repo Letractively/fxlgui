@@ -64,12 +64,6 @@ class SwingTextField extends SwingTextInput<JTextField, ITextField> implements
 		return this;
 	}
 
-	@Override
-	public ITextField columns(int rows) {
-		jTextField().setColumns(rows);
-		return this;
-	}
-
 	private JTextField jTextField() {
 		return ((JTextField) container.component);
 	}
@@ -78,5 +72,12 @@ class SwingTextField extends SwingTextInput<JTextField, ITextField> implements
 	public IUpdateable<String> addUpdateListener(
 			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
 		return super.addStringUpdateListener(listener);
+	}
+
+	@Override
+	public ITextField maxLength(int maxLength) {
+		// TODO ...
+		System.err.println("SwingTextField.maxLength: MethodNotImplementedException");
+		return this;
 	}
 }

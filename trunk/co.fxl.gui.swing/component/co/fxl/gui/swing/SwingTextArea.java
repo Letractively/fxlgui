@@ -76,4 +76,12 @@ class SwingTextArea extends SwingTextInput<JTextArea, ITextArea> implements
 			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
 		return super.addStringUpdateListener(listener);
 	}
+
+	@Override
+	public ITextArea maxLength(int maxLength) {
+		// TODO ...
+		System.err
+				.println("SwingTextArea.maxLength: MethodNotImplementedException");
+		return this;
+	}
 }
