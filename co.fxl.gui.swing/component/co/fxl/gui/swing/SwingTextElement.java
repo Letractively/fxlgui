@@ -23,7 +23,6 @@ import java.awt.Font;
 
 import javax.swing.JComponent;
 
-
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.template.HTMLText;
