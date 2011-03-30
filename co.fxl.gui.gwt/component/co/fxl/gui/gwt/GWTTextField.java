@@ -125,7 +125,7 @@ class GWTTextField extends GWTElement<TextBox, ITextField> implements
 	}
 
 	@Override
-	public ITextField columns(int rows) {
+	public ITextField maxLength(int rows) {
 		container.widget.setMaxLength(rows);
 		return this;
 	}
