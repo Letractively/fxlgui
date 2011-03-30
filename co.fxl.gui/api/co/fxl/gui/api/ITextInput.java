@@ -18,9 +18,11 @@
  */
 package co.fxl.gui.api;
 
-public interface ITextArea extends ITextInput<ITextArea> {
+public interface ITextInput<T> extends ITextElement<T>, IColored, IBordered,
+		IUpdateable<String> {
 
-	int cursorPosition();
+	T editable(boolean editable);
 
-	ITextArea cursorPosition(int position);
+	T maxLength(int maxLength);
+
 }
