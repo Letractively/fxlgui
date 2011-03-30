@@ -198,8 +198,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 											getNextCallback());
 							}
 						};
-						CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>(
-								lCallback1) {
+						CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>() {
 
 							public void onFail(Throwable throwable) {
 								widgetTitle.reset();

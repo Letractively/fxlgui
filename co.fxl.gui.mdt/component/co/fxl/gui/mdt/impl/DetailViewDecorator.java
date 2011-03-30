@@ -386,7 +386,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	public void supplement(IFormWidget form, PropertyImpl property,
 			String name, IFormField<?> formField) {
 		if (property.type.maxLength == -1
-				&& formField.valueElement() instanceof ITextInput<?>)
+				|| !(formField.valueElement() instanceof ITextInput<?>))
 			return;
 		ITextInput<?> te = (ITextInput<?>) formField.valueElement();
 		te.maxLength(property.type.maxLength);
