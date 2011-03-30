@@ -28,6 +28,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.ITextField;
+import co.fxl.gui.api.ITextInput;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.DiscardChangesDialog;
@@ -373,7 +374,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 						if (property != null && formField != null
 								&& property.required && hasRequiredAttributes)
 							formField.required();
-						supplement(form, property.name, formField);
+						supplement(form, property, property.name, formField);
 					}
 				}
 		supplement(form);
@@ -382,8 +383,13 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 		form.visible(true);
 	}
 
-	public void supplement(IFormWidget form, String name,
-			IFormField<?> formField) {
+	public void supplement(IFormWidget form, PropertyImpl property,
+			String name, IFormField<?> formField) {
+		if (property.type.maxLength == -1
+				&& formField.valueElement() instanceof ITextInput<?>)
+			return;
+		ITextInput<?> te = (ITextInput<?>) formField.valueElement();
+		te.maxLength(property.type.maxLength);
 	}
 
 	private void decorateEditable(final PropertyImpl property,
