@@ -18,8 +18,7 @@
  */
 package co.fxl.gui.api;
 
-public interface ITextField extends ITextElement<ITextField>, IColored,
-		IBordered, IUpdateable<String> {
+public interface ITextField extends ITextInput<ITextField> {
 
 	public interface ICarriageReturnListener {
 
@@ -27,8 +26,4 @@ public interface ITextField extends ITextElement<ITextField>, IColored,
 	}
 
 	ITextField addCarriageReturnListener(ICarriageReturnListener listener);
-
-	ITextField editable(boolean editable);
-
-	ITextField columns(int rows);
 }

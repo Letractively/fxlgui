@@ -36,6 +36,8 @@ public interface IFieldType {
 
 	IFieldType type(Class<?> clazz);
 
+	IFieldType maxLength(int maxLength);
+
 	IFieldType logic();
 
 	IFieldType relation();
