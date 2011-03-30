@@ -22,7 +22,7 @@ import co.fxl.gui.api.template.FieldTypeImpl;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.mdt.api.IProperty;
 
-class PropertyImpl implements IProperty<Object, Object> {
+public class PropertyImpl implements IProperty<Object, Object> {
 
 	String name;
 	IAdapter<Object, Object> adapter;
