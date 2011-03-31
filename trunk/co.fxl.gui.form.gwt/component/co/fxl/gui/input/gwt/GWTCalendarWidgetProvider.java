@@ -23,7 +23,7 @@ import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.gwt.GWTContainer;
 import co.fxl.gui.input.api.ICalendarWidget;
 
-import com.google.gwt.user.datepicker.client.DateBox;
+import com.google.gwt.user.datepicker.client.DatePicker;
 
 public class GWTCalendarWidgetProvider implements
 		IWidgetProvider<ICalendarWidget> {
@@ -36,8 +36,8 @@ public class GWTCalendarWidgetProvider implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public ICalendarWidget createWidget(IContainer container) {
-		GWTContainer<DateBox> c = (GWTContainer<DateBox>) container;
-		c.setComponent(new DateBox());
+		GWTContainer<DatePicker> c = (GWTContainer<DatePicker>) container;
+		c.setComponent(new DatePicker());
 		return new GWTCalendarWidget(c);
 	}
 }
