@@ -18,27 +18,25 @@
  */
 package co.fxl.gui.navigation.impl;
 
-import co.fxl.gui.api.IColored.IColor;
-import co.fxl.gui.api.IPanel;
 import co.fxl.gui.register.api.IRegister.ITitle;
 import co.fxl.gui.register.impl.RegisterWidgetImpl;
 
 class RootRegisterStyle extends RegisterStyle {
 
-	private RegisterWidgetImpl widget;
+	// private RegisterWidgetImpl widget;
 
 	@Override
 	void decorateWidget(RegisterWidgetImpl widget) {
-		this.widget = widget;
+		// this.widget = widget;
 		widget.headerPanel.color().rgb(200, 200, 200);
-		IPanel<?> filler = widget.addFillerPanel();
-		background(filler.color());
+		// IPanel<?> filler = widget.addFillerPanel();
+		// background(filler.color());
 		widget.separators(false);
 	}
 
-	private void background(IColor color) {
-		widget.background(color);
-	}
+	// private void background(IColor color) {
+	// widget.background(color);
+	// }
 
 	@Override
 	void init(ITitle title) {
