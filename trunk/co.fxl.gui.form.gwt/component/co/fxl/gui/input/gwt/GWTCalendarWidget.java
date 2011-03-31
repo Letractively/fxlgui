@@ -34,7 +34,6 @@ class GWTCalendarWidget extends GWTElement<DateBox, ICalendarWidget> implements
 
 	GWTCalendarWidget(GWTContainer<DateBox> container) {
 		super(container);
-		defaultFont();
 	}
 
 	@Override
