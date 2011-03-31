@@ -24,7 +24,9 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	@Override
 	public IPopUp visible(boolean visible) {
-		if (!visible)
+		if (visible)
+			popUp.show();
+		else
 			popUp.hide();
 		return this;
 	}
