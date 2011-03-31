@@ -27,12 +27,12 @@ import co.fxl.gui.input.api.ICalendarWidget;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.user.datepicker.client.DateBox;
+import com.google.gwt.user.datepicker.client.DatePicker;
 
-class GWTCalendarWidget extends GWTElement<DateBox, ICalendarWidget> implements
-		ICalendarWidget {
+class GWTCalendarWidget extends GWTElement<DatePicker, ICalendarWidget>
+		implements ICalendarWidget {
 
-	GWTCalendarWidget(GWTContainer<DateBox> container) {
+	GWTCalendarWidget(GWTContainer<DatePicker> container) {
 		super(container);
 	}
 
