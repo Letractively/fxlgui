@@ -118,11 +118,20 @@ class GWTTextArea extends GWTElement<TextArea, ITextArea> implements ITextArea {
 	}
 
 	@Override
-	public ITextArea maxLength(int maxLength) {
-		// TODO ...
-		System.err
-				.println("GWTTextArea.maxLength: MethodNotImplementedException");
+	public ITextArea maxLength(final int maxLength) {
+		addUpdateListener(new IUpdateListener<String>() {
+
+			@Override
+			public void onUpdate(final String value) {
+				if (value.length() > maxLength)
+					display().invokeLater(new Runnable() {
+						public void run() {
+							GWTTextArea.this.container.widget.setText(value
+									.substring(0, maxLength));
+						}
+					});
+			}
+		});
 		return this;
 	}
-
 }

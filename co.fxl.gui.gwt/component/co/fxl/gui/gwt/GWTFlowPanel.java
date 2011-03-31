@@ -29,7 +29,8 @@ class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 	@SuppressWarnings("unchecked")
 	GWTFlowPanel(GWTContainer<?> container) {
 		super((GWTContainer<FlowPanel>) container);
-		super.container.setComponent(new FlowPanel());
+		FlowPanel flowPanel = new FlowPanel();
+		super.container.setComponent(flowPanel);
 	}
 
 	@Override
