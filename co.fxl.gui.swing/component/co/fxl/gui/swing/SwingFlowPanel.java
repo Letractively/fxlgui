@@ -14,6 +14,7 @@ class SwingFlowPanel extends SwingPanel<IFlowPanel> implements IFlowPanel,
 	SwingFlowPanel(SwingContainer<PanelComponent> container) {
 		super(container);
 		setLayout(new HorizontalLayoutManager(this));
+		flowLayout().setAlignment(FlowLayout.LEFT);
 		flowLayout().setHgap(0);
 		flowLayout().setVgap(0);
 	}
