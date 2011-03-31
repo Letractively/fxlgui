@@ -73,11 +73,4 @@ class SwingTextField extends SwingTextInput<JTextField, ITextField> implements
 			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
 		return super.addStringUpdateListener(listener);
 	}
-
-	@Override
-	public ITextField maxLength(int maxLength) {
-		// TODO ...
-		System.err.println("SwingTextField.maxLength: MethodNotImplementedException");
-		return this;
-	}
 }

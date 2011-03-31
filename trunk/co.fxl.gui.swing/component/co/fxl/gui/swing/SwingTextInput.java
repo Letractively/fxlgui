@@ -74,11 +74,30 @@ public class SwingTextInput<T extends JTextComponent, R> extends
 		return html.text;
 	}
 
-	public R addStringUpdateListener(final IUpdateListener<String> updateListener) {
+	public R addStringUpdateListener(
+			final IUpdateListener<String> updateListener) {
 		container.component.getDocument().addDocumentListener(
 				new UpdateListener(updateListener));
 		@SuppressWarnings("unchecked")
 		R ret = (R) this;
 		return ret;
+	}
+
+	@SuppressWarnings("unchecked")
+	public R maxLength(final int maxLength) {
+		addStringUpdateListener(new IUpdateListener<String>() {
+
+			@Override
+			public void onUpdate(final String value) {
+				if (value.length() > maxLength)
+					display().invokeLater(new Runnable() {
+						public void run() {
+							SwingTextInput.this.container.component
+									.setText(value.substring(0, maxLength));
+						}
+					});
+			}
+		});
+		return (R) this;
 	}
 }
