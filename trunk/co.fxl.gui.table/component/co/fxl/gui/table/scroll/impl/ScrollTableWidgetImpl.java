@@ -417,7 +417,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			}
 			String name = columnImpl.name;
 			if (sortColumn == c) {
-				name += " " + (sortNegator == 1 ? ARROW_DOWN : ARROW_UP);
+				name += " " + (sortNegator == 1 ? ARROW_UP : ARROW_DOWN);
 			}
 			IColumn column = grid.column(current++);
 			columnImpl.decorator().prepare(column);
