@@ -62,7 +62,7 @@ class SelectableList {
 			}
 			selection = this;
 			selection.selected(true);
-			button.clickable(selection != null);
+			button.clickable(widget.editable && selection != null);
 		}
 
 		void selected(boolean selected) {
@@ -99,10 +99,11 @@ class SelectableList {
 				}
 			}
 		}
-		allButton.clickable(hasOne);
-		button.clickable(selection != null);
+		allButton.clickable(widget.editable && hasOne);
+		button.clickable(widget.editable && selection != null);
 	}
 
+	private N2MWidgetImpl widget;
 	private IVerticalPanel panel;
 	private List<ListItem> items = new LinkedList<ListItem>();
 	private ListItem selection;
@@ -112,7 +113,9 @@ class SelectableList {
 	private boolean isSelected;
 	private IScrollPane scrollPane;
 
-	SelectableList(IGridCell cell, String string, boolean isSelected) {
+	SelectableList(N2MWidgetImpl widget, IGridCell cell, String string,
+			boolean isSelected) {
+		this.widget = widget;
 		scrollPane = cell.scrollPane();
 		scrollPane.height(400);
 		scrollPane.color().white();
