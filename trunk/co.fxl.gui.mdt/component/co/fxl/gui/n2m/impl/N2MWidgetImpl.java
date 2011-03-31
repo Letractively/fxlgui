@@ -39,13 +39,14 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 	private IButton buttonRight;
 	private IButton buttonLeftAll;
 	private IButton buttonRightAll;
+	boolean editable = true;
 
 	N2MWidgetImpl(IContainer container) {
 		grid = container.panel().grid();
-		left = new SelectableList(grid.cell(0, 0), "Available", false);
+		left = new SelectableList(this, grid.cell(0, 0), "Available", false);
 		center = grid.cell(1, 0).width(80).align().center().panel().vertical()
 				.add().panel().vertical().spacing(10);
-		right = new SelectableList(grid.cell(2, 0), "Selected", true);
+		right = new SelectableList(this, grid.cell(2, 0), "Selected", true);
 		leftButton = center.add().button().text("<")
 				.addClickListener(new IClickListener() {
 					@Override
@@ -168,6 +169,7 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 			buttonRight.clickable(false);
 			buttonRightAll.clickable(false);
 		}
+		this.editable = editable;
 		return this;
 	}
 }
