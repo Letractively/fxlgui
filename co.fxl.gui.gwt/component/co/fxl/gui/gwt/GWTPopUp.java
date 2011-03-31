@@ -46,6 +46,6 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	@Override
 	public IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
-		throw new MethodNotImplementedException();
+		return display.lookupWidgetProvider(interfaceClass);
 	}
 }
