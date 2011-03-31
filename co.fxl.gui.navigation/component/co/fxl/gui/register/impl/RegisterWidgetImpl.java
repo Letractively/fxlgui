@@ -39,7 +39,6 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 	List<RegisterImpl> registers = new LinkedList<RegisterImpl>();
 	int selection = -1;
 	boolean separators = true;
-	public IHorizontalPanel borders;
 	private IHorizontalPanel stretch;
 	private IDockPanel mainBorders;
 	private int br = 0;
@@ -50,13 +49,12 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 
 	public RegisterWidgetImpl(ILayout panel) {
 		mainBorders = panel.dock();
-		borders = mainBorders.top().panel().horizontal();
-		headerPanel = borders.add().panel().flow();
+		headerPanel = mainBorders.top().panel().flow();
 		cardPanel = mainBorders.center().panel().card();
 	}
 
 	public void background(int r, int g, int b) {
-		borders.color().rgb(r, g, b);
+		headerPanel.color().rgb(r, g, b);
 		br = r;
 		bg = g;
 		bb = b;
