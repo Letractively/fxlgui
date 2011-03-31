@@ -64,7 +64,11 @@ public interface ITree<T> {
 
 	boolean isReassignable();
 
+	boolean isCopieable();
+
 	boolean isReassignableTo(ITree<T> tree);
+
+	boolean isCopieableTo(ITree<T> tree);
 
 	void reassign(ITree<T> newParent, boolean isCopy,
 			final ICallback<ITree<T>> pCallback);
