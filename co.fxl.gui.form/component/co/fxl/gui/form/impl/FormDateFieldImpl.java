@@ -49,6 +49,7 @@ class FormDateFieldImpl extends FormTextFieldImpl {
 								DateFormat.instance.format(value));
 					}
 				});
+				popUp.visible(true);
 			}
 		});
 	}
