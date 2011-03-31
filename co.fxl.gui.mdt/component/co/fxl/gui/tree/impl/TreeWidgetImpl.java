@@ -629,16 +629,21 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		if (paste != null)
 			paste.clickable(cutted != null
 					&& selection != null
-					&& cutted.tree
-							.isReassignableTo(getObject2node(selection).tree));
+					&& (!isCopy ? cutted.tree
+							.isReassignableTo(getObject2node(selection).tree)
+							: cutted.tree
+									.isCopieableTo(getObject2node(selection).tree)));
 		boolean cuttable = cut != null && selection != null
 				&& getObject2node(selection) != null
 				&& getObject2node(selection).tree.isReassignable();
 		if (cut != null) {
 			cut.clickable(cuttable);
 		}
+		boolean copieable = cut != null && selection != null
+				&& getObject2node(selection) != null
+				&& getObject2node(selection).tree.isCopieable();
 		if (copy != null) {
-			copy.clickable(cuttable);
+			copy.clickable(copieable);
 		}
 	}
 

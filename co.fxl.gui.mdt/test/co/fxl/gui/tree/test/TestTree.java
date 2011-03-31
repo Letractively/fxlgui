@@ -173,4 +173,14 @@ class TestTree implements ITree<String> {
 	public boolean isReassignableTo(ITree<String> tree) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public boolean isCopieable() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public boolean isCopieableTo(ITree<String> tree) {
+		throw new MethodNotImplementedException();
+	}
 }
