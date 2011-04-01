@@ -20,6 +20,8 @@ package co.fxl.gui.api;
 
 public interface IPopUp {
 
+	IPopUp offset(int x, int y);
+
 	IContainer container();
 
 	IPopUp visible(boolean visible);
