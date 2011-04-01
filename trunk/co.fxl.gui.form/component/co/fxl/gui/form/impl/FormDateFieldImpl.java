@@ -40,6 +40,7 @@ class FormDateFieldImpl extends FormTextFieldImpl {
 			@Override
 			public void onClick() {
 				final IPopUp popUp = widget.gridPanel.display().showPopUp();
+				popUp.offset(button.offsetX(), button.offsetY());
 				ICalendarWidget calendar = (ICalendarWidget) popUp.container()
 						.widget(ICalendarWidget.class);
 				calendar.addUpdateListener(new IUpdateListener<Date>() {
