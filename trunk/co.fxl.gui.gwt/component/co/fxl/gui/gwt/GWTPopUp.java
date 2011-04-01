@@ -50,4 +50,10 @@ class GWTPopUp implements IPopUp, WidgetParent {
 	public IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
 		return display.lookupWidgetProvider(interfaceClass);
 	}
+
+	@Override
+	public IPopUp offset(int x, int y) {
+		popUp.setPopupPosition(x, y);
+		return this;
+	}
 }

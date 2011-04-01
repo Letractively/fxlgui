@@ -44,6 +44,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	protected HandlerRegistration registration;
 	protected HandlerRegistration registration2;
 	protected List<GWTClickHandler<R>> handlers = new LinkedList<GWTClickHandler<R>>();
+	private String visibleStyle = null;
 
 	public GWTElement(GWTContainer<T> container) {
 		assert container != null : "GWTElement.new";
@@ -57,7 +58,18 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public R visible(boolean visible) {
-		container.widget.setVisible(visible);
+		if (!visible) {
+			if (visible())
+				visibleStyle = container.widget.getElement().getStyle()
+						.getProperty("display");
+			container.widget.setVisible(false);
+		} else {
+			if (visibleStyle != null)
+				container.widget.getElement().getStyle()
+						.setProperty("display", visibleStyle);
+			else
+				container.widget.setVisible(visible);
+		}
 		return (R) this;
 	}
 
