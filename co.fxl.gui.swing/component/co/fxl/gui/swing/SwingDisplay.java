@@ -256,6 +256,6 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	@Override
 	public IPopUp showPopUp() {
-		throw new MethodNotImplementedException();
+		return new SwingPopUp(this);
 	}
 }
