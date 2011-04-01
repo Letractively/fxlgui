@@ -30,6 +30,7 @@ class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 	GWTFlowPanel(GWTContainer<?> container) {
 		super((GWTContainer<FlowPanel>) container);
 		FlowPanel flowPanel = new FlowPanel();
+		flowPanel.setWidth("100%");
 		super.container.setComponent(flowPanel);
 	}
 
