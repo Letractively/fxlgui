@@ -22,6 +22,7 @@ import java.util.List;
 
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.ICallback;
+import co.fxl.gui.api.template.INavigationListener;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
@@ -99,4 +100,6 @@ public interface IMasterDetailTableWidget<T> {
 	ITreeWidget<T> tree();
 
 	IMasterDetailTableWidget<T> allowCutPaste(boolean allowCutPaste);
+
+	IMasterDetailTableWidget<T> navigationListener(INavigationListener l);
 }

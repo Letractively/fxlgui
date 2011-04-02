@@ -32,6 +32,7 @@ import co.fxl.gui.api.IRadioButton;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IFieldType;
+import co.fxl.gui.api.template.INavigationListener;
 import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.api.template.LazyUpdateListener;
 import co.fxl.gui.api.template.NavigationView;
@@ -94,6 +95,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	Map<String, String> creatableTypeIcons = new HashMap<String, String>();
 	int rowsInTable = 0;
 	boolean allowCutPaste = false;
+	private INavigationListener navigationListener;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -246,6 +248,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	void addNavigationLinks(IVerticalPanel sidePanel) {
 		if (!navigationLinks.isEmpty()) {
 			NavigationView t = new NavigationView(sidePanel.add().panel());
+			if (navigationListener != null)
+				t.navigationViewListener(navigationListener);
 			for (NavigationLinkImpl link : navigationLinks) {
 				Link l = t.addHyperlink(link.imageResource).text(link.name);
 				for (final INavigationLinkListener<Object> cl : link.listeners) {
@@ -502,6 +506,13 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	@Override
 	public IMasterDetailTableWidget<Object> allowCutPaste(boolean allowCutPaste) {
 		this.allowCutPaste = allowCutPaste;
+		return this;
+	}
+
+	@Override
+	public IMasterDetailTableWidget<Object> navigationListener(
+			INavigationListener l) {
+		navigationListener = l;
 		return this;
 	}
 }
