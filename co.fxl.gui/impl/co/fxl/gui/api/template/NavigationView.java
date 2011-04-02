@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
@@ -97,6 +98,29 @@ public class NavigationView {
 		widgetTitle.grayBackground();
 	}
 
+	public NavigationView navigationViewListener(final INavigationListener l) {
+		if (l == null)
+			return this;
+		IClickable<?> back = widgetTitle.addHyperlink("nav_back.png", "Back");
+		back.addClickListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				l.previous();
+			}
+		});
+		back.clickable(l.hasPrevious());
+		IClickable<?> forward = widgetTitle.addHyperlink("nav_forward.png",
+				"Forward");
+		forward.addClickListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				l.next();
+			}
+		});
+		forward.clickable(l.hasNext());
+		return this;
+	}
+
 	public Link addHyperlink() {
 		return addHyperlink(null);
 	}
@@ -112,8 +136,8 @@ public class NavigationView {
 
 	public Link addHyperlink(String imageResource) {
 		setUp();
-		IHorizontalPanel panel = this.panel.add().panel().horizontal().align().begin().add()
-				.panel().horizontal().align().begin();
+		IHorizontalPanel panel = this.panel.add().panel().horizontal().align()
+				.begin().add().panel().horizontal().align().begin();
 		IImage image = null;
 		if (SHOW_NUMBERS) {
 			String s = String.valueOf(index++) + ".";
