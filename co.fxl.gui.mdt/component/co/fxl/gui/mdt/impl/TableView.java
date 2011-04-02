@@ -260,7 +260,6 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 
 	@Override
 	public void onApply(final IFilterConstraints constraints) {
-		widget.mainPanel.clear();
 		widget.constraints = constraints;
 		Iterator<MDTFilterImpl> it = widget.filterList.filters.iterator();
 		while (it.hasNext()) {
@@ -279,6 +278,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 					@Override
 					public void onSuccess(final IDeletableList<Object> queryList) {
 						final long s = System.currentTimeMillis();
+						widget.mainPanel.clear();
 						drawTable();
 						TableView.this.queryList = queryList;
 						final List<Object> list = queryList.asList();
