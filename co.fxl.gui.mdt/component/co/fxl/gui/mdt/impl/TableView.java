@@ -355,11 +355,12 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 	}
 
 	@Override
-	public void onSort(String columnName, boolean up) {
+	public void onSort(String columnName, boolean up, boolean update) {
 		widget.constraints.sortOrder(columnName);
 		widget.constraints.sortDirection(up);
 		widget.filterWidget.constraints(widget.constraints());
-		onApply(widget.constraints);
+		if (update)
+			onApply(widget.constraints);
 	}
 
 	@Override

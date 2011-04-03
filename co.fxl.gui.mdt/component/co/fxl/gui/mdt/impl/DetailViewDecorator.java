@@ -394,7 +394,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 
 	private void decorateEditable(final PropertyImpl property,
 			final IFormField<?> formField) {
-		if (!property.editable) {
+		if (!property.editable || !isUpdateable) {
 			assert formField instanceof IFormField : "cast error in detail view";
 			@SuppressWarnings("unchecked")
 			IFormField<ITextField> iFormField = (IFormField<ITextField>) formField;
