@@ -534,13 +534,14 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				public void onClick(int column, int row) {
 					if (row != 0)
 						return;
-
 					ScrollTableColumnImpl columnImpl = columns
 							.get(realColumn(column));
 					if (columnImpl.sortable) {
 						if (rows.size() < MAX_SORT_SIZE || sortListener == null) {
 							sortColumn = columnImpl.index;
 							sortNegator = rows.sort(columnImpl);
+							sortListener.onSort(columnImpl.name,
+									sortNegator == 1, false);
 							update();
 						} else {
 							if (sortColumn != -1) {
@@ -550,7 +551,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 							}
 							sortColumn = columnImpl.index;
 							sortListener.onSort(columnImpl.name,
-									sortNegator == 1);
+									sortNegator == 1, true);
 						}
 					}
 				}
