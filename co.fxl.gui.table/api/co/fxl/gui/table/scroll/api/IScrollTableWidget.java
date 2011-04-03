@@ -78,7 +78,7 @@ public interface IScrollTableWidget<T> {
 
 	public interface ISortListener {
 
-		void onSort(String columnName, boolean up);
+		void onSort(String columnName, boolean asc, boolean update);
 	}
 
 	ILabel addTitle(String text);
