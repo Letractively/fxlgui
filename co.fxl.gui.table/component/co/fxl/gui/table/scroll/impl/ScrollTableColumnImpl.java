@@ -45,22 +45,22 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		@Override
 		public void decorate(final Object identifier, ICell cell, Boolean value) {
 			cell.checkBox(value);
-			if (value != null)
-				if (updateListener != null) {
-					cell.updateListener(new IUpdateListener<Boolean>() {
-						@Override
-						public void onUpdate(Boolean value) {
-							updateListener.onUpdate(identifier, value);
-						}
-					});
-					cell.updateAdapter(new IUpdateAdapter<Boolean>() {
+			if (value != null && updateListener != null
+					&& updateListener.isEditable(identifier)) {
+				cell.updateListener(new IUpdateListener<Boolean>() {
+					@Override
+					public void onUpdate(Boolean value) {
+						updateListener.onUpdate(identifier, value);
+					}
+				});
+				cell.updateAdapter(new IUpdateAdapter<Boolean>() {
 
-						@Override
-						public boolean isEditable() {
-							return updateListener.isEditable(identifier);
-						}
-					});
-				}
+					@Override
+					public boolean isEditable() {
+						return updateListener.isEditable(identifier);
+					}
+				});
+			}
 		}
 
 		@Override
