@@ -275,10 +275,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private int convertToRowOffset(int maxOffset) {
 		if (scrollPanelHeight == 0 || height == 0)
 			return 0;
-		double rowHeight = height / initialPaintedRows == 0 ? 1
-				: initialPaintedRows;
-		double index = maxOffset / rowHeight; // rows.size() * (maxOffset +
-												// height) / scrollPanelHeight;
+		// double rowHeight = height / initialPaintedRows == 0 ? 1
+		// : initialPaintedRows;
+		double index = // maxOffset / rowHeight;
+		rows.size() * (((double) (maxOffset)) / ((double) scrollPanelHeight));
 		int index2 = (int) index;
 		if (index2 > maxRowIndex)
 			index2 = maxRowIndex;
