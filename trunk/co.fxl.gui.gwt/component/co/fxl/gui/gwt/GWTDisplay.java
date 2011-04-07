@@ -19,6 +19,8 @@
 package co.fxl.gui.gwt;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.api.IColored.IColor;
@@ -47,6 +49,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class GWTDisplay implements IDisplay, WidgetParent {
 
+	public interface BlockListener {
+
+		void onBlock(boolean block);
+	}
+
 	static {
 		DateFormat.MONTH_INCREMENT_DEC = 1;
 		DateFormat.YEAR_INCREMENT_DEC = 1900;
@@ -56,6 +63,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 	private static GWTDisplay instance;
 	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
+	private List<BlockListener> blockListeners = new LinkedList<BlockListener>();
 	private GWTContainer<Widget> container;
 	private GWTUncaughtExceptionHandler uncaughtExceptionHandler;
 	boolean waiting = false;
@@ -230,7 +238,13 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		this.waiting = waiting;
 		DOM.setStyleAttribute(RootPanel.get().getElement(), "cursor",
 				waiting ? "wait" : "default");
-		// TODO ...
+		for (BlockListener l : blockListeners)
+			l.onBlock(waiting);
+		return this;
+	}
+
+	public GWTDisplay addBlockListener(BlockListener l) {
+		blockListeners.add(l);
 		return this;
 	}
 
