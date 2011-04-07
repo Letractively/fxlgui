@@ -52,6 +52,7 @@ import co.fxl.gui.mdt.api.INavigationLink.INavigationLinkListener;
 import co.fxl.gui.mdt.api.IPropertyGroup;
 import co.fxl.gui.mdt.api.IPropertyPage;
 import co.fxl.gui.mdt.api.IRelation;
+import co.fxl.gui.mdt.api.IStateMemento;
 import co.fxl.gui.tree.api.ITreeWidget;
 
 class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
@@ -514,5 +515,24 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 			INavigationListener l) {
 		navigationListener = l;
 		return this;
+	}
+
+	/**
+	 * TODO remember MDT-State: - Grid or Master-Detail - Relation-Constraints -
+	 * Table-Column-Selection Filter-Constraints - Selection (- wenn Grid: -
+	 * welches Register - selection auf register - filter auf register)
+	 * 
+	 * wenn wechsel via navigation top register leiste -> remember state (oder:
+	 * track all relevant state changes)
+	 */
+
+	@Override
+	public IStateMemento getState() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IMasterDetailTableWidget<Object> setState(IStateMemento state) {
+		throw new MethodNotImplementedException();
 	}
 }

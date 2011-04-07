@@ -102,4 +102,8 @@ public interface IMasterDetailTableWidget<T> {
 	IMasterDetailTableWidget<T> allowCutPaste(boolean allowCutPaste);
 
 	IMasterDetailTableWidget<T> navigationListener(INavigationListener l);
+
+	IStateMemento getState();
+
+	IMasterDetailTableWidget<T> setState(IStateMemento state);
 }
