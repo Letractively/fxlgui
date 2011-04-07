@@ -640,7 +640,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		if (cut != null) {
 			cut.clickable(cuttable);
 		}
-		boolean copieable = cut != null && selection != null
+		boolean copieable = copy != null && selection != null
 				&& getObject2node(selection) != null
 				&& getObject2node(selection).tree.isCopieable();
 		if (copy != null) {
