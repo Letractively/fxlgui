@@ -540,8 +540,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						if (rows.size() < MAX_SORT_SIZE || sortListener == null) {
 							sortColumn = columnImpl.index;
 							sortNegator = rows.sort(columnImpl);
-							sortListener.onSort(columnImpl.name,
-									sortNegator == 1, false);
+							if (sortListener != null)
+								sortListener.onSort(columnImpl.name,
+										sortNegator == 1, false);
 							update();
 						} else {
 							if (sortColumn != -1) {
