@@ -49,6 +49,8 @@ public interface IDialog {
 		IDialog error();
 	}
 
+	IDialog modal(boolean modal);
+
 	IDialog title(String title);
 
 	IDialog message(String message);

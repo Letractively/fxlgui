@@ -22,6 +22,8 @@ public interface IPopUp {
 
 	IPopUp offset(int x, int y);
 
+	IPopUp modal(boolean modal);
+
 	IContainer container();
 
 	IPopUp visible(boolean visible);
