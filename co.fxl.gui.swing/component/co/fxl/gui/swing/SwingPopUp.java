@@ -87,4 +87,10 @@ class SwingPopUp implements IPopUp {
 		}
 		return this;
 	}
+
+	@Override
+	public IPopUp modal(boolean modal) {
+		// TODO ...
+		return this;
+	}
 }
