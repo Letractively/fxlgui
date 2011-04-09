@@ -124,6 +124,7 @@ class SwingDialog implements IDialog {
 	}
 
 	private JDialog dialog;
+	private boolean modal = false;
 
 	@Override
 	public IContainer container() {
@@ -167,6 +168,7 @@ class SwingDialog implements IDialog {
 			dialog.pack();
 			dialog.setLocationRelativeTo(panel.frame);
 			dialog.setVisible(true);
+			dialog.setModal(modal);
 		} else {
 			dialog.setVisible(false);
 		}
@@ -181,6 +183,12 @@ class SwingDialog implements IDialog {
 	@Override
 	public IQuestionDialog question() {
 		return new QuestionDialog();
+	}
+
+	@Override
+	public IDialog modal(boolean modal) {
+		this.modal = modal;
+		return this;
 	}
 
 }
