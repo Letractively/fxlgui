@@ -57,6 +57,7 @@ class GWTDialog implements IDialog {
 
 	private String title;
 	private String type = "Information";
+	private boolean modal = false;
 
 	@Override
 	public IDialog title(String title) {
@@ -95,7 +96,7 @@ class GWTDialog implements IDialog {
 
 			@Override
 			public void add(Widget widget) {
-				dialogbox = new DialogBox(false);
+				dialogbox = new DialogBox(false, modal);
 				dialogbox.setText(title);
 				SimplePanel holder = new SimplePanel();
 				holder.add(widget);
@@ -138,5 +139,11 @@ class GWTDialog implements IDialog {
 	@Override
 	public IQuestionDialog question() {
 		return new GWTQuestionDialog();
+	}
+
+	@Override
+	public IDialog modal(boolean modal) {
+		this.modal = modal;
+		return this;
 	}
 }
