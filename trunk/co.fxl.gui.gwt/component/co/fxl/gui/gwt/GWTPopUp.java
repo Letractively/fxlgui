@@ -11,11 +11,10 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	private GWTDisplay display;
 	private PopupPanel popUp;
-	private boolean modal = false;
 
 	GWTPopUp(GWTDisplay display) {
 		this.display = display;
-		popUp = new PopupPanel(!modal, modal);
+		popUp = new PopupPanel(true, false);
 	}
 
 	@Override
@@ -60,7 +59,8 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	@Override
 	public IPopUp modal(boolean modal) {
-		this.modal = modal;
+		popUp.setModal(modal);
+		popUp.setAutoHideEnabled(!modal);
 		return this;
 	}
 }
