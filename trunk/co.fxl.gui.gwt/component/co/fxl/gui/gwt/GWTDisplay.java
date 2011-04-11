@@ -42,6 +42,7 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.core.client.impl.SchedulerImpl;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -67,6 +68,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	private GWTContainer<Widget> container;
 	private GWTUncaughtExceptionHandler uncaughtExceptionHandler;
 	boolean waiting = false;
+	private Map<IResizeListener, HandlerRegistration> resizeListeners = new HashMap<IResizeListener, HandlerRegistration>();
 
 	private GWTDisplay() {
 		container = new GWTContainer<Widget>(this) {
@@ -190,12 +192,13 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 	@Override
 	public IDisplay addResizeListener(final IResizeListener listener) {
-		Window.addResizeHandler(new ResizeHandler() {
+		HandlerRegistration reg = Window.addResizeHandler(new ResizeHandler() {
 			@Override
 			public void onResize(ResizeEvent event) {
 				listener.onResize(width(), height());
 			}
 		});
+		resizeListeners.put(listener, reg);
 		return this;
 	}
 
@@ -268,5 +271,13 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	@Override
 	public IPopUp showPopUp() {
 		return new GWTPopUp(this);
+	}
+
+	@Override
+	public IDisplay removeResizeListener(IResizeListener listener) {
+		HandlerRegistration r = resizeListeners.get(listener);
+		resizeListeners.remove(listener);
+		r.removeHandler();
+		return this;
 	}
 }
