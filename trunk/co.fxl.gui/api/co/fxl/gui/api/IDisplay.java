@@ -60,6 +60,8 @@ public interface IDisplay {
 
 	IDisplay addResizeListener(IResizeListener listener);
 
+	IDisplay removeResizeListener(IResizeListener listener);
+
 	int width();
 
 	int height();
