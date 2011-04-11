@@ -25,8 +25,10 @@ public class ResizeListener implements IResizeListener {
 
 	private static ResizeListener instance;
 	private static IResizeListener listener;
+	private static IDisplay display;
 
 	public static void setup(IDisplay display, IResizeListener l) {
+		ResizeListener.display = display;
 		if (instance == null) {
 			instance = new ResizeListener();
 			display.addResizeListener(instance);
@@ -37,5 +39,10 @@ public class ResizeListener implements IResizeListener {
 	@Override
 	public void onResize(int width, int height) {
 		listener.onResize(width, height);
+	}
+
+	public static void remove(IResizeListener l) {
+		if (l == listener)
+			display.removeResizeListener(l);
 	}
 }
