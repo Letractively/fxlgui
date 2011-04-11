@@ -312,7 +312,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 
 							@Override
 							public void run() {
-								onResize(-1, widget.mainPanel.display()
+								onHeightChange(widget.mainPanel.display()
 										.height());
 								updateCreatable();
 								time = System.currentTimeMillis() - s;
@@ -368,6 +368,10 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 		if (!table.visible()) {
 			ResizeListener.remove(this);
 		}
+		onHeightChange(height);
+	}
+
+	protected void onHeightChange(final int height) {
 		int offsetY = Math.max(table.offsetY(), 140);
 		int maxFromDisplay = height - offsetY - 70;
 		maxFromDisplay = Math.max(maxFromDisplay, 60);
