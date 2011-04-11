@@ -737,4 +737,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		this.showDisplayedRange = showDisplayedRange;
 		return this;
 	}
+
+	@Override
+	public boolean visible() {
+		return container.visible();
+	}
 }

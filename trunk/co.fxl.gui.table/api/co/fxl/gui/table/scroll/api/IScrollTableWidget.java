@@ -81,6 +81,8 @@ public interface IScrollTableWidget<T> {
 		void onSort(String columnName, boolean asc, boolean update);
 	}
 
+	boolean visible();
+
 	ILabel addTitle(String text);
 
 	IClickable<?> addButton(String name);
