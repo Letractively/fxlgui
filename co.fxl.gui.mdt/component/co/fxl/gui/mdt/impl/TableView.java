@@ -367,6 +367,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 	public void onResize(int width, final int height) {
 		if (!table.visible()) {
 			ResizeListener.remove(this);
+			return;
 		}
 		onHeightChange(height);
 	}
