@@ -25,6 +25,11 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 
 public interface IRelation<T, R> extends IPropertyGroup<R> {
 
+	public interface IEditableAdapter<T> {
+
+		boolean isEditable(T base);
+	}
+
 	public interface IAddListener<T, R> {
 
 		void onAdd(T base, int index, R entity, ICallback<Boolean> refresh);
@@ -72,6 +77,8 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 	IRelation<T, R> sortable(boolean sortable);
 
 	IRelation<T, R> editable(boolean editable);
+
+	IRelation<T, R> editableAdapter(IEditableAdapter<T> editableAdapter);
 
 	IRelation<T, R> editListener(IEditListener<T, R> editListener);
 }

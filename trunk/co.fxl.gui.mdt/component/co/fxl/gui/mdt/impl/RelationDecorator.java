@@ -105,11 +105,12 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 						c.sortable();
 					if (property.filterable)
 						c.filterable();
-					boolean b = relation.editable && property.editable;
-					if (b)
+					boolean editable = relation.editable && property.editable;
+					if (relation.editableAdapter != null)
+						editable &= relation.editableAdapter.isEditable(node);
+					if (editable)
 						c.editable();
-					if (property.editable && relation.editable
-							&& property.type.clazz.equals(Boolean.class)) {
+					if (editable && property.type.clazz.equals(Boolean.class)) {
 						c.updateListener(new IColumnUpdateListener<Object, Boolean>() {
 
 							@Override
@@ -158,11 +159,18 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 					final Object node, final IDeletableList<Object> result,
 					final ISelection<Object> selection0,
 					final ISingleSelection<Object> selection) {
-				addAddButton(node);
-				addRemoveButton(panel, result, selection0);
-				addUpDownButtons(node, panel, result, selection0);
+				boolean editable = relation.editable;
+				if (relation.editableAdapter != null)
+					editable &= relation.editableAdapter.isEditable(node);
+				if (editable) {
+					addAddButton(node);
+					addRemoveButton(panel, result, selection0);
+					addUpDownButtons(node, panel, result, selection0);
+				}
 				addShowButton();
-				addEditButton();
+				if (editable) {
+					addEditButton();
+				}
 			}
 		};
 		relation.adapter.valueOf(node, constraints, callback);
@@ -219,14 +227,14 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 			public void onClick(Object identifier, int rowIndex,
 					ICallback<Boolean> callback) {
 				relation.addRemoveListener.onAdd(node, identifier == null ? -1
-						: rowIndex, identifier,
-						new CallbackTemplate<Boolean>(callback) {
+						: rowIndex, identifier, new CallbackTemplate<Boolean>(
+						callback) {
 
-							@Override
-							public void onSuccess(Boolean result) {
-								table.refresh();
-							}
-						});
+					@Override
+					public void onSuccess(Boolean result) {
+						table.refresh();
+					}
+				});
 			}
 		};
 		if (relation.addRemoveListener != null) {
@@ -267,7 +275,8 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 									result.delete(
 											index,
 											r.get(index),
-											new CallbackTemplate<IDeletableList<Object>>(callback) {
+											new CallbackTemplate<IDeletableList<Object>>(
+													callback) {
 
 												@Override
 												public void onSuccess(
