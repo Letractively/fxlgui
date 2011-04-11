@@ -439,6 +439,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			public void run() {
 				int gridRow = 1;
 				int overflow = grid.tableHeight() - height;
+				if (gridRow >= grid.rowCount())
+					return;
 				do {
 					int rowHeight = grid.rowHeight(gridRow++);
 					overflow -= rowHeight;
