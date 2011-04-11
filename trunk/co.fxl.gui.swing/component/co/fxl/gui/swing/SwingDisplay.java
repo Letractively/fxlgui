@@ -52,8 +52,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
 	private SwingUncaughtExceptionHandler uncaughtExceptionHandler;
 	boolean waiting;
-	// private JScrollPane scrollPane;
-	// private ILayout layout;
+	private Map<IResizeListener, ComponentAdapter> resizeListeners = new HashMap<IResizeListener, ComponentAdapter>();
 	private static SwingDisplay instance = null;
 
 	private SwingDisplay() {
@@ -205,12 +204,14 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	@Override
 	public IDisplay addResizeListener(final IResizeListener listener) {
-		container.component.addComponentListener(new ComponentAdapter() {
+		ComponentAdapter adp = new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent arg0) {
 				listener.onResize(width(), height());
 			}
-		});
+		};
+		resizeListeners.put(listener, adp);
+		container.component.addComponentListener(adp);
 		return this;
 	}
 
@@ -257,5 +258,13 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 	@Override
 	public IPopUp showPopUp() {
 		return new SwingPopUp(this);
+	}
+
+	@Override
+	public IDisplay removeResizeListener(IResizeListener listener) {
+		ComponentAdapter adp = resizeListeners.get(listener);
+		resizeListeners.remove(listener);
+		container.component.removeComponentListener(adp);
+		return this;
 	}
 }
