@@ -31,6 +31,7 @@ class RelationImpl extends PropertyGroupImpl implements
 	IUpDownListener<Object, Object> upDownListener;
 	boolean editable = false;
 	IEditListener<Object, Object> editListener;
+	IEditableAdapter<Object> editableAdapter;
 
 	RelationImpl(String name) {
 		super(name);
@@ -86,6 +87,13 @@ class RelationImpl extends PropertyGroupImpl implements
 	public IRelation<Object, Object> editListener(
 			co.fxl.gui.mdt.api.IRelation.IEditListener<Object, Object> editListener) {
 		this.editListener = editListener;
+		return this;
+	}
+
+	@Override
+	public IRelation<Object, Object> editableAdapter(
+			co.fxl.gui.mdt.api.IRelation.IEditableAdapter<Object> editableAdapter) {
+		this.editableAdapter = editableAdapter;
 		return this;
 	}
 }
