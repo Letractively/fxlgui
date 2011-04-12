@@ -57,6 +57,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 	// private IClickable<?> detail;
 	private Map<String, IClickable<?>> buttons = new HashMap<String, IClickable<?>>();
 	private Object selectionObject;
+	private boolean painting = false;
 
 	TableView(final MasterDetailTableWidgetImpl widget, Object object) {
 		super(widget);
@@ -277,6 +278,9 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 
 					@Override
 					public void onSuccess(final IDeletableList<Object> queryList) {
+						if (painting)
+							return;
+						painting = true;
 						final long s = System.currentTimeMillis();
 						widget.mainPanel.clear();
 						drawTable();
@@ -348,6 +352,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 								out.println("TableView: created table in "
 										+ time + "ms");
 								onChange(table.selection().result());
+								painting = false;
 							}
 						});
 					}
