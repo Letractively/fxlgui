@@ -26,6 +26,8 @@ public interface IFieldType {
 
 	IFieldType text();
 
+	IFieldType encryptedText();
+
 	IFieldType longText();
 
 	IFieldType image();

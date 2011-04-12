@@ -31,6 +31,7 @@ public class FieldTypeImpl implements IFieldType {
 	public List<Object> values = new LinkedList<Object>();
 	public boolean isRelation = false;
 	public int maxLength = -1;
+	public boolean encryptedText = false;
 
 	@Override
 	public IFieldType type(Class<?> clazz) {
@@ -95,6 +96,12 @@ public class FieldTypeImpl implements IFieldType {
 	@Override
 	public IFieldType maxLength(int maxLength) {
 		this.maxLength = maxLength;
+		return this;
+	}
+
+	@Override
+	public IFieldType encryptedText() {
+		encryptedText = true;
 		return this;
 	}
 }
