@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.gwt;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import co.fxl.gui.api.ITextField;
 
 import com.google.gwt.event.dom.client.KeyPressEvent;
@@ -28,6 +31,8 @@ import com.google.gwt.user.client.ui.TextBox;
 
 class GWTTextField extends GWTElement<TextBox, ITextField> implements
 		ITextField {
+
+	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();
 
 	GWTTextField(GWTContainer<TextBox> container) {
 		super(container);
@@ -40,13 +45,15 @@ class GWTTextField extends GWTElement<TextBox, ITextField> implements
 		if (text == null)
 			text = "";
 		container.widget.setText(text);
-		// TODO inform update-listeners
+		for (IUpdateListener<String> l : updateListeners)
+			l.onUpdate(text);
 		return this;
 	}
 
 	@Override
 	public ITextField addUpdateListener(
 			final IUpdateListener<String> changeListener) {
+		updateListeners.add(changeListener);
 		container.widget.addKeyUpHandler(new KeyUpHandler() {
 
 			@Override
