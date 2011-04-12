@@ -20,6 +20,8 @@ package co.fxl.gui.swing;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JTextField;
 
@@ -28,6 +30,8 @@ import co.fxl.gui.api.IUpdateable;
 
 class SwingTextField extends SwingTextInput<JTextField, ITextField> implements
 		ITextField {
+
+	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();
 
 	SwingTextField(SwingContainer<JTextField> container) {
 		super(container);
@@ -49,6 +53,8 @@ class SwingTextField extends SwingTextInput<JTextField, ITextField> implements
 			text = "";
 		setTextOnComponent(text);
 		font.updateFont();
+		for (IUpdateListener<String> l : updateListeners)
+			l.onUpdate(text);
 		return this;
 	}
 
@@ -71,6 +77,7 @@ class SwingTextField extends SwingTextInput<JTextField, ITextField> implements
 	@Override
 	public IUpdateable<String> addUpdateListener(
 			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
+		updateListeners.add(listener);
 		return super.addStringUpdateListener(listener);
 	}
 }
