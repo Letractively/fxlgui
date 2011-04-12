@@ -528,11 +528,13 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	@Override
 	public IStateMemento getState() {
-		throw new MethodNotImplementedException();
+		return new StateMementoImpl(this);
 	}
 
 	@Override
 	public IMasterDetailTableWidget<Object> setState(IStateMemento state) {
-		throw new MethodNotImplementedException();
+		StateMementoImpl s = (StateMementoImpl) state;
+		showDetailViewByDefault = s.showDetailView;
+		return this;
 	}
 }
