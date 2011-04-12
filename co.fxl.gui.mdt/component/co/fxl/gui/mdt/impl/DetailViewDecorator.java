@@ -25,6 +25,7 @@ import java.util.List;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.ITextField;
@@ -191,7 +192,15 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 						final Object valueOf = node != null ? property.adapter
 								.valueOf(node) : null;
 						final ITextElement<?> valueElement;
-						if (property.type.clazz.equals(String.class)) {
+						if (property.type.encryptedText) {
+							IFormField<ITextField> tf = form
+									.addTextField(property.name);
+							formField = tf;
+							valueElement = (ITextElement<?>) formField
+									.valueElement();
+							tf.valueElement().editable(false);
+							// TODO ...
+						} else if (property.type.clazz.equals(String.class)) {
 							if (property.type.isRelation) {
 								if (!property.editable) {
 									IFormField<ITextField> tf = form
@@ -201,12 +210,19 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 											.valueElement();
 									tf.valueElement().editable(false);
 								} else {
-									final IFormField<ITextField> tf = form
-											.addTextField(property.name);
-									tf.valueElement().editable(false);
+									final IFormField<?> tf = property.type.encryptedText ? form
+											.addPasswordField(property.name)
+											: form.addTextField(property.name);
 									formField = tf;
 									valueElement = (ITextElement<?>) formField
 											.valueElement();
+									if (valueElement instanceof IPasswordField) {
+										((IPasswordField) valueElement)
+												.editable(false);
+									} else {
+										((ITextField) valueElement)
+												.editable(false);
+									}
 									if (property.listener != null) {
 										final ILabel assign = formField
 												.addButton(valueOf == null ? "Assign"
@@ -224,7 +240,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 																		if (update) {
 																			String newString = (String) property.adapter
 																					.valueOf(node);
-																			tf.valueElement()
+																			valueElement
 																					.text(newString);
 																			assign.text(newString == null ? "Assign"
 																					: "Change");
