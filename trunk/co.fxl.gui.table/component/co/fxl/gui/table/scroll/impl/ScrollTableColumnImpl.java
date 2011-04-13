@@ -271,4 +271,10 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		editable = true;
 		return this;
 	}
+
+	@Override
+	public IScrollTableColumn<Object> visible(boolean visible) {
+		this.visible = visible;
+		return this;
+	}
 }

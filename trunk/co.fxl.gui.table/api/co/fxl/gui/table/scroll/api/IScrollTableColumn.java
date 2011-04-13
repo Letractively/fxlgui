@@ -35,4 +35,6 @@ public interface IScrollTableColumn<T> extends IColumn<T> {
 	IScrollTableColumn<T> editable();
 
 	IScrollTableColumn<T> addClickListener(IScrollTableListener<T> l);
+
+	IScrollTableColumn<T> visible(boolean visible);
 }
