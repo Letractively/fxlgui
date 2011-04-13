@@ -39,6 +39,7 @@ import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
+import co.fxl.gui.mdt.api.IProperty.IAdapter;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 
@@ -299,11 +300,15 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							updates.add(new Runnable() {
 								@Override
 								public void run() {
-									if (property.adapter.valueOf(node) == null
-											&& valueElement.text().equals(""))
+									String text = valueElement.text();
+									assert text != null : valueElement
+											+ ".text() returned null";
+									IAdapter<Object, Object> adapter = property.adapter;
+									assert adapter != null;
+									if (adapter.valueOf(node) == null
+											&& text.equals(""))
 										return;
-									property.adapter.valueOf(node,
-											valueElement.text());
+									adapter.valueOf(node, valueElement.text());
 								}
 							});
 						} else if (property.type.clazz.equals(Date.class)) {
