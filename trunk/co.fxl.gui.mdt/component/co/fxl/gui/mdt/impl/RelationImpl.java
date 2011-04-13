@@ -18,6 +18,10 @@
  */
 package co.fxl.gui.mdt.impl;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import co.fxl.gui.mdt.api.IProperty;
 import co.fxl.gui.mdt.api.IRelation;
 
 class RelationImpl extends PropertyGroupImpl implements
@@ -32,6 +36,7 @@ class RelationImpl extends PropertyGroupImpl implements
 	boolean editable = false;
 	IEditListener<Object, Object> editListener;
 	IEditableAdapter<Object> editableAdapter;
+	List<IProperty<Object, ?>> hidden = new LinkedList<IProperty<Object, ?>>();
 
 	RelationImpl(String name) {
 		super(name);
@@ -94,6 +99,12 @@ class RelationImpl extends PropertyGroupImpl implements
 	public IRelation<Object, Object> editableAdapter(
 			co.fxl.gui.mdt.api.IRelation.IEditableAdapter<Object> editableAdapter) {
 		this.editableAdapter = editableAdapter;
+		return this;
+	}
+
+	@Override
+	public IRelation<Object, Object> hide(IProperty<Object, ?> property) {
+		hidden.add(property);
 		return this;
 	}
 }

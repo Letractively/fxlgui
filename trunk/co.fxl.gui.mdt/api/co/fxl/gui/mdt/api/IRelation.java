@@ -81,4 +81,6 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 	IRelation<T, R> editableAdapter(IEditableAdapter<T> editableAdapter);
 
 	IRelation<T, R> editListener(IEditListener<T, R> editListener);
+
+	IRelation<T, R> hide(IProperty<T, ?> property);
 }
