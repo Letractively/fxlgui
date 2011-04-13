@@ -193,16 +193,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 						final Object valueOf = node != null ? property.adapter
 								.valueOf(node) : null;
 						final ITextElement<?> valueElement;
-						if (property.type.encryptedText) {
-							IFormField<ITextField> tf = form
-									.addTextField(property.name);
-							formField = tf;
-							valueElement = (ITextElement<?>) formField
-									.valueElement();
-							tf.valueElement().editable(false);
-							// TODO ...
-						} else if (property.type.clazz.equals(String.class)) {
-							if (property.type.isRelation) {
+						if (property.type.clazz.equals(String.class)) {
+							if (property.type.isRelation || property.type.encryptedText) {
 								if (!property.editable) {
 									IFormField<ITextField> tf = form
 											.addTextField(property.name);
