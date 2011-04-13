@@ -101,6 +101,9 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 				for (final PropertyImpl property : relation.properties) {
 					IScrollTableColumn<Object> c = table.addColumn();
 					c.name(property.name).type(property.type);
+					if (relation.hidden.contains(property)) {
+						c.visible(false);
+					}
 					if (relation.sortable)
 						c.sortable();
 					if (property.filterable)
