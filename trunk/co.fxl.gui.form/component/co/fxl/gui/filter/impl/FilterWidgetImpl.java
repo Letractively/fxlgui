@@ -75,6 +75,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 				configurationComboBox.text(firstConfiguration);
 			else
 				update();
+			validation.update();
 			notifyListeners();
 		}
 	}
