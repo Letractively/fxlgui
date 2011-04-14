@@ -244,7 +244,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 				new CallbackTemplate<ITree<Object>>(callback) {
 
 					@Override
-					public void onSuccess(ITree<Object> result) {
+					public void onSuccess(final ITree<Object> result) {
 						DetailView.this.itree = result;
 						if (!create) {
 							callback.onSuccess(result);
@@ -256,7 +256,8 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 
 										@Override
 										public void onSuccess(
-												ITree<Object> result) {
+												ITree<Object> result1) {
+											tree.selection(result1.object());
 											callback.onSuccess(result);
 										}
 									});
