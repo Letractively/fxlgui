@@ -43,10 +43,7 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 	private String currentPasswordText;
 	private List<IPasswordListener> listeners = new LinkedList<IPasswordListener>();
 	private IContainer display;
-
-	// private IVerticalPanel verticalPanel;
-
-	// private boolean isFirstTitle = true;
+	private boolean requiresCurrent = true;
 
 	public ChangePasswordWidgetImpl(IContainer display) {
 		this.display = display;
@@ -89,6 +86,10 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 		currentPassword.addUpdateListener((IUpdateListener<String>) this);
 		currentPassword
 				.addCarriageReturnListener((ICarriageReturnListener) this);
+		if (!requiresCurrent) {
+			currentPassword.text(currentPasswordText);
+			currentPassword.editable(false);
+		}
 		newPassword = widget.addPasswordField("New").required().valueElement();
 		newPassword.addUpdateListener((IUpdateListener<String>) this);
 		newPassword.addCarriageReturnListener((ICarriageReturnListener) this);
@@ -184,5 +185,11 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 		// label.font().color().gray();
 		// isFirstTitle = false;
 		return label;
+	}
+
+	@Override
+	public IChangePasswordWidget requiresCurrent(boolean requiresCurrent) {
+		this.requiresCurrent = requiresCurrent;
+		return this;
 	}
 }
