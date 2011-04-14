@@ -326,7 +326,7 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 
 	@Override
 	public int rowCount() {
-		throw new MethodNotImplementedException();
+		return grid.rows();
 	}
 
 	@Override

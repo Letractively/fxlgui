@@ -199,6 +199,7 @@ class SelectionImpl implements ISelection<Object> {
 		}
 
 		ISelection<Object> add(Object object) {
+			assert widget.preselected == null : "Selection has already been applied";
 			widget.preselected = object;
 			return SelectionImpl.this;
 		}
