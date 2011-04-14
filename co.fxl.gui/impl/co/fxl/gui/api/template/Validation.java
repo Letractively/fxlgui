@@ -127,7 +127,7 @@ public class Validation {
 			originalValue = textElement.text();
 			isSpecified = false;
 			isError = false;
-			isNull = "".equals(originalValue);
+			isNull = originalValue == null || originalValue.equals("");
 		}
 
 		@Override
@@ -150,6 +150,10 @@ public class Validation {
 						errorColor(tf, isNull);
 				} else if (textElement instanceof IPasswordField) {
 					IPasswordField tf = (IPasswordField) textElement;
+					if (wColors)
+						errorColor(tf, isNull);
+				} else if (textElement instanceof IComboBox) {
+					IComboBox tf = (IComboBox) textElement;
 					if (wColors)
 						errorColor(tf, isNull);
 				} else
@@ -324,8 +328,12 @@ public class Validation {
 		return this;
 	}
 
-	public Validation linkInput(final IComboBox comboBox) {
-		Field field = new Field(comboBox, false);
+	public Validation linkInput(IComboBox comboBox) {
+		return linkInput(comboBox, false);
+	}
+
+	public Validation linkInput(IComboBox comboBox, boolean required) {
+		Field field = new Field(comboBox, required);
 		comboBox.addUpdateListener(field);
 		return this;
 	}
@@ -338,7 +346,15 @@ public class Validation {
 		}
 	}
 
-	private void errorColor(final ITextField textField, boolean hasError) {
+	private void errorColor(IComboBox textField, boolean hasError) {
+		if (hasError) {
+			textField.color().mix().red().white().white();
+		} else {
+			textField.color().white();
+		}
+	}
+
+	private void errorColor(ITextField textField, boolean hasError) {
 		if (hasError) {
 			textField.color().mix().red().white().white();
 		} else {

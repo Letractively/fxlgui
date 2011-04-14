@@ -23,6 +23,8 @@ public interface IComboBox extends ITextElement<IComboBox>,
 	
 	IComboBox clear();
 
+	IComboBox addNull();
+
 	IComboBox addText(String... texts);
 
 	IComboBox editable(boolean editable);
