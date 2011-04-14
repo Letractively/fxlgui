@@ -162,6 +162,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 					configuration = c;
 				comboBoxConfiguration.addText(c);
 			}
+			comboBoxConfiguration.text(configuration);
 			comboBoxConfiguration
 					.addUpdateListener(new LazyUpdateListener<String>() {
 
@@ -535,6 +536,9 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	public IMasterDetailTableWidget<Object> setState(IStateMemento state) {
 		StateMementoImpl s = (StateMementoImpl) state;
 		showDetailViewByDefault = s.showDetailView;
+		constraints = s.constraints;
+		configuration = s.configuration;
+		selection = s.selection;
 		return this;
 	}
 }
