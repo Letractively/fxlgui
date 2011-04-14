@@ -30,6 +30,7 @@ import com.google.gwt.user.client.ui.ListBox;
 class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 
 	private List<String> constraints = new LinkedList<String>();
+	private boolean hasNull = false;
 
 	GWTComboBox(GWTContainer<ListBox> container) {
 		super(container);
@@ -39,8 +40,18 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 	}
 
 	@Override
+	public IComboBox addNull() {
+		hasNull = true;
+		return addText("");
+	}
+
+	@Override
 	public IComboBox addText(String... texts) {
 		for (String choice : texts) {
+			if (choice == null) {
+				hasNull = true;
+				choice = "";
+			}
 			constraints.add(choice);
 			container.widget.addItem(choice);
 		}
@@ -62,18 +73,26 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 
 	@Override
 	public IComboBox text(String choice) {
-		if (choice == null)
-			choice = "";
-		if (!constraints.contains(choice))
+		String token = choice;
+		if (choice == null) {
+			if (!hasNull) {
+				addNull();
+			}
+			token = "";
+		}
+		if (!constraints.contains(token))
 			addText(choice);
-		int index = constraints.indexOf(choice);
+		int index = constraints.indexOf(token);
 		container.widget.setSelectedIndex(index);
 		return this;
 	}
 
 	@Override
 	public String text() {
-		return constraints.get(container.widget.getSelectedIndex());
+		String string = constraints.get(container.widget.getSelectedIndex());
+		if (hasNull && string.equals(""))
+			return null;
+		return string;
 	}
 
 	@Override
