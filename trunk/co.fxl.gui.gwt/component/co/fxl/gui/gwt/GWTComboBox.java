@@ -114,7 +114,7 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 
 	@Override
 	public IColor color() {
-		throw new MethodNotImplementedException();
+		return newBackgroundColor();
 	}
 
 	@Override
