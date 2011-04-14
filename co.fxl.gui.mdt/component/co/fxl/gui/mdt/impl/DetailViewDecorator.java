@@ -194,7 +194,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 								.valueOf(node) : null;
 						final ITextElement<?> valueElement;
 						if (property.type.clazz.equals(String.class)) {
-							if (property.type.isRelation || property.type.encryptedText) {
+							if (property.type.isRelation
+									|| property.type.encryptedText) {
 								if (!property.editable) {
 									IFormField<ITextField> tf = form
 											.addTextField(property.name);
@@ -285,7 +286,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 								valueElement = (ITextElement<?>) formField
 										.valueElement();
 							}
-							String value = valueOf == null ? ""
+							String value = valueOf == null ? null
 									: (valueOf instanceof String ? (String) valueOf
 											: String.valueOf(valueOf));
 							valueElement.text(value);
@@ -293,12 +294,10 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 								@Override
 								public void run() {
 									String text = valueElement.text();
-									assert text != null : valueElement
-											+ ".text() returned null";
 									IAdapter<Object, Object> adapter = property.adapter;
 									assert adapter != null;
 									if (adapter.valueOf(node) == null
-											&& text.equals(""))
+											&& "".equals(text))
 										return;
 									adapter.valueOf(node, valueElement.text());
 								}
@@ -309,7 +308,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							formField = tf;
 							decorateEditable(property, formField);
 							formField.type().date();
-							String value = valueOf == null ? ""
+							String value = valueOf == null ? null
 									: DetailView.DATE_FORMAT
 											.format((Date) valueOf);
 							((ITextElement<?>) formField.valueElement())

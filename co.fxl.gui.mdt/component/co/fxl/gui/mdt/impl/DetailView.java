@@ -87,8 +87,8 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 			public void onChange(Object selection) {
 				selectionObject = selection;
 				List<Object> l = new LinkedList<Object>();
-				if(selection!=null)
-				l.add(selection);
+				if (selection != null)
+					l.add(selection);
 				DetailView.this.onChange(l);
 			}
 		});
@@ -269,7 +269,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 
 	@Override
 	public void onDelete(final ITree<Object> tree, final ICallback<Boolean> cb) {
-		if (tree != null && tree.parent() != null)
+		if (tree != null && tree.isNew() && tree.parent() != null)
 			DetailView.this.tree.selection(tree.parent().object());
 		this.tree.refresh(new CallbackTemplate<Boolean>(cb) {
 

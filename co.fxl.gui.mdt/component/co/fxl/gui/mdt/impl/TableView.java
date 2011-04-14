@@ -39,6 +39,7 @@ import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.mdt.api.IDeletableList;
 import co.fxl.gui.mdt.api.IProperty.IAdapter;
 import co.fxl.gui.table.api.IColumn;
+import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableClickListener;
 import co.fxl.gui.table.scroll.api.IRows;
@@ -56,12 +57,12 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 	private IClickable<?> delete;
 	// private IClickable<?> detail;
 	private Map<String, IClickable<?>> buttons = new HashMap<String, IClickable<?>>();
-	private Object selectionObject;
+//	private Object selectionObject;
 	private boolean painting = false;
 
 	TableView(final MasterDetailTableWidgetImpl widget, Object object) {
 		super(widget);
-		selectionObject = object;
+//		selectionObject = object;
 		if (widget.splitLayout != null)
 			widget.splitLayout.showSplit(true);
 	}
@@ -304,6 +305,9 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 								return list.size();
 							}
 						};
+						ISelection<Object> tableSelection = table.selection();
+						for (Object o : widget.selection)
+							tableSelection.add(o);
 						table.rows(rows);
 						time = System.currentTimeMillis() - s;
 						final PrintStream out = time > 500 ? System.err
@@ -337,9 +341,9 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 								table.addTooltip("Double click to switch views.");
 								table.sortListener(TableView.this);
 								table.constraints(constraints);
-								if (selectionObject != null) {
-									table.selection().add(selectionObject);
-								}
+//								if (selectionObject != null) {
+//									table.selection().add(selectionObject);
+//								}
 								table.addFilterListener(new IFilterListener() {
 
 									@Override
