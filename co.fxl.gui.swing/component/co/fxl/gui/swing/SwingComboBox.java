@@ -28,6 +28,8 @@ import co.fxl.gui.api.IComboBox;
 public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 		implements IComboBox {
 
+	private boolean hasNull = false;
+
 	public SwingComboBox(SwingContainer<JComboBox> container) {
 		super(container);
 		color().white();
@@ -45,25 +47,51 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 
 	@Override
 	public IComboBox text(String choice) {
+		String token = choice;
+		if (choice == null) {
+			if (!hasNull) {
+				addNull();
+			}
+			token = "";
+		}
+		boolean found = false;
+		for (int i = 0; i < container.component.getItemCount(); i++) {
+			found |= container.component.getItemAt(i).equals(token);
+		}
+		if (!found)
+			addText(choice);
 		if (container.component.isEditable()) {
-			container.component.setSelectedItem(choice);
+			container.component.setSelectedItem(token);
 		} else
 			for (int i = 0; i < container.component.getItemCount(); i++)
-				if (container.component.getItemAt(i).equals(choice))
+				if (container.component.getItemAt(i).equals(token))
 					container.component.setSelectedIndex(i);
 		return this;
 	}
 
 	@Override
+	public IComboBox addNull() {
+		return addText((String) null);
+	}
+
+	@Override
 	public IComboBox addText(String... texts) {
-		for (String choice : texts)
+		for (String choice : texts) {
+			if (choice == null) {
+				hasNull = true;
+				choice = "";
+			}
 			container.component.addItem(choice);
+		}
 		return this;
 	}
 
 	@Override
 	public String text() {
-		return (String) container.component.getSelectedItem();
+		String selectedItem = (String) container.component.getSelectedItem();
+		if (hasNull && selectedItem.equals(""))
+			return null;
+		return selectedItem;
 	}
 
 	@Override
@@ -91,6 +119,7 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 	@Override
 	public IComboBox clear() {
 		container.component.removeAllItems();
+		hasNull = false;
 		return this;
 	}
 
