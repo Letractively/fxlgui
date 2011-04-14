@@ -33,6 +33,8 @@ public interface IChangePasswordWidget {
 
 	IChangePasswordWidget current(String currentPassword);
 
+	IChangePasswordWidget requiresCurrent(boolean requiresCurrent);
+
 	IChangePasswordWidget addListener(IPasswordListener listener);
 
 	IChangePasswordWidget visible(boolean visible);
