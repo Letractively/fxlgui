@@ -179,6 +179,14 @@ class Node<T> extends LazyClickListener {
 		decorate();
 	}
 
+	void refresh(boolean refreshChildren) {
+		update(null);
+		if (!refreshChildren)
+			return;
+		expand();
+		expand();
+	}
+
 	@Override
 	public void onAllowedClick() {
 		expandCollapse();
@@ -241,8 +249,12 @@ class Node<T> extends LazyClickListener {
 	void clear() {
 		if (!expandLoadedNode)
 			return;
-		childrenPanel.clear();
 		expandLoadedNode = false;
+		clearLoadedNode();
+	}
+
+	private void clearLoadedNode() {
+		childrenPanel.clear();
 		if (tree.icon() != null) {
 			if (tree.childCount() != 0)
 				image.resource(CLOSED);

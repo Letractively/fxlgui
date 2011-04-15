@@ -526,13 +526,14 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	@Override
-	public ITreeWidget<T> refreshDetailPanel() {
+	public ITreeWidget<T> refreshSelection(boolean refreshChildren) {
 		for (int i = 0; i < detailViews.size(); i++) {
 			DetailView view = detailViews.get(i);
 			if (view.register.isActive()) {
 				view.update();
 			}
 		}
+		getObject2node(selection).refresh(refreshChildren);
 		return this;
 	}
 
