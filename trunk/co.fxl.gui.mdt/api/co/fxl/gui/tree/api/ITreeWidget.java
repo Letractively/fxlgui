@@ -94,5 +94,5 @@ public interface ITreeWidget<T> {
 
 	ITreeWidget<T> showCommands(boolean showCommands);
 
-	ITreeWidget<T> refreshDetailPanel();
+	ITreeWidget<T> refreshSelection(boolean refreshChildren);
 }
