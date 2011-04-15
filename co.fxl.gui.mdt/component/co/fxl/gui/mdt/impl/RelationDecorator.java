@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.mdt.impl;
 
-import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
@@ -180,12 +179,11 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 	}
 
 	IRows<Object> toRows(final IDeletableList<Object> result) {
-		final List<Object> lresult = result.asList();
 		return new IRows<Object>() {
 
 			@Override
 			public Object identifier(int i) {
-				Object object = lresult.get(i);
+				Object object = result.get(i);
 				return object;
 			}
 
@@ -206,7 +204,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 
 			@Override
 			public int size() {
-				return lresult.size();
+				return result.size();
 			}
 		};
 	}

@@ -93,4 +93,6 @@ public interface ITreeWidget<T> {
 	ITreeWidget<T> allowCutPaste(boolean allowCutPaste);
 
 	ITreeWidget<T> showCommands(boolean showCommands);
+
+	ITreeWidget<T> refreshDetailPanel();
 }
