@@ -52,4 +52,6 @@ public interface IRegister {
 	IRegister visible(boolean visible);
 
 	IRegister enabled(boolean enabled);
+
+	boolean isActive();
 }
