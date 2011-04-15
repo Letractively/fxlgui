@@ -25,7 +25,9 @@ import co.fxl.gui.api.template.ICallback;
 
 public interface IDeletableList<T> {
 
-	List<T> asList();
+	T get(int i);
+
+	int size();
 
 	Serializable[] tableValues(T entity);
 

@@ -525,6 +525,17 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		}
 	}
 
+	@Override
+	public ITreeWidget<T> refreshDetailPanel() {
+		for (int i = 0; i < detailViews.size(); i++) {
+			DetailView view = detailViews.get(i);
+			if (view.register.isActive()) {
+				view.update();
+			}
+		}
+		return this;
+	}
+
 	private boolean isHide(DetailView view, Class<? extends Object> type) {
 		if (view.constrainType == null)
 			return false;

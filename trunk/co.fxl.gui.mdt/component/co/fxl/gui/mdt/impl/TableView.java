@@ -57,12 +57,12 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 	private IClickable<?> delete;
 	// private IClickable<?> detail;
 	private Map<String, IClickable<?>> buttons = new HashMap<String, IClickable<?>>();
-//	private Object selectionObject;
+	// private Object selectionObject;
 	private boolean painting = false;
 
 	TableView(final MasterDetailTableWidgetImpl widget, Object object) {
 		super(widget);
-//		selectionObject = object;
+		// selectionObject = object;
 		if (widget.splitLayout != null)
 			widget.splitLayout.showSplit(true);
 	}
@@ -286,23 +286,22 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 						widget.mainPanel.clear();
 						drawTable();
 						TableView.this.queryList = queryList;
-						final List<Object> list = queryList.asList();
-						widget.rowsInTable = list.size();
+						widget.rowsInTable = queryList.size();
 						final IRows<Object> rows = new IRows<Object>() {
 
 							@Override
 							public Object[] row(int i) {
-								return queryList.tableValues(list.get(i));
+								return queryList.tableValues(queryList.get(i));
 							}
 
 							@Override
 							public Object identifier(int i) {
-								return list.get(i);
+								return queryList.get(i);
 							}
 
 							@Override
 							public int size() {
-								return list.size();
+								return queryList.size();
 							}
 						};
 						ISelection<Object> tableSelection = table.selection();
@@ -312,7 +311,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 						time = System.currentTimeMillis() - s;
 						final PrintStream out = time > 500 ? System.err
 								: System.out;
-						out.println("TableView: added " + list.size()
+						out.println("TableView: added " + queryList.size()
 								+ " rows in " + time + "ms");
 						ResizeListener.setup(widget.mainPanel.display(),
 								TableView.this);
@@ -341,9 +340,9 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 								table.addTooltip("Double click to switch views.");
 								table.sortListener(TableView.this);
 								table.constraints(constraints);
-//								if (selectionObject != null) {
-//									table.selection().add(selectionObject);
-//								}
+								// if (selectionObject != null) {
+								// table.selection().add(selectionObject);
+								// }
 								table.addFilterListener(new IFilterListener() {
 
 									@Override
