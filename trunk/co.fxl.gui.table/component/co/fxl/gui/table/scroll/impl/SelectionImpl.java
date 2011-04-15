@@ -78,16 +78,16 @@ class SelectionImpl implements ISelection<Object> {
 		}
 
 		ISelection<Object> add(Object object) {
-			assert widget.preselected == null : "Only one row can be preselected";
+			assert widget.preselectedList.isEmpty() : "Only one row can be preselected";
 			widget.preselectedIndex = -1;
-			widget.preselected = object;
+			widget.preselectedList.add(object);
 			return SelectionImpl.this;
 		}
 
 		ISelection<Object> add(int selectionIndex, Object object) {
-			assert widget.preselected == null : "Only one row can be preselected";
+			assert widget.preselectedList.isEmpty() : "Only one row can be preselected";
 			widget.preselectedIndex = selectionIndex;
-			widget.preselected = object;
+			widget.preselectedList.add(object);
 			return SelectionImpl.this;
 		}
 	}
@@ -199,8 +199,7 @@ class SelectionImpl implements ISelection<Object> {
 		}
 
 		ISelection<Object> add(Object object) {
-			assert widget.preselected == null : "Selection has already been applied";
-			widget.preselected = object;
+			widget.preselectedList.add(object);
 			return SelectionImpl.this;
 		}
 

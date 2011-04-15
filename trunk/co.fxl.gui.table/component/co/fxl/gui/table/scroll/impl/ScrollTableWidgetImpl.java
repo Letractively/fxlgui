@@ -126,16 +126,16 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public IScrollTableWidget<Object> visible(boolean visible) {
 		if (visible) {
 			rows = new RowAdapter(actualRows);
-			if (preselected != null) {
+			if (!preselectedList.isEmpty()) {
 				if (preselectedIndex != -1) {
-					boolean found = rows
-							.selected(preselectedIndex, preselected);
+					boolean found = rows.selected(preselectedIndex,
+							preselectedList.get(0));
 					if (!found) {
 						preselectedIndex = -1;
-						preselected = null;
+						preselectedList.clear();
 					}
 				} else
-					rows.selected(preselected);
+					rows.selected(preselectedList);
 			}
 			adjustHeight = true;
 			this.visible = true;
@@ -202,15 +202,15 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					h.add().label().text("&#160;");
 					IPanel<?> quader = h.add().panel().absolute();
 					quader.size(4, 4);
-					if (preselected != null) {
-						int initialRowOffset = rows.find(preselected);
+					if (!preselectedList.isEmpty()) {
+						int initialRowOffset = rows.find(preselectedList);
 						int convertFromRowOffset = convertFromRowOffset(initialRowOffset);
 						h.offset(quader, 0, convertFromRowOffset);
 						sp.scrollIntoView(quader);
 					}
 				}
 			}
-			preselected = null;
+			preselectedList.clear();
 		} else {
 			this.visible = false;
 			throw new MethodNotImplementedException();
@@ -307,7 +307,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IFilterListener filterListener;
 	private IButtonPanelDecorator buttonDecorator;
 	private CommandButtonsImpl commandButtons;
-	Object preselected;
+	List<Object> preselectedList = new LinkedList<Object>();
 	int preselectedIndex = -1;
 	private boolean showDisplayedRange = true;
 
@@ -445,7 +445,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					int rowHeight = grid.rowHeight(gridRow++);
 					overflow -= rowHeight;
 					maxRowIndex++;
-				} while (overflow > 0 && maxRowIndex < rows.size() && gridRow < grid.rowCount());
+				} while (overflow > 0 && maxRowIndex < rows.size()
+						&& gridRow < grid.rowCount());
 				maxRowIndex++;
 				scrollPanelHeight += ROW_HEIGHT;
 				h.size(1, scrollPanelHeight);

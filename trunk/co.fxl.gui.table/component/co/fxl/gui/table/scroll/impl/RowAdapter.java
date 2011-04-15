@@ -73,6 +73,11 @@ class RowAdapter implements IRows<Object>, IComparableList {
 		return -1;
 	}
 
+	void selected(List<Object> object) {
+		for (Object o : object)
+			selected(o);
+	}
+
 	void clearSelection() {
 		selected = new boolean[rows.size()];
 	}
@@ -129,6 +134,14 @@ class RowAdapter implements IRows<Object>, IComparableList {
 	int find(Object object) {
 		for (int i = 0; i < rows.size(); i++) {
 			if (identifier(i).equals(object))
+				return i;
+		}
+		return -1;
+	}
+
+	int find(List<Object> object) {
+		for (int i = 0; i < rows.size(); i++) {
+			if (object.contains(identifier(i)))
 				return i;
 		}
 		return -1;
