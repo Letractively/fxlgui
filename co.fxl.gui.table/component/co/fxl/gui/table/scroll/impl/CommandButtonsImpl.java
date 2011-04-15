@@ -57,7 +57,7 @@ public class CommandButtonsImpl implements ICommandButtons,
 					// TODO validation
 				}
 			});
-			edit.clickable(widget.preselected != null);
+			edit.clickable(!widget.preselectedList.isEmpty());
 			widget.selection().single()
 					.addSelectionListener(new ISelectionListener<Object>() {
 
@@ -228,9 +228,9 @@ public class CommandButtonsImpl implements ICommandButtons,
 	CommandButtonsImpl(ScrollTableWidgetImpl widget) {
 		this.widget = widget;
 		widget.buttonPanel(this);
-		if (widget.preselected != null) {
+		if (!widget.preselectedList.isEmpty()) {
 			selectionIndex = widget.preselectedIndex;
-			selection = widget.preselected;
+			selection = widget.preselectedList.get(0);
 		}
 	}
 
@@ -311,18 +311,18 @@ public class CommandButtonsImpl implements ICommandButtons,
 			// remove = panel.add().button().text("Remove");
 			remove = clickable(panel.add(), "Remove");
 			remove.addClickListener(new Update(listenOnRemoveListener));
-			remove.clickable(widget.preselected != null);
+			remove.clickable(!widget.preselectedList.isEmpty());
 		}
 		if (listenOnShow) {
 			show = clickable(panel.add(), "Show");
 			show.addClickListener(new Update(listenOnShowListener));
-			show.clickable(widget.preselected != null);
+			show.clickable(!widget.preselectedList.isEmpty());
 		}
 		if (listenOnEdit) {
 			edit = clickable(panel.add(), "Edit");
 			final Update clickListener = new Update(listenOnEditListener);
 			edit.addClickListener(clickListener);
-			edit.clickable(widget.preselected != null);
+			edit.clickable(!widget.preselectedList.isEmpty());
 			widget.addTableClickListener(new ITableClickListener() {
 				@Override
 				public void onClick(int column, int row) {
@@ -377,7 +377,7 @@ public class CommandButtonsImpl implements ICommandButtons,
 		IClickable<?> image = clickable(panel.add(), res);
 		// image.font().weight().bold();
 		image.addClickListener(new Move(listenOnMoveUpListener2, i));
-		boolean canClick = widget.preselected != null;
+		boolean canClick = widget.preselectedList.size() == 1;
 		if (canClick) {
 			canClick &= i > 0 || widget.preselectedIndex > 0;
 			canClick &= i < 0
