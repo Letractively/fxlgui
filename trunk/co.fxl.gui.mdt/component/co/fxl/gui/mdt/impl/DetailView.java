@@ -309,6 +309,8 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 
 	@Override
 	public void onDelete(Object tree, ICallback<Boolean> cb) {
+		refresh();
+		cb.onSuccess(true);
 	}
 
 	@Override
