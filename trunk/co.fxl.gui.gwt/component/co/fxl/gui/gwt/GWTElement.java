@@ -183,25 +183,27 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 						}
 					}
 				});
-		registration2 = ((HasDoubleClickHandlers) container.widget)
-				.addDoubleClickHandler(new DoubleClickHandler() {
-					@Override
-					public void onDoubleClick(DoubleClickEvent event) {
-						for (GWTClickHandler<R> handler : handlers) {
-							handler.onDoubleClick(event);
+		if (container.widget instanceof HasDoubleClickHandlers)
+			registration2 = ((HasDoubleClickHandlers) container.widget)
+					.addDoubleClickHandler(new DoubleClickHandler() {
+						@Override
+						public void onDoubleClick(DoubleClickEvent event) {
+							for (GWTClickHandler<R> handler : handlers) {
+								handler.onDoubleClick(event);
+							}
 						}
-					}
-				});
-		registration3 = ((HasKeyPressHandlers) container.widget)
-				.addKeyPressHandler(new KeyPressHandler() {
+					});
+		if (container.widget instanceof HasKeyPressHandlers)
+			registration3 = ((HasKeyPressHandlers) container.widget)
+					.addKeyPressHandler(new KeyPressHandler() {
 
-					@Override
-					public void onKeyPress(KeyPressEvent event) {
-						for (GWTClickHandler<R> handler : handlers) {
-							handler.onClick(event);
+						@Override
+						public void onKeyPress(KeyPressEvent event) {
+							for (GWTClickHandler<R> handler : handlers) {
+								handler.onClick(event);
+							}
 						}
-					}
-				});
+					});
 	}
 
 	@SuppressWarnings("unchecked")
