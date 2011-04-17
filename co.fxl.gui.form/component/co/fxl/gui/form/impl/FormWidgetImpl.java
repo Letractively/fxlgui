@@ -28,6 +28,7 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IFocusable;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -77,6 +78,8 @@ class FormWidgetImpl implements IFormWidget {
 	private boolean isNew;
 	private boolean alwaysAllowCancel = false;
 	private IButton saveButton;
+	private boolean hasFocus = false;
+	private List<IFocusable<?>> focusables = new LinkedList<IFocusable<?>>();
 
 	FormWidgetImpl(IContainer panel) {
 		widgetTitle = new WidgetTitle(panel.panel());
@@ -110,19 +113,30 @@ class FormWidgetImpl implements IFormWidget {
 		ITextField valuePanel = container().textField();
 		heights.decorate(valuePanel);
 		valuePanel.editable(saveListener != null);
+		setFocus(valuePanel);
 		return valuePanel;
+	}
+
+	private void setFocus(IFocusable<?> f) {
+		focusables.add(f);
+		if (hasFocus)
+			return;
+		hasFocus = true;
+		f.focus();
 	}
 
 	IPasswordField addFormValuePasswordField() {
 		IPasswordField valuePanel = container().passwordField();
 		heights.decorate(valuePanel);
 		valuePanel.editable(saveListener != null);
+		setFocus(valuePanel);
 		return valuePanel;
 	}
 
 	ITextArea addFormValueTextArea() {
 		ITextArea valuePanel = container().textArea();
 		valuePanel.editable(saveListener != null);
+		setFocus(valuePanel);
 		return valuePanel;
 	}
 
@@ -429,5 +443,15 @@ class FormWidgetImpl implements IFormWidget {
 	public IFormWidget clickable(boolean clickable) {
 		saveButton.clickable(clickable);
 		return this;
+	}
+
+	void looseFocus(Object ff) {
+		if (focusables.contains(ff)) {
+			int index = focusables.indexOf(ff);
+			if (index < focusables.size() - 1) {
+				focusables.get(index + 1).focus();
+			} else
+				hasFocus = false;
+		}
 	}
 }

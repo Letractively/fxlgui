@@ -35,6 +35,7 @@ class FormTextAreaImpl extends FormFieldImpl<ITextArea> {
 	@Override
 	public IFormField<ITextArea> editable(boolean editable) {
 		valueElement().editable(editable);
+		checkFocus(editable);
 		return this;
 	}
 

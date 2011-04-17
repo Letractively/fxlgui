@@ -36,6 +36,7 @@ class FormTextFieldImpl extends FormFieldImpl<ITextField> {
 	@Override
 	public IFormField<ITextField> editable(boolean editable) {
 		valueElement().editable(editable);
+		checkFocus(editable);
 		return this;
 	}
 
