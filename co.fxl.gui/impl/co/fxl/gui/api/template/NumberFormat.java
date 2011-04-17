@@ -24,12 +24,12 @@ public abstract class NumberFormat {
 
 		@Override
 		public Number parse(String string) {
-			throw new MethodNotImplementedException();
+			return Double.valueOf(string);
 		}
 
 		@Override
 		public String format(Number date) {
-			throw new MethodNotImplementedException();
+			return String.valueOf(date);
 		}
 	};
 
