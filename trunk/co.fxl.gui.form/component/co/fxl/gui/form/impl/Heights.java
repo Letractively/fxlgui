@@ -46,7 +46,7 @@ public class Heights {
 	}
 
 	public void decorate(IPasswordField textField) {
-		textField.height(inc + TEXTFIELD_HEIGHT - 8);
+		textField.height(inc + TEXTFIELD_HEIGHT);
 	}
 
 	public void decorate(IGridPanel.IGridCell cell) {
