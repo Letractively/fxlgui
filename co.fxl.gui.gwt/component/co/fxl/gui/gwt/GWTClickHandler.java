@@ -18,13 +18,14 @@
  */
 package co.fxl.gui.gwt;
 
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.template.KeyTemplate;
 
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
+import com.google.gwt.event.dom.client.KeyPressEvent;
 
 class GWTClickHandler<T> extends KeyTemplate<T> {
 
@@ -45,6 +46,15 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 			return;
 		if (isDoubleClick)
 			return;
+		event.preventDefault();
+		event.stopPropagation();
+		GWTDisplay d = (GWTDisplay) ((IElement<?>) element).display();
+		if (d.waiting)
+			return;
+		clickListener.onClick();
+	}
+
+	public void onClick(KeyPressEvent event) {
 		event.preventDefault();
 		event.stopPropagation();
 		GWTDisplay d = (GWTDisplay) ((IElement<?>) element).display();
