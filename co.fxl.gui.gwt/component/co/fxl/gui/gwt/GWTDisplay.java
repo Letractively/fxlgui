@@ -66,7 +66,11 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 			@Override
 			public Number parse(String string) {
-				return fmt.parse(string);
+				try {
+					return fmt.parse(string);
+				} catch (Exception e) {
+					return null;
+				}
 			}
 
 			@Override
@@ -81,7 +85,11 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 			@Override
 			public Date parse(String string) {
-				return fmt.parse(string);
+				try {
+					return fmt.parse(string);
+				} catch (Exception e) {
+					return null;
+				}
 			}
 
 			@Override
