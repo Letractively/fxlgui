@@ -19,7 +19,7 @@
 package co.fxl.gui.api;
 
 public interface ITextInput<T> extends ITextElement<T>, IColored, IBordered,
-		IUpdateable<String> {
+		IUpdateable<String>, IFocusable<T> {
 
 	T editable(boolean editable);
 
