@@ -234,7 +234,12 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	@SuppressWarnings("unchecked")
 	public R focus() {
-		((Focusable) container.widget).setFocus(true);
+		display().invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				((Focusable) container.widget).setFocus(true);
+			}
+		});
 		return (R) this;
 	}
 }
