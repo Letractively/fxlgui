@@ -19,7 +19,7 @@
 package co.fxl.gui.api;
 
 public interface IPasswordField extends ITextElement<IPasswordField>, IColored,
-		IBordered, IUpdateable<String> {
+		IBordered, IUpdateable<String>, IFocusable<IPasswordField> {
 
 	public interface ICarriageReturnListener {
 
