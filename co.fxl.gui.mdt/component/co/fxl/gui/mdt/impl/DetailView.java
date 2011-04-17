@@ -96,7 +96,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 		tree.allowCutPaste(widget.allowCutPaste);
 		tree.expand(true);
 		tree.source(this);
-		tree.selection(selectionObject);
+		tree.selection(getSelectionObject());
 		tree.visible(true);
 	}
 
@@ -240,7 +240,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 	public void query(IFilterConstraints constraints,
 			final ICallback<ITree<Object>> callback) {
 		// widget.constraints = constraints;
-		widget.source.queryTree(widget.constraints, selectionObject,
+		widget.source.queryTree(widget.constraints, getSelectionObject(),
 				new CallbackTemplate<ITree<Object>>(callback) {
 
 					@Override
@@ -264,6 +264,15 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 						}
 					}
 				});
+	}
+
+	protected Object getSelectionObject() {
+		if (selectionObject != null)
+			return selectionObject;
+		else if (!widget.selection.isEmpty()) {
+			return widget.selection.get(widget.selection.size() - 1);
+		} else
+			return null;
 	}
 
 	@Override
