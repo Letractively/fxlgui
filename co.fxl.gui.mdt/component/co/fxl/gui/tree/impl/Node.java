@@ -48,7 +48,7 @@ class Node<T> extends LazyClickListener {
 	private int depth;
 	private IImage image;
 	private TreeWidgetImpl<T> widget;
-	private IHorizontalPanel container;
+	IHorizontalPanel container;
 	private boolean expand;
 	private IImage imageRefresh;
 	private ILabel label;

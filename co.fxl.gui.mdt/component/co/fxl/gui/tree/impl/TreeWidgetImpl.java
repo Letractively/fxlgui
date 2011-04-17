@@ -167,6 +167,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private IClickable<?> copy;
 	private IClickable<?> paste;
 	protected boolean isCopy;
+	private IScrollPane leftScrollPane;
 
 	TreeWidgetImpl(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel()).space(0);
@@ -371,7 +372,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			return;
 		splitPane = panel().add().splitPane().splitPosition(SPLIT_POSITION);
 		splitPane.border().color().lightgray();
-		leftContentPanel = splitPane.first().scrollPane().viewPort().panel()
+		leftScrollPane = splitPane.first().scrollPane();
+		leftContentPanel = leftScrollPane.viewPort().panel()
 				.vertical();
 		panel = leftContentPanel.spacing(10).add().panel().vertical();
 		IScrollPane scrollPane = splitPane.second().scrollPane();
@@ -496,6 +498,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	void showAfterLoad(Node<T> node, boolean callSelection) {
 		if (callSelection) {
 			if (node != null && node.tree != null) {
+				leftScrollPane.scrollIntoView(node.container);
 				node.selected(true);
 				selection(node.tree.object(), false);
 			} else
