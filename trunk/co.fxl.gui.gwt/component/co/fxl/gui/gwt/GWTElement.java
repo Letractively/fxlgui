@@ -34,6 +34,9 @@ import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.dom.client.HasDoubleClickHandlers;
+import com.google.gwt.event.dom.client.HasKeyPressHandlers;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Widget;
@@ -43,6 +46,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	public GWTContainer<T> container;
 	protected HandlerRegistration registration;
 	protected HandlerRegistration registration2;
+	protected HandlerRegistration registration3;
 	protected List<GWTClickHandler<R>> handlers = new LinkedList<GWTClickHandler<R>>();
 	private String visibleStyle = null;
 
@@ -159,6 +163,10 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 			registration2.removeHandler();
 			registration2 = null;
 		}
+		if (registration3 != null) {
+			registration3.removeHandler();
+			registration3 = null;
+		}
 		if (toggle) {
 			registerClickHandler();
 		}
@@ -180,6 +188,16 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 					public void onDoubleClick(DoubleClickEvent event) {
 						for (GWTClickHandler<R> handler : handlers) {
 							handler.onDoubleClick(event);
+						}
+					}
+				});
+		registration3 = ((HasKeyPressHandlers) container.widget)
+				.addKeyPressHandler(new KeyPressHandler() {
+
+					@Override
+					public void onKeyPress(KeyPressEvent event) {
+						for (GWTClickHandler<R> handler : handlers) {
+							handler.onClick(event);
 						}
 					}
 				});

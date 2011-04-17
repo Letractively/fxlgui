@@ -61,6 +61,7 @@ class GWTQuestionDialog implements IQuestionDialog {
 					l.onYes();
 			}
 		});
+		ok.setFocus(true);
 		panel.add(ok);
 		Button no = new Button("No");
 		no.addClickHandler(new ClickHandler() {

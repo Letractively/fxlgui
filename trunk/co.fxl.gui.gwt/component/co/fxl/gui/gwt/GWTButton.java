@@ -62,4 +62,10 @@ class GWTButton extends GWTElement<Button, IButton> implements IButton {
 	GWTClickHandler<IButton> newGWTClickHandler(IClickListener clickListener) {
 		return new GWTClickHandler<IButton>(this, clickListener);
 	}
+
+	@Override
+	public IButton focus() {
+		container.widget.setFocus(true);
+		return this;
+	}
 }

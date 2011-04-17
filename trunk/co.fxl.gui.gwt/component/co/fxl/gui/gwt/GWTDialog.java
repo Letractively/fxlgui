@@ -79,6 +79,7 @@ class GWTDialog implements IDialog {
 				dialogbox.hide();
 			}
 		});
+		button.setFocus(true);
 		SimplePanel holder = new SimplePanel();
 		holder.add(button);
 		panel.add(html);
