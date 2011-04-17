@@ -195,7 +195,7 @@ public class Validation {
 		}
 	}
 
-	private final static DateFormat DATE_FORMAT = new DateFormat();
+	private final static DateFormat DATE_FORMAT = DateFormat.instance;
 	private List<IClickable<?>> clickables = new LinkedList<IClickable<?>>();
 	private List<IClickable<?>> reset = new LinkedList<IClickable<?>>();
 	private List<IField> fields = new LinkedList<IField>();
