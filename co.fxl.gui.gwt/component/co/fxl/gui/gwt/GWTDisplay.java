@@ -34,6 +34,7 @@ import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
 import co.fxl.gui.api.template.DateFormat;
 import co.fxl.gui.api.template.DiscardChangesDialog;
+import co.fxl.gui.api.template.NumberFormat;
 import co.fxl.gui.api.template.SplitLayout;
 
 import com.google.gwt.core.client.GWT;
@@ -60,6 +61,21 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		DateFormat.YEAR_INCREMENT_DEC = 1900;
 		SplitLayout.SCROLLBAR_WIDTH = 8;
 		SplitLayout.WIDTH_SIDE_PANEL = 308;
+		NumberFormat.instance = new NumberFormat() {
+
+			private com.google.gwt.i18n.client.NumberFormat fmt = com.google.gwt.i18n.client.NumberFormat
+					.getDecimalFormat();
+
+			@Override
+			public Number parse(String string) {
+				return fmt.parse(string);
+			}
+
+			@Override
+			public String format(Number date) {
+				return fmt.format(date);
+			}
+		};
 	}
 
 	private static GWTDisplay instance;
