@@ -28,7 +28,7 @@ import co.fxl.gui.form.impl.FormWidgetImpl.FormEntryLabel;
 
 public abstract class FormFieldImpl<T> implements IFormField<T> {
 
-	private FormWidgetImpl widget;
+	FormWidgetImpl widget;
 	private ILabel label;
 	private IGridCell cell;
 	FieldTypeImpl type = new FieldTypeImpl();
@@ -44,6 +44,11 @@ public abstract class FormFieldImpl<T> implements IFormField<T> {
 		label = formEntryLabel.formEntryLabel;
 		widget.addFillColumn();
 		this.row = index;
+	}
+
+	void checkFocus(boolean editable) {
+		if (!editable)
+			widget.looseFocus(valueElement());
 	}
 
 	@Override
