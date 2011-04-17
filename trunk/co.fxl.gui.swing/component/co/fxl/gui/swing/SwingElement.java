@@ -172,4 +172,10 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	public IDisplay display() {
 		return container.display();
 	}
+
+	@SuppressWarnings("unchecked")
+	public R focus() {
+		container.component.requestFocus();
+		return (R) this;
+	}
 }

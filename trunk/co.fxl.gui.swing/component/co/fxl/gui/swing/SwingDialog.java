@@ -136,6 +136,7 @@ class SwingDialog implements IDialog {
 				dialog.setModal(true);
 				dialog.setTitle(title);
 				dialog.getContentPane().add(component);
+				dialog.requestFocus();
 			}
 
 			@Override
