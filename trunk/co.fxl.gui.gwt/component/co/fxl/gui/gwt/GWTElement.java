@@ -39,6 +39,7 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.Widget;
 
 public class GWTElement<T extends Widget, R> implements IElement<R> {
@@ -227,5 +228,11 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 				stylable.setBackgroundColor(color);
 			}
 		};
+	}
+
+	@SuppressWarnings("unchecked")
+	public R focus() {
+		((Focusable) container.widget).setFocus(true);
+		return (R) this;
 	}
 }
