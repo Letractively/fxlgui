@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.gwt;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,7 +36,6 @@ import co.fxl.gui.api.WidgetProviderNotFoundException;
 import co.fxl.gui.api.template.DateFormat;
 import co.fxl.gui.api.template.DiscardChangesDialog;
 import co.fxl.gui.api.template.NumberFormat;
-import co.fxl.gui.api.template.SplitLayout;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -44,6 +44,8 @@ import com.google.gwt.core.client.impl.SchedulerImpl;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -57,10 +59,6 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	}
 
 	static {
-		DateFormat.MONTH_INCREMENT_DEC = 1;
-		DateFormat.YEAR_INCREMENT_DEC = 1900;
-		SplitLayout.SCROLLBAR_WIDTH = 8;
-		SplitLayout.WIDTH_SIDE_PANEL = 308;
 		NumberFormat.instance = new NumberFormat() {
 
 			private com.google.gwt.i18n.client.NumberFormat fmt = com.google.gwt.i18n.client.NumberFormat
@@ -73,6 +71,21 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 			@Override
 			public String format(Number date) {
+				return fmt.format(date);
+			}
+		};
+		DateFormat.instance = new DateFormat() {
+
+			private DateTimeFormat fmt = DateTimeFormat
+					.getFormat(PredefinedFormat.DATE_SHORT);
+
+			@Override
+			public Date parse(String string) {
+				return fmt.parse(string);
+			}
+
+			@Override
+			public String format(Date date) {
 				return fmt.format(date);
 			}
 		};
