@@ -36,6 +36,7 @@ import co.fxl.gui.api.template.DiscardChangesDialog;
 import co.fxl.gui.api.template.DiscardChangesDialog.DiscardChangesListener;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.LazyClickListener;
+import co.fxl.gui.api.template.NumberFormat;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
@@ -354,7 +355,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							// TODO long ...
 							formField.type().integer();
 							String value = valueOf == null ? ""
-									: ((Number) valueOf).toString();
+									: NumberFormat.instance
+											.format(((Number) valueOf));
 							((ITextElement<?>) formField.valueElement())
 									.text(value);
 							if (property.editable)
@@ -365,10 +367,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 										String text = ((ITextElement<?>) formField
 												.valueElement()).text().trim();
 										if (!text.equals("")) {
-											if (isLong)
-												value = Long.valueOf(text);
-											else
-												value = Integer.valueOf(text);
+											value = NumberFormat.instance
+													.parse(text);
 										}
 										property.adapter.valueOf(node, value);
 									}
