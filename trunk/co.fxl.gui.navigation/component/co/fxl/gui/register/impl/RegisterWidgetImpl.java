@@ -104,4 +104,8 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 	public void background(IColor color) {
 		color.rgb(br, bg, bb);
 	}
+
+	public int heightMenu() {
+		return headerPanel.height();
+	}
 }
