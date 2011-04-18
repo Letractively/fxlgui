@@ -65,7 +65,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 					.getDecimalFormat();
 
 			@Override
-			public Number parse(String string) {
+			public Double parse(String string) {
 				try {
 					return fmt.parse(string);
 				} catch (Exception e) {
