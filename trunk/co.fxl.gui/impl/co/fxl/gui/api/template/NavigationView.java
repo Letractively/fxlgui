@@ -23,10 +23,12 @@ import java.util.List;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
 
 public class NavigationView {
@@ -136,21 +138,49 @@ public class NavigationView {
 
 	public Link addHyperlink(String imageResource) {
 		setUp();
-		IHorizontalPanel panel = this.panel.add().panel().horizontal().align()
-				.begin().add().panel().horizontal().align().begin();
+		IHorizontalPanel panel = addPanel();
+		IImage image = addImage(panel);
+		ILabel textLabel = addTextLabel(panel);
+		return new Link(panel, image, textLabel);
+	}
+
+	protected ILabel addTextLabel(IHorizontalPanel panel) {
+		final ILabel textLabel = panel.add().label();// .hyperlink();
+		textLabel.font().pixel(13);// .weight().bold();
+		return textLabel;
+	}
+
+	public IUpdateable<String> addComboBoxLink(String title, String text,
+			String... options) {
+		setUp();
+		IHorizontalPanel panel = addPanel();
+		addImage(panel);
+		ILabel textLabel = addTextLabel(panel);
+		textLabel.font().weight().bold();
+		textLabel.text(title);
+		IComboBox cb = panel.addSpace(8).add().comboBox();
+		cb.addText(options);
+		cb.text(text);
+		return cb;
+	}
+
+	protected IImage addImage(IHorizontalPanel panel) {
 		IImage image = null;
 		if (SHOW_NUMBERS) {
 			String s = String.valueOf(index++) + ".";
 			panel.add().label().text(s).font().pixel(13).color().gray();
 			panel.addSpace(4);
 		} else if (SHOW_TRIANGLE) {
-			image = panel.add().image()
-					.resource(imageResource == null ? LINK_PNG : imageResource);
+			image = panel.add().image().resource(LINK_PNG);
 			panel.addSpace(4);
 		}
-		final ILabel textLabel = panel.add().label();// .hyperlink();
-		textLabel.font().pixel(13);// .weight().bold();
-		return new Link(panel, image, textLabel);
+		return image;
+	}
+
+	protected IHorizontalPanel addPanel() {
+		IHorizontalPanel panel = this.panel.add().panel().horizontal().align()
+				.begin().add().panel().horizontal().align().begin();
+		return panel;
 	}
 
 	private void setUp() {
