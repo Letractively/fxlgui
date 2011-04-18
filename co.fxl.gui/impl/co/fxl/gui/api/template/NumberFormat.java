@@ -23,7 +23,7 @@ public abstract class NumberFormat {
 	public static NumberFormat instance = new NumberFormat() {
 
 		@Override
-		public Number parse(String string) {
+		public Double parse(String string) {
 			return Double.valueOf(string);
 		}
 
@@ -33,7 +33,7 @@ public abstract class NumberFormat {
 		}
 	};
 
-	public abstract Number parse(String string);
+	public abstract Double parse(String string);
 
 	public abstract String format(Number date);
 }
