@@ -821,4 +821,9 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		this.allowCutPaste = allowCutPaste;
 		return this;
 	}
+
+	@Override
+	public int heightRegisterPanel() {
+		return registers.heightMenu();
+	}
 }

@@ -224,7 +224,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 		}
 		for (final RelationImpl relation : widget.relations) {
 			registers.put(relation, new Register(relation.name,
-					new RelationDecorator(relation), relation.constrainType));
+					new RelationDecorator(this,relation), relation.constrainType));
 		}
 		for (Object r : widget.registerOrder) {
 			Register reg = registers.get(r);
