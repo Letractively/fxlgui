@@ -25,4 +25,6 @@ public interface IMenuWidget extends IMenuNode {
 	IMenuWidget visible(boolean visible);
 
 	IMenuWidget background(int r, int g, int b);
+
+	int heightMenu();
 }
