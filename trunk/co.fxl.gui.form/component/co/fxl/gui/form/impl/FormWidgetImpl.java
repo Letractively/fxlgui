@@ -78,7 +78,7 @@ class FormWidgetImpl implements IFormWidget {
 	private boolean isNew;
 	private boolean alwaysAllowCancel = false;
 	private IButton saveButton;
-	private boolean hasFocus = false;
+	private IFocusable<?> focus = null;
 	private List<IFocusable<?>> focusables = new LinkedList<IFocusable<?>>();
 
 	FormWidgetImpl(IContainer panel) {
@@ -119,9 +119,9 @@ class FormWidgetImpl implements IFormWidget {
 
 	private void setFocus(IFocusable<?> f) {
 		focusables.add(f);
-		if (hasFocus)
+		if (focus != null)
 			return;
-		hasFocus = true;
+		focus = f;
 		f.focus();
 	}
 
@@ -446,12 +446,13 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	void looseFocus(Object ff) {
-		if (focusables.contains(ff)) {
-			int index = focusables.indexOf(ff);
-			if (index < focusables.size() - 1) {
-				focusables.get(index + 1).focus();
-			} else
-				hasFocus = false;
-		}
+		if (ff != focus)
+			return;
+		int index = focusables.indexOf(ff);
+		if (index < focusables.size() - 1) {
+			focus = focusables.get(index + 1);
+			focus.focus();
+		} else
+			focus = null;
 	}
 }
