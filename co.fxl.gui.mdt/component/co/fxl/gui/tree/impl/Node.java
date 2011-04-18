@@ -42,7 +42,7 @@ class Node<T> extends LazyClickListener {
 	private static final String LEAF = "leaf.png";
 	private static final int INDENT = 10;
 	private static final String OPENORCLOSED = "openorclosed.png";
-	private IHorizontalPanel content;
+	IHorizontalPanel content;
 	private IVerticalPanel childrenPanel = null;
 	ITree<T> tree;
 	private int depth;

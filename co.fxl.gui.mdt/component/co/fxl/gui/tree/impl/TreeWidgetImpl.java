@@ -373,8 +373,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		splitPane = panel().add().splitPane().splitPosition(SPLIT_POSITION);
 		splitPane.border().color().lightgray();
 		leftScrollPane = splitPane.first().scrollPane();
-		leftContentPanel = leftScrollPane.viewPort().panel()
-				.vertical();
+		leftContentPanel = leftScrollPane.viewPort().panel().vertical();
 		panel = leftContentPanel.spacing(10).add().panel().vertical();
 		IScrollPane scrollPane = splitPane.second().scrollPane();
 		scrollPane.color().rgb(BACKGROUND_GRAY, BACKGROUND_GRAY,
@@ -498,7 +497,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	void showAfterLoad(Node<T> node, boolean callSelection) {
 		if (callSelection) {
 			if (node != null && node.tree != null) {
-				leftScrollPane.scrollIntoView(node.container);
+				leftScrollPane.scrollIntoView(node.content);
 				node.selected(true);
 				selection(node.tree.object(), false);
 			} else
