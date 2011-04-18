@@ -52,8 +52,10 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 	private int selectionIndex;
 	private Object selection;
 	private IVerticalPanel panel;
+	private DetailView detailView;
 
-	RelationDecorator(RelationImpl relation) {
+	RelationDecorator(DetailView detailView, RelationImpl relation) {
+		this.detailView = detailView;
 		this.relation = relation;
 	}
 
@@ -214,6 +216,9 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 		int offsetY = Math.max(panel.offsetY(), 180);
 		int maxFromDisplay = height - offsetY - 124;
 		maxFromDisplay = Math.max(maxFromDisplay, 60);
+		if (detailView.tree.heightRegisterPanel() > 30) {
+			maxFromDisplay -= 25;
+		}
 		table.height(maxFromDisplay);
 	}
 
