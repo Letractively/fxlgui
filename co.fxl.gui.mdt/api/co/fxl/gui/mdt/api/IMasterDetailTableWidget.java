@@ -72,6 +72,8 @@ public interface IMasterDetailTableWidget<T> {
 
 	INavigationLink<T> addNavigationLink(String name);
 
+	IComboBoxLink addComboBoxLink(String name);
+
 	IPropertyPage<T> addPropertyPage(String string);
 
 	IMasterDetailTableWidget<T> allowCreate(boolean allowCreate);
