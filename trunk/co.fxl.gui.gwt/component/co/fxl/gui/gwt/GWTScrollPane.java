@@ -24,6 +24,7 @@ import co.fxl.gui.api.IScrollPane;
 
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -84,7 +85,8 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 	@Override
 	public IScrollPane scrollIntoView(IElement<?> element) {
 		Widget w = (Widget) element.nativeElement();
-		w.getElement().scrollIntoView();
+		Element e = w.getElement();
+		e.scrollIntoView();
 		return this;
 	}
 }
