@@ -29,6 +29,8 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IRadioButton;
+import co.fxl.gui.api.IUpdateable;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IFieldType;
@@ -44,6 +46,7 @@ import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
+import co.fxl.gui.mdt.api.IComboBoxLink;
 import co.fxl.gui.mdt.api.IMDTFilterList;
 import co.fxl.gui.mdt.api.IMasterDetailTableWidget;
 import co.fxl.gui.mdt.api.IN2MRelation;
@@ -66,7 +69,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	MDTFilterListImpl filterList = new MDTFilterListImpl(this);
 	String title;
 	IFilterConstraints constraints;
-	List<NavigationLinkImpl> navigationLinks = new LinkedList<NavigationLinkImpl>();
+	List<Object> navigationLinks = new LinkedList<Object>();
 	boolean hasFilter = false;
 	ILayout layout;
 	IVerticalPanel mainPanel;
@@ -252,18 +255,27 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 			NavigationView t = new NavigationView(sidePanel.add().panel());
 			if (navigationListener != null)
 				t.navigationViewListener(navigationListener);
-			for (NavigationLinkImpl link : navigationLinks) {
-				Link l = t.addHyperlink(link.imageResource).text(link.name);
-				for (final INavigationLinkListener<Object> cl : link.listeners) {
-					l.addClickListener(new LazyClickListener() {
+			for (Object link0 : navigationLinks) {
+				if (link0 instanceof NavigationLinkImpl) {
+					NavigationLinkImpl link = (NavigationLinkImpl) link0;
+					Link l = t.addHyperlink(link.imageResource).text(link.name);
+					for (final INavigationLinkListener<Object> cl : link.listeners) {
+						l.addClickListener(new LazyClickListener() {
 
-						@Override
-						public void onAllowedClick() {
-							cl.onClick(selection);
-						}
-					});
+							@Override
+							public void onAllowedClick() {
+								cl.onClick(selection);
+							}
+						});
+					}
+					link.setLabel(l);
+				} else {
+					ComboBoxLinkImpl cbl = (ComboBoxLinkImpl) link0;
+					IUpdateable<String> cb = t.addComboBoxLink(cbl.name,cbl.text,
+							cbl.texts.toArray(new String[0]));
+					for (IUpdateListener<String> ul : cbl.listeners)
+						cb.addUpdateListener(ul);
 				}
-				link.setLabel(l);
 			}
 		}
 	}
@@ -451,8 +463,12 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	}
 
 	void notifyLinks(List<Object> selection) {
-		for (NavigationLinkImpl l : navigationLinks)
+		for (Object l0 : navigationLinks) {
+			if (!(l0 instanceof NavigationLinkImpl))
+				continue;
+			NavigationLinkImpl l = (NavigationLinkImpl) l0;
 			l.notifySelection(selection);
+		}
 	}
 
 	@Override
@@ -540,5 +556,12 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		configuration = s.configuration;
 		selection = s.selection;
 		return this;
+	}
+
+	@Override
+	public IComboBoxLink addComboBoxLink(String name) {
+		ComboBoxLinkImpl cbl = new ComboBoxLinkImpl(name);
+		navigationLinks.add(cbl);
+		return cbl;
 	}
 }
