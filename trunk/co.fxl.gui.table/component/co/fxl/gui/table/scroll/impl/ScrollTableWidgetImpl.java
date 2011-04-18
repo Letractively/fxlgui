@@ -182,10 +182,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 							.pixel(10).color().gray();
 				}
 				dock.add().label().text("&#160;");
-				dock.height(height);
+				dock.height(heightMinusTopPanel());
 			} else {
 				IDockPanel dock = container.add().panel().dock();
-				dock.height(height);
+				dock.height(heightMinusTopPanel());
 				contentPanel = dock.center().panel().card();
 				scrollOffset = 0;
 				update();
@@ -193,9 +193,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					initialPaintedRows = paintedRows;
 					maxRowIndex = rows.size() - paintedRows;
 					sp = dock.right().scrollPane();
-					sp.size(35, height);
+					sp.size(35, heightMinusTopPanel());
 					h = sp.viewPort().panel().absolute();
-					spHeight = height * (rows.size() + paintedRows);
+					spHeight = heightMinusTopPanel()
+							* (rows.size() + paintedRows);
 					scrollPanelHeight = (int) (spHeight / paintedRows);
 					h.size(1, scrollPanelHeight);
 					sp.addScrollListener(this);
@@ -216,6 +217,13 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			throw new MethodNotImplementedException();
 		}
 		return this;
+	}
+
+	protected int heightMinusTopPanel() {
+		if (topPanel.height() == 0)
+			return height + 40;
+		else
+			return height + 30 - topPanel.height();
 	}
 
 	private void topPanel() {
@@ -273,7 +281,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	private int convertToRowOffset(int maxOffset) {
-		if (scrollPanelHeight == 0 || height == 0)
+		if (scrollPanelHeight == 0 || heightMinusTopPanel() == 0)
 			return 0;
 		// double rowHeight = height / initialPaintedRows == 0 ? 1
 		// : initialPaintedRows;
@@ -286,11 +294,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	private int convertFromRowOffset(int rowOffset) {
-		if (scrollPanelHeight == 0 || height == 0)
+		if (scrollPanelHeight == 0 || heightMinusTopPanel() == 0)
 			return 0;
-		double rowHeight = height / initialPaintedRows == 0 ? 1
+		double rowHeight = heightMinusTopPanel() / initialPaintedRows == 0 ? 1
 				: initialPaintedRows;
-		return (int) (rowOffset * rowHeight * scrollPanelHeight / (scrollPanelHeight - height));
+		return (int) (rowOffset * rowHeight * scrollPanelHeight / (scrollPanelHeight - heightMinusTopPanel()));
 	}
 
 	private boolean updating = false;
@@ -323,7 +331,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			IBulkTableWidget lastGrid = grid;
 			grid = (IBulkTableWidget) contentPanel.add().widget(
 					IBulkTableWidget.class);
-			grid.height(height);
+			grid.height(heightMinusTopPanel());
 			rowOffset = convertToRowOffset(usedScrollOffset);
 			paintedRows = computeRowsToPaint();
 			updateHeaderRow(grid);
@@ -438,7 +446,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		grid.deferr(new Runnable() {
 			public void run() {
 				int gridRow = 1;
-				int overflow = grid.tableHeight() - height;
+				int overflow = grid.tableHeight() - heightMinusTopPanel();
 				if (gridRow >= grid.rowCount())
 					return;
 				do {
@@ -504,7 +512,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private int computeRowsToPaint() {
 		int paintedRows = 0;
 		int prognosedHeight = HEADER_ROW_HEIGHT;
-		while (prognosedHeight < height) {
+		while (prognosedHeight < heightMinusTopPanel()) {
 			prognosedHeight += ROW_HEIGHT;
 			paintedRows++;
 		}
