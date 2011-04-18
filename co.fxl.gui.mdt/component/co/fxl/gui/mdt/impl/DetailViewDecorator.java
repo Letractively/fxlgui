@@ -346,7 +346,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							});
 						} else if (property.type.clazz.equals(Long.class)
 								|| property.type.clazz.equals(Integer.class)) {
-							boolean isLong = property.type.clazz
+							final boolean isLong = property.type.clazz
 									.equals(Long.class);
 							IFormField<ITextField> tf = form
 									.addTextField(property.name);
@@ -358,7 +358,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 								formField.type().integer();
 							String value = valueOf == null ? ""
 									: NumberFormat.instance
-											.format(((Number) valueOf));
+											.format((Number) valueOf);
 							((ITextElement<?>) formField.valueElement())
 									.text(value);
 							if (property.editable)
@@ -369,8 +369,13 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 										String text = ((ITextElement<?>) formField
 												.valueElement()).text().trim();
 										if (!text.equals("")) {
-											value = NumberFormat.instance
-													.parse(text);
+											if (isLong)
+												value = NumberFormat.instance
+														.parse(text)
+														.longValue();
+											else
+												value = NumberFormat.instance
+														.parse(text).intValue();
 										}
 										property.adapter.valueOf(node, value);
 									}
