@@ -159,6 +159,7 @@ public class NavigationView {
 		textLabel.font().weight().bold();
 		textLabel.text(title);
 		IComboBox cb = panel.addSpace(8).add().comboBox();
+		cb.width(202);
 		cb.addText(options);
 		cb.text(text);
 		return cb;
