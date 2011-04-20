@@ -20,6 +20,7 @@ package co.fxl.gui.tree.impl;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -400,6 +401,14 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		return this;
 	}
 
+	void newNode(TreeWidgetImpl<T> widget, IVerticalPanel panel, ITree<T> root,
+			int depth, boolean expand, List<ITree<T>> path, Runnable finish) {
+		Node<T> node = new Node<T>(widget, panel, root, depth, expand, path);
+		if (this.node == null)
+			this.node = node;
+		finish.run();
+	}
+
 	public ITreeWidget<T> root(ITree<T> tree, List<ITree<T>> path) {
 		assert tree != null : "Tree cannot be null";
 		if (this.root != null) {
@@ -413,46 +422,65 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		node = null;
 		cutted = null;
 		object2node.clear();
-		if (showRoot) {
-			Node<T> n0 = new Node<T>(this, panel(), tree, 0, expand, path);
-			node = n0;
-		} else {
-			for (ITree<T> c : tree.children()) {
-				Node<T> n0 = new Node<T>(this, panel(), c, 0, expand, path);
-				if (node == null)
-					node = n0;
-			}
-		}
-		if (selection != null) {
-			Node<T> n = getObject2node(selection);
-			if (n != null)
-				node = n;
-			else if (!selection.equals(root.object()) || showRoot) {
-				node = null;
-				// new
-				// MethodNotImplementedException("Selection in tree widget '"
-				// + selection + "' (" + selection.getClass()
-				// + ") not found in expanded tree").printStackTrace();
-			} else if (!root.children().isEmpty())
-				node = getObject2node(root.children().get(0).object());
-			else
-				node = null;
-			// for (Node<T> n : object2node.values()) {
-			// T object = n.tree.object();
-			// if (object.equals(selection)) {
-			// node = n;
-			// }
-			// }
-			// assert node != null;
-		}
-		show(node, true, new CallbackTemplate<Void>() {
+		Runnable finish = new Runnable() {
 
 			@Override
-			public void onSuccess(Void result) {
-				notifyChange();
+			public void run() {
+				if (selection != null) {
+					Node<T> n = getObject2node(selection);
+					if (n != null)
+						node = n;
+					else if (!selection.equals(root.object()) || showRoot) {
+						node = null;
+						// new
+						// MethodNotImplementedException("Selection in tree widget '"
+						// + selection + "' (" + selection.getClass()
+						// + ") not found in expanded tree").printStackTrace();
+					} else if (!root.children().isEmpty())
+						node = getObject2node(root.children().get(0).object());
+					else
+						node = null;
+					// for (Node<T> n : object2node.values()) {
+					// T object = n.tree.object();
+					// if (object.equals(selection)) {
+					// node = n;
+					// }
+					// }
+					// assert node != null;
+				}
+				show(node, true, new CallbackTemplate<Void>() {
+
+					@Override
+					public void onSuccess(Void result) {
+						notifyChange();
+					}
+				});
+			}
+		};
+		if (showRoot) {
+			newNode(this, panel(), tree, 0, expand, path, finish);
+		} else {
+			Iterator<ITree<T>> it = tree.children().iterator();
+			drawNode(it, this, panel(), 0, expand, path, finish);
+		}
+		return this;
+	}
+
+	private void drawNode(final Iterator<ITree<T>> it,
+			final TreeWidgetImpl<T> treeWidgetImpl,
+			final IVerticalPanel panel2, final int i, final boolean expand2,
+			final List<ITree<T>> path, final Runnable finish) {
+		if (!it.hasNext()) {
+			finish.run();
+			return;
+		}
+		ITree<T> c = it.next();
+		newNode(this, panel(), c, 0, expand, path, new Runnable() {
+			@Override
+			public void run() {
+				drawNode(it, treeWidgetImpl, panel2, i, expand2, path, finish);
 			}
 		});
-		return this;
 	}
 
 	void show(final Node<T> node) {
