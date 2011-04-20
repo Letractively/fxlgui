@@ -235,14 +235,18 @@ class Node<T> extends LazyClickListener {
 		expandLoadedNode = true;
 		for (ITree<T> child : tree.children()) {
 			assert child != null : "Tree child cannot be null";
-			new Node<T>(widget, childrenPanel.add().panel().vertical(), child,
-					depth + 1, expand, path);
-		}
-		if (tree.childCount() > 0) {
-			if (tree.icon() != null) {
-				image.resource(OPEN);
-			} else
-				image.resource(FOLDER_OPEN);
+			widget.newNode(widget, childrenPanel.add().panel().vertical(),
+					child, depth + 1, expand, path, new Runnable() {
+						@Override
+						public void run() {
+							if (tree.childCount() > 0) {
+								if (tree.icon() != null) {
+									image.resource(OPEN);
+								} else
+									image.resource(FOLDER_OPEN);
+							}
+						}
+					});
 		}
 	}
 
