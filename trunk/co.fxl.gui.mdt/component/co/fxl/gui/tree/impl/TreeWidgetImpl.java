@@ -401,14 +401,6 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		return this;
 	}
 
-	void newNode(TreeWidgetImpl<T> widget, IVerticalPanel panel, ITree<T> root,
-			int depth, boolean expand, List<ITree<T>> path, Runnable finish) {
-		Node<T> node = new Node<T>(widget, panel, root, depth, expand, path);
-		if (this.node == null)
-			this.node = node;
-		finish.run();
-	}
-
 	public ITreeWidget<T> root(ITree<T> tree, List<ITree<T>> path) {
 		assert tree != null : "Tree cannot be null";
 		if (this.root != null) {
@@ -464,6 +456,14 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			drawNode(it, this, panel(), 0, expand, path, finish);
 		}
 		return this;
+	}
+
+	void newNode(TreeWidgetImpl<T> widget, IVerticalPanel panel, ITree<T> root,
+			int depth, boolean expand, List<ITree<T>> path, Runnable finish) {
+		Node<T> node = new Node<T>(widget, panel, root, depth, expand, path);
+		if (this.node == null)
+			this.node = node;
+		finish.run();
 	}
 
 	private void drawNode(final Iterator<ITree<T>> it,
