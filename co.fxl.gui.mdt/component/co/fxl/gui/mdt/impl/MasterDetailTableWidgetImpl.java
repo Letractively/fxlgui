@@ -251,7 +251,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 			@Override
 			public void onApply(IFilterConstraints constraints) {
 				if (!switch2grid)
-				queryList = null;
+					queryList = null;
 				MasterDetailTableWidgetImpl.this.onApply(constraints);
 			}
 		});
