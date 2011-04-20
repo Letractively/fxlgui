@@ -362,8 +362,10 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 				&& widget.queryList != null) {
 			widget.switch2grid = false;
 			callback.onSuccess(widget.queryList);
-		} else
+		} else {
+			widget.switch2grid = false;
 			widget.source.queryList(constraints, callback);
+		}
 	}
 
 	@Override

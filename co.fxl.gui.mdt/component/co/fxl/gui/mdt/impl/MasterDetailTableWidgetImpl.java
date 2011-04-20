@@ -136,6 +136,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		hl.addClickListener(new LazyClickListener() {
 			@Override
 			public void onAllowedClick() {
+				queryList = null;
 				refresh(null);
 			}
 		});
@@ -245,7 +246,15 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 			filterWidget.constraints(constraints);
 		if (!filterList.filters.isEmpty() && filterable)
 			filterWidget.addSizeFilter();
-		filterWidget.addFilterListener(this);
+		filterWidget.addFilterListener(new IFilterListener() {
+
+			@Override
+			public void onApply(IFilterConstraints constraints) {
+				if (!switch2grid)
+				queryList = null;
+				MasterDetailTableWidgetImpl.this.onApply(constraints);
+			}
+		});
 		filterWidget.visible(true);
 		if (configuration != null)
 			filterWidget.setConfiguration(configuration);
