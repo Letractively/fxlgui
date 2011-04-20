@@ -458,12 +458,21 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		return this;
 	}
 
+	private int painted = 0;
+	private static int MAX_PAINTS = 20;
+
 	void newNode(TreeWidgetImpl<T> widget, IVerticalPanel panel, ITree<T> root,
 			int depth, boolean expand, List<ITree<T>> path, Runnable finish) {
 		Node<T> node = new Node<T>(widget, panel, root, depth, expand, path);
 		if (this.node == null)
 			this.node = node;
-		finish.run();
+		painted++;
+		if (painted < MAX_PAINTS)
+			finish.run();
+		else {
+			painted = 0;
+			panel.display().invokeLater(finish);
+		}
 	}
 
 	private void drawNode(final Iterator<ITree<T>> it,
