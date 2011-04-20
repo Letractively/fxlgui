@@ -101,7 +101,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	int rowsInTable = 0;
 	boolean allowCutPaste = false;
 	private INavigationListener navigationListener;
-	boolean refreshOnSwitch2Grid = true;
+	boolean refreshOnSwitch2Grid = false;
 	boolean switch2grid = false;
 	IDeletableList<Object> queryList;
 
