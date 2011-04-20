@@ -403,9 +403,10 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	public ITreeWidget<T> root(ITree<T> tree, List<ITree<T>> path) {
 		assert tree != null : "Tree cannot be null";
+		IVerticalPanel panel2 = panel();
 		if (this.root != null) {
 			show(null);
-			panel().clear();
+			panel2.clear();
 		}
 		if (path != null) {
 			selection = path.get(path.size() - 1).object();
@@ -450,10 +451,13 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			}
 		};
 		if (showRoot) {
-			newNode(this, panel(), tree, 0, expand, path, finish);
+			newNode(this, panel2, tree, 0, expand, path, finish);
 		} else {
-			Iterator<ITree<T>> it = tree.children().iterator();
-			drawNode(it, this, panel(), 0, expand, path, finish);
+			List<ITree<T>> children = tree.children();
+			Iterator<ITree<T>> it = children.iterator();
+			// panel2.height(children.size() * 21);
+			// panel2 = panel2.add().panel().vertical();
+			drawNode(it, this, panel2, 0, expand, path, finish);
 		}
 		return this;
 	}
