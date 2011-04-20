@@ -459,7 +459,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	private int painted = 0;
-	private static int MAX_PAINTS = 100;
+	private static int MAX_PAINTS = 250;
 
 	void newNode(TreeWidgetImpl<T> widget, IVerticalPanel panel, ITree<T> root,
 			int depth, boolean expand, List<ITree<T>> path, Runnable finish) {
