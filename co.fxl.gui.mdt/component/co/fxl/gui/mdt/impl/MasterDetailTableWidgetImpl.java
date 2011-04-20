@@ -47,6 +47,7 @@ import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IComboBoxLink;
+import co.fxl.gui.mdt.api.IDeletableList;
 import co.fxl.gui.mdt.api.IMDTFilterList;
 import co.fxl.gui.mdt.api.IMasterDetailTableWidget;
 import co.fxl.gui.mdt.api.IN2MRelation;
@@ -100,6 +101,9 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	int rowsInTable = 0;
 	boolean allowCutPaste = false;
 	private INavigationListener navigationListener;
+	boolean refreshOnSwitch2Grid = true;
+	boolean switch2grid = false;
+	IDeletableList<Object> queryList;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -143,8 +147,10 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		r1.checked(true);
 		r1.font().weight().bold();
 		r1.addUpdateListener(new LazyUpdateListener<Boolean>() {
+
 			@Override
 			public void onAllowedUpdate(Boolean value) {
+				switch2grid = true;
 				Object show = null;
 				if (!selection.isEmpty())
 					show = selection.get(selection.size() - 1);
@@ -271,8 +277,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 					link.setLabel(l);
 				} else {
 					ComboBoxLinkImpl cbl = (ComboBoxLinkImpl) link0;
-					IUpdateable<String> cb = t.addComboBoxLink(cbl.name,cbl.text,
-							cbl.texts.toArray(new String[0]));
+					IUpdateable<String> cb = t.addComboBoxLink(cbl.name,
+							cbl.text, cbl.texts.toArray(new String[0]));
 					for (IUpdateListener<String> ul : cbl.listeners)
 						cb.addUpdateListener(ul);
 				}
@@ -563,5 +569,12 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		ComboBoxLinkImpl cbl = new ComboBoxLinkImpl(name);
 		navigationLinks.add(cbl);
 		return cbl;
+	}
+
+	@Override
+	public IMasterDetailTableWidget<Object> refreshOnSwitch2Grid(
+			boolean refreshOnSwitch2Grid) {
+		this.refreshOnSwitch2Grid = refreshOnSwitch2Grid;
+		return this;
 	}
 }

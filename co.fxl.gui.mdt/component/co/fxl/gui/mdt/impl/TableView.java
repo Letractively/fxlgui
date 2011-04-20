@@ -53,7 +53,6 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 	private IScrollTableWidget<Object> table;
 	private Map<PropertyImpl, IColumn<Object>> property2column = new HashMap<PropertyImpl, IColumn<Object>>();
 	private List<IAdapter<Object, Object>> adapters = new LinkedList<IAdapter<Object, Object>>();
-	private IDeletableList<Object> queryList;
 	private IClickable<?> delete;
 	// private IClickable<?> detail;
 	private Map<String, IClickable<?>> buttons = new HashMap<String, IClickable<?>>();
@@ -123,7 +122,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 										indices.add(i);
 										entities.add(entity);
 									}
-									queryList
+									widget.queryList
 											.delete(indices,
 													entities,
 													new CallbackTemplate<IDeletableList<Object>>() {
@@ -223,7 +222,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 		boolean clickable = !selection.isEmpty();
 		for (Object o : selection) {
 			assert o != null;
-			clickable &= queryList.isDeletable(o);
+			clickable &= widget.queryList.isDeletable(o);
 		}
 		// detail.clickable(selection.size() == 1);
 		if (widget.showCommands) {
@@ -272,94 +271,99 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 				}
 			}
 		}
-		widget.source.queryList(constraints,
-				new CallbackTemplate<IDeletableList<Object>>() {
+		queryList(constraints, new CallbackTemplate<IDeletableList<Object>>() {
 
-					private long time;
+			private long time;
+
+			@Override
+			public void onSuccess(final IDeletableList<Object> queryList) {
+				if (painting)
+					return;
+				painting = true;
+				final long s = System.currentTimeMillis();
+				widget.mainPanel.clear();
+				drawTable();
+				widget.queryList = queryList;
+				widget.rowsInTable = queryList.size();
+				final IRows<Object> rows = new IRows<Object>() {
 
 					@Override
-					public void onSuccess(final IDeletableList<Object> queryList) {
-						if (painting)
-							return;
-						painting = true;
-						final long s = System.currentTimeMillis();
-						widget.mainPanel.clear();
-						drawTable();
-						TableView.this.queryList = queryList;
-						widget.rowsInTable = queryList.size();
-						final IRows<Object> rows = new IRows<Object>() {
+					public Object[] row(int i) {
+						return queryList.tableValues(queryList.get(i));
+					}
+
+					@Override
+					public Object identifier(int i) {
+						return queryList.get(i);
+					}
+
+					@Override
+					public int size() {
+						return queryList.size();
+					}
+				};
+				ISelection<Object> tableSelection = table.selection();
+				for (Object o : widget.selection)
+					tableSelection.add(o);
+				table.rows(rows);
+				time = System.currentTimeMillis() - s;
+				final PrintStream out = time > 500 ? System.err : System.out;
+				out.println("TableView: added " + queryList.size()
+						+ " rows in " + time + "ms");
+				ResizeListener.setup(widget.mainPanel.display(), TableView.this);
+				widget.mainPanel.display().invokeLater(new Runnable() {
+
+					@Override
+					public void run() {
+						onHeightChange(widget.mainPanel.display().height());
+						updateCreatable();
+						time = System.currentTimeMillis() - s;
+						ITableClickListener showClickListener = new ITableClickListener() {
 
 							@Override
-							public Object[] row(int i) {
-								return queryList.tableValues(queryList.get(i));
-							}
-
-							@Override
-							public Object identifier(int i) {
-								return queryList.get(i);
-							}
-
-							@Override
-							public int size() {
-								return queryList.size();
+							public void onClick(int column, int row) {
+								if (row == 0)
+									return;
+								row--;
+								Object show = rows.identifier(row);
+								widget.r2.checked(true);
+								widget.showDetailView(show);
 							}
 						};
-						ISelection<Object> tableSelection = table.selection();
-						for (Object o : widget.selection)
-							tableSelection.add(o);
-						table.rows(rows);
-						time = System.currentTimeMillis() - s;
-						final PrintStream out = time > 500 ? System.err
-								: System.out;
-						out.println("TableView: added " + queryList.size()
-								+ " rows in " + time + "ms");
-						ResizeListener.setup(widget.mainPanel.display(),
-								TableView.this);
-						widget.mainPanel.display().invokeLater(new Runnable() {
+						table.addTableClickListener(showClickListener)
+								.doubleClick();
+						table.addTooltip("Double click to switch views.");
+						table.sortListener(TableView.this);
+						table.constraints(constraints);
+						// if (selectionObject != null) {
+						// table.selection().add(selectionObject);
+						// }
+						table.addFilterListener(new IFilterListener() {
 
 							@Override
-							public void run() {
-								onHeightChange(widget.mainPanel.display()
-										.height());
-								updateCreatable();
-								time = System.currentTimeMillis() - s;
-								ITableClickListener showClickListener = new ITableClickListener() {
-
-									@Override
-									public void onClick(int column, int row) {
-										if (row == 0)
-											return;
-										row--;
-										Object show = rows.identifier(row);
-										widget.r2.checked(true);
-										widget.showDetailView(show);
-									}
-								};
-								table.addTableClickListener(showClickListener)
-										.doubleClick();
-								table.addTooltip("Double click to switch views.");
-								table.sortListener(TableView.this);
-								table.constraints(constraints);
-								// if (selectionObject != null) {
-								// table.selection().add(selectionObject);
-								// }
-								table.addFilterListener(new IFilterListener() {
-
-									@Override
-									public void onApply(
-											IFilterConstraints constraints) {
-										TableView.this.onApply(constraints);
-									}
-								});
-								table.visible(true);
-								out.println("TableView: created table in "
-										+ time + "ms");
-								onChange(table.selection().result());
-								painting = false;
+							public void onApply(IFilterConstraints constraints) {
+								TableView.this.onApply(constraints);
 							}
 						});
+						table.visible(true);
+						out.println("TableView: created table in " + time
+								+ "ms");
+						onChange(table.selection().result());
+						painting = false;
 					}
 				});
+			}
+		});
+	}
+
+	private void queryList(IFilterConstraints constraints,
+			CallbackTemplate<IDeletableList<Object>> callback) {
+		if (widget.switch2grid && !widget.refreshOnSwitch2Grid
+				&& widget.queryList != null) {
+			widget.switch2grid = false;
+			callback.onSuccess(widget.queryList);
+		} else
+			widget.source.queryList(constraints, callback);
 	}
 
 	@Override
