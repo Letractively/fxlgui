@@ -192,6 +192,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 
 			@Override
 			protected void save(ITree<Object> node, ICallback<Boolean> cb) {
+				widget.queryList = null;
 				saveNode(node, cb);
 			}
 		}.refreshListener(this);
@@ -224,7 +225,8 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 		}
 		for (final RelationImpl relation : widget.relations) {
 			registers.put(relation, new Register(relation.name,
-					new RelationDecorator(this,relation), relation.constrainType));
+					new RelationDecorator(this, relation),
+					relation.constrainType));
 		}
 		for (Object r : widget.registerOrder) {
 			Register reg = registers.get(r);
