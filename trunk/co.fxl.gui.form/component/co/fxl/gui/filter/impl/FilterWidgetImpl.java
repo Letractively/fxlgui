@@ -110,9 +110,9 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	FilterWidgetImpl(IContainer panel) {
 		FilterPanel title = newFilterPanel(panel);
 		title.addTitle("Filter");
-		apply = title.addHyperlink("accept_free.png", "Update");
+		apply = title.addHyperlink("accept.png", "Update");
 		validation.linkClickable(apply);
-		clear = title.addHyperlink("remove_free.png", "Clear");
+		clear = title.addHyperlink("cancel.png", "Clear");
 		apply.addClickListener(new ApplyClickListener());
 		// apply.clickable(false);
 		clear.addClickListener(new ClearClickListener());
