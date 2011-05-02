@@ -19,8 +19,18 @@
 package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.IColored.IGradient;
 
 abstract class GWTColor implements IColor {
+
+	public class Gradient implements IGradient {
+
+		@Override
+		public IColor vertical() {
+			return GWTColor.this;
+		}
+
+	}
 
 	private class MixColor extends GWTColor {
 
@@ -39,6 +49,11 @@ abstract class GWTColor implements IColor {
 		public IColor remove() {
 			GWTColor.this.remove();
 			return this;
+		}
+
+		@Override
+		public IGradient gradient() {
+			return new Gradient();
 		}
 
 	}

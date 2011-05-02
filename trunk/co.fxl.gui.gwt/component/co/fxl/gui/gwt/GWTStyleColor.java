@@ -19,9 +19,19 @@
 package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.IColored.IGradient;
 import co.fxl.gui.api.template.ColorTemplate;
 
 public class GWTStyleColor extends ColorTemplate implements IColor {
+
+	public class Gradient implements IGradient {
+
+		@Override
+		public IColor vertical() {
+			return GWTStyleColor.this;
+		}
+
+	}
 
 	private Style style;
 
@@ -68,5 +78,10 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 		stylable().clearBackgroundColor();
 		stylable().clearColor();
 		return this;
+	}
+
+	@Override
+	public IGradient gradient() {
+		return new Gradient();
 	}
 }
