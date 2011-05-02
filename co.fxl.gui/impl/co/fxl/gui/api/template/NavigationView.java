@@ -103,7 +103,7 @@ public class NavigationView {
 	public NavigationView navigationViewListener(final INavigationListener l) {
 		if (l == null)
 			return this;
-		IClickable<?> back = widgetTitle.addHyperlink("nav_back.png", "Back");
+		IClickable<?> back = widgetTitle.addHyperlink("back.png", "Back");
 		back.addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
@@ -111,7 +111,7 @@ public class NavigationView {
 			}
 		});
 		back.clickable(l.hasPrevious());
-		IClickable<?> forward = widgetTitle.addHyperlink("nav_forward.png",
+		IClickable<?> forward = widgetTitle.addHyperlink("forward.png",
 				"Forward");
 		forward.addClickListener(new IClickListener() {
 			@Override
@@ -139,7 +139,7 @@ public class NavigationView {
 	public Link addHyperlink(String imageResource) {
 		setUp();
 		IHorizontalPanel panel = addPanel();
-		IImage image = addImage(panel);
+		IImage image = addImage(panel, imageResource);
 		ILabel textLabel = addTextLabel(panel);
 		return new Link(panel, image, textLabel);
 	}
@@ -154,7 +154,7 @@ public class NavigationView {
 			String... options) {
 		setUp();
 		IHorizontalPanel panel = addPanel();
-		addImage(panel);
+		addImage(panel, null);
 		ILabel textLabel = addTextLabel(panel);
 		textLabel.font().weight().bold();
 		textLabel.text(title);
@@ -165,14 +165,15 @@ public class NavigationView {
 		return cb;
 	}
 
-	protected IImage addImage(IHorizontalPanel panel) {
+	protected IImage addImage(IHorizontalPanel panel, String imageResource) {
 		IImage image = null;
 		if (SHOW_NUMBERS) {
 			String s = String.valueOf(index++) + ".";
 			panel.add().label().text(s).font().pixel(13).color().gray();
 			panel.addSpace(4);
 		} else if (SHOW_TRIANGLE) {
-			image = panel.add().image().resource(LINK_PNG);
+			image = panel.add().image()
+					.resource(imageResource == null ? LINK_PNG : imageResource);
 			panel.addSpace(4);
 		}
 		return image;
