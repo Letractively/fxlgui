@@ -130,7 +130,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		if (!allowGridView)
 			views.visible(false);
 		views.grayBackground();
-		views.addTitle("Views");
+		views.addTitle("VIEWS");
 		IClickable<?> hl = views.addHyperlink("refresh.png", "Refresh");
 		hl.clickable(true);
 		hl.addClickListener(new LazyClickListener() {
