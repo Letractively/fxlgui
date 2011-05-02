@@ -20,6 +20,11 @@ package co.fxl.gui.api;
 
 public interface IColored {
 
+	public interface IGradient {
+
+		IColor vertical();
+	}
+
 	public interface IColor {
 		
 		IColor black();
@@ -41,6 +46,8 @@ public interface IColored {
 		IColor rgb(int r, int g, int b);
 		
 		IColor mix();
+		
+		IGradient gradient();
 		
 		IColor remove();
 	}

@@ -19,8 +19,29 @@
 package co.fxl.gui.api.template;
 
 import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.IColored.IGradient;
 
 public abstract class ColorTemplate implements IColor {
+
+	public class Gradient implements IGradient {
+
+		@Override
+		public IColor vertical() {
+			return new ColorTemplate() {
+
+				@Override
+				public IColor rgb(int r, int g, int b) {
+					// TODO ...
+					return null;
+				}
+
+				@Override
+				public IColor remove() {
+					throw new MethodNotImplementedException();
+				}
+			};
+		}
+	}
 
 	private class MixColor extends ColorTemplate implements IColor {
 
@@ -91,5 +112,10 @@ public abstract class ColorTemplate implements IColor {
 	@Override
 	public IColor mix() {
 		return new MixColor();
+	}
+
+	@Override
+	public IGradient gradient() {
+		return new Gradient();
 	}
 }

@@ -181,14 +181,17 @@ public class NavigationView {
 
 	protected IHorizontalPanel addPanel() {
 		IHorizontalPanel panel = this.panel.add().panel().horizontal().align()
-				.begin().add().panel().horizontal().align().begin();
+				.begin().addSpace(6).add().panel().horizontal().align().begin();
+		// IBorder border = panel.border();
+		// border.color().rgb(172, 197, 213);
+		// border.style().bottom();
 		return panel;
 	}
 
 	private void setUp() {
 		if (panel != null)
 			return;
-		widgetTitle.addTitle("Navigation");
+		widgetTitle.addTitle("NAVIGATION");
 		panel = widgetTitle.content().panel().vertical().spacing(2);
 	}
 
