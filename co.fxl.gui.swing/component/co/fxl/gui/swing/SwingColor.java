@@ -20,7 +20,6 @@ package co.fxl.gui.swing;
 
 import java.awt.Color;
 
-
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.template.ColorTemplate;
 
