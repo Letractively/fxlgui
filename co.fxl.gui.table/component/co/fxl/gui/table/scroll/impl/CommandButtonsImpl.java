@@ -178,7 +178,10 @@ public class CommandButtonsImpl implements ICommandButtons,
 		// p.spacing(4);
 		// p.color().gray();
 		// p.border().color().gray();
-		IImage image = p.add().image().resource(string.toLowerCase() + ".png");
+		String imageR = string.toLowerCase();
+		if (imageR.equals("remove"))
+			imageR = "cancel";
+		IImage image = p.add().image().resource(imageR + ".png");
 		p.addSpace(2);
 		ILabel label = p.add().label().text(string);
 		Link l = new Link(p, image, label);
