@@ -101,7 +101,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 			}
 		}
 		if (widget.showCommands) {
-			delete = table.addButton("Delete", "remove.png");
+			delete = table.addButton("Delete", "cancel.png");
 			delete.addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {

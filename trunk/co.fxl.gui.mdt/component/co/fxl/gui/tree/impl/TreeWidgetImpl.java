@@ -310,7 +310,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					});
 				}
 			};
-			delete = widgetTitle.addHyperlink("remove.png", "Delete");
+			delete = widgetTitle.addHyperlink("cancel.png", "Delete");
 			delete.addClickListener(deleteListener);
 			if (showRefresh && this instanceof RefreshListener)
 				refresh().addClickListener(new LazyClickListener() {
