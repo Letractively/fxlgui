@@ -93,7 +93,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IRows<Object> actualRows;
 
 	ScrollTableWidgetImpl(IContainer container) {
-		widgetTitle = new WidgetTitle(container.panel()).foldable(false);
+		widgetTitle = new WidgetTitle(container.panel(), true).foldable(false);
 		widgetTitle.grayBackground();
 		widgetTitle.commandsOnTop();
 		this.container = widgetTitle.content().panel().vertical();
