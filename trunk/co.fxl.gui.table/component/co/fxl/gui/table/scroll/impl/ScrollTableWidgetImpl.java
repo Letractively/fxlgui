@@ -155,6 +155,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						// topPanel = container.add().panel().grid();
 						// container.addSpace(10);
 						filter = (IMiniFilterWidget) topPanel.cell(0, 0)
+								.panel().horizontal().addSpace(8).add()
 								.widget(IMiniFilterWidget.class);
 					}
 					filter.addFilter().name(c.name).type(c.type);
@@ -181,8 +182,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				if (topPanel == null)
 					topPanel = dock.add().panel().grid();
 				if (showNoRowsFound) {
-					topPanel.cell(0, 0).label().text("No entities found")
-							.font().pixel(10).color().gray();
+					topPanel.cell(0, 0).panel().horizontal().addSpace(8).add()
+							.label().text("NO ENTITIES FOUND").font().pixel(10)
+							.color().gray();
 				}
 				dock.add().label().text("&#160;");
 				dock.height(heightMinusTopPanel());
@@ -334,8 +336,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			highlighted.clear();
 			contentPanel.clear();
 			IBulkTableWidget lastGrid = grid;
-			grid = (IBulkTableWidget) contentPanel.add().widget(
-					IBulkTableWidget.class);
+			grid = (IBulkTableWidget) contentPanel.add().panel().vertical()
+					.spacing(8).add().widget(IBulkTableWidget.class);
 			grid.height(heightMinusTopPanel());
 			rowOffset = convertToRowOffset(usedScrollOffset);
 			paintedRows = computeRowsToPaint();
