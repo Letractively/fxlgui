@@ -51,15 +51,19 @@ public class GWTWidgetBorder extends GWTBorder {
 	@Override
 	protected void update() {
 		remove();
-		if (!borderType.equals(GWTBorder.BORDER_BOTTOM_LESS)) {
-			DOM.setStyleAttribute(element, borderType, width + "px " + color
-					+ " " + style);
-		} else {
+		if (borderType.equals(GWTBorder.BORDER_BOTTOM_LESS)) {
 			DOM.setStyleAttribute(element, "borderTop", width + "px " + color
 					+ " " + style);
 			DOM.setStyleAttribute(element, "borderLeft", width + "px " + color
 					+ " " + style);
 			DOM.setStyleAttribute(element, "borderRight", width + "px " + color
+					+ " " + style);
+		} else if (borderType.equals(GWTBorder.BORDER_ROUNDED)) {
+			DOM.setStyleAttribute(element, borderType, width + "px " + color
+					+ " " + style);
+			DOM.setStyleAttribute(element, "border-radius", "1em");
+		} else {
+			DOM.setStyleAttribute(element, borderType, width + "px " + color
 					+ " " + style);
 		}
 		lastBorderType = borderType;
