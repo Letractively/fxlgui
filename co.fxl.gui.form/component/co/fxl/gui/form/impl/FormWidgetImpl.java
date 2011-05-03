@@ -82,7 +82,7 @@ class FormWidgetImpl implements IFormWidget {
 	private List<IFocusable<?>> focusables = new LinkedList<IFocusable<?>>();
 
 	FormWidgetImpl(IContainer panel) {
-		widgetTitle = new WidgetTitle(panel.panel());
+		widgetTitle = new WidgetTitle(panel.panel(), false);
 		widgetTitle.foldable(false);
 	}
 
@@ -376,7 +376,7 @@ class FormWidgetImpl implements IFormWidget {
 		if (gridPanel == null) {
 			contentPanel = widgetTitle.content().panel().vertical();
 			gridPanel = contentPanel.add().panel().grid();
-			gridPanel.indent(2);
+			gridPanel.indent(1);
 			gridPanel.resize(2, 1).column(1).expand();
 		}
 		return gridPanel;

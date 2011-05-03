@@ -53,14 +53,16 @@ public abstract class FormFieldImpl<T> implements IFormField<T> {
 
 	@Override
 	public ILabel addButton(String title) {
-		return addContainer().label().hyperlink().text(title);
+		ILabel l = addContainer().label().hyperlink().text(title);
+		l.font().pixel(11);
+		return l;
 	}
 
 	@Override
 	public IContainer addContainer() {
 		return widget.grid().cell(column, row).valign().center().align()
 				.begin().panel().horizontal().align().begin().add().panel()
-				.horizontal().align().begin().addSpace(12).add();
+				.horizontal().align().begin().addSpace(2).add();
 	}
 
 	@Override
