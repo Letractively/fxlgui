@@ -18,12 +18,14 @@
  */
 package co.fxl.gui.navigation.impl;
 
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IMenuWidget;
 import co.fxl.gui.navigation.api.IToolbar;
 import co.fxl.gui.register.impl.RegisterWidgetImpl;
+import co.fxl.gui.register.impl.RegisterWidgetImpl.ColorDecorator;
 
 class NavigationWidgetImpl implements IMenuWidget {
 
@@ -31,7 +33,13 @@ class NavigationWidgetImpl implements IMenuWidget {
 
 	NavigationWidgetImpl(IContainer panel) {
 		registerWidget = new RegisterWidgetImpl(panel.panel());
-		registerWidget.background(200, 200, 200);
+		registerWidget.background(new ColorDecorator() {
+			@Override
+			public void decorate(IColor color) {
+				color.rgb(249, 249, 249).gradient().vertical()
+						.rgb(216, 216, 216);
+			}
+		});
 		registerWidget.spacing = 4;
 		registerWidget.fontSize = 12;
 	}
@@ -61,8 +69,7 @@ class NavigationWidgetImpl implements IMenuWidget {
 
 	@Override
 	public IMenuWidget background(int r, int g, int b) {
-		registerWidget.background(r, g, b);
-		return this;
+		throw new MethodNotImplementedException();
 	}
 
 	@Override
