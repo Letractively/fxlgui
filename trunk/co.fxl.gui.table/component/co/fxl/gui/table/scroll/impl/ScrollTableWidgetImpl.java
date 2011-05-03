@@ -174,11 +174,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			if (buttonDecorator != null) {
 				buttonPanel(buttonDecorator);
 			}
-			if (filter != null || buttonDecorator != null)
-				container.addSpace(10);
+//			if (filter != null || buttonDecorator != null)
+//				container.addSpace(10);
 			if (rows.size() == 0) {
-				IVerticalPanel dock = container.add().panel().vertical()
-						.spacing(10);
+				IVerticalPanel dock = container.add().panel().vertical();
+//						.spacing(10);
 				if (topPanel == null)
 					topPanel = dock.add().panel().grid();
 				if (showNoRowsFound) {
@@ -337,7 +337,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			contentPanel.clear();
 			IBulkTableWidget lastGrid = grid;
 			grid = (IBulkTableWidget) contentPanel.add().panel().vertical()
-					.spacing(8).add().widget(IBulkTableWidget.class);
+					.spacing(6).add().widget(IBulkTableWidget.class);
 			grid.height(heightMinusTopPanel());
 			rowOffset = convertToRowOffset(usedScrollOffset);
 			paintedRows = computeRowsToPaint();
