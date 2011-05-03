@@ -111,6 +111,10 @@ class MiniFilterPanel implements FilterPanel {
 		@Override
 		public Heights heights() {
 			return widget.heights;
+		}
+
+		@Override
+		public void resize(int size) {
 		};
 	}
 

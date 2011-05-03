@@ -119,7 +119,7 @@ class LoginWidgetImpl implements ILoginWidget {
 		decorate(liPanel.add().label().text("Password"));
 		decorate(password = liPanel.add().passwordField()
 				.addCarriageReturnListener(loginListener));
-		ILabel label = liPanel.add().label().text("Login").hyperlink()
+		ILabel label = liPanel.add().label().text("Login")// .hyperlink()
 				.addClickListener(loginListener).mouseLeft();
 		decorateHyperlink(label);
 		if (decorator != null)
@@ -132,10 +132,11 @@ class LoginWidgetImpl implements ILoginWidget {
 		if (decorator != null)
 			decorator.decorateBegin(loPanel, true);
 		ILabel loggedInHead = loPanel.add().label().text("Logged in as");
-		decorate(loggedInHead).font().color().lightgray();
+		decorate(loggedInHead).font().color().gray();
 		loggedInAs = loPanel.add().label();
-		decorate(loggedInAs).font().weight().bold().color().white();
-		ILabel label = loPanel.add().label().text("Logout").hyperlink()
+		decorate(loggedInAs).font().weight().bold().color().mix().black()
+				.gray();
+		ILabel label = loPanel.add().label().text("Logout")
 				.addClickListener(logoutListener).mouseLeft();
 		decorateHyperlink(label);
 		if (decorator != null)
@@ -143,12 +144,12 @@ class LoginWidgetImpl implements ILoginWidget {
 	}
 
 	private ILabel decorate(ILabel label) {
-		label.font().pixel(13).color().white();
+		label.font().pixel(13).color().mix().gray().black();
 		return label;
 	}
 
 	private void decorateHyperlink(ILabel label) {
-		label.font().pixel(13).color().mix().blue().white().white().white();
+		label.font().pixel(13).color().rgb(0, 87, 141);
 	}
 
 	private void decorate(ITextField formField) {
