@@ -350,7 +350,7 @@ public class Validation {
 		if (hasError) {
 			textField.color().mix().red().white().white();
 		} else {
-			textField.color().white();
+			textField.color().rgb(249, 249, 249);
 		}
 	}
 
@@ -358,7 +358,7 @@ public class Validation {
 		if (hasError) {
 			textField.color().mix().red().white().white();
 		} else {
-			textField.color().white();
+			textField.color().rgb(249, 249, 249);
 		}
 	}
 
