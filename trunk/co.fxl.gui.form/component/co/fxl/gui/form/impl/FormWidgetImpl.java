@@ -389,6 +389,7 @@ class FormWidgetImpl implements IFormWidget {
 
 	@Override
 	public ILabel addTitle(String title) {
+		widgetTitle.space(10);
 		return widgetTitle.addTitle(title);
 	}
 
