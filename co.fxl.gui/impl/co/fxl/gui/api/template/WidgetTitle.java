@@ -37,7 +37,7 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class WidgetTitle implements IClickListener {
 
-	private static final int SMALL_FONT = 12;
+	private static final int SMALL_FONT = 13;
 
 	class CommandLink implements IClickable<IClickable<?>> {
 
@@ -89,8 +89,8 @@ public class WidgetTitle implements IClickListener {
 
 	public static final int LARGE_FONT = 18;
 	private static final String FOLDABLE = "Click to minimize/maximize";
-	private String openPNG = "open.png";
-	private String closedPNG = "closed.png";
+	// private String openPNG = "open.png";
+	// private String closedPNG = "closed.png";
 	public IGridPanel panel;
 	private IHorizontalPanel titlePanel;
 	private IHorizontalPanel commandPanel;
@@ -99,7 +99,7 @@ public class WidgetTitle implements IClickListener {
 	private IDockPanel headerPanel;
 	private IContainer contentContainer;
 	private boolean open = true;
-	private IImage image;
+	// private IImage image;
 	private boolean foldable = true;
 	public ILabel headerLabel;
 	private List<ILabel> labels = new LinkedList<ILabel>();
@@ -141,8 +141,8 @@ public class WidgetTitle implements IClickListener {
 	}
 
 	public WidgetTitle triangleIcons() {
-		openPNG = "open_folder.png";
-		closedPNG = "closed_folder.png";
+		// openPNG = "open_folder.png";
+		// closedPNG = "closed_folder.png";
 		return this;
 	}
 
@@ -170,47 +170,56 @@ public class WidgetTitle implements IClickListener {
 			return;
 		headerPanel.visible(true);
 		// headerPanel.color().rgb(220, 220, 220);
-		IHorizontalPanel horizontal = headerPanel.center().panel().horizontal()
+		IHorizontalPanel horizontal = headerPanel.center().panel().horizontal().addSpace(2)
 				.align().begin();
 		if (grayBackground)
 			horizontal.color().gray();
 		titlePanel = horizontal.add().panel().horizontal().align().begin()
 				.spacing(5);
 		if (foldable) {
-			image = titlePanel.add().image().resource(openPNG);
-			image.addClickListener(this);
-			image.tooltip(FOLDABLE);
+			// image = titlePanel.add().image().resource(openPNG);
+			// image.addClickListener(this);
+			// image.tooltip(FOLDABLE);
 		}
-		if (commandsOnTop) {
-			IContainer cell = headerPanel.right();
-			commandPanelTop = cell.panel().horizontal().spacing(6);
-		} else {
-			IVerticalPanel vertical = bottom().panel().vertical();
-			IContainer cell = vertical.add().panel().dock().right();
-			commandPanel = cell.panel().horizontal().spacing(5);
-			vertical.color().rgb(249, 249, 249).gradient().vertical().rgb(216, 216, 216);
-			final IBorder border2 = vertical.border();
-			border2.color().rgb(172, 197, 213);
-			border2.style().top();
-		}// panel.addSpace(space);
 		hasHeaderPanel = true;
 	}
 
 	IHorizontalPanel commandPanel() {
+		setUpCommandPanel();
 		if (commandsOnTop)
 			return commandPanelTop;
 		else
 			return commandPanel;
 	}
 
+	void setUpCommandPanel() {
+		if (commandsOnTop) {
+			if (commandPanelTop != null)
+				return;
+			IContainer cell = headerPanel.right();
+			commandPanelTop = cell.panel().horizontal().spacing(6);
+		} else {
+			if (commandPanel != null)
+				return;
+			IVerticalPanel vertical = bottom().panel().vertical();
+			IContainer cell = vertical.add().panel().dock().right();
+			commandPanel = cell.panel().horizontal().spacing(5);
+			vertical.color().rgb(249, 249, 249).gradient().vertical()
+					.rgb(216, 216, 216);
+			final IBorder border2 = vertical.border();
+			border2.color().rgb(172, 197, 213);
+			border2.style().top();
+		}// panel.addSpace(space);
+	}
+
 	@Override
 	public void onClick() {
 		open = !open;
-		if (open) {
-			image.resource(openPNG);
-		} else {
-			image.resource(closedPNG);
-		}
+		// if (open) {
+		// image.resource(openPNG);
+		// } else {
+		// image.resource(closedPNG);
+		// }
 		contentContainer.element().visible(open);
 		for (ILabel l : labels)
 			l.visible(open);
@@ -293,7 +302,7 @@ public class WidgetTitle implements IClickListener {
 	public IContainer content() {
 		if (contentContainer != null)
 			return contentContainer;
-		return contentContainer = space == 0 ? panel.cell(0, 1) : panel
+		return contentContainer = space == 0 ? panel.cell(0, 1).panel().vertical().add() : panel
 				.cell(0, 1).panel().vertical().addSpace(space).add();
 	}
 
