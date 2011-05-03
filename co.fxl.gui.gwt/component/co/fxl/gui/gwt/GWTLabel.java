@@ -62,7 +62,7 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 		if (isHyperlink) {
 			font().underline(enable);
 			if (enable) {
-				font().color().blue();
+				font().color().rgb(0, 87, 141);
 			} else {
 				font().color().gray();
 			}
@@ -74,7 +74,7 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 	public ILabel hyperlink() {
 		isHyperlink = true;
 		font().underline(true);
-		font().color().blue();
+		font().color().rgb(0, 87, 141);
 		return this;
 	}
 
