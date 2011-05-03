@@ -165,7 +165,7 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 			disabled = true;
 		} else {
 			if (disabled) {
-				buttonLabel.font().color().black();
+				buttonLabel.font().color().white();
 				buttonPanel.visible(true);
 				disabled = false;
 			}
