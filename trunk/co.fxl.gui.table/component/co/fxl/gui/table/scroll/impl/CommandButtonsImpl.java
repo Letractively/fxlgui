@@ -182,7 +182,7 @@ public class CommandButtonsImpl implements ICommandButtons,
 		if (imageR.equals("remove"))
 			imageR = "cancel";
 		IImage image = p.add().image().resource(imageR + ".png");
-		p.addSpace(2);
+		p.addSpace(4);
 		ILabel label = p.add().label().text(string);
 		Link l = new Link(p, image, label);
 		l.clickable(true);
@@ -304,7 +304,7 @@ public class CommandButtonsImpl implements ICommandButtons,
 	public void decorate(IGridCell container) {
 		widget.selection().single().addSelectionListener(this);
 		panel = container.panel().horizontal().align().end().add().panel()
-				.horizontal().align().end().spacing(4);
+				.horizontal().align().end().spacing(8);
 		if (listenOnAdd) {
 			IClickable<?> image = listenOnAddListenerDecorator.decorate(panel
 					.add());
