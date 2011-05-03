@@ -35,7 +35,7 @@ class FormDateFieldImpl extends FormTextFieldImpl {
 
 	FormDateFieldImpl(final FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
-		button = addButton("Calendar");
+		button = addButton("Change");
 		button.addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
