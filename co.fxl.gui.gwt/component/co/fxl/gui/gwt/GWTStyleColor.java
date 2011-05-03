@@ -40,7 +40,7 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 	}
 
 	@Override
-	public IColor rgb(int r, int g, int b) {
+	public IColor setRGB(int r, int g, int b) {
 		String color = toString(r, g, b);
 		setColor(color);
 		return this;
