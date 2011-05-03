@@ -44,4 +44,10 @@ class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 		widget.getElement().getStyle().setProperty("display", "inline");
 		container.widget.add(widget);
 	}
+
+	@Override
+	public IFlowPanel spacing(int spacing) {
+		// TODO ... new MethodNotImplementedException();
+		return this;
+	}
 }
