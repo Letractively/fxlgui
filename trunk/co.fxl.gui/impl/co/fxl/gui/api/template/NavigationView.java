@@ -44,7 +44,7 @@ public class NavigationView {
 			this.panel = panel;
 			this.image = image;
 			this.label = textLabel;
-			label.hyperlink();
+			// label.hyperlink();
 		}
 
 		public Link text(String text) {
@@ -56,10 +56,10 @@ public class NavigationView {
 			label.clickable(clickable);
 			for (ILabel l : additionalLabels)
 				l.clickable(clickable);
-			// if (clickable)
-			// label.font().color().blue();
-			// else
-			// label.font().color().gray();
+			if (clickable)
+				label.font().color().rgb(0, 87, 141);
+			else
+				label.font().color().lightgray();
 			return this;
 		}
 
@@ -94,10 +94,19 @@ public class NavigationView {
 	private WidgetTitle widgetTitle;
 	private IVerticalPanel panel;
 	private int index = 1;
+	private boolean hasLinks;
 
 	public NavigationView(ILayout layout) {
 		widgetTitle = new WidgetTitle(layout);
+		widgetTitle.space(2);
 		widgetTitle.grayBackground();
+	}
+
+	private void setUp() {
+		if (panel != null)
+			return;
+		widgetTitle.addTitle("NAVIGATION");
+		panel = widgetTitle.content().panel().vertical().spacing(6);
 	}
 
 	public NavigationView navigationViewListener(final INavigationListener l) {
@@ -129,15 +138,19 @@ public class NavigationView {
 
 	public NavigationView addLine() {
 		setUp();
-		panel.addSpace(2);
-		// IVerticalPanel p = panel.add().panel().vertical().height(1);
-		// p.color().lightgray();
-		panel.addSpace(2);
+		// panel.addSpace(1);
+		IVerticalPanel p = panel.add().panel().vertical().height(1);
+		p.color().rgb(172, 197, 213);
+		// panel.addSpace(1);
 		return this;
 	}
 
 	public Link addHyperlink(String imageResource) {
 		setUp();
+		if (hasLinks) {
+			addLine();
+		}
+		hasLinks = true;
 		IHorizontalPanel panel = addPanel();
 		IImage image = addImage(panel, imageResource);
 		ILabel textLabel = addTextLabel(panel);
@@ -181,18 +194,12 @@ public class NavigationView {
 
 	protected IHorizontalPanel addPanel() {
 		IHorizontalPanel panel = this.panel.add().panel().horizontal().align()
-				.begin().addSpace(6).add().panel().horizontal().align().begin();
+				.begin()// .addSpace(6)
+				.add().panel().horizontal().align().begin();
 		// IBorder border = panel.border();
 		// border.color().rgb(172, 197, 213);
 		// border.style().bottom();
 		return panel;
-	}
-
-	private void setUp() {
-		if (panel != null)
-			return;
-		widgetTitle.addTitle("NAVIGATION");
-		panel = widgetTitle.content().panel().vertical().spacing(2);
 	}
 
 	public NavigationView foldable(boolean b) {
