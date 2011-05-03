@@ -41,8 +41,9 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	private NavigationItemImpl active;
 	private boolean first = true;
 	int[] colorActive = new int[] { 245, 245, 245 };
-	int[] colorBackground = new int[] { 0, 51, 102 };
-	int[] colorInactive = new int[] { 228, 228, 255 };
+	int[] colorBackground = new int[] { 199, 224, 241 };
+	int[] colorInactive = new int[] { 111, 111, 111 };
+	int[] colorInactiveGradient = new int[] { 63, 63, 63 };
 	private IVerticalPanel panel0;
 	private IVerticalPanel panel1;
 	private List<INavigationListener> listeners = new LinkedList<INavigationListener>();
@@ -50,7 +51,8 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	protected NavigationWidgetImpl(IContainer layout) {
 		mainPanel = layout.panel().dock();
 		IGridPanel hPanel = mainPanel.top().panel().grid();
-		hPanel.color().rgb(0, 51, 102);
+		hPanel.color().rgb(199, 224, 241).gradient().vertical()
+				.rgb(173, 211, 234);
 		navigationPanel = hPanel.cell(0, 0).panel().horizontal().add().panel()
 				.horizontal();
 		navigationPanel.addSpace(10);
@@ -104,7 +106,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		return new NonRemovableColorTemplate() {
 
 			@Override
-			public IColor rgb(int r, int g, int b) {
+			public IColor setRGB(int r, int g, int b) {
 				colorActive = new int[] { r, g, b };
 				return this;
 			}
@@ -113,14 +115,15 @@ public class NavigationWidgetImpl implements INavigationWidget {
 
 	@Override
 	public IColor colorBackground() {
-		return new NonRemovableColorTemplate() {
-
-			@Override
-			public IColor rgb(int r, int g, int b) {
-				colorBackground = new int[] { r, g, b };
-				return this;
-			}
-		};
+		throw new MethodNotImplementedException();
+		// return new NonRemovableColorTemplate() {
+		//
+		// @Override
+		// public IColor rgb(int r, int g, int b) {
+		// // colorBackground = new int[] { r, g, b };
+		// return this;
+		// }
+		// };
 	}
 
 	@Override
@@ -128,7 +131,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		return new NonRemovableColorTemplate() {
 
 			@Override
-			public IColor rgb(int r, int g, int b) {
+			public IColor setRGB(int r, int g, int b) {
 				colorInactive = new int[] { r, g, b };
 				return this;
 			}

@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.navigation.group.impl;
 
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
@@ -31,7 +32,7 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	private ILabel button;
 	private IDecorator decorator;
 	private IHorizontalPanel buttonPanel;
-	private IColor borderColor;
+	// private IColor borderColor;
 	private NavigationWidgetImpl widget;
 	private IHorizontalPanel itemPanel;
 
@@ -49,9 +50,12 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 			buttonPanel = itemPanel.add().panel().horizontal().spacing(3);
 			buttonPanel.spacing(3).align().center();
 			buttonPanel.addSpace(3);
-			borderColor = buttonPanel.border().width(2).color();
+			// borderColor =
+			IBorder b = buttonPanel.border();
+			b.width(1).color();
+			b.style().noBottom();
 			button = buttonPanel.add().label();
-			button.font().pixel(14).weight().bold();
+			button.font().pixel(14).weight().bold().color().white();
 			buttonPanel.addSpace(3);
 			buttonPanel.addClickListener(this);
 			showLabelAsInactive();
@@ -68,9 +72,12 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	void showLabelAsInactive() {
 		if (buttonPanel == null)
 			return;
+		button.font().color().white();
 		buttonPanel.clickable(true);
-		applyColor(buttonPanel.color(), widget.colorInactive);
-		applyColor(borderColor, widget.colorBackground);
+		applyGradient(buttonPanel.color(), widget.colorInactive,
+				widget.colorInactiveGradient);
+		// borderColor.remove();
+		// applyColor(borderColor, widget.colorBackground);
 	}
 
 	@Override
@@ -104,16 +111,22 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	}
 
 	private void showLabelAsActive(co.fxl.gui.api.template.ICallback<Void> cb) {
+		button.font().color().black();
 		buttonPanel.clickable(false);
 		if (buttonPanel == null)
 			return;
 		applyColor(buttonPanel.color(), widget.colorActive);
-		applyColor(borderColor, widget.colorActive);
+		// applyColor(borderColor, widget.colorActive);
 		widget.active(this, cb);
 	}
 
 	private void applyColor(IColor color, int[] rgb) {
 		color.rgb(rgb[0], rgb[1], rgb[2]);
+	}
+
+	private void applyGradient(IColor color, int[] rgb, int[] rgb2) {
+		color.rgb(rgb[0], rgb[1], rgb[2]).gradient().vertical()
+				.rgb(rgb2[0], rgb2[1], rgb2[2]);
 	}
 
 	@Override
