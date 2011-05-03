@@ -97,7 +97,7 @@ public class NavigationView {
 	private boolean hasLinks;
 
 	public NavigationView(ILayout layout) {
-		widgetTitle = new WidgetTitle(layout);
+		widgetTitle = new WidgetTitle(layout, true);
 		widgetTitle.space(2);
 		widgetTitle.grayBackground();
 	}

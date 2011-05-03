@@ -33,7 +33,6 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.IVerticalPanel;
 
 public class WidgetTitle implements IClickListener {
 
@@ -113,14 +112,20 @@ public class WidgetTitle implements IClickListener {
 	private boolean commandsOnTop = false;
 
 	public WidgetTitle(ILayout layout) {
+		this(layout, false);
+	}
+
+	public WidgetTitle(ILayout layout, boolean addBorder) {
 		panel = layout.grid();
-		panel.border().color().rgb(172, 197, 213);
 		panel.color().white();
 		headerPanel = panel.cell(0, 0).panel().dock();
 		headerPanel.visible(false);
 		IBorder border = headerPanel.border();
 		border.color().rgb(172, 197, 213);
 		border.style().bottom();
+		if (!addBorder)
+			return;
+		panel.border().color().rgb(172, 197, 213);
 	}
 
 	public WidgetTitle holdOnClick() {
@@ -178,7 +183,7 @@ public class WidgetTitle implements IClickListener {
 				.addSpace(2).align().begin();
 		if (grayBackground)
 			horizontal.color().rgb(136, 136, 136).gradient().vertical()
-			.rgb(113, 113, 113);
+					.rgb(113, 113, 113);
 		titlePanel = horizontal.add().panel().horizontal().align().begin()
 				.spacing(6);
 		if (foldable) {
@@ -206,8 +211,9 @@ public class WidgetTitle implements IClickListener {
 		} else {
 			if (commandPanel != null)
 				return;
-			IVerticalPanel vertical = bottom().panel().vertical();
-			IContainer cell = vertical.add().panel().dock().right();
+			IDockPanel vertical = bottom().panel().dock();
+			vertical.center().panel().vertical();
+			IContainer cell = vertical.right();
 			commandPanel = cell.panel().horizontal().spacing(5);
 			vertical.color().rgb(249, 249, 249).gradient().vertical()
 					.rgb(216, 216, 216);
