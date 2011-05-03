@@ -171,7 +171,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private IScrollPane leftScrollPane;
 
 	TreeWidgetImpl(IContainer layout) {
-		widgetTitle = new WidgetTitle(layout.panel()).space(0);
+		widgetTitle = new WidgetTitle(layout.panel()).space(0).grayBackground()
+				.commandsOnTop();
 		widgetTitle.foldable(false);
 		widgetTitle.holdOnClick();
 	}
