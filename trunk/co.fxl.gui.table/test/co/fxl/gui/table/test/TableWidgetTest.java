@@ -31,19 +31,20 @@ class TableWidgetTest {
 		display.register(new TableWidgetImplProvider());
 		IVerticalPanel panel = display.container().panel().vertical()
 				.spacing(10);
-		@SuppressWarnings("unchecked")
-		ITableWidget<String> widget = (ITableWidget<String>) panel.add()
-				.widget(ITableWidget.class);
-		widget.selection().single();
-		widget.addTitle("Table");
-		widget.addButton("New");
-		for (int i = 0; i < 3; i++)
-			widget.addColumn().name("Column " + i).sortable().type()
-					.type(String.class);
-		for (int j = 0; j < 10; j++) {
-			widget.addRow().add("C0").add("C1").add("C2");
-		}
-		widget.visible(true);
+		panel.color().rgb(0, 0, 0).gradient().vertical().rgb(255, 255, 255);
+//		@SuppressWarnings("unchecked")
+//		ITableWidget<String> widget = (ITableWidget<String>) panel.add()
+//				.widget(ITableWidget.class);
+//		widget.selection().single();
+//		widget.addTitle("Table");
+//		widget.addButton("New");
+//		for (int i = 0; i < 3; i++)
+//			widget.addColumn().name("Column " + i).sortable().type()
+//					.type(String.class);
+//		for (int j = 0; j < 10; j++) {
+//			widget.addRow().add("C0").add("C1").add("C2");
+//		}
+//		widget.visible(true);
 		display.visible(true);
 	}
 
