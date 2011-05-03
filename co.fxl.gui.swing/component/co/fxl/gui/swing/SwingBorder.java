@@ -41,6 +41,13 @@ class SwingBorder implements IBorder {
 		}
 
 		@Override
+		public IBorder rounded() {
+			borderStyle = ROUNDED;
+			updateBorder();
+			return SwingBorder.this;
+		}
+
+		@Override
 		public IBorder solid() {
 			borderStyle = SOLID;
 			updateBorder();
@@ -76,6 +83,7 @@ class SwingBorder implements IBorder {
 	private static final int SOLID = 0;
 	private static final int DOTTED = 1;
 	private static final int ETCHED = 2;
+	private static final int ROUNDED = 3;
 	private JComponent element;
 	private int borderThickness = 1;
 	private int borderStyle = SOLID;
@@ -95,6 +103,8 @@ class SwingBorder implements IBorder {
 			element.setBorder(new LineBorder(borderColor, borderThickness));
 		else if (borderStyle == ETCHED)
 			element.setBorder(new EtchedBorder(EtchedBorder.RAISED));
+		else if (borderStyle == ROUNDED)
+			element.setBorder(new LineBorder(borderColor, borderThickness, true));
 		else {
 			if (borderThickness != 1)
 				throw new MethodNotImplementedException();
