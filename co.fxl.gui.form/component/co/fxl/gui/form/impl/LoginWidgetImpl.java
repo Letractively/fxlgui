@@ -144,12 +144,12 @@ class LoginWidgetImpl implements ILoginWidget {
 	}
 
 	private ILabel decorate(ILabel label) {
-		label.font().pixel(13).color().mix().gray().black();
+		label.font().color().mix().gray().black();
 		return label;
 	}
 
 	private void decorateHyperlink(ILabel label) {
-		label.font().pixel(13).color().rgb(0, 87, 141);
+		label.font().color().rgb(0, 87, 141);
 	}
 
 	private void decorate(ITextField formField) {
