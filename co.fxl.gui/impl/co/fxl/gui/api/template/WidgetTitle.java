@@ -110,7 +110,7 @@ public class WidgetTitle implements IClickListener {
 	private boolean grayBackground = false;
 	private IContainer bottomContainer;
 	private IHorizontalPanel commandPanelTop;
-	private boolean commandsOnTop = true;
+	private boolean commandsOnTop = false;
 
 	public WidgetTitle(ILayout layout) {
 		panel = layout.grid();
@@ -161,7 +161,11 @@ public class WidgetTitle implements IClickListener {
 		if (headerLabel != null)
 			headerLabel.font().color().white();
 		grayBackground = true;
-		commandsOnTop = false;
+		return this;
+	}
+
+	public WidgetTitle commandsOnTop() {
+		commandsOnTop = true;
 		return this;
 	}
 
@@ -170,10 +174,11 @@ public class WidgetTitle implements IClickListener {
 			return;
 		headerPanel.visible(true);
 		// headerPanel.color().rgb(220, 220, 220);
-		IHorizontalPanel horizontal = headerPanel.center().panel().horizontal().addSpace(2)
-				.align().begin();
+		IHorizontalPanel horizontal = headerPanel.center().panel().horizontal()
+				.addSpace(2).align().begin();
 		if (grayBackground)
-			horizontal.color().gray();
+			horizontal.color().rgb(136, 136, 136).gradient().vertical()
+			.rgb(113, 113, 113);
 		titlePanel = horizontal.add().panel().horizontal().align().begin()
 				.spacing(6);
 		if (foldable) {
@@ -302,8 +307,9 @@ public class WidgetTitle implements IClickListener {
 	public IContainer content() {
 		if (contentContainer != null)
 			return contentContainer;
-		return contentContainer = space == 0 ? panel.cell(0, 1).panel().vertical().add() : panel
-				.cell(0, 1).panel().vertical().addSpace(space).add();
+		return contentContainer = space == 0 ? panel.cell(0, 1).panel()
+				.vertical().add() : panel.cell(0, 1).panel().vertical()
+				.addSpace(space).add();
 	}
 
 	public IContainer bottom() {

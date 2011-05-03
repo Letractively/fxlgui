@@ -54,7 +54,7 @@ public class SplitLayout implements IResizeListener// , IClickListener
 		cell0 = panel.cell(0, 0);
 		IVerticalPanel vpanel = cell0.valign().begin().panel().vertical()
 				.spacing(10);
-		mainPanel = addMainPanel(vpanel).spacing(10);
+		mainPanel = addMainPanel(vpanel);
 		// IHorizontalPanel horizontal = panel.cell(1, 0).width(16).align()
 		// .center().valign().center().panel().horizontal();
 		// // horizontal.addSpace(10);
