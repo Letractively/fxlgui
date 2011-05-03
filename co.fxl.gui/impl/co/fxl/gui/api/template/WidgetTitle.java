@@ -267,9 +267,19 @@ public class WidgetTitle implements IClickListener {
 				label.font().color().gray();
 			labels.add(label);
 		}
+		// if (hasCommands)
+		// commandPanel().addSpace(2);
 		hasCommands = true;
-		IHorizontalPanel iPanel = commandPanel().add().panel().horizontal()
-				.addSpace(4);
+		IHorizontalPanel iPanel = commandPanel().add().panel().horizontal();
+		if (commandsOnTop) {
+			iPanel.color().rgb(248, 248, 248).gradient().vertical()
+					.rgb(216, 216, 216);
+			IBorder b = iPanel.border();
+			b.color().rgb(172, 197, 213);
+			b.style().rounded();
+			iPanel.spacing(4);
+			iPanel = iPanel.add().panel().horizontal();
+		}
 		IImage image = null;
 		if (imageResource != null) {
 			image = iPanel.add().image().resource(imageResource);
@@ -278,7 +288,7 @@ public class WidgetTitle implements IClickListener {
 		final ILabel label = iPanel.addSpace(4).add().label().text(text);
 		if (!grayBackground)
 			label.hyperlink();
-		label.font().pixel(12);
+		label.font().pixel(commandsOnTop ? 12 : 12);
 		labels.add(label);
 		if (holdOnClicks) {
 			label.addClickListener(new IClickListener() {

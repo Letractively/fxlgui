@@ -26,6 +26,8 @@ public interface IBordered {
 
 			IBorder dotted();
 
+			IBorder rounded();
+
 			IBorder solid();
 
 			IBorder etched();
