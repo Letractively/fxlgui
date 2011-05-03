@@ -289,6 +289,8 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 	@Override
 	public IGridPanel spacing(int pixel) {
+//		container.component.getInsets().set(pixel / 2, pixel / 2, pixel / 2,
+//				pixel / 2);
 		constraints.insets = new Insets(pixel / 2, pixel / 2, pixel / 2,
 				pixel / 2);
 		return this;
