@@ -44,6 +44,7 @@ public class NavigationView {
 			this.panel = panel;
 			this.image = image;
 			this.label = textLabel;
+			clickable(true);
 			// label.hyperlink();
 		}
 
@@ -59,7 +60,7 @@ public class NavigationView {
 			if (clickable)
 				label.font().color().rgb(0, 87, 141);
 			else
-				label.font().color().lightgray();
+				label.font().color().mix().gray().lightgray();
 			return this;
 		}
 
