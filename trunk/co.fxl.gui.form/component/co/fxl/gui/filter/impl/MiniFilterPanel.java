@@ -72,6 +72,8 @@ class MiniFilterPanel implements FilterPanel {
 		FilterGridImpl(IContainer container) {
 			IHorizontalPanel panel = container.panel().horizontal();
 			comboBox = panel.add().comboBox();
+			comboBox.border().color().rgb(211, 211, 211);
+			comboBox.color().rgb(249, 249, 249);
 			panel.addSpace(4);
 			cardPanel = panel.add().panel().card();
 		}
@@ -124,7 +126,7 @@ class MiniFilterPanel implements FilterPanel {
 	private IHorizontalPanel hyperLinkPanel;
 	private IContainer gridContainer;
 	private FilterGridImpl grid;
-//	private boolean hasHyperlinks = false;
+	// private boolean hasHyperlinks = false;
 	private MiniFilterWidgetImpl widget;
 
 	MiniFilterPanel(MiniFilterWidgetImpl widget, IContainer c) {
