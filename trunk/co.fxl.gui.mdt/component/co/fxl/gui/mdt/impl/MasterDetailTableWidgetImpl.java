@@ -141,9 +141,9 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 			}
 		});
 		IVerticalPanel content = views.content().panel().vertical();
-		IHorizontalPanel h1 = content.add().panel().horizontal();
+		IHorizontalPanel h1 = content.add().panel().horizontal().addSpace(4);
 		r1 = h1.add().radioButton().text("Grid");
-		IHorizontalPanel h2 = content.add().panel().horizontal();
+		IHorizontalPanel h2 = content.add().panel().horizontal().addSpace(4);
 		r2 = h2.add().radioButton().text("Master-Detail");
 		r1.checked(true);
 		r1.font().weight().bold();
@@ -166,7 +166,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		if (!configurations.isEmpty()) {
 			h1.addSpace(4);
 			comboBoxConfiguration = h1.add().comboBox();
-			comboBoxConfiguration.size(220, 24);
+			comboBoxConfiguration.size(216, 24);
 			for (String c : configurations) {
 				if (configuration == null)
 					configuration = c;
