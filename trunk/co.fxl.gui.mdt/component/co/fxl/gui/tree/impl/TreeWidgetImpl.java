@@ -49,7 +49,7 @@ import co.fxl.gui.tree.api.ITreeWidget;
 class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	private static final int SPLIT_POSITION = 250;
-	private static final int BACKGROUND_GRAY = 247;
+	// private static final int BACKGROUND_GRAY = 247;
 	private boolean showRefresh = true;
 	private boolean showCommands = true;
 
@@ -81,9 +81,9 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					}
 				}
 			});
-			contentPanel = register.contentPanel().spacing(16);
-			contentPanel.color().rgb(BACKGROUND_GRAY, BACKGROUND_GRAY,
-					BACKGROUND_GRAY);
+			contentPanel = register.contentPanel().spacing(8);
+			// contentPanel.color().rgb(BACKGROUND_GRAY, BACKGROUND_GRAY,
+			// BACKGROUND_GRAY);
 			if (detailViews.isEmpty())
 				register.active();
 		}
@@ -373,13 +373,13 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		if (registers != null)
 			return;
 		splitPane = panel().add().splitPane().splitPosition(SPLIT_POSITION);
-		splitPane.border().color().lightgray();
+		splitPane.border().color().rgb(172, 197, 213);
 		leftScrollPane = splitPane.first().scrollPane();
 		leftContentPanel = leftScrollPane.viewPort().panel().vertical();
 		panel = leftContentPanel.spacing(10).add().panel().vertical();
 		IScrollPane scrollPane = splitPane.second().scrollPane();
-		scrollPane.color().rgb(BACKGROUND_GRAY, BACKGROUND_GRAY,
-				BACKGROUND_GRAY);
+		// scrollPane.color().rgb(BACKGROUND_GRAY, BACKGROUND_GRAY,
+		// BACKGROUND_GRAY);
 		registers = (IMenuWidget) scrollPane.viewPort().widget(
 				IMenuWidget.class);
 		ResizeListener.setup(panel.display(), this);
