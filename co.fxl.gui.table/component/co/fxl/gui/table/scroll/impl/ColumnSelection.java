@@ -32,18 +32,21 @@ class ColumnSelection {
 				.horizontal();
 		IHorizontalPanel b0 = p.add().panel().horizontal();// .spacing(4);
 		// b0.color().lightgray();
-		b0.add().label().text("Columns:").font().pixel(11).weight().bold();
+		b0.add().label().text("SHOW COLUMNS:").font().pixel(10).weight().bold();
 		for (final ScrollTableColumnImpl c : widget.columns) {
 			p.addSpace(4);
 			IHorizontalPanel b = p.add().panel().horizontal().spacing(4);
+			b.border().color().rgb(172, 197, 213);
 			if (c.visible)
 				b.color().gray();
+			else
+				b.color().white();
 			ILabel l = b.add().label().text(c.name).autoWrap(true);
 			l.font().pixel(11);
 			if (c.visible)
 				l.font().color().white();
 			else
-				l.font().color().gray();
+				l.font().color().rgb(102, 102, 102);
 			b.addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {
