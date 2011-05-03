@@ -94,6 +94,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	ScrollTableWidgetImpl(IContainer container) {
 		widgetTitle = new WidgetTitle(container.panel()).foldable(false);
+		widgetTitle.grayBackground();
+		widgetTitle.commandsOnTop();
 		this.container = widgetTitle.content().panel().vertical();
 	}
 
@@ -178,8 +180,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				if (topPanel == null)
 					topPanel = dock.add().panel().grid();
 				if (showNoRowsFound) {
-					topPanel.cell(0, 0).label().text("No entities found").font()
-							.pixel(10).color().gray();
+					topPanel.cell(0, 0).label().text("No entities found")
+							.font().pixel(10).color().gray();
 				}
 				dock.add().label().text("&#160;");
 				dock.height(heightMinusTopPanel());
