@@ -34,12 +34,13 @@ import co.fxl.gui.api.IWidgetProvider;
 class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
 		IPanel<R>, ComponentParent {
 
-	private final class SwingPanelColor extends SwingColor {
+	final class SwingPanelColor extends SwingColor {
 
 		@Override
 		protected void setColor(Color color) {
 			container.component.setOpaque(color != null);
 			container.component.setBackground(color);
+			container.component.fxlColor = this;
 		}
 	}
 

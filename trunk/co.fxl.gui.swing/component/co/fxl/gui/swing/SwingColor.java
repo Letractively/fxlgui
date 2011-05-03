@@ -28,7 +28,7 @@ public abstract class SwingColor extends ColorTemplate implements IColor {
 	protected abstract void setColor(Color color);
 
 	@Override
-	public IColor rgb(int r, int g, int b) {
+	public IColor setRGB(int r, int g, int b) {
 		setColor(new Color(r, g, b));
 		return this;
 	}
