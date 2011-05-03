@@ -311,7 +311,8 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 
 	private void addFilters4Configuration(String cfg) {
 		List<FilterImpl> l = filterList.get(cfg);
-		if (l != null)
+		if (l != null) {
+			grid.resize(l.size() + (addSizeFilter ? 1 : 0));
 			for (FilterImpl filter : l) {
 				List<Object> list = new LinkedList<Object>(filter.type.values);
 				if (!list.isEmpty())
@@ -325,6 +326,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 				}
 				addFilter(filter.type.clazz, filter.name, list, preset, adapter);
 			}
+		}
 	}
 
 	@Override

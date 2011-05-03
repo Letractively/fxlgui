@@ -101,6 +101,11 @@ class FilterPanelImpl implements FilterPanel {
 		public Heights heights() {
 			return widget.heights;
 		}
+
+		@Override
+		public void resize(int size) {
+			grid.resize(2, size);
+		}
 	}
 
 	private WidgetTitle title;

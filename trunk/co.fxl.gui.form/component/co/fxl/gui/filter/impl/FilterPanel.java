@@ -47,6 +47,8 @@ interface FilterPanel {
 		void title(int filterIndex, String name);
 
 		void register(ITextField tf);
+
+		void resize(int size);
 	}
 
 	void addTitle(String string);
