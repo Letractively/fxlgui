@@ -22,6 +22,8 @@ import co.fxl.gui.api.IBordered.IBorder;
 
 public abstract class GWTBorder implements IBorder {
 
+	static final String BORDER_BOTTOM_LESS = "borderBottomLess";
+
 	private class BorderStyle implements IBorderStyle {
 
 		@Override
@@ -53,6 +55,13 @@ public abstract class GWTBorder implements IBorder {
 		@Override
 		public IBorder bottom() {
 			borderType = "borderBottom";
+			update();
+			return GWTBorder.this;
+		}
+
+		@Override
+		public IBorder noBottom() {
+			borderType = BORDER_BOTTOM_LESS;
 			update();
 			return GWTBorder.this;
 		}

@@ -37,15 +37,31 @@ public class GWTWidgetBorder extends GWTBorder {
 
 	@Override
 	public void remove() {
-		if (lastBorderType != null && !lastBorderType.equals(borderType))
-			DOM.setStyleAttribute(element, lastBorderType, "none");
+		if (lastBorderType != null) {
+			if (!lastBorderType.equals(borderType))
+				DOM.setStyleAttribute(element, lastBorderType, "none");
+			else if (lastBorderType.equals(GWTBorder.BORDER_BOTTOM_LESS)) {
+				DOM.setStyleAttribute(element, "borderTop", "none");
+				DOM.setStyleAttribute(element, "borderLeft", "none");
+				DOM.setStyleAttribute(element, "borderRight", "none");
+			}
+		}
 	}
 
 	@Override
 	protected void update() {
 		remove();
-		DOM.setStyleAttribute(element, borderType, width + "px " + color + " "
-				+ style);
+		if (!borderType.equals(GWTBorder.BORDER_BOTTOM_LESS)) {
+			DOM.setStyleAttribute(element, borderType, width + "px " + color
+					+ " " + style);
+		} else {
+			DOM.setStyleAttribute(element, "borderTop", width + "px " + color
+					+ " " + style);
+			DOM.setStyleAttribute(element, "borderLeft", width + "px " + color
+					+ " " + style);
+			DOM.setStyleAttribute(element, "borderRight", width + "px " + color
+					+ " " + style);
+		}
 		lastBorderType = borderType;
 	}
 }
