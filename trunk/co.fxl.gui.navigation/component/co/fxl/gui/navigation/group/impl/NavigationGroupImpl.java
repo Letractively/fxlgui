@@ -38,14 +38,14 @@ class NavigationGroupImpl implements INavigationGroup {
 		panel.addSpace(3);
 		IVerticalPanel headerPanel = panel.add().panel().vertical();
 		header = headerPanel.add().label();
-		header.font().weight().bold().pixel(11).color().white();
-		panel.addSpace(3);
+		header.font().weight().bold().pixel(11);//.color().white();
+		panel.addSpace(4);
 		itemPanel = panel.add().panel().horizontal();
 	}
 
 	@Override
 	public INavigationGroup name(String name) {
-		header.text(name);
+		header.text(name+":");
 		return this;
 	}
 
