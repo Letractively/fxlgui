@@ -140,7 +140,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 				refresh(null);
 			}
 		});
-		IVerticalPanel content = views.content().panel().vertical();
+		IVerticalPanel content = views.content().panel().vertical().addSpace(2);
 		IHorizontalPanel h1 = content.add().panel().horizontal().addSpace(4);
 		r1 = h1.add().radioButton().text("Grid");
 		IHorizontalPanel h2 = content.add().panel().horizontal().addSpace(4);
