@@ -65,11 +65,6 @@ class GWTTextField extends GWTElement<TextBox, ITextField> implements
 	}
 
 	@Override
-	public IBorder border() {
-		return new GWTWidgetBorder(container.widget);
-	}
-
-	@Override
 	public IColor color() {
 		return newBackgroundColor();
 	}
