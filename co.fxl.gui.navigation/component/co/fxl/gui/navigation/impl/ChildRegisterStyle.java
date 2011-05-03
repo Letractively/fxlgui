@@ -18,16 +18,24 @@
  */
 package co.fxl.gui.navigation.impl;
 
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.register.api.IRegister.ITitle;
 import co.fxl.gui.register.impl.RegisterWidgetImpl;
+import co.fxl.gui.register.impl.RegisterWidgetImpl.ColorDecorator;
 
 class ChildRegisterStyle extends RegisterStyle {
 
 	@Override
 	void decorateWidget(RegisterWidgetImpl widget) {
 		widget.separators(true);
-//		widget.headerPanel.spacing(4);
-		widget.background(255, 0, 0);
+		// widget.headerPanel.spacing(4);
+		widget.background(new ColorDecorator() {
+			@Override
+			public void decorate(IColor color) {
+				color.rgb(255, 0, 0);
+			}
+
+		});
 	}
 
 	@Override

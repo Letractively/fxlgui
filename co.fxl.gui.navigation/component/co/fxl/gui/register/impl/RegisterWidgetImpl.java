@@ -34,6 +34,11 @@ import co.fxl.gui.register.api.IRegisterWidget;
 
 public class RegisterWidgetImpl implements IRegisterWidget {
 
+	public interface ColorDecorator {
+
+		void decorate(IColor color);
+	}
+
 	public IFlowPanel headerPanel;
 	ICardPanel cardPanel;
 	List<RegisterImpl> registers = new LinkedList<RegisterImpl>();
@@ -41,9 +46,7 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 	boolean separators = true;
 	private IHorizontalPanel stretch;
 	private IDockPanel mainBorders;
-	private int br = 0;
-	private int bg = 51;
-	private int bb = 102;
+	private ColorDecorator background;
 	public int spacing = 6;
 	public int fontSize = 14;
 
@@ -53,11 +56,9 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 		cardPanel = mainBorders.center().panel().card();
 	}
 
-	public void background(int r, int g, int b) {
-		headerPanel.color().rgb(r, g, b);
-		br = r;
-		bg = g;
-		bb = b;
+	public void background(ColorDecorator background) {
+		background.decorate(headerPanel.color());
+		this.background = background;
 	}
 
 	@Override
@@ -102,7 +103,7 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 	}
 
 	public void background(IColor color) {
-		color.rgb(br, bg, bb);
+		background.decorate(color);
 	}
 
 	public int heightMenu() {
