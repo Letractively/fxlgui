@@ -21,6 +21,7 @@ package co.fxl.gui.gwt;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IColored.IColor;
@@ -58,6 +59,10 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	protected void defaultFont() {
 		((IFontElement) this).font().pixel(12).family().arial();
+	}
+
+	public IBorder border() {
+		return new GWTWidgetBorder(container.widget);
 	}
 
 	@SuppressWarnings("unchecked")
