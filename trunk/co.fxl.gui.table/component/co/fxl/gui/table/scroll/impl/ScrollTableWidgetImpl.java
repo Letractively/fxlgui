@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.api.IAbsolutePanel;
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -240,11 +241,13 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	IGridPanel statusPanel() {
 		if (statusPanel == null) {
-			statusPanel = container.addSpace(10).add().panel().grid();
-			// statusPanel.spacing(6);
-			// IBorder border = statusPanel.border();
-			// border.color().lightgray();
-			// border.style().top();
+			statusPanel = container.add().panel().grid().resize(3, 1);
+			statusPanel.spacing(4);
+			IBorder border2 = statusPanel.border();
+			border2.color().rgb(172, 197, 213);
+			border2.style().top();
+			statusPanel.color().rgb(249, 249, 249).gradient().vertical()
+					.rgb(216, 216, 216);
 		}
 		return statusPanel;
 	}
@@ -491,7 +494,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			rt = rows.size();
 		int firstRow = constraints != null ? constraints.rowIterator()
 				.firstRow() : 0;
-		String status = "Displaying rows " + (firstRow + rowOffset + 1) + " - "
+		String status = "DISPLAYING ROWS " + (firstRow + rowOffset + 1) + " - "
 				+ (firstRow + rt) // + " of " + (firstRow + 1) + " - "
 		// + (firstRow + rows.size())
 		;
@@ -509,6 +512,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				}
 			});
 		}
+		p.addSpace(4);
 	}
 
 	private int computeRowsToPaint() {

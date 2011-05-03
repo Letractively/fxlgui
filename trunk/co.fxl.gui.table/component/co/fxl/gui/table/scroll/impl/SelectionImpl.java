@@ -121,7 +121,7 @@ class SelectionImpl implements ISelection<Object> {
 			}
 		}
 
-		private static final int PIXEL = 12;
+		private static final int PIXEL = 11;
 		private List<IChangeListener<Object>> listeners = new LinkedList<IChangeListener<Object>>();
 		private ILabel selectAll;
 		private ILabel removeSelection;
@@ -182,14 +182,14 @@ class SelectionImpl implements ISelection<Object> {
 				IHorizontalPanel p = widget.statusPanel().cell(0, 0).valign()
 						.center().width(120).panel().horizontal().add().panel()
 						.horizontal().spacing(5);
-				p.add().label().text("Select").font().pixel(PIXEL);
+				p.add().label().text("SELECT").font().pixel(PIXEL);
 				selectAll = p.add().label();
-				selectAll.text("All").font().pixel(PIXEL);
+				selectAll.text("ALL").font().pixel(PIXEL);
 				selectAll.hyperlink().addClickListener(
 						new SelectAllClickListener());
 				p.add().label().text("|").font().pixel(PIXEL).color().gray();
 				removeSelection = p.add().label();
-				removeSelection.text("None").font().pixel(PIXEL);
+				removeSelection.text("NONE").font().pixel(PIXEL);
 				removeSelection.hyperlink().addClickListener(
 						new RemoveSelectionClickListener());
 				removeSelection.clickable(!widget.rows.selectedIdentifiers()
