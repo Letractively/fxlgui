@@ -25,21 +25,28 @@ public abstract class ColorTemplate implements IColor {
 
 	public class Gradient implements IGradient {
 
-		@Override
-		public IColor vertical() {
-			return new ColorTemplate() {
+		public ColorTemplate color;
 
-				@Override
-				public IColor rgb(int r, int g, int b) {
-					// TODO ...
-					return null;
-				}
+		Gradient(final ColorTemplate original) {
+			color = new ColorTemplate() {
 
 				@Override
 				public IColor remove() {
-					throw new MethodNotImplementedException();
+					rgb = null;
+					return this;
+				}
+
+				@Override
+				protected IColor setRGB(int r, int g, int b) {
+					original.update();
+					return this;
 				}
 			};
+		}
+
+		@Override
+		public IColor vertical() {
+			return color;
 		}
 	}
 
@@ -51,7 +58,7 @@ public abstract class ColorTemplate implements IColor {
 		private int nCalls = 0;
 
 		@Override
-		public IColor rgb(int r, int g, int b) {
+		public IColor setRGB(int r, int g, int b) {
 			this.r += r;
 			this.g += g;
 			this.b += b;
@@ -69,10 +76,25 @@ public abstract class ColorTemplate implements IColor {
 		}
 	}
 
+	public Gradient gradient;
+	public int[] rgb;
+
 	@Override
 	public IColor black() {
 		return rgb(0, 0, 0);
 	}
+
+	@Override
+	public IColor rgb(int r, int g, int b) {
+		rgb = new int[] { r, g, b };
+		return update();
+	}
+
+	private IColor update() {
+		return setRGB(rgb[0], rgb[1], rgb[2]);
+	}
+
+	protected abstract IColor setRGB(int r, int g, int b);
 
 	@Override
 	public IColor green() {
@@ -116,6 +138,6 @@ public abstract class ColorTemplate implements IColor {
 
 	@Override
 	public IGradient gradient() {
-		return new Gradient();
+		return gradient = new Gradient(this);
 	}
 }

@@ -37,7 +37,7 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class WidgetTitle implements IClickListener {
 
-	private static final int SMALL_FONT = 13;
+	private static final int SMALL_FONT = 12;
 
 	class CommandLink implements IClickable<IClickable<?>> {
 
@@ -175,7 +175,7 @@ public class WidgetTitle implements IClickListener {
 		if (grayBackground)
 			horizontal.color().gray();
 		titlePanel = horizontal.add().panel().horizontal().align().begin()
-				.spacing(5);
+				.spacing(6);
 		if (foldable) {
 			// image = titlePanel.add().image().resource(openPNG);
 			// image.addClickListener(this);

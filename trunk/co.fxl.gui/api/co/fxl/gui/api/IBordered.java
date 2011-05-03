@@ -29,18 +29,20 @@ public interface IBordered {
 			IBorder solid();
 
 			IBorder etched();
-			
+
 			IBorder top();
-			
+
 			IBorder bottom();
+
+			IBorder noBottom();
 		}
- 
+
 		IBorderStyle style();
 
 		IBorder width(int width);
 
 		IBorder title(String title);
-		
+
 		void remove();
 	}
 
