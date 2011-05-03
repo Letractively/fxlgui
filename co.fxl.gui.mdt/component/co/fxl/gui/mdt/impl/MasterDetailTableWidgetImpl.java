@@ -126,7 +126,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	}
 
 	void addViewWidget(IVerticalPanel sidePanel) {
-		WidgetTitle views = new WidgetTitle(sidePanel.add().panel());
+		WidgetTitle views = new WidgetTitle(sidePanel.add().panel()).space(6);
 		if (!allowGridView)
 			views.visible(false);
 		views.grayBackground();
