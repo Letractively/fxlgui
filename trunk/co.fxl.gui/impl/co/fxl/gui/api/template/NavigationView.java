@@ -159,7 +159,7 @@ public class NavigationView {
 
 	protected ILabel addTextLabel(IHorizontalPanel panel) {
 		final ILabel textLabel = panel.add().label();// .hyperlink();
-		textLabel.font().pixel(13);// .weight().bold();
+		textLabel.font();//.pixel(13);// .weight().bold();
 		return textLabel;
 	}
 
