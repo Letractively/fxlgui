@@ -82,7 +82,7 @@ class FormWidgetImpl implements IFormWidget {
 	private List<IFocusable<?>> focusables = new LinkedList<IFocusable<?>>();
 
 	FormWidgetImpl(IContainer panel) {
-		widgetTitle = new WidgetTitle(panel.panel(), false);
+		widgetTitle = new WidgetTitle(panel.panel(), false).grayBackground().commandsOnTop().space(0);
 		widgetTitle.foldable(false);
 	}
 
