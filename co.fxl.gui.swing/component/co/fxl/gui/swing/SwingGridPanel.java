@@ -247,6 +247,9 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 	private Insets insets = new Insets(0, 0, 0, 0);
 	private boolean hasClickListener = false;
 	private List<GridClickListenerAdapter> gridClickListeners = new LinkedList<GridClickListenerAdapter>();
+	private int spacing;
+	private int sizeColumns = -1;
+	private int sizeRows = -1;
 
 	SwingGridPanel(SwingContainer<PanelComponent> container) {
 		super(container);
@@ -289,10 +292,9 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 	@Override
 	public IGridPanel spacing(int pixel) {
-//		container.component.getInsets().set(pixel / 2, pixel / 2, pixel / 2,
-//				pixel / 2);
-		constraints.insets = new Insets(pixel / 2, pixel / 2, pixel / 2,
-				pixel / 2);
+		// container.component.getInsets().set(pixel / 2, pixel / 2, pixel / 2,
+		// pixel / 2);
+		spacing = pixel;
 		return this;
 	}
 
@@ -308,6 +310,13 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 		if (gridCell == null) {
 			constraints.gridx = column;
 			constraints.gridy = row;
+			if (spacing != 0) {
+				assert sizeColumns != -1;
+				constraints.insets = new Insets(column == 0 ? spacing
+						: spacing / 2, row == 0 ? spacing : spacing / 2,
+						column == sizeColumns - 1 ? spacing : spacing / 2,
+						row == sizeRows - 1 ? spacing : spacing / 2);
+			}
 			gridCell = new GridCell(constraints);
 			putCell(column, row, gridCell);
 		}
@@ -353,6 +362,8 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 	@Override
 	public IGridPanel resize(int columns, int rows) {
+		sizeColumns = columns;
+		sizeRows = rows;
 		if (columns < columns())
 			throw new MethodNotImplementedException();
 		if (rows < rows()) {

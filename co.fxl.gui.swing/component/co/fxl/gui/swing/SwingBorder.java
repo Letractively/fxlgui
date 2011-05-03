@@ -25,7 +25,6 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-
 import co.fxl.gui.api.IBordered.IBorder;
 
 import com.sun.java.swing.plaf.windows.WindowsBorders.DashedBorder;
@@ -64,6 +63,12 @@ class SwingBorder implements IBorder {
 		@Override
 		public IBorder top() {
 			element.setBorder(new TopBorder(SwingBorder.this, true));
+			return SwingBorder.this;
+		}
+
+		@Override
+		public IBorder noBottom() {
+			element.setBorder(new NoBottomBorder(SwingBorder.this, true));
 			return SwingBorder.this;
 		}
 	}
