@@ -68,8 +68,8 @@ class FilterPanelImpl implements FilterPanel {
 		private IGridPanel grid;
 
 		FilterGridImpl(IContainer gridContainer) {
-			grid = gridContainer.panel().vertical().align().end().spacing(3)
-					.add().panel().grid().spacing(3);
+			grid = gridContainer.panel().vertical().align().end().spacing(5)
+					.add().panel().grid().spacing(0);
 		}
 
 		@Override
@@ -83,7 +83,7 @@ class FilterPanelImpl implements FilterPanel {
 			widget.heights.decorate(cell);
 			ILabel text = cell.align().end().valign().center().label()
 					.autoWrap(true);
-			text.text(name).font().color().gray();
+			text.text(name).font().color().black();
 			int size = 11;
 			// if (name.length() > 11)
 			// size = 10;
@@ -115,9 +115,9 @@ class FilterPanelImpl implements FilterPanel {
 
 	FilterPanelImpl(FilterWidgetImpl widget, IContainer panel) {
 		this.widget = widget;
-		title = new WidgetTitle(panel.panel()).grayBackground();
-		mainPanel = title.content().panel().horizontal().align().end().add()
-				.panel().vertical();
+		title = new WidgetTitle(panel.panel()).grayBackground().space(2);
+		mainPanel = title.content().panel().vertical().addSpace(4).add()
+				.panel().horizontal().align().end().add().panel().vertical();
 	}
 
 	@Override
