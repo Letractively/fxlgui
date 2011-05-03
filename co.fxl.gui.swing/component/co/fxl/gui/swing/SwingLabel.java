@@ -44,7 +44,7 @@ class SwingLabel extends SwingTextElement<JLabel, ILabel> implements ILabel {
 	@Override
 	public ILabel hyperlink() {
 		isHyperlink = true;
-		font().color().blue();
+		font().color().rgb(0, 87, 141);
 		font().underline(true);
 		return this;
 	}
@@ -54,7 +54,7 @@ class SwingLabel extends SwingTextElement<JLabel, ILabel> implements ILabel {
 		if (isHyperlink) {
 			if (enable) {
 				font().underline(true);
-				font().color().blue();
+				font().color().rgb(0, 87, 141);
 			} else {
 				font().underline(false);
 				font().color().gray();
