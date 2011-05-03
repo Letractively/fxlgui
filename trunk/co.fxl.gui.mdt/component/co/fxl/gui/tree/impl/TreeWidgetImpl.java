@@ -81,7 +81,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					}
 				}
 			});
-			contentPanel = register.contentPanel().spacing(8);
+			contentPanel = register.contentPanel();//.spacing(8);
 			// contentPanel.color().rgb(BACKGROUND_GRAY, BACKGROUND_GRAY,
 			// BACKGROUND_GRAY);
 			if (detailViews.isEmpty())

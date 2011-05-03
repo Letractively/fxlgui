@@ -128,7 +128,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 		assert node != null;
 		panel.clear();
 		decorateBorder(panel);
-		form = (IFormWidget) panel.add().widget(IFormWidget.class);
+		form = (IFormWidget) panel.add().panel().vertical().spacing(8).add()
+				.widget(IFormWidget.class);
 		form.isNew(isNew);
 		if (isNew) {
 			DiscardChangesDialog.listener = new DiscardChangesListener() {
