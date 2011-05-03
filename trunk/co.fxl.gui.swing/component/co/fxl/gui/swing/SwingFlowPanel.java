@@ -27,4 +27,11 @@ class SwingFlowPanel extends SwingPanel<IFlowPanel> implements IFlowPanel,
 	public Component stretch() {
 		return stretch;
 	}
+
+	@Override
+	public IFlowPanel spacing(int spacing) {
+		flowLayout().setHgap(spacing);
+		flowLayout().setVgap(spacing);
+		return this;
+	}
 }
