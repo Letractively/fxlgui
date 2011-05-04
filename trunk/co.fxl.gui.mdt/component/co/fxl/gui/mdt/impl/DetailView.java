@@ -143,12 +143,14 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 		}
 
 		@Override
-		public void decorate(IVerticalPanel panel, ITree<Object> tree) {
-			decorate(panel, tree.object());
+		public void decorate(IVerticalPanel panel, IVerticalPanel bottom,
+				ITree<Object> tree) {
+			decorate(panel, bottom, tree.object());
 		}
 
 		@Override
-		public void decorate(final IVerticalPanel panel, final Object node) {
+		public void decorate(final IVerticalPanel panel, IVerticalPanel bottom,
+				final Object node) {
 			propertyPage.dec.decorate(panel.clear().add(), node);
 		}
 	}

@@ -81,7 +81,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					}
 				}
 			});
-			contentPanel = register.contentPanel();//.spacing(8);
+			contentPanel = register.contentPanel();// .spacing(8);
 			// contentPanel.color().rgb(BACKGROUND_GRAY, BACKGROUND_GRAY,
 			// BACKGROUND_GRAY);
 			if (detailViews.isEmpty())
@@ -112,7 +112,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				if (node.tree.object() == root.object() && !showRoot) {
 					return;
 				}
-				decorator.decorate(contentPanel, node.tree);
+				bottom.clear();
+				decorator.decorate(contentPanel, bottom, node.tree);
 			}
 		}
 
@@ -169,10 +170,11 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private IClickable<?> paste;
 	protected boolean isCopy;
 	private IScrollPane leftScrollPane;
+	private IVerticalPanel bottom;
 
 	TreeWidgetImpl(IContainer layout) {
-		widgetTitle = new WidgetTitle(layout.panel()).space(0).grayBackground()
-				.commandsOnTop();
+		widgetTitle = new WidgetTitle(layout.panel(), true).space(0)
+				.grayBackground().commandsOnTop();
 		widgetTitle.foldable(false);
 		widgetTitle.holdOnClick();
 	}
@@ -347,6 +349,9 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	IVerticalPanel panel() {
 		if (panel == null) {
 			panel = widgetTitle.content().panel().vertical();
+			bottom = widgetTitle.bottom().panel().vertical();
+			bottom.height(32);
+			WidgetTitle.decorateGradient(bottom);
 		}
 		return panel;
 	}
@@ -373,7 +378,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		if (registers != null)
 			return;
 		splitPane = panel().add().splitPane().splitPosition(SPLIT_POSITION);
-		splitPane.border().color().rgb(172, 197, 213);
+		// splitPane.border().color().rgb(172, 197, 213);
 		leftScrollPane = splitPane.first().scrollPane();
 		leftContentPanel = leftScrollPane.viewPort().panel().vertical();
 		panel = leftContentPanel.spacing(10).add().panel().vertical();
@@ -390,7 +395,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	public void onResize(int width, int height) {
 		int offsetY = splitPane.offsetY();
 		offsetY = Math.max(offsetY, 130);
-		int maxFromDisplay = height - offsetY - 30;
+		int maxFromDisplay = height - offsetY - 28;
 		if (maxFromDisplay > 0)
 			splitPane.height(maxFromDisplay);
 	}

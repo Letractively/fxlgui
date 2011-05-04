@@ -43,9 +43,9 @@ public interface ITreeWidget<T> {
 
 	public interface IDecorator<T> {
 
-		void decorate(IVerticalPanel panel, ITree<T> tree);
+		void decorate(IVerticalPanel panel, IVerticalPanel bottom, ITree<T> tree);
 
-		void decorate(IVerticalPanel panel, Object tree);
+		void decorate(IVerticalPanel panel, IVerticalPanel bottom, Object tree);
 
 		void clear(IVerticalPanel contentPanel);
 	}

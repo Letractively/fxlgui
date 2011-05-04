@@ -64,6 +64,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	private ITree<Object> tree;
 	private DeleteListener deleteListener;
 	private boolean alwaysShowCancel = false;
+	private int spacing = 8;
 
 	public void setUpdateable(boolean isUpdateable) {
 		this.isUpdateable = isUpdateable;
@@ -111,25 +112,32 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	}
 
 	@Override
-	public void decorate(IVerticalPanel panel, final ITree<Object> node) {
+	public void decorate(IVerticalPanel panel, IVerticalPanel bottom,
+			final ITree<Object> node) {
 		this.tree = node;
 		isUpdateable = node.isUpdateable();
 		isNew = node.isNew();
-		decorate(panel, node.object());
+		decorate(panel, bottom, node.object());
 	}
 
 	public IFormWidget form() {
 		return form;
 	}
 
+	public DetailViewDecorator spacing(int spacing) {
+		this.spacing = spacing;
+		return this;
+	}
+
 	@Override
-	public void decorate(IVerticalPanel panel, final Object node) {
+	public void decorate(IVerticalPanel panel, IVerticalPanel bottom,
+			final Object node) {
 		updates.clear();
 		assert node != null;
 		panel.clear();
 		decorateBorder(panel);
-		form = (IFormWidget) panel.add().panel().vertical().spacing(8).add()
-				.widget(IFormWidget.class);
+		form = (IFormWidget) panel.add().panel().vertical().spacing(spacing)
+				.add().widget(IFormWidget.class);
 		form.isNew(isNew);
 		if (isNew) {
 			DiscardChangesDialog.listener = new DiscardChangesListener() {
