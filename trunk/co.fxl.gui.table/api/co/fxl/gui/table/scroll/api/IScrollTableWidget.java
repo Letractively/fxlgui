@@ -23,6 +23,7 @@ import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
@@ -120,4 +121,6 @@ public interface IScrollTableWidget<T> {
 	ICommandButtons commandButtons();
 
 	IScrollTableWidget<T> showDisplayedRange(boolean showDisplayedRange);
+
+	IScrollTableWidget<T> statusPanel(IVerticalPanel bottom);
 }
