@@ -380,6 +380,7 @@ class FormWidgetImpl implements IFormWidget {
 					.spacing(spacing).add().panel().vertical();
 			gridPanel = contentPanel.add().panel().grid();
 			gridPanel.indent(1);
+			gridPanel.spacing(1);
 			gridPanel.resize(2, 1).column(1).expand();
 		}
 		return gridPanel;
