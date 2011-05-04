@@ -33,6 +33,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IPanel;
 
 public class WidgetTitle implements IClickListener {
 
@@ -207,7 +208,7 @@ public class WidgetTitle implements IClickListener {
 			if (commandPanelTop != null)
 				return;
 			IContainer cell = headerPanel.right();
-			commandPanelTop = cell.panel().horizontal().spacing(6);
+			commandPanelTop = cell.panel().horizontal().spacing(4);
 		} else {
 			if (commandPanel != null)
 				return;
@@ -215,12 +216,17 @@ public class WidgetTitle implements IClickListener {
 			vertical.center().panel().vertical();
 			IContainer cell = vertical.right();
 			commandPanel = cell.panel().horizontal().spacing(5);
-			vertical.color().rgb(249, 249, 249).gradient().vertical()
-					.rgb(216, 216, 216);
-			final IBorder border2 = vertical.border();
-			border2.color().rgb(172, 197, 213);
-			border2.style().top();
+			decorateGradient(vertical);
 		}// panel.addSpace(space);
+	}
+
+	public static IBorder decorateGradient(IPanel<?> vertical) {
+		vertical.color().rgb(249, 249, 249).gradient().vertical()
+				.rgb(216, 216, 216);
+		IBorder border2 = vertical.border();
+		border2.color().rgb(172, 197, 213);
+		border2.style().top();
+		return border2;
 	}
 
 	@Override
