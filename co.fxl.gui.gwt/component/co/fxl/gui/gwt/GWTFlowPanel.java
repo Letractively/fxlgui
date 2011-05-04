@@ -20,11 +20,14 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IFlowPanel;
 
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 		IFlowPanel {
+
+	private int spacing;
 
 	@SuppressWarnings("unchecked")
 	GWTFlowPanel(GWTContainer<?> container) {
@@ -42,12 +45,21 @@ class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 	@Override
 	public void add(Widget widget) {
 		widget.getElement().getStyle().setProperty("display", "inline");
+		setPadding(widget);
 		container.widget.add(widget);
 	}
 
 	@Override
 	public IFlowPanel spacing(int spacing) {
-		// TODO ... new MethodNotImplementedException();
+		this.spacing = spacing;
+		for (int i = 0; i < container.widget.getWidgetCount(); i++) {
+			Widget w = container.widget.getWidget(i);
+			setPadding(w);
+		}
 		return this;
+	}
+
+	protected void setPadding(Widget w) {
+		DOM.setStyleAttribute(w.getElement(), "padding", (spacing / 2) + "px;");
 	}
 }
