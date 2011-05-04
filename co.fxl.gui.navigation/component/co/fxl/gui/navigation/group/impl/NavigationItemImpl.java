@@ -121,6 +121,7 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	}
 
 	private void applyColor(IColor color, int[] rgb) {
+		color.remove();
 		color.rgb(rgb[0], rgb[1], rgb[2]);
 	}
 
