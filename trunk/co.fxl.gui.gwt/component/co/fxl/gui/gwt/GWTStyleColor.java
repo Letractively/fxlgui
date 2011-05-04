@@ -22,18 +22,43 @@ import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IColored.IGradient;
 import co.fxl.gui.api.template.ColorTemplate;
 
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
+
 public class GWTStyleColor extends ColorTemplate implements IColor {
 
 	public class Gradient implements IGradient {
 
+		private GWTStyleColor original;
+
+		Gradient(GWTStyleColor original) {
+			this.original = original;
+		}
+
 		@Override
 		public IColor vertical() {
-			return GWTStyleColor.this;
+			return new GWTStyleColor(new Style() {
+
+				@Override
+				public void addStyleName(String style) {
+					throw new MethodNotImplementedException();
+				}
+			}) {
+
+				protected void setColor(String color) {
+					GWTWidgetStyle gwtWidgetStyle = (GWTWidgetStyle) original.style;
+					Element element = gwtWidgetStyle.widget.getElement();
+					DOM.setStyleAttribute(element, "background",
+							"-webkit-gradient(linear, left top, left bottom, from("
+									+ original.color + "), to(" + color + "))");
+				}
+			};
 		}
 
 	}
 
 	private Style style;
+	private String color;
 
 	public GWTStyleColor(Style style) {
 		this.style = style;
@@ -47,6 +72,7 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 	}
 
 	protected void setColor(String color) {
+		this.color = color;
 		com.google.gwt.dom.client.Style stylable = stylable();
 		setColor(color, stylable);
 	}
@@ -75,6 +101,9 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 
 	@Override
 	public IColor remove() {
+		GWTWidgetStyle gwtWidgetStyle = (GWTWidgetStyle) style;
+		Element element = gwtWidgetStyle.widget.getElement();
+		DOM.setStyleAttribute(element, "background", "none");
 		stylable().clearBackgroundColor();
 		stylable().clearColor();
 		return this;
@@ -82,6 +111,6 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 
 	@Override
 	public IGradient gradient() {
-		return new Gradient();
+		return new Gradient(this);
 	}
 }

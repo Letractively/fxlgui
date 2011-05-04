@@ -61,7 +61,7 @@ public class GWTWidgetBorder extends GWTBorder {
 		} else if (borderType.equals(GWTBorder.BORDER_ROUNDED)) {
 			DOM.setStyleAttribute(element, borderType, width + "px " + color
 					+ " " + style);
-			DOM.setStyleAttribute(element, "border-radius", "1em");
+			DOM.setStyleAttribute(element, "border-radius", "3px");
 		} else {
 			DOM.setStyleAttribute(element, borderType, width + "px " + color
 					+ " " + style);

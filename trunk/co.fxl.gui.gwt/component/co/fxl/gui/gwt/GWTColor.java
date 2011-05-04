@@ -25,9 +25,33 @@ abstract class GWTColor implements IColor {
 
 	public class Gradient implements IGradient {
 
+		private GWTColor gradient;
+
+		Gradient(final GWTColor original) {
+			gradient = new GWTColor() {
+
+				@Override
+				public IGradient gradient() {
+					throw new MethodNotImplementedException();
+				}
+
+				@Override
+				public IColor remove() {
+					throw new MethodNotImplementedException();
+				}
+
+				@Override
+				IColor setColorInternal(String string) {
+					original.setColor("-webkit-gradient(linear, left top, left bottom, from("
+							+ original.color + "), to(" + color + "))");
+					return this;
+				}
+			};
+		}
+
 		@Override
 		public IColor vertical() {
-			return GWTColor.this;
+			return gradient;
 		}
 
 	}
@@ -37,7 +61,7 @@ abstract class GWTColor implements IColor {
 		private String mix = "";
 
 		@Override
-		IColor setColor(String string) {
+		IColor setColorInternal(String string) {
 			if (!mix.equals(""))
 				mix += "-";
 			mix += string;
@@ -53,17 +77,25 @@ abstract class GWTColor implements IColor {
 
 		@Override
 		public IGradient gradient() {
-			return new Gradient();
+			return new Gradient(this);
 		}
 
 	}
+
+	private String color;
 
 	@Override
 	public IColor black() {
 		return setColor("black");
 	}
 
-	abstract IColor setColor(String string);
+	public final IColor setColor(String string) {
+		color = string;
+		setColorInternal(string);
+		return this;
+	}
+
+	abstract IColor setColorInternal(String string);
 
 	@Override
 	public IColor gray() {
