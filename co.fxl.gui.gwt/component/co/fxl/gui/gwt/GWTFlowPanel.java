@@ -27,7 +27,7 @@ import com.google.gwt.user.client.ui.Widget;
 class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 		IFlowPanel {
 
-	private int spacing;
+	private int padding = 0;
 
 	@SuppressWarnings("unchecked")
 	GWTFlowPanel(GWTContainer<?> container) {
@@ -51,7 +51,7 @@ class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 
 	@Override
 	public IFlowPanel spacing(int spacing) {
-		this.spacing = spacing;
+		this.padding = spacing / 2;
 		for (int i = 0; i < container.widget.getWidgetCount(); i++) {
 			Widget w = container.widget.getWidget(i);
 			setPadding(w);
@@ -60,6 +60,7 @@ class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 	}
 
 	protected void setPadding(Widget w) {
-		DOM.setStyleAttribute(w.getElement(), "padding", (spacing / 2) + "px;");
+		if (padding > 0)
+			DOM.setStyleAttribute(w.getElement(), "padding", padding + "px");
 	}
 }

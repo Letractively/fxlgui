@@ -24,6 +24,7 @@ import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IHorizontalLine;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
@@ -153,6 +154,13 @@ public class GWTContainer<T extends Widget> implements IContainer {
 		setComponent((T) new ToggleButton());
 		return (IToggleButton) (element = new GWTToggleButton(
 				(GWTContainer<ToggleButton>) this));
+	}
+
+	@Override
+	public IHorizontalLine line() {
+		setComponent((T) new HTML());
+		return (IHorizontalLine) (element = new GWTHorizontalLine(
+				(GWTContainer<HTML>) this));
 	}
 
 	@Override
