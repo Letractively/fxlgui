@@ -69,7 +69,7 @@ final class N2MRelationDecorator implements IDecorator<Object>, IResizeListener 
 							private void update(final IVerticalPanel panel,
 									final Object node, final List<Object> result) {
 								panel.clear();
-								table = (IN2MWidget<Object>) panel.add()
+								table = (IN2MWidget<Object>) panel.spacing(8).add()
 										.widget(IN2MWidget.class);
 								table.domain(domain);
 								table.selection(result);
