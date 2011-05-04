@@ -84,7 +84,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 				widget.creatableTypes.add(null);
 			for (final String type : widget.creatableTypes) {
 				IClickable<?> button = table.addButton(type == null ? "New"
-						: "New " + type, type == null ? null
+						: "New " + type, type == null ? "new.png"
 						: widget.creatableTypeIcons.get(type));
 				buttons.put(type, button);
 				button.addClickListener(new IClickListener() {
