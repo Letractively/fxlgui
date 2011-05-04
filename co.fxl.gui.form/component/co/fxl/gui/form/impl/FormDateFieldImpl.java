@@ -35,7 +35,8 @@ class FormDateFieldImpl extends FormTextFieldImpl {
 
 	FormDateFieldImpl(final FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
-		button = addButton("Change");
+		button = // addContainer().image().resource("date.png");
+		addButton("Change");
 		button.addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
