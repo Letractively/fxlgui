@@ -44,12 +44,14 @@ final class N2MRelationDecorator implements IDecorator<Object>, IResizeListener 
 	}
 
 	@Override
-	public void decorate(IVerticalPanel panel, ITree<Object> tree) {
-		decorate(panel, tree.object());
+	public void decorate(IVerticalPanel panel, IVerticalPanel bottom,
+			ITree<Object> tree) {
+		decorate(panel, bottom, tree.object());
 	}
 
 	@Override
-	public void decorate(final IVerticalPanel panel, final Object node) {
+	public void decorate(final IVerticalPanel panel, IVerticalPanel bottom,
+			final Object node) {
 		// IBorder border = panel.border();
 		// border.color().gray();
 		// border.style().top();
@@ -69,8 +71,8 @@ final class N2MRelationDecorator implements IDecorator<Object>, IResizeListener 
 							private void update(final IVerticalPanel panel,
 									final Object node, final List<Object> result) {
 								panel.clear();
-								table = (IN2MWidget<Object>) panel.spacing(8).add()
-										.widget(IN2MWidget.class);
+								table = (IN2MWidget<Object>) panel.spacing(8)
+										.add().widget(IN2MWidget.class);
 								table.domain(domain);
 								table.selection(result);
 								table.editable(relation.adapter.editable(node));

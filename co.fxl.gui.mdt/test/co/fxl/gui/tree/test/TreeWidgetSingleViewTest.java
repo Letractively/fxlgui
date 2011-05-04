@@ -44,14 +44,16 @@ class TreeWidgetSingleViewTest {
 		widget.setDetailView(new IDecorator<String>() {
 
 			@Override
-			public void decorate(IVerticalPanel panel, ITree<String> tree) {
+			public void decorate(IVerticalPanel panel, IVerticalPanel bottom,
+					ITree<String> tree) {
 				clear(panel);
 				panel.spacing(16);
 				panel.add().label().text(tree.object());
 			}
 
 			@Override
-			public void decorate(IVerticalPanel panel, Object tree) {
+			public void decorate(IVerticalPanel panel, IVerticalPanel bottom,
+					Object tree) {
 			}
 
 			@Override

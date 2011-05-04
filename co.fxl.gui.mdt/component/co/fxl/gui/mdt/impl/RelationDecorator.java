@@ -65,13 +65,14 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 	}
 
 	@Override
-	public void decorate(final IVerticalPanel panel, final Object node) {
+	public void decorate(final IVerticalPanel panel, IVerticalPanel bottom,
+			final Object node) {
 		if (this.node != null && !node.equals(this.node)) {
 			selectionIndex = -1;
 			selection = null;
 		}
 		this.node = node;
-		decorate(panel, null, node);
+		decoratePanel(panel, bottom, null, node);
 	}
 
 	@Override
@@ -80,8 +81,9 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 		this.selection = selection;
 	}
 
-	private void decorate(final IVerticalPanel panel,
-			final IFilterConstraints constraints, final Object node) {
+	private void decoratePanel(final IVerticalPanel panel,
+			final IVerticalPanel bottom, final IFilterConstraints constraints,
+			final Object node) {
 		this.panel = panel;
 		// IBorder border = panel.border();
 		// border.color().gray();
@@ -94,6 +96,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 				panel.clear();
 				table = (IScrollTableWidget<Object>) panel.add().widget(
 						IScrollTableWidget.class);
+				table.statusPanel(bottom);
 				final ISelection<Object> selection0 = table.selection();
 				ISingleSelection<Object> selection = selection0.single();
 				selection0
@@ -214,17 +217,17 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 	@Override
 	public void onResize(int width, int height) {
 		int offsetY = Math.max(panel.offsetY(), 180);
-		int maxFromDisplay = height - offsetY - 124;
+		int maxFromDisplay = height - offsetY - 70;
 		maxFromDisplay = Math.max(maxFromDisplay, 60);
-		if (detailView.tree.heightRegisterPanel() > 30) {
+		if (detailView.tree.heightRegisterPanel() > 40) {
 			maxFromDisplay -= 25;
 		}
 		table.height(maxFromDisplay);
 	}
 
 	@Override
-	public void decorate(IVerticalPanel panel, ITree<Object> tree) {
-		decorate(panel, tree.object());
+	public void decorate(IVerticalPanel panel, IVerticalPanel bottom, ITree<Object> tree) {
+		decorate(panel, bottom, tree.object());
 	}
 
 	private void addAddButton(final Object node) {
