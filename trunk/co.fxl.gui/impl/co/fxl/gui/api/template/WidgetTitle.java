@@ -63,7 +63,7 @@ public class WidgetTitle implements IClickListener {
 					label.font().color().black();
 					// label.font().underline(true);
 				} else {
-					label.font().color().lightgray();
+					label.font().color().gray();
 					// label.font().underline(false);
 				}
 			}
@@ -215,7 +215,7 @@ public class WidgetTitle implements IClickListener {
 			IDockPanel vertical = bottom().panel().dock();
 			vertical.center().panel().vertical();
 			IContainer cell = vertical.right();
-			commandPanel = cell.panel().horizontal().spacing(5);
+			commandPanel = cell.panel().horizontal().spacing(6);
 			decorateGradient(vertical);
 		}// panel.addSpace(space);
 	}
