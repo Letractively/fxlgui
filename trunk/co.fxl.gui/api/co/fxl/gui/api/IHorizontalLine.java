@@ -18,45 +18,6 @@
  */
 package co.fxl.gui.api;
 
-public interface IContainer {
+public interface IHorizontalLine extends IColored {
 
-	ILayout panel();
-
-	IButton button();
-
-	IImage image();
-
-	ILabel label();
-
-	ITextField textField();
-
-	IPasswordField passwordField();
-
-	ITextArea textArea();
-
-	ICheckBox checkBox();
-
-	IComboBox comboBox();
-
-	IRadioButton radioButton();
-
-	IHorizontalLine line();
-
-	IToggleButton toggleButton();
-
-	IScrollPane scrollPane();
-
-	ISplitPane splitPane();
-
-	IElement<?> element(IElement<?> element);
-
-	IElement<?> nativeElement(Object object);
-
-	IElement<?> element();
-
-	Object widget(Class<?> interfaceClass);
-
-	IContainer clear();
-
-	IDisplay display();
 }

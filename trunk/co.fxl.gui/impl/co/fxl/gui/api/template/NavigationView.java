@@ -139,10 +139,7 @@ public class NavigationView {
 
 	public NavigationView addLine() {
 		setUp();
-		// panel.addSpace(1);
-		IVerticalPanel p = panel.add().panel().vertical().height(1);
-		p.color().rgb(172, 197, 213);
-		// panel.addSpace(1);
+		panel.add().line().color().rgb(172, 197, 213);
 		return this;
 	}
 
@@ -160,7 +157,7 @@ public class NavigationView {
 
 	protected ILabel addTextLabel(IHorizontalPanel panel) {
 		final ILabel textLabel = panel.add().label();// .hyperlink();
-		textLabel.font();//.pixel(13);// .weight().bold();
+		textLabel.font();// .pixel(13);// .weight().bold();
 		return textLabel;
 	}
 
