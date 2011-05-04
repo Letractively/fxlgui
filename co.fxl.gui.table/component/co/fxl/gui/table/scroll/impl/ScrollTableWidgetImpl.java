@@ -92,17 +92,34 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private int initialPaintedRows;
 	private int maxRowIndex;
 	private IRows<Object> actualRows;
+	private IContainer c0;
+	private boolean addBorders;
 
 	ScrollTableWidgetImpl(IContainer container) {
-		widgetTitle = new WidgetTitle(container.panel(), true).foldable(false);
-		widgetTitle.grayBackground();
-		widgetTitle.commandsOnTop();
-		this.container = widgetTitle.content().panel().vertical();
+		c0 = container;
+	}
+
+	private WidgetTitle widgetTitle() {
+		if (widgetTitle == null) {
+			widgetTitle = new WidgetTitle(c0.panel(), addBorders)
+					.foldable(false);
+			widgetTitle.grayBackground();
+			widgetTitle.commandsOnTop();
+			this.container = widgetTitle.content().panel().vertical();
+		}
+		return widgetTitle;
+	}
+
+	private IVerticalPanel container() {
+		if (container == null) {
+			widgetTitle();
+		}
+		return container;
 	}
 
 	@Override
 	public int offsetY() {
-		return container.offsetY();
+		return container().offsetY();
 	}
 
 	@Override
@@ -142,10 +159,13 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			}
 			adjustHeight = true;
 			this.visible = true;
-			statusPanel = null;
+			if (!externalStatusPanel)
+				statusPanel = null;
+			else
+				resetStatusPanel();
 			topPanel = null;
 			selectionIsSetup = false;
-			container.clear();
+			container().clear();
 			topPanel();
 			filter = null;
 			for (ScrollTableColumnImpl c : columns) {
@@ -174,11 +194,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			if (buttonDecorator != null) {
 				buttonPanel(buttonDecorator);
 			}
-//			if (filter != null || buttonDecorator != null)
-//				container.addSpace(10);
+			// if (filter != null || buttonDecorator != null)
+			// container.addSpace(10);
 			if (rows.size() == 0) {
 				IVerticalPanel dock = container.add().panel().vertical();
-//						.spacing(10);
+				// .spacing(10);
 				if (topPanel == null)
 					topPanel = dock.add().panel().grid();
 				if (showNoRowsFound) {
@@ -233,7 +253,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	private void topPanel() {
 		if (topPanel == null) {
-			topPanel = container.add().panel().grid();
+			topPanel = container().add().panel().grid();
 			// topPanel.spacing(6);
 			// IBorder border = topPanel.border();
 			// border.color().lightgray();
@@ -243,7 +263,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	IGridPanel statusPanel() {
 		if (statusPanel == null) {
-			statusPanel = container.add().panel().grid().resize(3, 1);
+			statusPanel = container().add().panel().grid().resize(3, 1);
 			statusPanel.spacing(4);
 			IBorder border2 = statusPanel.border();
 			border2.color().rgb(172, 197, 213);
@@ -325,6 +345,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	List<Object> preselectedList = new LinkedList<Object>();
 	int preselectedIndex = -1;
 	private boolean showDisplayedRange = true;
+	private boolean externalStatusPanel;
+	private IVerticalPanel bottom;
 
 	void update() {
 		if (updating)
@@ -496,11 +518,19 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			rt = rows.size();
 		int firstRow = constraints != null ? constraints.rowIterator()
 				.firstRow() : 0;
-		String status = "DISPLAYING ROWS " + (firstRow + rowOffset + 1) + " - "
-				+ (firstRow + rt) // + " of " + (firstRow + 1) + " - "
+		String status = +(firstRow + rowOffset + 1) + " - " + (firstRow + rt) // +
+																				// " of "
+																				// +
+																				// (firstRow
+																				// +
+																				// 1)
+																				// +
+																				// " - "
 		// + (firstRow + rows.size())
 		;
-		p.add().label().text(status).font().pixel(10);
+		p.add().label().text("DISPLAYING ROWS").font().pixel(10);
+		p.addSpace(4).add().label().text(status).font().weight().bold()
+				.pixel(10);
 		if (constraints != null && constraints.rowIterator().hasNext()) {
 			p.addSpace(4);
 			ILabel l = p.add().label().text(">>");
@@ -589,17 +619,18 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	@Override
 	public ILabel addTitle(String text) {
-		return widgetTitle.addTitle(text);
+		addBorders = true;
+		return widgetTitle().addTitle(text);
 	}
 
 	@Override
 	public IClickable<?> addButton(String name) {
-		return widgetTitle.addHyperlink(name);
+		return widgetTitle().addHyperlink(name);
 	}
 
 	@Override
 	public IClickable<?> addButton(String name, String imageResource) {
-		return widgetTitle.addHyperlink(imageResource, name);
+		return widgetTitle().addHyperlink(imageResource, name);
 	}
 
 	@Override
@@ -759,6 +790,21 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	@Override
 	public boolean visible() {
-		return container.visible();
+		return container().visible();
+	}
+
+	@Override
+	public IScrollTableWidget<Object> statusPanel(IVerticalPanel bottom) {
+		this.bottom = bottom;
+		externalStatusPanel = true;
+		resetStatusPanel();
+		return this;
+	}
+
+	private void resetStatusPanel() {
+		bottom.clear();
+		bottom.addSpace(2);
+		statusPanel = bottom.add().panel().grid().resize(3, 1);
+		statusPanel.spacing(4);
 	}
 }
