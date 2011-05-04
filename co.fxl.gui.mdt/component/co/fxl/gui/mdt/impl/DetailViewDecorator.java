@@ -24,6 +24,7 @@ import java.util.List;
 
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IComboBox;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
@@ -136,6 +137,10 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 		assert node != null;
 		panel.clear();
 		decorateBorder(panel);
+		if (bottom != null) {
+			IGridPanel statusPanel = bottom.add().panel().grid().resize(3, 1);
+			statusPanel.spacing(4);
+		}
 		form = (IFormWidget) panel.add().panel().vertical().spacing(spacing)
 				.add().widget(IFormWidget.class);
 		form.isNew(isNew);
