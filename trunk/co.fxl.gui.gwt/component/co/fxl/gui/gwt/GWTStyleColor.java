@@ -101,12 +101,16 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 
 	@Override
 	public IColor remove() {
-		GWTWidgetStyle gwtWidgetStyle = (GWTWidgetStyle) style;
-		Element element = gwtWidgetStyle.widget.getElement();
-		DOM.setStyleAttribute(element, "background", "none");
+		setBackgroundNone();
 		stylable().clearBackgroundColor();
 		stylable().clearColor();
 		return this;
+	}
+
+	protected void setBackgroundNone() {
+		GWTWidgetStyle gwtWidgetStyle = (GWTWidgetStyle) style;
+		Element element = gwtWidgetStyle.widget.getElement();
+		DOM.setStyleAttribute(element, "background", "none");
 	}
 
 	@Override
