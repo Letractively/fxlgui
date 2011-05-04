@@ -80,9 +80,11 @@ class FormWidgetImpl implements IFormWidget {
 	private IButton saveButton;
 	private IFocusable<?> focus = null;
 	private List<IFocusable<?>> focusables = new LinkedList<IFocusable<?>>();
+	private int spacing = 0;
 
 	FormWidgetImpl(IContainer panel) {
-		widgetTitle = new WidgetTitle(panel.panel(), false).grayBackground().commandsOnTop().space(0);
+		widgetTitle = new WidgetTitle(panel.panel(), false).grayBackground()
+				.commandsOnTop().space(0);
 		widgetTitle.foldable(false);
 	}
 
@@ -233,7 +235,7 @@ class FormWidgetImpl implements IFormWidget {
 			if (fields.isEmpty())
 				return this;
 			// assert !fields.isEmpty() : "no fields added to form";
-			contentPanel.addSpace(10);
+			contentPanel.addSpace(8);
 			IGridPanel grid = contentPanel.add().panel().grid();
 			if (saveListener != null) {
 				addSaveButton(grid);
@@ -374,7 +376,8 @@ class FormWidgetImpl implements IFormWidget {
 
 	public IGridPanel grid() {
 		if (gridPanel == null) {
-			contentPanel = widgetTitle.content().panel().vertical();
+			contentPanel = widgetTitle.content().panel().vertical()
+					.spacing(spacing).add().panel().vertical();
 			gridPanel = contentPanel.add().panel().grid();
 			gridPanel.indent(1);
 			gridPanel.resize(2, 1).column(1).expand();
@@ -389,7 +392,8 @@ class FormWidgetImpl implements IFormWidget {
 
 	@Override
 	public ILabel addTitle(String title) {
-		widgetTitle.space(10);
+		widgetTitle.space(0);
+		spacing = 8;
 		return widgetTitle.addTitle(title);
 	}
 
