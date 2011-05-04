@@ -62,9 +62,10 @@ public class ViewList {
 				labelPanel.addSpace(2);
 			} else
 				labelPanel.addSpace(4);
-			label = labelPanel.add().label().hyperlink();
+			label = labelPanel.add().label();
 			label.addClickListener(this);
 			label.font().pixel(13);
+			label.font().weight().plain().color().rgb(0, 87, 141);
 			labelPanel.addSpace(4);
 			content = widget.contentPanel().add();
 			if (newListener != null) {
@@ -131,8 +132,8 @@ public class ViewList {
 					removeImage.visible(true);
 				}
 			} else {
-				labelPanel.color().rgb(245, 245, 245);
-				label.font().weight().plain().color().blue();
+				labelPanel.color().white();
+				label.font().weight().plain().color().rgb(0, 87, 141);
 				if (removeImage != null) {
 					removeImage.visible(false);
 				}
@@ -153,7 +154,7 @@ public class ViewList {
 
 	public ViewList(MetaViewList widget, ILayout layout) {
 		this.widget = widget;
-		widgetTitle = new WidgetTitle(layout).grayBackground();
+		widgetTitle = new WidgetTitle(layout, true).space(4).grayBackground();
 	}
 
 	public ViewImpl addView() {
