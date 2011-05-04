@@ -39,6 +39,7 @@ import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IHorizontalLine;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
@@ -172,6 +173,13 @@ public class SwingContainer<T extends JComponent> implements IContainer {
 		setComponent((T) new JSplitPane());
 		return (ISplitPane) (element = new SwingSplitPane(
 				(SwingContainer<JSplitPane>) this));
+	}
+
+	@Override
+	public IHorizontalLine line() {
+		setComponent((T) new PanelComponent());
+		return (IHorizontalLine) (element = new SwingHorizontalLine(
+				(SwingContainer<PanelComponent>) this));
 	}
 
 	@Override
