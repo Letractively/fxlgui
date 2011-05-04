@@ -131,7 +131,8 @@ class MiniFilterPanel implements FilterPanel {
 
 	MiniFilterPanel(MiniFilterWidgetImpl widget, IContainer c) {
 		this.widget = widget;
-		panel = c.panel().horizontal().add().panel().horizontal();
+		panel = c.panel().horizontal().add().panel().horizontal().align()
+				.begin().add().panel().horizontal().align().begin();
 		titlePanel = panel.add().panel().horizontal();
 		mainPanel = panel.addSpace(4).add().panel().horizontal();
 		hyperLinkPanel = panel.addSpace(4).add().panel().horizontal();
