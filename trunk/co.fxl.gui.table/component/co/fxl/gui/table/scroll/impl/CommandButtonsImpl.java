@@ -150,11 +150,11 @@ public class CommandButtonsImpl implements ICommandButtons,
 			image.clickable(clickable);
 			label.clickable(clickable);
 			if (clickable) {
-				label.font().color().blue();
-				label.font().underline(true);
+				label.font().color().black();
+//				label.font().underline(true);
 			} else {
 				label.font().color().gray();
-				label.font().underline(false);
+//				label.font().underline(false);
 			}
 			return this;
 		}
@@ -181,6 +181,8 @@ public class CommandButtonsImpl implements ICommandButtons,
 		String imageR = string.toLowerCase();
 		if (imageR.equals("remove"))
 			imageR = "cancel";
+		if (imageR.equals("edit")||imageR.equals("show"))
+			imageR = "detail";
 		IImage image = p.add().image().resource(imageR + ".png");
 		p.addSpace(4);
 		ILabel label = p.add().label().text(string);
