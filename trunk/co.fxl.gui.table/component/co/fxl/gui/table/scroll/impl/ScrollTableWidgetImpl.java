@@ -202,7 +202,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				if (topPanel == null)
 					topPanel = dock.add().panel().grid();
 				if (showNoRowsFound) {
-					topPanel.cell(0, 0).panel().horizontal().addSpace(8).add()
+					topPanel.cell(0, 0).panel().horizontal().addSpace(8)
+							.align().begin().add().panel().horizontal().add()
 							.label().text("NO ENTITIES FOUND").font().pixel(10)
 							.color().gray();
 				}
@@ -358,8 +359,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			highlighted.clear();
 			contentPanel.clear();
 			IBulkTableWidget lastGrid = grid;
-			grid = (IBulkTableWidget) contentPanel.add().panel().vertical()
-					.spacing(6).add().widget(IBulkTableWidget.class);
+			IVerticalPanel vpanel = contentPanel.add().panel().vertical();
+			grid = (IBulkTableWidget) vpanel.spacing(6).add()
+					.widget(IBulkTableWidget.class);
 			grid.height(heightMinusTopPanel());
 			rowOffset = convertToRowOffset(usedScrollOffset);
 			paintedRows = computeRowsToPaint();
@@ -393,7 +395,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						grid.labelMouseListener(current++, this);
 			}
 			grid.element().tooltip(tooltip);
-			contentPanel.show(grid.element());
+			contentPanel.show(vpanel);
 			if (lastGrid != null)
 				lastGrid.remove();
 			for (int r = 0; r < paintedRows; r++) {
