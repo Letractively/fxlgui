@@ -234,9 +234,10 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					}
 				};
 				newClick.put(type, cl);
-				IClickable<?> hl = widgetTitle.addHyperlink(type == null ? null
-						: creatableTypeIcons.get(type), "New"
-						+ (type == null ? "" : " " + type));
+				IClickable<?> hl = widgetTitle
+						.addHyperlink(type == null ? "new.png"
+								: creatableTypeIcons.get(type), "New"
+								+ (type == null ? "" : " " + type));
 				newClickHyperlink.put(type, hl);
 				hl.addClickListener(cl);
 			}
