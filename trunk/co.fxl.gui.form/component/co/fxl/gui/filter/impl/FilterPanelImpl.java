@@ -69,7 +69,7 @@ class FilterPanelImpl implements FilterPanel {
 
 		FilterGridImpl(IContainer gridContainer) {
 			grid = gridContainer.panel().vertical().align().end().spacing(5)
-					.add().panel().grid().spacing(2);
+					.add().panel().grid().spacing(3);
 		}
 
 		@Override
