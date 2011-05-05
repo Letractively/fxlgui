@@ -28,6 +28,7 @@ import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.template.ICallback;
+import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
@@ -168,7 +169,7 @@ class GWTUploadWidget implements IUploadWidget {
 				return false;
 			}
 		});
-		form.addTitle("Add Attachment");
+		form.addTitle("Add Attachment").font().pixel(WidgetTitle.LARGE_FONT);
 		tb = (TextBox) form.addTextField("Name").required().valueElement()
 				.nativeElement();
 		tb.setName("name");
