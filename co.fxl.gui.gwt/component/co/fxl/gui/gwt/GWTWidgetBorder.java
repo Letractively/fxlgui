@@ -62,7 +62,7 @@ public class GWTWidgetBorder extends GWTBorder {
 			DOM.setStyleAttribute(element, borderType, width + "px " + color
 					+ " " + style);
 			if (!GWTDisplay.isWebkitBrowser())
-				DOM.setStyleAttribute(element, "-moz-border-radius", "3px");
+				DOM.setStyleAttribute(element, "--moz-border-radius", "3px");
 			else
 				DOM.setStyleAttribute(element, "border-radius", "3px");
 		} else {
