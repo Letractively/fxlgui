@@ -54,7 +54,6 @@ public class WidgetTitle implements IClickListener {
 
 		@Override
 		public IClickable<?> clickable(boolean clickable) {
-			// iPanel.visible(clickable);
 			label.clickable(clickable);
 			if (image != null)
 				image.clickable(clickable);
@@ -96,7 +95,7 @@ public class WidgetTitle implements IClickListener {
 	private IHorizontalPanel commandPanel;
 	private boolean hasCommands = false;
 	private boolean hasHeaderPanel = false;
-	private IDockPanel headerPanel;
+	private IGridPanel headerPanel;
 	private IContainer contentContainer;
 	private boolean open = true;
 	// private IImage image;
@@ -119,7 +118,7 @@ public class WidgetTitle implements IClickListener {
 	public WidgetTitle(ILayout layout, boolean addBorder) {
 		panel = layout.grid();
 		panel.color().white();
-		headerPanel = panel.cell(0, 0).panel().dock();
+		headerPanel = panel.cell(0, 0).panel().grid();
 		headerPanel.visible(false);
 		IBorder border = headerPanel.border();
 		border.color().rgb(172, 197, 213);
@@ -180,8 +179,9 @@ public class WidgetTitle implements IClickListener {
 			return;
 		headerPanel.visible(true);
 		// headerPanel.color().rgb(220, 220, 220);
-		IHorizontalPanel horizontal = headerPanel.center().panel().horizontal()
-				.addSpace(2).align().begin();
+		IHorizontalPanel horizontal = headerPanel.cell(0, 0).align().begin()
+				.valign().center().panel().horizontal().addSpace(2).align()
+				.begin();
 		if (grayBackground)
 			horizontal.color().rgb(136, 136, 136).gradient().vertical()
 					.rgb(113, 113, 113);
@@ -207,8 +207,10 @@ public class WidgetTitle implements IClickListener {
 		if (commandsOnTop) {
 			if (commandPanelTop != null)
 				return;
-			IContainer cell = headerPanel.right();
-			commandPanelTop = cell.panel().horizontal().spacing(4);
+			IContainer cell = headerPanel.cell(1, 0).align().end().valign()
+					.center();
+			commandPanelTop = cell.panel().horizontal().align().end().add()
+					.panel().horizontal().align().end().spacing(4);
 		} else {
 			if (commandPanel != null)
 				return;
@@ -297,7 +299,7 @@ public class WidgetTitle implements IClickListener {
 		label.font().pixel(commandsOnTop ? 12 : 12);
 		labels.add(label);
 		if (holdOnClicks) {
-			label.addClickListener(new IClickListener() {
+			IClickListener clickListener = new IClickListener() {
 
 				@Override
 				public void onClick() {
@@ -308,7 +310,10 @@ public class WidgetTitle implements IClickListener {
 						hyperlink.clickable(false);
 					}
 				}
-			});
+			};
+			label.addClickListener(clickListener);
+			iPanel.addClickListener(clickListener);
+			image.addClickListener(clickListener);
 			clickableState.put(label, true);
 		}
 		CommandLink cl = new CommandLink(iPanel, image, label);
