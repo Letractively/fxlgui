@@ -273,6 +273,14 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 												return navigator.userAgent;
 												}-*/;
 
+	public static boolean isMozillaBrowser() {
+		return getUserAgent().toLowerCase().startsWith("moz");
+	}
+
+	public static boolean isIEBrowser() {
+		return getUserAgent().toLowerCase().contains("msie");
+	}
+
 	@Override
 	public IDisplay block(boolean waiting) {
 		this.waiting = waiting;
