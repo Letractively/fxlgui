@@ -46,6 +46,16 @@ public abstract class FormFieldImpl<T> implements IFormField<T> {
 		this.row = index;
 	}
 
+	@Override
+	public IFormField<T> editable(boolean editable) {
+		if (editable)
+			label.font().color().black();
+		else
+			label.font().color().gray();
+		checkFocus(editable);
+		return this;
+	}
+
 	void checkFocus(boolean editable) {
 		if (!editable)
 			widget.looseFocus(valueElement());

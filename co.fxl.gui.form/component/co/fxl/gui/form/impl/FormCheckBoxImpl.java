@@ -35,7 +35,7 @@ class FormCheckBoxImpl extends FormFieldImpl<ICheckBox> {
 	@Override
 	public IFormField<ICheckBox> editable(boolean editable) {
 		valueElement().editable(editable);
-		return this;
+		return super.editable(editable);
 	}
 
 	@Override
