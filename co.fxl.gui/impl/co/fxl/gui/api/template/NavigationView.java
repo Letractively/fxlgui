@@ -21,6 +21,7 @@ package co.fxl.gui.api.template;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
@@ -145,10 +146,6 @@ public class NavigationView {
 
 	public Link addHyperlink(String imageResource) {
 		setUp();
-		if (hasLinks) {
-			addLine();
-		}
-		hasLinks = true;
 		IHorizontalPanel panel = addPanel();
 		IImage image = addImage(panel, imageResource);
 		ILabel textLabel = addTextLabel(panel);
@@ -191,12 +188,18 @@ public class NavigationView {
 	}
 
 	protected IHorizontalPanel addPanel() {
-		IHorizontalPanel panel = this.panel.add().panel().horizontal().align()
-				.begin()// .addSpace(6)
+		IVerticalPanel p = this.panel.add().panel().vertical().spacing(2);
+		if (hasLinks) {
+			p.addSpace(3);
+		}
+		IHorizontalPanel panel = p.add().panel().horizontal().align().begin()// .addSpace(6)
 				.add().panel().horizontal().align().begin();
-		// IBorder border = panel.border();
-		// border.color().rgb(172, 197, 213);
-		// border.style().bottom();
+		if (hasLinks) {
+			IBorder border = p.border();
+			border.color().rgb(172, 197, 213);
+			border.style().top();
+		}
+		hasLinks = true;
 		return panel;
 	}
 
