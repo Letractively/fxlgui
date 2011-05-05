@@ -21,4 +21,6 @@ public interface IN2MRelation<T, R> {
 
 	IN2MRelation<T, R> constrainType(Class<?> class1);
 
+	IN2MRelation<T, R> itemImage(String itemImage);
+
 }

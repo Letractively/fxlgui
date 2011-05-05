@@ -33,6 +33,8 @@ public interface IN2MWidget<T> {
 
 	IN2MWidget<T> selection(List<T> tokens);
 
+	IN2MWidget<T> itemImage(String image);
+
 	List<T> selection();
 
 	IN2MWidget<T> listener(IN2MRelationListener<T> listener);

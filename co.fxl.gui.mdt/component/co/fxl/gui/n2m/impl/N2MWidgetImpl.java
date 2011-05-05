@@ -40,6 +40,7 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 	private IButton buttonLeftAll;
 	private IButton buttonRightAll;
 	boolean editable = true;
+	String itemImage;
 
 	N2MWidgetImpl(IContainer container) {
 		grid = container.panel().grid();
@@ -170,6 +171,12 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 			buttonRightAll.clickable(false);
 		}
 		this.editable = editable;
+		return this;
+	}
+
+	@Override
+	public IN2MWidget<Object> itemImage(String image) {
+		itemImage = image;
 		return this;
 	}
 }
