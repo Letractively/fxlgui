@@ -97,7 +97,7 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 
 	public IRegisterWidget topBorder() {
 		IBorder border = cardPanel.border();
-		border.color().lightgray();
+		border.color().rgb(172, 197, 213);
 		border.style().top();
 		return this;
 	}

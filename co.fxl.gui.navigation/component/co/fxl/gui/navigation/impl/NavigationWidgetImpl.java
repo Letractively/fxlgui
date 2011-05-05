@@ -33,6 +33,7 @@ class NavigationWidgetImpl implements IMenuWidget {
 
 	NavigationWidgetImpl(IContainer panel) {
 		registerWidget = new RegisterWidgetImpl(panel.panel());
+		registerWidget.topBorder();
 		registerWidget.background(new ColorDecorator() {
 			@Override
 			public void decorate(IColor color) {
