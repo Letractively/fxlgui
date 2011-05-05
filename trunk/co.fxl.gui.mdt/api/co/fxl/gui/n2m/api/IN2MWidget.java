@@ -22,6 +22,11 @@ import java.util.List;
 
 public interface IN2MWidget<T> {
 
+	public interface IItemImageProvider<T> {
+
+		String itemImage(T token);
+	}
+
 	public interface IN2MRelationListener<T> {
 
 		void onChange(List<T> selection);
@@ -34,6 +39,8 @@ public interface IN2MWidget<T> {
 	IN2MWidget<T> selection(List<T> tokens);
 
 	IN2MWidget<T> itemImage(String image);
+
+	IN2MWidget<T> itemImageProvider(IItemImageProvider<T> imageProvider);
 
 	List<T> selection();
 

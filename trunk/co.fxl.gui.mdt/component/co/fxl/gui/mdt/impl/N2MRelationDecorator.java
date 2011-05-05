@@ -73,9 +73,8 @@ final class N2MRelationDecorator implements IDecorator<Object>, IResizeListener 
 								panel.clear();
 								table = (IN2MWidget<Object>) panel.spacing(8)
 										.add().widget(IN2MWidget.class);
-								if (relation.itemImage != null) {
-									table.itemImage(relation.itemImage);
-								}
+								table.itemImage(relation.itemImage);
+								table.itemImageProvider(relation.itemImageProvider);
 								table.domain(domain);
 								table.selection(result);
 								table.editable(relation.adapter.editable(node));
@@ -125,7 +124,7 @@ final class N2MRelationDecorator implements IDecorator<Object>, IResizeListener 
 		// TODO ... un-hard-code
 		if (offsetY == 0)
 			offsetY = 139;
-		int maxFromDisplay = height - offsetY - 120;
+		int maxFromDisplay = height - offsetY - 60;
 		if (maxFromDisplay > 0)
 			table.height(maxFromDisplay);
 	}

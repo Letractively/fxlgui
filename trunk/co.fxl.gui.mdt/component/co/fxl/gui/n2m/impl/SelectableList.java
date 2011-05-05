@@ -53,8 +53,9 @@ class SelectableList {
 					.rgb(216, 216, 216);
 			IHorizontalPanel h = p.add().panel().horizontal().align().begin()
 					.add().panel().horizontal();
-			if (widget.itemImage != null) {
-				h.add().image().resource(widget.itemImage);
+			String image=widget.getItemImage(object);
+			if (image != null) {
+				h.add().image().resource(image);
 				h.addSpace(4);
 			}
 			label = h.add().label().text(String.valueOf(object));
