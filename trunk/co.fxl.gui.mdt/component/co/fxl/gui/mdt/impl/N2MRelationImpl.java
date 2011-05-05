@@ -25,6 +25,7 @@ class N2MRelationImpl implements IN2MRelation<Object, Object> {
 	IAdapter<Object, Object> adapter;
 	String name;
 	Class<?> constrainType;
+	String itemImage;
 
 	N2MRelationImpl(String name) {
 		this.name = name;
@@ -46,5 +47,11 @@ class N2MRelationImpl implements IN2MRelation<Object, Object> {
 		if (constrainType == null)
 			return true;
 		return constrainType.equals(node.getClass());
+	}
+
+	@Override
+	public IN2MRelation<Object, Object> itemImage(String itemImage) {
+		this.itemImage = itemImage;
+		return this;
 	}
 }

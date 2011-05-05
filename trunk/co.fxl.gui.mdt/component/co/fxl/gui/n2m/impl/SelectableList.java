@@ -25,6 +25,8 @@ import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IVerticalPanel;
 
@@ -35,6 +37,7 @@ class SelectableList {
 		private Object object;
 		private IVerticalPanel p;
 		private boolean visible = true;
+		private ILabel label;
 
 		ListItem(Object object, boolean visible) {
 			this.object = object;
@@ -44,13 +47,22 @@ class SelectableList {
 		boolean draw(boolean isFirst) {
 			if (!visible)
 				return false;
-			p = panel.add().panel().vertical().spacing(4);
-			p.add().label().text(String.valueOf(object));
-			if (!isFirst) {
-				IBorder b = p.border();
-				b.color().lightgray();
-				b.style().top();
+			p = panel.add().panel().vertical().spacing(1).add().panel()
+					.vertical().spacing(5);
+			p.color().rgb(248, 248, 248).gradient().vertical()
+					.rgb(216, 216, 216);
+			IHorizontalPanel h = p.add().panel().horizontal().align().begin()
+					.add().panel().horizontal();
+			if (widget.itemImage != null) {
+				h.add().image().resource(widget.itemImage);
+				h.addSpace(4);
 			}
+			label = h.add().label().text(String.valueOf(object));
+			// if (!isFirst) {
+			IBorder b = p.border();
+			b.color().rgb(172, 197, 213);
+			// b.style().top();
+			// }
 			p.addClickListener(this);
 			return true;
 		}
@@ -67,9 +79,12 @@ class SelectableList {
 
 		void selected(boolean selected) {
 			if (selected) {
-				p.color().rgb(230, 230, 255);
+				label.font().color().white();
+				p.color().remove().rgb(172, 197, 213);
 			} else {
-				p.color().remove();
+				label.font().color().black();
+				p.color().remove().rgb(248, 248, 248).gradient().vertical()
+						.rgb(216, 216, 216);
 			}
 		}
 
@@ -85,9 +100,10 @@ class SelectableList {
 		panel.clear();
 		if (title != null) {
 			IVerticalPanel p = panel.add().panel().vertical().spacing(4);
-			p.color().gray();
-			p.add().label().text(title).font().weight().bold().pixel(14)
-					.color().white();
+			p.color().rgb(136, 136, 136).gradient().vertical()
+					.rgb(113, 113, 113);
+			p.add().label().text(title.toUpperCase()).font().weight().bold()
+					.pixel(12).color().white();
 		}
 		boolean hasOne = false;
 		boolean isFirst = true;
@@ -119,8 +135,9 @@ class SelectableList {
 		scrollPane = cell.scrollPane();
 		scrollPane.height(400);
 		scrollPane.color().white();
-		panel = scrollPane.viewPort().panel().vertical().spacing(3);
-		scrollPane.border().color().gray();
+		panel = scrollPane.viewPort().panel().vertical();// .spacing(3);
+		scrollPane.border().color().rgb(172, 197, 213);
+		;
 		title = string;
 		this.isSelected = isSelected;
 	}
