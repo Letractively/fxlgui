@@ -28,14 +28,14 @@ class FormComboBoxImpl extends FormFieldImpl<IComboBox> {
 	FormComboBoxImpl(FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
 		comboBox = widget.addFormValueComboBox();
-//		comboBox.height(26);
+		// comboBox.height(26);
 		widget.addFillColumn();
 	}
 
 	@Override
 	public IFormField<IComboBox> editable(boolean editable) {
 		valueElement().editable(editable);
-		return this;
+		return super.editable(editable);
 	}
 
 	@Override

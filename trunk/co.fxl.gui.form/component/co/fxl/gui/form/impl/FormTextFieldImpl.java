@@ -20,7 +20,7 @@ package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.form.api.IFormField;
- 
+
 class FormTextFieldImpl extends FormFieldImpl<ITextField> {
 
 	ITextField textField;
@@ -28,16 +28,15 @@ class FormTextFieldImpl extends FormFieldImpl<ITextField> {
 	FormTextFieldImpl(FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
 		textField = addTextField(widget);
-//		textField.height(26);
-//		textField.border().color().gray();
+		// textField.height(26);
+		// textField.border().color().gray();
 		widget.addFillColumn();
 	}
 
 	@Override
 	public IFormField<ITextField> editable(boolean editable) {
 		valueElement().editable(editable);
-		checkFocus(editable);
-		return this;
+		return super.editable(editable);
 	}
 
 	ITextField addTextField(FormWidgetImpl widget) {
