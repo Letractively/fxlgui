@@ -202,10 +202,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				if (topPanel == null)
 					topPanel = dock.add().panel().grid();
 				if (showNoRowsFound) {
-					topPanel.cell(0, 0).panel().horizontal().addSpace(8)
-							.align().begin().add().panel().horizontal().align()
-							.begin().add().label().text("NO ENTITIES FOUND")
-							.font().pixel(10).color().gray();
+					topPanel.cell(0, 0).align().begin().panel().horizontal()
+							.addSpace(8).align().begin().add().panel()
+							.horizontal().align().begin().add().label()
+							.text("NO ENTITIES FOUND").font().pixel(10).color()
+							.gray();
 				}
 				dock.add().label().text("&#160;");
 				dock.height(heightMinusTopPanel());
