@@ -54,7 +54,6 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 				}
 			};
 		}
-
 	}
 
 	private Style style;
