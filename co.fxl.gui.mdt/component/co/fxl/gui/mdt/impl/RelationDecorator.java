@@ -99,8 +99,10 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 				table.statusPanel(bottom);
 				final ISelection<Object> selection0 = table.selection();
 				ISingleSelection<Object> selection = selection0.single();
-				selection0
-						.add(selectionIndex, RelationDecorator.this.selection);
+				if (selectionIndex != -1
+						|| RelationDecorator.this.selection != null)
+					selection0.add(selectionIndex,
+							RelationDecorator.this.selection);
 				selection.addSelectionListener(RelationDecorator.this);
 				for (final PropertyImpl property : relation.properties) {
 					IScrollTableColumn<Object> c = table.addColumn();
@@ -226,7 +228,8 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 	}
 
 	@Override
-	public void decorate(IVerticalPanel panel, IVerticalPanel bottom, ITree<Object> tree) {
+	public void decorate(IVerticalPanel panel, IVerticalPanel bottom,
+			ITree<Object> tree) {
 		decorate(panel, bottom, tree.object());
 	}
 
