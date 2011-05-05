@@ -20,6 +20,7 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IFlowPanel;
 
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -60,6 +61,6 @@ class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 
 	protected void setMargin(Widget w) {
 		if (margin > 0)
-			w.getElement().getStyle().setProperty("margin", margin + "px");
+			w.getElement().getStyle().setMargin(margin, Unit.PX);
 	}
 }
