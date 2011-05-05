@@ -53,14 +53,14 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 								+ original.color
 								+ "', endColorstr='"
 								+ color
-								+ "');";
+								+ "')";
 						DOM.setStyleAttribute(element, "filter", gradient);
 					} else {
 						String gradient = "-webkit-gradient(linear, left top, left bottom, from("
 								+ original.color + "), to(" + color + "))";
 						if (GWTDisplay.isMozillaBrowser()) {
 							gradient = "-moz-linear-gradient(top, "
-									+ original.color + ", " + color + ");";
+									+ original.color + ", " + color + ")";
 						}
 						DOM.setStyleAttribute(element, "background", gradient);
 					}
