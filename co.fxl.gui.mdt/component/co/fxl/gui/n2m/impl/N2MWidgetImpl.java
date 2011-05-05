@@ -41,6 +41,7 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 	private IButton buttonRightAll;
 	boolean editable = true;
 	String itemImage;
+	IItemImageProvider<Object> imageProvider;
 
 	N2MWidgetImpl(IContainer container) {
 		grid = container.panel().grid();
@@ -178,5 +179,21 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 	public IN2MWidget<Object> itemImage(String image) {
 		itemImage = image;
 		return this;
+	}
+
+	@Override
+	public IN2MWidget<Object> itemImageProvider(
+			co.fxl.gui.n2m.api.IN2MWidget.IItemImageProvider<Object> imageProvider) {
+		this.imageProvider = imageProvider;
+		return this;
+	}
+
+	String getItemImage(Object object) {
+		if (imageProvider != null && imageProvider.itemImage(object) != null) {
+			return imageProvider.itemImage(object);
+		}
+		if (itemImage != null)
+			return itemImage;
+		return null;
 	}
 }

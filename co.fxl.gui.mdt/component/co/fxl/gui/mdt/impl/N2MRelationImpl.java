@@ -19,6 +19,7 @@
 package co.fxl.gui.mdt.impl;
 
 import co.fxl.gui.mdt.api.IN2MRelation;
+import co.fxl.gui.n2m.api.IN2MWidget.IItemImageProvider;
 
 class N2MRelationImpl implements IN2MRelation<Object, Object> {
 
@@ -26,6 +27,7 @@ class N2MRelationImpl implements IN2MRelation<Object, Object> {
 	String name;
 	Class<?> constrainType;
 	String itemImage;
+	IItemImageProvider<Object> itemImageProvider;
 
 	N2MRelationImpl(String name) {
 		this.name = name;
@@ -52,6 +54,13 @@ class N2MRelationImpl implements IN2MRelation<Object, Object> {
 	@Override
 	public IN2MRelation<Object, Object> itemImage(String itemImage) {
 		this.itemImage = itemImage;
+		return this;
+	}
+
+	@Override
+	public IN2MRelation<Object, Object> itemImageProvider(
+			IItemImageProvider<Object> itemImageProvider) {
+		this.itemImageProvider = itemImageProvider;
 		return this;
 	}
 }
