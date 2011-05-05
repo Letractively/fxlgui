@@ -26,7 +26,7 @@ import com.google.gwt.user.client.ui.Widget;
 class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 		IFlowPanel {
 
-	private int padding = 0;
+	private int margin = 0;
 
 	@SuppressWarnings("unchecked")
 	GWTFlowPanel(GWTContainer<?> container) {
@@ -44,22 +44,22 @@ class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 	@Override
 	public void add(Widget widget) {
 		widget.getElement().getStyle().setProperty("display", "inline");
-		setPadding(widget);
+		setMargin(widget);
 		container.widget.add(widget);
 	}
 
 	@Override
 	public IFlowPanel spacing(int spacing) {
-		this.padding = spacing / 2;
+		this.margin = spacing / 2;
 		for (int i = 0; i < container.widget.getWidgetCount(); i++) {
 			Widget w = container.widget.getWidget(i);
-			setPadding(w);
+			setMargin(w);
 		}
 		return this;
 	}
 
-	protected void setPadding(Widget w) {
-		if (padding > 0)
-			w.getElement().getStyle().setProperty("padding", padding + "px");
+	protected void setMargin(Widget w) {
+		if (margin > 0)
+			w.getElement().getStyle().setProperty("margin", margin + "px");
 	}
 }
