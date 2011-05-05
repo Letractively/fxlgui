@@ -224,7 +224,8 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 								}
 								root(root, path);
 								assert node != null;
-								node.path = null;
+								if (node != null)
+									node.path = null;
 								expand = rememberExpand;
 							}
 						};
