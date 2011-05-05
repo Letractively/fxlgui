@@ -40,7 +40,7 @@ class NavigationWidgetImpl implements IMenuWidget {
 						.rgb(216, 216, 216);
 			}
 		});
-		registerWidget.spacing = 4;
+		registerWidget.spacing = 3;
 		registerWidget.fontSize = 12;
 	}
 
