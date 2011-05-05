@@ -220,7 +220,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 		int maxFromDisplay = height - offsetY - 70;
 		maxFromDisplay = Math.max(maxFromDisplay, 60);
 		if (detailView.tree.heightRegisterPanel() > 40) {
-			maxFromDisplay -= 25;
+			maxFromDisplay -= 35;
 		}
 		table.height(maxFromDisplay);
 	}
