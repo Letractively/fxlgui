@@ -63,7 +63,8 @@ class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 	}
 
 	protected void setMargin(Widget w) {
-		if (margin > 0)
-			w.getElement().getStyle().setMargin(margin, Unit.PX);
+		if (margin <= 0)
+			return;
+		w.getElement().getStyle().setMargin(margin, Unit.PX);
 	}
 }
