@@ -116,7 +116,7 @@ public class NavigationView {
 	public NavigationView navigationViewListener(final INavigationListener l) {
 		if (l == null)
 			return this;
-		IClickable<?> back = widgetTitle.addHyperlink("back.png", "Back");
+		IClickable<?> back = widgetTitle.addHyperlink("arrow_back.png", "Back");
 		back.addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
@@ -124,7 +124,7 @@ public class NavigationView {
 			}
 		});
 		back.clickable(l.hasPrevious());
-		IClickable<?> forward = widgetTitle.addHyperlink("forward.png",
+		IClickable<?> forward = widgetTitle.addHyperlink("arrow_forward.png",
 				"Forward");
 		forward.addClickListener(new IClickListener() {
 			@Override
