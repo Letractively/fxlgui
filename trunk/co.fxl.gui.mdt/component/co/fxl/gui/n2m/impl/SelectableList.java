@@ -135,7 +135,7 @@ class SelectableList {
 		this.widget = widget;
 		scrollPane = cell.scrollPane();
 		scrollPane.height(400);
-		scrollPane.color().white();
+		scrollPane.color().rgb(249, 249, 249);
 		panel = scrollPane.viewPort().panel().vertical();// .spacing(3);
 		scrollPane.border().color().rgb(172, 197, 213);
 		title = string;
