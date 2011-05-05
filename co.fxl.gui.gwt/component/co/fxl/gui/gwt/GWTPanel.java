@@ -26,18 +26,14 @@ import co.fxl.gui.api.IWidgetProvider;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 
 public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 		implements IPanel<R>, WidgetParent {
 
-	private Label placeHolder;
-
 	protected GWTPanel(GWTContainer<T> container) {
 		super(container);
-		container.widget.add(placeHolder = new Label("<span>&nbsp;</span>"));
 	}
 
 	@Override
@@ -89,10 +85,6 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 
 	@Override
 	public IContainer add() {
-		if (placeHolder != null) {
-			container.widget.remove(placeHolder);
-			placeHolder = null;
-		}
 		return new GWTContainer<Widget>(this);
 	}
 
