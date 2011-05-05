@@ -55,6 +55,8 @@ public class NavigationView {
 		}
 
 		public Link clickable(boolean clickable) {
+			if (image != null)
+				image.clickable(clickable);
 			label.clickable(clickable);
 			for (ILabel l : additionalLabels)
 				l.clickable(clickable);

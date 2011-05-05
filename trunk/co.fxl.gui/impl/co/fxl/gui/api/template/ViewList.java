@@ -44,7 +44,7 @@ public class ViewList {
 
 		private ILabel label;
 		private IGridPanel grid;
-		private IHorizontalPanel labelPanel;
+		private IHorizontalPanel labelPanel0;
 		private ViewDecorator decorator;
 		private IContainer content;
 		private Object bo;
@@ -53,7 +53,8 @@ public class ViewList {
 
 		ViewImpl(String imageResource) {
 			grid = ViewList.this.panel.add().panel().grid();
-			labelPanel = grid.cell(0, 0).panel().horizontal().add().panel()
+			labelPanel0 = grid.cell(0, 0).panel().horizontal();
+			IHorizontalPanel labelPanel = labelPanel0.add().panel()
 					.horizontal().spacing(2);
 			if (imageResource != null) {
 				image = labelPanel.addSpace(4).add().image()
@@ -126,13 +127,13 @@ public class ViewList {
 			if (image != null)
 				image.clickable(clickable);
 			if (!clickable) {
-				labelPanel.color().red();
+				labelPanel0.color().red();
 				label.font().weight().bold().color().white();
 				if (removeImage != null) {
 					removeImage.visible(true);
 				}
 			} else {
-				labelPanel.color().white();
+				labelPanel0.color().white();
 				label.font().weight().plain().color().rgb(0, 87, 141);
 				if (removeImage != null) {
 					removeImage.visible(false);
