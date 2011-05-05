@@ -22,6 +22,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.HashMap;
@@ -217,11 +218,17 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	@Override
 	public int height() {
+		if (container.component == null) {
+			return Toolkit.getDefaultToolkit().getScreenSize().height;
+		}
 		return container.component.getHeight();
 	}
 
 	@Override
 	public int width() {
+		if (container.component == null) {
+			return Toolkit.getDefaultToolkit().getScreenSize().width;
+		}
 		return container.component.getWidth();
 	}
 
