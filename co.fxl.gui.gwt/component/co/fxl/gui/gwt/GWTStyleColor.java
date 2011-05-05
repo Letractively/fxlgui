@@ -48,9 +48,22 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 				protected void setColor(String color) {
 					GWTWidgetStyle gwtWidgetStyle = (GWTWidgetStyle) original.style;
 					Element element = gwtWidgetStyle.widget.getElement();
-					DOM.setStyleAttribute(element, "background",
-							"-webkit-gradient(linear, left top, left bottom, from("
-									+ original.color + "), to(" + color + "))");
+					if (GWTDisplay.isIEBrowser()) {
+						String gradient = "progid:DXImageTransform.Microsoft.gradient(startColorstr='"
+								+ original.color
+								+ "', endColorstr='"
+								+ color
+								+ "');";
+						DOM.setStyleAttribute(element, "filter", gradient);
+					} else {
+						String gradient = "-webkit-gradient(linear, left top, left bottom, from("
+								+ original.color + "), to(" + color + "))";
+						if (GWTDisplay.isMozillaBrowser()) {
+							gradient = "-moz-linear-gradient(top, "
+									+ original.color + ", " + color + ");";
+						}
+						DOM.setStyleAttribute(element, "background", gradient);
+					}
 				}
 			};
 		}
