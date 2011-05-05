@@ -27,8 +27,7 @@ class GWTHorizontalLine extends GWTElement<HTML, IHorizontalLine> implements
 
 	GWTHorizontalLine(GWTContainer<HTML> container) {
 		super(container);
-		container.widget
-				.setHTML("<hr style=\"color:black; background:black; height:1px; width:100%;\"/>");
+		container.widget.setHTML("<hr/>");
 	}
 
 	@Override

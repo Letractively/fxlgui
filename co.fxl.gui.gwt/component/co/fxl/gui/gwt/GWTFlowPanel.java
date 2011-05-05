@@ -20,7 +20,6 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IFlowPanel;
 
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -61,6 +60,6 @@ class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 
 	protected void setPadding(Widget w) {
 		if (padding > 0)
-			DOM.setStyleAttribute(w.getElement(), "padding", padding + "px");
+			w.getElement().getStyle().setProperty("padding", padding + "px");
 	}
 }
