@@ -388,7 +388,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 
 	protected void onHeightChange(final int height) {
 		int offsetY = Math.max(table.offsetY(), 140);
-		int maxFromDisplay = height - offsetY - 80;
+		int maxFromDisplay = height - offsetY - 90;
 		maxFromDisplay = Math.max(maxFromDisplay, 60);
 		table.height(maxFromDisplay);
 	}
