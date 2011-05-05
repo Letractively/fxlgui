@@ -138,7 +138,6 @@ class SelectableList {
 		scrollPane.color().white();
 		panel = scrollPane.viewPort().panel().vertical();// .spacing(3);
 		scrollPane.border().color().rgb(172, 197, 213);
-		;
 		title = string;
 		this.isSelected = isSelected;
 	}

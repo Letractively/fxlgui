@@ -46,6 +46,8 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 	N2MWidgetImpl(IContainer container) {
 		grid = container.panel().grid();
 		left = new SelectableList(this, grid.cell(0, 0), "Available", false);
+		grid.column(0).expand();
+		grid.column(2).expand();
 		center = grid.cell(1, 0).width(80).align().center().panel().vertical()
 				.add().panel().vertical().spacing(10);
 		right = new SelectableList(this, grid.cell(2, 0), "Selected", true);
