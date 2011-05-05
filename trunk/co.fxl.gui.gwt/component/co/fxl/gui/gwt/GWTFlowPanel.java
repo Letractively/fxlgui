@@ -54,7 +54,7 @@ class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 		this.margin = spacing / 2;
 		if (!GWTDisplay.isWebkitBrowser())
 			container.widget.getElement().getStyle()
-					.setPadding(margin, Unit.PX);
+					.setPadding(spacing, Unit.PX);
 		for (int i = 0; i < container.widget.getWidgetCount(); i++) {
 			Widget w = container.widget.getWidget(i);
 			setMargin(w);
