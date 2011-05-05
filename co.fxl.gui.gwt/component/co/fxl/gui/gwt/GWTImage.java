@@ -30,6 +30,12 @@ class GWTImage extends GWTElement<Image, IImage> implements IImage {
 	}
 
 	@Override
+	public IImage clickable(boolean enable) {
+		container.widget.getElement().getStyle().setOpacity(enable ? 1 : 0.5);
+		return super.clickable(enable);
+	}
+
+	@Override
 	public IImage uRI(String uri) {
 		container.widget.setUrl(uri);
 		return this;
