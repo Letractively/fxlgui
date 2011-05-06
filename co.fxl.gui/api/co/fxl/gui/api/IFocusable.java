@@ -20,5 +20,5 @@ package co.fxl.gui.api;
 
 public interface IFocusable<T> {
 
-	T focus();
+	T focus(boolean focus);
 }
