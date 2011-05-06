@@ -52,7 +52,7 @@ class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 	@Override
 	public IFlowPanel spacing(int spacing) {
 		this.margin = spacing / 2;
-		if (!GWTDisplay.isWebkitBrowser())
+		if (!GWTDisplay.isChrome())
 			container.widget.getElement().getStyle()
 					.setPadding(spacing, Unit.PX);
 		for (int i = 0; i < container.widget.getWidgetCount(); i++) {
