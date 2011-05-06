@@ -72,7 +72,7 @@ public abstract class FormFieldImpl<T> implements IFormField<T> {
 	public IContainer addContainer() {
 		return widget.grid().cell(column, row).valign().center().align()
 				.begin().panel().horizontal().align().begin().add().panel()
-				.horizontal().align().begin().addSpace(2).add();
+				.horizontal().align().begin().addSpace(1).add();
 	}
 
 	@Override
