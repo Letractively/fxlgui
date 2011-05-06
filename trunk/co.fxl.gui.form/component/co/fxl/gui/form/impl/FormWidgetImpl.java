@@ -124,7 +124,7 @@ class FormWidgetImpl implements IFormWidget {
 		if (focus != null)
 			return;
 		focus = f;
-		f.focus();
+		f.focus(true);
 	}
 
 	IPasswordField addFormValuePasswordField() {
@@ -454,11 +454,16 @@ class FormWidgetImpl implements IFormWidget {
 	void looseFocus(Object ff) {
 		if (ff != focus)
 			return;
+		((IFocusable<?>) ff).focus(false);
+		focusables.remove(ff);
+		focus = null;
 		int index = focusables.indexOf(ff);
 		if (index < focusables.size() - 1) {
 			focus = focusables.get(index + 1);
-			focus.focus();
-		} else
-			focus = null;
+		} else if (focusables.size() > 0) {
+			focus = focusables.get(0);
+		}
+		if (focus != null)
+			focus.focus(true);
 	}
 }
