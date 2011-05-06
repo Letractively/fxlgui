@@ -174,8 +174,13 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public R focus() {
-		container.component.requestFocus();
+	public R focus(boolean focus) {
+		if (focus)
+			container.component.requestFocus();
+		else {
+			container.component.setFocusable(false);
+			container.component.setFocusable(true);
+		}
 		return (R) this;
 	}
 }
