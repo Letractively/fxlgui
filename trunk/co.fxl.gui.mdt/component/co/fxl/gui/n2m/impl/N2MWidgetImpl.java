@@ -20,10 +20,10 @@ package co.fxl.gui.n2m.impl;
 
 import java.util.List;
 
-import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.n2m.api.IN2MWidget;
 
@@ -35,10 +35,10 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 	private IVerticalPanel center;
 	private IN2MRelationListener<Object> listener;
 	private List<Object> last = null;
-	private IButton leftButton;
-	private IButton buttonRight;
-	private IButton buttonLeftAll;
-	private IButton buttonRightAll;
+	private IImage leftButton;
+	private IImage buttonRight;
+	private IImage buttonLeftAll;
+	private IImage buttonRightAll;
 	boolean editable = true;
 	String itemImage;
 	IItemImageProvider<Object> imageProvider;
@@ -46,12 +46,10 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 	N2MWidgetImpl(IContainer container) {
 		grid = container.panel().grid();
 		left = new SelectableList(this, grid.cell(0, 0), "Available", false);
-		grid.column(0).expand();
-		grid.column(2).expand();
-		center = grid.cell(1, 0).width(80).align().center().panel().vertical()
-				.add().panel().vertical().spacing(10);
+		center = grid.cell(1, 0).width(36).align().center().panel().vertical()
+				.add().panel().vertical().align().center().spacing(10);
 		right = new SelectableList(this, grid.cell(2, 0), "Selected", true);
-		leftButton = center.add().button().text("<")
+		leftButton = center.add().image().resource("(_02.png").size(16, 16)
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
@@ -62,7 +60,7 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 					}
 				}).mouseLeft();
 		right.link(leftButton);
-		buttonRight = center.add().button().text(">")
+		buttonRight = center.add().image().resource(")_02.png").size(16, 16)
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
@@ -74,7 +72,7 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 				}).mouseLeft();
 		left.link(buttonRight);
 		center.addSpace(20);
-		buttonLeftAll = center.add().button().text("<<")
+		buttonLeftAll = center.add().image().resource("((_02.png").size(16, 16)
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
@@ -85,7 +83,7 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 					}
 				}).mouseLeft();
 		right.linkAll(buttonLeftAll);
-		buttonRightAll = center.add().button().text(">>")
+		buttonRightAll = center.add().image().resource("))_02.png").size(16, 16)
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
@@ -96,6 +94,9 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 					}
 				}).mouseLeft();
 		left.linkAll(buttonRightAll);
+		grid.resize(3, 1);
+		grid.column(0).expand();
+		grid.column(2).expand();
 	}
 
 	@Override
