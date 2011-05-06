@@ -58,6 +58,6 @@ class RootRegisterStyle extends RegisterStyle {
 		// background(title.border().width(2).color());
 		title.color().rgb(255, 255, 255).gradient().vertical().rgb(245, 245, 245);
 		title.border().color().black();
-		title.font().underline(false).weight().bold().color().black();// .color().white();
+		title.font().underline(false).weight().plain().color().black();// .color().white();
 	}
 }
