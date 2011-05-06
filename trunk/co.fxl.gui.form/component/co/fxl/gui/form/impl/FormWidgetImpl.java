@@ -66,7 +66,7 @@ class FormWidgetImpl implements IFormWidget {
 	IGridPanel gridPanel;
 	boolean hasRequiredAttributes = false;
 	private IVerticalPanel contentPanel;
-	private ISaveListener saveListener = null;
+	ISaveListener saveListener = null;
 	List<FormFieldImpl<?>> fields = new LinkedList<FormFieldImpl<?>>();
 	private String saveTitle;
 	private int fixLabelWidth = -1;
@@ -120,6 +120,8 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	private void setFocus(IFocusable<?> f) {
+		if (saveListener == null)
+			return;
 		focusables.add(f);
 		if (focus != null)
 			return;

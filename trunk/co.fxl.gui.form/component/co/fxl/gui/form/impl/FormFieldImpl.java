@@ -89,7 +89,7 @@ public abstract class FormFieldImpl<T> implements IFormField<T> {
 	public IFormField<T> required() {
 		required = true;
 		widget.hasRequiredAttributes = true;
-		label.font().weight().bold().color().black();
+		label.font().weight().bold();
 		label.text(label.text() + " *");
 		return this;
 	}

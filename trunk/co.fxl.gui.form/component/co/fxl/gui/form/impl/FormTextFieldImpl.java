@@ -31,6 +31,7 @@ class FormTextFieldImpl extends FormFieldImpl<ITextField> {
 		// textField.height(26);
 		// textField.border().color().gray();
 		widget.addFillColumn();
+		editable(widget.saveListener != null);
 	}
 
 	@Override

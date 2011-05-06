@@ -30,6 +30,7 @@ class FormCheckBoxImpl extends FormFieldImpl<ICheckBox> {
 		checkBox = widget.addFormValueCheckBox();
 		// checkBox.height(26);
 		widget.addFillColumn();
+		editable(widget.saveListener != null);
 	}
 
 	@Override
