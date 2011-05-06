@@ -22,7 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IBordered.IBorder;
-import co.fxl.gui.api.IButton;
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -53,7 +53,7 @@ class SelectableList {
 					.rgb(216, 216, 216);
 			IHorizontalPanel h = p.add().panel().horizontal().align().begin()
 					.add().panel().horizontal();
-			String image=widget.getItemImage(object);
+			String image = widget.getItemImage(object);
 			if (image != null) {
 				h.add().image().resource(image);
 				h.addSpace(4);
@@ -124,8 +124,8 @@ class SelectableList {
 	private IVerticalPanel panel;
 	private List<ListItem> items = new LinkedList<ListItem>();
 	private ListItem selection;
-	private IButton button;
-	private IButton allButton;
+	private IClickable<?> button;
+	private IClickable<?> allButton;
 	private String title;
 	private boolean isSelected;
 	private IScrollPane scrollPane;
@@ -170,7 +170,7 @@ class SelectableList {
 		return os;
 	}
 
-	void link(IButton button) {
+	void link(IClickable<?> button) {
 		this.button = button;
 		button.clickable(false);
 	}
@@ -207,7 +207,7 @@ class SelectableList {
 		return os;
 	}
 
-	void linkAll(IButton button) {
+	void linkAll(IClickable<?> button) {
 		this.allButton = button;
 	}
 
