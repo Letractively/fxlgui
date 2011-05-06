@@ -19,7 +19,9 @@
 package co.fxl.gui.gwt;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IElement;
@@ -296,13 +298,18 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 		throw new MethodNotImplementedException();
 	}
 
+	private Set<Integer> expandedColumns = new HashSet<Integer>();
+
 	@Override
 	public IGridColumn column(final int column) {
 		return new IGridColumn() {
 
 			@Override
 			public IGridColumn expand() {
-				container.widget.getColumnFormatter().setWidth(column, "100%");
+				expandedColumns.add(column);
+				for (Integer i : expandedColumns)
+					container.widget.getColumnFormatter().setWidth(i,
+							(100 / expandedColumns.size()) + "%");
 				return this;
 			}
 		};
