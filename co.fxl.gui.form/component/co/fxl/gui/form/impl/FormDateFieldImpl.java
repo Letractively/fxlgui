@@ -54,11 +54,13 @@ class FormDateFieldImpl extends FormTextFieldImpl {
 				popUp.visible(true);
 			}
 		});
+		editable(widget.saveListener != null);
 	}
 
 	@Override
 	public IFormField<ITextField> editable(boolean editable) {
-		button.clickable(editable);
+		if (button != null)
+			button.clickable(editable);
 		return super.editable(editable);
 	}
 }

@@ -31,6 +31,7 @@ class FormTextAreaImpl extends FormFieldImpl<ITextArea> {
 		textArea.border().color().rgb(211, 211, 211);
 		textArea.color().rgb(249, 249, 249);
 		widget.addFillColumn();
+		editable(widget.saveListener != null);
 	}
 
 	@Override
