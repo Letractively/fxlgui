@@ -65,6 +65,7 @@ class SelectableList {
 			// b.style().top();
 			// }
 			p.addClickListener(this);
+			p.addClickListener(clickListener).doubleClick();
 			return true;
 		}
 
@@ -129,6 +130,7 @@ class SelectableList {
 	private String title;
 	private boolean isSelected;
 	private IScrollPane scrollPane;
+	private IClickListener clickListener;
 
 	SelectableList(N2MWidgetImpl widget, IGridCell cell, String string,
 			boolean isSelected) {
@@ -170,8 +172,9 @@ class SelectableList {
 		return os;
 	}
 
-	void link(IClickable<?> button) {
+	void link(IClickable<?> button, IClickListener clickListener) {
 		this.button = button;
+		this.clickListener = clickListener;
 		button.clickable(false);
 	}
 

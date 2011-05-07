@@ -51,28 +51,31 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 				.add().panel().vertical().align().center().spacing(10);
 		right = new SelectableList(this, grid.cell(2, 0), "Selected", true);
 		grid.column(2).expand();
+		IClickListener leftClickListener = new IClickListener() {
+			@Override
+			public void onClick() {
+				Object selection = right.removeSelected();
+				right.visible(selection, false);
+				left.visible(selection, true);
+				update();
+			}
+		};
 		leftButton = center.add().image().resource("(_02.png").size(16, 16)
-				.addClickListener(new IClickListener() {
-					@Override
-					public void onClick() {
-						Object selection = right.removeSelected();
-						right.visible(selection, false);
-						left.visible(selection, true);
-						update();
-					}
-				}).mouseLeft();
-		right.link(leftButton);
+				.addClickListener(leftClickListener).mouseLeft();
+		right.link(leftButton, leftClickListener
+				);
+		IClickListener rightClickListener = new IClickListener() {
+			@Override
+			public void onClick() {
+				Object selection = left.removeSelected();
+				left.visible(selection, false);
+				right.visible(selection, true);
+				update();
+			}
+		};
 		buttonRight = center.add().image().resource(")_02.png").size(16, 16)
-				.addClickListener(new IClickListener() {
-					@Override
-					public void onClick() {
-						Object selection = left.removeSelected();
-						left.visible(selection, false);
-						right.visible(selection, true);
-						update();
-					}
-				}).mouseLeft();
-		left.link(buttonRight);
+				.addClickListener(rightClickListener).mouseLeft();
+		left.link(buttonRight,rightClickListener);
 		center.addSpace(20);
 		buttonLeftAll = center.add().image().resource("((_02.png").size(16, 16)
 				.addClickListener(new IClickListener() {
