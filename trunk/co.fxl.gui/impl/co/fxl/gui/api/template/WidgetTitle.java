@@ -39,7 +39,7 @@ public class WidgetTitle implements IClickListener {
 
 	private static final int SMALL_FONT = 12;
 
-	class CommandLink implements IClickable<IClickable<?>> {
+	public class CommandLink implements IClickable<IClickable<?>> {
 
 		// private IHorizontalPanel iPanel;
 		private ILabel label;
@@ -50,6 +50,11 @@ public class WidgetTitle implements IClickListener {
 			// this.iPanel = iPanel;
 			this.image = image;
 			this.label = headerLabel;
+		}
+
+		public CommandLink label(String l) {
+			label.text(l);
+			return this;
 		}
 
 		@Override
@@ -261,11 +266,11 @@ public class WidgetTitle implements IClickListener {
 		return headerLabel;
 	}
 
-	public IClickable<?> addHyperlink(String text) {
+	public CommandLink addHyperlink(String text) {
 		return addHyperlink(null, text);
 	}
 
-	public IClickable<?> addHyperlink(String imageResource, String text) {
+	public CommandLink addHyperlink(String imageResource, String text) {
 		initHeader();
 		if (hasCommands && imageResource == null) {
 			ILabel label = commandPanel().add().label().text("|");
