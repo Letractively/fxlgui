@@ -19,7 +19,7 @@
 package co.fxl.gui.api;
 
 public interface IToggleButton extends ITextElement<IToggleButton>,
-		IUpdateable<Boolean> {
+		IUpdateable<Boolean>, IFocusable<IToggleButton> {
 
 	IToggleButton down(boolean down);
 
