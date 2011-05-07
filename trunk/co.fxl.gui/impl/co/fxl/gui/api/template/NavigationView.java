@@ -76,6 +76,8 @@ public class NavigationView {
 		public co.fxl.gui.api.IClickable.IKey<Object> addClickListener(
 				co.fxl.gui.api.IClickable.IClickListener clickListener) {
 			label.addClickListener(clickListener);
+			if (image != null)
+				image.addClickListener(clickListener);
 			return null;
 		}
 
