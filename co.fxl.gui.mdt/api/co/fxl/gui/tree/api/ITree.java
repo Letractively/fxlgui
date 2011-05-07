@@ -77,5 +77,7 @@ public interface ITree<T> {
 
 	String icon();
 
+	String iconClosed();
+
 	IDecorator decorator();
 }

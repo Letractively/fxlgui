@@ -183,4 +183,9 @@ class TestTree implements ITree<String> {
 	public boolean isCopieableTo(ITree<String> tree) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public String iconClosed() {
+		throw new MethodNotImplementedException();
+	}
 }
