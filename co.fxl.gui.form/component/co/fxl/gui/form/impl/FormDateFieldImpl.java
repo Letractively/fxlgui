@@ -21,7 +21,7 @@ package co.fxl.gui.form.impl;
 import java.util.Date;
 
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
@@ -31,12 +31,12 @@ import co.fxl.gui.input.api.ICalendarWidget;
 
 class FormDateFieldImpl extends FormTextFieldImpl {
 
-	private ILabel button;
+	private IImage button;
 
 	FormDateFieldImpl(final FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
-		button = // addContainer().image().resource("date.png");
-		addButton("Change");
+		button = addContainer().image().resource("calendar.png").size(16, 16);
+		// addButton("Change");
 		button.addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
