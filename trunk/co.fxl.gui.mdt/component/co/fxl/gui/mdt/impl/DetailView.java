@@ -94,6 +94,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 		});
 		addDetailViews();
 		tree.allowCutPaste(widget.allowCutPaste);
+		tree.allowReorder(widget.allowReorder);
 		tree.expand(true);
 		tree.source(this);
 		tree.selection(getSelectionObject());

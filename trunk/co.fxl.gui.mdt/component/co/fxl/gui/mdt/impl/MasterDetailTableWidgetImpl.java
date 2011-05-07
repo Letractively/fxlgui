@@ -104,6 +104,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	boolean refreshOnSwitch2Grid = false;
 	boolean switch2grid = false;
 	IDeletableList<Object> queryList;
+	boolean allowReorder;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -587,6 +588,12 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	public IMasterDetailTableWidget<Object> refreshOnSwitch2Grid(
 			boolean refreshOnSwitch2Grid) {
 		this.refreshOnSwitch2Grid = refreshOnSwitch2Grid;
+		return this;
+	}
+
+	@Override
+	public IMasterDetailTableWidget<Object> allowReorder(boolean allowReorder) {
+		this.allowReorder = allowReorder;
 		return this;
 	}
 }

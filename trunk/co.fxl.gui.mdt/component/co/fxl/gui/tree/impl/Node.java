@@ -57,6 +57,8 @@ class Node<T> extends LazyClickListener {
 	boolean expandLoadedNode = false;
 	private IImage icon;
 	protected boolean isExpanded;
+	private IHorizontalPanel buttonPanel;
+	boolean moveActive = false;
 
 	Node(final TreeWidgetImpl<T> widget, IVerticalPanel panel,
 			final ITree<T> root, int depth, boolean expand, List<ITree<T>> path) {
@@ -98,6 +100,7 @@ class Node<T> extends LazyClickListener {
 		boolean isNull = name == null || name.trim().equals("");
 		label = content.add().label().text(isNull ? "unnamed" : name);
 		label.font().pixel(12);
+		buttonPanel = content.addSpace(4).add().panel().horizontal();
 		if (isNull)
 			label.font().weight().italic().color().gray();
 		injectTreeListener(label);
@@ -146,6 +149,20 @@ class Node<T> extends LazyClickListener {
 			container.border().color().white();
 		if (tree != null && tree.decorator() != null)
 			tree.decorator().decorate(label);
+		buttonPanel.clear();
+		if (moveActive && tree.isMovable()) {
+			buttonPanel.add().image().resource("top.png");
+			// TODO ...
+			buttonPanel.addSpace(4);
+			buttonPanel.add().image().resource("up.png");
+			// TODO ...
+			buttonPanel.addSpace(4);
+			buttonPanel.add().image().resource("down.png");
+			// TODO ...
+			buttonPanel.addSpace(4);
+			buttonPanel.add().image().resource("bottom.png");
+			// TODO ...
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -290,6 +307,7 @@ class Node<T> extends LazyClickListener {
 		else {
 			container.color().rgb(230, 230, 255);
 		}
+		buttonPanel.visible(selected);
 	}
 
 	@Override

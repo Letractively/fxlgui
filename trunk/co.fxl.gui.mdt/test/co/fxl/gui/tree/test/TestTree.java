@@ -188,4 +188,9 @@ class TestTree implements ITree<String> {
 	public String iconClosed() {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public boolean isMovable() {
+		throw new MethodNotImplementedException();
+	}
 }

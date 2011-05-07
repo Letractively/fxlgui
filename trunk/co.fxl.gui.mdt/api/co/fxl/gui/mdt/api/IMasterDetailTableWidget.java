@@ -109,5 +109,8 @@ public interface IMasterDetailTableWidget<T> {
 
 	IMasterDetailTableWidget<T> setState(IStateMemento state);
 
-	IMasterDetailTableWidget<T> refreshOnSwitch2Grid(boolean refreshOnSwitch2Grid);
+	IMasterDetailTableWidget<T> refreshOnSwitch2Grid(
+			boolean refreshOnSwitch2Grid);
+
+	IMasterDetailTableWidget<T> allowReorder(boolean allowReorder);
 }

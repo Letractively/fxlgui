@@ -68,6 +68,8 @@ public interface ITree<T> {
 
 	boolean isReassignableTo(ITree<T> tree);
 
+	boolean isMovable();
+
 	boolean isCopieableTo(ITree<T> tree);
 
 	void reassign(ITree<T> newParent, boolean isCopy,

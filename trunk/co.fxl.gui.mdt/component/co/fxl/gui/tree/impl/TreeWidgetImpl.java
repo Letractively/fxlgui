@@ -40,6 +40,7 @@ import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.KeyAdapter;
 import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.api.template.WidgetTitle;
+import co.fxl.gui.api.template.WidgetTitle.CommandLink;
 import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
 import co.fxl.gui.navigation.api.IMenuWidget;
@@ -171,6 +172,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	protected boolean isCopy;
 	private IScrollPane leftScrollPane;
 	private IVerticalPanel bottom;
+	private CommandLink reorder;
 
 	TreeWidgetImpl(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel(), true).space(0)
@@ -289,6 +291,18 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 								});
 					}
 				});
+			}
+			if (allowReorder) {
+				IClickListener reorderCL = new LazyClickListener() {
+
+					@Override
+					protected void onAllowedClick() {
+						getObject2node(selection).moveActive = !getObject2node(selection).moveActive;
+						notifyUpdate(selection);
+					}
+				};
+				reorder = widgetTitle.addHyperlink("move.png", "Move");
+				reorder.addClickListener(reorderCL);
 			}
 			deleteListener = new LazyClickListener() {
 				@Override
@@ -471,6 +485,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	private int painted = 0;
+	boolean allowReorder = false;
 	private static int MAX_PAINTS = 250;
 
 	void newNode(TreeWidgetImpl<T> widget, IVerticalPanel panel, ITree<T> root,
@@ -642,13 +657,26 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				sNode.selected(true);
 				update = true;
 			}
-			if (showCommands)
+			if (showCommands) {
 				delete.clickable(!root.object().equals(selection)
 						&& (sNode != null && sNode.tree.isDeletable() && !sNode.tree
 								.isNew()));
+				if (reorder != null) {
+					boolean clickable = !root.object().equals(selection)
+							&& (sNode != null && sNode.tree.isMovable() && !sNode.tree
+									.isNew());
+					reorder.clickable(clickable);
+					if (clickable) {
+						reorder.label(sNode.moveActive ? "Lock" : "Move");
+					}
+				}
+			}
 		} else {
-			if (showCommands)
+			if (showCommands) {
 				delete.clickable(false);
+				if (reorder != null)
+					reorder.clickable(false);
+			}
 		}
 		this.selection = selection;
 		if (showCommands)
@@ -875,5 +903,11 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	@Override
 	public int heightRegisterPanel() {
 		return registers.heightMenu();
+	}
+
+	@Override
+	public ITreeWidget<T> allowReorder(boolean allowReorder) {
+		this.allowReorder = allowReorder;
+		return this;
 	}
 }

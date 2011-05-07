@@ -92,9 +92,11 @@ public interface ITreeWidget<T> {
 
 	ITreeWidget<T> allowCutPaste(boolean allowCutPaste);
 
+	ITreeWidget<T> allowReorder(boolean allowReorder);
+
 	ITreeWidget<T> showCommands(boolean showCommands);
 
 	ITreeWidget<T> refreshSelection(boolean refreshChildren);
-	
+
 	int heightRegisterPanel();
 }
