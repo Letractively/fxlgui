@@ -19,7 +19,7 @@
 package co.fxl.gui.api;
 
 public interface IComboBox extends ITextElement<IComboBox>,
-		IUpdateable<String>, IColored, IBordered {
+		IUpdateable<String>, IColored, IBordered, IFocusable<IComboBox> {
 
 	IComboBox clear();
 

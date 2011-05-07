@@ -20,7 +20,8 @@ package co.fxl.gui.api;
 
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
-public interface IRadioButton extends ITextElement<IRadioButton> {
+public interface IRadioButton extends ITextElement<IRadioButton>,
+		IFocusable<IRadioButton> {
 
 	public interface IGroup {
 
