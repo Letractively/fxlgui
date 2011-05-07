@@ -29,7 +29,7 @@ class FormPasswordFieldImpl extends FormFieldImpl<IPasswordField> {
 		super(widget, index, name);
 		passwordField = widget.addFormValuePasswordField();
 //		passwordField.height(26);
-		passwordField.border().color().gray();
+//		passwordField.border().color().gray();
 		widget.addFillColumn();
 		editable(widget.saveListener != null);
 	}
