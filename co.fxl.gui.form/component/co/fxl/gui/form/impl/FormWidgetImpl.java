@@ -454,12 +454,12 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	void looseFocus(Object ff) {
+		int index = focusables.indexOf(focus);
+		focusables.remove(focus);
 		if (ff != focus)
 			return;
 		focus.focus(false);
-		focusables.remove(focus);
 		focus = null;
-		int index = focusables.indexOf(focus);
 		if (index < focusables.size() - 1) {
 			focus = focusables.get(index + 1);
 		} else if (focusables.size() > 0) {
