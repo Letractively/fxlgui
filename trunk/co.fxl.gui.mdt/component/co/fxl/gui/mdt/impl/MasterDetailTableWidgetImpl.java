@@ -128,7 +128,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	void addViewWidget(IVerticalPanel sidePanel) {
 		WidgetTitle views = new WidgetTitle(sidePanel.add().panel(), true)
-				.space(6);
+				.space(2);
 		if (!allowGridView)
 			views.visible(false);
 		views.grayBackground();
@@ -142,13 +142,14 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 				refresh(null);
 			}
 		});
-		IVerticalPanel content = views.content().panel().vertical().addSpace(2);
+		IVerticalPanel content = views.content().panel().vertical().addSpace(6);
 		IHorizontalPanel h1 = content.add().panel().horizontal().align()
 				.begin().add().panel().horizontal().align().begin().addSpace(4);
 		r1 = h1.add().radioButton().text("Grid");
 		IHorizontalPanel h2 = content.add().panel().horizontal().align()
 				.begin().add().panel().horizontal().align().begin().addSpace(4);
 		r2 = h2.add().radioButton().text("Master-Detail");
+		content.addSpace(4);
 		r1.checked(true);
 		r1.font().weight().bold();
 		r1.addUpdateListener(new LazyUpdateListener<Boolean>() {
