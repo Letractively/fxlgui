@@ -54,7 +54,29 @@ class FilterConstraintsImpl implements IFilterConstraints {
 		public Integer upperBound() {
 			return upperBound;
 		}
+	}
 
+	private class LongRangeConstraintImpl implements IRange<Long> {
+
+		private Long upperBound = null;
+		private Long lowerBound = null;
+
+		LongRangeConstraintImpl(IDoubleRangeConstraint iNamedConstraint) {
+			if (iNamedConstraint.upperBound() != null)
+				upperBound = iNamedConstraint.upperBound().longValue();
+			if (iNamedConstraint.lowerBound() != null)
+				lowerBound = iNamedConstraint.lowerBound().longValue();
+		}
+
+		@Override
+		public Long lowerBound() {
+			return lowerBound;
+		}
+
+		@Override
+		public Long upperBound() {
+			return upperBound;
+		}
 	}
 
 	public class RowIterator implements IRowIterator {
@@ -249,6 +271,17 @@ class FilterConstraintsImpl implements IFilterConstraints {
 		return !constraints.isEmpty()
 				|| size != (Integer) FilterWidgetImpl.DEFAULT_SIZES.get(0)
 				|| sortOrder != null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public IRange<Long> longRange(String column) {
+		INamedConstraint iNamedConstraint = constraints.get(column);
+		if (iNamedConstraint instanceof IDoubleRangeConstraint) {
+			return new LongRangeConstraintImpl(
+					(IDoubleRangeConstraint) iNamedConstraint);
+		}
+		return (IRange<Long>) iNamedConstraint;
 	}
 
 }

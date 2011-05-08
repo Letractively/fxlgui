@@ -51,4 +51,9 @@ abstract class FilterTemplate<T> implements FilterPart<T> {
 		} else
 			return false;
 	}
+
+	@Override
+	public String name() {
+		return name;
+	}
 }

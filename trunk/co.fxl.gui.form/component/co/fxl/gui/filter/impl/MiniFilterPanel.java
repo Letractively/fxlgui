@@ -117,6 +117,12 @@ class MiniFilterPanel implements FilterPanel {
 
 		@Override
 		public void resize(int size) {
+		}
+
+		@Override
+		public void show(FilterPart<?> firstConstraint) {
+			if (firstConstraint != null)
+				comboBox.text(firstConstraint.name());
 		};
 	}
 

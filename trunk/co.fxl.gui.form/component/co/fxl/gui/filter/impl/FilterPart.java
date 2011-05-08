@@ -32,4 +32,6 @@ interface FilterPart<T> {
 	void addUpdateListener(FilterListener l);
 
 	void validate(Validation validation);
+
+	String name();
 }
