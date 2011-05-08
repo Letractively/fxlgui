@@ -41,10 +41,10 @@ import co.fxl.gui.mdt.api.IProperty.IAdapter;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
-import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableClickListener;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
+import co.fxl.gui.table.scroll.api.IScrollTableWidget.IScrollTableClickListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.ISortListener;
 
 class TableView extends ViewTemplate implements IResizeListener, ISortListener,
@@ -318,16 +318,12 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 						onHeightChange(widget.mainPanel.display().height());
 						updateCreatable();
 						time = System.currentTimeMillis() - s;
-						ITableClickListener showClickListener = new ITableClickListener() {
+						IScrollTableClickListener showClickListener = new IScrollTableClickListener() {
 
 							@Override
-							public void onClick(int column, int row) {
-								if (row == 0)
-									return;
-								row--;
-								Object show = rows.identifier(row);
+							public void onClick(Object identifier, int rowIndex) {
 								widget.r2.checked(true);
-								widget.showDetailView(show);
+								widget.showDetailView(identifier);
 							}
 						};
 						table.addTableClickListener(showClickListener)
@@ -388,7 +384,8 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 
 	protected void onHeightChange(int height) {
 		int offsetY = Math.max(table.offsetY(), 140);
-		int tableHeight = height - offsetY - 64 + (widget.rowsInTable == 0 ? 40 : 0);
+		int tableHeight = height - offsetY - 64
+				+ (widget.rowsInTable == 0 ? 40 : 0);
 		tableHeight = Math.max(tableHeight, 60);
 		table.height(tableHeight);
 	}
