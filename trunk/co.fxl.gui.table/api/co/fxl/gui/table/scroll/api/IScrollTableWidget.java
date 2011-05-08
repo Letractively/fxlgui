@@ -28,9 +28,13 @@ import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.table.api.ISelection;
-import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableClickListener;
 
 public interface IScrollTableWidget<T> {
+
+	public interface IScrollTableClickListener {
+
+		void onClick(Object identifier, int rowIndex);
+	}
 
 	public interface IInsert {
 
@@ -100,7 +104,7 @@ public interface IScrollTableWidget<T> {
 
 	IScrollTableWidget<T> rows(IRows<T> rows);
 
-	IKey<?> addTableClickListener(ITableClickListener l);
+	IKey<?> addTableClickListener(IScrollTableClickListener l);
 
 	IScrollTableWidget<T> sortListener(ISortListener l);
 

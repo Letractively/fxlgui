@@ -27,12 +27,12 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
-import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableClickListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IButtonPanelDecorator;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.ICommandButtons;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IDecorator;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IMoveRowListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IRowListener;
+import co.fxl.gui.table.scroll.api.IScrollTableWidget.IScrollTableClickListener;
 
 public class CommandButtonsImpl implements ICommandButtons,
 		IButtonPanelDecorator, ISelectionListener<Object> {
@@ -151,10 +151,10 @@ public class CommandButtonsImpl implements ICommandButtons,
 			label.clickable(clickable);
 			if (clickable) {
 				label.font().color().black();
-//				label.font().underline(true);
+				// label.font().underline(true);
 			} else {
 				label.font().color().gray();
-//				label.font().underline(false);
+				// label.font().underline(false);
 			}
 			return this;
 		}
@@ -181,7 +181,7 @@ public class CommandButtonsImpl implements ICommandButtons,
 		String imageR = string.toLowerCase();
 		if (imageR.equals("remove"))
 			imageR = "cancel";
-		if (imageR.equals("edit")||imageR.equals("show"))
+		if (imageR.equals("edit") || imageR.equals("show"))
 			imageR = "detail";
 		IImage image = p.add().image().resource(imageR + ".png");
 		p.addSpace(4);
@@ -280,10 +280,11 @@ public class CommandButtonsImpl implements ICommandButtons,
 	public ICommandButtons listenOnShow(final IRowListener<Boolean> l) {
 		listenOnShow = true;
 		listenOnShowListener = l;
-		widget.addTableClickListener(new ITableClickListener() {
+		widget.addTableClickListener(new IScrollTableClickListener() {
+
 			@Override
-			public void onClick(int column, int row) {
-				l.onClick(widget.rows.identifier(row - 1), row,
+			public void onClick(Object identifier, int rowIndex) {
+				l.onClick(identifier, rowIndex,
 						new CallbackTemplate<Boolean>() {
 
 							@Override
@@ -328,15 +329,13 @@ public class CommandButtonsImpl implements ICommandButtons,
 			final Update clickListener = new Update(listenOnEditListener);
 			edit.addClickListener(clickListener);
 			edit.clickable(!widget.preselectedList.isEmpty());
-			widget.addTableClickListener(new ITableClickListener() {
+			widget.addTableClickListener(new IScrollTableClickListener() {
+
 				@Override
-				public void onClick(int column, int row) {
-					if (row == 0)
-						return;
-					row--;
-					widget.rows.selected(row);
-					selection = widget.rows.identifier(row);
-					selectionIndex = row;
+				public void onClick(Object identifier, int rowIndex) {
+					widget.rows.selected(rowIndex);
+					selection = identifier;
+					selectionIndex = rowIndex;
 					clickListener.onClick();
 				}
 			}).doubleClick();

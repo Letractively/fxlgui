@@ -650,13 +650,14 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	@Override
-	public IKey<?> addTableClickListener(final ITableClickListener l) {
+	public IKey<?> addTableClickListener(final IScrollTableClickListener l) {
 		ITableClickListener l2 = new ITableClickListener() {
 
 			@Override
 			public void onClick(int column, int row) {
 				int convert2TableRow = convert2TableRow(row);
-				l.onClick(realColumn(column), convert2TableRow);
+				l.onClick(rows.identifier(convert2TableRow - 1),
+						convert2TableRow - 1);
 			}
 		};
 		KeyAdapter<Object> keyAdapter = new KeyAdapter<Object>();
