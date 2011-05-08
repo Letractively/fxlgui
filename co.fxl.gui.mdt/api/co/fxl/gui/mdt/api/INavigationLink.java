@@ -44,7 +44,7 @@ public interface INavigationLink<T> {
 
 	INavigationLink<T> typeConstraint(Class<?> typeConstraint);
 
-	INavigationLink<T> exclusionConstraint(Class<?> typeConstraint);
+	INavigationLink<T> exclusionConstraint(Class<?>[] typeConstraint);
 
 	INavigationLink<T> imageResource(String imageResource);
 

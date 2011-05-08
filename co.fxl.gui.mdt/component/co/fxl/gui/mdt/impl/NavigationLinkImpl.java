@@ -18,7 +18,7 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 	String imageResource;
 	private Link label;
 	private boolean requiresRows = false;
-	private Class<?> exclusionConstraint = null;
+	private Class<?>[] exclusionConstraint = null;
 
 	NavigationLinkImpl(String name) {
 		this.name = name;
@@ -36,8 +36,10 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 						.equals(widget.selection.get(0).getClass())));
 		if (requiresSelection && !widget.selection.isEmpty()
 				&& exclusionConstraint != null) {
-			Class<? extends Object> c = widget.selection.get(0).getClass();
-			clickable &= !exclusionConstraint.equals(c);
+			for (Class<?> exclusionConstraintInstance : exclusionConstraint) {
+				Class<? extends Object> c = widget.selection.get(0).getClass();
+				clickable &= !exclusionConstraintInstance.equals(c);
+			}
 		}
 		if (widget.activeView instanceof DetailView && !asDetail)
 			clickable = false;
@@ -118,7 +120,7 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 	}
 
 	@Override
-	public INavigationLink<Object> exclusionConstraint(Class<?> typeConstraint) {
+	public INavigationLink<Object> exclusionConstraint(Class<?>[] typeConstraint) {
 		exclusionConstraint = typeConstraint;
 		return this;
 	}
