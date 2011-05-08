@@ -87,4 +87,9 @@ class SwingHorizontalPanel extends SwingPanel<IHorizontalPanel> implements
 	public Component stretch() {
 		return stretch;
 	}
+
+	@Override
+	public co.fxl.gui.api.ILinearPanel.ISpacing spacing() {
+		throw new MethodNotImplementedException();
+	}
 }
