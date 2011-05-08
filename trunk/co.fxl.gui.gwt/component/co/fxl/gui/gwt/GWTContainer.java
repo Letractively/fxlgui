@@ -25,6 +25,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IHorizontalLine;
+import co.fxl.gui.api.IHyperlink;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
@@ -176,6 +177,13 @@ public class GWTContainer<T extends Widget> implements IContainer {
 		setComponent((T) new HorizontalSplitPanel());
 		return (ISplitPane) (element = new GWTSplitPane(
 				(GWTContainer<Widget>) this));
+	}
+
+	@Override
+	public IHyperlink hyperlink() {
+		setComponent((T) new HTML());
+		return (IHyperlink) (element = new GWTHyperlink(
+				(GWTContainer<HTML>) this));
 	}
 
 	@Override
