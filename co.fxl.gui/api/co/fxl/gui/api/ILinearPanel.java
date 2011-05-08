@@ -20,7 +20,22 @@ package co.fxl.gui.api;
 
 public interface ILinearPanel<T extends ILinearPanel<T>> extends IPanel<T> {
 
+	public interface ISpacing {
+
+		ISpacing left(int pixel);
+
+		ISpacing right(int pixel);
+
+		ISpacing top(int pixel);
+
+		ISpacing bottom(int pixel);
+
+		ISpacing inner(int pixel);
+	}
+
 	T spacing(int pixel);
+
+	ISpacing spacing();
 
 	T addSpace(int pixel);
 
