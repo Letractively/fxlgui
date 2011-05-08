@@ -49,6 +49,8 @@ interface FilterPanel {
 		void register(ITextField tf);
 
 		void resize(int size);
+
+		void show(FilterPart<?> firstConstraint);
 	}
 
 	void addTitle(String string);

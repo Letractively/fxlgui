@@ -106,6 +106,10 @@ class FilterPanelImpl implements FilterPanel {
 		public void resize(int size) {
 			grid.resize(2, size);
 		}
+
+		@Override
+		public void show(FilterPart<?> firstConstraint) {
+		}
 	}
 
 	private WidgetTitle title;

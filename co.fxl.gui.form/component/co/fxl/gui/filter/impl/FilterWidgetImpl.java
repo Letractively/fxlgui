@@ -285,6 +285,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 			sizeFilter.validate(validation);
 		}
 		boolean constrained = false;
+		FilterPart<?> firstConstraint = null;
 		if (constraints != null) {
 			for (FilterPart<?> f : guiFilterElements) {
 				FilterTemplate<?> ft = (FilterTemplate<?>) f;
@@ -292,10 +293,16 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 				constrained = constrained | c;
 				if (f instanceof RelationFilter)
 					constrained = true;
+				if (constrained && firstConstraint == null) {
+					firstConstraint = f;
+				}
 			}
 			if (constraints.size() != (Integer) DEFAULT_SIZES.get(0)) {
 				sizeFilter.set(constraints.size());
 				constrained = true;
+				if (constrained && firstConstraint == null) {
+					firstConstraint = sizeFilter;
+				}
 			}
 		}
 		for (FilterPart<?> f : guiFilterElements) {
@@ -306,6 +313,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 		apply.clickable(constrained);
 		clear.clickable(constrained);
 		mainPanel.visible();
+		grid.show(firstConstraint);
 		return this;
 	}
 

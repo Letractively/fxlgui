@@ -67,13 +67,15 @@ public interface IFilterConstraints {
 
 	IRange<Date> dateRange(String column);
 
+	IRange<Double> doubleRange(String string);
+
+	IRange<Long> longRange(String uiLabel);
+
 	String stringValue(String column);
 
 	List<?> relationList(String column);
 
 	Class<?> typeOf(String column);
-
-	IRange<Double> doubleRange(String string);
 
 	Boolean booleanValue(String uiLabel);
 
