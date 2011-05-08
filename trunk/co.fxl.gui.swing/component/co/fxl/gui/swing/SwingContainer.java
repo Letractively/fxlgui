@@ -40,6 +40,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IHorizontalLine;
+import co.fxl.gui.api.IHyperlink;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
@@ -217,5 +218,10 @@ public class SwingContainer<T extends JComponent> implements IContainer {
 	@Override
 	public IDisplay display() {
 		return lookupSwingDisplay();
+	}
+
+	@Override
+	public IHyperlink hyperlink() {
+		return new SwingHyperlink(this);
 	}
 }
