@@ -64,9 +64,10 @@ public class SplitLayout implements IResizeListener// , IClickListener
 		// IVerticalPanel vertical = cell.panel().vertical();
 		// horizontal.addClickListener(clickListener);
 		// button.addClickListener(this);
-		sideScrollPanel = cell.scrollPane();
+		sideScrollPanel = cell.panel().vertical().addSpace(10).add()
+				.scrollPane();
 		sidePanel = sideScrollPanel.viewPort().panel().vertical();
-		sidePanel.spacing().right(10).top(10).bottom(10).inner(10);
+		sidePanel.spacing().right(10).inner(10);
 		// sidePanel.width(WIDTH_SIDE_PANEL - SCROLLBAR_WIDTH);
 		SidePanelResizeListener.setup(panel.display(), this);
 		onResize(panel.display().width(), panel.display().height());
