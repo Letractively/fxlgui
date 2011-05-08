@@ -69,4 +69,9 @@ class GWTHorizontalPanel extends GWTPanel<HorizontalPanel, IHorizontalPanel>
 		return new GWTHorizontalAlignment<IHorizontalPanel>(this,
 				container.widget);
 	}
+
+	@Override
+	public co.fxl.gui.api.ILinearPanel.ISpacing spacing() {
+		throw new MethodNotImplementedException();
+	}
 }

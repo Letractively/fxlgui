@@ -21,6 +21,7 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IVerticalPanel;
 
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -29,6 +30,7 @@ class GWTVerticalPanel extends GWTPanel<VerticalPanel, IVerticalPanel>
 		implements IVerticalPanel {
 
 	private boolean stretch = true;
+	private int innerSpace = 0;
 
 	@SuppressWarnings("unchecked")
 	GWTVerticalPanel(GWTContainer<?> container) {
@@ -50,6 +52,8 @@ class GWTVerticalPanel extends GWTPanel<VerticalPanel, IVerticalPanel>
 	public void add(Widget widget) {
 		if (stretch)
 			widget.setWidth("100%");
+		if (innerSpace > 0 && container.widget.getWidgetCount() > 0)
+			addSpace(innerSpace);
 		container.widget.add(widget);
 	}
 
@@ -96,6 +100,46 @@ class GWTVerticalPanel extends GWTPanel<VerticalPanel, IVerticalPanel>
 				container.widget
 						.setHorizontalAlignment(VerticalPanel.ALIGN_LEFT);
 				return GWTVerticalPanel.this;
+			}
+		};
+	}
+
+	@Override
+	public co.fxl.gui.api.ILinearPanel.ISpacing spacing() {
+		return new ISpacing() {
+
+			@Override
+			public co.fxl.gui.api.ILinearPanel.ISpacing left(int pixel) {
+				container.widget.getElement().getStyle()
+						.setPaddingLeft(pixel, Unit.PX);
+				return this;
+			}
+
+			@Override
+			public co.fxl.gui.api.ILinearPanel.ISpacing right(int pixel) {
+				container.widget.getElement().getStyle()
+						.setPaddingRight(pixel, Unit.PX);
+				return this;
+			}
+
+			@Override
+			public co.fxl.gui.api.ILinearPanel.ISpacing top(int pixel) {
+				container.widget.getElement().getStyle()
+						.setPaddingTop(pixel, Unit.PX);
+				return this;
+			}
+
+			@Override
+			public co.fxl.gui.api.ILinearPanel.ISpacing bottom(int pixel) {
+				container.widget.getElement().getStyle()
+						.setPaddingBottom(pixel, Unit.PX);
+				return this;
+			}
+
+			@Override
+			public co.fxl.gui.api.ILinearPanel.ISpacing inner(int pixel) {
+				innerSpace = pixel;
+				return this;
 			}
 		};
 	}
