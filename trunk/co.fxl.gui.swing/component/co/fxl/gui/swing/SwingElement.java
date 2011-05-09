@@ -38,7 +38,6 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
-import co.fxl.gui.api.IKeyRecipient.ICarriageReturnListener;
 
 class SwingElement<T extends JComponent, R> implements IElement<R> {
 
@@ -190,12 +189,11 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public R addCarriageReturnListener(
-			final ICarriageReturnListener changeListener) {
+	public R addCarriageReturnListener(final IClickListener changeListener) {
 		addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				changeListener.onCarriageReturn();
+				changeListener.onClick();
 			}
 		});
 		return (R) this;
