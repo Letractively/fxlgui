@@ -47,6 +47,7 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 	private IImage downButton;
 	private IImage topButton;
 	private IImage bottomButton;
+	boolean allowReorder = false;
 
 	N2MWidgetImpl(IContainer container) {
 		grid = container.panel().grid();
@@ -259,6 +260,7 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 
 	@Override
 	public IN2MWidget<Object> allowReorder(boolean allowReorder) {
+		this.allowReorder = allowReorder;
 		if (allowReorder)
 			addReorderButtons();
 		return this;
