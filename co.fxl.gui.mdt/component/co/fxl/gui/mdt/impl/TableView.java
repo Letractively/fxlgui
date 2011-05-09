@@ -38,7 +38,6 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.mdt.api.IDeletableList;
 import co.fxl.gui.mdt.api.IProperty.IAdapter;
-import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
 import co.fxl.gui.table.scroll.api.IRows;
@@ -50,8 +49,8 @@ import co.fxl.gui.table.scroll.api.IScrollTableWidget.ISortListener;
 class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 		ISelectionListener<Object> {
 
-	private IScrollTableWidget<Object> table;
-	private Map<PropertyImpl, IColumn<Object>> property2column = new HashMap<PropertyImpl, IColumn<Object>>();
+	IScrollTableWidget<Object> table;
+	Map<PropertyImpl, IScrollTableColumn<Object>> property2column = new HashMap<PropertyImpl, IScrollTableColumn<Object>>();
 	private List<IAdapter<Object, Object>> adapters = new LinkedList<IAdapter<Object, Object>>();
 	private IClickable<?> delete;
 	// private IClickable<?> detail;
@@ -190,6 +189,9 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 						column.tagSortOrder(widget.constraints.sortDirection());
 				}
 				property2column.put(p, column);
+				if (widget.hiddenColumns.contains(p.name)) {
+					column.visible(false);
+				}
 				// if (index == 0) {
 				// column.addClickListener(new IScrollTableListener<Object>() {
 				//
@@ -203,6 +205,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 				index++;
 			}
 		}
+		widget.hiddenColumns.clear();
 	}
 
 	private String getConfig() {

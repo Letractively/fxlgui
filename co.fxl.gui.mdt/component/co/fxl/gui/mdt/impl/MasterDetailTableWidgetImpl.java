@@ -105,6 +105,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	boolean switch2grid = false;
 	IDeletableList<Object> queryList;
 	boolean allowReorder;
+	String selectedRegister;
+	List<String> hiddenColumns = new LinkedList<String>();
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -575,6 +577,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		constraints = s.constraints;
 		configuration = s.configuration;
 		selection = s.selection;
+		selectedRegister = s.registerSelection;
+		hiddenColumns = s.hiddenColumns;
 		return this;
 	}
 

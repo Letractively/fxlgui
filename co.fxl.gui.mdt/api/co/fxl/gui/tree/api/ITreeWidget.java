@@ -58,6 +58,10 @@ public interface ITreeWidget<T> {
 
 	IView addDetailView(String title, IDecorator<T> decorator);
 
+	String activeDetailView();
+
+	ITreeWidget<T> activeDetailView(String detailView);
+
 	ITreeWidget<T> root(ITree<T> tree);
 
 	ITreeWidget<T> expand(boolean expand);
