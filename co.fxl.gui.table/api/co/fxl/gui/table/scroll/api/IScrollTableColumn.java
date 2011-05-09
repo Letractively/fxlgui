@@ -37,4 +37,8 @@ public interface IScrollTableColumn<T> extends IColumn<T> {
 	IScrollTableColumn<T> addClickListener(IScrollTableListener<T> l);
 
 	IScrollTableColumn<T> visible(boolean visible);
+
+	boolean visible();
+
+	String name();
 }

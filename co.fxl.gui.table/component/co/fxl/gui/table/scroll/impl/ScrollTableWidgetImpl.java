@@ -164,12 +164,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			else
 				resetStatusPanel();
 			topPanel = null;
+			buttonColumn = 1;
 			selectionIsSetup = false;
 			container().clear();
 			topPanel();
-			if (buttonDecorator != null) {
-				buttonPanel(buttonDecorator);
-			}
 			// if (filter != null || buttonDecorator != null)
 			// container.addSpace(10);
 			if (rows.size() == 0) {
@@ -178,11 +176,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				if (topPanel == null)
 					topPanel = dock.add().panel().grid();
 				if (showNoRowsFound) {
-					topPanel.cell(0, 0).align().begin().panel().horizontal()
-							.addSpace(8).align().begin().add().panel()
-							.horizontal().align().begin().add().label()
+					topPanel.cell(0, 0).width(10).label().text("&#160;");
+					topPanel.cell(1, 0).valign().begin().align().begin().label()
 							.text("NO ENTITIES FOUND").font().pixel(10).color()
 							.gray();
+					buttonColumn++;
 				}
 				dock.add().label().text("&#160;");
 				dock.height(heightMinusTopPanel());
@@ -215,6 +213,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					}
 				}
 			}
+			if (buttonDecorator != null) {
+				buttonPanel(buttonDecorator);
+			}
 			preselectedList.clear();
 		} else {
 			this.visible = false;
@@ -231,8 +232,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					// if (topPanel == null)
 					// topPanel = container.add().panel().grid();
 					// container.addSpace(10);
-					filter = (IMiniFilterWidget) topPanel.cell(0, 0)
-							.panel().horizontal().addSpace(8).add()
+					filter = (IMiniFilterWidget) topPanel.cell(0, 0).panel()
+							.horizontal().addSpace(8).add()
 							.widget(IMiniFilterWidget.class);
 				}
 				filter.addFilter().name(c.name).type(c.type);
@@ -353,6 +354,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private boolean showDisplayedRange = true;
 	private boolean externalStatusPanel;
 	private IVerticalPanel bottom;
+	private int buttonColumn = 1;
 
 	void update() {
 		if (updating)
@@ -754,7 +756,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> buttonPanel(IButtonPanelDecorator dec) {
 		if (topPanel != null) {
-			dec.decorate(topPanel.cell(1, 0).align().end());
+			dec.decorate(topPanel.cell(buttonColumn, 0).align().end());
 		} else
 			buttonDecorator = dec;
 		return this;
