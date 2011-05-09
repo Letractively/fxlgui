@@ -167,30 +167,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			selectionIsSetup = false;
 			container().clear();
 			topPanel();
-			filter = null;
-			for (ScrollTableColumnImpl c : columns) {
-				if (c.filterable) {
-					if (filter == null) {
-						// if (topPanel == null)
-						// topPanel = container.add().panel().grid();
-						// container.addSpace(10);
-						filter = (IMiniFilterWidget) topPanel.cell(0, 0)
-								.panel().horizontal().addSpace(8).add()
-								.widget(IMiniFilterWidget.class);
-					}
-					filter.addFilter().name(c.name).type(c.type);
-					// TODO value constraint: choice of x elements
-				}
-			}
-			if (filter != null) {
-				if (filterListener != null)
-					filter.addFilterListener(filterListener);
-				filter.addSizeFilter();
-				if (constraints != null)
-					filter.constraints(constraints);
-				filter.visible(true);
-				showNoRowsFound = false;
-			}
 			if (buttonDecorator != null) {
 				buttonPanel(buttonDecorator);
 			}
@@ -211,6 +187,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				dock.add().label().text("&#160;");
 				dock.height(heightMinusTopPanel());
 			} else {
+				addFilter();
 				IDockPanel dock = container.add().panel().dock();
 				dock.height(heightMinusTopPanel());
 				contentPanel = dock.center().panel().card();
@@ -244,6 +221,33 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			throw new MethodNotImplementedException();
 		}
 		return this;
+	}
+
+	protected void addFilter() {
+		filter = null;
+		for (ScrollTableColumnImpl c : columns) {
+			if (c.filterable) {
+				if (filter == null) {
+					// if (topPanel == null)
+					// topPanel = container.add().panel().grid();
+					// container.addSpace(10);
+					filter = (IMiniFilterWidget) topPanel.cell(0, 0)
+							.panel().horizontal().addSpace(8).add()
+							.widget(IMiniFilterWidget.class);
+				}
+				filter.addFilter().name(c.name).type(c.type);
+				// TODO value constraint: choice of x elements
+			}
+		}
+		if (filter != null) {
+			if (filterListener != null)
+				filter.addFilterListener(filterListener);
+			filter.addSizeFilter();
+			if (constraints != null)
+				filter.constraints(constraints);
+			filter.visible(true);
+			showNoRowsFound = false;
+		}
 	}
 
 	protected int heightMinusTopPanel() {
