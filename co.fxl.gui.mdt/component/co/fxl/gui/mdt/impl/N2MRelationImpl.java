@@ -28,6 +28,7 @@ class N2MRelationImpl implements IN2MRelation<Object, Object> {
 	Class<?> constrainType;
 	String itemImage;
 	IItemImageProvider<Object> itemImageProvider;
+	boolean allowReorder;
 
 	N2MRelationImpl(String name) {
 		this.name = name;
@@ -61,6 +62,12 @@ class N2MRelationImpl implements IN2MRelation<Object, Object> {
 	public IN2MRelation<Object, Object> itemImageProvider(
 			IItemImageProvider<Object> itemImageProvider) {
 		this.itemImageProvider = itemImageProvider;
+		return this;
+	}
+
+	@Override
+	public IN2MRelation<Object, Object> allowReorder(boolean allowReorder) {
+		this.allowReorder = allowReorder;
 		return this;
 	}
 }

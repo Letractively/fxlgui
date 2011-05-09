@@ -29,6 +29,7 @@ import co.fxl.gui.n2m.api.IN2MWidget;
 
 class N2MWidgetImpl implements IN2MWidget<Object> {
 
+	private static final int _20 = 10;
 	private IGridPanel grid;
 	private SelectableList left;
 	private SelectableList right;
@@ -42,6 +43,10 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 	boolean editable = true;
 	String itemImage;
 	IItemImageProvider<Object> imageProvider;
+	private IImage upButton;
+	private IImage downButton;
+	private IImage topButton;
+	private IImage bottomButton;
 
 	N2MWidgetImpl(IContainer container) {
 		grid = container.panel().grid();
@@ -62,8 +67,7 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 		};
 		leftButton = center.add().image().resource("(_02.png").size(16, 16)
 				.addClickListener(leftClickListener).mouseLeft();
-		right.link(leftButton, leftClickListener
-				);
+		right.link(leftButton, leftClickListener);
 		IClickListener rightClickListener = new IClickListener() {
 			@Override
 			public void onClick() {
@@ -75,8 +79,8 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 		};
 		buttonRight = center.add().image().resource(")_02.png").size(16, 16)
 				.addClickListener(rightClickListener).mouseLeft();
-		left.link(buttonRight,rightClickListener);
-		center.addSpace(20);
+		left.link(buttonRight, rightClickListener);
+		center.addSpace(_20);
 		buttonLeftAll = center.add().image().resource("((_02.png").size(16, 16)
 				.addClickListener(new IClickListener() {
 					@Override
@@ -88,8 +92,8 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 					}
 				}).mouseLeft();
 		right.linkAll(buttonLeftAll);
-		buttonRightAll = center.add().image().resource("))_02.png").size(16, 16)
-				.addClickListener(new IClickListener() {
+		buttonRightAll = center.add().image().resource("))_02.png")
+				.size(16, 16).addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
 						List<Object> selection = left.removeAll();
@@ -99,6 +103,49 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 					}
 				}).mouseLeft();
 		left.linkAll(buttonRightAll);
+	}
+
+	private void addReorderButtons() {
+		IClickListener upClickListener = new IClickListener() {
+			@Override
+			public void onClick() {
+				right.up();
+				update();
+			}
+		};
+		upButton = center.addSpace(_20).add().image().resource("up.png")
+				.size(16, 16).addClickListener(upClickListener).mouseLeft();
+		right.linkUp(upButton, upClickListener);
+		IClickListener downClickListener = new IClickListener() {
+			@Override
+			public void onClick() {
+				right.down();
+				update();
+			}
+		};
+		downButton = center.add().image().resource("down.png").size(16, 16)
+				.addClickListener(downClickListener).mouseLeft();
+		right.linkDown(downButton, downClickListener);
+		IClickListener topClickListener = new IClickListener() {
+			@Override
+			public void onClick() {
+				right.top();
+				update();
+			}
+		};
+		topButton = center.addSpace(_20).add().image().resource("top.png")
+				.size(16, 16).addClickListener(topClickListener).mouseLeft();
+		right.linkTop(topButton, topClickListener);
+		IClickListener bottomClickListener = new IClickListener() {
+			@Override
+			public void onClick() {
+				right.bottom();
+				update();
+			}
+		};
+		bottomButton = center.add().image().resource("bottom.png").size(16, 16)
+				.addClickListener(bottomClickListener).mouseLeft();
+		right.linkBottom(bottomButton, bottomClickListener);
 	}
 
 	@Override
@@ -138,6 +185,14 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 	}
 
 	private boolean equals(List<Object> l1, List<Object> l2) {
+		if (topButton != null) {
+			if (l1.size() != l2.size())
+				return false;
+			for (int i = 0; i < l1.size(); i++)
+				if (!l1.get(i).equals(l2.get(i)))
+					return false;
+			return true;
+		}
 		for (Object o : l1) {
 			if (!l2.contains(o))
 				return false;
@@ -200,5 +255,23 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 		if (itemImage != null)
 			return itemImage;
 		return null;
+	}
+
+	@Override
+	public IN2MWidget<Object> allowReorder(boolean allowReorder) {
+		if (allowReorder)
+			addReorderButtons();
+		return this;
+	}
+
+	@Override
+	public Object selectedItem() {
+		return right.selection != null ? right.selection.object : null;
+	}
+
+	@Override
+	public IN2MWidget<Object> selectedItem(Object o) {
+		right.preselected = o;
+		return this;
 	}
 }
