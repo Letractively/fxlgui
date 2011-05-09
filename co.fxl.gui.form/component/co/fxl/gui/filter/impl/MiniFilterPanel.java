@@ -29,7 +29,7 @@ import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
-import co.fxl.gui.form.impl.Heights;
+import co.fxl.gui.api.template.Heights;
 
 class MiniFilterPanel implements FilterPanel {
 

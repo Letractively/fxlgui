@@ -31,16 +31,15 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IImage;
-import co.fxl.gui.api.IKeyRecipient.ICarriageReturnListener;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.api.template.Heights;
 import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
-import co.fxl.gui.form.impl.Heights;
 
 class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 
@@ -368,10 +367,10 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	}
 
 	void register(ITextField tf) {
-		tf.addCarriageReturnListener(new ICarriageReturnListener() {
+		tf.addCarriageReturnListener(new IClickListener() {
 
 			@Override
-			public void onCarriageReturn() {
+			public void onClick() {
 				if (apply.clickable())
 					onApplyClick();
 			}
