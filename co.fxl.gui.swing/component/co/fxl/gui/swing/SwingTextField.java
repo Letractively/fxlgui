@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.swing;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,25 +58,14 @@ class SwingTextField extends SwingTextInput<JTextField, ITextField> implements
 	}
 
 	@Override
-	public ITextField addCarriageReturnListener(
-			final ICarriageReturnListener changeListener) {
-		jTextField().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				changeListener.onCarriageReturn();
-			}
-		});
-		return this;
-	}
-
-	private JTextField jTextField() {
-		return ((JTextField) container.component);
-	}
-
-	@Override
 	public IUpdateable<String> addUpdateListener(
 			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
 		updateListeners.add(listener);
 		return super.addStringUpdateListener(listener);
 	}
+
+	void addActionListener(ActionListener actionListener) {
+		container.component.addActionListener(actionListener);
+	}
+
 }

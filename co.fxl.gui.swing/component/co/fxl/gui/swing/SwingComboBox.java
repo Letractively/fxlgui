@@ -122,5 +122,4 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 		hasNull = false;
 		return this;
 	}
-
 }
