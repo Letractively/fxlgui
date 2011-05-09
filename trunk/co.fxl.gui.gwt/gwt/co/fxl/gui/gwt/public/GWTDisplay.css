@@ -1,4 +1,4 @@
-html {overflow-y: hidden; overflow: -moz-scrollbars-none; overflow-x: auto;  user-select: none; -moz-user-select: none; -webkit-user-select: none; }
+html {overflow: auto; overflow: -moz-scrollbars-none; user-select: none; -moz-user-select: none; -webkit-user-select: none; }
 html, body {height:100%; width:100%;}
 ::selection {
     background-color: transparent;
