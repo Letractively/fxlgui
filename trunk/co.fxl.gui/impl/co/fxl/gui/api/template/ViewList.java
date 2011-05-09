@@ -173,6 +173,8 @@ public class ViewList {
 					view.clickable(view != this);
 				}
 			}
+			if (content == null)
+				return;
 			content.clear();
 			decorator.decorate(content);
 			ICardPanel contentPanel = widget.contentPanel();
