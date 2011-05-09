@@ -19,16 +19,10 @@
 package co.fxl.gui.api;
 
 public interface IPasswordField extends ITextElement<IPasswordField>, IColored,
-		IBordered, IUpdateable<String>, IFocusable<IPasswordField> {
-
-	public interface ICarriageReturnListener {
-
-		void onCarriageReturn();
-	}
+		IBordered, IUpdateable<String>, IFocusable<IPasswordField>,
+		IKeyRecipient<IPasswordField> {
 
 	IPasswordField editable(boolean editable);
-
-	IPasswordField addCarriageReturnListener(ICarriageReturnListener listener);
 
 	IPasswordField columns(int rows);
 }
