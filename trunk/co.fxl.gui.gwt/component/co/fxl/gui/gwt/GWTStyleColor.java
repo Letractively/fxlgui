@@ -58,6 +58,9 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 								+ "', endColorstr='"
 								+ color
 								+ "')";
+						DOM.setStyleAttribute(element, "zoom", "1");
+						DOM.setStyleAttribute(element, "-ms-" + attribute,
+								gradient);
 					} else if (GWTDisplay.isFirefox()) {
 						gradient = "-moz-linear-gradient(top, "
 								+ original.color + ", " + color + ")";
