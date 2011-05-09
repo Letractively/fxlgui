@@ -109,24 +109,6 @@ class GWTTextField extends GWTElement<TextBox, ITextField> implements
 	}
 
 	@Override
-	public ITextField addCarriageReturnListener(
-			final ICarriageReturnListener listener) {
-		assert container != null : "GWTTextField.addCarriageReturnListener: container is null";
-		assert container.widget != null : "GWTTextField.addCarriageReturnListener: container.widget is null";
-		container.widget.addKeyPressHandler(new KeyPressHandler() {
-
-			@Override
-			public void onKeyPress(KeyPressEvent event) {
-				char charCode = event.getCharCode();
-				if (charCode == '\r') {
-					listener.onCarriageReturn();
-				}
-			}
-		});
-		return this;
-	}
-
-	@Override
 	public ITextField maxLength(int rows) {
 		container.widget.setMaxLength(rows);
 		return this;
