@@ -22,6 +22,11 @@ import java.util.List;
 
 public interface INavigationLink<T> {
 
+	public interface IEntityConstraint<T> {
+
+		boolean applies(T entity);
+	}
+
 	public interface INavigationLinkSelectionListener<T> {
 
 		void onUpdate(INavigationLink<T> link, List<T> selection);
@@ -54,4 +59,6 @@ public interface INavigationLink<T> {
 			INavigationLinkSelectionListener<T> l);
 
 	INavigationLink<T> clickable(boolean b);
+
+	INavigationLink<T> entityConstraint(IEntityConstraint<T> constraint);
 }
