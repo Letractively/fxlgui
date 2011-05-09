@@ -39,6 +39,8 @@ class SelectableList {
 		private IVerticalPanel p;
 		private boolean visible = true;
 		private ILabel label;
+		private IImage reorderLogo;
+		private IHorizontalPanel h;
 
 		ListItem(Object object, boolean visible) {
 			this.object = object;
@@ -57,14 +59,16 @@ class SelectableList {
 					.vertical().spacing(5);
 			p.color().rgb(248, 248, 248).gradient().vertical()
 					.rgb(216, 216, 216);
-			IHorizontalPanel h = p.add().panel().horizontal().align().begin()
-					.add().panel().horizontal();
+			h = p.add().panel().horizontal().align().begin().add().panel()
+					.horizontal();
 			String image = widget.getItemImage(object);
 			if (image != null) {
 				h.add().image().resource(image);
 				h.addSpace(4);
 			}
 			label = h.add().label().text(String.valueOf(object));
+			if (widget.allowReorder)
+				h.addSpace(4);
 			// if (!isFirst) {
 			IBorder b = p.border();
 			b.color().rgb(172, 197, 213);
@@ -95,10 +99,15 @@ class SelectableList {
 			if (selected) {
 				label.font().color().white();
 				p.color().remove().rgb(172, 197, 213);
+				if (widget.allowReorder)
+					reorderLogo = h.add().image().resource("move.png");
 			} else {
 				label.font().color().black();
 				p.color().remove().rgb(248, 248, 248).gradient().vertical()
 						.rgb(216, 216, 216);
+				if (widget.allowReorder && reorderLogo != null)
+					reorderLogo.remove();
+				reorderLogo = null;
 			}
 		}
 
