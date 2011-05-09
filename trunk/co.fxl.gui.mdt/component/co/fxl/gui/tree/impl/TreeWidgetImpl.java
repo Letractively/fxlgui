@@ -67,9 +67,11 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		private IVerticalPanel contentPanel;
 		private IMenuItem register;
 		private Class<?>[] constrainType;
+		private String title;
 
 		DetailView(String title, IDecorator<T> decorator) {
 			this.decorator = decorator;
+			this.title = title;
 			register = registers.addNavigationItem();
 			register.text(title);
 			register.addListener(new INavigationListener() {
@@ -115,6 +117,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				}
 				bottom.clear();
 				decorator.decorate(contentPanel, bottom, node.tree);
+				activeView = title;
 			}
 		}
 
@@ -486,6 +489,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	private int painted = 0;
 	boolean allowReorder = false;
+	private String activeView;
 	private static int MAX_PAINTS = 250;
 
 	void newNode(TreeWidgetImpl<T> widget, IVerticalPanel panel, ITree<T> root,
@@ -908,6 +912,19 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	@Override
 	public ITreeWidget<T> allowReorder(boolean allowReorder) {
 		this.allowReorder = allowReorder;
+		return this;
+	}
+
+	@Override
+	public String activeDetailView() {
+		return activeView;
+	}
+
+	@Override
+	public ITreeWidget<T> activeDetailView(String detailView) {
+		for (DetailView dv : detailViews)
+			if (dv.title.equals(detailView))
+				dv.register.active();
 		return this;
 	}
 }

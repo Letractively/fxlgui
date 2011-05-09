@@ -93,6 +93,10 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 			}
 		});
 		addDetailViews();
+		if (widget.selectedRegister != null) {
+			tree.activeDetailView(widget.selectedRegister);
+			widget.selectedRegister = null;
+		}
 		tree.allowCutPaste(widget.allowCutPaste);
 		tree.allowReorder(widget.allowReorder);
 		tree.expand(true);
