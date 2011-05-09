@@ -24,6 +24,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.IUpdateable;
 
@@ -43,11 +44,11 @@ class SwingPasswordField extends SwingTextInput<JPasswordField, IPasswordField>
 
 	@Override
 	public IPasswordField addCarriageReturnListener(
-			final ICarriageReturnListener changeListener) {
+			final IClickListener changeListener) {
 		jTextField().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				changeListener.onCarriageReturn();
+				changeListener.onClick();
 			}
 		});
 		return this;
