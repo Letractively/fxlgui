@@ -18,17 +18,12 @@
  */
 package co.fxl.gui.api;
 
-public interface IDockPanel extends IPanel<IDockPanel> {
+public interface IKeyRecipient<T> {
 
-	IDockPanel spacing(int pixel);
+	public interface ICarriageReturnListener {
 
-	IContainer center();
+		void onCarriageReturn();
+	}
 
-	IContainer top();
-
-	IContainer left();
-
-	IContainer right();
-
-	IContainer bottom();
+	T addCarriageReturnListener(ICarriageReturnListener listener);
 }

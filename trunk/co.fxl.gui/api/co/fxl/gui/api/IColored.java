@@ -26,7 +26,7 @@ public interface IColored {
 	}
 
 	public interface IColor {
-		
+
 		IColor black();
 
 		IColor gray();
@@ -44,11 +44,11 @@ public interface IColored {
 		IColor yellow();
 
 		IColor rgb(int r, int g, int b);
-		
+
 		IColor mix();
-		
+
 		IGradient gradient();
-		
+
 		IColor remove();
 	}
 

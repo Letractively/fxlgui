@@ -18,12 +18,6 @@
  */
 package co.fxl.gui.api;
 
-public interface ITextField extends ITextInput<ITextField> {
-
-	public interface ICarriageReturnListener {
-
-		void onCarriageReturn();
-	}
-
-	ITextField addCarriageReturnListener(ICarriageReturnListener listener);
+public interface ITextField extends ITextInput<ITextField>,
+		IKeyRecipient<ITextField> {
 }
