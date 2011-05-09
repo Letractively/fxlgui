@@ -19,6 +19,7 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 	private Link label;
 	private boolean requiresRows = false;
 	private Class<?>[] exclusionConstraint = null;
+	private IEntityConstraint<Object> constraint;
 
 	NavigationLinkImpl(String name) {
 		this.name = name;
@@ -39,6 +40,12 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 			for (Class<?> exclusionConstraintInstance : exclusionConstraint) {
 				Class<? extends Object> c = widget.selection.get(0).getClass();
 				clickable &= !exclusionConstraintInstance.equals(c);
+			}
+		}
+		if (requiresSelection && !widget.selection.isEmpty()
+				&& constraint != null) {
+			for (Object o : widget.selection) {
+				clickable &= constraint.applies(o);
 			}
 		}
 		if (widget.activeView instanceof DetailView && !asDetail)
@@ -122,6 +129,13 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 	@Override
 	public INavigationLink<Object> exclusionConstraint(Class<?>[] typeConstraint) {
 		exclusionConstraint = typeConstraint;
+		return this;
+	}
+
+	@Override
+	public INavigationLink<Object> entityConstraint(
+			co.fxl.gui.mdt.api.INavigationLink.IEntityConstraint<Object> constraint) {
+		this.constraint = constraint;
 		return this;
 	}
 }
