@@ -18,12 +18,9 @@
  */
 package co.fxl.gui.api;
 
+import co.fxl.gui.api.IClickable.IClickListener;
+
 public interface IKeyRecipient<T> {
 
-	public interface ICarriageReturnListener {
-
-		void onCarriageReturn();
-	}
-
-	T addCarriageReturnListener(ICarriageReturnListener listener);
+	T addCarriageReturnListener(IClickListener listener);
 }
