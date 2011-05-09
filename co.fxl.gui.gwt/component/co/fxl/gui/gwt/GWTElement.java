@@ -28,7 +28,6 @@ import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFontElement;
-import co.fxl.gui.api.IKeyRecipient.ICarriageReturnListener;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -253,7 +252,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public R addCarriageReturnListener(final ICarriageReturnListener listener) {
+	public R addCarriageReturnListener(final IClickListener listener) {
 		((HasKeyPressHandlers) container.widget)
 				.addKeyPressHandler(new KeyPressHandler() {
 
@@ -261,7 +260,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 					public void onKeyPress(KeyPressEvent event) {
 						char charCode = event.getCharCode();
 						if (charCode == '\r') {
-							listener.onCarriageReturn();
+							listener.onClick();
 						}
 					}
 				});

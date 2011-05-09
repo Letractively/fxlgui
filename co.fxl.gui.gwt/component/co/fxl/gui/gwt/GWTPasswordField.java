@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.gwt;
 
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IPasswordField;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -95,14 +96,14 @@ class GWTPasswordField extends GWTElement<PasswordTextBox, IPasswordField>
 
 	@Override
 	public IPasswordField addCarriageReturnListener(
-			final ICarriageReturnListener listener) {
+			final IClickListener listener) {
 		container.widget.addKeyPressHandler(new KeyPressHandler() {
 
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
 				char charCode = event.getCharCode();
 				if (charCode == '\r') {
-					listener.onCarriageReturn();
+					listener.onClick();
 				}
 			}
 		});
