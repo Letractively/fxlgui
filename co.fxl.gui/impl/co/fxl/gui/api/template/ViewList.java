@@ -105,6 +105,7 @@ public class ViewList {
 						.addClickListener(new IClickListener() {
 							@Override
 							public void onClick() {
+								labelPanel.clear();
 								decorate(false);
 								title(tf.text().trim());
 								newListener.onNew(ViewImpl.this,
@@ -139,8 +140,8 @@ public class ViewList {
 			if (value.trim().length() == 0)
 				return false;
 			for (int i = 0; i < value.length(); i++)
-				if (!(Character.isLetterOrDigit(value.charAt(i)) || Character
-						.isSpaceChar(value.charAt(i))))
+				if (!(Character.isLetterOrDigit(value.charAt(i)) || value
+						.charAt(i) == ' '))
 					return false;
 			return true;
 		}
@@ -182,6 +183,8 @@ public class ViewList {
 		}
 
 		private void clickable(boolean clickable) {
+			if (label == null)
+				return;
 			label.clickable(clickable);
 			if (image != null)
 				image.clickable(clickable);
