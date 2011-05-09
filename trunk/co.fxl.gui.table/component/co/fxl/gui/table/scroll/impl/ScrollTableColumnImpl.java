@@ -277,4 +277,14 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		this.visible = visible;
 		return this;
 	}
+
+	@Override
+	public boolean visible() {
+		return visible;
+	}
+
+	@Override
+	public String name() {
+		return name;
+	}
 }
