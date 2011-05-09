@@ -528,7 +528,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	void show(final Node<T> node, boolean callSelection, ICallback<Void> cb) {
-		if (last == node)
+		if (last == node && node != null)
 			return;
 		if (last != null) {
 			// if (last == node)
@@ -840,8 +840,9 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			path.add(0, r);
 		}
 		root(tree, path);
-		if (node != null)
+		if (node != null) {
 			node.path = null;
+		}
 		expand = rememberExpand;
 	}
 
