@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.ICardPanel;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
@@ -29,13 +30,15 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.ITextField;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 
 public class ViewList {
 
 	public interface NewListener {
 
-		void onNew(ViewImpl view);
+		void onNew(ViewImpl view, ICallback<Void> cb);
 
 		void onRemove(ViewImpl view);
 	}
@@ -50,12 +53,22 @@ public class ViewList {
 		private Object bo;
 		private IImage removeImage;
 		private IImage image;
+		private IHorizontalPanel labelPanel;
+		private String imageResource;
 
 		ViewImpl(String imageResource) {
+			this(imageResource, false);
+		}
+
+		ViewImpl(String imageResource, boolean isNew) {
+			this.imageResource = imageResource;
 			grid = ViewList.this.panel.add().panel().grid();
 			labelPanel0 = grid.cell(0, 0).panel().horizontal();
-			IHorizontalPanel labelPanel = labelPanel0.add().panel()
-					.horizontal().spacing(2);
+			labelPanel = labelPanel0.add().panel().horizontal().spacing(2);
+			decorate(isNew);
+		}
+
+		protected void decorate(boolean isNew) {
 			if (imageResource != null) {
 				image = labelPanel.addSpace(4).add().image()
 						.resource(imageResource);
@@ -63,38 +76,84 @@ public class ViewList {
 				labelPanel.addSpace(2);
 			} else
 				labelPanel.addSpace(4);
-			label = labelPanel.add().label();
-			label.addClickListener(this);
-			label.font().pixel(13);
-			label.font().weight().plain().color().rgb(0, 87, 141);
-			labelPanel.addSpace(4);
-			content = widget.contentPanel().add();
-			if (newListener != null) {
-				removeImage = grid.cell(1, 0).width(30).align().end().panel()
-						.horizontal().add().image();
-				removeImage.resource("remove.png").addClickListener(
-						new LazyClickListener() {
+			if (!isNew) {
+				label = labelPanel.add().label();
+				label.addClickListener(this);
+				label.font().pixel(13);
+				label.font().weight().plain().color().rgb(0, 87, 141);
+				labelPanel.addSpace(4);
+				content = widget.contentPanel().add();
+				if (newListener != null) {
+					removeImage = grid.cell(1, 0).valign().center().width(30)
+							.align().end().panel().horizontal().addSpace(4)
+							.add().image();
+					removeImage.resource("cancel.png").addClickListener(
+							new LazyClickListener() {
+								@Override
+								public void onAllowedClick() {
+									remove(grid, ViewImpl.this);
+								}
+							});
+					removeImage.visible(false);
+				}
+			} else {
+				final ITextField tf = labelPanel.add().textField();
+				new Heights(0).decorate(tf);
+				tf.width(200);
+				final IImage accept = labelPanel.addSpace(4).add().image()
+						.resource("accept.png")
+						.addClickListener(new IClickListener() {
 							@Override
-							public void onAllowedClick() {
-								grid.remove();
-								newListener.onRemove(ViewImpl.this);
-								int i = views.indexOf(ViewImpl.this);
-								views.remove(ViewImpl.this);
-								if (i < views.size()) {
-									views.get(i).onClick();
-								} else if (!views.isEmpty()) {
-									views.get(views.size() - 1).onClick();
-								} else
-									widget.selectFirst();
+							public void onClick() {
+								decorate(false);
+								title(tf.text().trim());
+								newListener.onNew(ViewImpl.this,
+										new CallbackTemplate<Void>() {
+
+											@Override
+											public void onSuccess(Void result) {
+												onAllowedClick();
+											}
+										});
 							}
-						});
-				removeImage.visible(false);
+						}).mouseLeft();
+				accept.clickable(false);
+				tf.addUpdateListener(new IUpdateListener<String>() {
+
+					@Override
+					public void onUpdate(String value) {
+						accept.clickable(check(value));
+					}
+				});
+				labelPanel.addSpace(4).add().image().resource("cancel.png")
+						.addClickListener(new IClickListener() {
+							@Override
+							public void onClick() {
+								remove(grid, ViewImpl.this);
+							}
+						}).mouseLeft();
 			}
+		}
+
+		private boolean check(String value) {
+			if (value.trim().length() == 0)
+				return false;
+			for (int i = 0; i < value.length(); i++)
+				if (!(Character.isLetterOrDigit(value.charAt(i)) || Character
+						.isSpaceChar(value.charAt(i))))
+					return false;
+			return true;
 		}
 
 		public ViewImpl businessObject(Object bo) {
 			this.bo = bo;
 			return this;
+		}
+
+		public String title() {
+			if (label == null)
+				return null;
+			return label.text();
 		}
 
 		public Object businessObject() {
@@ -163,22 +222,28 @@ public class ViewList {
 	}
 
 	public ViewImpl addView(String imageResource) {
+		return addView(imageResource, false);
+	}
+
+	public ViewImpl addView(String imageResource, boolean isNew) {
 		if (widgetTitle.headerLabel == null)
 			title("Views");
 		if (panel == null)
 			panel = widgetTitle.content().panel().vertical().spacing(2);
-		ViewImpl view = new ViewImpl(imageResource);
+		ViewImpl view = new ViewImpl(imageResource, isNew);
 		views.add(view);
 		return view;
 	}
 
-	public ViewList modifiable(NewListener listener) {
+	public ViewList modifiable(String icon, final String typeIcon, String name,
+			NewListener listener) {
 		newListener = listener;
-		widgetTitle.addHyperlink("New").addClickListener(
-				new LazyClickListener() {
+		widgetTitle
+				.addHyperlink(icon, "New" + (name == null ? "" : " " + name))
+				.addClickListener(new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
-						newListener.onNew(addView());
+						addView(typeIcon, true);
 					}
 				});
 		return this;
@@ -192,5 +257,19 @@ public class ViewList {
 	public ViewList foldable(boolean foldable) {
 		widgetTitle.foldable(foldable);
 		return this;
+	}
+
+	protected void remove(IGridPanel grid, ViewImpl view) {
+		grid.remove();
+		if (view.title() != null)
+			newListener.onRemove(view);
+		int i = views.indexOf(view);
+		views.remove(view);
+		if (i < views.size()) {
+			views.get(i).onClick();
+		} else if (!views.isEmpty()) {
+			views.get(views.size() - 1).onClick();
+		} else
+			widget.selectFirst();
 	}
 }
