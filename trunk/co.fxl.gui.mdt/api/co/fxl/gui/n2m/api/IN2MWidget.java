@@ -51,4 +51,10 @@ public interface IN2MWidget<T> {
 	IN2MWidget<T> height(int maxFromDisplay);
 
 	IN2MWidget<T> editable(boolean editable);
+
+	IN2MWidget<T> allowReorder(boolean allowReorder);
+
+	T selectedItem();
+
+	IN2MWidget<T> selectedItem(T o);
 }

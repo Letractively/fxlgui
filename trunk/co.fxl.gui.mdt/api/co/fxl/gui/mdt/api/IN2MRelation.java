@@ -26,4 +26,6 @@ public interface IN2MRelation<T, R> {
 
 	IN2MRelation<T, R> itemImageProvider(IItemImageProvider<R> itemImageProvider);
 
+	IN2MRelation<T, R> allowReorder(boolean allowReorder);
+
 }

@@ -71,10 +71,14 @@ final class N2MRelationDecorator implements IDecorator<Object>, IResizeListener 
 							private void update(final IVerticalPanel panel,
 									final Object node, final List<Object> result) {
 								panel.clear();
+								Object o = table != null ? table.selectedItem()
+										: null;
 								table = (IN2MWidget<Object>) panel.spacing(8)
 										.add().widget(IN2MWidget.class);
+								table.selectedItem(o);
 								table.itemImage(relation.itemImage);
 								table.itemImageProvider(relation.itemImageProvider);
+								table.allowReorder(relation.allowReorder);
 								table.domain(domain);
 								table.selection(result);
 								table.editable(relation.adapter.editable(node));

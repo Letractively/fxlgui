@@ -26,6 +26,7 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IVerticalPanel;
@@ -34,7 +35,7 @@ class SelectableList {
 
 	class ListItem implements IClickListener {
 
-		private Object object;
+		Object object;
 		private IVerticalPanel p;
 		private boolean visible = true;
 		private ILabel label;
@@ -42,6 +43,11 @@ class SelectableList {
 		ListItem(Object object, boolean visible) {
 			this.object = object;
 			this.visible = visible;
+		}
+
+		@Override
+		public String toString() {
+			return label.text();
 		}
 
 		boolean draw(boolean isFirst) {
@@ -66,6 +72,12 @@ class SelectableList {
 			// }
 			p.addClickListener(this);
 			p.addClickListener(clickListener).doubleClick();
+			if (preselected != null) {
+				if (object.equals(preselected)) {
+					selection = this;
+				}
+			}
+			selected(this == selection);
 			return true;
 		}
 
@@ -76,7 +88,7 @@ class SelectableList {
 			}
 			selection = this;
 			selection.selected(true);
-			button.clickable(widget.editable && selection != null);
+			updateButtons();
 		}
 
 		void selected(boolean selected) {
@@ -91,7 +103,7 @@ class SelectableList {
 		}
 
 		void visible(boolean b) {
-			if (selection != null && selection.equals(this))
+			if (selection != null && selection.equals(this) && !visible)
 				selection = null;
 			visible = b;
 		}
@@ -99,6 +111,10 @@ class SelectableList {
 
 	private void draw() {
 		selection = null;
+		drawKeepSelection();
+	}
+
+	protected void drawKeepSelection() {
 		panel.clear();
 		if (title != null) {
 			IVerticalPanel p = panel.add().panel().vertical().spacing(4);
@@ -118,19 +134,42 @@ class SelectableList {
 			}
 		}
 		allButton.clickable(widget.editable && hasOne);
+		updateButtons();
+	}
+
+	protected void updateButtons() {
 		button.clickable(widget.editable && selection != null);
+		if (buttonUp == null)
+			return;
+		boolean isUp = widget.editable && selection != null
+				&& selectionIndex() > 0;
+		buttonUp.clickable(isUp);
+		buttonTop.clickable(isUp);
+		boolean isDown = widget.editable && selection != null
+				&& selectionIndex() < items.size() - 1;
+		buttonDown.clickable(isDown);
+		buttonBottom.clickable(isDown);
+	}
+
+	private int selectionIndex() {
+		return items.indexOf(selection);
 	}
 
 	private N2MWidgetImpl widget;
 	private IVerticalPanel panel;
 	private List<ListItem> items = new LinkedList<ListItem>();
-	private ListItem selection;
+	ListItem selection;
 	private IClickable<?> button;
 	private IClickable<?> allButton;
 	private String title;
 	private boolean isSelected;
 	private IScrollPane scrollPane;
 	private IClickListener clickListener;
+	private IImage buttonUp;
+	private IImage buttonDown;
+	private IImage buttonTop;
+	private IImage buttonBottom;
+	Object preselected;
 
 	SelectableList(N2MWidgetImpl widget, IGridCell cell, String string,
 			boolean isSelected) {
@@ -182,6 +221,8 @@ class SelectableList {
 		// TODO effizienter
 		for (Object o : tokens)
 			visible(o, b);
+		if (b)
+			preselected = null;
 	}
 
 	void visible(Object selection, boolean b) {
@@ -216,5 +257,57 @@ class SelectableList {
 
 	void title(String left) {
 		this.title = left;
+	}
+
+	void up() {
+		move(-1);
+	}
+
+	private void move(int i) {
+		int index = items.indexOf(selection);
+		int position = index + i;
+		moveTo(position);
+	}
+
+	protected void moveTo(int position) {
+		int index = items.indexOf(selection);
+		items.remove(index);
+		if (position >= items.size())
+			items.add(selection);
+		else
+			items.add(position, selection);
+		drawKeepSelection();
+	}
+
+	void down() {
+		move(1);
+	}
+
+	void linkUp(IImage button, IClickListener clickListener) {
+		this.buttonUp = button;
+		button.clickable(false);
+	}
+
+	public void linkDown(IImage button, IClickListener clickListener) {
+		this.buttonDown = button;
+		button.clickable(false);
+	}
+
+	void linkTop(IImage button, IClickListener clickListener) {
+		this.buttonTop = button;
+		button.clickable(false);
+	}
+
+	public void linkBottom(IImage button, IClickListener clickListener) {
+		this.buttonBottom = button;
+		button.clickable(false);
+	}
+
+	void top() {
+		moveTo(0);
+	}
+
+	void bottom() {
+		moveTo(items.size());
 	}
 }
