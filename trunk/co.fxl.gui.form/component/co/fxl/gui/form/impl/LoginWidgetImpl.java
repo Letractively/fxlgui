@@ -21,7 +21,6 @@ package co.fxl.gui.form.impl;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IHorizontalPanel;
-import co.fxl.gui.api.IKeyRecipient.ICarriageReturnListener;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextField;
@@ -30,8 +29,7 @@ import co.fxl.gui.form.api.ILoginWidget;
 
 class LoginWidgetImpl implements ILoginWidget {
 
-	class LoginListener extends LazyClickListener implements
-			ICarriageReturnListener {
+	class LoginListener extends LazyClickListener {
 
 		@Override
 		public void onAllowedClick() {
@@ -57,11 +55,6 @@ class LoginWidgetImpl implements ILoginWidget {
 					}
 				}
 			});
-		}
-
-		@Override
-		public void onCarriageReturn() {
-			onClick();
 		}
 	}
 

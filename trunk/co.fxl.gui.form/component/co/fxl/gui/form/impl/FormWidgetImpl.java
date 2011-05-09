@@ -34,13 +34,13 @@ import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IKeyRecipient;
-import co.fxl.gui.api.IKeyRecipient.ICarriageReturnListener;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
+import co.fxl.gui.api.template.Heights;
 import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.api.template.WidgetTitle;
@@ -136,9 +136,9 @@ class FormWidgetImpl implements IFormWidget {
 	private void setCRListener(IKeyRecipient<?> kr) {
 		if (saveListener == null)
 			return;
-		kr.addCarriageReturnListener(new ICarriageReturnListener() {
+		kr.addCarriageReturnListener(new IClickListener() {
 			@Override
-			public void onCarriageReturn() {
+			public void onClick() {
 				if (saveClickListener != null && saveButton.clickable())
 					saveClickListener.onClick();
 			}
