@@ -21,6 +21,10 @@ package co.fxl.gui.swing;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
@@ -34,6 +38,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IKeyRecipient.ICarriageReturnListener;
 
 class SwingElement<T extends JComponent, R> implements IElement<R> {
 
@@ -182,5 +187,28 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 			container.component.setFocusable(true);
 		}
 		return (R) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public R addCarriageReturnListener(
+			final ICarriageReturnListener changeListener) {
+		addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				changeListener.onCarriageReturn();
+			}
+		});
+		return (R) this;
+	}
+
+	void addActionListener(final ActionListener actionListener) {
+		container.component.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				char keyChar = arg0.getKeyChar();
+				if (keyChar == '\n')
+					actionListener.actionPerformed(null);
+			}
+		});
 	}
 }

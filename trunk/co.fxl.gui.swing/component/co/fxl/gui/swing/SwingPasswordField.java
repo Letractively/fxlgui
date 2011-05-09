@@ -68,4 +68,8 @@ class SwingPasswordField extends SwingTextInput<JPasswordField, IPasswordField>
 			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
 		return super.addStringUpdateListener(listener);
 	}
+
+	void addActionListener(ActionListener actionListener) {
+		container.component.addActionListener(actionListener);
+	}
 }
