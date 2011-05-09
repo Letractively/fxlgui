@@ -33,6 +33,8 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
+import co.fxl.gui.api.IKeyRecipient;
+import co.fxl.gui.api.IKeyRecipient.ICarriageReturnListener;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
@@ -81,6 +83,7 @@ class FormWidgetImpl implements IFormWidget {
 	private IFocusable<?> focus = null;
 	private List<IFocusable<?>> focusables = new LinkedList<IFocusable<?>>();
 	private int spacing = 0;
+	private IClickListener saveClickListener;
 
 	FormWidgetImpl(IContainer panel) {
 		widgetTitle = new WidgetTitle(panel.panel(), false).grayBackground()
@@ -116,6 +119,7 @@ class FormWidgetImpl implements IFormWidget {
 		heights.decorate(valuePanel);
 		valuePanel.editable(saveListener != null);
 		setFocus(valuePanel);
+		setCRListener(valuePanel);
 		return valuePanel;
 	}
 
@@ -129,11 +133,24 @@ class FormWidgetImpl implements IFormWidget {
 		f.focus(true);
 	}
 
+	private void setCRListener(IKeyRecipient<?> kr) {
+		if (saveListener == null)
+			return;
+		kr.addCarriageReturnListener(new ICarriageReturnListener() {
+			@Override
+			public void onCarriageReturn() {
+				if (saveClickListener != null && saveButton.clickable())
+					saveClickListener.onClick();
+			}
+		});
+	}
+
 	IPasswordField addFormValuePasswordField() {
 		IPasswordField valuePanel = container().passwordField();
 		heights.decorate(valuePanel);
 		valuePanel.editable(saveListener != null);
 		setFocus(valuePanel);
+		setCRListener(valuePanel);
 		return valuePanel;
 	}
 
@@ -148,6 +165,8 @@ class FormWidgetImpl implements IFormWidget {
 		IComboBox valuePanel = container().comboBox();
 		heights.decorate(valuePanel);
 		valuePanel.editable(saveListener != null);
+		setFocus(valuePanel);
+		setCRListener(valuePanel);
 		return valuePanel;
 	}
 
@@ -155,6 +174,8 @@ class FormWidgetImpl implements IFormWidget {
 		ICheckBox valuePanel = container().checkBox();
 		heights.valuePanel(valuePanel);
 		valuePanel.editable(saveListener != null);
+		setFocus(valuePanel);
+		setCRListener(valuePanel);
 		return valuePanel;
 	}
 
@@ -265,7 +286,7 @@ class FormWidgetImpl implements IFormWidget {
 		// TODO un-hack
 		if (!saveListener.allowsCancel())
 			clickable1.visible(false);
-		saveButton.text(saveTitle).addClickListener(new IClickListener() {
+		saveClickListener = new IClickListener() {
 			@Override
 			public void onClick() {
 				saveListener.save(new CallbackTemplate<Boolean>() {
@@ -281,7 +302,8 @@ class FormWidgetImpl implements IFormWidget {
 					}
 				});
 			}
-		});
+		};
+		saveButton.text(saveTitle).addClickListener(saveClickListener);
 		clickable1.text("Cancel").addClickListener(new LazyClickListener() {
 			@Override
 			public void onAllowedClick() {

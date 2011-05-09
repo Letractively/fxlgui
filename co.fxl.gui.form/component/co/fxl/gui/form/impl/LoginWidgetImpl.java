@@ -21,18 +21,17 @@ package co.fxl.gui.form.impl;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IKeyRecipient.ICarriageReturnListener;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.ITextField.ICarriageReturnListener;
 import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.form.api.ILoginWidget;
 
 class LoginWidgetImpl implements ILoginWidget {
 
 	class LoginListener extends LazyClickListener implements
-			ICarriageReturnListener,
-			co.fxl.gui.api.IPasswordField.ICarriageReturnListener {
+			ICarriageReturnListener {
 
 		@Override
 		public void onAllowedClick() {

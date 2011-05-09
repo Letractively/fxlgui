@@ -23,9 +23,9 @@ import java.util.List;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IKeyRecipient.ICarriageReturnListener;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
-import co.fxl.gui.api.IPasswordField.ICarriageReturnListener;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.form.api.IChangePasswordWidget;
 import co.fxl.gui.form.api.IFormField;
@@ -33,8 +33,8 @@ import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
 
 public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
-		IClickListener//, IUpdateListener<String>
-, ICarriageReturnListener {
+		IClickListener// , IUpdateListener<String>
+		, ICarriageReturnListener {
 
 	protected IFormWidget widget;
 	private IPasswordField currentPassword;
@@ -88,17 +88,17 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 			currentPassword.editable(false);
 		} else
 			pw.required();
-//		currentPassword.addUpdateListener((IUpdateListener<String>) this);
-		currentPassword
-				.addCarriageReturnListener((ICarriageReturnListener) this);
+		// currentPassword.addUpdateListener((IUpdateListener<String>) this);
+//		currentPassword
+//				.addCarriageReturnListener((ICarriageReturnListener) this);
 		newPassword = widget.addPasswordField("New").required().valueElement();
-//		newPassword.addUpdateListener((IUpdateListener<String>) this);
-		newPassword.addCarriageReturnListener((ICarriageReturnListener) this);
+		// newPassword.addUpdateListener((IUpdateListener<String>) this);
+//		newPassword.addCarriageReturnListener((ICarriageReturnListener) this);
 		confirmPassword = widget.addPasswordField("Confirm").required()
 				.valueElement();
-//		confirmPassword.addUpdateListener((IUpdateListener<String>) this);
-		confirmPassword
-				.addCarriageReturnListener((ICarriageReturnListener) this);
+		// confirmPassword.addUpdateListener((IUpdateListener<String>) this);
+//		confirmPassword
+//				.addCarriageReturnListener((ICarriageReturnListener) this);
 		// ILabel oKButton = widget.addOKHyperlink();
 		// oKButton.text("Change");
 		// oKButton.addClickListener(this);
@@ -155,7 +155,7 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 		currentPassword.text("");
 		newPassword.text("");
 		confirmPassword.text("");
-//		onUpdate(null);
+		// onUpdate(null);
 	}
 
 	@Override
@@ -173,9 +173,9 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 		return this;
 	}
 
-//	@Override
-//	public void onUpdate(String input) {
-//	}
+	// @Override
+	// public void onUpdate(String input) {
+	// }
 
 	@Override
 	public ILabel addTitle(String title) {
