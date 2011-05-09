@@ -61,10 +61,10 @@ public class GWTWidgetBorder extends GWTBorder {
 		} else if (borderType.equals(GWTBorder.BORDER_ROUNDED)) {
 			DOM.setStyleAttribute(element, borderType, width + "px " + color
 					+ " " + style);
-			if (!GWTDisplay.isChrome())
-				DOM.setStyleAttribute(element, "--moz-border-radius", "3px");
-			else
-				DOM.setStyleAttribute(element, "border-radius", "3px");
+			String attr = "border-radius";
+			if (GWTDisplay.isFirefox())
+				attr = "-moz-" + attr;
+			DOM.setStyleAttribute(element, attr, "3px");
 		} else {
 			DOM.setStyleAttribute(element, borderType, width + "px " + color
 					+ " " + style);
