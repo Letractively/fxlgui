@@ -1,6 +1,5 @@
 package co.fxl.gui.swing;
 
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IHyperlink;
 import co.fxl.gui.api.ILabel;
 
@@ -32,6 +31,21 @@ class SwingHyperlink implements IHyperlink {
 
 	@Override
 	public IHyperlink localURI(String string) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IHyperlink clickable(boolean clickable) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public boolean clickable() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IKey<IHyperlink> addClickListener(IClickListener clickListener) {
 		throw new MethodNotImplementedException();
 	}
 }
