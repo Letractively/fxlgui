@@ -53,9 +53,10 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 			return;
 		if (isDoubleClick)
 			return;
-		event.preventDefault();
-		if (stopPropagation)
+		if (stopPropagation) {
+			event.preventDefault();
 			event.stopPropagation();
+		}
 		GWTDisplay d = (GWTDisplay) ((IElement<?>) element).display();
 		if (d.waiting)
 			return;
