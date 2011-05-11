@@ -50,7 +50,11 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 				cell.updateListener(new IUpdateListener<Boolean>() {
 					@Override
 					public void onUpdate(Boolean value) {
-						updateListener.onUpdate(identifier, value);
+						boolean refresh = updateListener.onUpdate(identifier,
+								value);
+						if (refresh) {
+							widget.refresh();
+						}
 					}
 				});
 				cell.updateAdapter(new IUpdateAdapter<Boolean>() {

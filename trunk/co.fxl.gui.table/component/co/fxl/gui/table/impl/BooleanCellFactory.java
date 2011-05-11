@@ -37,7 +37,11 @@ class BooleanCellFactory extends CellFactory<ICheckBox, Boolean> {
 
 				@Override
 				public void onUpdate(Boolean value) {
-					c.updateListener.onUpdate(row.content.identifier, value);
+					boolean refresh = c.updateListener.onUpdate(
+							row.content.identifier, value);
+					if (refresh) {
+						throw new MethodNotImplementedException();
+					}
 				}
 			});
 		}
