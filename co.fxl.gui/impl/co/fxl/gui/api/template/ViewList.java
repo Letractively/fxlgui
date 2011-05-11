@@ -40,7 +40,7 @@ public class ViewList {
 
 		void onNew(ViewImpl view, ICallback<Void> cb);
 
-		void onRemove(ViewImpl view);
+		void onRemove(ViewImpl view, ICallback<Boolean> remove);
 	}
 
 	public class ViewImpl extends LazyClickListener {
@@ -91,7 +91,13 @@ public class ViewList {
 							new LazyClickListener() {
 								@Override
 								public void onAllowedClick() {
-									remove(grid, ViewImpl.this);
+									remove(grid, ViewImpl.this,
+											new CallbackTemplate<Boolean>() {
+												@Override
+												public void onSuccess(
+														Boolean result) {
+												}
+											});
 								}
 							});
 					removeImage.visible(false);
@@ -130,7 +136,7 @@ public class ViewList {
 						.addClickListener(new IClickListener() {
 							@Override
 							public void onClick() {
-								remove(grid, ViewImpl.this);
+								remove(grid, ViewImpl.this, null);
 							}
 						}).mouseLeft();
 			}
@@ -264,10 +270,23 @@ public class ViewList {
 		return this;
 	}
 
-	protected void remove(IGridPanel grid, ViewImpl view) {
-		grid.remove();
+	protected void remove(final IGridPanel grid, final ViewImpl view,
+			final ICallback<Boolean> remove) {
 		if (view.title() != null)
-			newListener.onRemove(view);
+			newListener.onRemove(view, new CallbackTemplate<Boolean>() {
+				@Override
+				public void onSuccess(Boolean result) {
+					if (result)
+						removeView(grid, view);
+					remove.onSuccess(result);
+				}
+			});
+		else
+			removeView(grid, view);
+	}
+
+	protected void removeView(IGridPanel grid, ViewImpl view) {
+		grid.remove();
 		int i = views.indexOf(view);
 		views.remove(view);
 		if (i < views.size()) {
