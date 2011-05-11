@@ -305,7 +305,7 @@ class Node<T> extends LazyClickListener {
 		if (!selected)
 			container.color().white();
 		else {
-			container.color().rgb(230, 230, 255);
+			container.color().rgb(0xD0, 0xE4, 0xF6);
 		}
 		buttonPanel.visible(selected);
 	}
