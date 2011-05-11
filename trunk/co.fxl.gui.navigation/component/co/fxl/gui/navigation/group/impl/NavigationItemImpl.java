@@ -47,6 +47,7 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 
 	void initButtonPanel() {
 		if (buttonPanel == null) {
+			itemPanel.addSpace(3);
 			buttonPanel = itemPanel.add().panel().horizontal();
 			buttonPanel.spacing(5).align().center();
 			buttonPanel.addSpace(3);
