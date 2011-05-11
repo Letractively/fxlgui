@@ -1,6 +1,8 @@
 package co.fxl.gui.gwt;
 
+import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.IHyperlink;
+import co.fxl.gui.api.IClickable.IClickListener;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.HTML;
@@ -37,5 +39,10 @@ class GWTHyperlink extends GWTElement<HTML, IHyperlink> implements IHyperlink {
 		if (text == null || uRI == null)
 			return;
 		container.widget.setHTML("<a href=\"" + uRI + "\">" + text + "</a>");
+	}
+
+	@Override
+	GWTClickHandler<IHyperlink> newGWTClickHandler(IClickListener clickListener) {
+		return new GWTClickHandler<IHyperlink>(this, clickListener);
 	}
 }
