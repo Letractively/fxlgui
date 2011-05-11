@@ -199,13 +199,13 @@ public class ViewList {
 			if (image != null)
 				image.clickable(clickable);
 			if (!clickable) {
-				labelPanel0.color().red();
-				label.font().weight().bold().color().white();
+				grid.color().rgb(0xD0, 0xE4, 0xF6);
+				label.font().weight().plain().color().black();
 				if (removeImage != null && newListener.isRemovable(this)) {
 					removeImage.visible(true);
 				}
 			} else {
-				labelPanel0.color().white();
+				grid.color().remove();
 				label.font().weight().plain().color().rgb(0, 87, 141);
 				if (removeImage != null) {
 					removeImage.visible(false);
