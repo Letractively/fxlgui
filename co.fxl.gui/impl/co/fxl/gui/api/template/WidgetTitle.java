@@ -191,7 +191,7 @@ public class WidgetTitle implements IClickListener {
 			horizontal.color().rgb(136, 136, 136).gradient().vertical()
 					.rgb(113, 113, 113);
 		titlePanel = horizontal.add().panel().horizontal().align().begin()
-				.spacing(6);
+				.spacing(10);
 		if (foldable) {
 			// image = titlePanel.add().image().resource(openPNG);
 			// image.addClickListener(this);
