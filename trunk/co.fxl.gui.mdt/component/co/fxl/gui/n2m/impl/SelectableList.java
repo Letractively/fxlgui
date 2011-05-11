@@ -61,9 +61,19 @@ class SelectableList {
 					.rgb(216, 216, 216);
 			h = p.add().panel().horizontal().align().begin().add().panel()
 					.horizontal();
-			String image = widget.getItemImage(object);
-			if (image != null) {
-				h.add().image().resource(image);
+			boolean hasImage = widget.hasItemImage();
+			if (hasImage) {
+				IImage i = h.add().image();
+				if (widget.itemImage != null)
+					i.resource(widget.itemImage);
+				String providerImage = widget.imageProvider != null ? widget.imageProvider
+						.itemImage(object) : null;
+				if (providerImage != null) {
+					try {
+						i.resource(providerImage);
+					} catch (Exception e) {
+					}
+				}
 				h.addSpace(4);
 			}
 			label = h.add().label().text(String.valueOf(object));

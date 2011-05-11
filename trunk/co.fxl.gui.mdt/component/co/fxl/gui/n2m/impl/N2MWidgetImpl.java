@@ -249,14 +249,14 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 		return this;
 	}
 
-	String getItemImage(Object object) {
-		if (imageProvider != null && imageProvider.itemImage(object) != null) {
-			return imageProvider.itemImage(object);
-		}
-		if (itemImage != null)
-			return itemImage;
-		return null;
-	}
+	// String getItemImage(Object object) {
+	// if (imageProvider != null && imageProvider.itemImage(object) != null) {
+	// return imageProvider.itemImage(object);
+	// }
+	// if (itemImage != null)
+	// return itemImage;
+	// return null;
+	// }
 
 	@Override
 	public IN2MWidget<Object> allowReorder(boolean allowReorder) {
@@ -275,5 +275,9 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 	public IN2MWidget<Object> selectedItem(Object o) {
 		right.preselected = o;
 		return this;
+	}
+
+	boolean hasItemImage() {
+		return itemImage != null || imageProvider != null;
 	}
 }
