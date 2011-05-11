@@ -107,7 +107,7 @@ public class ViewList {
 			} else {
 				final ITextField tf = labelPanel.add().textField();
 				new Heights(0).decorate(tf);
-				tf.width(200);
+				tf.width(199);
 				final IImage accept = labelPanel.addSpace(4).add().image()
 						.resource("accept.png")
 						.addClickListener(new IClickListener() {
@@ -227,7 +227,7 @@ public class ViewList {
 
 	public ViewList(MetaViewList widget, ILayout layout) {
 		this.widget = widget;
-		widgetTitle = new WidgetTitle(layout, true).space(4).grayBackground();
+		widgetTitle = new WidgetTitle(layout, true).space(2).grayBackground();
 	}
 
 	public ViewImpl addView() {
@@ -241,8 +241,12 @@ public class ViewList {
 	public ViewImpl addView(String imageResource, boolean isNew) {
 		if (widgetTitle.headerLabel == null)
 			title("Views");
-		if (panel == null)
-			panel = widgetTitle.content().panel().vertical().spacing(2);
+		if (panel == null) {
+			IVerticalPanel vertical = widgetTitle.content().panel().vertical();
+			vertical.addSpace(2);
+			panel = vertical.add().panel().vertical().spacing(2);
+			vertical.addSpace(4);
+		}
 		ViewImpl view = new ViewImpl(imageResource, isNew);
 		views.add(view);
 		return view;
