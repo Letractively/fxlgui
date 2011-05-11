@@ -186,7 +186,7 @@ public class WidgetTitle implements IClickListener {
 		// headerPanel.color().rgb(220, 220, 220);
 		IHorizontalPanel horizontal = headerPanel.cell(0, 0).align().begin()
 				.valign().center().panel().horizontal().align()
-				.begin().addSpace(3);
+				.begin();//.addSpace(3);
 		if (grayBackground)
 			horizontal.color().rgb(136, 136, 136).gradient().vertical()
 					.rgb(113, 113, 113);
