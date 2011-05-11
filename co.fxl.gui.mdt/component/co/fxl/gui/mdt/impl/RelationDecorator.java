@@ -123,8 +123,8 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 						c.updateListener(new IColumnUpdateListener<Object, Boolean>() {
 
 							@Override
-							public void onUpdate(Object o, Boolean value) {
-								property.adapter.valueOf(o, value);
+							public boolean onUpdate(Object o, Boolean value) {
+								return property.adapter.valueOf(o, value);
 							}
 
 							@Override
