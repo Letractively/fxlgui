@@ -26,7 +26,7 @@ public interface IColumn<T> {
 
 		boolean isEditable(T entity);
 
-		void onUpdate(T entity, R value);
+		boolean onUpdate(T entity, R value);
 	}
 
 	public interface IDecorator<T, R> {
