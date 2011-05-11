@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.api;
 
-public interface IHyperlink {
+public interface IHyperlink extends IClickable<IHyperlink> {
 
 	IHyperlink text(String text);
 
