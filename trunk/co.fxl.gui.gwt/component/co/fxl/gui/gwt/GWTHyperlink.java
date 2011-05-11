@@ -41,6 +41,6 @@ class GWTHyperlink extends GWTElement<HTML, IHyperlink> implements IHyperlink {
 
 	@Override
 	GWTClickHandler<IHyperlink> newGWTClickHandler(IClickListener clickListener) {
-		return new GWTClickHandler<IHyperlink>(this, clickListener);
+		return new GWTClickHandler<IHyperlink>(this, clickListener, false);
 	}
 }

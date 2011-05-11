@@ -30,10 +30,17 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 class GWTClickHandler<T> extends KeyTemplate<T> {
 
 	private IClickListener clickListener;
+	private boolean stopPropagation = true;
 
 	GWTClickHandler(T element, IClickListener clickListener) {
+		this(element, clickListener, true);
+	}
+
+	GWTClickHandler(T element, IClickListener clickListener,
+			boolean stopPropagation) {
 		super(element);
 		this.clickListener = clickListener;
+		this.stopPropagation = stopPropagation;
 	}
 
 	public void onClick(ClickEvent event) {
@@ -47,7 +54,8 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 		if (isDoubleClick)
 			return;
 		event.preventDefault();
-		event.stopPropagation();
+		if (stopPropagation)
+			event.stopPropagation();
 		GWTDisplay d = (GWTDisplay) ((IElement<?>) element).display();
 		if (d.waiting)
 			return;
