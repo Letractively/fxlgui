@@ -40,6 +40,8 @@ public class ViewList {
 
 		void onNew(ViewImpl view, ICallback<Void> cb);
 
+		boolean isRemovable(ViewImpl view);
+
 		void onRemove(ViewImpl view, ICallback<Boolean> remove);
 	}
 
@@ -199,7 +201,7 @@ public class ViewList {
 			if (!clickable) {
 				labelPanel0.color().red();
 				label.font().weight().bold().color().white();
-				if (removeImage != null) {
+				if (removeImage != null && newListener.isRemovable(this)) {
 					removeImage.visible(true);
 				}
 			} else {
