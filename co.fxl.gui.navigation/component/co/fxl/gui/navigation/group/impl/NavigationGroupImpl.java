@@ -39,7 +39,7 @@ class NavigationGroupImpl implements INavigationGroup {
 		IVerticalPanel headerPanel = panel.add().panel().vertical();
 		header = headerPanel.addSpace(2).add().label();
 		header.font().weight().bold().pixel(11);//.color().white();
-		panel.addSpace(4);
+		panel.addSpace(1);
 		itemPanel = panel.add().panel().horizontal();
 	}
 
