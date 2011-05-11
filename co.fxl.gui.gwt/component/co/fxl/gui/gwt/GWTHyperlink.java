@@ -1,8 +1,6 @@
 package co.fxl.gui.gwt;
 
-import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.IHyperlink;
-import co.fxl.gui.api.IClickable.IClickListener;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.HTML;
