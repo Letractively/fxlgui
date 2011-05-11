@@ -52,15 +52,19 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 			buttonPanel.spacing(5).align().center();
 			buttonPanel.addSpace(3);
 			// borderColor =
-			IBorder b = buttonPanel.border();
-			b.width(1).color();
-			b.style().noBottom();
+			addBorder();
 			button = buttonPanel.add().label();
 			button.font().pixel(14).weight().bold().color().white();
 			buttonPanel.addSpace(3);
 			buttonPanel.addClickListener(this);
 			showLabelAsInactive();
 		}
+	}
+
+	protected void addBorder() {
+		IBorder b = buttonPanel.border();
+		b.width(1).color();
+		b.style().noBottom();
 	}
 
 	@Override
@@ -77,6 +81,7 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 		buttonPanel.clickable(true);
 		applyGradient(buttonPanel.color(), widget.colorInactive,
 				widget.colorInactiveGradient);
+		buttonPanel.border().remove();
 		// borderColor.remove();
 		// applyColor(borderColor, widget.colorBackground);
 	}
@@ -117,6 +122,7 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 		if (buttonPanel == null)
 			return;
 		applyColor(buttonPanel.color(), widget.colorActive);
+		addBorder();
 		// applyColor(borderColor, widget.colorActive);
 		widget.active(this, cb);
 	}
