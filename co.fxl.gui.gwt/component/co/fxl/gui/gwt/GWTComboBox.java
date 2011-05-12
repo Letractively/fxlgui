@@ -23,6 +23,7 @@ import java.util.List;
 
 import co.fxl.gui.api.IComboBox;
 
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.ListBox;
@@ -35,8 +36,17 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 	GWTComboBox(GWTContainer<ListBox> container) {
 		super(container);
 		container.widget.addStyleName("gwt-Combobox-FXL");
-		container.widget.setHeight("24px");
+		height(24);
 		defaultFont();
+	}
+
+	@Override
+	public IComboBox height(int height) {
+		if (GWTDisplay.isFirefox()) {
+			container.widget.getElement().getStyle()
+					.setPaddingTop(height / 2, Unit.PX);
+		}
+		return super.height(height);
 	}
 
 	@Override
