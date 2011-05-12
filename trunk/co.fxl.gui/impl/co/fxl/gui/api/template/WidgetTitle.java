@@ -185,13 +185,12 @@ public class WidgetTitle implements IClickListener {
 		headerPanel.visible(true);
 		// headerPanel.color().rgb(220, 220, 220);
 		IHorizontalPanel horizontal = headerPanel.cell(0, 0).align().begin()
-				.valign().center().panel().horizontal().align()
-				.begin();//.addSpace(3);
+				.valign().center().panel().horizontal().align().begin();// .addSpace(3);
 		if (grayBackground)
 			horizontal.color().rgb(136, 136, 136).gradient().vertical()
 					.rgb(113, 113, 113);
-		titlePanel = horizontal.add().panel().horizontal().align().begin()
-				.spacing(10);
+		titlePanel = horizontal.add().panel().horizontal().align().begin();
+		titlePanel.spacing().left(10).top(6).bottom(6).right(6);
 		if (foldable) {
 			// image = titlePanel.add().image().resource(openPNG);
 			// image.addClickListener(this);
