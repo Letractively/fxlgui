@@ -47,6 +47,8 @@ class GWTHorizontalPanel extends GWTPanel<HorizontalPanel, IHorizontalPanel>
 
 	@Override
 	public void add(Widget widget) {
+		if (innerSpace > 0 && container.widget.getWidgetCount() > 0)
+			addSpace(innerSpace);
 		container.widget.add(widget);
 	}
 
@@ -68,10 +70,5 @@ class GWTHorizontalPanel extends GWTPanel<HorizontalPanel, IHorizontalPanel>
 	public IAlignment<IHorizontalPanel> align() {
 		return new GWTHorizontalAlignment<IHorizontalPanel>(this,
 				container.widget);
-	}
-
-	@Override
-	public co.fxl.gui.api.ILinearPanel.ISpacing spacing() {
-		throw new MethodNotImplementedException();
 	}
 }

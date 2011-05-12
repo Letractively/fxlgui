@@ -30,7 +30,6 @@ class GWTVerticalPanel extends GWTPanel<VerticalPanel, IVerticalPanel>
 		implements IVerticalPanel {
 
 	private boolean stretch = true;
-	private int innerSpace = 0;
 
 	@SuppressWarnings("unchecked")
 	GWTVerticalPanel(GWTContainer<?> container) {
@@ -100,46 +99,6 @@ class GWTVerticalPanel extends GWTPanel<VerticalPanel, IVerticalPanel>
 				container.widget
 						.setHorizontalAlignment(VerticalPanel.ALIGN_LEFT);
 				return GWTVerticalPanel.this;
-			}
-		};
-	}
-
-	@Override
-	public co.fxl.gui.api.ILinearPanel.ISpacing spacing() {
-		return new ISpacing() {
-
-			@Override
-			public co.fxl.gui.api.ILinearPanel.ISpacing left(int pixel) {
-				container.widget.getElement().getStyle()
-						.setPaddingLeft(pixel, Unit.PX);
-				return this;
-			}
-
-			@Override
-			public co.fxl.gui.api.ILinearPanel.ISpacing right(int pixel) {
-				container.widget.getElement().getStyle()
-						.setPaddingRight(pixel, Unit.PX);
-				return this;
-			}
-
-			@Override
-			public co.fxl.gui.api.ILinearPanel.ISpacing top(int pixel) {
-				container.widget.getElement().getStyle()
-						.setPaddingTop(pixel, Unit.PX);
-				return this;
-			}
-
-			@Override
-			public co.fxl.gui.api.ILinearPanel.ISpacing bottom(int pixel) {
-				container.widget.getElement().getStyle()
-						.setPaddingBottom(pixel, Unit.PX);
-				return this;
-			}
-
-			@Override
-			public co.fxl.gui.api.ILinearPanel.ISpacing inner(int pixel) {
-				innerSpace = pixel;
-				return this;
 			}
 		};
 	}
