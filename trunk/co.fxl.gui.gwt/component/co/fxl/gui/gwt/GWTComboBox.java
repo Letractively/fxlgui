@@ -32,19 +32,21 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 
 	private List<String> constraints = new LinkedList<String>();
 	private boolean hasNull = false;
+	private int defaultHeight;
 
 	GWTComboBox(GWTContainer<ListBox> container) {
 		super(container);
 		container.widget.addStyleName("gwt-Combobox-FXL");
-		height(24);
 		defaultFont();
+		defaultHeight = height();
+		height(24);
 	}
 
 	@Override
 	public IComboBox height(int height) {
 		if (GWTDisplay.isFirefox()) {
 			container.widget.getElement().getStyle()
-					.setPaddingTop(height / 2, Unit.PX);
+					.setPaddingTop((height - defaultHeight) / 2, Unit.PX);
 		}
 		return super.height(height);
 	}
