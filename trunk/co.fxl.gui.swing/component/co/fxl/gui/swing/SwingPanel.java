@@ -20,6 +20,7 @@ package co.fxl.gui.swing;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Insets;
 import java.awt.LayoutManager;
 
 import javax.swing.JComponent;
@@ -28,6 +29,7 @@ import javax.swing.JFrame;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.ILinearPanel.ISpacing;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IWidgetProvider;
 
@@ -125,5 +127,48 @@ class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
 	@Override
 	public JComponent getComponent() {
 		return container.component;
+	}
+
+	public co.fxl.gui.api.ILinearPanel.ISpacing spacing() {
+		return new ISpacing() {
+
+			@Override
+			public co.fxl.gui.api.ILinearPanel.ISpacing left(int pixel) {
+				insets().left = pixel;
+				return this;
+			}
+
+			@Override
+			public co.fxl.gui.api.ILinearPanel.ISpacing right(int pixel) {
+				insets().right = pixel;
+				return this;
+			}
+
+			@Override
+			public co.fxl.gui.api.ILinearPanel.ISpacing top(int pixel) {
+				insets().top = pixel;
+				return this;
+			}
+
+			@Override
+			public co.fxl.gui.api.ILinearPanel.ISpacing bottom(int pixel) {
+				insets().bottom = pixel;
+				return this;
+			}
+
+			@Override
+			public co.fxl.gui.api.ILinearPanel.ISpacing inner(int pixel) {
+				gap(pixel);
+				return this;
+			}
+		};
+	}
+
+	void gap(int pixel) {
+		throw new MethodNotImplementedException();
+	}
+
+	Insets insets() {
+		throw new MethodNotImplementedException();
 	}
 }
