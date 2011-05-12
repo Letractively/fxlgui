@@ -52,40 +52,13 @@ class SwingVerticalPanel extends SwingPanel<IVerticalPanel> implements
 	}
 
 	@Override
-	public co.fxl.gui.api.ILinearPanel.ISpacing spacing() {
-		return new ISpacing() {
+	void gap(int pixel) {
+		layoutManager.vgap = pixel;
+	}
 
-			@Override
-			public co.fxl.gui.api.ILinearPanel.ISpacing left(int pixel) {
-				layoutManager.insets.left = pixel;
-				return this;
-			}
-
-			@Override
-			public co.fxl.gui.api.ILinearPanel.ISpacing right(int pixel) {
-				layoutManager.insets.right = pixel;
-				return this;
-			}
-
-			@Override
-			public co.fxl.gui.api.ILinearPanel.ISpacing top(int pixel) {
-				layoutManager.insets.top = pixel;
-				return this;
-			}
-
-			@Override
-			public co.fxl.gui.api.ILinearPanel.ISpacing bottom(int pixel) {
-				layoutManager.insets.bottom = pixel;
-				return this;
-			}
-
-			@Override
-			public co.fxl.gui.api.ILinearPanel.ISpacing inner(int pixel) {
-				layoutManager.vgap = pixel;
-				return this;
-			}
-
-		};
+	@Override
+	Insets insets() {
+		return layoutManager.insets;
 	}
 
 	@Override

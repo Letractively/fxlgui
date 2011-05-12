@@ -21,8 +21,11 @@ package co.fxl.gui.swing;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Insets;
 
 import javax.swing.Box;
+import javax.swing.JComponent;
+import javax.swing.border.EmptyBorder;
 
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -53,12 +56,31 @@ class SwingHorizontalPanel extends SwingPanel<IHorizontalPanel> implements
 	}
 
 	Component stretch;
+	private HorizontalLayoutManager layoutManager;
+	private Insets insets;
 
 	SwingHorizontalPanel(SwingContainer<PanelComponent> container) {
 		super(container);
-		setLayout(new HorizontalLayoutManager(this));
+		setLayout(layoutManager = new HorizontalLayoutManager(this));
 		align().begin();
 		spacing(0);
+	}
+
+	@Override
+	public void add(JComponent component) {
+		if (insets != null) {
+			int l = 0;
+			int r = 0;
+			int t = 0;
+			int b = 0;
+			int cc = container.component.getComponentCount();
+			if (cc == 0)
+				l = insets.left;
+			t = insets.top;
+			b = insets.bottom;
+			component.setBorder(new EmptyBorder(t, l, b, r));
+		}
+		super.add(component);
 	}
 
 	@Override
@@ -89,7 +111,14 @@ class SwingHorizontalPanel extends SwingPanel<IHorizontalPanel> implements
 	}
 
 	@Override
-	public co.fxl.gui.api.ILinearPanel.ISpacing spacing() {
-		throw new MethodNotImplementedException();
+	void gap(int pixel) {
+		layoutManager.setHgap(pixel);
+	}
+
+	@Override
+	Insets insets() {
+		if (insets == null)
+			insets = new Insets(0, 0, 0, 0);
+		return insets;
 	}
 }

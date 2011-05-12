@@ -21,6 +21,7 @@ package co.fxl.gui.swing;
 import java.awt.Color;
 
 import javax.swing.JComponent;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -99,6 +100,8 @@ class SwingBorder implements IBorder {
 	}
 
 	private void updateBorder() {
+		if (element.getBorder() instanceof EmptyBorder)
+			throw new MethodNotImplementedException();
 		if (borderStyle == SOLID)
 			element.setBorder(new LineBorder(borderColor, borderThickness));
 		else if (borderStyle == ETCHED)
