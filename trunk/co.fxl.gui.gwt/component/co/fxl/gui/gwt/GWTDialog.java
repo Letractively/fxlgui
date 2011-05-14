@@ -68,7 +68,7 @@ class GWTDialog implements IDialog {
 	@Override
 	public IDialog message(String message) {
 		final DialogBox dialogbox = new DialogBox(false);
-		dialogbox.setText(title);
+		dialogbox.setText(title.toUpperCase());
 		VerticalPanel panel = new VerticalPanel();
 		panel.setSpacing(10);
 		HTML html = new HTML(type + ": " + message);
