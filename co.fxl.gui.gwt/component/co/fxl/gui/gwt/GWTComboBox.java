@@ -40,6 +40,8 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 		container.widget.addStyleName("gwt-Combobox-FXL");
 		defaultFont();
 		defaultHeight = height();
+		if (defaultHeight < 20)
+			defaultHeight = 20;
 		height(24);
 	}
 
