@@ -49,7 +49,7 @@ class GWTQuestionDialog implements IQuestionDialog {
 		if (message == null || questionListeners.isEmpty())
 			return;
 		final DialogBox dialog = new DialogBox(false, true);
-		dialog.setText(title);
+		dialog.setText(title.toUpperCase());
 		VerticalPanel v = new VerticalPanel();
 		v.setSpacing(10);
 		v.add(new Label(message));
