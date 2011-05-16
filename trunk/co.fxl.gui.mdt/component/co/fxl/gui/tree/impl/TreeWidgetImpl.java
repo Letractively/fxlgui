@@ -29,8 +29,7 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IDialog.IQuestionDialog;
-import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
+import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IScrollPane;
@@ -311,25 +310,21 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			deleteListener = new LazyClickListener() {
 				@Override
 				public void onAllowedClick() {
-					IQuestionDialogListener l = new IQuestionDialogListener() {
-
+					IDisplay display = panel.display();
+					IDialog dl = queryDeleteEntity(display, false);
+					dl.addButton().yes().addClickListener(new IClickListener() {
 						@Override
-						public void onYes() {
+						public void onClick() {
 							delete();
 						}
-
+					});
+					dl.addButton().no().addClickListener(new IClickListener() {
 						@Override
-						public void onNo() {
+						public void onClick() {
 							widgetTitle.reset();
 						}
-
-						@Override
-						public void onCancel() {
-							throw new MethodNotImplementedException();
-						}
-					};
-					final IDisplay display = panel.display();
-					queryDeleteEntity(l, display, false);
+					});
+					dl.visible(true);
 				}
 			};
 			delete = widgetTitle.addHyperlink("cancel.png", "Delete");
@@ -929,12 +924,9 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		return this;
 	}
 
-	public static void queryDeleteEntity(IQuestionDialogListener l,
-			final IDisplay display, boolean plural) {
-		IQuestionDialog question = display.showDialog().question();
-		question.imageResource("skip.png");
-		question.question("Delete " + (plural ? "Entities" : "Entity") + "?")
-				.title("Please Confirm...");
-		question.addQuestionListener(l);
+	public static IDialog queryDeleteEntity(IDisplay display, boolean plural) {
+		return display.showDialog()
+				.message("Delete " + (plural ? "Entities" : "Entity") + "?")
+				.warn().confirm();
 	}
 }
