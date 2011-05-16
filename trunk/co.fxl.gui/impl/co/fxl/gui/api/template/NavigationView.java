@@ -64,6 +64,7 @@ public class NavigationView {
 				label.font().color().rgb(0, 87, 141);
 			else
 				label.font().color().mix().gray().lightgray();
+			panel.clickable(clickable);
 			return this;
 		}
 
@@ -78,6 +79,7 @@ public class NavigationView {
 			label.addClickListener(clickListener);
 			if (image != null)
 				image.addClickListener(clickListener);
+			panel.addClickListener(clickListener);
 			return null;
 		}
 
