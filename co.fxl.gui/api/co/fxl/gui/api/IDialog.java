@@ -18,30 +18,28 @@
  */
 package co.fxl.gui.api;
 
+import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IDialog.IDialogButton;
+
 public interface IDialog {
 
-	public interface IQuestionDialog {
+	public interface IDialogButton {
 
-		public interface IQuestionDialogListener {
+		IDialogButton imageResource(String imageResource);
 
-			void onYes();
+		IDialogButton text(String text);
 
-			void onNo();
+		IDialogButton ok();
 
-			void onCancel();
-		}
+		IDialogButton yes();
 
-		IQuestionDialog modal(boolean modal);
+		IDialogButton no();
 
-		IQuestionDialog title(String title);
+		IDialogButton cancel();
 
-		IQuestionDialog allowCancel();
+		IDialogButton addClickListener(IClickListener l);
 
-		IQuestionDialog question(String message);
-
-		IQuestionDialog addQuestionListener(IQuestionDialogListener l);
-
-		IQuestionDialog imageResource(String imageResource);
+		IDialogButton close();
 	}
 
 	public interface IType {
@@ -57,13 +55,15 @@ public interface IDialog {
 
 	IDialog title(String title);
 
-	IDialog message(String message);
+	IType message(String message);
 
-	IType type();
+	IDialogButton addButton();
 
 	IContainer container();
 
-	IQuestionDialog question();
-
 	IDialog visible(boolean visible);
+
+	IDialog confirm();
+
+	IDialog size(int width, int height);
 }

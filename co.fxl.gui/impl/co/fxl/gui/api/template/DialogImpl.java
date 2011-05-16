@@ -18,32 +18,74 @@
  */
 package co.fxl.gui.api.template;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
-import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.WidgetTitle.CommandLink;
 
 public class DialogImpl implements IDialog {
 
-	public class Type implements IType {
+	private class DialogButtonImpl implements IDialogButton {
+
+		private List<IClickListener> listeners = new LinkedList<IClickListener>();
+		private String imageResource;
+		private String text;
 
 		@Override
-		public IDialog error() {
-			type = "Error";
-			return DialogImpl.this;
+		public IDialogButton imageResource(String imageResource) {
+			this.imageResource = imageResource;
+			return this;
 		}
 
 		@Override
-		public IDialog info() {
-			type = "Information";
-			return DialogImpl.this;
+		public IDialogButton text(String text) {
+			this.text = text;
+			return this;
 		}
 
 		@Override
-		public IDialog warn() {
-			type = "Warning";
-			return DialogImpl.this;
+		public IDialogButton ok() {
+			return imageResource("accept.png").text("Ok");
+		}
+
+		@Override
+		public IDialogButton close() {
+			return imageResource("back.png").text("Close");
+		}
+
+		@Override
+		public IDialogButton yes() {
+			return imageResource("accept.png").text("Yes");
+		}
+
+		@Override
+		public IDialogButton no() {
+			return imageResource("back.png").text("No");
+		}
+
+		@Override
+		public IDialogButton cancel() {
+			return imageResource("cancel.png").text("Cancel");
+		}
+
+		@Override
+		public IDialogButton addClickListener(final IClickListener l) {
+			listeners.add(new IClickListener() {
+
+				@Override
+				public void onClick() {
+					DialogImpl.this.visible(false);
+					l.onClick();
+				}
+			});
+			return this;
 		}
 	}
 
@@ -53,9 +95,14 @@ public class DialogImpl implements IDialog {
 	private String message;
 	private String type = "Information";
 	private IPopUp popUp;
+	private List<DialogButtonImpl> buttons = new LinkedList<DialogButtonImpl>();
+	private IContainer container;
+	private int width = -1;
+	private int height = -1;
 
 	public DialogImpl(IDisplay display) {
 		this.display = display;
+		confirm();
 	}
 
 	@Override
@@ -71,54 +118,87 @@ public class DialogImpl implements IDialog {
 	}
 
 	@Override
-	public IDialog message(String message) {
+	public IType message(String message) {
 		this.message = message;
-		return this;
-	}
+		return new IType() {
 
-	@Override
-	public IType type() {
-		return new Type();
+			private IDialog type(String string) {
+				type = string;
+				if (title == null)
+					title(string);
+				return DialogImpl.this;
+			}
+
+			@Override
+			public IDialog error() {
+				return type("Error");
+			}
+
+			@Override
+			public IDialog info() {
+				return type("Information");
+			}
+
+			@Override
+			public IDialog warn() {
+				return type("Warning");
+			}
+		};
 	}
 
 	@Override
 	public IContainer container() {
-		popUp = display.showPopUp();
-		return popUp.container();
+		if (container == null) {
+			if (title != null || !buttons.isEmpty())
+				getPopUp();
+			else {
+				popUp = display.showPopUp();
+				container = popUp.container();
+			}
+		}
+		return container;
 	}
 
-	@Override
-	public IQuestionDialog question() {
-		return new QuestionDialogImpl(display, true);
+	IPopUp getPopUp() {
+		if (popUp == null) {
+			popUp = display.showPopUp();
+			if (width != -1) {
+				popUp.size(width, height);
+			}
+			popUp.center();
+			popUp.modal(modal);
+			IVerticalPanel v = popUp.container().panel().vertical().spacing(1);
+			WidgetTitle.decorateBorder(v.border().color());
+			WidgetTitle t = new WidgetTitle(v.add().panel()).grayBackground()
+					.foldable(false).space(0);
+			t.addTitle(title.toUpperCase());
+			if (message != null && buttons.isEmpty()) {
+				addButton().ok().addClickListener(new IClickListener() {
+					@Override
+					public void onClick() {
+					}
+				});
+			}
+			for (DialogButtonImpl b : buttons) {
+				CommandLink l = t.addHyperlink(b.imageResource, b.text);
+				for (IClickListener cl : b.listeners)
+					l.addClickListener(cl);
+			}
+			if (message != null) {
+				IGridPanel grid = t.content().panel().vertical().spacing(10)
+						.add().panel().grid().spacing(10).resize(2, 1);
+				grid.cell(0, 0).align().begin().valign().begin().image()
+						.resource(image(type)).size(16, 16);
+				grid.cell(1, 0).label().text(message);
+			} else
+				container = t.content();
+		}
+		return popUp;
 	}
 
 	@Override
 	public IDialog visible(boolean visible) {
-		if (popUp == null) {
-			QuestionDialogImpl qd = new QuestionDialogImpl(display, false);
-			qd.modal(modal);
-			qd.title(title != null ? title : type);
-			qd.imageResource(image(type));
-			qd.question(message);
-			qd.addQuestionListener(new IQuestionDialogListener() {
-
-				@Override
-				public void onYes() {
-				}
-
-				@Override
-				public void onNo() {
-					throw new MethodNotImplementedException();
-				}
-
-				@Override
-				public void onCancel() {
-					throw new MethodNotImplementedException();
-				}
-			});
-			popUp = qd.popUp;
-		}
-		popUp.visible(visible);
+		getPopUp().visible(visible);
 		return this;
 	}
 
@@ -131,5 +211,24 @@ public class DialogImpl implements IDialog {
 			return "cancel.png";
 		else
 			throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IDialogButton addButton() {
+		DialogButtonImpl button = new DialogButtonImpl();
+		buttons.add(button);
+		return button;
+	}
+
+	@Override
+	public IDialog confirm() {
+		return title("Please Confirm");
+	}
+
+	@Override
+	public IDialog size(int width, int height) {
+		this.width = width;
+		this.height = height;
+		return this;
 	}
 }

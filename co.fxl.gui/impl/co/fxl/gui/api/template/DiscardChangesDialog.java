@@ -18,7 +18,8 @@
  */
 package co.fxl.gui.api.template;
 
-import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
+import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 
 public class DiscardChangesDialog {
@@ -38,48 +39,47 @@ public class DiscardChangesDialog {
 	public static void show(final ICallback<Boolean> callback) {
 		if (!active)
 			callback.onSuccess(true);
-		else
-			display.showDialog().question().question(DISCARD_CHANGES)
-					.title("Warning")
-					.addQuestionListener(new IQuestionDialogListener() {
+		else {
+			IDialog dl = display.showDialog().confirm().message(DISCARD_CHANGES).warn();
+			dl.addButton().yes().addClickListener(new IClickListener() {
+				@Override
+				public void onClick() {
+					active = false;
+					if (listener != null) {
+						listener.onDiscardChanges(new CallbackTemplate<Boolean>(
+								callback) {
 
-						@Override
-						public void onYes() {
-							active = false;
-							if (listener != null) {
-								listener.onDiscardChanges(new CallbackTemplate<Boolean>(callback) {
+							@Override
+							public void onSuccess(Boolean result) {
+								if (result)
+									listener = null;
+								callback.onSuccess(result);
+							}
+						});
+					} else
+						callback.onSuccess(true);
+				}
+			});
+			dl.addButton().no().addClickListener(new IClickListener() {
+				@Override
+				public void onClick() {
+					if (listener != null) {
+						listener.onKeepChanges(new CallbackTemplate<Boolean>(
+								callback) {
 
-									@Override
-									public void onSuccess(Boolean result) {
-										if (result)
-											listener = null;
-										callback.onSuccess(result);
-									}
-								});
-							} else
-								callback.onSuccess(true);
-						}
-
-						@Override
-						public void onNo() {
-							if (listener != null) {
-								listener.onKeepChanges(new CallbackTemplate<Boolean>(callback) {
-
-									@Override
-									public void onSuccess(Boolean result) {
-										if (result)
-											listener = null;
-										callback.onSuccess(false);
-									}
-								});
-							} else
+							@Override
+							public void onSuccess(Boolean result) {
+								if (result)
+									listener = null;
 								callback.onSuccess(false);
-						}
-
-						@Override
-						public void onCancel() {
-						}
-					});
+							}
+						});
+					} else
+						callback.onSuccess(false);
+				}
+			});
+			dl.visible(true);
+		}
 	}
 
 	public static void active(boolean active) {
