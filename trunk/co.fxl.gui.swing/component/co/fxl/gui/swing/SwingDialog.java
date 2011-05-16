@@ -28,7 +28,6 @@ import javax.swing.JOptionPane;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.api.template.QuestionDialogImpl;
 
 class SwingDialog implements IDialog {
 
@@ -80,6 +79,16 @@ class SwingDialog implements IDialog {
 		public IQuestionDialog allowCancel() {
 			allowCancel = true;
 			return this;
+		}
+
+		@Override
+		public IQuestionDialog modal(boolean modal) {
+			throw new MethodNotImplementedException();
+		}
+
+		@Override
+		public IQuestionDialog imageResource(String imageResource) {
+			throw new MethodNotImplementedException();
 		}
 	}
 
@@ -184,7 +193,8 @@ class SwingDialog implements IDialog {
 
 	@Override
 	public IQuestionDialog question() {
-		return new QuestionDialogImpl(panel);
+		throw new MethodNotImplementedException();// new
+													// QuestionDialogImpl(panel);
 	}
 
 	@Override
