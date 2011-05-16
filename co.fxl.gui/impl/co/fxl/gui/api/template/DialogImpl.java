@@ -152,7 +152,7 @@ public class DialogImpl implements IDialog {
 			if (title != null || !buttons.isEmpty())
 				getPopUp();
 			else {
-				popUp = display.showPopUp();
+				popUp = display.showPopUp().modal(modal);
 				container = popUp.container();
 			}
 		}
@@ -185,8 +185,8 @@ public class DialogImpl implements IDialog {
 					l.addClickListener(cl);
 			}
 			if (message != null) {
-				IGridPanel grid = t.content().panel().vertical().spacing(10)
-						.add().panel().grid().spacing(10).resize(2, 1);
+				IGridPanel grid = t.content().panel().vertical().add().panel()
+						.grid().spacing(10).resize(2, 1);
 				grid.cell(0, 0).align().begin().valign().begin().image()
 						.resource(image(type)).size(16, 16);
 				grid.cell(1, 0).label().text(message);
