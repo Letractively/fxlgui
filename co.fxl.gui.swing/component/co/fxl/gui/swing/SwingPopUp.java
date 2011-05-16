@@ -34,6 +34,8 @@ class SwingPopUp implements IPopUp {
 	private int y = 0;
 	private boolean center = false;
 	protected JComponent component;
+	private int w = -1;
+	private int h = -1;
 
 	SwingPopUp(SwingDisplay panel) {
 		this.panel = panel;
@@ -84,6 +86,10 @@ class SwingPopUp implements IPopUp {
 			if (component != null) {
 				if (component.getWidth() < 160)
 					component.setSize(160, component.getHeight());
+				if (w < 0)
+					component.setSize(w, component.getHeight());
+				if (h < 0)
+					component.setSize(component.getWidth(), h);
 				if (center) {
 					x = panel.width() / 2
 							- Math.max(80, component.getWidth() / 2);
@@ -111,6 +117,37 @@ class SwingPopUp implements IPopUp {
 	@Override
 	public IPopUp center() {
 		this.center = true;
+		return this;
+	}
+
+	@Override
+	public int offsetX() {
+		return x;
+	}
+
+	@Override
+	public int offsetY() {
+		return y;
+	}
+
+	@Override
+	public int width() {
+		return component.getWidth();
+	}
+
+	@Override
+	public int height() {
+		return component.getHeight();
+	}
+
+	@Override
+	public IPopUp size(int w, int h) {
+		if (component != null)
+			component.setSize(w, h);
+		else {
+			this.w = w;
+			this.h = h;
+		}
 		return this;
 	}
 }
