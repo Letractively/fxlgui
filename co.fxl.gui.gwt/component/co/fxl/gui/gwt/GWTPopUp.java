@@ -11,6 +11,7 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	private GWTDisplay display;
 	private PopupPanel popUp;
+	private boolean center;
 
 	GWTPopUp(GWTDisplay display) {
 		this.display = display;
@@ -24,9 +25,11 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	@Override
 	public IPopUp visible(boolean visible) {
-		if (visible)
+		if (visible) {
+			if (center)
+				popUp.center();
 			popUp.show();
-		else
+		} else
 			popUp.hide();
 		return this;
 	}
@@ -67,6 +70,7 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	@Override
 	public IPopUp center() {
+		center = true;
 		popUp.center();
 		return this;
 	}
