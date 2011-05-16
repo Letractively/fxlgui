@@ -31,6 +31,7 @@ import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog.IQuestionDialog;
 import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
+import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISplitPane;
@@ -47,7 +48,7 @@ import co.fxl.gui.navigation.api.IMenuWidget;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 
-class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
+public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	private static final int SPLIT_POSITION = 250;
 	// private static final int BACKGROUND_GRAY = 247;
@@ -310,10 +311,7 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			deleteListener = new LazyClickListener() {
 				@Override
 				public void onAllowedClick() {
-					IQuestionDialog question = panel.display().showDialog()
-							.question();
-					question.question("Delete Entity?").title("Warning");
-					question.addQuestionListener(new IQuestionDialogListener() {
+					IQuestionDialogListener l = new IQuestionDialogListener() {
 
 						@Override
 						public void onYes() {
@@ -329,7 +327,9 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 						public void onCancel() {
 							throw new MethodNotImplementedException();
 						}
-					});
+					};
+					final IDisplay display = panel.display();
+					queryDeleteEntity(l, display, false);
 				}
 			};
 			delete = widgetTitle.addHyperlink("cancel.png", "Delete");
@@ -927,5 +927,14 @@ class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			if (dv.title.equals(detailView))
 				dv.register.active();
 		return this;
+	}
+
+	public static void queryDeleteEntity(IQuestionDialogListener l,
+			final IDisplay display, boolean plural) {
+		IQuestionDialog question = display.showDialog().question();
+		question.imageResource("skip.png");
+		question.question("Delete " + (plural ? "Entities" : "Entity") + "?")
+				.title("Please Confirm...");
+		question.addQuestionListener(l);
 	}
 }
