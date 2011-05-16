@@ -42,6 +42,7 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.template.DateFormat;
+import co.fxl.gui.api.template.DialogImpl;
 import co.fxl.gui.api.template.DiscardChangesDialog;
 
 public class SwingDisplay implements IDisplay, ComponentParent {
@@ -148,7 +149,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	@Override
 	public IDialog showDialog() {
-		return new SwingDialog(this);
+		return new DialogImpl(this);
 	}
 
 	@Override
