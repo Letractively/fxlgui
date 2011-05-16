@@ -18,12 +18,9 @@
  */
 package co.fxl.gui.api.template;
 
-import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IDialog.IQuestionDialog;
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IPopUp;
-import co.fxl.gui.api.IVerticalPanel;
 
 public class QuestionDialogImpl implements IQuestionDialog {
 
@@ -48,42 +45,17 @@ public class QuestionDialogImpl implements IQuestionDialog {
 		if (message == null || listener == null)
 			return;
 		IPopUp popUp = display.showPopUp();
-		IVerticalPanel panel = popUp.container().panel().vertical();
-		IVerticalPanel titlePanel = panel.add().panel().vertical().spacing(10);
-		WidgetTitle.decorateGradient(titlePanel);
-		IBorder border2 = titlePanel.border();
-		border2.color().rgb(172, 197, 213);
-		border2.style().bottom();
-		titlePanel.add().label().text(title.toUpperCase()).font().weight()
-				.bold();
-		IVerticalPanel content = panel.add().panel().vertical().spacing(10);
-		content.add().label().text(message).font().weight().bold().color()
-				.gray();
-		IHorizontalPanel buttonPanel = content.add().panel().horizontal()
-				.align().begin().add().panel().horizontal().align().begin();
-		buttonPanel.add().button().text("Yes")
-				.addClickListener(new LazyClickListener() {
-					@Override
-					protected void onAllowedClick() {
-						listener.onYes();
-					}
-				});
-		buttonPanel.addSpace(10).add().button().text("No")
-				.addClickListener(new LazyClickListener() {
-					@Override
-					protected void onAllowedClick() {
-						listener.onNo();
-					}
-				});
-		if (allowCancel)
-			buttonPanel.addSpace(10).add().button().text("Cancel")
-					.addClickListener(new LazyClickListener() {
-						@Override
-						protected void onAllowedClick() {
-							listener.onCancel();
-						}
-					});
+		popUp.center();
 		popUp.modal(true);
+		WidgetTitle t = new WidgetTitle(popUp.container().panel())
+				.grayBackground().foldable(false).space(0);
+		t.addTitle(title.toUpperCase());
+		t.addHyperlink("accept.png", "Ok");
+		t.addHyperlink("back.png", "No");
+		if (allowCancel)
+			t.addHyperlink("cancel.png", "Cancel");
+		t.content().panel().vertical().spacing(10).add().label().text(message)
+				.font().weight().bold();
 		popUp.visible(true);
 	}
 
