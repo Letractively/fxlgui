@@ -32,6 +32,7 @@ class SwingPopUp implements IPopUp {
 	private Popup dialog;
 	private int x = 0;
 	private int y = 0;
+	private boolean center = false;
 
 	SwingPopUp(SwingDisplay panel) {
 		this.panel = panel;
@@ -51,6 +52,12 @@ class SwingPopUp implements IPopUp {
 			@Override
 			public void add(JComponent component) {
 				PopupFactory factory = PopupFactory.getSharedInstance();
+				if (center) {
+					x = panel.width() / 2
+							- Math.max(80, component.getWidth() / 2);
+					y = panel.height() / 2
+							- Math.max(40, component.getHeight() / 2);
+				}
 				dialog = factory.getPopup(panel.frame, component, x, y);
 			}
 
@@ -91,6 +98,12 @@ class SwingPopUp implements IPopUp {
 	@Override
 	public IPopUp modal(boolean modal) {
 		// TODO ...
+		return this;
+	}
+
+	@Override
+	public IPopUp center() {
+		this.center = true;
 		return this;
 	}
 }
