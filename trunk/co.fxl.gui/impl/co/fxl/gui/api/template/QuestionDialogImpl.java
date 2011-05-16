@@ -81,8 +81,8 @@ public class QuestionDialogImpl implements IQuestionDialog {
 							listener.onCancel();
 						}
 					});
-		t.content().panel().vertical().spacing(10).add().label().text(message)
-				.font().weight().bold();
+		t.content().panel().vertical().spacing(10).add().label().text(message);
+		// .font().weight().bold();
 		popUp.visible(true);
 	}
 
