@@ -31,6 +31,8 @@ public interface IDialog {
 			void onCancel();
 		}
 
+		IQuestionDialog modal(boolean modal);
+
 		IQuestionDialog title(String title);
 
 		IQuestionDialog allowCancel();
@@ -38,6 +40,8 @@ public interface IDialog {
 		IQuestionDialog question(String message);
 
 		IQuestionDialog addQuestionListener(IQuestionDialogListener l);
+
+		IQuestionDialog imageResource(String imageResource);
 	}
 
 	public interface IType {

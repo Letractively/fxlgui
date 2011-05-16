@@ -21,19 +21,25 @@ package co.fxl.gui.api.template;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDialog.IQuestionDialog;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IVerticalPanel;
 
-public class QuestionDialogImpl implements IQuestionDialog {
+class QuestionDialogImpl implements IQuestionDialog {
 
 	private IDisplay display;
 	private String title = "Question";
 	private boolean allowCancel = false;
 	private String message;
 	private IQuestionDialogListener listener;
+	private boolean hasNo = true;
+	IPopUp popUp;
+	private boolean modal = true;
+	private String imageResource;
 
-	public QuestionDialogImpl(IDisplay display) {
+	QuestionDialogImpl(IDisplay display, boolean hasNo) {
 		this.display = display;
+		this.hasNo = hasNo;
 	}
 
 	@Override
@@ -46,15 +52,15 @@ public class QuestionDialogImpl implements IQuestionDialog {
 	private void update() {
 		if (message == null || listener == null)
 			return;
-		final IPopUp popUp = display.showPopUp();
+		popUp = display.showPopUp();
 		popUp.center();
-		popUp.modal(true);
+		popUp.modal(modal);
 		IVerticalPanel v = popUp.container().panel().vertical().spacing(1);
 		WidgetTitle.decorateBorder(v.border().color());
 		WidgetTitle t = new WidgetTitle(v.add().panel()).grayBackground()
 				.foldable(false).space(0);
 		t.addTitle(title.toUpperCase());
-		t.addHyperlink("accept.png", "Yes").addClickListener(
+		t.addHyperlink("accept.png", hasNo ? "Yes" : "Ok").addClickListener(
 				new IClickListener() {
 
 					@Override
@@ -63,14 +69,16 @@ public class QuestionDialogImpl implements IQuestionDialog {
 						listener.onYes();
 					}
 				});
-		t.addHyperlink("back.png", "No").addClickListener(new IClickListener() {
+		if (hasNo)
+			t.addHyperlink("back.png", "No").addClickListener(
+					new IClickListener() {
 
-			@Override
-			public void onClick() {
-				popUp.visible(false);
-				listener.onNo();
-			}
-		});
+						@Override
+						public void onClick() {
+							popUp.visible(false);
+							listener.onNo();
+						}
+					});
 		if (allowCancel)
 			t.addHyperlink("cancel.png", "Cancel").addClickListener(
 					new IClickListener() {
@@ -81,22 +89,16 @@ public class QuestionDialogImpl implements IQuestionDialog {
 							listener.onCancel();
 						}
 					});
-		t.content().panel().vertical().spacing(10).add().label().text(message);
-		// .font().weight().bold();
+		IHorizontalPanel v0 = t.content().panel().vertical().spacing(10).add()
+				.panel().horizontal().align().begin().add().panel()
+				.horizontal().align().begin();
+		if (imageResource != null) {
+			v0.add().image().resource(imageResource);
+			v0.addSpace(4);
+		}
+		v0.add().label().text(message);
 		popUp.visible(true);
-		// addShadow(popUp.offsetX() + 40, popUp.offsetY() + popUp.height(), 40,
-		// 40);
 	}
-
-	//
-	// private void addShadow(int x, int y, int w, int h) {
-	// IPopUp popUp = display.showPopUp();
-	// popUp.modal(true);
-	// popUp.offset(x, y);
-	// popUp.size(w, h);
-	// popUp.container().panel().vertical().color().lightgray();
-	// popUp.visible(true);
-	// }
 
 	@Override
 	public IQuestionDialog allowCancel() {
@@ -116,6 +118,18 @@ public class QuestionDialogImpl implements IQuestionDialog {
 	public IQuestionDialog addQuestionListener(IQuestionDialogListener listener) {
 		this.listener = listener;
 		update();
+		return this;
+	}
+
+	@Override
+	public IQuestionDialog modal(boolean modal) {
+		this.modal = modal;
+		return this;
+	}
+
+	@Override
+	public IQuestionDialog imageResource(String imageResource) {
+		this.imageResource = imageResource;
 		return this;
 	}
 }
