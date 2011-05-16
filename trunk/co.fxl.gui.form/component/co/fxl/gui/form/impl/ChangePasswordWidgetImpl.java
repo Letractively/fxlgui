@@ -147,8 +147,8 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 	}
 
 	private void showDialog(String string) {
-		display.display().showDialog().title("Change Password Error").type()
-				.error().message(string);
+		display.display().showDialog().title("Change Password Error")
+				.message(string).error();
 	}
 
 	private void clear() {
