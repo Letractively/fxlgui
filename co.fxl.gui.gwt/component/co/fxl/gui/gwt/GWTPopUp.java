@@ -69,4 +69,31 @@ class GWTPopUp implements IPopUp, WidgetParent {
 		popUp.center();
 		return this;
 	}
+
+	@Override
+	public int offsetX() {
+		return popUp.getAbsoluteLeft();
+	}
+
+	@Override
+	public int offsetY() {
+		return popUp.getAbsoluteTop();
+	}
+
+	@Override
+	public int width() {
+		return popUp.getOffsetWidth();
+	}
+
+	@Override
+	public int height() {
+		return popUp.getOffsetHeight();
+	}
+
+	@Override
+	public IPopUp size(int w, int h) {
+		popUp.setWidth(w + "px");
+		popUp.setHeight(h + "px");
+		return this;
+	}
 }
