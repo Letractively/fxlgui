@@ -83,7 +83,8 @@ class LoginWidgetImpl implements ILoginWidget {
 	void dialog(String string) {
 		IDialog dialog = cards.display().showDialog();
 		dialog.title("Login Failed");
-		dialog.type().error().message(string);
+		dialog.message(string).error();
+		dialog.visible(true);
 	}
 
 	@Override
