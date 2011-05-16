@@ -63,4 +63,10 @@ class GWTPopUp implements IPopUp, WidgetParent {
 		popUp.setAutoHideEnabled(!modal);
 		return this;
 	}
+
+	@Override
+	public IPopUp center() {
+		popUp.center();
+		return this;
+	}
 }
