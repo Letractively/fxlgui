@@ -60,6 +60,7 @@ class GWTPopUp implements IPopUp, WidgetParent {
 	@Override
 	public IPopUp modal(boolean modal) {
 		popUp.setModal(modal);
+		popUp.setGlassEnabled(modal);
 		popUp.setAutoHideEnabled(!modal);
 		return this;
 	}
@@ -72,12 +73,12 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	@Override
 	public int offsetX() {
-		return popUp.getAbsoluteLeft();
+		return popUp.getPopupLeft();
 	}
 
 	@Override
 	public int offsetY() {
-		return popUp.getAbsoluteTop();
+		return popUp.getPopupTop();
 	}
 
 	@Override
