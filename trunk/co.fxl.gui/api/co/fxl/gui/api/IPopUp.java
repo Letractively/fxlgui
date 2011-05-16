@@ -27,4 +27,6 @@ public interface IPopUp {
 	IContainer container();
 
 	IPopUp visible(boolean visible);
+
+	IPopUp center();
 }
