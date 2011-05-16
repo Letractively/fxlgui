@@ -34,6 +34,7 @@ import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
 import co.fxl.gui.api.template.DateFormat;
+import co.fxl.gui.api.template.DialogImpl;
 import co.fxl.gui.api.template.DiscardChangesDialog;
 import co.fxl.gui.api.template.NumberFormat;
 
@@ -178,7 +179,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 	@Override
 	public IDialog showDialog() {
-		return new GWTDialog();
+		return new DialogImpl(this);
 	}
 
 	@Override
