@@ -330,7 +330,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 						};
 						table.addTableClickListener(showClickListener)
 								.doubleClick();
-						table.addTooltip("Double click to switch views.");
+						table.addTooltip("Double-Click to show Details.");
 						table.sortListener(TableView.this);
 						table.constraints(constraints);
 						// if (selectionObject != null) {
