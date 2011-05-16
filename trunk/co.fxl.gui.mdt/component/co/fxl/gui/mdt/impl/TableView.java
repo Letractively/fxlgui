@@ -109,8 +109,8 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 					final Map<Integer, Object> result = table.selection()
 							.indexedResult();
 					IDisplay display = widget.mainPanel.display();
-					IDialog dl = TreeWidgetImpl
-							.queryDeleteEntity(display, true);
+					IDialog dl = TreeWidgetImpl.queryDeleteEntity(display,
+							result.size() > 1);
 					dl.addButton().yes().addClickListener(new IClickListener() {
 
 						@Override
