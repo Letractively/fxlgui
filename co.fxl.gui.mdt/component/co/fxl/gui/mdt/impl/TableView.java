@@ -28,7 +28,7 @@ import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
+import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.template.CallbackTemplate;
@@ -108,10 +108,13 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 				public void onClick() {
 					final Map<Integer, Object> result = table.selection()
 							.indexedResult();
-					IQuestionDialogListener l = new IQuestionDialogListener() {
+					IDisplay display = widget.mainPanel.display();
+					IDialog dl = TreeWidgetImpl
+							.queryDeleteEntity(display, true);
+					dl.addButton().yes().addClickListener(new IClickListener() {
 
 						@Override
-						public void onYes() {
+						public void onClick() {
 							List<Integer> indices = new LinkedList<Integer>();
 							List<Object> entities = new LinkedList<Object>();
 							for (Integer i : result.keySet()) {
@@ -131,18 +134,14 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 												}
 											});
 						}
+					});
+					dl.addButton().no().addClickListener(new IClickListener() {
 
 						@Override
-						public void onNo() {
+						public void onClick() {
 						}
-
-						@Override
-						public void onCancel() {
-							throw new MethodNotImplementedException();
-						}
-					};
-					IDisplay display = widget.mainPanel.display();
-					TreeWidgetImpl.queryDeleteEntity(l, display, true);
+					});
+					dl.visible(true);
 				}
 			});
 			delete.clickable(false);

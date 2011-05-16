@@ -21,8 +21,9 @@ package co.fxl.gui.mdt.impl;
 import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
+import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
@@ -275,40 +276,36 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 				public void onClick(Object identifier, int rowIndex,
 						final ICallback<Boolean> callback) {
 					String msg = "Remove Entity?";
-					panel.display().showDialog().question().question(msg)
-							.title("Warning")
-							.addQuestionListener(new IQuestionDialogListener() {
+					IDialog dl = panel.display().showDialog().message(msg)
+							.warn().confirm();
+					dl.addButton().yes().addClickListener(new IClickListener() {
+						@Override
+						public void onClick() {
+							Map<Integer, Object> r = selection0.indexedResult();
+							int index = r.keySet().iterator().next();
+							result.delete(
+									index,
+									r.get(index),
+									new CallbackTemplate<IDeletableList<Object>>(
+											callback) {
 
-								@Override
-								public void onYes() {
-									Map<Integer, Object> r = selection0
-											.indexedResult();
-									int index = r.keySet().iterator().next();
-									result.delete(
-											index,
-											r.get(index),
-											new CallbackTemplate<IDeletableList<Object>>(
-													callback) {
+										@Override
+										public void onSuccess(
+												IDeletableList<Object> result) {
+											table.rows(toRows(result));
+											callback.onSuccess(true);
+										}
+									});
+						}
+					});
+					dl.addButton().no().addClickListener(new IClickListener() {
 
-												@Override
-												public void onSuccess(
-														IDeletableList<Object> result) {
-													table.rows(toRows(result));
-													callback.onSuccess(true);
-												}
-											});
-								}
-
-								@Override
-								public void onNo() {
-									callback.onSuccess(false);
-								}
-
-								@Override
-								public void onCancel() {
-									throw new MethodNotImplementedException();
-								}
-							});
+						@Override
+						public void onClick() {
+							callback.onSuccess(false);
+						}
+					});
+					dl.visible(true);
 				}
 			});
 		}
