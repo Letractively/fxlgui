@@ -128,4 +128,14 @@ class GWTQuestionDialog implements IQuestionDialog {
 		return this;
 	}
 
+	@Override
+	public IQuestionDialog modal(boolean modal) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IQuestionDialog imageResource(String imageResource) {
+		throw new MethodNotImplementedException();
+	}
+
 }
