@@ -282,7 +282,6 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 										}
 									});
 							// } else {
-
 						}
 					}
 				});
