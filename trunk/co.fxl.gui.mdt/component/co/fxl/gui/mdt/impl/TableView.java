@@ -29,6 +29,7 @@ import java.util.Map;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDialog.IQuestionDialog.IQuestionDialogListener;
+import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.ICallback;
@@ -45,6 +46,7 @@ import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IScrollTableClickListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.ISortListener;
+import co.fxl.gui.tree.impl.TreeWidgetImpl;
 
 class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 		ISelectionListener<Object> {
@@ -106,43 +108,41 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 				public void onClick() {
 					final Map<Integer, Object> result = table.selection()
 							.indexedResult();
-					String msg = result.size() == 1 ? "Delete Entity?"
-							: "Delete Entities?";
-					widget.mainPanel.display().showDialog().question()
-							.question(msg).title("Warning")
-							.addQuestionListener(new IQuestionDialogListener() {
+					IQuestionDialogListener l = new IQuestionDialogListener() {
 
-								@Override
-								public void onYes() {
-									List<Integer> indices = new LinkedList<Integer>();
-									List<Object> entities = new LinkedList<Object>();
-									for (Integer i : result.keySet()) {
-										Object entity = result.get(i);
-										indices.add(i);
-										entities.add(entity);
-									}
-									widget.queryList
-											.delete(indices,
-													entities,
-													new CallbackTemplate<IDeletableList<Object>>() {
+						@Override
+						public void onYes() {
+							List<Integer> indices = new LinkedList<Integer>();
+							List<Object> entities = new LinkedList<Object>();
+							for (Integer i : result.keySet()) {
+								Object entity = result.get(i);
+								indices.add(i);
+								entities.add(entity);
+							}
+							widget.queryList
+									.delete(indices,
+											entities,
+											new CallbackTemplate<IDeletableList<Object>>() {
 
-														@Override
-														public void onSuccess(
-																IDeletableList<Object> result) {
-															onDelete(null);
-														}
-													});
-								}
+												@Override
+												public void onSuccess(
+														IDeletableList<Object> result) {
+													onDelete(null);
+												}
+											});
+						}
 
-								@Override
-								public void onNo() {
-								}
+						@Override
+						public void onNo() {
+						}
 
-								@Override
-								public void onCancel() {
-									throw new MethodNotImplementedException();
-								}
-							});
+						@Override
+						public void onCancel() {
+							throw new MethodNotImplementedException();
+						}
+					};
+					IDisplay display = widget.mainPanel.display();
+					TreeWidgetImpl.queryDeleteEntity(l, display, true);
 				}
 			});
 			delete.clickable(false);
