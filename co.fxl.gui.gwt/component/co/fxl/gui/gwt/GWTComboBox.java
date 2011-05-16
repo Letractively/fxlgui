@@ -23,6 +23,7 @@ import java.util.List;
 
 import co.fxl.gui.api.IComboBox;
 
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -48,8 +49,9 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 	@Override
 	public IComboBox height(int height) {
 		if (GWTDisplay.isFirefox()) {
-			container.widget.getElement().getStyle()
-					.setPaddingTop((height - defaultHeight) / 2, Unit.PX);
+			int padding = (height - defaultHeight) / 2;
+			Style s = container.widget.getElement().getStyle();
+			s.setPadding(padding, Unit.PX);
 		}
 		return super.height(height);
 	}
