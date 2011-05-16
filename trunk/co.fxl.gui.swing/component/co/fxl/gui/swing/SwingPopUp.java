@@ -86,9 +86,9 @@ class SwingPopUp implements IPopUp {
 			if (component != null) {
 				if (component.getWidth() < 160)
 					component.setSize(160, component.getHeight());
-				if (w < 0)
+				if (w > 0)
 					component.setSize(w, component.getHeight());
-				if (h < 0)
+				if (h > 0)
 					component.setSize(component.getWidth(), h);
 				if (center) {
 					x = panel.width() / 2
