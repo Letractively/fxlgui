@@ -18,9 +18,11 @@
  */
 package co.fxl.gui.api.template;
 
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDialog.IQuestionDialog;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IVerticalPanel;
 
 public class QuestionDialogImpl implements IQuestionDialog {
 
@@ -44,16 +46,41 @@ public class QuestionDialogImpl implements IQuestionDialog {
 	private void update() {
 		if (message == null || listener == null)
 			return;
-		IPopUp popUp = display.showPopUp();
+		final IPopUp popUp = display.showPopUp();
 		popUp.center();
 		popUp.modal(true);
-		WidgetTitle t = new WidgetTitle(popUp.container().panel())
-				.grayBackground().foldable(false).space(0);
+		IVerticalPanel v = popUp.container().panel().vertical().spacing(1);
+		WidgetTitle.decorateBorder(v.border().color());
+		WidgetTitle t = new WidgetTitle(v.add().panel()).grayBackground()
+				.foldable(false).space(0);
 		t.addTitle(title.toUpperCase());
-		t.addHyperlink("accept.png", "Ok");
-		t.addHyperlink("back.png", "No");
+		t.addHyperlink("accept.png", "Yes").addClickListener(
+				new IClickListener() {
+
+					@Override
+					public void onClick() {
+						popUp.visible(false);
+						listener.onYes();
+					}
+				});
+		t.addHyperlink("back.png", "No").addClickListener(new IClickListener() {
+
+			@Override
+			public void onClick() {
+				popUp.visible(false);
+				listener.onNo();
+			}
+		});
 		if (allowCancel)
-			t.addHyperlink("cancel.png", "Cancel");
+			t.addHyperlink("cancel.png", "Cancel").addClickListener(
+					new IClickListener() {
+
+						@Override
+						public void onClick() {
+							popUp.visible(false);
+							listener.onCancel();
+						}
+					});
 		t.content().panel().vertical().spacing(10).add().label().text(message)
 				.font().weight().bold();
 		popUp.visible(true);

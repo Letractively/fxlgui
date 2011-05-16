@@ -236,9 +236,14 @@ public class WidgetTitle implements IClickListener {
 		vertical.color().rgb(249, 249, 249).gradient().vertical()
 				.rgb(216, 216, 216);
 		IBorder border2 = vertical.border();
-		border2.color().rgb(172, 197, 213);
+		IColor c = border2.color();
+		decorateBorder(c);
 		border2.style().top();
 		return border2;
+	}
+
+	public static void decorateBorder(IColor c) {
+		c.rgb(172, 197, 213);
 	}
 
 	@Override
