@@ -84,7 +84,19 @@ public class QuestionDialogImpl implements IQuestionDialog {
 		t.content().panel().vertical().spacing(10).add().label().text(message);
 		// .font().weight().bold();
 		popUp.visible(true);
+		// addShadow(popUp.offsetX() + 40, popUp.offsetY() + popUp.height(), 40,
+		// 40);
 	}
+
+	//
+	// private void addShadow(int x, int y, int w, int h) {
+	// IPopUp popUp = display.showPopUp();
+	// popUp.modal(true);
+	// popUp.offset(x, y);
+	// popUp.size(w, h);
+	// popUp.container().panel().vertical().color().lightgray();
+	// popUp.visible(true);
+	// }
 
 	@Override
 	public IQuestionDialog allowCancel() {

@@ -29,4 +29,14 @@ public interface IPopUp {
 	IPopUp visible(boolean visible);
 
 	IPopUp center();
+
+	int offsetX();
+
+	int offsetY();
+
+	int width();
+
+	int height();
+
+	IPopUp size(int w, int h);
 }
