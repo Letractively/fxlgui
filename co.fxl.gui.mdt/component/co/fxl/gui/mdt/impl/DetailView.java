@@ -255,21 +255,34 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 					@Override
 					public void onSuccess(final ITree<Object> result) {
 						DetailView.this.itree = result;
-						if (!create) {
-							callback.onSuccess(result);
-						} else {
-							create = false;
-							itree.createNew(createType,
-									new CallbackTemplate<ITree<Object>>(
-											callback) {
+						// if (!create) {
+						callback.onSuccess(result);
+						if (create) {
+							DetailView.this.widget.mainPanel.display()
+									.invokeLater(new Runnable() {
 
 										@Override
-										public void onSuccess(
-												ITree<Object> result1) {
-											tree.selection(result1.object());
-											callback.onSuccess(result);
+										public void run() {
+											create = false;
+											tree.clickNew(createType);
+											// itree.createNew(
+											// createType,
+											// new
+											// CallbackTemplate<ITree<Object>>(
+											// callback) {
+											//
+											// @Override
+											// public void onSuccess(
+											// ITree<Object> result1) {
+											// tree.selection(result1
+											// .object());
+											// callback.onSuccess(result);
+											// }
+											// });
 										}
 									});
+							// } else {
+
 						}
 					}
 				});
