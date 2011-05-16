@@ -30,7 +30,7 @@ public class DiscardChangesDialog {
 		void onKeepChanges(ICallback<Boolean> cb);
 	}
 
-	public static final String DISCARD_CHANGES = "You have made changes that have not been saved! Discard Changes?";
+	public static final String DISCARD_CHANGES = "You have made changes that have not been saved! \nDiscard Changes?";
 	private static boolean active = false;
 	public static IDisplay display;
 	public static DiscardChangesListener listener;
