@@ -26,6 +26,7 @@ import java.util.Map;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
@@ -34,6 +35,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.IVerticalPanel;
 
 public class WidgetTitle implements IClickListener {
 
@@ -166,12 +168,16 @@ public class WidgetTitle implements IClickListener {
 			headerPanel.color().rgb(136, 136, 136).gradient().vertical()
 					.rgb(113, 113, 113);
 		if (titlePanel != null)
-			titlePanel.color().rgb(136, 136, 136).gradient().vertical()
-					.rgb(113, 113, 113);
+			decorateGradient(titlePanel);
 		if (headerLabel != null)
 			headerLabel.font().color().white();
 		grayBackground = true;
 		return this;
+	}
+
+	static IColor decorateGradient(IVerticalPanel titlePanel) {
+		return titlePanel.color().rgb(136, 136, 136).gradient().vertical()
+				.rgb(113, 113, 113);
 	}
 
 	public WidgetTitle commandsOnTop() {
