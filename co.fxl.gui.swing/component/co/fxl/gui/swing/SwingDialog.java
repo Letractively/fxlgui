@@ -28,6 +28,7 @@ import javax.swing.JOptionPane;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IWidgetProvider;
+import co.fxl.gui.api.template.QuestionDialogImpl;
 
 class SwingDialog implements IDialog {
 
@@ -183,7 +184,7 @@ class SwingDialog implements IDialog {
 
 	@Override
 	public IQuestionDialog question() {
-		return new QuestionDialog();
+		return new QuestionDialogImpl(panel);
 	}
 
 	@Override
