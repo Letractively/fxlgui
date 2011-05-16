@@ -43,13 +43,13 @@ public class WidgetTitle implements IClickListener {
 
 	public class CommandLink implements IClickable<IClickable<?>> {
 
-		// private IHorizontalPanel iPanel;
+		private IHorizontalPanel iPanel;
 		private ILabel label;
 		private IImage image;
 
 		public CommandLink(IHorizontalPanel iPanel, IImage image,
 				ILabel headerLabel) {
-			// this.iPanel = iPanel;
+			this.iPanel = iPanel;
 			this.image = image;
 			this.label = headerLabel;
 		}
@@ -88,9 +88,9 @@ public class WidgetTitle implements IClickListener {
 			label.addClickListener(clickListener);
 			if (image != null)
 				image.addClickListener(clickListener);
+			iPanel.addClickListener(clickListener);
 			return null;
 		}
-
 	}
 
 	public static final int LARGE_FONT = 18;
@@ -293,7 +293,8 @@ public class WidgetTitle implements IClickListener {
 		// if (hasCommands)
 		// commandPanel().addSpace(2);
 		hasCommands = true;
-		IHorizontalPanel iPanel = commandPanel().add().panel().horizontal();
+		IHorizontalPanel iPanel0 = commandPanel().add().panel().horizontal();
+		IHorizontalPanel iPanel = iPanel0;
 		if (commandsOnTop) {
 			iPanel.color().rgb(248, 248, 248).gradient().vertical()
 					.rgb(216, 216, 216);
@@ -331,7 +332,7 @@ public class WidgetTitle implements IClickListener {
 			image.addClickListener(clickListener);
 			clickableState.put(label, true);
 		}
-		CommandLink cl = new CommandLink(iPanel, image, label);
+		CommandLink cl = new CommandLink(iPanel0, image, label);
 		cl.clickable(true);
 		return cl;
 	}
