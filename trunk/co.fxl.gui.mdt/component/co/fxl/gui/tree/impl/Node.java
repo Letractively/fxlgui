@@ -60,6 +60,10 @@ class Node<T> extends LazyClickListener {
 	protected boolean isExpanded;
 	private IHorizontalPanel buttonPanel;
 	boolean moveActive = false;
+	private IImage moveTop;
+	private IImage moveUp;
+	private IImage moveDown;
+	private IImage moveBottom;
 
 	Node(final TreeWidgetImpl<T> widget, IVerticalPanel panel,
 			final ITree<T> root, int depth, boolean expand, List<ITree<T>> path) {
@@ -157,41 +161,43 @@ class Node<T> extends LazyClickListener {
 	}
 
 	void setUpMoveButtons() {
-		buttonPanel.add().image().resource("top.png")
+		int index = tree.parent().children().indexOf(tree);
+		int num = tree.parent().children().size();
+		moveTop = buttonPanel.add().image().resource("top.png")
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
 						throw new MethodNotImplementedException();
 					}
-				});
-		// TODO ...
+				}).mouseLeft();
+		moveTop.clickable(index > 0);
 		buttonPanel.addSpace(4);
-		buttonPanel.add().image().resource("up.png")
+		moveUp = buttonPanel.add().image().resource("up.png")
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
 						throw new MethodNotImplementedException();
 					}
-				});
-		// TODO ...
+				}).mouseLeft();
+		moveUp.clickable(index > 0);
 		buttonPanel.addSpace(4);
-		buttonPanel.add().image().resource("down.png")
+		moveDown = buttonPanel.add().image().resource("down.png")
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
 						throw new MethodNotImplementedException();
 					}
-				});
-		// TODO ...
+				}).mouseLeft();
+		moveDown.clickable(index < num - 1);
 		buttonPanel.addSpace(4);
-		buttonPanel.add().image().resource("bottom.png")
+		moveBottom = buttonPanel.add().image().resource("bottom.png")
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
 						throw new MethodNotImplementedException();
 					}
-				});
-		// TODO ...
+				}).mouseLeft();
+		moveBottom.clickable(index < num - 1);
 	}
 
 	@SuppressWarnings("unchecked")
