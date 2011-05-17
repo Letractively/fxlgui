@@ -294,7 +294,7 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 	public IGridPanel spacing(int pixel) {
 		// container.component.getInsets().set(pixel / 2, pixel / 2, pixel / 2,
 		// pixel / 2);
-		spacing = pixel / 2;
+		spacing = pixel;
 		return this;
 	}
 
@@ -312,10 +312,11 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 			constraints.gridy = row;
 			if (spacing != 0) {
 				assert sizeColumns != -1;
-				constraints.insets = new Insets(column == 0 ? spacing
-						: spacing / 2, row == 0 ? spacing : spacing / 2,
-						column == sizeColumns - 1 ? spacing : spacing / 2,
-						row == sizeRows - 1 ? spacing : spacing / 2);
+				int top = row == 0 ? spacing : spacing / 2;
+				int left = column == 0 ? spacing : spacing / 2;
+				int bottom = row == sizeRows - 1 ? spacing : spacing / 2;
+				int right = column == sizeColumns - 1 ? spacing : spacing / 2;
+				constraints.insets = new Insets(top, left, bottom, right);
 			}
 			gridCell = new GridCell(constraints);
 			putCell(column, row, gridCell);
