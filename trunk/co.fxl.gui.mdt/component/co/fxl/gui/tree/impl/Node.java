@@ -167,7 +167,12 @@ class Node<T> extends LazyClickListener {
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
-						throw new MethodNotImplementedException();
+						tree.moveTop(new CallbackTemplate<Void>() {
+							@Override
+							public void onSuccess(Void result) {
+								updateParent();
+							}
+						});
 					}
 				}).mouseLeft();
 		moveTop.clickable(index > 0);
@@ -176,7 +181,12 @@ class Node<T> extends LazyClickListener {
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
-						throw new MethodNotImplementedException();
+						tree.moveUp(new CallbackTemplate<Void>() {
+							@Override
+							public void onSuccess(Void result) {
+								updateParent();
+							}
+						});
 					}
 				}).mouseLeft();
 		moveUp.clickable(index > 0);
@@ -185,7 +195,12 @@ class Node<T> extends LazyClickListener {
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
-						throw new MethodNotImplementedException();
+						tree.moveDown(new CallbackTemplate<Void>() {
+							@Override
+							public void onSuccess(Void result) {
+								updateParent();
+							}
+						});
 					}
 				}).mouseLeft();
 		moveDown.clickable(index < num - 1);
@@ -194,10 +209,19 @@ class Node<T> extends LazyClickListener {
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
-						throw new MethodNotImplementedException();
+						tree.moveBottom(new CallbackTemplate<Void>() {
+							@Override
+							public void onSuccess(Void result) {
+								updateParent();
+							}
+						});
 					}
 				}).mouseLeft();
 		moveBottom.clickable(index < num - 1);
+	}
+
+	private void updateParent() {
+		throw new MethodNotImplementedException();
 	}
 
 	@SuppressWarnings("unchecked")

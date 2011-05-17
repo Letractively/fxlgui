@@ -21,6 +21,7 @@ package co.fxl.gui.tree.test;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.tree.api.ITree;
 
@@ -191,6 +192,26 @@ class TestTree implements ITree<String> {
 
 	@Override
 	public boolean isMovable() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public void moveUp(CallbackTemplate<Void> callback) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public void moveDown(CallbackTemplate<Void> callback) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public void moveTop(CallbackTemplate<Void> callback) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public void moveBottom(CallbackTemplate<Void> callback) {
 		throw new MethodNotImplementedException();
 	}
 }
