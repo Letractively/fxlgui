@@ -173,8 +173,8 @@ class GWTUploadWidget implements IUploadWidget {
 		tb = (TextBox) form.addTextField("Name").required().valueElement()
 				.nativeElement();
 		tb.setName("name");
-		final IFormField<ITextField> uRLField = form.addTextField("URL")
-				.required();
+		final IFormField<ITextField, String> uRLField = form
+				.addTextField("URL").required();
 		url = uRLField.valueElement();
 		IContainer c = uRLField.addContainer();
 		final FileUpload object = new FileUpload();
