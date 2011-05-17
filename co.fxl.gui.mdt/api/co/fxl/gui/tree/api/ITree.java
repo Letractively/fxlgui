@@ -21,7 +21,6 @@ package co.fxl.gui.tree.api;
 import java.util.List;
 
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.ICallback;
 
 public interface ITree<T> {
@@ -84,11 +83,11 @@ public interface ITree<T> {
 
 	IDecorator decorator();
 
-	void moveUp(CallbackTemplate<Void> callback);
+	void moveUp(ICallback<Void> callback);
 
-	void moveDown(CallbackTemplate<Void> callback);
+	void moveDown(ICallback<Void> callback);
 
-	void moveTop(CallbackTemplate<Void> callback);
+	void moveTop(ICallback<Void> callback);
 
-	void moveBottom(CallbackTemplate<Void> callback);
+	void moveBottom(ICallback<Void> callback);
 }
