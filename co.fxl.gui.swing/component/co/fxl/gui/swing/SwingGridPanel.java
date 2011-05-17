@@ -237,6 +237,8 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 		void remove() {
 			SwingGridPanel.this.container.component.remove(panel);
+			SwingGridPanel.this
+					.removeCell(constraints.gridx, constraints.gridy);
 		}
 	}
 
@@ -325,19 +327,29 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 	}
 
 	private void putCell(int columnIndex, int rowIndex, GridCell gridCell) {
-		Map<Integer, GridCell> row = cells.get(columnIndex);
+		Map<Integer, GridCell> row = cells.get(rowIndex);
 		if (row == null) {
 			row = new HashMap<Integer, GridCell>();
-			cells.put(columnIndex, row);
+			cells.put(rowIndex, row);
 		}
-		row.put(rowIndex, gridCell);
+		row.put(columnIndex, gridCell);
 	}
 
 	private GridCell getCell(int columnIndex, int rowIndex) {
-		Map<Integer, GridCell> row = cells.get(columnIndex);
+		Map<Integer, GridCell> row = cells.get(rowIndex);
 		if (row == null)
 			return null;
-		return row.get(rowIndex);
+		return row.get(columnIndex);
+	}
+
+	private GridCell removeCell(int columnIndex, int rowIndex) {
+		Map<Integer, GridCell> row = cells.get(rowIndex);
+		if (row == null)
+			return null;
+		GridCell remove = row.remove(columnIndex);
+		if (row.isEmpty())
+			cells.remove(rowIndex);
+		return remove;
 	}
 
 	@Override
@@ -349,16 +361,16 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 	@Override
 	public int columns() {
-		if (cells == null)
+		if (cells == null || cells.isEmpty())
 			return 0;
-		return cells.size();
+		return cells.get(0).size();
 	}
 
 	@Override
 	public int rows() {
-		if (cells == null || cells.isEmpty())
+		if (cells == null)
 			return 0;
-		return cells.get(0).size();
+		return cells.size();
 	}
 
 	@Override
@@ -368,11 +380,8 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 		if (columns < columns())
 			throw new MethodNotImplementedException();
 		if (rows < rows()) {
-			for (int r = rows; r < rows(); r++) {
-				for (int c = 0; c < columns; c++) {
-					((GridCell) getCell(c, r)).remove();
-				}
-			}
+			for (int r = rows; r < rows(); r++)
+				row(r).remove();
 		}
 		return this;
 	}
@@ -393,6 +402,33 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 					max = Math.max(max, cell(column, row).height());
 				}
 				return max;
+			}
+
+			@Override
+			public IGridPanel remove() {
+				for (int c = 0; c < columns(); c++) {
+					removeCell(c, row).remove();
+				}
+				return update();
+			}
+
+			@Override
+			public IGridPanel insert() {
+				for (int r = rows() - 1; r >= row; r--) {
+					for (int c = 0; c < columns(); c++) {
+						GridCell cell = getCell(c, r);
+						cell.constraints.gridy++;
+						layout.setConstraints(cell.panel, cell.constraints);
+					}
+					Map<Integer, GridCell> row = cells.remove(r);
+					cells.put(r + 1, row);
+				}
+				return update();
+			}
+
+			private IGridPanel update() {
+				SwingGridPanel.this.container.component.updateUI();
+				return SwingGridPanel.this;
 			}
 		};
 	}
