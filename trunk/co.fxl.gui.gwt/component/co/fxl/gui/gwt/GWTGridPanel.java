@@ -294,8 +294,28 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 	}
 
 	@Override
-	public IGridRow row(int row) {
-		throw new MethodNotImplementedException();
+	public IGridRow row(final int row) {
+		return new IGridRow() {
+
+			@Override
+			public int height() {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public IGridPanel remove() {
+				Grid grid = (Grid) container.widget;
+				grid.removeRow(row);
+				return GWTGridPanel.this;
+			}
+
+			@Override
+			public IGridPanel insert() {
+				Grid grid = (Grid) container.widget;
+				grid.insertRow(row);
+				return GWTGridPanel.this;
+			}
+		};
 	}
 
 	private Set<Integer> expandedColumns = new HashSet<Integer>();
