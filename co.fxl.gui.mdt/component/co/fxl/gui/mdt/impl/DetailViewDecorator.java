@@ -204,7 +204,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 					boolean hasProperty = node == null ? true
 							: property.adapter.hasProperty(node);
 					if (property.displayInDetailView && hasProperty) {
-						final IFormField<?> formField;
+						final IFormField<?, ?> formField;
 						final Object valueOf = node != null ? property.adapter
 								.valueOf(node) : null;
 						final ITextElement<?> valueElement;
@@ -212,14 +212,14 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							if (property.type.isRelation
 									|| property.type.encryptedText) {
 								if (!property.editable) {
-									IFormField<ITextField> tf = form
+									IFormField<ITextField, String> tf = form
 											.addTextField(property.name);
 									formField = tf;
 									valueElement = (ITextElement<?>) formField
 											.valueElement();
 									tf.valueElement().editable(false);
 								} else {
-									final IFormField<?> tf = property.type.encryptedText ? form
+									final IFormField<?, String> tf = property.type.encryptedText ? form
 											.addPasswordField(property.name)
 											: form.addTextField(property.name);
 									formField = tf;
@@ -271,7 +271,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 									}
 								}
 							} else if (property.type.isLong) {
-								IFormField<ITextArea> textArea = form
+								IFormField<ITextArea, String> textArea = form
 										.addTextArea(property.name);
 								if (!property.editable)
 									textArea.valueElement().editable(false);
@@ -294,7 +294,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 								valueElement = (ITextElement<?>) formField
 										.valueElement();
 							} else {
-								IFormField<ITextField> tf = form
+								IFormField<ITextField, String> tf = form
 										.addTextField(property.name);
 								formField = tf;
 								decorateEditable(property, formField);
@@ -318,7 +318,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 								}
 							});
 						} else if (property.type.clazz.equals(Date.class)) {
-							IFormField<ITextField> tf = form
+							IFormField<ITextField, Date> tf = form
 									.addDateField(property.name);
 							formField = tf;
 							decorateEditable(property, formField);
@@ -362,7 +362,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 								|| property.type.clazz.equals(Integer.class)) {
 							final boolean isLong = property.type.clazz
 									.equals(Long.class);
-							IFormField<ITextField> tf = form
+							IFormField<ITextField, String> tf = form
 									.addTextField(property.name);
 							formField = tf;
 							decorateEditable(property, formField);
@@ -423,7 +423,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	}
 
 	public void supplement(IFormWidget form, PropertyImpl property,
-			String name, IFormField<?> formField) {
+			String name, IFormField<?, ?> formField) {
 		if (property.type.maxLength == -1
 				|| !(formField.valueElement() instanceof ITextInput<?>))
 			return;
@@ -432,11 +432,11 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	}
 
 	private void decorateEditable(final PropertyImpl property,
-			final IFormField<?> formField) {
+			final IFormField<?, ?> formField) {
 		if (!property.editable || !isUpdateable) {
 			assert formField instanceof IFormField : "cast error in detail view";
 			@SuppressWarnings("unchecked")
-			IFormField<ITextField> iFormField = (IFormField<ITextField>) formField;
+			IFormField<ITextField, ?> iFormField = (IFormField<ITextField, ?>) formField;
 			iFormField.editable(false);
 		}
 	}
