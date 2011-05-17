@@ -33,4 +33,26 @@ class StateMementoImpl implements IStateMemento {
 		configuration = widget.configuration;
 		selection = new LinkedList<Object>(widget.selection);
 	}
+
+	StateMementoImpl() {
+	}
+
+	@Override
+	public IStateMemento selection(Object selection) {
+		this.selection = new LinkedList<Object>();
+		this.selection.add(selection);
+		return this;
+	}
+
+	@Override
+	public IStateMemento constraints(IFilterConstraints constraints) {
+		this.constraints = constraints;
+		return this;
+	}
+
+	@Override
+	public IStateMemento showDetailView() {
+		this.showDetailView = true;
+		return this;
+	}
 }

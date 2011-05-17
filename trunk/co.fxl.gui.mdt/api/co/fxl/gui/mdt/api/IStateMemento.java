@@ -18,6 +18,13 @@
  */
 package co.fxl.gui.mdt.api;
 
+import co.fxl.gui.filter.api.IFilterConstraints;
+
 public interface IStateMemento {
 
+	IStateMemento selection(Object selection);
+
+	IStateMemento constraints(IFilterConstraints constraints);
+
+	IStateMemento showDetailView();
 }
