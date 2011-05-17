@@ -105,4 +105,9 @@ public class PropertyImpl implements IProperty<Object, Object> {
 		constraintAdapter = adapter;
 		return this;
 	}
+
+	@Override
+	public IConditionRule<Object, Object, Object> addConditionRule() {
+		throw new MethodNotImplementedException();
+	}
 }
