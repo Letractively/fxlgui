@@ -21,12 +21,13 @@ package co.fxl.gui.form.impl;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.template.FieldTypeImpl;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.impl.FormWidgetImpl.FormEntryLabel;
 
-public abstract class FormFieldImpl<T> implements IFormField<T> {
+public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 
 	FormWidgetImpl widget;
 	private ILabel label;
@@ -47,7 +48,7 @@ public abstract class FormFieldImpl<T> implements IFormField<T> {
 	}
 
 	@Override
-	public IFormField<T> editable(boolean editable) {
+	public IFormField<T, R> editable(boolean editable) {
 		if (editable)
 			label.font().color().black();
 		else
@@ -86,7 +87,7 @@ public abstract class FormFieldImpl<T> implements IFormField<T> {
 	}
 
 	@Override
-	public IFormField<T> required() {
+	public IFormField<T, R> required() {
 		required = true;
 		widget.hasRequiredAttributes = true;
 		label.font().weight().bold();
@@ -101,6 +102,11 @@ public abstract class FormFieldImpl<T> implements IFormField<T> {
 
 	@Override
 	public void remove() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IUpdateable<R> addUpdateListener(IUpdateListener<R> listener) {
 		throw new MethodNotImplementedException();
 	}
 }

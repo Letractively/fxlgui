@@ -21,7 +21,7 @@ package co.fxl.gui.form.impl;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.form.api.IFormField;
 
-class FormTextFieldImpl extends FormFieldImpl<ITextField> {
+class FormTextFieldImpl<R> extends FormFieldImpl<ITextField, R> {
 
 	ITextField textField;
 
@@ -35,7 +35,7 @@ class FormTextFieldImpl extends FormFieldImpl<ITextField> {
 	}
 
 	@Override
-	public IFormField<ITextField> editable(boolean editable) {
+	public IFormField<ITextField, R> editable(boolean editable) {
 		valueElement().editable(editable);
 		return super.editable(editable);
 	}

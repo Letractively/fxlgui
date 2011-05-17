@@ -24,12 +24,11 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.template.DateFormat;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.input.api.ICalendarWidget;
 
-class FormDateFieldImpl extends FormTextFieldImpl {
+class FormDateFieldImpl extends FormTextFieldImpl<Date> {
 
 	private IImage button;
 
@@ -58,7 +57,7 @@ class FormDateFieldImpl extends FormTextFieldImpl {
 	}
 
 	@Override
-	public IFormField<ITextField> editable(boolean editable) {
+	public IFormField<ITextField, Date> editable(boolean editable) {
 		if (button != null)
 			button.clickable(editable);
 		return super.editable(editable);

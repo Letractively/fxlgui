@@ -79,7 +79,8 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 
 	@Override
 	public IChangePasswordWidget visible(boolean visible) {
-		IFormField<IPasswordField> pw = widget.addPasswordField("Current");
+		IFormField<IPasswordField, String> pw = widget
+				.addPasswordField("Current");
 		pw.addContainer().label();
 		currentPassword = pw.valueElement();
 		if (!requiresCurrent) {

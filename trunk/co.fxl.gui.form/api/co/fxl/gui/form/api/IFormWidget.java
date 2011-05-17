@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.form.api;
 
+import java.util.Date;
+
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -32,19 +34,19 @@ public interface IFormWidget {
 
 	public interface IFormContainer {
 
-		IFormField<ILabel> label();
+		IFormField<ILabel, String> label();
 
-		IFormField<ITextField> textField();
+		IFormField<ITextField, String> textField();
 
-		IFormField<ITextField> dateField();
+		IFormField<ITextField, Date> dateField();
 
-		IFormField<IPasswordField> passwordField();
+		IFormField<IPasswordField, String> passwordField();
 
-		IFormField<ITextArea> textArea();
+		IFormField<ITextArea, String> textArea();
 
-		IFormField<ICheckBox> checkBox();
+		IFormField<ICheckBox, Boolean> checkBox();
 
-		IFormField<IComboBox> comboBox();
+		IFormField<IComboBox, String> comboBox();
 
 		IImageField image();
 	}
@@ -68,19 +70,19 @@ public interface IFormWidget {
 
 	IFormContainer insert(int index, String name);
 
-	IFormField<ILabel> addLabel(String name);
+	IFormField<ILabel, String> addLabel(String name);
 
-	IFormField<ITextField> addTextField(String name);
+	IFormField<ITextField, String> addTextField(String name);
 
-	IFormField<ITextField> addDateField(String name);
+	IFormField<ITextField, Date> addDateField(String name);
 
-	IFormField<IPasswordField> addPasswordField(String name);
+	IFormField<IPasswordField, String> addPasswordField(String name);
 
-	IFormField<ITextArea> addTextArea(String name);
+	IFormField<ITextArea, String> addTextArea(String name);
 
-	IFormField<ICheckBox> addCheckBox(String name);
+	IFormField<ICheckBox, Boolean> addCheckBox(String name);
 
-	IFormField<IComboBox> addComboBox(String name);
+	IFormField<IComboBox, String> addComboBox(String name);
 
 	IImageField addImage(String name);
 

@@ -21,7 +21,7 @@ package co.fxl.gui.form.impl;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.form.api.IFormField;
 
-class FormCheckBoxImpl extends FormFieldImpl<ICheckBox> {
+class FormCheckBoxImpl extends FormFieldImpl<ICheckBox, Boolean> {
 
 	private ICheckBox checkBox;
 
@@ -34,7 +34,7 @@ class FormCheckBoxImpl extends FormFieldImpl<ICheckBox> {
 	}
 
 	@Override
-	public IFormField<ICheckBox> editable(boolean editable) {
+	public IFormField<ICheckBox, Boolean> editable(boolean editable) {
 		valueElement().editable(editable);
 		return super.editable(editable);
 	}

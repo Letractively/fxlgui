@@ -21,7 +21,7 @@ package co.fxl.gui.form.impl;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.form.api.IFormField;
 
-class FormTextAreaImpl extends FormFieldImpl<ITextArea> {
+class FormTextAreaImpl extends FormFieldImpl<ITextArea, String> {
 
 	private ITextArea textArea;
 
@@ -35,7 +35,7 @@ class FormTextAreaImpl extends FormFieldImpl<ITextArea> {
 	}
 
 	@Override
-	public IFormField<ITextArea> editable(boolean editable) {
+	public IFormField<ITextArea, String> editable(boolean editable) {
 		valueElement().editable(editable);
 		return super.editable(editable);
 	}

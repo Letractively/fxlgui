@@ -21,7 +21,7 @@ package co.fxl.gui.form.impl;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.form.api.IFormField;
 
-class FormComboBoxImpl extends FormFieldImpl<IComboBox> {
+class FormComboBoxImpl extends FormFieldImpl<IComboBox, String> {
 
 	private IComboBox comboBox;
 
@@ -34,7 +34,7 @@ class FormComboBoxImpl extends FormFieldImpl<IComboBox> {
 	}
 
 	@Override
-	public IFormField<IComboBox> editable(boolean editable) {
+	public IFormField<IComboBox, String> editable(boolean editable) {
 		valueElement().editable(editable);
 		return super.editable(editable);
 	}

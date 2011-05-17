@@ -21,21 +21,21 @@ package co.fxl.gui.form.impl;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.form.api.IFormField;
 
-class FormPasswordFieldImpl extends FormFieldImpl<IPasswordField> {
+class FormPasswordFieldImpl extends FormFieldImpl<IPasswordField, String> {
 
 	IPasswordField passwordField;
 
 	FormPasswordFieldImpl(FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
 		passwordField = widget.addFormValuePasswordField();
-//		passwordField.height(26);
-//		passwordField.border().color().gray();
+		// passwordField.height(26);
+		// passwordField.border().color().gray();
 		widget.addFillColumn();
 		editable(widget.saveListener != null);
 	}
 
 	@Override
-	public IFormField<IPasswordField> editable(boolean editable) {
+	public IFormField<IPasswordField, String> editable(boolean editable) {
 		valueElement().editable(editable);
 		return this;
 	}

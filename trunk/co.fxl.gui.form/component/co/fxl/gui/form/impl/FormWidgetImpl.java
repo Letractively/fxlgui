@@ -69,7 +69,7 @@ class FormWidgetImpl implements IFormWidget {
 	boolean hasRequiredAttributes = false;
 	private IVerticalPanel contentPanel;
 	ISaveListener saveListener = null;
-	List<FormFieldImpl<?>> fields = new LinkedList<FormFieldImpl<?>>();
+	List<FormFieldImpl<?, ?>> fields = new LinkedList<FormFieldImpl<?, ?>>();
 	private String saveTitle;
 	private int fixLabelWidth = -1;
 	private int fixValueWidth = -1;
@@ -190,27 +190,27 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	@Override
-	public IFormField<ICheckBox> addCheckBox(String name) {
+	public IFormField<ICheckBox, Boolean> addCheckBox(String name) {
 		return new FormCheckBoxImpl(this, gridIndex, name);
 	}
 
 	@Override
-	public IFormField<ITextArea> addTextArea(String name) {
+	public IFormField<ITextArea, String> addTextArea(String name) {
 		return new FormTextAreaImpl(this, gridIndex, name);
 	}
 
 	@Override
-	public IFormField<ITextField> addTextField(String name) {
-		return new FormTextFieldImpl(this, gridIndex, name);
+	public IFormField<ITextField, String> addTextField(String name) {
+		return new FormTextFieldImpl<String>(this, gridIndex, name);
 	}
 
 	@Override
-	public IFormField<ITextField> addDateField(String name) {
+	public IFormField<ITextField, Date> addDateField(String name) {
 		return new FormDateFieldImpl(this, gridIndex, name);
 	}
 
 	@Override
-	public IFormField<IPasswordField> addPasswordField(String name) {
+	public IFormField<IPasswordField, String> addPasswordField(String name) {
 		return new FormPasswordFieldImpl(this, gridIndex, name);
 	}
 
@@ -220,12 +220,12 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	@Override
-	public IFormField<IComboBox> addComboBox(String name) {
+	public IFormField<IComboBox, String> addComboBox(String name) {
 		return new FormComboBoxImpl(this, gridIndex, name);
 	}
 
 	@Override
-	public IFormField<ILabel> addLabel(String name) {
+	public IFormField<ILabel, String> addLabel(String name) {
 		return new FormLabelImpl(this, gridIndex, name);
 	}
 
@@ -325,7 +325,7 @@ class FormWidgetImpl implements IFormWidget {
 			validation.linkClickable(saveButton);
 			if (!alwaysAllowCancel)
 				validation.linkReset(clickable1);
-			for (final FormFieldImpl<?> formField : fields) {
+			for (final FormFieldImpl<?, ?> formField : fields) {
 				Object valueElement = formField.valueElement();
 				if (valueElement instanceof ITextArea) {
 					validation.linkInput((ITextArea) valueElement,
