@@ -189,7 +189,7 @@ public class DialogImpl implements IDialog {
 						.grid().spacing(10).resize(2, 1);
 				grid.cell(0, 0).align().begin().valign().begin().image()
 						.resource(image(type)).size(16, 16);
-				grid.cell(1, 0).label().text(message);
+				grid.cell(1, 0).valign().center().label().text(message);
 			} else
 				container = t.content();
 		}
