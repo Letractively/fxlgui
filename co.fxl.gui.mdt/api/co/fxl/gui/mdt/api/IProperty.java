@@ -52,7 +52,6 @@ public interface IProperty<T, S> {
 
 		boolean valueOf(T entity, S value);
 
-		// TODO not supported yet
 		boolean editable(T entity);
 	}
 
