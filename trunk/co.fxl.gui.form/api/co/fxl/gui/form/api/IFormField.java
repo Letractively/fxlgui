@@ -40,4 +40,6 @@ public interface IFormField<T> {
 	IContainer addContainer();
 
 	IFormField<T> editable(boolean editable);
+
+	void remove();
 }

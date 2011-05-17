@@ -30,6 +30,25 @@ import co.fxl.gui.api.template.ICallback;
 
 public interface IFormWidget {
 
+	public interface IFormContainer {
+
+		IFormField<ILabel> label();
+
+		IFormField<ITextField> textField();
+
+		IFormField<ITextField> dateField();
+
+		IFormField<IPasswordField> passwordField();
+
+		IFormField<ITextArea> textArea();
+
+		IFormField<ICheckBox> checkBox();
+
+		IFormField<IComboBox> comboBox();
+
+		IImageField image();
+	}
+
 	public interface ISaveListener {
 
 		void save(ICallback<Boolean> cb);
@@ -44,6 +63,10 @@ public interface IFormWidget {
 	IFormWidget fixValueColumn(int width);
 
 	ILabel addTitle(String title);
+
+	IFormContainer add(String name);
+
+	IFormContainer insert(int index, String name);
 
 	IFormField<ILabel> addLabel(String name);
 
