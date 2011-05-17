@@ -21,6 +21,7 @@ package co.fxl.gui.tree.impl;
 import java.util.List;
 
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -151,18 +152,46 @@ class Node<T> extends LazyClickListener {
 			tree.decorator().decorate(label);
 		buttonPanel.clear();
 		if (moveActive && tree.isMovable()) {
-			buttonPanel.add().image().resource("top.png");
-			// TODO ...
-			buttonPanel.addSpace(4);
-			buttonPanel.add().image().resource("up.png");
-			// TODO ...
-			buttonPanel.addSpace(4);
-			buttonPanel.add().image().resource("down.png");
-			// TODO ...
-			buttonPanel.addSpace(4);
-			buttonPanel.add().image().resource("bottom.png");
-			// TODO ...
+			setUpMoveButtons();
 		}
+	}
+
+	void setUpMoveButtons() {
+		buttonPanel.add().image().resource("top.png")
+				.addClickListener(new IClickListener() {
+					@Override
+					public void onClick() {
+						throw new MethodNotImplementedException();
+					}
+				});
+		// TODO ...
+		buttonPanel.addSpace(4);
+		buttonPanel.add().image().resource("up.png")
+		.addClickListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				throw new MethodNotImplementedException();
+			}
+		});
+		// TODO ...
+		buttonPanel.addSpace(4);
+		buttonPanel.add().image().resource("down.png")
+		.addClickListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				throw new MethodNotImplementedException();
+			}
+		});
+		// TODO ...
+		buttonPanel.addSpace(4);
+		buttonPanel.add().image().resource("bottom.png")
+		.addClickListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				throw new MethodNotImplementedException();
+			}
+		});
+		// TODO ...
 	}
 
 	@SuppressWarnings("unchecked")
