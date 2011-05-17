@@ -28,6 +28,10 @@ public interface IGridPanel extends IPanel<IGridPanel> {
 	public interface IGridRow {
 
 		int height();
+
+		IGridPanel remove();
+
+		IGridPanel insert();
 	}
 
 	public interface IGridClickListener {
