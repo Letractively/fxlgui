@@ -107,6 +107,8 @@ public interface IMasterDetailTableWidget<T> {
 
 	IStateMemento getState();
 
+	IStateMemento createNavigationState();
+
 	IMasterDetailTableWidget<T> setState(IStateMemento state);
 
 	IMasterDetailTableWidget<T> refreshOnSwitch2Grid(

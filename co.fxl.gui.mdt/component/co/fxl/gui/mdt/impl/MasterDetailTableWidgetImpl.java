@@ -601,4 +601,9 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		this.allowReorder = allowReorder;
 		return this;
 	}
+
+	@Override
+	public IStateMemento createNavigationState() {
+		return new StateMementoImpl();
+	}
 }
