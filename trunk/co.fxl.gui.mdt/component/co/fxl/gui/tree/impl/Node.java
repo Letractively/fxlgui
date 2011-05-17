@@ -221,7 +221,10 @@ class Node<T> extends LazyClickListener {
 	}
 
 	private void updateParent() {
-		throw new MethodNotImplementedException();
+		widget.getObject2node(tree.parent().object()).refresh(true);
+		widget.selection(tree.object());
+		widget.getObject2node(tree.object()).moveActive = true;
+		widget.notifyUpdate(widget.selection);
 	}
 
 	@SuppressWarnings("unchecked")
