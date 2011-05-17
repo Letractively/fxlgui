@@ -167,30 +167,30 @@ class Node<T> extends LazyClickListener {
 		// TODO ...
 		buttonPanel.addSpace(4);
 		buttonPanel.add().image().resource("up.png")
-		.addClickListener(new IClickListener() {
-			@Override
-			public void onClick() {
-				throw new MethodNotImplementedException();
-			}
-		});
+				.addClickListener(new IClickListener() {
+					@Override
+					public void onClick() {
+						throw new MethodNotImplementedException();
+					}
+				});
 		// TODO ...
 		buttonPanel.addSpace(4);
 		buttonPanel.add().image().resource("down.png")
-		.addClickListener(new IClickListener() {
-			@Override
-			public void onClick() {
-				throw new MethodNotImplementedException();
-			}
-		});
+				.addClickListener(new IClickListener() {
+					@Override
+					public void onClick() {
+						throw new MethodNotImplementedException();
+					}
+				});
 		// TODO ...
 		buttonPanel.addSpace(4);
 		buttonPanel.add().image().resource("bottom.png")
-		.addClickListener(new IClickListener() {
-			@Override
-			public void onClick() {
-				throw new MethodNotImplementedException();
-			}
-		});
+				.addClickListener(new IClickListener() {
+					@Override
+					public void onClick() {
+						throw new MethodNotImplementedException();
+					}
+				});
 		// TODO ...
 	}
 
