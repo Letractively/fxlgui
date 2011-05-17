@@ -18,9 +18,13 @@
  */
 package co.fxl.gui.swing;
 
+import java.awt.Color;
+
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
+import javax.swing.border.LineBorder;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IPopUp;
@@ -97,7 +101,12 @@ class SwingPopUp implements IPopUp {
 							- Math.max(40, component.getHeight() / 2);
 				}
 				PopupFactory factory = PopupFactory.getSharedInstance();
-				dialog = factory.getPopup(panel.frame, component, x, y);
+				JPanel p = new JPanel();
+				p.add(component);
+				p.getInsets().set(3, 3, 3, 3);
+				p.setBackground(Color.WHITE);
+				p.setBorder(new LineBorder(new Color(195, 217, 255), 3));
+				dialog = factory.getPopup(panel.frame, p, x, y);
 			}
 		assert dialog != null;
 		if (visible) {
