@@ -21,19 +21,19 @@ package co.fxl.gui.form.impl;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.form.api.IFormField;
 
-class FormLabelImpl extends FormFieldImpl<ILabel> {
+class FormLabelImpl extends FormFieldImpl<ILabel, String> {
 
 	private ILabel textField;
 
 	FormLabelImpl(FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
 		textField = addLabel(widget);
-//		textField.height(20);
+		// textField.height(20);
 		widget.addFillColumn();
 	}
 
 	@Override
-	public IFormField<ILabel> editable(boolean editable) {
+	public IFormField<ILabel, String> editable(boolean editable) {
 		return this;
 	}
 

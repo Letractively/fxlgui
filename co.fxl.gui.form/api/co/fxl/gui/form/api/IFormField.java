@@ -21,9 +21,10 @@ package co.fxl.gui.form.api;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.template.IFieldType;
 
-public interface IFormField<T> {
+public interface IFormField<T, R> extends IUpdateable<R> {
 
 	IGridCell cell();
 
@@ -31,7 +32,7 @@ public interface IFormField<T> {
 
 	T valueElement();
 
-	IFormField<T> required();
+	IFormField<T, R> required();
 
 	IFieldType type();
 
@@ -39,7 +40,7 @@ public interface IFormField<T> {
 
 	IContainer addContainer();
 
-	IFormField<T> editable(boolean editable);
+	IFormField<T, R> editable(boolean editable);
 
 	void remove();
 }

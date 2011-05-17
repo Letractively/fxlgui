@@ -43,7 +43,7 @@ public class UploadWidgetImpl implements IUploadWidget {
 	private boolean isFileUpload = false;
 	private Map<String, String> keyValues;
 	private IContainer c0;
-	private IFormField<ITextField> uRLField;
+	private IFormField<ITextField, String> uRLField;
 	private ITextField textField;
 	private ITextArea textArea;
 
