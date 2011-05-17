@@ -161,12 +161,11 @@ public class DialogImpl implements IDialog {
 
 	IPopUp getPopUp() {
 		if (popUp == null) {
-			popUp = display.showPopUp();
+			popUp = display.showPopUp().modal(modal);
 			if (width != -1) {
 				popUp.size(width, height);
 			}
 			popUp.center();
-			popUp.modal(modal);
 			IVerticalPanel v = popUp.container().panel().vertical().spacing(1);
 			WidgetTitle.decorateBorder(v.border().color());
 			WidgetTitle t = new WidgetTitle(v.add().panel()).grayBackground()
