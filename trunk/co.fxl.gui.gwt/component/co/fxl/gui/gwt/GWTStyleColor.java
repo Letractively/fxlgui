@@ -59,12 +59,24 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 								+ color
 								+ "')";
 						DOM.setStyleAttribute(element, "zoom", "1");
-//						DOM.setStyleAttribute(element, "-ms-" + attribute,
-//								gradient);
+						// DOM.setStyleAttribute(element, "-ms-" + attribute,
+						// gradient);
 					} else if (GWTDisplay.isFirefox()) {
 						gradient = "-moz-linear-gradient(top, "
 								+ original.color + ", " + color + ")";
-					}
+					} 
+//					else if (GWTDisplay.isOpera()) {
+//						attribute = "background-image";
+//						gradient = "url(gradient_"
+//								+ gwtWidgetStyle.widget.getOffsetHeight() + "_"
+//								+ original.color.substring(1).toLowerCase()
+//								+ "_" + color.substring(1).toLowerCase()
+//								+ ".png";
+//						DOM.setStyleAttribute(element, "background-repeat",
+//								"repeat-x");
+//						DOM.setStyleAttribute(element, "background",
+//								original.color);
+//					}
 					DOM.setStyleAttribute(element, attribute, gradient);
 				}
 			};
