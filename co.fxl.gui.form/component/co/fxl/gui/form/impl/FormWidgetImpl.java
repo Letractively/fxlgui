@@ -490,4 +490,14 @@ class FormWidgetImpl implements IFormWidget {
 		if (focus != null)
 			focus.focus(true);
 	}
+
+	@Override
+	public IFormContainer add(String name) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IFormContainer insert(int index, String name) {
+		throw new MethodNotImplementedException();
+	}
 }

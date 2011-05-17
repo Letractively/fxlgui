@@ -98,4 +98,9 @@ public abstract class FormFieldImpl<T> implements IFormField<T> {
 	public IFieldType type() {
 		return type;
 	}
+
+	@Override
+	public void remove() {
+		throw new MethodNotImplementedException();
+	}
 }
