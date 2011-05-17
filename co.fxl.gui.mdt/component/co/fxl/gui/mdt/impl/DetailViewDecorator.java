@@ -31,6 +31,7 @@ import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.ITextInput;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.DiscardChangesDialog;
@@ -409,10 +410,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 								&& property.required && hasRequiredAttributes)
 							formField.required();
 						supplement(form, property, property.name, formField);
-						for (ConditionRuleImpl cr : property.conditionRules) {
-							// TODO ...
-							throw new MethodNotImplementedException();
-						}
+						if (property != null && formField != null)
+							addConditionRules(property, formField);
 					}
 				}
 			}
@@ -421,6 +420,25 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 		if (alwaysShowCancel)
 			form.alwaysAllowCancel();
 		form.visible(true);
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void addConditionRules(final PropertyImpl property,
+			final IFormField<?, ?> formField) {
+		for (final ConditionRuleImpl cr : property.conditionRules) {
+			formField.addUpdateListener(new IUpdateListener() {
+
+				@Override
+				public void onUpdate(Object value) {
+					if (cr.invisible) {
+						// TODO ...
+						throw new MethodNotImplementedException();
+					}
+					// TODO ...
+					throw new MethodNotImplementedException();
+				}
+			});
+		}
 	}
 
 	public void supplement(IFormWidget form, PropertyImpl property,
