@@ -199,7 +199,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 				}
 			});
 		for (PropertyGroupImpl g : gs) {
-			if (g.applies(node))
+			if (g.applies(node)) {
 				for (final PropertyImpl property : g.properties) {
 					boolean hasProperty = node == null ? true
 							: property.adapter.hasProperty(node);
@@ -409,7 +409,11 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							formField.required();
 						supplement(form, property, property.name, formField);
 					}
+					if (!property.conditionRules.isEmpty()) {
+						throw new MethodNotImplementedException();
+					}
 				}
+			}
 		}
 		supplement(form);
 		if (alwaysShowCancel)

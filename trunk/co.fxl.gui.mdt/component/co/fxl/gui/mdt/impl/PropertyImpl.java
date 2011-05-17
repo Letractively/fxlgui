@@ -18,11 +18,56 @@
  */
 package co.fxl.gui.mdt.impl;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import co.fxl.gui.api.template.FieldTypeImpl;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.mdt.api.IProperty;
 
 public class PropertyImpl implements IProperty<Object, Object> {
+
+	class ConditionRuleImpl implements IConditionRule<Object, Object, Object> {
+
+		ICondition<Object> condition;
+		boolean invisible;
+		boolean nonModifieable;
+		Object[] targetValues;
+		IProperty<Object, Object> target;
+
+		@Override
+		public co.fxl.gui.mdt.api.IProperty.IConditionRule<Object, Object, Object> condition(
+				ICondition<Object> condition) {
+			this.condition = condition;
+			return this;
+		}
+
+		@Override
+		public co.fxl.gui.mdt.api.IProperty.IConditionRule<Object, Object, Object> target(
+				IProperty<Object, Object> target) {
+			this.target = target;
+			return this;
+		}
+
+		@Override
+		public co.fxl.gui.mdt.api.IProperty.IConditionRule<Object, Object, Object> targetValues(
+				Object... targetValues) {
+			this.targetValues = targetValues;
+			return this;
+		}
+
+		@Override
+		public co.fxl.gui.mdt.api.IProperty.IConditionRule<Object, Object, Object> invisible() {
+			invisible = true;
+			return this;
+		}
+
+		@Override
+		public co.fxl.gui.mdt.api.IProperty.IConditionRule<Object, Object, Object> nonModifieable() {
+			nonModifieable = true;
+			return this;
+		}
+	}
 
 	String name;
 	IAdapter<Object, Object> adapter;
@@ -35,6 +80,7 @@ public class PropertyImpl implements IProperty<Object, Object> {
 	IUpdateListener<Object> listener;
 	boolean filterable;
 	IConstraintAdapter<Object, Object> constraintAdapter;
+	List<ConditionRuleImpl> conditionRules = new LinkedList<ConditionRuleImpl>();
 
 	PropertyImpl(String name) {
 		this.name = name;
@@ -108,6 +154,8 @@ public class PropertyImpl implements IProperty<Object, Object> {
 
 	@Override
 	public IConditionRule<Object, Object, Object> addConditionRule() {
-		throw new MethodNotImplementedException();
+		ConditionRuleImpl rule = new ConditionRuleImpl();
+		conditionRules.add(rule);
+		return rule;
 	}
 }
