@@ -42,6 +42,7 @@ import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
 import co.fxl.gui.mdt.api.IProperty.IAdapter;
+import co.fxl.gui.mdt.impl.PropertyImpl.ConditionRuleImpl;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 
@@ -408,10 +409,10 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 								&& property.required && hasRequiredAttributes)
 							formField.required();
 						supplement(form, property, property.name, formField);
-					}
-					if (!property.conditionRules.isEmpty()) {
-						// TODO ...
-						throw new MethodNotImplementedException();
+						for (ConditionRuleImpl cr : property.conditionRules) {
+							// TODO ...
+							throw new MethodNotImplementedException();
+						}
 					}
 				}
 			}
