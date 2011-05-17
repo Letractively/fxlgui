@@ -25,6 +25,20 @@ import co.fxl.gui.api.template.IFieldType;
 
 public interface IProperty<T, S> {
 
+	public interface IConditionRule<T, S, R> {
+
+		public interface ICondition<S> {
+
+			boolean satisfied(S value);
+		}
+
+		IConditionRule<T, S, R> condition(ICondition<S> condition);
+
+		IConditionRule<T, S, R> target(IProperty<T, R> target);
+
+		IConditionRule<T, S, R> targetValues(R... targetValues);
+	}
+
 	public interface IConstraintAdapter<T, S> {
 
 		List<S> constraints(T entity);
@@ -66,6 +80,8 @@ public interface IProperty<T, S> {
 	IProperty<T, S> editable(boolean b);
 
 	IProperty<T, S> filterable();
+
+	IConditionRule<T, S, ?> addConditionRule();
 
 	String name();
 }
