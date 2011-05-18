@@ -29,6 +29,7 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
+import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.group.api.INavigationWidget;
@@ -94,13 +95,33 @@ public class NavigationWidgetImpl implements INavigationWidget {
 			active.showLabelAsInactive();
 		}
 		active = item;
-		for (INavigationListener l : listeners)
-			l.onNavigation(active, cb != null ? cb
-					: new CallbackTemplate<Void>(cb) {
+		notifyListeners(active, cb, listeners);
+		// for (INavigationListener l : listeners)
+		// l.onBeforeNavigation(active, cb != null ? cb
+		// : new CallbackTemplate<Void>(cb) {
+		// @Override
+		// public void onSuccess(Void result) {
+		// }
+		// });
+	}
+
+	private void notifyListeners(final NavigationItemImpl activeItem,
+			final ICallback<Void> cb, final List<INavigationListener> listeners2) {
+		if (listeners2.isEmpty())
+			return;
+		if (listeners2.size() > 1) {
+			listeners2.get(0).onBeforeNavigation(activeItem,
+					new CallbackTemplate<Void>() {
 						@Override
 						public void onSuccess(Void result) {
+							List<INavigationListener> listeners3 = listeners2
+									.subList(1, listeners2.size());
+							notifyListeners(activeItem, cb, listeners3);
 						}
 					});
+		} else {
+			listeners2.get(0).onBeforeNavigation(activeItem, cb);
+		}
 	}
 
 	@Override
