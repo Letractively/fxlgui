@@ -23,6 +23,7 @@ import java.util.List;
 
 import co.fxl.gui.mdt.api.IProperty;
 import co.fxl.gui.mdt.api.IRelation;
+import co.fxl.gui.tree.api.ITreeWidget.IViewID;
 
 class RelationImpl extends PropertyGroupImpl implements
 		IRelation<Object, Object> {
@@ -37,6 +38,7 @@ class RelationImpl extends PropertyGroupImpl implements
 	IEditListener<Object, Object> editListener;
 	IEditableAdapter<Object> editableAdapter;
 	List<IProperty<Object, ?>> hidden = new LinkedList<IProperty<Object, ?>>();
+	IViewID viewID;
 
 	RelationImpl(String name) {
 		super(name);

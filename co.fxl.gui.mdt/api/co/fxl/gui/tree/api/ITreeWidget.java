@@ -24,11 +24,17 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public interface ITreeWidget<T> {
 
+	public interface IViewID {
+
+	}
+
 	public interface IView {
 
 		void constrainType(Class<?> clazz);
 
 		void constrainType(Class<?>[] clazz);
+
+		IViewID iD();
 	}
 
 	public interface ITreeClickListener<T> {
@@ -58,9 +64,9 @@ public interface ITreeWidget<T> {
 
 	IView addDetailView(String title, IDecorator<T> decorator);
 
-	String activeDetailView();
+	IViewID activeDetailView();
 
-	ITreeWidget<T> activeDetailView(String detailView);
+	ITreeWidget<T> activeDetailView(IViewID view);
 
 	ITreeWidget<T> root(ITree<T> tree);
 

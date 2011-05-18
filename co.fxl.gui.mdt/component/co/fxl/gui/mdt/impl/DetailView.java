@@ -231,8 +231,8 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 							relation.constrainType));
 		}
 		for (final RelationImpl relation : widget.relations) {
-			registers.put(relation, new Register(relation.name,
-					new RelationDecorator(this, relation),
+			RelationDecorator dec = new RelationDecorator(this, relation);
+			registers.put(relation, new Register(relation.name, dec,
 					relation.constrainType));
 		}
 		for (Object r : widget.registerOrder) {
@@ -241,6 +241,11 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 				IView dv = tree.addDetailView(reg.name, reg.dec);
 				if (reg.c != null)
 					dv.constrainType(reg.c);
+				if (r instanceof RelationImpl) {
+					((RelationImpl) r).viewID = dv.iD();
+					((RelationDecorator) reg.dec).updateSelection(this,
+							(RelationImpl) r);
+				}
 			}
 		}
 	}
