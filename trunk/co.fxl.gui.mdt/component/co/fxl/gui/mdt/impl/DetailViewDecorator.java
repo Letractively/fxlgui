@@ -464,9 +464,6 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	}
 
 	protected void decorateBorder(IVerticalPanel panel) {
-		// IBorder border = panel.border();
-		// border.color().gray();
-		// border.style().top();
 	}
 
 	public DetailViewDecorator alwaysShowCancel() {
