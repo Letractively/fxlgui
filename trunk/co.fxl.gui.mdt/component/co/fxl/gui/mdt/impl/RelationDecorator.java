@@ -50,7 +50,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 	private final RelationImpl relation;
 	private IScrollTableWidget<Object> table;
 	private Object node;
-	private int selectionIndex;
+	private int selectionIndex = -1;
 	private Object selection;
 	private IVerticalPanel panel;
 	private DetailView detailView;
@@ -58,6 +58,8 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 	RelationDecorator(DetailView detailView, RelationImpl relation) {
 		this.detailView = detailView;
 		this.relation = relation;
+		selection = detailView.widget.relationRegisterSelection
+				.get(relation.name);
 	}
 
 	@Override
@@ -80,6 +82,8 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 	public void onSelection(int index, Object selection) {
 		this.selectionIndex = index;
 		this.selection = selection;
+		detailView.widget.relationRegisterSelection.put(relation.name,
+				selection);
 	}
 
 	private void decoratePanel(final IVerticalPanel panel,
