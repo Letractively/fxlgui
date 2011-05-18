@@ -6,6 +6,7 @@ import java.util.List;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.mdt.api.IStateMemento;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
+import co.fxl.gui.tree.api.ITreeWidget.IViewID;
 
 class StateMementoImpl implements IStateMemento {
 
@@ -13,7 +14,7 @@ class StateMementoImpl implements IStateMemento {
 	IFilterConstraints constraints;
 	String configuration;
 	LinkedList<Object> selection;
-	String registerSelection;
+	IViewID registerSelection;
 	Object relationRegisterSelection;
 	List<String> hiddenColumns = new LinkedList<String>();
 

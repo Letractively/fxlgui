@@ -58,6 +58,7 @@ import co.fxl.gui.mdt.api.IPropertyPage;
 import co.fxl.gui.mdt.api.IRelation;
 import co.fxl.gui.mdt.api.IStateMemento;
 import co.fxl.gui.tree.api.ITreeWidget;
+import co.fxl.gui.tree.api.ITreeWidget.IViewID;
 
 class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		IFilterListener {
@@ -105,9 +106,9 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	boolean switch2grid = false;
 	IDeletableList<Object> queryList;
 	boolean allowReorder;
-	String selectedRegister;
+	IViewID selectedRegister;
 	List<String> hiddenColumns = new LinkedList<String>();
-	Map<String, Object> relationRegisterSelection = new HashMap<String, Object>();
+	Map<IViewID, Object> relationRegisterSelection = new HashMap<IViewID, Object>();
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();

@@ -59,6 +59,42 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		void onRefresh();
 	}
 
+	public class ViewID implements IViewID {
+
+		private String title;
+		private Class<?>[] constrainType;
+
+		public ViewID(DetailView detailView) {
+			title = detailView.title;
+			constrainType = detailView.constrainType;
+		}
+		
+		@Override
+		public int hashCode() {
+			return title.hashCode();
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public boolean equals(Object o) {
+			ViewID iD = (ViewID) o;
+			if (!title.equals(iD.title))
+				return false;
+			return equals(constrainType, iD.constrainType);
+		}
+
+		private boolean equals(Class<?>[] c1, Class<?>[] c2) {
+			if (c1 == null || c2 == null)
+				return c1 == c2;
+			if (c1.length != c2.length)
+				return false;
+			for (int i = 0; i < c1.length; i++)
+				if (!c1[i].equals(c2[i]))
+					return false;
+			return true;
+		}
+	}
+
 	private class DetailView implements co.fxl.gui.tree.api.ITreeWidget.IView {
 
 		private IDecorator<T> decorator;
@@ -117,7 +153,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				}
 				bottom.clear();
 				decorator.decorate(contentPanel, bottom, node.tree);
-				activeView = title;
+				activeView = this;
 			}
 		}
 
@@ -135,6 +171,11 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		public void constrainType(Class<?>[] clazz) {
 			if (clazz.length > 1 || (clazz.length == 1 && clazz[0] != null))
 				this.constrainType = clazz;
+		}
+
+		@Override
+		public co.fxl.gui.tree.api.ITreeWidget.IViewID iD() {
+			return new ViewID(this);
 		}
 	}
 
@@ -484,7 +525,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	private int painted = 0;
 	boolean allowReorder = false;
-	private String activeView;
+	private IView activeView;
 	private static int MAX_PAINTS = 250;
 
 	void newNode(TreeWidgetImpl<T> widget, IVerticalPanel panel, ITree<T> root,
@@ -912,14 +953,18 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	@Override
-	public String activeDetailView() {
-		return activeView;
+	public IViewID activeDetailView() {
+		if (activeView == null)
+			return null;
+		return activeView.iD();
 	}
 
 	@Override
-	public ITreeWidget<T> activeDetailView(String detailView) {
+	public ITreeWidget<T> activeDetailView(IViewID view) {
+		if (view == null)
+			return this;
 		for (DetailView dv : detailViews)
-			if (dv.title.equals(detailView))
+			if (dv.iD().equals(view))
 				dv.register.active();
 		return this;
 	}

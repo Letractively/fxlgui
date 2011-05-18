@@ -58,8 +58,11 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 	RelationDecorator(DetailView detailView, RelationImpl relation) {
 		this.detailView = detailView;
 		this.relation = relation;
+	}
+
+	void updateSelection(DetailView detailView, RelationImpl relation) {
 		selection = detailView.widget.relationRegisterSelection
-				.get(relation.name);
+				.get(relation.viewID);
 	}
 
 	@Override
@@ -82,7 +85,8 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 	public void onSelection(int index, Object selection) {
 		this.selectionIndex = index;
 		this.selection = selection;
-		detailView.widget.relationRegisterSelection.put(relation.name,
+		assert relation.viewID != null;
+		detailView.widget.relationRegisterSelection.put(relation.viewID,
 				selection);
 	}
 
