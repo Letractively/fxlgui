@@ -36,7 +36,8 @@ class GWTHyperlink extends GWTElement<HTML, IHyperlink> implements IHyperlink {
 	private void update() {
 		if (text == null || uRI == null)
 			return;
-		container.widget.setHTML("<a href=\"" + uRI + "\">" + text + "</a>");
+		container.widget.setHTML("<span style=\"font-size: 12px\"><a href=\""
+				+ uRI + "\">" + text + "</a></span>");
 	}
 
 	@Override
