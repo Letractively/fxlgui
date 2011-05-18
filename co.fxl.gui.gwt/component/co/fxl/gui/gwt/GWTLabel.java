@@ -20,6 +20,7 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.template.HTMLText;
+import co.fxl.gui.api.template.HyperlinkDecorator;
 
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
@@ -30,9 +31,9 @@ import com.google.gwt.user.client.ui.HTML;
 
 class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 
-	private boolean isHyperlink = false;
 	private HTMLText html = new HTMLText();
 	private boolean selectionDisabled = false;
+	private HyperlinkDecorator hyperlinkDecorator;
 
 	GWTLabel(GWTContainer<HTML> container) {
 		super(container);
@@ -59,22 +60,15 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 
 	@Override
 	public ILabel clickable(boolean enable) {
-		if (isHyperlink) {
-			font().underline(enable);
-			if (enable) {
-				font().color().rgb(0, 87, 141);
-			} else {
-				font().color().gray();
-			}
+		if (hyperlinkDecorator != null) {
+			hyperlinkDecorator.clickable(enable);
 		}
 		return super.clickable(enable);
 	}
 
 	@Override
 	public ILabel hyperlink() {
-		isHyperlink = true;
-		font().underline(true);
-		font().color().rgb(0, 87, 141);
+		hyperlinkDecorator = new HyperlinkDecorator(this);
 		return this;
 	}
 
