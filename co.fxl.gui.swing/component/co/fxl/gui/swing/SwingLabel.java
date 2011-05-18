@@ -25,10 +25,11 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.template.HyperlinkDecorator;
 
 class SwingLabel extends SwingTextElement<JLabel, ILabel> implements ILabel {
 
-	private boolean isHyperlink = false;
+	private HyperlinkDecorator hyperlinkDecorator;
 
 	SwingLabel(SwingContainer<JLabel> container) {
 		super(container);
@@ -43,22 +44,14 @@ class SwingLabel extends SwingTextElement<JLabel, ILabel> implements ILabel {
 
 	@Override
 	public ILabel hyperlink() {
-		isHyperlink = true;
-		font().color().rgb(0, 87, 141);
-		font().underline(true);
+		hyperlinkDecorator = new HyperlinkDecorator(this);
 		return this;
 	}
 
 	@Override
 	public ILabel clickable(boolean enable) {
-		if (isHyperlink) {
-			if (enable) {
-				font().underline(true);
-				font().color().rgb(0, 87, 141);
-			} else {
-				font().underline(false);
-				font().color().gray();
-			}
+		if (hyperlinkDecorator != null) {
+			hyperlinkDecorator.clickable(enable);
 		}
 		super.clickable(enable);
 		return this;
