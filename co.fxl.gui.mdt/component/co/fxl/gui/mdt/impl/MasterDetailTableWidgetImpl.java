@@ -107,6 +107,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	boolean allowReorder;
 	String selectedRegister;
 	List<String> hiddenColumns = new LinkedList<String>();
+	Map<String, Object> relationRegisterSelection = new HashMap<String, Object>();
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -578,6 +579,9 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		configuration = s.configuration;
 		selection = s.selection;
 		selectedRegister = s.registerSelection;
+		if (selectedRegister != null)
+			relationRegisterSelection.put(selectedRegister,
+					s.relationRegisterSelection);
 		hiddenColumns = s.hiddenColumns;
 		return this;
 	}

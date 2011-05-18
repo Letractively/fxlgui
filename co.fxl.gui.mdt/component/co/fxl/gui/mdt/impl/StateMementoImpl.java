@@ -14,6 +14,7 @@ class StateMementoImpl implements IStateMemento {
 	String configuration;
 	LinkedList<Object> selection;
 	String registerSelection;
+	Object relationRegisterSelection;
 	List<String> hiddenColumns = new LinkedList<String>();
 
 	StateMementoImpl(MasterDetailTableWidgetImpl widget) {
@@ -21,6 +22,8 @@ class StateMementoImpl implements IStateMemento {
 		if (widget.activeView instanceof DetailView) {
 			registerSelection = ((DetailView) widget.activeView).tree
 					.activeDetailView();
+			relationRegisterSelection = widget.relationRegisterSelection
+					.get(registerSelection);
 		} else {
 			TableView tv = (TableView) widget.activeView;
 			for (IScrollTableColumn<Object> c : tv.property2column.values()) {
