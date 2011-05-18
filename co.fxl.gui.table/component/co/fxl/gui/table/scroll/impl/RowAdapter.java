@@ -44,6 +44,7 @@ class RowAdapter implements IRows<Object>, IComparableList {
 
 	@Override
 	public Object identifier(int i) {
+		assert i != -1;
 		return rows.identifier(indices[i]);
 	}
 
