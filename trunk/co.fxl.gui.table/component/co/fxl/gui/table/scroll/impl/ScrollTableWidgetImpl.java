@@ -177,9 +177,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					topPanel = dock.add().panel().grid();
 				if (showNoRowsFound) {
 					topPanel.cell(0, 0).width(10).label().text("&#160;");
-					topPanel.cell(1, 0).valign().begin().align().begin().label()
-							.text("NO ENTITIES FOUND").font().pixel(10).color()
-							.gray();
+					topPanel.cell(1, 0).valign().begin().align().begin()
+							.label().text("NO ENTITIES FOUND").font().pixel(10)
+							.color().gray();
 					buttonColumn++;
 				}
 				dock.add().label().text("&#160;");
@@ -662,6 +662,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			@Override
 			public void onClick(int column, int row) {
 				int convert2TableRow = convert2TableRow(row);
+				if (convert2TableRow == 0) {
+					return;
+				}
 				l.onClick(rows.identifier(convert2TableRow - 1),
 						convert2TableRow - 1);
 			}
