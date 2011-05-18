@@ -57,7 +57,7 @@ public class DialogImpl implements IDialog {
 
 		@Override
 		public IDialogButton close() {
-			return imageResource("back.png").text("Close");
+			return imageResource("cancel.png").text("Close");
 		}
 
 		@Override
@@ -67,7 +67,7 @@ public class DialogImpl implements IDialog {
 
 		@Override
 		public IDialogButton no() {
-			return imageResource("back.png").text("No");
+			return imageResource("cancel.png").text("No");
 		}
 
 		@Override
