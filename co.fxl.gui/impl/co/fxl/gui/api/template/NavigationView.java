@@ -60,10 +60,10 @@ public class NavigationView {
 			label.clickable(clickable);
 			for (ILabel l : additionalLabels)
 				l.clickable(clickable);
-			if (clickable)
-				label.font().color().rgb(0, 87, 141);
-			else
-				label.font().color().mix().gray().lightgray();
+			// if (clickable)
+			// label.font().color().rgb(0, 87, 141);
+			// else
+			// label.font().color().mix().gray().lightgray();
 			panel.clickable(clickable);
 			return this;
 		}
@@ -159,8 +159,8 @@ public class NavigationView {
 	}
 
 	protected ILabel addTextLabel(IHorizontalPanel panel) {
-		final ILabel textLabel = panel.add().label();// .hyperlink();
-		textLabel.font();// .pixel(13);// .weight().bold();
+		final ILabel textLabel = panel.add().label().hyperlink();// .hyperlink();
+		// textLabel.font();// .pixel(13);// .weight().bold();
 		return textLabel;
 	}
 
