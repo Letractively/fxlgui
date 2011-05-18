@@ -40,4 +40,6 @@ public interface INavigationItem {
 	IVerticalPanel addExtraPanel();
 
 	boolean isActive();
+
+	IDecorator initDecorator();
 }

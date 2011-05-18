@@ -153,4 +153,9 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	public String name() {
 		return button.text();
 	}
+
+	@Override
+	public IDecorator initDecorator() {
+		return decorator;
+	}
 }
