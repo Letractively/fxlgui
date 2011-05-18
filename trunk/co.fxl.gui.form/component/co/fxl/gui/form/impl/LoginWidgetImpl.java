@@ -112,9 +112,9 @@ class LoginWidgetImpl implements ILoginWidget {
 		decorate(liPanel.add().label().text("Password"));
 		decorate(password = liPanel.add().passwordField()
 				.addCarriageReturnListener(loginListener));
-		ILabel label = liPanel.add().label().text("Login")// .hyperlink()
+		liPanel.add().label().text("Login").hyperlink()
 				.addClickListener(loginListener).mouseLeft();
-		decorateHyperlink(label);
+		// decorateHyperlink(label);
 		if (decorator != null)
 			decorator.decorateEnd(liPanel, false);
 	}
@@ -129,9 +129,9 @@ class LoginWidgetImpl implements ILoginWidget {
 		loggedInAs = loPanel.add().label();
 		decorate(loggedInAs).font().weight().bold().color().mix().black()
 				.gray();
-		ILabel label = loPanel.add().label().text("Logout")
+		loPanel.add().label().text("Logout").hyperlink()
 				.addClickListener(logoutListener).mouseLeft();
-		decorateHyperlink(label);
+		// decorateHyperlink(label);
 		if (decorator != null)
 			decorator.decorateEnd(loPanel, true);
 	}
@@ -141,9 +141,9 @@ class LoginWidgetImpl implements ILoginWidget {
 		return label;
 	}
 
-	private void decorateHyperlink(ILabel label) {
-		label.font().color().rgb(0, 87, 141);
-	}
+	// private void decorateHyperlink(ILabel label) {
+	// label.font().color().rgb(0, 87, 141);
+	// }
 
 	private void decorate(ITextField formField) {
 		formField.font().pixel(11);
