@@ -38,13 +38,7 @@ class RelationFilter extends StringFilter {
 	private IClickListener clear = new IClickListener() {
 		@Override
 		public void onClick() {
-			values = null;
-			RelationFilter.super.clear();
-			textField.editable(true).width(RelationFilter.super.width()).font()
-					.weight().plain().color().black();
-			widget.apply();
-			if (cl != null)
-				cl.onClick();
+			clear(true);
 		}
 	};
 	private IAdapter<Object, Object> adapter;
@@ -58,10 +52,22 @@ class RelationFilter extends StringFilter {
 		super(grid, name, filterIndex);
 		this.widget = widget;
 		this.adapter = adapter;
-		textField.text(toString(preset) ).editable(false).font()
-				.weight().bold().color().gray();
+		textField.text(toString(preset)).editable(false).font().weight().bold()
+				.color().gray();
 		this.cl = cl;
 		remove.addClickListener(clear);
+	}
+
+	private void clear(boolean notifyListeners) {
+		values = null;
+		RelationFilter.super.clear();
+		textField.editable(true).width(RelationFilter.super.width()).font()
+				.weight().plain().color().black();
+		if (!notifyListeners)
+			return;
+		widget.apply();
+		if (cl != null)
+			cl.onClick();
 	}
 
 	@Override
@@ -119,7 +125,7 @@ class RelationFilter extends StringFilter {
 	boolean fromConstraint(IFilterConstraints constraints) {
 		if (values != null) {
 			if (!constraints.isRelationConstrained(name)) {
-				clear.onClick();
+				clear(false);
 			}
 			return false;
 		} else if (constraints.isAttributeConstrained(name)) {
