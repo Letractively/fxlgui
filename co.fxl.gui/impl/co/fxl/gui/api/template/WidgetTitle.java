@@ -244,13 +244,13 @@ public class WidgetTitle implements IClickListener {
 
 	public CommandLink addHyperlink(String imageResource, String text) {
 		initHeader();
+		IHorizontalPanel cp = commandPanel();
 		if (hasCommands && imageResource == null) {
-			ILabel label = commandPanel().add().label().text("|");
-			label.font().color().lightgray();
+			ILabel label = addSeparator(cp);
 			labels.add(label);
 		}
 		hasCommands = true;
-		IHorizontalPanel iPanel0 = commandPanel().add().panel().horizontal();
+		IHorizontalPanel iPanel0 = cp.add().panel().horizontal();
 		IHorizontalPanel iPanel = iPanel0;
 		if (commandsOnTop) {
 			iPanel.color().rgb(248, 248, 248).gradient().vertical()
@@ -294,11 +294,18 @@ public class WidgetTitle implements IClickListener {
 
 	public IImage addImage(String image) {
 		initHeader();
+		IHorizontalPanel cp = commandPanel();
 		if (hasCommands) {
-			commandPanel().add().label().text("|").font().color().gray();
+			addSeparator(cp);
 		}
 		hasCommands = true;
-		IImage label = commandPanel().add().image().resource(image);
+		IImage label = cp.add().image().resource(image);
+		return label;
+	}
+
+	protected ILabel addSeparator(IHorizontalPanel cp) {
+		ILabel label = cp.add().label().text("|");
+		label.font().color().gray();
 		return label;
 	}
 
