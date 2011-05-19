@@ -72,6 +72,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	private int spacing = 8;
 	private Map<PropertyImpl, IFormField<?, ?>> property2formField = new HashMap<PropertyImpl, IFormField<?, ?>>();
 	private Object node;
+	private IVerticalPanel panel;
 
 	public void setUpdateable(boolean isUpdateable) {
 		this.isUpdateable = isUpdateable;
@@ -139,6 +140,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	@Override
 	public void decorate(IVerticalPanel panel, IVerticalPanel bottom,
 			final Object node) {
+		this.panel = panel;
 		updates.clear();
 		assert node != null;
 		this.node = node;
@@ -440,17 +442,22 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 			formField.addUpdateListener(new IUpdateListener() {
 
 				@Override
-				public void onUpdate(Object value) {
-					boolean satisfied = cr.condition.satisfied(value);
-					if (cr.invisible) {
-						invisible(satisfied, value);
-					}
-					if (cr.nonModifieable) {
-						nonModifieable(satisfied, value);
-					}
-					if (cr.targetValues != null) {
-						targetValues(satisfied, value);
-					}
+				public void onUpdate(final Object value) {
+					panel.display().invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							boolean satisfied = cr.condition.satisfied(value);
+							if (cr.invisible) {
+								invisible(satisfied, value);
+							}
+							if (cr.nonModifieable) {
+								nonModifieable(satisfied, value);
+							}
+							if (cr.targetValues != null) {
+								targetValues(satisfied, value);
+							}
+						}
+					});
 				}
 
 				private void targetValues(boolean satisfied, Object value) {
