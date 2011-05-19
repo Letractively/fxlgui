@@ -29,10 +29,8 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -40,6 +38,7 @@ import javax.swing.JPanel;
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.template.GridCellContainer;
 import co.fxl.gui.api.template.KeyTemplate;
 
 class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
@@ -237,13 +236,25 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 		void remove() {
 			SwingGridPanel.this.container.component.remove(panel);
-			SwingGridPanel.this
-					.removeCell(constraints.gridx, constraints.gridy);
+			SwingGridPanel.this.cells.removeCell(constraints.gridx,
+					constraints.gridy);
 		}
 	}
 
 	private GridBagConstraints constraints = new GridBagConstraints();
-	private Map<Integer, Map<Integer, GridCell>> cells = new HashMap<Integer, Map<Integer, GridCell>>();
+	private GridCellContainer<GridCell> cells = new GridCellContainer<GridCell>() {
+
+		private static final long serialVersionUID = -4186212502539969308L;
+
+		protected void moveCellDown(GridCell cell, int i) {
+			cell.constraints.gridy += i;
+			layout.setConstraints(cell.panel, cell.constraints);
+		}
+
+		protected void handleRemovedCell(GridCell cell) {
+			container.component.remove(cell.panel);
+		}
+	};
 	private GridCell gridCell;
 	private GridBagLayout layout;
 	private Insets insets = new Insets(0, 0, 0, 0);
@@ -308,7 +319,7 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 	@Override
 	public IGridCell cell(int column, int row) {
-		gridCell = getCell(column, row);
+		gridCell = cells.getCell(column, row);
 		if (gridCell == null) {
 			constraints.gridx = column;
 			constraints.gridy = row;
@@ -321,35 +332,9 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 				constraints.insets = new Insets(top, left, bottom, right);
 			}
 			gridCell = new GridCell(constraints);
-			putCell(column, row, gridCell);
+			cells.putCell(column, row, gridCell);
 		}
 		return gridCell;
-	}
-
-	private void putCell(int columnIndex, int rowIndex, GridCell gridCell) {
-		Map<Integer, GridCell> row = cells.get(rowIndex);
-		if (row == null) {
-			row = new HashMap<Integer, GridCell>();
-			cells.put(rowIndex, row);
-		}
-		row.put(columnIndex, gridCell);
-	}
-
-	private GridCell getCell(int columnIndex, int rowIndex) {
-		Map<Integer, GridCell> row = cells.get(rowIndex);
-		if (row == null)
-			return null;
-		return row.get(columnIndex);
-	}
-
-	private GridCell removeCell(int columnIndex, int rowIndex) {
-		Map<Integer, GridCell> row = cells.get(rowIndex);
-		if (row == null)
-			return null;
-		GridCell remove = row.remove(columnIndex);
-		if (row.isEmpty())
-			cells.remove(rowIndex);
-		return remove;
 	}
 
 	@Override
@@ -406,41 +391,23 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 			@Override
 			public IGridPanel remove() {
-				int rows = rows();
-				for (int c = 0; c < columns(); c++) {
-					removeCell(c, row).remove();
-				}
-				for (int r = row + 1; r < rows; r++) {
-					for (int c = 0; c < columns(); c++) {
-						GridCell cell = getCell(c, r);
-						assert cell.constraints != null : "cell " + c + "/" + r
-								+ " not found";
-						cell.constraints.gridy--;
-						layout.setConstraints(cell.panel, cell.constraints);
-					}
-					Map<Integer, GridCell> row = cells.remove(r);
-					cells.put(r - 1, row);
-				}
+				cells.removeRow(row);
 				return update();
 			}
 
 			@Override
 			public IGridPanel insert() {
-				int rows = rows();
-				for (int r = rows - 1; r >= row; r--) {
-					for (int c = 0; c < columns(); c++) {
-						GridCell cell = getCell(c, r);
-						cell.constraints.gridy++;
-						layout.setConstraints(cell.panel, cell.constraints);
-					}
-					Map<Integer, GridCell> row = cells.remove(r);
-					cells.put(r + 1, row);
-				}
+				cells.insertRow(row);
 				return update();
 			}
 
 			private IGridPanel update() {
-				SwingGridPanel.this.container.component.updateUI();
+				display().invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						SwingGridPanel.this.container.component.updateUI();
+					}
+				});
 				return SwingGridPanel.this;
 			}
 		};
