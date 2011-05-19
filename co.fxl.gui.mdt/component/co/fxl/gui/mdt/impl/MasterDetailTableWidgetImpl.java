@@ -135,7 +135,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 				.space(2);
 		if (!allowGridView)
 			views.visible(false);
-		views.grayBackground();
+//		views.grayBackground();
 		views.addTitle("VIEWS");
 		IClickable<?> hl = views.addHyperlink(Icons.REFRESH, "Refresh");
 		hl.clickable(true);

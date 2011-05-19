@@ -221,7 +221,8 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	TreeWidgetImpl(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel(), true).space(0)
-				.grayBackground().commandsOnTop();
+//				.grayBackground()
+				.commandsOnTop();
 		widgetTitle.foldable(false);
 		widgetTitle.holdOnClick();
 	}
