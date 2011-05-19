@@ -27,11 +27,6 @@ class FormTextFieldImpl<R> extends FormFieldImpl<ITextField, R> {
 
 	FormTextFieldImpl(FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
-		textField = addTextField(widget);
-		// textField.height(26);
-		// textField.border().color().gray();
-		widget.addFillColumn();
-		editable(widget.saveListener != null);
 	}
 
 	@Override
@@ -47,5 +42,11 @@ class FormTextFieldImpl<R> extends FormFieldImpl<ITextField, R> {
 	@Override
 	public ITextField valueElement() {
 		return textField;
+	}
+
+	@Override
+	void createContentColumn(int index) {
+		textField = addTextField(widget);
+		editable(widget.saveListener != null);
 	}
 }
