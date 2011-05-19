@@ -38,21 +38,33 @@ public class Heights {
 	}
 
 	public void decorate(IComboBox textField) {
+		decorateHeight(textField);
+		textField.color().rgb(249, 249, 249);
+	}
+
+	public void decorateHeight(IComboBox textField) {
 		textField.height(inc + COMBOBOX_HEIGHT);
 		textField.border().color().rgb(211, 211, 211);
-		textField.color().rgb(249, 249, 249);
 	}
 
 	public void decorate(ITextField textField) {
-		textField.height(inc + TEXTFIELD_HEIGHT);
-		textField.border().color().rgb(211, 211, 211);
+		decorateHeight(textField);
 		textField.color().rgb(249, 249, 249);
 	}
 
-	public void decorate(IPasswordField textField) {
+	public void decorateHeight(ITextField textField) {
 		textField.height(inc + TEXTFIELD_HEIGHT);
 		textField.border().color().rgb(211, 211, 211);
+	}
+
+	public void decorate(IPasswordField textField) {
+		decorateHeight(textField);
 		textField.color().rgb(249, 249, 249);
+	}
+
+	public void decorateHeight(IPasswordField textField) {
+		textField.height(inc + TEXTFIELD_HEIGHT);
+		textField.border().color().rgb(211, 211, 211);
 	}
 
 	public void decorate(IGridPanel.IGridCell cell) {
