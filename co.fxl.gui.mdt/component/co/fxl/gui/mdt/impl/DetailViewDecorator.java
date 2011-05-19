@@ -307,10 +307,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 								valueElement = (ITextElement<?>) formField
 										.valueElement();
 							}
-							String value = valueOf == null ? null
-									: (valueOf instanceof String ? (String) valueOf
-											: String.valueOf(valueOf));
-							valueElement.text(value);
+							setValue(valueOf, valueElement);
 							updates.add(new Runnable() {
 								@Override
 								public void run() {
@@ -427,6 +424,14 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 		form.visible(true);
 	}
 
+	public void setValue(final Object valueOf,
+			final ITextElement<?> valueElement) {
+		String value = valueOf == null ? null
+				: (valueOf instanceof String ? (String) valueOf : String
+						.valueOf(valueOf));
+		valueElement.text(value);
+	}
+
 	public List<Object> getDomain(final Object node, final PropertyImpl property) {
 		List<Object> vs = property.type.values;
 		if (property.constraintAdapter != null) {
@@ -498,8 +503,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 					boolean visible = !satisfied;
 					ff.visible(visible);
 					if (visible) {
-						// TODO inject value
-						throw new MethodNotImplementedException();
+						setValue(p.adapter.valueOf(node),
+								(ITextElement<?>) ff.valueElement());
 					}
 				}
 
