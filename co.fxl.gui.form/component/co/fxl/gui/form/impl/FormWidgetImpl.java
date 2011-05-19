@@ -63,7 +63,7 @@ class FormWidgetImpl implements IFormWidget {
 
 	// static final int HEIGHT_CELL = 30;
 	// static final int HEIGHT_CELL_INNER = 28;
-	int gridIndex = 0;
+	private int gridIndex = -1;
 	private WidgetTitle widgetTitle;
 	IGridPanel gridPanel;
 	boolean hasRequiredAttributes = false;
@@ -191,42 +191,46 @@ class FormWidgetImpl implements IFormWidget {
 
 	@Override
 	public IFormField<ICheckBox, Boolean> addCheckBox(String name) {
-		return new FormCheckBoxImpl(this, gridIndex, name);
+		return new FormCheckBoxImpl(this, nextGridIndex(), name);
 	}
 
 	@Override
 	public IFormField<ITextArea, String> addTextArea(String name) {
-		return new FormTextAreaImpl(this, gridIndex, name);
+		return new FormTextAreaImpl(this, nextGridIndex(), name);
 	}
 
 	@Override
 	public IFormField<ITextField, String> addTextField(String name) {
-		return new FormTextFieldImpl<String>(this, gridIndex, name);
+		return new FormTextFieldImpl<String>(this, nextGridIndex(), name);
 	}
 
 	@Override
 	public IFormField<ITextField, Date> addDateField(String name) {
-		return new FormDateFieldImpl(this, gridIndex, name);
+		return new FormDateFieldImpl(this, nextGridIndex(), name);
 	}
 
 	@Override
 	public IFormField<IPasswordField, String> addPasswordField(String name) {
-		return new FormPasswordFieldImpl(this, gridIndex, name);
+		return new FormPasswordFieldImpl(this, nextGridIndex(), name);
 	}
 
 	@Override
 	public IImageField addImage(String name) {
-		return new ImageFieldImpl(this, name);
+		return new ImageFieldImpl(this, nextGridIndex(), name);
+	}
+
+	private int nextGridIndex() {
+		return ++gridIndex;
 	}
 
 	@Override
 	public IFormField<IComboBox, String> addComboBox(String name) {
-		return new FormComboBoxImpl(this, gridIndex, name);
+		return new FormComboBoxImpl(this, nextGridIndex(), name);
 	}
 
 	@Override
 	public IFormField<ILabel, String> addLabel(String name) {
-		return new FormLabelImpl(this, gridIndex, name);
+		return new FormLabelImpl(this, nextGridIndex(), name);
 	}
 
 	@Override
