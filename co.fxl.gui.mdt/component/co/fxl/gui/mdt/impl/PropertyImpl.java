@@ -29,7 +29,7 @@ public class PropertyImpl implements IProperty<Object, Object> {
 
 	class ConditionRuleImpl implements IConditionRule<Object, Object, Object> {
 
-		ICondition<Object> condition;
+		ICondition<Object, Object> condition;
 		boolean invisible;
 		boolean nonModifieable;
 		Object[] targetValues;
@@ -37,7 +37,7 @@ public class PropertyImpl implements IProperty<Object, Object> {
 
 		@Override
 		public co.fxl.gui.mdt.api.IProperty.IConditionRule<Object, Object, Object> condition(
-				ICondition<Object> condition) {
+				ICondition<Object, Object> condition) {
 			this.condition = condition;
 			return this;
 		}
