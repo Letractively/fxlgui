@@ -402,12 +402,7 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 			}
 
 			private IGridPanel update() {
-				display().invokeLater(new Runnable() {
-					@Override
-					public void run() {
-						SwingGridPanel.this.container.component.updateUI();
-					}
-				});
+				SwingGridPanel.this.container.component.updateUI();
 				return SwingGridPanel.this;
 			}
 		};
