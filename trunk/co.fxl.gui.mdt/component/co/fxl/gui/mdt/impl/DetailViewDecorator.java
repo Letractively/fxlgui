@@ -484,7 +484,12 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 				private void invisible(boolean satisfied, Object value) {
 					PropertyImpl p = property(cr);
 					IFormField<?, ?> ff = target(p);
-					ff.visible(!satisfied);
+					boolean visible = !satisfied;
+					ff.visible(visible);
+					if (visible) {
+						// TODO inject value
+						throw new MethodNotImplementedException();
+					}
 				}
 
 				private PropertyImpl property(ConditionRuleImpl cr) {
