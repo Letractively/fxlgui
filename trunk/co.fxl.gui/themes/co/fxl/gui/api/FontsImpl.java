@@ -40,6 +40,22 @@ class FontsImpl implements IFonts {
 					}
 				};
 			}
+
+			@Override
+			public IButton button() {
+				return new IButton() {
+
+					@Override
+					public void clickable(ILabel label, boolean clickable) {
+						if (clickable) {
+							label.font().color().black();
+						} else {
+							label.font().color().gray();
+						}
+					}
+
+				};
+			}
 		};
 	}
 

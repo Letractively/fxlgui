@@ -65,11 +65,7 @@ public class WidgetTitle implements IClickListener {
 			label.clickable(clickable);
 			if (image != null)
 				image.clickable(clickable);
-			if (clickable) {
-				label.font().color().black();
-			} else {
-				label.font().color().gray();
-			}
+			Fonts.instance().dialog().button().clickable(label, clickable);
 			return this;
 		}
 

@@ -82,7 +82,6 @@ public class ViewList {
 				label = labelPanel.add().label().hyperlink();
 				label.addClickListener(this);
 				label.font().pixel(13);
-				// label.font().weight().plain().color().rgb(0, 87, 141);
 				labelPanel.addSpace(4);
 				content = widget.contentPanel().add();
 				if (newListener != null) {

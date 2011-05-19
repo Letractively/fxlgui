@@ -41,7 +41,15 @@ public interface IFonts {
 
 		}
 
+		public interface IButton {
+
+			void clickable(ILabel label, boolean clickable);
+
+		}
+
 		IErrorDialog error();
+
+		IButton button();
 
 	}
 
