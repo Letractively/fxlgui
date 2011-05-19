@@ -104,4 +104,10 @@ public class FieldTypeImpl implements IFieldType {
 		encryptedText = true;
 		return this;
 	}
+
+	@Override
+	public IFieldType clearConstraints() {
+		values.clear();
+		return this;
+	}
 }
