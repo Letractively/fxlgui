@@ -27,11 +27,6 @@ class FormPasswordFieldImpl extends FormFieldImpl<IPasswordField, String> {
 
 	FormPasswordFieldImpl(FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
-		passwordField = widget.addFormValuePasswordField(index);
-		// passwordField.height(26);
-		// passwordField.border().color().gray();
-		widget.addFillColumn();
-		editable(widget.saveListener != null);
 	}
 
 	@Override
@@ -43,5 +38,11 @@ class FormPasswordFieldImpl extends FormFieldImpl<IPasswordField, String> {
 	@Override
 	public IPasswordField valueElement() {
 		return passwordField;
+	}
+
+	@Override
+	void createContentColumn(int index) {
+		passwordField = widget.addFormValuePasswordField(index);
+		editable(widget.saveListener != null);
 	}
 }

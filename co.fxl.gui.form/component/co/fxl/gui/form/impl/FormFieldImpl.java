@@ -37,16 +37,24 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	int row;
 	private int column = 2;
 	private boolean visible = true;
+	private String name;
 
 	public FormFieldImpl(FormWidgetImpl widget, int index, String name) {
 		this.widget = widget;
+		this.name = name;
 		widget.fields.add(this);
+		createLabelColumn(index);
+		this.row = index;
+		createContentColumn(index);
+	}
+
+	void createLabelColumn(int index) {
 		FormEntryLabel formEntryLabel = widget.addFormEntryLabel(name, index);
 		cell = formEntryLabel.cell;
 		label = formEntryLabel.formEntryLabel;
-		widget.addFillColumn();
-		this.row = index;
 	}
+
+	abstract void createContentColumn(int index);
 
 	@Override
 	public IFormField<T, R> editable(boolean editable) {
@@ -119,8 +127,8 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 		int index = getVisibleIndex();
 		if (visible) {
 			widget.gridPanel.row(index).insert();
-			// TODO ...
-			throw new MethodNotImplementedException();
+			createLabelColumn(index);
+			createContentColumn(index);
 		} else {
 			remove();
 		}

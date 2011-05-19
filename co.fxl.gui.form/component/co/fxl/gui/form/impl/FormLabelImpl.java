@@ -27,9 +27,6 @@ class FormLabelImpl extends FormFieldImpl<ILabel, String> {
 
 	FormLabelImpl(FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
-		textField = addLabel(widget);
-		// textField.height(20);
-		widget.addFillColumn();
 	}
 
 	@Override
@@ -44,5 +41,10 @@ class FormLabelImpl extends FormFieldImpl<ILabel, String> {
 	@Override
 	public ILabel valueElement() {
 		return textField;
+	}
+
+	@Override
+	void createContentColumn(int index) {
+		textField = addLabel(widget);
 	}
 }

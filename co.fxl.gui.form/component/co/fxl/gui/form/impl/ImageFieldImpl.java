@@ -14,10 +14,14 @@ class ImageFieldImpl implements IImageField {
 
 	ImageFieldImpl(FormWidgetImpl widget, int index, String name) {
 		FormEntryLabel formEntryLabel = widget.addFormEntryLabel(name, index);
+		createLabelColumn(widget, index, formEntryLabel);
+	}
+
+	void createLabelColumn(FormWidgetImpl widget, int index,
+			FormEntryLabel formEntryLabel) {
 		cell = formEntryLabel.cell;
 		label = formEntryLabel.formEntryLabel;
 		image = widget.addImage(index);
-		widget.addFillColumn();
 	}
 
 	@Override

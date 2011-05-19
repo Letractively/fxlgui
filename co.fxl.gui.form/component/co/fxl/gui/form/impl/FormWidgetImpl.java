@@ -111,9 +111,6 @@ class FormWidgetImpl implements IFormWidget {
 		return cell;
 	}
 
-	void addFillColumn() {
-	}
-
 	ITextField addFormValueTextField(int gridIndex) {
 		ITextField valuePanel = container(gridIndex).textField();
 		heights.decorate(valuePanel);
