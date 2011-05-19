@@ -452,7 +452,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 					panel.display().invokeLater(new Runnable() {
 						@Override
 						public void run() {
-							boolean satisfied = cr.condition.satisfied(value);
+							boolean satisfied = cr.condition.satisfied(node,
+									value);
 							if (cr.invisible) {
 								invisible(satisfied, value);
 							}

@@ -55,30 +55,30 @@ class MasterDetailTableWidgetTest {
 		@SuppressWarnings("unchecked")
 		IConditionRule<Object, String, String> c = (IConditionRule<Object, String, String>) p1
 				.addConditionRule();
-		c.target(p2).condition(new ICondition<String>() {
+		c.target(p2).condition(new ICondition<Object, String>() {
 
 			@Override
-			public boolean satisfied(String value) {
+			public boolean satisfied(Object e, String value) {
 				return INVISIBLE.equals(value);
 			}
 		}).invisible();
 		@SuppressWarnings("unchecked")
 		IConditionRule<Object, String, String> c2 = (IConditionRule<Object, String, String>) p3
 				.addConditionRule();
-		c2.target(p2).condition(new ICondition<String>() {
+		c2.target(p2).condition(new ICondition<Object, String>() {
 
 			@Override
-			public boolean satisfied(String value) {
+			public boolean satisfied(Object e, String value) {
 				return NON_EDITABLE.equals(value);
 			}
 		}).nonModifieable();
 		@SuppressWarnings("unchecked")
 		IConditionRule<Object, String, String> c3 = (IConditionRule<Object, String, String>) p3
 				.addConditionRule();
-		c3.target(p4).condition(new ICondition<String>() {
+		c3.target(p4).condition(new ICondition<Object, String>() {
 
 			@Override
-			public boolean satisfied(String value) {
+			public boolean satisfied(Object e, String value) {
 				return NON_EDITABLE.equals(value);
 			}
 		}).targetValues("1", "3");

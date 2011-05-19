@@ -27,12 +27,12 @@ public interface IProperty<T, S> {
 
 	public interface IConditionRule<T, S, R> {
 
-		public interface ICondition<S> {
+		public interface ICondition<T, S> {
 
-			boolean satisfied(S value);
+			boolean satisfied(T entity, S value);
 		}
 
-		IConditionRule<T, S, R> condition(ICondition<S> condition);
+		IConditionRule<T, S, R> condition(ICondition<T, S> condition);
 
 		IConditionRule<T, S, R> target(IProperty<T, R> target);
 
