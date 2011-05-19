@@ -19,8 +19,10 @@
 package co.fxl.gui.mdt.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IComboBox;
@@ -68,6 +70,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	private DeleteListener deleteListener;
 	private boolean alwaysShowCancel = false;
 	private int spacing = 8;
+	private Map<PropertyImpl, IFormField<?, ?>> property2formField = new HashMap<PropertyImpl, IFormField<?, ?>>();
 
 	public void setUpdateable(boolean isUpdateable) {
 		this.isUpdateable = isUpdateable;
@@ -143,6 +146,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 			IGridPanel statusPanel = bottom.add().panel().grid().resize(3, 1);
 			statusPanel.spacing(4);
 		}
+		property2formField.clear();
 		form = (IFormWidget) panel.add().panel().vertical().spacing(spacing)
 				.add().widget(IFormWidget.class);
 		form.isNew(isNew);
@@ -412,6 +416,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 						supplement(form, property, property.name, formField);
 						if (property != null && formField != null)
 							addConditionRules(property, formField);
+						property2formField.put(property, formField);
 					}
 				}
 			}
@@ -430,12 +435,44 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 
 				@Override
 				public void onUpdate(Object value) {
+					boolean satisfied = cr.condition.satisfied(value);
 					if (cr.invisible) {
-						// TODO ...
+						invisible(satisfied, value);
+					}
+					if (cr.nonModifieable) {
+						nonModifieable(satisfied, value);
+					}
+					if (cr.targetValues != null) {
+						targetValues(satisfied, value);
+					}
+				}
+
+				private void targetValues(boolean satisfied, Object value) {
+					throw new MethodNotImplementedException();
+				}
+
+				private void nonModifieable(boolean satisfied, Object value) {
+					PropertyImpl p = property(cr);
+					IFormField<?, ?> ff = target(p);
+					ff.editable(!satisfied);
+				}
+
+				private void invisible(boolean satisfied, Object value) {
+					PropertyImpl p = property(cr);
+					IFormField<?, ?> ff = target(p);
+					if (satisfied) {
+						ff.remove();
+					} else {
 						throw new MethodNotImplementedException();
 					}
-					// TODO ...
-					throw new MethodNotImplementedException();
+				}
+
+				private PropertyImpl property(ConditionRuleImpl cr) {
+					return (PropertyImpl) cr.target;
+				}
+
+				private IFormField<?, ?> target(PropertyImpl p) {
+					return property2formField.get(p);
 				}
 			});
 		}
