@@ -30,6 +30,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.mdt.impl.Icons;
 
 class SelectableList {
 
@@ -110,7 +111,7 @@ class SelectableList {
 				label.font().color().white();
 				p.color().remove().rgb(172, 197, 213);
 				if (widget.allowReorder)
-					reorderLogo = h.add().image().resource("move.png");
+					reorderLogo = h.add().image().resource(Icons.MOVE);
 			} else {
 				label.font().color().black();
 				p.color().remove().rgb(248, 248, 248).gradient().vertical()

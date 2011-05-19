@@ -85,7 +85,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 				widget.creatableTypes.add(null);
 			for (final String type : widget.creatableTypes) {
 				IClickable<?> button = table.addButton(type == null ? "New"
-						: "New " + type, type == null ? "new.png"
+						: "New " + type, type == null ? Icons.NEW
 						: widget.creatableTypeIcons.get(type));
 				buttons.put(type, button);
 				button.addClickListener(new IClickListener() {
@@ -102,7 +102,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 			}
 		}
 		if (widget.showCommands) {
-			delete = table.addButton("Delete", "cancel.png");
+			delete = table.addButton("Delete", co.fxl.gui.api.template.Icons.CANCEL);
 			delete.addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {
