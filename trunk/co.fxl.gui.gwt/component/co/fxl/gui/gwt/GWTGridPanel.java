@@ -236,19 +236,19 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 	}
 
 	private void putCell(int columnIndex, int rowIndex, GridCell gridCell) {
-		Map<Integer, GridCell> row = cells.get(columnIndex);
+		Map<Integer, GridCell> row = cells.get(rowIndex);
 		if (row == null) {
 			row = new HashMap<Integer, GridCell>();
-			cells.put(columnIndex, row);
+			cells.put(rowIndex, row);
 		}
-		row.put(rowIndex, gridCell);
+		row.put(columnIndex, gridCell);
 	}
 
 	private GridCell getCell(int columnIndex, int rowIndex) {
-		Map<Integer, GridCell> row = cells.get(columnIndex);
+		Map<Integer, GridCell> row = cells.get(rowIndex);
 		if (row == null)
 			return null;
-		return row.get(rowIndex);
+		return row.get(columnIndex);
 	}
 
 	@Override
@@ -306,14 +306,16 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 			public IGridPanel remove() {
 				Grid grid = (Grid) container.widget;
 				grid.removeRow(row);
-				return GWTGridPanel.this;
+				// TODO adjust cells
+				throw new MethodNotImplementedException();
 			}
 
 			@Override
 			public IGridPanel insert() {
 				Grid grid = (Grid) container.widget;
 				grid.insertRow(row);
-				return GWTGridPanel.this;
+				// TODO adjust cells
+				throw new MethodNotImplementedException();
 			}
 		};
 	}
