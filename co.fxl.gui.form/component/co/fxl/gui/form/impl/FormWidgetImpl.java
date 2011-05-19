@@ -63,7 +63,7 @@ class FormWidgetImpl implements IFormWidget {
 
 	// static final int HEIGHT_CELL = 30;
 	// static final int HEIGHT_CELL_INNER = 28;
-	private int gridIndex = 0;
+	int gridIndex = 0;
 	private WidgetTitle widgetTitle;
 	IGridPanel gridPanel;
 	boolean hasRequiredAttributes = false;
@@ -91,7 +91,7 @@ class FormWidgetImpl implements IFormWidget {
 		widgetTitle.foldable(false);
 	}
 
-	FormEntryLabel addFormEntryLabel(String name) {
+	FormEntryLabel addFormEntryLabel(String name, int gridIndex) {
 		IGridCell cell = grid().cell(0, gridIndex).align().end().valign()
 				.center();// .height(HEIGHT_CELL);
 		if (fixLabelWidth != -1)
@@ -102,7 +102,7 @@ class FormWidgetImpl implements IFormWidget {
 		return new FormEntryLabel(cell, formEntryLabel);
 	}
 
-	private IContainer container() {
+	private IContainer container(int gridIndex) {
 		IGridCell cell = grid().cell(1, gridIndex).valign().center();
 		if (fixValueWidth != -1)
 			cell.width(fixValueWidth);
@@ -114,8 +114,8 @@ class FormWidgetImpl implements IFormWidget {
 	void addFillColumn() {
 	}
 
-	ITextField addFormValueTextField() {
-		ITextField valuePanel = container().textField();
+	ITextField addFormValueTextField(int gridIndex) {
+		ITextField valuePanel = container(gridIndex).textField();
 		heights.decorate(valuePanel);
 		valuePanel.editable(saveListener != null);
 		setFocus(valuePanel);
@@ -145,8 +145,8 @@ class FormWidgetImpl implements IFormWidget {
 		});
 	}
 
-	IPasswordField addFormValuePasswordField() {
-		IPasswordField valuePanel = container().passwordField();
+	IPasswordField addFormValuePasswordField(int gridIndex) {
+		IPasswordField valuePanel = container(gridIndex).passwordField();
 		heights.decorate(valuePanel);
 		valuePanel.editable(saveListener != null);
 		setFocus(valuePanel);
@@ -154,15 +154,15 @@ class FormWidgetImpl implements IFormWidget {
 		return valuePanel;
 	}
 
-	ITextArea addFormValueTextArea() {
-		ITextArea valuePanel = container().textArea();
+	ITextArea addFormValueTextArea(int gridIndex) {
+		ITextArea valuePanel = container(gridIndex).textArea();
 		valuePanel.editable(saveListener != null);
 		setFocus(valuePanel);
 		return valuePanel;
 	}
 
-	IComboBox addFormValueComboBox() {
-		IComboBox valuePanel = container().comboBox();
+	IComboBox addFormValueComboBox(int gridIndex) {
+		IComboBox valuePanel = container(gridIndex).comboBox();
 		heights.decorate(valuePanel);
 		valuePanel.editable(saveListener != null);
 		setFocus(valuePanel);
@@ -170,8 +170,8 @@ class FormWidgetImpl implements IFormWidget {
 		return valuePanel;
 	}
 
-	ICheckBox addFormValueCheckBox() {
-		ICheckBox valuePanel = container().checkBox();
+	ICheckBox addFormValueCheckBox(int gridIndex) {
+		ICheckBox valuePanel = container(gridIndex).checkBox();
 		heights.valuePanel(valuePanel);
 		valuePanel.editable(saveListener != null);
 		setFocus(valuePanel);
@@ -179,14 +179,14 @@ class FormWidgetImpl implements IFormWidget {
 		return valuePanel;
 	}
 
-	ILabel addFormLabel() {
-		ILabel label = container().label();
+	ILabel addFormLabel(int gridIndex) {
+		ILabel label = container(gridIndex).label();
 		heights.decorate(label);
 		return label;
 	}
 
-	IImage addImage() {
-		return container().panel().horizontal().add().image();
+	IImage addImage(int gridIndex) {
+		return container(gridIndex).panel().horizontal().add().image();
 	}
 
 	@Override

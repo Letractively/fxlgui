@@ -38,7 +38,7 @@ class FormLabelImpl extends FormFieldImpl<ILabel, String> {
 	}
 
 	ILabel addLabel(FormWidgetImpl widget) {
-		return widget.addFormLabel();
+		return widget.addFormLabel(row);
 	}
 
 	@Override

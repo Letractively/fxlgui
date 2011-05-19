@@ -41,7 +41,7 @@ class FormTextFieldImpl<R> extends FormFieldImpl<ITextField, R> {
 	}
 
 	ITextField addTextField(FormWidgetImpl widget) {
-		return widget.addFormValueTextField();
+		return widget.addFormValueTextField(row);
 	}
 
 	@Override
