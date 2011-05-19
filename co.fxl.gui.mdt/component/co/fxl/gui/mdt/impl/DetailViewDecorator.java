@@ -456,6 +456,10 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 				private void targetValues(boolean satisfied, Object value) {
 					PropertyImpl p = property(cr);
 					IFormField<IComboBox, String> ff = (IFormField<IComboBox, String>) target(p);
+					if (!ff.visible()) {
+						// TODO ...
+						throw new MethodNotImplementedException();
+					}
 					IComboBox comboBox = ff.valueElement();
 					comboBox.clear();
 					String text = comboBox.text();
