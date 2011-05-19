@@ -19,6 +19,17 @@
 package co.fxl.gui.api;
 
 public interface IFonts {
+	
+	public interface IHyperlink {
+		
+		void active(ILabel label);
+		
+		void inactive(ILabel label);
+		
+		void highlight(ILabel label);
+		
+		void unhighlight(ILabel label);
+	}
 
 	public interface IDialog {
 
@@ -39,5 +50,9 @@ public interface IFonts {
 	}
 
 	IDialog dialog();
+
+	void separator(ILabel label);
+
+	IHyperlink hyperlink();
 
 }
