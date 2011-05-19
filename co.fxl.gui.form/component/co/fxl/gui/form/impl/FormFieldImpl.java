@@ -121,6 +121,11 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	}
 
 	@Override
+	public boolean visible() {
+		return visible;
+	}
+
+	@Override
 	public IFormField<T, R> visible(boolean visible) {
 		if (visible == this.visible)
 			return this;
