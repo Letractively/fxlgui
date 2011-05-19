@@ -168,7 +168,7 @@ public class DialogImpl implements IDialog {
 			popUp.center();
 			IVerticalPanel v = popUp.container().panel().vertical().spacing(1);
 			WidgetTitle.decorateBorder(v.border().color());
-			WidgetTitle t = new WidgetTitle(v.add().panel()).grayBackground()
+			WidgetTitle t = new WidgetTitle(v.add().panel())//.grayBackground()
 					.foldable(false).space(0);
 			t.addTitle(title.toUpperCase());
 			if (message != null && buttons.isEmpty()) {

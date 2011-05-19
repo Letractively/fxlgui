@@ -227,7 +227,7 @@ public class ViewList {
 
 	public ViewList(MetaViewList widget, ILayout layout) {
 		this.widget = widget;
-		widgetTitle = new WidgetTitle(layout, true).space(2).grayBackground();
+		widgetTitle = new WidgetTitle(layout, true).space(2);//.grayBackground();
 	}
 
 	public ViewImpl addView() {
