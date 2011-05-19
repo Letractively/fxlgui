@@ -20,6 +20,7 @@ package co.fxl.gui.api.template;
 
 public class Icons {
 
+	public static String DETAIL = "detail.png";
 	public static String NAVIGATION_BACK = "arrow_back.png";
 	public static String NAVIGATION_FORWARD = "arrow_forward.png";
 	public static String ACCEPT = "accept.png";

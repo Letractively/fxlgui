@@ -55,20 +55,12 @@ public class SplitLayout implements IResizeListener// , IClickListener
 		IVerticalPanel vpanel = cell0.valign().begin().panel().vertical()
 				.spacing(10);
 		mainPanel = addMainPanel(vpanel);
-		// IHorizontalPanel horizontal = panel.cell(1, 0).width(16).align()
-		// .center().valign().center().panel().horizontal();
-		// // horizontal.addSpace(10);
-		// button = horizontal.add().image().resource("minimize.png");
 		cell = panel.cell(1, 0).width(WIDTH_SIDE_PANEL).valign().begin()
 				.align().end();
-		// IVerticalPanel vertical = cell.panel().vertical();
-		// horizontal.addClickListener(clickListener);
-		// button.addClickListener(this);
 		sideScrollPanel = cell.panel().vertical().addSpace(10).add()
 				.scrollPane();
 		sidePanel = sideScrollPanel.viewPort().panel().vertical();
 		sidePanel.spacing().right(10).inner(10);
-		// sidePanel.width(WIDTH_SIDE_PANEL - SCROLLBAR_WIDTH);
 		SidePanelResizeListener.setup(panel.display(), this);
 		onResize(panel.display().width(), panel.display().height());
 	}
@@ -88,22 +80,10 @@ public class SplitLayout implements IResizeListener// , IClickListener
 
 	protected IVerticalPanel addMainPanel(IVerticalPanel vpanel) {
 		mainPanel = vpanel.add().panel().vertical();
-//		mainPanel.border().color().lightgray();
+		// mainPanel.border().color().lightgray();
 		mainPanel.color().white();
 		return mainPanel;
 	}
-
-	// @Override
-	// public void onClick() {
-	// boolean visible = !sidePanel.visible();
-	// onClick(visible);
-	// }
-
-	// private void onClick(boolean visible) {
-	// sidePanel.visible(visible);
-	// cell.width(sidePanel.visible() ? 300 : 1);
-	// button.resource(sidePanel.visible() ? "minimize.png" : "maximize.png");
-	// }
 
 	public void reset() {
 		panel.remove();
@@ -111,11 +91,5 @@ public class SplitLayout implements IResizeListener// , IClickListener
 	}
 
 	public void showSplit(boolean showSplit) {
-		// if (!showSplit) {
-		// onClick(false);
-		// button.resource(null);
-		// } else {
-		// onClick(true);
-		// }
 	}
 }

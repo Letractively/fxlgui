@@ -95,8 +95,6 @@ public class WidgetTitle implements IClickListener {
 
 	public static final int LARGE_FONT = 18;
 	private static final String FOLDABLE = "Click to minimize/maximize";
-	// private String openPNG = "open.png";
-	// private String closedPNG = "closed.png";
 	public IGridPanel panel;
 	private IHorizontalPanel titlePanel;
 	private IHorizontalPanel commandPanel;
@@ -105,7 +103,6 @@ public class WidgetTitle implements IClickListener {
 	private IGridPanel headerPanel;
 	private IContainer contentContainer;
 	private boolean open = true;
-	// private IImage image;
 	private boolean foldable = true;
 	public ILabel headerLabel;
 	private List<ILabel> labels = new LinkedList<ILabel>();
@@ -153,8 +150,6 @@ public class WidgetTitle implements IClickListener {
 	}
 
 	public WidgetTitle triangleIcons() {
-		// openPNG = "open_folder.png";
-		// closedPNG = "closed_folder.png";
 		return this;
 	}
 
