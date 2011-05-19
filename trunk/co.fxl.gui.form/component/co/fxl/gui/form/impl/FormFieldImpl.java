@@ -110,4 +110,9 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	public IUpdateable<R> addUpdateListener(IUpdateListener<R> listener) {
 		return ((IUpdateable<R>) valueElement()).addUpdateListener(listener);
 	}
+
+	@Override
+	public IFormField<T, R> visible(boolean visible) {
+		throw new MethodNotImplementedException();
+	}
 }
