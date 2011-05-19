@@ -106,7 +106,7 @@ public class NavigationView {
 	public NavigationView(ILayout layout) {
 		widgetTitle = new WidgetTitle(layout, true);
 		widgetTitle.space(2);
-//		widgetTitle.grayBackground();
+		// widgetTitle.grayBackground();
 	}
 
 	private void setUp() {
@@ -183,7 +183,8 @@ public class NavigationView {
 		IImage image = null;
 		if (SHOW_NUMBERS) {
 			String s = String.valueOf(index++) + ".";
-			panel.add().label().text(s).font().pixel(13).color().gray();
+			ILabel label = panel.add().label().text(s);
+			label.font().pixel(13).color().gray();
 			panel.addSpace(4);
 		} else if (SHOW_TRIANGLE) {
 			image = panel
