@@ -24,6 +24,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextField;
+import co.fxl.gui.api.template.Heights;
 import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.form.api.ILoginWidget;
 
@@ -75,6 +76,7 @@ class LoginWidgetImpl implements ILoginWidget {
 	private LogoutListener logoutListener = new LogoutListener();
 	private ILabel loggedInAs;
 	private IStatusPanelDecorator decorator;
+	private Heights heights = new Heights(0);
 
 	LoginWidgetImpl(IContainer display) {
 		cards = display.panel().horizontal().align().end();
@@ -148,13 +150,14 @@ class LoginWidgetImpl implements ILoginWidget {
 	private void decorate(ITextField formField) {
 		formField.font().pixel(11);
 		formField.width(100);
-		formField.border().color().lightgray();
+		heights.decorateHeight(formField);
 	}
 
 	private void decorate(IPasswordField formField) {
 		formField.font().pixel(11);
 		formField.width(100);
 		formField.border().color().lightgray();
+		heights.decorateHeight(formField);
 	}
 
 	@Override
