@@ -42,5 +42,7 @@ public interface IFormField<T, R> extends IUpdateable<R> {
 
 	IFormField<T, R> editable(boolean editable);
 
+	IFormField<T, R> visible(boolean visible);
+
 	void remove();
 }
