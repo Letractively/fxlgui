@@ -27,6 +27,7 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.HTML;
 
 class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
@@ -112,6 +113,7 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 
 	@Override
 	public ILabel addMouseOverListener(final IMouseOverListener l) {
+		container.widget.sinkEvents(Event.ONMOUSEOVER | Event.ONMOUSEOUT);
 		container.widget.addDomHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
