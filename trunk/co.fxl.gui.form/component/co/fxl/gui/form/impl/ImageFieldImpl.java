@@ -13,11 +13,12 @@ class ImageFieldImpl implements IImageField {
 	private ILabel label;
 
 	ImageFieldImpl(FormWidgetImpl widget, String name) {
-		FormEntryLabel formEntryLabel = widget.addFormEntryLabel(name);
+		FormEntryLabel formEntryLabel = widget.addFormEntryLabel(name,
+				widget.gridIndex);
 		cell = formEntryLabel.cell;
 		label = formEntryLabel.formEntryLabel;
-		image = widget.addImage();
-		widget.addFillColumn(); 
+		image = widget.addImage(widget.gridIndex);
+		widget.addFillColumn();
 	}
 
 	@Override

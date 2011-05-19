@@ -34,13 +34,14 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	private IGridCell cell;
 	FieldTypeImpl type = new FieldTypeImpl();
 	boolean required = false;
-	private int row;
+	int row;
 	private int column = 2;
+	private boolean visible = true;
 
 	public FormFieldImpl(FormWidgetImpl widget, int index, String name) {
 		this.widget = widget;
 		widget.fields.add(this);
-		FormEntryLabel formEntryLabel = widget.addFormEntryLabel(name);
+		FormEntryLabel formEntryLabel = widget.addFormEntryLabel(name, index);
 		cell = formEntryLabel.cell;
 		label = formEntryLabel.formEntryLabel;
 		widget.addFillColumn();
@@ -113,6 +114,30 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 
 	@Override
 	public IFormField<T, R> visible(boolean visible) {
+		if (visible == this.visible)
+			return this;
+		int index = getVisibleIndex();
+		if (visible) {
+			widget.gridPanel.row(index).insert();
+			// TODO ...
+			throw new MethodNotImplementedException();
+		} else {
+			remove();
+		}
+		this.visible = visible;
+		return this;
+	}
+
+	private int getVisibleIndex() {
+		int index = 0;
+		for (FormFieldImpl<?, ?> ff : widget.fields) {
+			if (ff == this)
+				return index;
+			else {
+				if (ff.visible)
+					index++;
+			}
+		}
 		throw new MethodNotImplementedException();
 	}
 }
