@@ -45,4 +45,6 @@ public interface IFieldType {
 	IFieldType relation();
 
 	Class<?> clazz();
+
+	IFieldType clearConstraints();
 }
