@@ -267,8 +267,7 @@ public class WidgetTitle implements IClickListener {
 			image = iPanel.add().image().resource(imageResource);
 			images.add(image);
 		}
-		final ILabel label = iPanel.addSpace(4).add().label().text(text);
-		label.font().pixel(12);
+		final ILabel label = addHyperlinkLabel(text, iPanel);
 		labels.add(label);
 		if (holdOnClicks) {
 			IClickListener clickListener = new IClickListener() {
@@ -291,6 +290,12 @@ public class WidgetTitle implements IClickListener {
 		CommandLink cl = new CommandLink(iPanel0, image, label);
 		cl.clickable(true);
 		return cl;
+	}
+
+	protected ILabel addHyperlinkLabel(String text, IHorizontalPanel iPanel) {
+		final ILabel label = iPanel.addSpace(4).add().label().text(text);
+		label.font().pixel(12);
+		return label;
 	}
 
 	public IImage addImage(String image) {

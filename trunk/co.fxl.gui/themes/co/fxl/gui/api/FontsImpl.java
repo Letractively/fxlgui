@@ -53,23 +53,16 @@ class FontsImpl implements IFonts {
 		return new IHyperlink() {
 
 			@Override
-			public void active(ILabel label) {
-				label.font().color().rgb(0, 87, 141);
+			public void clickable(ILabel label, boolean clickable) {
+				if (clickable)
+					label.font().color().rgb(0, 87, 141);
+				else
+					label.font().color().gray();
 			}
 
 			@Override
-			public void inactive(ILabel label) {
-				label.font().color().gray();
-			}
-
-			@Override
-			public void highlight(ILabel label) {
-				label.font().underline(true);
-			}
-
-			@Override
-			public void unhighlight(ILabel label) {
-				label.font().underline(false);
+			public void highlight(ILabel label, boolean highlighted) {
+				label.font().underline(highlighted);
 			}
 		};
 	}
