@@ -52,27 +52,27 @@ public class DialogImpl implements IDialog {
 
 		@Override
 		public IDialogButton ok() {
-			return imageResource("accept.png").text("Ok");
+			return imageResource(Icons.ACCEPT).text("Ok");
 		}
 
 		@Override
 		public IDialogButton close() {
-			return imageResource("cancel.png").text("Close");
+			return imageResource(Icons.CANCEL).text("Close");
 		}
 
 		@Override
 		public IDialogButton yes() {
-			return imageResource("accept.png").text("Yes");
+			return imageResource(Icons.ACCEPT).text("Yes");
 		}
 
 		@Override
 		public IDialogButton no() {
-			return imageResource("cancel.png").text("No");
+			return imageResource(Icons.CANCEL).text("No");
 		}
 
 		@Override
 		public IDialogButton cancel() {
-			return imageResource("cancel.png").text("Cancel");
+			return imageResource(Icons.CANCEL).text("Cancel");
 		}
 
 		@Override

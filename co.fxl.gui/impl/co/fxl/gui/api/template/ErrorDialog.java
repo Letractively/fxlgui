@@ -37,7 +37,7 @@ public class ErrorDialog {
 		IDialog dialog = display.showDialog();
 		dialog.title(pTitle).message(pMessage).error();
 		if (pStacktrace != null) {
-			dialog.addButton().text("Details").imageResource("detail.png")
+			dialog.addButton().text("Details").imageResource(Icons.DETAIL)
 					.addClickListener(new IClickListener() {
 						@Override
 						public void onClick() {
@@ -65,7 +65,7 @@ public class ErrorDialog {
 						}
 					});
 		}
-		dialog.addButton().text("Close").imageResource("cancel.png")
+		dialog.addButton().text("Close").imageResource(Icons.CANCEL)
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
