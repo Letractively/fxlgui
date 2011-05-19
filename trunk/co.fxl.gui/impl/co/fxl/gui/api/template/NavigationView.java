@@ -106,7 +106,7 @@ public class NavigationView {
 	public NavigationView(ILayout layout) {
 		widgetTitle = new WidgetTitle(layout, true);
 		widgetTitle.space(2);
-		widgetTitle.grayBackground();
+//		widgetTitle.grayBackground();
 	}
 
 	private void setUp() {
