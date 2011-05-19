@@ -41,6 +41,7 @@ import co.fxl.gui.api.template.KeyAdapter;
 import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.api.template.WidgetTitle.CommandLink;
+import co.fxl.gui.mdt.impl.Icons;
 import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
 import co.fxl.gui.navigation.api.IMenuWidget;
@@ -68,7 +69,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			title = detailView.title;
 			constrainType = detailView.constrainType;
 		}
-		
+
 		@Override
 		public int hashCode() {
 			return title.hashCode();
@@ -282,7 +283,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				};
 				newClick.put(type, cl);
 				IClickable<?> hl = widgetTitle
-						.addHyperlink(type == null ? "new.png"
+						.addHyperlink(type == null ? Icons.NEW
 								: creatableTypeIcons.get(type), "New"
 								+ (type == null ? "" : " " + type));
 				newClickHyperlink.put(type, hl);
@@ -291,7 +292,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		}
 		if (showCommands) {
 			if (allowCutPaste) {
-				cut = widgetTitle.addHyperlink("cut.png", "Cut");
+				cut = widgetTitle.addHyperlink(Icons.CUT, "Cut");
 				cut.addClickListener(new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
@@ -304,7 +305,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 						cutted.decorate();
 					}
 				});
-				copy = widgetTitle.addHyperlink("copy.png", "Copy");
+				copy = widgetTitle.addHyperlink(Icons.COPY, "Copy");
 				copy.addClickListener(new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
@@ -317,7 +318,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 						cutted.decorate();
 					}
 				});
-				paste = widgetTitle.addHyperlink("paste.png", "Paste");
+				paste = widgetTitle.addHyperlink(Icons.PASTE, "Paste");
 				paste.addClickListener(new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
@@ -345,7 +346,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 						notifyUpdate(selection);
 					}
 				};
-				reorder = widgetTitle.addHyperlink("move.png", "Move");
+				reorder = widgetTitle.addHyperlink(Icons.MOVE, "Move");
 				reorder.addClickListener(reorderCL);
 			}
 			deleteListener = new LazyClickListener() {
@@ -368,7 +369,8 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					dl.visible(true);
 				}
 			};
-			delete = widgetTitle.addHyperlink("cancel.png", "Delete");
+			delete = widgetTitle.addHyperlink(
+					co.fxl.gui.api.template.Icons.CANCEL, "Delete");
 			delete.addClickListener(deleteListener);
 			if (showRefresh && this instanceof RefreshListener)
 				refresh().addClickListener(new LazyClickListener() {

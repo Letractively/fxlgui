@@ -137,7 +137,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 			views.visible(false);
 		views.grayBackground();
 		views.addTitle("VIEWS");
-		IClickable<?> hl = views.addHyperlink("refresh.png", "Refresh");
+		IClickable<?> hl = views.addHyperlink(Icons.REFRESH, "Refresh");
 		hl.clickable(true);
 		hl.addClickListener(new LazyClickListener() {
 			@Override
