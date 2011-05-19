@@ -27,7 +27,7 @@ class FormTextAreaImpl extends FormFieldImpl<ITextArea, String> {
 
 	FormTextAreaImpl(FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
-		textArea = widget.addFormValueTextArea(row);
+		textArea = widget.addFormValueTextArea(index);
 		textArea.border().color().rgb(211, 211, 211);
 		textArea.color().rgb(249, 249, 249);
 		widget.addFillColumn();
