@@ -409,6 +409,10 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 				for (int c = 0; c < columns(); c++) {
 					removeCell(c, row).remove();
 				}
+				// TODO adjust indices constraints.gridy & cells map 
+				if (true) {
+					throw new MethodNotImplementedException();
+				}
 				return update();
 			}
 
