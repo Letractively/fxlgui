@@ -102,11 +102,12 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 
 	@Override
 	public void remove() {
-		throw new MethodNotImplementedException();
+		widget.gridPanel.row(row).remove();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public IUpdateable<R> addUpdateListener(IUpdateListener<R> listener) {
-		throw new MethodNotImplementedException();
+		return ((IUpdateable<R>) valueElement()).addUpdateListener(listener);
 	}
 }
