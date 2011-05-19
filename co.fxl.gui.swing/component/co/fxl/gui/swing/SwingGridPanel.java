@@ -406,19 +406,28 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 			@Override
 			public IGridPanel remove() {
+				int rows = rows();
 				for (int c = 0; c < columns(); c++) {
 					removeCell(c, row).remove();
 				}
-				// TODO adjust indices constraints.gridy & cells map 
-				if (true) {
-					throw new MethodNotImplementedException();
+				for (int r = row + 1; r < rows; r++) {
+					for (int c = 0; c < columns(); c++) {
+						GridCell cell = getCell(c, r);
+						assert cell.constraints != null : "cell " + c + "/" + r
+								+ " not found";
+						cell.constraints.gridy--;
+						layout.setConstraints(cell.panel, cell.constraints);
+					}
+					Map<Integer, GridCell> row = cells.remove(r);
+					cells.put(r - 1, row);
 				}
 				return update();
 			}
 
 			@Override
 			public IGridPanel insert() {
-				for (int r = rows() - 1; r >= row; r--) {
+				int rows = rows();
+				for (int r = rows - 1; r >= row; r--) {
 					for (int c = 0; c < columns(); c++) {
 						GridCell cell = getCell(c, r);
 						cell.constraints.gridy++;
