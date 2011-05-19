@@ -448,6 +448,9 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 				}
 
 				private void targetValues(boolean satisfied, Object value) {
+					PropertyImpl p = property(cr);
+					IFormField<IComboBox, String> ff = (IFormField<IComboBox, String>) target(p);
+					IComboBox comboBox = ff.valueElement();
 					throw new MethodNotImplementedException();
 				}
 
@@ -460,11 +463,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 				private void invisible(boolean satisfied, Object value) {
 					PropertyImpl p = property(cr);
 					IFormField<?, ?> ff = target(p);
-					if (satisfied) {
-						ff.remove();
-					} else {
-						throw new MethodNotImplementedException();
-					}
+					ff.visible(!satisfied);
 				}
 
 				private PropertyImpl property(ConditionRuleImpl cr) {
