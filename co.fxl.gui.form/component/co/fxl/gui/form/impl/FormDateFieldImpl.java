@@ -34,7 +34,7 @@ class FormDateFieldImpl extends FormTextFieldImpl<Date> {
 
 	FormDateFieldImpl(final FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
-		button = addContainer().image().resource("calendar.png").size(16, 16);
+		button = addContainer().image().resource(Icons.CALENDAR).size(16, 16);
 		// addButton("Change");
 		button.addClickListener(new IClickListener() {
 			@Override

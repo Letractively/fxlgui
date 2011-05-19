@@ -34,6 +34,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.template.Heights;
+import co.fxl.gui.api.template.Icons;
 import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -109,9 +110,9 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	FilterWidgetImpl(IContainer panel) {
 		FilterPanel title = newFilterPanel(panel);
 		title.addTitle("FILTER");
-		apply = title.addHyperlink("accept.png", "Update");
+		apply = title.addHyperlink(Icons.ACCEPT, "Update");
 		validation.linkClickable(apply);
-		clear = title.addHyperlink("cancel.png", "Clear");
+		clear = title.addHyperlink(Icons.CANCEL, "Clear");
 		apply.addClickListener(new ApplyClickListener());
 		// apply.clickable(false);
 		clear.addClickListener(new ClearClickListener());
