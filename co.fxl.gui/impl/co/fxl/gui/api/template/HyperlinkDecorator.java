@@ -29,19 +29,32 @@ public class HyperlinkDecorator implements IMouseOverListener {
 	public HyperlinkDecorator(ILabel label) {
 		this.label = label;
 		label.addMouseOverListener(this);
-		hyperlinkColor();
+		activeColor();
 	}
 
-	private void hyperlinkColor() {
+	private void activeColor() {
 		label.font().color().rgb(0, 87, 141);
+	}
+
+	private void inactiveColor() {
+		label.font().color().gray();
+	}
+
+	private void activeHighlight() {
+		label.font().underline(true);
+	}
+
+	private void inactiveHighlight() {
+		label.font().underline(false);
 	}
 
 	public HyperlinkDecorator clickable(boolean enable) {
 		this.enabled = enable;
 		if (enabled) {
-			hyperlinkColor();
+			activeColor();
 		} else {
-			label.font().underline(false).color().gray();
+			inactiveColor();
+			inactiveHighlight();
 		}
 		return this;
 	}
@@ -52,8 +65,11 @@ public class HyperlinkDecorator implements IMouseOverListener {
 	}
 
 	protected void update(boolean over) {
-		if (enabled)
-			label.font().underline(over);
+		if (enabled) {
+			activeHighlight();
+		} else {
+			inactiveHighlight();
+		}
 	}
 
 	@Override
