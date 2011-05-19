@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import co.fxl.gui.api.Fonts;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -305,7 +306,7 @@ public class WidgetTitle implements IClickListener {
 
 	protected ILabel addSeparator(IHorizontalPanel cp) {
 		ILabel label = cp.add().label().text("|");
-		label.font().color().gray();
+		Fonts.instance().separator(label);
 		return label;
 	}
 

@@ -42,4 +42,35 @@ class FontsImpl implements IFonts {
 			}
 		};
 	}
+
+	@Override
+	public void separator(ILabel label) {
+		label.font().color().gray();
+	}
+
+	@Override
+	public IHyperlink hyperlink() {
+		return new IHyperlink() {
+
+			@Override
+			public void active(ILabel label) {
+				label.font().color().rgb(0, 87, 141);
+			}
+
+			@Override
+			public void inactive(ILabel label) {
+				label.font().color().gray();
+			}
+
+			@Override
+			public void highlight(ILabel label) {
+				label.font().underline(true);
+			}
+
+			@Override
+			public void unhighlight(ILabel label) {
+				label.font().underline(false);
+			}
+		};
+	}
 }
