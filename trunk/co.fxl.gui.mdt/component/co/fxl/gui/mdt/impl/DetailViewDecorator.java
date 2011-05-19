@@ -524,7 +524,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 		}
 	}
 
-	public void supplement(IFormWidget form, PropertyImpl property,
+	public final void supplement(IFormWidget form, PropertyImpl property,
 			String name, IFormField<?, ?> formField) {
 		if (property.type.maxLength == -1
 				|| !(formField.valueElement() instanceof ITextInput<?>))
@@ -543,10 +543,10 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 		}
 	}
 
-	public void supplement(IFormWidget form) {
+	public final void supplement(IFormWidget form) {
 	}
 
-	protected void decorateBorder(IVerticalPanel panel) {
+	protected final void decorateBorder(IVerticalPanel panel) {
 	}
 
 	public DetailViewDecorator alwaysShowCancel() {
