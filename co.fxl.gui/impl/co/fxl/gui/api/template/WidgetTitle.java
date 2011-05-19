@@ -67,10 +67,8 @@ public class WidgetTitle implements IClickListener {
 			if (grayBackground) {
 				if (clickable) {
 					label.font().color().black();
-					// label.font().underline(true);
 				} else {
 					label.font().color().gray();
-					// label.font().underline(false);
 				}
 			}
 			return this;
@@ -79,7 +77,6 @@ public class WidgetTitle implements IClickListener {
 		@Override
 		public boolean clickable() {
 			return label.clickable();
-			// return iPanel.visible();
 		}
 
 		@Override
@@ -159,20 +156,23 @@ public class WidgetTitle implements IClickListener {
 	}
 
 	public WidgetTitle grayBackground() {
-		if (headerPanel != null)
+		if (headerPanel != null) {
 			headerPanel.color().rgb(136, 136, 136).gradient().vertical()
 					.rgb(113, 113, 113);
+		}
 		if (titlePanel != null)
 			decorateGradient(titlePanel);
-		if (headerLabel != null)
+		if (headerLabel != null) {
 			headerLabel.font().color().white();
+		}
 		grayBackground = true;
 		return this;
 	}
 
 	static IColor decorateGradient(IVerticalPanel titlePanel) {
-		return titlePanel.color().rgb(136, 136, 136).gradient().vertical()
-				.rgb(113, 113, 113);
+		IColor color = titlePanel.color().rgb(136, 136, 136).gradient()
+				.vertical().rgb(113, 113, 113);
+		return color;
 	}
 
 	public WidgetTitle commandsOnTop() {
@@ -184,19 +184,14 @@ public class WidgetTitle implements IClickListener {
 		if (hasHeaderPanel)
 			return;
 		headerPanel.visible(true);
-		// headerPanel.color().rgb(220, 220, 220);
 		IHorizontalPanel horizontal = headerPanel.cell(0, 0).align().begin()
 				.valign().center().panel().horizontal().align().begin();// .addSpace(3);
-		if (grayBackground)
+		if (grayBackground) {
 			horizontal.color().rgb(136, 136, 136).gradient().vertical()
 					.rgb(113, 113, 113);
+		}
 		titlePanel = horizontal.add().panel().horizontal().align().begin();
 		titlePanel.spacing().left(10).top(6).bottom(6).right(6);
-		if (foldable) {
-			// image = titlePanel.add().image().resource(openPNG);
-			// image.addClickListener(this);
-			// image.tooltip(FOLDABLE);
-		}
 		hasHeaderPanel = true;
 	}
 
@@ -224,7 +219,7 @@ public class WidgetTitle implements IClickListener {
 			IContainer cell = vertical.right();
 			commandPanel = cell.panel().horizontal().spacing(6);
 			decorateGradient(vertical);
-		}// panel.addSpace(space);
+		}
 	}
 
 	public static IBorder decorateGradient(IPanel<?> vertical) {
@@ -244,11 +239,6 @@ public class WidgetTitle implements IClickListener {
 	@Override
 	public void onClick() {
 		open = !open;
-		// if (open) {
-		// image.resource(openPNG);
-		// } else {
-		// image.resource(closedPNG);
-		// }
 		contentContainer.element().visible(open);
 		for (ILabel l : labels)
 			l.visible(open);
@@ -285,8 +275,6 @@ public class WidgetTitle implements IClickListener {
 				label.font().color().gray();
 			labels.add(label);
 		}
-		// if (hasCommands)
-		// commandPanel().addSpace(2);
 		hasCommands = true;
 		IHorizontalPanel iPanel0 = commandPanel().add().panel().horizontal();
 		IHorizontalPanel iPanel = iPanel0;
