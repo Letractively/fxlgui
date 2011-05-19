@@ -83,13 +83,7 @@ class FilterPanelImpl implements FilterPanel {
 			widget.heights.decorate(cell);
 			ILabel text = cell.align().end().valign().center().label()
 					.autoWrap(true);
-			text.text(name).font().color().black();
-			int size = 11;
-			// if (name.length() > 11)
-			// size = 10;
-			// if (name.length() > 16)
-			size = 10;
-			text.font().pixel(size);
+			text.text(name).font().pixel(10);
 		}
 
 		@Override
