@@ -39,6 +39,7 @@ import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.DiscardChangesDialog;
 import co.fxl.gui.api.template.DiscardChangesDialog.DiscardChangesListener;
 import co.fxl.gui.api.template.ICallback;
+import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.api.template.NumberFormat;
 import co.fxl.gui.form.api.IFormField;
@@ -468,26 +469,29 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 				private void targetValues(boolean satisfied, Object value) {
 					PropertyImpl p = property(cr);
 					IFormField<IComboBox, String> ff = (IFormField<IComboBox, String>) target(p);
-					if (!ff.visible()) {
-						// TODO ...
-						throw new MethodNotImplementedException();
-					}
-					IComboBox comboBox = ff.valueElement();
-					comboBox.clear();
-					String text = comboBox.text();
-					boolean found = false;
-					String s0 = null;
 					Object[] targetValues = satisfied ? cr.targetValues
 							: getDomain(node, p).toArray();
+					IFieldType type = ff.type();
+					type.clearConstraints();
 					for (Object o : targetValues) {
-						String s = String.valueOf(o);
-						found |= s.equals(text);
-						comboBox.addText(s);
-						if (s0 == null)
-							s0 = s;
+						type.addConstraint(o);
 					}
-					if (!found && s0 != null) {
-						comboBox.text(s0);
+					if (ff.visible()) {
+						IComboBox comboBox = ff.valueElement();
+						comboBox.clear();
+						String text = comboBox.text();
+						boolean found = false;
+						String s0 = null;
+						for (Object o : targetValues) {
+							String s = String.valueOf(o);
+							found |= s.equals(text);
+							comboBox.addText(s);
+							if (s0 == null)
+								s0 = s;
+						}
+						if (!found && s0 != null) {
+							comboBox.text(s0);
+						}
 					}
 				}
 
