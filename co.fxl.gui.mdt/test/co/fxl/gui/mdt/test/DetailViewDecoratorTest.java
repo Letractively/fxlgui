@@ -51,6 +51,7 @@ class MasterDetailTableWidgetTest {
 		IProperty<Object, String> p1 = addP1(g);
 		IProperty<Object, String> p2 = addP2(g);
 		IProperty<Object, String> p3 = addP3(g);
+		IProperty<Object, String> p4 = addP4(g);
 		@SuppressWarnings("unchecked")
 		IConditionRule<Object, String, String> c = (IConditionRule<Object, String, String>) p1
 				.addConditionRule();
@@ -71,13 +72,54 @@ class MasterDetailTableWidgetTest {
 				return NON_EDITABLE.equals(value);
 			}
 		}).nonModifieable();
+		@SuppressWarnings("unchecked")
+		IConditionRule<Object, String, String> c3 = (IConditionRule<Object, String, String>) p3
+				.addConditionRule();
+		c3.target(p4).condition(new ICondition<String>() {
+
+			@Override
+			public boolean satisfied(String value) {
+				return NON_EDITABLE.equals(value);
+			}
+		}).targetValues("1", "3");
 		return g;
+	}
+
+	private IProperty<Object, String> addP4(PropertyGroupImpl g) {
+		@SuppressWarnings("unchecked")
+		IProperty<Object, String> p4 = (IProperty<Object, String>) g
+				.addProperty("Property 4");
+		p4.type().text().addConstraint("1", "2", "3", "4");
+		p4.adapter(new IAdapter<Object, String>() {
+
+			@Override
+			public boolean hasProperty(Object entity) {
+				return true;
+			}
+
+			@Override
+			public String valueOf(Object entity) {
+				return "1";
+			}
+
+			@Override
+			public boolean valueOf(Object entity, String value) {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public boolean editable(Object entity) {
+				throw new MethodNotImplementedException();
+			}
+		});
+		p4.editable(true);
+		return p4;
 	}
 
 	private IProperty<Object, String> addP3(PropertyGroupImpl g) {
 		@SuppressWarnings("unchecked")
 		IProperty<Object, String> p3 = (IProperty<Object, String>) g
-				.addProperty("Property 2");
+				.addProperty("Property 3");
 		p3.type().text().addConstraint(EDITABLE, NON_EDITABLE);
 		p3.adapter(new IAdapter<Object, String>() {
 
