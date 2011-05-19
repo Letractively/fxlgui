@@ -123,9 +123,8 @@ public class WidgetTitle implements IClickListener {
 		IBorder border = headerPanel.border();
 		border.color().rgb(172, 197, 213);
 		border.style().bottom();
-		if (!addBorder)
-			return;
-		panel.border().color().rgb(172, 197, 213);
+		if (addBorder)
+			panel.border().color().rgb(172, 197, 213);
 	}
 
 	public WidgetTitle holdOnClick() {
