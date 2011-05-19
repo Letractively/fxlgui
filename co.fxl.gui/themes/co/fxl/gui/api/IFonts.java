@@ -19,16 +19,12 @@
 package co.fxl.gui.api;
 
 public interface IFonts {
-	
+
 	public interface IHyperlink {
-		
-		void active(ILabel label);
-		
-		void inactive(ILabel label);
-		
-		void highlight(ILabel label);
-		
-		void unhighlight(ILabel label);
+
+		void clickable(ILabel label, boolean clickable);
+
+		void highlight(ILabel label, boolean highlighted);
 	}
 
 	public interface IDialog {
