@@ -86,7 +86,7 @@ class FormWidgetImpl implements IFormWidget {
 	private IClickListener saveClickListener;
 
 	FormWidgetImpl(IContainer panel) {
-		widgetTitle = new WidgetTitle(panel.panel(), false).grayBackground()
+		widgetTitle = new WidgetTitle(panel.panel(), false)//.grayBackground()
 				.commandsOnTop().space(0);
 		widgetTitle.foldable(false);
 	}
