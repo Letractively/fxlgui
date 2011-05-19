@@ -71,6 +71,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	private boolean alwaysShowCancel = false;
 	private int spacing = 8;
 	private Map<PropertyImpl, IFormField<?, ?>> property2formField = new HashMap<PropertyImpl, IFormField<?, ?>>();
+	private Object node;
 
 	public void setUpdateable(boolean isUpdateable) {
 		this.isUpdateable = isUpdateable;
@@ -140,6 +141,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 			final Object node) {
 		updates.clear();
 		assert node != null;
+		this.node = node;
 		panel.clear();
 		decorateBorder(panel);
 		if (bottom != null) {
@@ -290,11 +292,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 										.valueElement();
 								if (!property.editable)
 									cb.editable(false);
-								List<Object> vs = property.type.values;
-								if (property.constraintAdapter != null) {
-									vs = property.constraintAdapter
-											.constraints(node);
-								}
+								List<Object> vs = getDomain(node, property);
 								for (Object s : vs)
 									cb.addText((String) s);
 								valueElement = (ITextElement<?>) formField
@@ -427,6 +425,14 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 		form.visible(true);
 	}
 
+	public List<Object> getDomain(final Object node, final PropertyImpl property) {
+		List<Object> vs = property.type.values;
+		if (property.constraintAdapter != null) {
+			vs = property.constraintAdapter.constraints(node);
+		}
+		return vs;
+	}
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void addConditionRules(final PropertyImpl property,
 			final IFormField<?, ?> formField) {
@@ -451,7 +457,22 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 					PropertyImpl p = property(cr);
 					IFormField<IComboBox, String> ff = (IFormField<IComboBox, String>) target(p);
 					IComboBox comboBox = ff.valueElement();
-					throw new MethodNotImplementedException();
+					comboBox.clear();
+					String text = comboBox.text();
+					boolean found = false;
+					String s0 = null;
+					Object[] targetValues = satisfied ? cr.targetValues
+							: getDomain(node, p).toArray();
+					for (Object o : targetValues) {
+						String s = String.valueOf(o);
+						found |= s.equals(text);
+						comboBox.addText(s);
+						if (s0 == null)
+							s0 = s;
+					}
+					if (!found && s0 != null) {
+						comboBox.text(s0);
+					}
 				}
 
 				private void nonModifieable(boolean satisfied, Object value) {
