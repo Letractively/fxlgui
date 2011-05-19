@@ -65,7 +65,7 @@ public class HyperlinkDecorator implements IMouseOverListener {
 	}
 
 	protected void update(boolean over) {
-		if (enabled) {
+		if (enabled && over) {
 			activeHighlight();
 		} else {
 			inactiveHighlight();
