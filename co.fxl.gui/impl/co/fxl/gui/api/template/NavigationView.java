@@ -96,7 +96,6 @@ public class NavigationView {
 		}
 	}
 
-	private static final String LINK_PNG = "link.png";
 	private static final boolean SHOW_NUMBERS = false;
 	private static final boolean SHOW_TRIANGLE = true;
 	private WidgetTitle widgetTitle;
@@ -120,7 +119,8 @@ public class NavigationView {
 	public NavigationView navigationViewListener(final INavigationListener l) {
 		if (l == null)
 			return this;
-		IClickable<?> back = widgetTitle.addHyperlink("arrow_back.png", "Back");
+		IClickable<?> back = widgetTitle.addHyperlink(Icons.NAVIGATION_BACK,
+				"Back");
 		back.addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
@@ -128,8 +128,8 @@ public class NavigationView {
 			}
 		});
 		back.clickable(l.hasPrevious());
-		IClickable<?> forward = widgetTitle.addHyperlink("arrow_forward.png",
-				"Forward");
+		IClickable<?> forward = widgetTitle.addHyperlink(
+				Icons.NAVIGATION_FORWARD, "Forward");
 		forward.addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
@@ -186,8 +186,11 @@ public class NavigationView {
 			panel.add().label().text(s).font().pixel(13).color().gray();
 			panel.addSpace(4);
 		} else if (SHOW_TRIANGLE) {
-			image = panel.add().image()
-					.resource(imageResource == null ? LINK_PNG : imageResource);
+			image = panel
+					.add()
+					.image()
+					.resource(
+							imageResource == null ? Icons.LINK : imageResource);
 			panel.addSpace(4);
 		}
 		return image;

@@ -82,14 +82,14 @@ public class ViewList {
 				label = labelPanel.add().label().hyperlink();
 				label.addClickListener(this);
 				label.font().pixel(13);
-//				label.font().weight().plain().color().rgb(0, 87, 141);
+				// label.font().weight().plain().color().rgb(0, 87, 141);
 				labelPanel.addSpace(4);
 				content = widget.contentPanel().add();
 				if (newListener != null) {
 					removeImage = grid.cell(1, 0).valign().center().width(30)
 							.align().end().panel().horizontal().addSpace(4)
 							.add().image();
-					removeImage.resource("cancel.png").addClickListener(
+					removeImage.resource(Icons.CANCEL).addClickListener(
 							new LazyClickListener() {
 								@Override
 								public void onAllowedClick() {
@@ -109,7 +109,7 @@ public class ViewList {
 				new Heights(0).decorate(tf);
 				tf.width(199);
 				final IImage accept = labelPanel.addSpace(4).add().image()
-						.resource("accept.png")
+						.resource(Icons.ACCEPT)
 						.addClickListener(new IClickListener() {
 							@Override
 							public void onClick() {
@@ -134,7 +134,7 @@ public class ViewList {
 						accept.clickable(check(value));
 					}
 				});
-				labelPanel.addSpace(4).add().image().resource("cancel.png")
+				labelPanel.addSpace(4).add().image().resource(Icons.CANCEL)
 						.addClickListener(new IClickListener() {
 							@Override
 							public void onClick() {
@@ -206,7 +206,7 @@ public class ViewList {
 				}
 			} else {
 				grid.color().remove();
-//				label.font().weight().plain().color().rgb(0, 87, 141);
+				// label.font().weight().plain().color().rgb(0, 87, 141);
 				if (removeImage != null) {
 					removeImage.visible(false);
 				}

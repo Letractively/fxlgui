@@ -203,11 +203,11 @@ public class DialogImpl implements IDialog {
 
 	private String image(String type2) {
 		if (type.equals("Information"))
-			return "info.png";
+			return Icons.INFO;
 		else if (type.equals("Warning"))
-			return "skip.png";
+			return Icons.SKIP;
 		else if (type.equals("Error"))
-			return "cancel.png";
+			return Icons.CANCEL;
 		else
 			throw new MethodNotImplementedException();
 	}
