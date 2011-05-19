@@ -18,10 +18,12 @@
  */
 package co.fxl.gui.api.template;
 
+import co.fxl.gui.api.Fonts;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 
 public class ErrorDialog {
@@ -55,9 +57,10 @@ public class ErrorDialog {
 									.vertical();
 							IVerticalPanel verticalDetailPanel = detailPanel
 									.spacing(10).add().panel().vertical();
-							verticalDetailPanel.add().label()
-									.text("Stacktrace:").font().weight()
-									.italic();
+							ILabel label = verticalDetailPanel.add().label()
+									.text("Stacktrace:");
+							Fonts.instance().dialog().error().header()
+									.stacktrace(label);
 							verticalDetailPanel.add().textArea().size(400, 100)
 									.text(pMessage + "\n" + pStacktrace)
 									.border().color().gray();
