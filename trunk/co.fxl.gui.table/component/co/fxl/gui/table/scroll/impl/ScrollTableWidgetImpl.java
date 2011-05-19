@@ -103,7 +103,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (widgetTitle == null) {
 			widgetTitle = new WidgetTitle(c0.panel(), addBorders)
 					.foldable(false);
-			widgetTitle.grayBackground();
+//			widgetTitle.grayBackground();
 			widgetTitle.commandsOnTop();
 			this.container = widgetTitle.content().panel().vertical();
 		}
