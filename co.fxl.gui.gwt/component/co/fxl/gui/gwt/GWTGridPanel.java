@@ -18,14 +18,13 @@
  */
 package co.fxl.gui.gwt;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.template.GridCellContainer;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Grid;
@@ -174,7 +173,7 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 		}
 	}
 
-	private Map<Integer, Map<Integer, GridCell>> cells = new HashMap<Integer, Map<Integer, GridCell>>();
+	private GridCellContainer<GridCell> cells = new GridCellContainer<GridCell>();
 	private GridCell gridCell;
 	private String borderType;
 	private String borderConfiguration;
@@ -216,10 +215,10 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 
 	@Override
 	public IGridCell cell(int column, int row) {
-		gridCell = getCell(column, row);
+		gridCell = cells.getCell(column, row);
 		if (gridCell == null) {
 			gridCell = new GridCell(column, row);
-			putCell(column, row, gridCell);
+			cells.putCell(column, row, gridCell);
 			resize();
 		}
 		return gridCell;
@@ -233,22 +232,6 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 		if (gridCell.row >= grid.getRowCount()) {
 			grid.resizeRows(gridCell.row + 1);
 		}
-	}
-
-	private void putCell(int columnIndex, int rowIndex, GridCell gridCell) {
-		Map<Integer, GridCell> row = cells.get(rowIndex);
-		if (row == null) {
-			row = new HashMap<Integer, GridCell>();
-			cells.put(rowIndex, row);
-		}
-		row.put(columnIndex, gridCell);
-	}
-
-	private GridCell getCell(int columnIndex, int rowIndex) {
-		Map<Integer, GridCell> row = cells.get(rowIndex);
-		if (row == null)
-			return null;
-		return row.get(columnIndex);
 	}
 
 	@Override
@@ -306,16 +289,16 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 			public IGridPanel remove() {
 				Grid grid = (Grid) container.widget;
 				grid.removeRow(row);
-				// TODO adjust cells
-				throw new MethodNotImplementedException();
+				cells.removeRow(row);
+				return GWTGridPanel.this;
 			}
 
 			@Override
 			public IGridPanel insert() {
 				Grid grid = (Grid) container.widget;
 				grid.insertRow(row);
-				// TODO adjust cells
-				throw new MethodNotImplementedException();
+				cells.insertRow(row);
+				return GWTGridPanel.this;
 			}
 		};
 	}
