@@ -112,18 +112,18 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 
 	@Override
 	public ILabel addMouseOverListener(final IMouseOverListener l) {
-		container.widget.addMouseOverHandler(new MouseOverHandler() {
+		container.widget.addDomHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				l.onMouseOver();
 			}
-		});
-		container.widget.addMouseOutHandler(new MouseOutHandler() {
+		}, MouseOverEvent.getType());
+		container.widget.addDomHandler(new MouseOutHandler() {
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
 				l.onMouseOut();
 			}
-		});
+		}, MouseOutEvent.getType());
 		return this;
 	}
 }
