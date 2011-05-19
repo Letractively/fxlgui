@@ -357,35 +357,6 @@ class FormWidgetImpl implements IFormWidget {
 				} else
 					throw new MethodNotImplementedException(
 							valueElement.getClass());
-				// for (final IExternalStatusAdapter a :
-				// formField.externalStatusAdapters) {
-				// validation.addField(new Validation.IField() {
-				//
-				// @Override
-				// public boolean isError() {
-				// return false;
-				// }
-				//
-				// @Override
-				// public boolean isNull() {
-				// return a.isNull();
-				// }
-				//
-				// @Override
-				// public boolean required() {
-				// return formField.required;
-				// }
-				//
-				// @Override
-				// public boolean isSpecified() {
-				// return a.hasChanged();
-				// }
-				//
-				// @Override
-				// public void update() {
-				// }
-				// });
-				// }
 			}
 			if (isNew) {
 				validation.isNew();
