@@ -146,12 +146,6 @@ public class NavigationView {
 		return addHyperlink(null);
 	}
 
-	public NavigationView addLine() {
-		setUp();
-		panel.add().line().color().rgb(172, 197, 213);
-		return this;
-	}
-
 	public Link addHyperlink(String imageResource) {
 		setUp();
 		IHorizontalPanel panel = addPanel();
