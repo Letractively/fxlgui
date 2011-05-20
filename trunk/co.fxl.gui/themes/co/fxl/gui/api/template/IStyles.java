@@ -38,8 +38,6 @@ public interface IStyles {
 		IField field();
 	}
 
-	IInput input();
-
 	public interface IWindow {
 
 		public interface ITitle {
@@ -131,5 +129,7 @@ public interface IStyles {
 	IHyperlink hyperlink();
 
 	IWindow window();
+
+	IInput input();
 
 }
