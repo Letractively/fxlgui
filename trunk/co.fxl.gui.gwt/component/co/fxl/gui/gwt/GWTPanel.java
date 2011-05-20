@@ -21,8 +21,8 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.ILinearPanel.ISpacing;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.ISpaced.ISpacing;
 import co.fxl.gui.api.IWidgetProvider;
 
 import com.google.gwt.dom.client.Style.Unit;
