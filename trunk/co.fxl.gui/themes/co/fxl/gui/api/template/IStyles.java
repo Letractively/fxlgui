@@ -19,6 +19,7 @@
 package co.fxl.gui.api.template;
 
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IPanel;
 
 public interface IStyles {
 
@@ -37,6 +38,15 @@ public interface IStyles {
 		}
 
 		public interface IViewWindow {
+
+			public interface IEntry {
+
+				IEntry active(IPanel<?> panel, boolean active);
+
+				IEntry active(ILabel label, boolean active);
+			}
+
+			IEntry entry();
 
 		}
 
@@ -59,6 +69,8 @@ public interface IStyles {
 		IViewWindow view();
 
 		IHeader header();
+
+		void button(ILabel label);
 
 	}
 

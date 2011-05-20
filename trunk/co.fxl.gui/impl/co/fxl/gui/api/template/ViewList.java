@@ -80,8 +80,8 @@ public class ViewList {
 				labelPanel.addSpace(4);
 			if (!isNew) {
 				label = labelPanel.add().label().hyperlink();
+				Styles.instance().window().view().entry().active(label, true);
 				label.addClickListener(this);
-				label.font().pixel(13);
 				labelPanel.addSpace(4);
 				content = widget.contentPanel().add();
 				if (newListener != null) {
@@ -197,14 +197,13 @@ public class ViewList {
 			label.clickable(clickable);
 			if (image != null)
 				image.clickable(clickable);
+			Styles.instance().window().view().entry().active(grid, !clickable)
+					.active(label, !clickable);
 			if (!clickable) {
-				grid.color().rgb(0xD0, 0xE4, 0xF6);
-				label.font().color().mix().black().gray();
 				if (removeImage != null && newListener.isRemovable(this)) {
 					removeImage.visible(true);
 				}
 			} else {
-				grid.color().remove();
 				if (removeImage != null) {
 					removeImage.visible(false);
 				}
