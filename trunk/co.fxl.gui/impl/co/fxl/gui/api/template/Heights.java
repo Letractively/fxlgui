@@ -18,7 +18,9 @@
  */
 package co.fxl.gui.api.template;
 
+import co.fxl.gui.api.IBordered;
 import co.fxl.gui.api.ICheckBox;
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -39,32 +41,40 @@ public class Heights {
 
 	public void decorate(IComboBox textField) {
 		decorateHeight(textField);
-		textField.color().rgb(249, 249, 249);
+		background(textField);
+	}
+
+	private void background(IColored colored) {
+		Styles.instance().input().field().background(colored);
+	}
+
+	private void border(IBordered bordered) {
+		Styles.instance().input().field().border(bordered);
 	}
 
 	public void decorateHeight(IComboBox textField) {
 		textField.height(inc + COMBOBOX_HEIGHT);
-		textField.border().color().rgb(211, 211, 211);
+		border(textField);
 	}
 
 	public void decorate(ITextField textField) {
 		decorateHeight(textField);
-		textField.color().rgb(249, 249, 249);
+		background(textField);
 	}
 
 	public void decorateHeight(ITextField textField) {
 		textField.height(inc + TEXTFIELD_HEIGHT);
-		textField.border().color().rgb(211, 211, 211);
+		border(textField);
 	}
 
 	public void decorate(IPasswordField textField) {
 		decorateHeight(textField);
-		textField.color().rgb(249, 249, 249);
+		background(textField);
 	}
 
 	public void decorateHeight(IPasswordField textField) {
 		textField.height(inc + TEXTFIELD_HEIGHT);
-		textField.border().color().rgb(211, 211, 211);
+		border(textField);
 	}
 
 	public void decorate(IGridPanel.IGridCell cell) {

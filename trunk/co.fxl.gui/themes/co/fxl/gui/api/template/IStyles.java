@@ -18,10 +18,27 @@
  */
 package co.fxl.gui.api.template;
 
+import co.fxl.gui.api.IBordered;
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 
 public interface IStyles {
+
+	public interface IInput {
+
+		public interface IField {
+
+			IField background(IColored c);
+
+			IField border(IBordered b);
+
+		}
+
+		IField field();
+	}
+
+	IInput input();
 
 	public interface IWindow {
 
