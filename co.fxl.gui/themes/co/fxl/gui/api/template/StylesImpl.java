@@ -19,6 +19,7 @@
 package co.fxl.gui.api.template;
 
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IPanel;
 
 class StylesImpl implements IStyles {
 
@@ -135,8 +136,37 @@ class StylesImpl implements IStyles {
 			@Override
 			public IViewWindow view() {
 				return new IViewWindow() {
-					
+
+					@Override
+					public IEntry entry() {
+						return new IEntry() {
+
+							@Override
+							public IEntry active(IPanel<?> panel, boolean active) {
+								if (active) {
+									panel.color().rgb(0xD0, 0xE4, 0xF6);
+								} else {
+									panel.color().remove();
+								}
+								return this;
+							}
+
+							@Override
+							public IEntry active(ILabel label, boolean active) {
+								label.font().pixel(13);
+								if (active) {
+									label.font().color().mix().black().gray();
+								}
+								return this;
+							}
+						};
+					}
 				};
+			}
+
+			@Override
+			public void button(ILabel label) {
+				label.font().pixel(12);
 			}
 		};
 	}

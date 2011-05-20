@@ -285,9 +285,9 @@ public class WidgetTitle implements IClickListener {
 		return cl;
 	}
 
-	protected ILabel addHyperlinkLabel(String text, IHorizontalPanel iPanel) {
-		final ILabel label = iPanel.addSpace(4).add().label().text(text);
-		label.font().pixel(12);
+	private ILabel addHyperlinkLabel(String text, IHorizontalPanel iPanel) {
+		ILabel label = iPanel.addSpace(4).add().label().text(text);
+		Styles.instance().window().button(label);
 		return label;
 	}
 
