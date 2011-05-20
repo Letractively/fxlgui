@@ -98,7 +98,7 @@ public interface IStyles {
 
 	public interface IDialog {
 
-		public interface IErrorDialog {
+		public interface IError {
 
 			public interface IHeader {
 
@@ -116,7 +116,7 @@ public interface IStyles {
 
 		}
 
-		IErrorDialog error();
+		IError error();
 
 		IButton button();
 
