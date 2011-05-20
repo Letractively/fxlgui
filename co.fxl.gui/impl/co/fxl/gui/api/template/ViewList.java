@@ -199,13 +199,12 @@ public class ViewList {
 				image.clickable(clickable);
 			if (!clickable) {
 				grid.color().rgb(0xD0, 0xE4, 0xF6);
-				label.font().underline(false).weight().plain().color().black();
+				label.font().color().mix().black().gray();
 				if (removeImage != null && newListener.isRemovable(this)) {
 					removeImage.visible(true);
 				}
 			} else {
 				grid.color().remove();
-				// label.font().weight().plain().color().rgb(0, 87, 141);
 				if (removeImage != null) {
 					removeImage.visible(false);
 				}
@@ -226,7 +225,7 @@ public class ViewList {
 
 	public ViewList(MetaViewList widget, ILayout layout) {
 		this.widget = widget;
-		widgetTitle = new WidgetTitle(layout, true).space(2);//.grayBackground();
+		widgetTitle = new WidgetTitle(layout, true).space(2);// .grayBackground();
 	}
 
 	public ViewImpl addView() {

@@ -23,7 +23,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import co.fxl.gui.api.Fonts;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -39,8 +38,6 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
 
 public class WidgetTitle implements IClickListener {
-
-	private static final int SMALL_FONT = 12;
 
 	public class CommandLink implements IClickable<IClickable<?>> {
 
@@ -65,7 +62,7 @@ public class WidgetTitle implements IClickListener {
 			label.clickable(clickable);
 			if (image != null)
 				image.clickable(clickable);
-			Fonts.instance().dialog().button().clickable(label, clickable);
+			Styles.instance().dialog().button().clickable(label, clickable);
 			return this;
 		}
 
@@ -225,13 +222,13 @@ public class WidgetTitle implements IClickListener {
 
 	public ILabel addTitle(String title) {
 		initHeader();
-		headerLabel = titlePanel.add().label().text(title);
+		ILabel label = titlePanel.add().label().text(title);
+		Styles.instance().window().header().title().small(label);
+		headerLabel = label;
 		if (foldable) {
 			headerLabel.addClickListener(this);
 			headerLabel.tooltip(FOLDABLE);
 		}
-		headerLabel.font().weight().bold().pixel(SMALL_FONT);
-		headerLabel.font().color().white();
 		return headerLabel;
 	}
 
@@ -307,7 +304,7 @@ public class WidgetTitle implements IClickListener {
 
 	protected ILabel addSeparator(IHorizontalPanel cp) {
 		ILabel label = cp.add().label().text("|");
-		Fonts.instance().separator(label);
+		Styles.instance().separator(label);
 		return label;
 	}
 

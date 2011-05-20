@@ -24,6 +24,7 @@ import java.util.List;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.template.Styles;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -85,7 +86,8 @@ public class NavigationView {
 
 		public ILabel addHyperlink(String text) {
 			panel.addSpace(4);
-			panel.add().label().text("|").font().color().gray();
+			ILabel label = panel.add().label().text("|");
+			Styles.instance().separator(label);
 			ILabel l = panel.addSpace(4).add().label().text(text).hyperlink();
 			additionalLabels.add(l);
 			return l;
@@ -159,8 +161,7 @@ public class NavigationView {
 	}
 
 	protected ILabel addTextLabel(IHorizontalPanel panel) {
-		final ILabel textLabel = panel.add().label().hyperlink();// .hyperlink();
-		// textLabel.font();// .pixel(13);// .weight().bold();
+		final ILabel textLabel = panel.add().label().hyperlink();
 		return textLabel;
 	}
 
@@ -169,9 +170,9 @@ public class NavigationView {
 		setUp();
 		IHorizontalPanel panel = addPanel();
 		addImage(panel, null);
-		ILabel textLabel = addTextLabel(panel);
-		textLabel.font().weight().bold();
-		textLabel.text(title);
+		ILabel label = addTextLabel(panel);
+		Styles.instance().window().navigation().choice().title(label);
+		label.text(title);
 		IComboBox cb = panel.addSpace(8).add().comboBox();
 		cb.width(202);
 		cb.addText(options);
@@ -184,7 +185,7 @@ public class NavigationView {
 		if (SHOW_NUMBERS) {
 			String s = String.valueOf(index++) + ".";
 			ILabel label = panel.add().label().text(s);
-			label.font().pixel(13).color().gray();
+			Styles.instance().window().navigation().number(label);
 			panel.addSpace(4);
 		} else if (SHOW_TRIANGLE) {
 			image = panel

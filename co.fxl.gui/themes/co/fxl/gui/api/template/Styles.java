@@ -16,47 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.api;
+package co.fxl.gui.api.template;
 
-public interface IFonts {
+public class Styles {
 
-	public interface IHyperlink {
-
-		void clickable(ILabel label, boolean clickable);
-
-		void highlight(ILabel label, boolean highlighted);
+	// TODO after .text(..) target(..)
+	public static IStyles instance() {
+		return new StylesImpl();
 	}
-
-	public interface IDialog {
-
-		public interface IErrorDialog {
-
-			public interface IHeader {
-
-				void stacktrace(ILabel label);
-
-			}
-
-			IHeader header();
-
-		}
-
-		public interface IButton {
-
-			void clickable(ILabel label, boolean clickable);
-
-		}
-
-		IErrorDialog error();
-
-		IButton button();
-
-	}
-
-	IDialog dialog();
-
-	void separator(ILabel label);
-
-	IHyperlink hyperlink();
-
 }
