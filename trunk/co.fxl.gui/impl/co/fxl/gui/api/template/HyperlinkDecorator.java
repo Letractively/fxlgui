@@ -18,9 +18,9 @@
  */
 package co.fxl.gui.api.template;
 
-import co.fxl.gui.api.Fonts;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
+import co.fxl.gui.api.template.Styles;
 
 public class HyperlinkDecorator implements IMouseOverListener {
 
@@ -34,19 +34,19 @@ public class HyperlinkDecorator implements IMouseOverListener {
 	}
 
 	private void activeColor() {
-		Fonts.instance().hyperlink().clickable(label, true);
+		Styles.instance().hyperlink().clickable(label, true);
 	}
 
 	private void inactiveColor() {
-		Fonts.instance().hyperlink().clickable(label, false);
+		Styles.instance().hyperlink().clickable(label, false);
 	}
 
 	private void activeHighlight() {
-		Fonts.instance().hyperlink().highlight(label, true);
+		Styles.instance().hyperlink().highlight(label, true);
 	}
 
 	private void inactiveHighlight() {
-		Fonts.instance().hyperlink().highlight(label, false);
+		Styles.instance().hyperlink().highlight(label, false);
 	}
 
 	public HyperlinkDecorator clickable(boolean enable) {

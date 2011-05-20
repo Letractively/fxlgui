@@ -18,11 +18,11 @@
  */
 package co.fxl.gui.api.template;
 
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.IClickable.IClickListener;
 
 public class ViewWidget {
 
@@ -42,11 +42,7 @@ public class ViewWidget {
 		panel.addSpace(4);
 		ILabel textLabel = panel.add().label().text(name);
 		textLabel.font().pixel(13);
-		if (active) {
-			panel.color().red();
-			textLabel.font().weight().bold().color().white();
-		} else
-			textLabel.hyperlink().addClickListener(clickListener);
+		textLabel.hyperlink().addClickListener(clickListener);
 		panel.addSpace(4);
 	}
 }

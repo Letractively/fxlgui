@@ -16,9 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.api;
+package co.fxl.gui.api.template;
 
-class FontsImpl implements IFonts {
+import co.fxl.gui.api.ILabel;
+
+class StylesImpl implements IStyles {
 
 	@Override
 	public IDialog dialog() {
@@ -53,7 +55,6 @@ class FontsImpl implements IFonts {
 							label.font().color().gray();
 						}
 					}
-
 				};
 			}
 		};
@@ -79,6 +80,63 @@ class FontsImpl implements IFonts {
 			@Override
 			public void highlight(ILabel label, boolean highlighted) {
 				label.font().underline(highlighted);
+			}
+		};
+	}
+
+	@Override
+	public IWindow window() {
+		return new IWindow() {
+
+			@Override
+			public INavigationWindow navigation() {
+				return new INavigationWindow() {
+
+					@Override
+					public IChoice choice() {
+						return new IChoice() {
+
+							@Override
+							public void title(ILabel label) {
+								label.font().weight().bold();
+							}
+
+						};
+
+					}
+
+					@Override
+					public void number(ILabel label) {
+						label.font().pixel(13);
+						label.font().color().gray();
+					}
+				};
+			}
+
+			@Override
+			public IHeader header() {
+				return new IHeader() {
+
+					@Override
+					public ITitle title() {
+						return new ITitle() {
+
+							@Override
+							public void small(ILabel label) {
+								label.font().weight().bold().pixel(12);
+								label.font().color().white();
+							}
+
+						};
+					}
+				};
+			}
+
+			@Override
+			public IViewWindow view() {
+				return new IViewWindow() {
+					
+				};
 			}
 		};
 	}

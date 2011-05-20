@@ -19,7 +19,6 @@
 package co.fxl.gui.api;
 
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IDialog.IDialogButton;
 
 public interface IDialog {
 
