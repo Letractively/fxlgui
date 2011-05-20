@@ -30,8 +30,8 @@ class StylesImpl implements IStyles {
 		return new IDialog() {
 
 			@Override
-			public IErrorDialog error() {
-				return new IErrorDialog() {
+			public IError error() {
+				return new IError() {
 
 					@Override
 					public IHeader header() {
