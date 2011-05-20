@@ -113,10 +113,10 @@ public class WidgetTitle implements IClickListener {
 		headerPanel = panel.cell(0, 0).panel().grid();
 		headerPanel.color().rgb(136, 136, 136).gradient().vertical()
 				.rgb(113, 113, 113);
-		headerPanel.visible(false);
 		IBorder border = headerPanel.border();
 		border.color().rgb(172, 197, 213);
 		border.style().bottom();
+		headerPanel.visible(false);
 		if (addBorder)
 			panel.border().color().rgb(172, 197, 213);
 	}

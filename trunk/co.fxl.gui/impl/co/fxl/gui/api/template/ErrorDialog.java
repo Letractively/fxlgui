@@ -19,11 +19,11 @@
 package co.fxl.gui.api.template;
 
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.template.Styles;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.IVerticalPanel;
 
 public class ErrorDialog {
@@ -55,15 +55,16 @@ public class ErrorDialog {
 							IContainer container = detailDialog.container();
 							IVerticalPanel detailPanel = container.panel()
 									.vertical();
-							IVerticalPanel verticalDetailPanel = detailPanel
-									.spacing(10).add().panel().vertical();
-							ILabel label = verticalDetailPanel.add().label()
+							IVerticalPanel panel = detailPanel.spacing(10)
+									.add().panel().vertical();
+							ILabel label = panel.add().label()
 									.text("Stacktrace:");
 							Styles.instance().dialog().error().header()
 									.stacktrace(label);
-							verticalDetailPanel.add().textArea().size(400, 100)
-									.text(pMessage + "\n" + pStacktrace)
-									.border().color().gray();
+							ITextArea textArea = panel.add().textArea()
+									.size(400, 100)
+									.text(pMessage + "\n" + pStacktrace);
+							textArea.border().color().gray();
 							detailDialog.visible(true);
 						}
 					});
