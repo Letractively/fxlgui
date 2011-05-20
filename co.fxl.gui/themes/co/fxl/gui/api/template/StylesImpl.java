@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.api.template;
 
+import co.fxl.gui.api.IBordered;
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 
@@ -167,6 +169,30 @@ class StylesImpl implements IStyles {
 			@Override
 			public void button(ILabel label) {
 				label.font().pixel(12);
+			}
+		};
+	}
+
+	@Override
+	public IInput input() {
+		return new IInput() {
+
+			@Override
+			public IField field() {
+				return new IField() {
+
+					@Override
+					public IField background(IColored colored) {
+						colored.color().rgb(249, 249, 249);
+						return this;
+					}
+
+					@Override
+					public IField border(IBordered bordered) {
+						bordered.border().color().rgb(211, 211, 211);
+						return this;
+					}
+				};
 			}
 		};
 	}

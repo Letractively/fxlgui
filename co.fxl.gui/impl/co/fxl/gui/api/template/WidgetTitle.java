@@ -35,7 +35,6 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
-import co.fxl.gui.api.IVerticalPanel;
 
 public class WidgetTitle implements IClickListener {
 
@@ -147,11 +146,11 @@ public class WidgetTitle implements IClickListener {
 		return this;
 	}
 
-	static IColor decorateGradient(IVerticalPanel titlePanel) {
-		IColor color = titlePanel.color().rgb(136, 136, 136).gradient()
-				.vertical().rgb(113, 113, 113);
-		return color;
-	}
+	// static IColor decorateGradient(IVerticalPanel titlePanel) {
+	// IColor color = titlePanel.color().rgb(136, 136, 136).gradient()
+	// .vertical().rgb(113, 113, 113);
+	// return color;
+	// }
 
 	public WidgetTitle commandsOnTop() {
 		commandsOnTop = true;
