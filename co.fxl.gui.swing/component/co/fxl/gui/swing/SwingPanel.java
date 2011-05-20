@@ -29,8 +29,8 @@ import javax.swing.JFrame;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.ILinearPanel.ISpacing;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.ISpaced.ISpacing;
 import co.fxl.gui.api.IWidgetProvider;
 
 class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
