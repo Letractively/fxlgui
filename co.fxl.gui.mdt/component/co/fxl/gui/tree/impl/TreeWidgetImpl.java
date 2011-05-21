@@ -181,47 +181,45 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	private IVerticalPanel panel;
-	Node<T> last;
 	private IMenuWidget registers;
 	private List<DetailView> detailViews = new LinkedList<DetailView>();
-	// IVerticalPanel detailPanel;
-	ITree<T> root;
 	private WidgetTitle widgetTitle;
-	private boolean expand = false;
-	T selection;
-	Map<T, Node<T>> object2node = new HashMap<T, Node<T>>();
 	private IClickable<?> refresh;
 	private Map<String, IClickListener> newClick = new HashMap<String, IClickListener>();
 	private Map<String, IClickable<?>> newClickHyperlink = new HashMap<String, IClickable<?>>();
 	private List<ISelectionListener<T>> selectionListeners = new LinkedList<ISelectionListener<T>>();
 	private IClickable<?> delete;
 	private IVerticalPanel leftContentPanel;
-	// private IVerticalPanel rightContentPanel;
 	private ISplitPane splitPane;
-	// IScrollPane scrollPane;
-	Node<T> node;
 	private boolean hasButtons = false;
 	private String defaultCreatableType = null;
 	private List<String> creatableTypes = new LinkedList<String>();
-	private boolean showRoot = true;
 	ITreeClickListener<T> treeClickListener;
 	KeyAdapter<Object> treeClickAdapter;
 	boolean allowCreate = true;
 	private IClickListener deleteListener;
 	private Map<String, String> creatableTypeIcons = new HashMap<String, String>();
-	Node<T> cutted;
 	private boolean allowCutPaste = false;
 	private IClickable<?> cut;
 	private IClickable<?> copy;
 	private IClickable<?> paste;
-	protected boolean isCopy;
 	private IScrollPane leftScrollPane;
 	private IVerticalPanel bottom;
 	private CommandLink reorder;
 
+	// TODO extract model
+	private boolean showRoot = true;
+	Node<T> node;
+	private boolean expand = false;
+	Map<T, Node<T>> object2node = new HashMap<T, Node<T>>();
+	T selection;
+	Node<T> last;
+	ITree<T> root;
+	protected boolean isCopy;
+	Node<T> cutted;
+
 	TreeWidgetImpl(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel(), true).space(0)
-		// .grayBackground()
 				.commandsOnTop();
 		widgetTitle.foldable(false);
 		widgetTitle.holdOnClick();
