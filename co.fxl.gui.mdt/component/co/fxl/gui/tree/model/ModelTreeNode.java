@@ -109,25 +109,6 @@ class ModelTreeNode<T> extends LazyClickListener {
 		if (isNull)
 			label.font().weight().italic().color().gray();
 		injectTreeListener(label);
-		// if (widget.detailPanel != null) {
-		// // label.addClickListener(showClickListener);
-		// }
-		// if (root.children().size() != 0 && expand
-		// && root.childCount() > root.children().size()) {
-		// String text = " [" + root.children().size() + "/"
-		// + root.childCount() + "]";
-		// refreshLabel = content.add().label().text(text);
-		// refreshLabel.font().color().gray();
-		// content.addSpace(4);
-		// imageRefresh = content.add().image().resource(DOWN);
-		// imageRefresh.addClickListener(new IClickListener() {
-		// @Override
-		// public void onClick() {
-		// expandLazyNode();
-		// }
-		// });
-		// imageRefresh.addClickListener(showClickListener);
-		// }
 		label.addClickListener(this);
 		this.depth = depth;
 		content.addSpace(10);
