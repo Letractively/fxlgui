@@ -206,9 +206,9 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private IScrollPane leftScrollPane;
 	private IVerticalPanel bottom;
 	private CommandLink reorder;
+	private boolean showRoot = true;
 
 	// TODO extract model
-	private boolean showRoot = true;
 	Node<T> node;
 	private boolean expand = false;
 	Map<T, Node<T>> object2node = new HashMap<T, Node<T>>();
