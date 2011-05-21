@@ -73,13 +73,7 @@ class ModelFilterTreeWidget<T> extends ModelTreeWidget<T> implements
 
 			@Override
 			public void onSuccess(ITree<T> tree) {
-				ModelTreeNode<T> n = getObject2node(selection);
-				if (n != null) {
-					assert n.tree != null : "Tree cannot be null";
-					ITree<T> p = n.tree;
-					showToParent(tree, p);
-				} else
-					root(tree);
+				model.refresh();
 			}
 		});
 	}
@@ -91,13 +85,7 @@ class ModelFilterTreeWidget<T> extends ModelTreeWidget<T> implements
 
 			@Override
 			public void onSuccess(ITree<T> tree) {
-				ModelTreeNode<T> n = getObject2node(selection);
-				if (n != null) {
-					ITree<T> p = n.tree;
-					assert p != null : "Tree cannot be null";
-					showToParent(tree, p);
-				} else
-					root(tree);
+				model.refresh();
 				if (cb != null)
 					cb.onSuccess(true);
 			}

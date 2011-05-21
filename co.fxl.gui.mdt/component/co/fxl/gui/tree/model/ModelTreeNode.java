@@ -50,11 +50,9 @@ class ModelTreeNode<T> extends LazyClickListener {
 	private IImage image;
 	private ModelTreeWidget<T> widget;
 	IHorizontalPanel container;
-	private boolean expand;
 	private IImage imageRefresh;
 	private ILabel label;
 	private ILabel refreshLabel;
-	List<ITree<T>> path;
 	boolean expandLoadedNode = false;
 	private IImage icon;
 	protected boolean isExpanded;
@@ -66,13 +64,11 @@ class ModelTreeNode<T> extends LazyClickListener {
 	private IImage moveBottom;
 
 	ModelTreeNode(final ModelTreeWidget<T> widget, IVerticalPanel panel,
-			final ITree<T> root, int depth, boolean expand, List<ITree<T>> path) {
+			final ITree<T> root, int depth) {
 		assert root != null : "Tree cannot be null";
 		this.tree = root;
 		this.widget = widget;
-		this.expand = expand;
-		isExpanded = expand;
-		this.path = path;
+		isExpanded = false;
 		container = panel.add().panel().horizontal();
 		IClickable<?> clickable = container;
 		clickable.addClickListener(this);
@@ -113,12 +109,13 @@ class ModelTreeNode<T> extends LazyClickListener {
 		this.depth = depth;
 		content.addSpace(10);
 		childrenPanel = panel.add().panel().vertical();
-		if (root.children().size() != 0 && expand)
+		if (root.children().size() != 0)
 			expandLoadedNode();
-		else if (root.childCount() != 0 && path != null && path.contains(tree)) {
-			expandLazyNode();
-		}
-		widget.object2node.put(root.object(), this);
+		// else if (root.childCount() != 0 && path != null &&
+		// path.contains(tree)) {
+		// expandLazyNode();
+		// }
+		widget.model.register(this);
 		decorate();
 	}
 
@@ -129,7 +126,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 	}
 
 	void decorate() {
-		if (widget.cutted != null && tree.equals(widget.cutted.tree)) {
+		if (widget.model.isCutCopy(this)) {
 			container.border().style().dotted();
 		} else
 			container.border().color().white();
@@ -202,10 +199,10 @@ class ModelTreeNode<T> extends LazyClickListener {
 	}
 
 	private void updateParent() {
-		widget.getObject2node(tree.parent().object()).refresh(true);
+		widget.model.refresh(tree.parent(), true);
 		widget.selection(tree.object());
-		widget.getObject2node(tree.object()).moveActive = true;
-		widget.notifyUpdate(widget.selection);
+		widget.model.node(tree).moveActive = true;
+		widget.notifyUpdate(widget.model.selection().object());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -266,7 +263,8 @@ class ModelTreeNode<T> extends LazyClickListener {
 	private void expandCollapse() {
 		if (tree.childCount() == 0)
 			return;
-		if (widget.selection != null && !tree.object().equals(widget.selection)) {
+		if (widget.model.selection() != null
+				&& !tree.object().equals(widget.model.selection().object())) {
 			return;
 		}
 		if (!expandLoadedNode) {
@@ -296,7 +294,6 @@ class ModelTreeNode<T> extends LazyClickListener {
 			imageRefresh.resource(null);
 			refreshLabel.remove();
 		}
-		expand = false;
 		tree.loadChildren(lCallback);
 	}
 
@@ -306,7 +303,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 		for (ITree<T> child : tree.children()) {
 			assert child != null : "Tree child cannot be null";
 			widget.newNode(widget, childrenPanel.add().panel().vertical(),
-					child, depth + 1, expand, path, new Runnable() {
+					child, depth + 1, new Runnable() {
 						@Override
 						public void run() {
 							if (tree.childCount() > 0) {
