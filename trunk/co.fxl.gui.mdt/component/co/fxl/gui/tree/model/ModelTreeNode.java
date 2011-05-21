@@ -111,10 +111,6 @@ class ModelTreeNode<T> extends LazyClickListener {
 		childrenPanel = panel.add().panel().vertical();
 		if (root.children().size() != 0)
 			expandLoadedNode();
-		// else if (root.childCount() != 0 && path != null &&
-		// path.contains(tree)) {
-		// expandLazyNode();
-		// }
 		widget.model.register(this);
 		decorate();
 	}
