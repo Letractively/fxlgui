@@ -140,7 +140,7 @@ class TestTree implements ITree<String> {
 
 	@Override
 	public boolean isNew() {
-		throw new MethodNotImplementedException();
+		return false;
 	}
 
 	@Override
@@ -150,7 +150,7 @@ class TestTree implements ITree<String> {
 
 	@Override
 	public boolean isLoaded() {
-		throw new MethodNotImplementedException();
+		return true;
 	}
 
 	@Override
@@ -160,7 +160,7 @@ class TestTree implements ITree<String> {
 
 	@Override
 	public co.fxl.gui.tree.api.ITree.IDecorator decorator() {
-		throw new MethodNotImplementedException();
+		return null;
 	}
 
 	@Override
@@ -186,7 +186,7 @@ class TestTree implements ITree<String> {
 
 	@Override
 	public String iconClosed() {
-		throw new MethodNotImplementedException();
+		return null;
 	}
 
 	@Override
