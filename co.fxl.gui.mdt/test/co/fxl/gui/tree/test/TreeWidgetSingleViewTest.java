@@ -27,12 +27,12 @@ import co.fxl.gui.register.impl.RegisterWidgetImplProvider;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
-import co.fxl.gui.tree.impl.TreeWidgetProvider;
+import co.fxl.gui.tree.impl.TreeWidgetImplProvider;
 
 class TreeWidgetSingleViewTest {
 
 	void run(IDisplay display) {
-		display.register(new TreeWidgetProvider());
+		display.register(new TreeWidgetImplProvider());
 		display.register(new RegisterWidgetImplProvider());
 		display.register(new NavigationWidgetImplProvider());
 		IVerticalPanel panel = display.container().panel().vertical();

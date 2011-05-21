@@ -21,14 +21,14 @@ package co.fxl.gui.tree.model;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 
-public class ResizeListener implements IResizeListener {
+public class ModelResizeListener implements IResizeListener {
 
-	private static ResizeListener instance;
+	private static ModelResizeListener instance;
 	private static IResizeListener listener;
 
 	public static void setup(IDisplay display, IResizeListener l) {
 		if (instance == null) {
-			instance = new ResizeListener();
+			instance = new ModelResizeListener();
 			display.addResizeListener(instance);
 		}
 		listener = l;

@@ -48,7 +48,7 @@ import co.fxl.gui.navigation.api.IMenuWidget;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 
-public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
+public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	
 	// TODO extract model
 
@@ -101,7 +101,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private class DetailView implements co.fxl.gui.tree.api.ITreeWidget.IView {
 
 		private IDecorator<T> decorator;
-		private Node<T> node;
+		private ModelTreeNode<T> node;
 		boolean onTop = false;
 		private IVerticalPanel contentPanel;
 		private IMenuItem register;
@@ -136,7 +136,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		// onTop = true;
 		// }
 
-		void setNode(Node<T> node) {
+		void setNode(ModelTreeNode<T> node) {
 			this.node = node;
 			if (node == null) {
 				decorator.clear(contentPanel);
@@ -211,16 +211,16 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private boolean showRoot = true;
 
 	// TODO extract model
-	Node<T> node;
+	ModelTreeNode<T> node;
 	private boolean expand = false;
-	Map<T, Node<T>> object2node = new HashMap<T, Node<T>>();
+	Map<T, ModelTreeNode<T>> object2node = new HashMap<T, ModelTreeNode<T>>();
 	T selection;
-	Node<T> last;
+	ModelTreeNode<T> last;
 	ITree<T> root;
 	protected boolean isCopy;
-	Node<T> cutted;
+	ModelTreeNode<T> cutted;
 
-	TreeWidgetImpl(IContainer layout) {
+	ModelTreeWidget(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel(), true).space(0)
 				.commandsOnTop();
 		widgetTitle.foldable(false);
@@ -296,7 +296,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					@Override
 					public void onAllowedClick() {
 						widgetTitle.reset();
-						Node<T> lastCutted = cutted;
+						ModelTreeNode<T> lastCutted = cutted;
 						cutted = getObject2node(selection);
 						if (lastCutted != null)
 							lastCutted.decorate();
@@ -309,7 +309,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					@Override
 					public void onAllowedClick() {
 						widgetTitle.reset();
-						Node<T> lastCutted = cutted;
+						ModelTreeNode<T> lastCutted = cutted;
 						cutted = getObject2node(selection);
 						if (lastCutted != null)
 							lastCutted.decorate();
@@ -375,7 +375,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				refresh().addClickListener(new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
-						((RefreshListener) TreeWidgetImpl.this).onRefresh();
+						((RefreshListener) ModelTreeWidget.this).onRefresh();
 						widgetTitle.reset();
 					}
 				});
@@ -443,7 +443,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		// BACKGROUND_GRAY);
 		registers = (IMenuWidget) scrollPane.viewPort().widget(
 				IMenuWidget.class);
-		ResizeListener.setup(panel.display(), this);
+		ModelResizeListener.setup(panel.display(), this);
 		onResize(-1, panel.display().height());
 	}
 
@@ -482,7 +482,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			@Override
 			public void run() {
 				if (selection != null) {
-					Node<T> n = getObject2node(selection);
+					ModelTreeNode<T> n = getObject2node(selection);
 					if (n != null)
 						node = n;
 					else if (!selection.equals(root.object()) || showRoot) {
@@ -529,9 +529,9 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private IView activeView;
 	private static int MAX_PAINTS = 250;
 
-	void newNode(TreeWidgetImpl<T> widget, IVerticalPanel panel, ITree<T> root,
+	void newNode(ModelTreeWidget<T> widget, IVerticalPanel panel, ITree<T> root,
 			int depth, boolean expand, List<ITree<T>> path, Runnable finish) {
-		Node<T> node = new Node<T>(widget, panel, root, depth, expand, path);
+		ModelTreeNode<T> node = new ModelTreeNode<T>(widget, panel, root, depth, expand, path);
 		if (this.node == null)
 			this.node = node;
 		painted++;
@@ -544,7 +544,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	private void drawNode(final Iterator<ITree<T>> it,
-			final TreeWidgetImpl<T> treeWidgetImpl,
+			final ModelTreeWidget<T> treeWidgetImpl,
 			final IVerticalPanel panel2, final int i, final boolean expand2,
 			final List<ITree<T>> path, final Runnable finish) {
 		if (!it.hasNext()) {
@@ -560,11 +560,11 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		});
 	}
 
-	void show(final Node<T> node) {
+	void show(final ModelTreeNode<T> node) {
 		show(node, true, null);
 	}
 
-	void show(final Node<T> node, boolean callSelection, ICallback<Void> cb) {
+	void show(final ModelTreeNode<T> node, boolean callSelection, ICallback<Void> cb) {
 		if (last == node && node != null)
 			return;
 		if (last != null) {
@@ -575,7 +575,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		showLoading(node, callSelection, cb);
 	}
 
-	void showLoading(final Node<T> node, final boolean callSelection,
+	void showLoading(final ModelTreeNode<T> node, final boolean callSelection,
 			final ICallback<Void> cb) {
 		if (node != null && !node.tree.isLoaded()) {
 			node.tree.load(new CallbackTemplate<Boolean>(cb) {
@@ -599,7 +599,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		}
 	}
 
-	void showAfterLoad(Node<T> node, boolean callSelection) {
+	void showAfterLoad(ModelTreeNode<T> node, boolean callSelection) {
 		if (callSelection) {
 			if (node != null && node.tree != null) {
 				leftScrollPane.scrollIntoView(node.content);
@@ -662,7 +662,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> expand(T selection, boolean expand) {
-		Node<T> sNode = getObject2node(selection);
+		ModelTreeNode<T> sNode = getObject2node(selection);
 		if (expand)
 			sNode.expand();
 		else
@@ -685,14 +685,14 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		addButtons();
 		boolean update = false;
 		if (this.selection != null) {
-			Node<T> sNode = getObject2node(this.selection);
+			ModelTreeNode<T> sNode = getObject2node(this.selection);
 			// assert sNode != null : this.selection + " not found in "
 			// + object2node.values().toString();
 			if (sNode != null)
 				sNode.selected(false);
 		}
 		if (selection != null && root != null && root.object() != null) {
-			Node<T> sNode = getObject2node(selection);
+			ModelTreeNode<T> sNode = getObject2node(selection);
 			if (sNode != null) {
 				last = sNode;
 				sNode.selected(true);
@@ -794,7 +794,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		return last.tree.object();
 	}
 
-	TreeWidgetImpl<T> addRefreshListener(final RefreshListener listener) {
+	ModelTreeWidget<T> addRefreshListener(final RefreshListener listener) {
 		addButtons();
 		return this;
 	}
@@ -824,7 +824,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	@Override
 	public ITreeWidget<T> notifyUpdate(T originalObject, boolean recurse) {
 		assert originalObject != null : "Illegal argument for Tree.notifyUpdate";
-		Node<T> n = getObject2node(originalObject);
+		ModelTreeNode<T> n = getObject2node(originalObject);
 		assert n != null : "Expanded tree node cannot be updated for object "
 				+ originalObject;
 		n.update(originalObject);
@@ -923,9 +923,9 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		return this;
 	}
 
-	Node<T> getObject2node(T selection) {
+	ModelTreeNode<T> getObject2node(T selection) {
 		for (T t : object2node.keySet()) {
-			Node<T> node = object2node.get(t);
+			ModelTreeNode<T> node = object2node.get(t);
 			assert node != null : selection + " not found in "
 					+ object2node.values();
 			ITree<T> tree = node.tree;

@@ -26,22 +26,22 @@ import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.tree.api.IFilterList;
 import co.fxl.gui.tree.api.IFilterTreeWidget;
 import co.fxl.gui.tree.api.ITree;
-import co.fxl.gui.tree.model.TreeWidgetImpl.RefreshListener;
+import co.fxl.gui.tree.model.ModelTreeWidget.RefreshListener;
 
-class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
+class ModelFilterTreeWidget<T> extends ModelTreeWidget<T> implements
 		IFilterTreeWidget<T>, IFilterListener, RefreshListener {
 
 	ISource<T> source;
-	private FilterListImpl<T> filterList;
+	private ModelFilterList<T> filterList;
 	private IFilterConstraints constraints;
 
-	FilterTreeWidgetImpl(IContainer layout) {
+	ModelFilterTreeWidget(IContainer layout) {
 		super(layout);
 	}
 
 	@Override
 	public IFilterList<T> filterList(ILayout layout) {
-		return filterList = new FilterListImpl<T>(this, layout);
+		return filterList = new ModelFilterList<T>(this, layout);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
 
 			@Override
 			public void onSuccess(ITree<T> tree) {
-				Node<T> n = getObject2node(selection);
+				ModelTreeNode<T> n = getObject2node(selection);
 				if (n != null) {
 					assert n.tree != null : "Tree cannot be null";
 					ITree<T> p = n.tree;
@@ -91,7 +91,7 @@ class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
 
 			@Override
 			public void onSuccess(ITree<T> tree) {
-				Node<T> n = getObject2node(selection);
+				ModelTreeNode<T> n = getObject2node(selection);
 				if (n != null) {
 					ITree<T> p = n.tree;
 					assert p != null : "Tree cannot be null";

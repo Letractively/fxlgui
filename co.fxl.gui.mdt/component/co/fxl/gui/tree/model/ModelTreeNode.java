@@ -32,7 +32,7 @@ import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.tree.api.ITree;
 
-class Node<T> extends LazyClickListener {
+class ModelTreeNode<T> extends LazyClickListener {
 
 	private static final String FOLDER_CLOSED = "folder_closed.png";
 	private static final String FOLDER_EMPTY = "folder_empty.png";
@@ -48,7 +48,7 @@ class Node<T> extends LazyClickListener {
 	ITree<T> tree;
 	private int depth;
 	private IImage image;
-	private TreeWidgetImpl<T> widget;
+	private ModelTreeWidget<T> widget;
 	IHorizontalPanel container;
 	private boolean expand;
 	private IImage imageRefresh;
@@ -65,7 +65,7 @@ class Node<T> extends LazyClickListener {
 	private IImage moveDown;
 	private IImage moveBottom;
 
-	Node(final TreeWidgetImpl<T> widget, IVerticalPanel panel,
+	ModelTreeNode(final ModelTreeWidget<T> widget, IVerticalPanel panel,
 			final ITree<T> root, int depth, boolean expand, List<ITree<T>> path) {
 		assert root != null : "Tree cannot be null";
 		this.tree = root;
@@ -279,7 +279,7 @@ class Node<T> extends LazyClickListener {
 	@Override
 	public void onAllowedClick() {
 		expandCollapse();
-		widget.show(Node.this);
+		widget.show(ModelTreeNode.this);
 	}
 
 	private void expandCollapse() {
