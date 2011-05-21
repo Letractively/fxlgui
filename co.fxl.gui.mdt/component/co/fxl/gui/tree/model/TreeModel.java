@@ -22,10 +22,10 @@ import co.fxl.gui.tree.api.ITree;
 
 class TreeModel<T> {
 
-	ITree<T> root;
-	ITree<T> selection;
-	boolean isCopy;
-	ITree<T> cutted;
+	private ITree<T> root;
+	private ITree<T> selection;
+	private boolean isCopy;
+	private ITree<T> cutCopy;
 
 	TreeModel(ITree<T> tree) {
 		root = tree;
