@@ -18,20 +18,16 @@
  */
 package co.fxl.gui.tree.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import co.fxl.gui.tree.api.ITree;
 
 class TreeModel<T> {
 
-	Node<T> node;
-	boolean expand = false;
-	Map<T, Node<T>> object2node = new HashMap<T, Node<T>>();
-	T selection;
-	Node<T> last;
 	ITree<T> root;
-	protected boolean isCopy;
-	Node<T> cutted;
+	ITree<T> selection;
+	boolean isCopy;
+	ITree<T> cutted;
 
+	TreeModel(ITree<T> tree) {
+		root = tree;
+	}
 }
