@@ -239,44 +239,42 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					public void onAllowedClick() {
 						final ITree<T> lParentNode = last != null ? last.tree
 								: root;
-						ChainedCallback<List<T>, ITree<T>> lCallback1 = new ChainedCallback<List<T>, ITree<T>>() {
+						assert lParentNode != null : "Parent node cannot be resolved, cannot load children";
+						CallbackTemplate<List<T>> lCallback1 = new CallbackTemplate<List<T>>() {
 							@Override
 							public void onSuccess(List<T> result) {
+								CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>() {
+
+									public void onFail(Throwable throwable) {
+										widgetTitle.reset();
+										super.onFail(throwable);
+									}
+
+									@Override
+									public void onSuccess(ITree<T> result) {
+										widgetTitle.reset();
+										selection(result.object());
+										boolean rememberExpand = expand;
+										expand = true;
+										List<ITree<T>> path = new LinkedList<ITree<T>>();
+										path.add(result);
+										while (result.parent() != null) {
+											result = result.parent();
+											path.add(0, result);
+										}
+										root(root, path);
+										assert node != null;
+										if (node != null)
+											node.path = null;
+										expand = rememberExpand;
+									}
+								};
 								if (type == null)
-									lParentNode.createNew(getNextCallback());
+									lParentNode.createNew(lCallback2);
 								else
-									lParentNode.createNew(type,
-											getNextCallback());
+									lParentNode.createNew(type, lCallback2);
 							}
 						};
-						CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>() {
-
-							public void onFail(Throwable throwable) {
-								widgetTitle.reset();
-								super.onFail(throwable);
-							}
-
-							@Override
-							public void onSuccess(ITree<T> result) {
-								widgetTitle.reset();
-								selection(result.object());
-								boolean rememberExpand = expand;
-								expand = true;
-								List<ITree<T>> path = new LinkedList<ITree<T>>();
-								path.add(result);
-								while (result.parent() != null) {
-									result = result.parent();
-									path.add(0, result);
-								}
-								root(root, path);
-								assert node != null;
-								if (node != null)
-									node.path = null;
-								expand = rememberExpand;
-							}
-						};
-						lCallback1.setNextCallback(lCallback2);
-						assert lParentNode != null : "Parent node cannot be resolved, cannot load children";
 						lParentNode.loadChildren(lCallback1);
 					}
 				};
