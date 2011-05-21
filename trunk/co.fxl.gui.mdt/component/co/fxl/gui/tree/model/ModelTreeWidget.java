@@ -49,11 +49,10 @@ import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 
 public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
-	
+
 	// TODO extract model
 
 	private static final int SPLIT_POSITION = 250;
-	// private static final int BACKGROUND_GRAY = 247;
 	private boolean showRefresh = true;
 	private boolean showCommands = true;
 
@@ -123,18 +122,10 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 					}
 				}
 			});
-			contentPanel = register.contentPanel();// .spacing(8);
-			// contentPanel.color().rgb(BACKGROUND_GRAY, BACKGROUND_GRAY,
-			// BACKGROUND_GRAY);
+			contentPanel = register.contentPanel();
 			if (detailViews.isEmpty())
 				register.active();
 		}
-
-		// DetailView(IDecorator<Object> decorator) {
-		// this.decorator = decorator;
-		// contentPanel = detailPanel;
-		// onTop = true;
-		// }
 
 		void setNode(ModelTreeNode<T> node) {
 			this.node = node;
@@ -416,10 +407,6 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	public ITreeWidget<T> setDetailView(IDecorator<T> decorator) {
 		addDetailView("Details", decorator);
 		return this;
-		// setUpDetailPanel();
-		// DetailView detailView = new DetailView(decorator);
-		// detailViews.add(detailView);
-		// return this;
 	}
 
 	@Override
@@ -434,13 +421,10 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		if (registers != null)
 			return;
 		splitPane = panel().add().splitPane().splitPosition(SPLIT_POSITION);
-		// splitPane.border().color().rgb(172, 197, 213);
 		leftScrollPane = splitPane.first().scrollPane();
 		leftContentPanel = leftScrollPane.viewPort().panel().vertical();
 		panel = leftContentPanel.spacing(10).add().panel().vertical();
 		IScrollPane scrollPane = splitPane.second().scrollPane();
-		// scrollPane.color().rgb(BACKGROUND_GRAY, BACKGROUND_GRAY,
-		// BACKGROUND_GRAY);
 		registers = (IMenuWidget) scrollPane.viewPort().widget(
 				IMenuWidget.class);
 		ModelResizeListener.setup(panel.display(), this);
@@ -487,21 +471,10 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 						node = n;
 					else if (!selection.equals(root.object()) || showRoot) {
 						node = null;
-						// new
-						// MethodNotImplementedException("Selection in tree widget '"
-						// + selection + "' (" + selection.getClass()
-						// + ") not found in expanded tree").printStackTrace();
 					} else if (!root.children().isEmpty())
 						node = getObject2node(root.children().get(0).object());
 					else
 						node = null;
-					// for (Node<T> n : object2node.values()) {
-					// T object = n.tree.object();
-					// if (object.equals(selection)) {
-					// node = n;
-					// }
-					// }
-					// assert node != null;
 				}
 				show(node, true, new CallbackTemplate<Void>() {
 
@@ -517,8 +490,6 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		} else {
 			List<ITree<T>> children = tree.children();
 			Iterator<ITree<T>> it = children.iterator();
-			// panel2.height(children.size() * 21);
-			// panel2 = panel2.add().panel().vertical();
 			drawNode(it, this, panel2, 0, expand, path, finish);
 		}
 		return this;
@@ -529,9 +500,11 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	private IView activeView;
 	private static int MAX_PAINTS = 250;
 
-	void newNode(ModelTreeWidget<T> widget, IVerticalPanel panel, ITree<T> root,
-			int depth, boolean expand, List<ITree<T>> path, Runnable finish) {
-		ModelTreeNode<T> node = new ModelTreeNode<T>(widget, panel, root, depth, expand, path);
+	void newNode(ModelTreeWidget<T> widget, IVerticalPanel panel,
+			ITree<T> root, int depth, boolean expand, List<ITree<T>> path,
+			Runnable finish) {
+		ModelTreeNode<T> node = new ModelTreeNode<T>(widget, panel, root,
+				depth, expand, path);
 		if (this.node == null)
 			this.node = node;
 		painted++;
@@ -564,12 +537,11 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		show(node, true, null);
 	}
 
-	void show(final ModelTreeNode<T> node, boolean callSelection, ICallback<Void> cb) {
+	void show(final ModelTreeNode<T> node, boolean callSelection,
+			ICallback<Void> cb) {
 		if (last == node && node != null)
 			return;
 		if (last != null) {
-			// if (last == node)
-			// return;
 			last.selected(false);
 		}
 		showLoading(node, callSelection, cb);
@@ -686,8 +658,6 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		boolean update = false;
 		if (this.selection != null) {
 			ModelTreeNode<T> sNode = getObject2node(this.selection);
-			// assert sNode != null : this.selection + " not found in "
-			// + object2node.values().toString();
 			if (sNode != null)
 				sNode.selected(false);
 		}
@@ -860,13 +830,6 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 	void showToParent(ITree<T> tree, final ITree<T> parent) {
 		last = null;
-		// T set = null;
-		// if (showRoot
-		// || (parent.object() != null && root != null && !parent.object()
-		// .equals(root.object()))) {
-		// set = parent.object();
-		// }
-		// selection(set);
 		boolean rememberExpand = expand;
 		expand = false;
 		List<ITree<T>> path = new LinkedList<ITree<T>>();
