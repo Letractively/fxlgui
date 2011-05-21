@@ -51,6 +51,10 @@ class TreeModel<T> {
 	}
 
 	void selection(ITree<T> selection) {
+		// TODO show old node as not selected
+		this.selection = selection;
+		// TODO show node as selected
+		// TODO set detail views
 		throw new MethodNotImplementedException();
 	}
 

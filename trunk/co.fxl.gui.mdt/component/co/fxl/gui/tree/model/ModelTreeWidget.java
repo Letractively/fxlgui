@@ -466,13 +466,11 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 			node.tree.load(new CallbackTemplate<Boolean>() {
 				@Override
 				public void onSuccess(Boolean result) {
-					model.refresh(node.tree);
-					setDetailViewNode(node);
+					model.selection(node.tree);
 				}
 			});
 		} else {
-			model.refresh(node.tree);
-			setDetailViewNode(node);
+			model.selection(node.tree);
 		}
 	}
 
