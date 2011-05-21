@@ -25,7 +25,6 @@ import co.fxl.gui.tree.api.ITree;
 
 class TreeModel<T> {
 
-	boolean showRoot = true;
 	Node<T> node;
 	boolean expand = false;
 	Map<T, Node<T>> object2node = new HashMap<T, Node<T>>();
