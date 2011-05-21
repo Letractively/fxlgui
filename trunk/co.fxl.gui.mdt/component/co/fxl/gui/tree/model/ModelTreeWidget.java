@@ -137,12 +137,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		}
 
 		protected void update() {
-			if (node == null)
-				return;
-			if (node.tree.object() != null) {
-				if (node.tree.object() == root.object() && !showRoot) {
-					return;
-				}
+			if (node != null && node.tree.object() != null) {
 				bottom.clear();
 				decorator.decorate(contentPanel, bottom, node.tree);
 				activeView = this;
@@ -197,17 +192,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	private IScrollPane leftScrollPane;
 	private IVerticalPanel bottom;
 	private CommandLink reorder;
-	private boolean showRoot = true;
-
-	// TODO extract model
-	ModelTreeNode<T> node;
-	private boolean expand = false;
-	Map<T, ModelTreeNode<T>> object2node = new HashMap<T, ModelTreeNode<T>>();
-	T selection;
-	ModelTreeNode<T> last;
-	ITree<T> root;
-	protected boolean isCopy;
-	ModelTreeNode<T> cutted;
+	TreeModel<T> model;
 
 	ModelTreeWidget(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel(), true).space(0)
@@ -228,9 +213,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				IClickListener cl = new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
-						final ITree<T> lParentNode = last != null ? last.tree
-								: root;
-						assert lParentNode != null : "Parent node cannot be resolved, cannot load children";
+						final ITree<T> lParentNode = model.selection();
 						CallbackTemplate<List<T>> lCallback1 = new CallbackTemplate<List<T>>() {
 							@Override
 							public void onSuccess(List<T> result) {
@@ -244,20 +227,8 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 									@Override
 									public void onSuccess(ITree<T> result) {
 										widgetTitle.reset();
-										selection(result.object());
-										boolean rememberExpand = expand;
-										expand = true;
-										List<ITree<T>> path = new LinkedList<ITree<T>>();
-										path.add(result);
-										while (result.parent() != null) {
-											result = result.parent();
-											path.add(0, result);
-										}
-										root(root, path);
-										assert node != null;
-										if (node != null)
-											node.path = null;
-										expand = rememberExpand;
+										model.selection(result);
+										model.refresh(lParentNode);
 									}
 								};
 								if (type == null)
@@ -285,12 +256,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 					@Override
 					public void onAllowedClick() {
 						widgetTitle.reset();
-						ModelTreeNode<T> lastCutted = cutted;
-						cutted = getObject2node(selection);
-						if (lastCutted != null)
-							lastCutted.decorate();
-						isCopy = false;
-						cutted.decorate();
+						model.cutCopy(false);
 					}
 				});
 				copy = widgetTitle.addHyperlink(Icons.COPY, "Copy");
@@ -298,28 +264,25 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 					@Override
 					public void onAllowedClick() {
 						widgetTitle.reset();
-						ModelTreeNode<T> lastCutted = cutted;
-						cutted = getObject2node(selection);
-						if (lastCutted != null)
-							lastCutted.decorate();
-						isCopy = true;
-						cutted.decorate();
+						model.cutCopy(true);
 					}
 				});
 				paste = widgetTitle.addHyperlink(Icons.PASTE, "Paste");
 				paste.addClickListener(new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
-						cutted.tree.reassign(getObject2node(selection).tree,
-								isCopy, new CallbackTemplate<ITree<T>>() {
+						final ITree<T> p1 = model.cutCopy().parent();
+						final ITree<T> p2 = model.selection();
+						model.cutCopy().reassign(model.selection(),
+								model.isCopy(),
+								new CallbackTemplate<ITree<T>>() {
 
 									@Override
 									public void onSuccess(ITree<T> result) {
 										widgetTitle.reset();
 										paste.clickable(false);
-										final ITree<T> tree = cutted.tree;
-										cutted = null;
-										showToParent(root, tree);
+										model.refresh(p1);
+										model.refresh(p2);
 									}
 								});
 					}
@@ -330,8 +293,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 					@Override
 					protected void onAllowedClick() {
-						getObject2node(selection).moveActive = !getObject2node(selection).moveActive;
-						notifyUpdate(selection);
+						model.move();
 					}
 				};
 				reorder = widgetTitle.addHyperlink(Icons.MOVE, "Move");
@@ -372,14 +334,14 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	void delete() {
-		final ITree<T> tree = last.tree;
+		final ITree<T> tree = model.selection();
 		final ITree<T> parent = tree.parent();
 		ICallback<T> callback = new CallbackTemplate<T>() {
 
 			@Override
 			public void onSuccess(T result) {
-				showToParent(root, parent);
-				// widgetTitle.reset();
+				model.selection(parent);
+				model.refresh(parent);
 			}
 		};
 		tree.delete(callback);
@@ -441,54 +403,23 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	@Override
 	public ITreeWidget<T> root(ITree<T> tree) {
 		addButtons();
-		root(tree, null);
-		return this;
-	}
-
-	public ITreeWidget<T> root(ITree<T> tree, List<ITree<T>> path) {
-		assert tree != null : "Tree cannot be null";
 		IVerticalPanel panel2 = panel();
-		if (this.root != null) {
+		if (model != null) {
 			show(null);
 			panel2.clear();
 		}
-		if (path != null) {
-			selection = path.get(path.size() - 1).object();
-		}
-		this.root = tree;
-		node = null;
-		cutted = null;
-		object2node.clear();
+		model = new TreeModel<T>(tree, model);
 		Runnable finish = new Runnable() {
-
 			@Override
 			public void run() {
-				if (selection != null) {
-					ModelTreeNode<T> n = getObject2node(selection);
-					if (n != null)
-						node = n;
-					else if (!selection.equals(root.object()) || showRoot) {
-						node = null;
-					} else if (!root.children().isEmpty())
-						node = getObject2node(root.children().get(0).object());
-					else
-						node = null;
-				}
-				show(node, true, new CallbackTemplate<Void>() {
-
-					@Override
-					public void onSuccess(Void result) {
-						notifyChange();
-					}
-				});
 			}
 		};
-		if (showRoot) {
-			newNode(this, panel2, tree, 0, expand, path, finish);
+		if (model.showRoot) {
+			newNode(this, panel2, tree, 0, finish);
 		} else {
 			List<ITree<T>> children = tree.children();
 			Iterator<ITree<T>> it = children.iterator();
-			drawNode(it, this, panel2, 0, expand, path, finish);
+			drawNode(it, this, panel2, 0, finish);
 		}
 		return this;
 	}
@@ -499,12 +430,8 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	private static int MAX_PAINTS = 250;
 
 	void newNode(ModelTreeWidget<T> widget, IVerticalPanel panel,
-			ITree<T> root, int depth, boolean expand, List<ITree<T>> path,
-			Runnable finish) {
-		ModelTreeNode<T> node = new ModelTreeNode<T>(widget, panel, root,
-				depth, expand, path);
-		if (this.node == null)
-			this.node = node;
+			ITree<T> root, int depth, Runnable finish) {
+		new ModelTreeNode<T>(widget, panel, root, depth);
 		painted++;
 		if (painted < MAX_PAINTS)
 			finish.run();
@@ -516,68 +443,40 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 	private void drawNode(final Iterator<ITree<T>> it,
 			final ModelTreeWidget<T> treeWidgetImpl,
-			final IVerticalPanel panel2, final int i, final boolean expand2,
-			final List<ITree<T>> path, final Runnable finish) {
+			final IVerticalPanel panel2, final int i, final Runnable finish) {
 		if (!it.hasNext()) {
 			finish.run();
 			return;
 		}
 		ITree<T> c = it.next();
-		newNode(this, panel(), c, 0, expand, path, new Runnable() {
+		newNode(this, panel(), c, 0, new Runnable() {
 			@Override
 			public void run() {
-				drawNode(it, treeWidgetImpl, panel2, i, expand2, path, finish);
+				drawNode(it, treeWidgetImpl, panel2, i, finish);
 			}
 		});
 	}
 
 	void show(final ModelTreeNode<T> node) {
-		show(node, true, null);
-	}
-
-	void show(final ModelTreeNode<T> node, boolean callSelection,
-			ICallback<Void> cb) {
-		if (last == node && node != null)
+		if (node == null) {
+			setDetailViewNode(null);
 			return;
-		if (last != null) {
-			last.selected(false);
 		}
-		showLoading(node, callSelection, cb);
-	}
-
-	void showLoading(final ModelTreeNode<T> node, final boolean callSelection,
-			final ICallback<Void> cb) {
-		if (node != null && !node.tree.isLoaded()) {
-			node.tree.load(new CallbackTemplate<Boolean>(cb) {
-
+		if (!node.tree.isLoaded()) {
+			node.tree.load(new CallbackTemplate<Boolean>() {
 				@Override
 				public void onSuccess(Boolean result) {
-					node.update(node.tree.object());
-					showAfterLoad(node, callSelection);
-					last = node;
-					if (result)
-						node.expand();
-					if (cb != null)
-						cb.onSuccess(null);
+					model.refresh(node.tree);
+					setDetailViewNode(node);
 				}
 			});
 		} else {
-			showAfterLoad(node, callSelection);
-			last = node;
-			if (cb != null)
-				cb.onSuccess(null);
+			model.refresh(node.tree);
+			setDetailViewNode(node);
 		}
 	}
 
-	void showAfterLoad(ModelTreeNode<T> node, boolean callSelection) {
-		if (callSelection) {
-			if (node != null && node.tree != null) {
-				leftScrollPane.scrollIntoView(node.content);
-				node.selected(true);
-				selection(node.tree.object(), false);
-			} else
-				selection(null, false);
-		}
+	void setDetailViewNode(ModelTreeNode<T> node) {
 		boolean showFirst = false;
 		for (int i = 0; i < detailViews.size(); i++) {
 			DetailView view = detailViews.get(i);
@@ -610,7 +509,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				view.update();
 			}
 		}
-		getObject2node(selection).refresh(refreshChildren);
+		model.refresh(model.selection(), refreshChildren);
 		return this;
 	}
 
@@ -626,18 +525,12 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> expand(boolean expand) {
-		this.expand = expand;
 		return this;
 	}
 
 	@Override
 	public ITreeWidget<T> expand(T selection, boolean expand) {
-		ModelTreeNode<T> sNode = getObject2node(selection);
-		if (expand)
-			sNode.expand();
-		else
-			sNode.clear();
-		return this;
+		throw new MethodNotImplementedException();
 	}
 
 	@Override
@@ -653,113 +546,48 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 	private ITreeWidget<T> selection(T selection, boolean recurse) {
 		addButtons();
-		boolean update = false;
-		if (this.selection != null) {
-			ModelTreeNode<T> sNode = getObject2node(this.selection);
-			if (sNode != null)
-				sNode.selected(false);
-		}
-		if (selection != null && root != null && root.object() != null) {
-			ModelTreeNode<T> sNode = getObject2node(selection);
-			if (sNode != null) {
-				last = sNode;
-				sNode.selected(true);
-				update = true;
-			}
-			if (showCommands) {
-				delete.clickable(!root.object().equals(selection)
-						&& (sNode != null && sNode.tree.isDeletable() && !sNode.tree
-								.isNew()));
-				if (reorder != null) {
-					boolean clickable = !root.object().equals(selection)
-							&& (sNode != null && sNode.tree.isMovable() && !sNode.tree
-									.isNew());
-					reorder.clickable(clickable);
-					if (clickable) {
-						reorder.label(sNode.moveActive ? "Lock" : "Move");
-					}
-				}
-			}
-		} else {
-			if (showCommands) {
-				delete.clickable(false);
-				if (reorder != null)
-					reorder.clickable(false);
-			}
-		}
-		this.selection = selection;
-		if (showCommands)
-			updateCreatable();
-		if (update && recurse)
-			showLoading(last, false, new CallbackTemplate<Void>() {
-				@Override
-				public void onSuccess(Void result) {
-					notifyChange();
-				}
-			});
-		else
-			notifyChange();
+		model.selection(selection, recurse);
+		updateButtons();
+		notifyChange();
 		return this;
+	}
+
+	void updateButtons() {
+		if (!showCommands || model == null)
+			return;
+		if (delete != null)
+			delete.clickable(model.allowDelete());
+		if (reorder != null) {
+			reorder.clickable(model.allowMove());
+			reorder.label(model.node(model.selection()).moveActive ? "Lock"
+					: "Move");
+		}
+		String[] creatableTypes = model.getCreatableTypes();
+		List<String> ctypes = creatableTypes != null ? Arrays
+				.asList(creatableTypes) : null;
+		boolean clickableAtAll = !model.selection().isNew();
+		for (String c : newClickHyperlink.keySet()) {
+			boolean b = ctypes == null || ctypes.contains(c);
+			newClickHyperlink.get(c).clickable(clickableAtAll && b);
+		}
+		if (paste != null)
+			paste.clickable(model.allowPaste());
+		if (cut != null) {
+			cut.clickable(model.allowCut());
+		}
+		if (copy != null) {
+			copy.clickable(model.allowCopy());
+		}
 	}
 
 	void notifyChange() {
 		for (ISelectionListener<T> l : selectionListeners)
-			l.onChange(this.selection);
-	}
-
-	private void updateCreatable() {
-		if (root == null) {
-			disableAllNew();
-			return;
-		}
-		ITree<T> tree = root;
-		if (selection != null && getObject2node(selection) != null) {
-			tree = getObject2node(selection).tree;
-			if (tree.isNew()) {
-				disableAllNew();
-				return;
-			}
-		}
-		String[] creatableTypes = tree.getCreatableTypes();
-		List<String> ctypes = creatableTypes != null ? Arrays
-				.asList(creatableTypes) : null;
-		for (String c : newClickHyperlink.keySet()) {
-			boolean b = ctypes == null || ctypes.contains(c);
-			newClickHyperlink.get(c).clickable(b);
-		}
-		if (paste != null)
-			paste.clickable(cutted != null
-					&& selection != null
-					&& getObject2node(selection) != null
-					&& (!isCopy ? cutted.tree
-							.isReassignableTo(getObject2node(selection).tree)
-							: cutted.tree
-									.isCopieableTo(getObject2node(selection).tree)));
-		boolean cuttable = cut != null && selection != null
-				&& getObject2node(selection) != null
-				&& getObject2node(selection).tree.isReassignable();
-		if (cut != null) {
-			cut.clickable(cuttable);
-		}
-		boolean copieable = copy != null && selection != null
-				&& getObject2node(selection) != null
-				&& getObject2node(selection).tree.isCopieable();
-		if (copy != null) {
-			copy.clickable(copieable);
-		}
-	}
-
-	private void disableAllNew() {
-		for (IClickable<?> c : newClickHyperlink.values()) {
-			c.clickable(false);
-		}
+			l.onChange(model.selection().object());
 	}
 
 	@Override
 	public T selection() {
-		if (last == null)
-			return null;
-		return last.tree.object();
+		return model.selection().object();
 	}
 
 	ModelTreeWidget<T> addRefreshListener(final RefreshListener listener) {
@@ -791,21 +619,8 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> notifyUpdate(T originalObject, boolean recurse) {
-		assert originalObject != null : "Illegal argument for Tree.notifyUpdate";
-		ModelTreeNode<T> n = getObject2node(originalObject);
-		assert n != null : "Expanded tree node cannot be updated for object "
-				+ originalObject;
-		n.update(originalObject);
-		if (selection == originalObject) {
-			selection(originalObject);
-			show(n);
-		}
-		updateCreatable();
-		if (recurse && n.expandLoadedNode) {
-			for (ITree<T> t : n.tree.children()) {
-				notifyUpdate(t.object(), recurse);
-			}
-		}
+		model.refresh(originalObject, recurse);
+		updateButtons();
 		return this;
 	}
 
@@ -826,24 +641,6 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		return this;
 	}
 
-	void showToParent(ITree<T> tree, final ITree<T> parent) {
-		last = null;
-		boolean rememberExpand = expand;
-		expand = false;
-		List<ITree<T>> path = new LinkedList<ITree<T>>();
-		ITree<T> r = parent;
-		path.add(r);
-		while (r.parent() != null) {
-			r = r.parent();
-			path.add(0, r);
-		}
-		root(tree, path);
-		if (node != null) {
-			node.path = null;
-		}
-		expand = rememberExpand;
-	}
-
 	@Override
 	public ITreeWidget<T> clickNew(String type) {
 		if (type == null && newClick.size() > 1)
@@ -855,7 +652,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> hideRoot() {
-		showRoot = false;
+		model.showRoot = false;
 		return this;
 	}
 
@@ -882,19 +679,6 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	public ITreeWidget<T> showCommands(boolean showCommands) {
 		this.showCommands = showCommands;
 		return this;
-	}
-
-	ModelTreeNode<T> getObject2node(T selection) {
-		for (T t : object2node.keySet()) {
-			ModelTreeNode<T> node = object2node.get(t);
-			assert node != null : selection + " not found in "
-					+ object2node.values();
-			ITree<T> tree = node.tree;
-			T object = tree.object();
-			if (object.equals(selection))
-				return node;
-		}
-		return null;
 	}
 
 	@Override

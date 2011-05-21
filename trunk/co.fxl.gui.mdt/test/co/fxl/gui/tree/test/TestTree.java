@@ -145,7 +145,7 @@ class TestTree implements ITree<String> {
 
 	@Override
 	public String icon() {
-		throw new MethodNotImplementedException();
+		return null;
 	}
 
 	@Override
