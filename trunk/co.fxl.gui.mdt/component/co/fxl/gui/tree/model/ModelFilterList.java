@@ -26,11 +26,11 @@ import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.mdt.api.IProperty;
 import co.fxl.gui.tree.api.IFilterList;
 
-class FilterListImpl<T> implements IFilterList<T> {
+class ModelFilterList<T> implements IFilterList<T> {
 
 	private IFilterWidget filterWidget;
 
-	FilterListImpl(FilterTreeWidgetImpl<T> widget, ILayout layout) {
+	ModelFilterList(ModelFilterTreeWidget<T> widget, ILayout layout) {
 		filterWidget = (IFilterWidget) layout.vertical().add()
 				.widget(IFilterWidget.class);
 		filterWidget.addSizeFilter();

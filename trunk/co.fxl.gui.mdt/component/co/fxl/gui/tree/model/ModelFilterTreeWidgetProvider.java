@@ -16,22 +16,23 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.tree.impl;
+package co.fxl.gui.tree.model;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.tree.api.ITreeWidget;
+import co.fxl.gui.tree.api.IFilterTreeWidget;
 
 @SuppressWarnings("rawtypes")
-public class TreeWidgetProvider implements IWidgetProvider<ITreeWidget> {
+public class ModelFilterTreeWidgetProvider implements
+		IWidgetProvider<IFilterTreeWidget> {
 
 	@Override
-	public ITreeWidget createWidget(IContainer panel) {
-		return new TreeWidgetImpl(panel);
+	public IFilterTreeWidget createWidget(IContainer panel) {
+		return new ModelFilterTreeWidget(panel);
 	}
 
 	@Override
-	public Class<ITreeWidget> widgetType() {
-		return ITreeWidget.class;
+	public Class<IFilterTreeWidget> widgetType() {
+		return IFilterTreeWidget.class;
 	}
 }

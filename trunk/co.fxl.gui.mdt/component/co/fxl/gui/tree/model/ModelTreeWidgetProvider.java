@@ -23,11 +23,11 @@ import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.tree.api.ITreeWidget;
 
 @SuppressWarnings("rawtypes")
-public class TreeWidgetProvider implements IWidgetProvider<ITreeWidget> {
+public class ModelTreeWidgetProvider implements IWidgetProvider<ITreeWidget> {
 
 	@Override
 	public ITreeWidget createWidget(IContainer panel) {
-		return new TreeWidgetImpl(panel);
+		return new ModelTreeWidget(panel);
 	}
 
 	@Override
