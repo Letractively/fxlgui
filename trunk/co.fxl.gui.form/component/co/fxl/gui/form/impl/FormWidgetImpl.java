@@ -61,8 +61,6 @@ class FormWidgetImpl implements IFormWidget {
 		}
 	}
 
-	// static final int HEIGHT_CELL = 30;
-	// static final int HEIGHT_CELL_INNER = 28;
 	private int gridIndex = -1;
 	private WidgetTitle widgetTitle;
 	IGridPanel gridPanel;
@@ -258,7 +256,6 @@ class FormWidgetImpl implements IFormWidget {
 		if (saveListener != null || hasRequiredAttributes) {
 			if (fields.isEmpty())
 				return this;
-			// assert !fields.isEmpty() : "no fields added to form";
 			contentPanel.addSpace(8);
 			IGridPanel grid = contentPanel.add().panel().grid();
 			if (saveListener != null) {
