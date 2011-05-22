@@ -85,14 +85,20 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public R width(int width) {
-		container.widget.setWidth(width + "px");
+		if (width == -1)
+			container.widget.getElement().getStyle().clearWidth();
+		else
+			container.widget.setWidth(width + "px");
 		return (R) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public R height(int height) {
-		container.widget.setHeight(height + "px");
+		if (height == -1)
+			container.widget.getElement().getStyle().clearHeight();
+		else
+			container.widget.setHeight(height + "px");
 		return (R) this;
 	}
 
