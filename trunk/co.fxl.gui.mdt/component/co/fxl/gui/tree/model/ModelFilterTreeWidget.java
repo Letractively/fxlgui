@@ -73,7 +73,7 @@ class ModelFilterTreeWidget<T> extends ModelTreeWidget<T> implements
 
 			@Override
 			public void onSuccess(ITree<T> tree) {
-				root(tree);
+				setRoot(tree);
 			}
 		});
 	}
@@ -85,11 +85,17 @@ class ModelFilterTreeWidget<T> extends ModelTreeWidget<T> implements
 
 			@Override
 			public void onSuccess(ITree<T> tree) {
-				model.refresh();
+				setRoot(tree);
 				if (cb != null)
 					cb.onSuccess(true);
 			}
 		});
 		return this;
+	}
+
+	public void setRoot(ITree<T> tree) {
+		if (model != null)
+			previousSelection = model.selection().object();
+		root(tree);
 	}
 }

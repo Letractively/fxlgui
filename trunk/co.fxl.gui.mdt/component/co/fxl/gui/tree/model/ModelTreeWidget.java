@@ -563,7 +563,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		String[] creatableTypes = model.getCreatableTypes();
 		List<String> ctypes = creatableTypes != null ? Arrays
 				.asList(creatableTypes) : null;
-		boolean clickableAtAll = !selection.isNew();
+		boolean clickableAtAll = selection == null || !selection.isNew();
 		for (String c : newClickHyperlink.keySet()) {
 			boolean b = ctypes == null || ctypes.contains(c);
 			newClickHyperlink.get(c).clickable(clickableAtAll && b);
@@ -580,7 +580,8 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 	void notifyChange() {
 		for (ISelectionListener<T> l : selectionListeners)
-			l.onChange(model.selection().object());
+			l.onChange(model.selection() != null ? model.selection().object()
+					: null);
 	}
 
 	@Override
