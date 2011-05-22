@@ -26,7 +26,6 @@ import co.fxl.gui.tree.api.ITree;
 class TreeModel<T> {
 
 	private ModelTreeWidget<T> widget;
-	boolean showRoot = true;
 	private ITree<T> root;
 	private ITree<T> selection;
 	private boolean isCopy;
@@ -36,10 +35,6 @@ class TreeModel<T> {
 	TreeModel(ModelTreeWidget<T> widget, ITree<T> tree) {
 		this.widget = widget;
 		root = tree;
-	}
-
-	void showRoot(boolean showRoot) {
-		this.showRoot = showRoot;
 	}
 
 	ITree<T> selection() {
