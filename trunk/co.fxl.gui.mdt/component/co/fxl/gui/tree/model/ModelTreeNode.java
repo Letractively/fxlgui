@@ -62,12 +62,21 @@ class ModelTreeNode<T> extends LazyClickListener {
 	private IImage moveUp;
 	private IImage moveDown;
 	private IImage moveBottom;
+	private IVerticalPanel panel;
+	private boolean drawn;
 
 	ModelTreeNode(final ModelTreeWidget<T> widget, IVerticalPanel panel,
 			final ITree<T> root, int depth) {
-		assert root != null : "tree cannot be null";
-		this.tree = root;
 		this.widget = widget;
+		this.panel = panel;
+		this.tree = root;
+		this.depth = depth;
+		draw();
+	}
+
+	void draw() {
+		if (drawn)
+			return;
 		isExpanded = false;
 		container = panel.add().panel().horizontal();
 		IClickable<?> clickable = container;
@@ -76,9 +85,9 @@ class ModelTreeNode<T> extends LazyClickListener {
 		content = container.add().panel().horizontal().spacing(2);
 		content.addSpace(depth * INDENT);
 		image = content.add().image();
-		if (root.childCount() != 0) {
+		if (tree.childCount() != 0) {
 			if (icon() != null) {
-				image.resource(!root.isLoaded() ? getOpenOrClosedIcon()
+				image.resource(!tree.isLoaded() ? getOpenOrClosedIcon()
 						: CLOSED);
 				icon = content.add().image().resource(icon());
 				icon.addClickListener(this);
@@ -87,17 +96,17 @@ class ModelTreeNode<T> extends LazyClickListener {
 				image.resource(FOLDER_CLOSED);
 		} else {
 			if (icon() != null) {
-				image.resource(!root.isLoaded() ? getOpenOrClosedIcon() : EMPTY);
+				image.resource(!tree.isLoaded() ? getOpenOrClosedIcon() : EMPTY);
 				icon = content.add().image().resource(icon());
 				icon.addClickListener(this);
 				injectTreeListener(icon);
 			} else
-				image.resource(root.isLeaf() ? LEAF : FOLDER_EMPTY);
+				image.resource(tree.isLeaf() ? LEAF : FOLDER_EMPTY);
 		}
 		image.addClickListener(this);
 		injectTreeListener(image);
 		content.addSpace(2);
-		String name = root.name();
+		String name = tree.name();
 		boolean isNull = name == null || name.trim().equals("");
 		label = content.add().label().text(isNull ? "unnamed" : name);
 		label.font().pixel(12);
@@ -106,13 +115,13 @@ class ModelTreeNode<T> extends LazyClickListener {
 			label.font().weight().italic().color().gray();
 		injectTreeListener(label);
 		label.addClickListener(this);
-		this.depth = depth;
 		content.addSpace(10);
 		childrenPanel = panel.add().panel().vertical();
-		if (root.children().size() != 0)
+		if (tree.children().size() != 0)
 			expandLoadedNode();
 		widget.model.register(this);
 		decorate();
+		drawn = true;
 	}
 
 	String getOpenOrClosedIcon() {
@@ -342,7 +351,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 		else {
 			container.color().rgb(0xD0, 0xE4, 0xF6);
 		}
-		if(selected)
+		if (selected)
 			widget.leftScrollPane.scrollIntoView(content);
 		buttonPanel.visible(selected);
 	}
