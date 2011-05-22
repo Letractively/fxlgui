@@ -68,6 +68,7 @@ class LazyScrollListener<T> implements IScrollListener {
 		while (!todo.isEmpty()) {
 			ModelTreeNode<T> n = todo.pop();
 			n.draw();
+			widget.topLevelNodes.remove(n);
 		}
 	}
 }
