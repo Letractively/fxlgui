@@ -25,6 +25,19 @@ import co.fxl.gui.api.template.ICallback;
 
 public interface ITree<T> {
 
+	public interface ILazyList<T> extends Iterable<T> {
+
+		public int size();
+
+		public int indexOf(T t);
+
+		public boolean isEmpty();
+
+		public T get(int index);
+
+		public boolean add(T t);
+	}
+
 	public interface IDecorator {
 
 		void decorate(ILabel label);
@@ -36,7 +49,7 @@ public interface ITree<T> {
 
 	int childCount();
 
-	List<ITree<T>> children();
+	ILazyList<ITree<T>> children();
 
 	ITree<T> parent();
 
