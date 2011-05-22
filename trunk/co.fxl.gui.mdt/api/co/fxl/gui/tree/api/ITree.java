@@ -36,6 +36,8 @@ public interface ITree<T> {
 		public T get(int index);
 
 		public boolean add(T t);
+
+		public boolean remove(T bo);
 	}
 
 	public interface IDecorator {
