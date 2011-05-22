@@ -89,4 +89,9 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 		e.scrollIntoView();
 		return this;
 	}
+
+	@Override
+	public int scrollOffset() {
+		return container.widget.getScrollPosition();
+	}
 }
