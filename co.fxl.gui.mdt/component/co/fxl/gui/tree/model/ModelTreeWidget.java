@@ -437,7 +437,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	private IView activeView;
 	T previousSelection;
 	List<ModelTreeNode<T>> topLevelNodes;
-	private static int MAX_PAINTS = 250;
+	private static int MAX_PAINTS = 500;
 
 	void newNode(ModelTreeWidget<T> widget, IVerticalPanel panel,
 			ITree<T> root, int depth, Runnable finish, boolean topLevel,
