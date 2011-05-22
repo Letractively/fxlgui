@@ -194,6 +194,8 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	private CommandLink reorder;
 	TreeModel<T> model;
 	boolean showRoot = true;
+	private LazyScrollListener<T> scrollListener = new LazyScrollListener<T>(
+			this);
 
 	ModelTreeWidget(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel(), true).space(0)
@@ -386,6 +388,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				IMenuWidget.class);
 		ModelResizeListener.setup(panel.display(), this);
 		onResize(-1, panel.display().height());
+//		scrollPane.addScrollListener(scrollListener);
 	}
 
 	@Override
@@ -399,6 +402,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> root(ITree<T> tree) {
+		scrollListener.active = false;
 		addButtons();
 		IVerticalPanel panel2 = panel();
 		if (model != null) {
@@ -418,16 +422,21 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		} else {
 			Iterator<ITree<T>> it = tree.children().iterator();
 			drawNode(it, this, panel2, 0, finish, true);
+			scrollListener.active = true;
 		}
 		return this;
+	}
+
+	void scrollIntoView(ModelTreeNode<T> node) {
+		leftScrollPane.scrollIntoView(node.container);
 	}
 
 	private int painted = 0;
 	boolean allowReorder = false;
 	private IView activeView;
 	T previousSelection;
-	private List<ModelTreeNode<T>> topLevelNodes;
-	private static int MAX_PAINTS = 250;
+	List<ModelTreeNode<T>> topLevelNodes;
+	private static int MAX_PAINTS = 5000;
 
 	void newNode(ModelTreeWidget<T> widget, IVerticalPanel panel,
 			ITree<T> root, int depth, Runnable finish, boolean topLevel,

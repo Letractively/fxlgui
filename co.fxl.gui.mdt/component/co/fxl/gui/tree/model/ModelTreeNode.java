@@ -63,7 +63,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 	private IImage moveDown;
 	private IImage moveBottom;
 	private IVerticalPanel panel;
-	private boolean drawn;
+	boolean drawn;
 
 	ModelTreeNode(final ModelTreeWidget<T> widget, IVerticalPanel panel,
 			final ITree<T> root, int depth, boolean draw) {
@@ -73,6 +73,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 		this.depth = depth;
 		isExpanded = false;
 		container = panel.add().panel().horizontal();
+		widget.model.register(this);
 		if (!draw) {
 			int height = numberLoadedDescendants(tree) + 1;
 			container.height(height * 22);
@@ -86,6 +87,14 @@ class ModelTreeNode<T> extends LazyClickListener {
 			i += 1 + numberLoadedDescendants(t);
 		}
 		return i;
+	}
+
+	int bottom() {
+		return container.offsetY() + container.height();
+	}
+
+	int top() {
+		return container.offsetY();
 	}
 
 	void draw() {
@@ -133,7 +142,6 @@ class ModelTreeNode<T> extends LazyClickListener {
 		childrenPanel = panel.add().panel().vertical();
 		if (tree.children().size() != 0)
 			expandLoadedNode();
-		widget.model.register(this);
 		decorate();
 	}
 
@@ -359,13 +367,14 @@ class ModelTreeNode<T> extends LazyClickListener {
 	}
 
 	void selected(boolean selected) {
+		draw();
 		if (!selected)
 			container.color().white();
 		else {
 			container.color().rgb(0xD0, 0xE4, 0xF6);
 		}
 		if (selected)
-			widget.leftScrollPane.scrollIntoView(content);
+			widget.scrollIntoView(this);
 		buttonPanel.visible(selected);
 	}
 
