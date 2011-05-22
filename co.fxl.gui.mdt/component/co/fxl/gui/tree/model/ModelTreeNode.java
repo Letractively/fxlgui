@@ -319,7 +319,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 									image.resource(FOLDER_OPEN);
 							}
 						}
-					});
+					}, false);
 		}
 	}
 

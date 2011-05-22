@@ -412,8 +412,9 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				setDetailViewTree(model.selection());
 			}
 		};
+		topLevelNodes = new LinkedList<ModelTreeNode<T>>();
 		if (showRoot) {
-			newNode(this, panel2, tree, 0, finish);
+			newNode(this, panel2, tree, 0, finish, true);
 		} else {
 			Iterator<ITree<T>> it = tree.children().iterator();
 			drawNode(it, this, panel2, 0, finish);
@@ -425,11 +426,14 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	boolean allowReorder = false;
 	private IView activeView;
 	T previousSelection;
+	private List<ModelTreeNode<T>> topLevelNodes;
 	private static int MAX_PAINTS = 250;
 
 	void newNode(ModelTreeWidget<T> widget, IVerticalPanel panel,
-			ITree<T> root, int depth, Runnable finish) {
-		new ModelTreeNode<T>(widget, panel, root, depth);
+			ITree<T> root, int depth, Runnable finish, boolean topLevel) {
+		ModelTreeNode<T> node = new ModelTreeNode<T>(widget, panel, root, depth);
+		if (topLevel)
+			topLevelNodes.add(node);
 		painted++;
 		if (painted < MAX_PAINTS)
 			finish.run();
@@ -452,7 +456,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 			public void run() {
 				drawNode(it, treeWidgetImpl, panel2, i, finish);
 			}
-		});
+		}, true);
 	}
 
 	void setDetailViewTree(final ITree<T> tree) {
