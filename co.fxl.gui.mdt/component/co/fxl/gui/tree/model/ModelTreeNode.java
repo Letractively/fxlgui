@@ -196,7 +196,6 @@ class ModelTreeNode<T> extends LazyClickListener {
 
 	private void updateParent() {
 		widget.model.refresh(tree.parent(), true);
-		widget.selection(tree.object());
 		widget.model.node(tree).moveActive = true;
 		widget.notifyUpdate(widget.model.selection().object());
 	}

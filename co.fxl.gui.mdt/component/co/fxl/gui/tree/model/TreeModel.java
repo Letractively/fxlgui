@@ -31,17 +31,11 @@ class TreeModel<T> {
 	private ITree<T> selection;
 	private boolean isCopy;
 	private ITree<T> cutCopy;
-	private ITree<T> previousSelection;
 	private Map<T, ModelTreeNode<T>> nodes = new HashMap<T, ModelTreeNode<T>>();
 
 	TreeModel(ModelTreeWidget<T> widget, ITree<T> tree) {
 		this.widget = widget;
 		root = tree;
-	}
-
-	TreeModel(ModelTreeWidget<T> widget, ITree<T> tree, TreeModel<T> model) {
-		this(widget, tree);
-		previousSelection = model != null ? model.selection : null;
 	}
 
 	void showRoot(boolean showRoot) {
@@ -64,12 +58,15 @@ class TreeModel<T> {
 			node(this.selection).selected(false);
 		}
 		this.selection = selection;
-		node(selection).selected(true);
-		widget.setDetailViewNode(node(selection));
+		ModelTreeNode<T> node = node(selection);
+		node.selected(true);
+		widget.setDetailViewTree(selection);
 	}
 
 	void selection(Object selection, boolean recurse) {
-		throw new MethodNotImplementedException();
+		ModelTreeNode<T> node = nodes.get(selection);
+		assert node != null : selection + " not found";
+		selection(node.tree, recurse);
 	}
 
 	ITree<T> cutCopy() {
@@ -96,13 +93,15 @@ class TreeModel<T> {
 	}
 
 	void refresh(ITree<T> tree, boolean recurse) {
-		throw new MethodNotImplementedException();
+		node(tree).refresh(recurse);
 	}
 
 	void refresh(Object object, boolean recurse) {
-		// TODO refresh tree
-		// TODO refresh detail-views
-		throw new MethodNotImplementedException();
+		ITree<T> tree = nodes.get(object).tree;
+		refresh(tree, recurse);
+		if (tree.equals(selection)) {
+			widget.setDetailViewTree(tree);
+		}
 	}
 
 	boolean isCopy() {
@@ -115,16 +114,16 @@ class TreeModel<T> {
 	}
 
 	void register(ModelTreeNode<T> node) {
-		if (previousSelection != null
-				&& previousSelection.object().equals(node.tree.object())) {
-			previousSelection = null;
+		if (widget.previousSelection != null
+				&& widget.previousSelection.equals(node.tree.object())) {
+			widget.previousSelection = null;
 			selection = node.tree;
 			node.selected(true);
-			widget.setDetailViewNode(node(selection));
+			widget.setDetailViewTree(selection);
 		} else if (selection != null
 				&& selection.object().equals(node.tree.object())) {
 			node.selected(true);
-			widget.setDetailViewNode(node(selection));
+			widget.setDetailViewTree(selection);
 		}
 		nodes.put(node.tree.object(), node);
 	}
@@ -138,7 +137,13 @@ class TreeModel<T> {
 	}
 
 	boolean allowDelete() {
-		throw new MethodNotImplementedException();
+		if (selection == null)
+			return false;
+		if (selection.equals(root))
+			return false;
+		if (selection.isNew())
+			return true;
+		return selection.isDeletable();
 	}
 
 	boolean allowMove() {
@@ -152,7 +157,9 @@ class TreeModel<T> {
 	}
 
 	String[] getCreatableTypes() {
-		throw new MethodNotImplementedException();
+		if (selection == null)
+			return root.getCreatableTypes();
+		return selection.getCreatableTypes();
 	}
 
 	public boolean allowPaste() {
