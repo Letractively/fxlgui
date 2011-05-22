@@ -125,4 +125,9 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 		container.component.repaint();
 		return this;
 	}
+
+	@Override
+	public int scrollOffset() {
+		return container.component.getVerticalScrollBar().getValue();
+	}
 }
