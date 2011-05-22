@@ -414,10 +414,10 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		};
 		topLevelNodes = new LinkedList<ModelTreeNode<T>>();
 		if (showRoot) {
-			newNode(this, panel2, tree, 0, finish, true);
+			newNode(this, panel2, tree, 0, finish, true, true);
 		} else {
 			Iterator<ITree<T>> it = tree.children().iterator();
-			drawNode(it, this, panel2, 0, finish);
+			drawNode(it, this, panel2, 0, finish, true);
 		}
 		return this;
 	}
@@ -430,8 +430,10 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	private static int MAX_PAINTS = 250;
 
 	void newNode(ModelTreeWidget<T> widget, IVerticalPanel panel,
-			ITree<T> root, int depth, Runnable finish, boolean topLevel) {
-		ModelTreeNode<T> node = new ModelTreeNode<T>(widget, panel, root, depth);
+			ITree<T> root, int depth, Runnable finish, boolean topLevel,
+			boolean draw) {
+		ModelTreeNode<T> node = new ModelTreeNode<T>(widget, panel, root,
+				depth, draw);
 		if (topLevel)
 			topLevelNodes.add(node);
 		painted++;
@@ -445,7 +447,8 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 	private void drawNode(final Iterator<ITree<T>> it,
 			final ModelTreeWidget<T> treeWidgetImpl,
-			final IVerticalPanel panel2, final int i, final Runnable finish) {
+			final IVerticalPanel panel2, final int i, final Runnable finish,
+			final boolean draw) {
 		if (!it.hasNext()) {
 			finish.run();
 			return;
@@ -454,9 +457,9 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		newNode(this, panel(), c, 0, new Runnable() {
 			@Override
 			public void run() {
-				drawNode(it, treeWidgetImpl, panel2, i, finish);
+				drawNode(it, treeWidgetImpl, panel2, i, finish, draw);
 			}
-		}, true);
+		}, true, draw);
 	}
 
 	void setDetailViewTree(final ITree<T> tree) {
