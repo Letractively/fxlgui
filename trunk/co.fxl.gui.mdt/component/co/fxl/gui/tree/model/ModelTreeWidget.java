@@ -281,8 +281,8 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 									public void onSuccess(ITree<T> result) {
 										widgetTitle.reset();
 										paste.clickable(false);
-										model.refresh(p1);
-										model.refresh(p2);
+										model.refresh(p1, true);
+										model.refresh(p2, true);
 									}
 								});
 					}
