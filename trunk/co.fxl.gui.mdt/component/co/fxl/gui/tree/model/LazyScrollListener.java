@@ -38,6 +38,8 @@ class LazyScrollListener<T> implements IScrollListener {
 	public void onScroll(int top) {
 		if (!active)
 			return;
+		if (widget.topLevelNodes.isEmpty())
+			active = false;
 		lastStart = top;
 		if (running) {
 			return;
