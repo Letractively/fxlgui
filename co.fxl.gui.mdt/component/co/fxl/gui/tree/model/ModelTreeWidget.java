@@ -536,16 +536,12 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> selection(T selection) {
-		return selection(selection, true);
-	}
-
-	private ITreeWidget<T> selection(T selection, boolean recurse) {
 		if (model == null) {
 			previousSelection = selection;
 			return this;
 		}
 		addButtons();
-		model.selection(selection, recurse);
+		model.selection(selection);
 		updateButtons();
 		notifyChange();
 		return this;

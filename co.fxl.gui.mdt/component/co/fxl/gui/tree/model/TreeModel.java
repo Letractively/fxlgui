@@ -58,10 +58,10 @@ class TreeModel<T> {
 		widget.setDetailViewTree(selection);
 	}
 
-	void selection(Object selection, boolean recurse) {
+	void selection(Object selection) {
 		ModelTreeNode<T> node = nodes.get(selection);
 		assert node != null : selection + " not found";
-		selection(node.tree, recurse);
+		selection(node.tree);
 	}
 
 	ITree<T> cutCopy() {
