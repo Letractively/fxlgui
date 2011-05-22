@@ -74,14 +74,22 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public R height(int height) {
-		container.component.setPreferredSize(new Dimension(width(), height));
+		if (height == -1)
+			container.component.setPreferredSize(null);
+		else
+			container.component
+					.setPreferredSize(new Dimension(width(), height));
 		return (R) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public R width(int width) {
-		container.component.setPreferredSize(new Dimension(width, height()));
+		if (width == -1)
+			container.component.setPreferredSize(null);
+		else
+			container.component
+					.setPreferredSize(new Dimension(width, height()));
 		return (R) this;
 	}
 
