@@ -68,15 +68,13 @@ class ModelTreeNode<T> extends LazyClickListener {
 	ModelTreeNode(final ModelTreeWidget<T> widget, IVerticalPanel panel,
 			final ITree<T> root, int depth, boolean draw) {
 		this.widget = widget;
-		this.panel = panel;
+		this.panel = panel.add().panel().vertical();
 		this.tree = root;
 		this.depth = depth;
-		isExpanded = false;
-		container = panel.add().panel().horizontal();
 		widget.model.register(this);
 		if (!draw) {
 			int height = numberLoadedDescendants(tree) + 1;
-			container.height(height * 22);
+			this.panel.height(height * 22);
 		} else
 			draw();
 	}
@@ -90,18 +88,21 @@ class ModelTreeNode<T> extends LazyClickListener {
 	}
 
 	int bottom() {
-		return container.offsetY() + container.height();
+		return panel.offsetY() + panel.height();
 	}
 
 	int top() {
-		return container.offsetY();
+		return panel.offsetY();
 	}
 
 	void draw() {
 		if (drawn)
 			return;
 		drawn = true;
-		container.height(-1);
+		panel.height(-1);
+		isExpanded = false;
+		container = this.panel.add().panel().horizontal();
+		container.height(22);
 		IClickable<?> clickable = container;
 		clickable.addClickListener(this);
 		injectTreeListener(clickable);

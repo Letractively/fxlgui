@@ -51,6 +51,7 @@ import co.fxl.gui.tree.api.ITreeWidget;
 public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 	private static final int SPLIT_POSITION = 250;
+	private static final boolean LAZY_LOAD = false;
 	private boolean showRefresh = true;
 	private boolean showCommands = true;
 
@@ -388,7 +389,8 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				IMenuWidget.class);
 		ModelResizeListener.setup(panel.display(), this);
 		onResize(-1, panel.display().height());
-		// leftScrollPane.addScrollListener(scrollListener);
+		if (LAZY_LOAD)
+			leftScrollPane.addScrollListener(scrollListener);
 	}
 
 	@Override
@@ -421,9 +423,11 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 			newNode(this, panel2, tree, 0, finish, true, true);
 		} else {
 			Iterator<ITree<T>> it = tree.children().iterator();
-			drawNode(it, this, panel2, 0, finish, true);
-			scrollListener.active = true;
-			// scrollListener.onScroll(0);
+			drawNode(it, this, panel2, 0, finish, !LAZY_LOAD);
+			if (LAZY_LOAD) {
+				scrollListener.active = true;
+				scrollListener.onScroll(leftScrollPane.scrollOffset());
+			}
 		}
 		return this;
 	}
