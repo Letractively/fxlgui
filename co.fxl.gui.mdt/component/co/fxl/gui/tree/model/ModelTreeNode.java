@@ -65,7 +65,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 
 	ModelTreeNode(final ModelTreeWidget<T> widget, IVerticalPanel panel,
 			final ITree<T> root, int depth) {
-		assert root != null : "Tree cannot be null";
+		assert root != null : "tree cannot be null";
 		this.tree = root;
 		this.widget = widget;
 		isExpanded = false;
