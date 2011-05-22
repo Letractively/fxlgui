@@ -26,9 +26,9 @@ class LazyScrollListener<T> implements IScrollListener {
 
 	boolean active = false;
 	private ModelTreeWidget<T> widget;
-	private boolean painting = false;
 	private Stack<ModelTreeNode<T>> todo = new Stack<ModelTreeNode<T>>();
-	private boolean running;
+	private boolean running = false;
+	private int lastStart = -1;
 
 	LazyScrollListener(ModelTreeWidget<T> widget) {
 		this.widget = widget;
@@ -38,9 +38,18 @@ class LazyScrollListener<T> implements IScrollListener {
 	public void onScroll(int top) {
 		if (!active)
 			return;
-		int bottom = top + widget.leftScrollPane.height();
-		if (painting)
-			todo.clear();
+		lastStart = top;
+		if (running) {
+			return;
+		}
+		running = true;
+		execute(top);
+		running = false;
+	}
+
+	public void execute(int top) {
+		int bottom = top + widget.splitPane.height();
+		System.out.println("drawing " + top + " - " + bottom);
 		for (ModelTreeNode<T> n : widget.topLevelNodes) {
 			if (n.drawn)
 				continue;
@@ -50,16 +59,15 @@ class LazyScrollListener<T> implements IScrollListener {
 			if (n.top() > bottom)
 				break;
 		}
-		if (!running)
-			run();
+		run();
+		if (top != lastStart)
+			execute(lastStart);
 	}
 
 	private void run() {
-		running = true;
 		while (!todo.isEmpty()) {
 			ModelTreeNode<T> n = todo.pop();
 			n.draw();
 		}
-		running = false;
 	}
 }

@@ -176,7 +176,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	private List<ISelectionListener<T>> selectionListeners = new LinkedList<ISelectionListener<T>>();
 	private IClickable<?> delete;
 	private IVerticalPanel leftContentPanel;
-	private ISplitPane splitPane;
+	ISplitPane splitPane;
 	private boolean hasButtons = false;
 	private String defaultCreatableType = null;
 	private List<String> creatableTypes = new LinkedList<String>();
@@ -388,7 +388,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				IMenuWidget.class);
 		ModelResizeListener.setup(panel.display(), this);
 		onResize(-1, panel.display().height());
-//		scrollPane.addScrollListener(scrollListener);
+		// leftScrollPane.addScrollListener(scrollListener);
 	}
 
 	@Override
@@ -423,6 +423,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 			Iterator<ITree<T>> it = tree.children().iterator();
 			drawNode(it, this, panel2, 0, finish, true);
 			scrollListener.active = true;
+			// scrollListener.onScroll(0);
 		}
 		return this;
 	}
@@ -436,7 +437,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	private IView activeView;
 	T previousSelection;
 	List<ModelTreeNode<T>> topLevelNodes;
-	private static int MAX_PAINTS = 5000;
+	private static int MAX_PAINTS = 250;
 
 	void newNode(ModelTreeWidget<T> widget, IVerticalPanel panel,
 			ITree<T> root, int depth, Runnable finish, boolean topLevel,
