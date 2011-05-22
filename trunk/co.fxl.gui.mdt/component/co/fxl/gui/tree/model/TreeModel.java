@@ -109,6 +109,7 @@ class TreeModel<T> {
 	}
 
 	void register(ModelTreeNode<T> node) {
+		nodes.put(node.tree.object(), node);
 		if (widget.previousSelection != null
 				&& widget.previousSelection.equals(node.tree.object())) {
 			widget.previousSelection = null;
@@ -120,7 +121,6 @@ class TreeModel<T> {
 			node.selected(true);
 			widget.setDetailViewTree(selection);
 		}
-		nodes.put(node.tree.object(), node);
 	}
 
 	ModelTreeNode<T> node(ITree<T> tree) {

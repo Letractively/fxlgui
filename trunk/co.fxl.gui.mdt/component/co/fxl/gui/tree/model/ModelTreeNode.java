@@ -252,7 +252,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 	@Override
 	public void onAllowedClick() {
 		expandCollapse();
-		widget.show(ModelTreeNode.this);
+		widget.model.selection(tree);
 	}
 
 	private void expandCollapse() {

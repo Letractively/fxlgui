@@ -402,7 +402,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		addButtons();
 		IVerticalPanel panel2 = panel();
 		if (model != null) {
-			show(null);
+			setDetailViewTree(null);
 			panel2.clear();
 		}
 		model = new TreeModel<T>(this, tree);
@@ -456,24 +456,20 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		});
 	}
 
-	void show(final ModelTreeNode<T> node) {
-		if (node == null) {
-			setDetailViewTree(null);
-			return;
-		}
-		if (!node.tree.isLoaded()) {
-			node.tree.load(new CallbackTemplate<Boolean>() {
+	void setDetailViewTree(final ITree<T> tree) {
+		if (!tree.isLoaded()) {
+			tree.load(new CallbackTemplate<Boolean>() {
 				@Override
 				public void onSuccess(Boolean result) {
-					model.selection(node.tree);
+					setLoadedDetailViewTree(tree);
 				}
 			});
 		} else {
-			model.selection(node.tree);
+			setLoadedDetailViewTree(tree);
 		}
 	}
 
-	void setDetailViewTree(ITree<T> tree) {
+	public void setLoadedDetailViewTree(ITree<T> tree) {
 		boolean showFirst = false;
 		for (int i = 0; i < detailViews.size(); i++) {
 			DetailView view = detailViews.get(i);
