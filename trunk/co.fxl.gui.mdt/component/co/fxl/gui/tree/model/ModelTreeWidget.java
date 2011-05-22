@@ -193,6 +193,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	private IVerticalPanel bottom;
 	private CommandLink reorder;
 	TreeModel<T> model;
+	boolean showRoot = true;
 
 	ModelTreeWidget(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel(), true).space(0)
@@ -276,13 +277,13 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 						model.cutCopy().reassign(model.selection(),
 								model.isCopy(),
 								new CallbackTemplate<ITree<T>>() {
-
 									@Override
 									public void onSuccess(ITree<T> result) {
 										widgetTitle.reset();
 										paste.clickable(false);
 										model.refresh(p1, true);
 										model.refresh(p2, true);
+										model.selection(result);
 									}
 								});
 					}
@@ -411,7 +412,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				setDetailViewTree(model.selection());
 			}
 		};
-		if (model.showRoot) {
+		if (showRoot) {
 			newNode(this, panel2, tree, 0, finish);
 		} else {
 			List<ITree<T>> children = tree.children();
@@ -657,7 +658,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> hideRoot() {
-		model.showRoot = false;
+		showRoot = false;
 		return this;
 	}
 
