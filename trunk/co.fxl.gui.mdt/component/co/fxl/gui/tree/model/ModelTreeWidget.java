@@ -457,7 +457,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	void setDetailViewTree(final ITree<T> tree) {
-		if (!tree.isLoaded()) {
+		if (tree != null && !tree.isLoaded()) {
 			tree.load(new CallbackTemplate<Boolean>() {
 				@Override
 				public void onSuccess(Boolean result) {
@@ -493,6 +493,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 			view.setNode(tree);
 		}
 		updateButtons();
+		notifyChange();
 	}
 
 	@Override
