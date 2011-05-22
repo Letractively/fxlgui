@@ -415,8 +415,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		if (showRoot) {
 			newNode(this, panel2, tree, 0, finish);
 		} else {
-			List<ITree<T>> children = tree.children();
-			Iterator<ITree<T>> it = children.iterator();
+			Iterator<ITree<T>> it = tree.children().iterator();
 			drawNode(it, this, panel2, 0, finish);
 		}
 		return this;

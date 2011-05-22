@@ -26,9 +26,13 @@ import co.fxl.gui.tree.api.ITree;
 
 class TestTree implements ITree<String> {
 
+	@SuppressWarnings("serial")
+	private class LazyList<T> extends LinkedList<T> implements ILazyList<T> {
+	}
+
 	private String path;
 	private int id;
-	List<ITree<String>> children = new LinkedList<ITree<String>>();
+	ILazyList<ITree<String>> children = new LazyList<ITree<String>>();
 
 	TestTree(TestTree parent, String path, int id) {
 		this.path = path;
@@ -40,7 +44,7 @@ class TestTree implements ITree<String> {
 	}
 
 	@Override
-	public List<ITree<String>> children() {
+	public ILazyList<ITree<String>> children() {
 		return children;
 	}
 

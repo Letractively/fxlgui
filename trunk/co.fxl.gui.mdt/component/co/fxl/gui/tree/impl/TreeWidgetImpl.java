@@ -513,10 +513,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		if (showRoot) {
 			newNode(this, panel2, tree, 0, expand, path, finish);
 		} else {
-			List<ITree<T>> children = tree.children();
-			Iterator<ITree<T>> it = children.iterator();
-			// panel2.height(children.size() * 21);
-			// panel2 = panel2.add().panel().vertical();
+			Iterator<ITree<T>> it = tree.children().iterator();
 			drawNode(it, this, panel2, 0, expand, path, finish);
 		}
 		return this;
