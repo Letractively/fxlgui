@@ -25,6 +25,7 @@ import co.fxl.gui.tree.api.ITree;
 
 class TreeModel<T> {
 
+	private ModelTreeWidget<T> widget;
 	boolean showRoot = true;
 	private ITree<T> root;
 	private ITree<T> selection;
@@ -33,12 +34,13 @@ class TreeModel<T> {
 	private ITree<T> previousSelection;
 	private Map<T, ModelTreeNode<T>> nodes = new HashMap<T, ModelTreeNode<T>>();
 
-	TreeModel(ITree<T> tree) {
+	TreeModel(ModelTreeWidget<T> widget, ITree<T> tree) {
+		this.widget = widget;
 		root = tree;
 	}
 
-	TreeModel(ITree<T> tree, TreeModel<T> model) {
-		this(tree);
+	TreeModel(ModelTreeWidget<T> widget, ITree<T> tree, TreeModel<T> model) {
+		this(widget, tree);
 		previousSelection = model != null ? model.selection : null;
 	}
 
@@ -47,15 +49,23 @@ class TreeModel<T> {
 	}
 
 	ITree<T> selection() {
-		throw new MethodNotImplementedException();
+		return selection;
 	}
 
 	void selection(ITree<T> selection) {
-		// TODO show old node as not selected
+		if (this.selection != null) {
+			if (this.selection.equals(selection)) {
+				return;
+			} else {
+				node(this.selection).selected(false);
+			}
+		}
+		if (this.selection != null && !this.selection.equals(selection)) {
+			node(this.selection).selected(false);
+		}
 		this.selection = selection;
-		// TODO show node as selected
-		// TODO set detail views
-		throw new MethodNotImplementedException();
+		node(selection).selected(true);
+		widget.setDetailViewNode(node(selection));
 	}
 
 	void selection(Object selection, boolean recurse) {
@@ -107,7 +117,14 @@ class TreeModel<T> {
 	void register(ModelTreeNode<T> node) {
 		if (previousSelection != null
 				&& previousSelection.object().equals(node.tree.object())) {
-			throw new MethodNotImplementedException();
+			previousSelection = null;
+			selection = node.tree;
+			node.selected(true);
+			widget.setDetailViewNode(node(selection));
+		} else if (selection != null
+				&& selection.object().equals(node.tree.object())) {
+			node.selected(true);
+			widget.setDetailViewNode(node(selection));
 		}
 		nodes.put(node.tree.object(), node);
 	}

@@ -408,7 +408,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 			show(null);
 			panel2.clear();
 		}
-		model = new TreeModel<T>(tree, model);
+		model = new TreeModel<T>(this, tree, model);
 		Runnable finish = new Runnable() {
 			@Override
 			public void run() {
