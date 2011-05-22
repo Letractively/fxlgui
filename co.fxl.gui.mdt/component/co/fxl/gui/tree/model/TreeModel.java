@@ -85,7 +85,7 @@ class TreeModel<T> {
 	}
 
 	void refresh() {
-		refresh(root);
+		refresh(root, true);
 	}
 
 	void refresh(ITree<T> tree) {
