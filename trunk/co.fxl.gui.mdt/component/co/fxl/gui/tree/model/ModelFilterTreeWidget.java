@@ -73,7 +73,7 @@ class ModelFilterTreeWidget<T> extends ModelTreeWidget<T> implements
 
 			@Override
 			public void onSuccess(ITree<T> tree) {
-				model.refresh();
+				root(tree);
 			}
 		});
 	}

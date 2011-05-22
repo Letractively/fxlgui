@@ -98,7 +98,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	private class DetailView implements co.fxl.gui.tree.api.ITreeWidget.IView {
 
 		private IDecorator<T> decorator;
-		private ModelTreeNode<T> node;
+		private ITree<T> node;
 		boolean onTop = false;
 		private IVerticalPanel contentPanel;
 		private IMenuItem register;
@@ -125,7 +125,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				register.active();
 		}
 
-		void setNode(ModelTreeNode<T> node) {
+		void setNode(ITree<T> node) {
 			this.node = node;
 			if (node == null) {
 				decorator.clear(contentPanel);
@@ -137,9 +137,9 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		}
 
 		protected void update() {
-			if (node != null && node.tree.object() != null) {
+			if (node != null && node.object() != null) {
 				bottom.clear();
-				decorator.decorate(contentPanel, bottom, node.tree);
+				decorator.decorate(contentPanel, bottom, node);
 				activeView = this;
 			}
 		}
@@ -213,7 +213,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				IClickListener cl = new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
-						final ITree<T> lParentNode = model.selection();
+						final ITree<T> parent = model.selection();
 						CallbackTemplate<List<T>> lCallback1 = new CallbackTemplate<List<T>>() {
 							@Override
 							public void onSuccess(List<T> result) {
@@ -227,17 +227,17 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 									@Override
 									public void onSuccess(ITree<T> result) {
 										widgetTitle.reset();
+										model.refresh(parent, true);
 										model.selection(result);
-										model.refresh(lParentNode);
 									}
 								};
 								if (type == null)
-									lParentNode.createNew(lCallback2);
+									parent.createNew(lCallback2);
 								else
-									lParentNode.createNew(type, lCallback2);
+									parent.createNew(type, lCallback2);
 							}
 						};
-						lParentNode.loadChildren(lCallback1);
+						parent.loadChildren(lCallback1);
 					}
 				};
 				newClick.put(type, cl);
@@ -307,7 +307,17 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 					dl.addButton().yes().addClickListener(new IClickListener() {
 						@Override
 						public void onClick() {
-							delete();
+							final ITree<T> tree = model.selection();
+							final ITree<T> parent = tree.parent();
+							ICallback<T> callback = new CallbackTemplate<T>() {
+
+								@Override
+								public void onSuccess(T result) {
+									model.selection(parent);
+									model.refresh(parent, true);
+								}
+							};
+							tree.delete(callback);
 						}
 					});
 					dl.addButton().no().addClickListener(new IClickListener() {
@@ -331,20 +341,6 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 					}
 				});
 		}
-	}
-
-	void delete() {
-		final ITree<T> tree = model.selection();
-		final ITree<T> parent = tree.parent();
-		ICallback<T> callback = new CallbackTemplate<T>() {
-
-			@Override
-			public void onSuccess(T result) {
-				model.selection(parent);
-				model.refresh(parent);
-			}
-		};
-		tree.delete(callback);
 	}
 
 	@Override
@@ -408,10 +404,11 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 			show(null);
 			panel2.clear();
 		}
-		model = new TreeModel<T>(this, tree, model);
+		model = new TreeModel<T>(this, tree);
 		Runnable finish = new Runnable() {
 			@Override
 			public void run() {
+				setDetailViewTree(model.selection());
 			}
 		};
 		if (model.showRoot) {
@@ -427,6 +424,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	private int painted = 0;
 	boolean allowReorder = false;
 	private IView activeView;
+	T previousSelection;
 	private static int MAX_PAINTS = 250;
 
 	void newNode(ModelTreeWidget<T> widget, IVerticalPanel panel,
@@ -459,7 +457,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 	void show(final ModelTreeNode<T> node) {
 		if (node == null) {
-			setDetailViewNode(null);
+			setDetailViewTree(null);
 			return;
 		}
 		if (!node.tree.isLoaded()) {
@@ -474,29 +472,30 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		}
 	}
 
-	void setDetailViewNode(ModelTreeNode<T> node) {
+	void setDetailViewTree(ITree<T> tree) {
 		boolean showFirst = false;
 		for (int i = 0; i < detailViews.size(); i++) {
 			DetailView view = detailViews.get(i);
-			if (node != null) {
-				Class<? extends Object> type = node.tree.object().getClass();
+			if (tree != null) {
+				Class<? extends Object> type = tree.object().getClass();
 				boolean hide = isHide(view, type);
 				if (hide && i > 0 && view.onTop) {
 					showFirst = true;
 				}
 			}
 		}
-		if (showFirst || (node != null && node.tree.isNew()))
+		if (showFirst || (tree != null && tree.isNew()))
 			detailViews.get(0).register.active();
 		for (int i = 0; i < detailViews.size(); i++) {
 			DetailView view = detailViews.get(i);
-			if (node != null) {
-				Class<? extends Object> type = node.tree.object().getClass();
+			if (tree != null) {
+				Class<? extends Object> type = tree.object().getClass();
 				boolean hide = isHide(view, type);
-				view.enabled(!hide && (i == 0 || !node.tree.isNew()));
+				view.enabled(!hide && (i == 0 || !tree.isNew()));
 			}
-			view.setNode(node);
+			view.setNode(tree);
 		}
+		updateButtons();
 	}
 
 	@Override
@@ -543,6 +542,10 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	private ITreeWidget<T> selection(T selection, boolean recurse) {
+		if (model == null) {
+			previousSelection = selection;
+			return this;
+		}
 		addButtons();
 		model.selection(selection, recurse);
 		updateButtons();
@@ -555,15 +558,19 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 			return;
 		if (delete != null)
 			delete.clickable(model.allowDelete());
+		ITree<T> selection = model.selection();
 		if (reorder != null) {
 			reorder.clickable(model.allowMove());
-			reorder.label(model.node(model.selection()).moveActive ? "Lock"
-					: "Move");
+			if (model.allowMove()) {
+				ModelTreeNode<T> node = model.node(selection);
+				if (node != null)
+					reorder.label(node.moveActive ? "Lock" : "Move");
+			}
 		}
 		String[] creatableTypes = model.getCreatableTypes();
 		List<String> ctypes = creatableTypes != null ? Arrays
 				.asList(creatableTypes) : null;
-		boolean clickableAtAll = !model.selection().isNew();
+		boolean clickableAtAll = !selection.isNew();
 		for (String c : newClickHyperlink.keySet()) {
 			boolean b = ctypes == null || ctypes.contains(c);
 			newClickHyperlink.get(c).clickable(clickableAtAll && b);
