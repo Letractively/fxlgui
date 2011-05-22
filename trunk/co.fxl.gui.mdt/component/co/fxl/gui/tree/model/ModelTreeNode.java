@@ -77,6 +77,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 	void draw() {
 		if (drawn)
 			return;
+		drawn = true;
 		isExpanded = false;
 		container = panel.add().panel().horizontal();
 		IClickable<?> clickable = container;
@@ -121,7 +122,6 @@ class ModelTreeNode<T> extends LazyClickListener {
 			expandLoadedNode();
 		widget.model.register(this);
 		decorate();
-		drawn = true;
 	}
 
 	String getOpenOrClosedIcon() {
