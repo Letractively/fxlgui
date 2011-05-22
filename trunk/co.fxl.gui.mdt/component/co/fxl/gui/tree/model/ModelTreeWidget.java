@@ -419,6 +419,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 			}
 		};
 		topLevelNodes = new LinkedList<ModelTreeNode<T>>();
+		scrollListener.reset();
 		if (showRoot) {
 			newNode(this, panel2, tree, 0, finish, true, true);
 		} else {

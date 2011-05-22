@@ -34,6 +34,13 @@ class LazyScrollListener<T> implements IScrollListener {
 		this.widget = widget;
 	}
 
+	void reset() {
+		active = false;
+		todo.clear();
+		running = false;
+		lastStart = -1;
+	}
+
 	@Override
 	public void onScroll(int top) {
 		if (!active)
