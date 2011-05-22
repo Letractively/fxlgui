@@ -342,6 +342,8 @@ class ModelTreeNode<T> extends LazyClickListener {
 		else {
 			container.color().rgb(0xD0, 0xE4, 0xF6);
 		}
+		if(selected)
+			widget.leftScrollPane.scrollIntoView(content);
 		buttonPanel.visible(selected);
 	}
 

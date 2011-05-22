@@ -189,7 +189,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	private IClickable<?> cut;
 	private IClickable<?> copy;
 	private IClickable<?> paste;
-	private IScrollPane leftScrollPane;
+	IScrollPane leftScrollPane;
 	private IVerticalPanel bottom;
 	private CommandLink reorder;
 	TreeModel<T> model;
