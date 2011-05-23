@@ -27,9 +27,17 @@ public interface ILazyScrollPane {
 		void decorate(IContainer container, int firstRow, int lastRow);
 	}
 
-	ILazyScrollPane rowHeight(int height);
+	ILazyScrollPane size(int size);
+
+	ILazyScrollPane rowIndex(int rowIndex);
+
+	ILazyScrollPane minRowHeight(int height);
 
 	ILazyScrollPane rowHeight(int row, int height);
 
 	ILazyScrollPane decorator(IDecorator decorator);
+
+	ILazyScrollPane visible(boolean visible);
+
+	ILazyScrollPane height(int height);
 }
