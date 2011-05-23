@@ -20,18 +20,22 @@ package co.fxl.gui.table.util.test;
 
 import java.lang.reflect.InvocationTargetException;
 
-import co.fxl.gui.api.IButton;
+import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IImage;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 import co.fxl.gui.table.util.api.ILazyScrollPane.IDecorator;
 import co.fxl.gui.table.util.impl.LazyScrollPanelImplWidgetProvider;
 
-class LazyScrollPaneTest implements IDecorator {
+class LazyScrollPaneTest implements IDecorator, IClickListener {
 
 	private ILazyScrollPane widget;
-	private IButton[] buttons = new IButton[1000];
+	private IHorizontalPanel[] buttons = new IHorizontalPanel[1000];
 
 	void run(IDisplay display) {
 		display.register(new LazyScrollPanelImplWidgetProvider());
@@ -46,12 +50,32 @@ class LazyScrollPaneTest implements IDecorator {
 	}
 
 	@Override
-	public void decorate(IContainer container, int firstRow, int lastRow) {
-		IVerticalPanel v = container.panel().vertical();
+	public void decorate(IContainer c, int firstRow, int lastRow) {
+		IVerticalPanel v = c.panel().vertical();
 		for (int i = firstRow; i <= lastRow; i++) {
-			IButton button = v.add().button().text(String.valueOf(i))
-					.size(100, 20 + (i % 20) * 3);
-			buttons[i] = button;
+			IHorizontalPanel container = v.add().panel().horizontal();
+			container.height(22);
+			IClickable<?> clickable = container;
+			clickable.addClickListener(this);
+			IHorizontalPanel content = container.add().panel().horizontal()
+					.spacing(2);
+			content.addSpace((i % 3) * 10);
+			IImage image = content.add().image();
+			image.resource("closed.png");
+			image.addClickListener(this);
+			IImage icon = content.add().image().resource("export.png");
+			icon.addClickListener(this);
+			content.addSpace(2);
+			String name = "Tree Node " + i;
+			boolean isNull = name == null || name.trim().equals("");
+			ILabel label = content.add().label()
+					.text(isNull ? "unnamed" : name);
+			label.font().pixel(12);
+			if (isNull)
+				label.font().weight().italic().color().gray();
+			label.addClickListener(this);
+			content.addSpace(10);
+			buttons[i] = container;
 		}
 	}
 
@@ -68,5 +92,10 @@ class LazyScrollPaneTest implements IDecorator {
 	@Override
 	public int rowHeight(int rowIndex) {
 		return buttons[rowIndex].height();
+	}
+
+	@Override
+	public void onClick() {
+		throw new MethodNotImplementedException();
 	}
 }
