@@ -20,7 +20,6 @@ package co.fxl.gui.api.template;
 
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
-import co.fxl.gui.api.template.Styles;
 
 public class HyperlinkDecorator implements IMouseOverListener {
 
@@ -29,7 +28,7 @@ public class HyperlinkDecorator implements IMouseOverListener {
 
 	public HyperlinkDecorator(ILabel label) {
 		this.label = label;
-		label.addMouseOverListener(this);
+		// TODO doesn't work yet with GWT: label.addMouseOverListener(this);
 		activeColor();
 	}
 
