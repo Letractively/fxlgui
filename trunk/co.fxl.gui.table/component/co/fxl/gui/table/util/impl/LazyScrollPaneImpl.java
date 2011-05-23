@@ -26,4 +26,19 @@ class LazyScrollPaneImpl implements ILazyScrollPane {
 	LazyScrollPaneImpl(IContainer container) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public ILazyScrollPane decorator(IDecorator decorator) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public ILazyScrollPane rowHeight(int height) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public ILazyScrollPane rowHeight(int row, int height) {
+		throw new MethodNotImplementedException();
+	}
 }

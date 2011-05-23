@@ -18,6 +18,18 @@
  */
 package co.fxl.gui.table.util.api;
 
+import co.fxl.gui.api.IContainer;
+
 public interface ILazyScrollPane {
 
+	public interface IDecorator {
+
+		void decorate(IContainer container, int firstRow, int lastRow);
+	}
+
+	ILazyScrollPane rowHeight(int height);
+
+	ILazyScrollPane rowHeight(int row, int height);
+
+	ILazyScrollPane decorator(IDecorator decorator);
 }
