@@ -28,7 +28,7 @@ public class HyperlinkDecorator implements IMouseOverListener {
 
 	public HyperlinkDecorator(ILabel label) {
 		this.label = label;
-		// TODO doesn't work yet with GWT: label.addMouseOverListener(this);
+		// TODO doesn't work (yet) with GWT: label.addMouseOverListener(this);
 		activeColor();
 	}
 
