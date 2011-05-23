@@ -103,7 +103,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (widgetTitle == null) {
 			widgetTitle = new WidgetTitle(c0.panel(), addBorders)
 					.foldable(false);
-//			widgetTitle.grayBackground();
 			widgetTitle.commandsOnTop();
 			this.container = widgetTitle.content().panel().vertical();
 		}
@@ -168,11 +167,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			selectionIsSetup = false;
 			container().clear();
 			topPanel();
-			// if (filter != null || buttonDecorator != null)
-			// container.addSpace(10);
 			if (rows.size() == 0) {
 				IVerticalPanel dock = container.add().panel().vertical();
-				// .spacing(10);
 				if (topPanel == null)
 					topPanel = dock.add().panel().grid();
 				if (showNoRowsFound) {
@@ -229,15 +225,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		for (ScrollTableColumnImpl c : columns) {
 			if (c.filterable) {
 				if (filter == null) {
-					// if (topPanel == null)
-					// topPanel = container.add().panel().grid();
-					// container.addSpace(10);
 					filter = (IMiniFilterWidget) topPanel.cell(0, 0).panel()
 							.horizontal().addSpace(8).add()
 							.widget(IMiniFilterWidget.class);
 				}
 				filter.addFilter().name(c.name).type(c.type);
-				// TODO value constraint: choice of x elements
 			}
 		}
 		if (filter != null) {
@@ -261,10 +253,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private void topPanel() {
 		if (topPanel == null) {
 			topPanel = container().add().panel().grid();
-			// topPanel.spacing(6);
-			// IBorder border = topPanel.border();
-			// border.color().lightgray();
-			// border.style().bottom();
 		}
 	}
 
@@ -285,24 +273,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public void onScroll(int maxOffset) {
 		boolean scroll = maxOffset != scrollOffset;
 		if (scroll) {
-			// TODO Swing if (maxOffset > scrollOffset
-			// && maxOffset - scrollOffset < MIN_SCROLL_INCREMENT) {
-			// maxOffset = Math.min(scrollOffset + MIN_SCROLL_INCREMENT,
-			// scrollPanelHeight);
-			// }
-			// if (maxOffset < scrollOffset
-			// && maxOffset - scrollOffset < MIN_SCROLL_INCREMENT) {
-			// maxOffset = Math.min(scrollOffset + MIN_SCROLL_INCREMENT,
-			// scrollPanelHeight);
-			// }
 			scrollOffset = maxOffset;
 			update();
-			// if (paintedRows <= rows.size()) {
-			// scrollPanelHeight = 1;
-			// } else {
-			// scrollPanelHeight = (int) (spHeight / paintedRows);
-			// // }
-			// h.size(1, scrollPanelHeight);
 		}
 	}
 
@@ -317,10 +289,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private int convertToRowOffset(int maxOffset) {
 		if (scrollPanelHeight == 0 || heightMinusTopPanel() == 0)
 			return 0;
-		// double rowHeight = height / initialPaintedRows == 0 ? 1
-		// : initialPaintedRows;
-		double index = // maxOffset / rowHeight;
-		rows.size() * (((double) (maxOffset)) / ((double) scrollPanelHeight));
+		double index = rows.size()
+				* (((double) (maxOffset)) / ((double) scrollPanelHeight));
 		int index2 = (int) index;
 		if (index2 > maxRowIndex)
 			index2 = maxRowIndex;
@@ -527,16 +497,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			rt = rows.size();
 		int firstRow = constraints != null ? constraints.rowIterator()
 				.firstRow() : 0;
-		String status = +(firstRow + rowOffset + 1) + " - " + (firstRow + rt) // +
-																				// " of "
-																				// +
-																				// (firstRow
-																				// +
-																				// 1)
-																				// +
-																				// " - "
-		// + (firstRow + rows.size())
-		;
+		String status = +(firstRow + rowOffset + 1) + " - " + (firstRow + rt);
 		p.add().label().text("DISPLAYING ROWS").font().pixel(10);
 		p.addSpace(4).add().label().text(status).font().weight().bold()
 				.pixel(10);
@@ -676,9 +637,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	@Override
 	public IScrollTableWidget<Object> addTooltip(String tooltip) {
-
-		// TODO tooltip doesn't work for BulkTableWidgetImpl
-
+		// TODO Swing tooltip doesn't work for BulkTableWidgetImpl
 		this.tooltip += (this.tooltip.equals("") ? "" : "\n") + tooltip;
 		if (grid != null)
 			grid.element().tooltip(tooltip);
