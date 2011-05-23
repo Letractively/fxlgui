@@ -23,6 +23,8 @@ public interface IGridPanel extends IPanel<IGridPanel> {
 	public interface IGridColumn {
 
 		IGridColumn expand();
+
+		IGridColumn width(int width);
 	}
 
 	public interface IGridRow {
