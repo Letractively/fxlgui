@@ -25,6 +25,8 @@ public interface ILazyScrollPane {
 	public interface IDecorator {
 
 		void decorate(IContainer container, int firstRow, int lastRow);
+
+		int rowHeight(int rowIndex);
 	}
 
 	ILazyScrollPane size(int size);
@@ -32,8 +34,6 @@ public interface ILazyScrollPane {
 	ILazyScrollPane rowIndex(int rowIndex);
 
 	ILazyScrollPane minRowHeight(int height);
-
-	ILazyScrollPane rowHeight(int row, int height);
 
 	ILazyScrollPane decorator(IDecorator decorator);
 

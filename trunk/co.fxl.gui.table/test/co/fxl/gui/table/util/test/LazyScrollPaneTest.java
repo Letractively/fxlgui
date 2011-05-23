@@ -31,11 +31,12 @@ import co.fxl.gui.table.util.impl.LazyScrollPanelImplWidgetProvider;
 class LazyScrollPaneTest implements IDecorator {
 
 	private ILazyScrollPane widget;
+	private IButton[] buttons = new IButton[1000];
 
 	void run(IDisplay display) {
 		display.register(new LazyScrollPanelImplWidgetProvider());
-		widget = (ILazyScrollPane) display.container().panel()
-				.vertical().add().widget(ILazyScrollPane.class);
+		widget = (ILazyScrollPane) display.container().panel().vertical().add()
+				.widget(ILazyScrollPane.class);
 		widget.size(1000);
 		widget.minRowHeight(20);
 		widget.height(600);
@@ -49,8 +50,8 @@ class LazyScrollPaneTest implements IDecorator {
 		IVerticalPanel v = container.panel().vertical();
 		for (int i = firstRow; i <= lastRow; i++) {
 			IButton button = v.add().button().text(String.valueOf(i))
-					.size(100, 20 + (i % 20));
-			widget.rowHeight(i, button.height());
+					.size(100, 20 + (i % 20) * 3);
+			buttons[i] = button;
 		}
 	}
 
@@ -62,5 +63,10 @@ class LazyScrollPaneTest implements IDecorator {
 		IDisplay display = (IDisplay) clazz.getMethod("instance",
 				new Class<?>[0]).invoke(null, new Object[0]);
 		new LazyScrollPaneTest().run(display);
+	}
+
+	@Override
+	public int rowHeight(int rowIndex) {
+		return buttons[rowIndex].height();
 	}
 }

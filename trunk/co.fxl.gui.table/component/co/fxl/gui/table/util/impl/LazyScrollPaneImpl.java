@@ -29,7 +29,7 @@ import co.fxl.gui.table.util.api.ILazyScrollPane;
 class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 	private IDecorator decorator;
-	private int[] rowHeight;
+	private int minRowHeight = 20;
 	private int height = 400;
 	private IContainer container;
 	private ICardPanel contentPanel;
@@ -37,6 +37,11 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private IContainer lastCard = null;
 	private int scrollPanelHeight;
 	private IAbsolutePanel scrollContentPanel;
+	private int size;
+	private int rows2Paint = height / minRowHeight;
+	private IScrollPane scrollPane;
+	private int maxRowIndex;
+	private int maxOffset;
 
 	LazyScrollPaneImpl(IContainer container) {
 		this.container = container;
@@ -50,10 +55,15 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 	@Override
 	public ILazyScrollPane minRowHeight(int height) {
-		assert rowHeight != null : "size not set";
-		for (int i = 0; i < rowHeight.length; i++)
-			if (rowHeight[i] == 0)
-				rowHeight[i] = height;
+		minRowHeight = height;
+		rows2Paint = height / minRowHeight;
+		return this;
+	}
+
+	@Override
+	public ILazyScrollPane height(int height) {
+		this.height = height;
+		rows2Paint = height / minRowHeight;
 		return this;
 	}
 
@@ -64,53 +74,60 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	}
 
 	@Override
-	public ILazyScrollPane rowHeight(int row, int height) {
-		if (height >= rowHeight[row]) {
-			scrollPanelHeight += height - rowHeight[row];
-		} else
-			throw new MethodNotImplementedException();
-		rowHeight[row] = height;
-		return this;
-	}
-
-	@Override
 	public ILazyScrollPane size(int size) {
-		rowHeight = new int[size];
+		this.size = size;
 		return this;
 	}
 
 	@Override
 	public ILazyScrollPane visible(boolean visible) {
 		if (visible) {
-			IDockPanel dock = container.panel().dock();
-			dock.height(height);
-			contentPanel = dock.center().panel().card();
-			update();
-			IScrollPane sp = dock.right().scrollPane();
-			sp.size(35, height);
-			scrollContentPanel = sp.viewPort().panel().absolute();
-			scrollPanelHeight = 0;
-			for (int r : rowHeight)
-				scrollPanelHeight += rowHeight[r];
-			scrollContentPanel.size(1, scrollPanelHeight);
-			sp.addScrollListener(this);
-			scrollContentPanel.add().label().text("&#160;");
+			draw();
 		} else
 			throw new MethodNotImplementedException();
 		return this;
 	}
 
+	private void draw() {
+		final IDockPanel dock = container.panel().dock();
+		dock.visible(false);
+		dock.height(height);
+		contentPanel = dock.center().panel().card();
+		scrollPane = dock.right().scrollPane();
+		scrollPane.size(35, height);
+		scrollContentPanel = scrollPane.viewPort().panel().absolute();
+		scrollContentPanel.add().label().text("&#160;");
+		scrollPanelHeight = size * minRowHeight;
+		scrollContentPanel.size(1, scrollPanelHeight);
+		maxOffset = scrollPanelHeight - height;
+		update(size - rows2Paint);
+		dock.display().invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				int h = decorator.rowHeight(size - 1);
+				maxRowIndex = size - 1;
+				for (int i = size - 2; i >= rowIndex && h < height; i--) {
+					h += decorator.rowHeight(i);
+					if (h < height) {
+						maxRowIndex = i;
+					}
+				}
+				update();
+				dock.visible(true);
+				scrollPane.addScrollListener(LazyScrollPaneImpl.this);
+			}
+		});
+	}
+
 	private void update() {
-		if (scrollContentPanel != null
-				&& scrollPanelHeight != scrollContentPanel.height())
-			scrollContentPanel.height(scrollPanelHeight);
-		int lastIndex = rowIndex;
-		for (int paintedHeight = 0; paintedHeight < height
-				&& lastIndex < rowHeight.length; lastIndex++) {
-			paintedHeight += rowHeight[lastIndex];
-		}
-		if (lastIndex >= rowHeight.length)
-			lastIndex--;
+		update(rowIndex);
+	}
+
+	private void update(int rowIndex) {
+		int lastIndex = rowIndex + rows2Paint - 1;
+		if (lastIndex >= size)
+			lastIndex = size - 1;
 		IContainer invisibleCard = contentPanel.add();
 		decorator.decorate(invisibleCard, rowIndex, lastIndex);
 		contentPanel.show(invisibleCard.element());
@@ -120,25 +137,16 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		lastCard = invisibleCard;
 	}
 
-	private int convertScrollOffset2RowIndex(int maxOffset) {
-		int offset = 0;
-		for (int i = 0; i < rowHeight.length; i++) {
-			offset += rowHeight[i];
-			if (offset > maxOffset)
-				return i;
-		}
-		return rowHeight.length - 1;
+	private int convertScrollOffset2RowIndex(int offset) {
+		double r = offset;
+		r /= maxOffset;
+		r *= maxRowIndex;
+		return (int) r;
 	}
 
 	@Override
 	public void onScroll(int maxOffset) {
 		rowIndex = convertScrollOffset2RowIndex(maxOffset);
 		update();
-	}
-
-	@Override
-	public ILazyScrollPane height(int height) {
-		this.height = height;
-		return this;
 	}
 }
