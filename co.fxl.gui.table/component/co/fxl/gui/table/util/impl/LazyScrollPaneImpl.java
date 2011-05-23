@@ -105,9 +105,12 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				&& scrollPanelHeight != scrollContentPanel.height())
 			scrollContentPanel.height(scrollPanelHeight);
 		int lastIndex = rowIndex;
-		for (int paintedHeight = 0; paintedHeight < height; lastIndex++) {
-			paintedHeight += rowHeight[paintedHeight];
+		for (int paintedHeight = 0; paintedHeight < height
+				&& lastIndex < rowHeight.length; lastIndex++) {
+			paintedHeight += rowHeight[lastIndex];
 		}
+		if (lastIndex >= rowHeight.length)
+			lastIndex--;
 		IContainer invisibleCard = contentPanel.add();
 		decorator.decorate(invisibleCard, rowIndex, lastIndex);
 		contentPanel.show(invisibleCard.element());
