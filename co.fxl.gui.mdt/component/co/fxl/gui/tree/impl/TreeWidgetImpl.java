@@ -39,6 +39,7 @@ import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.KeyAdapter;
 import co.fxl.gui.api.template.LazyClickListener;
+import co.fxl.gui.api.template.ResizeListener;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.api.template.WidgetTitle.CommandLink;
 import co.fxl.gui.mdt.impl.Icons;

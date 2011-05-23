@@ -102,7 +102,8 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 			}
 		}
 		if (widget.showCommands) {
-			delete = table.addButton("Delete", co.fxl.gui.api.template.Icons.CANCEL);
+			delete = table.addButton("Delete",
+					co.fxl.gui.api.template.Icons.CANCEL);
 			delete.addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {
@@ -191,16 +192,6 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 				if (widget.hiddenColumns.contains(p.name)) {
 					column.visible(false);
 				}
-				// if (index == 0) {
-				// column.addClickListener(new IScrollTableListener<Object>() {
-				//
-				// @Override
-				// public void onClick(Object identifier) {
-				// widget.r2.checked(true);
-				// widget.showDetailView(identifier);
-				// }
-				// });
-				// }
 				index++;
 			}
 		}
@@ -281,6 +272,10 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 			public void onSuccess(final IDeletableList<Object> queryList) {
 				if (painting)
 					return;
+				// if (true) {
+				// new Test().run(widget.mainPanel.clear());
+				// return;
+				// }
 				painting = true;
 				final long s = System.currentTimeMillis();
 				widget.mainPanel.clear();
@@ -333,9 +328,6 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 						table.addTooltip("Double-Click to show Details.");
 						table.sortListener(TableView.this);
 						table.constraints(constraints);
-						// if (selectionObject != null) {
-						// table.selection().add(selectionObject);
-						// }
 						table.addFilterListener(new IFilterListener() {
 
 							@Override
@@ -389,7 +381,8 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 		int tableHeight = height - offsetY - 84
 				+ (widget.rowsInTable == 0 ? 50 : 0);
 		tableHeight = Math.max(tableHeight, 60);
-		table.height(tableHeight);
+		if (table != null)
+			table.height(tableHeight);
 	}
 
 	@Override
@@ -411,4 +404,62 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 	void selection(List<Object> selection) {
 		throw new MethodNotImplementedException();
 	}
+
+	// private class Test implements IDecorator, IClickListener {
+	// private ILazyScrollPane widget;
+	// private IHorizontalPanel[] buttons = new IHorizontalPanel[1000];
+	//
+	// void run(IVerticalPanel panel) {
+	// panel.display().register(new LazyScrollPanelImplWidgetProvider());
+	// widget = (ILazyScrollPane) panel.add()
+	// .widget(ILazyScrollPane.class);
+	// widget.size(1000);
+	// widget.minRowHeight(20);
+	// widget.height(900);
+	// widget.decorator(this);
+	// widget.visible(true);
+	// }
+	//
+	// @Override
+	// public void decorate(IContainer c, int firstRow, int lastRow) {
+	// long t = System.currentTimeMillis();
+	// IVerticalPanel v = c.panel().vertical();
+	// for (int i = firstRow; i <= lastRow; i++) {
+	// IHorizontalPanel container = v.add().panel().horizontal();
+	// container.height(22);
+	// IClickable<?> clickable = container;
+	// clickable.addClickListener(this);
+	// IHorizontalPanel content = container.add().panel().horizontal()
+	// .spacing(2);
+	// content.addSpace((i % 3) * 10);
+	// IImage image = content.add().image();
+	// image.resource("closed.png");
+	// image.addClickListener(this);
+	// IImage icon = content.add().image().resource("export.png");
+	// icon.addClickListener(this);
+	// content.addSpace(2);
+	// String name = "Tree Node " + i;
+	// boolean isNull = name == null || name.trim().equals("");
+	// ILabel label = content.add().label()
+	// .text(isNull ? "unnamed" : name);
+	// label.font().pixel(12);
+	// if (isNull)
+	// label.font().weight().italic().color().gray();
+	// label.addClickListener(this);
+	// content.addSpace(10);
+	// buttons[i] = container;
+	// }
+	// c.display().title((System.currentTimeMillis() - t) + "ms");
+	// }
+	//
+	// @Override
+	// public void onClick() {
+	// throw new MethodNotImplementedException();
+	// }
+	//
+	// @Override
+	// public int rowHeight(int rowIndex) {
+	// return buttons[rowIndex].height();
+	// }
+	// }
 }
