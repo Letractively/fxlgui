@@ -20,18 +20,33 @@ package co.fxl.gui.table.util.test;
 
 import java.lang.reflect.InvocationTargetException;
 
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
+import co.fxl.gui.table.util.api.ILazyScrollPane.IDecorator;
 import co.fxl.gui.table.util.impl.LazyScrollPanelImplWidgetProvider;
 
-class LazyScrollPaneTest {
+class LazyScrollPaneTest implements IDecorator {
 
 	void run(IDisplay display) {
 		display.register(new LazyScrollPanelImplWidgetProvider());
-		ILazyScrollPane w = (ILazyScrollPane) display.container().widget(
-				ILazyScrollPane.class);
-		// TODO ...
+		ILazyScrollPane w = (ILazyScrollPane) display.container().panel()
+				.vertical().add().widget(ILazyScrollPane.class);
+		w.minRowHeight(20);
+		w.height(600);
+		w.size(1000);
+		w.decorator(this);
+		w.visible(true);
 		display.visible(true);
+	}
+
+	@Override
+	public void decorate(IContainer container, int firstRow, int lastRow) {
+		IVerticalPanel v = container.panel().vertical();
+		for (int i = firstRow; i <= lastRow; i++) {
+			v.add().button().text(String.valueOf(i)).size(100, 20 + (i % 20));
+		}
 	}
 
 	public static void main(String[] args) throws InstantiationException,
