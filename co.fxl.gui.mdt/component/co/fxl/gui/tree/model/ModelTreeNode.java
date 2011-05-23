@@ -99,10 +99,10 @@ class ModelTreeNode<T> extends LazyClickListener {
 		if (drawn)
 			return;
 		drawn = true;
-		panel.height(-1);
+		// panel.height(-1);
 		isExpanded = false;
-		container = this.panel.add().panel().horizontal();
-		container.height(22);
+		container = panel.add().panel().horizontal();
+		// container.height(22);
 		IClickable<?> clickable = container;
 		clickable.addClickListener(this);
 		injectTreeListener(clickable);
@@ -327,21 +327,16 @@ class ModelTreeNode<T> extends LazyClickListener {
 		clear();
 		expandLoadedNode = true;
 		for (ITree<T> child : tree.children()) {
-			assert child != null : "Tree child cannot be null";
-			widget.newNode(widget, childrenPanel.add().panel().vertical(),
-					child, depth + 1, new Runnable() {
-						@Override
-						public void run() {
-							if (tree.childCount() > 0) {
-								isExpanded = true;
-								if (icon() != null) {
-									image.resource(OPEN);
-									icon.resource(icon());
-								} else
-									image.resource(FOLDER_OPEN);
-							}
-						}
-					}, false, true);
+			widget.newNode(widget, childrenPanel, child, depth + 1, null,
+					false, true);
+		}
+		if (tree.childCount() > 0) {
+			isExpanded = true;
+			if (icon() != null) {
+				image.resource(OPEN);
+				icon.resource(icon());
+			} else
+				image.resource(FOLDER_OPEN);
 		}
 	}
 
