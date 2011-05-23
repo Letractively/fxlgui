@@ -24,6 +24,7 @@ import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.table.bulk.impl.BulkTableWidgetImplProvider;
 import co.fxl.gui.table.scroll.api.IRows;
+import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 import co.fxl.gui.table.scroll.impl.ScrollTableWidgetImplProvider;
 
@@ -40,9 +41,10 @@ class ScrollTableWidgetTest implements IRows<String> {
 		widget.selection().multi();
 		widget.addTitle("Table");
 		widget.addButton("New");
-		for (int i = 0; i < 3; i++)
-			widget.addColumn().name("Column " + i).sortable().type()
-					.type(String.class);
+		for (int i = 0; i < 3; i++) {
+			IScrollTableColumn<String> c = widget.addColumn();
+			c.name("Column " + i).sortable().type().type(String.class);
+		}
 		widget.rows(this);
 		widget.visible(true);
 		display.visible(true);
