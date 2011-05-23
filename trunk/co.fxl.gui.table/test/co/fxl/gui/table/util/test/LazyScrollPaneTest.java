@@ -43,7 +43,7 @@ class LazyScrollPaneTest implements IDecorator, IClickListener {
 				.widget(ILazyScrollPane.class);
 		widget.size(1000);
 		widget.minRowHeight(20);
-		widget.height(600);
+		widget.height(900);
 		widget.decorator(this);
 		widget.visible(true);
 		display.visible(true);
