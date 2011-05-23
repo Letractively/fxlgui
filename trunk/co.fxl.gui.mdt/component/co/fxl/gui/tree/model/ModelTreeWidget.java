@@ -404,6 +404,8 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> root(ITree<T> tree) {
+		if (previousSelection == null && showRoot)
+			previousSelection = tree.object();
 		scrollListener.active = false;
 		addButtons();
 		IVerticalPanel panel2 = panel();
