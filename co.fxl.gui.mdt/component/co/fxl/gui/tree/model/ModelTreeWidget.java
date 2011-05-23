@@ -424,10 +424,14 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 			newNode(this, panel2, tree, 0, finish, true, true);
 		} else {
 			Iterator<ITree<T>> it = tree.children().iterator();
-			drawNode(it, this, panel2, 0, finish, !LAZY_LOAD);
 			if (LAZY_LOAD) {
+				while (it.hasNext()) {
+					newNode(this, panel2, it.next(), 0, null, true, false);
+				}
 				scrollListener.active = true;
 				scrollListener.onScroll(leftScrollPane.scrollOffset());
+			} else {
+				drawNode(it, this, panel2, 0, finish, !LAZY_LOAD);
 			}
 		}
 		return this;
@@ -452,11 +456,13 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		if (topLevel)
 			topLevelNodes.add(node);
 		painted++;
-		if (painted < MAX_PAINTS)
-			finish.run();
-		else {
+		if (painted < MAX_PAINTS) {
+			if (finish != null)
+				finish.run();
+		} else {
 			painted = 0;
-			panel.display().invokeLater(finish);
+			if (finish != null)
+				panel.display().invokeLater(finish);
 		}
 	}
 
