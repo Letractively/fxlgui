@@ -18,17 +18,22 @@
  */
 package co.fxl.gui.gwt;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IPasswordField;
 
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 
 class GWTPasswordField extends GWTElement<PasswordTextBox, IPasswordField>
 		implements IPasswordField {
+
+	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();
 
 	GWTPasswordField(GWTContainer<PasswordTextBox> container) {
 		super(container);
@@ -40,16 +45,19 @@ class GWTPasswordField extends GWTElement<PasswordTextBox, IPasswordField>
 		if (text == null)
 			text = "";
 		container.widget.setText(text);
+		for (IUpdateListener<String> l : updateListeners)
+			l.onUpdate(text);
 		return this;
 	}
 
 	@Override
 	public IPasswordField addUpdateListener(
 			final IUpdateListener<String> changeListener) {
-		container.widget.addChangeHandler(new ChangeHandler() {
+		updateListeners.add(changeListener);
+		container.widget.addKeyUpHandler(new KeyUpHandler() {
 
 			@Override
-			public void onChange(ChangeEvent event) {
+			public void onKeyUp(KeyUpEvent event) {
 				changeListener.onUpdate(container.widget.getText());
 			}
 		});

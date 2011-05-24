@@ -64,6 +64,8 @@ public class GWTWidgetBorder extends GWTBorder {
 			String attr = "border-radius";
 			if (GWTDisplay.isFirefox())
 				attr = "-moz-" + attr;
+			// TODO Code: Look: Firefox/IE/Opera: Rounded Corners in
+			// Firefox/Opera/Firefox don’t work
 			DOM.setStyleAttribute(element, attr, "3px");
 		} else {
 			DOM.setStyleAttribute(element, borderType, width + "px " + color
