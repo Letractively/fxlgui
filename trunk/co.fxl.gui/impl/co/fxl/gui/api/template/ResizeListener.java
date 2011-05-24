@@ -23,6 +23,9 @@ import co.fxl.gui.api.IDisplay.IResizeListener;
 
 public class ResizeListener implements IResizeListener {
 
+	// TODO Code: Potential Bug / Option: Optimization: holds references,
+	// impairs garbage collection
+
 	private static ResizeListener instance;
 	private static IResizeListener listener;
 	private static IDisplay display;
