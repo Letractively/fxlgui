@@ -31,9 +31,7 @@ import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
 
-public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
-		IClickListener// , IUpdateListener<String>
-{
+class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener {
 
 	protected IFormWidget widget;
 	private IPasswordField currentPassword;
@@ -46,9 +44,7 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 
 	public ChangePasswordWidgetImpl(IContainer display) {
 		this.display = display;
-		// verticalPanel = display.panel().vertical();
 		widget = (IFormWidget) display.widget(IFormWidget.class);
-		// widget.fixValueColumn(180);
 		widget.saveListener("Submit", new ISaveListener() {
 
 			@Override
@@ -88,26 +84,9 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 			currentPassword.editable(false);
 		} else
 			pw.required();
-		// currentPassword.addUpdateListener((IUpdateListener<String>) this);
-		// currentPassword
-		// .addCarriageReturnListener((ICarriageReturnListener) this);
 		newPassword = widget.addPasswordField("New").required().valueElement();
-		// newPassword.addUpdateListener((IUpdateListener<String>) this);
-		// newPassword.addCarriageReturnListener((ICarriageReturnListener)
-		// this);
 		confirmPassword = widget.addPasswordField("Confirm").required()
 				.valueElement();
-		// confirmPassword.addUpdateListener((IUpdateListener<String>) this);
-		// confirmPassword
-		// .addCarriageReturnListener((ICarriageReturnListener) this);
-		// ILabel oKButton = widget.addOKHyperlink();
-		// oKButton.text("Change");
-		// oKButton.addClickListener(this);
-		// Validation validation = new Validation();
-		// validation.linkInput(currentPassword, true);
-		// validation.linkInput(newPassword, true);
-		// validation.linkInput(confirmPassword, true);
-		// validation.update();
 		widget.visible(true);
 		return this;
 	}
@@ -156,7 +135,6 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 		currentPassword.text("");
 		newPassword.text("");
 		confirmPassword.text("");
-		// onUpdate(null);
 	}
 
 	public void visible() {
@@ -169,18 +147,9 @@ public class ChangePasswordWidgetImpl implements IChangePasswordWidget,
 		return this;
 	}
 
-	// @Override
-	// public void onUpdate(String input) {
-	// }
-
 	@Override
 	public ILabel addTitle(String title) {
-		// if (isFirstTitle)
-		// title = title + ".";
 		ILabel label = widget.addTitle(title);
-		// if (isFirstTitle)
-		// label.font().color().gray();
-		// isFirstTitle = false;
 		return label;
 	}
 
