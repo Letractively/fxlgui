@@ -26,6 +26,10 @@ import co.fxl.gui.navigation.group.api.INavigationItem;
 
 class NavigationGroupImpl implements INavigationGroup {
 
+	// TODO Code: Look: add horizontal line spanning width (color: #000000)
+	// TODO Code: Look: Register-Widget: no flickering -> use Card-Panel, set
+	// panel invisible, decorator with callback: switch when returned
+
 	NavigationWidgetImpl widget;
 	private IHorizontalPanel panel;
 	private ILabel header;
@@ -38,14 +42,14 @@ class NavigationGroupImpl implements INavigationGroup {
 		panel.addSpace(3);
 		IVerticalPanel headerPanel = panel.add().panel().vertical();
 		header = headerPanel.addSpace(2).add().label();
-		header.font().weight().bold().pixel(11);//.color().white();
+		header.font().weight().bold().pixel(11);// .color().white();
 		panel.addSpace(1);
 		itemPanel = panel.add().panel().horizontal();
 	}
 
 	@Override
 	public INavigationGroup name(String name) {
-		header.text(name+":");
+		header.text(name + ":");
 		return this;
 	}
 
