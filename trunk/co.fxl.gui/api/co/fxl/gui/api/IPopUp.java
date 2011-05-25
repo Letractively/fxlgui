@@ -39,4 +39,6 @@ public interface IPopUp {
 	int height();
 
 	IPopUp size(int w, int h);
+
+	IPopUp autoHide(boolean autoHide);
 }
