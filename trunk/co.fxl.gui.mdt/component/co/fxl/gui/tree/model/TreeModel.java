@@ -41,21 +41,21 @@ class TreeModel<T> {
 		return selection;
 	}
 
-	void selection(ITree<T> selection) {
+	void selection(ITree<T> tree) {
 		if (this.selection != null) {
-			if (this.selection.equals(selection)) {
+			if (this.selection.equals(tree)) {
 				return;
 			} else {
 				node(this.selection).selected(false);
 			}
 		}
-		if (this.selection != null && !this.selection.equals(selection)) {
+		if (this.selection != null && !this.selection.equals(tree)) {
 			node(this.selection).selected(false);
 		}
-		this.selection = selection;
-		ModelTreeNode<T> node = node(selection);
+		this.selection = tree;
+		ModelTreeNode<T> node = node(tree);
 		node.selected(true);
-		widget.setDetailViewTree(selection);
+		widget.setDetailViewTree(tree);
 	}
 
 	void selection(Object selection) {

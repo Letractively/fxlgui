@@ -67,6 +67,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 
 	ModelTreeNode(final ModelTreeWidget<T> widget, IVerticalPanel panel,
 			final ITree<T> root, int depth, boolean draw) {
+		assert root != null && root.object() != null;
 		this.widget = widget;
 		this.panel = panel.add().panel().vertical();
 		this.tree = root;
