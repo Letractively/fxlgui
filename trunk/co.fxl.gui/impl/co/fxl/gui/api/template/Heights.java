@@ -101,6 +101,5 @@ public class Heights {
 
 	public void decorate(ICheckBox c) {
 		c.height(inc + COMBOBOX_HEIGHT);
-		background(c);
 	}
 }
