@@ -557,18 +557,14 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		return this;
 	}
 
-	/**
-	 * TODO remember MDT-State: - Grid or Master-Detail - Relation-Constraints -
-	 * Table-Column-Selection Filter-Constraints - Selection (- wenn Grid: -
-	 * welches Register - selection auf register - filter auf register)
-	 * 
-	 * wenn wechsel via navigation top register leiste -> remember state (oder:
-	 * track all relevant state changes)
-	 */
-
 	@Override
 	public IStateMemento getState() {
-		return new StateMementoImpl(this);
+		return new StateMementoImpl(this,null);
+	}
+
+	@Override
+	public IStateMemento getState(IStatePacker<Object> packer) {
+		return new StateMementoImpl(this, packer);
 	}
 
 	@Override

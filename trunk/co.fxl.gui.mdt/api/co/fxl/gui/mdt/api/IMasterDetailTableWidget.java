@@ -29,6 +29,11 @@ import co.fxl.gui.tree.api.ITreeWidget;
 
 public interface IMasterDetailTableWidget<T> {
 
+	public interface IStatePacker<T> {
+
+		Object pack(T entity);
+	}
+
 	String DETAILS = "Details";
 
 	public interface IContent<T> {
@@ -106,6 +111,8 @@ public interface IMasterDetailTableWidget<T> {
 	IMasterDetailTableWidget<T> navigationListener(INavigationListener l);
 
 	IStateMemento getState();
+
+	IStateMemento getState(IStatePacker<T> packer);
 
 	IStateMemento createNavigationState();
 
