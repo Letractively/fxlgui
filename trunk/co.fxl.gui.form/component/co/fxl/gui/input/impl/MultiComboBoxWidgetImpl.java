@@ -42,6 +42,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener {
 	private List<String> texts = new LinkedList<String>();
 	private List<String> selection = new LinkedList<String>();
 	private Heights heights = new Heights(0);
+	private int width = -1;
 
 	MultiComboBoxWidgetImpl(IContainer container) {
 		panel = container.panel().vertical();
@@ -85,7 +86,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener {
 		final IPopUp popUp = label.display().showPopUp();
 		popUp.offset(panel.offsetX(), panel.offsetY() + panel.height());
 		IScrollPane scrollPane = popUp.container().scrollPane();
-		scrollPane.width(panel.width());
+		scrollPane.width(width != -1 ? width : panel.width());
 		scrollPane
 				.height(Math.min(300, texts.size() * Heights.COMBOBOX_HEIGHT));
 		scrollPane.color().white();
@@ -106,5 +107,11 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener {
 			cb.checked(selection.contains(text));
 		}
 		popUp.visible(true);
+	}
+
+	@Override
+	public IMultiComboBoxWidget width(int width) {
+		this.width = width;
+		return this;
 	}
 }
