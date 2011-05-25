@@ -161,15 +161,15 @@ public class DialogImpl implements IDialog {
 
 	IPopUp getPopUp() {
 		if (popUp == null) {
-			popUp = display.showPopUp().modal(modal);
+			popUp = display.showPopUp().modal(modal).autoHide(false);
 			if (width != -1) {
 				popUp.size(width, height);
 			}
 			popUp.center();
 			IVerticalPanel panel = popUp.container().panel().vertical();
 			WidgetTitle.decorateBorder(panel.spacing(1).border().color());
-			WidgetTitle t = new WidgetTitle(panel.add().panel()).foldable(false)
-					.space(0);
+			WidgetTitle t = new WidgetTitle(panel.add().panel())
+					.foldable(false).space(0);
 			t.addTitle(title.toUpperCase());
 			if (message != null && buttons.isEmpty()) {
 				addButton().ok().addClickListener(new IClickListener() {
