@@ -79,13 +79,7 @@ public class SplitLayout implements IResizeListener// , IClickListener
 	}
 
 	protected IVerticalPanel addMainPanel(IVerticalPanel vpanel) {
-		return addMainPanel(vpanel, false);
-	}
-
-	protected IVerticalPanel addMainPanel(IVerticalPanel vpanel, boolean wBorder) {
 		mainPanel = vpanel.add().panel().vertical();
-		if (wBorder)
-			mainPanel.border().color().lightgray();
 		mainPanel.color().white();
 		return mainPanel;
 	}
