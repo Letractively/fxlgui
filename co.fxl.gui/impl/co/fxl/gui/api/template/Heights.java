@@ -25,14 +25,15 @@ import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextField;
 
 public class Heights {
 
-	private static final int CELL_HEIGHT = 28;
-	private static final int TEXTFIELD_HEIGHT = 24;
-	private static final int COMBOBOX_HEIGHT = 24;
+	public static final int CELL_HEIGHT = 28;
+	public static final int TEXTFIELD_HEIGHT = 24;
+	public static final int COMBOBOX_HEIGHT = 24;
 	private int inc;
 
 	public Heights(int inc) {
@@ -91,5 +92,9 @@ public class Heights {
 
 	public void decorate(ILabel label) {
 		label.height(inc + TEXTFIELD_HEIGHT);
+	}
+
+	public void decorate(IPanel<?> panel) {
+		panel.height(inc + COMBOBOX_HEIGHT);
 	}
 }
