@@ -115,4 +115,18 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener {
 		this.width = width;
 		return this;
 	}
+
+	@Override
+	public IMultiComboBoxWidget clear() {
+		texts.clear();
+		selection.clear();
+		selection(new String[0]);
+		return this;
+	}
+
+	@Override
+	public IMultiComboBoxWidget visible(boolean visible) {
+		panel.visible(visible);
+		return this;
+	}
 }

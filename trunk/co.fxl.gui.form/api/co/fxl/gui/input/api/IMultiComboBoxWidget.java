@@ -6,9 +6,13 @@ public interface IMultiComboBoxWidget extends IUpdateable<String[]> {
 
 	IMultiComboBoxWidget width(int width);
 
+	IMultiComboBoxWidget clear();
+
 	IMultiComboBoxWidget addText(String... texts);
 
 	IMultiComboBoxWidget selection(String[] texts);
 
 	String[] selection();
+
+	IMultiComboBoxWidget visible(boolean visible);
 }
