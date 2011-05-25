@@ -18,7 +18,11 @@
  */
 package co.fxl.gui.api;
 
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
+
 public interface IFocusable<T> {
 
 	T focus(boolean focus);
+
+	T addFocusListener(IUpdateListener<Boolean> hasFocus);
 }
