@@ -28,6 +28,7 @@ import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFontElement;
+import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -59,8 +60,8 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		this.container = container;
 	}
 
-	protected void defaultFont() {
-		((IFontElement) this).font().pixel(12).family().arial();
+	IFont defaultFont() {
+		return ((IFontElement) this).font().pixel(12).family().arial();
 	}
 
 	public IBorder border() {
@@ -267,6 +268,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 			public void onFocus(Widget sender) {
 				l.onUpdate(true);
 			}
+
 			@Override
 			public void onLostFocus(Widget sender) {
 				l.onUpdate(false);

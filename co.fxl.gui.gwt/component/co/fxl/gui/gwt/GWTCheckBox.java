@@ -30,7 +30,7 @@ class GWTCheckBox extends GWTElement<CheckBox, ICheckBox> implements ICheckBox {
 		super(container);
 		container.widget.addStyleName("gwt-Checkbox-FXL");
 		container.widget.setValue(false);
-		defaultFont();
+		defaultFont().color().black();
 	}
 
 	@Override
