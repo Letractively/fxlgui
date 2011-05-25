@@ -40,6 +40,7 @@ class SwingPopUp implements IPopUp {
 	protected JComponent component;
 	private int w = -1;
 	private int h = -1;
+	private boolean autoHide = false;
 
 	SwingPopUp(SwingDisplay panel) {
 		this.panel = panel;
@@ -86,6 +87,11 @@ class SwingPopUp implements IPopUp {
 
 	@Override
 	public IPopUp visible(boolean visible) {
+		if (autoHide) {
+			// TODO implement
+			new MethodNotImplementedException().printStackTrace();
+			return this;
+		}
 		if (dialog == null)
 			if (component != null) {
 				if (component.getWidth() < 160)
@@ -157,6 +163,12 @@ class SwingPopUp implements IPopUp {
 			this.w = w;
 			this.h = h;
 		}
+		return this;
+	}
+
+	@Override
+	public IPopUp autoHide(boolean autoHide) {
+		this.autoHide = autoHide;
 		return this;
 	}
 }
