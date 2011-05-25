@@ -51,6 +51,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener {
 		WidgetTitle.decorateBorder(panel.border().color());
 		label = panel.add().label();
 		panel.addClickListener(this);
+		panel.tooltip("Click to edit");
 	}
 
 	@Override
