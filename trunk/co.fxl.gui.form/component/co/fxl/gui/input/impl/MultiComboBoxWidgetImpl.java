@@ -94,6 +94,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener {
 		IVerticalPanel v = scrollPane.viewPort().panel().vertical();
 		for (final String text : texts) {
 			ICheckBox cb = v.add().checkBox().text(text);
+			heights.decorate(cb);
 			cb.addUpdateListener(new IUpdateListener<Boolean>() {
 				@Override
 				public void onUpdate(Boolean value) {
