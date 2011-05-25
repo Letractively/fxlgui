@@ -21,6 +21,7 @@ package co.fxl.gui.form.impl;
 import java.util.Date;
 
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.ITextField;
@@ -30,30 +31,47 @@ import co.fxl.gui.input.api.ICalendarWidget;
 
 class FormDateFieldImpl extends FormTextFieldImpl<Date> {
 
+	private class PopUp implements IClickListener, IUpdateListener<Boolean> {
+
+		private IElement<?> e;
+
+		PopUp(IElement<?> e) {
+			this.e = e;
+		}
+
+		@Override
+		public void onClick() {
+			final IPopUp popUp = widget.gridPanel.display().showPopUp();
+			int height = e.height();
+			popUp.offset(e.offsetX(), e.offsetY() + height);
+			ICalendarWidget calendar = (ICalendarWidget) popUp.container()
+					.widget(ICalendarWidget.class);
+			calendar.addUpdateListener(new IUpdateListener<Date>() {
+				@Override
+				public void onUpdate(Date value) {
+					FormDateFieldImpl.this.valueElement().text(
+							DateFormat.instance.format(value));
+				}
+			});
+			calendar.date(DateFormat.instance.parse(valueElement().text()));
+			popUp.visible(true);
+		}
+
+		@Override
+		public void onUpdate(Boolean value) {
+			if (value)
+				new PopUp(valueElement()).onClick();
+		}
+	}
+
 	private IImage button;
 
 	FormDateFieldImpl(final FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
 		button = addContainer().image().resource(Icons.CALENDAR).size(16, 16);
-		// addButton("Change");
-		button.addClickListener(new IClickListener() {
-			@Override
-			public void onClick() {
-				final IPopUp popUp = widget.gridPanel.display().showPopUp();
-				popUp.offset(button.offsetX(), button.offsetY());
-				ICalendarWidget calendar = (ICalendarWidget) popUp.container()
-						.widget(ICalendarWidget.class);
-				calendar.addUpdateListener(new IUpdateListener<Date>() {
-					@Override
-					public void onUpdate(Date value) {
-						FormDateFieldImpl.this.valueElement().text(
-								DateFormat.instance.format(value));
-					}
-				});
-				popUp.visible(true);
-			}
-		});
+		button.addClickListener(new PopUp(button));
 		editable(widget.saveListener != null);
+		valueElement().addFocusListener(new PopUp(valueElement()));
 	}
 
 	@Override
