@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.swing;
 
+import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -33,6 +34,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import co.fxl.gui.api.IBordered.IBorder;
@@ -66,6 +68,11 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 
 	@Override
 	public int width() {
+		Container parent = container.component.getParent();
+		if (parent instanceof JPanel
+				&& ((JPanel) parent).getLayout() instanceof VerticalLayoutManager) {
+			return parent.getWidth();
+		}
 		return container.component.getPreferredSize().width;
 	}
 
