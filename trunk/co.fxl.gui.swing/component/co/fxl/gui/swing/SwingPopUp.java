@@ -106,7 +106,7 @@ class SwingPopUp implements IPopUp {
 				p.getInsets().set(3, 3, 3, 3);
 				p.setBackground(Color.WHITE);
 				p.setBorder(new LineBorder(new Color(195, 217, 255), 3));
-				dialog = factory.getPopup(panel.frame, p, x, y);
+				dialog = factory.getPopup(panel.frame, p, x, y + 20);
 			}
 		assert dialog != null;
 		if (visible) {
