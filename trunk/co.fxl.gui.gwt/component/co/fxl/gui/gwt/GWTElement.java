@@ -28,6 +28,7 @@ import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFontElement;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -39,7 +40,9 @@ import com.google.gwt.event.dom.client.HasKeyPressHandlers;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.Focusable;
+import com.google.gwt.user.client.ui.HasFocus;
 import com.google.gwt.user.client.ui.Widget;
 
 public class GWTElement<T extends Widget, R> implements IElement<R> {
@@ -252,6 +255,21 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 			@Override
 			public void run() {
 				((Focusable) container.widget).setFocus(focus);
+			}
+		});
+		return (R) this;
+	}
+
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	public R addFocusListener(final IUpdateListener<Boolean> l) {
+		((HasFocus) container.widget).addFocusListener(new FocusListener() {
+			@Override
+			public void onFocus(Widget sender) {
+				l.onUpdate(true);
+			}
+			@Override
+			public void onLostFocus(Widget sender) {
+				l.onUpdate(false);
 			}
 		});
 		return (R) this;
