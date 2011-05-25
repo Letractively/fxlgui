@@ -113,6 +113,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener {
 	@Override
 	public IMultiComboBoxWidget width(int width) {
 		this.width = width;
+		panel.width(width);
 		return this;
 	}
 
