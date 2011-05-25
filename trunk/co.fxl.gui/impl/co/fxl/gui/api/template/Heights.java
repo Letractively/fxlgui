@@ -96,6 +96,7 @@ public class Heights {
 
 	public void decorate(IPanel<?> panel) {
 		panel.height(inc + COMBOBOX_HEIGHT);
+		background(panel);
 	}
 
 	public void decorate(ICheckBox c) {
