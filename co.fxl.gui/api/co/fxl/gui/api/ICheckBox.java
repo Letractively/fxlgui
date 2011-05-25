@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.api;
 
-public interface ICheckBox extends ITextElement<ICheckBox>, IColored,
+public interface ICheckBox extends ITextElement<ICheckBox>,
 		IUpdateable<Boolean>, IFocusable<ICheckBox>, IKeyRecipient<ICheckBox> {
 
 	ICheckBox checked(boolean checked);
