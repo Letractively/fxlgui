@@ -46,13 +46,6 @@ class GWTCheckBox extends GWTElement<CheckBox, ICheckBox> implements ICheckBox {
 	}
 
 	@Override
-	public IColor color() {
-		GWTWidgetStyle style = new GWTWidgetStyle("background-color-",
-				container.widget);
-		return new GWTStyleColor(style);
-	}
-
-	@Override
 	public ICheckBox checked(boolean checked) {
 		container.widget.setValue(checked);
 		return this;
