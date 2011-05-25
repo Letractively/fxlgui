@@ -23,6 +23,8 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -38,6 +40,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 class SwingElement<T extends JComponent, R> implements IElement<R> {
 
@@ -193,6 +196,22 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 			container.component.setFocusable(false);
 			container.component.setFocusable(true);
 		}
+		return (R) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public R addFocusListener(final IUpdateListener<Boolean> l) {
+		container.component.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				l.onUpdate(true);
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				l.onUpdate(false);
+			}
+		});
 		return (R) this;
 	}
 
