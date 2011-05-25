@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.mdt.api.IMasterDetailTableWidget.IStatePacker;
 import co.fxl.gui.mdt.api.IStateMemento;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.tree.api.ITreeWidget.IViewID;
@@ -18,7 +19,8 @@ class StateMementoImpl implements IStateMemento {
 	Object relationRegisterSelection;
 	List<String> hiddenColumns = new LinkedList<String>();
 
-	StateMementoImpl(MasterDetailTableWidgetImpl widget) {
+	StateMementoImpl(MasterDetailTableWidgetImpl widget,
+			IStatePacker<Object> packer) {
 		showDetailView = widget.activeView instanceof DetailView;
 		if (widget.activeView instanceof DetailView) {
 			registerSelection = ((DetailView) widget.activeView).tree
@@ -35,7 +37,13 @@ class StateMementoImpl implements IStateMemento {
 		}
 		constraints = widget.constraints;
 		configuration = widget.configuration;
-		selection = new LinkedList<Object>(widget.selection);
+		if (packer == null)
+			selection = new LinkedList<Object>(widget.selection);
+		else {
+			selection = new LinkedList<Object>();
+			for (Object o : widget.selection)
+				selection.add(packer.pack(o));
+		}
 	}
 
 	StateMementoImpl() {
