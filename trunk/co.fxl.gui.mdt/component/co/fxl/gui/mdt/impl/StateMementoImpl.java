@@ -18,6 +18,7 @@ class StateMementoImpl implements IStateMemento {
 	IViewID registerSelection;
 	Object relationRegisterSelection;
 	List<String> hiddenColumns = new LinkedList<String>();
+	boolean isPacked = false;
 
 	StateMementoImpl(MasterDetailTableWidgetImpl widget,
 			IStatePacker<Object> packer) {
@@ -43,6 +44,7 @@ class StateMementoImpl implements IStateMemento {
 			selection = new LinkedList<Object>();
 			for (Object o : widget.selection)
 				selection.add(packer.pack(o));
+			isPacked = true;
 		}
 	}
 
