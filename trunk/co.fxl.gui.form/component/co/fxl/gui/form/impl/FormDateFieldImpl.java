@@ -44,8 +44,8 @@ class FormDateFieldImpl extends FormTextFieldImpl<Date> {
 			final IPopUp popUp = widget.gridPanel.display().showPopUp();
 			int height = e.height();
 			popUp.offset(e.offsetX(), e.offsetY() + height);
-			ICalendarWidget calendar = (ICalendarWidget) popUp.container()
-					.widget(ICalendarWidget.class);
+			final ICalendarWidget calendar = (ICalendarWidget) popUp
+					.container().widget(ICalendarWidget.class);
 			calendar.addUpdateListener(new IUpdateListener<Date>() {
 				@Override
 				public void onUpdate(Date value) {
@@ -53,7 +53,12 @@ class FormDateFieldImpl extends FormTextFieldImpl<Date> {
 							DateFormat.instance.format(value));
 				}
 			});
-			calendar.date(DateFormat.instance.parse(valueElement().text()));
+			valueElement().addUpdateListener(new IUpdateListener<String>() {
+				@Override
+				public void onUpdate(String value) {
+					calendar.date(DateFormat.instance.parse(value));
+				}
+			});
 			popUp.visible(true);
 		}
 
