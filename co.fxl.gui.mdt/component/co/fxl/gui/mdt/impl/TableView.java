@@ -302,6 +302,9 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 				ISelection<Object> tableSelection = table.selection();
 				for (Object o : widget.selection)
 					tableSelection.add(o);
+				for (Object o : widget.preselection)
+					tableSelection.add(o);
+				widget.preselection.clear();
 				table.rows(rows);
 				time = System.currentTimeMillis() - s;
 				final PrintStream out = time > 500 ? System.err : System.out;
@@ -336,6 +339,8 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 							}
 						});
 						table.visible(true);
+						widget.selection = table.selection().result();
+						updateLinks();
 						out.println("TableView: created table in " + time
 								+ "ms");
 						onChange(table.selection().result());

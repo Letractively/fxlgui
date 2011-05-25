@@ -109,6 +109,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	IViewID selectedRegister;
 	List<String> hiddenColumns = new LinkedList<String>();
 	Map<IViewID, Object> relationRegisterSelection = new HashMap<IViewID, Object>();
+	LinkedList<Object> preselection = new LinkedList<Object>();
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -559,7 +560,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	@Override
 	public IStateMemento getState() {
-		return new StateMementoImpl(this,null);
+		return new StateMementoImpl(this, null);
 	}
 
 	@Override
@@ -573,7 +574,11 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		showDetailViewByDefault = s.showDetailView;
 		constraints = s.constraints;
 		configuration = s.configuration;
-		selection = s.selection;
+		if (!s.isPacked)
+			selection = s.selection;
+		else {
+			preselection = s.selection;
+		}
 		selectedRegister = s.registerSelection;
 		if (selectedRegister != null)
 			relationRegisterSelection.put(selectedRegister,
