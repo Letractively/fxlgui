@@ -15,7 +15,7 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	GWTPopUp(GWTDisplay display) {
 		this.display = display;
-		popUp = new PopupPanel(true, false);
+		popUp = new PopupPanel(false, false);
 	}
 
 	@Override
@@ -99,6 +99,12 @@ class GWTPopUp implements IPopUp, WidgetParent {
 	public IPopUp size(int w, int h) {
 		popUp.setWidth(w + "px");
 		popUp.setHeight(h + "px");
+		return this;
+	}
+
+	@Override
+	public IPopUp autoHide(boolean autoHide) {
+		popUp.setAutoHideEnabled(autoHide);
 		return this;
 	}
 }
