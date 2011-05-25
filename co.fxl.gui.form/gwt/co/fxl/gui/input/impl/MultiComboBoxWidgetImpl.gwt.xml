@@ -1,0 +1,5 @@
+<module>
+	<inherits name='co.fxl.gui.api.IDisplay' />
+	<inherits name='co.fxl.gui.input.api.IMultiComboBoxWidget' />
+	<source path='' />
+</module>

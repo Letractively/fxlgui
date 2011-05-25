@@ -16,22 +16,22 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.input.dummy;
+package co.fxl.gui.input.impl;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.input.api.ICalendarWidget;
+import co.fxl.gui.input.api.IMultiComboBoxWidget;
 
-public class DummyCalendarWidgetProvider implements
-		IWidgetProvider<ICalendarWidget> {
+public class MultiComboBoxWidgetProvider implements
+		IWidgetProvider<IMultiComboBoxWidget> {
 
 	@Override
-	public Class<ICalendarWidget> widgetType() {
-		return ICalendarWidget.class;
+	public Class<IMultiComboBoxWidget> widgetType() {
+		return IMultiComboBoxWidget.class;
 	}
 
 	@Override
-	public ICalendarWidget createWidget(IContainer container) {
-		return new DummyCalendarWidget(container);
+	public IMultiComboBoxWidget createWidget(IContainer container) {
+		return new MultiComboBoxWidgetImpl(container);
 	}
 }
