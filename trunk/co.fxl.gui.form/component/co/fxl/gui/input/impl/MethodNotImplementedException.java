@@ -16,22 +16,10 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.input.dummy;
+package co.fxl.gui.input.impl;
 
-import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.input.api.ICalendarWidget;
+class MethodNotImplementedException extends RuntimeException {
 
-public class DummyCalendarWidgetProvider implements
-		IWidgetProvider<ICalendarWidget> {
+	private static final long serialVersionUID = 6282989723242176406L;
 
-	@Override
-	public Class<ICalendarWidget> widgetType() {
-		return ICalendarWidget.class;
-	}
-
-	@Override
-	public ICalendarWidget createWidget(IContainer container) {
-		return new DummyCalendarWidget(container);
-	}
 }
