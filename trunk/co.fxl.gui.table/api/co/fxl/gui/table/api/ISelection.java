@@ -52,7 +52,7 @@ public interface ISelection<T> {
 
 	Map<Integer, T> indexedResult();
 
-	ISelection<T> add(T object);
+	Object add(T object);
 
-	ISelection<T> add(int selectionIndex, Object selection);
+	Object add(int selectionIndex, Object selection);
 }

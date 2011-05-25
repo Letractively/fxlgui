@@ -66,7 +66,7 @@ class RowAdapter implements IRows<Object>, IComparableList {
 
 	int selected(Object object) {
 		for (int i = 0; i < rows.size(); i++) {
-			if (identifier(i).equals(object)) {
+			if (object.equals(identifier(i))) {
 				selected(i, true);
 				return i;
 			}
