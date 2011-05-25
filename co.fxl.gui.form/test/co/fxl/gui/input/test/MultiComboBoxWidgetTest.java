@@ -31,7 +31,8 @@ class MultiComboBoxWidgetTest {
 
 	void run(IDisplay display) {
 		display.register(new MultiComboBoxWidgetProvider());
-		final IVerticalPanel vertical = display.container().panel().vertical();
+		final IVerticalPanel vertical = display.container().panel()
+				.horizontal().add().panel().vertical().width(200);
 		IMultiComboBoxWidget widget = (IMultiComboBoxWidget) vertical.add()
 				.widget(IMultiComboBoxWidget.class);
 		for (int i = 0; i < 3; i++)
