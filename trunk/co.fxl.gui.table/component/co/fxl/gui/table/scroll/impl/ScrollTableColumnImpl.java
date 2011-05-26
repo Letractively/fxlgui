@@ -28,9 +28,10 @@ import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.template.AlignmentMemento;
 import co.fxl.gui.api.template.AlignmentMemento.Type;
-import co.fxl.gui.api.template.DateFormat;
 import co.fxl.gui.api.template.FieldTypeImpl;
 import co.fxl.gui.api.template.IFieldType;
+import co.fxl.gui.format.api.IFormat;
+import co.fxl.gui.format.impl.Format;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ICell;
@@ -125,7 +126,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		}
 	}
 
-	private static DateFormat FORMAT = DateFormat.instance;
+	private static IFormat<Date> FORMAT = Format.date();
 	String name;
 	boolean sortable = false;
 	FieldTypeImpl type = new FieldTypeImpl();

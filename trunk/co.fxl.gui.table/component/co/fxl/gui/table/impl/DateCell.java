@@ -20,8 +20,9 @@ package co.fxl.gui.table.impl;
 
 import java.util.Date;
 
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.ILabel;
+import co.fxl.gui.format.impl.Format;
 
 class DateCell extends LabelCell {
 
@@ -31,6 +32,6 @@ class DateCell extends LabelCell {
 
 	@Override
 	public void update(Object value) {
-		super.update(DateCellFactory.DATE_FORMAT.format((Date) value));
+		super.update(Format.date().format((Date) value));
 	}
 }

@@ -22,11 +22,12 @@ import java.util.Date;
 
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.template.DateFormat;
+import co.fxl.gui.format.api.IFormat;
+import co.fxl.gui.format.impl.Format;
 
 class DateCellFactory extends ComparableCellFactory<Date> {
 
-	static DateFormat DATE_FORMAT = DateFormat.instance;
+	static IFormat<Date> DATE_FORMAT = Format.date();
 
 	@Override
 	Cell<ILabel> newLabelCell(int row, IGridCell cell, ILabel label) {
