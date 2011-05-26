@@ -19,6 +19,8 @@
 package co.fxl.gui.mdt.test;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedList;
+import java.util.List;
 
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.form.impl.FormWidgetImplProvider;
@@ -65,6 +67,9 @@ class MasterDetailTableWidgetTest {
 		@SuppressWarnings("unchecked")
 		IConditionRule<Object, String, String> c2 = (IConditionRule<Object, String, String>) p3
 				.addConditionRule();
+		List<String> l = new LinkedList<String>();
+		l.add("1");
+		l.add("3");
 		c2.target(p2).condition(new ICondition<Object, String>() {
 
 			@Override
@@ -81,7 +86,7 @@ class MasterDetailTableWidgetTest {
 			public boolean satisfied(Object e, String value) {
 				return NON_EDITABLE.equals(value);
 			}
-		}).targetValues("1", "3");
+		}).targetValues(l);
 		return g;
 	}
 
