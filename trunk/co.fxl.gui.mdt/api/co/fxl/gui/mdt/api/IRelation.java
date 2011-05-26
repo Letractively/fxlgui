@@ -83,4 +83,6 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 	IRelation<T, R> editListener(IEditListener<T, R> editListener);
 
 	IRelation<T, R> hide(IProperty<T, ?> property);
+
+	IRelation<T, R> isDefaultView(boolean isDefaultView);
 }

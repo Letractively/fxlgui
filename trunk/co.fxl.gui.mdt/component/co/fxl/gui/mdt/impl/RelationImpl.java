@@ -39,6 +39,7 @@ class RelationImpl extends PropertyGroupImpl implements
 	IEditableAdapter<Object> editableAdapter;
 	List<IProperty<Object, ?>> hidden = new LinkedList<IProperty<Object, ?>>();
 	IViewID viewID;
+	boolean isDefaultView = false;
 
 	RelationImpl(String name) {
 		super(name);
@@ -107,6 +108,12 @@ class RelationImpl extends PropertyGroupImpl implements
 	@Override
 	public IRelation<Object, Object> hide(IProperty<Object, ?> property) {
 		hidden.add(property);
+		return this;
+	}
+
+	@Override
+	public IRelation<Object, Object> isDefaultView(boolean isDefaultView) {
+		this.isDefaultView = isDefaultView;
 		return this;
 	}
 }

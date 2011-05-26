@@ -105,6 +105,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		private IMenuItem register;
 		private Class<?>[] constrainType;
 		private String title;
+		boolean isDefaultView;
 
 		DetailView(String title, IDecorator<T> decorator) {
 			this.decorator = decorator;
@@ -150,20 +151,32 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		}
 
 		@Override
-		public void constrainType(Class<?> clazz) {
+		public IView constrainType(Class<?> clazz) {
 			if (clazz != null)
 				this.constrainType = new Class<?>[] { clazz };
+			return this;
 		}
 
 		@Override
-		public void constrainType(Class<?>[] clazz) {
+		public IView constrainType(Class<?>[] clazz) {
 			if (clazz.length > 1 || (clazz.length == 1 && clazz[0] != null))
 				this.constrainType = clazz;
+			return this;
 		}
 
 		@Override
 		public co.fxl.gui.tree.api.ITreeWidget.IViewID iD() {
 			return new ViewID(this);
+		}
+
+		@Override
+		public co.fxl.gui.tree.api.ITreeWidget.IView isDefaultView() {
+			isDefaultView = true;
+			return this;
+		}
+
+		public boolean enabled() {
+			return register.enabled();
 		}
 	}
 
@@ -510,8 +523,6 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				}
 			}
 		}
-		if (showFirst || (tree != null && tree.isNew()))
-			detailViews.get(0).register.active();
 		for (int i = 0; i < detailViews.size(); i++) {
 			DetailView view = detailViews.get(i);
 			if (tree != null) {
@@ -521,8 +532,19 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 			}
 			view.setNode(tree);
 		}
+		if (showFirst || (tree != null && tree.isNew())) {
+			findDefaultView(tree).register.active();
+		}
 		updateButtons();
 		notifyChange();
+	}
+
+	private DetailView findDefaultView(ITree<T> tree) {
+		for (DetailView view : detailViews) {
+			if (view.enabled() && view.isDefaultView)
+				return view;
+		}
+		return detailViews.get(0);
 	}
 
 	@Override
