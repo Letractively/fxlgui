@@ -280,6 +280,11 @@ public class CommandButtonsImpl implements ICommandButtons,
 	public ICommandButtons listenOnShow(final IRowListener<Boolean> l) {
 		listenOnShow = true;
 		listenOnShowListener = l;
+		doubleClickListener(l);
+		return this;
+	}
+
+	private void doubleClickListener(final IRowListener<Boolean> l) {
 		widget.addTableClickListener(new IScrollTableClickListener() {
 
 			@Override
@@ -293,13 +298,13 @@ public class CommandButtonsImpl implements ICommandButtons,
 						});
 			}
 		}).doubleClick();
-		return this;
 	}
 
 	@Override
 	public ICommandButtons listenOnEdit(IRowListener<Boolean> l) {
 		listenOnEdit = true;
 		listenOnEditListener = l;
+		doubleClickListener(l);
 		return this;
 	}
 
