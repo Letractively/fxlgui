@@ -18,8 +18,8 @@
  */
 package co.fxl.gui.filter.impl;
 
-import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.filter.impl.FilterTemplate.FilterListener;
+import co.fxl.gui.form.impl.Validation;
 
 interface FilterPart<T> {
 

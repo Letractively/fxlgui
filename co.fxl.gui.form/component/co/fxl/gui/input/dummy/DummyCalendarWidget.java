@@ -25,7 +25,7 @@ import java.util.List;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IUpdateable;
-import co.fxl.gui.api.template.DateFormat;
+import co.fxl.gui.format.impl.Format;
 import co.fxl.gui.input.api.ICalendarWidget;
 
 class DummyCalendarWidget implements ICalendarWidget {
@@ -46,7 +46,7 @@ class DummyCalendarWidget implements ICalendarWidget {
 
 	@Override
 	public ICalendarWidget date(Date date) {
-		label.text(DateFormat.instance.format(date));
+		label.text(Format.date().format(date));
 		for (IUpdateListener<Date> l : listeners)
 			l.onUpdate(date());
 		return this;
@@ -54,6 +54,6 @@ class DummyCalendarWidget implements ICalendarWidget {
 
 	@Override
 	public Date date() {
-		return DateFormat.instance.parse(label.text());
+		return Format.date().parse(label.text());
 	}
 }

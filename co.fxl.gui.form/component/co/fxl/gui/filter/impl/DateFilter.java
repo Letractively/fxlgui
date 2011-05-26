@@ -20,12 +20,13 @@ package co.fxl.gui.filter.impl;
 
 import java.util.Date;
 
-import co.fxl.gui.api.template.DateFormat;
-import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterConstraints.IRange;
 import co.fxl.gui.filter.impl.Constraint.IDateRangeConstraint;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
+import co.fxl.gui.form.impl.Validation;
+import co.fxl.gui.format.api.IFormat;
+import co.fxl.gui.format.impl.Format;
 
 class DateFilter extends RangeFilter<Date> {
 
@@ -45,14 +46,14 @@ class DateFilter extends RangeFilter<Date> {
 		public Date upperBound() {
 			return upperBound;
 		}
-		
+
 		@Override
 		public String toString() {
-			return lowerBound+"-"+upperBound;
+			return lowerBound + "-" + upperBound;
 		}
 	}
 
-	static DateFormat DATE_FORMAT = DateFormat.instance;
+	static IFormat<Date> DATE_FORMAT = Format.date();
 	private Date lowerBound = null;
 	private Date upperBound = null;
 

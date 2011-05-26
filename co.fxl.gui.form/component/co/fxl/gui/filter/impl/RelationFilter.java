@@ -25,12 +25,12 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
 import co.fxl.gui.filter.impl.Constraint.IRelationConstraint;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.filter.impl.FilterPanel.ICell;
+import co.fxl.gui.form.impl.Validation;
 
 class RelationFilter extends StringFilter {
 

@@ -22,9 +22,9 @@ import java.util.List;
 
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
-import co.fxl.gui.api.template.Validation;
 import co.fxl.gui.filter.impl.Constraint.ISizeConstraint;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
+import co.fxl.gui.form.impl.Validation;
 
 class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
 
