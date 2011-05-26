@@ -28,9 +28,11 @@ import com.google.gwt.i18n.client.NumberFormat;
 public class GWTFormat {
 
 	public static void setUp() {
-		Format.registerTime(new GWTDateFormat(PredefinedFormat.DATE_TIME_MEDIUM));
+		Format.registerDateTime(new GWTDateFormat(PredefinedFormat.DATE_TIME_MEDIUM));
 		Format.register(Date.class, new GWTDateFormat(
 				PredefinedFormat.DATE_SHORT));
+		Format.registerTime(new GWTDateFormat(
+				PredefinedFormat.TIME_LONG));
 		Format.register(Long.class,
 				new GWTNumberFormat<Long>(NumberFormat.getDecimalFormat()) {
 					@Override
