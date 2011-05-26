@@ -40,4 +40,6 @@ public interface IMenuItem extends IMenuNode, INavigationItem<IMenuItem> {
 	IMenuItem enabled(boolean enabled);
 
 	boolean isActive();
+
+	boolean enabled();
 }

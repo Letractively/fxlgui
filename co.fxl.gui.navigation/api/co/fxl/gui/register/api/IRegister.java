@@ -54,4 +54,6 @@ public interface IRegister {
 	IRegister enabled(boolean enabled);
 
 	boolean isActive();
+
+	boolean enabled();
 }

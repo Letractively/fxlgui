@@ -177,4 +177,9 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 	public boolean isActive() {
 		return widget.selection == index;
 	}
+
+	@Override
+	public boolean enabled() {
+		return !disabled;
+	}
 }
