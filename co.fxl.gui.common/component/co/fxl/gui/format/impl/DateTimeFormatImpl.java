@@ -22,13 +22,13 @@ import java.util.Date;
 
 import co.fxl.gui.format.api.IFormat;
 
-class TimeFormatImpl extends DateFormatImpl implements IFormat<Date> {
+class DateTimeFormatImpl extends DateFormatImpl implements IFormat<Date> {
 
-	public TimeFormatImpl() {
+	public DateTimeFormatImpl() {
 		super();
 	}
 
-	public TimeFormatImpl(int yearIncrement, int monthIncrement,
+	public DateTimeFormatImpl(int yearIncrement, int monthIncrement,
 			int dayIncrement) {
 		super(yearIncrement, monthIncrement, dayIncrement);
 	}
@@ -58,12 +58,6 @@ class TimeFormatImpl extends DateFormatImpl implements IFormat<Date> {
 
 	@Override
 	public String format(Date date) {
-		return getTime(date);
-	}
-
-	@SuppressWarnings("deprecation")
-	static String getTime(Date date) {
-		return l(date.getHours(), 2) + ":" + l(date.getMinutes(), 2) + ":"
-				+ l(date.getSeconds(), 2);
+		return super.format(date) + " " + TimeFormatImpl.getTime(date);
 	}
 }
