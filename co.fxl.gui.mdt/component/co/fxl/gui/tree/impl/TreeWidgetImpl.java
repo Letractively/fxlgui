@@ -166,20 +166,27 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		}
 
 		@Override
-		public void constrainType(Class<?> clazz) {
+		public IView constrainType(Class<?> clazz) {
 			if (clazz != null)
 				this.constrainType = new Class<?>[] { clazz };
+			return this;
 		}
 
 		@Override
-		public void constrainType(Class<?>[] clazz) {
+		public IView constrainType(Class<?>[] clazz) {
 			if (clazz.length > 1 || (clazz.length == 1 && clazz[0] != null))
 				this.constrainType = clazz;
+			return this;
 		}
 
 		@Override
 		public co.fxl.gui.tree.api.ITreeWidget.IViewID iD() {
 			return new ViewID(this);
+		}
+
+		@Override
+		public co.fxl.gui.tree.api.ITreeWidget.IView isDefaultView() {
+			throw new MethodNotImplementedException();
 		}
 	}
 

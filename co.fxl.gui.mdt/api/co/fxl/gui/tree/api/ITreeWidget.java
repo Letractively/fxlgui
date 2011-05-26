@@ -30,9 +30,11 @@ public interface ITreeWidget<T> {
 
 	public interface IView {
 
-		void constrainType(Class<?> clazz);
+		IView constrainType(Class<?> clazz);
 
-		void constrainType(Class<?>[] clazz);
+		IView constrainType(Class<?>[] clazz);
+		
+		IView isDefaultView();
 
 		IViewID iD();
 	}
