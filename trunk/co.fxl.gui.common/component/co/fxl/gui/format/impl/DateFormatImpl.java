@@ -73,7 +73,7 @@ class DateFormatImpl implements IFormat<Date> {
 		return string;
 	}
 
-	String l(int date, int i) {
+	static String l(int date, int i) {
 		String s = String.valueOf(date);
 		while (s.length() < i)
 			s = "0" + s;

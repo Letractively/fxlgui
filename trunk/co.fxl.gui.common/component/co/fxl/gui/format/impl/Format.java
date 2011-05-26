@@ -27,6 +27,7 @@ import co.fxl.gui.format.api.IFormat;
 public class Format {
 
 	private static Map<String, IFormat<?>> formats = new HashMap<String, IFormat<?>>();
+	private static IFormat<Date> dateTimeFormat;
 	private static IFormat<Date> timeFormat;
 	static {
 		setUp();
@@ -34,6 +35,10 @@ public class Format {
 
 	public static void register(Class<?> clazz, IFormat<?> format) {
 		formats.put(clazz.getName(), format);
+	}
+
+	public static void registerDateTime(IFormat<Date> format) {
+		dateTimeFormat = format;
 	}
 
 	public static void registerTime(IFormat<Date> format) {
@@ -60,6 +65,7 @@ public class Format {
 			}
 		});
 		register(Date.class, new DateFormatImpl());
+		registerDateTime(new DateTimeFormatImpl());
 		registerTime(new TimeFormatImpl());
 	}
 
@@ -92,6 +98,10 @@ public class Format {
 	@SuppressWarnings("unchecked")
 	public static IFormat<Date> date() {
 		return (IFormat<Date>) get(Date.class);
+	}
+
+	public static IFormat<Date> dateTime() {
+		return (IFormat<Date>) dateTimeFormat;
 	}
 
 	public static IFormat<Date> time() {
