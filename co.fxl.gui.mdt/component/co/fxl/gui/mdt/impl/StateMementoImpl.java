@@ -30,9 +30,11 @@ class StateMementoImpl implements IStateMemento {
 					.get(registerSelection);
 		} else {
 			TableView tv = (TableView) widget.activeView;
-			for (IScrollTableColumn<Object> c : tv.property2column.values()) {
-				if (!c.visible()) {
-					hiddenColumns.add(c.name());
+			if (tv != null) {
+				for (IScrollTableColumn<Object> c : tv.property2column.values()) {
+					if (!c.visible()) {
+						hiddenColumns.add(c.name());
+					}
 				}
 			}
 		}
