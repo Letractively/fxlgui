@@ -51,8 +51,8 @@ public class PropertyImpl implements IProperty<Object, Object> {
 
 		@Override
 		public co.fxl.gui.mdt.api.IProperty.IConditionRule<Object, Object, Object> targetValues(
-				Object... targetValues) {
-			this.targetValues = targetValues;
+				List<Object> targetValues) {
+			this.targetValues = targetValues.toArray();
 			return this;
 		}
 

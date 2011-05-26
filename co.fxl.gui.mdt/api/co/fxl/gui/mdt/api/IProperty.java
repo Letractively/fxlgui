@@ -36,7 +36,7 @@ public interface IProperty<T, S> {
 
 		IConditionRule<T, S, R> target(IProperty<T, R> target);
 
-		IConditionRule<T, S, R> targetValues(R... targetValues);
+		IConditionRule<T, S, R> targetValues(List<R> targetValues);
 
 		IConditionRule<T, S, R> invisible();
 
