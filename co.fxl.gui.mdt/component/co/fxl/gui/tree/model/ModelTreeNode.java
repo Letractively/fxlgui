@@ -64,6 +64,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 	private IImage moveBottom;
 	private IVerticalPanel panel;
 	boolean drawn;
+	private IClickable<?> gridButton;
 
 	ModelTreeNode(final ModelTreeWidget<T> widget, IVerticalPanel panel,
 			final ITree<T> root, int depth, boolean draw) {
@@ -100,13 +101,10 @@ class ModelTreeNode<T> extends LazyClickListener {
 		if (drawn)
 			return;
 		drawn = true;
-		// panel.height(-1);
 		isExpanded = false;
 		container = panel.add().panel().horizontal();
-		// container.height(22);
 		IClickable<?> clickable = container;
 		clickable.addClickListener(this);
-		injectTreeListener(clickable);
 		content = container.add().panel().horizontal().spacing(2);
 		content.addSpace(depth * INDENT);
 		image = content.add().image();
@@ -116,7 +114,6 @@ class ModelTreeNode<T> extends LazyClickListener {
 						: CLOSED);
 				icon = content.add().image().resource(icon());
 				icon.addClickListener(this);
-				injectTreeListener(icon);
 			} else
 				image.resource(FOLDER_CLOSED);
 		} else {
@@ -124,21 +121,19 @@ class ModelTreeNode<T> extends LazyClickListener {
 				image.resource(!tree.isLoaded() ? getOpenOrClosedIcon() : EMPTY);
 				icon = content.add().image().resource(icon());
 				icon.addClickListener(this);
-				injectTreeListener(icon);
 			} else
 				image.resource(tree.isLeaf() ? LEAF : FOLDER_EMPTY);
 		}
 		image.addClickListener(this);
-		injectTreeListener(image);
 		content.addSpace(2);
 		String name = tree.name();
 		boolean isNull = name == null || name.trim().equals("");
 		label = content.add().label().text(isNull ? "unnamed" : name);
 		label.font().pixel(12);
-		buttonPanel = content.addSpace(4).add().panel().horizontal();
+		buttonPanel = content.addSpace(4).add().panel().horizontal()
+				.visible(false);
 		if (isNull)
 			label.font().weight().italic().color().gray();
-		injectTreeListener(label);
 		label.addClickListener(this);
 		content.addSpace(10);
 		childrenPanel = panel.add().panel().vertical();
@@ -161,6 +156,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 		if (tree != null && tree.decorator() != null)
 			tree.decorator().decorate(label);
 		buttonPanel.clear();
+		injectTreeListener();
 		if (moveActive && tree.isMovable()) {
 			setUpMoveButtons();
 		}
@@ -169,6 +165,8 @@ class ModelTreeNode<T> extends LazyClickListener {
 	void setUpMoveButtons() {
 		int index = tree.parent().children().indexOf(tree);
 		int num = tree.parent().children().size();
+		if (gridButton != null)
+			buttonPanel.addSpace(4);
 		moveTop = buttonPanel.add().image().resource("top.png")
 				.addClickListener(new IClickListener() {
 					@Override
@@ -233,9 +231,11 @@ class ModelTreeNode<T> extends LazyClickListener {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void injectTreeListener(IClickable<?> clickable) {
+	private void injectTreeListener() {
 		if (widget.treeClickListener != null) {
-			IKey<?> key = clickable.addClickListener(new LazyClickListener() {
+			gridButton = buttonPanel.add().image().resource("grid.png")
+					.tooltip("Switch to Grid-View");
+			IKey<?> key = gridButton.addClickListener(new LazyClickListener() {
 
 				@Override
 				public void onAllowedClick() {

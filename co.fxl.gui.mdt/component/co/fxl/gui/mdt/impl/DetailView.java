@@ -40,6 +40,7 @@ import co.fxl.gui.tree.api.IFilterTreeWidget.ISource;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
+import co.fxl.gui.tree.api.ITreeWidget.ITreeClickListener;
 import co.fxl.gui.tree.api.ITreeWidget.IView;
 
 class DetailView extends ViewTemplate implements ISource<Object>,
@@ -67,14 +68,13 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 		tree = (IFilterTreeWidget<Object>) widget.mainPanel.add().widget(
 				IFilterTreeWidget.class);
 		tree.showCommands(widget.showCommands);
-		// tree.addTreeClickListener(new ITreeClickListener<Object>() {
-		//
-		// @Override
-		// public void onClick(ITree<Object> tree) {
-		// if (tree.isLeaf())
-		// widget.showTableView(tree.object());
-		// }
-		// }).doubleClick();
+		tree.addTreeClickListener(new ITreeClickListener<Object>() {
+
+			@Override
+			public void onClick(ITree<Object> tree) {
+				widget.showTableView(tree.object());
+			}
+		});
 		tree.showRefresh(false);
 		if (widget.hideDetailRoot)
 			tree.hideRoot();
