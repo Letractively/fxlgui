@@ -104,6 +104,8 @@ class TreeModel<T> {
 	}
 
 	void move() {
+		boolean moveActive = node(selection).moveActive;
+		widget.reorder.label(moveActive ? "Move" : "Lock");
 		node(selection).moveActive = !node(selection).moveActive;
 		refresh(selection);
 	}
