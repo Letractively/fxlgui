@@ -47,8 +47,6 @@ class DummyCalendarWidget implements ICalendarWidget {
 	@Override
 	public ICalendarWidget date(Date date) {
 		label.text(Format.date().format(date));
-		for (IUpdateListener<Date> l : listeners)
-			l.onUpdate(date());
 		return this;
 	}
 
