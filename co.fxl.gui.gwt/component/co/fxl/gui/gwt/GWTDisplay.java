@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.gwt;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,10 +32,8 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
-import co.fxl.gui.api.template.DateFormat;
 import co.fxl.gui.api.template.DialogImpl;
 import co.fxl.gui.api.template.DiscardChangesDialog;
-import co.fxl.gui.api.template.NumberFormat;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -45,8 +42,6 @@ import com.google.gwt.core.client.impl.SchedulerImpl;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -57,47 +52,6 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	public interface BlockListener {
 
 		void onBlock(boolean block);
-	}
-
-	static {
-		NumberFormat.instance = new NumberFormat() {
-
-			private com.google.gwt.i18n.client.NumberFormat fmt = com.google.gwt.i18n.client.NumberFormat
-					.getDecimalFormat();
-
-			@Override
-			public Double parse(String string) {
-				try {
-					return fmt.parse(string);
-				} catch (Exception e) {
-					return null;
-				}
-			}
-
-			@Override
-			public String format(Number date) {
-				return fmt.format(date);
-			}
-		};
-		DateFormat.instance = new DateFormat() {
-
-			private DateTimeFormat fmt = DateTimeFormat
-					.getFormat(PredefinedFormat.DATE_SHORT);
-
-			@Override
-			public Date parse(String string) {
-				try {
-					return fmt.parse(string);
-				} catch (Exception e) {
-					return null;
-				}
-			}
-
-			@Override
-			public String format(Date date) {
-				return fmt.format(date);
-			}
-		};
 	}
 
 	private static GWTDisplay instance;
