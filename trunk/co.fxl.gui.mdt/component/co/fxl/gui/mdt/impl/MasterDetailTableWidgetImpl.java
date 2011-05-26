@@ -176,7 +176,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		if (!configurations.isEmpty()) {
 			h1.addSpace(4);
 			comboBoxConfiguration = h1.add().comboBox();
-			comboBoxConfiguration.width(246);
+			comboBoxConfiguration.width(228);
 			new Heights(0).decorate(comboBoxConfiguration);
 			for (String c : configurations) {
 				if (configuration == null)
