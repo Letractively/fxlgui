@@ -28,4 +28,8 @@ class MethodNotImplementedException extends RuntimeException {
 		super(class1.getName());
 	}
 
+	MethodNotImplementedException(String string) {
+		super(string);
+	}
+
 }

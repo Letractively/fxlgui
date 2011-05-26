@@ -25,8 +25,8 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.template.DateFormat;
 import co.fxl.gui.form.api.IFormField;
+import co.fxl.gui.format.impl.Format;
 import co.fxl.gui.input.api.ICalendarWidget;
 
 class FormDateFieldImpl extends FormTextFieldImpl<Date> {
@@ -51,13 +51,13 @@ class FormDateFieldImpl extends FormTextFieldImpl<Date> {
 				@Override
 				public void onUpdate(Date value) {
 					FormDateFieldImpl.this.valueElement().text(
-							DateFormat.instance.format(value));
+							Format.date().format(value));
 				}
 			});
 			valueElement().addUpdateListener(new IUpdateListener<String>() {
 				@Override
 				public void onUpdate(String value) {
-					calendar.date(DateFormat.instance.parse(value));
+					calendar.date(Format.date().parse(value));
 				}
 			});
 			popUp.visible(true);
