@@ -32,6 +32,7 @@ import co.fxl.gui.api.IRadioButton;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.Heights;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.api.template.INavigationListener;
@@ -175,7 +176,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		if (!configurations.isEmpty()) {
 			h1.addSpace(4);
 			comboBoxConfiguration = h1.add().comboBox();
-			comboBoxConfiguration.size(216, 24);
+			comboBoxConfiguration.width(246);
+			new Heights(0).decorate(comboBoxConfiguration);
 			for (String c : configurations) {
 				if (configuration == null)
 					configuration = c;
