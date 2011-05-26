@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.format.impl;
 
-import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,8 +59,8 @@ public class Format {
 				return Integer.valueOf(format);
 			}
 		});
-		register(Date.class, new DateFormatImpl(DateFormat.getDateInstance()));
-		registerTime(new DateFormatImpl(DateFormat.getTimeInstance()));
+		register(Date.class, new DateFormatImpl());
+		registerTime(new TimeFormatImpl());
 	}
 
 	public static IFormat<?> get(Class<?> clazz) {

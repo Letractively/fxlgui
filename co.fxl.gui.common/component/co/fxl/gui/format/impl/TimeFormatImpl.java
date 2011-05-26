@@ -22,20 +22,15 @@ import java.util.Date;
 
 import co.fxl.gui.format.api.IFormat;
 
-class DateFormatImpl implements IFormat<Date> {
+class TimeFormatImpl extends DateFormatImpl implements IFormat<Date> {
 
-	int yearIncrement = 1900;
-	int monthIncrement = 1;
-	int dayIncrement = 1;
-
-	public DateFormatImpl() {
+	public TimeFormatImpl() {
+		super();
 	}
 
-	public DateFormatImpl(int yearIncrement, int monthIncrement,
+	public TimeFormatImpl(int yearIncrement, int monthIncrement,
 			int dayIncrement) {
-		this.yearIncrement = yearIncrement;
-		this.monthIncrement = monthIncrement;
-		this.dayIncrement = dayIncrement;
+		super(yearIncrement, monthIncrement, dayIncrement);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -44,18 +39,18 @@ class DateFormatImpl implements IFormat<Date> {
 		try {
 			if (string == null || string.equals(""))
 				return null;
-			String[] s = string.split("\\.");
-			Integer year = Integer.valueOf(s[2]);
-			if (year < 0)
+			String[] s = string.split(" ");
+			Date date = super.parse(s[0]);
+			String[] time = s[1].split(":");
+			Integer hours = Integer.valueOf(time[0]);
+			if (hours < 0)
 				return null;
-			Integer month = Integer.valueOf(s[1]);
-			if (month < 1 || month > 12)
+			date.setHours(hours);
+			Integer minutes = Integer.valueOf(time[1]);
+			if (minutes < 0 || minutes > 60)
 				return null;
-			Integer day = Integer.valueOf(s[0]);
-			if (day < 1 || day > 31)
-				return null;
-			return new Date(year - yearIncrement, month - monthIncrement, day
-					- dayIncrement);
+			date.setMinutes(minutes);
+			return date;
 		} catch (Exception e) {
 			return null;
 		}
@@ -64,19 +59,7 @@ class DateFormatImpl implements IFormat<Date> {
 	@SuppressWarnings("deprecation")
 	@Override
 	public String format(Date date) {
-		if (date == null)
-			return "";
-		int day = date.getDate() + dayIncrement;
-		int month = date.getMonth() + monthIncrement;
-		int year = date.getYear() + yearIncrement;
-		String string = l(day, 2) + "." + l(month, 2) + "." + l(year, 4);
-		return string;
-	}
-
-	String l(int date, int i) {
-		String s = String.valueOf(date);
-		while (s.length() < i)
-			s = "0" + s;
-		return s;
+		return super.format(date) + " " + l(date.getHours(), 2) + ":"
+				+ l(date.getMinutes(), 2);
 	}
 }
