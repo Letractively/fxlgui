@@ -49,7 +49,8 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 	@Override
 	public IComboBox height(int height) {
 		if (GWTDisplay.isFirefox()) {
-			// TODO Code: Look: GWT: Firefox: ComboBox has inline padding (displayed if has focus), should be aligned
+			// TODO Code: Look: GWT: Firefox: ComboBox has inline padding
+			// (displayed if has focus), should be aligned
 			int padding = (height - defaultHeight) / 2;
 			Style s = container.widget.getElement().getStyle();
 			s.setPadding(padding, Unit.PX);
@@ -110,7 +111,10 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 
 	@Override
 	public String text() {
-		String string = constraints.get(container.widget.getSelectedIndex());
+		int selectedIndex = container.widget.getSelectedIndex();
+		if (selectedIndex == -1)
+			return null;
+		String string = constraints.get(selectedIndex);
 		if (hasNull && string.equals(""))
 			return null;
 		return string;
