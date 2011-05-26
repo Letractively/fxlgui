@@ -41,10 +41,11 @@ import co.fxl.gui.api.template.DiscardChangesDialog.DiscardChangesListener;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.api.template.LazyClickListener;
-import co.fxl.gui.api.template.NumberFormat;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
+import co.fxl.gui.format.api.IFormat;
+import co.fxl.gui.format.impl.Format;
 import co.fxl.gui.mdt.api.IProperty.IAdapter;
 import co.fxl.gui.mdt.impl.PropertyImpl.ConditionRuleImpl;
 import co.fxl.gui.tree.api.ITree;
@@ -370,13 +371,18 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 									.addTextField(property.name);
 							formField = tf;
 							decorateEditable(property, formField);
-							if (isLong)
+							@SuppressWarnings("rawtypes")
+							final IFormat format;
+							if (isLong) {
 								formField.type().longType();
-							else
+								format = Format.longInt();
+							} else {
 								formField.type().integer();
-							String value = valueOf == null ? ""
-									: NumberFormat.instance
-											.format((Number) valueOf);
+								format = Format.integer();
+							}
+							@SuppressWarnings("unchecked")
+							String value = valueOf == null ? "" : format
+									.format(valueOf);
 							((ITextElement<?>) formField.valueElement())
 									.text(value);
 							if (property.editable)
@@ -387,13 +393,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 										String text = ((ITextElement<?>) formField
 												.valueElement()).text().trim();
 										if (!text.equals("")) {
-											if (isLong)
-												value = NumberFormat.instance
-														.parse(text)
-														.longValue();
-											else
-												value = NumberFormat.instance
-														.parse(text).intValue();
+											value = format.parse(text);
+											value = format.parse(text);
 										}
 										property.adapter.valueOf(node, value);
 									}

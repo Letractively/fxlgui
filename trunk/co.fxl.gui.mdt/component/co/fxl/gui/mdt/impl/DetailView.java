@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.mdt.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,11 +26,12 @@ import java.util.Map;
 
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
-import co.fxl.gui.api.template.DateFormat;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
+import co.fxl.gui.format.api.IFormat;
+import co.fxl.gui.format.impl.Format;
 import co.fxl.gui.mdt.api.IMDTFilterList;
 import co.fxl.gui.mdt.api.IMasterDetailTableWidget;
 import co.fxl.gui.mdt.impl.DetailViewDecorator.DeleteListener;
@@ -43,7 +45,7 @@ import co.fxl.gui.tree.api.ITreeWidget.IView;
 class DetailView extends ViewTemplate implements ISource<Object>,
 		DeleteListener {
 
-	static final DateFormat DATE_FORMAT = DateFormat.instance;
+	static final IFormat<Date> DATE_FORMAT = Format.date();
 	IFilterTreeWidget<Object> tree;
 	private IMDTFilterList<Object> filterList;
 	protected ITree<Object> itree;
