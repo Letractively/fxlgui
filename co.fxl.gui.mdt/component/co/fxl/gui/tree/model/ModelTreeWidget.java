@@ -528,10 +528,15 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 			if (tree != null) {
 				Class<? extends Object> type = tree.object().getClass();
 				boolean hide = isHide(view, type);
-				view.enabled(!hide && (i == 0 || !tree.isNew()));
-			}
-			view.setNode(tree);
+				boolean enabled = !hide && (i == 0 || !tree.isNew());
+				view.enabled(enabled);
+				if (enabled)
+					view.setNode(tree);
+			} else
+				view.setNode(null);
 		}
+		if (detailViews.get(0).register.isActive())
+			showFirst = true;
 		if (showFirst || (tree != null && tree.isNew())) {
 			findDefaultView(tree).register.active();
 		}
@@ -540,10 +545,10 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	private DetailView findDefaultView(ITree<T> tree) {
-//		for (DetailView view : detailViews) {
-//			if (view.enabled() && view.isDefaultView)
-//				return view;
-//		}
+		for (DetailView view : detailViews) {
+			if (view.enabled() && view.isDefaultView)
+				return view;
+		}
 		return detailViews.get(0);
 	}
 
