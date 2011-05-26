@@ -41,7 +41,6 @@ import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.api.template.DateFormat;
 import co.fxl.gui.api.template.DialogImpl;
 import co.fxl.gui.api.template.DiscardChangesDialog;
 
@@ -80,7 +79,6 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		// scrollPane = new JScrollPane(container.component);
 		// scrollPane
 		// .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		DateFormat.instance = new SwingDateFormat();
 		DiscardChangesDialog.display = this;
 		fullscreen();
 	}
