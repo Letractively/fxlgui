@@ -540,10 +540,10 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	private DetailView findDefaultView(ITree<T> tree) {
-		for (DetailView view : detailViews) {
-			if (view.enabled() && view.isDefaultView)
-				return view;
-		}
+//		for (DetailView view : detailViews) {
+//			if (view.enabled() && view.isDefaultView)
+//				return view;
+//		}
 		return detailViews.get(0);
 	}
 
