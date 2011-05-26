@@ -24,6 +24,8 @@ public interface IFieldType {
 
 	IFieldType date();
 
+	IFieldType time();
+
 	IFieldType text();
 
 	IFieldType encryptedText();

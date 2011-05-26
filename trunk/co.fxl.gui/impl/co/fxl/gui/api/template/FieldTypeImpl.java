@@ -110,4 +110,11 @@ public class FieldTypeImpl implements IFieldType {
 		values.clear();
 		return this;
 	}
+
+	@Override
+	public IFieldType time() {
+		type(Date.class);
+		isLong = true;
+		return this;
+	}
 }
