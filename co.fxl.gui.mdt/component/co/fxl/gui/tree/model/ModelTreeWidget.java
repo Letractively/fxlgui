@@ -192,7 +192,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	private IClickable<?> paste;
 	IScrollPane leftScrollPane;
 	private IVerticalPanel bottom;
-	private CommandLink reorder;
+	CommandLink reorder;
 	TreeModel<T> model;
 	boolean showRoot = true;
 	private LazyScrollListener<T> scrollListener = new LazyScrollListener<T>(

@@ -234,7 +234,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 	private void injectTreeListener() {
 		if (widget.treeClickListener != null) {
 			gridButton = buttonPanel.add().image().resource("grid.png")
-					.tooltip("Switch to Grid-View");
+					.tooltip("Double-Click to switch to Grid");
 			IKey<?> key = gridButton.addClickListener(new LazyClickListener() {
 
 				@Override
