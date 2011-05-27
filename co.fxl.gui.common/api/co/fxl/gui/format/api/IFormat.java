@@ -1,4 +1,4 @@
-/**
+ /**
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  *  
  * This file is part of FXL GUI API.
@@ -21,6 +21,8 @@ package co.fxl.gui.format.api;
 public interface IFormat<T> {
 
 	String format(T object);
+	
+	String format(T object, String pFormatStyle);
 
 	T parse(String format);
 }

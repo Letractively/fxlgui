@@ -64,9 +64,6 @@ public class Format {
 				return Integer.valueOf(format);
 			}
 		});
-		register(Date.class, new DateFormatImpl());
-		registerDateTime(new DateTimeFormatImpl());
-		registerTime(new TimeFormatImpl());
 	}
 
 	public static IFormat<?> get(Class<?> clazz) {

@@ -36,6 +36,12 @@ abstract class GWTNumberFormat<T> implements IFormat<T> {
 			return "";
 		return impl.format(((Number) object));
 	}
+	
+	
+	@Override 
+	public String format(T object, String pFormat) {
+		return format(object);
+	}
 
 	@Override
 	public T parse(String format) {
