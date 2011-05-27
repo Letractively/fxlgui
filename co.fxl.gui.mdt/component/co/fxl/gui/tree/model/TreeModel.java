@@ -59,9 +59,13 @@ class TreeModel<T> {
 	}
 
 	void selection(Object selection) {
-		ModelTreeNode<T> node = nodes.get(selection);
-		assert node != null : selection + " not found";
-		selection(node.tree);
+		if (root.object().equals(selection) && !widget.showRoot) {
+			selection = null;
+		} else {
+			ModelTreeNode<T> node = nodes.get(selection);
+			assert node != null : selection + " not found";
+			selection(node.tree);
+		}
 	}
 
 	ITree<T> cutCopy() {
