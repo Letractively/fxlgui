@@ -30,7 +30,11 @@ class GWTDateFormat implements IFormat<Date> {
 	private DateTimeFormat impl;
 
 	GWTDateFormat(PredefinedFormat predef) {
-		this.impl = DateTimeFormat.getFormat(predef);
+		try {
+			this.impl = DateTimeFormat.getFormat(predef);
+		} catch (Throwable lThrowable) {
+			lThrowable.printStackTrace();
+		}
 	}
 
 	@Override
@@ -38,6 +42,15 @@ class GWTDateFormat implements IFormat<Date> {
 		if (object == null)
 			return "";
 		return impl.format(object);
+	}
+	
+	@Override
+	public String format(Date object, String pFormatStyle) {
+		if (object == null) {
+			return "";
+		}
+		DateTimeFormat lDateTimeFormat = DateTimeFormat.getFormat(pFormatStyle);
+		return lDateTimeFormat.format(object);
 	}
 
 	@Override
@@ -50,4 +63,5 @@ class GWTDateFormat implements IFormat<Date> {
 			return null;
 		}
 	}
+	
 }

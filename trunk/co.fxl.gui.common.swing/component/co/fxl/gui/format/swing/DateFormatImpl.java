@@ -19,6 +19,7 @@
 package co.fxl.gui.format.swing;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import co.fxl.gui.format.api.IFormat;
@@ -34,6 +35,12 @@ class DateFormatImpl implements IFormat<Date> {
 	@Override
 	public String format(Date object) {
 		return impl.format(object);
+	}
+	
+	@Override
+	public String format(Date object, String pFormat) {
+		SimpleDateFormat lFormat = new SimpleDateFormat(pFormat);
+		return lFormat.format(object);
 	}
 
 	@Override

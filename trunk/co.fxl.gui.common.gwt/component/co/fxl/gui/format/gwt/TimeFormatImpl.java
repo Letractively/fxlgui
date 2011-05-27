@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.format.impl;
+package co.fxl.gui.format.gwt;
 
 import java.util.Date;
 
 import co.fxl.gui.format.api.IFormat;
 
-class TimeFormatImpl extends DateFormatImpl implements IFormat<Date> {
+public abstract class TimeFormatImpl extends DateFormatImpl implements IFormat<Date> {
 
 	public TimeFormatImpl() {
 		super();
