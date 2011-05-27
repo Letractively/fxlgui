@@ -40,7 +40,7 @@ class StateMementoImpl implements IStateMemento {
 		}
 		constraints = widget.constraints;
 		configuration = widget.configuration;
-		if (packer == null)
+		if (packer == null || widget.selection.size() <= 1)
 			selection = new LinkedList<Object>(widget.selection);
 		else {
 			selection = new LinkedList<Object>();
