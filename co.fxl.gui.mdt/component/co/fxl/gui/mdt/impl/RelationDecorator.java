@@ -222,6 +222,11 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 			public int size() {
 				return result.size();
 			}
+
+			@Override
+			public boolean deletable(int i) {
+				return result.isDeletable(identifier(i));
+			}
 		};
 	}
 

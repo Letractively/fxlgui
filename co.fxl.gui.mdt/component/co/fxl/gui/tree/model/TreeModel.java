@@ -26,7 +26,7 @@ import co.fxl.gui.tree.api.ITree;
 class TreeModel<T> {
 
 	private ModelTreeWidget<T> widget;
-	private ITree<T> root;
+	ITree<T> root;
 	private ITree<T> selection;
 	private boolean isCopy;
 	private ITree<T> cutCopy;
