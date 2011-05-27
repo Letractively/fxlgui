@@ -243,6 +243,8 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 								widgetTitle.reset();
 								if (parent != null)
 									model.refresh(parent, true);
+								else
+									model.refresh();
 								model.selection(result);
 							}
 						};

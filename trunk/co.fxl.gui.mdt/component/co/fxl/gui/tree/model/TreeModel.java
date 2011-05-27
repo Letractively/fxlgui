@@ -80,7 +80,11 @@ class TreeModel<T> {
 	}
 
 	void refresh() {
-		refresh(root, true);
+		if (widget.showRoot)
+			refresh(root, true);
+		else {
+			widget.root(root);
+		}
 	}
 
 	void refresh(ITree<T> tree) {
