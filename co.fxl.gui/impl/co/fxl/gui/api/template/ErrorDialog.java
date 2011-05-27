@@ -63,7 +63,7 @@ public class ErrorDialog {
 									.stacktrace(label);
 							ITextArea textArea = panel.add().textArea()
 									.size(400, 100)
-									.text(pMessage + "\n" + pStacktrace);
+									.text(pStacktrace);
 							Styles.instance().input().field().border(textArea);
 							detailDialog.visible(true);
 						}
