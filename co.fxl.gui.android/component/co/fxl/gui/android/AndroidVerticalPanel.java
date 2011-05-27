@@ -50,8 +50,8 @@ class AndroidVerticalPanel extends AndroidPanel<LinearLayout, IVerticalPanel>
 	public IVerticalPanel addSpace(int pixel) {
 		if (hasChildren) {
 			View c = view.getChildAt(view.getChildCount() - 1);
-			c.setPadding(c.getPaddingLeft(), c.getPaddingTop(), c
-					.getPaddingRight(), pixel + c.getPaddingBottom());
+			c.setPadding(c.getPaddingLeft(), c.getPaddingTop(),
+					c.getPaddingRight(), pixel + c.getPaddingBottom());
 		} else
 			additionalSpace = pixel;
 		return this;
@@ -111,5 +111,10 @@ class AndroidVerticalPanel extends AndroidPanel<LinearLayout, IVerticalPanel>
 	@Override
 	public void remove() {
 		internalContainer.remove(view);
+	}
+
+	@Override
+	public co.fxl.gui.api.ISpaced.ISpacing spacing() {
+		throw new MethodNotImplementedException();
 	}
 }

@@ -25,9 +25,9 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.AdapterView.OnItemSelectedListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IUpdateable;
 
@@ -113,6 +113,16 @@ class AndroidComboBox extends AndroidElement<Spinner, IComboBox> implements
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IComboBox clear() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IComboBox addNull() {
 		throw new MethodNotImplementedException();
 	}
 }

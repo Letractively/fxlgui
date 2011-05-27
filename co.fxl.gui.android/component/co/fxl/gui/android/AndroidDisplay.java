@@ -24,8 +24,10 @@ import java.util.Map;
 import android.app.Activity;
 import android.view.View;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
@@ -149,6 +151,36 @@ public class AndroidDisplay implements IDisplay, Parent {
 
 	@Override
 	public void remove(View view) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public boolean supports(Class<?> widgetClass) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IPopUp showPopUp() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IDisplay removeResizeListener(IResizeListener listener) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public ICursor cursor() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IDisplay block(boolean waiting) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IDisplay invokeLater(Runnable runnable) {
 		throw new MethodNotImplementedException();
 	}
 }

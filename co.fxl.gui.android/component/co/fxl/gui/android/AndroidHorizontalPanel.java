@@ -103,4 +103,9 @@ class AndroidHorizontalPanel extends
 	public void remove() {
 		internalContainer.remove(view);
 	}
+
+	@Override
+	public co.fxl.gui.api.ISpaced.ISpacing spacing() {
+		throw new MethodNotImplementedException();
+	}
 }

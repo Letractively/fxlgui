@@ -21,11 +21,11 @@ package co.fxl.gui.android;
 import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IDockPanel;
+import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
-import co.fxl.gui.api.ISplitPanel;
 import co.fxl.gui.api.IVerticalPanel;
 
 public class AndroidLayout implements ILayout {
@@ -63,11 +63,6 @@ public class AndroidLayout implements ILayout {
 	}
 
 	@Override
-	public ISplitPanel horizontalSplit() {
-		throw new MethodNotImplementedException();
-	}
-
-	@Override
 	public IPanel<?> plugIn(Class<?> layoutType) {
 		throw new MethodNotImplementedException();
 	}
@@ -79,7 +74,7 @@ public class AndroidLayout implements ILayout {
 	}
 
 	@Override
-	public ISplitPanel verticalSplit() {
+	public IFlowPanel flow() {
 		throw new MethodNotImplementedException();
 	}
 }

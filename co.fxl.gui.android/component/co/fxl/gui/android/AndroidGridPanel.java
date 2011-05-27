@@ -48,11 +48,11 @@ class AndroidGridPanel extends AndroidPanel<TableLayout, IGridPanel> implements
 
 	@Override
 	public IGridCell cell(int columnIndex, int rowIndex) {
-		TableRow row = row(rowIndex);
+		TableRow row = getRow(rowIndex);
 		return new AndroidGridCell(androidDisplay, row, columnIndex);
 	}
 
-	private TableRow row(int rowIndex) {
+	private TableRow getRow(int rowIndex) {
 		TableRow row = rows.get(rowIndex);
 		if (row == null) {
 			row = new TableRow(activity);
@@ -99,6 +99,26 @@ class AndroidGridPanel extends AndroidPanel<TableLayout, IGridPanel> implements
 
 	@Override
 	public void remove(View view) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IGridPanel resize(int columns, int rows) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IBorder cellBorder() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IGridColumn column(int column) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IGridRow row(int row) {
 		throw new MethodNotImplementedException();
 	}
 }

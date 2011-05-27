@@ -23,10 +23,13 @@ import java.util.List;
 
 import android.view.View;
 import android.view.View.OnClickListener;
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
+import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 class AndroidElement<R extends View, T> implements IElement<T> {
 
@@ -121,5 +124,30 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 
 	public boolean clickable() {
 		return view.isClickable();
+	}
+
+	public IDisplay display() {
+		throw new MethodNotImplementedException();
+	}
+
+	public T focus(boolean focus) {
+		throw new MethodNotImplementedException();
+	}
+
+	public T addFocusListener(IUpdateListener<Boolean> hasFocus) {
+		throw new MethodNotImplementedException();
+	}
+
+	public IBorder border() {
+		throw new MethodNotImplementedException();
+	}
+
+	public T addCarriageReturnListener(IClickListener listener) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public T tooltip(String tooltip) {
+		throw new MethodNotImplementedException();
 	}
 }
