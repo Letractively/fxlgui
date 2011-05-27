@@ -20,6 +20,8 @@ package co.fxl.gui.table.scroll.api;
 
 public interface IRows<T> {
 
+	boolean deletable(int i);
+
 	T identifier(int i);
 
 	Object[] row(int i);

@@ -419,7 +419,10 @@ public class CommandButtonsImpl implements ICommandButtons,
 			imageDown.clickable(c);
 		}
 		if (remove != null) {
-			boolean c = selection != null;
+			boolean c = selection != null
+					&& widget.rows
+							.deletable(selectionIndex != -1 ? selectionIndex
+									: widget.rows.find(selection));
 			remove.clickable(c);
 		}
 		if (show != null) {
