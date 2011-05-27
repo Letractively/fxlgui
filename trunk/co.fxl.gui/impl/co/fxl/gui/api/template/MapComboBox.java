@@ -27,12 +27,18 @@ import co.fxl.gui.api.IUpdateable;
 
 public class MapComboBox<T> implements IUpdateable<T> {
 
+	private static Heights HEIGHTS = new Heights(0);
 	private IComboBox comboBox;
 	private Map<String, T> text2object = new HashMap<String, T>();
 	private Map<T, String> object2text = new HashMap<T, String>();
 
-	MapComboBox(IContainer container) {
-		comboBox = container.comboBox();
+	public MapComboBox(IContainer container) {
+		this(container.comboBox());
+	}
+
+	public MapComboBox(IComboBox comboBox) {
+		this.comboBox = comboBox;
+		HEIGHTS.decorate(comboBox);
 	}
 
 	@Override
