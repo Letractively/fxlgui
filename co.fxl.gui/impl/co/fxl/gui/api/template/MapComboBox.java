@@ -1,0 +1,87 @@
+/**
+ * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
+ *  
+ * This file is part of FXL GUI API.
+ *  
+ * FXL GUI API is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *  
+ * FXL GUI API is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *  
+ * You should have received a copy of the GNU General Public License
+ * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package co.fxl.gui.api.template;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import co.fxl.gui.api.IComboBox;
+import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IUpdateable;
+
+public class MapComboBox<T> implements IUpdateable<T> {
+
+	private IComboBox comboBox;
+	private Map<String, T> text2object = new HashMap<String, T>();
+	private Map<T, String> object2text = new HashMap<T, String>();
+
+	MapComboBox(IContainer container) {
+		comboBox = container.comboBox();
+	}
+
+	@Override
+	public IUpdateable<T> addUpdateListener(
+			final co.fxl.gui.api.IUpdateable.IUpdateListener<T> listener) {
+		comboBox.addUpdateListener(new IUpdateListener<String>() {
+
+			@Override
+			public void onUpdate(String value) {
+				listener.onUpdate(text2object.get(value));
+			}
+		});
+		return this;
+	}
+
+	public MapComboBox<T> clear() {
+		comboBox.clear();
+		text2object.clear();
+		object2text.clear();
+		return this;
+	}
+
+	public MapComboBox<T> addNull() {
+		comboBox.addNull();
+		return this;
+	}
+
+	public MapComboBox<T> addObject(T object) {
+		return addObject(String.valueOf(object), object);
+	}
+
+	public MapComboBox<T> addObject(String text, T object) {
+		comboBox.addText(text);
+		text2object.put(text, object);
+		object2text.put(object, text);
+		return this;
+	}
+
+	public T object() {
+		return text2object.get(comboBox.text());
+	}
+
+	public MapComboBox<T> object(T object) {
+		comboBox.text(object2text.get(object));
+		return this;
+	}
+
+	public MapComboBox<T> editable(boolean editable) {
+		comboBox.editable(editable);
+		return this;
+	}
+}
