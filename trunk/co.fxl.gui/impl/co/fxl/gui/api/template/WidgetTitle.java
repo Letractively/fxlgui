@@ -61,6 +61,7 @@ public class WidgetTitle implements IClickListener {
 			label.clickable(clickable);
 			if (image != null)
 				image.clickable(clickable);
+			iPanel.clickable(clickable);
 			Styles.instance().dialog().button().clickable(label, clickable);
 			return this;
 		}
