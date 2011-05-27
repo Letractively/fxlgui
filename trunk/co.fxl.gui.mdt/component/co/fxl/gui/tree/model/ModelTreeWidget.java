@@ -231,30 +231,38 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 					@Override
 					public void onAllowedClick() {
 						final ITree<T> parent = model.selection();
-						CallbackTemplate<List<T>> lCallback1 = new CallbackTemplate<List<T>>() {
+						final CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>() {
+
+							public void onFail(Throwable throwable) {
+								widgetTitle.reset();
+								super.onFail(throwable);
+							}
+
 							@Override
-							public void onSuccess(List<T> result) {
-								CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>() {
-
-									public void onFail(Throwable throwable) {
-										widgetTitle.reset();
-										super.onFail(throwable);
-									}
-
-									@Override
-									public void onSuccess(ITree<T> result) {
-										widgetTitle.reset();
-										model.refresh(parent, true);
-										model.selection(result);
-									}
-								};
-								if (type == null)
-									parent.createNew(lCallback2);
-								else
-									parent.createNew(type, lCallback2);
+							public void onSuccess(ITree<T> result) {
+								widgetTitle.reset();
+								if (parent != null)
+									model.refresh(parent, true);
+								model.selection(result);
 							}
 						};
-						parent.loadChildren(lCallback1);
+						if (parent != null) {
+							CallbackTemplate<List<T>> lCallback1 = new CallbackTemplate<List<T>>() {
+								@Override
+								public void onSuccess(List<T> result) {
+									if (type == null)
+										parent.createNew(lCallback2);
+									else
+										parent.createNew(type, lCallback2);
+								}
+							};
+							parent.loadChildren(lCallback1);
+						} else {
+							if (type == null)
+								model.root.createNew(lCallback2);
+							else
+								model.root.createNew(type, lCallback2);
+						}
 					}
 				};
 				newClick.put(type, cl);

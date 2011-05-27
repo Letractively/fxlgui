@@ -298,6 +298,11 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 					public int size() {
 						return queryList.size();
 					}
+
+					@Override
+					public boolean deletable(int i) {
+						return false;
+					}
 				};
 				ISelection<Object> tableSelection = table.selection();
 				for (Object o : widget.selection)
