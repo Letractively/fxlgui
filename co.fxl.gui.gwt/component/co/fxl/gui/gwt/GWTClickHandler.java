@@ -24,8 +24,8 @@ import co.fxl.gui.api.template.KeyTemplate;
 
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
-import com.google.gwt.event.dom.client.KeyPressEvent;
 
 class GWTClickHandler<T> extends KeyTemplate<T> {
 
@@ -53,19 +53,14 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 			return;
 		if (isDoubleClick)
 			return;
+		onClick(event);
+	}
+
+	public void onClick(DomEvent<?> event) {
 		if (stopPropagation) {
 			event.preventDefault();
 			event.stopPropagation();
 		}
-		GWTDisplay d = (GWTDisplay) ((IElement<?>) element).display();
-		if (d.waiting)
-			return;
-		clickListener.onClick();
-	}
-
-	public void onClick(KeyPressEvent event) {
-		event.preventDefault();
-		event.stopPropagation();
 		GWTDisplay d = (GWTDisplay) ((IElement<?>) element).display();
 		if (d.waiting)
 			return;
@@ -82,14 +77,7 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 			return;
 		if (!isDoubleClick)
 			return;
-		if (stopPropagation) {
-			event.preventDefault();
-			event.stopPropagation();
-		}
-		GWTDisplay d = (GWTDisplay) ((IElement<?>) element).display();
-		if (d.waiting)
-			return;
-		clickListener.onClick();
+		onClick(event);
 	}
 
 	private boolean buttonMatches(ClickEvent event) {
