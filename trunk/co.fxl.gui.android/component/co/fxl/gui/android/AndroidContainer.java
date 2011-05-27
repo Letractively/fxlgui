@@ -23,7 +23,10 @@ import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IHorizontalLine;
+import co.fxl.gui.api.IHyperlink;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
@@ -143,5 +146,20 @@ public class AndroidContainer implements IContainer {
 
 	void layout(View view) {
 		view.setPadding(paddingLeft, paddingTop, 0, 0);
+	}
+
+	@Override
+	public IHorizontalLine line() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IHyperlink hyperlink() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IDisplay display() {
+		throw new MethodNotImplementedException();
 	}
 }

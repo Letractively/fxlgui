@@ -21,7 +21,8 @@ package co.fxl.gui.android;
 import android.view.View;
 import android.widget.ScrollView;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IScrollListener;
+import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IScrollPane;
 
 class AndroidScrollPane implements IScrollPane, Parent {
@@ -127,6 +128,31 @@ class AndroidScrollPane implements IScrollPane, Parent {
 
 	@Override
 	public IScrollPane addScrollListener(IScrollListener listener) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IScrollPane tooltip(String tooltip) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IDisplay display() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IScrollPane scrollTo(int pos) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IScrollPane scrollIntoView(IElement<?> element) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public int scrollOffset() {
 		throw new MethodNotImplementedException();
 	}
 }

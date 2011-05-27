@@ -39,4 +39,9 @@ abstract class AndroidColor extends ColorTemplate {
 	}
 
 	abstract void setAndroidColor(int c);
+
+	@Override
+	protected IColor setRGB(int r, int g, int b) {
+		return rgb(r, g, b);
+	}
 }

@@ -92,4 +92,14 @@ class AndroidGridCell extends AndroidContainer implements IGridCell {
 	public IGridCell clear() {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public int height() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public int width() {
+		throw new MethodNotImplementedException();
+	}
 }

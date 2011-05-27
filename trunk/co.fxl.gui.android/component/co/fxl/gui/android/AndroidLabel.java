@@ -106,4 +106,10 @@ class AndroidLabel extends AndroidElement<TextView, ILabel> implements ILabel {
 	public IFont font() {
 		return new AndroidFont(view);
 	}
+
+	@Override
+	public ILabel addMouseOverListener(
+			co.fxl.gui.api.IMouseOverElement.IMouseOverListener l) {
+		throw new MethodNotImplementedException();
+	}
 }

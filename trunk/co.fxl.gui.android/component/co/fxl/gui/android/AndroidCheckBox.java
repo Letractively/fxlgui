@@ -73,11 +73,6 @@ class AndroidCheckBox extends AndroidElement<CheckBox, ICheckBox> implements
 	}
 
 	@Override
-	public IColor color() {
-		throw new MethodNotImplementedException();
-	}
-
-	@Override
 	public IUpdateable<Boolean> addUpdateListener(
 			final IUpdateListener<Boolean> listener) {
 		view.setOnCheckedChangeListener(new OnCheckedChangeListener() {

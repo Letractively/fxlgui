@@ -60,16 +60,6 @@ class AndroidTextField extends AndroidElement<EditText, ITextField> implements
 	}
 
 	@Override
-	public ITextField addCarriageReturnListener(ICarriageReturnListener listener) {
-		throw new MethodNotImplementedException();
-	}
-
-	@Override
-	public ITextField columns(int rows) {
-		throw new MethodNotImplementedException();
-	}
-
-	@Override
 	public ITextField editable(boolean editable) {
 		view.setEnabled(editable);
 		return this;
@@ -111,5 +101,10 @@ class AndroidTextField extends AndroidElement<EditText, ITextField> implements
 			}
 		});
 		return this;
+	}
+
+	@Override
+	public ITextField maxLength(int maxLength) {
+		throw new MethodNotImplementedException();
 	}
 }

@@ -18,24 +18,16 @@
  */
 package co.fxl.gui.android;
 
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
-import co.fxl.gui.api.ILayout;
 
 class AndroidDialog implements IDialog {
 
-	private AndroidDisplay androidDisplay;
-
 	AndroidDialog(AndroidDisplay androidDisplay) {
-		this.androidDisplay = androidDisplay;
 	}
 
 	@Override
-	public IDialog message(String message) {
-		throw new MethodNotImplementedException();
-	}
-
-	@Override
-	public ILayout panel() {
+	public IDialog modal(boolean modal) {
 		throw new MethodNotImplementedException();
 	}
 
@@ -45,12 +37,32 @@ class AndroidDialog implements IDialog {
 	}
 
 	@Override
-	public IType type() {
+	public IType message(String message) {
 		throw new MethodNotImplementedException();
 	}
 
 	@Override
-	public IQuestionDialog question() {
-		return new AndroidQuestionDialog(androidDisplay);
+	public IDialogButton addButton() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IContainer container() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IDialog visible(boolean visible) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IDialog confirm() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IDialog size(int width, int height) {
+		throw new MethodNotImplementedException();
 	}
 }
