@@ -76,4 +76,9 @@ class ScrollTableWidgetTest implements IRows<String> {
 	public int size() {
 		return 1000;
 	}
+
+	@Override
+	public boolean deletable(int i) {
+		throw new MethodNotImplementedException();
+	}
 }
