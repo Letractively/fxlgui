@@ -96,10 +96,11 @@ class TreeModel<T> {
 	}
 
 	void refresh(ITree<T> tree, boolean recurse) {
-		if (tree.equals(root)) {
+		if (tree.equals(root) && !widget.showRoot) {
 			refresh();
 		} else
 			node(tree).refresh(recurse);
+		widget.updateButtons();
 	}
 
 	void refresh(Object object, boolean recurse) {
@@ -150,7 +151,7 @@ class TreeModel<T> {
 		if (selection.equals(root))
 			return false;
 		if (selection.isNew())
-			return true;
+			return false;
 		return selection.isDeletable();
 	}
 
