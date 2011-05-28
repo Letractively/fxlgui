@@ -40,6 +40,7 @@ class RelationImpl extends PropertyGroupImpl implements
 	List<IProperty<Object, ?>> hidden = new LinkedList<IProperty<Object, ?>>();
 	IViewID viewID;
 	boolean isDefaultView = false;
+	NavigationImpl navigation;
 
 	RelationImpl(String name) {
 		super(name);
@@ -115,5 +116,12 @@ class RelationImpl extends PropertyGroupImpl implements
 	public IRelation<Object, Object> isDefaultView(boolean isDefaultView) {
 		this.isDefaultView = isDefaultView;
 		return this;
+	}
+
+	@Override
+	public co.fxl.gui.mdt.api.IRelation.INavigation<Object, Object> navigation() {
+		if (navigation == null)
+			navigation = new NavigationImpl();
+		return navigation;
 	}
 }

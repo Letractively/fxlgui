@@ -94,9 +94,6 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 			final IVerticalPanel bottom, final IFilterConstraints constraints,
 			final Object node) {
 		this.panel = panel;
-		// IBorder border = panel.border();
-		// border.color().gray();
-		// border.style().top();
 		ICallback<IDeletableList<Object>> callback = new CallbackTemplate<IDeletableList<Object>>() {
 
 			@SuppressWarnings("unchecked")
@@ -185,6 +182,8 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 					addRemoveButton(panel, result, selection0);
 					addUpDownButtons(node, panel, result, selection0);
 				}
+				if (relation.navigation != null)
+					addNavigation(panel, result, selection0);
 				addShowButton();
 				if (editable) {
 					addEditButton();
@@ -192,6 +191,11 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 			}
 		};
 		relation.adapter.valueOf(node, constraints, callback);
+	}
+
+	private void addNavigation(Object node, IDeletableList<Object> result,
+			ISelection<Object> selection) {
+		throw new MethodNotImplementedException();
 	}
 
 	IRows<Object> toRows(final IDeletableList<Object> result) {

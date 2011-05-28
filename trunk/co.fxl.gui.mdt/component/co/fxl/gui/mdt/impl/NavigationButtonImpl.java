@@ -18,13 +18,30 @@
  */
 package co.fxl.gui.mdt.impl;
 
-public class Icons {
+import co.fxl.gui.mdt.api.IRelation.INavigation.INavigationButton;
 
-	public static String PASTE = "paste.png";
-	public static String CUT = "cut.png";
-	public static String COPY = "copy.png";
-	public static String MOVE = "move.png";
-	public static String NEW = "new.png";
-	public static String REFRESH = "refresh.png";
+class NavigationButtonImpl implements INavigationButton<Object, Object> {
 
+	String imageResource;
+	String text;
+	IClickableDecorator<Object, Object> clickableDecorator;
+
+	@Override
+	public INavigationButton<Object, Object> imageResource(String imageResource) {
+		this.imageResource = imageResource;
+		return this;
+	}
+
+	@Override
+	public INavigationButton<Object, Object> label(String text) {
+		this.text = text;
+		return this;
+	}
+
+	@Override
+	public INavigationButton<Object, Object> clickableDecorator(
+			IClickableDecorator<Object, Object> clickableDecorator) {
+		this.clickableDecorator = clickableDecorator;
+		return this;
+	}
 }

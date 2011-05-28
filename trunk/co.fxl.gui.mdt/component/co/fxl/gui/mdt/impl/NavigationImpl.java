@@ -18,13 +18,29 @@
  */
 package co.fxl.gui.mdt.impl;
 
-public class Icons {
+import java.util.LinkedList;
+import java.util.List;
 
-	public static String PASTE = "paste.png";
-	public static String CUT = "cut.png";
-	public static String COPY = "copy.png";
-	public static String MOVE = "move.png";
-	public static String NEW = "new.png";
-	public static String REFRESH = "refresh.png";
+import co.fxl.gui.mdt.api.IRelation.INavigation;
 
+class NavigationImpl implements INavigation<Object, Object> {
+
+	List<NavigationButtonImpl> navigationButtons = new LinkedList<NavigationButtonImpl>();
+
+	@Override
+	public INavigationButton<Object, Object> back() {
+		return addButton().label("Previous").imageResource("arrow_back.png");
+	}
+
+	@Override
+	public INavigationButton<Object, Object> forward() {
+		return addButton().label("Next").imageResource("arrow_forward.png");
+	}
+
+	@Override
+	public INavigationButton<Object, Object> addButton() {
+		NavigationButtonImpl b = new NavigationButtonImpl();
+		navigationButtons.add(b);
+		return b;
+	}
 }
