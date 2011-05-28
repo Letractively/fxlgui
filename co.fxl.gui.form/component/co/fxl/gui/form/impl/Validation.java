@@ -253,10 +253,20 @@ public class Validation {
 	}
 
 	public Validation validateDate(final ITextField textField) {
+		return validateDate(textField, DATE_FORMAT, false);
+	}
+
+	public Validation validateDate(ITextField textField, boolean required) {
+		return validateDate(textField, DATE_FORMAT, required);
+	}
+
+	public Validation validateDate(final ITextField textField,
+			IFormat<Date> format) {
 		return validateDate(textField, false);
 	}
 
-	public Validation validateDate(final ITextField textField, boolean required) {
+	public Validation validateDate(final ITextField textField,
+			final IFormat<Date> format, boolean required) {
 		final Field field = new Field(textField, required);
 		textField.addUpdateListener(new IUpdateListener<String>() {
 			@Override
@@ -264,7 +274,7 @@ public class Validation {
 				field.isError = false;
 				if (value.trim().length() > 0) {
 					try {
-						Date d = DATE_FORMAT.parse(value.trim());
+						Date d = format.parse(value.trim());
 						if (d == null)
 							field.isError = true;
 					} catch (Exception e) {
