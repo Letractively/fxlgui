@@ -52,8 +52,6 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	protected NavigationWidgetImpl(IContainer layout) {
 		mainPanel = layout.panel().dock();
 		IGridPanel hPanel = mainPanel.top().panel().grid();
-		// hPanel.color().rgb(199, 224, 241).gradient().vertical()
-		// .rgb(173, 211, 234);
 		hPanel.color().rgb(235, 235, 235).gradient().vertical()
 				.rgb(211, 211, 211);
 		navigationPanel = hPanel.cell(0, 0).panel().horizontal().add().panel()
@@ -90,19 +88,13 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	}
 
 	void active(NavigationItemImpl item,
-			co.fxl.gui.api.template.ICallback<Void> cb) {
+			co.fxl.gui.api.template.ICallback<Void> cb, boolean notify) {
 		if (active != null && active != item) {
 			active.showLabelAsInactive();
 		}
 		active = item;
-		notifyListeners(active, cb, listeners);
-		// for (INavigationListener l : listeners)
-		// l.onBeforeNavigation(active, cb != null ? cb
-		// : new CallbackTemplate<Void>(cb) {
-		// @Override
-		// public void onSuccess(Void result) {
-		// }
-		// });
+		if (notify)
+			notifyListeners(active, cb, listeners);
 	}
 
 	private void notifyListeners(final NavigationItemImpl activeItem,
