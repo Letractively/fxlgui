@@ -23,7 +23,7 @@ import java.util.List;
 
 import co.fxl.gui.mdt.api.IRelation.INavigation;
 
-class NavigationImpl implements INavigation<Object, Object> {
+public class NavigationImpl implements INavigation<Object, Object> {
 
 	List<NavigationButtonImpl> navigationButtons = new LinkedList<NavigationButtonImpl>();
 
@@ -42,5 +42,11 @@ class NavigationImpl implements INavigation<Object, Object> {
 		NavigationButtonImpl b = new NavigationButtonImpl();
 		navigationButtons.add(b);
 		return b;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public void forward(INavigation navigation) {
+		for (NavigationButtonImpl b : navigationButtons)
+			b.forward(navigation.addButton());
 	}
 }
