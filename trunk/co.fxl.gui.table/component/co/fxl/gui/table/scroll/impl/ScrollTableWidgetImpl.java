@@ -39,7 +39,6 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.ImageButton;
 import co.fxl.gui.api.template.KeyAdapter;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -210,11 +209,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					}
 				}
 			}
-			if (buttonDecorator != null) {
-				buttonPanel(buttonDecorator);
-			}
 			if (navigationDecorator != null) {
 				navigationPanel(navigationDecorator);
+			}
+			if (buttonDecorator != null) {
+				buttonPanel(buttonDecorator);
 			}
 			preselectedList.clear();
 		} else {
@@ -330,7 +329,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private boolean externalStatusPanel;
 	private IVerticalPanel bottom;
 	private int buttonColumn = 1;
-	private INavigationPanel navigationPanel;
 
 	void update() {
 		if (updating)
@@ -722,28 +720,12 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	@Override
-	public IScrollTableWidget<Object> navigationPanel(INavigationPanelDecorator dec) {
+	public IScrollTableWidget<Object> navigationPanel(
+			INavigationPanelDecorator dec) {
 		if (topPanel != null) {
-			dec.decorate(topPanel.cell(buttonColumn + 1, 0).align().end());
+			dec.decorate(topPanel.cell(buttonColumn++, 0).align().end());
 		} else
 			navigationDecorator = dec;
-		if (topPanel != null) {
-			IContainer nContainer = topPanel.cell(buttonColumn + 1, 0).align()
-					.end();
-			final IHorizontalPanel panel = nContainer.panel().horizontal()
-					.align().end().add().panel().horizontal().align().end()
-					.spacing(8);
-			navigationPanel = new INavigationPanel() {
-				@Override
-				public IClickable<?> addButton(String imageResource,
-						String label) {
-					ImageButton l = new ImageButton(panel.add());
-					l.imageResource(imageResource);
-					l.text(label);
-					return l;
-				}
-			};
-		}
 		return this;
 	}
 
