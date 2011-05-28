@@ -25,9 +25,11 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay.IResizeListener;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.api.template.ICallback;
+import co.fxl.gui.api.template.ImageButton;
 import co.fxl.gui.api.template.ResizeListener;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
@@ -40,6 +42,7 @@ import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IMoveRowListener;
+import co.fxl.gui.table.scroll.api.IScrollTableWidget.INavigationPanelDecorator;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IRowListener;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
@@ -195,7 +198,22 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 
 	private void addNavigation(Object node, IDeletableList<Object> result,
 			ISelection<Object> selection) {
-		throw new MethodNotImplementedException();
+		table.navigationPanel(new INavigationPanelDecorator() {
+			@Override
+			public void decorate(IContainer container) {
+				final IHorizontalPanel panel = container.panel().horizontal()
+						.align().end().add().panel().horizontal().align().end()
+						.spacing(8);
+				for (NavigationButtonImpl b : relation.navigation.navigationButtons) {
+					ImageButton l = new ImageButton(panel.add());
+					l.imageResource(b.imageResource);
+					l.text(b.text);
+					l.clickable(b.clickable != null);
+					if (b.clickable != null)
+						l.addClickListener(b.clickable);
+				}
+			}
+		});
 	}
 
 	IRows<Object> toRows(final IDeletableList<Object> result) {

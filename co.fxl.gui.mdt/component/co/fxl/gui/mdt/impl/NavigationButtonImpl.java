@@ -18,13 +18,15 @@
  */
 package co.fxl.gui.mdt.impl;
 
+import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.mdt.api.IRelation.INavigation;
 import co.fxl.gui.mdt.api.IRelation.INavigation.INavigationButton;
 
 class NavigationButtonImpl implements INavigationButton<Object, Object> {
 
 	String imageResource;
 	String text;
-	IClickableDecorator<Object, Object> clickableDecorator;
+	IClickListener clickable = null;
 
 	@Override
 	public INavigationButton<Object, Object> imageResource(String imageResource) {
@@ -38,10 +40,16 @@ class NavigationButtonImpl implements INavigationButton<Object, Object> {
 		return this;
 	}
 
+	@SuppressWarnings({ "rawtypes" })
+	void forward(INavigation.INavigationButton b) {
+		b.imageResource(imageResource);
+		b.label(text);
+		b.clickable(clickable);
+	}
+
 	@Override
-	public INavigationButton<Object, Object> clickableDecorator(
-			IClickableDecorator<Object, Object> clickableDecorator) {
-		this.clickableDecorator = clickableDecorator;
+	public INavigationButton<Object, Object> clickable(IClickListener clickable) {
+		this.clickable = clickable;
 		return this;
 	}
 }
