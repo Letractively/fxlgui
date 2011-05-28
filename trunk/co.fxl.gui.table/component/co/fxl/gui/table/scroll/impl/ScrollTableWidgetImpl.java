@@ -33,6 +33,7 @@ import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
@@ -732,7 +733,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> buttonPanel(IButtonPanelDecorator dec) {
 		if (topPanel != null) {
-			dec.decorate(topPanel.cell(buttonColumn, 0).align().end());
+			IGridCell cell = topPanel.cell(buttonColumn, 0);
+			if (navigationDecorator != null)
+				cell.width(100);
+			dec.decorate(cell.align().end());
 		} else
 			buttonDecorator = dec;
 		return this;
