@@ -723,7 +723,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public IScrollTableWidget<Object> navigationPanel(
 			INavigationPanelDecorator dec) {
 		if (topPanel != null) {
-			dec.decorate(topPanel.cell(buttonColumn++, 0).align().end());
+			if (buttonColumn == 0) {
+				topPanel.cell(0, 0).width(160).label();
+				buttonColumn++;
+			}
+			dec.decorate(topPanel.cell(buttonColumn++, 0).align().begin());
 		} else
 			navigationDecorator = dec;
 		return this;
