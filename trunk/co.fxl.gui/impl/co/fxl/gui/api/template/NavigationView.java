@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.api.template;
 
-
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -101,6 +100,7 @@ public class NavigationView {
 		Styles.instance().window().navigation().choice().title(label);
 		label.text(title);
 		IComboBox cb = panel.addSpace(8).add().comboBox();
+		new Heights(0).decorate(cb);
 		cb.width(202);
 		cb.addText(options);
 		cb.text(text);
