@@ -96,7 +96,10 @@ class TreeModel<T> {
 	}
 
 	void refresh(ITree<T> tree, boolean recurse) {
-		node(tree).refresh(recurse);
+		if (tree.equals(root)) {
+			refresh();
+		} else
+			node(tree).refresh(recurse);
 	}
 
 	void refresh(Object object, boolean recurse) {
