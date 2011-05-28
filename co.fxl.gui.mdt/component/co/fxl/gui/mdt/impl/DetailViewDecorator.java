@@ -328,9 +328,15 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							formField = tf;
 							decorateEditable(property, formField);
 							formField.type().date();
-							String value = valueOf == null ? null
-									: DetailView.DATE_FORMAT
-											.format((Date) valueOf);
+							final IFormat<Date> dateFormat;
+							if (property.type.isLong)
+								dateFormat = Format.dateTime();
+							else if (property.type.isShort)
+								dateFormat = Format.time();
+							else
+								dateFormat = DetailView.DATE_FORMAT;
+							String value = valueOf == null ? null : dateFormat
+									.format((Date) valueOf);
 							((ITextElement<?>) formField.valueElement())
 									.text(value);
 							updates.add(new Runnable() {
@@ -340,8 +346,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 									String text = ((ITextElement<?>) formField
 											.valueElement()).text().trim();
 									if (!text.trim().equals("")) {
-										value = DetailView.DATE_FORMAT
-												.parse(text);
+										value = dateFormat.parse(text);
 									}
 									property.adapter.valueOf(node, value);
 								}
