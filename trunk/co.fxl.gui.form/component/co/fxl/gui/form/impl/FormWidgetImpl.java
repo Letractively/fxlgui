@@ -83,7 +83,7 @@ class FormWidgetImpl implements IFormWidget {
 	private IClickListener saveClickListener;
 
 	FormWidgetImpl(IContainer panel) {
-		widgetTitle = new WidgetTitle(panel.panel(), false)//.grayBackground()
+		widgetTitle = new WidgetTitle(panel.panel(), false)// .grayBackground()
 				.commandsOnTop().space(0);
 		widgetTitle.foldable(false);
 	}
@@ -108,11 +108,12 @@ class FormWidgetImpl implements IFormWidget {
 		return cell;
 	}
 
-	ITextField addFormValueTextField(int gridIndex) {
+	ITextField addFormValueTextField(int gridIndex, boolean withFocus) {
 		ITextField valuePanel = container(gridIndex).textField();
 		heights.decorate(valuePanel);
 		valuePanel.editable(saveListener != null);
-		setFocus(valuePanel);
+		if (withFocus)
+			setFocus(valuePanel);
 		setCRListener(valuePanel);
 		return valuePanel;
 	}
@@ -156,10 +157,15 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	IComboBox addFormValueComboBox(int gridIndex) {
+		return addFormValueComboBox(gridIndex, true);
+	}
+
+	IComboBox addFormValueComboBox(int gridIndex, boolean withFocus) {
 		IComboBox valuePanel = container(gridIndex).comboBox();
 		heights.decorate(valuePanel);
 		valuePanel.editable(saveListener != null);
-		setFocus(valuePanel);
+		if (withFocus)
+			setFocus(valuePanel);
 		setCRListener(valuePanel);
 		return valuePanel;
 	}

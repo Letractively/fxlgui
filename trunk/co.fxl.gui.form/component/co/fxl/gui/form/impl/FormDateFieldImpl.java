@@ -65,6 +65,8 @@ class FormDateFieldImpl extends FormTextFieldImpl<Date> {
 
 		@Override
 		public void onUpdate(Boolean value) {
+			if (!button.clickable())
+				return;
 			if (value)
 				new PopUp(valueElement()).onClick();
 		}
@@ -73,7 +75,7 @@ class FormDateFieldImpl extends FormTextFieldImpl<Date> {
 	private IImage button;
 
 	FormDateFieldImpl(final FormWidgetImpl widget, int index, String name) {
-		super(widget, index, name);
+		super(widget, index, name, false);
 		button = addContainer().image().resource(Icons.CALENDAR).size(16, 16);
 		button.addClickListener(new PopUp(button));
 		editable(widget.saveListener != null);

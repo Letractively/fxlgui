@@ -24,9 +24,16 @@ import co.fxl.gui.form.api.IFormField;
 class FormComboBoxImpl extends FormFieldImpl<IComboBox, String> {
 
 	private IComboBox comboBox;
+	private boolean withFocus = true;
 
 	FormComboBoxImpl(FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
+	}
+
+	FormComboBoxImpl(FormWidgetImpl widget, int index, String name,
+			boolean withFocus) {
+		super(widget, index, name);
+		this.withFocus = withFocus;
 	}
 
 	@Override
@@ -42,7 +49,7 @@ class FormComboBoxImpl extends FormFieldImpl<IComboBox, String> {
 
 	@Override
 	void createContentColumn(int index) {
-		comboBox = widget.addFormValueComboBox(index);
+		comboBox = widget.addFormValueComboBox(index, withFocus);
 		editable(widget.saveListener != null);
 	}
 }
