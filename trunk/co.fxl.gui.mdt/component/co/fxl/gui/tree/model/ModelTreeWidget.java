@@ -241,9 +241,9 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 							@Override
 							public void onSuccess(ITree<T> result) {
 								widgetTitle.reset();
-								if (parent != null)
-									model.refresh(parent, true);
-								else
+								if (parent != null) {
+									model.refresh(result.parent(), true);
+								} else
 									model.refresh();
 								model.selection(result);
 							}
