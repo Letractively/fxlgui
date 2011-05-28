@@ -32,6 +32,7 @@ public class FieldTypeImpl implements IFieldType {
 	public boolean isRelation = false;
 	public int maxLength = -1;
 	public boolean encryptedText = false;
+	public boolean isShort = false;
 
 	@Override
 	public IFieldType type(Class<?> clazz) {
@@ -113,6 +114,13 @@ public class FieldTypeImpl implements IFieldType {
 
 	@Override
 	public IFieldType time() {
+		type(Date.class);
+		isShort = true;
+		return this;
+	}
+
+	@Override
+	public IFieldType dateTime() {
 		type(Date.class);
 		isLong = true;
 		return this;
