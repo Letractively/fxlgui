@@ -248,10 +248,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	protected int heightMinusTopPanel() {
-		if (topPanel.height() == 0)
+		if (topPanel.height() == 0 && buttonDecorator == null
+				&& navigationDecorator == null)
 			return height + 40;
 		else
-			return height + 30 - topPanel.height();
+			return height + 20 - topPanel.height();
 	}
 
 	private void topPanel() {
@@ -525,7 +526,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private int computeRowsToPaint() {
 		int paintedRows = 0;
 		int prognosedHeight = HEADER_ROW_HEIGHT;
-		while (prognosedHeight < heightMinusTopPanel()) {
+		int heightMinusTopPanel = heightMinusTopPanel();
+		while (prognosedHeight < heightMinusTopPanel) {
 			prognosedHeight += ROW_HEIGHT;
 			paintedRows++;
 		}
