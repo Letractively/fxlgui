@@ -786,4 +786,22 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				.message("Delete " + (plural ? "Entities" : "Entity") + "?")
 				.warn().confirm();
 	}
+
+	@Override
+	public ITreeWidget<T> navigateUp() {
+		return navigation(-1);
+	}
+
+	@Override
+	public ITreeWidget<T> navigateDown() {
+		return navigation(1);
+	}
+
+	private ITreeWidget<T> navigation(int j) {
+		ITree<T> t = model.selection();
+		int i = t.parent().children().indexOf(t);
+		ITree<T> c = t.parent().children().get(i + j);
+		model.selection(c);
+		return this;
+	}
 }

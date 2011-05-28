@@ -982,4 +982,14 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				.message("Delete " + (plural ? "Entities" : "Entity") + "?")
 				.warn().confirm();
 	}
+
+	@Override
+	public ITreeWidget<T> navigateUp() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public ITreeWidget<T> navigateDown() {
+		throw new MethodNotImplementedException();
+	}
 }

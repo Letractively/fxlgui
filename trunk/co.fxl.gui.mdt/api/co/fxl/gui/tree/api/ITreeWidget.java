@@ -33,7 +33,7 @@ public interface ITreeWidget<T> {
 		IView constrainType(Class<?> clazz);
 
 		IView constrainType(Class<?>[] clazz);
-		
+
 		IView isDefaultView();
 
 		IViewID iD();
@@ -111,4 +111,8 @@ public interface ITreeWidget<T> {
 	ITreeWidget<T> refreshSelection(boolean refreshChildren);
 
 	int heightRegisterPanel();
+
+	ITreeWidget<T> navigateUp();
+
+	ITreeWidget<T> navigateDown();
 }
