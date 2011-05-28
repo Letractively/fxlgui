@@ -46,7 +46,7 @@ import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IScrollTableClickListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.ISortListener;
-import co.fxl.gui.tree.impl.TreeWidgetImpl;
+import co.fxl.gui.tree.model.ModelTreeWidget;
 
 class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 		ISelectionListener<Object> {
@@ -110,7 +110,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 					final Map<Integer, Object> result = table.selection()
 							.indexedResult();
 					IDisplay display = widget.mainPanel.display();
-					IDialog dl = TreeWidgetImpl.queryDeleteEntity(display,
+					IDialog dl = ModelTreeWidget.queryDeleteEntity(display,
 							result.size() > 1);
 					dl.addButton().yes().addClickListener(new IClickListener() {
 
