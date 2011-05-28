@@ -88,7 +88,7 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 
 	@Override
 	public IVerticalPanel addExtraPanel() {
-		showLabelAsActive(null);
+		showLabelAsActive(null, false);
 		return widget.panel1().clear();
 	}
 
@@ -112,11 +112,12 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 				applyColor(widget.panel0().color(), widget.colorActive);
 				decorator.decorate(widget.panel0());
 			}
-		});
+		}, true);
 		return this;
 	}
 
-	private void showLabelAsActive(co.fxl.gui.api.template.ICallback<Void> cb) {
+	private void showLabelAsActive(co.fxl.gui.api.template.ICallback<Void> cb,
+			boolean notify) {
 		button.font().color().black();
 		buttonPanel.clickable(false);
 		if (buttonPanel == null)
@@ -124,7 +125,7 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 		applyColor(buttonPanel.color(), widget.colorActive);
 		addBorder();
 		// applyColor(borderColor, widget.colorActive);
-		widget.active(this, cb);
+		widget.active(this, cb, notify);
 	}
 
 	private void applyColor(IColor color, int[] rgb) {
