@@ -24,7 +24,8 @@ public interface INavigationWidget {
 
 	public interface INavigationListener {
 
-		void onBeforeNavigation(INavigationItem activeItem, co.fxl.gui.api.template.ICallback<Void> cb);
+		void onBeforeNavigation(INavigationItem activeItem, boolean viaClick,
+				co.fxl.gui.api.template.ICallback<Void> cb);
 	}
 
 	IColor colorBackground();
