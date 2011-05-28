@@ -75,11 +75,16 @@ class FormDateFieldImpl extends FormTextFieldImpl<Date> {
 	private IImage button;
 
 	FormDateFieldImpl(final FormWidgetImpl widget, int index, String name) {
-		super(widget, index, name, false);
+		super(widget, index, name);
 		button = addContainer().image().resource(Icons.CALENDAR).size(16, 16);
 		button.addClickListener(new PopUp(button));
 		editable(widget.saveListener != null);
 		valueElement().addFocusListener(new PopUp(valueElement()));
+	}
+
+	@Override
+	boolean withFocus() {
+		return false;
 	}
 
 	@Override

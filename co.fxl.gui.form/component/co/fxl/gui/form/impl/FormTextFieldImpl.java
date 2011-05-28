@@ -24,16 +24,9 @@ import co.fxl.gui.form.api.IFormField;
 class FormTextFieldImpl<R> extends FormFieldImpl<ITextField, R> {
 
 	ITextField textField;
-	private boolean withFocus = true;
 
 	FormTextFieldImpl(FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
-	}
-
-	FormTextFieldImpl(FormWidgetImpl widget, int index, String name,
-			boolean withFocus) {
-		super(widget, index, name);
-		this.withFocus = withFocus;
 	}
 
 	@Override
@@ -43,7 +36,11 @@ class FormTextFieldImpl<R> extends FormFieldImpl<ITextField, R> {
 	}
 
 	ITextField addTextField(FormWidgetImpl widget) {
-		return widget.addFormValueTextField(row, withFocus);
+		return widget.addFormValueTextField(row, withFocus());
+	}
+
+	boolean withFocus() {
+		return true;
 	}
 
 	@Override
