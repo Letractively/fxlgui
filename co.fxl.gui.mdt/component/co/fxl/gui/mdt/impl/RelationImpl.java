@@ -40,7 +40,7 @@ class RelationImpl extends PropertyGroupImpl implements
 	List<IProperty<Object, ?>> hidden = new LinkedList<IProperty<Object, ?>>();
 	IViewID viewID;
 	boolean isDefaultView = false;
-	NavigationImpl navigation;
+	INavigationDecorator<Object, Object> navigation;
 
 	RelationImpl(String name) {
 		super(name);
@@ -119,9 +119,9 @@ class RelationImpl extends PropertyGroupImpl implements
 	}
 
 	@Override
-	public co.fxl.gui.mdt.api.IRelation.INavigation<Object, Object> navigation() {
-		if (navigation == null)
-			navigation = new NavigationImpl();
-		return navigation;
+	public IRelation<Object, Object> navigation(
+			INavigationDecorator<Object, Object> dec) {
+		navigation = dec;
+		return this;
 	}
 }

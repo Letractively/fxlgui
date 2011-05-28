@@ -26,6 +26,11 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 
 public interface IRelation<T, R> extends IPropertyGroup<R> {
 
+	public interface INavigationDecorator<T, R> {
+
+		void decorate(T base, INavigation<T, R> navigation);
+	}
+
 	public interface INavigation<T, R> {
 
 		public interface INavigationButton<T, R> {
@@ -105,5 +110,5 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 
 	IRelation<T, R> isDefaultView(boolean isDefaultView);
 
-	INavigation<T, R> navigation();
+	IRelation<T, R> navigation(INavigationDecorator<T, R> dec);
 }

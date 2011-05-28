@@ -186,7 +186,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 					addUpDownButtons(node, panel, result, selection0);
 				}
 				if (relation.navigation != null)
-					addNavigation(panel, result, selection0);
+					addNavigation(node);
 				addShowButton();
 				if (editable) {
 					addEditButton();
@@ -196,15 +196,16 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 		relation.adapter.valueOf(node, constraints, callback);
 	}
 
-	private void addNavigation(Object node, IDeletableList<Object> result,
-			ISelection<Object> selection) {
+	private void addNavigation(final Object node) {
 		table.navigationPanel(new INavigationPanelDecorator() {
 			@Override
 			public void decorate(IContainer container) {
 				final IHorizontalPanel panel = container.panel().horizontal()
 						.align().end().add().panel().horizontal().align().end()
 						.spacing(8);
-				for (NavigationButtonImpl b : relation.navigation.navigationButtons) {
+				NavigationImpl navigation = new NavigationImpl();
+				relation.navigation.decorate(node, navigation);
+				for (NavigationButtonImpl b : navigation.navigationButtons) {
 					ImageButton l = new ImageButton(panel.add());
 					l.imageResource(b.imageResource);
 					l.text(b.text);
