@@ -18,13 +18,10 @@
  */
 package co.fxl.gui.api.template;
 
-import java.util.LinkedList;
-import java.util.List;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.template.Styles;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -34,69 +31,6 @@ import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
 
 public class NavigationView {
-
-	public class Link implements IClickable<Object> {
-
-		IImage image;
-		private ILabel label;
-		private IHorizontalPanel panel;
-		private List<ILabel> additionalLabels = new LinkedList<ILabel>();
-
-		private Link(IHorizontalPanel panel, IImage image, ILabel textLabel) {
-			this.panel = panel;
-			this.image = image;
-			this.label = textLabel;
-			clickable(true);
-			// label.hyperlink();
-		}
-
-		public Link text(String text) {
-			label.text(text);
-			return this;
-		}
-
-		public Link clickable(boolean clickable) {
-			if (image != null)
-				image.clickable(clickable);
-			label.clickable(clickable);
-			for (ILabel l : additionalLabels)
-				l.clickable(clickable);
-			// if (clickable)
-			// label.font().color().rgb(0, 87, 141);
-			// else
-			// label.font().color().mix().gray().lightgray();
-			panel.clickable(clickable);
-			return this;
-		}
-
-		@Override
-		public boolean clickable() {
-			return label.clickable();
-		}
-
-		@Override
-		public co.fxl.gui.api.IClickable.IKey<Object> addClickListener(
-				co.fxl.gui.api.IClickable.IClickListener clickListener) {
-			label.addClickListener(clickListener);
-			if (image != null)
-				image.addClickListener(clickListener);
-			panel.addClickListener(clickListener);
-			return null;
-		}
-
-		public ILabel addHyperlink(String text) {
-			panel.addSpace(4);
-			ILabel label = panel.add().label().text("|");
-			Styles.instance().separator(label);
-			ILabel l = panel.addSpace(4).add().label().text(text).hyperlink();
-			additionalLabels.add(l);
-			return l;
-		}
-
-		public void imageResource(String string) {
-			image.resource(string);
-		}
-	}
 
 	private static final boolean SHOW_NUMBERS = false;
 	private static final boolean SHOW_TRIANGLE = true;
@@ -142,16 +76,16 @@ public class NavigationView {
 		return this;
 	}
 
-	public Link addHyperlink() {
+	public ImageButton addHyperlink() {
 		return addHyperlink(null);
 	}
 
-	public Link addHyperlink(String imageResource) {
+	public ImageButton addHyperlink(String imageResource) {
 		setUp();
 		IHorizontalPanel panel = addPanel();
 		IImage image = addImage(panel, imageResource);
 		ILabel textLabel = addTextLabel(panel);
-		return new Link(panel, image, textLabel);
+		return new ImageButton(panel, image, textLabel);
 	}
 
 	protected ILabel addTextLabel(IHorizontalPanel panel) {
