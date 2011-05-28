@@ -81,6 +81,16 @@ public interface IScrollTableWidget<T> {
 		void decorate(IGridPanel.IGridCell container);
 	}
 
+	public interface INavigationPanelDecorator {
+
+		void decorate(IContainer container);
+	}
+
+	public interface INavigationPanel {
+
+		IClickable<?> addButton(String imageResource, String label);
+	}
+
 	public interface ISortListener {
 
 		void onSort(String columnName, boolean asc, boolean update);
@@ -121,6 +131,8 @@ public interface IScrollTableWidget<T> {
 	IScrollTableWidget<T> refresh();
 
 	IScrollTableWidget<T> buttonPanel(IButtonPanelDecorator iDecorator);
+
+	IScrollTableWidget<T> navigationPanel(INavigationPanelDecorator dec);
 
 	ICommandButtons commandButtons();
 
