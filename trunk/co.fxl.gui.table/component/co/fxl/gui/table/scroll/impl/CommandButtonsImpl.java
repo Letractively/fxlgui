@@ -37,6 +37,8 @@ import co.fxl.gui.table.scroll.api.IScrollTableWidget.IScrollTableClickListener;
 public class CommandButtonsImpl implements ICommandButtons,
 		IButtonPanelDecorator, ISelectionListener<Object> {
 
+	static final int SPACE = 4;
+
 	class Edit {
 
 		private int previousEdit = -1;
@@ -184,7 +186,7 @@ public class CommandButtonsImpl implements ICommandButtons,
 		if (imageR.equals("edit") || imageR.equals("show"))
 			imageR = "detail";
 		IImage image = p.add().image().resource(imageR + ".png");
-		p.addSpace(4);
+		p.addSpace(SPACE);
 		ILabel label = p.add().label().text(string);
 		Link l = new Link(p, image, label);
 		l.clickable(true);

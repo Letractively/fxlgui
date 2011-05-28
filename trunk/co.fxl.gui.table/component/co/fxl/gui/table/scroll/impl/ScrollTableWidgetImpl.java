@@ -39,6 +39,7 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.template.ImageButton;
 import co.fxl.gui.api.template.KeyAdapter;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -212,6 +213,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			if (buttonDecorator != null) {
 				buttonPanel(buttonDecorator);
 			}
+			if (navigationDecorator != null) {
+				navigationPanel(navigationDecorator);
+			}
 			preselectedList.clear();
 		} else {
 			this.visible = false;
@@ -318,6 +322,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IFilterConstraints constraints;
 	private IFilterListener filterListener;
 	private IButtonPanelDecorator buttonDecorator;
+	private INavigationPanelDecorator navigationDecorator;
 	private CommandButtonsImpl commandButtons;
 	List<Object> preselectedList = new LinkedList<Object>();
 	int preselectedIndex = -1;
@@ -325,6 +330,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private boolean externalStatusPanel;
 	private IVerticalPanel bottom;
 	private int buttonColumn = 1;
+	private INavigationPanel navigationPanel;
 
 	void update() {
 		if (updating)
@@ -712,6 +718,32 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> constraints(IFilterConstraints constraints) {
 		this.constraints = constraints;
+		return this;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> navigationPanel(INavigationPanelDecorator dec) {
+		if (topPanel != null) {
+			dec.decorate(topPanel.cell(buttonColumn + 1, 0).align().end());
+		} else
+			navigationDecorator = dec;
+		if (topPanel != null) {
+			IContainer nContainer = topPanel.cell(buttonColumn + 1, 0).align()
+					.end();
+			final IHorizontalPanel panel = nContainer.panel().horizontal()
+					.align().end().add().panel().horizontal().align().end()
+					.spacing(8);
+			navigationPanel = new INavigationPanel() {
+				@Override
+				public IClickable<?> addButton(String imageResource,
+						String label) {
+					ImageButton l = new ImageButton(panel.add());
+					l.imageResource(imageResource);
+					l.text(label);
+					return l;
+				}
+			};
+		}
 		return this;
 	}
 
