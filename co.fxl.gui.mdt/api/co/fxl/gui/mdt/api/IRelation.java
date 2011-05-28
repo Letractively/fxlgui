@@ -25,6 +25,29 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 
 public interface IRelation<T, R> extends IPropertyGroup<R> {
 
+	public interface INavigation<T, R> {
+
+		public interface INavigationButton<T, R> {
+
+			public interface IClickableDecorator<T, R> {
+
+				void decorate(IClickable<?> clickable, T base, R selection);
+			}
+
+			INavigationButton<T, R> imageResource(String imageResource);
+
+			INavigationButton<T, R> label(String text);
+
+			INavigationButton<T, R> clickableDecorator(IClickableDecorator<T, R> adapter);
+		}
+
+		INavigationButton<T, R> back();
+
+		INavigationButton<T, R> forward();
+
+		INavigationButton<T, R> addButton();
+	}
+
 	public interface IEditableAdapter<T> {
 
 		boolean isEditable(T base);
@@ -85,4 +108,6 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 	IRelation<T, R> hide(IProperty<T, ?> property);
 
 	IRelation<T, R> isDefaultView(boolean isDefaultView);
+
+	INavigation<T, R> navigation();
 }

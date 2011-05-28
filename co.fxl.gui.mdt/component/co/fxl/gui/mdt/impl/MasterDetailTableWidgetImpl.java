@@ -36,10 +36,10 @@ import co.fxl.gui.api.template.Heights;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.api.template.INavigationListener;
+import co.fxl.gui.api.template.ImageButton;
 import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.api.template.LazyUpdateListener;
 import co.fxl.gui.api.template.NavigationView;
-import co.fxl.gui.api.template.NavigationView.Link;
 import co.fxl.gui.api.template.SplitLayout;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -87,7 +87,6 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	Listener listener;
 	String configuration = null;
 	IRadioButton r2;
-	// int addSpacing = 0;
 	private boolean showDetailViewByDefault = false;
 	boolean allowCreate = true;
 	boolean allowMultiSelection = true;
@@ -284,7 +283,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 			for (Object link0 : navigationLinks) {
 				if (link0 instanceof NavigationLinkImpl) {
 					NavigationLinkImpl link = (NavigationLinkImpl) link0;
-					Link l = t.addHyperlink(link.imageResource).text(link.name);
+					ImageButton l = t.addHyperlink(link.imageResource).text(link.name);
 					for (final INavigationLinkListener<Object> cl : link.listeners) {
 						l.addClickListener(new LazyClickListener() {
 
