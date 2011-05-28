@@ -87,32 +87,34 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		return this;
 	}
 
-	void active(NavigationItemImpl item,
+	void active(NavigationItemImpl item, boolean viaClick,
 			co.fxl.gui.api.template.ICallback<Void> cb, boolean notify) {
 		if (active != null && active != item) {
 			active.showLabelAsInactive();
 		}
 		active = item;
 		if (notify)
-			notifyListeners(active, cb, listeners);
+			notifyListeners(active, viaClick, cb, listeners);
 	}
 
 	private void notifyListeners(final NavigationItemImpl activeItem,
-			final ICallback<Void> cb, final List<INavigationListener> listeners2) {
+			final boolean viaClick, final ICallback<Void> cb,
+			final List<INavigationListener> listeners2) {
 		if (listeners2.isEmpty())
 			return;
 		if (listeners2.size() > 1) {
-			listeners2.get(0).onBeforeNavigation(activeItem,
+			listeners2.get(0).onBeforeNavigation(activeItem, viaClick,
 					new CallbackTemplate<Void>() {
 						@Override
 						public void onSuccess(Void result) {
 							List<INavigationListener> listeners3 = listeners2
 									.subList(1, listeners2.size());
-							notifyListeners(activeItem, cb, listeners3);
+							notifyListeners(activeItem, viaClick, cb,
+									listeners3);
 						}
 					});
 		} else {
-			listeners2.get(0).onBeforeNavigation(activeItem, cb);
+			listeners2.get(0).onBeforeNavigation(activeItem, viaClick, cb);
 		}
 	}
 
