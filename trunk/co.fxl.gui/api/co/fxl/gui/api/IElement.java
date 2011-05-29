@@ -18,21 +18,7 @@
  */
 package co.fxl.gui.api;
 
-public interface IElement<T> {
-
-	int offsetX();
-
-	int offsetY();
-
-	int width();
-
-	int height();
-
-	T width(int width);
-
-	T height(int height);
-
-	T size(int width, int height);
+public interface IElement<T> extends ILocated<T> {
 
 	T visible(boolean visible);
 
