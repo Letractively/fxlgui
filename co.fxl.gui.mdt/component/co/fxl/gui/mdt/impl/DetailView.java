@@ -68,6 +68,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 		tree = (IFilterTreeWidget<Object>) widget.mainPanel.add().widget(
 				IFilterTreeWidget.class);
 		tree.showCommands(widget.showCommands);
+		if(widget.allowGridView)
 		tree.addTreeClickListener(new ITreeClickListener<Object>() {
 
 			@Override
