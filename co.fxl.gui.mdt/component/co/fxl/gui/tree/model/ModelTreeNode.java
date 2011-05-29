@@ -289,7 +289,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 	}
 
 	void expandCollapse() {
-		expandCollapse(!expandLoadedNode);
+		expandCollapse(expandLoadedNode);
 	}
 
 	void expandCollapse(boolean expandLoadedNode) {
