@@ -292,4 +292,9 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 				});
 		return (R) this;
 	}
+
+	@Override
+	public R offset(int x, int y) {
+		throw new MethodNotImplementedException();
+	}
 }
