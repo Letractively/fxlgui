@@ -19,6 +19,7 @@
 package co.fxl.gui.swing;
 
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -95,20 +96,20 @@ class SwingPopUp implements IPopUp {
 		if (autoHide) {
 			// TODO implement
 			new MethodNotImplementedException().printStackTrace();
+			// TODO return this;
 		}
 		if (dialog == null)
 			if (component != null) {
-				if (component.getWidth() < 160)
-					component.setSize(160, component.getHeight());
-				if (w > 0)
-					component.setSize(w, component.getHeight());
-				if (h > 0)
-					component.setSize(component.getWidth(), h);
+				if (w > 0 && h > 0)
+					component.setPreferredSize(new Dimension(w - 12, h));
+				else if (w > 0)
+					component.setPreferredSize(new Dimension(w - 12, component
+							.getHeight()));
+				else if (h > 0)
+					p.setPreferredSize(new Dimension(component.getWidth(), h));
 				if (center) {
-					x = panel.width() / 2
-							- Math.max(80, component.getWidth() / 2);
-					y = panel.height() / 2
-							- Math.max(40, component.getHeight() / 2);
+					x = panel.width() / 2 - Math.max(80, p.getWidth() / 2);
+					y = panel.height() / 2 - Math.max(40, p.getHeight() / 2);
 				}
 				PopupFactory factory = PopupFactory.getSharedInstance();
 				p.add(component);
