@@ -27,6 +27,10 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 public class SwingTextInput<T extends JTextComponent, R> extends
 		SwingTextElement<T, R> {
 
+	// TODO Usabillity: Swing: when focus is set on textfield, the cursor should
+	// be positioned at the end, not the beginning.
+	// Probably valid also for textarea
+
 	private final class UpdateListener implements DocumentListener {
 		private final IUpdateListener<String> updateListener;
 
