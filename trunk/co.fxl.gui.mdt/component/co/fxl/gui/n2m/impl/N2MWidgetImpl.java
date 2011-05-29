@@ -29,6 +29,9 @@ import co.fxl.gui.n2m.api.IN2MWidget;
 
 class N2MWidgetImpl implements IN2MWidget<Object> {
 
+	// TODO FEATURE: Option: Usability: Enable Drag & Drop for N2M-Widget, can
+	// be used for reordering & moving from left 2 right / right 2 left
+
 	private static final int _20 = 10;
 	private IGridPanel grid;
 	private SelectableList left;

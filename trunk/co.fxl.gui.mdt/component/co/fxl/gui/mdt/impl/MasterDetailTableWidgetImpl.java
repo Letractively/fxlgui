@@ -64,6 +64,16 @@ import co.fxl.gui.tree.api.ITreeWidget.IViewID;
 class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		IFilterListener {
 
+	// TODO FEATURE: Option: Usability: In general: include an editable table
+	// using:
+	// http://gwt.google.com/samples/Showcase/Showcase.html#!CwCellSampler
+
+	// TODO FEATURE: Option: Usability: Include context menu showing all
+	// commands (top) and navigation buttons and view options (grid, details,
+	// etc.)
+	// http://stackoverflow.com/questions/3372096/why-doesnt-this-right-click-capture-in-gwt-work-in-ie
+	// [maybe use the same widget as for grid view filter query tree selection]
+
 	List<PropertyGroupImpl> propertyGroups = new LinkedList<PropertyGroupImpl>();
 	List<RelationImpl> relations = new LinkedList<RelationImpl>();
 	List<N2MRelationImpl> n2MRelations = new LinkedList<N2MRelationImpl>();
@@ -130,6 +140,19 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		sidePanel = panel;
 		return this;
 	}
+
+	// TODO FEATURE: Option: Usability: MDT: Include List-Views using
+	// HTML-Templates, HTML has entityName.fieldName (+clickable, +modifieable),
+	// fieldName, # (current index), #primaryEntity.name, #primaryEntity.image.
+	// HTML-Templates can be created using a generic html editor (with
+	// additional buttons for meta-model-references). References are replaced
+	// according to the type of the meta-model-entity. Use history listeners to
+	// intercept hyperlink-clicks. click to show entity, click to change value
+	// of property to specific value, etc.
+
+	// TODO FEATURE: Option: Usability: Allow choosing the filter query using a
+	// ComboBoxTreeWidget, structured in a tree (like Google "more")
+	// http://gwt.google.com/samples/Showcase/Showcase.html#!CwMenuBar
 
 	void addViewWidget(IVerticalPanel sidePanel) {
 		WidgetTitle views = new WidgetTitle(sidePanel.add().panel(), true)
@@ -283,7 +306,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 			for (Object link0 : navigationLinks) {
 				if (link0 instanceof NavigationLinkImpl) {
 					NavigationLinkImpl link = (NavigationLinkImpl) link0;
-					ImageButton l = t.addHyperlink(link.imageResource).text(link.name);
+					ImageButton l = t.addHyperlink(link.imageResource).text(
+							link.name);
 					for (final INavigationLinkListener<Object> cl : link.listeners) {
 						l.addClickListener(new LazyClickListener() {
 
