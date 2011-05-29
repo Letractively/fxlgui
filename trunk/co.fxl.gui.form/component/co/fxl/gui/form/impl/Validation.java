@@ -297,7 +297,11 @@ public class Validation {
 			public void onUpdate(String value) {
 				field.isError = false;
 				if (value.length() > 0) {
-					field.isError = Format.longInt().parse(value) != null;
+					try {
+						Long.valueOf(value);
+					} catch (Exception e) {
+						field.isError = true;
+					}
 				} else {
 					field.isError = field.required;
 				}
