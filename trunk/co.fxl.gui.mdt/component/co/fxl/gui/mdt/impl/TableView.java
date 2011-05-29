@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.mdt.impl;
 
-import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -272,12 +271,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 			public void onSuccess(final IDeletableList<Object> queryList) {
 				if (painting)
 					return;
-				// if (true) {
-				// new Test().run(widget.mainPanel.clear());
-				// return;
-				// }
 				painting = true;
-				final long s = System.currentTimeMillis();
 				widget.mainPanel.clear();
 				drawTable();
 				widget.queryList = queryList;
@@ -311,10 +305,6 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 					tableSelection.add(o);
 				widget.preselection.clear();
 				table.rows(rows);
-				time = System.currentTimeMillis() - s;
-				final PrintStream out = time > 500 ? System.err : System.out;
-				out.println("TableView: added " + queryList.size()
-						+ " rows in " + time + "ms");
 				ResizeListener.setup(widget.mainPanel.display(), TableView.this);
 				widget.mainPanel.display().invokeLater(new Runnable() {
 
@@ -322,7 +312,6 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 					public void run() {
 						onHeightChange(widget.mainPanel.display().height());
 						updateCreatable();
-						time = System.currentTimeMillis() - s;
 						IScrollTableClickListener showClickListener = new IScrollTableClickListener() {
 
 							@Override
@@ -346,8 +335,6 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 						table.visible(true);
 						widget.selection = table.selection().result();
 						updateLinks();
-						out.println("TableView: created table in " + time
-								+ "ms");
 						onChange(table.selection().result());
 						painting = false;
 					}
@@ -414,62 +401,4 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 	void selection(List<Object> selection) {
 		throw new MethodNotImplementedException();
 	}
-
-	// private class Test implements IDecorator, IClickListener {
-	// private ILazyScrollPane widget;
-	// private IHorizontalPanel[] buttons = new IHorizontalPanel[1000];
-	//
-	// void run(IVerticalPanel panel) {
-	// panel.display().register(new LazyScrollPanelImplWidgetProvider());
-	// widget = (ILazyScrollPane) panel.add()
-	// .widget(ILazyScrollPane.class);
-	// widget.size(1000);
-	// widget.minRowHeight(20);
-	// widget.height(900);
-	// widget.decorator(this);
-	// widget.visible(true);
-	// }
-	//
-	// @Override
-	// public void decorate(IContainer c, int firstRow, int lastRow) {
-	// long t = System.currentTimeMillis();
-	// IVerticalPanel v = c.panel().vertical();
-	// for (int i = firstRow; i <= lastRow; i++) {
-	// IHorizontalPanel container = v.add().panel().horizontal();
-	// container.height(22);
-	// IClickable<?> clickable = container;
-	// clickable.addClickListener(this);
-	// IHorizontalPanel content = container.add().panel().horizontal()
-	// .spacing(2);
-	// content.addSpace((i % 3) * 10);
-	// IImage image = content.add().image();
-	// image.resource("closed.png");
-	// image.addClickListener(this);
-	// IImage icon = content.add().image().resource("export.png");
-	// icon.addClickListener(this);
-	// content.addSpace(2);
-	// String name = "Tree Node " + i;
-	// boolean isNull = name == null || name.trim().equals("");
-	// ILabel label = content.add().label()
-	// .text(isNull ? "unnamed" : name);
-	// label.font().pixel(12);
-	// if (isNull)
-	// label.font().weight().italic().color().gray();
-	// label.addClickListener(this);
-	// content.addSpace(10);
-	// buttons[i] = container;
-	// }
-	// c.display().title((System.currentTimeMillis() - t) + "ms");
-	// }
-	//
-	// @Override
-	// public void onClick() {
-	// throw new MethodNotImplementedException();
-	// }
-	//
-	// @Override
-	// public int rowHeight(int rowIndex) {
-	// return buttons[rowIndex].height();
-	// }
-	// }
 }
