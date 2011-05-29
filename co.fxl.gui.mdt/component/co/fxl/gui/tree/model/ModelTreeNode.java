@@ -273,12 +273,13 @@ class ModelTreeNode<T> extends LazyClickListener {
 			return tree.iconClosed();
 	}
 
-	void refresh(boolean refreshChildren) {
+	ModelTreeNode<T> refresh(boolean refreshChildren) {
 		update(null);
 		if (!refreshChildren)
-			return;
+			return this;
 		expand();
 		expand();
+		return this;
 	}
 
 	@Override
@@ -287,7 +288,11 @@ class ModelTreeNode<T> extends LazyClickListener {
 		widget.model.selection(tree);
 	}
 
-	private void expandCollapse() {
+	void expandCollapse() {
+		expandCollapse(!expandLoadedNode);
+	}
+
+	void expandCollapse(boolean expandLoadedNode) {
 		if (tree.childCount() == 0)
 			return;
 		if (widget.model.selection() != null
