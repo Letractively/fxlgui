@@ -53,6 +53,8 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener,
 	@Override
 	public void onUpdate(Boolean value) {
 		textField.editable(!value);
+		if (!value)
+			onClick();
 	}
 
 	@Override
