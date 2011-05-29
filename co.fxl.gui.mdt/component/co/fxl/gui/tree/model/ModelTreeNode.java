@@ -66,6 +66,9 @@ class ModelTreeNode<T> extends LazyClickListener {
 	boolean drawn;
 	private IClickable<?> gridButton;
 
+	// TODO FEATURE: Option: Usability: Click on cursor left / right expands /
+	// collapses tree node
+
 	ModelTreeNode(final ModelTreeWidget<T> widget, IVerticalPanel panel,
 			final ITree<T> root, int depth, boolean draw) {
 		assert root != null && root.object() != null;
