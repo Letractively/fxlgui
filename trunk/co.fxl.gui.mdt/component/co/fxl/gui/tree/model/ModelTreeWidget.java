@@ -427,8 +427,12 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> root(ITree<T> tree) {
-		if (previousSelection == null && showRoot)
-			previousSelection = tree.object();
+		if (previousSelection == null)
+			if (showRoot) {
+				previousSelection = tree.object();
+			} else if (tree.children().size() > 0) {
+				previousSelection = tree.children().get(0).object();
+			}
 		scrollListener.active = false;
 		addButtons();
 		IVerticalPanel panel2 = panel();
@@ -514,6 +518,8 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				@Override
 				public void onSuccess(Boolean result) {
 					setLoadedDetailViewTree(tree);
+					if (result)
+						expand(tree.object(), true);
 				}
 			});
 		} else {
@@ -591,7 +597,8 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> expand(T selection, boolean expand) {
-		throw new MethodNotImplementedException();
+		model.refresh(selection, expand);
+		return this;
 	}
 
 	@Override
@@ -645,10 +652,24 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		}
 	}
 
+	private T lastSelection;
+
 	void notifyChange() {
-		for (ISelectionListener<T> l : selectionListeners)
-			l.onChange(model.selection() != null ? model.selection().object()
-					: null);
+		T newSelection = model.selection() != null ? model.selection().object()
+				: null;
+		if (!equals(lastSelection, newSelection)) {
+			lastSelection = newSelection;
+			for (ISelectionListener<T> l : selectionListeners) {
+				l.onChange(newSelection);
+			}
+		}
+	}
+
+	private boolean equals(T lastSelection, T newSelection) {
+		if (lastSelection == null)
+			return newSelection == null;
+		else
+			return lastSelection.equals(newSelection);
 	}
 
 	@Override

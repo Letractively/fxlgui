@@ -83,32 +83,41 @@ class TreeModel<T> {
 		refresh(cutCopy);
 	}
 
-	void refresh() {
+	ModelTreeNode<T> refresh() {
 		if (widget.showRoot)
-			refresh(root, true);
+			return refresh(root, true);
 		else {
 			widget.root(root);
+			if (widget.showRoot)
+				return node(root);
+			else
+				return null;
 		}
 	}
 
-	void refresh(ITree<T> tree) {
-		refresh(tree, false);
+	ModelTreeNode<T> refresh(ITree<T> tree) {
+		return refresh(tree, false);
 	}
 
-	void refresh(ITree<T> tree, boolean recurse) {
+	ModelTreeNode<T> refresh(ITree<T> tree, boolean recurse) {
+		ModelTreeNode<T> node;
 		if (tree.equals(root) && !widget.showRoot) {
-			refresh();
+			node = refresh();
 		} else
-			node(tree).refresh(recurse);
+			node = node(tree).refresh(recurse);
 		widget.updateButtons();
+		return node;
 	}
 
-	void refresh(Object object, boolean recurse) {
-		ITree<T> tree = nodes.get(object).tree;
+	ModelTreeNode<T> refresh(T object, boolean recurse) {
+		ModelTreeNode<T> node = nodes.get(object);
+		assert node != null : object + " not found in " + nodes.keySet();
+		ITree<T> tree = node.tree;
 		refresh(tree, recurse);
 		if (tree.equals(selection)) {
 			widget.setDetailViewTree(tree);
 		}
+		return node;
 	}
 
 	boolean isCopy() {
