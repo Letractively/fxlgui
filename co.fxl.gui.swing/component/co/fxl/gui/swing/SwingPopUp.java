@@ -41,9 +41,14 @@ class SwingPopUp implements IPopUp {
 	private int w = -1;
 	private int h = -1;
 	private boolean autoHide = false;
+	private JPanel p;
 
 	SwingPopUp(SwingDisplay panel) {
 		this.panel = panel;
+		p = new JPanel();
+		p.getInsets().set(3, 3, 3, 3);
+		p.setBackground(Color.WHITE);
+		p.setBorder(new LineBorder(new Color(195, 217, 255), 3));
 	}
 
 	@Override
@@ -107,11 +112,7 @@ class SwingPopUp implements IPopUp {
 							- Math.max(40, component.getHeight() / 2);
 				}
 				PopupFactory factory = PopupFactory.getSharedInstance();
-				JPanel p = new JPanel();
 				p.add(component);
-				p.getInsets().set(3, 3, 3, 3);
-				p.setBackground(Color.WHITE);
-				p.setBorder(new LineBorder(new Color(195, 217, 255), 3));
 				dialog = factory.getPopup(panel.frame, p, x, y + 20);
 			}
 		assert dialog != null;
@@ -170,5 +171,20 @@ class SwingPopUp implements IPopUp {
 	public IPopUp autoHide(boolean autoHide) {
 		this.autoHide = autoHide;
 		return this;
+	}
+
+	@Override
+	public IBorder border() {
+		return new SwingBorder(p);
+	}
+
+	@Override
+	public IPopUp width(int width) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IPopUp height(int height) {
+		throw new MethodNotImplementedException();
 	}
 }
