@@ -90,7 +90,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 		popUp = textField.display().showPopUp().autoHide(true);
 		heights.decorateBorder(popUp);
 		int w = Math.min(320, textField.width());
-		int h = Math.min(240, 19 * texts.size());
+		int h = Math.min(240, 2 + 19 * texts.size());
 		popUp.size(w, h);
 		popUp.offset(textField.offsetX(),
 				textField.offsetY() + textField.height());
