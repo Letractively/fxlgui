@@ -96,7 +96,7 @@ class SwingPopUp implements IPopUp {
 		if (autoHide) {
 			// TODO implement
 			new MethodNotImplementedException().printStackTrace();
-			// TODO return this;
+			return this;
 		}
 		if (dialog == null)
 			if (component != null) {
