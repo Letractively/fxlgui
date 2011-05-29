@@ -12,6 +12,8 @@ class GWTPopUp implements IPopUp, WidgetParent {
 	private GWTDisplay display;
 	private PopupPanel popUp;
 	private boolean center;
+	private int w;
+	private int h;
 
 	GWTPopUp(GWTDisplay display) {
 		this.display = display;
@@ -36,6 +38,10 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	@Override
 	public void add(Widget widget) {
+		if (w > 0)
+			widget.setWidth(w + "px");
+		if (h > 0)
+			widget.setHeight(h + "px");
 		popUp.setWidget(widget);
 	}
 
@@ -97,6 +103,8 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	@Override
 	public IPopUp size(int w, int h) {
+		this.w = w;
+		this.h = h;
 		popUp.setWidth(w + "px");
 		popUp.setHeight(h + "px");
 		return this;
