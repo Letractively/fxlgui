@@ -88,6 +88,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener,
 	@Override
 	public void onClick() {
 		final IPopUp popUp = textField.display().showPopUp().autoHide(true);
+		popUp.border().width(1).color().black();
 		popUp.offset(textField.offsetX(),
 				textField.offsetY() + textField.height());
 		IScrollPane scrollPane = popUp.container().scrollPane();
