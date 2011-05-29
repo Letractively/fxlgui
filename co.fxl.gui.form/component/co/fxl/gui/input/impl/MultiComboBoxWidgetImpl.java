@@ -23,7 +23,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.ICheckBox;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IPopUp;
@@ -31,9 +30,11 @@ import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.template.Heights;
+import co.fxl.gui.form.impl.Validation;
+import co.fxl.gui.form.impl.Validation.IValidation;
 import co.fxl.gui.input.api.IMultiComboBoxWidget;
 
-class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener,
+class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 		co.fxl.gui.api.IUpdateable.IUpdateListener<Boolean> {
 
 	private List<IUpdateListener<String[]>> listeners = new LinkedList<IUpdateListener<String[]>>();
@@ -41,20 +42,17 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener,
 	private List<String> selection = new LinkedList<String>();
 	private Heights heights = new Heights(0);
 	private ITextField textField;
+	private IPopUp popUp;
 
 	MultiComboBoxWidgetImpl(IContainer container) {
 		textField = container.textField();
 		heights.decorate(textField);
-		textField.editable(false);
 		textField.addFocusListener(this);
-		textField.tooltip("Click to edit");
 	}
 
 	@Override
 	public void onUpdate(Boolean value) {
-		textField.editable(!value);
-		if (!value)
-			onClick();
+		getPopUp().visible(value);
 	}
 
 	@Override
@@ -85,36 +83,38 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener,
 		return this;
 	}
 
-	@Override
-	public void onClick() {
-		final IPopUp popUp = textField.display().showPopUp().autoHide(true);
-		popUp.border().width(1).color().black();
-		popUp.offset(textField.offsetX(),
-				textField.offsetY() + textField.height());
-		IScrollPane scrollPane = popUp.container().scrollPane();
-		scrollPane.color().white();
-		IGridPanel v = scrollPane.viewPort().panel().grid().spacing(0)
-				.indent(0);
-		int i = 0;
-		for (final String text : texts) {
-			ICheckBox cb = v.cell(0, i++).height(Heights.COMBOBOX_HEIGHT)
-					.align().begin().valign().center().checkBox().text(text);
-			cb.addUpdateListener(new IUpdateListener<Boolean>() {
-				@Override
-				public void onUpdate(Boolean value) {
-					String t = text;
-					if (value)
-						MultiComboBoxWidgetImpl.this.selection.add(t);
-					else
-						MultiComboBoxWidgetImpl.this.selection.remove(t);
-					selection(selection.toArray(new String[0]));
-				}
-			});
-			cb.checked(selection.contains(text));
+	public IPopUp getPopUp() {
+		if (popUp == null) {
+			popUp = textField.display().showPopUp().autoHide(true);
+			heights.decorateBorder(popUp);
+			popUp.size(320,
+					Math.min(240, Heights.COMBOBOX_HEIGHT * texts.size()) + 4);
+			popUp.offset(textField.offsetX(),
+					textField.offsetY() + textField.height());
+			IScrollPane scrollPane = popUp.container().scrollPane();
+			scrollPane.color().white();
+			IGridPanel v = scrollPane.viewPort().panel().grid().spacing(0)
+					.indent(0);
+			int i = 0;
+			for (final String text : texts) {
+				ICheckBox cb = v.cell(0, i++).height(Heights.COMBOBOX_HEIGHT)
+						.align().begin().valign().center().checkBox()
+						.text(text);
+				cb.addUpdateListener(new IUpdateListener<Boolean>() {
+					@Override
+					public void onUpdate(Boolean value) {
+						String t = text;
+						if (value)
+							MultiComboBoxWidgetImpl.this.selection.add(t);
+						else
+							MultiComboBoxWidgetImpl.this.selection.remove(t);
+						selection(selection.toArray(new String[0]));
+					}
+				});
+				cb.checked(selection.contains(text));
+			}
 		}
-		scrollPane.size(Math.max(320, v.width()), Math.min(240, v.height()));
-		v.width(v.width());
-		popUp.visible(true);
+		return popUp;
 	}
 
 	@Override
@@ -125,6 +125,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener,
 
 	@Override
 	public IMultiComboBoxWidget clear() {
+		getPopUp().visible(false);
 		texts.clear();
 		selection.clear();
 		selection(new String[0]);
@@ -134,6 +135,24 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener,
 	@Override
 	public IMultiComboBoxWidget visible(boolean visible) {
 		textField.visible(visible);
+		return this;
+	}
+
+	@Override
+	public IMultiComboBoxWidget validation(Validation validation) {
+		validation.validate(textField, new IValidation<String>() {
+			@Override
+			public boolean validate(String trim) {
+				String[] s = trim.split(", ");
+				List<String> tokens = new LinkedList<String>(texts);
+				for (String s0 : s) {
+					boolean r = tokens.remove(s0);
+					if (!r)
+						return false;
+				}
+				return true;
+			}
+		});
 		return this;
 	}
 }

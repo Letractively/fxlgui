@@ -36,6 +36,14 @@ import co.fxl.gui.format.api.IFormat;
 import co.fxl.gui.format.impl.Format;
 
 public class Validation {
+	
+	// TODO extract validation to component
+
+	public interface IValidation<T> {
+
+		boolean validate(String trim);
+
+	}
 
 	class CheckBoxField implements IField, IUpdateListener<Boolean> {
 
@@ -416,6 +424,27 @@ public class Validation {
 		for (IClickable<?> c : reset) {
 			c.clickable(true);
 		}
+	}
+
+	public void validate(final ITextField textField, final IValidation<String> v) {
+		final Field field = new Field(textField, false);
+		textField.addUpdateListener(new IUpdateListener<String>() {
+			@Override
+			public void onUpdate(String value) {
+				field.isError = false;
+				if (value.trim().length() > 0) {
+					try {
+						field.isError = !v.validate(value.trim());
+					} catch (Exception e) {
+						field.isError = true;
+					}
+				} else {
+					field.isError = field.required;
+				}
+				field.onUpdate(value);
+				errorColor(textField, field.isError);
+			}
+		});
 	}
 
 }
