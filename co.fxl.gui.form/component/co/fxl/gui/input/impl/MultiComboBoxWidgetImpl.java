@@ -94,10 +94,12 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 		popUp.size(w, h);
 		popUp.offset(textField.offsetX(),
 				textField.offsetY() + textField.height());
-		IScrollPane scrollPane = popUp.container().scrollPane().width(w);
+		IScrollPane scrollPane = popUp.container().scrollPane();
 		scrollPane.border().remove();
 		scrollPane.color().white();
-		IVerticalPanel v = scrollPane.viewPort().panel().vertical().width(w);
+		// TODO refine, 16 = hack for GWT
+		IVerticalPanel v = scrollPane.viewPort().panel().vertical()
+				.width(w - 16);
 		for (final String text : texts) {
 			ICheckBox cb = v.add().panel().horizontal().align().begin().add()
 					.panel().horizontal().align().begin().add().checkBox()
