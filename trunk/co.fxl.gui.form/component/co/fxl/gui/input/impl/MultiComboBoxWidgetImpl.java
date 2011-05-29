@@ -25,6 +25,7 @@ import java.util.List;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IScrollPane;
@@ -91,10 +92,12 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener {
 		scrollPane
 				.height(Math.min(300, texts.size() * Heights.COMBOBOX_HEIGHT));
 		scrollPane.color().white();
-		IVerticalPanel v = scrollPane.viewPort().panel().vertical();
+		IGridPanel v = scrollPane.viewPort().panel().grid().spacing(0)
+				.indent(0);
+		int i = 0;
 		for (final String text : texts) {
-			ICheckBox cb = v.add().checkBox().text(text);
-			heights.decorate(cb);
+			ICheckBox cb = v.cell(0, i++).height(Heights.COMBOBOX_HEIGHT)
+					.align().begin().valign().center().checkBox().text(text);
 			cb.addUpdateListener(new IUpdateListener<Boolean>() {
 				@Override
 				public void onUpdate(Boolean value) {
@@ -115,6 +118,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener {
 	public IMultiComboBoxWidget width(int width) {
 		this.width = width;
 		panel.width(width);
+		label.width(width);
 		return this;
 	}
 
