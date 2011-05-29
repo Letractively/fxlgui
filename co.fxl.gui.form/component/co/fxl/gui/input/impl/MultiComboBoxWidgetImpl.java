@@ -26,33 +26,34 @@ import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IScrollPane;
+import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable;
-import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.Heights;
-import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.input.api.IMultiComboBoxWidget;
 
-class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener {
+class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener,
+		co.fxl.gui.api.IUpdateable.IUpdateListener<Boolean> {
 
 	private List<IUpdateListener<String[]>> listeners = new LinkedList<IUpdateListener<String[]>>();
-	private IVerticalPanel panel;
-	private ILabel label;
 	private List<String> texts = new LinkedList<String>();
 	private List<String> selection = new LinkedList<String>();
 	private Heights heights = new Heights(0);
 	private int width = -1;
+	private ITextField textField;
 
 	MultiComboBoxWidgetImpl(IContainer container) {
-		panel = container.panel().vertical();
-		panel.spacing(4);
-		heights.decorate(panel);
-		WidgetTitle.decorateBorder(panel.border().color());
-		label = panel.add().label();
-		panel.addClickListener(this);
-		panel.tooltip("Click to edit");
+		textField = container.textField();
+		heights.decorate(textField);
+		textField.editable(false);
+		textField.addFocusListener(this);
+		textField.tooltip("Click to edit");
+	}
+
+	@Override
+	public void onUpdate(Boolean value) {
+		textField.editable(!value);
 	}
 
 	@Override
@@ -65,7 +66,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener {
 	@Override
 	public IMultiComboBoxWidget selection(String[] selection) {
 		this.selection = new LinkedList<String>(Arrays.asList(selection));
-		label.text(this.selection.toString().substring(1,
+		textField.text(this.selection.toString().substring(1,
 				this.selection.toString().length() - 1));
 		for (IUpdateListener<String[]> l : listeners)
 			l.onUpdate(selection());
@@ -85,12 +86,14 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener {
 
 	@Override
 	public void onClick() {
-		final IPopUp popUp = label.display().showPopUp().autoHide(true);
-		popUp.offset(panel.offsetX(), panel.offsetY() + panel.height());
+		final IPopUp popUp = textField.display().showPopUp().autoHide(true);
+		popUp.offset(textField.offsetX(),
+				textField.offsetY() + textField.height());
 		IScrollPane scrollPane = popUp.container().scrollPane();
-		scrollPane.width(width != -1 ? width : panel.width());
+		int w = width != -1 ? width : textField.width();
+		scrollPane.width(Math.max(320, w));
 		scrollPane
-				.height(Math.min(300, texts.size() * Heights.COMBOBOX_HEIGHT));
+				.height(Math.min(240, texts.size() * Heights.COMBOBOX_HEIGHT));
 		scrollPane.color().white();
 		IGridPanel v = scrollPane.viewPort().panel().grid().spacing(0)
 				.indent(0);
@@ -117,8 +120,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener {
 	@Override
 	public IMultiComboBoxWidget width(int width) {
 		this.width = width;
-		panel.width(width);
-		label.width(width);
+		textField.width(width);
 		return this;
 	}
 
@@ -132,7 +134,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget, IClickListener {
 
 	@Override
 	public IMultiComboBoxWidget visible(boolean visible) {
-		panel.visible(visible);
+		textField.visible(visible);
 		return this;
 	}
 }
