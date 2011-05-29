@@ -46,6 +46,10 @@ import co.fxl.gui.tree.api.ITreeWidget.IView;
 class DetailView extends ViewTemplate implements ISource<Object>,
 		DeleteListener {
 
+	// TODO BUG: Swing: Width of detail view (MDT) is not resized correctly when
+	// display size changes, GWT works correctly, similar functionality in table
+	// view (MDT) also
+
 	static final IFormat<Date> DATE_FORMAT = Format.date();
 	IFilterTreeWidget<Object> tree;
 	private IMDTFilterList<Object> filterList;
@@ -68,14 +72,14 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 		tree = (IFilterTreeWidget<Object>) widget.mainPanel.add().widget(
 				IFilterTreeWidget.class);
 		tree.showCommands(widget.showCommands);
-		if(widget.allowGridView)
-		tree.addTreeClickListener(new ITreeClickListener<Object>() {
+		if (widget.allowGridView)
+			tree.addTreeClickListener(new ITreeClickListener<Object>() {
 
-			@Override
-			public void onClick(ITree<Object> tree) {
-				widget.showTableView(tree.object());
-			}
-		}).doubleClick();
+				@Override
+				public void onClick(ITree<Object> tree) {
+					widget.showTableView(tree.object());
+				}
+			}).doubleClick();
 		tree.showRefresh(false);
 		if (widget.hideDetailRoot)
 			tree.hideRoot();
