@@ -252,7 +252,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				&& navigationDecorator == null)
 			return height + 40;
 		else
-			return height + 20 - topPanel.height();
+			return height + 0 - topPanel.height();
 	}
 
 	private void topPanel() {
