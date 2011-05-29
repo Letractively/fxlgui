@@ -243,4 +243,9 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 			}
 		});
 	}
+
+	@Override
+	public R offset(int x, int y) {
+		throw new MethodNotImplementedException();
+	}
 }
