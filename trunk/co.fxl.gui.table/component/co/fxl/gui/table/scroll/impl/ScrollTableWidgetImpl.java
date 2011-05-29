@@ -595,10 +595,13 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	private int realColumn(int column) {
+		int visibleColumns = 0;
 		int c = column;
-		for (int i = 0; i < column; i++)
+		for (int i = 0; visibleColumns <= column; i++)
 			if (!columns.get(i).visible)
 				c++;
+			else
+				visibleColumns++;
 		return c;
 	}
 
