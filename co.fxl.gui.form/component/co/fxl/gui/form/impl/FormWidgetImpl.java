@@ -49,6 +49,11 @@ import co.fxl.gui.form.api.IImageField;
 
 class FormWidgetImpl implements IFormWidget {
 
+	// TODO FEATURE: Option: Usability: Integrate an RTF-Editor, e.g.
+	// http://gwt.google.com/samples/Showcase/Showcase.html#!CwRichText, or
+	// implement own RTF-Editor using toggle-buttons that writes html with a
+	// preview panel
+
 	class FormEntryLabel {
 
 		IGridCell cell;

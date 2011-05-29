@@ -33,6 +33,9 @@ import co.fxl.gui.api.template.Heights;
 
 class MiniFilterPanel implements FilterPanel {
 
+	// TODO FEATURE: Option: Usability: Include a combobox that allows choosing
+	// the configuration (filter query) for the mini-filter-widget
+
 	class FilterGridImpl implements FilterGrid, IUpdateListener<String> {
 
 		class CellImpl implements ICell {
