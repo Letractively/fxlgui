@@ -45,14 +45,17 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	private IPopUp popUp;
 
 	MultiComboBoxWidgetImpl(IContainer container) {
-		textField = container.textField();
+		textField = container.textField().visible(false);
 		heights.decorate(textField);
-		textField.addFocusListener(this);
 	}
 
 	@Override
 	public void onUpdate(Boolean value) {
-		getPopUp().visible(value);
+		clearPopUp();
+		if (value) {
+			createPopUp();
+			popUp.visible(true);
+		}
 	}
 
 	@Override
@@ -83,38 +86,43 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 		return this;
 	}
 
-	public IPopUp getPopUp() {
-		if (popUp == null) {
-			popUp = textField.display().showPopUp().autoHide(true);
-			heights.decorateBorder(popUp);
-			popUp.size(320,
-					Math.min(240, Heights.COMBOBOX_HEIGHT * texts.size()) + 4);
-			popUp.offset(textField.offsetX(),
-					textField.offsetY() + textField.height());
-			IScrollPane scrollPane = popUp.container().scrollPane();
-			scrollPane.color().white();
-			IGridPanel v = scrollPane.viewPort().panel().grid().spacing(0)
-					.indent(0);
-			int i = 0;
-			for (final String text : texts) {
-				ICheckBox cb = v.cell(0, i++).height(Heights.COMBOBOX_HEIGHT)
-						.align().begin().valign().center().checkBox()
-						.text(text);
-				cb.addUpdateListener(new IUpdateListener<Boolean>() {
-					@Override
-					public void onUpdate(Boolean value) {
-						String t = text;
-						if (value)
-							MultiComboBoxWidgetImpl.this.selection.add(t);
-						else
-							MultiComboBoxWidgetImpl.this.selection.remove(t);
-						selection(selection.toArray(new String[0]));
-					}
-				});
-				cb.checked(selection.contains(text));
-			}
+	public void createPopUp() {
+		popUp = textField.display().showPopUp().autoHide(true);
+		heights.decorateBorder(popUp);
+		int w = Math.min(320, textField.width());
+		int h = Math.min(240, Heights.COMBOBOX_HEIGHT * texts.size());
+		popUp.size(w, h);
+		popUp.offset(textField.offsetX(),
+				textField.offsetY() + textField.height());
+		IScrollPane scrollPane = popUp.container().scrollPane();
+		scrollPane.border().remove();
+		scrollPane.color().white();
+		IGridPanel v = scrollPane.viewPort().panel().grid().spacing(0)
+				.indent(0);
+		int i = 0;
+		for (final String text : texts) {
+			ICheckBox cb = v.cell(0, i++).height(Heights.COMBOBOX_HEIGHT)
+					.align().begin().valign().center().checkBox().text(text);
+			cb.addUpdateListener(new IUpdateListener<Boolean>() {
+				@Override
+				public void onUpdate(Boolean value) {
+					String t = text;
+					if (value)
+						MultiComboBoxWidgetImpl.this.selection.add(t);
+					else
+						MultiComboBoxWidgetImpl.this.selection.remove(t);
+					selection(selection.toArray(new String[0]));
+				}
+			});
+			cb.checked(selection.contains(text));
 		}
-		return popUp;
+	}
+
+	private void clearPopUp() {
+		if (popUp != null) {
+			popUp.visible(false);
+			popUp = null;
+		}
 	}
 
 	@Override
@@ -125,7 +133,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 
 	@Override
 	public IMultiComboBoxWidget clear() {
-		getPopUp().visible(false);
+		clearPopUp();
 		texts.clear();
 		selection.clear();
 		selection(new String[0]);
@@ -135,6 +143,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	@Override
 	public IMultiComboBoxWidget visible(boolean visible) {
 		textField.visible(visible);
+		textField.addFocusListener(this);
 		return this;
 	}
 
