@@ -107,4 +107,19 @@ class GWTPopUp implements IPopUp, WidgetParent {
 		popUp.setAutoHideEnabled(autoHide);
 		return this;
 	}
+
+	@Override
+	public IBorder border() {
+		return new GWTWidgetBorder(popUp);
+	}
+
+	@Override
+	public IPopUp width(int width) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IPopUp height(int height) {
+		throw new MethodNotImplementedException();
+	}
 }
