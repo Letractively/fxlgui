@@ -24,11 +24,11 @@ import java.util.List;
 
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.Heights;
 import co.fxl.gui.form.impl.Validation;
 import co.fxl.gui.form.impl.Validation.IValidation;
@@ -51,8 +51,8 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 
 	@Override
 	public void onUpdate(Boolean value) {
-		clearPopUp();
 		if (value) {
+			clearPopUp();
 			createPopUp();
 			popUp.visible(true);
 		}
@@ -86,23 +86,22 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 		return this;
 	}
 
-	public void createPopUp() {
+	private void createPopUp() {
 		popUp = textField.display().showPopUp().autoHide(true);
 		heights.decorateBorder(popUp);
 		int w = Math.min(320, textField.width());
-		int h = Math.min(240, Heights.COMBOBOX_HEIGHT * texts.size());
+		int h = Math.min(240, 19 * texts.size());
 		popUp.size(w, h);
 		popUp.offset(textField.offsetX(),
 				textField.offsetY() + textField.height());
-		IScrollPane scrollPane = popUp.container().scrollPane();
+		IScrollPane scrollPane = popUp.container().scrollPane().width(w);
 		scrollPane.border().remove();
 		scrollPane.color().white();
-		IGridPanel v = scrollPane.viewPort().panel().grid().spacing(0)
-				.indent(0);
-		int i = 0;
+		IVerticalPanel v = scrollPane.viewPort().panel().vertical().width(w);
 		for (final String text : texts) {
-			ICheckBox cb = v.cell(0, i++).height(Heights.COMBOBOX_HEIGHT)
-					.align().begin().valign().center().checkBox().text(text);
+			ICheckBox cb = v.add().panel().horizontal().align().begin().add()
+					.panel().horizontal().align().begin().add().checkBox()
+					.text(text);
 			cb.addUpdateListener(new IUpdateListener<Boolean>() {
 				@Override
 				public void onUpdate(Boolean value) {
