@@ -61,6 +61,14 @@ import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		IScrollListener, ILabelMouseListener {
 
+	// TODO FEATURE: Option: Usability: Implement live filter on current table
+	// content, every update notification in filter-widget on the side is
+	// directly applied to the loaded table content
+
+	// TODO FEATURE: Option: Usability: Enable Drag&Drop for main table (in
+	// general: tables without reordering feature): moves displayed range up /
+	// down
+
 	// TODO Swing Scroll Panel block increment for single click on arrow is not
 	// enough
 
