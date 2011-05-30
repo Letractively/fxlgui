@@ -78,9 +78,13 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 			b.append(s);
 		}
 		textField.text(b.toString());
+		notifyListeners();
+		return this;
+	}
+
+	private void notifyListeners() {
 		for (IUpdateListener<String[]> l : listeners)
 			l.onUpdate(selection());
-		return this;
 	}
 
 	private void setSelection(String[] selection) {
@@ -163,15 +167,23 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 			public void onUpdate(String value) {
 				List<String> result = new LinkedList<String>(Arrays
 						.asList(extract(value)));
+				boolean changed = false;
 				for (String t : texts) {
-					if (!result.contains(t))
+					if (!result.contains(t)) {
 						selection.remove(t);
+						changed = true;
+					}
 				}
 				for (String t : result) {
-					if (!selection.contains(t))
+					if (!selection.contains(t) && texts.contains(t)) {
 						selection.add(t);
+						changed = true;
+					}
 				}
-				updateCheckBoxes();
+				if (changed) {
+					updateCheckBoxes();
+					notifyListeners();
+				}
 			}
 		});
 		return this;
