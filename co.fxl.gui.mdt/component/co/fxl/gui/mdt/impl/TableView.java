@@ -265,8 +265,6 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 		}
 		queryList(constraints, new CallbackTemplate<IDeletableList<Object>>() {
 
-			private long time;
-
 			@Override
 			public void onSuccess(final IDeletableList<Object> queryList) {
 				if (painting)
