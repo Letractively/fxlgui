@@ -176,7 +176,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			selectionIsSetup = false;
 			container().clear();
 			topPanel();
-			if (rows.size() == 0) {
+			if (rows.size() == 0
+					&& (constraints == null || !constraints.isSpecified())) {
 				IVerticalPanel dock = container.add().panel().vertical();
 				if (topPanel == null)
 					topPanel = dock.add().panel().grid();
