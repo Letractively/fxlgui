@@ -19,8 +19,10 @@
 package co.fxl.gui.input.impl;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IContainer;
@@ -43,6 +45,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	private Heights heights = new Heights(0);
 	private ITextField textField;
 	private IPopUp popUp;
+	private Map<String, ICheckBox> checkBoxes = new HashMap<String, ICheckBox>();
 
 	MultiComboBoxWidgetImpl(IContainer container) {
 		textField = container.textField().visible(false);
@@ -67,7 +70,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 
 	@Override
 	public IMultiComboBoxWidget selection(String[] selection) {
-		this.selection = new LinkedList<String>(Arrays.asList(selection));
+		setSelection(selection);
 		StringBuilder b = new StringBuilder();
 		for (String s : selection) {
 			if (b.length() > 0)
@@ -78,6 +81,10 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 		for (IUpdateListener<String[]> l : listeners)
 			l.onUpdate(selection());
 		return this;
+	}
+
+	private void setSelection(String[] selection) {
+		this.selection = new LinkedList<String>(Arrays.asList(selection));
 	}
 
 	@Override
@@ -109,6 +116,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 			ICheckBox cb = v.add().panel().horizontal().align().begin().add()
 					.panel().horizontal().align().begin().add().checkBox()
 					.text(text);
+			checkBoxes.put(text, cb);
 			cb.addUpdateListener(new IUpdateListener<Boolean>() {
 				@Override
 				public void onUpdate(Boolean value) {
@@ -159,10 +167,22 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 					if (!result.contains(t))
 						selection.remove(t);
 				}
-				selection(selection());
+				for (String t : result) {
+					if (!selection.contains(t))
+						selection.add(t);
+				}
+				updateCheckBoxes();
 			}
 		});
 		return this;
+	}
+
+	private void updateCheckBoxes() {
+		for (String t : texts) {
+			ICheckBox cb = checkBoxes.get(t);
+			if (cb != null)
+				cb.checked(selection.contains(t));
+		}
 	}
 
 	@Override
