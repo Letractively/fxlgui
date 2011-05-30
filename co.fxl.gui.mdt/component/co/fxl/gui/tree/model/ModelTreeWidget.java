@@ -50,7 +50,7 @@ import co.fxl.gui.tree.api.ITreeWidget;
 
 public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
-//	private static final String LOCK = "Lock";
+	// private static final String LOCK = "Lock";
 	private static final int SPLIT_POSITION = 250;
 	private static final boolean LAZY_LOAD = false;
 	private boolean showRefresh = true;
@@ -635,12 +635,12 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		ITree<T> selection = model.selection();
 		if (reorder != null) {
 			reorder.clickable(model.allowMove() && !moveActive);
-//			if (model.allowMove()) {
-//				ModelTreeNode<T> node = 
-//					model.node(selection);
-//				if (node != null)
-//					reorder.label(moveActive ? LOCK : "Move");
-//			}
+			// if (model.allowMove()) {
+			// ModelTreeNode<T> node =
+			// model.node(selection);
+			// if (node != null)
+			// reorder.label(moveActive ? LOCK : "Move");
+			// }
 		}
 		String[] creatableTypes = model.getCreatableTypes();
 		List<String> ctypes = creatableTypes != null ? Arrays
@@ -829,6 +829,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	private ITreeWidget<T> navigation(int j) {
 		ITree<T> t = model.selection();
 		int i = t.parent().children().indexOf(t);
+		assert i >= 0 : t + " not found in " + t.parent().children();
 		ITree<T> c = t.parent().children().get(i + j);
 		model.selection(c);
 		return this;
