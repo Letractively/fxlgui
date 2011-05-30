@@ -114,7 +114,7 @@ public interface IMasterDetailTableWidget<T> {
 
 	IStateMemento getState(IStatePacker<T> packer);
 
-	IStateMemento createNavigationState();
+	IStateMemento createNavigationState(boolean addRegisterFilterConstraints);
 
 	IMasterDetailTableWidget<T> setState(IStateMemento state);
 

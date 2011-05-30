@@ -57,6 +57,7 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 	private Object selectionObject;
 	private String createType;
 	private boolean create;
+	IFilterConstraints relationDecoratorFilterConstraints;
 
 	DetailView(final MasterDetailTableWidgetImpl widget, Object sshow,
 			boolean create, String createType) {

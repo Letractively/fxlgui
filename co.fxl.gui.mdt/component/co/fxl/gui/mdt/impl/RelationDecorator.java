@@ -151,6 +151,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 
 					@Override
 					public void onApply(IFilterConstraints constraints) {
+						detailView.relationDecoratorFilterConstraints = constraints;
 						relation.adapter.valueOf(node, constraints,
 								new CallbackTemplate<IDeletableList<Object>>() {
 

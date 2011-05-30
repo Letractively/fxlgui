@@ -633,7 +633,11 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	}
 
 	@Override
-	public IStateMemento createNavigationState() {
-		return new StateMementoImpl();
+	public IStateMemento createNavigationState(
+			boolean addRegisterFilterConstraints) {
+		StateMementoImpl stateMementoImpl = new StateMementoImpl();
+		if (addRegisterFilterConstraints && activeView instanceof DetailView)
+			stateMementoImpl.constraints = ((DetailView) activeView).relationDecoratorFilterConstraints;
+		return stateMementoImpl;
 	}
 }
