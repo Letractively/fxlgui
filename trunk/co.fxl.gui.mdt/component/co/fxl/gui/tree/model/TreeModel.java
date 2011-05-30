@@ -62,6 +62,7 @@ class TreeModel<T> {
 		if (selection != null) {
 			ModelTreeNode<T> node = node(tree);
 			node.selected(true);
+			selection = node.tree;
 		}
 		if (setDetailViewTree)
 			widget.setDetailViewTree(this.selection);
@@ -89,6 +90,10 @@ class TreeModel<T> {
 			assert node != null : selection + " not found";
 			selection(node.tree);
 		}
+	}
+
+	boolean isSelected(ITree<T> t) {
+		return t.equals(selection);
 	}
 
 	ITree<T> cutCopy() {
@@ -169,6 +174,7 @@ class TreeModel<T> {
 			widget.setDetailViewTree(selection);
 		} else if (selection != null
 				&& selection.object().equals(node.tree.object())) {
+			selection = node.tree;
 			node.selected(true);
 			widget.setDetailViewTree(selection);
 		}
