@@ -526,7 +526,8 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				public void onSuccess(Boolean result) {
 					if (result)
 						expand(tree.object(), true);
-					setLoadedDetailViewTree(tree);
+					else
+						setLoadedDetailViewTree(tree);
 				}
 			});
 		} else {
