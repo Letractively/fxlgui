@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import co.fxl.gui.tree.api.ITree;
+import co.fxl.gui.tree.api.ITree.ILazyList;
 
 class TreeModel<T> {
 
@@ -42,20 +43,41 @@ class TreeModel<T> {
 	}
 
 	void selection(ITree<T> tree) {
-		if (this.selection != null) {
-			if (this.selection.equals(tree)) {
+		selection(tree, true);
+	}
+
+	void selection(ITree<T> tree, boolean setDetailViewTree) {
+		if (selection != null) {
+			if (selection.equals(tree)) {
 				return;
 			} else {
-				node(this.selection).selected(false);
+				node(selection).selected(false);
 			}
 		}
-		if (this.selection != null && !this.selection.equals(tree)) {
-			node(this.selection).selected(false);
+		if (root.equals(tree) && !widget.showRoot) {
+			tree = null;
 		}
-		this.selection = tree;
-		ModelTreeNode<T> node = node(tree);
-		node.selected(true);
-		widget.setDetailViewTree(tree);
+		selection = tree;
+		if (selection != null) {
+			ModelTreeNode<T> node = node(tree);
+			node.selected(true);
+		}
+		if (setDetailViewTree)
+			widget.setDetailViewTree(this.selection);
+	}
+
+	ITree<T> nextSelection(ITree<T> tree) {
+		ILazyList<ITree<T>> children = tree.parent().children();
+		int index = children.indexOf(tree);
+		if (index < children.size() - 1) {
+			index++;
+		} else if (index > 0) {
+			index--;
+		} else {
+			return tree.parent();
+		}
+		tree = children.get(index);
+		return tree;
 	}
 
 	void selection(Object selection) {
