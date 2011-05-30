@@ -57,7 +57,6 @@ class ModelTreeNode<T> extends LazyClickListener {
 	private IImage icon;
 	protected boolean isExpanded;
 	private IHorizontalPanel buttonPanel;
-	boolean moveActive = false;
 	private IImage moveTop;
 	private IImage moveUp;
 	private IImage moveDown;
@@ -160,12 +159,12 @@ class ModelTreeNode<T> extends LazyClickListener {
 			tree.decorator().decorate(label);
 		buttonPanel.clear();
 		injectTreeListener();
-		if (moveActive && tree.isMovable()) {
-			setUpMoveButtons();
+		if (widget.moveActive && tree.isMovable()) {
+			addMoveButtons();
 		}
 	}
 
-	void setUpMoveButtons() {
+	void addMoveButtons() {
 		int index = tree.parent().children().indexOf(tree);
 		int num = tree.parent().children().size();
 		if (gridButton != null)
@@ -225,11 +224,19 @@ class ModelTreeNode<T> extends LazyClickListener {
 					}
 				}).mouseLeft();
 		moveBottom.clickable(index < num - 1);
+		buttonPanel.addSpace(4);
+		buttonPanel.add().image().resource("accept.png")
+				.addClickListener(new IClickListener() {
+					@Override
+					public void onClick() {
+						widget.model.moveStop();
+					}
+				}).mouseLeft();
 	}
 
 	private void updateParent() {
 		widget.model.refresh(tree.parent(), true);
-		widget.model.node(tree).moveActive = true;
+		widget.moveActive = true;
 		widget.notifyUpdate(widget.model.selection().object());
 	}
 

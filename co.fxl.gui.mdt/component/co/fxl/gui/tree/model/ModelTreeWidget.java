@@ -50,6 +50,7 @@ import co.fxl.gui.tree.api.ITreeWidget;
 
 public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
+//	private static final String LOCK = "Lock";
 	private static final int SPLIT_POSITION = 250;
 	private static final boolean LAZY_LOAD = false;
 	private boolean showRefresh = true;
@@ -210,6 +211,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	boolean showRoot = true;
 	private LazyScrollListener<T> scrollListener = new LazyScrollListener<T>(
 			this);
+	boolean moveActive = false;
 
 	ModelTreeWidget(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel(), true).space(0)
@@ -632,12 +634,13 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 			delete.clickable(model.allowDelete());
 		ITree<T> selection = model.selection();
 		if (reorder != null) {
-			reorder.clickable(model.allowMove());
-			if (model.allowMove()) {
-				ModelTreeNode<T> node = model.node(selection);
-				if (node != null)
-					reorder.label(node.moveActive ? "Lock" : "Move");
-			}
+			reorder.clickable(model.allowMove() && !moveActive);
+//			if (model.allowMove()) {
+//				ModelTreeNode<T> node = 
+//					model.node(selection);
+//				if (node != null)
+//					reorder.label(moveActive ? LOCK : "Move");
+//			}
 		}
 		String[] creatableTypes = model.getCreatableTypes();
 		List<String> ctypes = creatableTypes != null ? Arrays

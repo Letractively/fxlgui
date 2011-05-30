@@ -51,6 +51,7 @@ class TreeModel<T> {
 			if (selection.equals(tree)) {
 				return;
 			} else {
+				widget.moveActive = false;
 				node(selection).selected(false);
 			}
 		}
@@ -147,9 +148,14 @@ class TreeModel<T> {
 	}
 
 	void move() {
-		boolean moveActive = node(selection).moveActive;
-		widget.reorder.label(moveActive ? "Move" : "Lock");
-		node(selection).moveActive = !node(selection).moveActive;
+		widget.moveActive = true;
+		widget.reorder.clickable(false);
+		refresh(selection);
+	}
+
+	public void moveStop() {
+		widget.moveActive = false;
+		widget.reorder.clickable(true);
 		refresh(selection);
 	}
 
