@@ -76,12 +76,12 @@ class ModelTreeNode<T> extends LazyClickListener {
 		this.panel = panel.add().panel().vertical();
 		this.tree = root;
 		this.depth = depth;
-		widget.model.register(this);
 		if (!draw) {
 			int height = numberLoadedDescendants(tree) + 1;
 			this.panel.height(height * 22);
 		} else
 			draw();
+		widget.model.register(this);
 	}
 
 	private int numberLoadedDescendants(ITree<T> tree) {
@@ -170,6 +170,8 @@ class ModelTreeNode<T> extends LazyClickListener {
 		int num = tree.parent().children().size();
 		if (gridButton != null)
 			buttonPanel.addSpace(4);
+		boolean allowMove = widget.moveActive && widget.model.allowMove(tree)
+				&& widget.model.isSelected(tree);
 		IHorizontalPanel movePanel = buttonPanel;
 		moveTop = movePanel.add().image().resource("top.png")
 				.addClickListener(new IClickListener() {
@@ -182,7 +184,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 							}
 						});
 					}
-				}).mouseLeft();
+				}).mouseLeft().visible(allowMove);
 		moveTop.clickable(index > 0);
 		movePanel.addSpace(4);
 		moveUp = movePanel.add().image().resource("up.png")
@@ -196,7 +198,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 							}
 						});
 					}
-				}).mouseLeft();
+				}).mouseLeft().visible(allowMove);
 		moveUp.clickable(index > 0);
 		movePanel.addSpace(4);
 		moveDown = movePanel.add().image().resource("down.png")
@@ -210,7 +212,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 							}
 						});
 					}
-				}).mouseLeft();
+				}).mouseLeft().visible(allowMove);
 		moveDown.clickable(index < num - 1);
 		movePanel.addSpace(4);
 		moveBottom = movePanel.add().image().resource("bottom.png")
@@ -224,7 +226,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 							}
 						});
 					}
-				}).mouseLeft();
+				}).mouseLeft().visible(allowMove);
 		moveBottom.clickable(index < num - 1);
 		movePanel.addSpace(4);
 		acceptMove = movePanel.add().image().resource("accept.png")
@@ -233,12 +235,12 @@ class ModelTreeNode<T> extends LazyClickListener {
 					public void onClick() {
 						widget.model.moveStop();
 					}
-				}).mouseLeft();
+				}).mouseLeft().visible(allowMove);
 	}
 
 	private void updateParentAfterMove() {
 		widget.model.refresh(tree.parent(), true);
-		widget.notifyUpdate(widget.model.selection().object());
+//		widget.notifyUpdate(widget.model.selection().object());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -286,10 +288,8 @@ class ModelTreeNode<T> extends LazyClickListener {
 
 	ModelTreeNode<T> refresh(boolean refreshChildren) {
 		update(null);
-		if (!refreshChildren)
-			return this;
-		expand();
-		expand();
+		if (refreshChildren)
+			expand();
 		return this;
 	}
 
