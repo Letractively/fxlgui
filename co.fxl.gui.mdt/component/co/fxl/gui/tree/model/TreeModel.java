@@ -51,7 +51,7 @@ class TreeModel<T> {
 			if (selection.equals(tree)) {
 				return;
 			} else {
-				widget.moveActive = false;
+				// widget.moveActive = false;
 				node(selection).selected(false);
 			}
 		}
@@ -213,6 +213,8 @@ class TreeModel<T> {
 			return false;
 		if (selection == null)
 			return false;
+		if (selection.isNew())
+			return false;
 		if (!isCopy) {
 			return cutCopy.isReassignableTo(selection);
 		} else {
@@ -223,12 +225,12 @@ class TreeModel<T> {
 	boolean allowCut() {
 		if (selection == null)
 			return false;
-		return selection.isReassignable();
+		return selection.isReassignable() && !selection.isNew();
 	}
 
 	boolean allowCopy() {
 		if (selection == null)
 			return false;
-		return selection.isCopieable();
+		return selection.isCopieable() && !selection.isNew();
 	}
 }

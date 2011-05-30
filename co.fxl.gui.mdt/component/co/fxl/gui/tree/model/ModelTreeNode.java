@@ -64,6 +64,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 	private IVerticalPanel panel;
 	boolean drawn;
 	private IClickable<?> gridButton;
+	private IHorizontalPanel movePanel;
 
 	// TODO FEATURE: Option: Usability: Click on cursor left / right expands /
 	// collapses tree node
@@ -159,7 +160,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 			tree.decorator().decorate(label);
 		buttonPanel.clear();
 		injectTreeListener();
-		if (widget.moveActive && tree.isMovable()) {
+		if (tree.isMovable()) {
 			addMoveButtons();
 		}
 	}
@@ -169,74 +170,75 @@ class ModelTreeNode<T> extends LazyClickListener {
 		int num = tree.parent().children().size();
 		if (gridButton != null)
 			buttonPanel.addSpace(4);
-		moveTop = buttonPanel.add().image().resource("top.png")
+		movePanel = buttonPanel.add().panel().horizontal();
+		moveTop = movePanel.add().image().resource("top.png")
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
 						tree.moveTop(new CallbackTemplate<Void>() {
 							@Override
 							public void onSuccess(Void result) {
-								updateParent();
+								updateParentAfterMove();
 							}
 						});
 					}
 				}).mouseLeft();
 		moveTop.clickable(index > 0);
-		buttonPanel.addSpace(4);
-		moveUp = buttonPanel.add().image().resource("up.png")
+		movePanel.addSpace(4);
+		moveUp = movePanel.add().image().resource("up.png")
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
 						tree.moveUp(new CallbackTemplate<Void>() {
 							@Override
 							public void onSuccess(Void result) {
-								updateParent();
+								updateParentAfterMove();
 							}
 						});
 					}
 				}).mouseLeft();
 		moveUp.clickable(index > 0);
-		buttonPanel.addSpace(4);
-		moveDown = buttonPanel.add().image().resource("down.png")
+		movePanel.addSpace(4);
+		moveDown = movePanel.add().image().resource("down.png")
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
 						tree.moveDown(new CallbackTemplate<Void>() {
 							@Override
 							public void onSuccess(Void result) {
-								updateParent();
+								updateParentAfterMove();
 							}
 						});
 					}
 				}).mouseLeft();
 		moveDown.clickable(index < num - 1);
-		buttonPanel.addSpace(4);
-		moveBottom = buttonPanel.add().image().resource("bottom.png")
+		movePanel.addSpace(4);
+		moveBottom = movePanel.add().image().resource("bottom.png")
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
 						tree.moveBottom(new CallbackTemplate<Void>() {
 							@Override
 							public void onSuccess(Void result) {
-								updateParent();
+								updateParentAfterMove();
 							}
 						});
 					}
 				}).mouseLeft();
 		moveBottom.clickable(index < num - 1);
-		buttonPanel.addSpace(4);
-		buttonPanel.add().image().resource("accept.png")
+		movePanel.addSpace(4);
+		movePanel.add().image().resource("accept.png")
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
 						widget.model.moveStop();
 					}
 				}).mouseLeft();
+		movePanel.visible(widget.moveActive);
 	}
 
-	private void updateParent() {
+	private void updateParentAfterMove() {
 		widget.model.refresh(tree.parent(), true);
-		widget.moveActive = true;
 		widget.notifyUpdate(widget.model.selection().object());
 	}
 
@@ -388,6 +390,8 @@ class ModelTreeNode<T> extends LazyClickListener {
 		if (selected)
 			widget.scrollIntoView(this);
 		buttonPanel.visible(selected);
+		if (movePanel != null)
+			movePanel.visible(widget.moveActive && selected);
 	}
 
 	@Override
