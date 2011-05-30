@@ -18,10 +18,8 @@
  */
 package co.fxl.gui.api.template;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
@@ -47,8 +45,20 @@ public class WidgetTitle implements IClickListener {
 		public CommandLink(IHorizontalPanel iPanel, IImage image,
 				ILabel headerLabel) {
 			this.iPanel = iPanel;
+			noDoubleClicks(iPanel);
 			this.image = image;
+			noDoubleClicks(image);
 			this.label = headerLabel;
+			noDoubleClicks(label);
+		}
+
+		private void noDoubleClicks(IClickable<?> c) {
+			c.addClickListener(new IClickListener() {
+
+				@Override
+				public void onClick() {
+				}
+			}).doubleClick();
 		}
 
 		public CommandLink label(String l) {
@@ -97,8 +107,9 @@ public class WidgetTitle implements IClickListener {
 	private List<ILabel> labels = new LinkedList<ILabel>();
 	private List<IImage> images = new LinkedList<IImage>();
 	private int space = 10;
-	private Map<ILabel, Boolean> clickableState = new HashMap<ILabel, Boolean>();
-	private boolean holdOnClicks = false;
+	// private Map<ILabel, Boolean> clickableState = new HashMap<ILabel,
+	// Boolean>();
+	// private boolean holdOnClicks = false;
 	private IContainer bottomContainer;
 	private IHorizontalPanel commandPanelTop;
 	private boolean commandsOnTop = false;
@@ -121,17 +132,17 @@ public class WidgetTitle implements IClickListener {
 			panel.border().color().rgb(172, 197, 213);
 	}
 
-	public WidgetTitle holdOnClick() {
-		holdOnClicks = true;
-		return this;
-	}
+	// public WidgetTitle holdOnClick() {
+	// holdOnClicks = true;
+	// return this;
+	// }
 
-	public WidgetTitle reset() {
-		for (ILabel l : clickableState.keySet()) {
-			l.clickable(clickableState.get(l));
-		}
-		return this;
-	}
+	// public WidgetTitle reset() {
+	// for (ILabel l : clickableState.keySet()) {
+	// l.clickable(clickableState.get(l));
+	// }
+	// return this;
+	// }
 
 	public WidgetTitle space(int space) {
 		this.space = space;
@@ -146,12 +157,6 @@ public class WidgetTitle implements IClickListener {
 		this.foldable = foldable;
 		return this;
 	}
-
-	// static IColor decorateGradient(IVerticalPanel titlePanel) {
-	// IColor color = titlePanel.color().rgb(136, 136, 136).gradient()
-	// .vertical().rgb(113, 113, 113);
-	// return color;
-	// }
 
 	public WidgetTitle commandsOnTop() {
 		commandsOnTop = true;
@@ -262,24 +267,24 @@ public class WidgetTitle implements IClickListener {
 		}
 		final ILabel label = addHyperlinkLabel(text, iPanel);
 		labels.add(label);
-		if (holdOnClicks) {
-			IClickListener clickListener = new IClickListener() {
-
-				@Override
-				public void onClick() {
-					LinkedList<ILabel> ls = new LinkedList<ILabel>(
-							clickableState.keySet());
-					for (ILabel hyperlink : ls) {
-						clickableState.put(hyperlink, label.clickable());
-						hyperlink.clickable(false);
-					}
-				}
-			};
-			label.addClickListener(clickListener);
-			iPanel.addClickListener(clickListener);
-			image.addClickListener(clickListener);
-			clickableState.put(label, true);
-		}
+		// if (holdOnClicks) {
+		// IClickListener clickListener = new IClickListener() {
+		//
+		// @Override
+		// public void onClick() {
+		// LinkedList<ILabel> ls = new LinkedList<ILabel>(
+		// clickableState.keySet());
+		// for (ILabel hyperlink : ls) {
+		// clickableState.put(hyperlink, label.clickable());
+		// hyperlink.clickable(false);
+		// }
+		// }
+		// };
+		// label.addClickListener(clickListener);
+		// iPanel.addClickListener(clickListener);
+		// image.addClickListener(clickListener);
+		// clickableState.put(label, true);
+		// }
 		CommandLink cl = new CommandLink(iPanel0, image, label);
 		cl.clickable(true);
 		return cl;
