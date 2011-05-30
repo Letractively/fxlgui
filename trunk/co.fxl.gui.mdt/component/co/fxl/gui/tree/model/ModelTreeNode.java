@@ -64,7 +64,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 	private IVerticalPanel panel;
 	boolean drawn;
 	private IClickable<?> gridButton;
-	private IHorizontalPanel movePanel;
+	private IImage acceptMove;
 
 	// TODO FEATURE: Option: Usability: Click on cursor left / right expands /
 	// collapses tree node
@@ -170,7 +170,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 		int num = tree.parent().children().size();
 		if (gridButton != null)
 			buttonPanel.addSpace(4);
-		movePanel = buttonPanel.add().panel().horizontal();
+		IHorizontalPanel movePanel = buttonPanel;
 		moveTop = movePanel.add().image().resource("top.png")
 				.addClickListener(new IClickListener() {
 					@Override
@@ -227,7 +227,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 				}).mouseLeft();
 		moveBottom.clickable(index < num - 1);
 		movePanel.addSpace(4);
-		movePanel.add().image().resource("accept.png")
+		acceptMove = movePanel.add().image().resource("accept.png")
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
@@ -389,10 +389,15 @@ class ModelTreeNode<T> extends LazyClickListener {
 		if (selected)
 			widget.scrollIntoView(this);
 		buttonPanel.visible(selected);
-		boolean visible = widget.moveActive && selected
+		boolean allowMove = widget.moveActive && selected
 				&& widget.model.allowMove(tree);
-		if (movePanel != null)
-			movePanel.visible(visible);
+		if (moveUp != null) {
+			moveUp.visible(allowMove);
+			moveDown.visible(allowMove);
+			moveTop.visible(allowMove);
+			moveBottom.visible(allowMove);
+			acceptMove.visible(allowMove);
+		}
 	}
 
 	@Override
