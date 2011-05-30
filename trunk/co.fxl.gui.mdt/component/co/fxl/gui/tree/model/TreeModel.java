@@ -193,6 +193,10 @@ class TreeModel<T> {
 	}
 
 	boolean allowMove() {
+		return allowMove(selection);
+	}
+
+	boolean allowMove(ITree<T> selection) {
 		if (selection == null)
 			return false;
 		if (selection.equals(root))

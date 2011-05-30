@@ -234,7 +234,6 @@ class ModelTreeNode<T> extends LazyClickListener {
 						widget.model.moveStop();
 					}
 				}).mouseLeft();
-		movePanel.visible(widget.moveActive);
 	}
 
 	private void updateParentAfterMove() {
@@ -390,8 +389,10 @@ class ModelTreeNode<T> extends LazyClickListener {
 		if (selected)
 			widget.scrollIntoView(this);
 		buttonPanel.visible(selected);
+		boolean visible = widget.moveActive && selected
+				&& widget.model.allowMove(tree);
 		if (movePanel != null)
-			movePanel.visible(widget.moveActive && selected);
+			movePanel.visible(visible);
 	}
 
 	@Override
