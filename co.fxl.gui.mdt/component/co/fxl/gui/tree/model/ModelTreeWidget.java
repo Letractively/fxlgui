@@ -215,7 +215,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		widgetTitle = new WidgetTitle(layout.panel(), true).space(0)
 				.commandsOnTop();
 		widgetTitle.foldable(false);
-		widgetTitle.holdOnClick();
+		// widgetTitle.holdOnClick();
 	}
 
 	void addButtons() {
@@ -234,13 +234,13 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 						final CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>() {
 
 							public void onFail(Throwable throwable) {
-								widgetTitle.reset();
+								// widgetTitle.reset();
 								super.onFail(throwable);
 							}
 
 							@Override
 							public void onSuccess(ITree<T> result) {
-								widgetTitle.reset();
+								// widgetTitle.reset();
 								if (parent != null) {
 									model.refresh(result.parent(), true);
 								} else
@@ -282,7 +282,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				cut.addClickListener(new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
-						widgetTitle.reset();
+						// widgetTitle.reset();
 						model.cutCopy(false);
 					}
 				});
@@ -290,7 +290,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				copy.addClickListener(new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
-						widgetTitle.reset();
+						// widgetTitle.reset();
 						model.cutCopy(true);
 					}
 				});
@@ -305,7 +305,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 								new CallbackTemplate<ITree<T>>() {
 									@Override
 									public void onSuccess(ITree<T> result) {
-										widgetTitle.reset();
+										// widgetTitle.reset();
 										paste.clickable(false);
 										model.refresh(p1, true);
 										model.refresh(p2, true);
@@ -336,11 +336,13 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 						public void onClick() {
 							final ITree<T> tree = model.selection();
 							final ITree<T> parent = tree.parent();
+							final ITree<T> nextSelection = model
+									.nextSelection(tree);
 							ICallback<T> callback = new CallbackTemplate<T>() {
 
 								@Override
 								public void onSuccess(T result) {
-									model.selection(parent);
+									model.selection(nextSelection, false);
 									model.refresh(parent, true);
 								}
 							};
@@ -350,7 +352,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 					dl.addButton().no().addClickListener(new IClickListener() {
 						@Override
 						public void onClick() {
-							widgetTitle.reset();
+							// widgetTitle.reset();
 						}
 					});
 					dl.visible(true);
@@ -364,7 +366,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 					@Override
 					public void onAllowedClick() {
 						((RefreshListener) ModelTreeWidget.this).onRefresh();
-						widgetTitle.reset();
+						// widgetTitle.reset();
 					}
 				});
 		}
@@ -427,12 +429,15 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> root(ITree<T> tree) {
-		if (previousSelection == null)
-			if (showRoot) {
+		if (previousSelection == null) {
+			if (model != null) {
+				previousSelection = model.selection().object();
+			} else if (showRoot) {
 				previousSelection = tree.object();
 			} else if (tree.children().size() > 0) {
 				previousSelection = tree.children().get(0).object();
 			}
+		}
 		scrollListener.active = false;
 		addButtons();
 		IVerticalPanel panel2 = panel();
