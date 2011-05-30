@@ -68,8 +68,13 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	@Override
 	public IMultiComboBoxWidget selection(String[] selection) {
 		this.selection = new LinkedList<String>(Arrays.asList(selection));
-		textField.text(this.selection.toString().substring(1,
-				this.selection.toString().length() - 1));
+		StringBuilder b = new StringBuilder();
+		for (String s : selection) {
+			if (b.length() > 0)
+				b.append(";");
+			b.append(s);
+		}
+		textField.text(b.toString());
 		for (IUpdateListener<String[]> l : listeners)
 			l.onUpdate(selection());
 		return this;
@@ -145,6 +150,18 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	public IMultiComboBoxWidget visible(boolean visible) {
 		textField.visible(visible);
 		textField.addFocusListener(this);
+		textField.addUpdateListener(new IUpdateListener<String>() {
+			@Override
+			public void onUpdate(String value) {
+				List<String> result = new LinkedList<String>(Arrays
+						.asList(extract(value)));
+				for (String t : texts) {
+					if (!result.contains(t))
+						selection.remove(t);
+				}
+				selection(selection());
+			}
+		});
 		return this;
 	}
 
@@ -153,7 +170,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 		validation.validate(textField, new IValidation<String>() {
 			@Override
 			public boolean validate(String trim) {
-				String[] s = trim.split(", ");
+				String[] s = extract(trim);
 				List<String> tokens = new LinkedList<String>(texts);
 				for (String s0 : s) {
 					boolean r = tokens.remove(s0);
@@ -164,5 +181,9 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 			}
 		});
 		return this;
+	}
+
+	private String[] extract(String value) {
+		return value.split(";");
 	}
 }
