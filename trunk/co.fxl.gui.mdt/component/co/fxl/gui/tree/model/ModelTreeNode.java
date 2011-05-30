@@ -47,7 +47,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 	private IVerticalPanel childrenPanel = null;
 	ITree<T> tree;
 	private int depth;
-	private IImage image;
+	IImage image;
 	private ModelTreeWidget<T> widget;
 	IHorizontalPanel container;
 	private IImage imageRefresh;

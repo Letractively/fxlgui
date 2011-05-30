@@ -472,7 +472,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	void scrollIntoView(ModelTreeNode<T> node) {
-		leftScrollPane.scrollIntoView(node.container);
+		leftScrollPane.scrollIntoView(node.image);
 	}
 
 	private int painted = 0;
