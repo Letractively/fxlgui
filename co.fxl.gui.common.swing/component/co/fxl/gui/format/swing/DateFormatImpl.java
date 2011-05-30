@@ -34,9 +34,11 @@ class DateFormatImpl implements IFormat<Date> {
 
 	@Override
 	public String format(Date object) {
+		if (object == null)
+			return "";
 		return impl.format(object);
 	}
-	
+
 	@Override
 	public String format(Date object, String pFormat) {
 		SimpleDateFormat lFormat = new SimpleDateFormat(pFormat);
