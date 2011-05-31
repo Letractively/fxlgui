@@ -21,35 +21,35 @@ package co.fxl.gui.mdt.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.Styles;
+import co.fxl.gui.api.template.Heights;
 import co.fxl.gui.api.template.WidgetTitle;
+import co.fxl.gui.mdt.impl.ViewWidget.ViewConfiguration;
 
-public class ViewWidget {
+public class ViewWidget implements IUpdateable<ViewConfiguration> {
 
 	// TODO ...
 
-	private static final String PLEASE_CHOOSE_FILTER = "Please choose filter";
-
-	public class Link implements IClickable<Object> {
+	public class Link implements IClickable<Object>, IUpdateable<String> {
 
 		IImage image;
 		private ILabel label;
 		private IHorizontalPanel panel;
 		private List<ILabel> additionalLabels = new LinkedList<ILabel>();
+		private IComboBox cb;
 
 		private Link(IHorizontalPanel panel, IImage image, ILabel textLabel) {
 			this.panel = panel;
 			this.image = image;
 			this.label = textLabel;
-			clickable(true);
 		}
 
 		public Link text(String text) {
@@ -64,6 +64,8 @@ public class ViewWidget {
 			for (ILabel l : additionalLabels)
 				l.clickable(clickable);
 			panel.clickable(clickable);
+			if (cb != null)
+				cb.visible(!clickable);
 			return this;
 		}
 
@@ -74,21 +76,20 @@ public class ViewWidget {
 
 		@Override
 		public co.fxl.gui.api.IClickable.IKey<Object> addClickListener(
-				co.fxl.gui.api.IClickable.IClickListener clickListener) {
+				final co.fxl.gui.api.IClickable.IClickListener c0) {
+			IClickListener clickListener = new IClickListener() {
+				@Override
+				public void onClick() {
+					for (Link l : links)
+						l.clickable(l != Link.this);
+					c0.onClick();
+				}
+			};
 			label.addClickListener(clickListener);
 			if (image != null)
 				image.addClickListener(clickListener);
 			panel.addClickListener(clickListener);
 			return null;
-		}
-
-		public ILabel addHyperlink(String text) {
-			panel.addSpace(4);
-			ILabel label = panel.add().label().text("|");
-			Styles.instance().separator(label);
-			ILabel l = panel.addSpace(4).add().label().text(text).hyperlink();
-			additionalLabels.add(l);
-			return l;
 		}
 
 		public void imageResource(String string) {
@@ -98,35 +99,125 @@ public class ViewWidget {
 		public void width(int i) {
 			panel.width(i);
 		}
+
+		void comboBox(IComboBox cb) {
+			this.cb = cb;
+		}
+
+		@Override
+		public IUpdateable<String> addUpdateListener(
+				co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
+			if (cb != null)
+				cb.addUpdateListener(listener);
+			return this;
+		}
+
+		public String cbText() {
+			if (cb == null)
+				return null;
+			if (cb.text().equals(PLEASE_CHOOSE_FILTER))
+				return null;
+			return cb.text();
+		}
 	}
 
+	public enum ViewType {
+		TABLE, DETAILS;
+	}
+
+	public enum ActionType {
+		VIEW_CHANGED, CONFIGURATION_CHANGED, REFRESH;
+	}
+
+	public class ViewConfiguration {
+
+		public ViewType viewType;
+		public String configuration;
+		public ActionType viewChanged;
+
+		public String toString() {
+			return viewType + " " + configuration + " " + viewChanged;
+		}
+	}
+
+	private static final String PLEASE_CHOOSE_FILTER = "Please choose filter";
+	private static final Heights HEIGHTS = new Heights(0);
 	private WidgetTitle widgetTitle;
 	private IVerticalPanel panel;
-	private boolean hasLinks;
+	private List<Link> links = new LinkedList<Link>();
+	private List<IUpdateListener<ViewConfiguration>> listeners = new LinkedList<IUpdateListener<ViewConfiguration>>();
 
 	public ViewWidget(ILayout layout, List<String> configurations) {
 		widgetTitle = new WidgetTitle(layout, true);
 		widgetTitle.space(2);
-		addComboBoxLink("grid.png", "Table", configurations.get(0),
-				configurations);
+		widgetTitle.addTitle("VIEWS");
+		panel = widgetTitle.content().panel().vertical().spacing(6);
+		final Link table = addComboBoxLink("accept.png", "Table",
+				configurations.get(0), configurations);
 		List<String> options = new LinkedList<String>(configurations);
 		if (!options.isEmpty())
 			options.add(0, PLEASE_CHOOSE_FILTER);
-		addComboBoxLink("detail.png", "Detail", PLEASE_CHOOSE_FILTER, options);
-		widgetTitle.addTitle("VIEWS");
-		panel = widgetTitle.content().panel().vertical().spacing(6);
+		final Link details = addComboBoxLink("add.png", "Detail",
+				PLEASE_CHOOSE_FILTER, options);
+		links.add(table);
+		table.addClickListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				fire(ViewType.TABLE, table, ActionType.VIEW_CHANGED);
+			}
+		});
+		table.addUpdateListener(new IUpdateListener<String>() {
+			@Override
+			public void onUpdate(String value) {
+				fire(ViewType.TABLE, table, ActionType.CONFIGURATION_CHANGED);
+			}
+		});
+		links.add(details);
+		details.addClickListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				fire(ViewType.DETAILS, details, ActionType.VIEW_CHANGED);
+			}
+		});
+		details.addUpdateListener(new IUpdateListener<String>() {
+			@Override
+			public void onUpdate(String value) {
+				fire(ViewType.DETAILS, details,
+						ActionType.CONFIGURATION_CHANGED);
+			}
+		});
+		table.clickable(false);
+		details.clickable(true);
+		widgetTitle.addHyperlink("refresh.png", "Refresh").addClickListener(
+				new IClickListener() {
+					@Override
+					public void onClick() {
+						fire(details.clickable() ? ViewType.TABLE
+								: ViewType.DETAILS, details.clickable() ? table
+								: details, ActionType.REFRESH);
+					}
+				});
 	}
 
-	public Link addHyperlink(String imageResource) {
-		IHorizontalPanel panel = addPanel();
-		IImage image = addImage(panel, imageResource);
-		ILabel textLabel = addTextLabel(panel);
-		return new Link(panel, image, textLabel);
+	private void fire(ViewType viewType, Link link, ActionType b) {
+		for (IUpdateListener<ViewConfiguration> listener : listeners) {
+			ViewConfiguration cfg = new ViewConfiguration();
+			cfg.viewType = viewType;
+			cfg.configuration = link.cbText();
+			cfg.viewChanged = b;
+			listener.onUpdate(cfg);
+		}
+	}
+
+	@Override
+	public IUpdateable<ViewConfiguration> addUpdateListener(
+			co.fxl.gui.api.IUpdateable.IUpdateListener<ViewConfiguration> listener) {
+		listeners.add(listener);
+		return this;
 	}
 
 	protected ILabel addTextLabel(IHorizontalPanel panel) {
-		final ILabel textLabel = panel.add().label().hyperlink();
-		return textLabel;
+		return panel.add().label().hyperlink();
 	}
 
 	Link addComboBoxLink(String imageResource, String title, String option,
@@ -140,10 +231,12 @@ public class ViewWidget {
 		l.text(title);
 		if (!options.isEmpty()) {
 			IComboBox cb = panel.addSpace(8).add().comboBox();
+			HEIGHTS.decorate(cb);
 			cb.width(202);
 			for (String o : options)
 				cb.addText(o);
 			cb.text(option);
+			l.comboBox(cb);
 		}
 		return l;
 	}
@@ -156,18 +249,9 @@ public class ViewWidget {
 	}
 
 	protected IHorizontalPanel addPanel() {
-		IVerticalPanel p = this.panel.add().panel().vertical().spacing(2);
-		if (hasLinks) {
-			p.addSpace(3);
-		}
-		IHorizontalPanel panel = p.add().panel().horizontal().align().begin()// .addSpace(6)
+		IVerticalPanel p = panel.add().panel().vertical();
+		IHorizontalPanel panel = p.add().panel().horizontal().align().begin()
 				.add().panel().horizontal().align().begin();
-		if (hasLinks) {
-			IBorder border = p.border();
-			border.color().rgb(172, 197, 213);
-			border.style().top();
-		}
-		hasLinks = true;
 		return panel;
 	}
 
