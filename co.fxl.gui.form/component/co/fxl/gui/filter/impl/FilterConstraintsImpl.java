@@ -268,9 +268,14 @@ class FilterConstraintsImpl implements IFilterConstraints {
 
 	@Override
 	public boolean isSpecified() {
-		return !constraints.isEmpty()
+		return isConstraintSpecified()
 				|| size != (Integer) FilterWidgetImpl.DEFAULT_SIZES.get(0)
 				|| sortOrder != null;
+	}
+
+	@Override
+	public boolean isConstraintSpecified() {
+		return !constraints.isEmpty();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -282,6 +287,11 @@ class FilterConstraintsImpl implements IFilterConstraints {
 					(IDoubleRangeConstraint) iNamedConstraint);
 		}
 		return (IRange<Long>) iNamedConstraint;
+	}
+
+	@Override
+	public void configuration(String configuration) {
+		this.cfg = configuration;
 	}
 
 }

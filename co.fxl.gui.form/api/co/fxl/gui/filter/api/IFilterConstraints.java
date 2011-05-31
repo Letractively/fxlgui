@@ -92,4 +92,8 @@ public interface IFilterConstraints {
 	void clear();
 
 	boolean isSpecified();
+
+	boolean isConstraintSpecified();
+
+	void configuration(String configuration);
 }
