@@ -150,4 +150,9 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 	public T tooltip(String tooltip) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public T offset(int x, int y) {
+		throw new MethodNotImplementedException();
+	}
 }

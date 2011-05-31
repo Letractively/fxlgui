@@ -155,4 +155,9 @@ class AndroidScrollPane implements IScrollPane, Parent {
 	public int scrollOffset() {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public IScrollPane offset(int x, int y) {
+		throw new MethodNotImplementedException();
+	}
 }
