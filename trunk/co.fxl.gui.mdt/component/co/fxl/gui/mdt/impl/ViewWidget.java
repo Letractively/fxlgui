@@ -155,22 +155,26 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 	private Link table;
 
 	public ViewWidget(ILayout layout, List<String> configurations,
-			boolean optionalForDetail, boolean neverShowFilter) {
+			String configuration, boolean optionalForDetail,
+			boolean neverShowFilter) {
 		widgetTitle = new WidgetTitle(layout, true);
 		widgetTitle.space(2);
 		widgetTitle.addTitle("VIEWS");
 		panel = widgetTitle.content().panel().vertical().spacing(6);
-		table = addComboBoxLink("grid.png", "Table",
-				configurations.isEmpty() ? null : configurations.get(0),
-				configurations);
+		String tableC = configuration;
+		if (tableC == null)
+			tableC = configurations.isEmpty() ? null : configurations.get(0);
+		table = addComboBoxLink("grid.png", "Table", tableC, configurations);
 		List<String> options = new LinkedList<String>(configurations);
 		boolean hasOptional = optionalForDetail && !options.isEmpty();
 		if (hasOptional)
 			options.add(0, PLEASE_CHOOSE_FILTER);
 		if (neverShowFilter)
 			options.clear();
-		details = addComboBoxLink("detail.png", "Detail",
-				options.isEmpty() ? null : options.get(0), options);
+		String detailC = configuration;
+		if (detailC == null)
+			detailC = options.isEmpty() ? null : options.get(0);
+		details = addComboBoxLink("detail.png", "Detail", detailC, options);
 		links.add(table);
 		table.addClickListener(new LazyClickListener() {
 			@Override

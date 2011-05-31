@@ -94,4 +94,10 @@ class StateMementoImpl implements IStateMemento {
 	public IFilterConstraints constraints() {
 		return constraints;
 	}
+
+	@Override
+	public IStateMemento configuration(String configuration) {
+		this.configuration = configuration;
+		return this;
+	}
 }
