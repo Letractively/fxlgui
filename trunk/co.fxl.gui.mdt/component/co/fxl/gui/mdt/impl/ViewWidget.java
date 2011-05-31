@@ -250,7 +250,7 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 		if (!options.isEmpty()) {
 			IComboBox cb = panel.addSpace(6).add().comboBox();
 			HEIGHTS.decorate(cb);
-			cb.width(232);
+			cb.width(220);
 			for (String o : options)
 				cb.addText(o);
 			cb.text(option);
