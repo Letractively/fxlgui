@@ -144,14 +144,17 @@ public class CommandButtonsImpl implements ICommandButtons,
 
 		private IImage image;
 		private ILabel label;
+		private IHorizontalPanel p;
 
 		Link(IHorizontalPanel p, IImage image, ILabel label) {
+			this.p = p;
 			this.image = image;
 			this.label = label;
 		}
 
 		@Override
 		public Link clickable(boolean clickable) {
+			p.clickable(clickable);
 			image.clickable(clickable);
 			label.clickable(clickable);
 			if (clickable) {
@@ -172,6 +175,7 @@ public class CommandButtonsImpl implements ICommandButtons,
 		@Override
 		public co.fxl.gui.api.IClickable.IKey<Link> addClickListener(
 				co.fxl.gui.api.IClickable.IClickListener clickListener) {
+			p.addClickListener(clickListener);
 			image.addClickListener(clickListener);
 			label.addClickListener(clickListener);
 			return null;
