@@ -146,7 +146,7 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 		}
 	}
 
-	private static final String PLEASE_CHOOSE_FILTER = "Please choose filter";
+	private static final String PLEASE_CHOOSE_FILTER = "Click to choose filter";
 	private static final Heights HEIGHTS = new Heights(0);
 	private WidgetTitle widgetTitle;
 	private IVerticalPanel panel;
