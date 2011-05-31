@@ -22,7 +22,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -31,6 +30,8 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.Heights;
+import co.fxl.gui.api.template.LazyClickListener;
+import co.fxl.gui.api.template.LazyUpdateListener;
 import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.mdt.impl.ViewWidget.ViewConfiguration;
 
@@ -160,28 +161,28 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 		final Link details = addComboBoxLink("details.png", "Detail",
 				PLEASE_CHOOSE_FILTER, options);
 		links.add(table);
-		table.addClickListener(new IClickListener() {
+		table.addClickListener(new LazyClickListener() {
 			@Override
-			public void onClick() {
+			public void onAllowedClick() {
 				fire(ViewType.TABLE, table, ActionType.VIEW_CHANGED);
 			}
 		});
-		table.addUpdateListener(new IUpdateListener<String>() {
+		table.addUpdateListener(new LazyUpdateListener<String>() {
 			@Override
-			public void onUpdate(String value) {
+			public void onAllowedUpdate(String value) {
 				fire(ViewType.TABLE, table, ActionType.CONFIGURATION_CHANGED);
 			}
 		});
 		links.add(details);
-		details.addClickListener(new IClickListener() {
+		details.addClickListener(new LazyClickListener() {
 			@Override
-			public void onClick() {
+			public void onAllowedClick() {
 				fire(ViewType.DETAILS, details, ActionType.VIEW_CHANGED);
 			}
 		});
-		details.addUpdateListener(new IUpdateListener<String>() {
+		details.addUpdateListener(new LazyUpdateListener<String>() {
 			@Override
-			public void onUpdate(String value) {
+			public void onAllowedUpdate(String value) {
 				fire(ViewType.DETAILS, details,
 						ActionType.CONFIGURATION_CHANGED);
 			}
@@ -189,9 +190,9 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 		table.clickable(false);
 		details.clickable(true);
 		widgetTitle.addHyperlink("refresh.png", "Refresh").addClickListener(
-				new IClickListener() {
+				new LazyClickListener() {
 					@Override
-					public void onClick() {
+					public void onAllowedClick() {
 						fire(details.clickable() ? ViewType.TABLE
 								: ViewType.DETAILS, details.clickable() ? table
 								: details, ActionType.REFRESH);
