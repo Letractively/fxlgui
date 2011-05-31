@@ -155,7 +155,7 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 	private Link table;
 
 	public ViewWidget(ILayout layout, List<String> configurations,
-			boolean optionalForDetail) {
+			boolean optionalForDetail, boolean neverShowFilter) {
 		widgetTitle = new WidgetTitle(layout, true);
 		widgetTitle.space(2);
 		widgetTitle.addTitle("VIEWS");
@@ -167,12 +167,10 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 		boolean hasOptional = optionalForDetail && !options.isEmpty();
 		if (hasOptional)
 			options.add(0, PLEASE_CHOOSE_FILTER);
-		details = addComboBoxLink(
-				"detail.png",
-				"Detail",
-				hasOptional ? PLEASE_CHOOSE_FILTER
-						: (configurations.isEmpty() ? null : configurations
-								.get(0)), options);
+		if (neverShowFilter)
+			options.clear();
+		details = addComboBoxLink("detail.png", "Detail",
+				options.isEmpty() ? null : options.get(0), options);
 		links.add(table);
 		table.addClickListener(new LazyClickListener() {
 			@Override
