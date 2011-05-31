@@ -226,13 +226,12 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 		IHorizontalPanel panel1 = panel.add().panel().horizontal();
 		IImage image = addImage(panel1, imageResource);
 		ILabel textLabel = addTextLabel(panel);
-		panel1.width(80);
 		Link l = new Link(panel1, image, textLabel);
 		l.text(title);
 		if (!options.isEmpty()) {
 			IComboBox cb = panel.addSpace(8).add().comboBox();
 			HEIGHTS.decorate(cb);
-			cb.width(202);
+			cb.width(222);
 			for (String o : options)
 				cb.addText(o);
 			cb.text(option);

@@ -31,8 +31,8 @@ public class ViewWidgetTest {
 
 	void run(IDisplay display) {
 		IVerticalPanel p = display.container().panel().vertical();
-		IVerticalPanel v = p.add().panel().horizontal().width(300).add()
-				.panel().vertical();
+		IVerticalPanel v = p.add().panel().dock().left().panel().vertical()
+				.width(300);
 		ViewWidget vw = new ViewWidget(v.add().panel(),
 				Arrays.asList(new String[] { "A", "B" }));
 		vw.addUpdateListener(new IUpdateListener<ViewWidget.ViewConfiguration>() {
