@@ -82,13 +82,17 @@ class TreeModel<T> {
 		return tree;
 	}
 
-	void selection(Object selection) {
+	void selection(T selection) {
 		if (root.object().equals(selection) && !widget.showRoot) {
-			selection = null;
+			this.selection = null;
 		} else {
 			ModelTreeNode<T> node = nodes.get(selection);
-			assert node != null : selection + " not found";
-			selection(node.tree);
+			if (node != null)
+				selection(node.tree);
+			else {
+				node(this.selection).selected(false);
+				widget.previousSelection = selection;
+			}
 		}
 	}
 
