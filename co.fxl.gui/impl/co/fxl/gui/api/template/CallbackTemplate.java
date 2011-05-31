@@ -20,7 +20,7 @@ package co.fxl.gui.api.template;
 
 public abstract class CallbackTemplate<T> implements ICallback<T> {
 
-	private ICallback<?> cb;
+	private ICallback<?> cb; 
 
 	public CallbackTemplate() {
 	}
