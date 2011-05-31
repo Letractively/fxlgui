@@ -156,7 +156,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	void addViewWidget(IVerticalPanel sidePanel) {
 		views = new ViewWidget(sidePanel.add().panel(), configurations,
-				!alwaysShowFilter);
+				!alwaysShowFilter, neverShowFilter);
 		if (!allowGridView)
 			views.visible(false);
 		views.addUpdateListener(new IUpdateListener<ViewWidget.ViewConfiguration>() {
