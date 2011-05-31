@@ -277,7 +277,8 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 		grid = mainPanel.filterGrid();
 		guiFilterElements.clear();
 		addFilters4Configuration(IFilterConstraints.COMMON);
-		if (!configuration.equals(IFilterConstraints.COMMON))
+		if (configuration != null
+				&& !configuration.equals(IFilterConstraints.COMMON))
 			addFilters4Configuration(configuration);
 		if (addSizeFilter) {
 			sizeFilter = (ComboBoxIntegerFilter) addFilter(Integer.class,
