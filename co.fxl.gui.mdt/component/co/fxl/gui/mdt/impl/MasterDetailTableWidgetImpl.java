@@ -118,6 +118,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	LinkedList<Object> preselection = new LinkedList<Object>();
 	ViewWidget views;
 	private IVerticalPanel filterPanel;
+	private boolean alwaysShowFilter;
+	private boolean neverShowFilter;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -153,7 +155,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	// http://gwt.google.com/samples/Showcase/Showcase.html#!CwMenuBar
 
 	void addViewWidget(IVerticalPanel sidePanel) {
-		views = new ViewWidget(sidePanel.add().panel(), configurations);
+		views = new ViewWidget(sidePanel.add().panel(), configurations,
+				!alwaysShowFilter);
 		if (!allowGridView)
 			views.visible(false);
 		views.addUpdateListener(new IUpdateListener<ViewWidget.ViewConfiguration>() {
@@ -163,8 +166,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 				if (constraints != null) {
 					constraints.configuration(configuration);
 				}
-				if (filterPanel != null)
-					filterPanel.visible(configuration != null);
+				udpateFilterPanel();
 				if (value.viewChanged.equals(ActionType.REFRESH)) {
 					queryList = null;
 					refresh(null);
@@ -279,7 +281,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	void setUpFilter(String configuration) {
 		filterPanel = sidePanel.add().panel().vertical();
-		if (filterList.filters.isEmpty() || !filterable)
+		if (neverShowFilter
+				|| (!alwaysShowFilter && (filterList.filters.isEmpty() || !filterable)))
 			filterPanel.visible(false);
 		filterWidget = (IFilterWidget) filterPanel.add().widget(
 				IFilterWidget.class);
@@ -439,7 +442,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	}
 
 	void showTableView(Object object) {
-		if (filterPanel != null)
+		if (filterPanel != null && !neverShowFilter)
 			filterPanel.visible(true);
 		views.showTable();
 		clear();
@@ -450,8 +453,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	DetailView showDetailView(Object show) {
 		clear();
-		if (filterPanel != null)
-			filterPanel.visible(configuration != null);
+		udpateFilterPanel();
 		DetailView dView = (DetailView) (activeView = new DetailView(this,
 				show, false, null));
 		activeView.updateLinks();
@@ -461,8 +463,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	public void showDetailView(Object show, boolean create, String createType) {
 		clear();
-		if (filterPanel != null)
-			filterPanel.visible(configuration != null);
+		udpateFilterPanel();
 		DetailView dView = (DetailView) (activeView = new DetailView(this,
 				show, create, createType));
 		activeView.updateLinks();
@@ -684,5 +685,23 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		if (addRegisterFilterConstraints && activeView instanceof DetailView)
 			stateMementoImpl.constraints = ((DetailView) activeView).relationDecoratorFilterConstraints;
 		return stateMementoImpl;
+	}
+
+	@Override
+	public IMasterDetailTableWidget<Object> alwaysShowFilter() {
+		this.alwaysShowFilter = true;
+		return this;
+	}
+
+	@Override
+	public IMasterDetailTableWidget<Object> neverShowFilter() {
+		this.neverShowFilter = true;
+		return this;
+	}
+
+	private void udpateFilterPanel() {
+		if (filterPanel != null)
+			filterPanel.visible(!neverShowFilter
+					&& (alwaysShowFilter || configuration != null));
 	}
 }
