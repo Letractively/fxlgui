@@ -31,7 +31,7 @@ import co.fxl.gui.filter.impl.Constraint.IRelationConstraint;
 import co.fxl.gui.filter.impl.Constraint.ISizeConstraint;
 import co.fxl.gui.filter.impl.Constraint.IStringPrefixConstraint;
 
-class FilterConstraintsImpl implements IFilterConstraints {
+public class FilterConstraintsImpl implements IFilterConstraints {
 
 	private class IntegerRangeConstraintImpl implements IRange<Integer> {
 
@@ -146,7 +146,7 @@ class FilterConstraintsImpl implements IFilterConstraints {
 	private boolean sortDirection = false;
 	private IRowIterator it = new RowIterator();
 
-	FilterConstraintsImpl(String configuration) {
+	public FilterConstraintsImpl(String configuration) {
 		cfg = configuration;
 	}
 
