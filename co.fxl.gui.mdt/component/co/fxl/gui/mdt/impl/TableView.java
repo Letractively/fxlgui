@@ -90,7 +90,8 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 				button.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
-						widget.r2.checked(true);
+//						widget.r2.checked(true);
+						widget.views.showDetails();
 						Object show = null;
 						List<Object> result = table.selection().result();
 						if (!result.isEmpty())
@@ -314,7 +315,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 
 							@Override
 							public void onClick(Object identifier, int rowIndex) {
-								widget.r2.checked(true);
+								widget.views.showDetails();
 								widget.showDetailView(identifier);
 							}
 						};

@@ -81,8 +81,7 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 			IClickListener clickListener = new IClickListener() {
 				@Override
 				public void onClick() {
-					for (Link l : links)
-						l.clickable(l != Link.this);
+					showActive();
 					c0.onClick();
 				}
 			};
@@ -120,6 +119,11 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 				return null;
 			return cb.text();
 		}
+
+		public void showActive() {
+			for (Link l : links)
+				l.clickable(l != Link.this);
+		}
 	}
 
 	public enum ViewType {
@@ -147,6 +151,7 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 	private IVerticalPanel panel;
 	private List<Link> links = new LinkedList<Link>();
 	private List<IUpdateListener<ViewConfiguration>> listeners = new LinkedList<IUpdateListener<ViewConfiguration>>();
+	private Link details;
 
 	public ViewWidget(ILayout layout, List<String> configurations) {
 		widgetTitle = new WidgetTitle(layout, true);
@@ -158,8 +163,8 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 		List<String> options = new LinkedList<String>(configurations);
 		if (!options.isEmpty())
 			options.add(0, PLEASE_CHOOSE_FILTER);
-		final Link details = addComboBoxLink("details.png", "Detail",
-				PLEASE_CHOOSE_FILTER, options);
+		details = addComboBoxLink("detail.png", "Detail", PLEASE_CHOOSE_FILTER,
+				options);
 		links.add(table);
 		table.addClickListener(new LazyClickListener() {
 			@Override
@@ -258,5 +263,14 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 	public ViewWidget foldable(boolean b) {
 		widgetTitle.foldable(b);
 		return this;
+	}
+
+	public ViewWidget visible(boolean b) {
+		panel.visible(b);
+		return this;
+	}
+
+	public void showDetails() {
+		details.showActive();
 	}
 }

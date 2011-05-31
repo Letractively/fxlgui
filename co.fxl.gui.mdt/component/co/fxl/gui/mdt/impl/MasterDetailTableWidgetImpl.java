@@ -23,25 +23,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.IRadioButton;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.Heights;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.api.template.INavigationListener;
 import co.fxl.gui.api.template.ImageButton;
 import co.fxl.gui.api.template.LazyClickListener;
-import co.fxl.gui.api.template.LazyUpdateListener;
 import co.fxl.gui.api.template.NavigationView;
 import co.fxl.gui.api.template.SplitLayout;
-import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
@@ -58,6 +51,9 @@ import co.fxl.gui.mdt.api.IPropertyGroup;
 import co.fxl.gui.mdt.api.IPropertyPage;
 import co.fxl.gui.mdt.api.IRelation;
 import co.fxl.gui.mdt.api.IStateMemento;
+import co.fxl.gui.mdt.impl.ViewWidget.ActionType;
+import co.fxl.gui.mdt.impl.ViewWidget.ViewConfiguration;
+import co.fxl.gui.mdt.impl.ViewWidget.ViewType;
 import co.fxl.gui.tree.api.ITreeWidget;
 import co.fxl.gui.tree.api.ITreeWidget.IViewID;
 
@@ -92,15 +88,15 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	SplitLayout splitLayout;
 	boolean hideDetailRoot = false;
 	List<Object> selection = new LinkedList<Object>();
-	private IComboBox comboBoxConfiguration;
+	// private IComboBox comboBoxConfiguration;
 	private List<String> configurations = new LinkedList<String>();
 	Listener listener;
 	String configuration = null;
-	IRadioButton r2;
+	// IRadioButton r2;
 	private boolean showDetailViewByDefault = false;
 	boolean allowCreate = true;
 	boolean allowMultiSelection = true;
-	private IRadioButton r1;
+	// private IRadioButton r1;
 	IFilterWidget filterWidget;
 	ViewTemplate activeView;
 	List<Object> registerOrder = new LinkedList<Object>();
@@ -120,6 +116,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	List<String> hiddenColumns = new LinkedList<String>();
 	Map<IViewID, Object> relationRegisterSelection = new HashMap<IViewID, Object>();
 	LinkedList<Object> preselection = new LinkedList<Object>();
+	ViewWidget views;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -155,81 +152,30 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	// http://gwt.google.com/samples/Showcase/Showcase.html#!CwMenuBar
 
 	void addViewWidget(IVerticalPanel sidePanel) {
-		WidgetTitle views = new WidgetTitle(sidePanel.add().panel(), true)
-				.space(2);
+		views = new ViewWidget(sidePanel.add().panel(), configurations);
 		if (!allowGridView)
 			views.visible(false);
-		views.addTitle("VIEWS");
-		IClickable<?> hl = views.addHyperlink(Icons.REFRESH, "Refresh");
-		hl.clickable(true);
-		hl.addClickListener(new LazyClickListener() {
+		views.addUpdateListener(new IUpdateListener<ViewWidget.ViewConfiguration>() {
 			@Override
-			public void onAllowedClick() {
-				queryList = null;
-				refresh(null);
-			}
-		});
-		IVerticalPanel content = views.content().panel().vertical().addSpace(6);
-		IHorizontalPanel h1 = content.add().panel().horizontal().align()
-				.begin().add().panel().horizontal().align().begin().addSpace(4);
-		r1 = h1.add().radioButton().text("Grid");
-		IHorizontalPanel h2 = content.add().panel().horizontal().align()
-				.begin().add().panel().horizontal().align().begin().addSpace(4);
-		r2 = h2.add().radioButton().text("Master-Detail");
-		content.addSpace(4);
-		r1.checked(true);
-		r1.font().weight().bold();
-		r1.addUpdateListener(new LazyUpdateListener<Boolean>() {
+			public void onUpdate(ViewConfiguration value) {
+				MasterDetailTableWidgetImpl.this.configuration = value.configuration;
+				if (value.viewChanged.equals(ActionType.REFRESH)) {
+					queryList = null;
+					refresh(null);
+				} else if (value.viewType.equals(ViewType.TABLE)) {
+					if (listener instanceof TableView)
+						notifyConfigurationListener(configuration);
+					else {
+						switch2grid = true;
+						if (filterWidget != null)
+							filterWidget.setConfiguration(configuration);
+						Object show = null;
+						if (!selection.isEmpty())
+							show = selection.get(selection.size() - 1);
+						showTableView(show);
+					}
 
-			@Override
-			public void onAllowedUpdate(Boolean value) {
-				switch2grid = true;
-				Object show = null;
-				if (!selection.isEmpty())
-					show = selection.get(selection.size() - 1);
-				showTableView(show);
-			}
-
-			@Override
-			public void onCancelledUpdate(Boolean value) {
-				r2.checked(true);
-			}
-		});
-		if (!configurations.isEmpty()) {
-			h1.addSpace(4);
-			comboBoxConfiguration = h1.add().comboBox();
-			comboBoxConfiguration.width(228);
-			new Heights(0).decorate(comboBoxConfiguration);
-			for (String c : configurations) {
-				if (configuration == null)
-					configuration = c;
-				comboBoxConfiguration.addText(c);
-			}
-			comboBoxConfiguration.text(configuration);
-			comboBoxConfiguration
-					.addUpdateListener(new LazyUpdateListener<String>() {
-
-						@Override
-						public void onAllowedUpdate(final String value) {
-							configuration = value;
-							r1.checked(true);
-							if (listener instanceof TableView)
-								notifyConfigurationListener(value);
-							else {
-								if (filterWidget != null)
-									filterWidget.setConfiguration(value);
-								Object show = null;
-								if (!selection.isEmpty())
-									show = selection.get(selection.size() - 1);
-								showTableView(show);
-							}
-						}
-					});
-		}
-		r2.addUpdateListener(new LazyUpdateListener<Boolean>() {
-			@Override
-			public void onAllowedUpdate(Boolean value) {
-				if (value) {
+				} else if (value.viewType.equals(ViewType.DETAILS)) {
 					Object show = null;
 					if (!selection.isEmpty())
 						show = selection.get(selection.size() - 1);
@@ -237,8 +183,92 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 				}
 			}
 		});
-		r2.font().weight().bold();
-		r1.group().add(r2);
+		return;
+		// WidgetTitle views = new WidgetTitle(sidePanel.add().panel(), true)
+		// .space(2);
+		// if (!allowGridView)
+		// views.visible(false);
+		// views.addTitle("VIEWS");
+		// IClickable<?> hl = views.addHyperlink(Icons.REFRESH, "Refresh");
+		// hl.clickable(true);
+		// hl.addClickListener(new LazyClickListener() {
+		// @Override
+		// public void onAllowedClick() {
+		// queryList = null;
+		// refresh(null);
+		// }
+		// });
+		// IVerticalPanel content =
+		// views.content().panel().vertical().addSpace(6);
+		// IHorizontalPanel h1 = content.add().panel().horizontal().align()
+		// .begin().add().panel().horizontal().align().begin().addSpace(4);
+		// r1 = h1.add().radioButton().text("Grid");
+		// IHorizontalPanel h2 = content.add().panel().horizontal().align()
+		// .begin().add().panel().horizontal().align().begin().addSpace(4);
+		// r2 = h2.add().radioButton().text("Master-Detail");
+		// content.addSpace(4);
+		// r1.checked(true);
+		// r1.font().weight().bold();
+		// r1.addUpdateListener(new LazyUpdateListener<Boolean>() {
+		//
+		// @Override
+		// public void onAllowedUpdate(Boolean value) {
+		// switch2grid = true;
+		// Object show = null;
+		// if (!selection.isEmpty())
+		// show = selection.get(selection.size() - 1);
+		// showTableView(show);
+		// }
+		//
+		// @Override
+		// public void onCancelledUpdate(Boolean value) {
+		// r2.checked(true);
+		// }
+		// });
+		// if (!configurations.isEmpty()) {
+		// h1.addSpace(4);
+		// comboBoxConfiguration = h1.add().comboBox();
+		// comboBoxConfiguration.width(228);
+		// new Heights(0).decorate(comboBoxConfiguration);
+		// for (String c : configurations) {
+		// if (configuration == null)
+		// configuration = c;
+		// comboBoxConfiguration.addText(c);
+		// }
+		// comboBoxConfiguration.text(configuration);
+		// comboBoxConfiguration
+		// .addUpdateListener(new LazyUpdateListener<String>() {
+		//
+		// @Override
+		// public void onAllowedUpdate(final String value) {
+		// configuration = value;
+		// r1.checked(true);
+		// if (listener instanceof TableView)
+		// notifyConfigurationListener(value);
+		// else {
+		// if (filterWidget != null)
+		// filterWidget.setConfiguration(value);
+		// Object show = null;
+		// if (!selection.isEmpty())
+		// show = selection.get(selection.size() - 1);
+		// showTableView(show);
+		// }
+		// }
+		// });
+		// }
+		// r2.addUpdateListener(new LazyUpdateListener<Boolean>() {
+		// @Override
+		// public void onAllowedUpdate(Boolean value) {
+		// if (value) {
+		// Object show = null;
+		// if (!selection.isEmpty())
+		// show = selection.get(selection.size() - 1);
+		// showDetailView(show);
+		// }
+		// }
+		// });
+		// r2.font().weight().bold();
+		// r1.group().add(r2);
 	}
 
 	void setUpFilter(String configuration) {
@@ -395,14 +425,14 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		if (!showDetailViewByDefault)
 			showTableView(null);
 		else {
-			r2.checked(true);
+			// r2.checked(true);
 			showDetailView(null);
 		}
 		return this;
 	}
 
 	void showTableView(Object object) {
-		r1.checked(true);
+		// r1.checked(true);
 		clear();
 		activeView = new TableView(this, object);
 		activeView.updateLinks();
