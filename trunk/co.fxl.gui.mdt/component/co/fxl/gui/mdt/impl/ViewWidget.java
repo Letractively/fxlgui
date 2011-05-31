@@ -152,13 +152,14 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 	private List<Link> links = new LinkedList<Link>();
 	private List<IUpdateListener<ViewConfiguration>> listeners = new LinkedList<IUpdateListener<ViewConfiguration>>();
 	private Link details;
+	private Link table;
 
 	public ViewWidget(ILayout layout, List<String> configurations) {
 		widgetTitle = new WidgetTitle(layout, true);
 		widgetTitle.space(2);
 		widgetTitle.addTitle("VIEWS");
 		panel = widgetTitle.content().panel().vertical().spacing(6);
-		final Link table = addComboBoxLink("grid.png", "Table",
+		table = addComboBoxLink("grid.png", "Table",
 				configurations.get(0), configurations);
 		List<String> options = new LinkedList<String>(configurations);
 		if (!options.isEmpty())
@@ -272,5 +273,9 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 
 	public void showDetails() {
 		details.showActive();
+	}
+
+	public void showTable() {
+		table.showActive();
 	}
 }
