@@ -264,7 +264,8 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 	public void query(IFilterConstraints constraints,
 			final ICallback<ITree<Object>> callback) {
 		// widget.constraints = constraints;
-		widget.source.queryTree(widget.constraints, getSelectionObject(),
+		widget.source.queryTree(widget.configuration == null ? null
+				: widget.constraints, getSelectionObject(),
 				new CallbackTemplate<ITree<Object>>(callback) {
 
 					@Override
