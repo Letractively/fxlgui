@@ -27,6 +27,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.Heights;
@@ -244,10 +245,12 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 		ILabel textLabel = addTextLabel(panel);
 		Link l = new Link(panel1, image, textLabel);
 		l.text(title);
+		IPanel<?> dummy = panel.add().panel().horizontal().width(1);
+		HEIGHTS.decorate(dummy);
 		if (!options.isEmpty()) {
-			IComboBox cb = panel.addSpace(8).add().comboBox();
+			IComboBox cb = panel.addSpace(6).add().comboBox();
 			HEIGHTS.decorate(cb);
-			cb.width(222);
+			cb.width(232);
 			for (String o : options)
 				cb.addText(o);
 			cb.text(option);
