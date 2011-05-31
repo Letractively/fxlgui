@@ -152,12 +152,12 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 		widgetTitle.space(2);
 		widgetTitle.addTitle("VIEWS");
 		panel = widgetTitle.content().panel().vertical().spacing(6);
-		final Link table = addComboBoxLink("accept.png", "Table",
+		final Link table = addComboBoxLink("grid.png", "Table",
 				configurations.get(0), configurations);
 		List<String> options = new LinkedList<String>(configurations);
 		if (!options.isEmpty())
 			options.add(0, PLEASE_CHOOSE_FILTER);
-		final Link details = addComboBoxLink("add.png", "Detail",
+		final Link details = addComboBoxLink("details.png", "Detail",
 				PLEASE_CHOOSE_FILTER, options);
 		links.add(table);
 		table.addClickListener(new IClickListener() {
