@@ -431,14 +431,17 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		if (!showDetailViewByDefault)
 			showTableView(null);
 		else {
-			// r2.checked(true);
+			views.showDetails();
+			// TODO show filter widget with relation constraint
 			showDetailView(null);
 		}
 		return this;
 	}
 
 	void showTableView(Object object) {
-		// r1.checked(true);
+		if (filterPanel != null)
+			filterPanel.visible(true);
+		views.showTable();
 		clear();
 		activeView = new TableView(this, object);
 		activeView.updateLinks();
@@ -447,6 +450,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	DetailView showDetailView(Object show) {
 		clear();
+		if (filterPanel != null)
+			filterPanel.visible(configuration != null);
 		DetailView dView = (DetailView) (activeView = new DetailView(this,
 				show, false, null));
 		activeView.updateLinks();
@@ -456,6 +461,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	public void showDetailView(Object show, boolean create, String createType) {
 		clear();
+		if (filterPanel != null)
+			filterPanel.visible(configuration != null);
 		DetailView dView = (DetailView) (activeView = new DetailView(this,
 				show, create, createType));
 		activeView.updateLinks();
