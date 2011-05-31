@@ -117,6 +117,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	Map<IViewID, Object> relationRegisterSelection = new HashMap<IViewID, Object>();
 	LinkedList<Object> preselection = new LinkedList<Object>();
 	ViewWidget views;
+	private IVerticalPanel filterPanel;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -158,7 +159,12 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		views.addUpdateListener(new IUpdateListener<ViewWidget.ViewConfiguration>() {
 			@Override
 			public void onUpdate(ViewConfiguration value) {
-				MasterDetailTableWidgetImpl.this.configuration = value.configuration;
+				configuration = value.configuration;
+				if (constraints != null) {
+					constraints.configuration(configuration);
+				}
+				if (filterPanel != null)
+					filterPanel.visible(configuration != null);
 				if (value.viewChanged.equals(ActionType.REFRESH)) {
 					queryList = null;
 					refresh(null);
@@ -272,7 +278,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	}
 
 	void setUpFilter(String configuration) {
-		IVerticalPanel filterPanel = sidePanel.add().panel().vertical();
+		filterPanel = sidePanel.add().panel().vertical();
 		if (filterList.filters.isEmpty() || !filterable)
 			filterPanel.visible(false);
 		filterWidget = (IFilterWidget) filterPanel.add().widget(
@@ -520,6 +526,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	}
 
 	IFilterConstraints constraints() {
+		// if (configuration == null)
+		// return null;
 		return constraints;
 	}
 
