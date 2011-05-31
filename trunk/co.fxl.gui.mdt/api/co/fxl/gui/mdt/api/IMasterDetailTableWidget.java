@@ -73,6 +73,10 @@ public interface IMasterDetailTableWidget<T> {
 
 	IMasterDetailTableWidget<T> showDetailViewByDefault();
 
+	IMasterDetailTableWidget<T> alwaysShowFilter();
+
+	IMasterDetailTableWidget<T> neverShowFilter();
+
 	IMasterDetailTableWidget<T> visible(boolean visible);
 
 	INavigationLink<T> addNavigationLink(String name);

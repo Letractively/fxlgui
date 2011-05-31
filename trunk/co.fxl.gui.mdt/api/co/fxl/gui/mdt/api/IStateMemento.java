@@ -27,4 +27,6 @@ public interface IStateMemento {
 	IStateMemento constraints(IFilterConstraints constraints);
 
 	IStateMemento showDetailView();
+
+	IFilterConstraints constraints();
 }

@@ -89,4 +89,9 @@ class StateMementoImpl implements IStateMemento {
 		this.showDetailView = true;
 		return this;
 	}
+
+	@Override
+	public IFilterConstraints constraints() {
+		return constraints;
+	}
 }
