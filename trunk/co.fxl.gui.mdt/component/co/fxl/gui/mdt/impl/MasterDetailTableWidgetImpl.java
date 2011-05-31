@@ -166,6 +166,9 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 				if (constraints != null) {
 					constraints.configuration(configuration);
 				}
+				if(value.viewType.equals(ViewType.DETAILS)) {
+					filterWidget.setConfiguration(configuration);
+				}
 				udpateFilterPanel();
 				if (value.viewChanged.equals(ActionType.REFRESH)) {
 					queryList = null;
