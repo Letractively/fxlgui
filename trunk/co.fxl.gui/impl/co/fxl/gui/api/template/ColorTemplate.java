@@ -35,7 +35,7 @@ public abstract class ColorTemplate implements IColor {
 					rgb = null;
 					return this;
 				}
-
+ 
 				@Override
 				protected IColor setRGB(int r, int g, int b) {
 					original.update();
