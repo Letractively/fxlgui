@@ -143,7 +143,7 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 	private Map<String, INamedConstraint> constraints = new HashMap<String, INamedConstraint>();
 	private String cfg;
 	private String sortOrder;
-	private boolean sortDirection = false;
+	private boolean sortDirection = true;
 	private IRowIterator it = new RowIterator();
 
 	public FilterConstraintsImpl(String configuration) {
