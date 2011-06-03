@@ -241,8 +241,8 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	}
 
 	@Override
-	public IColumn<Object> tagSortOrder(boolean up) {
-		tagSortOrder = up;
+	public IColumn<Object> tagSortOrder(boolean ascending) {
+		tagSortOrder = !ascending;
 		return this;
 	}
 
