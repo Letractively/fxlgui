@@ -85,7 +85,7 @@ public interface IFilterConstraints {
 
 	boolean sortDirection();
 
-	IFilterConstraints sortDirection(boolean sortDirection);
+	IFilterConstraints sortDirection(boolean ascending);
 
 	IRowIterator rowIterator();
 
