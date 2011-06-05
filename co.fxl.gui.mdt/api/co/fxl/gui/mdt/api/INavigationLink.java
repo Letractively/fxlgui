@@ -20,11 +20,18 @@ package co.fxl.gui.mdt.api;
 
 import java.util.List;
 
+import co.fxl.gui.filter.api.IFilterConstraints;
+
 public interface INavigationLink<R, T> {
 
 	public interface IEntityConstraint<R> {
 
 		boolean applies(R entity);
+	}
+
+	public interface IBaseEntityConstraint<R> {
+
+		boolean applies(IFilterConstraints constraints, R entity);
 	}
 
 	public interface INavigationLinkSelectionListener<R, T> {
@@ -62,5 +69,6 @@ public interface INavigationLink<R, T> {
 
 	INavigationLink<R, T> entityConstraint(IEntityConstraint<T> constraint);
 
-	INavigationLink<R, T> baseEntityConstraint(IEntityConstraint<R> constraint);
+	INavigationLink<R, T> baseEntityConstraint(
+			IBaseEntityConstraint<R> constraint);
 }

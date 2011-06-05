@@ -38,7 +38,7 @@ class NavigationLinkImpl implements INavigationLink<Object, Object> {
 	private boolean requiresRows = false;
 	private Class<?>[] exclusionConstraint = null;
 	private IEntityConstraint<Object> constraint;
-	IEntityConstraint<Object> baseEntityConstraint;
+	IBaseEntityConstraint<Object> baseEntityConstraint;
 
 	NavigationLinkImpl(String name) {
 		this.name = name;
@@ -163,7 +163,7 @@ class NavigationLinkImpl implements INavigationLink<Object, Object> {
 
 	@Override
 	public INavigationLink<Object, Object> baseEntityConstraint(
-			co.fxl.gui.mdt.api.INavigationLink.IEntityConstraint<Object> constraint) {
+			co.fxl.gui.mdt.api.INavigationLink.IBaseEntityConstraint<Object> constraint) {
 		baseEntityConstraint = constraint;
 		return this;
 	}
