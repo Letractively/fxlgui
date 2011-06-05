@@ -67,6 +67,10 @@ class NavigationLinkImpl implements INavigationLink<Object, Object> {
 				clickable &= constraint.applies(o);
 			}
 		}
+		if (requiresSelection && !widget.selection.isEmpty()
+				&& baseEntityConstraint != null) {
+			clickable &= baseEntityConstraint.applies(widget.constraints, widget.selection);
+		}
 		if (widget.activeView instanceof DetailView && !asDetail)
 			clickable = false;
 		if (widget.activeView instanceof TableView && !inTable)
