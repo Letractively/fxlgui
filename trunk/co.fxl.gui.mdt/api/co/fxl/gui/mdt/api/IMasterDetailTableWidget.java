@@ -79,7 +79,7 @@ public interface IMasterDetailTableWidget<T> {
 
 	IMasterDetailTableWidget<T> visible(boolean visible);
 
-	INavigationLink<T> addNavigationLink(String name);
+	INavigationLink<T, ?> addNavigationLink(String name);
 
 	IComboBoxLink addComboBoxLink(String name);
 

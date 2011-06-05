@@ -24,13 +24,13 @@ import java.util.List;
 import co.fxl.gui.api.template.ImageButton;
 import co.fxl.gui.mdt.api.INavigationLink;
 
-class NavigationLinkImpl implements INavigationLink<Object> {
+class NavigationLinkImpl implements INavigationLink<Object, Object> {
 
 	String name;
 	boolean inTable = true;
 	boolean asDetail = true;
 	List<INavigationLinkListener<Object>> listeners = new LinkedList<INavigationLinkListener<Object>>();
-	private List<INavigationLinkSelectionListener<Object>> selectionListeners = new LinkedList<INavigationLinkSelectionListener<Object>>();
+	private List<INavigationLinkSelectionListener<Object, Object>> selectionListeners = new LinkedList<INavigationLinkSelectionListener<Object, Object>>();
 	boolean requiresSelection = true;
 	Class<?> typeConstraint;
 	String imageResource;
@@ -38,6 +38,7 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 	private boolean requiresRows = false;
 	private Class<?>[] exclusionConstraint = null;
 	private IEntityConstraint<Object> constraint;
+	IEntityConstraint<Object> baseEntityConstraint;
 
 	NavigationLinkImpl(String name) {
 		this.name = name;
@@ -76,50 +77,52 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 	}
 
 	@Override
-	public INavigationLink<Object> addClickListener(
+	public INavigationLink<Object, Object> addClickListener(
 			INavigationLinkListener<Object> listener) {
 		listeners.add(listener);
 		return this;
 	}
 
 	@Override
-	public INavigationLink<Object> asDetail(boolean asDetail) {
+	public INavigationLink<Object, Object> asDetail(boolean asDetail) {
 		this.asDetail = asDetail;
 		return this;
 	}
 
 	@Override
-	public INavigationLink<Object> inTable(boolean inTable) {
+	public INavigationLink<Object, Object> inTable(boolean inTable) {
 		this.inTable = inTable;
 		return this;
 	}
 
 	@Override
-	public INavigationLink<Object> requiresSelection(boolean requiresSelection) {
+	public INavigationLink<Object, Object> requiresSelection(
+			boolean requiresSelection) {
 		this.requiresSelection = requiresSelection;
 		return this;
 	}
 
 	@Override
-	public INavigationLink<Object> typeConstraint(Class<?> typeConstraint) {
+	public INavigationLink<Object, Object> typeConstraint(
+			Class<?> typeConstraint) {
 		this.typeConstraint = typeConstraint;
 		return this;
 	}
 
 	@Override
-	public INavigationLink<Object> imageResource(String imageResource) {
+	public INavigationLink<Object, Object> imageResource(String imageResource) {
 		this.imageResource = imageResource;
 		return this;
 	}
 
 	@Override
-	public INavigationLink<Object> requiresRows(boolean requiresRows) {
+	public INavigationLink<Object, Object> requiresRows(boolean requiresRows) {
 		this.requiresRows = requiresRows;
 		return this;
 	}
 
 	@Override
-	public INavigationLink<Object> text(String text) {
+	public INavigationLink<Object, Object> text(String text) {
 		this.name = text;
 		if (label != null)
 			label.text(text);
@@ -127,33 +130,41 @@ class NavigationLinkImpl implements INavigationLink<Object> {
 	}
 
 	@Override
-	public INavigationLink<Object> addSelectionListener(
-			co.fxl.gui.mdt.api.INavigationLink.INavigationLinkSelectionListener<Object> l) {
+	public INavigationLink<Object, Object> addSelectionListener(
+			co.fxl.gui.mdt.api.INavigationLink.INavigationLinkSelectionListener<Object, Object> l) {
 		selectionListeners.add(l);
 		return this;
 	}
 
 	void notifySelection(List<Object> selection) {
-		for (INavigationLinkSelectionListener<Object> l : selectionListeners)
+		for (INavigationLinkSelectionListener<Object, Object> l : selectionListeners)
 			l.onUpdate(this, selection);
 	}
 
 	@Override
-	public INavigationLink<Object> clickable(boolean b) {
+	public INavigationLink<Object, Object> clickable(boolean b) {
 		label.clickable(b);
 		return this;
 	}
 
 	@Override
-	public INavigationLink<Object> exclusionConstraint(Class<?>[] typeConstraint) {
+	public INavigationLink<Object, Object> exclusionConstraint(
+			Class<?>[] typeConstraint) {
 		exclusionConstraint = typeConstraint;
 		return this;
 	}
 
 	@Override
-	public INavigationLink<Object> entityConstraint(
+	public INavigationLink<Object, Object> entityConstraint(
 			co.fxl.gui.mdt.api.INavigationLink.IEntityConstraint<Object> constraint) {
 		this.constraint = constraint;
+		return this;
+	}
+
+	@Override
+	public INavigationLink<Object, Object> baseEntityConstraint(
+			co.fxl.gui.mdt.api.INavigationLink.IEntityConstraint<Object> constraint) {
+		baseEntityConstraint = constraint;
 		return this;
 	}
 }

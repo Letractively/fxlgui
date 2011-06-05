@@ -20,16 +20,16 @@ package co.fxl.gui.mdt.api;
 
 import java.util.List;
 
-public interface INavigationLink<T> {
+public interface INavigationLink<R, T> {
 
-	public interface IEntityConstraint<T> {
+	public interface IEntityConstraint<R> {
 
-		boolean applies(T entity);
+		boolean applies(R entity);
 	}
 
-	public interface INavigationLinkSelectionListener<T> {
+	public interface INavigationLinkSelectionListener<R, T> {
 
-		void onUpdate(INavigationLink<T> link, List<T> selection);
+		void onUpdate(INavigationLink<R, T> link, List<T> selection);
 	}
 
 	public interface INavigationLinkListener<T> {
@@ -37,28 +37,30 @@ public interface INavigationLink<T> {
 		void onClick(List<T> selection);
 	}
 
-	INavigationLink<T> inTable(boolean inTable);
+	INavigationLink<R, T> inTable(boolean inTable);
 
-	INavigationLink<T> asDetail(boolean asDetail);
+	INavigationLink<R, T> asDetail(boolean asDetail);
 
-	INavigationLink<T> addClickListener(INavigationLinkListener<T> listener);
+	INavigationLink<R, T> addClickListener(INavigationLinkListener<T> listener);
 
-	INavigationLink<T> requiresSelection(boolean requiresSelection);
+	INavigationLink<R, T> requiresSelection(boolean requiresSelection);
 
-	INavigationLink<T> requiresRows(boolean requiresRows);
+	INavigationLink<R, T> requiresRows(boolean requiresRows);
 
-	INavigationLink<T> typeConstraint(Class<?> typeConstraint);
+	INavigationLink<R, T> typeConstraint(Class<?> typeConstraint);
 
-	INavigationLink<T> exclusionConstraint(Class<?>[] typeConstraint);
+	INavigationLink<R, T> exclusionConstraint(Class<?>[] typeConstraint);
 
-	INavigationLink<T> imageResource(String imageResource);
+	INavigationLink<R, T> imageResource(String imageResource);
 
-	INavigationLink<T> text(String text);
+	INavigationLink<R, T> text(String text);
 
-	INavigationLink<T> addSelectionListener(
-			INavigationLinkSelectionListener<T> l);
+	INavigationLink<R, T> addSelectionListener(
+			INavigationLinkSelectionListener<R, T> l);
 
-	INavigationLink<T> clickable(boolean b);
+	INavigationLink<R, T> clickable(boolean b);
 
-	INavigationLink<T> entityConstraint(IEntityConstraint<T> constraint);
+	INavigationLink<R, T> entityConstraint(IEntityConstraint<T> constraint);
+
+	INavigationLink<R, T> baseEntityConstraint(IEntityConstraint<R> constraint);
 }
