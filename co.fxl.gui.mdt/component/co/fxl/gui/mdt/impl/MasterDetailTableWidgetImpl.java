@@ -487,7 +487,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	}
 
 	@Override
-	public INavigationLink<Object> addNavigationLink(String name) {
+	public INavigationLink<Object, Object> addNavigationLink(String name) {
 		NavigationLinkImpl link = new NavigationLinkImpl(name);
 		navigationLinks.add(link);
 		return link;
