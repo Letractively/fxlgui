@@ -432,7 +432,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	@Override
 	public ITreeWidget<T> root(ITree<T> tree) {
 		if (previousSelection == null) {
-			if (model != null) {
+			if (model != null && model.selection() != null) {
 				previousSelection = model.selection().object();
 			} else if (showRoot) {
 				previousSelection = tree.object();
