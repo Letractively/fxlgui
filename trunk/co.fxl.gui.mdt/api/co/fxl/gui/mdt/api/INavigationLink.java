@@ -31,7 +31,7 @@ public interface INavigationLink<R, T> {
 
 	public interface IBaseEntityConstraint<R> {
 
-		boolean applies(IFilterConstraints constraints, R entity);
+		boolean applies(IFilterConstraints constraints, List<R> selection);
 	}
 
 	public interface INavigationLinkSelectionListener<R, T> {
