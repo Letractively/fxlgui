@@ -57,6 +57,11 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	abstract void createContentColumn(int index);
 
 	@Override
+	public boolean isRequired() {
+		return required;
+	}
+
+	@Override
 	public IFormField<T, R> editable(boolean editable) {
 		if (editable)
 			label.font().color().black();

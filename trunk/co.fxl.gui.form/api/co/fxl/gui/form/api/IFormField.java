@@ -34,6 +34,8 @@ public interface IFormField<T, R> extends IUpdateable<R> {
 
 	IFormField<T, R> required();
 
+	boolean isRequired();
+
 	IFieldType type();
 
 	ILabel addButton(String title);
