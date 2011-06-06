@@ -490,7 +490,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							cr.targetValues) : getDomain(node, p).toArray();
 					type.clearConstraints();
 					for (Object o : targetValues) {
-						type.addConstraint(o);
+						if (o != null)
+							type.addConstraint(o);
 					}
 					if (ff.visible()) {
 						IComboBox comboBox = ff.valueElement();
@@ -499,11 +500,10 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 						boolean found = false;
 						String s0 = null;
 						for (Object o : targetValues) {
-							String s = String.valueOf(o);
-							found |= s.equals(text);
-							comboBox.addText(s);
+							found |= o==null ? text==null : o.equals(text);
+							comboBox.addText((String) o);
 							if (s0 == null)
-								s0 = s;
+								s0 = (String) o;
 						}
 						if (!found && s0 != null) {
 							comboBox.text(s0);
