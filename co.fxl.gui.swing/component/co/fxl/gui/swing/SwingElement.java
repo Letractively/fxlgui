@@ -49,6 +49,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	protected SwingContainer<T> container;
 	private List<ClickListenerMouseAdapter<R>> adapters = new LinkedList<ClickListenerMouseAdapter<R>>();
 	private boolean clickListenerAdded = false;
+	private Boolean disabled;
 
 	SwingElement(SwingContainer<T> container) {
 		this.container = container;
@@ -126,18 +127,26 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 		// container.component.addMouseListener(adapter.adapter);
 		// }
 		// }
+		disabled = !clickable;
 		container.component.setEnabled(clickable);
+		setCursor(clickable);
+		return (R) this;
+	}
+
+	void setCursor(boolean clickable) {
 		container.component
 				.setCursor(clickable ? new Cursor(Cursor.HAND_CURSOR)
 						: new Cursor(Cursor.DEFAULT_CURSOR));
-		return (R) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	public IKey<R> addClickListener(IClickListener listener) {
 		// assert !clickListenerAdded :
 		// "Multiple click listeners are not yet supported";
-		clickable(true);
+		if (disabled == null)
+			clickable(true);
+		else
+			setCursor(true);
 		// container.component.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		ClickListenerMouseAdapter<R> adapter = new ClickListenerMouseAdapter<R>(
 				(R) this, listener);

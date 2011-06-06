@@ -41,11 +41,6 @@ class SwingImage extends SwingElement<JLabel, IImage> implements IImage {
 	}
 
 	@Override
-	public IKey<IImage> addClickListener(IClickListener listener) {
-		return super.addClickListener(listener);
-	}
-
-	@Override
 	public IImage resource(String name) {
 		if (name == null) {
 			container.component.setIcon(null);
