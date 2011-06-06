@@ -331,7 +331,7 @@ public class CommandButtonsImpl implements ICommandButtons,
 			// remove = panel.add().button().text("Remove");
 			remove = clickable(panel.add(), "Remove");
 			remove.addClickListener(new Update(listenOnRemoveListener));
-			remove.clickable(!widget.preselectedList.isEmpty());
+//			remove.clickable(!widget.preselectedList.isEmpty());
 		}
 		if (listenOnShow) {
 			show = clickable(panel.add(), "Show");
