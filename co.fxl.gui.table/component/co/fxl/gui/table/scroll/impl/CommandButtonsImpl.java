@@ -80,23 +80,36 @@ public class CommandButtonsImpl implements ICommandButtons,
 	private final class Update implements IClickListener {
 
 		private IRowListener<Boolean> l;
+		private boolean deleteSelection;
 
 		Update(IRowListener<Boolean> l) {
+			this(l, false);
+		}
+
+		Update(IRowListener<Boolean> l, boolean deleteSelection) {
 			this.l = l;
+			this.deleteSelection = deleteSelection;
 		}
 
 		@Override
 		public void onClick() {
-			if (l != null)
-				l.onClick(selection, selectionIndex,
-						new CallbackTemplate<Boolean>() {
-							@Override
-							public void onSuccess(Boolean result) {
-								if (result != null && result)
-									execute();
-							}
-						});
-			else
+			if (l != null) {
+				Object s = selection;
+				int i = selectionIndex;
+				if (deleteSelection) {
+					selection = null;
+					selectionIndex = -1;
+				}
+				l.onClick(s, i, new CallbackTemplate<Boolean>() {
+					@Override
+					public void onSuccess(Boolean result) {
+						selection = null;
+						selectionIndex = -1;
+						if (result != null && result)
+							execute();
+					}
+				});
+			} else
 				execute();
 		}
 
@@ -330,8 +343,8 @@ public class CommandButtonsImpl implements ICommandButtons,
 		if (listenOnRemove) {
 			// remove = panel.add().button().text("Remove");
 			remove = clickable(panel.add(), "Remove");
-			remove.addClickListener(new Update(listenOnRemoveListener));
-//			remove.clickable(!widget.preselectedList.isEmpty());
+			remove.addClickListener(new Update(listenOnRemoveListener, true));
+			remove.clickable(false);
 		}
 		if (listenOnShow) {
 			show = clickable(panel.add(), "Show");
@@ -412,7 +425,7 @@ public class CommandButtonsImpl implements ICommandButtons,
 		updateButtons();
 	}
 
-	private void updateButtons() {
+	void updateButtons() {
 		updateButtons(selectionIndex);
 	}
 

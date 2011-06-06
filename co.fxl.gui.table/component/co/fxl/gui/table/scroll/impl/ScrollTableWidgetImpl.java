@@ -226,6 +226,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				buttonPanel(buttonDecorator);
 			}
 			preselectedList.clear();
+			if (commandButtons != null) {
+				commandButtons.updateButtons();
+			}
 		} else {
 			this.visible = false;
 			throw new MethodNotImplementedException();
