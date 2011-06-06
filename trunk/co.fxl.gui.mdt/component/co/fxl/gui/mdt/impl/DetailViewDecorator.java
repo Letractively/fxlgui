@@ -75,6 +75,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	private Map<PropertyImpl, IFormField<?, ?>> property2formField = new HashMap<PropertyImpl, IFormField<?, ?>>();
 	private Object node;
 	private IVerticalPanel panel;
+	private Map<PropertyImpl, IUpdateListener<Object>> listeners = new HashMap<PropertyImpl, IUpdateListener<Object>>();
 
 	public void setUpdateable(boolean isUpdateable) {
 		this.isUpdateable = isUpdateable;
@@ -153,6 +154,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 			statusPanel.spacing(4);
 		}
 		property2formField.clear();
+		listeners.clear();
 		form = (IFormWidget) panel.add().panel().vertical().spacing(spacing)
 				.add().widget(IFormWidget.class);
 		form.isNew(isNew);
@@ -429,6 +431,10 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 		if (alwaysShowCancel)
 			form.alwaysAllowCancel();
 		form.visible(true);
+		for (PropertyImpl p : listeners.keySet()) {
+			if (listeners.get(p) != null)
+				listeners.get(p).onUpdate(p.adapter.valueOf(node));
+		}
 	}
 
 	public void setValue(final Object valueOf,
@@ -450,30 +456,33 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void addConditionRules(final PropertyImpl property,
 			final IFormField<?, ?> formField) {
-		for (final ConditionRuleImpl cr : property.conditionRules) {
-			formField.addUpdateListener(new IUpdateListener() {
+		if (!property.conditionRules.isEmpty()) {
+			IUpdateListener listener = new IUpdateListener() {
 
 				@Override
 				public void onUpdate(final Object value) {
 					panel.display().invokeLater(new Runnable() {
 						@Override
 						public void run() {
-							boolean satisfied = cr.condition.satisfied(node,
-									value);
-							if (cr.invisible) {
-								invisible(satisfied, value);
-							}
-							if (cr.nonModifieable) {
-								nonModifieable(satisfied, value);
-							}
-							if (cr.targetValues != null) {
-								targetValues(satisfied, value);
+							for (final ConditionRuleImpl cr : property.conditionRules) {
+								boolean satisfied = cr.condition.satisfied(
+										node, value);
+								if (cr.invisible) {
+									invisible(cr, satisfied, value);
+								}
+								if (cr.nonModifieable) {
+									nonModifieable(cr, satisfied, value);
+								}
+								if (cr.targetValues != null) {
+									targetValues(cr, satisfied, value);
+								}
 							}
 						}
 					});
 				}
 
-				private void targetValues(boolean satisfied, Object value) {
+				private void targetValues(ConditionRuleImpl cr,
+						boolean satisfied, Object value) {
 					PropertyImpl p = property(cr);
 					IFormField<IComboBox, String> ff = (IFormField<IComboBox, String>) target(p);
 					Object[] targetValues = satisfied ? cr.targetValues
@@ -502,13 +511,15 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 					}
 				}
 
-				private void nonModifieable(boolean satisfied, Object value) {
+				private void nonModifieable(ConditionRuleImpl cr,
+						boolean satisfied, Object value) {
 					PropertyImpl p = property(cr);
 					IFormField<?, ?> ff = target(p);
 					ff.editable(!satisfied);
 				}
 
-				private void invisible(boolean satisfied, Object value) {
+				private void invisible(ConditionRuleImpl cr, boolean satisfied,
+						Object value) {
 					PropertyImpl p = property(cr);
 					IFormField<?, ?> ff = target(p);
 					boolean visible = !satisfied;
@@ -526,7 +537,9 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 				private IFormField<?, ?> target(PropertyImpl p) {
 					return property2formField.get(p);
 				}
-			});
+			};
+			listeners.put(property, listener);
+			formField.addUpdateListener(listener);
 		}
 	}
 
