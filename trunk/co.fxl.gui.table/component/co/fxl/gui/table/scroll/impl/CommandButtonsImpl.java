@@ -196,6 +196,11 @@ public class CommandButtonsImpl implements ICommandButtons,
 	}
 
 	public static IClickable<?> clickable(IContainer c, String string) {
+		return clickable(c, string, true);
+	}
+
+	public static IClickable<?> clickable(IContainer c, String string,
+			boolean clickable) {
 		IHorizontalPanel p = c.panel().horizontal();
 		// p.spacing(4);
 		// p.color().gray();
@@ -209,7 +214,7 @@ public class CommandButtonsImpl implements ICommandButtons,
 		p.addSpace(SPACE);
 		ILabel label = p.add().label().text(string);
 		Link l = new Link(p, image, label);
-		l.clickable(true);
+		l.clickable(clickable);
 		return l;
 	}
 
