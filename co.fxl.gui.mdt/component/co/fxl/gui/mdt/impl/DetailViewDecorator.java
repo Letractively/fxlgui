@@ -485,9 +485,9 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 						boolean satisfied, Object value) {
 					PropertyImpl p = property(cr);
 					IFormField<IComboBox, String> ff = (IFormField<IComboBox, String>) target(p);
-					Object[] targetValues = satisfied ? cr.targetValues
-							: getDomain(node, p).toArray();
 					IFieldType type = ff.type();
+					Object[] targetValues = satisfied ? withNull(ff,
+							cr.targetValues) : getDomain(node, p).toArray();
 					type.clearConstraints();
 					for (Object o : targetValues) {
 						type.addConstraint(o);
@@ -509,6 +509,18 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							comboBox.text(s0);
 						}
 					}
+				}
+
+				private Object[] withNull(IFormField<IComboBox, String> field,
+						Object[] targetValues) {
+					if (field.isRequired()) {
+						Object[] o = new Object[targetValues.length + 1];
+						o[0] = null;
+						System.arraycopy(targetValues, 0, o, 1,
+								targetValues.length);
+						return o;
+					}
+					return targetValues;
 				}
 
 				private void nonModifieable(ConditionRuleImpl cr,
