@@ -76,6 +76,11 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	private Object node;
 	private IVerticalPanel panel;
 	private Map<PropertyImpl, IUpdateListener<Object>> listeners = new HashMap<PropertyImpl, IUpdateListener<Object>>();
+	private boolean displayAllProperties = false;
+
+	public void displayAllProperties() {
+		displayAllProperties = true;
+	}
 
 	public void setUpdateable(boolean isUpdateable) {
 		this.isUpdateable = isUpdateable;
@@ -217,7 +222,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 				for (final PropertyImpl property : g.properties) {
 					boolean hasProperty = node == null ? true
 							: property.adapter.hasProperty(node);
-					if (property.displayInDetailView && hasProperty) {
+					if ((property.displayInDetailView || displayAllProperties)
+							&& hasProperty) {
 						final IFormField<?, ?> formField;
 						final Object valueOf = node != null ? property.adapter
 								.valueOf(node) : null;
@@ -500,7 +506,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 						boolean found = false;
 						String s0 = null;
 						for (Object o : targetValues) {
-							found |= o==null ? text==null : o.equals(text);
+							found |= o == null ? text == null : o.equals(text);
 							comboBox.addText((String) o);
 							if (s0 == null)
 								s0 = (String) o;
