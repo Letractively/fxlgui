@@ -89,6 +89,9 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 	@Override
 	public String text() {
 		String selectedItem = (String) container.component.getSelectedItem();
+		if (selectedItem == null) {
+			return null;
+		}
 		if (hasNull && selectedItem.equals(""))
 			return null;
 		return selectedItem;
