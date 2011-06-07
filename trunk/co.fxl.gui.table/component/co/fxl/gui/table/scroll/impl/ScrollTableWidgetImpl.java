@@ -177,7 +177,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			container().clear();
 			topPanel();
 			if (rows.size() == 0
-					&& (constraints == null || !constraints.isSpecified())) {
+					&& (constraints == null || !constraints
+							.isConstraintSpecified())) {
 				IVerticalPanel dock = container.add().panel().vertical();
 				if (topPanel == null)
 					topPanel = dock.add().panel().grid();
@@ -234,6 +235,13 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			throw new MethodNotImplementedException();
 		}
 		return this;
+	}
+
+	private boolean hasFilter() {
+		for (ScrollTableColumnImpl c : columns)
+			if (c.filterable)
+				return true;
+		return false;
 	}
 
 	protected void addFilter() {
