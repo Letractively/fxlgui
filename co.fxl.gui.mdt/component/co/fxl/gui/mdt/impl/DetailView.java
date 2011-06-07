@@ -151,8 +151,9 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 		}
 
 		@Override
-		public void clear(IVerticalPanel panel) {
+		public boolean clear(IVerticalPanel panel) {
 			panel.clear();
+			return true;
 		}
 
 		@Override

@@ -117,8 +117,9 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	}
 
 	@Override
-	public void clear(IVerticalPanel panel) {
+	public boolean clear(IVerticalPanel panel) {
 		panel.clear();
+		return true;
 	}
 
 	protected void save(ITree<Object> tree, ICallback<Boolean> cb) {

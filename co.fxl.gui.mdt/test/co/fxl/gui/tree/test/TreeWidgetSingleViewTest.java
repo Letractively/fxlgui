@@ -57,8 +57,9 @@ class TreeWidgetSingleViewTest {
 			}
 
 			@Override
-			public void clear(IVerticalPanel contentPanel) {
+			public boolean clear(IVerticalPanel contentPanel) {
 				contentPanel.clear();
+				return true;
 			}
 
 		});

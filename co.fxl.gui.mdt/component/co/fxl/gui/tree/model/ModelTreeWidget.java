@@ -131,7 +131,11 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		void setNode(ITree<T> node) {
 			this.node = node;
 			if (node == null) {
-				decorator.clear(contentPanel);
+				boolean addTitle = decorator.clear(contentPanel);
+				if (addTitle)
+					contentPanel.add().panel().vertical().spacing(10).add()
+							.label().text("NO ENTITY SELECTED").font()
+							.pixel(10).color().gray();
 				return;
 			}
 			if (onTop) {
