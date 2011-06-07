@@ -55,7 +55,7 @@ public interface ITreeWidget<T> {
 
 		void decorate(IVerticalPanel panel, IVerticalPanel bottom, Object tree);
 
-		void clear(IVerticalPanel contentPanel);
+		boolean clear(IVerticalPanel contentPanel);
 	}
 
 	ITreeWidget<T> title(String title);

@@ -39,8 +39,9 @@ final class N2MRelationDecorator implements IDecorator<Object>, IResizeListener 
 	}
 
 	@Override
-	public void clear(IVerticalPanel panel) {
+	public boolean clear(IVerticalPanel panel) {
 		panel.clear();
+		return true;
 	}
 
 	@Override
