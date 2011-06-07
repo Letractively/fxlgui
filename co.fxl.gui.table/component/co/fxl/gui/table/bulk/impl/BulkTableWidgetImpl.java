@@ -141,9 +141,9 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 			public ICell checkBox(Boolean value) {
 				IGridCell cell = grid.cell(column, row + rowOffset);
 				align(column, cell);
-				if (value != null)
+				if (value != null) {
 					checkBox = cell.checkBox().checked(value).editable(false);
-				else {
+				} else {
 					cell.label();
 				}
 				decorate(column, row, cell);
