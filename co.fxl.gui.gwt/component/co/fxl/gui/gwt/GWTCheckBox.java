@@ -54,6 +54,10 @@ class GWTCheckBox extends GWTElement<CheckBox, ICheckBox> implements ICheckBox {
 	@Override
 	public ICheckBox editable(boolean editable) {
 		container.widget.setEnabled(editable);
+		if (!editable)
+			container.widget.addStyleName("gwt-CheckBox-disabled");
+		else
+			container.widget.removeStyleName("gwt-CheckBox-disabled");
 		return this;
 	}
 
