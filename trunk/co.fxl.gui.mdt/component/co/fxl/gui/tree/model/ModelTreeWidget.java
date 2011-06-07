@@ -388,6 +388,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		if (panel == null) {
 			panel = widgetTitle.content().panel().vertical();
 			bottom = widgetTitle.bottom().panel().vertical();
+			bottom.add().label().text("&#160;");
 			bottom.height(32);
 			WidgetTitle.decorateGradient(bottom);
 		}
