@@ -60,7 +60,7 @@ class TreeModel<T> {
 		}
 		selection = tree;
 		if (selection != null) {
-			ModelTreeNode<T> node = node(tree);
+			ModelTreeNode<T> node = node(selection);
 			node.selected(true);
 			selection = node.tree;
 		}
