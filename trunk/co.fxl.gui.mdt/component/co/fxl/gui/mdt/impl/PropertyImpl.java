@@ -30,8 +30,8 @@ public class PropertyImpl implements IProperty<Object, Object> {
 	class ConditionRuleImpl implements IConditionRule<Object, Object, Object> {
 
 		ICondition<Object, Object> condition;
-		boolean invisible;
-		boolean nonModifieable;
+		Boolean invisible;
+		Boolean nonModifieable;
 		Object[] targetValues;
 		IProperty<Object, Object> target;
 

@@ -474,11 +474,14 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							for (final ConditionRuleImpl cr : property.conditionRules) {
 								boolean satisfied = cr.condition.satisfied(
 										node, value);
-								if (cr.invisible) {
-									invisible(cr, satisfied, value);
-								}
-								if (cr.nonModifieable) {
+								boolean invisible = cr.invisible != null
+										&& cr.invisible;
+								if (cr.nonModifieable != null
+										&& cr.nonModifieable && !invisible) {
 									nonModifieable(cr, satisfied, value);
+								}
+								if (invisible) {
+									invisible(cr, satisfied, value);
 								}
 								if (cr.targetValues != null) {
 									targetValues(cr, satisfied, value);
