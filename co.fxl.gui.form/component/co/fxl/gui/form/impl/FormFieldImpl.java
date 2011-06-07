@@ -116,7 +116,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 
 	@Override
 	public void remove() {
-		widget.gridPanel.row(row).remove();
+		widget.gridPanel.row(getVisibleIndex()).remove();
 	}
 
 	@SuppressWarnings("unchecked")
