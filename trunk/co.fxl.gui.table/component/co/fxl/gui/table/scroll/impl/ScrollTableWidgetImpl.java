@@ -191,6 +191,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				}
 				dock.add().label().text("&#160;");
 				dock.height(heightMinusTopPanel());
+				if (!externalStatusPanel) {
+					IGridPanel statusPanel2 = statusPanel();
+					statusPanel2.cell(0, 0).label().text("&#160;");
+					statusPanel2.height(32);
+				}
 			} else {
 				addFilter();
 				IDockPanel dock = container.add().panel().dock();
