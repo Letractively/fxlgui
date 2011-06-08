@@ -465,4 +465,9 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			edit.clickable(c);
 		}
 	}
+
+	public void reset() {
+		selection = null;
+		selectionIndex = -1;
+	}
 }
