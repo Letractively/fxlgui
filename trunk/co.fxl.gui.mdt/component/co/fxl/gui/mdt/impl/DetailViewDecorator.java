@@ -537,8 +537,6 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 						boolean satisfied, Object value) {
 					PropertyImpl p = property(cr);
 					IFormField<?, ?> ff = target(p);
-					assert ff != null : "no form field found for property "
-							+ p.name;
 					ff.editable(!satisfied);
 				}
 
