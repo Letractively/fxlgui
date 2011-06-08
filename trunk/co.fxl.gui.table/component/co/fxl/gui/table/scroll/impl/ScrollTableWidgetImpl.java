@@ -789,7 +789,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	@Override
-	public co.fxl.gui.table.scroll.api.IScrollTableWidget.ICommandButtons commandButtons() {
+	public co.fxl.gui.table.scroll.api.IScrollTableWidget.ICommandButtons<Object> commandButtons() {
 		if (commandButtons == null) {
 			commandButtons = new CommandButtonsImpl(this);
 			buttonDecorator = commandButtons;
@@ -826,5 +826,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		bottom.addSpace(2);
 		statusPanel = bottom.add().panel().grid().resize(3, 1);
 		statusPanel.spacing(4);
+	}
+
+	void visible(IRows<Object> result) {
+		if (result != null)
+			rows(result);
+		visible(true);
 	}
 }
