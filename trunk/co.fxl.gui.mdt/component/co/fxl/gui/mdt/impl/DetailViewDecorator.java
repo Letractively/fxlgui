@@ -301,13 +301,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 										.valueElement();
 							} else if (property.type.values.size() > 0) {
 								formField = form.addComboBox(property.name);
-								IComboBox cb = (IComboBox) formField
-										.valueElement();
-								if (!property.editable)
-									cb.editable(false);
-								List<Object> vs = getDomain(node, property);
-								for (Object s : vs)
-									cb.addText((String) s);
+								IComboBox cb = setValues(node, property,
+										formField);
 								valueElement = (ITextElement<?>) formField
 										.valueElement();
 							} else {
@@ -322,6 +317,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							updates.add(new Runnable() {
 								@Override
 								public void run() {
+									ITextElement<?> valueElement = (ITextElement<?>) property2formField
+											.get(property).valueElement();
 									String text = valueElement.text();
 									IAdapter<Object, Object> adapter = property.adapter;
 									assert adapter != null;
@@ -362,7 +359,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							});
 						} else if (property.type.clazz.equals(Boolean.class)) {
 							formField = form.addCheckBox(property.name);
-							final ICheckBox checkBox = (ICheckBox) formField
+							ICheckBox checkBox = (ICheckBox) formField
 									.valueElement();
 							if (!property.editable)
 								checkBox.editable(false);
@@ -373,6 +370,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							updates.add(new Runnable() {
 								@Override
 								public void run() {
+									ICheckBox checkBox = (ICheckBox) formField
+											.valueElement();
 									property.adapter.valueOf(node,
 											checkBox.checked());
 								}
@@ -442,6 +441,17 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 			if (listeners.get(p) != null)
 				listeners.get(p).onUpdate(p.adapter.valueOf(node));
 		}
+	}
+
+	IComboBox setValues(final Object node, final PropertyImpl property,
+			final IFormField<?, ?> formField) {
+		IComboBox cb = (IComboBox) formField.valueElement();
+		List<Object> vs = getDomain(node, property);
+		for (Object s : vs)
+			cb.addText((String) s);
+		if (!property.editable)
+			cb.editable(false);
+		return cb;
 	}
 
 	public void setValue(final Object valueOf,
@@ -545,8 +555,9 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 					PropertyImpl p = property(cr);
 					IFormField<?, ?> ff = target(p);
 					boolean visible = !satisfied;
-					ff.visible(visible);
-					if (visible) {
+					boolean changed = ff.visible(visible);
+					if (visible && changed) {
+						setValues(node, p, ff);
 						setValue(p.adapter.valueOf(node),
 								(ITextElement<?>) ff.valueElement());
 					}
