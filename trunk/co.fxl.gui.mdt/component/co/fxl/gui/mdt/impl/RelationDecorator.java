@@ -273,17 +273,17 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 	}
 
 	private void addAddButton(final Object node) {
-		IRowListener<Boolean> addListener = new IRowListener<Boolean>() {
+		IRowListener<IRows<Object>> addListener = new IRowListener<IRows<Object>>() {
 			@Override
 			public void onClick(Object identifier, int rowIndex,
-					ICallback<Boolean> callback) {
+					final ICallback<IRows<Object>> callback) {
 				relation.addRemoveListener.onAdd(node, identifier == null ? -1
 						: rowIndex, identifier, new CallbackTemplate<Boolean>(
 						callback) {
 
 					@Override
 					public void onSuccess(Boolean result) {
-						table.refresh();
+						callback.onSuccess(null);
 					}
 				});
 			}
@@ -308,44 +308,48 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 			final IDeletableList<Object> result,
 			final ISelection<Object> selection0) {
 		if (relation.addRemoveListener != null) {
-			table.commandButtons().listenOnRemove(new IRowListener<Boolean>() {
+			table.commandButtons().listenOnRemove(
+					new IRowListener<IRows<Object>>() {
 
-				@Override
-				public void onClick(Object identifier, int rowIndex,
-						final ICallback<Boolean> callback) {
-					String msg = "Remove Entity?";
-					IDialog dl = panel.display().showDialog().message(msg)
-							.warn().confirm();
-					dl.addButton().yes().addClickListener(new IClickListener() {
 						@Override
-						public void onClick() {
-							Map<Integer, Object> r = selection0.indexedResult();
-							int index = r.keySet().iterator().next();
-							result.delete(
-									index,
-									r.get(index),
-									new CallbackTemplate<IDeletableList<Object>>(
-											callback) {
-
+						public void onClick(Object identifier, int rowIndex,
+								final ICallback<IRows<Object>> callback) {
+							String msg = "Remove Entity?";
+							IDialog dl = panel.display().showDialog()
+									.message(msg).warn().confirm();
+							dl.addButton().yes()
+									.addClickListener(new IClickListener() {
 										@Override
-										public void onSuccess(
-												IDeletableList<Object> result) {
-											table.rows(toRows(result));
-											callback.onSuccess(true);
+										public void onClick() {
+											Map<Integer, Object> r = selection0
+													.indexedResult();
+											int index = r.keySet().iterator()
+													.next();
+											result.delete(
+													index,
+													r.get(index),
+													new CallbackTemplate<IDeletableList<Object>>(
+															callback) {
+
+														@Override
+														public void onSuccess(
+																IDeletableList<Object> result) {
+															callback.onSuccess(toRows(result));
+														}
+													});
 										}
 									});
-						}
-					});
-					dl.addButton().no().addClickListener(new IClickListener() {
+							dl.addButton().no()
+									.addClickListener(new IClickListener() {
 
-						@Override
-						public void onClick() {
-							callback.onSuccess(false);
+										@Override
+										public void onClick() {
+											callback.onSuccess(null);
+										}
+									});
+							dl.visible(true);
 						}
 					});
-					dl.visible(true);
-				}
-			});
 		}
 	}
 
@@ -354,35 +358,37 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 			final ISelection<Object> selection0) {
 		if (relation.upDownListener != null) {
 			table.commandButtons().listenOnMoveUp(
-					new IMoveRowListener<Boolean>() {
+					new IMoveRowListener<IRows<Object>>() {
 
 						@Override
 						public void onClick(int rowIndex, Object identifier,
-								boolean maxMove, ICallback<Boolean> callback) {
+								boolean maxMove,
+								final ICallback<IRows<Object>> callback) {
 							relation.upDownListener.onUp(node, rowIndex,
 									identifier, maxMove,
 									new CallbackTemplate<Boolean>(callback) {
 
 										@Override
 										public void onSuccess(Boolean result) {
+											callback.onSuccess(null);
 										}
 									});
 						}
 					});
 			table.commandButtons().listenOnMoveDown(
-					new IMoveRowListener<Boolean>() {
+					new IMoveRowListener<IRows<Object>>() {
 
 						@Override
 						public void onClick(int rowIndex, Object identifier,
 								boolean maxMove,
-								final ICallback<Boolean> callback) {
+								final ICallback<IRows<Object>> callback) {
 							relation.upDownListener.onDown(node, rowIndex,
 									identifier, maxMove,
 									new CallbackTemplate<Boolean>(callback) {
 
 										@Override
 										public void onSuccess(Boolean result) {
-											callback.onSuccess(result);
+											callback.onSuccess(null);
 										}
 									});
 						}
@@ -392,24 +398,32 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 
 	private void addShowButton() {
 		if (relation.showListener != null)
-			table.commandButtons().listenOnShow(new IRowListener<Boolean>() {
-				@Override
-				public void onClick(Object identifier, int rowIndex,
-						ICallback<Boolean> callback) {
-					relation.showListener.onShow(identifier);
-				}
-			});
+			table.commandButtons().listenOnShow(
+					new IRowListener<IRows<Object>>() {
+						@Override
+						public void onClick(Object identifier, int rowIndex,
+								ICallback<IRows<Object>> callback) {
+							relation.showListener.onShow(identifier);
+						}
+					});
 	}
 
 	private void addEditButton() {
 		if (relation.editListener != null)
-			table.commandButtons().listenOnEdit(new IRowListener<Boolean>() {
-				@Override
-				public void onClick(Object identifier, int rowIndex,
-						ICallback<Boolean> callback) {
-					relation.editListener.onEdit(node, rowIndex, identifier,
-							callback);
-				}
-			});
+			table.commandButtons().listenOnEdit(
+					new IRowListener<IRows<Object>>() {
+						@Override
+						public void onClick(Object identifier, int rowIndex,
+								final ICallback<IRows<Object>> callback) {
+							relation.editListener.onEdit(node, rowIndex,
+									identifier,
+									new CallbackTemplate<Boolean>() {
+										@Override
+										public void onSuccess(Boolean result) {
+											callback.onSuccess(null);
+										}
+									});
+						}
+					});
 	}
 }
