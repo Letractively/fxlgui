@@ -154,6 +154,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public IScrollTableWidget<Object> visible(boolean visible) {
 		if (visible) {
 			rows = new RowAdapter(actualRows);
+			if(commandButtons!=null)
+				commandButtons.reset();
 			if (!preselectedList.isEmpty()) {
 				if (preselectedIndex != -1) {
 					boolean found = rows.selected(preselectedIndex,
