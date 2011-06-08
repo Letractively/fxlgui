@@ -301,7 +301,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 										.valueElement();
 							} else if (property.type.values.size() > 0) {
 								formField = form.addComboBox(property.name);
-								IComboBox cb = setValues(node, property,
+								setValues(node, property,
 										formField);
 								valueElement = (ITextElement<?>) formField
 										.valueElement();
