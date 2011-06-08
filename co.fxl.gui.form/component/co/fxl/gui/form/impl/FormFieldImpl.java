@@ -131,9 +131,9 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	}
 
 	@Override
-	public IFormField<T, R> visible(boolean visible) {
+	public boolean visible(boolean visible) {
 		if (visible == this.visible)
-			return this;
+			return false;
 		int index = getVisibleIndex();
 		if (visible) {
 			widget.gridPanel.row(index).insert();
@@ -143,7 +143,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 			remove();
 		}
 		this.visible = visible;
-		return this;
+		return true;
 	}
 
 	private int getVisibleIndex() {
