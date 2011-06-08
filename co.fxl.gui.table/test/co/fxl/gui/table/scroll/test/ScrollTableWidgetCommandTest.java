@@ -52,27 +52,28 @@ class ScrollTableWidgetCommandTest implements IRows<String> {
 					.type().type(String.class);
 		widget.rows(this);
 		widget.commandButtons().listenOnMoveUp(null).listenOnMoveDown(null);
-		widget.commandButtons().listenOnAdd(new IRowListener<Boolean>() {
+		widget.commandButtons().listenOnAdd(new IRowListener<IRows<String>>() {
 
 			@Override
 			public void onClick(Object identifier, int index,
-					ICallback<Boolean> callback) {
+					ICallback<IRows<String>> callback) {
 				if (identifier == null) {
 					content.add(index, newContent(content.size()));
 				} else
 					content.add(newContent(content.size()));
-				callback.onSuccess(true);
+				callback.onSuccess(null);
 			}
 		});
-		widget.commandButtons().listenOnRemove(new IRowListener<Boolean>() {
+		widget.commandButtons().listenOnRemove(
+				new IRowListener<IRows<String>>() {
 
-			@Override
-			public void onClick(Object identifier, int index,
-					ICallback<Boolean> callback) {
-				content.remove(index);
-				callback.onSuccess(true);
-			}
-		});
+					@Override
+					public void onClick(Object identifier, int index,
+							ICallback<IRows<String>> callback) {
+						content.remove(index);
+						callback.onSuccess(null);
+					}
+				});
 		widget.visible(true);
 		display.visible(true);
 	}

@@ -27,6 +27,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
+import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IButtonPanelDecorator;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.ICommandButtons;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IDecorator;
@@ -34,7 +35,7 @@ import co.fxl.gui.table.scroll.api.IScrollTableWidget.IMoveRowListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IRowListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IScrollTableClickListener;
 
-public class CommandButtonsImpl implements ICommandButtons,
+public class CommandButtonsImpl implements ICommandButtons<Object>,
 		IButtonPanelDecorator, ISelectionListener<Object> {
 
 	// TODO FEATURE: Option: Usability: Enable Drag & Drop for reordering of
@@ -79,14 +80,14 @@ public class CommandButtonsImpl implements ICommandButtons,
 
 	private final class Update implements IClickListener {
 
-		private IRowListener<Boolean> l;
+		private IRowListener<IRows<Object>> l;
 		private boolean deleteSelection;
 
-		Update(IRowListener<Boolean> l) {
+		Update(IRowListener<IRows<Object>> l) {
 			this(l, false);
 		}
 
-		Update(IRowListener<Boolean> l, boolean deleteSelection) {
+		Update(IRowListener<IRows<Object>> l, boolean deleteSelection) {
 			this.l = l;
 			this.deleteSelection = deleteSelection;
 		}
@@ -100,30 +101,29 @@ public class CommandButtonsImpl implements ICommandButtons,
 					selection = null;
 					selectionIndex = -1;
 				}
-				l.onClick(s, i, new CallbackTemplate<Boolean>() {
+				l.onClick(s, i, new CallbackTemplate<IRows<Object>>() {
 					@Override
-					public void onSuccess(Boolean result) {
+					public void onSuccess(IRows<Object> result) {
 						selection = null;
 						selectionIndex = -1;
-						if (result != null && result)
-							execute();
+						execute(result);
 					}
 				});
 			} else
-				execute();
+				execute(null);
 		}
 
-		private void execute() {
-			widget.visible(true);
+		private void execute(IRows<Object> result) {
+			widget.visible(result);
 		}
 	}
 
 	private final class Move implements IClickListener {
 
-		private IMoveRowListener<Boolean> l;
+		private IMoveRowListener<IRows<Object>> l;
 		private int inc;
 
-		Move(IMoveRowListener<Boolean> l, int inc) {
+		Move(IMoveRowListener<IRows<Object>> l, int inc) {
 			this.l = l;
 			this.inc = inc;
 		}
@@ -145,9 +145,9 @@ public class CommandButtonsImpl implements ICommandButtons,
 			if (l != null)
 				l.onClick(index, selection, inc == Integer.MAX_VALUE
 						|| inc == Integer.MIN_VALUE,
-						new CallbackTemplate<Boolean>() {
+						new CallbackTemplate<IRows<Object>>() {
 							@Override
-							public void onSuccess(Boolean result) {
+							public void onSuccess(IRows<Object> result) {
 							}
 						});
 		}
@@ -238,12 +238,12 @@ public class CommandButtonsImpl implements ICommandButtons,
 	private boolean listenOnMoveUp;
 	private boolean listenOnMoveDown;
 	private boolean listenOnShow;
-	private IRowListener<Boolean> listenOnAddListener;
-	private IRowListener<Boolean> listenOnRemoveListener;
-	private IMoveRowListener<Boolean> listenOnMoveUpListener;
-	private IMoveRowListener<Boolean> listenOnMoveDownListener;
-	private IRowListener<Boolean> listenOnShowListener;
-	private int selectionIndex;
+	private IRowListener<IRows<Object>> listenOnAddListener;
+	private IRowListener<IRows<Object>> listenOnRemoveListener;
+	private IMoveRowListener<IRows<Object>> listenOnMoveUpListener;
+	private IMoveRowListener<IRows<Object>> listenOnMoveDownListener;
+	private IRowListener<IRows<Object>> listenOnShowListener;
+	private int selectionIndex = -1;
 	private Object selection;
 	private IHorizontalPanel panel;
 	private IClickable<?> imageUp;
@@ -252,7 +252,7 @@ public class CommandButtonsImpl implements ICommandButtons,
 	private IDecorator listenOnAddListenerDecorator = DEFAULT_DECORATOR;
 	private IClickable<?> edit;
 	private boolean listenOnEdit;
-	private IRowListener<Boolean> listenOnEditListener;
+	private IRowListener<IRows<Object>> listenOnEditListener;
 	private IClickable<?> imageUpMax;
 	private IClickable<?> imageDownMax;
 	private IClickable<?> show;
@@ -267,7 +267,8 @@ public class CommandButtonsImpl implements ICommandButtons,
 	}
 
 	@Override
-	public ICommandButtons listenOnAdd(IDecorator dec, IRowListener<Boolean> l) {
+	public ICommandButtons<Object> listenOnAdd(IDecorator dec,
+			IRowListener<IRows<Object>> l) {
 		listenOnAdd = true;
 		listenOnAddListenerDecorator = dec;
 		widget.showNoRowsFound = false;
@@ -276,51 +277,54 @@ public class CommandButtonsImpl implements ICommandButtons,
 	}
 
 	@Override
-	public ICommandButtons listenOnAdd(IRowListener<Boolean> l) {
+	public ICommandButtons<Object> listenOnAdd(IRowListener<IRows<Object>> l) {
 		listenOnAdd = true;
 		listenOnAddListener = l;
 		return this;
 	}
 
 	@Override
-	public ICommandButtons listenOnRemove(IRowListener<Boolean> l) {
+	public ICommandButtons<Object> listenOnRemove(IRowListener<IRows<Object>> l) {
 		listenOnRemove = true;
 		listenOnRemoveListener = l;
 		return this;
 	}
 
 	@Override
-	public ICommandButtons listenOnMoveUp(IMoveRowListener<Boolean> l) {
+	public ICommandButtons<Object> listenOnMoveUp(
+			IMoveRowListener<IRows<Object>> l) {
 		listenOnMoveUp = true;
 		listenOnMoveUpListener = l;
 		return this;
 	}
 
 	@Override
-	public ICommandButtons listenOnMoveDown(IMoveRowListener<Boolean> l) {
+	public ICommandButtons<Object> listenOnMoveDown(
+			IMoveRowListener<IRows<Object>> l) {
 		listenOnMoveDown = true;
 		listenOnMoveDownListener = l;
 		return this;
 	}
 
 	@Override
-	public ICommandButtons listenOnShow(final IRowListener<Boolean> l) {
+	public ICommandButtons<Object> listenOnShow(
+			final IRowListener<IRows<Object>> l) {
 		listenOnShow = true;
 		listenOnShowListener = l;
 		doubleClickListener(l);
 		return this;
 	}
 
-	private void doubleClickListener(final IRowListener<Boolean> l) {
+	private void doubleClickListener(final IRowListener<IRows<Object>> l) {
 		widget.addTableClickListener(new IScrollTableClickListener() {
 
 			@Override
 			public void onClick(Object identifier, int rowIndex) {
 				l.onClick(identifier, rowIndex,
-						new CallbackTemplate<Boolean>() {
+						new CallbackTemplate<IRows<Object>>() {
 
 							@Override
-							public void onSuccess(Boolean result) {
+							public void onSuccess(IRows<Object> result) {
 							}
 						});
 			}
@@ -328,7 +332,7 @@ public class CommandButtonsImpl implements ICommandButtons,
 	}
 
 	@Override
-	public ICommandButtons listenOnEdit(IRowListener<Boolean> l) {
+	public ICommandButtons<Object> listenOnEdit(IRowListener<IRows<Object>> l) {
 		listenOnEdit = true;
 		listenOnEditListener = l;
 		doubleClickListener(l);
@@ -395,7 +399,7 @@ public class CommandButtonsImpl implements ICommandButtons,
 	}
 
 	private IClickable<?> addMoveImage(String resource,
-			IMoveRowListener<Boolean> listenOnMoveUpListener2, int i) {
+			IMoveRowListener<IRows<Object>> listenOnMoveUpListener2, int i) {
 		String res = null;
 		// resource
 		// + (i == Integer.MAX_VALUE || i == Integer.MIN_VALUE ? resource

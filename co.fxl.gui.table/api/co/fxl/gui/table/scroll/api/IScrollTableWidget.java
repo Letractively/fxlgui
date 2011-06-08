@@ -59,21 +59,21 @@ public interface IScrollTableWidget<T> {
 		IClickable<?> decorate(IContainer c);
 	}
 
-	public interface ICommandButtons {
+	public interface ICommandButtons<T> {
 
-		ICommandButtons listenOnAdd(IDecorator dec, IRowListener<Boolean> l);
+		ICommandButtons<T> listenOnAdd(IDecorator dec, IRowListener<IRows<T>> l);
 
-		ICommandButtons listenOnAdd(IRowListener<Boolean> l);
+		ICommandButtons<T> listenOnAdd(IRowListener<IRows<T>> l);
 
-		ICommandButtons listenOnRemove(IRowListener<Boolean> l);
+		ICommandButtons<T> listenOnRemove(IRowListener<IRows<T>> l);
 
-		ICommandButtons listenOnMoveUp(IMoveRowListener<Boolean> l);
+		ICommandButtons<T> listenOnMoveUp(IMoveRowListener<IRows<T>> l);
 
-		ICommandButtons listenOnMoveDown(IMoveRowListener<Boolean> l);
+		ICommandButtons<T> listenOnMoveDown(IMoveRowListener<IRows<T>> l);
 
-		ICommandButtons listenOnShow(IRowListener<Boolean> l);
+		ICommandButtons<T> listenOnShow(IRowListener<IRows<T>> l);
 
-		ICommandButtons listenOnEdit(IRowListener<Boolean> l);
+		ICommandButtons<T> listenOnEdit(IRowListener<IRows<T>> l);
 	}
 
 	public interface IButtonPanelDecorator {
@@ -134,7 +134,7 @@ public interface IScrollTableWidget<T> {
 
 	IScrollTableWidget<T> navigationPanel(INavigationPanelDecorator dec);
 
-	ICommandButtons commandButtons();
+	ICommandButtons<T> commandButtons();
 
 	IScrollTableWidget<T> showDisplayedRange(boolean showDisplayedRange);
 
