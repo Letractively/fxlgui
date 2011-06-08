@@ -268,7 +268,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			if (constraints != null)
 				filter.constraints(constraints);
 			filter.visible(true);
-			showNoRowsFound = false;
+//			showNoRowsFound = false;
 		}
 	}
 
