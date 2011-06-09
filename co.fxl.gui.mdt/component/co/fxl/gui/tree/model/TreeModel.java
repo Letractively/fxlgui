@@ -200,6 +200,9 @@ class TreeModel<T> {
 		nodes.put(node.tree.object(), node);
 		if (widget.previousSelection != null
 				&& widget.previousSelection.equals(node.tree.object())) {
+			if (selection != null && node(selection) != null) {
+				node(selection).selected(false);
+			}
 			widget.previousSelection = null;
 			selection = node.tree;
 			node.selected(true);
