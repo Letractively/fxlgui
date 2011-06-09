@@ -34,10 +34,18 @@ class TreeModel<T> {
 	private boolean isCopy;
 	private ITree<T> cutCopy;
 	private Map<T, ModelTreeNode<T>> nodes = new HashMap<T, ModelTreeNode<T>>();
+	ITree<T> detailViewTree;
 
 	TreeModel(ModelTreeWidget<T> widget, ITree<T> tree) {
 		this.widget = widget;
 		root = tree;
+	}
+
+	boolean setDetailViewTree(ITree<T> tree) {
+		if (detailViewTree != null && detailViewTree.equals(tree))
+			return true;
+		detailViewTree = tree;
+		return false;
 	}
 
 	ITree<T> selection() {
