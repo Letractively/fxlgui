@@ -301,8 +301,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 										.valueElement();
 							} else if (property.type.values.size() > 0) {
 								formField = form.addComboBox(property.name);
-								setValues(node, property,
-										formField);
+								setValues(node, property, formField);
 								valueElement = (ITextElement<?>) formField
 										.valueElement();
 							} else {
@@ -505,6 +504,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 						boolean satisfied, Object value) {
 					PropertyImpl p = property(cr);
 					IFormField<IComboBox, String> ff = (IFormField<IComboBox, String>) target(p);
+//					if (ff == null)
+//						return;
 					IFieldType type = ff.type();
 					Object[] targetValues = satisfied ? withNull(ff,
 							cr.targetValues) : getDomain(node, p).toArray();
