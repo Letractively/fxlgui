@@ -60,6 +60,14 @@ class FormDateFieldImpl extends FormTextFieldImpl<Date> {
 					calendar.date(Format.date().parse(value));
 				}
 			});
+			calendar.date(Format.date().parse(valueElement().text()));
+			valueElement().addFocusListener(new IUpdateListener<Boolean>() {
+				@Override
+				public void onUpdate(Boolean value) {
+					if (!value)
+						popUp.visible(false);
+				}
+			});
 			popUp.visible(true);
 		}
 
