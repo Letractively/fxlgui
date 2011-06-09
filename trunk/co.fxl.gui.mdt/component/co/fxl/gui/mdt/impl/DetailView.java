@@ -110,6 +110,10 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 		tree.expand(true);
 		tree.source(this);
 		tree.selection(getSelectionObject());
+		if (create) {
+			create = false;
+			tree.clickNew(createType);
+		}
 		tree.visible(true);
 	}
 
@@ -274,32 +278,32 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 						DetailView.this.itree = result;
 						// if (!create) {
 						callback.onSuccess(result);
-						if (create) {
-							DetailView.this.widget.mainPanel.display()
-									.invokeLater(new Runnable() {
-
-										@Override
-										public void run() {
-											create = false;
-											tree.clickNew(createType);
-											// itree.createNew(
-											// createType,
-											// new
-											// CallbackTemplate<ITree<Object>>(
-											// callback) {
-											//
-											// @Override
-											// public void onSuccess(
-											// ITree<Object> result1) {
-											// tree.selection(result1
-											// .object());
-											// callback.onSuccess(result);
-											// }
-											// });
-										}
-									});
-							// } else {
-						}
+						// if (create) {
+						// DetailView.this.widget.mainPanel.display()
+						// .invokeLater(new Runnable() {
+						//
+						// @Override
+						// public void run() {
+						// create = false;
+						// tree.clickNew(createType);
+						// // itree.createNew(
+						// // createType,
+						// // new
+						// // CallbackTemplate<ITree<Object>>(
+						// // callback) {
+						// //
+						// // @Override
+						// // public void onSuccess(
+						// // ITree<Object> result1) {
+						// // tree.selection(result1
+						// // .object());
+						// // callback.onSuccess(result);
+						// // }
+						// // });
+						// }
+						// });
+						// // } else {
+						// }
 					}
 				});
 	}
