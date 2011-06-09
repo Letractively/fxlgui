@@ -19,7 +19,9 @@
 package co.fxl.gui.tree.model;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITree.ILazyList;
@@ -143,13 +145,30 @@ class TreeModel<T> {
 
 	ModelTreeNode<T> refresh(T object, boolean recurse) {
 		ModelTreeNode<T> node = nodes.get(object);
-		assert node != null : object + " not found in " + nodes.keySet();
+		assert node != null : trace(object) + " not found in "
+				+ trace(nodes.keySet());
 		ITree<T> tree = node.tree;
 		refresh(tree, recurse);
 		if (tree.equals(selection)) {
 			widget.setDetailViewTree(tree);
 		}
 		return node;
+	}
+
+	private String trace(Set<T> s) {
+		if (s.isEmpty())
+			return "";
+		Iterator<T> it = s.iterator();
+		StringBuilder b = new StringBuilder(trace(it.next()));
+		while (it.hasNext())
+			b.append(", " + trace(it.next()));
+		return b.toString();
+	}
+
+	private String trace(T object) {
+		if (object == null)
+			return "null";
+		return object + ":" + object.hashCode();
 	}
 
 	boolean isCopy() {
