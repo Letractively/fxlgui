@@ -145,6 +145,14 @@ class TreeModel<T> {
 
 	ModelTreeNode<T> refresh(T object, boolean recurse) {
 		ModelTreeNode<T> node = nodes.get(object);
+		if (node == null) {
+			for (T t : nodes.keySet()) {
+				if (t.equals(object)) {
+					node = nodes.get(t);
+					break;
+				}
+			}
+		}
 		assert node != null : trace(object) + " not found in "
 				+ trace(nodes.keySet());
 		ITree<T> tree = node.tree;
