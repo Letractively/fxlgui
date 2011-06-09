@@ -166,8 +166,8 @@ class TreeModel<T> {
 		ITree<T> tree = node.tree;
 		refresh(tree, recurse);
 		if (tree.equals(selection)) {
-			widget.setDetailViewTree(tree);
 			widget.scrollIntoView(node);
+			widget.setDetailViewTree(tree);
 		}
 		return node;
 	}
