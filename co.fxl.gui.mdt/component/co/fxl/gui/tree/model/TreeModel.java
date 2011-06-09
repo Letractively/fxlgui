@@ -145,8 +145,11 @@ class TreeModel<T> {
 		ModelTreeNode<T> node;
 		if (tree.equals(root) && !widget.showRoot) {
 			node = refresh();
-		} else
+		} else {
 			node = node(tree).refresh(recurse);
+			if (tree.equals(selection))
+				widget.scrollIntoView(node);
+		}
 		widget.updateButtons();
 		return node;
 	}
