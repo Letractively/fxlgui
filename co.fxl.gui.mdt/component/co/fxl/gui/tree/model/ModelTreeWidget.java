@@ -455,12 +455,16 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		}
 		model = new TreeModel<T>(this, tree);
 		Runnable finish = null;
-		// new Runnable() {
-		// @Override
-		// public void run() {
-		// setDetailViewTree(model.selection(), false);
-		// }
-		// };
+		if (runAfterVisible != null)
+			finish = new Runnable() {
+				@Override
+				public void run() {
+					IClickListener run = newClick.get(runAfterVisible);
+					runAfterVisible = null;
+					run.onClick();
+					// setDetailViewTree(model.selection(), false);
+				}
+			};
 		topLevelNodes = new LinkedList<ModelTreeNode<T>>();
 		scrollListener.reset();
 		if (showRoot) {
@@ -490,7 +494,9 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	T previousSelection;
 	List<ModelTreeNode<T>> topLevelNodes;
 	private static int MAX_PAINTS = Integer.MAX_VALUE;
-	// TODO potential problem in combination with click-new in MDT.DetailView (if constrained)
+
+	// TODO potential problem in combination with click-new in MDT.DetailView
+	// (if constrained)
 
 	void newNode(ModelTreeWidget<T> widget, IVerticalPanel panel,
 			ITree<T> root, int depth, Runnable finish, boolean topLevel,
@@ -677,6 +683,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	private T lastSelection;
+	private String runAfterVisible = null;
 
 	void notifyChange() {
 		T newSelection = model.selection() != null ? model.selection().object()
@@ -756,8 +763,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	public ITreeWidget<T> clickNew(String type) {
 		if (type == null && newClick.size() > 1)
 			type = defaultCreatableType;
-		IClickListener cl = newClick.get(type);
-		cl.onClick();
+		runAfterVisible = type;
 		return this;
 	}
 

@@ -155,10 +155,10 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	// http://gwt.google.com/samples/Showcase/Showcase.html#!CwMenuBar
 
 	void addViewWidget(IVerticalPanel sidePanel) {
+		if (!allowGridView)
+			return;
 		views = new ViewWidget(sidePanel.add().panel(), configurations,
 				configuration, !alwaysShowFilter, neverShowFilter);
-		if (!allowGridView)
-			views.visible(false);
 		views.addUpdateListener(new IUpdateListener<ViewWidget.ViewConfiguration>() {
 			@Override
 			public void onUpdate(ViewConfiguration value) {
@@ -166,7 +166,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 				if (constraints != null) {
 					constraints.configuration(configuration);
 				}
-				if(value.viewType.equals(ViewType.DETAILS)) {
+				if (value.viewType.equals(ViewType.DETAILS)) {
 					filterWidget.setConfiguration(configuration);
 				}
 				udpateFilterPanel();
@@ -437,7 +437,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		if (!showDetailViewByDefault)
 			showTableView(null);
 		else {
-			views.showDetails();
+			if (views != null)
+				views.showDetails();
 			// TODO show filter widget with relation constraint
 			showDetailView(null);
 		}
@@ -447,7 +448,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	void showTableView(Object object) {
 		if (filterPanel != null && !neverShowFilter)
 			filterPanel.visible(true);
-		views.showTable();
+		if (views != null)
+			views.showTable();
 		clear();
 		activeView = new TableView(this, object);
 		activeView.updateLinks();
