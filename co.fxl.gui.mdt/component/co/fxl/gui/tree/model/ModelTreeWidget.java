@@ -557,6 +557,9 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	private void setLoadedDetailViewTree(ITree<T> tree) {
+		if (tree != null && model.selection() != null
+				&& !model.selection().equals(tree))
+			return;
 		boolean showFirst = false;
 		for (int i = 0; i < detailViews.size(); i++) {
 			DetailView view = detailViews.get(i);
