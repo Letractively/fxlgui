@@ -35,6 +35,11 @@ public class FieldTypeImpl implements IFieldType {
 	public boolean isShort = false;
 
 	@Override
+	public String toString() {
+		return String.valueOf(clazz);
+	}
+
+	@Override
 	public IFieldType type(Class<?> clazz) {
 		this.clazz = clazz;
 		return this;
