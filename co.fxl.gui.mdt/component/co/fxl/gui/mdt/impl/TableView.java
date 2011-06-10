@@ -313,17 +313,20 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 					public void run() {
 						onHeightChange(widget.mainPanel.display().height());
 						updateCreatable();
-						IScrollTableClickListener showClickListener = new IScrollTableClickListener() {
+						if (widget.allowDetailView) {
+							IScrollTableClickListener showClickListener = new IScrollTableClickListener() {
 
-							@Override
-							public void onClick(Object identifier, int rowIndex) {
-								if (widget.views != null)
-									widget.views.showDetails();
-								widget.showDetailView(identifier);
-							}
-						};
-						table.addTableClickListener(showClickListener)
-								.doubleClick();
+								@Override
+								public void onClick(Object identifier,
+										int rowIndex) {
+									if (widget.views != null)
+										widget.views.showDetails();
+									widget.showDetailView(identifier);
+								}
+							};
+							table.addTableClickListener(showClickListener)
+									.doubleClick();
+						}
 						table.addTooltip("Double-Click to show Details.");
 						table.sortListener(TableView.this);
 						table.constraints(constraints);
