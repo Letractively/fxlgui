@@ -133,7 +133,7 @@ public class ViewList {
 						if (accept.clickable())
 							acceptListener.onClick();
 					}
-				});
+				}).enter();
 				accept.clickable(false);
 				tf.addUpdateListener(new IUpdateListener<String>() {
 
