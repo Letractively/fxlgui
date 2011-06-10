@@ -580,7 +580,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 					boolean visible = !satisfied;
 					boolean changed = ff.visible(visible);
 					if (visible && changed) {
-						setValues(node, p, ff);
+						if (ff.valueElement() instanceof IComboBox)
+							setValues(node, p, ff);
 						setValue(p.adapter.valueOf(node),
 								(ITextElement<?>) ff.valueElement());
 					}
