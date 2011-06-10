@@ -61,13 +61,18 @@ class FormDateFieldImpl extends FormTextFieldImpl<Date> {
 				}
 			});
 			calendar.date(Format.date().parse(valueElement().text()));
-			valueElement().addFocusListener(new IUpdateListener<Boolean>() {
-				@Override
-				public void onUpdate(Boolean value) {
-					if (!value)
-						popUp.visible(false);
-				}
-			});
+			// valueElement().addFocusListener(new IUpdateListener<Boolean>() {
+			// @Override
+			// public void onUpdate(Boolean value) {
+			// if (!value)
+			// widget.gridPanel.display().invokeLater(new Runnable() {
+			// @Override
+			// public void run() {
+			// popUp.visible(false);
+			// }
+			// });
+			// }
+			// });
 			popUp.visible(true);
 		}
 
