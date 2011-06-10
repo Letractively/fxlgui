@@ -25,6 +25,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.IUpdateable;
 
@@ -43,7 +44,7 @@ class SwingPasswordField extends SwingTextInput<JPasswordField, IPasswordField>
 	}
 
 	@Override
-	public IPasswordField addCarriageReturnListener(
+	public IKeyRecipient.IKey<IPasswordField> addKeyListener(
 			final IClickListener changeListener) {
 		jTextField().addActionListener(new ActionListener() {
 			@Override
@@ -51,7 +52,18 @@ class SwingPasswordField extends SwingTextInput<JPasswordField, IPasswordField>
 				changeListener.onClick();
 			}
 		});
-		return this;
+		return new IKeyRecipient.IKey<IPasswordField>() {
+
+			@Override
+			public IPasswordField enter() {
+				return (IPasswordField) SwingPasswordField.this;
+			}
+
+			@Override
+			public IPasswordField tab() {
+				throw new MethodNotImplementedException();
+			}
+		};
 	}
 
 	@Override
