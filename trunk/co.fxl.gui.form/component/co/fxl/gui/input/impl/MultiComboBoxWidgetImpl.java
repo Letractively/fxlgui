@@ -26,12 +26,9 @@ import java.util.Map;
 
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IPopUp;
-import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.Heights;
 import co.fxl.gui.form.impl.Validation;
 import co.fxl.gui.form.impl.Validation.IValidation;
 import co.fxl.gui.input.api.IMultiComboBoxWidget;
@@ -42,14 +39,14 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	private List<IUpdateListener<String[]>> listeners = new LinkedList<IUpdateListener<String[]>>();
 	private List<String> texts = new LinkedList<String>();
 	private List<String> selection = new LinkedList<String>();
-	private Heights heights = new Heights(0);
 	private ITextField textField;
-	private IPopUp popUp;
 	private Map<String, ICheckBox> checkBoxes = new HashMap<String, ICheckBox>();
+	private ElementPopUp popUp;
 
 	MultiComboBoxWidgetImpl(IContainer container) {
 		textField = container.textField().visible(false);
-		heights.decorate(textField);
+		ElementPopUp.HEIGHTS.decorate(textField);
+		popUp = new ElementPopUp(textField);
 	}
 
 	@Override
@@ -99,23 +96,12 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	@Override
 	public IMultiComboBoxWidget addText(String... texts) {
 		this.texts.addAll(Arrays.asList(texts));
+		popUp.lines(this.texts.size());
 		return this;
 	}
 
 	private void createPopUp() {
-		popUp = textField.display().showPopUp().autoHide(true);
-		heights.decorateBorder(popUp);
-		int w = Math.min(320, textField.width());
-		int h = Math.min(240, 2 + 19 * texts.size());
-		popUp.size(w, h);
-		popUp.offset(textField.offsetX(),
-				textField.offsetY() + textField.height());
-		IScrollPane scrollPane = popUp.container().scrollPane();
-		scrollPane.border().remove();
-		scrollPane.color().white();
-		// TODO refine, 16 = hack for GWT
-		IVerticalPanel v = scrollPane.viewPort().panel().vertical()
-				.width(w - 16);
+		IVerticalPanel v = popUp.create();
 		for (final String text : texts) {
 			ICheckBox cb = v.add().panel().horizontal().align().begin().add()
 					.panel().horizontal().align().begin().add().checkBox()
@@ -137,10 +123,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	}
 
 	private void clearPopUp() {
-		if (popUp != null) {
-			popUp.visible(false);
-			popUp = null;
-		}
+		popUp.clear();
 	}
 
 	@Override
