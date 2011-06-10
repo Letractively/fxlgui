@@ -105,26 +105,35 @@ public class ViewList {
 				}
 			} else {
 				final ITextField tf = labelPanel.add().textField();
+				tf.focus(true);
 				new Heights(0).decorate(tf);
 				tf.width(199);
+				final IClickListener acceptListener = new IClickListener() {
+					@Override
+					public void onClick() {
+						labelPanel.clear();
+						decorate(false);
+						title(tf.text().trim());
+						newListener.onNew(ViewImpl.this,
+								new CallbackTemplate<Void>() {
+
+									@Override
+									public void onSuccess(Void result) {
+										onAllowedClick();
+									}
+								});
+					}
+				};
 				final IImage accept = labelPanel.addSpace(4).add().image()
 						.resource(Icons.ACCEPT)
-						.addClickListener(new IClickListener() {
-							@Override
-							public void onClick() {
-								labelPanel.clear();
-								decorate(false);
-								title(tf.text().trim());
-								newListener.onNew(ViewImpl.this,
-										new CallbackTemplate<Void>() {
-
-											@Override
-											public void onSuccess(Void result) {
-												onAllowedClick();
-											}
-										});
-							}
-						}).mouseLeft();
+						.addClickListener(acceptListener).mouseLeft();
+				tf.addCarriageReturnListener(new IClickListener() {
+					@Override
+					public void onClick() {
+						if (accept.clickable())
+							acceptListener.onClick();
+					}
+				});
 				accept.clickable(false);
 				tf.addUpdateListener(new IUpdateListener<String>() {
 
