@@ -127,7 +127,7 @@ public class ViewList {
 				final IImage accept = labelPanel.addSpace(4).add().image()
 						.resource(Icons.ACCEPT)
 						.addClickListener(acceptListener).mouseLeft();
-				tf.addCarriageReturnListener(new IClickListener() {
+				tf.addKeyListener(new IClickListener() {
 					@Override
 					public void onClick() {
 						if (accept.clickable())
