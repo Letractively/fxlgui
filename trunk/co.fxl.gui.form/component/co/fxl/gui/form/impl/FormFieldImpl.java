@@ -134,6 +134,10 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	public boolean visible(boolean visible) {
 		if (visible == this.visible)
 			return false;
+		if (visible)
+			widget.linkInput(this);
+		else
+			widget.removeInput(this);
 		int index = getVisibleIndex();
 		if (visible) {
 			widget.gridPanel.row(index).insert();
