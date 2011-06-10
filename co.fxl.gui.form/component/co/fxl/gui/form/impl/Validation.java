@@ -19,6 +19,7 @@
 package co.fxl.gui.form.impl;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ import co.fxl.gui.format.api.IFormat;
 import co.fxl.gui.format.impl.Format;
 
 public class Validation {
-	
+
 	// TODO extract validation to component
 
 	public interface IValidation<T> {
@@ -55,6 +56,11 @@ public class Validation {
 			originalValue = valueElement.checked();
 			fields.add(this);
 			update();
+		}
+
+		@Override
+		public boolean matches(Object valueElement) {
+			return this.valueElement == valueElement;
 		}
 
 		@Override
@@ -114,6 +120,8 @@ public class Validation {
 		void notifyChange();
 
 		void reset();
+
+		boolean matches(Object valueElement);
 
 	}
 
@@ -204,6 +212,11 @@ public class Validation {
 		@Override
 		public void reset() {
 			textElement.text(originalValue);
+		}
+
+		@Override
+		public boolean matches(Object valueElement) {
+			return textElement == valueElement;
 		}
 	}
 
@@ -445,6 +458,15 @@ public class Validation {
 				errorColor(textField, field.isError);
 			}
 		});
+	}
+
+	public void removeInput(Object valueElement) {
+		Iterator<IField> it = fields.iterator();
+		while (it.hasNext()) {
+			if (it.next().matches(valueElement)) {
+				it.remove();
+			}
+		}
 	}
 
 }
