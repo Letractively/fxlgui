@@ -504,6 +504,10 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 						boolean satisfied, Object value) {
 					PropertyImpl p = property(cr);
 					IFormField<IComboBox, String> ff = (IFormField<IComboBox, String>) target(p);
+					if (ff == null) {
+						warn(cr, satisfied, value, p);
+						return;
+					}
 					IFieldType type = ff.type();
 					Object[] targetValues = satisfied ? withNull(ff,
 							cr.targetValues) : getDomain(node, p).toArray();
@@ -530,6 +534,15 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 					}
 				}
 
+				private void warn(ConditionRuleImpl cr, boolean satisfied,
+						Object value, PropertyImpl p) {
+					System.out.println("WARN: no formfield found for " + p
+							+ ", CR=" + cr + ", satisfied=" + satisfied
+							+ ", value=" + value);
+					System.out.println("WARN: formfields available for "
+							+ property2formField.keySet());
+				}
+
 				private Object[] withNull(IFormField<IComboBox, String> field,
 						Object[] targetValues) {
 					if (field.isRequired()) {
@@ -546,6 +559,10 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 						boolean satisfied, Object value) {
 					PropertyImpl p = property(cr);
 					IFormField<?, ?> ff = target(p);
+					if (ff == null) {
+						warn(cr, satisfied, value, p);
+						return;
+					}
 					ff.editable(!satisfied);
 				}
 
@@ -553,6 +570,10 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 						Object value) {
 					PropertyImpl p = property(cr);
 					IFormField<?, ?> ff = target(p);
+					if (ff == null) {
+						warn(cr, satisfied, value, p);
+						return;
+					}
 					boolean visible = !satisfied;
 					boolean changed = ff.visible(visible);
 					if (visible && changed) {

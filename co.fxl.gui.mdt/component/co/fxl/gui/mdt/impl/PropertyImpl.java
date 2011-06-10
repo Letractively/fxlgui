@@ -36,6 +36,13 @@ public class PropertyImpl implements IProperty<Object, Object> {
 		IProperty<Object, Object> target;
 
 		@Override
+		public String toString() {
+			return "condition=" + condition + ", invisible=" + invisible
+					+ ", nonModifieable=" + nonModifieable + ", targetValues="
+					+ targetValues;
+		}
+
+		@Override
 		public co.fxl.gui.mdt.api.IProperty.IConditionRule<Object, Object, Object> condition(
 				ICondition<Object, Object> condition) {
 			this.condition = condition;
@@ -157,5 +164,10 @@ public class PropertyImpl implements IProperty<Object, Object> {
 		ConditionRuleImpl rule = new ConditionRuleImpl();
 		conditionRules.add(rule);
 		return rule;
+	}
+
+	@Override
+	public String toString() {
+		return name + "(" + type + ")";
 	}
 }
