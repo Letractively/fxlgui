@@ -126,4 +126,6 @@ public interface IMasterDetailTableWidget<T> {
 			boolean refreshOnSwitch2Grid);
 
 	IMasterDetailTableWidget<T> allowReorder(boolean allowReorder);
+
+	IMasterDetailTableWidget<Object> allowDetailView(boolean allowDetailView);
 }

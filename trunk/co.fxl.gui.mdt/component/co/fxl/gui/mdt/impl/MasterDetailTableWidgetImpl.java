@@ -120,6 +120,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	private IVerticalPanel filterPanel;
 	private boolean alwaysShowFilter;
 	private boolean neverShowFilter;
+	boolean allowDetailView = true;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -155,7 +156,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	// http://gwt.google.com/samples/Showcase/Showcase.html#!CwMenuBar
 
 	void addViewWidget(IVerticalPanel sidePanel) {
-		if (!allowGridView)
+		if (!allowGridView || !allowDetailView)
 			return;
 		views = new ViewWidget(sidePanel.add().panel(), configurations,
 				configuration, !alwaysShowFilter, neverShowFilter);
@@ -608,6 +609,13 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		this.allowGridView = allowGridView;
 		if (!allowGridView)
 			showDetailViewByDefault = true;
+		return this;
+	}
+
+	@Override
+	public IMasterDetailTableWidget<Object> allowDetailView(
+			boolean allowDetailView) {
+		this.allowDetailView = allowDetailView;
 		return this;
 	}
 
