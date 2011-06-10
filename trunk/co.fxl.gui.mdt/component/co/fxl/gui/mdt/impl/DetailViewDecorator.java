@@ -504,8 +504,6 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 						boolean satisfied, Object value) {
 					PropertyImpl p = property(cr);
 					IFormField<IComboBox, String> ff = (IFormField<IComboBox, String>) target(p);
-					if (ff == null)
-						return;
 					IFieldType type = ff.type();
 					Object[] targetValues = satisfied ? withNull(ff,
 							cr.targetValues) : getDomain(node, p).toArray();
@@ -569,7 +567,10 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 				}
 
 				private IFormField<?, ?> target(PropertyImpl p) {
-					return property2formField.get(p);
+					IFormField<?, ?> iFormField = property2formField.get(p);
+					assert iFormField != null : "No form field found for property "
+							+ p;
+					return iFormField;
 				}
 			};
 			listeners.put(property, listener);
