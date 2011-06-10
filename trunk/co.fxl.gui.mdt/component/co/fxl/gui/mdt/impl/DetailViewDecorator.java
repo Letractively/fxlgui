@@ -503,11 +503,17 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 				private void targetValues(ConditionRuleImpl cr,
 						boolean satisfied, Object value) {
 					PropertyImpl p = property(cr);
-					IFormField<IComboBox, String> ff = (IFormField<IComboBox, String>) target(p);
-					if (ff == null) {
+					IFormField<IComboBox, String> f0 = (IFormField<IComboBox, String>) target(p);
+					if (f0 == null) {
 						warn(cr, satisfied, value, p);
 						return;
 					}
+					if (!(f0.valueElement() instanceof IComboBox)) {
+						throw new MethodNotImplementedException(
+								"No combobox found for " + p + ", but: "
+										+ f0.valueElement());
+					}
+					IFormField<IComboBox, String> ff = (IFormField<IComboBox, String>) f0;
 					IFieldType type = ff.type();
 					Object[] targetValues = satisfied ? withNull(ff,
 							cr.targetValues) : getDomain(node, p).toArray();
