@@ -504,8 +504,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 						boolean satisfied, Object value) {
 					PropertyImpl p = property(cr);
 					IFormField<IComboBox, String> ff = (IFormField<IComboBox, String>) target(p);
-//					if (ff == null)
-//						return;
+					if (ff == null)
+						return;
 					IFieldType type = ff.type();
 					Object[] targetValues = satisfied ? withNull(ff,
 							cr.targetValues) : getDomain(node, p).toArray();
