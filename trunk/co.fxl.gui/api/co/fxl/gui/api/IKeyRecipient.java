@@ -22,5 +22,12 @@ import co.fxl.gui.api.IClickable.IClickListener;
 
 public interface IKeyRecipient<T> {
 
-	T addCarriageReturnListener(IClickListener listener);
+	public interface IKey<T> {
+
+		T enter();
+
+		T tab();
+	}
+
+	IKey<T> addKeyListener(IClickListener listener);
 }
