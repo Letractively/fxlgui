@@ -110,10 +110,10 @@ class LoginWidgetImpl implements ILoginWidget {
 			decorator.decorateBegin(liPanel, false);
 		decorate(liPanel.add().label().text("ID"));
 		decorate(loginID = liPanel.add().textField()
-				.addCarriageReturnListener(loginListener).focus(true));
+				.addKeyListener(loginListener).enter().focus(true));
 		decorate(liPanel.add().label().text("Password"));
 		decorate(password = liPanel.add().passwordField()
-				.addCarriageReturnListener(loginListener));
+				.addKeyListener(loginListener).enter());
 		liPanel.add().label().text("Login").hyperlink()
 				.addClickListener(loginListener).mouseLeft();
 		// decorateHyperlink(label);

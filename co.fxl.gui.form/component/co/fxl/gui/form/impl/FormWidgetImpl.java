@@ -136,7 +136,7 @@ class FormWidgetImpl implements IFormWidget {
 	private void setCRListener(IKeyRecipient<?> kr) {
 		if (saveListener == null)
 			return;
-		kr.addCarriageReturnListener(new IClickListener() {
+		kr.addKeyListener(new IClickListener() {
 			@Override
 			public void onClick() {
 				if (saveClickListener != null && saveButton.clickable())

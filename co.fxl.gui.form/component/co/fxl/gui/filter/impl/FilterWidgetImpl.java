@@ -369,7 +369,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	}
 
 	void register(ITextField tf) {
-		tf.addCarriageReturnListener(new IClickListener() {
+		tf.addKeyListener(new IClickListener() {
 
 			@Override
 			public void onClick() {
