@@ -508,11 +508,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 						warn(cr, satisfied, value, p);
 						return;
 					}
-					if (!(f0.valueElement() instanceof IComboBox)) {
-						throw new MethodNotImplementedException(
-								"No combobox found for " + p + ", but: "
-										+ f0.valueElement());
-					}
+					assert f0.valueElement() instanceof IComboBox : "No combobox found for "
+							+ p + ", but: " + f0.valueElement();
 					IFormField<IComboBox, String> ff = (IFormField<IComboBox, String>) f0;
 					IFieldType type = ff.type();
 					Object[] targetValues = satisfied ? withNull(ff,
