@@ -42,6 +42,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 class SwingElement<T extends JComponent, R> implements IElement<R> {
@@ -232,14 +233,26 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public R addCarriageReturnListener(final IClickListener changeListener) {
+	public IKeyRecipient.IKey<R> addKeyListener(
+			final IClickListener changeListener) {
 		addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				changeListener.onClick();
 			}
 		});
-		return (R) this;
+		return new IKeyRecipient.IKey<R>() {
+
+			@Override
+			public R enter() {
+				return (R) SwingElement.this;
+			}
+
+			@Override
+			public R tab() {
+				throw new MethodNotImplementedException();
+			}
+		};
 	}
 
 	void addActionListener(final ActionListener actionListener) {
