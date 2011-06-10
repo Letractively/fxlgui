@@ -142,7 +142,7 @@ class FormWidgetImpl implements IFormWidget {
 				if (saveClickListener != null && saveButton.clickable())
 					saveClickListener.onClick();
 			}
-		});
+		}).enter();
 	}
 
 	IPasswordField addFormValuePasswordField(int gridIndex) {

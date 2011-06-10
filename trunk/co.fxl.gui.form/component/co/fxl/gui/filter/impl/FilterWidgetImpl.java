@@ -376,7 +376,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 				if (apply.clickable())
 					onApplyClick();
 			}
-		});
+		}).enter();
 	}
 
 	private void onApplyClick() {
