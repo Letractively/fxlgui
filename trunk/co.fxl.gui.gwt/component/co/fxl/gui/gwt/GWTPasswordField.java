@@ -21,11 +21,8 @@ package co.fxl.gui.gwt;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IPasswordField;
 
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.ui.PasswordTextBox;
@@ -102,21 +99,21 @@ class GWTPasswordField extends GWTElement<PasswordTextBox, IPasswordField>
 		return super.height() + 2;
 	}
 
-	@Override
-	public IPasswordField addCarriageReturnListener(
-			final IClickListener listener) {
-		container.widget.addKeyPressHandler(new KeyPressHandler() {
-
-			@Override
-			public void onKeyPress(KeyPressEvent event) {
-				char charCode = event.getCharCode();
-				if (charCode == '\r') {
-					listener.onClick();
-				}
-			}
-		});
-		return this;
-	}
+	// @Override
+	// public IPasswordField addKeyListener(
+	// final IClickListener listener) {
+	// container.widget.addKeyPressHandler(new KeyPressHandler() {
+	//
+	// @Override
+	// public void onKeyPress(KeyPressEvent event) {
+	// char charCode = event.getCharCode();
+	// if (charCode == '\r') {
+	// listener.onClick();
+	// }
+	// }
+	// });
+	// return this;
+	// }
 
 	@Override
 	public IPasswordField columns(int rows) {

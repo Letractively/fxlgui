@@ -29,6 +29,7 @@ import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFontElement;
 import co.fxl.gui.api.IFontElement.IFont;
+import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -277,8 +278,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		return (R) this;
 	}
 
-	@SuppressWarnings("unchecked")
-	public R addCarriageReturnListener(final IClickListener listener) {
+	public IKeyRecipient.IKey<R> addKeyListener(final IClickListener listener) {
 		((HasKeyPressHandlers) container.widget)
 				.addKeyPressHandler(new KeyPressHandler() {
 
@@ -290,7 +290,19 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 						}
 					}
 				});
-		return (R) this;
+		return new IKeyRecipient.IKey<R>() {
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public R enter() {
+				return (R) GWTElement.this;
+			}
+
+			@Override
+			public R tab() {
+				throw new MethodNotImplementedException();
+			}
+		};
 	}
 
 	@Override
