@@ -49,4 +49,6 @@ public interface IFormField<T, R> extends IUpdateable<R> {
 	void remove();
 
 	boolean visible();
+
+	IFormField<T, R> required(boolean required);
 }

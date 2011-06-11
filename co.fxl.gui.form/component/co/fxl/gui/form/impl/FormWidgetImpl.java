@@ -68,7 +68,6 @@ class FormWidgetImpl implements IFormWidget {
 	private int gridIndex = -1;
 	private WidgetTitle widgetTitle;
 	IGridPanel gridPanel;
-	boolean hasRequiredAttributes = false;
 	private IVerticalPanel contentPanel;
 	ISaveListener saveListener = null;
 	List<FormFieldImpl<?, ?>> fields = new LinkedList<FormFieldImpl<?, ?>>();
@@ -86,6 +85,7 @@ class FormWidgetImpl implements IFormWidget {
 	private List<IFocusable<?>> focusables = new LinkedList<IFocusable<?>>();
 	private int spacing = 0;
 	private IClickListener saveClickListener;
+	private IGridPanel bottomPanel;
 
 	FormWidgetImpl(IContainer panel) {
 		widgetTitle = new WidgetTitle(panel.panel(), false)// .grayBackground()
@@ -263,21 +263,45 @@ class FormWidgetImpl implements IFormWidget {
 
 	@Override
 	public FormWidgetImpl visible(boolean visible) {
-		if (saveListener != null || hasRequiredAttributes) {
+		setUpBottomPanel();
+		return this;
+	}
+
+	void setUpBottomPanel() {
+		if (saveListener != null || hasRequiredAttributes()) {
 			if (fields.isEmpty())
-				return this;
-			contentPanel.addSpace(8);
-			IGridPanel grid = contentPanel.add().panel().grid();
-			if (saveListener != null) {
-				addSaveButton(grid);
+				return;
+			if (bottomPanel == null) {
+				contentPanel.addSpace(8);
+				bottomPanel = contentPanel.add().panel().grid();
+				if (saveListener != null) {
+					addSaveButton(bottomPanel);
+				}
 			}
-			if (hasRequiredAttributes) {
-				requiredAttributeLabel = grid.cell(1, 0).align().end().label()
-						.text("* Required Attribute");
-				requiredAttributeLabel.font().pixel(10);
+			if (hasRequiredAttributes()) {
+				if (requiredAttributeLabel == null) {
+					requiredAttributeLabel = bottomPanel.cell(1, 0).align()
+							.end().label().text("* Required Attribute");
+					requiredAttributeLabel.font().pixel(10);
+				}
+			} else {
+				requiredAttributeLabel.remove();
+				requiredAttributeLabel = null;
 			}
 		}
-		return this;
+	}
+
+	void updateRequiredStatus(FormFieldImpl<?, ?> field, boolean status) {
+		if (!validate)
+			return;
+		validation.updateInput(field.valueElement(), status);
+	}
+
+	private boolean hasRequiredAttributes() {
+		for (FormFieldImpl<?, ?> f : fields)
+			if (f.required)
+				return true;
+		return false;
 	}
 
 	@Override

@@ -103,6 +103,9 @@ public class Validation {
 			valueElement.checked(originalValue);
 		}
 
+		@Override
+		public void required(boolean status) {
+		}
 	}
 
 	public interface IField {
@@ -122,6 +125,8 @@ public class Validation {
 		void reset();
 
 		boolean matches(Object valueElement);
+
+		void required(boolean status);
 
 	}
 
@@ -217,6 +222,11 @@ public class Validation {
 		@Override
 		public boolean matches(Object valueElement) {
 			return textElement == valueElement;
+		}
+
+		@Override
+		public void required(boolean status) {
+			required = status;
 		}
 	}
 
@@ -465,6 +475,16 @@ public class Validation {
 		while (it.hasNext()) {
 			if (it.next().matches(valueElement)) {
 				it.remove();
+			}
+		}
+	}
+
+	public void updateInput(Object valueElement, boolean status) {
+		Iterator<IField> it = fields.iterator();
+		while (it.hasNext()) {
+			IField field = it.next();
+			if (field.matches(valueElement)) {
+				field.required(status);
 			}
 		}
 	}
