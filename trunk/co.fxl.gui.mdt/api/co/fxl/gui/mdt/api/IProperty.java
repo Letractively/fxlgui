@@ -38,9 +38,11 @@ public interface IProperty<T, S> {
 
 		IConditionRule<T, S, R> targetValues(List<R> targetValues);
 
-		IConditionRule<T, S, R> invisible();
+		IConditionRule<T, S, R> visible(Boolean visible);
 
-		IConditionRule<T, S, R> nonModifieable();
+		IConditionRule<T, S, R> required(Boolean required);
+
+		IConditionRule<T, S, R> modifieable(Boolean modifieable);
 	}
 
 	public interface IConstraintAdapter<T, S> {
