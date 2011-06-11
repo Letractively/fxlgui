@@ -103,9 +103,26 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	@Override
 	public IFormField<T, R> required() {
 		required = true;
-		widget.hasRequiredAttributes = true;
 		label.font().weight().bold();
-		label.text(label.text() + " *");
+		label.text(name + " *");
+		return this;
+	}
+
+	@Override
+	public IFormField<T, R> required(boolean required) {
+		if (this.required == required)
+			return this;
+		if (required) {
+			required();
+			widget.setUpBottomPanel();
+			widget.updateRequiredStatus(this, required);
+		} else {
+			required = false;
+			label.font().weight().plain();
+			label.text(name);
+			widget.setUpBottomPanel();
+			widget.updateRequiredStatus(this, required);
+		}
 		return this;
 	}
 
