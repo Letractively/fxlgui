@@ -147,8 +147,8 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	}
 
 	@Override
-	public void decorate(IVerticalPanel panel, IVerticalPanel bottom,
-			final Object node) {
+	public void decorate(final IVerticalPanel panel,
+			final IVerticalPanel bottom, final Object node) {
 		this.panel = panel;
 		updates.clear();
 		assert node != null;
@@ -174,20 +174,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 
 				@Override
 				public void onDiscardChanges(final ICallback<Boolean> cb) {
-					// tree.delete(new CallbackTemplate<Object>() {
-					//
-					// @Override
-					// public void onSuccess(Object result) {
-					deleteListener.onDelete(tree,
-							new CallbackTemplate<Boolean>(cb) {
-
-								@Override
-								public void onSuccess(Boolean result) {
-									cb.onSuccess(true);
-								}
-							});
-					// }
-					// });
+					refresh(cb);
 				}
 			};
 		}
@@ -200,6 +187,14 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 				public void save(ICallback<Boolean> cb) {
 					for (Runnable update : updates)
 						update.run();
+					// CallbackTemplate<Boolean> cb2 = new
+					// CallbackTemplate<Boolean>(
+					// cb) {
+					// @Override
+					// public void onSuccess(Boolean result) {
+					// decorate(panel, bottom, node);
+					// }
+					// };
 					DetailViewDecorator.this.save(tree, cb);
 					DetailViewDecorator.this.save(node, cb);
 				}
@@ -484,13 +479,26 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 								boolean satisfied = cr.condition.satisfied(
 										node, value);
 								if (satisfied && cr.modifieable != null) {
-									modifieable(cr, cr.modifieable, value);
+									boolean modifieable = cr.modifieable;
+									if (!satisfied) {
+										PropertyImpl p = property(cr);
+										modifieable = p.editable;
+									}
+									modifieable(cr, modifieable, value);
 								}
-								if (satisfied && cr.visible != null) {
-									visible(cr, cr.visible, value);
+								if (cr.visible != null) {
+									boolean visible = cr.visible;
+									if (!satisfied)
+										visible = true;
+									visible(cr, visible, value);
 								}
-								if (satisfied && cr.required != null) {
-									required(cr, cr.required, value);
+								if (cr.required != null) {
+									boolean required = cr.required;
+									if (!satisfied) {
+										PropertyImpl p = property(cr);
+										required = p.required;
+									}
+									required(cr, required, value);
 								}
 								if (cr.targetValues != null) {
 									targetValues(cr, satisfied, value);
@@ -640,5 +648,16 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 	public DetailViewDecorator alwaysShowCancel() {
 		alwaysShowCancel = true;
 		return this;
+	}
+
+	void refresh(final ICallback<Boolean> cb) {
+		deleteListener.onDelete(tree, new CallbackTemplate<Boolean>(cb) {
+
+			@Override
+			public void onSuccess(Boolean result) {
+				if (cb != null)
+					cb.onSuccess(true);
+			}
+		});
 	}
 }

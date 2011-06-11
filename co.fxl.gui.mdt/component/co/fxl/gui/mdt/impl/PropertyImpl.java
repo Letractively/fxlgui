@@ -38,9 +38,8 @@ public class PropertyImpl implements IProperty<Object, Object> {
 
 		@Override
 		public String toString() {
-			return "condition=" + condition + ", visible=" + visible
-					+ ", modifieable=" + modifieable + ", targetValues="
-					+ targetValues;
+			return condition + ", vis.=" + visible + ", mod.=" + modifieable
+					+ ", req.=" + required + ", values=" + targetValues;
 		}
 
 		@Override
