@@ -285,7 +285,8 @@ class FormWidgetImpl implements IFormWidget {
 					requiredAttributeLabel.font().pixel(10);
 				}
 			} else {
-				requiredAttributeLabel.remove();
+				if (requiredAttributeLabel != null)
+					requiredAttributeLabel.remove();
 				requiredAttributeLabel = null;
 			}
 		}
