@@ -454,17 +454,17 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 			panel2.clear();
 		}
 		model = new TreeModel<T>(this, tree);
-		Runnable finish = null;
-		if (runAfterVisible != null)
-			finish = new Runnable() {
-				@Override
-				public void run() {
+		Runnable finish = new Runnable() {
+			@Override
+			public void run() {
+				updateButtons();
+				if (runAfterVisible != null) {
 					IClickListener run = newClick.get(runAfterVisible);
 					runAfterVisible = null;
 					run.onClick();
-					// setDetailViewTree(model.selection(), false);
 				}
-			};
+			}
+		};
 		topLevelNodes = new LinkedList<ModelTreeNode<T>>();
 		scrollListener.reset();
 		if (showRoot) {
