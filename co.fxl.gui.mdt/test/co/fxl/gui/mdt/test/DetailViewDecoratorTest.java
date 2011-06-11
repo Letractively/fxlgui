@@ -63,7 +63,7 @@ class MasterDetailTableWidgetTest {
 			public boolean satisfied(Object e, String value) {
 				return INVISIBLE.equals(value);
 			}
-		}).invisible();
+		}).visible(true);
 		@SuppressWarnings("unchecked")
 		IConditionRule<Object, String, String> c2 = (IConditionRule<Object, String, String>) p3
 				.addConditionRule();
@@ -76,7 +76,7 @@ class MasterDetailTableWidgetTest {
 			public boolean satisfied(Object e, String value) {
 				return NON_EDITABLE.equals(value);
 			}
-		}).nonModifieable();
+		}).modifieable(true);
 		@SuppressWarnings("unchecked")
 		IConditionRule<Object, String, String> c3 = (IConditionRule<Object, String, String>) p3
 				.addConditionRule();

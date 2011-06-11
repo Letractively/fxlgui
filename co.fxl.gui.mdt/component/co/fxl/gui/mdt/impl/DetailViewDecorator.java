@@ -483,14 +483,14 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							for (final ConditionRuleImpl cr : property.conditionRules) {
 								boolean satisfied = cr.condition.satisfied(
 										node, value);
-								boolean invisible = cr.invisible != null
-										&& cr.invisible;
-								if (cr.nonModifieable != null
-										&& cr.nonModifieable && !invisible) {
-									nonModifieable(cr, satisfied, value);
+								if (satisfied && cr.modifieable != null) {
+									modifieable(cr, cr.modifieable, value);
 								}
-								if (invisible) {
-									invisible(cr, satisfied, value);
+								if (satisfied && cr.visible != null) {
+									visible(cr, cr.visible, value);
+								}
+								if (satisfied && cr.required != null) {
+									required(cr, cr.required, value);
 								}
 								if (cr.targetValues != null) {
 									targetValues(cr, satisfied, value);
@@ -505,7 +505,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 					PropertyImpl p = property(cr);
 					IFormField<IComboBox, String> f0 = (IFormField<IComboBox, String>) target(p);
 					if (f0 == null) {
-						warn(cr, satisfied, value, p);
+						warn(cr, value, p);
 						return;
 					}
 					assert f0.valueElement() instanceof IComboBox : "No combobox found for "
@@ -537,11 +537,10 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 					}
 				}
 
-				private void warn(ConditionRuleImpl cr, boolean satisfied,
-						Object value, PropertyImpl p) {
+				private void warn(ConditionRuleImpl cr, Object value,
+						PropertyImpl p) {
 					System.out.println("WARN: no formfield found for " + p
-							+ ", CR=" + cr + ", satisfied=" + satisfied
-							+ ", value=" + value);
+							+ ", CR=" + cr + ", value=" + value);
 					System.out.println("WARN: formfields available for "
 							+ property2formField.keySet());
 				}
@@ -558,26 +557,36 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 					return targetValues;
 				}
 
-				private void nonModifieable(ConditionRuleImpl cr,
-						boolean satisfied, Object value) {
+				private void modifieable(ConditionRuleImpl cr,
+						boolean modifieable, Object value) {
 					PropertyImpl p = property(cr);
 					IFormField<?, ?> ff = target(p);
 					if (ff == null) {
-						warn(cr, satisfied, value, p);
+						warn(cr, value, p);
 						return;
 					}
-					ff.editable(!satisfied);
+					ff.editable(modifieable);
 				}
 
-				private void invisible(ConditionRuleImpl cr, boolean satisfied,
+				private void required(ConditionRuleImpl cr, boolean required,
 						Object value) {
 					PropertyImpl p = property(cr);
 					IFormField<?, ?> ff = target(p);
 					if (ff == null) {
-						warn(cr, satisfied, value, p);
+						warn(cr, value, p);
 						return;
 					}
-					boolean visible = !satisfied;
+					ff.required(required);
+				}
+
+				private void visible(ConditionRuleImpl cr, boolean visible,
+						Object value) {
+					PropertyImpl p = property(cr);
+					IFormField<?, ?> ff = target(p);
+					if (ff == null) {
+						warn(cr, value, p);
+						return;
+					}
 					boolean changed = ff.visible(visible);
 					if (visible && changed) {
 						if (ff.valueElement() instanceof IComboBox)

@@ -30,15 +30,16 @@ public class PropertyImpl implements IProperty<Object, Object> {
 	class ConditionRuleImpl implements IConditionRule<Object, Object, Object> {
 
 		ICondition<Object, Object> condition;
-		Boolean invisible;
-		Boolean nonModifieable;
+		Boolean visible;
+		Boolean modifieable;
+		Boolean required;
 		Object[] targetValues;
 		IProperty<Object, Object> target;
 
 		@Override
 		public String toString() {
-			return "condition=" + condition + ", invisible=" + invisible
-					+ ", nonModifieable=" + nonModifieable + ", targetValues="
+			return "condition=" + condition + ", visible=" + visible
+					+ ", modifieable=" + modifieable + ", targetValues="
 					+ targetValues;
 		}
 
@@ -64,14 +65,23 @@ public class PropertyImpl implements IProperty<Object, Object> {
 		}
 
 		@Override
-		public co.fxl.gui.mdt.api.IProperty.IConditionRule<Object, Object, Object> invisible() {
-			invisible = true;
+		public co.fxl.gui.mdt.api.IProperty.IConditionRule<Object, Object, Object> visible(
+				Boolean b) {
+			visible = b;
 			return this;
 		}
 
 		@Override
-		public co.fxl.gui.mdt.api.IProperty.IConditionRule<Object, Object, Object> nonModifieable() {
-			nonModifieable = true;
+		public co.fxl.gui.mdt.api.IProperty.IConditionRule<Object, Object, Object> required(
+				Boolean b) {
+			required = b;
+			return this;
+		}
+
+		@Override
+		public co.fxl.gui.mdt.api.IProperty.IConditionRule<Object, Object, Object> modifieable(
+				Boolean b) {
+			modifieable = b;
 			return this;
 		}
 	}
