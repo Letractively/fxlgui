@@ -481,12 +481,23 @@ public class Validation {
 
 	public void updateInput(Object valueElement, boolean status) {
 		Iterator<IField> it = fields.iterator();
+		boolean update = false;
 		while (it.hasNext()) {
 			IField field = it.next();
 			if (field.matches(valueElement)) {
+				update = true;
 				field.required(status);
 			}
 		}
+		if (!update)
+			linkInput(valueElement, status);
+	}
+
+	private void linkInput(Object valueElement, boolean status) {
+		if (valueElement instanceof IComboBox)
+			linkInput((IComboBox) valueElement);
+		else
+			throw new MethodNotImplementedException();
 	}
 
 }
