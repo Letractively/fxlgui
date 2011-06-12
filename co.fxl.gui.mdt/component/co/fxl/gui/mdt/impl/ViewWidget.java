@@ -154,9 +154,10 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 	private List<IUpdateListener<ViewConfiguration>> listeners = new LinkedList<IUpdateListener<ViewConfiguration>>();
 	private Link details;
 	private Link table;
+	private boolean ignoreFire = false;
 
 	public ViewWidget(ILayout layout, List<String> configurations,
-			String configuration, boolean optionalForDetail,
+			String configuration, final boolean optionalForDetail,
 			boolean neverShowFilter) {
 		widgetTitle = new WidgetTitle(layout, true);
 		widgetTitle.space(2);
@@ -187,6 +188,8 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 			@Override
 			public void onAllowedUpdate(String value) {
 				fire(ViewType.TABLE, table, ActionType.CONFIGURATION_CHANGED);
+				if (!optionalForDetail)
+					copyComboBox(table, details);
 			}
 		});
 		links.add(details);
@@ -201,6 +204,8 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 			public void onAllowedUpdate(String value) {
 				fire(ViewType.DETAILS, details,
 						ActionType.CONFIGURATION_CHANGED);
+				if (!optionalForDetail)
+					copyComboBox(details, table);
 			}
 		});
 		table.clickable(false);
@@ -216,7 +221,15 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 				});
 	}
 
+	protected void copyComboBox(Link l1, Link l2) {
+		ignoreFire = true;
+		l2.cb.text(l1.cbText());
+		ignoreFire = false;
+	}
+
 	private void fire(ViewType viewType, Link link, ActionType b) {
+		if (ignoreFire)
+			return;
 		for (IUpdateListener<ViewConfiguration> listener : listeners) {
 			ViewConfiguration cfg = new ViewConfiguration();
 			cfg.viewType = viewType;
