@@ -202,8 +202,10 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 				@Override
 				public void cancel(ICallback<Boolean> cb) {
 					if (deleteListener != null) {
-						deleteListener.onDelete(tree, cb);
-						deleteListener.onDelete(node, cb);
+						if (tree != null)
+							deleteListener.onDelete(tree, cb);
+						else
+							deleteListener.onDelete(node, cb);
 					} else
 						cb.onSuccess(true);
 				}
@@ -610,8 +612,9 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 
 				private IFormField<?, ?> target(PropertyImpl p) {
 					IFormField<?, ?> iFormField = property2formField.get(p);
-//					assert iFormField != null : "No form field found for property "
-//							+ p;
+					// assert iFormField != null :
+					// "No form field found for property "
+					// + p;
 					return iFormField;
 				}
 			};
