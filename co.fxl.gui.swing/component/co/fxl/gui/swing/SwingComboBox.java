@@ -122,7 +122,6 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 	@Override
 	public IComboBox clear() {
 		container.component.removeAllItems();
-		hasNull = false;
 		return this;
 	}
 }
