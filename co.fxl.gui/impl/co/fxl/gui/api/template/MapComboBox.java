@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.api.template;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +34,7 @@ public class MapComboBox<T> implements IUpdateable<T> {
 	private Map<T, String> object2text = new HashMap<T, String>();
 
 	public MapComboBox(IContainer container) {
-		this(container.comboBox());
+		this.comboBox = container.comboBox();
 	}
 
 	public MapComboBox(IComboBox comboBox) {
@@ -89,5 +90,13 @@ public class MapComboBox<T> implements IUpdateable<T> {
 	public MapComboBox<T> editable(boolean editable) {
 		comboBox.editable(editable);
 		return this;
+	}
+
+	public IComboBox comboBox() {
+		return comboBox;
+	}
+
+	public Collection<T> objects() {
+		return object2text.keySet();
 	}
 }
