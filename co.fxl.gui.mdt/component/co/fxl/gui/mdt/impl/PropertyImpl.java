@@ -92,6 +92,7 @@ public class PropertyImpl implements IProperty<Object, Object> {
 	FieldTypeImpl type = new FieldTypeImpl();
 	boolean sortable = false;
 	boolean required;
+	boolean visible = true;
 	boolean editable = false;
 	IUpdateListener<Object> listener;
 	boolean filterable;
@@ -178,5 +179,11 @@ public class PropertyImpl implements IProperty<Object, Object> {
 	@Override
 	public String toString() {
 		return name + "(" + type + ")";
+	}
+
+	@Override
+	public IProperty<Object, Object> visible(boolean b) {
+		this.visible = b;
+		return this;
 	}
 }

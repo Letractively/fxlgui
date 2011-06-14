@@ -433,6 +433,9 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 		if (alwaysShowCancel)
 			form.alwaysAllowCancel();
 		form.visible(true);
+		for (PropertyImpl p : property2formField.keySet())
+			if (p != null && !p.visible)
+				property2formField.get(p).visible(false);
 		for (PropertyImpl p : listeners.keySet()) {
 			if (listeners.get(p) != null)
 				listeners.get(p).onUpdate(p.adapter.valueOf(node));

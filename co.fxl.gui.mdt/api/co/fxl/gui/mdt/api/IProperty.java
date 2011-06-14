@@ -84,6 +84,8 @@ public interface IProperty<T, S> {
 
 	IProperty<T, S> editable(boolean b);
 
+	IProperty<T, S> visible(boolean b);
+
 	IProperty<T, S> filterable();
 
 	IConditionRule<T, S, ?> addConditionRule();
