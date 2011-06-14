@@ -187,7 +187,6 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 							show = selection.get(selection.size() - 1);
 						showTableView(show);
 					}
-
 				} else if (value.viewType.equals(ViewType.DETAILS)) {
 					Object show = null;
 					if (!selection.isEmpty())
