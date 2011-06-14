@@ -373,7 +373,8 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	void removeInput(final FormFieldImpl<?, ?> formField) {
-		validation.removeInput(formField.valueElement());
+		if (validation != null)
+			validation.removeInput(formField.valueElement());
 	}
 
 	void linkInput(final FormFieldImpl<?, ?> formField) {
