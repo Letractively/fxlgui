@@ -107,6 +107,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		private Class<?>[] constrainType;
 		private String title;
 		boolean isDefaultView;
+		boolean deactivatedUpdate = false;
 
 		DetailView(String title, IDecorator<T> decorator) {
 			this.decorator = decorator;
@@ -128,7 +129,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				register.active();
 		}
 
-		void setNode(ITree<T> node) {
+		boolean setNode(ITree<T> node) {
 			this.node = node;
 			if (node == null) {
 				boolean addTitle = decorator.clear(contentPanel);
@@ -136,14 +137,18 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 					contentPanel.add().panel().vertical().spacing(10).add()
 							.label().text("NO ENTITY SELECTED").font()
 							.pixel(10).color().gray();
-				return;
+				return false;
 			}
 			if (onTop) {
 				update();
+				return true;
 			}
+			return false;
 		}
 
 		protected void update() {
+			if (deactivatedUpdate)
+				return;
 			if (node != null && node.object() != null) {
 				bottom.clear();
 				decorator.decorate(contentPanel, bottom, node);
@@ -571,6 +576,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				}
 			}
 		}
+		DetailView alreadyDecorated = null;
 		for (int i = 0; i < detailViews.size(); i++) {
 			DetailView view = detailViews.get(i);
 			if (tree != null) {
@@ -578,15 +584,23 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				boolean hide = isHide(view, type);
 				boolean enabled = !hide && (i == 0 || !tree.isNew());
 				view.enabled(enabled);
-				if (enabled)
-					view.setNode(tree);
+				if (enabled) {
+					boolean updated = view.setNode(tree);
+					if (updated)
+						alreadyDecorated = view;
+				}
 			} else
 				view.setNode(null);
 		}
 		if (detailViews.get(0).register.isActive())
 			showFirst = true;
 		if (showFirst || (tree != null && tree.isNew())) {
-			findDefaultView(tree).register.active();
+			DetailView findDefaultView = findDefaultView(tree);
+			if (findDefaultView == alreadyDecorated)
+				findDefaultView.deactivatedUpdate = true;
+			findDefaultView.register.active();
+			if (findDefaultView == alreadyDecorated)
+				findDefaultView.deactivatedUpdate = false;
 		}
 		updateButtons();
 		notifyChange();
