@@ -49,7 +49,7 @@ class DateFilter extends RangeFilter<Date> {
 
 		@Override
 		public String toString() {
-			return lowerBound + "-" + upperBound;
+			return wNull(lowerBound) + "-" + wNull(upperBound);
 		}
 	}
 
@@ -59,6 +59,12 @@ class DateFilter extends RangeFilter<Date> {
 
 	DateFilter(FilterGrid parent, String name, int filterIndex) {
 		super(parent, name, filterIndex);
+	}
+
+	public String wNull(Date lowerBound) {
+		if (lowerBound == null)
+			return "";
+		return DATE_FORMAT.format(lowerBound);
 	}
 
 	@Override
