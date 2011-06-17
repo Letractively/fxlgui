@@ -81,11 +81,11 @@ class FilterPanelImpl implements FilterPanel {
 		public void title(int filterIndex, String name) {
 			IGridCell cell = grid.cell(0, filterIndex).width(50);
 			widget.heights.decorate(cell);
-			
+
 			// TODO Look: Swing: Align filter labels to the right, grid cell
 			// alignment ist of no effect in Swing - in contrast to the GWT
 			// implementation, there it works
-			
+
 			ILabel text = cell.align().end().valign().center().label()
 					.autoWrap(true);
 			text.text(name).font().pixel(10);
@@ -120,8 +120,10 @@ class FilterPanelImpl implements FilterPanel {
 		this.widget = widget;
 		title = new WidgetTitle(panel.panel(), true)// .grayBackground()
 				.space(2);
-		mainPanel = title.content().panel().vertical().addSpace(4).add()
-				.panel().horizontal().align().end().add().panel().vertical();
+		mainPanel = title.content().panel().vertical()
+				.addSpace(2)
+				.add().panel().horizontal().align().end().add().panel()
+				.vertical();
 	}
 
 	@Override
