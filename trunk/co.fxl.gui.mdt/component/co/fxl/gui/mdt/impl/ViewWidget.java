@@ -63,6 +63,9 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 			if (image != null)
 				image.clickable(clickable);
 			label.clickable(clickable);
+			if (!clickable) {
+				label.font().weight().bold().color().black();
+			}
 			for (ILabel l : additionalLabels)
 				l.clickable(clickable);
 			panel.clickable(clickable);
@@ -204,8 +207,8 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 			public void onAllowedUpdate(String value) {
 				fire(ViewType.DETAILS, details,
 						ActionType.CONFIGURATION_CHANGED);
-//				if (!optionalForDetail)
-//					copyComboBox(details, table);
+				// if (!optionalForDetail)
+				// copyComboBox(details, table);
 			}
 		});
 		table.clickable(false);
