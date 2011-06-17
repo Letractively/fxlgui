@@ -155,4 +155,9 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 	public T offset(int x, int y) {
 		throw new MethodNotImplementedException();
 	}
+
+	public co.fxl.gui.api.IKeyRecipient.IKey<T> addKeyListener(
+			IClickListener listener) {
+		throw new MethodNotImplementedException();
+	}
 }
