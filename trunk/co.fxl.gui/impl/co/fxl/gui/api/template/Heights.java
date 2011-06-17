@@ -27,6 +27,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPasswordField;
+import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 
 public class Heights {
@@ -60,6 +61,10 @@ public class Heights {
 
 	public void decorate(ITextField textField) {
 		decorateHeight(textField);
+		background(textField);
+	}
+
+	public void decorate(ITextArea textField) {
 		background(textField);
 	}
 
