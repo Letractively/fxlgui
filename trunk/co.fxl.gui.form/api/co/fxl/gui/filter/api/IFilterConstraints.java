@@ -87,6 +87,8 @@ public interface IFilterConstraints {
 
 	IFilterConstraints sortDirection(boolean ascending);
 
+	List<String[]> description();
+
 	IRowIterator rowIterator();
 
 	void clear();

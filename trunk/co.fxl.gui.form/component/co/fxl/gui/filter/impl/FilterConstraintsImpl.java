@@ -20,6 +20,7 @@ package co.fxl.gui.filter.impl;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -292,6 +293,14 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 	@Override
 	public void configuration(String configuration) {
 		this.cfg = configuration;
+	}
+
+	@Override
+	public List<String[]> description() {
+		List<String[]> desc = new LinkedList<String[]>();
+		for (INamedConstraint c : constraints.values())
+			desc.add(new String[] { c.column(), c.toString() });
+		return desc;
 	}
 
 }
