@@ -154,7 +154,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public IScrollTableWidget<Object> visible(boolean visible) {
 		if (visible) {
 			rows = new RowAdapter(actualRows);
-			if(commandButtons!=null)
+			if (commandButtons != null)
 				commandButtons.reset();
 			if (!preselectedList.isEmpty()) {
 				if (preselectedIndex != -1) {
@@ -186,9 +186,29 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					topPanel = dock.add().panel().grid();
 				if (showNoRowsFound) {
 					topPanel.cell(0, 0).width(10).label().text("&#160;");
-					topPanel.cell(1, 0).valign().begin().align().begin()
-							.label().text("NO ENTITIES FOUND").font().pixel(10)
-							.color().gray();
+					IGridCell begin = topPanel.cell(1, 0).valign().begin()
+							.align().begin();
+					IVerticalPanel nef = begin.panel().vertical();
+					nef.add().panel().vertical().spacing(4).add().label()
+							.text("NO ENTITIES FOUND").font().pixel(10).color()
+							.gray();
+					if (constraints != null
+							&& constraints.isConstraintSpecified()) {
+						// nef.addSpace(8).add().label().text("ACTIVE FILTER")
+						// .font().color().gray();
+						IGridPanel gp = nef.addSpace(4).add().panel().grid()
+								.resize(3, constraints.description().size())
+								.spacing(4);
+						gp.cell(0, 0).label().text("FILTER").font().pixel(9)
+								.color().gray();
+						int i = 0;
+						for (String[] d : constraints.description()) {
+							gp.cell(1, i).label().text(d[0]).font().pixel(9)
+									.color().gray();
+							gp.cell(2, i++).label().text(d[1]).font().weight()
+									.bold().pixel(9).color().gray();
+						}
+					}
 					buttonColumn++;
 				}
 				dock.add().label().text("&#160;");
@@ -270,7 +290,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			if (constraints != null)
 				filter.constraints(constraints);
 			filter.visible(true);
-//			showNoRowsFound = false;
+			// showNoRowsFound = false;
 		}
 	}
 
