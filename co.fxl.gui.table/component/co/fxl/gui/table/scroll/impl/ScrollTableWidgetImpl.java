@@ -683,8 +683,13 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				if (convert2TableRow == 0) {
 					return;
 				}
-				l.onClick(rows.identifier(convert2TableRow - 1),
-						convert2TableRow - 1);
+				int rowIndex = convert2TableRow - 1;
+				if (!rows.selected(rowIndex)) {
+					rows.selected(rowIndex, true);
+					selection.notifySelection(rowIndex,
+							rows.identifier(rowIndex));
+				}
+				l.onClick(rows.identifier(rowIndex), rowIndex);
 			}
 		};
 		KeyAdapter<Object> keyAdapter = new KeyAdapter<Object>();
