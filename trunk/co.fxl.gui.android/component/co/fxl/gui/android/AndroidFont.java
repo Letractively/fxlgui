@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.android;
 
+import android.graphics.Typeface;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.TypedValue;
@@ -28,23 +29,30 @@ class AndroidFont implements IFont {
 
 	class FontWeight implements IWeight {
 
+		private TextView view;
+
 		FontWeight(TextView view) {
-			throw new MethodNotImplementedException();
+			this.view = view;
 		}
 
 		@Override
 		public IFont bold() {
-			throw new MethodNotImplementedException();
+			return weight(Typeface.BOLD);
 		}
 
 		@Override
 		public IFont italic() {
-			throw new MethodNotImplementedException();
+			return weight(Typeface.ITALIC);
+		}
+
+		private IFont weight(int weight) {
+			view.setTypeface(Typeface.defaultFromStyle(weight));
+			return AndroidFont.this;
 		}
 
 		@Override
 		public IFont plain() {
-			throw new MethodNotImplementedException();
+			return weight(Typeface.NORMAL);
 		}
 	}
 
