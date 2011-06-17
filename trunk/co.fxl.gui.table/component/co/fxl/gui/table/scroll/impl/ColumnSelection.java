@@ -25,6 +25,10 @@ import co.fxl.gui.api.ILabel;
 
 class ColumnSelection {
 
+	// TODO FEATURE: Option: Look: Column-Selection: if > n Columns or
+	// sum(characters of column-headers) > m
+	// then dynamically resize font size of column selection labels
+
 	ColumnSelection(final ScrollTableWidgetImpl widget) {
 		IGridCell clear = widget.statusPanel().cell(1, 0).clear().align()
 				.begin().valign().center();
