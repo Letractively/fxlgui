@@ -53,7 +53,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 	private IImage imageRefresh;
 	private ILabel label;
 	private ILabel refreshLabel;
-	boolean expandLoadedNode = false;
+	boolean childrenExpanded = false;
 	private IImage icon;
 	protected boolean isExpanded;
 	private IHorizontalPanel buttonPanel;
@@ -127,7 +127,13 @@ class ModelTreeNode<T> extends LazyClickListener {
 			} else
 				image.resource(tree.isLeaf() ? LEAF : FOLDER_EMPTY);
 		}
-		image.addClickListener(this);
+		image.addClickListener(new LazyClickListener() {
+			@Override
+			protected void onAllowedClick() {
+				expandCollapse(true, childrenExpanded);
+				widget.model.selection(tree);
+			}
+		});
 		content.addSpace(2);
 		String name = tree.name();
 		boolean isNull = name == null || name.trim().equals("");
@@ -240,7 +246,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 
 	private void updateParentAfterMove() {
 		widget.model.refresh(tree.parent(), true);
-//		widget.notifyUpdate(widget.model.selection().object());
+		// widget.notifyUpdate(widget.model.selection().object());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -300,17 +306,22 @@ class ModelTreeNode<T> extends LazyClickListener {
 	}
 
 	void expandCollapse() {
-		expandCollapse(expandLoadedNode);
+		expandCollapse(childrenExpanded);
 	}
 
-	void expandCollapse(boolean expandLoadedNode) {
-		if (tree.childCount() == 0)
-			return;
-		if (widget.model.selection() != null
-				&& !tree.object().equals(widget.model.selection().object())) {
+	void expandCollapse(boolean childrenExpanded) {
+		expandCollapse(false, childrenExpanded);
+	}
+
+	void expandCollapse(boolean expandNoMatterWhat, boolean childrenExpanded) {
+		if (!expandNoMatterWhat
+				&& (widget.model.selection() != null && !tree.object().equals(
+						widget.model.selection().object()))) {
 			return;
 		}
-		if (!expandLoadedNode) {
+		if (tree.childCount() == 0)
+			return;
+		if (!childrenExpanded) {
 			expand();
 		} else {
 			clear();
@@ -342,7 +353,7 @@ class ModelTreeNode<T> extends LazyClickListener {
 
 	protected void expandLoadedNode() {
 		clear();
-		expandLoadedNode = true;
+		childrenExpanded = true;
 		for (ITree<T> child : tree.children()) {
 			widget.newNode(widget, childrenPanel, child, depth + 1, null,
 					false, true);
@@ -358,9 +369,9 @@ class ModelTreeNode<T> extends LazyClickListener {
 	}
 
 	void clear() {
-		if (!expandLoadedNode)
+		if (!childrenExpanded)
 			return;
-		expandLoadedNode = false;
+		childrenExpanded = false;
 		clearLoadedNode();
 	}
 
