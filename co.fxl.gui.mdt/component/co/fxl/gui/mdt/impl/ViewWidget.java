@@ -65,6 +65,8 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 			label.clickable(clickable);
 			if (!clickable) {
 				label.font().weight().bold().color().black();
+			} else {
+				label.font().weight().plain();
 			}
 			for (ILabel l : additionalLabels)
 				l.clickable(clickable);
