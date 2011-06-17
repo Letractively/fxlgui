@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.filter.impl;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
@@ -45,5 +46,11 @@ class RelationFilterImpl extends FilterImpl implements
 			IAdapter<Object, Object> adapter) {
 		this.adapter = adapter;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		return RelationFilter.toString(adapter, preset,
+				new LinkedList<Object>());
 	}
 }

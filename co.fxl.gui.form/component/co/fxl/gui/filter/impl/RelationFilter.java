@@ -45,6 +45,7 @@ class RelationFilter extends StringFilter {
 	private IImage remove;
 	private FilterWidgetImpl widget;
 	private IClickListener cl;
+	private List<Object> preset;
 
 	RelationFilter(FilterWidgetImpl widget, FilterGrid grid, String name,
 			int filterIndex, List<Object> preset,
@@ -56,6 +57,7 @@ class RelationFilter extends StringFilter {
 				.color().gray();
 		this.cl = cl;
 		remove.addClickListener(clear);
+		this.preset = preset;
 	}
 
 	private void clear(boolean notifyListeners) {
@@ -83,7 +85,17 @@ class RelationFilter extends StringFilter {
 		return dock.center().textField();
 	}
 
+	@Override
+	public String toString() {
+		return toString(preset);
+	}
+
 	private String toString(List<Object> preset) {
+		return toString(adapter, preset, values);
+	}
+
+	static String toString(IAdapter<Object, Object> adapter,
+			List<Object> preset, List<Object> values) {
 		StringBuilder b = new StringBuilder();
 		boolean hasMore = false;
 		for (Object e : preset) {
@@ -115,6 +127,11 @@ class RelationFilter extends StringFilter {
 				@Override
 				public String column() {
 					return name;
+				}
+
+				@Override
+				public String toString() {
+					return RelationFilter.this.toString(preset);
 				}
 			};
 		else

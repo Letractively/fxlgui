@@ -40,11 +40,17 @@ class NumberFilter extends RangeFilter<Number> {
 		public Double upperBound() {
 			return upperBound;
 		}
-		
+
 		@Override
 		public String toString() {
-			return lowerBound+"-"+upperBound;
+			return wNull(lowerBound) + "-" + wNull(upperBound);
 		}
+	}
+
+	public String wNull(Double lowerBound) {
+		if (lowerBound == null)
+			return "";
+		return lowerBound.toString();
 	}
 
 	private Double lowerBound = null;
