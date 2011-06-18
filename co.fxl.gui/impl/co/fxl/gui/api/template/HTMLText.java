@@ -37,8 +37,7 @@ public class HTMLText {
 	}
 
 	public static String html(String toString) {
-		toString = toString.replace("<", "&lt;").replace(">", "&gt;")
-				.replace("\n", "<br/>");
+		toString = toString.replace("\n", "<br/>");
 		StringBuilder b = new StringBuilder();
 		for (int i = 0; i < toString.length(); i++) {
 			char c = toString.charAt(i);
@@ -79,7 +78,7 @@ public class HTMLText {
 
 	@Override
 	public String toString() {
-		String toString = text;
+		String toString = text.replace("<", "&#060;").replace("\n", "<br>");
 		if (center)
 			toString = center(toString);
 		if (underline)
