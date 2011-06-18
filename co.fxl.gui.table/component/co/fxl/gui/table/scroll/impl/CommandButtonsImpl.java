@@ -41,7 +41,8 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	// TODO FEATURE: Option: Usability: Enable Drag & Drop for reordering of
 	// table content (additionally to move buttons)
 
-	// TODO FEATURE: Option: Usability: After delete: select next item at same index position
+	// TODO FEATURE: Option: Usability: After delete: select next item at same
+	// index position
 
 	static final int SPACE = 4;
 
@@ -140,18 +141,21 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 				secondIndex = widget.rows.size() - 1;
 			else
 				secondIndex = index + inc;
-			widget.rows.swap(index, secondIndex);
-			widget.notifySelection(secondIndex, selection);
-			widget.update();
-			updateButtons(secondIndex);
 			if (l != null)
 				l.onClick(index, selection, inc == Integer.MAX_VALUE
 						|| inc == Integer.MIN_VALUE,
 						new CallbackTemplate<IRows<Object>>() {
 							@Override
 							public void onSuccess(IRows<Object> result) {
+								throw new MethodNotImplementedException();
 							}
 						});
+			else {
+				widget.rows.swap(index, secondIndex);
+				widget.notifySelection(secondIndex, selection);
+				widget.update();
+				updateButtons(secondIndex);
+			}
 		}
 	}
 
