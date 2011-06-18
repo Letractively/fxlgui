@@ -53,8 +53,8 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 	private final RelationImpl relation;
 	private IScrollTableWidget<Object> table;
 	private Object node;
-	private int selectionIndex = -1;
-	private Object selection;
+	int selectionIndex = -1;
+	Object selection;
 	private IVerticalPanel panel;
 	private DetailView detailView;
 

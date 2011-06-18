@@ -41,9 +41,12 @@ class RelationImpl extends PropertyGroupImpl implements
 	IViewID viewID;
 	boolean isDefaultView = false;
 	INavigationDecorator<Object, Object> navigation;
+	private MasterDetailTableWidgetImpl widget;
+	RelationDecorator relationDecorator;
 
-	RelationImpl(String name) {
+	RelationImpl(MasterDetailTableWidgetImpl widget, String name) {
 		super(name);
+		this.widget = widget;
 	}
 
 	@Override
@@ -122,6 +125,16 @@ class RelationImpl extends PropertyGroupImpl implements
 	public IRelation<Object, Object> navigation(
 			INavigationDecorator<Object, Object> dec) {
 		navigation = dec;
+		return this;
+	}
+
+	@Override
+	public IRelation<Object, Object> selection(Object selection) {
+		widget.relationRegisterSelection.put(viewID, selection);
+		if (relationDecorator != null) {
+			relationDecorator.selectionIndex = -1;
+			relationDecorator.selection = selection;
+		}
 		return this;
 	}
 }
