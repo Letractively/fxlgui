@@ -41,6 +41,8 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	// TODO FEATURE: Option: Usability: Enable Drag & Drop for reordering of
 	// table content (additionally to move buttons)
 
+	// TODO FEATURE: Option: Usability: After delete: select next item at same index position
+
 	static final int SPACE = 4;
 
 	class Edit {
