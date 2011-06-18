@@ -196,7 +196,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 							&& constraints.isConstraintSpecified()) {
 						// nef.addSpace(8).add().label().text("ACTIVE FILTER")
 						// .font().color().gray();
-						IGridPanel gp = nef.addSpace(4).add().panel().grid()
+						IGridPanel gp = nef.addSpace(4).add().panel()
+								.horizontal().align().begin().add().panel()
+								.horizontal().align().begin().add().panel()
+								.grid()
 								.resize(3, constraints.description().size())
 								.spacing(4);
 						gp.cell(0, 0).label().text("FILTER").font().pixel(9)
