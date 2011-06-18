@@ -606,6 +606,7 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							setValues(node, p, ff);
 						setValue(p.adapter.valueOf(node),
 								(ITextElement<?>) ff.valueElement());
+						ff.required(p.required);
 					}
 				}
 
