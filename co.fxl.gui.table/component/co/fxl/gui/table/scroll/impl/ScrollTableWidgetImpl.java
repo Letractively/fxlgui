@@ -158,14 +158,18 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				commandButtons.reset();
 			if (!preselectedList.isEmpty()) {
 				if (preselectedIndex != -1) {
-					boolean found = rows.selected(preselectedIndex,
-							preselectedList.get(0));
-					if (!found) {
-						preselectedIndex = -1;
+					preselectedIndex = rows.find(preselectedList.get(0));
+					if (preselectedIndex == -1) {
 						preselectedList.clear();
+					} else {
+						rows.selected(preselectedIndex, preselectedList.get(0));
+						commandButtons.selection = preselectedList.get(0);
+						commandButtons.selectionIndex = preselectedIndex;
 					}
-				} else
+				} else {
 					rows.selected(preselectedList);
+					commandButtons.selection = preselectedList.get(0);
+				}
 			}
 			adjustHeight = true;
 			this.visible = true;

@@ -249,8 +249,8 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	private IMoveRowListener<IRows<Object>> listenOnMoveUpListener;
 	private IMoveRowListener<IRows<Object>> listenOnMoveDownListener;
 	private IRowListener<IRows<Object>> listenOnShowListener;
-	private int selectionIndex = -1;
-	private Object selection;
+	int selectionIndex = -1;
+	Object selection;
 	private IHorizontalPanel panel;
 	private IClickable<?> imageUp;
 	private IClickable<?> imageDown;
@@ -441,6 +441,9 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	}
 
 	void updateButtons() {
+		if (selectionIndex == -1 && selection != null) {
+			selectionIndex = widget.rows.find(selection);
+		}
 		updateButtons(selectionIndex);
 	}
 
