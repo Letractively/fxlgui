@@ -442,6 +442,10 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> root(ITree<T> tree) {
+		return root(tree, false);
+	}
+
+	ITreeWidget<T> root(ITree<T> tree, final boolean alwaysRefresh) {
 		if (previousSelection == null) {
 			if (model != null && model.selection() != null) {
 				previousSelection = model.selection().object();
@@ -463,7 +467,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 			@Override
 			public void run() {
 				updateButtons();
-				notifyChange();
+				notifyChange(alwaysRefresh);
 				if (runAfterVisible != null) {
 					IClickListener run = newClick.get(runAfterVisible);
 					runAfterVisible = null;
@@ -704,9 +708,13 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	private String runAfterVisible = null;
 
 	void notifyChange() {
+		notifyChange(false);
+	}
+
+	void notifyChange(boolean alwaysRefresh) {
 		T newSelection = model.selection() != null ? model.selection().object()
 				: null;
-		if (lastSelection == null || !equals(lastSelection, newSelection)) {
+		if (alwaysRefresh || !equals(lastSelection, newSelection)) {
 			lastSelection = newSelection;
 			for (ISelectionListener<T> l : selectionListeners) {
 				l.onChange(newSelection);

@@ -96,6 +96,6 @@ class ModelFilterTreeWidget<T> extends ModelTreeWidget<T> implements
 	public void setRoot(ITree<T> tree) {
 		if (model != null && model.selection() != null)
 			previousSelection = model.selection().object();
-		root(tree);
+		root(tree, true);
 	}
 }
