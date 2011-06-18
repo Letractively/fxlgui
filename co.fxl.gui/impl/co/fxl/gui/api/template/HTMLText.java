@@ -36,8 +36,9 @@ public class HTMLText {
 		return "<p align='center'>" + text + "</p>";
 	}
 
-	private String html(String toString) {
-		toString = toString.replace("\n", "<br/>");
+	public static String html(String toString) {
+		toString = toString.replace("<", "&lt;").replace(">", "&gt;")
+				.replace("\n", "<br/>");
 		StringBuilder b = new StringBuilder();
 		for (int i = 0; i < toString.length(); i++) {
 			char c = toString.charAt(i);
@@ -78,7 +79,7 @@ public class HTMLText {
 
 	@Override
 	public String toString() {
-		String toString = text.replace("<", "&#060;").replace("\n", "<br>");
+		String toString = text;
 		if (center)
 			toString = center(toString);
 		if (underline)
