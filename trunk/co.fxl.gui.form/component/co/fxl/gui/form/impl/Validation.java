@@ -491,11 +491,12 @@ public class Validation {
 		}
 		if (!update)
 			linkInput(valueElement, status);
+		updateClickables();
 	}
 
 	private void linkInput(Object valueElement, boolean status) {
 		if (valueElement instanceof IComboBox)
-			linkInput((IComboBox) valueElement);
+			linkInput((IComboBox) valueElement, status);
 		else
 			throw new MethodNotImplementedException();
 	}
