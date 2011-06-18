@@ -26,6 +26,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IVerticalPanel;
 
 public class ImageButton implements IClickable<Object> {
 
@@ -34,6 +35,7 @@ public class ImageButton implements IClickable<Object> {
 	private ILabel label;
 	private IHorizontalPanel panel;
 	private List<ILabel> additionalLabels = new LinkedList<ILabel>();
+	private IVerticalPanel p0;
 
 	public ImageButton(IContainer c) {
 		this.panel = c.panel().horizontal();
@@ -43,6 +45,12 @@ public class ImageButton implements IClickable<Object> {
 	}
 
 	public ImageButton(IHorizontalPanel panel, IImage image, ILabel textLabel) {
+		this(null, panel, image, textLabel);
+	}
+
+	public ImageButton(IVerticalPanel p0, IHorizontalPanel panel, IImage image,
+			ILabel textLabel) {
+		this.p0 = p0;
 		this.panel = panel;
 		this.image = image;
 		this.label = textLabel;
@@ -60,7 +68,10 @@ public class ImageButton implements IClickable<Object> {
 		label.clickable(clickable);
 		for (ILabel l : additionalLabels)
 			l.clickable(clickable);
-		panel.clickable(clickable);
+		if (p0 != null)
+			p0.clickable(clickable);
+		else
+			panel.clickable(clickable);
 		return this;
 	}
 
@@ -74,7 +85,10 @@ public class ImageButton implements IClickable<Object> {
 		label.addClickListener(clickListener);
 		if (image != null)
 			image.addClickListener(clickListener);
-		panel.addClickListener(clickListener);
+		if (p0 != null)
+			p0.addClickListener(clickListener);
+		else
+			panel.addClickListener(clickListener);
 		return null;
 	}
 

@@ -26,6 +26,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
 
@@ -80,10 +81,12 @@ public class NavigationView {
 
 	public ImageButton addHyperlink(String imageResource) {
 		setUp();
-		IHorizontalPanel panel = addPanel();
+		IPanel<?>[] panels = addPanel();
+		IHorizontalPanel panel = (IHorizontalPanel) panels[1];
 		IImage image = addImage(panel, imageResource);
 		ILabel textLabel = addTextLabel(panel);
-		return new ImageButton(panel, image, textLabel);
+		return new ImageButton((IVerticalPanel) panels[0], panel, image,
+				textLabel);
 	}
 
 	protected ILabel addTextLabel(IHorizontalPanel panel) {
@@ -94,7 +97,8 @@ public class NavigationView {
 	public IUpdateable<String> addComboBoxLink(String title, String text,
 			String... options) {
 		setUp();
-		IHorizontalPanel panel = addPanel();
+		IPanel<?>[] panels = addPanel();
+		IHorizontalPanel panel = (IHorizontalPanel) panels[1];
 		addImage(panel, null);
 		ILabel label = addTextLabel(panel);
 		Styles.instance().window().navigation().choice().title(label);
@@ -125,8 +129,8 @@ public class NavigationView {
 		return image;
 	}
 
-	protected IHorizontalPanel addPanel() {
-		IVerticalPanel p = this.panel.add().panel().vertical().spacing(2);
+	protected IPanel<?>[] addPanel() {
+		IVerticalPanel p = panel.add().panel().vertical().spacing(2);
 		if (hasLinks) {
 			p.addSpace(3);
 		}
@@ -138,7 +142,8 @@ public class NavigationView {
 			border.style().top();
 		}
 		hasLinks = true;
-		return panel;
+		IPanel<?>[] panels = new IPanel<?>[] { p, panel };
+		return panels;
 	}
 
 	public NavigationView foldable(boolean b) {
