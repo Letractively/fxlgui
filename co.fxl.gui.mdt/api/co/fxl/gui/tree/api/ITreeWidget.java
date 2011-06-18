@@ -110,6 +110,8 @@ public interface ITreeWidget<T> {
 
 	ITreeWidget<T> refreshSelection(boolean refreshChildren);
 
+	ITreeWidget<T> refreshTreeNode(boolean refreshChildren);
+
 	int heightRegisterPanel();
 
 	ITreeWidget<T> navigateUp();
