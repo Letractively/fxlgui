@@ -255,10 +255,12 @@ class DetailView extends ViewTemplate implements ISource<Object>,
 				if (reg.c != null)
 					dv.constrainType(reg.c);
 				if (r instanceof RelationImpl) {
-					((RelationImpl) r).viewID = dv.iD();
-					((RelationDecorator) reg.dec).updateSelection(this,
+					RelationImpl relationImpl = (RelationImpl) r;
+					relationImpl.viewID = dv.iD();
+					relationImpl.relationDecorator = (RelationDecorator) reg.dec;
+					relationImpl.relationDecorator.updateSelection(this,
 							(RelationImpl) r);
-					if (((RelationImpl) r).isDefaultView)
+					if (relationImpl.isDefaultView)
 						dv.isDefaultView();
 				}
 			}

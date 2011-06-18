@@ -111,4 +111,6 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 	IRelation<T, R> isDefaultView(boolean isDefaultView);
 
 	IRelation<T, R> navigation(INavigationDecorator<T, R> dec);
+
+	IRelation<T, R> selection(R selection);
 }
