@@ -463,6 +463,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 			@Override
 			public void run() {
 				updateButtons();
+				notifyChange();
 				if (runAfterVisible != null) {
 					IClickListener run = newClick.get(runAfterVisible);
 					runAfterVisible = null;
@@ -705,7 +706,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	void notifyChange() {
 		T newSelection = model.selection() != null ? model.selection().object()
 				: null;
-		if (!equals(lastSelection, newSelection)) {
+		if (lastSelection == null || !equals(lastSelection, newSelection)) {
 			lastSelection = newSelection;
 			for (ISelectionListener<T> l : selectionListeners) {
 				l.onChange(newSelection);
