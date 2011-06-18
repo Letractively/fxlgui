@@ -627,6 +627,11 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				view.update();
 			}
 		}
+		return refreshTreeNode(refreshChildren);
+	}
+
+	@Override
+	public ITreeWidget<T> refreshTreeNode(boolean refreshChildren) {
 		model.refresh(model.selection(), refreshChildren);
 		return this;
 	}
