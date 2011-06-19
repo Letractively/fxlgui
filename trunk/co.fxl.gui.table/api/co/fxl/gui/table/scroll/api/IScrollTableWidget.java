@@ -23,6 +23,7 @@ import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -113,6 +114,9 @@ public interface IScrollTableWidget<T> {
 	IScrollTableWidget<T> height(int height);
 
 	IScrollTableWidget<T> rows(IRows<T> rows);
+
+	IScrollTableWidget<T> addViewComboBox(String[] texts,
+			IUpdateListener<String> ul);
 
 	IKey<?> addTableClickListener(IScrollTableClickListener l);
 
