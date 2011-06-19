@@ -1,5 +1,5 @@
 <module>
-	<inherits name='co.fxl.gui.api.IDisplay' />
+	<inherits name='co.fxl.gui.IDisplay' />
 	<inherits name='co.fxl.gui.table.api.ITableWidget' />
 	<inherits name='co.fxl.gui.table.impl.TableWidgetImpl' />
 	<source path='' />

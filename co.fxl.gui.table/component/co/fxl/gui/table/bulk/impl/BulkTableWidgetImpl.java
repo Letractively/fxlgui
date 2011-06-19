@@ -38,7 +38,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.AlignmentMemento;
+import co.fxl.gui.impl.AlignmentMemento;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 
 class BulkTableWidgetImpl implements IBulkTableWidget {
