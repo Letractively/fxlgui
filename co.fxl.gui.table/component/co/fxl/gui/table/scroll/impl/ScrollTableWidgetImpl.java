@@ -39,6 +39,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.template.KeyAdapter;
 import co.fxl.gui.api.template.WidgetTitle;
@@ -183,14 +184,24 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			selectionIsSetup = false;
 			container().clear();
 			topPanel();
+			viewInc = 0;
+			if (viewComboBoxText != null) {
+				IHorizontalPanel p = topPanel.cell(viewInc + 0, 0).panel()
+						.horizontal();
+				p.add().label().text("VIEW:").font().weight().bold();
+				p.addSpace(4).add().comboBox().width(100)
+						.addText(viewComboBoxText)
+						.addUpdateListener(viewComboBoxUpdateListener);
+				p.addSpace(4);
+				viewInc = 1;
+			}
 			if (rows.size() == 0
 					&& (constraints == null
 							|| !constraints.isConstraintSpecified() || !hasFilter())) {
 				IVerticalPanel dock = container.add().panel().vertical();
-				if (topPanel == null)
-					topPanel = dock.add().panel().grid();
 				if (showNoRowsFound) {
-					topPanel.cell(0, 0).width(10).label().text("&#160;");
+					topPanel.cell(viewInc + 0, 0).width(10).label()
+							.text("&#160;");
 					IGridCell begin = topPanel.cell(1, 0).valign().begin()
 							.align().begin();
 					IVerticalPanel nef = begin.panel().vertical();
@@ -397,6 +408,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private boolean externalStatusPanel;
 	private IVerticalPanel bottom;
 	private int buttonColumn = 1;
+	private String[] viewComboBoxText;
+	private IUpdateListener<String> viewComboBoxUpdateListener;
+	private int viewInc;
 
 	void update() {
 		if (updating)
@@ -800,7 +814,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public IScrollTableWidget<Object> navigationPanel(
 			INavigationPanelDecorator dec) {
 		if (topPanel != null) {
-			dec.decorate(topPanel.cell(buttonColumn++, 0).align().end());
+			dec.decorate(topPanel.cell(viewInc + buttonColumn++, 0).align()
+					.end());
 		} else
 			navigationDecorator = dec;
 		return this;
@@ -809,7 +824,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> buttonPanel(IButtonPanelDecorator dec) {
 		if (topPanel != null) {
-			IGridCell cell = topPanel.cell(buttonColumn, 0);
+			IGridCell cell = topPanel.cell(viewInc + buttonColumn, 0);
 			if (navigationDecorator != null)
 				cell.width(100);
 			dec.decorate(cell.align().end());
@@ -878,5 +893,13 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (result != null)
 			rows(result);
 		visible(true);
+	}
+
+	@Override
+	public IScrollTableWidget<Object> addViewComboBox(String[] texts,
+			IUpdateListener<String> ul) {
+		viewComboBoxText = texts;
+		viewComboBoxUpdateListener = ul;
+		return this;
 	}
 }
