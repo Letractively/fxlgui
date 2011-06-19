@@ -238,14 +238,19 @@ class SelectableList {
 	}
 
 	void visible(List<Object> tokens, boolean b) {
-		// TODO effizienter
-		for (Object o : tokens)
-			visible(o, b);
+		for (Object o : tokens) {
+			visible(o, b, false);
+		}
+		draw();
 		if (b)
 			preselected = null;
 	}
 
 	void visible(Object selection, boolean b) {
+		visible(selection, b, true);
+	}
+
+	void visible(Object selection, boolean b, boolean draw) {
 		// TODO effizienter
 		int x = 0;
 		for (; x < items.size(); x++) {
@@ -259,7 +264,8 @@ class SelectableList {
 			ListItem o = items.remove(x);
 			items.add(o);
 		}
-		draw();
+		if (draw)
+			draw();
 	}
 
 	List<Object> getItems() {
