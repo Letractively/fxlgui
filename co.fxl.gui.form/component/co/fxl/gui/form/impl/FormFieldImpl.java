@@ -22,10 +22,10 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IUpdateable;
-import co.fxl.gui.api.template.FieldTypeImpl;
-import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.impl.FormWidgetImpl.FormEntryLabel;
+import co.fxl.gui.impl.FieldTypeImpl;
+import co.fxl.gui.impl.IFieldType;
 
 public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 

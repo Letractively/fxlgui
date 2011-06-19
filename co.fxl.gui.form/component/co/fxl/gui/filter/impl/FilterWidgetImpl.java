@@ -33,14 +33,14 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
-import co.fxl.gui.api.template.Heights;
-import co.fxl.gui.api.template.Icons;
-import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.form.impl.Validation;
+import co.fxl.gui.impl.Heights;
+import co.fxl.gui.impl.Icons;
+import co.fxl.gui.impl.LazyClickListener;
 
 class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 
