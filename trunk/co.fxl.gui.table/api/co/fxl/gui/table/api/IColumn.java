@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.table.api;
 
-import co.fxl.gui.api.template.IFieldType;
+import co.fxl.gui.impl.IFieldType;
 
 public interface IColumn<T> {
 

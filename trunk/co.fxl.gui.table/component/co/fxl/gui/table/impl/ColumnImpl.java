@@ -22,8 +22,8 @@ import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.template.FieldTypeImpl;
-import co.fxl.gui.api.template.IFieldType;
+import co.fxl.gui.impl.FieldTypeImpl;
+import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.table.api.IColumn;
 
 public class ColumnImpl implements IColumn<Object> {

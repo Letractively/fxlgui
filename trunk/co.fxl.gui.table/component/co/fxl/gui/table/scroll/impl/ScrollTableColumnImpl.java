@@ -26,12 +26,12 @@ import java.util.List;
 
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
-import co.fxl.gui.api.template.AlignmentMemento;
-import co.fxl.gui.api.template.AlignmentMemento.Type;
-import co.fxl.gui.api.template.FieldTypeImpl;
-import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.format.api.IFormat;
 import co.fxl.gui.format.impl.Format;
+import co.fxl.gui.impl.AlignmentMemento;
+import co.fxl.gui.impl.FieldTypeImpl;
+import co.fxl.gui.impl.IFieldType;
+import co.fxl.gui.impl.AlignmentMemento.Type;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ICell;

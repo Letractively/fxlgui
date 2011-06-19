@@ -24,8 +24,8 @@ import java.util.List;
 
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.filter.impl.MiniFilterWidgetImplProvider;
+import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.table.bulk.impl.BulkTableWidgetImplProvider;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
