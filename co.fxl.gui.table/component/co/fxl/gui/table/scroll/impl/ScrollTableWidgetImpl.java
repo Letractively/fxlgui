@@ -168,7 +168,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					}
 				} else {
 					rows.selected(preselectedList);
-					commandButtons.selection = preselectedList.get(0);
+					if (commandButtons != null)
+						commandButtons.selection = preselectedList.get(0);
 				}
 			}
 			adjustHeight = true;
