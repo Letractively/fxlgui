@@ -19,8 +19,8 @@
 package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.template.HTMLText;
-import co.fxl.gui.api.template.HyperlinkDecorator;
+import co.fxl.gui.impl.HTMLText;
+import co.fxl.gui.impl.HyperlinkDecorator;
 
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
