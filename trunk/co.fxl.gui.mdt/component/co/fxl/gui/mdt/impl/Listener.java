@@ -19,7 +19,7 @@
 package co.fxl.gui.mdt.impl;
 
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
-import co.fxl.gui.api.template.ICallback;
+import co.fxl.gui.impl.ICallback;
 
 interface Listener extends IUpdateListener<String> {
 

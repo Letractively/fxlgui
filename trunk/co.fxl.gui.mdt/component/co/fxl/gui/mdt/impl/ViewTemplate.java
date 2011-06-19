@@ -21,8 +21,8 @@ package co.fxl.gui.mdt.impl;
 import java.util.List;
 
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.SplitLayout;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
+import co.fxl.gui.impl.SplitLayout;
 import co.fxl.gui.table.api.ISelection.IMultiSelection.IChangeListener;
 
 abstract class ViewTemplate implements IChangeListener<Object>, Listener,

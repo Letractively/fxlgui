@@ -21,7 +21,7 @@ package co.fxl.gui.mdt.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.template.ImageButton;
+import co.fxl.gui.impl.ImageButton;
 import co.fxl.gui.mdt.api.INavigationLink;
 
 class NavigationLinkImpl implements INavigationLink<Object, Object> {

@@ -22,8 +22,8 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
-import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.impl.ICallback;
 
 public interface IRelation<T, R> extends IPropertyGroup<R> {
 

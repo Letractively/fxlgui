@@ -19,8 +19,8 @@
 package co.fxl.gui.tree.api;
 
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.impl.ICallback;
 
 public interface IFilterTreeWidget<T> extends ITreeWidget<T> {
 
@@ -35,5 +35,5 @@ public interface IFilterTreeWidget<T> extends ITreeWidget<T> {
 
 	IFilterTreeWidget<T> visible(boolean visible);
 
-	IFilterTreeWidget<T> refresh(co.fxl.gui.api.template.ICallback<Boolean> cb);
+	IFilterTreeWidget<T> refresh(co.fxl.gui.impl.ICallback<Boolean> cb);
 }

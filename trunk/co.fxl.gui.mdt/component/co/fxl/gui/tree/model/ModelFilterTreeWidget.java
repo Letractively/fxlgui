@@ -20,9 +20,9 @@ package co.fxl.gui.tree.model;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.template.CallbackTemplate;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
+import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.tree.api.IFilterList;
 import co.fxl.gui.tree.api.IFilterTreeWidget;
 import co.fxl.gui.tree.api.ITree;
@@ -80,7 +80,7 @@ class ModelFilterTreeWidget<T> extends ModelTreeWidget<T> implements
 
 	@Override
 	public IFilterTreeWidget<T> refresh(
-			final co.fxl.gui.api.template.ICallback<Boolean> cb) {
+			final co.fxl.gui.impl.ICallback<Boolean> cb) {
 		source.query(constraints, new CallbackTemplate<ITree<T>>(cb) {
 
 			@Override

@@ -21,7 +21,7 @@ package co.fxl.gui.tree.test;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.template.ICallback;
+import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.tree.api.ITree;
 
 class TestTree implements ITree<String> {
