@@ -106,6 +106,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	private String configuration = IFilterConstraints.COMMON;
 	private boolean showConfiguration = true;
 	Heights heights = new Heights(0);
+	private ClearClickListener clearClickListener;
 
 	FilterWidgetImpl(IContainer panel) {
 		FilterPanel title = newFilterPanel(panel);
@@ -115,7 +116,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 		clear = title.addHyperlink(Icons.CANCEL, "Clear");
 		apply.addClickListener(new ApplyClickListener());
 		// apply.clickable(false);
-		clear.addClickListener(new ClearClickListener());
+		clear.addClickListener(clearClickListener = new ClearClickListener());
 		clear.clickable(false);
 		mainPanel = title;
 	}
@@ -353,6 +354,12 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	@Override
 	public IFilterWidget apply() {
 		notifyListeners();
+		return this;
+	}
+
+	@Override
+	public IFilterWidget clear() {
+		clearClickListener.onAllowedClick();
 		return this;
 	}
 
