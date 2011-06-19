@@ -207,6 +207,17 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 								.grid()
 								.resize(3, constraints.description().size())
 								.spacing(4);
+						// if (filter != null || filterListener != null)
+						// gp.cell(0, 0).label().text("Remove").hyperlink()
+						// .addClickListener(new IClickListener() {
+						// @Override
+						// public void onClick() {
+						// if (filter != null)
+						// filter.clear();
+						// else
+						// throw new MethodNotImplementedException();
+						// }
+						// });
 						gp.cell(0, 0).label().text("FILTER").font().pixel(9)
 								.color().gray();
 						int i = 0;
