@@ -27,7 +27,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.template.WidgetTitle;
+import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.wizard.api.IWizardStep;
 import co.fxl.gui.wizard.api.IWizardStepCard;
 
