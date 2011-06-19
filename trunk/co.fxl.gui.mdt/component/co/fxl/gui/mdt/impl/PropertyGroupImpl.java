@@ -85,4 +85,10 @@ public class PropertyGroupImpl implements IPropertyGroup<Object> {
 		constrainType = type;
 		return this;
 	}
+
+	@Override
+	public IPropertyGroup<Object> clear() {
+		properties.clear();
+		return this;
+	}
 }

@@ -20,6 +20,8 @@ package co.fxl.gui.mdt.api;
 
 public interface IPropertyGroup<T> {
 
+	IPropertyGroup<T> clear();
+
 	IProperty<T, ?> addProperty(String name);
 
 	IPropertyGroup<T> inTable(boolean show);
