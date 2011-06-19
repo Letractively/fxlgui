@@ -25,7 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.template.HyperlinkDecorator;
+import co.fxl.gui.impl.HyperlinkDecorator;
 
 class SwingLabel extends SwingTextElement<JLabel, ILabel> implements ILabel {
 

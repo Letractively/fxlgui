@@ -21,7 +21,7 @@ package co.fxl.gui.swing;
 import java.awt.Color;
 
 import co.fxl.gui.api.IColored.IColor;
-import co.fxl.gui.api.template.ColorTemplate;
+import co.fxl.gui.impl.ColorTemplate;
 
 public abstract class SwingColor extends ColorTemplate implements IColor {
 

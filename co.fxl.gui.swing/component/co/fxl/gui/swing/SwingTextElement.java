@@ -25,7 +25,7 @@ import javax.swing.JComponent;
 
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IFontElement.IFont;
-import co.fxl.gui.api.template.HTMLText;
+import co.fxl.gui.impl.HTMLText;
 
 public abstract class SwingTextElement<T extends JComponent, R> extends
 		SwingElement<T, R> {
