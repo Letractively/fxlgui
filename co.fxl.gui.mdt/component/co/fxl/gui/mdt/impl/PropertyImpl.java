@@ -21,8 +21,8 @@ package co.fxl.gui.mdt.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.template.FieldTypeImpl;
-import co.fxl.gui.api.template.IFieldType;
+import co.fxl.gui.impl.FieldTypeImpl;
+import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.mdt.api.IProperty;
 
 public class PropertyImpl implements IProperty<Object, Object> {

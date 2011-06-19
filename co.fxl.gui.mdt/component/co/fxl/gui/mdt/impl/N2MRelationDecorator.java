@@ -22,8 +22,8 @@ import java.util.List;
 
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.CallbackTemplate;
-import co.fxl.gui.api.template.ResizeListener;
+import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.ResizeListener;
 import co.fxl.gui.n2m.api.IN2MWidget;
 import co.fxl.gui.n2m.api.IN2MWidget.IN2MRelationListener;
 import co.fxl.gui.tree.api.ITree;

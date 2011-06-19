@@ -27,9 +27,9 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.CallbackTemplate;
-import co.fxl.gui.api.template.ICallback;
-import co.fxl.gui.api.template.LazyClickListener;
+import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.ICallback;
+import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.tree.api.ITree;
 
 class ModelTreeNode<T> extends LazyClickListener {

@@ -30,10 +30,10 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.Heights;
-import co.fxl.gui.api.template.LazyClickListener;
-import co.fxl.gui.api.template.LazyUpdateListener;
-import co.fxl.gui.api.template.WidgetTitle;
+import co.fxl.gui.impl.Heights;
+import co.fxl.gui.impl.LazyClickListener;
+import co.fxl.gui.impl.LazyUpdateListener;
+import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.mdt.impl.ViewWidget.ViewConfiguration;
 
 public class ViewWidget implements IUpdateable<ViewConfiguration> {

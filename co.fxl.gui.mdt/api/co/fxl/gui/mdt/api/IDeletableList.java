@@ -21,7 +21,7 @@ package co.fxl.gui.mdt.api;
 import java.io.Serializable;
 import java.util.List;
 
-import co.fxl.gui.api.template.ICallback;
+import co.fxl.gui.impl.ICallback;
 
 public interface IDeletableList<T> {
 

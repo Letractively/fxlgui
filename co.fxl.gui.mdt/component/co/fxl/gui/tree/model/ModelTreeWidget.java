@@ -35,12 +35,12 @@ import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.CallbackTemplate;
-import co.fxl.gui.api.template.ICallback;
-import co.fxl.gui.api.template.KeyAdapter;
-import co.fxl.gui.api.template.LazyClickListener;
-import co.fxl.gui.api.template.WidgetTitle;
-import co.fxl.gui.api.template.WidgetTitle.CommandLink;
+import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.ICallback;
+import co.fxl.gui.impl.KeyAdapter;
+import co.fxl.gui.impl.LazyClickListener;
+import co.fxl.gui.impl.WidgetTitle;
+import co.fxl.gui.impl.WidgetTitle.CommandLink;
 import co.fxl.gui.mdt.impl.Icons;
 import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
@@ -371,7 +371,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				}
 			};
 			delete = widgetTitle.addHyperlink(
-					co.fxl.gui.api.template.Icons.CANCEL, "Delete");
+					co.fxl.gui.impl.Icons.CANCEL, "Delete");
 			delete.addClickListener(deleteListener);
 			if (showRefresh && this instanceof RefreshListener)
 				refresh().addClickListener(new LazyClickListener() {

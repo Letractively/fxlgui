@@ -30,12 +30,12 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDisplay.IResizeListener;
-import co.fxl.gui.api.template.CallbackTemplate;
-import co.fxl.gui.api.template.ICallback;
-import co.fxl.gui.api.template.ResizeListener;
-import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
+import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.ICallback;
+import co.fxl.gui.impl.ResizeListener;
+import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.mdt.api.IDeletableList;
 import co.fxl.gui.mdt.api.IProperty.IAdapter;
 import co.fxl.gui.table.api.ISelection;
@@ -104,7 +104,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 		}
 		if (widget.showCommands) {
 			delete = table.addButton("Delete",
-					co.fxl.gui.api.template.Icons.CANCEL);
+					co.fxl.gui.impl.Icons.CANCEL);
 			delete.addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {

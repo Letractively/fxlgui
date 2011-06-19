@@ -21,7 +21,7 @@ package co.fxl.gui.tree.api;
 import java.util.List;
 
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.template.ICallback;
+import co.fxl.gui.impl.ICallback;
 
 public interface ITree<T> {
 
