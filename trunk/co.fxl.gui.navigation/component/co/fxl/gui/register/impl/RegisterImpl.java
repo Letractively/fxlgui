@@ -27,7 +27,7 @@ import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.LazyClickListener;
+import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.register.api.IRegister;
 
 class RegisterImpl extends LazyClickListener implements IRegister {
