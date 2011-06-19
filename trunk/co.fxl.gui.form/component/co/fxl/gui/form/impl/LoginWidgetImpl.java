@@ -24,9 +24,9 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.template.Heights;
-import co.fxl.gui.api.template.LazyClickListener;
 import co.fxl.gui.form.api.ILoginWidget;
+import co.fxl.gui.impl.Heights;
+import co.fxl.gui.impl.LazyClickListener;
 
 class LoginWidgetImpl implements ILoginWidget {
 

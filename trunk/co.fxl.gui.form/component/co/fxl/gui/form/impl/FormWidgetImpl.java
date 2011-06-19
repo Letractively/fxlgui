@@ -39,13 +39,13 @@ import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.CallbackTemplate;
-import co.fxl.gui.api.template.Heights;
-import co.fxl.gui.api.template.LazyClickListener;
-import co.fxl.gui.api.template.WidgetTitle;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IImageField;
+import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.Heights;
+import co.fxl.gui.impl.LazyClickListener;
+import co.fxl.gui.impl.WidgetTitle;
 
 class FormWidgetImpl implements IFormWidget {
 

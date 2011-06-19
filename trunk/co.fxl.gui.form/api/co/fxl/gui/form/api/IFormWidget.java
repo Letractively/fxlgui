@@ -28,7 +28,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.template.ICallback;
+import co.fxl.gui.impl.ICallback;
 
 public interface IFormWidget {
 

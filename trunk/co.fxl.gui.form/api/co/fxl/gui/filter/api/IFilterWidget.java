@@ -20,7 +20,7 @@ package co.fxl.gui.filter.api;
 
 import java.util.List;
 
-import co.fxl.gui.api.template.IFieldType;
+import co.fxl.gui.impl.IFieldType;
 
 public interface IFilterWidget {
 

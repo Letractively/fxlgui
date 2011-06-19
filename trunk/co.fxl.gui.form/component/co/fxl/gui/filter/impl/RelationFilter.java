@@ -81,7 +81,7 @@ class RelationFilter extends StringFilter {
 	ITextField textField(ICell c, int filterIndex) {
 		IDockPanel dock = c.dock();
 		remove = dock.right().panel().vertical().addSpace(4).add().image()
-				.resource(co.fxl.gui.api.template.Icons.CANCEL).size(16, 16);
+				.resource(co.fxl.gui.impl.Icons.CANCEL).size(16, 16);
 		return dock.center().textField();
 	}
 

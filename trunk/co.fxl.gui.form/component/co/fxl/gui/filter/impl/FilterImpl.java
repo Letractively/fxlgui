@@ -18,9 +18,9 @@
  */
 package co.fxl.gui.filter.impl;
 
-import co.fxl.gui.api.template.FieldTypeImpl;
-import co.fxl.gui.api.template.IFieldType;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
+import co.fxl.gui.impl.FieldTypeImpl;
+import co.fxl.gui.impl.IFieldType;
 
 class FilterImpl implements IFilter {
 

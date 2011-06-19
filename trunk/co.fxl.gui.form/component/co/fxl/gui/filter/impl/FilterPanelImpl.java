@@ -28,8 +28,8 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.template.Heights;
-import co.fxl.gui.api.template.WidgetTitle;
+import co.fxl.gui.impl.Heights;
+import co.fxl.gui.impl.WidgetTitle;
 
 class FilterPanelImpl implements FilterPanel {
 

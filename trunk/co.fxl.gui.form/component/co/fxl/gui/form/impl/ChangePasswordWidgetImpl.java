@@ -25,11 +25,11 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
-import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.form.api.IChangePasswordWidget;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
+import co.fxl.gui.impl.ICallback;
 
 class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener {
 

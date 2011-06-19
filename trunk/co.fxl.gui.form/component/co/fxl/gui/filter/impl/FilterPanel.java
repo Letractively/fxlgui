@@ -23,7 +23,7 @@ import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.template.Heights;
+import co.fxl.gui.impl.Heights;
 
 interface FilterPanel {
 
