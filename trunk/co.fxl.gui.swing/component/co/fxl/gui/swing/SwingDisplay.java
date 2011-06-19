@@ -41,8 +41,8 @@ import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.api.template.DialogImpl;
-import co.fxl.gui.api.template.DiscardChangesDialog;
+import co.fxl.gui.impl.DialogImpl;
+import co.fxl.gui.impl.DiscardChangesDialog;
 
 public class SwingDisplay implements IDisplay, ComponentParent {
 

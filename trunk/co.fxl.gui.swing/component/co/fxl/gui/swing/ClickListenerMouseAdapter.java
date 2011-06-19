@@ -26,7 +26,7 @@ import java.awt.event.MouseEvent;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IElement;
-import co.fxl.gui.api.template.KeyTemplate;
+import co.fxl.gui.impl.KeyTemplate;
 
 class ClickListenerMouseAdapter<T> extends KeyTemplate<T> implements IKey<T> {
 

@@ -38,8 +38,8 @@ import javax.swing.JPanel;
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
-import co.fxl.gui.api.template.GridCellContainer;
-import co.fxl.gui.api.template.KeyTemplate;
+import co.fxl.gui.impl.GridCellContainer;
+import co.fxl.gui.impl.KeyTemplate;
 
 class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
