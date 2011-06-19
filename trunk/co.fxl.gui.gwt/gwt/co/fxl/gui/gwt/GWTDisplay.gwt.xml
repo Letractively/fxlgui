@@ -1,7 +1,7 @@
 <module>
 	<inherits name='com.google.gwt.user.User' />
 	<inherits name='com.google.gwt.user.theme.standard.Standard' />
-	<inherits name='co.fxl.gui.api.IDisplay' />
+	<inherits name='co.fxl.gui.IDisplay' />
 	<source path="" />
 	<stylesheet src='GWTDisplay.css' />
 </module>

@@ -20,7 +20,7 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IColored.IGradient;
-import co.fxl.gui.api.template.ColorTemplate;
+import co.fxl.gui.impl.ColorTemplate;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;

@@ -32,8 +32,8 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
-import co.fxl.gui.api.template.DialogImpl;
-import co.fxl.gui.api.template.DiscardChangesDialog;
+import co.fxl.gui.impl.DialogImpl;
+import co.fxl.gui.impl.DiscardChangesDialog;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;

@@ -24,7 +24,7 @@ import java.util.Set;
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
-import co.fxl.gui.api.template.GridCellContainer;
+import co.fxl.gui.impl.GridCellContainer;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Grid;

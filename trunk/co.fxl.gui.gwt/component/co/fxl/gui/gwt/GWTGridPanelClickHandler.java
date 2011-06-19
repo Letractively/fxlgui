@@ -21,7 +21,7 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridClickListener;
-import co.fxl.gui.api.template.KeyTemplate;
+import co.fxl.gui.impl.KeyTemplate;
 
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
