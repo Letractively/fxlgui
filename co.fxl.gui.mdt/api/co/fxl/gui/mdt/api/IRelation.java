@@ -21,6 +21,7 @@ package co.fxl.gui.mdt.api;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.template.ICallback;
 import co.fxl.gui.filter.api.IFilterConstraints;
 
@@ -113,4 +114,7 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 	IRelation<T, R> navigation(INavigationDecorator<T, R> dec);
 
 	IRelation<T, R> selection(R selection);
+
+	IRelation<T, R> allowViewConfiguration(String[] views,
+			IUpdateListener<String> l);
 }

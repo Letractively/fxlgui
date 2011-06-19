@@ -21,6 +21,7 @@ package co.fxl.gui.mdt.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.mdt.api.IProperty;
 import co.fxl.gui.mdt.api.IRelation;
 import co.fxl.gui.tree.api.ITreeWidget.IViewID;
@@ -136,5 +137,11 @@ class RelationImpl extends PropertyGroupImpl implements
 			relationDecorator.selection = selection;
 		}
 		return this;
+	}
+
+	@Override
+	public IRelation<Object, Object> allowViewConfiguration(String[] views,
+			IUpdateListener<String> l) {
+		throw new MethodNotImplementedException();
 	}
 }
