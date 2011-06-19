@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="api"/>
 	<classpathentry kind="src" path="impl"/>
-	<classpathentry kind="src" path="themes"/>
 	<classpathentry kind="src" path="gwt"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
