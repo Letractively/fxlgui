@@ -69,7 +69,7 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 				update();
 			}
 		};
-		leftButton = center.add().image().resource("(_02.png").size(16, 16)
+		leftButton = center.add().image().resource("l_02.png").size(16, 16)
 				.addClickListener(leftClickListener).mouseLeft();
 		right.link(leftButton, leftClickListener);
 		IClickListener rightClickListener = new IClickListener() {
@@ -81,11 +81,11 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 				update();
 			}
 		};
-		buttonRight = center.add().image().resource(")_02.png").size(16, 16)
+		buttonRight = center.add().image().resource("r_02.png").size(16, 16)
 				.addClickListener(rightClickListener).mouseLeft();
 		left.link(buttonRight, rightClickListener);
 		center.addSpace(_20);
-		buttonLeftAll = center.add().image().resource("((_02.png").size(16, 16)
+		buttonLeftAll = center.add().image().resource("ll_02.png").size(16, 16)
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
@@ -96,7 +96,7 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 					}
 				}).mouseLeft();
 		right.linkAll(buttonLeftAll);
-		buttonRightAll = center.add().image().resource("))_02.png")
+		buttonRightAll = center.add().image().resource("rr_02.png")
 				.size(16, 16).addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
