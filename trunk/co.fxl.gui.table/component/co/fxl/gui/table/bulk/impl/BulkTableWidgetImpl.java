@@ -199,6 +199,11 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 				this.updateAdapter = updateAdapter;
 				return this;
 			}
+
+			@Override
+			public ICell html(String text) {
+				throw new MethodNotImplementedException();
+			}
 		};
 	}
 
@@ -332,5 +337,10 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 	@Override
 	public int rowHeight(int row) {
 		return grid.row(row).height();
+	}
+
+	@Override
+	public IBulkTableWidget css(boolean css) {
+		throw new MethodNotImplementedException();
 	}
 }
