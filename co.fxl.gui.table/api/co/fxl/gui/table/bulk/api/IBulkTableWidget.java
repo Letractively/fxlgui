@@ -76,6 +76,8 @@ public interface IBulkTableWidget {
 
 		ICell text(String text);
 
+		ICell html(String text);
+
 		ICell checkBox(Boolean value);
 
 		ICell updateAdapter(IUpdateAdapter<Boolean> updateAdapter);
@@ -108,6 +110,8 @@ public interface IBulkTableWidget {
 	IBulkTableWidget labelMouseListener(int column, ILabelMouseListener l);
 
 	IBulkTableWidget visible(boolean visible);
+
+	IBulkTableWidget css(boolean css);
 
 	void remove();
 
