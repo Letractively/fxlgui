@@ -20,90 +20,29 @@ package co.fxl.gui.form.impl;
 
 import java.util.Date;
 
-import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IElement;
-import co.fxl.gui.api.IImage;
-import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.form.api.IFormField;
-import co.fxl.gui.format.impl.Format;
-import co.fxl.gui.input.api.ICalendarWidget;
+import co.fxl.gui.impl.DateField;
 
 class FormDateFieldImpl extends FormTextFieldImpl<Date> {
 
-	private class PopUp implements IClickListener, IUpdateListener<Boolean> {
-
-		private IElement<?> e;
-
-		PopUp(IElement<?> e) {
-			this.e = e;
-		}
-
-		@Override
-		public void onClick() {
-			final IPopUp popUp = widget.gridPanel.display().showPopUp()
-					.autoHide(true);
-			int height = e.height();
-			popUp.offset(e.offsetX(), e.offsetY() + height);
-			final ICalendarWidget calendar = (ICalendarWidget) popUp
-					.container().widget(ICalendarWidget.class);
-			calendar.addUpdateListener(new IUpdateListener<Date>() {
-				@Override
-				public void onUpdate(Date value) {
-					FormDateFieldImpl.this.valueElement().text(
-							Format.date().format(value));
-				}
-			});
-			valueElement().addUpdateListener(new IUpdateListener<String>() {
-				@Override
-				public void onUpdate(String value) {
-					calendar.date(Format.date().parse(value));
-				}
-			});
-			calendar.date(Format.date().parse(valueElement().text()));
-			// valueElement().addFocusListener(new IUpdateListener<Boolean>() {
-			// @Override
-			// public void onUpdate(Boolean value) {
-			// if (!value)
-			// widget.gridPanel.display().invokeLater(new Runnable() {
-			// @Override
-			// public void run() {
-			// popUp.visible(false);
-			// }
-			// });
-			// }
-			// });
-			popUp.visible(true);
-		}
-
-		@Override
-		public void onUpdate(Boolean value) {
-			if (!button.clickable())
-				return;
-			if (value)
-				new PopUp(valueElement()).onClick();
-		}
-	}
-
-	private IImage button;
+	private DateField dateField;
 
 	FormDateFieldImpl(final FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
-		button = addContainer().image().resource(Icons.CALENDAR).size(16, 16);
-		button.addClickListener(new PopUp(button));
+		dateField = new DateField(valueElement(), addContainer());
 		editable(widget.saveListener != null);
-		valueElement().addFocusListener(new PopUp(valueElement()));
 	}
 
-	@Override
-	boolean withFocus() {
-		return false;
-	}
+//	@Override
+//	boolean withFocus() {
+//		return false;
+//	}
 
 	@Override
 	public IFormField<ITextField, Date> editable(boolean editable) {
-		if (button != null)
-			button.clickable(editable);
+		if (dateField != null)
+			dateField.clickable(editable);
 		return super.editable(editable);
 	}
 }
