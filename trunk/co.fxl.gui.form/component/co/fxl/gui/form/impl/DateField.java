@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.form.impl;
 
-import java.text.Format;
 import java.util.Date;
 
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -27,7 +26,9 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.format.impl.Format;
 import co.fxl.gui.impl.Icons;
+import co.fxl.gui.input.api.ICalendarWidget;
 
 public class DateField {
 
