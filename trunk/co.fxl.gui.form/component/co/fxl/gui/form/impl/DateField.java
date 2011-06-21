@@ -52,7 +52,10 @@ public class DateField {
 					calendar.date(Format.date().parse(value));
 				}
 			});
+			
+			// TODO Usability: GWT: this seems to not work (shows always the current date):
 			calendar.date(Format.date().parse(tf.text()));
+			
 			popUp.visible(true);
 		}
 	}
