@@ -50,7 +50,7 @@ class GWTCalendarWidget extends GWTElement<DatePicker, ICalendarWidget>
 
 	@Override
 	public ICalendarWidget date(Date date) {
-		container.widget.setValue(date);
+		container.widget.setValue(date, true);
 		return this;
 	}
 
