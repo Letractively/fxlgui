@@ -22,7 +22,6 @@ import java.util.Date;
 
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.form.api.IFormField;
-import co.fxl.gui.impl.DateField;
 
 class FormDateFieldImpl extends FormTextFieldImpl<Date> {
 
