@@ -27,7 +27,6 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.format.impl.Format;
-import co.fxl.gui.impl.Icons;
 import co.fxl.gui.input.api.ICalendarWidget;
 
 public class DateField {
