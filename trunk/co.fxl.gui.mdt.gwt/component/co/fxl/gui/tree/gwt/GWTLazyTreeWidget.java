@@ -136,5 +136,6 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		});
 		p.add(html);
 		container.nativeElement(p);
+		super.decorate(container, firstRow, lastRow);
 	}
 }
