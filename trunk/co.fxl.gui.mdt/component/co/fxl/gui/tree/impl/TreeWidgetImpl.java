@@ -16,7 +16,7 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.tree.model;
+package co.fxl.gui.tree.impl;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -48,8 +48,9 @@ import co.fxl.gui.navigation.api.IMenuWidget;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 
-public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
+public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
+	// private static final String LOCK = "Lock";
 	private static final int SPLIT_POSITION = 250;
 	private static final boolean LAZY_LOAD = false;
 	private boolean showRefresh = true;
@@ -221,7 +222,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 			this);
 	boolean moveActive = false;
 
-	ModelTreeWidget(IContainer layout) {
+	TreeWidgetImpl(IContainer layout) {
 		widgetTitle = new WidgetTitle(layout.panel(), true).space(0)
 				.commandsOnTop();
 		widgetTitle.foldable(false);
@@ -376,7 +377,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				refresh().addClickListener(new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
-						((RefreshListener) ModelTreeWidget.this).onRefresh();
+						((RefreshListener) TreeWidgetImpl.this).onRefresh();
 						// widgetTitle.reset();
 					}
 				});
@@ -424,7 +425,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		IScrollPane scrollPane = splitPane.second().scrollPane();
 		registers = (IMenuWidget) scrollPane.viewPort().widget(
 				IMenuWidget.class);
-		ModelResizeListener.setup(panel.display(), this);
+		ResizeListenerImpl.setup(panel.display(), this);
 		onResize(-1, panel.display().height());
 		if (LAZY_LOAD)
 			leftScrollPane.addScrollListener(scrollListener);
@@ -474,7 +475,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				}
 			}
 		};
-		topLevelNodes = new LinkedList<ModelTreeNode<T>>();
+		topLevelNodes = new LinkedList<TreeNodeImpl<T>>();
 		scrollListener.reset();
 		if (showRoot) {
 			newNode(this, panel2, tree, 0, finish, true, true);
@@ -493,7 +494,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		return this;
 	}
 
-	void scrollIntoView(ModelTreeNode<T> node) {
+	void scrollIntoView(TreeNodeImpl<T> node) {
 		leftScrollPane.scrollIntoView(node.image);
 	}
 
@@ -501,16 +502,16 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	boolean allowReorder = false;
 	private IView activeView;
 	T previousSelection;
-	List<ModelTreeNode<T>> topLevelNodes;
+	List<TreeNodeImpl<T>> topLevelNodes;
 	private static int MAX_PAINTS = Integer.MAX_VALUE;
 
 	// TODO potential problem in combination with click-new in MDT.DetailView
 	// (if constrained)
 
-	void newNode(ModelTreeWidget<T> widget, IVerticalPanel panel,
+	void newNode(TreeWidgetImpl<T> widget, IVerticalPanel panel,
 			ITree<T> root, int depth, Runnable finish, boolean topLevel,
 			boolean draw) {
-		ModelTreeNode<T> node = new ModelTreeNode<T>(widget, panel, root,
+		TreeNodeImpl<T> node = new TreeNodeImpl<T>(widget, panel, root,
 				depth, draw);
 		if (topLevel)
 			topLevelNodes.add(node);
@@ -526,7 +527,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	private void drawNode(final Iterator<ITree<T>> it,
-			final ModelTreeWidget<T> treeWidgetImpl,
+			final TreeWidgetImpl<T> treeWidgetImpl,
 			final IVerticalPanel panel2, final int i, final Runnable finish,
 			final boolean draw) {
 		if (!it.hasNext()) {
@@ -738,7 +739,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		return model.selection().object();
 	}
 
-	ModelTreeWidget<T> addRefreshListener(final RefreshListener listener) {
+	TreeWidgetImpl<T> addRefreshListener(final RefreshListener listener) {
 		addButtons();
 		return this;
 	}

@@ -16,7 +16,7 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.tree.model;
+package co.fxl.gui.tree.impl;
 
 import java.util.LinkedList;
 import java.util.List;
