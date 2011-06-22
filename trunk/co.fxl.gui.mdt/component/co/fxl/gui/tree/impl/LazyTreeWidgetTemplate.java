@@ -36,6 +36,7 @@ public abstract class LazyTreeWidgetTemplate implements
 	protected IContainer c;
 	protected List<ILazyTreeListener> listeners = new LinkedList<ILazyTreeListener>();
 	private boolean showRoot;
+	protected int spacing = 0;
 
 	public LazyTreeWidgetTemplate(IContainer c) {
 		this(c, true);
@@ -49,6 +50,12 @@ public abstract class LazyTreeWidgetTemplate implements
 	@Override
 	public ILazyTreeWidget<Object> showRoot(boolean showRoot) {
 		this.showRoot = showRoot;
+		return this;
+	}
+
+	@Override
+	public ILazyTreeWidget<Object> spacing(int spacing) {
+		this.spacing = spacing;
 		return this;
 	}
 

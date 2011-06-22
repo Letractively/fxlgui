@@ -27,6 +27,8 @@ public interface ILazyTreeWidget<T> {
 		void onClick(int index);
 	}
 
+	ILazyTreeWidget<T> spacing(int spacing);
+
 	ILazyTreeWidget<T> tree(ITree<T> tree);
 
 	ILazyTreeWidget<T> showRoot(boolean showRoot);
