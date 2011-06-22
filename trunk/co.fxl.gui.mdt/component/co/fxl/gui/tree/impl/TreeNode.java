@@ -261,7 +261,6 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 
 	private void updateParentAfterMove() {
 		widget.model.refresh(tree.parent(), true);
-		// widget.notifyUpdate(widget.model.selection().object());
 	}
 
 	@SuppressWarnings("unchecked")
