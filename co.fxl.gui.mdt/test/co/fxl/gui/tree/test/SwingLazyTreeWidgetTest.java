@@ -18,29 +18,26 @@
  */
 package co.fxl.gui.tree.test;
 
+import java.lang.reflect.InvocationTargetException;
+
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.table.util.impl.LazyScrollPanelImplWidgetProvider;
-import co.fxl.gui.tree.api.ILazyTreeWidget;
-import co.fxl.gui.tree.api.ILazyTreeWidget.ILazyTreeListener;
+import co.fxl.gui.tree.model.LazyTreeWidgetImplProvider;
 
-public class LazyTreeWidgetTest implements ILazyTreeListener {
+public class SwingLazyTreeWidgetTest {
 
-	private ILazyTreeWidget tree;
-
-	public LazyTreeWidgetTest(IDisplay display) {
-		display.register(new LazyScrollPanelImplWidgetProvider());
-		IVerticalPanel panel = display.container().panel().vertical();
-		tree = (ILazyTreeWidget) panel.add().widget(ILazyTreeWidget.class);
-		tree.tree(new TestLazyTree(5));
-		tree.height(600);
-		tree.addListener(this);
-		tree.visible(true);
-		display.visible(true);
+	void run(IDisplay display) {
+		display.register(new LazyTreeWidgetImplProvider());
+		new LazyTreeWidgetTest(display);
 	}
 
-	@Override
-	public void onClick(int index) {
-		tree.elementAt(index).label().text("Hell");
+	public static void main(String[] args) throws InstantiationException,
+			IllegalAccessException, ClassNotFoundException,
+			IllegalArgumentException, SecurityException,
+			InvocationTargetException, NoSuchMethodException {
+		Class<?> clazz = Class.forName("co.fxl.gui.swing.SwingDisplay");
+		IDisplay display = (IDisplay) clazz.getMethod("instance",
+				new Class<?>[0]).invoke(null, new Object[0]);
+		new SwingLazyTreeWidgetTest().run(display);
 	}
+
 }
