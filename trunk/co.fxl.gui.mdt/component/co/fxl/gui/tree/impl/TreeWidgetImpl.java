@@ -467,8 +467,12 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		return this;
 	}
 
-	void scrollIntoView(TreeNode<T> node) {
-		leftScrollPane.scrollIntoView(node.image);
+	@SuppressWarnings("rawtypes")
+	void scrollIntoView(NodeRef<T> node) {
+		if (node instanceof TreeNode) {
+			leftScrollPane.scrollIntoView(((TreeNode) node).image);
+		} else
+			throw new MethodNotImplementedException();
 	}
 
 	private int painted = 0;

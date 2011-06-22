@@ -32,7 +32,7 @@ import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.tree.api.ITree;
 
-class TreeNode<T> extends LazyClickListener {
+class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 
 	// TODO FEATURE: Option: Usability: GWT: double click on table shortcut from
 	// tree node doesn't work when discard changes intercepts (works only like a
@@ -307,7 +307,8 @@ class TreeNode<T> extends LazyClickListener {
 			return tree.iconClosed();
 	}
 
-	TreeNode<T> refresh(boolean refreshChildren) {
+	@Override
+	public TreeNode<T> refresh(boolean refreshChildren) {
 		update(null);
 		if (refreshChildren)
 			expand();
@@ -405,7 +406,8 @@ class TreeNode<T> extends LazyClickListener {
 			imageRefresh.resource(null);
 	}
 
-	void selected(boolean selected) {
+	@Override
+	public void selected(boolean selected) {
 		draw();
 		if (!selected)
 			container.color().white();
@@ -429,5 +431,10 @@ class TreeNode<T> extends LazyClickListener {
 	@Override
 	public String toString() {
 		return String.valueOf(tree.object());
+	}
+
+	@Override
+	public ITree<T> tree() {
+		return tree;
 	}
 }
