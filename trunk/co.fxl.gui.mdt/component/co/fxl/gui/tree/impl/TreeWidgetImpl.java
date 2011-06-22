@@ -51,7 +51,6 @@ import co.fxl.gui.tree.api.ITreeWidget;
 public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	private static final int SPLIT_POSITION = 250;
-	private static final boolean LAZY_LOAD = false;
 	private boolean showRefresh = true;
 	private boolean showCommands = true;
 
@@ -217,8 +216,6 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	CommandLink reorder;
 	TreeModel<T> model;
 	boolean showRoot = true;
-	private LazyScrollListener<T> scrollListener = new LazyScrollListener<T>(
-			this);
 	boolean moveActive = false;
 
 	TreeWidgetImpl(IContainer layout) {
@@ -415,8 +412,6 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				IMenuWidget.class);
 		ResizeListenerImpl.setup(panel.display(), this);
 		onResize(-1, panel.display().height());
-		if (LAZY_LOAD)
-			leftScrollPane.addScrollListener(scrollListener);
 	}
 
 	@Override
@@ -443,7 +438,6 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				previousSelection = tree.children().get(0).object();
 			}
 		}
-		scrollListener.active = false;
 		addButtons();
 		IVerticalPanel panel2 = panel();
 		if (model != null) {
@@ -464,20 +458,11 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			}
 		};
 		topLevelNodes = new LinkedList<TreeNode<T>>();
-		scrollListener.reset();
 		if (showRoot) {
 			newNode(this, panel2, tree, 0, finish, true, true);
 		} else {
 			Iterator<ITree<T>> it = tree.children().iterator();
-			if (LAZY_LOAD) {
-				while (it.hasNext()) {
-					newNode(this, panel2, it.next(), 0, null, true, false);
-				}
-				scrollListener.active = true;
-				scrollListener.onScroll(leftScrollPane.scrollOffset());
-			} else {
-				drawNode(it, this, panel2, 0, finish, !LAZY_LOAD);
-			}
+			drawNode(it, this, panel2, 0, finish, true);
 		}
 		return this;
 	}
