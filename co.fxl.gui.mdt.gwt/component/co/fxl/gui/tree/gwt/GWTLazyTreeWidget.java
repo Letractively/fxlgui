@@ -25,8 +25,8 @@ import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.gwt.GWTContainer;
 import co.fxl.gui.gwt.GWTDisplay;
 import co.fxl.gui.gwt.WidgetParent;
-import co.fxl.gui.tree.model.LazyTreeAdp;
-import co.fxl.gui.tree.model.LazyTreeWidgetTemplate;
+import co.fxl.gui.tree.impl.LazyTreeAdp;
+import co.fxl.gui.tree.impl.LazyTreeWidgetTemplate;
 
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.ClickEvent;
