@@ -26,7 +26,7 @@ class LazyScrollListener<T> implements IScrollListener {
 
 	boolean active = false;
 	private TreeWidgetImpl<T> widget;
-	private Stack<TreeNodeImpl<T>> todo = new Stack<TreeNodeImpl<T>>();
+	private Stack<TreeNode<T>> todo = new Stack<TreeNode<T>>();
 	private boolean running = false;
 	private int lastStart = -1;
 
@@ -61,7 +61,7 @@ class LazyScrollListener<T> implements IScrollListener {
 	public void execute(int top) {
 		int bottom = top + widget.splitPane.height();
 		System.out.println("drawing " + top + " - " + bottom);
-		for (TreeNodeImpl<T> n : widget.topLevelNodes) {
+		for (TreeNode<T> n : widget.topLevelNodes) {
 			if (n.drawn)
 				continue;
 			if (n.bottom() > top && n.top() < bottom) {
@@ -77,7 +77,7 @@ class LazyScrollListener<T> implements IScrollListener {
 
 	private void run() {
 		while (!todo.isEmpty()) {
-			TreeNodeImpl<T> n = todo.pop();
+			TreeNode<T> n = todo.pop();
 			n.draw();
 			widget.topLevelNodes.remove(n);
 		}
