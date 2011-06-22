@@ -1,4 +1,0 @@
-<module>
-	<inherits name='co.fxl.gui.tree.api.ITreeWidget' />
-	<source path='' />
-</module>
