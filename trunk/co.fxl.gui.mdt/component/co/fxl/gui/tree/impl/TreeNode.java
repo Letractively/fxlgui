@@ -76,7 +76,7 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	}
 
 	TreeNode(final TreeWidgetImpl<T> widget, IVerticalPanel panel,
-			final ITree<T> root, int depthdraw) {
+			final ITree<T> root, int depth) {
 		assert root != null && root.object() != null;
 		this.widget = widget;
 		setUp(panel, root, depth);
