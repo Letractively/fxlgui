@@ -42,7 +42,8 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 
 	@Override
 	public void decorate(IContainer container, int firstRow, int lastRow) {
-		IVerticalPanel panel = container.panel().vertical();
+		IVerticalPanel panel = container.panel().vertical().spacing(spacing)
+				.add().panel().vertical();
 		TreeNode<Object> decorator = new TreeNode<Object>();
 		List<LazyTreeAdp> rows = tree.rows(firstRow, lastRow);
 		for (LazyTreeAdp row : rows) {
