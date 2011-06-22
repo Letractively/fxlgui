@@ -44,4 +44,8 @@ public class LazyTreeWidgetTest implements ILazyTreeListener {
 	public void onClick(int index) {
 		tree.elementAt(index).label().text("Hell");
 	}
+
+	@Override
+	public void onVisible(int startIndex, int endIndex) {
+	}
 }
