@@ -24,6 +24,8 @@ public interface ILazyTreeWidget<T> {
 
 	public interface ILazyTreeListener {
 
+		void onVisible(int startIndex, int endIndex);
+
 		void onClick(int index);
 	}
 

@@ -96,8 +96,11 @@ public abstract class LazyTreeWidgetTemplate implements
 	}
 
 	@Override
-	public abstract void decorate(IContainer container, int firstRow,
-			int lastRow);
+	public void decorate(IContainer container, int firstRow, int lastRow) {
+		for (ILazyTreeListener l : listeners) {
+			l.onVisible(firstRow, lastRow);
+		}
+	}
 
 	@Override
 	public int rowHeight(int rowIndex) {

@@ -51,5 +51,6 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 			decorator.panel.height(heightElement);
 			decorator.decorateCore();
 		}
+		super.decorate(container, firstRow, lastRow);
 	}
 }
