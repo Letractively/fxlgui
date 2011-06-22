@@ -459,10 +459,10 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		};
 		topLevelNodes = new LinkedList<TreeNode<T>>();
 		if (showRoot) {
-			newNode(this, panel2, tree, 0, finish, true, true);
+			newNode(this, panel2, tree, 0, finish, true);
 		} else {
 			Iterator<ITree<T>> it = tree.children().iterator();
-			drawNode(it, this, panel2, 0, finish, true);
+			drawNode(it, this, panel2, 0, finish);
 		}
 		return this;
 	}
@@ -486,8 +486,8 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	// (if constrained)
 
 	void newNode(TreeWidgetImpl<T> widget, IVerticalPanel panel, ITree<T> root,
-			int depth, Runnable finish, boolean topLevel, boolean draw) {
-		TreeNode<T> node = new TreeNode<T>(widget, panel, root, depth, draw);
+			int depth, Runnable finish, boolean topLevel) {
+		TreeNode<T> node = new TreeNode<T>(widget, panel, root, depth);
 		if (topLevel)
 			topLevelNodes.add(node);
 		painted++;
@@ -503,8 +503,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	private void drawNode(final Iterator<ITree<T>> it,
 			final TreeWidgetImpl<T> treeWidgetImpl,
-			final IVerticalPanel panel2, final int i, final Runnable finish,
-			final boolean draw) {
+			final IVerticalPanel panel2, final int i, final Runnable finish) {
 		if (!it.hasNext()) {
 			if (finish != null)
 				finish.run();
@@ -514,9 +513,9 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		newNode(this, panel(), c, 0, new Runnable() {
 			@Override
 			public void run() {
-				drawNode(it, treeWidgetImpl, panel2, i, finish, draw);
+				drawNode(it, treeWidgetImpl, panel2, i, finish);
 			}
-		}, true, draw);
+		}, true);
 	}
 
 	void setDetailViewTree(final ITree<T> tree) {
