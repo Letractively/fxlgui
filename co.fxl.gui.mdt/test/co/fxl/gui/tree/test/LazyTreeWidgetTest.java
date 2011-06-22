@@ -26,12 +26,13 @@ import co.fxl.gui.tree.api.ILazyTreeWidget.ILazyTreeListener;
 
 public class LazyTreeWidgetTest implements ILazyTreeListener {
 
-	private ILazyTreeWidget tree;
+	private ILazyTreeWidget<Object> tree;
 
+	@SuppressWarnings("unchecked")
 	public LazyTreeWidgetTest(IDisplay display) {
 		display.register(new LazyScrollPanelImplWidgetProvider());
 		IVerticalPanel panel = display.container().panel().vertical();
-		tree = (ILazyTreeWidget) panel.add().widget(ILazyTreeWidget.class);
+		tree = (ILazyTreeWidget<Object>) panel.add().widget(ILazyTreeWidget.class);
 		tree.tree(new TestLazyTree(5));
 		tree.height(600);
 		tree.addListener(this);
