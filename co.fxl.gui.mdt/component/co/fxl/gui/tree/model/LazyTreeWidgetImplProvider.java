@@ -32,6 +32,6 @@ public class LazyTreeWidgetImplProvider implements
 
 	@Override
 	public ILazyTreeWidget createWidget(IContainer container) {
-		return LazyTreeWidgetImpl(container);
+		return new LazyTreeWidgetImpl(container);
 	}
 }
