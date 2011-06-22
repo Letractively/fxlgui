@@ -61,7 +61,6 @@ class TreeModel<T> {
 			if (selection.equals(tree)) {
 				return;
 			} else {
-				// widget.moveActive = false;
 				node(selection).selected(false);
 			}
 		}
