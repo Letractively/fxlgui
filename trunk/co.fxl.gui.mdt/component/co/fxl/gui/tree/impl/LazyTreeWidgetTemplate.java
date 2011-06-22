@@ -47,6 +47,12 @@ public abstract class LazyTreeWidgetTemplate implements
 	}
 
 	@Override
+	public ILazyTreeWidget<Object> showRoot(boolean showRoot) {
+		this.showRoot = showRoot;
+		return this;
+	}
+
+	@Override
 	public ILazyTreeWidget<Object> tree(ITree<Object> tree) {
 		this.tree = new LazyTreeAdp(tree, showRoot);
 		return this;

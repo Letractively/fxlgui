@@ -29,6 +29,8 @@ public interface ILazyTreeWidget<T> {
 
 	ILazyTreeWidget<T> tree(ITree<T> tree);
 
+	ILazyTreeWidget<T> showRoot(boolean showRoot);
+
 	ILazyTreeWidget<T> height(int height);
 
 	ILazyTreeWidget<T> addListener(ILazyTreeListener l);
