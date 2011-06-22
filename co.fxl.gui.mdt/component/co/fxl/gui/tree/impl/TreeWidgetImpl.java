@@ -50,7 +50,6 @@ import co.fxl.gui.tree.api.ITreeWidget;
 
 public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
-	// private static final String LOCK = "Lock";
 	private static final int SPLIT_POSITION = 250;
 	private static final boolean LAZY_LOAD = false;
 	private boolean showRefresh = true;
@@ -226,7 +225,6 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		widgetTitle = new WidgetTitle(layout.panel(), true).space(0)
 				.commandsOnTop();
 		widgetTitle.foldable(false);
-		// widgetTitle.holdOnClick();
 	}
 
 	void addButtons() {
@@ -244,16 +242,9 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 						final ITree<T> parent = model.selection();
 						final CallbackTemplate<ITree<T>> lCallback2 = new CallbackTemplate<ITree<T>>() {
 
-							public void onFail(Throwable throwable) {
-								// widgetTitle.reset();
-								super.onFail(throwable);
-							}
-
 							@Override
 							public void onSuccess(ITree<T> result) {
-								// widgetTitle.reset();
 								previousSelection = result.object();
-								// model.selection(result);
 								if (result.parent() != null) {
 									model.refresh(result.parent(), true);
 								} else
@@ -294,7 +285,6 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				cut.addClickListener(new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
-						// widgetTitle.reset();
 						model.cutCopy(false);
 					}
 				});
@@ -302,7 +292,6 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				copy.addClickListener(new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
-						// widgetTitle.reset();
 						model.cutCopy(true);
 					}
 				});
@@ -364,21 +353,20 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					dl.addButton().no().addClickListener(new IClickListener() {
 						@Override
 						public void onClick() {
-							// widgetTitle.reset();
 						}
 					});
 					dl.visible(true);
 				}
 			};
-			delete = widgetTitle.addHyperlink(
-					co.fxl.gui.impl.Icons.CANCEL, "Delete");
+			delete = widgetTitle.addHyperlink(co.fxl.gui.impl.Icons.CANCEL,
+					"Delete");
 			delete.addClickListener(deleteListener);
 			if (showRefresh && this instanceof RefreshListener)
 				refresh().addClickListener(new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
-						((RefreshListener) TreeWidgetImpl.this).onRefresh();
-						// widgetTitle.reset();
+						RefreshListener refreshListener = (RefreshListener) TreeWidgetImpl.this;
+						refreshListener.onRefresh();
 					}
 				});
 		}
@@ -508,11 +496,9 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	// TODO potential problem in combination with click-new in MDT.DetailView
 	// (if constrained)
 
-	void newNode(TreeWidgetImpl<T> widget, IVerticalPanel panel,
-			ITree<T> root, int depth, Runnable finish, boolean topLevel,
-			boolean draw) {
-		TreeNode<T> node = new TreeNode<T>(widget, panel, root,
-				depth, draw);
+	void newNode(TreeWidgetImpl<T> widget, IVerticalPanel panel, ITree<T> root,
+			int depth, Runnable finish, boolean topLevel, boolean draw) {
+		TreeNode<T> node = new TreeNode<T>(widget, panel, root, depth, draw);
 		if (topLevel)
 			topLevelNodes.add(node);
 		painted++;
@@ -684,12 +670,6 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		ITree<T> selection = model.selection();
 		if (reorder != null) {
 			reorder.clickable(model.allowMove() && !moveActive);
-			// if (model.allowMove()) {
-			// ModelTreeNode<T> node =
-			// model.node(selection);
-			// if (node != null)
-			// reorder.label(moveActive ? LOCK : "Move");
-			// }
 		}
 		String[] creatableTypes = model.getCreatableTypes();
 		List<String> ctypes = creatableTypes != null ? Arrays

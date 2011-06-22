@@ -74,7 +74,7 @@ class TestLazyTree implements ITree<Object> {
 
 	@Override
 	public boolean isLoaded() {
-		throw new MethodNotImplementedException();
+		return true;
 	}
 
 	@Override
@@ -165,12 +165,12 @@ class TestLazyTree implements ITree<Object> {
 
 	@Override
 	public String icon() {
-		throw new MethodNotImplementedException();
+		return "folder_open.png";
 	}
 
 	@Override
 	public String iconClosed() {
-		throw new MethodNotImplementedException();
+		return "folder_closed.png";
 	}
 
 	@Override

@@ -65,7 +65,7 @@ class TreeNode<T> extends LazyClickListener {
 	private IImage moveUp;
 	private IImage moveDown;
 	private IImage moveBottom;
-	private IVerticalPanel panel;
+	IVerticalPanel panel;
 	boolean drawn;
 	private IClickable<?> gridButton;
 	private IImage acceptMove;
@@ -73,19 +73,27 @@ class TreeNode<T> extends LazyClickListener {
 	// TODO FEATURE: Option: Usability: Click on cursor left / right expands /
 	// collapses tree node
 
+	TreeNode() {
+	}
+
 	TreeNode(final TreeWidgetImpl<T> widget, IVerticalPanel panel,
 			final ITree<T> root, int depth, boolean draw) {
 		assert root != null && root.object() != null;
 		this.widget = widget;
-		this.panel = panel.add().panel().vertical();
-		this.tree = root;
-		this.depth = depth;
+		setUp(panel, root, depth);
 		if (!draw) {
 			int height = numberLoadedDescendants(tree) + 1;
 			this.panel.height(height * 22);
 		} else
 			draw();
 		widget.model.register(this);
+	}
+
+	TreeNode<T> setUp(IVerticalPanel panel, final ITree<T> root, int depth) {
+		this.panel = panel.add().panel().vertical();
+		this.tree = root;
+		this.depth = depth;
+		return this;
 	}
 
 	private int numberLoadedDescendants(ITree<T> tree) {
@@ -109,9 +117,27 @@ class TreeNode<T> extends LazyClickListener {
 			return;
 		drawn = true;
 		isExpanded = false;
+		decorateCore();
+		content.addSpace(10);
+		childrenPanel = panel.add().panel().vertical();
+		if (tree.children().size() != 0)
+			expandLoadedNode();
+		label.addClickListener(this);
+		container.addClickListener(this);
+		if (icon != null)
+			icon.addClickListener(this);
+		image.addClickListener(new LazyClickListener() {
+			@Override
+			protected void onAllowedClick() {
+				expandCollapse(true, childrenExpanded);
+				widget.model.selection(tree);
+			}
+		});
+		decorate();
+	}
+
+	void decorateCore() {
 		container = panel.add().panel().horizontal();
-		IClickable<?> clickable = container;
-		clickable.addClickListener(this);
 		content = container.add().panel().horizontal().spacing(2);
 		content.addSpace(depth * INDENT);
 		image = content.add().image();
@@ -120,24 +146,15 @@ class TreeNode<T> extends LazyClickListener {
 				image.resource(!tree.isLoaded() ? getOpenOrClosedIcon()
 						: CLOSED);
 				icon = content.add().image().resource(icon());
-				icon.addClickListener(this);
 			} else
 				image.resource(FOLDER_CLOSED);
 		} else {
 			if (icon() != null) {
 				image.resource(!tree.isLoaded() ? getOpenOrClosedIcon() : EMPTY);
 				icon = content.add().image().resource(icon());
-				icon.addClickListener(this);
 			} else
 				image.resource(tree.isLeaf() ? LEAF : FOLDER_EMPTY);
 		}
-		image.addClickListener(new LazyClickListener() {
-			@Override
-			protected void onAllowedClick() {
-				expandCollapse(true, childrenExpanded);
-				widget.model.selection(tree);
-			}
-		});
 		content.addSpace(2);
 		String name = tree.name();
 		boolean isNull = name == null || name.trim().equals("");
@@ -147,12 +164,6 @@ class TreeNode<T> extends LazyClickListener {
 				.visible(false);
 		if (isNull)
 			label.font().weight().italic().color().gray();
-		label.addClickListener(this);
-		content.addSpace(10);
-		childrenPanel = panel.add().panel().vertical();
-		if (tree.children().size() != 0)
-			expandLoadedNode();
-		decorate();
 	}
 
 	String getOpenOrClosedIcon() {

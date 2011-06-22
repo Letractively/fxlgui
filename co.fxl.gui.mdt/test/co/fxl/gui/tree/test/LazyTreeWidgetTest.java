@@ -36,7 +36,7 @@ public class LazyTreeWidgetTest implements ILazyTreeListener {
 		tree.height(600);
 		tree.addListener(this);
 		tree.visible(true);
-		display.visible(true);
+		display.fullscreen().visible(true);
 	}
 
 	@Override

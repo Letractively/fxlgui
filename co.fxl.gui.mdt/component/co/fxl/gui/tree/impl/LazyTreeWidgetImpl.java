@@ -21,11 +21,13 @@ package co.fxl.gui.tree.impl;
 import java.util.List;
 
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IVerticalPanel;
 
 class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 
 	LazyTreeWidgetImpl(IContainer container) {
 		super(container);
+		heightElement = 22;
 	}
 
 	@Override
@@ -35,9 +37,13 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 
 	@Override
 	public void decorate(IContainer container, int firstRow, int lastRow) {
+		IVerticalPanel panel = container.panel().vertical();
+		TreeNode<Object> decorator = new TreeNode<Object>();
 		List<LazyTreeAdp> rows = tree.rows(firstRow, lastRow);
 		for (LazyTreeAdp row : rows) {
-			throw new MethodNotImplementedException();
+			decorator.setUp(panel, row.tree, row.indent);
+			decorator.panel.height(heightElement);
+			decorator.decorateCore();
 		}
 	}
 }

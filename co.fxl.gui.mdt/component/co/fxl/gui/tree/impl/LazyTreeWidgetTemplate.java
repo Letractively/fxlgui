@@ -30,7 +30,7 @@ import co.fxl.gui.tree.api.ITree;
 public abstract class LazyTreeWidgetTemplate implements ILazyTreeWidget,
 		IDecorator {
 
-	protected static final int HEIGHT_ELEMENT = 26;
+	protected int heightElement = 26;
 	protected LazyTreeAdp tree;
 	private int height = 600;
 	protected IContainer c;
@@ -67,7 +67,7 @@ public abstract class LazyTreeWidgetTemplate implements ILazyTreeWidget,
 			ILazyScrollPane pane = (ILazyScrollPane) c
 					.widget(ILazyScrollPane.class);
 			pane.size(tree.width);
-			pane.minRowHeight(HEIGHT_ELEMENT);
+			pane.minRowHeight(heightElement);
 			pane.height(height);
 			pane.decorator(this);
 			pane.visible(true);
@@ -82,6 +82,6 @@ public abstract class LazyTreeWidgetTemplate implements ILazyTreeWidget,
 
 	@Override
 	public int rowHeight(int rowIndex) {
-		return HEIGHT_ELEMENT;
+		return heightElement;
 	}
 }
