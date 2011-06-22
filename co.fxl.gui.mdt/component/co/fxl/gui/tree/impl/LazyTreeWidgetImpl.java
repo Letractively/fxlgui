@@ -30,6 +30,11 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 		heightElement = 22;
 	}
 
+	LazyTreeWidgetImpl(IContainer container, boolean showRoot) {
+		super(container, showRoot);
+		heightElement = 22;
+	}
+
 	@Override
 	public IContainer elementAt(int index) {
 		throw new MethodNotImplementedException();
