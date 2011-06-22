@@ -22,8 +22,8 @@ import co.fxl.gui.api.IContainer;
 
 class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 
-	LazyTreeWidgetImpl(IContainer c) {
-		super(c);
+	LazyTreeWidgetImpl(IContainer container) {
+		super(container);
 	}
 
 	@Override
