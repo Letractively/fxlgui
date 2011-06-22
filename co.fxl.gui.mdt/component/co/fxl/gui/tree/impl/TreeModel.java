@@ -33,7 +33,7 @@ class TreeModel<T> {
 	private ITree<T> selection;
 	private boolean isCopy;
 	private ITree<T> cutCopy;
-	private Map<T, TreeNode<T>> nodes = new HashMap<T, TreeNode<T>>();
+	private Map<T, NodeRef<T>> nodes = new HashMap<T, NodeRef<T>>();
 	ITree<T> detailViewTree;
 
 	TreeModel(TreeWidgetImpl<T> widget, ITree<T> tree) {
@@ -69,9 +69,9 @@ class TreeModel<T> {
 		}
 		selection = tree;
 		if (selection != null) {
-			TreeNode<T> node = node(selection);
+			NodeRef<T> node = node(selection);
 			node.selected(true);
-			selection = node.tree;
+			selection = node.tree();
 		}
 		if (setDetailViewTree)
 			widget.setDetailViewTree(this.selection);
@@ -95,9 +95,9 @@ class TreeModel<T> {
 		if (root.object().equals(selection) && !widget.showRoot) {
 			this.selection = null;
 		} else {
-			TreeNode<T> node = nodes.get(selection);
+			NodeRef<T> node = nodes.get(selection);
 			if (node != null)
-				selection(node.tree);
+				selection(node.tree());
 			else {
 				node(this.selection).selected(false);
 				widget.previousSelection = selection;
@@ -124,7 +124,7 @@ class TreeModel<T> {
 		refresh(cutCopy);
 	}
 
-	TreeNode<T> refresh() {
+	NodeRef<T> refresh() {
 		if (widget.showRoot)
 			return refresh(root, true);
 		else {
@@ -136,12 +136,12 @@ class TreeModel<T> {
 		}
 	}
 
-	TreeNode<T> refresh(ITree<T> tree) {
+	NodeRef<T> refresh(ITree<T> tree) {
 		return refresh(tree, false);
 	}
 
-	TreeNode<T> refresh(ITree<T> tree, boolean recurse) {
-		TreeNode<T> node;
+	NodeRef<T> refresh(ITree<T> tree, boolean recurse) {
+		NodeRef<T> node;
 		if (tree.equals(root) && !widget.showRoot) {
 			node = refresh();
 		} else {
@@ -153,8 +153,8 @@ class TreeModel<T> {
 		return node;
 	}
 
-	TreeNode<T> refresh(T object, boolean recurse) {
-		TreeNode<T> node = nodes.get(object);
+	NodeRef<T> refresh(T object, boolean recurse) {
+		NodeRef<T> node = nodes.get(object);
 		if (node == null) {
 			for (T t : nodes.keySet()) {
 				if (t.equals(object)) {
@@ -165,7 +165,7 @@ class TreeModel<T> {
 		}
 		assert node != null : trace(object) + " not found in "
 				+ trace(nodes.keySet());
-		ITree<T> tree = node.tree;
+		ITree<T> tree = node.tree();
 		refresh(tree, recurse);
 		if (tree.equals(selection)) {
 			widget.scrollIntoView(node);
@@ -225,7 +225,7 @@ class TreeModel<T> {
 		}
 	}
 
-	TreeNode<T> node(ITree<T> tree) {
+	NodeRef<T> node(ITree<T> tree) {
 		return nodes.get(tree.object());
 	}
 
