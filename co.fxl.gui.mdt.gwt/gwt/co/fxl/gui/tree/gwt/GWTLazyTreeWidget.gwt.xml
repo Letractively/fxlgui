@@ -1,4 +1,4 @@
 <module>
-	<inherits name='co.fxl.gui.tree.model.ModelFilterTreeWidget' />
+	<inherits name='co.fxl.gui.tree.model.ModelTreeWidget' />
 	<source path='' />
 </module>
