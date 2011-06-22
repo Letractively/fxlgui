@@ -66,7 +66,6 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	private IImage moveDown;
 	private IImage moveBottom;
 	IVerticalPanel panel;
-	boolean drawn;
 	private IClickable<?> gridButton;
 	private IImage acceptMove;
 
@@ -77,15 +76,11 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	}
 
 	TreeNode(final TreeWidgetImpl<T> widget, IVerticalPanel panel,
-			final ITree<T> root, int depth, boolean draw) {
+			final ITree<T> root, int depthdraw) {
 		assert root != null && root.object() != null;
 		this.widget = widget;
 		setUp(panel, root, depth);
-		if (!draw) {
-			int height = numberLoadedDescendants(tree) + 1;
-			this.panel.height(height * 22);
-		} else
-			draw();
+		draw();
 		widget.model.register(this);
 	}
 
@@ -113,9 +108,6 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	}
 
 	void draw() {
-		if (drawn)
-			return;
-		drawn = true;
 		isExpanded = false;
 		decorateCore();
 		content.addSpace(10);
@@ -370,8 +362,7 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		clear();
 		childrenExpanded = true;
 		for (ITree<T> child : tree.children()) {
-			widget.newNode(widget, childrenPanel, child, depth + 1, null,
-					false, true);
+			widget.newNode(widget, childrenPanel, child, depth + 1, null, false);
 		}
 		if (tree.childCount() > 0) {
 			isExpanded = true;
@@ -407,7 +398,6 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 
 	@Override
 	public void selected(boolean selected) {
-		draw();
 		if (!selected)
 			container.color().white();
 		else {
