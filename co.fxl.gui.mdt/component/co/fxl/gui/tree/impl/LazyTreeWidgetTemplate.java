@@ -35,14 +35,20 @@ public abstract class LazyTreeWidgetTemplate implements ILazyTreeWidget,
 	private int height = 600;
 	protected IContainer c;
 	protected List<ILazyTreeListener> listeners = new LinkedList<ILazyTreeListener>();
+	private boolean showRoot;
 
 	public LazyTreeWidgetTemplate(IContainer c) {
+		this(c, true);
+	}
+
+	public LazyTreeWidgetTemplate(IContainer c, boolean showRoot) {
 		this.c = c;
+		this.showRoot = showRoot;
 	}
 
 	@Override
 	public ILazyTreeWidget tree(ITree<Object> tree) {
-		this.tree = new LazyTreeAdp(tree);
+		this.tree = new LazyTreeAdp(tree, showRoot);
 		return this;
 	}
 

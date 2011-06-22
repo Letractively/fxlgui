@@ -32,13 +32,18 @@ public class LazyTreeAdp {
 	private int rootIndex = 0;
 	public int indent = 0;
 
-	public LazyTreeAdp(ITree<Object> tree) {
-		this(null, null, tree);
+	public LazyTreeAdp(ITree<Object> tree, boolean showRoot) {
+		this(null, null, tree, showRoot);
 	}
 
-	public LazyTreeAdp(LazyTreeAdp root, LazyTreeAdp parent, ITree<Object> tree) {
+	public LazyTreeAdp(LazyTreeAdp root, LazyTreeAdp parent,
+			ITree<Object> tree, boolean visible) {
 		this.tree = tree;
-		if (root != null) {
+		if (!visible) {
+			row = -1;
+			indent = -1;
+			width = 0;
+		} else if (root != null) {
 			root.rootIndex++;
 			row = root.rootIndex;
 		}
@@ -46,7 +51,7 @@ public class LazyTreeAdp {
 			indent = parent.indent + 1;
 		for (ITree<Object> c : tree.children()) {
 			LazyTreeAdp adp = new LazyTreeAdp(root == null ? this : root, this,
-					c);
+					c, true);
 			width += adp.width;
 			children.add(adp);
 		}
