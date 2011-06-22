@@ -6,7 +6,7 @@ interface NodeRef<T> {
 
 	ITree<T> tree();
 
-	void selected(boolean b);
+	void selected(boolean selected);
 
 	NodeRef<T> refresh(boolean recurse);
 
