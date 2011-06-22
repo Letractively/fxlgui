@@ -20,20 +20,20 @@ package co.fxl.gui.tree.api;
 
 import co.fxl.gui.api.IContainer;
 
-public interface ILazyTreeWidget {
+public interface ILazyTreeWidget<T> {
 
 	public interface ILazyTreeListener {
 
 		void onClick(int index);
 	}
 
-	ILazyTreeWidget tree(ITree<Object> tree);
+	ILazyTreeWidget<T> tree(ITree<T> tree);
 
-	ILazyTreeWidget height(int height);
+	ILazyTreeWidget<T> height(int height);
 
-	ILazyTreeWidget addListener(ILazyTreeListener l);
+	ILazyTreeWidget<T> addListener(ILazyTreeListener l);
 
-	ILazyTreeWidget visible(boolean visible);
+	ILazyTreeWidget<T> visible(boolean visible);
 
 	IContainer elementAt(final int index);
 }
