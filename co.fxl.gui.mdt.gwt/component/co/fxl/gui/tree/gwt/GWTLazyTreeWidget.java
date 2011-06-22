@@ -33,6 +33,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
@@ -106,8 +107,9 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 
 	@Override
 	public void decorate(IContainer container, int firstRow, int lastRow) {
-		// long t = System.currentTimeMillis();
 		List<LazyTreeAdp> rows = tree.rows(firstRow, lastRow);
+		VerticalPanel p = new VerticalPanel();
+		p.setSpacing(spacing);
 		StringBuilder b = new StringBuilder(
 				"<table cellspacing=\"0\" cellpadding=\"0\">");
 		for (int i = firstRow; i <= lastRow; i++) {
@@ -132,9 +134,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 				}
 			}
 		});
-		container.nativeElement(html);
-		// String title = (lastRow - firstRow + 1) + " in "
-		// + (System.currentTimeMillis() - t) + "ms";
-		// c.display().title(title);
+		p.add(html);
+		container.nativeElement(p);
 	}
 }
