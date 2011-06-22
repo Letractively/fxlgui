@@ -27,8 +27,8 @@ import co.fxl.gui.table.util.api.ILazyScrollPane.IDecorator;
 import co.fxl.gui.tree.api.ILazyTreeWidget;
 import co.fxl.gui.tree.api.ITree;
 
-public abstract class LazyTreeWidgetTemplate implements ILazyTreeWidget,
-		IDecorator {
+public abstract class LazyTreeWidgetTemplate implements
+		ILazyTreeWidget<Object>, IDecorator {
 
 	protected int heightElement = 26;
 	protected LazyTreeAdp tree;
@@ -47,19 +47,19 @@ public abstract class LazyTreeWidgetTemplate implements ILazyTreeWidget,
 	}
 
 	@Override
-	public ILazyTreeWidget tree(ITree<Object> tree) {
+	public ILazyTreeWidget<Object> tree(ITree<Object> tree) {
 		this.tree = new LazyTreeAdp(tree, showRoot);
 		return this;
 	}
 
 	@Override
-	public ILazyTreeWidget height(int height) {
+	public ILazyTreeWidget<Object> height(int height) {
 		this.height = height;
 		return this;
 	}
 
 	@Override
-	public ILazyTreeWidget addListener(ILazyTreeListener l) {
+	public ILazyTreeWidget<Object> addListener(ILazyTreeListener l) {
 		listeners.add(l);
 		return this;
 	}
@@ -68,7 +68,7 @@ public abstract class LazyTreeWidgetTemplate implements ILazyTreeWidget,
 	public abstract IContainer elementAt(final int index);
 
 	@Override
-	public ILazyTreeWidget visible(boolean visible) {
+	public ILazyTreeWidget<Object> visible(boolean visible) {
 		if (visible) {
 			ILazyScrollPane pane = (ILazyScrollPane) c
 					.widget(ILazyScrollPane.class);

@@ -22,6 +22,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.tree.api.ILazyTreeWidget;
 
+@SuppressWarnings("rawtypes")
 public class LazyTreeWidgetImplProvider implements
 		IWidgetProvider<ILazyTreeWidget> {
 
