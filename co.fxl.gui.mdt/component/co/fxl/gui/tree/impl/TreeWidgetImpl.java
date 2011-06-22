@@ -475,7 +475,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				}
 			}
 		};
-		topLevelNodes = new LinkedList<TreeNodeImpl<T>>();
+		topLevelNodes = new LinkedList<TreeNode<T>>();
 		scrollListener.reset();
 		if (showRoot) {
 			newNode(this, panel2, tree, 0, finish, true, true);
@@ -494,7 +494,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		return this;
 	}
 
-	void scrollIntoView(TreeNodeImpl<T> node) {
+	void scrollIntoView(TreeNode<T> node) {
 		leftScrollPane.scrollIntoView(node.image);
 	}
 
@@ -502,7 +502,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	boolean allowReorder = false;
 	private IView activeView;
 	T previousSelection;
-	List<TreeNodeImpl<T>> topLevelNodes;
+	List<TreeNode<T>> topLevelNodes;
 	private static int MAX_PAINTS = Integer.MAX_VALUE;
 
 	// TODO potential problem in combination with click-new in MDT.DetailView
@@ -511,7 +511,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	void newNode(TreeWidgetImpl<T> widget, IVerticalPanel panel,
 			ITree<T> root, int depth, Runnable finish, boolean topLevel,
 			boolean draw) {
-		TreeNodeImpl<T> node = new TreeNodeImpl<T>(widget, panel, root,
+		TreeNode<T> node = new TreeNode<T>(widget, panel, root,
 				depth, draw);
 		if (topLevel)
 			topLevelNodes.add(node);

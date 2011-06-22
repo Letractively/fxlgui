@@ -32,7 +32,7 @@ import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.tree.api.ITree;
 
-class TreeNodeImpl<T> extends LazyClickListener {
+class TreeNode<T> extends LazyClickListener {
 
 	// TODO FEATURE: Option: Usability: GWT: double click on table shortcut from
 	// tree node doesn't work when discard changes intercepts (works only like a
@@ -73,7 +73,7 @@ class TreeNodeImpl<T> extends LazyClickListener {
 	// TODO FEATURE: Option: Usability: Click on cursor left / right expands /
 	// collapses tree node
 
-	TreeNodeImpl(final TreeWidgetImpl<T> widget, IVerticalPanel panel,
+	TreeNode(final TreeWidgetImpl<T> widget, IVerticalPanel panel,
 			final ITree<T> root, int depth, boolean draw) {
 		assert root != null && root.object() != null;
 		this.widget = widget;
@@ -296,7 +296,7 @@ class TreeNodeImpl<T> extends LazyClickListener {
 			return tree.iconClosed();
 	}
 
-	TreeNodeImpl<T> refresh(boolean refreshChildren) {
+	TreeNode<T> refresh(boolean refreshChildren) {
 		update(null);
 		if (refreshChildren)
 			expand();

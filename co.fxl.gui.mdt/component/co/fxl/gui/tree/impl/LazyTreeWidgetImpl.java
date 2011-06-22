@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.tree.impl;
 
+import java.util.List;
+
 import co.fxl.gui.api.IContainer;
 
 class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
@@ -33,6 +35,9 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 
 	@Override
 	public void decorate(IContainer container, int firstRow, int lastRow) {
-		throw new MethodNotImplementedException();
+		List<LazyTreeAdp> rows = tree.rows(firstRow, lastRow);
+		for (LazyTreeAdp row : rows) {
+			throw new MethodNotImplementedException();
+		}
 	}
 }

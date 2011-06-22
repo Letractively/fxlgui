@@ -33,7 +33,7 @@ class TreeModel<T> {
 	private ITree<T> selection;
 	private boolean isCopy;
 	private ITree<T> cutCopy;
-	private Map<T, TreeNodeImpl<T>> nodes = new HashMap<T, TreeNodeImpl<T>>();
+	private Map<T, TreeNode<T>> nodes = new HashMap<T, TreeNode<T>>();
 	ITree<T> detailViewTree;
 
 	TreeModel(TreeWidgetImpl<T> widget, ITree<T> tree) {
@@ -70,7 +70,7 @@ class TreeModel<T> {
 		}
 		selection = tree;
 		if (selection != null) {
-			TreeNodeImpl<T> node = node(selection);
+			TreeNode<T> node = node(selection);
 			node.selected(true);
 			selection = node.tree;
 		}
@@ -96,7 +96,7 @@ class TreeModel<T> {
 		if (root.object().equals(selection) && !widget.showRoot) {
 			this.selection = null;
 		} else {
-			TreeNodeImpl<T> node = nodes.get(selection);
+			TreeNode<T> node = nodes.get(selection);
 			if (node != null)
 				selection(node.tree);
 			else {
@@ -125,7 +125,7 @@ class TreeModel<T> {
 		refresh(cutCopy);
 	}
 
-	TreeNodeImpl<T> refresh() {
+	TreeNode<T> refresh() {
 		if (widget.showRoot)
 			return refresh(root, true);
 		else {
@@ -137,12 +137,12 @@ class TreeModel<T> {
 		}
 	}
 
-	TreeNodeImpl<T> refresh(ITree<T> tree) {
+	TreeNode<T> refresh(ITree<T> tree) {
 		return refresh(tree, false);
 	}
 
-	TreeNodeImpl<T> refresh(ITree<T> tree, boolean recurse) {
-		TreeNodeImpl<T> node;
+	TreeNode<T> refresh(ITree<T> tree, boolean recurse) {
+		TreeNode<T> node;
 		if (tree.equals(root) && !widget.showRoot) {
 			node = refresh();
 		} else {
@@ -154,8 +154,8 @@ class TreeModel<T> {
 		return node;
 	}
 
-	TreeNodeImpl<T> refresh(T object, boolean recurse) {
-		TreeNodeImpl<T> node = nodes.get(object);
+	TreeNode<T> refresh(T object, boolean recurse) {
+		TreeNode<T> node = nodes.get(object);
 		if (node == null) {
 			for (T t : nodes.keySet()) {
 				if (t.equals(object)) {
@@ -207,7 +207,7 @@ class TreeModel<T> {
 		refresh(selection);
 	}
 
-	void register(TreeNodeImpl<T> node) {
+	void register(TreeNode<T> node) {
 		nodes.put(node.tree.object(), node);
 		if (widget.previousSelection != null
 				&& widget.previousSelection.equals(node.tree.object())) {
@@ -226,11 +226,11 @@ class TreeModel<T> {
 		}
 	}
 
-	TreeNodeImpl<T> node(ITree<T> tree) {
+	TreeNode<T> node(ITree<T> tree) {
 		return nodes.get(tree.object());
 	}
 
-	boolean isCutCopy(TreeNodeImpl<T> node) {
+	boolean isCutCopy(TreeNode<T> node) {
 		return cutCopy != null && cutCopy.equals(node.tree);
 	}
 
