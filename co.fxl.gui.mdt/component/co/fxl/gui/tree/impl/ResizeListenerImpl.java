@@ -16,22 +16,26 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.tree.model;
+package co.fxl.gui.tree.impl;
 
-import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.tree.api.ILazyTreeWidget;
+import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IDisplay.IResizeListener;
 
-public class LazyTreeWidgetImplProvider implements
-		IWidgetProvider<ILazyTreeWidget> {
+public class ResizeListenerImpl implements IResizeListener {
 
-	@Override
-	public Class<ILazyTreeWidget> widgetType() {
-		return ILazyTreeWidget.class;
+	private static ResizeListenerImpl instance;
+	private static IResizeListener listener;
+
+	public static void setup(IDisplay display, IResizeListener l) {
+		if (instance == null) {
+			instance = new ResizeListenerImpl();
+			display.addResizeListener(instance);
+		}
+		listener = l;
 	}
 
 	@Override
-	public ILazyTreeWidget createWidget(IContainer container) {
-		return new LazyTreeWidgetImpl(container);
+	public void onResize(int width, int height) {
+		listener.onResize(width, height);
 	}
 }

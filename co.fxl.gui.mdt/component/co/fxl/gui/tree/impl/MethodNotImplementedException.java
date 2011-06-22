@@ -16,23 +16,16 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.tree.model;
+package co.fxl.gui.tree.impl;
 
-import co.fxl.gui.api.IContainer;
+class MethodNotImplementedException extends RuntimeException {
 
-class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
+	private static final long serialVersionUID = -1983615011921970031L;
 
-	LazyTreeWidgetImpl(IContainer container) {
-		super(container);
+	public MethodNotImplementedException() {
 	}
 
-	@Override
-	public IContainer elementAt(int index) {
-		throw new MethodNotImplementedException();
-	}
-
-	@Override
-	public void decorate(IContainer container, int firstRow, int lastRow) {
-		throw new MethodNotImplementedException();
+	public MethodNotImplementedException(String string) {
+		super(string);
 	}
 }

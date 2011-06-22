@@ -16,28 +16,22 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.tree.test;
+package co.fxl.gui.tree.impl;
 
-import java.lang.reflect.InvocationTargetException;
+import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IWidgetProvider;
+import co.fxl.gui.tree.api.ILazyTreeWidget;
 
-import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.tree.impl.LazyTreeWidgetImplProvider;
+public class LazyTreeWidgetImplProvider implements
+		IWidgetProvider<ILazyTreeWidget> {
 
-public class SwingLazyTreeWidgetTest {
-
-	void run(IDisplay display) {
-		display.register(new LazyTreeWidgetImplProvider());
-		new LazyTreeWidgetTest(display);
+	@Override
+	public Class<ILazyTreeWidget> widgetType() {
+		return ILazyTreeWidget.class;
 	}
 
-	public static void main(String[] args) throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException,
-			IllegalArgumentException, SecurityException,
-			InvocationTargetException, NoSuchMethodException {
-		Class<?> clazz = Class.forName("co.fxl.gui.swing.SwingDisplay");
-		IDisplay display = (IDisplay) clazz.getMethod("instance",
-				new Class<?>[0]).invoke(null, new Object[0]);
-		new SwingLazyTreeWidgetTest().run(display);
+	@Override
+	public ILazyTreeWidget createWidget(IContainer container) {
+		return new LazyTreeWidgetImpl(container);
 	}
-
 }
