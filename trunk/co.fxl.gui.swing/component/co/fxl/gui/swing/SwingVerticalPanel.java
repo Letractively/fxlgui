@@ -78,19 +78,22 @@ class SwingVerticalPanel extends SwingPanel<IVerticalPanel> implements
 
 			@Override
 			public IVerticalPanel begin() {
-				// TODO ... throw new MethodNotImplementedException();
+				// TODO Code: Swing: IMPL: Vertical-Panel align ... throw new
+				// MethodNotImplementedException();
 				return SwingVerticalPanel.this;
 			}
 
 			@Override
 			public IVerticalPanel center() {
-				// TODO ... throw new MethodNotImplementedException();
+				// TODO Code: Swing: IMPL: Vertical-Panel align ... throw new
+				// MethodNotImplementedException();
 				return SwingVerticalPanel.this;
 			}
 
 			@Override
 			public IVerticalPanel end() {
-				// TODO ... throw new MethodNotImplementedException();
+				// TODO Code: Swing: IMPL: Vertical-Panel align ... throw new
+				// MethodNotImplementedException();
 				return SwingVerticalPanel.this;
 			}
 		};
