@@ -40,4 +40,8 @@ public interface ILazyScrollPane {
 	ILazyScrollPane visible(boolean visible);
 
 	ILazyScrollPane height(int height);
+
+	ILazyScrollPane scrollUp(int turns);
+
+	ILazyScrollPane scrollDown(int turns);
 }

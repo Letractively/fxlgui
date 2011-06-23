@@ -69,6 +69,7 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 	@Override
 	public ILazyScrollPane rowIndex(int rowIndex) {
+		assert rowIndex >= 0;
 		this.rowIndex = rowIndex;
 		return this;
 	}
@@ -107,8 +108,11 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 			public void run() {
 				int h = decorator.rowHeight(size - 1);
 				maxRowIndex = size - 1;
-				for (int i = size - 2; i >= rowIndex && h < height; i--) {
-					h += decorator.rowHeight(i);
+				for (int i = size - 1; i >= rowIndex && h < height; i--) {
+					int rowHeight = decorator.rowHeight(i);
+					if (rowHeight < minRowHeight)
+						rowHeight = minRowHeight;
+					h += rowHeight;
 					if (h < height) {
 						maxRowIndex = i;
 					}
@@ -121,6 +125,7 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	}
 
 	private void update() {
+		assert rowIndex >= 0;
 		update(rowIndex);
 	}
 
@@ -138,6 +143,7 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	}
 
 	private int convertScrollOffset2RowIndex(int offset) {
+		assert offset >= 0;
 		double r = offset;
 		r /= maxOffset;
 		r *= maxRowIndex;
@@ -148,5 +154,15 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	public void onScroll(int maxOffset) {
 		rowIndex = convertScrollOffset2RowIndex(maxOffset);
 		update();
+	}
+
+	@Override
+	public ILazyScrollPane scrollUp(int turns) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public ILazyScrollPane scrollDown(int turns) {
+		throw new MethodNotImplementedException();
 	}
 }
