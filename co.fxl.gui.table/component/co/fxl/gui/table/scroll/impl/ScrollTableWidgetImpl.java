@@ -272,6 +272,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						@Override
 						public int rowHeight(int rowIndex) {
 							int visibleRowIndex = convert2GridRow(rowIndex);
+							if (visibleRowIndex >= grid.rowCount())
+								throw new MethodNotImplementedException(
+										"Illegal row index: " + rowIndex + "/"
+												+ visibleRowIndex
+												+ ", row offset=" + rowOffset);
 							return grid.rowHeight(visibleRowIndex);
 						}
 					});
