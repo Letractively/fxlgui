@@ -324,12 +324,6 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 	}
 
 	@Override
-	public IBulkTableWidget deferr(Runnable runnable) {
-		runnable.run();
-		return this;
-	}
-
-	@Override
 	public int rowCount() {
 		return grid.rows();
 	}
