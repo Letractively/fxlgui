@@ -265,8 +265,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						public void decorate(IContainer container,
 								int firstRow, int lastRow) {
 							rowOffset = firstRow;
+							paintedRows = lastRow - firstRow + 1;
 							contentPanel = container.panel().vertical();
-							update();
+							updateWithPaintedRowsSet();
 						}
 
 						@Override
@@ -276,7 +277,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 								throw new MethodNotImplementedException(
 										"Illegal row index: " + rowIndex + "/"
 												+ visibleRowIndex
-												+ ", row offset=" + rowOffset);
+												+ ", row offset=" + rowOffset
+												+ ", row count="
+												+ grid.rowCount());
 							return grid.rowHeight(visibleRowIndex);
 						}
 					});
@@ -398,6 +401,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private int viewInc;
 
 	void update() {
+		paintedRows = computeRowsToPaint();
+		updateWithPaintedRowsSet();
+	}
+
+	void updateWithPaintedRowsSet() {
 		if (updating)
 			return;
 		updating = true;
@@ -411,7 +419,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			grid = (IBulkTableWidget) vpanel.spacing(6).add()
 					.widget(IBulkTableWidget.class);
 			grid.height(heightMinusTopPanel());
-			paintedRows = computeRowsToPaint();
 			updateHeaderRow(grid);
 			for (int r = 0; r < paintedRows; r++) {
 				int index = r + rowOffset;
