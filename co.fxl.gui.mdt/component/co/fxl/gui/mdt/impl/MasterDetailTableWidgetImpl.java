@@ -149,7 +149,12 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	// additional buttons for meta-model-references). References are replaced
 	// according to the type of the meta-model-entity. Use history listeners to
 	// intercept hyperlink-clicks. click to show entity, click to change value
-	// of property to specific value, etc.
+	// of property to specific value, etc. List-View has HTML-Template,
+	// associated with filter query.
+	// Filter-Query: Attribute Has-List-View=true/false, if true (condition
+	// rule):
+	// visible: HTML Template. Sort-By- & Group-By-ComboBoxes @
+	// Filter-Side-Widget if list-view is active
 
 	// TODO FEATURE: Option: Usability: Allow choosing the filter query using a
 	// ComboBoxTreeWidget, structured in a tree (like Google "more")
