@@ -206,20 +206,20 @@ class TreeModel<T> {
 		refresh(selection);
 	}
 
-	void register(TreeNode<T> node) {
-		nodes.put(node.tree.object(), node);
+	void register(NodeRef<T> node) {
+		nodes.put(node.tree().object(), node);
 		if (widget.previousSelection != null
-				&& widget.previousSelection.equals(node.tree.object())) {
+				&& widget.previousSelection.equals(node.tree().object())) {
 			if (selection != null && node(selection) != null) {
 				node(selection).selected(false);
 			}
 			widget.previousSelection = null;
-			selection = node.tree;
+			selection = node.tree();
 			node.selected(true);
 			widget.setDetailViewTree(selection);
 		} else if (selection != null
-				&& selection.object().equals(node.tree.object())) {
-			selection = node.tree;
+				&& selection.object().equals(node.tree().object())) {
+			selection = node.tree();
 			node.selected(true);
 			widget.setDetailViewTree(selection);
 		}
