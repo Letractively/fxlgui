@@ -20,6 +20,7 @@ package co.fxl.gui.tree.impl;
 
 import java.util.List;
 
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IVerticalPanel;
 
@@ -37,6 +38,7 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 
 	@Override
 	public IContainer elementAt(int index) {
+		// TODO return element index, not visible row index
 		throw new MethodNotImplementedException();
 	}
 
@@ -46,10 +48,21 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 				.add().panel().vertical();
 		TreeNode<Object> decorator = new TreeNode<Object>();
 		List<LazyTreeAdp> rows = tree.rows(firstRow, lastRow);
+		int index = firstRow;
 		for (LazyTreeAdp row : rows) {
-			decorator.setUp(panel, row.tree, row.indent);
+			IVerticalPanel p = decorator.setUp(panel, row.tree, row.indent);
 			decorator.panel.height(heightElement);
 			decorator.decorateCore();
+			final int fIndex = index;
+			p.addClickListener(new IClickListener() {
+				@Override
+				public void onClick() {
+					for (ILazyTreeListener l : listeners) {
+						l.onClick(fIndex);
+					}
+				}
+			});
+			index++;
 		}
 		super.decorate(container, firstRow, lastRow);
 	}
