@@ -25,6 +25,8 @@ public class ResizeListener implements IResizeListener {
 
 	// TODO Code: Potential Bug / Option: Optimization: holds references,
 	// impairs garbage collection
+	
+	// TODO Code: Architecture: Architecture: use only one Resize-Listener
 
 	private static ResizeListener instance;
 	private static IResizeListener listener;
