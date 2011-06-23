@@ -84,11 +84,11 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		widget.model.register(this);
 	}
 
-	TreeNode<T> setUp(IVerticalPanel panel, final ITree<T> root, int depth) {
+	IVerticalPanel setUp(IVerticalPanel panel, final ITree<T> root, int depth) {
 		this.panel = panel.add().panel().vertical();
 		this.tree = root;
 		this.depth = depth;
-		return this;
+		return this.panel;
 	}
 
 	private int numberLoadedDescendants(ITree<T> tree) {
