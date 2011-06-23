@@ -94,7 +94,7 @@ class SwingPopUp implements IPopUp {
 	@Override
 	public IPopUp visible(boolean visible) {
 		if (autoHide) {
-			// TODO implement
+			// TODO Swing: Code: IMPL: Implement Auto-Hide
 			new MethodNotImplementedException().printStackTrace();
 			return this;
 		}
