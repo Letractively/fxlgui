@@ -49,6 +49,8 @@ import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 
 final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 		ISelectionListener<Object> {
+	
+	// TODO Optimization / Potential Bug: Relation Page seems to get painted twice on each register change 
 
 	private final RelationImpl relation;
 	private IScrollTableWidget<Object> table;
