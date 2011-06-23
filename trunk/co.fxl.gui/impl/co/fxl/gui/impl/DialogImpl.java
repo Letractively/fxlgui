@@ -162,9 +162,12 @@ public class DialogImpl implements IDialog {
 	IPopUp getPopUp() {
 		if (popUp == null) {
 			popUp = display.showPopUp().modal(modal).autoHide(false);
-			if (width != -1) {
+			if (width != -1 && height != -1) {
 				popUp.size(width, height);
-			}
+			} else if (width != -1) {
+				popUp.width(width);
+			} else if (height != -1)
+				popUp.height(height);
 			popUp.center();
 			IVerticalPanel panel = popUp.container().panel().vertical();
 			WidgetTitle.decorateBorder(panel.spacing(1).border().color());
@@ -188,7 +191,8 @@ public class DialogImpl implements IDialog {
 						.grid().spacing(10).resize(2, 1);
 				grid.cell(0, 0).align().begin().valign().begin().image()
 						.resource(image(type)).size(16, 16);
-				grid.cell(1, 0).valign().center().label().text(message);
+				grid.cell(1, 0).valign().center().label().autoWrap(true)
+						.text(message);
 			} else
 				container = t.content();
 		}
@@ -227,6 +231,18 @@ public class DialogImpl implements IDialog {
 	@Override
 	public IDialog size(int width, int height) {
 		this.width = width;
+		this.height = height;
+		return this;
+	}
+
+	@Override
+	public IDialog width(int width) {
+		this.width = width;
+		return this;
+	}
+
+	@Override
+	public IDialog height(int height) {
 		this.height = height;
 		return this;
 	}
