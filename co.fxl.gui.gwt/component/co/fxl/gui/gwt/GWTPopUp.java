@@ -123,11 +123,15 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	@Override
 	public IPopUp width(int width) {
-		throw new MethodNotImplementedException();
+		this.w = width;
+		popUp.setWidth(w + "px");
+		return this;
 	}
 
 	@Override
 	public IPopUp height(int height) {
-		throw new MethodNotImplementedException();
+		this.h = height;
+		popUp.setHeight(h + "px");
+		return this;
 	}
 }
