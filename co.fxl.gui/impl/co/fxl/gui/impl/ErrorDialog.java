@@ -38,7 +38,7 @@ public class ErrorDialog {
 	public void showDialog(String pTitle, final String pMessage,
 			final String pStacktrace) {
 		IDialog dialog = display.showDialog();
-		dialog.title(pTitle).message(pMessage).error();
+		dialog.width(240).title(pTitle).message(pMessage).error();
 		if (pStacktrace != null) {
 			dialog.addButton().text("Details").imageResource(Icons.DETAIL)
 					.addClickListener(new IClickListener() {
@@ -63,8 +63,7 @@ public class ErrorDialog {
 							Styles.instance().dialog().error().header()
 									.stacktrace(label);
 							ITextArea textArea = panel.add().textArea()
-									.size(400, 100)
-									.text(pStacktrace);
+									.size(400, 100).text(pStacktrace);
 							Styles.instance().input().field().border(textArea);
 							detailDialog.visible(true);
 						}

@@ -65,4 +65,8 @@ public interface IDialog {
 	IDialog confirm();
 
 	IDialog size(int width, int height);
+
+	IDialog width(int width);
+
+	IDialog height(int height);
 }
