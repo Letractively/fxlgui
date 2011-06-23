@@ -24,20 +24,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.IBordered.IBorder;
-import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.IPanel;
-import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
@@ -58,6 +53,7 @@ import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn.IScrollTableListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
+import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		IScrollListener, ILabelMouseListener {
@@ -80,7 +76,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	static final String ARROW_DOWN = "\u2193";
 	protected static final int SCROLL_MULT = 33;
 	protected static final int MAX_SORT_SIZE = 100;
-	private boolean adjustHeight = true;
 	IVerticalPanel container;
 	private int height = 400;
 	private WidgetTitle widgetTitle;
@@ -88,9 +83,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private int paintedRows;
 	List<ScrollTableColumnImpl> columns = new LinkedList<ScrollTableColumnImpl>();
 	private SelectionImpl selection = new SelectionImpl(this);
-	private int scrollPanelHeight;
 	private int scrollOffset = -1;
-	private ICardPanel contentPanel;
+	private IVerticalPanel contentPanel;
 	private int sortColumn = -1;
 	private int sortNegator = -1;
 	IBulkTableWidget grid;
@@ -99,8 +93,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IGridPanel statusPanel;
 	private String tooltip = "";// Use CTRL + Click to select multiple rows.";
 	private boolean visible;
-	private int initialPaintedRows;
-	private int maxRowIndex;
 	private IRows<Object> actualRows;
 	private IContainer c0;
 	private boolean addBorders;
@@ -150,6 +142,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	private IGridPanel topPanel;
 	boolean showNoRowsFound = true;
+	private IVerticalPanel contentPanel0;
 
 	@Override
 	public IScrollTableWidget<Object> visible(boolean visible) {
@@ -173,7 +166,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						commandButtons.selection = preselectedList.get(0);
 				}
 			}
-			adjustHeight = true;
 			this.visible = true;
 			if (!externalStatusPanel)
 				statusPanel = null;
@@ -210,8 +202,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 							.gray();
 					if (constraints != null
 							&& constraints.isConstraintSpecified()) {
-						// nef.addSpace(8).add().label().text("ACTIVE FILTER")
-						// .font().color().gray();
 						IGridPanel gp = nef.addSpace(4).add().panel()
 								.horizontal().align().begin().add().panel()
 								.horizontal().align().begin().add().panel()
@@ -253,31 +243,40 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				}
 			} else {
 				addFilter();
-				IDockPanel dock = container.add().panel().dock();
-				dock.height(heightMinusTopPanel());
-				contentPanel = dock.center().panel().card();
+				contentPanel0 = container.add().panel().vertical();
+				contentPanel0.height(heightMinusTopPanel());
+				contentPanel = contentPanel0.add().panel().vertical();
 				scrollOffset = 0;
 				update();
 				if (paintedRows != rows.size()) {
-					initialPaintedRows = paintedRows;
-					maxRowIndex = rows.size() - paintedRows;
-					sp = dock.right().scrollPane();
-					sp.size(35, heightMinusTopPanel());
-					h = sp.viewPort().panel().absolute();
-					spHeight = heightMinusTopPanel()
-							* (rows.size() + paintedRows);
-					scrollPanelHeight = (int) (spHeight / paintedRows);
-					h.size(1, scrollPanelHeight);
-					sp.addScrollListener(this);
-					h.add().label().text("&#160;");
-					IPanel<?> quader = h.add().panel().absolute();
-					quader.size(4, 4);
+					contentPanel0.clear();
+					sp = (ILazyScrollPane) contentPanel0.add().widget(
+							ILazyScrollPane.class);
+					sp.minRowHeight(ROW_HEIGHT);
 					if (!preselectedList.isEmpty()) {
-						int initialRowOffset = rows.find(preselectedList);
-						int convertFromRowOffset = convertFromRowOffset(initialRowOffset);
-						h.offset(quader, 0, convertFromRowOffset);
-						sp.scrollIntoView(quader);
+						int rowIndex = rows.find(preselectedList);
+						if (rowIndex != -1)
+							sp.rowIndex(rowIndex);
 					}
+					sp.height(heightMinusTopPanel());
+					sp.decorator(new ILazyScrollPane.IDecorator() {
+
+						@Override
+						public void decorate(IContainer container,
+								int firstRow, int lastRow) {
+							rowOffset = firstRow;
+							contentPanel = container.panel().vertical();
+							update();
+						}
+
+						@Override
+						public int rowHeight(int rowIndex) {
+							int visibleRowIndex = convert2GridRow(rowIndex);
+							return grid.rowHeight(visibleRowIndex);
+						}
+					});
+					sp.size(rows.size());
+					sp.visible(true);
 				}
 			}
 			if (navigationDecorator != null) {
@@ -323,7 +322,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			if (constraints != null)
 				filter.constraints(constraints);
 			filter.visible(true);
-			// showNoRowsFound = false;
 		}
 	}
 
@@ -371,31 +369,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		return column;
 	}
 
-	private int convertToRowOffset(int maxOffset) {
-		if (scrollPanelHeight == 0 || heightMinusTopPanel() == 0)
-			return 0;
-		double index = rows.size()
-				* (((double) (maxOffset)) / ((double) scrollPanelHeight));
-		int index2 = (int) index;
-		if (index2 > maxRowIndex)
-			index2 = maxRowIndex;
-		return index2;
-	}
-
-	private int convertFromRowOffset(int rowOffset) {
-		if (scrollPanelHeight == 0 || heightMinusTopPanel() == 0)
-			return 0;
-		double rowHeight = heightMinusTopPanel() / initialPaintedRows == 0 ? 1
-				: initialPaintedRows;
-		return (int) (rowOffset * rowHeight * scrollPanelHeight / (scrollPanelHeight - heightMinusTopPanel()));
-	}
-
 	private boolean updating = false;
 	private Map<ITableClickListener, KeyAdapter<Object>> listeners = new HashMap<ITableClickListener, KeyAdapter<Object>>();
 	boolean selectionIsSetup = false;
-	private IScrollPane sp;
-	private IAbsolutePanel h;
-	private double spHeight;
+	private ILazyScrollPane sp;
 	private ISortListener sortListener;
 	boolean addClickListeners = false;
 	private IMiniFilterWidget filter;
@@ -429,7 +406,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			grid = (IBulkTableWidget) vpanel.spacing(6).add()
 					.widget(IBulkTableWidget.class);
 			grid.height(heightMinusTopPanel());
-			rowOffset = convertToRowOffset(usedScrollOffset);
 			paintedRows = computeRowsToPaint();
 			updateHeaderRow(grid);
 			for (int r = 0; r < paintedRows; r++) {
@@ -442,16 +418,12 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 					@Override
 					public void onUp(int turns) {
-						int pos = Math.max(0, scrollOffset - turns
-								* SCROLL_MULT);
-						sp.scrollTo(pos);
+						sp.scrollUp(turns);
 					}
 
 					@Override
 					public void onDown(int turns) {
-						int pos = Math.min(scrollPanelHeight, scrollOffset
-								+ turns * SCROLL_MULT);
-						sp.scrollTo(pos);
+						sp.scrollDown(turns);
 					}
 				});
 			if (addClickListeners) {
@@ -461,7 +433,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						grid.labelMouseListener(current++, this);
 			}
 			grid.element().tooltip(tooltip);
-			contentPanel.show(vpanel);
 			if (lastGrid != null)
 				lastGrid.remove();
 			for (int r = 0; r < paintedRows; r++) {
@@ -485,10 +456,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				@SuppressWarnings("unchecked")
 				IKey<Object> key = (IKey<Object>) grid.addTableListener(l);
 				adp.forward(key);
-			}
-			if (adjustHeight && h != null
-					&& rowOffset >= maxRowIndex - initialPaintedRows) {
-				dynamicallyGrowHeight();
 			}
 		} while (usedScrollOffset != scrollOffset);
 		updating = false;
@@ -536,27 +503,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					column.width(columnImpl.widthDouble);
 			}
 		}
-	}
-
-	private void dynamicallyGrowHeight() {
-		adjustHeight = false;
-		grid.deferr(new Runnable() {
-			public void run() {
-				int gridRow = 1;
-				int overflow = grid.tableHeight() - heightMinusTopPanel();
-				if (gridRow >= grid.rowCount())
-					return;
-				do {
-					int rowHeight = grid.rowHeight(gridRow++);
-					overflow -= rowHeight;
-					maxRowIndex++;
-				} while (overflow > 0 && maxRowIndex < rows.size()
-						&& gridRow < grid.rowCount());
-				maxRowIndex++;
-				scrollPanelHeight += ROW_HEIGHT;
-				h.size(1, scrollPanelHeight);
-			}
-		});
 	}
 
 	private void addDisplayingNote() {
