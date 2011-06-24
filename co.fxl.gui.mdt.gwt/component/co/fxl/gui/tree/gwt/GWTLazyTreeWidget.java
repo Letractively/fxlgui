@@ -18,13 +18,16 @@
  */
 package co.fxl.gui.tree.gwt;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.gwt.GWTContainer;
 import co.fxl.gui.gwt.GWTDisplay;
 import co.fxl.gui.gwt.WidgetParent;
+import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.impl.LazyTreeAdp;
 import co.fxl.gui.tree.impl.LazyTreeWidgetTemplate;
 
@@ -71,6 +74,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			+ "</div>" + "</td>" + "</td>" + "</tr>" + "</tbody>" + "</table>"
 			+ "</td>" + "</tr>" + "</tbody>" + "</table>";
 	private HTML html;
+	private Map<Integer, ITree<Object>> trees = new HashMap<Integer, ITree<Object>>();
 
 	public GWTLazyTreeWidget(IContainer c) {
 		super(c);
@@ -107,6 +111,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 
 	@Override
 	public void decorate(IContainer container, int firstRow, int lastRow) {
+		trees.clear();
 		List<LazyTreeAdp> rows = tree.rows(firstRow, lastRow);
 		VerticalPanel p = new VerticalPanel();
 		p.setSpacing(spacing);
@@ -120,6 +125,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			hTML = hTML.replace("${ICON}", "release_m.png");
 			hTML = hTML.replace("${LABEL}", row.tree.name());
 			b.append("<tr>" + hTML + "</tr>");
+			trees.put(i, row.tree);
 		}
 		b.append("</table>");
 		html = new HTML(b.toString());
@@ -128,9 +134,9 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		html.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				for (ILazyTreeListener l : listeners) {
+				for (ILazyTreeListener<Object> l : listeners) {
 					int index = event.getY() / heightElement;
-					l.onClick(index);
+					l.onClick(trees.get(index), index);
 				}
 			}
 		});
