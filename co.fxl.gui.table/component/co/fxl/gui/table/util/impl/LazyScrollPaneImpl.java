@@ -55,17 +55,22 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	}
 
 	@Override
-	public ILazyScrollPane minRowHeight(int height) {
-		minRowHeight = height;
+	public ILazyScrollPane minRowHeight(int minRowHeight) {
+		this.minRowHeight = minRowHeight;
+		return updateRows2Paint();
+	}
+
+	private ILazyScrollPane updateRows2Paint() {
 		rows2Paint = height / minRowHeight;
+		if (rows2Paint > size)
+			rows2Paint = size;
 		return this;
 	}
 
 	@Override
 	public ILazyScrollPane height(int height) {
 		this.height = height;
-		rows2Paint = height / minRowHeight;
-		return this;
+		return updateRows2Paint();
 	}
 
 	@Override
@@ -102,12 +107,16 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		int scrollPanelHeight = size * minRowHeight;
 		scrollContentPanel.size(1, scrollPanelHeight);
 		maxOffset = scrollPanelHeight - height;
+		if (maxOffset > 0)
+			maxOffset = 0;
 		final int firstIndex = size - rows2Paint;
+		assert firstIndex >= 0;
 		update(firstIndex, false);
 		dock.display().invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
+				assert firstIndex >= 0;
 				int h = decorator.rowHeight(lastIndex);
 				maxRowIndex = lastIndex;
 				for (int i = lastIndex - 1; i >= firstIndex && h < height; i--) {
@@ -118,13 +127,14 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 						maxRowIndex = i;
 					}
 				}
-				if (maxRowIndex < lastIndex - 1)
-					maxRowIndex++;
+				// if (maxRowIndex < lastIndex - 1)
+				// maxRowIndex++;
+				assert maxRowIndex >= 0;
+				if (rowIndex > maxRowIndex)
+					rowIndex = maxRowIndex;
 				if (rowIndex > 0) {
 					scrollPane.scrollTo(convertRowIndex2ScrollOffset(rowIndex));
 				}
-				if (rowIndex > maxRowIndex)
-					rowIndex = maxRowIndex;
 				update();
 				scrollPane.addScrollListener(LazyScrollPaneImpl.this);
 				dock.visible(true);
@@ -201,6 +211,12 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	@Override
 	public ILazyScrollPane horizontalScrollPane(boolean horizontalScrollPane) {
 		this.horizontalScrollPane = horizontalScrollPane;
+		return this;
+	}
+
+	@Override
+	public ILazyScrollPane refresh() {
+		update(rowIndex, true);
 		return this;
 	}
 }
