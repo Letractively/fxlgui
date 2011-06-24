@@ -26,6 +26,7 @@ abstract class GWTColor implements IColor {
 	public class Gradient implements IGradient {
 
 		private GWTColor gradient;
+		int[] fallback = null;
 
 		Gradient(final GWTColor original) {
 			gradient = new GWTColor() {
@@ -50,10 +51,15 @@ abstract class GWTColor implements IColor {
 		}
 
 		@Override
+		public IGradient fallback(int r, int g, int b) {
+			fallback = new int[] { r, g, b };
+			return this;
+		}
+
+		@Override
 		public IColor vertical() {
 			return gradient;
 		}
-
 	}
 
 	private class MixColor extends GWTColor {
