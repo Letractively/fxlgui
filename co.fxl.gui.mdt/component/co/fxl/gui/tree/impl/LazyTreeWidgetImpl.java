@@ -62,7 +62,7 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 				@Override
 				public void onClick() {
 					for (ILazyTreeListener<Object> l : listeners) {
-						l.onClick(row.tree, fIndex);
+						l.onClick(fIndex);
 					}
 				}
 			});
