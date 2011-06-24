@@ -180,11 +180,21 @@ class SwingPopUp implements IPopUp {
 
 	@Override
 	public IPopUp width(int width) {
-		throw new MethodNotImplementedException();
+		if (component != null)
+			component.getPreferredSize().width = width;
+		else {
+			this.w = width;
+		}
+		return this;
 	}
 
 	@Override
 	public IPopUp height(int height) {
-		throw new MethodNotImplementedException();
+		if (component != null)
+			component.getPreferredSize().height = height;
+		else {
+			this.h = height;
+		}
+		return this;
 	}
 }
