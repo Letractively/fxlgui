@@ -26,6 +26,7 @@ public abstract class ColorTemplate implements IColor {
 	public class Gradient implements IGradient {
 
 		public ColorTemplate color;
+		public int[] fallback = null;
 
 		Gradient(final ColorTemplate original) {
 			color = new ColorTemplate() {
@@ -35,7 +36,7 @@ public abstract class ColorTemplate implements IColor {
 					rgb = null;
 					return this;
 				}
- 
+
 				@Override
 				protected IColor setRGB(int r, int g, int b) {
 					original.update();
@@ -47,6 +48,12 @@ public abstract class ColorTemplate implements IColor {
 		@Override
 		public IColor vertical() {
 			return color;
+		}
+
+		@Override
+		public IGradient fallback(int r, int g, int b) {
+			fallback = new int[] { r, g, b };
+			return this;
 		}
 	}
 
