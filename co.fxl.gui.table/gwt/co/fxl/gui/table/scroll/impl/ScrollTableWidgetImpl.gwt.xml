@@ -1,6 +1,7 @@
 <module>
 	<inherits name='co.fxl.gui.IDisplay' />
 	<inherits name='co.fxl.gui.table.bulk.api.IBulkTableWidget' />
+	<inherits name='co.fxl.gui.table.util.api.ILazyScrollPane' />
 	<inherits name='co.fxl.gui.table.scroll.api.IScrollTableWidget' />
 	<source path='' />
 </module>
