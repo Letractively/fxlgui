@@ -44,8 +44,8 @@ public class LazyTreeAdp {
 			indent = -1;
 			width = 0;
 		} else if (root != null) {
-			root.rootIndex++;
 			row = root.rootIndex;
+			root.rootIndex++;
 		}
 		if (parent != null)
 			indent = parent.indent + 1;
