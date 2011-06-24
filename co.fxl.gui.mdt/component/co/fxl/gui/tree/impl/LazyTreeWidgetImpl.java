@@ -28,7 +28,7 @@ import co.fxl.gui.api.IVerticalPanel;
 
 class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 
-	private Map<Integer, IVerticalPanel> rows = new HashMap<Integer, IVerticalPanel>();
+	private Map<Integer, IVerticalPanel> panels = new HashMap<Integer, IVerticalPanel>();
 
 	LazyTreeWidgetImpl(IContainer container) {
 		super(container);
@@ -42,12 +42,12 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 
 	@Override
 	public IContainer elementAt(int index) {
-		return rows.get(index).clear().add();
+		return panels.get(index).clear().add();
 	}
 
 	@Override
 	public void decorate(IContainer container, int firstRow, int lastRow) {
-		rows.clear();
+		panels.clear();
 		IVerticalPanel panel = container.panel().vertical().spacing(spacing)
 				.add().panel().vertical();
 		TreeNode<Object> decorator = new TreeNode<Object>();
@@ -66,7 +66,7 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 					}
 				}
 			});
-			LazyTreeWidgetImpl.this.rows.put(index, p);
+			LazyTreeWidgetImpl.this.panels.put(index, p);
 			index++;
 		}
 		super.decorate(container, firstRow, lastRow);
