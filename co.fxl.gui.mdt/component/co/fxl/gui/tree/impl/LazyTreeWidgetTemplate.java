@@ -86,6 +86,7 @@ public abstract class LazyTreeWidgetTemplate implements
 			ILazyScrollPane pane = (ILazyScrollPane) c
 					.widget(ILazyScrollPane.class);
 			pane.size(tree.width);
+			pane.horizontalScrollPane(true);
 			pane.minRowHeight(heightElement);
 			pane.height(height);
 			pane.decorator(this);
