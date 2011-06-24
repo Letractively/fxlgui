@@ -44,4 +44,6 @@ public interface ILazyScrollPane {
 	ILazyScrollPane scrollUp(int turns);
 
 	ILazyScrollPane scrollDown(int turns);
+
+	ILazyScrollPane horizontalScrollPane(boolean horizontalScrollPane);
 }

@@ -42,6 +42,7 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private int maxRowIndex;
 	private int maxOffset;
 	private int lastIndex;
+	private boolean horizontalScrollPane = false;
 
 	LazyScrollPaneImpl(IContainer container) {
 		this.container = container;
@@ -119,9 +120,12 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				}
 				if (maxRowIndex < lastIndex - 1)
 					maxRowIndex++;
+				if (rowIndex > 0) {
+					scrollPane.scrollTo(convertRowIndex2ScrollOffset(rowIndex));
+				}
 				update();
-				dock.visible(true);
 				scrollPane.addScrollListener(LazyScrollPaneImpl.this);
+				dock.visible(true);
 			}
 		});
 	}
@@ -138,7 +142,11 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		else if (lastIndex < 0)
 			lastIndex = 0;
 		IContainer invisibleCard = contentPanel.add();
-		decorator.decorate(invisibleCard, rowIndex, lastIndex);
+		IContainer c = invisibleCard;
+		if (horizontalScrollPane) {
+			c = c.scrollPane().horizontal().viewPort();
+		}
+		decorator.decorate(c, rowIndex, lastIndex);
 		contentPanel.show(invisibleCard.element());
 		if (lastCard != null) {
 			lastCard.element().remove();
@@ -151,6 +159,13 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		double r = offset;
 		r /= maxOffset;
 		r *= maxRowIndex;
+		return (int) r;
+	}
+
+	private int convertRowIndex2ScrollOffset(int rowIndex) {
+		double r = rowIndex;
+		r *= maxOffset;
+		r /= maxRowIndex;
 		return (int) r;
 	}
 
@@ -178,6 +193,12 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	public ILazyScrollPane scrollDown(int turns) {
 		int scrollPanelIndex = scrollPane.scrollOffset() + increment(turns);
 		scrollPane.scrollTo(scrollPanelIndex);
+		return this;
+	}
+
+	@Override
+	public ILazyScrollPane horizontalScrollPane(boolean horizontalScrollPane) {
+		this.horizontalScrollPane = horizontalScrollPane;
 		return this;
 	}
 }
