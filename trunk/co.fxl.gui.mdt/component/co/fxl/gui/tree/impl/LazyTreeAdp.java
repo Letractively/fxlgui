@@ -85,4 +85,16 @@ public class LazyTreeAdp {
 		}
 		return null;
 	}
+
+	public int index(Object selection) {
+		if (tree.object().equals(selection)) {
+			return row;
+		}
+		for (LazyTreeAdp child : children) {
+			int c = child.index(selection);
+			if (c != -1)
+				return c;
+		}
+		return -1;
+	}
 }

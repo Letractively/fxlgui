@@ -37,6 +37,7 @@ public abstract class LazyTreeWidgetTemplate implements
 	protected List<ILazyTreeListener<Object>> listeners = new LinkedList<ILazyTreeListener<Object>>();
 	private boolean showRoot;
 	protected int spacing = 0;
+	protected Object selection;
 
 	public LazyTreeWidgetTemplate(IContainer c) {
 		this(c, true);
@@ -45,6 +46,12 @@ public abstract class LazyTreeWidgetTemplate implements
 	public LazyTreeWidgetTemplate(IContainer c, boolean showRoot) {
 		this.c = c;
 		this.showRoot = showRoot;
+	}
+
+	@Override
+	public ILazyTreeWidget<Object> selection(Object selection) {
+		this.selection = selection;
+		return this;
 	}
 
 	@Override
@@ -97,6 +104,9 @@ public abstract class LazyTreeWidgetTemplate implements
 			pane.minRowHeight(heightElement);
 			pane.height(height);
 			pane.decorator(this);
+			int index = tree.index(selection);
+			if (index != -1)
+				pane.rowIndex(index);
 			pane.visible(true);
 		} else
 			throw new MethodNotImplementedException();
