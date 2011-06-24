@@ -35,7 +35,6 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private ICardPanel contentPanel;
 	private int rowIndex = 0;
 	private IContainer lastCard = null;
-	private int scrollPanelHeight;
 	private IAbsolutePanel scrollContentPanel;
 	private int size;
 	private int rows2Paint = height / minRowHeight;
@@ -99,7 +98,7 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		scrollPane.size(35, height);
 		scrollContentPanel = scrollPane.viewPort().panel().absolute();
 		scrollContentPanel.add().label().text("&#160;");
-		scrollPanelHeight = size * minRowHeight;
+		int scrollPanelHeight = size * minRowHeight;
 		scrollContentPanel.size(1, scrollPanelHeight);
 		maxOffset = scrollPanelHeight - height;
 		final int firstIndex = size - rows2Paint;
@@ -162,13 +161,23 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		update();
 	}
 
+	private int increment(int turns) {
+		double inc = maxOffset * 2 * turns;
+		inc /= maxRowIndex;
+		return (int) inc;
+	}
+
 	@Override
 	public ILazyScrollPane scrollUp(int turns) {
-		throw new MethodNotImplementedException();
+		int scrollPanelIndex = scrollPane.scrollOffset() - increment(turns);
+		scrollPane.scrollTo(scrollPanelIndex);
+		return this;
 	}
 
 	@Override
 	public ILazyScrollPane scrollDown(int turns) {
-		throw new MethodNotImplementedException();
+		int scrollPanelIndex = scrollPane.scrollOffset() + increment(turns);
+		scrollPane.scrollTo(scrollPanelIndex);
+		return this;
 	}
 }
