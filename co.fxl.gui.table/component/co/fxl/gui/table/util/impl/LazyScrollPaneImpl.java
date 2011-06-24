@@ -123,6 +123,8 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				if (rowIndex > 0) {
 					scrollPane.scrollTo(convertRowIndex2ScrollOffset(rowIndex));
 				}
+				if (rowIndex > maxRowIndex)
+					rowIndex = maxRowIndex;
 				update();
 				scrollPane.addScrollListener(LazyScrollPaneImpl.this);
 				dock.visible(true);
