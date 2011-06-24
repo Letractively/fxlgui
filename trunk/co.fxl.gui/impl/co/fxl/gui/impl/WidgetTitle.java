@@ -48,7 +48,8 @@ public class WidgetTitle implements IClickListener {
 			this.iPanel = iPanel;
 			noDoubleClicks(iPanel);
 			this.image = image;
-			noDoubleClicks(image);
+			if (image != null)
+				noDoubleClicks(image);
 			this.label = headerLabel;
 			noDoubleClicks(label);
 		}
