@@ -25,6 +25,8 @@ public interface IScrollPane extends IElement<IScrollPane>, IBordered, IColored 
 		void onScroll(int maxOffset);
 	}
 
+	IScrollPane horizontal();
+
 	IContainer viewPort();
 
 	IScrollPane addScrollListener(IScrollListener listener);
