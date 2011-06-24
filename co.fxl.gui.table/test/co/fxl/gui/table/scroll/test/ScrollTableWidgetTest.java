@@ -18,8 +18,6 @@
  */
 package co.fxl.gui.table.scroll.test;
 
-import java.lang.reflect.InvocationTargetException;
-
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.table.bulk.impl.BulkTableWidgetImplProvider;
@@ -28,9 +26,9 @@ import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 import co.fxl.gui.table.scroll.impl.ScrollTableWidgetImplProvider;
 
-class ScrollTableWidgetTest implements IRows<String> {
+public class ScrollTableWidgetTest implements IRows<String> {
 
-	void run(IDisplay display) {
+	public void run(IDisplay display) {
 		display.register(new ScrollTableWidgetImplProvider());
 		display.register(new BulkTableWidgetImplProvider());
 		IVerticalPanel panel = display.container().panel().vertical()
@@ -50,15 +48,15 @@ class ScrollTableWidgetTest implements IRows<String> {
 		display.visible(true);
 	}
 
-	public static void main(String[] args) throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException,
-			IllegalArgumentException, SecurityException,
-			InvocationTargetException, NoSuchMethodException {
-		Class<?> clazz = Class.forName("co.fxl.gui.swing.SwingDisplay");
-		IDisplay display = (IDisplay) clazz.getMethod("instance",
-				new Class<?>[0]).invoke(null, new Object[0]);
-		new ScrollTableWidgetTest().run(display);
-	}
+	// public static void main(String[] args) throws InstantiationException,
+	// IllegalAccessException, ClassNotFoundException,
+	// IllegalArgumentException, SecurityException,
+	// InvocationTargetException, NoSuchMethodException {
+	// Class<?> clazz = Class.forName("co.fxl.gui.swing.SwingDisplay");
+	// IDisplay display = (IDisplay) clazz.getMethod("instance",
+	// new Class<?>[0]).invoke(null, new Object[0]);
+	// new ScrollTableWidgetTest().run(display);
+	// }
 
 	@Override
 	public String identifier(int i) {
