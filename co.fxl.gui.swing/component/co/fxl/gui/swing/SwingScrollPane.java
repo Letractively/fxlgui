@@ -112,9 +112,7 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 
 	@Override
 	public IScrollPane scrollTo(int pos) {
-		// TODO doesn't work
-		container.component.getVerticalScrollBar().scrollRectToVisible(
-				new Rectangle(0, pos, 1, 1));
+		container.component.getVerticalScrollBar().setValue(pos);
 		return this;
 	}
 
@@ -129,5 +127,14 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 	@Override
 	public int scrollOffset() {
 		return container.component.getVerticalScrollBar().getValue();
+	}
+
+	@Override
+	public IScrollPane horizontal() {
+		container.component
+				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		container.component
+				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		return this;
 	}
 }
