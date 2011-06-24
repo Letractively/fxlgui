@@ -33,7 +33,6 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -56,7 +55,7 @@ import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
-		IScrollListener, ILabelMouseListener {
+		ILabelMouseListener {
 
 	// TODO FEATURE: Option: Usability: Implement live filter on current table
 	// content, every update notification in filter-widget on the side is
@@ -83,7 +82,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private int paintedRows;
 	List<ScrollTableColumnImpl> columns = new LinkedList<ScrollTableColumnImpl>();
 	private SelectionImpl selection = new SelectionImpl(this);
-	private int scrollOffset = -1;
 	private IVerticalPanel contentPanel;
 	private int sortColumn = -1;
 	private int sortNegator = -1;
@@ -246,7 +244,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				contentPanel0 = container.add().panel().vertical();
 				contentPanel0.height(heightMinusTopPanel());
 				contentPanel = contentPanel0.add().panel().vertical();
-				scrollOffset = 0;
 				update();
 				if (paintedRows != rows.size()) {
 					contentPanel0.clear();
@@ -273,7 +270,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						@Override
 						public int rowHeight(int rowIndex) {
 							int visibleRowIndex = convert2GridRow(rowIndex);
-							if (visibleRowIndex >= grid.rowCount())
+							if (visibleRowIndex >= grid.rowCount()
+									|| visibleRowIndex < 0)
 								throw new MethodNotImplementedException(
 										"Illegal row index: " + rowIndex + "/"
 												+ visibleRowIndex
@@ -361,15 +359,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	@Override
-	public void onScroll(int maxOffset) {
-		boolean scroll = maxOffset != scrollOffset;
-		if (scroll) {
-			scrollOffset = maxOffset;
-			update();
-		}
-	}
-
-	@Override
 	public IScrollTableColumn<Object> addColumn() {
 		ScrollTableColumnImpl column = new ScrollTableColumnImpl(this,
 				columns.size());
@@ -409,67 +398,63 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (updating)
 			return;
 		updating = true;
-		int usedScrollOffset;
-		do {
-			usedScrollOffset = scrollOffset;
-			highlighted.clear();
-			contentPanel.clear();
-			IBulkTableWidget lastGrid = grid;
-			IVerticalPanel vpanel = contentPanel.add().panel().vertical();
-			grid = (IBulkTableWidget) vpanel.spacing(6).add()
-					.widget(IBulkTableWidget.class);
-			grid.height(heightMinusTopPanel());
-			updateHeaderRow(grid);
-			for (int r = 0; r < paintedRows; r++) {
-				int index = r + rowOffset;
-				updateSingleContentRow(grid, r, index);
-			}
-			grid.visible(true);
-			if (sp != null)
-				grid.addMouseWheelListener(new IMouseWheelListener() {
+		highlighted.clear();
+		contentPanel.clear();
+		IBulkTableWidget lastGrid = grid;
+		IVerticalPanel vpanel = contentPanel.add().panel().vertical();
+		grid = (IBulkTableWidget) vpanel.spacing(6).add()
+				.widget(IBulkTableWidget.class);
+		grid.height(heightMinusTopPanel());
+		updateHeaderRow(grid);
+		for (int r = 0; r < paintedRows; r++) {
+			int index = r + rowOffset;
+			updateSingleContentRow(grid, r, index);
+		}
+		grid.visible(true);
+		if (sp != null)
+			grid.addMouseWheelListener(new IMouseWheelListener() {
 
-					@Override
-					public void onUp(int turns) {
-						sp.scrollUp(turns);
-					}
-
-					@Override
-					public void onDown(int turns) {
-						sp.scrollDown(turns);
-					}
-				});
-			if (addClickListeners) {
-				int current = 0;
-				for (ScrollTableColumnImpl c : columns)
-					if (!c.clickListeners.isEmpty() && c.visible)
-						grid.labelMouseListener(current++, this);
-			}
-			grid.element().tooltip(tooltip);
-			if (lastGrid != null)
-				lastGrid.remove();
-			for (int r = 0; r < paintedRows; r++) {
-				if (rows.selected(r + rowOffset)) {
-					IRow row = grid.row(r);
-					row.highlight(true);
-					highlighted.add(row);
+				@Override
+				public void onUp(int turns) {
+					sp.scrollUp(turns);
 				}
+
+				@Override
+				public void onDown(int turns) {
+					sp.scrollDown(turns);
+				}
+			});
+		if (addClickListeners) {
+			int current = 0;
+			for (ScrollTableColumnImpl c : columns)
+				if (!c.clickListeners.isEmpty() && c.visible)
+					grid.labelMouseListener(current++, this);
+		}
+		grid.element().tooltip(tooltip);
+		if (lastGrid != null)
+			lastGrid.remove();
+		for (int r = 0; r < paintedRows; r++) {
+			if (rows.selected(r + rowOffset)) {
+				IRow row = grid.row(r);
+				row.highlight(true);
+				highlighted.add(row);
 			}
-			addDisplayingNote();
-			if (allowColumnSelection) {
-				if (ALLOW_RESIZE)
-					new ResizableColumnSelection(this);
-				else
-					new ColumnSelection(this);
-			}
-			addSorting();
-			selection.update();
-			for (ITableClickListener l : listeners.keySet()) {
-				KeyAdapter<Object> adp = listeners.get(l);
-				@SuppressWarnings("unchecked")
-				IKey<Object> key = (IKey<Object>) grid.addTableListener(l);
-				adp.forward(key);
-			}
-		} while (usedScrollOffset != scrollOffset);
+		}
+		addDisplayingNote();
+		if (allowColumnSelection) {
+			if (ALLOW_RESIZE)
+				new ResizableColumnSelection(this);
+			else
+				new ColumnSelection(this);
+		}
+		addSorting();
+		selection.update();
+		for (ITableClickListener l : listeners.keySet()) {
+			KeyAdapter<Object> adp = listeners.get(l);
+			@SuppressWarnings("unchecked")
+			IKey<Object> key = (IKey<Object>) grid.addTableListener(l);
+			adp.forward(key);
+		}
 		updating = false;
 	}
 

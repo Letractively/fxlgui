@@ -29,7 +29,7 @@ import co.fxl.gui.table.util.api.ILazyScrollPane;
 class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 	private IDecorator decorator;
-	private int minRowHeight = 20;
+	private int minRowHeight = 22;
 	private int height = 400;
 	private IContainer container;
 	private ICardPanel contentPanel;
@@ -102,24 +102,23 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		scrollPanelHeight = size * minRowHeight;
 		scrollContentPanel.size(1, scrollPanelHeight);
 		maxOffset = scrollPanelHeight - height;
-		update(size - rows2Paint);
+		final int firstIndex = size - rows2Paint;
+		update(firstIndex);
 		dock.display().invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
-				int h = decorator.rowHeight(size - 1);
-				maxRowIndex = size - 1;
-				for (int i = size - 2; i >= rowIndex && h < height; i--) {
-					int rowHeight = i <= lastIndex ? decorator
-							.rowHeight(i) : minRowHeight;
-					if (rowHeight < minRowHeight)
-						rowHeight = minRowHeight;
+				int h = decorator.rowHeight(lastIndex);
+				maxRowIndex = lastIndex;
+				for (int i = lastIndex - 1; i >= firstIndex && h < height; i--) {
+					int rowHeight = Math.max(minRowHeight,
+							decorator.rowHeight(i));
 					h += rowHeight;
 					if (h < height) {
 						maxRowIndex = i;
 					}
 				}
-				if (maxRowIndex < size - 1)
+				if (maxRowIndex < lastIndex - 1)
 					maxRowIndex++;
 				update();
 				dock.visible(true);
@@ -137,6 +136,8 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		lastIndex = rowIndex + rows2Paint - 1;
 		if (lastIndex >= size)
 			lastIndex = size - 1;
+		else if (lastIndex < 0)
+			lastIndex = 0;
 		IContainer invisibleCard = contentPanel.add();
 		decorator.decorate(invisibleCard, rowIndex, lastIndex);
 		contentPanel.show(invisibleCard.element());
@@ -157,6 +158,7 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	@Override
 	public void onScroll(int maxOffset) {
 		rowIndex = convertScrollOffset2RowIndex(maxOffset);
+		assert rowIndex >= 0 : maxOffset + " offset not valid: " + rowIndex;
 		update();
 	}
 
