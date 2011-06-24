@@ -23,6 +23,8 @@ public interface IColored {
 	public interface IGradient {
 
 		IColor vertical();
+
+		IGradient fallback(int r, int g, int b);
 	}
 
 	public interface IColor {
