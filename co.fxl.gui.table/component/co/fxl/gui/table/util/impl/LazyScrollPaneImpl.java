@@ -162,7 +162,7 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	}
 
 	private int increment(int turns) {
-		double inc = maxOffset * 2 * turns;
+		double inc = maxOffset * turns;
 		inc /= maxRowIndex;
 		return (int) inc;
 	}
