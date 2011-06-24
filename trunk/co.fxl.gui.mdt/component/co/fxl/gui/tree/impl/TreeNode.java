@@ -130,6 +130,7 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 
 	void decorateCore() {
 		container = panel.add().panel().horizontal();
+		container.border().color().white();
 		content = container.add().panel().horizontal().spacing(2);
 		content.addSpace(depth * INDENT);
 		image = content.add().image();
