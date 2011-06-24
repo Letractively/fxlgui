@@ -18,13 +18,17 @@
  */
 package co.fxl.gui.tree.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IVerticalPanel;
 
 class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
+
+	private Map<Integer, IVerticalPanel> rows = new HashMap<Integer, IVerticalPanel>();
 
 	LazyTreeWidgetImpl(IContainer container) {
 		super(container);
@@ -38,12 +42,12 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 
 	@Override
 	public IContainer elementAt(int index) {
-		// TODO return element index, not visible row index
-		throw new MethodNotImplementedException();
+		return rows.get(index).clear().add();
 	}
 
 	@Override
 	public void decorate(IContainer container, int firstRow, int lastRow) {
+		rows.clear();
 		IVerticalPanel panel = container.panel().vertical().spacing(spacing)
 				.add().panel().vertical();
 		TreeNode<Object> decorator = new TreeNode<Object>();
@@ -62,6 +66,7 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 					}
 				}
 			});
+			LazyTreeWidgetImpl.this.rows.put(index, p);
 			index++;
 		}
 		super.decorate(container, firstRow, lastRow);
