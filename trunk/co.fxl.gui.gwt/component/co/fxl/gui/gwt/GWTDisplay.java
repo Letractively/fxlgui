@@ -48,6 +48,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class GWTDisplay implements IDisplay, WidgetParent {
+	
+	// TODO 2DECIDE: Feature: Usability: GWT/IE: marking of text has been deactivated
 
 	public interface BlockListener {
 
