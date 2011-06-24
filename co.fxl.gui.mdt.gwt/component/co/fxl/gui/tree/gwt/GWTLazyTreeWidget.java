@@ -136,7 +136,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			public void onClick(ClickEvent event) {
 				for (ILazyTreeListener<Object> l : listeners) {
 					int index = event.getY() / heightElement;
-					l.onClick(trees.get(index), index);
+					l.onClick(index);
 				}
 			}
 		});
