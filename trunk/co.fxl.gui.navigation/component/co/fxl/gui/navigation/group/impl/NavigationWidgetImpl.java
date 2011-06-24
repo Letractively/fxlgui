@@ -52,7 +52,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	protected NavigationWidgetImpl(IContainer layout) {
 		mainPanel = layout.panel().dock();
 		IGridPanel hPanel = mainPanel.top().panel().grid();
-		hPanel.color().rgb(235, 235, 235).gradient().vertical()
+		hPanel.color().rgb(235, 235, 235).gradient().fallback(235, 235, 235).vertical()
 				.rgb(211, 211, 211);
 		navigationPanel = hPanel.cell(0, 0).panel().horizontal().add().panel()
 				.horizontal();
