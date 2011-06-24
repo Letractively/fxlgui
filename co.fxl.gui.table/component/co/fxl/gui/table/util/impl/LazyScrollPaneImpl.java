@@ -103,7 +103,7 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		scrollContentPanel.size(1, scrollPanelHeight);
 		maxOffset = scrollPanelHeight - height;
 		final int firstIndex = size - rows2Paint;
-		update(firstIndex);
+		update(firstIndex, false);
 		dock.display().invokeLater(new Runnable() {
 
 			@Override
@@ -132,10 +132,10 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 	private void update() {
 		assert rowIndex >= 0;
-		update(rowIndex);
+		update(rowIndex, true);
 	}
 
-	private void update(int rowIndex) {
+	private void update(int rowIndex, boolean notify) {
 		lastIndex = rowIndex + rows2Paint - 1;
 		if (lastIndex >= size)
 			lastIndex = size - 1;
@@ -146,7 +146,7 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		if (horizontalScrollPane) {
 			c = c.scrollPane().horizontal().viewPort();
 		}
-		decorator.decorate(c, rowIndex, lastIndex);
+		decorator.decorate(c, rowIndex, lastIndex, notify);
 		contentPanel.show(invisibleCard.element());
 		if (lastCard != null) {
 			lastCard.element().remove();
