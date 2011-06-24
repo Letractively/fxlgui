@@ -49,7 +49,9 @@ public abstract class LazyTreeWidgetTemplate implements
 
 	@Override
 	public ITree<Object> getTreeByIndex(int index) {
-		return tree.row(index).tree;
+		LazyTreeAdp row = tree.row(index);
+		assert row != null : "row " + index + " not found in tree " + tree;
+		return row.tree;
 	}
 
 	@Override
