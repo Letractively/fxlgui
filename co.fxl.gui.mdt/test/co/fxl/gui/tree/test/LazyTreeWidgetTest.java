@@ -23,8 +23,9 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.table.util.impl.LazyScrollPanelImplWidgetProvider;
 import co.fxl.gui.tree.api.ILazyTreeWidget;
 import co.fxl.gui.tree.api.ILazyTreeWidget.ILazyTreeListener;
+import co.fxl.gui.tree.api.ITree;
 
-public class LazyTreeWidgetTest implements ILazyTreeListener {
+public class LazyTreeWidgetTest implements ILazyTreeListener<Object> {
 
 	private ILazyTreeWidget<Object> tree;
 
@@ -32,7 +33,8 @@ public class LazyTreeWidgetTest implements ILazyTreeListener {
 	public LazyTreeWidgetTest(IDisplay display) {
 		display.register(new LazyScrollPanelImplWidgetProvider());
 		IVerticalPanel panel = display.container().panel().vertical();
-		tree = (ILazyTreeWidget<Object>) panel.add().widget(ILazyTreeWidget.class);
+		tree = (ILazyTreeWidget<Object>) panel.add().widget(
+				ILazyTreeWidget.class);
 		tree.tree(new TestLazyTree(5));
 		tree.height(600);
 		tree.addListener(this);
@@ -41,7 +43,7 @@ public class LazyTreeWidgetTest implements ILazyTreeListener {
 	}
 
 	@Override
-	public void onClick(int index) {
+	public void onClick(ITree<Object> t, int index) {
 		tree.elementAt(index).label().text("Hell");
 	}
 
