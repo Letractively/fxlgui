@@ -353,7 +353,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			border2.color().rgb(172, 197, 213);
 			border2.style().top();
 			statusPanel.color().rgb(249, 249, 249).gradient()
-					.fallback(233, 233, 233).vertical().rgb(216, 216, 216);
+					.fallback(240, 240, 240).vertical().rgb(216, 216, 216);
 		}
 		return statusPanel;
 	}
