@@ -110,7 +110,7 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				int h = decorator.rowHeight(size - 1);
 				maxRowIndex = size - 1;
 				for (int i = size - 2; i >= rowIndex && h < height; i--) {
-					int rowHeight = maxRowIndex <= lastIndex ? decorator
+					int rowHeight = i <= lastIndex ? decorator
 							.rowHeight(i) : minRowHeight;
 					if (rowHeight < minRowHeight)
 						rowHeight = minRowHeight;
