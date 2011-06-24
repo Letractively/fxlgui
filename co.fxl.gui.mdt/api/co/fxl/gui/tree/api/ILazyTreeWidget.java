@@ -43,5 +43,7 @@ public interface ILazyTreeWidget<T> {
 
 	ILazyTreeWidget<T> visible(boolean visible);
 
+	ILazyTreeWidget<T> selection(T selection);
+
 	IContainer elementAt(final int index);
 }
