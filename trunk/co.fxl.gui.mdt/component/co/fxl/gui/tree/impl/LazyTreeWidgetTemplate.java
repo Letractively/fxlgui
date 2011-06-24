@@ -34,7 +34,7 @@ public abstract class LazyTreeWidgetTemplate implements
 	protected LazyTreeAdp tree;
 	private int height = 600;
 	protected IContainer c;
-	protected List<ILazyTreeListener> listeners = new LinkedList<ILazyTreeListener>();
+	protected List<ILazyTreeListener<Object>> listeners = new LinkedList<ILazyTreeListener<Object>>();
 	private boolean showRoot;
 	protected int spacing = 0;
 
@@ -72,7 +72,7 @@ public abstract class LazyTreeWidgetTemplate implements
 	}
 
 	@Override
-	public ILazyTreeWidget<Object> addListener(ILazyTreeListener l) {
+	public ILazyTreeWidget<Object> addListener(ILazyTreeListener<Object> l) {
 		listeners.add(l);
 		return this;
 	}
@@ -97,7 +97,7 @@ public abstract class LazyTreeWidgetTemplate implements
 
 	@Override
 	public void decorate(IContainer container, int firstRow, int lastRow) {
-		for (ILazyTreeListener l : listeners) {
+		for (ILazyTreeListener<Object> l : listeners) {
 			l.onVisible(firstRow, lastRow);
 		}
 	}
