@@ -114,10 +114,12 @@ public abstract class LazyTreeWidgetTemplate implements
 	}
 
 	@Override
-	public void decorate(IContainer container, int firstRow, int lastRow) {
-		for (ILazyTreeListener<Object> l : listeners) {
-			l.onVisible(firstRow, lastRow);
-		}
+	public void decorate(IContainer container, int firstRow, int lastRow,
+			boolean notify) {
+		if (notify)
+			for (ILazyTreeListener<Object> l : listeners) {
+				l.onVisible(firstRow, lastRow);
+			}
 	}
 
 	@Override
