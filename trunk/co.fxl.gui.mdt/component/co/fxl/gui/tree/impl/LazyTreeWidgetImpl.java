@@ -46,7 +46,8 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 	}
 
 	@Override
-	public void decorate(IContainer container, int firstRow, int lastRow) {
+	public void decorate(IContainer container, int firstRow, int lastRow,
+			boolean notify) {
 		panels.clear();
 		IVerticalPanel panel = container.panel().vertical().spacing(spacing)
 				.add().panel().vertical();
@@ -69,6 +70,6 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 			LazyTreeWidgetImpl.this.panels.put(index, p);
 			index++;
 		}
-		super.decorate(container, firstRow, lastRow);
+		super.decorate(container, firstRow, lastRow, notify);
 	}
 }
