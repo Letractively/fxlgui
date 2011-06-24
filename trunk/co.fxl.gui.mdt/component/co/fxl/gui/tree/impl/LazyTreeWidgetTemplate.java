@@ -32,12 +32,14 @@ public abstract class LazyTreeWidgetTemplate implements
 
 	protected int heightElement = 26;
 	protected LazyTreeAdp tree;
-	private int height = 600;
+	protected int height = 600;
 	protected IContainer c;
 	protected List<ILazyTreeListener<Object>> listeners = new LinkedList<ILazyTreeListener<Object>>();
 	private boolean showRoot;
 	protected int spacing = 0;
 	protected Object selection;
+	private ILazyScrollPane pane;
+	private ITree<Object> realTree;
 
 	public LazyTreeWidgetTemplate(IContainer c) {
 		this(c, true);
@@ -75,6 +77,7 @@ public abstract class LazyTreeWidgetTemplate implements
 
 	@Override
 	public ILazyTreeWidget<Object> tree(ITree<Object> tree) {
+		this.realTree = tree;
 		this.tree = new LazyTreeAdp(tree, showRoot);
 		return this;
 	}
@@ -97,8 +100,7 @@ public abstract class LazyTreeWidgetTemplate implements
 	@Override
 	public ILazyTreeWidget<Object> visible(boolean visible) {
 		if (visible) {
-			ILazyScrollPane pane = (ILazyScrollPane) c
-					.widget(ILazyScrollPane.class);
+			pane = (ILazyScrollPane) c.widget(ILazyScrollPane.class);
 			pane.size(tree.width);
 			pane.horizontalScrollPane(true);
 			pane.minRowHeight(heightElement);
@@ -110,6 +112,14 @@ public abstract class LazyTreeWidgetTemplate implements
 			pane.visible(true);
 		} else
 			throw new MethodNotImplementedException();
+		return this;
+	}
+
+	@Override
+	public ILazyTreeWidget<Object> refresh() {
+		tree(realTree);
+		c.element().remove();
+		visible(true);
 		return this;
 	}
 

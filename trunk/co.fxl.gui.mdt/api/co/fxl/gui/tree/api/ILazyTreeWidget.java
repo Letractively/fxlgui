@@ -46,4 +46,6 @@ public interface ILazyTreeWidget<T> {
 	ILazyTreeWidget<T> selection(T selection);
 
 	IContainer elementAt(final int index);
+
+	ILazyTreeWidget<T> refresh();
 }
