@@ -53,7 +53,7 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 		TreeNode<Object> decorator = new TreeNode<Object>();
 		List<LazyTreeAdp> rows = tree.rows(firstRow, lastRow);
 		int index = firstRow;
-		for (LazyTreeAdp row : rows) {
+		for (final LazyTreeAdp row : rows) {
 			IVerticalPanel p = decorator.setUp(panel, row.tree, row.indent);
 			decorator.panel.height(heightElement);
 			decorator.decorateCore();
@@ -61,8 +61,8 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 			p.addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {
-					for (ILazyTreeListener l : listeners) {
-						l.onClick(fIndex);
+					for (ILazyTreeListener<Object> l : listeners) {
+						l.onClick(row.tree, fIndex);
 					}
 				}
 			});
