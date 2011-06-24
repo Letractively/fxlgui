@@ -53,9 +53,11 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 					String gradient = "-webkit-gradient(linear, left top, left bottom, from("
 							+ original.color + "), to(" + color + "))";
 					if (GWTDisplay.isInternetExplorer()) {
-						
-						// TODO Look: GWT: use repeating image a la background-image: url(h64_FFAACC_FFAAAA.png); background-repeat: repeat-x; background: mittelwert
-						
+
+						// TODO Look: GWT: use repeating image a la
+						// background-image: url(h64_FFAACC_FFAAAA.png);
+						// background-repeat: repeat-x; background: mittelwert
+
 						if (fallback != null) {
 							gradient = toString(fallback[0], fallback[1],
 									fallback[2]);
@@ -79,9 +81,11 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 						} else {
 							gradient = mix(original.color, color);
 						}
-						
-						// TODO Look: GWT: use repeating image a la background-image: url(h64_FFAACC_FFAAAA.png); background-repeat: repeat-x; background: mittelwert
-						
+
+						// TODO Look: GWT: use repeating image a la
+						// background-image: url(h64_FFAACC_FFAAAA.png);
+						// background-repeat: repeat-x; background: mittelwert
+
 						// attribute = "background-image";
 						// gradient = "url(gradient_"
 						// + gwtWidgetStyle.widget.getOffsetHeight() + "_"
@@ -95,24 +99,6 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 					}
 					DOM.setStyleAttribute(element, attribute, gradient);
 				}
-
-				private String mix(String color1, String color2) {
-					int[] rgb1 = rgb(color1);
-					int[] rgb2 = rgb(color2);
-					return toString(mix(rgb1, rgb2, 0), mix(rgb1, rgb2, 1),
-							mix(rgb1, rgb2, 2));
-				}
-
-				private int mix(int[] rgb1, int[] rgb2, int i) {
-					return (rgb1[i] + rgb2[i]) / 2;
-				}
-
-				private int[] rgb(String color1) {
-					return new int[] {
-							Integer.parseInt(color1.substring(1, 2), 16),
-							Integer.parseInt(color1.substring(3, 4), 16),
-							Integer.parseInt(color1.substring(5, 6), 16) };
-				}
 			};
 		}
 
@@ -121,6 +107,28 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 			fallback = new int[] { r, g, b };
 			return this;
 		}
+	}
+
+	static String mix(String color1, String color2) {
+		int[] rgb1 = rgb(color1);
+		int[] rgb2 = rgb(color2);
+		return toString(mix(rgb1, rgb2, 0), mix(rgb1, rgb2, 1),
+				mix(rgb1, rgb2, 2));
+	}
+
+	static int mix(int[] rgb1, int[] rgb2, int i) {
+		return (rgb1[i] + rgb2[i]) / 2;
+	}
+
+	static int[] rgb(String color1) {
+		return new int[] { fromHex(color1.substring(1, 3)),
+				fromHex(color1.substring(3, 5)),
+				fromHex(color1.substring(5, 7)) };
+	}
+
+	static int fromHex(String s) {
+		int parseInt = Integer.parseInt(s, 16);
+		return parseInt;
 	}
 
 	private Style style;
@@ -150,11 +158,11 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 		return stylable;
 	}
 
-	String toString(int r, int g, int b) {
+	static String toString(int r, int g, int b) {
 		return "#" + toHexString(r) + toHexString(g) + toHexString(b);
 	}
 
-	private String toHexString(int r) {
+	static String toHexString(int r) {
 		String hex = Integer.toHexString(r);
 		while (hex.length() < 2)
 			hex = "0" + hex;
