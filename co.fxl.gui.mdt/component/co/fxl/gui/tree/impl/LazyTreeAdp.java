@@ -46,6 +46,8 @@ public class LazyTreeAdp {
 		} else if (root != null) {
 			row = root.rootIndex;
 			root.rootIndex++;
+		} else if (root == null) {
+			rootIndex++;
 		}
 		if (parent != null)
 			indent = parent.indent + 1;
@@ -101,17 +103,17 @@ public class LazyTreeAdp {
 	@Override
 	public String toString() {
 		StringBuilder b = new StringBuilder(String.valueOf(row));
-		if (!children.isEmpty()) {
-			b.append("[");
-			boolean first = true;
-			for (LazyTreeAdp child : children) {
-				if (!first)
-					b.append(", ");
-				first = false;
-				b.append(child.toString());
-			}
-			b.append("]");
-		}
+		// if (!children.isEmpty()) {
+		// b.append("[");
+		// boolean first = true;
+		// for (LazyTreeAdp child : children) {
+		// if (!first)
+		// b.append(", ");
+		// first = false;
+		// b.append(child.toString());
+		// }
+		// b.append("]");
+		// }
 		return b.toString();
 	}
 }

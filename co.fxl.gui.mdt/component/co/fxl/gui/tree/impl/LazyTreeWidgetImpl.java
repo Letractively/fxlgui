@@ -42,7 +42,9 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 
 	@Override
 	public IContainer elementAt(int index) {
-		return panels.get(index).clear().add();
+		IVerticalPanel p = panels.get(index);
+		assert p != null : index + " not in " + panels.keySet();
+		return p.clear().add();
 	}
 
 	@Override
