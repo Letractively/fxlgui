@@ -18,18 +18,18 @@
  */
 package co.fxl.gui.tree.gwt;
 
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.gwt.GWTContainer;
 import co.fxl.gui.gwt.GWTDisplay;
 import co.fxl.gui.gwt.WidgetParent;
-import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.impl.LazyTreeAdp;
 import co.fxl.gui.tree.impl.LazyTreeWidgetTemplate;
+import co.fxl.gui.tree.impl.TreeNode;
 
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -55,12 +55,12 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			+ "</td>"
 			+ "<td align=\"left\" style=\"vertical-align: middle;\">"
 			+ "<img class=\"gwt-Image\" "
-			+ "src=\"test_gwt/images/${STATE_ICON}\" "
+			+ "src=\"images/${STATE_ICON}\" "
 			+ "style=\"cursor: pointer;\">"
 			+ "</td>"
 			+ "<td align=\"left\" style=\"vertical-align: middle;\">"
 			+ "<img class=\"gwt-Image\" "
-			+ "src=\"test_gwt/images/${ICON}\" "
+			+ "src=\"images/${ICON}\" "
 			+ "style=\"cursor: pointer;\">"
 			+ "</td>"
 			+ "<td align=\"left\" style=\"vertical-align: middle;\">"
@@ -74,7 +74,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			+ "</div>" + "</td>" + "</td>" + "</tr>" + "</tbody>" + "</table>"
 			+ "</td>" + "</tr>" + "</tbody>" + "</table>";
 	private HTML html;
-	private Map<Integer, ITree<Object>> trees = new HashMap<Integer, ITree<Object>>();
+	private Set<Integer> trees = new HashSet<Integer>();
 
 	public GWTLazyTreeWidget(IContainer c) {
 		super(c);
@@ -82,6 +82,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 
 	@Override
 	public IContainer elementAt(final int index) {
+		trees.remove(index);
 		return new GWTContainer<Widget>(new WidgetParent() {
 
 			@Override
@@ -122,21 +123,23 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			LazyTreeAdp row = rows.get(i - firstRow);
 			String hTML = HTML.replace("${INDENT}",
 					String.valueOf(row.indent * 10));
-			hTML = hTML.replace("${STATE_ICON}", "open.png");
-			hTML = hTML.replace("${ICON}", "release_m.png");
+			hTML = hTML.replace("${STATE_ICON}", icon(row));
+			hTML = hTML.replace("${ICON}", image(row));
 			hTML = hTML.replace("${LABEL}", row.tree.name());
 			b.append("<tr>" + hTML + "</tr>");
-			trees.put(i, row.tree);
+			trees.add(i);
 		}
 		b.append("</table>");
 		html = new HTML(b.toString());
 		html.getElement().getStyle().setOverflow(Overflow.HIDDEN);
-		html.setHeight(600 + "px");
+		html.setHeight(height + "px");
 		html.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				int index = event.getY() / heightElement;
+				if (!trees.contains(index))
+					return;
 				for (ILazyTreeListener<Object> l : listeners) {
-					int index = event.getY() / heightElement;
 					l.onClick(index);
 				}
 			}
@@ -144,5 +147,22 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		p.add(html);
 		container.nativeElement(p);
 		super.decorate(container, firstRow, lastRow, notify);
+	}
+
+	private String image(LazyTreeAdp tree) {
+		if (!tree.tree.children().isEmpty())
+			return tree.tree.icon();
+		else
+			return tree.tree.iconClosed();
+	}
+
+	private String icon(LazyTreeAdp row) {
+		if (row.tree.childCount() == 0) {
+			return !row.tree.isLoaded() ? TreeNode
+					.getOpenOrClosedIcon(row.tree) : (row.tree.children()
+					.isEmpty() ? TreeNode.CLOSED : TreeNode.OPEN);
+		} else
+			return !row.tree.isLoaded() ? TreeNode
+					.getOpenOrClosedIcon(row.tree) : TreeNode.EMPTY;
 	}
 }
