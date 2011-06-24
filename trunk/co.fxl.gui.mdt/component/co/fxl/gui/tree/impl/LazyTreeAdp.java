@@ -75,7 +75,7 @@ public class LazyTreeAdp {
 		if (row == index) {
 			return this;
 		}
-		int lastRow = row + width - 1;
+		int lastRow = (row == -1 ? 0 : row) + width - 1;
 		if (lastRow < index || index > lastRow)
 			return null;
 		for (LazyTreeAdp child : children) {
@@ -100,7 +100,7 @@ public class LazyTreeAdp {
 
 	@Override
 	public String toString() {
-		StringBuilder b = new StringBuilder(row);
+		StringBuilder b = new StringBuilder(String.valueOf(row));
 		if (!children.isEmpty()) {
 			b.append("[");
 			boolean first = true;
