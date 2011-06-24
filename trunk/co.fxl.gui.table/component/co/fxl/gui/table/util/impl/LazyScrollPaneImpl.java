@@ -83,7 +83,7 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	@Override
 	public ILazyScrollPane size(int size) {
 		this.size = size;
-		return this;
+		return updateRows2Paint();
 	}
 
 	@Override
@@ -107,9 +107,10 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		int scrollPanelHeight = size * minRowHeight;
 		scrollContentPanel.size(1, scrollPanelHeight);
 		maxOffset = scrollPanelHeight - height;
-		if (maxOffset > 0)
+		if (maxOffset < 0)
 			maxOffset = 0;
 		final int firstIndex = size - rows2Paint;
+		assert rows2Paint > 0;
 		assert firstIndex >= 0;
 		update(firstIndex, false);
 		dock.display().invokeLater(new Runnable() {
@@ -168,6 +169,7 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 	private int convertScrollOffset2RowIndex(int offset) {
 		assert offset >= 0;
+		assert maxOffset > 0;
 		double r = offset;
 		r /= maxOffset;
 		r *= maxRowIndex;
