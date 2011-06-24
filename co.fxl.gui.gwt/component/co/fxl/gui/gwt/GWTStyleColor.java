@@ -30,6 +30,7 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 	public class Gradient implements IGradient {
 
 		private GWTStyleColor original;
+		int[] fallback = null;
 
 		Gradient(GWTStyleColor original) {
 			this.original = original;
@@ -52,34 +53,67 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 					String gradient = "-webkit-gradient(linear, left top, left bottom, from("
 							+ original.color + "), to(" + color + "))";
 					if (GWTDisplay.isInternetExplorer()) {
-						attribute = "filter";
-						gradient = "progid:DXImageTransform.Microsoft.gradient(startColorstr='"
-								+ original.color
-								+ "', endColorstr='"
-								+ color
-								+ "')";
-						DOM.setStyleAttribute(element, "zoom", "1");
+						if (fallback != null) {
+							gradient = toString(fallback[0], fallback[1],
+									fallback[2]);
+						} else {
+							attribute = "filter";
+							gradient = "progid:DXImageTransform.Microsoft.gradient(startColorstr='"
+									+ original.color
+									+ "', endColorstr='"
+									+ color + "')";
+							DOM.setStyleAttribute(element, "zoom", "1");
+						}
 						// DOM.setStyleAttribute(element, "-ms-" + attribute,
 						// gradient);
 					} else if (GWTDisplay.isFirefox()) {
 						gradient = "-moz-linear-gradient(top, "
 								+ original.color + ", " + color + ")";
-					} 
-//					else if (GWTDisplay.isOpera()) {
-//						attribute = "background-image";
-//						gradient = "url(gradient_"
-//								+ gwtWidgetStyle.widget.getOffsetHeight() + "_"
-//								+ original.color.substring(1).toLowerCase()
-//								+ "_" + color.substring(1).toLowerCase()
-//								+ ".png";
-//						DOM.setStyleAttribute(element, "background-repeat",
-//								"repeat-x");
-//						DOM.setStyleAttribute(element, "background",
-//								original.color);
-//					}
+					} else if (GWTDisplay.isOpera()) {
+						if (fallback != null) {
+							gradient = toString(fallback[0], fallback[1],
+									fallback[2]);
+						} else {
+							gradient = mix(original.color, color);
+						}
+						// attribute = "background-image";
+						// gradient = "url(gradient_"
+						// + gwtWidgetStyle.widget.getOffsetHeight() + "_"
+						// + original.color.substring(1).toLowerCase()
+						// + "_" + color.substring(1).toLowerCase()
+						// + ".png";
+						// DOM.setStyleAttribute(element, "background-repeat",
+						// "repeat-x");
+						// DOM.setStyleAttribute(element, "background",
+						// original.color);
+					}
 					DOM.setStyleAttribute(element, attribute, gradient);
 				}
+
+				private String mix(String color1, String color2) {
+					int[] rgb1 = rgb(color1);
+					int[] rgb2 = rgb(color2);
+					return toString(mix(rgb1, rgb2, 0), mix(rgb1, rgb2, 1),
+							mix(rgb1, rgb2, 2));
+				}
+
+				private int mix(int[] rgb1, int[] rgb2, int i) {
+					return (rgb1[i] + rgb2[i]) / 2;
+				}
+
+				private int[] rgb(String color1) {
+					return new int[] {
+							Integer.parseInt(color1.substring(1, 2), 16),
+							Integer.parseInt(color1.substring(3, 4), 16),
+							Integer.parseInt(color1.substring(5, 6), 16) };
+				}
 			};
+		}
+
+		@Override
+		public IGradient fallback(int r, int g, int b) {
+			fallback = new int[] { r, g, b };
+			return this;
 		}
 	}
 
