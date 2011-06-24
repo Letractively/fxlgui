@@ -97,4 +97,21 @@ public class LazyTreeAdp {
 		}
 		return -1;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder b = new StringBuilder(row);
+		if (!children.isEmpty()) {
+			b.append("[");
+			boolean first = true;
+			for (LazyTreeAdp child : children) {
+				if (!first)
+					b.append(", ");
+				first = false;
+				b.append(child.toString());
+			}
+			b.append("]");
+		}
+		return b.toString();
+	}
 }
