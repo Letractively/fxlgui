@@ -110,7 +110,8 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 	}
 
 	@Override
-	public void decorate(IContainer container, int firstRow, int lastRow) {
+	public void decorate(IContainer container, int firstRow, int lastRow,
+			boolean notify) {
 		trees.clear();
 		List<LazyTreeAdp> rows = tree.rows(firstRow, lastRow);
 		VerticalPanel p = new VerticalPanel();
@@ -142,6 +143,6 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		});
 		p.add(html);
 		container.nativeElement(p);
-		super.decorate(container, firstRow, lastRow);
+		super.decorate(container, firstRow, lastRow, notify);
 	}
 }
