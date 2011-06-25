@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.format.gwt;
 
-import co.fxl.gui.format.api.IFormat;
+import co.fxl.data.format.api.IFormat;
 
 import com.google.gwt.i18n.client.NumberFormat;
 
