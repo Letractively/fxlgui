@@ -260,7 +260,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 						@Override
 						public void decorate(IContainer container,
-								int firstRow, int lastRow, boolean notify) {
+								int firstRow, int lastRow) {
 							rowOffset = firstRow;
 							paintedRows = lastRow - firstRow + 1;
 							contentPanel = container.panel().vertical();
