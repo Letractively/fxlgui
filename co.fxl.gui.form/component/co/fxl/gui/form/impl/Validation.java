@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.data.format.api.IFormat;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IComboBox;
@@ -31,7 +32,6 @@ import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
-import co.fxl.gui.format.api.IFormat;
 import co.fxl.gui.format.impl.Format;
 import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.ICallback;
