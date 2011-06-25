@@ -24,9 +24,9 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.data.format.api.IFormat;
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
-import co.fxl.gui.format.api.IFormat;
 import co.fxl.gui.format.impl.Format;
 import co.fxl.gui.impl.AlignmentMemento;
 import co.fxl.gui.impl.FieldTypeImpl;
