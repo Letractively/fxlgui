@@ -20,7 +20,6 @@ package co.fxl.gui.tree.impl;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +44,7 @@ import co.fxl.gui.mdt.impl.Icons;
 import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
 import co.fxl.gui.navigation.api.IMenuWidget;
+import co.fxl.gui.tree.api.ILazyTreeWidget;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 
@@ -197,7 +197,6 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private Map<String, IClickable<?>> newClickHyperlink = new HashMap<String, IClickable<?>>();
 	private List<ISelectionListener<T>> selectionListeners = new LinkedList<ISelectionListener<T>>();
 	private IClickable<?> delete;
-	private IVerticalPanel leftContentPanel;
 	ISplitPane splitPane;
 	private boolean hasButtons = false;
 	private String defaultCreatableType = null;
@@ -211,7 +210,6 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private IClickable<?> cut;
 	private IClickable<?> copy;
 	private IClickable<?> paste;
-	IScrollPane leftScrollPane;
 	private IVerticalPanel bottom;
 	CommandLink reorder;
 	TreeModel<T> model;
@@ -242,7 +240,9 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 							@Override
 							public void onSuccess(ITree<T> result) {
 								previousSelection = result.object();
-								if (result.parent() != null) {
+								if (!showRoot) {
+									refreshLazyTree();
+								} else if (result.parent() != null) {
 									model.refresh(result.parent(), true);
 								} else
 									model.refresh();
@@ -404,9 +404,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		if (registers != null)
 			return;
 		splitPane = panel().add().splitPane().splitPosition(SPLIT_POSITION);
-		leftScrollPane = splitPane.first().scrollPane();
-		leftContentPanel = leftScrollPane.viewPort().panel().vertical();
-		panel = leftContentPanel.spacing(10).add().panel().vertical();
+		panel = splitPane.first().panel().vertical();
 		IScrollPane scrollPane = splitPane.second().scrollPane();
 		registers = (IMenuWidget) scrollPane.viewPort().widget(
 				IMenuWidget.class);
@@ -445,78 +443,109 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			panel2.clear();
 		}
 		model = new TreeModel<T>(this, tree);
-		Runnable finish = new Runnable() {
-			@Override
-			public void run() {
-				updateButtons();
-				notifyChange(alwaysRefresh);
-				if (runAfterVisible != null) {
-					IClickListener run = newClick.get(runAfterVisible);
-					runAfterVisible = null;
-					run.onClick();
-				}
-			}
-		};
-		topLevelNodes = new LinkedList<TreeNode<T>>();
-		if (showRoot) {
-			newNode(this, panel2, tree, 0, finish, true);
-		} else {
-			Iterator<ITree<T>> it = tree.children().iterator();
-			drawNode(it, this, panel2, 0, finish);
+		createLazyTree(tree, panel2);
+		updateButtons();
+		notifyChange(alwaysRefresh);
+		if (runAfterVisible != null) {
+			IClickListener run = newClick.get(runAfterVisible);
+			runAfterVisible = null;
+			run.onClick();
 		}
 		return this;
 	}
 
-	@SuppressWarnings("rawtypes")
-	void scrollIntoView(NodeRef<T> node) {
-		if (node instanceof TreeNode) {
-			leftScrollPane.scrollIntoView(((TreeNode) node).image);
-		} else
-			throw new MethodNotImplementedException();
+	@SuppressWarnings("unchecked")
+	void createLazyTree(ITree<T> tree, final IVerticalPanel panel2) {
+		lazyTree = (ILazyTreeWidget<T>) panel2.add().widget(
+				ILazyTreeWidget.class);
+		lazyTree.selectionDecorator(new ILazyTreeWidget.IDecorator() {
+			@Override
+			public void decorate(IContainer c, int index) {
+				ITree<T> tree = lazyTree.getTreeByIndex(index);
+				int indent = 0;
+				ITree<T> parent = tree.parent();
+				while (parent != null) {
+					parent = parent.parent();
+					indent++;
+				}
+				if (!showRoot)
+					indent--;
+				new TreeNode<T>(TreeWidgetImpl.this, c.panel().vertical(),
+						tree, indent);
+				model.selection(tree);
+			}
+		});
+		lazyTree.showRoot(showRoot);
+		lazyTree.tree(tree);
+		if (previousSelection == null && model.selection() != null)
+			previousSelection = model.selection().object();
+		if (previousSelection != null) {
+			lazyTree.selection(previousSelection);
+		}
+		lazyTree.spacing(10);
+		lazyTree.height(splitPane.height());
+		lazyTree.selection(previousSelection);
+		lazyTree.visible(true);
 	}
 
-	private int painted = 0;
+	void refreshLazyTree() {
+		if (previousSelection != null)
+			lazyTree.selection(previousSelection);
+		lazyTree.refresh();
+	}
+
+	// @SuppressWarnings("rawtypes")
+	// void scrollIntoView(NodeRef<T> node) {
+	// if (node instanceof TreeNode) {
+	// leftScrollPane.scrollIntoView(((TreeNode) node).image);
+	// } else
+	// throw new MethodNotImplementedException();
+	// }
+
+	// private int painted = 0;
 	boolean allowReorder = false;
 	private IView activeView;
 	T previousSelection;
-	List<TreeNode<T>> topLevelNodes;
-	private static int MAX_PAINTS = Integer.MAX_VALUE;
+
+	// List<TreeNode<T>> topLevelNodes;
+	// private static int MAX_PAINTS = Integer.MAX_VALUE;
 
 	// TODO potential problem in combination with click-new in MDT.DetailView
 	// (if constrained)
 
-	void newNode(TreeWidgetImpl<T> widget, IVerticalPanel panel, ITree<T> root,
-			int depth, Runnable finish, boolean topLevel) {
-		TreeNode<T> node = new TreeNode<T>(widget, panel, root, depth);
-		if (topLevel)
-			topLevelNodes.add(node);
-		painted++;
-		if (painted < MAX_PAINTS) {
-			if (finish != null)
-				finish.run();
-		} else {
-			painted = 0;
-			if (finish != null)
-				panel.display().invokeLater(finish);
-		}
-	}
-
-	private void drawNode(final Iterator<ITree<T>> it,
-			final TreeWidgetImpl<T> treeWidgetImpl,
-			final IVerticalPanel panel2, final int i, final Runnable finish) {
-		if (!it.hasNext()) {
-			if (finish != null)
-				finish.run();
-			return;
-		}
-		ITree<T> c = it.next();
-		newNode(this, panel(), c, 0, new Runnable() {
-			@Override
-			public void run() {
-				drawNode(it, treeWidgetImpl, panel2, i, finish);
-			}
-		}, true);
-	}
+	// void newNode(TreeWidgetImpl<T> widget, IVerticalPanel panel, ITree<T>
+	// root,
+	// int depth, Runnable finish, boolean topLevel) {
+	// TreeNode<T> node = new TreeNode<T>(widget, panel, root, depth);
+	// if (topLevel)
+	// topLevelNodes.add(node);
+	// painted++;
+	// if (painted < MAX_PAINTS) {
+	// if (finish != null)
+	// finish.run();
+	// } else {
+	// painted = 0;
+	// if (finish != null)
+	// panel.display().invokeLater(finish);
+	// }
+	// }
+	//
+	// private void drawNode(final Iterator<ITree<T>> it,
+	// final TreeWidgetImpl<T> treeWidgetImpl,
+	// final IVerticalPanel panel2, final int i, final Runnable finish) {
+	// if (!it.hasNext()) {
+	// if (finish != null)
+	// finish.run();
+	// return;
+	// }
+	// ITree<T> c = it.next();
+	// newNode(this, panel(), c, 0, new Runnable() {
+	// @Override
+	// public void run() {
+	// drawNode(it, treeWidgetImpl, panel2, i, finish);
+	// }
+	// }, true);
+	// }
 
 	void setDetailViewTree(final ITree<T> tree) {
 		setDetailViewTree(tree, true);
@@ -679,6 +708,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	private T lastSelection;
 	private String runAfterVisible = null;
+	private ILazyTreeWidget<T> lazyTree;
 
 	void notifyChange() {
 		notifyChange(false);

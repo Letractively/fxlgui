@@ -32,7 +32,7 @@ import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.tree.api.ITree;
 
-class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
+public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 
 	// TODO FEATURE: Option: Usability: GWT: double click on table shortcut from
 	// tree node doesn't work when discard changes intercepts (works only like a
@@ -41,14 +41,14 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	private static final String FOLDER_CLOSED = "folder_closed.png";
 	private static final String FOLDER_EMPTY = "folder_empty.png";
 	private static final String FOLDER_OPEN = "folder_open.png";
-	private static final String CLOSED = "closed.png";
-	private static final String EMPTY = "empty.png";
-	private static final String OPEN = "open.png";
+	public static final String CLOSED = "closed.png";
+	public static final String EMPTY = "empty.png";
+	public static final String OPEN = "open.png";
 	private static final String LEAF = "leaf.png";
 	private static final int INDENT = 10;
 	private static final String OPENORCLOSED = "openorclosed.png";
 	IHorizontalPanel content;
-	private IVerticalPanel childrenPanel = null;
+	// private IVerticalPanel childrenPanel = null;
 	ITree<T> tree;
 	private int depth;
 	IImage image;
@@ -57,7 +57,7 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	private IImage imageRefresh;
 	private ILabel label;
 	private ILabel refreshLabel;
-	boolean childrenExpanded = false;
+	// boolean childrenExpanded = false;
 	private IImage icon;
 	protected boolean isExpanded;
 	private IHorizontalPanel buttonPanel;
@@ -108,12 +108,12 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	}
 
 	void draw() {
-		isExpanded = false;
+		isExpanded = !tree.children().isEmpty();
 		decorateCore();
 		content.addSpace(10);
-		childrenPanel = panel.add().panel().vertical();
-		if (tree.children().size() != 0)
-			expandLoadedNode();
+		// childrenPanel = panel.add().panel().vertical();
+		// if (tree.children().size() != 0)
+		// expandLoadedNode();
 		label.addClickListener(this);
 		container.addClickListener(this);
 		if (icon != null)
@@ -121,7 +121,7 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		image.addClickListener(new LazyClickListener() {
 			@Override
 			protected void onAllowedClick() {
-				expandCollapse(true, childrenExpanded);
+				expandCollapse(true, isExpanded);
 				widget.model.selection(tree);
 			}
 		});
@@ -133,21 +133,12 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		container.border().color().white();
 		content = container.add().panel().horizontal().spacing(2);
 		content.addSpace(depth * INDENT);
-		image = content.add().image();
-		if (tree.childCount() != 0) {
-			if (icon() != null) {
-				image.resource(!tree.isLoaded() ? getOpenOrClosedIcon()
-						: CLOSED);
-				icon = content.add().image().resource(icon());
-			} else
-				image.resource(FOLDER_CLOSED);
-		} else {
-			if (icon() != null) {
-				image.resource(!tree.isLoaded() ? getOpenOrClosedIcon() : EMPTY);
-				icon = content.add().image().resource(icon());
-			} else
-				image.resource(tree.isLeaf() ? LEAF : FOLDER_EMPTY);
-		}
+		assert treeIcon(tree) != null;
+		image = content.add().image().resource(treeIcon(tree));
+		if (entityIcon(tree) == null)
+			throw new MethodNotImplementedException("entity-icon is null for "
+					+ tree);
+		icon = content.add().image().resource(entityIcon(tree));
 		content.addSpace(2);
 		String name = tree.name();
 		boolean isNull = name == null || name.trim().equals("");
@@ -159,7 +150,26 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 			label.font().weight().italic().color().gray();
 	}
 
-	String getOpenOrClosedIcon() {
+	@SuppressWarnings("rawtypes")
+	public static String entityIcon(ITree tree) {
+		if (!tree.children().isEmpty())
+			return tree.icon();
+		else
+			return tree.iconClosed();
+	}
+
+	@SuppressWarnings("rawtypes")
+	public static String treeIcon(ITree tree) {
+		if (!tree.isLoaded())
+			return TreeNode.getOpenOrClosedIcon(tree);
+		if (tree.childCount() != 0) {
+			return (tree.children().isEmpty() ? TreeNode.CLOSED : TreeNode.OPEN);
+		} else
+			return TreeNode.EMPTY;
+	}
+
+	@SuppressWarnings("rawtypes")
+	private static String getOpenOrClosedIcon(ITree tree) {
 		if (tree.isLeaf())
 			return EMPTY;
 		return OPENORCLOSED;
@@ -277,7 +287,7 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		label.font().weight().plain().color().black();
 		if (tree.childCount() != 0) {
 			if (icon() != null) {
-				isExpanded = false;
+				// isExpanded = false;
 				image.resource(CLOSED);
 			} else
 				image.resource(FOLDER_CLOSED);
@@ -314,7 +324,7 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	}
 
 	void expandCollapse() {
-		expandCollapse(childrenExpanded);
+		expandCollapse(isExpanded);
 	}
 
 	void expandCollapse(boolean childrenExpanded) {
@@ -361,10 +371,13 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 
 	protected void expandLoadedNode() {
 		clear();
-		childrenExpanded = true;
-		for (ITree<T> child : tree.children()) {
-			widget.newNode(widget, childrenPanel, child, depth + 1, null, false);
+		if (!isExpanded) {
+			isExpanded = true;
+			refreshLazyTree();
 		}
+		// for (ITree<T> child : tree.children()) {
+		// widget.newNode(widget, childrenPanel, child, depth + 1, null, false);
+		// }
 		if (tree.childCount() > 0) {
 			isExpanded = true;
 			if (icon() != null) {
@@ -375,15 +388,19 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		}
 	}
 
+	void refreshLazyTree() {
+		widget.refreshLazyTree();
+	}
+
 	void clear() {
-		if (!childrenExpanded)
+		if (!isExpanded)
 			return;
-		childrenExpanded = false;
+		isExpanded = false;
 		clearLoadedNode();
 	}
 
 	private void clearLoadedNode() {
-		childrenPanel.clear();
+		// childrenPanel.clear();
 		if (icon() != null) {
 			if (tree.childCount() != 0) {
 				isExpanded = false;
@@ -395,6 +412,7 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 			image.resource(FOLDER_CLOSED);
 		if (imageRefresh != null)
 			imageRefresh.resource(null);
+		refreshLazyTree();
 	}
 
 	@Override
@@ -404,8 +422,8 @@ class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		else {
 			container.color().rgb(0xD0, 0xE4, 0xF6);
 		}
-		if (selected)
-			widget.scrollIntoView(this);
+		// if (selected)
+		// widget.scrollIntoView(this);
 		buttonPanel.visible(selected);
 		boolean allowMove = widget.moveActive && selected
 				&& widget.model.allowMove(tree);

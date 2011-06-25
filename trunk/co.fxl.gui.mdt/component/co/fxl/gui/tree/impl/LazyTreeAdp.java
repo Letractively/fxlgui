@@ -65,9 +65,11 @@ public class LazyTreeAdp {
 		if (row >= start && row <= end) {
 			rows.add(this);
 		}
-		int lastRow = row + width - 1;
-		if (lastRow < start || row > end)
-			return rows;
+		if (row != -1) {
+			int lastRow = row + width - 1;
+			if (lastRow < start || row > end)
+				return rows;
+		}
 		for (LazyTreeAdp child : children) {
 			rows.addAll(child.rows(start, end));
 		}
