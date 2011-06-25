@@ -29,11 +29,9 @@ import co.fxl.gui.tree.impl.LazyTreeAdp;
 import co.fxl.gui.tree.impl.LazyTreeWidgetTemplate;
 import co.fxl.gui.tree.impl.TreeNode;
 
-import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -72,38 +70,56 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			+ "<div class=\"unselectable\" unselectable=\"on\">${LABEL}</div>"
 			+ "</div>" + "</td>" + "</td>" + "</tr>" + "</tbody>" + "</table>"
 			+ "</td>" + "</tr>" + "</tbody>" + "</table>";
-	private HTML html;
 	private int firstRow;
+	private int lastRow;
+	private IContainer container;
 
 	public GWTLazyTreeWidget(IContainer c) {
 		super(c);
 	}
 
-	private void decorate(final int index) {
-		IContainer c = new GWTContainer<Widget>(new WidgetParent() {
+	@Override
+	public void decorate(IContainer container, final int firstRow, int lastRow) {
+		this.container = container;
+		this.firstRow = firstRow;
+		this.lastRow = lastRow;
+		VerticalPanel p = new VerticalPanel();
+		p.setSpacing(spacing);
+		p.setHeight(height + "px");
+		p.getElement().getStyle().setOverflow(Overflow.HIDDEN);
+		if (elementAt > firstRow && elementAt < lastRow) {
+			p.add(getHTML(firstRow, elementAt - 1));
+			decorator.decorate(getContainer(p), elementAt);
+			p.add(getHTML(elementAt + 1, lastRow));
+		} else if (elementAt == firstRow) {
+			decorator.decorate(getContainer(p), elementAt);
+			p.add(getHTML(firstRow + 1, lastRow));
+		} else if (elementAt == lastRow) {
+			p.add(getHTML(firstRow, lastRow - 1));
+			decorator.decorate(getContainer(p), elementAt);
+		} else {
+			p.add(getHTML(firstRow, lastRow));
+		}
+		container.nativeElement(p);
+	}
+
+	@SuppressWarnings("rawtypes")
+	private IContainer getContainer(final VerticalPanel p) {
+		return new GWTContainer(new WidgetParent() {
 
 			@Override
 			public void add(Widget widget) {
-				child().removeFromParent();
-				DOM.insertChild(html.getElement(), widget.getElement(), index());
-			}
-
-			Node child() {
-				return html.getElement().getChild(index());
-			}
-
-			private int index() {
-				return index - firstRow;
+				p.add(widget);
 			}
 
 			@Override
 			public void remove(Widget widget) {
-				child().removeFromParent();
+				p.remove(widget);
 			}
 
 			@Override
 			public GWTDisplay lookupDisplay() {
-				return (GWTDisplay) GWTLazyTreeWidget.this.c.display();
+				return (GWTDisplay) c.display();
 			}
 
 			@Override
@@ -112,17 +128,15 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 				return lookupDisplay().lookupWidgetProvider(interfaceClass);
 			}
 		});
-		decorator.decorate(c, index);
 	}
 
-	@Override
-	public void decorate(IContainer container, final int firstRow, int lastRow,
-			boolean notify) {
-		this.firstRow = firstRow;
+	private void update() {
+		container.element().remove();
+		decorate(container, firstRow, lastRow);
+	}
+
+	HTML getHTML(final int firstRow, int lastRow) {
 		List<LazyTreeAdp> rows = tree.rows(firstRow, lastRow);
-		VerticalPanel p = new VerticalPanel();
-		p.setSpacing(spacing);
-		p.setHeight(height + "px");
 		StringBuilder b = new StringBuilder(
 				"<table cellspacing=\"0\" cellpadding=\"0\">");
 		for (int i = firstRow; i <= lastRow; i++) {
@@ -135,21 +149,14 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			b.append("<tr>" + hTML + "</tr>");
 		}
 		b.append("</table>");
-		html = new HTML(b.toString());
-		html.getElement().getStyle().setOverflow(Overflow.HIDDEN);
-		html.setHeight((height - 2 * spacing) + "px");
+		HTML html = new HTML(b.toString());
 		html.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				elementAt = firstRow + (event.getY() / heightElement);
-				decorate(elementAt);
+				update();
 			}
 		});
-		p.add(html);
-		container.nativeElement(p);
-		if (elementAt >= firstRow && elementAt <= lastRow) {
-			decorate(elementAt);
-		}
-		super.decorate(container, firstRow, lastRow, notify);
+		return html;
 	}
 }
