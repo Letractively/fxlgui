@@ -416,12 +416,12 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 				@Override
 				public void onUp(int turns) {
-					sp.scrollUp(turns);
+					sp.onUp(turns);
 				}
 
 				@Override
 				public void onDown(int turns) {
-					sp.scrollDown(turns);
+					sp.onDown(turns);
 				}
 			});
 		if (addClickListeners) {

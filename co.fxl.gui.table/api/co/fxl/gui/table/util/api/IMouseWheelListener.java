@@ -1,6 +1,4 @@
 /**
- * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
- *  
  * This file is part of FXL GUI API.
  *  
  * FXL GUI API is free software: you can redistribute it and/or modify
@@ -15,33 +13,14 @@
  *  
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
 package co.fxl.gui.table.util.api;
 
-import co.fxl.gui.api.IContainer;
+public interface IMouseWheelListener<T extends IMouseWheelListener<T>> {
 
-public interface ILazyScrollPane extends IMouseWheelListener<ILazyScrollPane> {
+	T onUp(int turns);
 
-	public interface IDecorator {
-
-		void decorate(IContainer container, int firstRow, int lastRow);
-
-		int rowHeight(int rowIndex);
-	}
-
-	ILazyScrollPane size(int size);
-
-	ILazyScrollPane rowIndex(int rowIndex);
-
-	ILazyScrollPane minRowHeight(int height);
-
-	ILazyScrollPane decorator(IDecorator decorator);
-
-	ILazyScrollPane visible(boolean visible);
-
-	ILazyScrollPane height(int height);
-
-	ILazyScrollPane horizontalScrollPane(boolean horizontalScrollPane);
-
-	ILazyScrollPane refresh();
+	T onDown(int turns);
 }
