@@ -18,9 +18,6 @@
  */
 package co.fxl.gui.tree.impl;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 import co.fxl.gui.table.util.api.ILazyScrollPane.IDecorator;
@@ -34,7 +31,6 @@ public abstract class LazyTreeWidgetTemplate implements
 	protected LazyTreeAdp tree;
 	protected int height = 600;
 	protected IContainer c;
-	protected List<ILazyTreeListener<Object>> listeners = new LinkedList<ILazyTreeListener<Object>>();
 	private boolean showRoot;
 	protected int spacing = 0;
 	protected Object selection;
@@ -97,12 +93,6 @@ public abstract class LazyTreeWidgetTemplate implements
 	}
 
 	@Override
-	public ILazyTreeWidget<Object> addListener(ILazyTreeListener<Object> l) {
-		listeners.add(l);
-		return this;
-	}
-
-	@Override
 	public ILazyTreeWidget<Object> visible(boolean visible) {
 		if (visible) {
 			pane = (ILazyScrollPane) c.widget(ILazyScrollPane.class);
@@ -128,15 +118,6 @@ public abstract class LazyTreeWidgetTemplate implements
 		c.element().remove();
 		visible(true);
 		return this;
-	}
-
-	@Override
-	public void decorate(IContainer container, int firstRow, int lastRow,
-			boolean notify) {
-		if (notify)
-			for (ILazyTreeListener<Object> l : listeners) {
-				l.onVisible(firstRow, lastRow);
-			}
 	}
 
 	@Override
