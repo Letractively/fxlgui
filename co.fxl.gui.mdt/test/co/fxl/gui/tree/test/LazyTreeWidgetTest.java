@@ -18,13 +18,14 @@
  */
 package co.fxl.gui.tree.test;
 
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.table.util.impl.LazyScrollPanelImplWidgetProvider;
 import co.fxl.gui.tree.api.ILazyTreeWidget;
-import co.fxl.gui.tree.api.ILazyTreeWidget.ILazyTreeListener;
+import co.fxl.gui.tree.api.ILazyTreeWidget.IDecorator;
 
-public class LazyTreeWidgetTest implements ILazyTreeListener<Object> {
+public class LazyTreeWidgetTest implements IDecorator {
 
 	private ILazyTreeWidget<Object> tree;
 
@@ -34,19 +35,15 @@ public class LazyTreeWidgetTest implements ILazyTreeListener<Object> {
 		IVerticalPanel panel = display.container().panel().vertical();
 		tree = (ILazyTreeWidget<Object>) panel.add().widget(
 				ILazyTreeWidget.class);
+		tree.onClick(this);
 		tree.tree(new TestLazyTree(5));
 		tree.height(600);
-		tree.addListener(this);
 		tree.visible(true);
 		display.fullscreen().visible(true);
 	}
 
 	@Override
-	public void onClick(int index) {
-		tree.elementAt(index).label().text("Hell");
-	}
-
-	@Override
-	public void onVisible(int startIndex, int endIndex) {
+	public void decorate(IContainer c, int index) {
+		c.label().text("# " + index);
 	}
 }
