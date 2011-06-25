@@ -31,6 +31,7 @@ public class LazyTreeAdp {
 	private int row = 0;
 	private int rootIndex = 0;
 	public int indent = 0;
+	boolean isCollapsed = false;
 
 	public LazyTreeAdp(ITree<Object> tree, boolean showRoot) {
 		this(null, null, tree, showRoot);
@@ -115,5 +116,17 @@ public class LazyTreeAdp {
 		// b.append("]");
 		// }
 		return b.toString();
+	}
+
+	boolean isCollapsed(ITree<Object> tree) {
+		return row(index(tree.object())).isCollapsed;
+	}
+
+	boolean collapsed(ITree<Object> tree, boolean collapse) {
+		return row(index(tree.object())).collapse(collapse);
+	}
+
+	private boolean collapse(boolean collapse) {
+		throw new MethodNotImplementedException();
 	}
 }

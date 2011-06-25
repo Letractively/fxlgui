@@ -126,4 +126,15 @@ public abstract class LazyTreeWidgetTemplate implements
 	public int rowHeight(int rowIndex) {
 		return heightElement;
 	}
+
+	@Override
+	public boolean isCollapsed(ITree<Object> tree) {
+		return this.tree.isCollapsed(tree);
+	}
+
+	@Override
+	public ILazyTreeWidget<Object> collapse(ITree<Object> tree, boolean collapse) {
+		this.tree.collapsed(tree, collapse);
+		return this;
+	}
 }
