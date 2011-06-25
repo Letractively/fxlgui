@@ -49,7 +49,7 @@ public abstract class LazyTreeWidgetTemplate implements
 	}
 
 	@Override
-	public ILazyTreeWidget<Object> onClick(IDecorator dec) {
+	public ILazyTreeWidget<Object> selectionDecorator(IDecorator dec) {
 		decorator = dec;
 		return this;
 	}

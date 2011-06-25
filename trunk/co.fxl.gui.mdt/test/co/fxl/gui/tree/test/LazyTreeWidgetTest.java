@@ -35,7 +35,7 @@ public class LazyTreeWidgetTest implements IDecorator {
 		IVerticalPanel panel = display.container().panel().vertical();
 		tree = (ILazyTreeWidget<Object>) panel.add().widget(
 				ILazyTreeWidget.class);
-		tree.onClick(this);
+		tree.selectionDecorator(this);
 		tree.tree(new TestLazyTree(5));
 		tree.height(600);
 		tree.visible(true);
