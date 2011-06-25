@@ -33,6 +33,9 @@ import co.fxl.gui.tree.impl.TreeNode;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseWheelEvent;
+import com.google.gwt.event.dom.client.MouseWheelHandler;
+import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -84,6 +87,18 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		this.container = container;
 		this.firstRow = firstRow;
 		this.lastRow = lastRow;
+		FocusPanel fp = new FocusPanel();
+		fp.addStyleName("nooutline");
+		fp.addMouseWheelHandler(new MouseWheelHandler() {
+			@Override
+			public void onMouseWheel(MouseWheelEvent event) {
+				if (event.isNorth()) {
+					pane.onUp(event.getDeltaY());
+				} else if (event.isSouth()) {
+					pane.onUp(event.getDeltaY());
+				}
+			}
+		});
 		VerticalPanel p0 = new VerticalPanel();
 		p0.setSpacing(spacing);
 		p0.setHeight(height + "px");
@@ -104,7 +119,8 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			p.add(getHTML(firstRow, lastRow));
 		}
 		p0.add(p);
-		container.nativeElement(p0);
+		fp.setWidget(p0);
+		container.nativeElement(fp);
 	}
 
 	@SuppressWarnings("rawtypes")
