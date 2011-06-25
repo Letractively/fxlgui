@@ -146,8 +146,8 @@ class TreeModel<T> {
 			node = refresh();
 		} else {
 			node = node(tree).refresh(recurse);
-			if (tree.equals(selection))
-				widget.scrollIntoView(node);
+			// if (tree.equals(selection))
+			// widget.scrollIntoView(node);
 		}
 		widget.updateButtons();
 		return node;
@@ -168,7 +168,7 @@ class TreeModel<T> {
 		ITree<T> tree = node.tree();
 		refresh(tree, recurse);
 		if (tree.equals(selection)) {
-			widget.scrollIntoView(node);
+			// widget.scrollIntoView(node);
 			widget.setDetailViewTree(tree);
 		}
 		return node;
@@ -216,12 +216,12 @@ class TreeModel<T> {
 			widget.previousSelection = null;
 			selection = node.tree();
 			node.selected(true);
-			widget.setDetailViewTree(selection);
+			widget.setDetailViewTree(selection, false);
 		} else if (selection != null
 				&& selection.object().equals(node.tree().object())) {
 			selection = node.tree();
 			node.selected(true);
-			widget.setDetailViewTree(selection);
+			widget.setDetailViewTree(selection, false);
 		}
 	}
 
