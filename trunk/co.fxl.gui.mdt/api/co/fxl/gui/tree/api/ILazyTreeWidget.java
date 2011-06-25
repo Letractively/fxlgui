@@ -22,11 +22,9 @@ import co.fxl.gui.api.IContainer;
 
 public interface ILazyTreeWidget<T> {
 
-	public interface ILazyTreeListener<T> {
+	public interface IDecorator {
 
-		void onVisible(int startIndex, int endIndex);
-
-		void onClick(int index);
+		void decorate(IContainer c, int index);
 	}
 
 	ILazyTreeWidget<T> spacing(int spacing);
@@ -39,13 +37,11 @@ public interface ILazyTreeWidget<T> {
 
 	ILazyTreeWidget<T> height(int height);
 
-	ILazyTreeWidget<T> addListener(ILazyTreeListener<T> l);
-
 	ILazyTreeWidget<T> visible(boolean visible);
 
 	ILazyTreeWidget<T> selection(T selection);
 
-	IContainer elementAt(final int index);
+	ILazyTreeWidget<T> onClick(IDecorator decorator);
 
 	ILazyTreeWidget<T> refresh();
 }
