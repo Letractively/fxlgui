@@ -52,12 +52,12 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			+ "</td>"
 			+ "<td align=\"left\" style=\"vertical-align: middle;\">"
 			+ "<img class=\"gwt-Image\" "
-			+ "src=\"test_gwt/images/${STATE_ICON}\" "
+			+ "src=\"images/${STATE_ICON}\" "
 			+ "style=\"cursor: pointer;\">"
 			+ "</td>"
 			+ "<td align=\"left\" style=\"vertical-align: middle;\">"
 			+ "<img class=\"gwt-Image\" "
-			+ "src=\"test_gwt/images/${ICON}\" "
+			+ "src=\"images/${ICON}\" "
 			+ "style=\"cursor: pointer;\">"
 			+ "</td>"
 			+ "<td align=\"left\" style=\"vertical-align: middle;\">"
@@ -102,6 +102,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		} else {
 			p.add(getHTML(firstRow, lastRow));
 		}
+		p0.add(p);
 		container.nativeElement(p0);
 	}
 
