@@ -44,4 +44,8 @@ public interface ILazyTreeWidget<T> {
 	ILazyTreeWidget<T> selectionDecorator(IDecorator decorator);
 
 	ILazyTreeWidget<T> refresh();
+
+	boolean isCollapsed(ITree<T> tree);
+
+	ILazyTreeWidget<T> collapse(ITree<T> tree, boolean collapse);
 }
