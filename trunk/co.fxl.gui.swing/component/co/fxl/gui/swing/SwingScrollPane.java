@@ -19,7 +19,6 @@
 package co.fxl.gui.swing;
 
 import java.awt.Color;
-import java.awt.Rectangle;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
@@ -34,6 +33,7 @@ import co.fxl.gui.api.IScrollPane;
 class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 		IScrollPane {
 
+	private static final int BLOCK_INCREMENT = 22;
 	private SwingContainer<JComponent> viewPort = new SwingContainer<JComponent>(
 			container.parent) {
 
@@ -136,5 +136,22 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 		container.component
 				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		return this;
+	}
+
+	@Override
+	public void onUp(int turns) {
+		onScrollTurns(-turns);
+	}
+
+	private void onScrollTurns(int i) {
+		int newOffset = scrollOffset() + i * BLOCK_INCREMENT;
+		if (newOffset < 0)
+			newOffset = 0;
+		scrollTo(newOffset);
+	}
+
+	@Override
+	public void onDown(int turns) {
+		onScrollTurns(turns);
 	}
 }
