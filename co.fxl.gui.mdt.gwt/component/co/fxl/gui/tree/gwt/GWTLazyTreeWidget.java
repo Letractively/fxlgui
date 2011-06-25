@@ -117,14 +117,15 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		List<LazyTreeAdp> rows = tree.rows(firstRow, lastRow);
 		VerticalPanel p = new VerticalPanel();
 		p.setSpacing(spacing);
+		p.setHeight(height + "px");
 		StringBuilder b = new StringBuilder(
 				"<table cellspacing=\"0\" cellpadding=\"0\">");
 		for (int i = firstRow; i <= lastRow; i++) {
 			LazyTreeAdp row = rows.get(i - firstRow);
 			String hTML = HTML.replace("${INDENT}",
 					String.valueOf(row.indent * 10));
-			hTML = hTML.replace("${STATE_ICON}", icon(row));
-			hTML = hTML.replace("${ICON}", image(row));
+			hTML = hTML.replace("${STATE_ICON}", TreeNode.treeIcon(row.tree));
+			hTML = hTML.replace("${ICON}", TreeNode.entityIcon(row.tree));
 			hTML = hTML.replace("${LABEL}", row.tree.name());
 			b.append("<tr>" + hTML + "</tr>");
 			trees.add(i);
@@ -132,7 +133,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		b.append("</table>");
 		html = new HTML(b.toString());
 		html.getElement().getStyle().setOverflow(Overflow.HIDDEN);
-		html.setHeight(height + "px");
+		html.setHeight((height - 2 * spacing) + "px");
 		html.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -147,22 +148,5 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		p.add(html);
 		container.nativeElement(p);
 		super.decorate(container, firstRow, lastRow, notify);
-	}
-
-	private String image(LazyTreeAdp tree) {
-		if (!tree.tree.children().isEmpty())
-			return tree.tree.icon();
-		else
-			return tree.tree.iconClosed();
-	}
-
-	private String icon(LazyTreeAdp row) {
-		if (row.tree.childCount() == 0) {
-			return !row.tree.isLoaded() ? TreeNode
-					.getOpenOrClosedIcon(row.tree) : (row.tree.children()
-					.isEmpty() ? TreeNode.CLOSED : TreeNode.OPEN);
-		} else
-			return !row.tree.isLoaded() ? TreeNode
-					.getOpenOrClosedIcon(row.tree) : TreeNode.EMPTY;
 	}
 }
