@@ -31,6 +31,8 @@ import com.google.gwt.user.client.ui.Widget;
 class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 		IScrollPane {
 
+	private static final int BLOCK_INCREMENT = 22;
+
 	GWTScrollPane(GWTContainer<ScrollPanel> container) {
 		super(container);
 		container.widget.setWidth("100%");
@@ -98,5 +100,22 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 	@Override
 	public IScrollPane horizontal() {
 		return this;
+	}
+
+	@Override
+	public void onUp(int turns) {
+		onScrollTurns(-turns);
+	}
+
+	private void onScrollTurns(int i) {
+		int newOffset = scrollOffset() + i * BLOCK_INCREMENT;
+		if (newOffset < 0)
+			newOffset = 0;
+		scrollTo(newOffset);
+	}
+
+	@Override
+	public void onDown(int turns) {
+		onScrollTurns(turns);
 	}
 }
