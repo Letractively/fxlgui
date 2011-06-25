@@ -1,6 +1,4 @@
 /**
- * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
- *  
  * This file is part of FXL GUI API.
  *  
  * FXL GUI API is free software: you can redistribute it and/or modify
@@ -15,26 +13,14 @@
  *  
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
 package co.fxl.gui.api;
 
-public interface IScrollPane extends IElement<IScrollPane>, IBordered,
-		IColored, IMouseWheelListener {
+public interface IMouseWheelListener {
 
-	public interface IScrollListener {
+	void onUp(int turns);
 
-		void onScroll(int maxOffset);
-	}
-
-	IScrollPane horizontal();
-
-	IContainer viewPort();
-
-	IScrollPane addScrollListener(IScrollListener listener);
-
-	IScrollPane scrollTo(int pos);
-
-	IScrollPane scrollIntoView(IElement<?> element);
-
-	int scrollOffset();
+	void onDown(int turns);
 }
