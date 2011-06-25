@@ -24,6 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import co.fxl.data.format.api.IFormat;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IGridPanel;
@@ -38,7 +39,6 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
-import co.fxl.gui.format.api.IFormat;
 import co.fxl.gui.format.impl.Format;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.DiscardChangesDialog;
