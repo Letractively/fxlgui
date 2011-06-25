@@ -110,7 +110,6 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		if (maxOffset < 0)
 			maxOffset = 0;
 		final int firstIndex = size - rows2Paint;
-		assert rows2Paint > 0;
 		assert firstIndex >= 0;
 		update(firstIndex);
 		dock.display().invokeLater(new Runnable() {
