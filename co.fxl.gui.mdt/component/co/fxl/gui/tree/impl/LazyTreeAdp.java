@@ -90,6 +90,8 @@ public class LazyTreeAdp {
 	}
 
 	public int index(Object selection) {
+		if (selection == null)
+			return -1;
 		if (tree.object().equals(selection)) {
 			return row;
 		}
