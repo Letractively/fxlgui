@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import co.fxl.gui.format.api.IFormat;
+import co.fxl.data.format.api.IFormat;
 
 public class Format {
 

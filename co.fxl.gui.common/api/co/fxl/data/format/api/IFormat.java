@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.format.api;
+package co.fxl.data.format.api;
 
 public interface IFormat<T> {
 
