@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.format.impl;
 
-import co.fxl.gui.format.api.IFormat;
+import co.fxl.data.format.api.IFormat;
 
 abstract class FormatImpl<T> implements IFormat<T> {
 
