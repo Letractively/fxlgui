@@ -90,8 +90,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			@Override
 			public void add(Widget widget) {
 				child().removeFromParent();
-				DOM.insertChild(html.getElement(), widget.getElement(),
-						index());
+				DOM.insertChild(html.getElement(), widget.getElement(), index());
 			}
 
 			Node child() {
@@ -121,7 +120,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 	}
 
 	@Override
-	public void decorate(IContainer container, int firstRow, int lastRow,
+	public void decorate(IContainer container, final int firstRow, int lastRow,
 			boolean notify) {
 		trees.clear();
 		this.firstRow = firstRow;
@@ -139,7 +138,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			hTML = hTML.replace("${ICON}", TreeNode.entityIcon(row.tree));
 			hTML = hTML.replace("${LABEL}", row.tree.name());
 			b.append("<tr>" + hTML + "</tr>");
-			trees.add(i);
+			trees.add(firstRow + i);
 		}
 		b.append("</table>");
 		html = new HTML(b.toString());
@@ -148,7 +147,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		html.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				int index = event.getY() / heightElement;
+				int index = firstRow + (event.getY() / heightElement);
 				if (!trees.contains(index))
 					return;
 				for (ILazyTreeListener<Object> l : listeners) {
