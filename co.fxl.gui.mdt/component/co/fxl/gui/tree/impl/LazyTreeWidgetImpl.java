@@ -28,6 +28,8 @@ import co.fxl.gui.api.IVerticalPanel;
 
 class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 
+	// TODO Usability: Swing: Mouse-Wheel not active on content panel
+
 	private Map<Integer, IVerticalPanel> panels = new HashMap<Integer, IVerticalPanel>();
 
 	LazyTreeWidgetImpl(IContainer container) {
