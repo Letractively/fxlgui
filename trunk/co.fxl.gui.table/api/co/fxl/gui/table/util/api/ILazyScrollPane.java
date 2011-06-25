@@ -19,8 +19,9 @@
 package co.fxl.gui.table.util.api;
 
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IMouseWheelListener;
 
-public interface ILazyScrollPane extends IMouseWheelListener<ILazyScrollPane> {
+public interface ILazyScrollPane extends IMouseWheelListener {
 
 	public interface IDecorator {
 

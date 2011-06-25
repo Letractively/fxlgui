@@ -189,24 +189,14 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		update();
 	}
 
-	private int increment(int turns) {
-		double inc = maxOffset * turns;
-		inc /= maxRowIndex;
-		return (int) inc;
+	@Override
+	public void onUp(int turns) {
+		scrollPane.onUp(turns);
 	}
 
 	@Override
-	public ILazyScrollPane onUp(int turns) {
-		int scrollPanelIndex = scrollPane.scrollOffset() - increment(turns);
-		scrollPane.scrollTo(scrollPanelIndex);
-		return this;
-	}
-
-	@Override
-	public ILazyScrollPane onDown(int turns) {
-		int scrollPanelIndex = scrollPane.scrollOffset() + increment(turns);
-		scrollPane.scrollTo(scrollPanelIndex);
-		return this;
+	public void onDown(int turns) {
+		scrollPane.onDown(turns);
 	}
 
 	@Override

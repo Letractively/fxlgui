@@ -22,6 +22,7 @@ import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IMouseWheelListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 public interface IBulkTableWidget {
@@ -29,13 +30,6 @@ public interface IBulkTableWidget {
 	public interface IUpdateAdapter<T> {
 
 		boolean isEditable();
-	}
-
-	public interface IMouseWheelListener {
-
-		void onDown(int turns);
-
-		void onUp(int turns);
 	}
 
 	public interface ITableClickListener {
