@@ -169,4 +169,14 @@ class AndroidDialog implements IDialog {
 	public IDialog size(int width, int height) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public IDialog width(int width) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IDialog height(int height) {
+		throw new MethodNotImplementedException();
+	}
 }

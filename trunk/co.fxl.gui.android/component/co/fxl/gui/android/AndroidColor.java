@@ -19,7 +19,7 @@
 package co.fxl.gui.android;
 
 import co.fxl.gui.api.IColored.IColor;
-import co.fxl.gui.api.template.ColorTemplate;
+import co.fxl.gui.impl.ColorTemplate;
 
 abstract class AndroidColor extends ColorTemplate {
 
