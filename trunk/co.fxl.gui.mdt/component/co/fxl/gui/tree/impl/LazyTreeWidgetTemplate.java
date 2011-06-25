@@ -115,6 +115,7 @@ public abstract class LazyTreeWidgetTemplate implements
 
 	@Override
 	public ILazyTreeWidget<Object> refresh() {
+		selection = tree.row(elementAt).tree.object();
 		tree(realTree);
 		c.element().remove();
 		visible(true);
