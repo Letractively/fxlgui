@@ -24,8 +24,7 @@ public interface ILazyScrollPane {
 
 	public interface IDecorator {
 
-		void decorate(IContainer container, int firstRow, int lastRow,
-				boolean notify);
+		void decorate(IContainer container, int firstRow, int lastRow);
 
 		int rowHeight(int rowIndex);
 	}
