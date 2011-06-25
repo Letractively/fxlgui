@@ -30,7 +30,7 @@ import co.fxl.gui.tree.api.ITree;
 public abstract class LazyTreeWidgetTemplate implements
 		ILazyTreeWidget<Object>, IDecorator {
 
-	protected int heightElement = 26;
+	protected int heightElement = 22;
 	protected LazyTreeAdp tree;
 	protected int height = 600;
 	protected IContainer c;
