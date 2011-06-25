@@ -20,7 +20,7 @@ package co.fxl.gui.format.gwt;
 
 import java.util.Date;
 
-import co.fxl.gui.format.api.IFormat;
+import co.fxl.data.format.api.IFormat;
 
 public abstract class DateFormatImpl implements IFormat<Date> {
 
