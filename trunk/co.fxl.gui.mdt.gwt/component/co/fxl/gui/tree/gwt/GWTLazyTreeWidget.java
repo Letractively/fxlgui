@@ -31,6 +31,7 @@ import co.fxl.gui.tree.impl.LazyTreeAdp;
 import co.fxl.gui.tree.impl.LazyTreeWidgetTemplate;
 import co.fxl.gui.tree.impl.TreeNode;
 
+import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -55,12 +56,12 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			+ "</td>"
 			+ "<td align=\"left\" style=\"vertical-align: middle;\">"
 			+ "<img class=\"gwt-Image\" "
-			+ "src=\"images/${STATE_ICON}\" "
+			+ "src=\"test_gwt/images/${STATE_ICON}\" "
 			+ "style=\"cursor: pointer;\">"
 			+ "</td>"
 			+ "<td align=\"left\" style=\"vertical-align: middle;\">"
 			+ "<img class=\"gwt-Image\" "
-			+ "src=\"images/${ICON}\" "
+			+ "src=\"test_gwt/images/${ICON}\" "
 			+ "style=\"cursor: pointer;\">"
 			+ "</td>"
 			+ "<td align=\"left\" style=\"vertical-align: middle;\">"
@@ -75,6 +76,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			+ "</td>" + "</tr>" + "</tbody>" + "</table>";
 	private HTML html;
 	private Set<Integer> trees = new HashSet<Integer>();
+	private int firstRow;
 
 	public GWTLazyTreeWidget(IContainer c) {
 		super(c);
@@ -87,14 +89,22 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 
 			@Override
 			public void add(Widget widget) {
-				html.getElement().getChild(index + 1).removeFromParent();
+				child().removeFromParent();
 				DOM.insertChild(html.getElement(), widget.getElement(),
-						index + 1);
+						index());
+			}
+
+			Node child() {
+				return html.getElement().getChild(index());
+			}
+
+			private int index() {
+				return index - firstRow;
 			}
 
 			@Override
 			public void remove(Widget widget) {
-				html.getElement().getChild(index + 1).removeFromParent();
+				child().removeFromParent();
 			}
 
 			@Override
@@ -114,6 +124,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 	public void decorate(IContainer container, int firstRow, int lastRow,
 			boolean notify) {
 		trees.clear();
+		this.firstRow = firstRow;
 		List<LazyTreeAdp> rows = tree.rows(firstRow, lastRow);
 		VerticalPanel p = new VerticalPanel();
 		p.setSpacing(spacing);
