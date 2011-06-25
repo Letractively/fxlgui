@@ -263,7 +263,8 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	}
 
 	private void updateParentAfterMove() {
-		widget.model.refresh(tree.parent(), true);
+		widget.refreshLazyTree();
+//		widget.model.refresh(tree.parent(), true);
 	}
 
 	@SuppressWarnings("unchecked")
