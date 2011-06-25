@@ -32,12 +32,10 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 
 	LazyTreeWidgetImpl(IContainer container) {
 		super(container);
-		heightElement = 22;
 	}
 
 	LazyTreeWidgetImpl(IContainer container, boolean showRoot) {
 		super(container, showRoot);
-		heightElement = 22;
 	}
 
 	@Override
