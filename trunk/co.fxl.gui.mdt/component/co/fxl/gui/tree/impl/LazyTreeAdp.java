@@ -131,6 +131,9 @@ public class LazyTreeAdp {
 	}
 
 	private boolean collapse(boolean collapse) {
+		// TODO if true: width anpassen
+		// TODO & row von allen sibblings anpassen
+		// TODO & children.clear()
 		throw new MethodNotImplementedException();
 	}
 }
