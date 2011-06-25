@@ -104,6 +104,7 @@ public abstract class LazyTreeWidgetTemplate implements
 			int index = tree.index(selection);
 			if (index != -1) {
 				pane.rowIndex(index);
+				selection = null;
 			}
 			elementAt = index;
 			pane.visible(true);
