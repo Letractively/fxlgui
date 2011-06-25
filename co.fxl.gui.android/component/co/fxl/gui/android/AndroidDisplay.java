@@ -23,6 +23,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.view.View;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
@@ -31,7 +32,6 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
-import co.fxl.gui.api.IColored.IColor;
 
 public class AndroidDisplay implements IDisplay, Parent {
 

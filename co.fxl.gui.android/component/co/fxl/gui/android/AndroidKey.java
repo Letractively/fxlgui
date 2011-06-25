@@ -18,8 +18,8 @@
  */
 package co.fxl.gui.android;
 
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IClickable.IKey;
+import co.fxl.gui.api.IElement;
 
 class AndroidKey<T extends IElement<T>> implements IKey<T> {
 
