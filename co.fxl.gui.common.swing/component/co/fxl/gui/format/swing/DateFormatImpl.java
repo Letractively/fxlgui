@@ -22,7 +22,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import co.fxl.gui.format.api.IFormat;
+import co.fxl.data.format.api.IFormat;
 
 class DateFormatImpl implements IFormat<Date> {
 
