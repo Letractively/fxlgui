@@ -83,10 +83,12 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		this.container = container;
 		this.firstRow = firstRow;
 		this.lastRow = lastRow;
+		VerticalPanel p0 = new VerticalPanel();
+		p0.setSpacing(spacing);
+		p0.setHeight(height + "px");
+		p0.getElement().getStyle().setOverflow(Overflow.HIDDEN);
 		VerticalPanel p = new VerticalPanel();
-		p.setSpacing(spacing);
-		p.setHeight(height + "px");
-		p.getElement().getStyle().setOverflow(Overflow.HIDDEN);
+		p.setSpacing(0);
 		if (elementAt > firstRow && elementAt < lastRow) {
 			p.add(getHTML(firstRow, elementAt - 1));
 			decorator.decorate(getContainer(p), elementAt);
@@ -100,7 +102,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		} else {
 			p.add(getHTML(firstRow, lastRow));
 		}
-		container.nativeElement(p);
+		container.nativeElement(p0);
 	}
 
 	@SuppressWarnings("rawtypes")
