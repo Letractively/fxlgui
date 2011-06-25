@@ -25,6 +25,7 @@ import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.gwt.GWTContainer;
 import co.fxl.gui.gwt.GWTDisplay;
 import co.fxl.gui.gwt.WidgetParent;
+import co.fxl.gui.impl.HTMLText;
 import co.fxl.gui.tree.impl.LazyTreeAdp;
 import co.fxl.gui.tree.impl.LazyTreeWidgetTemplate;
 import co.fxl.gui.tree.impl.TreeNode;
@@ -148,7 +149,8 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 					String.valueOf(row.indent * 10));
 			hTML = hTML.replace("${STATE_ICON}", TreeNode.treeIcon(row.tree));
 			hTML = hTML.replace("${ICON}", TreeNode.entityIcon(row.tree));
-			hTML = hTML.replace("${LABEL}", row.tree.name());
+			hTML = hTML.replace("${LABEL}",
+					HTMLText.html(row.tree.name().replace("<", "&#060;")));
 			b.append("<tr>" + hTML + "</tr>");
 		}
 		b.append("</table>");
