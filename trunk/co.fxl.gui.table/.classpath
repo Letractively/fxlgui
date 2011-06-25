@@ -7,6 +7,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/co.fxl.gui"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/co.fxl.gui.form"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/co.fxl.gui.common"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/co.fxl.data.format"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
