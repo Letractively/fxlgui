@@ -18,9 +18,7 @@
  */
 package co.fxl.gui.tree.gwt;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
@@ -75,17 +73,14 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			+ "</div>" + "</td>" + "</td>" + "</tr>" + "</tbody>" + "</table>"
 			+ "</td>" + "</tr>" + "</tbody>" + "</table>";
 	private HTML html;
-	private Set<Integer> trees = new HashSet<Integer>();
 	private int firstRow;
 
 	public GWTLazyTreeWidget(IContainer c) {
 		super(c);
 	}
 
-	@Override
-	public IContainer elementAt(final int index) {
-		trees.remove(index);
-		return new GWTContainer<Widget>(new WidgetParent() {
+	private void decorate(final int index) {
+		IContainer c = new GWTContainer<Widget>(new WidgetParent() {
 
 			@Override
 			public void add(Widget widget) {
@@ -108,7 +103,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 
 			@Override
 			public GWTDisplay lookupDisplay() {
-				return (GWTDisplay) c.display();
+				return (GWTDisplay) GWTLazyTreeWidget.this.c.display();
 			}
 
 			@Override
@@ -117,12 +112,12 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 				return lookupDisplay().lookupWidgetProvider(interfaceClass);
 			}
 		});
+		decorator.decorate(c, index);
 	}
 
 	@Override
 	public void decorate(IContainer container, final int firstRow, int lastRow,
 			boolean notify) {
-		trees.clear();
 		this.firstRow = firstRow;
 		List<LazyTreeAdp> rows = tree.rows(firstRow, lastRow);
 		VerticalPanel p = new VerticalPanel();
@@ -138,7 +133,6 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			hTML = hTML.replace("${ICON}", TreeNode.entityIcon(row.tree));
 			hTML = hTML.replace("${LABEL}", row.tree.name());
 			b.append("<tr>" + hTML + "</tr>");
-			trees.add(firstRow + i);
 		}
 		b.append("</table>");
 		html = new HTML(b.toString());
@@ -147,16 +141,15 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		html.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				int index = firstRow + (event.getY() / heightElement);
-				if (!trees.contains(index))
-					return;
-				for (ILazyTreeListener<Object> l : listeners) {
-					l.onClick(index);
-				}
+				elementAt = firstRow + (event.getY() / heightElement);
+				decorate(elementAt);
 			}
 		});
 		p.add(html);
 		container.nativeElement(p);
+		if (elementAt >= firstRow && elementAt <= lastRow) {
+			decorate(elementAt);
+		}
 		super.decorate(container, firstRow, lastRow, notify);
 	}
 }
