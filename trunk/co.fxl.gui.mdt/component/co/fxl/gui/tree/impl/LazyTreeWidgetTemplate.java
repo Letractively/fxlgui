@@ -34,7 +34,7 @@ public abstract class LazyTreeWidgetTemplate implements
 	private boolean showRoot;
 	protected int spacing = 0;
 	protected Object selection;
-	private ILazyScrollPane pane;
+	protected ILazyScrollPane pane;
 	private ITree<Object> realTree;
 	protected int elementAt = -1;
 	protected IDecorator decorator;
