@@ -20,7 +20,7 @@ package co.fxl.data.format.gwt;
 
 import java.util.Date;
 
-import co.fxl.gui.format.impl.Format;
+import co.fxl.data.format.impl.Format;
 
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.i18n.client.NumberFormat;
