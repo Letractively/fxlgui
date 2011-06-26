@@ -22,10 +22,10 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.data.format.impl.Format;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IUpdateable;
-import co.fxl.gui.format.impl.Format;
 import co.fxl.gui.input.api.ICalendarWidget;
 
 class DummyCalendarWidget implements ICalendarWidget {
