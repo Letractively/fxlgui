@@ -20,9 +20,9 @@ package co.fxl.gui.table.impl;
 
 import java.util.Date;
 
+import co.fxl.data.format.impl.Format;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.format.impl.Format;
 
 class DateCell extends LabelCell {
 

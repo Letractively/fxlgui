@@ -18,8 +18,8 @@
  */
 package co.fxl.gui.table.impl;
 
-import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.IImage;
 
 class ImageCell extends Cell<IImage> {
 
