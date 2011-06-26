@@ -21,12 +21,12 @@ package co.fxl.gui.filter.impl;
 import java.util.Date;
 
 import co.fxl.data.format.api.IFormat;
+import co.fxl.data.format.impl.Format;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterConstraints.IRange;
 import co.fxl.gui.filter.impl.Constraint.IDateRangeConstraint;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.form.impl.Validation;
-import co.fxl.gui.format.impl.Format;
 
 class DateFilter extends RangeFilter<Date> {
 
