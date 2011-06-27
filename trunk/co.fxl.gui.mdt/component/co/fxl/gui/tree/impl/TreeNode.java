@@ -112,7 +112,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	}
 
 	void draw() {
-		isExpanded = !tree.children().isEmpty();
+		isExpanded = !lazyTree.isCollapsed(tree);
 		decorateCore();
 		content.addSpace(10);
 		// childrenPanel = panel.add().panel().vertical();
@@ -269,7 +269,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	}
 
 	private void updateParentAfterMove() {
-		widget.refreshLazyTree();
+		widget.refreshLazyTree(true);
 		// widget.model.refresh(tree.parent(), true);
 	}
 
@@ -380,7 +380,8 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		clear();
 		if (!isExpanded) {
 			isExpanded = true;
-			refreshLazyTree();
+//			lazyTree.collapse(tree, false);
+			refreshLazyTree(true);
 		}
 		// for (ITree<T> child : tree.children()) {
 		// widget.newNode(widget, childrenPanel, child, depth + 1, null, false);
@@ -395,8 +396,8 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		}
 	}
 
-	void refreshLazyTree() {
-		widget.refreshLazyTree();
+	void refreshLazyTree(boolean reset) {
+		widget.refreshLazyTree(reset);
 	}
 
 	void clear() {
@@ -408,18 +409,19 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 
 	private void clearLoadedNode() {
 		// childrenPanel.clear();
-		if (icon() != null) {
-			if (tree.childCount() != 0) {
-				isExpanded = false;
-				image.resource(CLOSED);
-				icon.resource(icon());
-			} else
-				image.resource(EMPTY);
-		} else
-			image.resource(FOLDER_CLOSED);
-		if (imageRefresh != null)
-			imageRefresh.resource(null);
-		refreshLazyTree();
+		// if (icon() != null) {
+		// if (tree.childCount() != 0) {
+		// isExpanded = false;
+		// image.resource(CLOSED);
+		// icon.resource(icon());
+		// } else
+		// image.resource(EMPTY);
+		// } else
+		// image.resource(FOLDER_CLOSED);
+		// if (imageRefresh != null)
+		// imageRefresh.resource(null);
+		lazyTree.collapse(tree, true);
+		refreshLazyTree(false);
 	}
 
 	@Override

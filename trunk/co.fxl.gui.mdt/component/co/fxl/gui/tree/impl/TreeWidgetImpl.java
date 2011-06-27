@@ -241,7 +241,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 							public void onSuccess(ITree<T> result) {
 								previousSelection = result.object();
 								if (!showRoot) {
-									refreshLazyTree();
+									refreshLazyTree(true);
 								} else if (result.parent() != null) {
 									model.refresh(result.parent(), true);
 								} else
@@ -488,10 +488,10 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		lazyTree.visible(true);
 	}
 
-	void refreshLazyTree() {
+	void refreshLazyTree(boolean r) {
 		if (previousSelection != null)
 			lazyTree.selection(previousSelection);
-		lazyTree.refresh();
+		lazyTree.refresh(r);
 	}
 
 	// @SuppressWarnings("rawtypes")

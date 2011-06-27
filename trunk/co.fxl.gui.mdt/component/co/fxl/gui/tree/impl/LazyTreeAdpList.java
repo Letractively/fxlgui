@@ -73,8 +73,12 @@ public class LazyTreeAdpList {
 
 	void collapse(ITree<Object> tree, boolean collapse) {
 		if (collapse) {
-			for (ITree<Object> c : tree.children())
+			for (ITree<Object> c : tree.children()) {
+				if (!c.children().isEmpty()) {
+					collapse(c, true);
+				}
 				rows.remove(c);
+			}
 		} else {
 			List<ITree<Object>> cs = new LinkedList<ITree<Object>>();
 			for (ITree<Object> c : tree.children())
