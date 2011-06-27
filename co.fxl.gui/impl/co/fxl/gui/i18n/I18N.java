@@ -1,5 +1,6 @@
 package co.fxl.gui.i18n;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import co.fxl.gui.api.ITextElement;
@@ -7,7 +8,10 @@ import co.fxl.gui.api.ITextElement;
 public class I18N {
 
 	private static final I18N INSTANCE = new I18N();
-	private Map<String, String> translations;
+	private Map<String, String> translations = new HashMap<String, String>();
+
+	private I18N() {
+	}
 
 	public void register(String text, String translation) {
 		translations.put(text, translation);
