@@ -50,7 +50,8 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 		List<ITree<Object>> rows = tree.rows(firstRow, lastRow);
 		int index = firstRow;
 		for (final ITree<Object> row : rows) {
-			IVerticalPanel p = decorator.setUp(panel, row, tree.indent(row));
+			IVerticalPanel p = decorator.setUp(this, panel, row,
+					tree.indent(row));
 			decorator.panel.height(heightElement);
 			decorator.decorateCore();
 			final int fIndex = index;

@@ -470,8 +470,8 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				}
 				if (!showRoot)
 					indent--;
-				new TreeNode<T>(TreeWidgetImpl.this, c.panel().vertical(),
-						tree, indent);
+				new TreeNode<T>(lazyTree, TreeWidgetImpl.this, c.panel()
+						.vertical(), tree, indent);
 				model.selection(tree);
 			}
 		});

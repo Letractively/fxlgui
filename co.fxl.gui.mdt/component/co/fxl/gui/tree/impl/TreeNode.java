@@ -30,6 +30,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.LazyClickListener;
+import co.fxl.gui.tree.api.ILazyTreeWidget;
 import co.fxl.gui.tree.api.ITree;
 
 public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
@@ -68,6 +69,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	IVerticalPanel panel;
 	private IClickable<?> gridButton;
 	private IImage acceptMove;
+	private ILazyTreeWidget<T> lazyTree;
 
 	// TODO FEATURE: Option: Usability: Click on cursor left / right expands /
 	// collapses tree node
@@ -75,16 +77,18 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	TreeNode() {
 	}
 
-	TreeNode(final TreeWidgetImpl<T> widget, IVerticalPanel panel,
-			final ITree<T> root, int depth) {
+	TreeNode(ILazyTreeWidget<T> lazyTree, final TreeWidgetImpl<T> widget,
+			IVerticalPanel panel, final ITree<T> root, int depth) {
 		assert root != null && root.object() != null;
 		this.widget = widget;
-		setUp(panel, root, depth);
+		setUp(lazyTree, panel, root, depth);
 		draw();
 		widget.model.register(this);
 	}
 
-	IVerticalPanel setUp(IVerticalPanel panel, final ITree<T> root, int depth) {
+	IVerticalPanel setUp(ILazyTreeWidget<T> lazyTree, IVerticalPanel panel,
+			final ITree<T> root, int depth) {
+		this.lazyTree = lazyTree;
 		this.panel = panel.add().panel().vertical();
 		this.tree = root;
 		this.depth = depth;
@@ -133,7 +137,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		container.border().color().white();
 		content = container.add().panel().horizontal().spacing(2);
 		content.addSpace(depth * INDENT);
-		image = content.add().image().resource(treeIcon(tree));
+		image = content.add().image().resource(treeIcon(lazyTree, tree));
 		if (entityIcon(tree) == null)
 			throw new MethodNotImplementedException("entity-icon is null for "
 					+ tree);
@@ -157,12 +161,15 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 			return tree.iconClosed();
 	}
 
-	@SuppressWarnings("rawtypes")
-	public static String treeIcon(ITree tree) {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static String treeIcon(ILazyTreeWidget lazyTree, ITree tree) {
 		if (!tree.isLoaded())
 			return TreeNode.getOpenOrClosedIcon(tree);
 		if (tree.childCount() != 0) {
-			return (tree.children().isEmpty() ? TreeNode.CLOSED : TreeNode.OPEN);
+			if (tree.children().isEmpty())
+				return TreeNode.CLOSED;
+			boolean collapsed = lazyTree.isCollapsed(tree);
+			return collapsed ? TreeNode.CLOSED : TreeNode.OPEN;
 		} else
 			return TreeNode.EMPTY;
 	}
