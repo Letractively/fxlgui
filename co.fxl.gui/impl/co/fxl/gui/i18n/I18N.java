@@ -6,6 +6,8 @@ import java.util.Map;
 import co.fxl.gui.api.ITextElement;
 
 public class I18N {
+	
+	// TODO FEATURE: Option: IMPL: I18N
 
 	private static final I18N INSTANCE = new I18N();
 	private Map<String, String> translations = new HashMap<String, String>();
