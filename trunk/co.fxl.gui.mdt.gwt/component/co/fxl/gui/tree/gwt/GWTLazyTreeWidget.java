@@ -26,7 +26,7 @@ import co.fxl.gui.gwt.GWTContainer;
 import co.fxl.gui.gwt.GWTDisplay;
 import co.fxl.gui.gwt.WidgetParent;
 import co.fxl.gui.impl.HTMLText;
-import co.fxl.gui.tree.impl.LazyTreeAdp;
+import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.impl.LazyTreeWidgetTemplate;
 import co.fxl.gui.tree.impl.TreeNode;
 
@@ -156,17 +156,17 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 	}
 
 	HTML getHTML(final int firstRow, int lastRow) {
-		List<LazyTreeAdp> rows = tree.rows(firstRow, lastRow);
+		List<ITree<Object>> rows = tree.rows(firstRow, lastRow);
 		StringBuilder b = new StringBuilder(
 				"<table cellspacing=\"0\" cellpadding=\"0\">");
 		for (int i = firstRow; i <= lastRow; i++) {
-			LazyTreeAdp row = rows.get(i - firstRow);
+			ITree<Object> row = rows.get(i - firstRow);
 			String hTML = HTML.replace("${INDENT}",
-					String.valueOf(row.indent * 10));
-			hTML = hTML.replace("${STATE_ICON}", TreeNode.treeIcon(row.tree));
-			hTML = hTML.replace("${ICON}", TreeNode.entityIcon(row.tree));
+					String.valueOf(tree.indent(row) * 10));
+			hTML = hTML.replace("${STATE_ICON}", TreeNode.treeIcon(row));
+			hTML = hTML.replace("${ICON}", TreeNode.entityIcon(row));
 			hTML = hTML.replace("${LABEL}",
-					HTMLText.html(row.tree.name().replace("<", "&#060;")));
+					HTMLText.html(row.name().replace("<", "&#060;")));
 			b.append("<tr>" + hTML + "</tr>");
 		}
 		b.append("</table>");
