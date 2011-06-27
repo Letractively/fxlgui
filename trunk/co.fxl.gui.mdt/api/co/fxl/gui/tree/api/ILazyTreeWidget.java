@@ -19,6 +19,7 @@
 package co.fxl.gui.tree.api;
 
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.tree.impl.LazyTreeAdpList;
 
 public interface ILazyTreeWidget<T> {
 

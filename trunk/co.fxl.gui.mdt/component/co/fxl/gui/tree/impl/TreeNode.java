@@ -133,7 +133,6 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		container.border().color().white();
 		content = container.add().panel().horizontal().spacing(2);
 		content.addSpace(depth * INDENT);
-		assert treeIcon(tree) != null;
 		image = content.add().image().resource(treeIcon(tree));
 		if (entityIcon(tree) == null)
 			throw new MethodNotImplementedException("entity-icon is null for "
@@ -264,7 +263,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 
 	private void updateParentAfterMove() {
 		widget.refreshLazyTree();
-//		widget.model.refresh(tree.parent(), true);
+		// widget.model.refresh(tree.parent(), true);
 	}
 
 	@SuppressWarnings("unchecked")
