@@ -16,20 +16,14 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.mdt.api;
+package co.fxl.gui.tree.impl;
 
-import co.fxl.gui.api.IContainer;
+import co.fxl.gui.tree.api.ITree;
 
-public interface IPropertyPage<T> {
+public class LazyTreeAdpList extends LazyTreeAdp {
 
-	interface IDecorator<T> {
-
-		void decorate(IContainer container, T entity);
+	public LazyTreeAdpList(ITree<Object> tree, boolean showRoot) {
+		super(tree, showRoot);
 	}
 
-	IPropertyPage<T> typeConstraint(Class<?> clazz);
-
-	IPropertyPage<T> decorator(IDecorator<T> dec);
-
-	IPropertyPage<T> constrainType(Class<?> class1);
 }
