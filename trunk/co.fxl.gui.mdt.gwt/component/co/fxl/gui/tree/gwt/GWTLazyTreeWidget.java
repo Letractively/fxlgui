@@ -163,7 +163,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			ITree<Object> row = rows.get(i - firstRow);
 			String hTML = HTML.replace("${INDENT}",
 					String.valueOf(tree.indent(row) * 10));
-			hTML = hTML.replace("${STATE_ICON}", TreeNode.treeIcon(row));
+			hTML = hTML.replace("${STATE_ICON}", TreeNode.treeIcon(this, row));
 			hTML = hTML.replace("${ICON}", TreeNode.entityIcon(row));
 			hTML = hTML.replace("${LABEL}",
 					HTMLText.html(row.name().replace("<", "&#060;")));
