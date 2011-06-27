@@ -28,7 +28,7 @@ public abstract class LazyTreeWidgetTemplate implements
 		ILazyTreeWidget<Object>, IDecorator {
 
 	protected int heightElement = 22;
-	protected LazyTreeAdp tree;
+	protected LazyTreeAdpList tree;
 	protected int height = 600;
 	protected IContainer c;
 	private boolean showRoot;
@@ -62,9 +62,9 @@ public abstract class LazyTreeWidgetTemplate implements
 
 	@Override
 	public ITree<Object> getTreeByIndex(int index) {
-		LazyTreeAdp row = tree.row(index);
+		ITree<Object> row = tree.row(index);
 		assert row != null : "row " + index + " not found in tree " + tree;
-		return row.tree;
+		return row;
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public abstract class LazyTreeWidgetTemplate implements
 	@Override
 	public ILazyTreeWidget<Object> tree(ITree<Object> tree) {
 		this.realTree = tree;
-		this.tree = new LazyTreeAdp(tree, showRoot);
+		this.tree = new LazyTreeAdpList(tree, showRoot);
 		return this;
 	}
 
@@ -96,7 +96,7 @@ public abstract class LazyTreeWidgetTemplate implements
 	public ILazyTreeWidget<Object> visible(boolean visible) {
 		if (visible) {
 			pane = (ILazyScrollPane) c.widget(ILazyScrollPane.class);
-			pane.size(tree.width);
+			pane.size(tree.size());
 			pane.horizontalScrollPane(true);
 			pane.minRowHeight(heightElement);
 			pane.height(height);
@@ -116,7 +116,7 @@ public abstract class LazyTreeWidgetTemplate implements
 	@Override
 	public ILazyTreeWidget<Object> refresh() {
 		if (selection == null && elementAt != -1)
-			selection = tree.row(elementAt).tree.object();
+			selection = tree.row(elementAt).object();
 		tree(realTree);
 		c.element().remove();
 		visible(true);
@@ -135,7 +135,7 @@ public abstract class LazyTreeWidgetTemplate implements
 
 	@Override
 	public ILazyTreeWidget<Object> collapse(ITree<Object> tree, boolean collapse) {
-		this.tree.collapsed(tree, collapse);
+		this.tree.collapse(tree, collapse);
 		return this;
 	}
 }
