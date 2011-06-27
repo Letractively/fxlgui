@@ -2,6 +2,8 @@ package co.fxl.gui.i18n;
 
 import java.util.Map;
 
+import co.fxl.gui.api.ITextElement;
+
 public class I18N {
 
 	private static final I18N INSTANCE = new I18N();
@@ -9,6 +11,10 @@ public class I18N {
 
 	public void register(String text, String translation) {
 		translations.put(text, translation);
+	}
+
+	public void translate(ITextElement<?> text) {
+		text.text(translate(text.text()));
 	}
 
 	public String translate(String text) {
