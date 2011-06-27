@@ -153,7 +153,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 			label.font().weight().italic().color().gray();
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes" })
 	public static String entityIcon(ITree tree) {
 		if (!tree.children().isEmpty())
 			return tree.icon();
@@ -380,7 +380,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		clear();
 		if (!isExpanded) {
 			isExpanded = true;
-//			lazyTree.collapse(tree, false);
+			// lazyTree.collapse(tree, false);
 			refreshLazyTree(true);
 		}
 		// for (ITree<T> child : tree.children()) {
