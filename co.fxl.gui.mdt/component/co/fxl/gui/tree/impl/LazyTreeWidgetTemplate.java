@@ -114,10 +114,12 @@ public abstract class LazyTreeWidgetTemplate implements
 	}
 
 	@Override
-	public ILazyTreeWidget<Object> refresh() {
+	public ILazyTreeWidget<Object> refresh(boolean reset) {
 		if (selection == null && elementAt != -1)
 			selection = tree.row(elementAt).object();
-		tree(realTree);
+		if (reset) {
+			tree(realTree);
+		}
 		c.element().remove();
 		visible(true);
 		return this;
