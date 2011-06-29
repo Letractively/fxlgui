@@ -1,8 +1,8 @@
 <module >
 	<inherits name='co.fxl.gui.IDisplay' />
 	<inherits name='co.fxl.gui.input.api.ICalendarWidget' />
-	<inherits name='co.fxl.gui.format.api.IFormat' />
-	<inherits name='co.fxl.gui.format.impl.FormatImpl' />
+	<inherits name='co.fxl.data.format.api.IFormat' />
+	<inherits name='co.fxl.data.format.impl.FormatImpl' />
 	<inherits name='co.fxl.gui.form.api.IFormWidget' />
 	<source path='' />
 </module>
