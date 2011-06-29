@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.filter.impl;
 
+import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.filter.impl.Constraint.IDoubleRangeConstraint;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.form.impl.Validation;
@@ -113,5 +114,11 @@ class NumberFilter extends RangeFilter<Number> {
 	public void validate(Validation validation) {
 		validation.linkInput(lowerBoundTextField);
 		validation.linkInput(upperBoundTextField);
+	}
+
+	@Override
+	public IUpdateable<String> addUpdateListener(
+			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
+		throw new MethodNotImplementedException();
 	}
 }

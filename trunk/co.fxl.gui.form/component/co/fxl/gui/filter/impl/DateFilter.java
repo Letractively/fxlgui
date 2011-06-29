@@ -22,6 +22,7 @@ import java.util.Date;
 
 import co.fxl.data.format.api.IFormat;
 import co.fxl.data.format.impl.Format;
+import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterConstraints.IRange;
 import co.fxl.gui.filter.impl.Constraint.IDateRangeConstraint;
@@ -124,5 +125,11 @@ class DateFilter extends RangeFilter<Date> {
 			return true;
 		} else
 			return false;
+	}
+
+	@Override
+	public IUpdateable<String> addUpdateListener(
+			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
+		throw new MethodNotImplementedException();
 	}
 }

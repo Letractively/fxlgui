@@ -21,7 +21,7 @@ package co.fxl.gui.filter.impl;
 import java.util.List;
 
 import co.fxl.gui.api.IComboBox;
-import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.filter.impl.Constraint.ISizeConstraint;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.form.impl.Validation;
@@ -108,5 +108,11 @@ class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
 
 	void set(int size) {
 		comboBox.text(String.valueOf(size));
+	}
+
+	@Override
+	public IUpdateable<String> addUpdateListener(
+			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
+		throw new MethodNotImplementedException();
 	}
 }

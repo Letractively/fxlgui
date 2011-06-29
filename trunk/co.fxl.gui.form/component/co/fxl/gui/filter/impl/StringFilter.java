@@ -19,6 +19,7 @@
 package co.fxl.gui.filter.impl;
 
 import co.fxl.gui.api.ITextField;
+import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.impl.Constraint.IStringPrefixConstraint;
@@ -115,5 +116,11 @@ class StringFilter extends FilterTemplate<String> {
 			return true;
 		} else
 			return false;
+	}
+
+	@Override
+	public IUpdateable<String> addUpdateListener(
+			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
+		throw new MethodNotImplementedException();
 	}
 }
