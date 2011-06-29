@@ -115,7 +115,7 @@ public interface IScrollTableWidget<T> {
 
 	IScrollTableWidget<T> rows(IRows<T> rows);
 
-	IScrollTableWidget<T> addViewComboBox(String[] texts,
+	IScrollTableWidget<T> addViewComboBox(String[] texts, String view,
 			IUpdateListener<String> ul);
 
 	IKey<?> addTableClickListener(IScrollTableClickListener l);
