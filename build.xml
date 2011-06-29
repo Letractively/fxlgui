@@ -29,6 +29,7 @@
 
 	<property name="co.fxl.data.format.dir" value="${project.dir}/co.fxl.data.format"/>
 	<property name="co.fxl.data.format.api.src.dir" value="${co.fxl.data.format.dir}/api"/>
+	<property name="co.fxl.data.format.api.gwt.dir" value="${co.fxl.data.format.dir}/gwt"/>
 	<property name="co.fxl.data.format.component.src.dir" value="${co.fxl.data.format.dir}/component"/>
 
 	<property name="co.fxl.data.format.gwt.dir" value="${project.dir}/co.fxl.data.format.gwt"/>
@@ -104,6 +105,7 @@
     	<fileset dir="${co.fxl.gui.impl.src.dir}"/>
     	<fileset dir="${co.fxl.gui.gwt.src.dir}"/>
     	<fileset dir="${co.fxl.gui.form.api.src.dir}"/>
+    	<fileset dir="${co.fxl.data.format.api.gwt.dir}"/>
     	<fileset dir="${co.fxl.gui.form.component.src.dir}"/>
     	<fileset dir="${co.fxl.gui.form.gwt.src.dir}"/>    		
     	<fileset dir="${co.fxl.gui.form.gwt.component.src.dir}"/>
