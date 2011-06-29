@@ -1,4 +1,4 @@
 <module>
-	<inherits name='co.fxl.gui.format.api.IFormat' />
+	<inherits name='co.fxl.data.format.api.IFormat' />
 	<source path='' />
 </module>
