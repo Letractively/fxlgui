@@ -20,6 +20,7 @@ package co.fxl.gui.filter.api;
 
 import java.util.List;
 
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.IFieldType;
 
 public interface IFilterWidget {
@@ -55,6 +56,8 @@ public interface IFilterWidget {
 	}
 
 	IFilterWidget addConfiguration(String config);
+
+	IFilterWidget addConfigurationListener(IUpdateListener<String> l);
 
 	IFilterWidget showConfiguration(boolean show);
 

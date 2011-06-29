@@ -135,7 +135,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	@Override
 	public IFilterWidget addConfiguration(String config) {
 		if (configurationComboBox == null && showConfiguration) {
-			configurationComboBox = mainPanel.addComboBox();
+			configurationComboBox = mainPanel.viewComboBox();
 			configurationComboBox.addUpdateListener(this);
 			// configurationComboBox.height(FilterTemplate.HEIGHT);
 		}
@@ -396,6 +396,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 
 	@Override
 	public IFilterWidget addConfigurationListener(IUpdateListener<String> l) {
-		throw new MethodNotImplementedException();
+		mainPanel.viewComboBox().addUpdateListener(l);
+		return this;
 	}
 }

@@ -57,7 +57,7 @@ interface FilterPanel {
 
 	IClickable<?> addHyperlink(String imageResource, String string);
 
-	IComboBox addComboBox();
+	IComboBox viewComboBox();
 
 	FilterGrid filterGrid();
 
