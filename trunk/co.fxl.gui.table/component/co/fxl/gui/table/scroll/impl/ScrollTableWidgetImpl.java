@@ -37,6 +37,7 @@ import co.fxl.gui.api.IMouseWheelListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IMiniFilterWidget;
 import co.fxl.gui.impl.KeyAdapter;
@@ -179,16 +180,16 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			container().clear();
 			topPanel();
 			viewInc = 0;
-			if (viewComboBoxText != null) {
-				IHorizontalPanel p = topPanel.cell(viewInc + 0, 0).panel()
-						.horizontal();
-				p.add().label().text("VIEW:").font().weight().bold();
-				p.addSpace(4).add().comboBox().width(100)
-						.addText(viewComboBoxText)
-						.addUpdateListener(viewComboBoxUpdateListener);
-				p.addSpace(4);
-				viewInc = 1;
-			}
+			// if (viewComboBoxText != null) {
+			// IHorizontalPanel p = topPanel.cell(viewInc + 0, 0).panel()
+			// .horizontal();
+			// p.add().label().text("VIEW:").font().weight().bold();
+			// p.addSpace(4).add().comboBox().width(100)
+			// .addText(viewComboBoxText)
+			// .addUpdateListener(viewComboBoxUpdateListener);
+			// p.addSpace(4);
+			// viewInc = 1;
+			// }
 			if (rows.size() == 0
 					&& (constraints == null
 							|| !constraints.isConstraintSpecified() || !hasFilter())) {
@@ -315,6 +316,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	protected void addFilter() {
 		filter = null;
+		if (viewComboBoxText != null) {
+			IFilter vl = filter.addFilter().name("View");
+			vl.type().text().addConstraint((Object[]) viewComboBoxText);
+			vl.updateListener(viewComboBoxUpdateListener);
+		}
 		for (ScrollTableColumnImpl c : columns) {
 			if (c.filterable) {
 				if (filter == null) {
