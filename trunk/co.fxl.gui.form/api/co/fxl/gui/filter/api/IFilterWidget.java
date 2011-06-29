@@ -32,6 +32,8 @@ public interface IFilterWidget {
 
 	public interface IFilter {
 
+		IFilter required();
+
 		IFilter name(String name);
 
 		IFieldType type();
@@ -39,6 +41,8 @@ public interface IFilterWidget {
 		IFilter type(IFieldType type);
 
 		IFilter updateListener(IUpdateListener<String> l);
+
+		IFilter text(String c);
 	}
 
 	public interface IRelationFilter<S, R> extends IFilter {
