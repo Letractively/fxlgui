@@ -28,7 +28,6 @@ import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ITextField;
@@ -101,7 +100,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	private boolean addSizeFilter = false;
 	private IFilterConstraints constraints;
 	private FilterPanel mainPanel;
-	private IComboBox configurationComboBox;
+	private ViewComboBox configurationComboBox;
 	private String firstConfiguration = IFilterConstraints.COMMON;
 	private String configuration = IFilterConstraints.COMMON;
 	private boolean showConfiguration = true;
@@ -268,8 +267,8 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 
 	@Override
 	public IFilterWidget visible(boolean visible) {
-		if (configurationComboBox != null)
-			validation.linkInput(configurationComboBox);
+		// if (configurationComboBox != null)
+		// validation.linkInput(configurationComboBox);
 		configuration = firstConfiguration;
 		return update();
 	}

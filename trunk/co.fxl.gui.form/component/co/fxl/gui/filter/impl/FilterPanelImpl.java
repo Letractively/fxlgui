@@ -120,10 +120,8 @@ class FilterPanelImpl implements FilterPanel {
 		this.widget = widget;
 		title = new WidgetTitle(panel.panel(), true)// .grayBackground()
 				.space(2);
-		mainPanel = title.content().panel().vertical()
-				.addSpace(2)
-				.add().panel().horizontal().align().end().add().panel()
-				.vertical();
+		mainPanel = title.content().panel().vertical().addSpace(2).add()
+				.panel().horizontal().align().end().add().panel().vertical();
 	}
 
 	@Override
@@ -146,10 +144,11 @@ class FilterPanelImpl implements FilterPanel {
 	}
 
 	@Override
-	public IComboBox viewComboBox() {
-		IComboBox comboBox = mainPanel.add().comboBox();
-		mainPanel.addSpace(4);
-		return comboBox;
+	public ViewComboBox viewComboBox() {
+		throw new MethodNotImplementedException();
+		// IComboBox comboBox = mainPanel.add().comboBox();
+		// mainPanel.addSpace(4);
+		// return comboBox;
 	}
 
 	@Override

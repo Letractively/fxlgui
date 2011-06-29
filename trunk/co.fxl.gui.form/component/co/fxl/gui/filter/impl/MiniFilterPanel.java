@@ -137,7 +137,7 @@ class MiniFilterPanel implements FilterPanel {
 	private FilterGridImpl grid;
 	// private boolean hasHyperlinks = false;
 	private MiniFilterWidgetImpl widget;
-	private IComboBox viewComboBox;
+	private ViewComboBox viewComboBox;
 
 	MiniFilterPanel(MiniFilterWidgetImpl widget, IContainer c) {
 		this.widget = widget;
@@ -178,13 +178,10 @@ class MiniFilterPanel implements FilterPanel {
 	}
 
 	@Override
-	public IComboBox viewComboBox() {
+	public ViewComboBox viewComboBox() {
 		if (viewComboBox != null)
 			return viewComboBox;
-		viewComboBox = filterGrid().cell(0).comboBox();
-		widget.heights.decorate(viewComboBox);
-		mainPanel.addSpace(4);
-		return viewComboBox;
+		throw new MethodNotImplementedException();
 	}
 
 }
