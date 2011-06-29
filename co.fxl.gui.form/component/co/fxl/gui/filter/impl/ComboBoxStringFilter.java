@@ -21,7 +21,7 @@ package co.fxl.gui.filter.impl;
 import java.util.List;
 
 import co.fxl.gui.api.IComboBox;
-import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.impl.Constraint.IStringPrefixConstraint;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
@@ -116,5 +116,12 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 			return true;
 		} else
 			return false;
+	}
+
+	@Override
+	public IUpdateable<String> addUpdateListener(
+			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
+		comboBox.addUpdateListener(listener);
+		return this;
 	}
 }

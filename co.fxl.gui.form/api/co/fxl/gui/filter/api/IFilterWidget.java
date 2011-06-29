@@ -37,6 +37,8 @@ public interface IFilterWidget {
 		IFieldType type();
 
 		IFilter type(IFieldType type);
+
+		IFilter updateListener(IUpdateListener<String> l);
 	}
 
 	public interface IRelationFilter<S, R> extends IFilter {

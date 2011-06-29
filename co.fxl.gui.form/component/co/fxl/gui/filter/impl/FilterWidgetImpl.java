@@ -333,7 +333,10 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 					preset = rf.preset;
 					adapter = rf.adapter;
 				}
-				addFilter(filter.type.clazz, filter.name, list, preset, adapter);
+				FilterPart<?> fp = addFilter(filter.type.clazz, filter.name,
+						list, preset, adapter);
+				if (filter.updateListener != null)
+					fp.addUpdateListener(filter.updateListener);
 			}
 		}
 	}
