@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.mdt.impl;
 
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.IFieldType;
@@ -67,5 +68,10 @@ class MDTFilterImpl implements IMDTFilter {
 	public IFilter type(IFieldType type) {
 		this.type = (FieldTypeImpl) type;
 		return this;
+	}
+
+	@Override
+	public IFilter updateListener(IUpdateListener<String> l) {
+		throw new MethodNotImplementedException();
 	}
 }
