@@ -115,6 +115,8 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 
 	IRelation<T, R> selection(R selection);
 
-	IRelation<T, R> allowViewConfiguration(String[] views,
+	IRelation<T, R> allowViewConfiguration(String[] views, String view,
 			IUpdateListener<String> l);
+
+	IRelation<T, R> reset();
 }

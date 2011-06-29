@@ -31,7 +31,7 @@ public class PropertyGroupImpl implements IPropertyGroup<Object> {
 	boolean asDetail = true;
 	boolean inTable = true;
 	Class<?>[] constrainType;
-
+	
 	@Override
 	public String toString() {
 		return getClass().getName() + ": " + name;

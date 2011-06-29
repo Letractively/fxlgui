@@ -110,7 +110,8 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 				table = (IScrollTableWidget<Object>) panel.add().widget(
 						IScrollTableWidget.class);
 				if (relation.views != null) {
-					table.addViewComboBox(relation.views, relation.viewListener);
+					table.addViewComboBox(relation.views, relation.view,
+							relation.viewListener);
 				}
 				table.statusPanel(bottom);
 				final ISelection<Object> selection0 = table.selection();

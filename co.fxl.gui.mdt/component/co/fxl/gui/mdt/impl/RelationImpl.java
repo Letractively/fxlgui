@@ -46,6 +46,7 @@ class RelationImpl extends PropertyGroupImpl implements
 	RelationDecorator relationDecorator;
 	String[] views;
 	IUpdateListener<String> viewListener;
+	String view;
 
 	RelationImpl(MasterDetailTableWidgetImpl widget, String name) {
 		super(name);
@@ -143,9 +144,16 @@ class RelationImpl extends PropertyGroupImpl implements
 
 	@Override
 	public IRelation<Object, Object> allowViewConfiguration(String[] views,
-			IUpdateListener<String> l) {
+			String view, IUpdateListener<String> l) {
 		this.views = views;
+		this.view = view;
 		this.viewListener = l;
+		return this;
+	}
+
+	@Override
+	public IRelation<Object, Object> reset() {
+		properties.clear();
 		return this;
 	}
 }
