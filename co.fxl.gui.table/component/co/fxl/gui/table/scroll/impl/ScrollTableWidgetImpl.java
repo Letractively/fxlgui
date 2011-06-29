@@ -40,6 +40,7 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IMiniFilterWidget;
+import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.KeyAdapter;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.table.api.ISelection;
@@ -236,7 +237,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						}
 					}
 					buttonColumn++;
-				}
+				} else
+					addFilter();
 				dock.add().label().text("&#160;");
 				dock.height(heightMinusTopPanel());
 				if (!externalStatusPanel) {
@@ -317,17 +319,18 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	protected void addFilter() {
 		filter = null;
 		if (viewComboBoxText != null) {
-			IFilter vl = filter.addFilter().name("View");
-			vl.type().text().addConstraint((Object[]) viewComboBoxText);
+			createFilter();
+			IFilter vl = filter.addFilter().name("View").required();
+			IFieldType type = vl.type().text();
+			for (String s : viewComboBoxText) {
+				type.addConstraint(s);
+			}
+			vl.text(viewComboBoxChoice);
 			vl.updateListener(viewComboBoxUpdateListener);
 		}
 		for (ScrollTableColumnImpl c : columns) {
 			if (c.filterable) {
-				if (filter == null) {
-					filter = (IMiniFilterWidget) topPanel.cell(0, 0).panel()
-							.horizontal().addSpace(8).add()
-							.widget(IMiniFilterWidget.class);
-				}
+				createFilter();
 				filter.addFilter().name(c.name).type(c.type);
 			}
 		}
@@ -338,6 +341,14 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			if (constraints != null)
 				filter.constraints(constraints);
 			filter.visible(true);
+		}
+	}
+
+	void createFilter() {
+		if (filter == null) {
+			filter = (IMiniFilterWidget) topPanel.cell(0, 0).panel()
+					.horizontal().addSpace(8).add()
+					.widget(IMiniFilterWidget.class);
 		}
 	}
 
@@ -398,6 +409,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private String[] viewComboBoxText;
 	private IUpdateListener<String> viewComboBoxUpdateListener;
 	private int viewInc;
+	private String viewComboBoxChoice;
 
 	void update() {
 		paintedRows = computeRowsToPaint();
@@ -853,9 +865,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	@Override
 	public IScrollTableWidget<Object> addViewComboBox(String[] texts,
-			IUpdateListener<String> ul) {
+			String viewComboBoxChoice, IUpdateListener<String> ul) {
 		viewComboBoxText = texts;
+		this.viewComboBoxChoice = viewComboBoxChoice;
 		viewComboBoxUpdateListener = ul;
+		showNoRowsFound = false;
 		return this;
 	}
 }
