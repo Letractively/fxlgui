@@ -44,6 +44,8 @@ class RelationImpl extends PropertyGroupImpl implements
 	INavigationDecorator<Object, Object> navigation;
 	private MasterDetailTableWidgetImpl widget;
 	RelationDecorator relationDecorator;
+	String[] views;
+	IUpdateListener<String> viewListener;
 
 	RelationImpl(MasterDetailTableWidgetImpl widget, String name) {
 		super(name);
@@ -142,6 +144,8 @@ class RelationImpl extends PropertyGroupImpl implements
 	@Override
 	public IRelation<Object, Object> allowViewConfiguration(String[] views,
 			IUpdateListener<String> l) {
-		throw new MethodNotImplementedException();
+		this.views = views;
+		this.viewListener = l;
+		return this;
 	}
 }
