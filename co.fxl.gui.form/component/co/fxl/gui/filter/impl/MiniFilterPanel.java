@@ -46,7 +46,8 @@ class MiniFilterPanel implements FilterPanel {
 
 		@Override
 		public void text(String c) {
-			comboBox.text(c);
+			if (c != null)
+				comboBox.text(c);
 		}
 
 		@Override

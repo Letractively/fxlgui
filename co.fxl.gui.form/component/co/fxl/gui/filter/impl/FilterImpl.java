@@ -28,6 +28,8 @@ class FilterImpl implements IFilter {
 	FieldTypeImpl type = new FieldTypeImpl();
 	String name;
 	IUpdateListener<String> updateListener;
+	boolean required = false;
+	String text;
 
 	@Override
 	public IFilter name(String name) {
@@ -50,6 +52,18 @@ class FilterImpl implements IFilter {
 	@Override
 	public IFilter updateListener(IUpdateListener<String> l) {
 		updateListener = l;
+		return this;
+	}
+
+	@Override
+	public IFilter required() {
+		required = true;
+		return this;
+	}
+
+	@Override
+	public IFilter text(String c) {
+		this.text = c;
 		return this;
 	}
 }

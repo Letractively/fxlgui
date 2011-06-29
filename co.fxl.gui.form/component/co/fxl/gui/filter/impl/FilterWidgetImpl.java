@@ -324,7 +324,7 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 			grid.resize(l.size() + (addSizeFilter ? 1 : 0));
 			for (FilterImpl filter : l) {
 				List<Object> list = new LinkedList<Object>(filter.type.values);
-				if (!list.isEmpty())
+				if (!filter.required && !list.isEmpty())
 					list.add(0, "");
 				List<Object> preset = null;
 				IAdapter<Object, Object> adapter = null;
@@ -335,6 +335,9 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 				}
 				FilterPart<?> fp = addFilter(filter.type.clazz, filter.name,
 						list, preset, adapter);
+				if (filter.text != null) {
+					((ComboBoxStringFilter) fp).comboBox.text(filter.text);
+				}
 				if (filter.updateListener != null)
 					fp.addUpdateListener(filter.updateListener);
 			}
