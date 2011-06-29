@@ -146,7 +146,7 @@ class FilterPanelImpl implements FilterPanel {
 	}
 
 	@Override
-	public IComboBox addComboBox() {
+	public IComboBox viewComboBox() {
 		IComboBox comboBox = mainPanel.add().comboBox();
 		mainPanel.addSpace(4);
 		return comboBox;
