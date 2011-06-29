@@ -27,15 +27,14 @@
 	<property name="co.fxl.gui.form.gwt.component.src.dir" value="${co.fxl.gui.form.gwt.dir}/component"/>
 	<property name="co.fxl.gui.form.gwt.gwt.src.dir" value="${co.fxl.gui.form.gwt.dir}/gwt"/>
 
-	<property name="co.fxl.gui.common.dir" value="${project.dir}/co.fxl.gui.common"/>
-	<property name="co.fxl.gui.common.api.src.dir" value="${co.fxl.gui.common.dir}/api"/>
-	<property name="co.fxl.gui.common.component.src.dir" value="${co.fxl.gui.common.dir}/component"/>
-	<property name="co.fxl.gui.common.gwt.src.dir" value="${co.fxl.gui.common.dir}/gwt"/>
-		
-	<property name="co.fxl.gui.common.gwt.dir" value="${project.dir}/co.fxl.gui.common.gwt"/>
-	<property name="co.fxl.gui.common.gwt.component.src.dir" value="${co.fxl.gui.common.gwt.dir}/component"/>
-	<property name="co.fxl.gui.common.gwt.gwt.src.dir" value="${co.fxl.gui.common.gwt.dir}/gwt"/>
-	
+	<property name="co.fxl.data.format.dir" value="${project.dir}/co.fxl.data.format"/>
+	<property name="co.fxl.data.format.api.src.dir" value="${co.fxl.data.format.dir}/api"/>
+	<property name="co.fxl.data.format.component.src.dir" value="${co.fxl.data.format.dir}/component"/>
+
+	<property name="co.fxl.data.format.gwt.dir" value="${project.dir}/co.fxl.data.format.gwt"/>
+	<property name="co.fxl.data.format.gwt.component.src.dir" value="${co.fxl.data.format.gwt.dir}/component"/>
+	<property name="co.fxl.data.format.gwt.gwt.src.dir" value="${co.fxl.data.format.gwt.dir}/gwt"/>
+
 	<property name="co.fxl.gui.gwt.dir" value="${project.dir}/co.fxl.gui.gwt"/>
 	<property name="co.fxl.gui.gwt.build.src.dir" value="${co.fxl.gui.gwt.dir}/build"/>
 	<property name="co.fxl.gui.gwt.component.src.dir" value="${co.fxl.gui.gwt.dir}/component"/>
@@ -109,11 +108,10 @@
     	<fileset dir="${co.fxl.gui.form.gwt.src.dir}"/>    		
     	<fileset dir="${co.fxl.gui.form.gwt.component.src.dir}"/>
     	<fileset dir="${co.fxl.gui.form.gwt.gwt.src.dir}"/>    		
-    	<fileset dir="${co.fxl.gui.common.api.src.dir}"/>
-    	<fileset dir="${co.fxl.gui.common.component.src.dir}"/>
-    	<fileset dir="${co.fxl.gui.common.gwt.src.dir}"/>    		
-    	<fileset dir="${co.fxl.gui.common.gwt.component.src.dir}"/>
-    	<fileset dir="${co.fxl.gui.common.gwt.gwt.src.dir}"/>    		
+    	<fileset dir="${co.fxl.data.format.api.src.dir}"/>
+    	<fileset dir="${co.fxl.data.format.component.src.dir}"/>
+    	<fileset dir="${co.fxl.data.format.gwt.component.src.dir}"/>
+    	<fileset dir="${co.fxl.data.format.gwt.gwt.src.dir}"/>    	
     	<fileset dir="${co.fxl.gui.gwt.component.src.dir}"/>
     	<fileset dir="${co.fxl.gui.gwt.gwt.src.dir}"/>
     	<fileset dir="${co.fxl.gui.mdt.api.src.dir}"/>	
