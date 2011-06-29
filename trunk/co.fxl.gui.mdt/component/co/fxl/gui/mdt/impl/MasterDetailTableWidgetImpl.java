@@ -399,6 +399,11 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	@Override
 	public IRelation<Object, ?> addRelation(String name) {
+		for (IRelation<Object, ?> r : relations) {
+			if (r.name().equals(name)) {
+				return r.reset();
+			}
+		}
 		RelationImpl relation = new RelationImpl(this, name);
 		registerOrder.add(relation);
 		relations.add(relation);

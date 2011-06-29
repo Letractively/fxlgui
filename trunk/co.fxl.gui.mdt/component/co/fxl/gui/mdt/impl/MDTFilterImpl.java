@@ -74,4 +74,14 @@ class MDTFilterImpl implements IMDTFilter {
 	public IFilter updateListener(IUpdateListener<String> l) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public IFilter required() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IFilter text(String c) {
+		throw new MethodNotImplementedException();
+	}
 }
