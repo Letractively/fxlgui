@@ -49,8 +49,9 @@ import co.fxl.gui.tree.api.ITreeWidget.IDecorator;
 
 final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 		ISelectionListener<Object> {
-	
-	// TODO Optimization / Potential Bug: Relation Page seems to get painted twice on each register change 
+
+	// TODO Optimization / Potential Bug: Relation Page seems to get painted
+	// twice on each register change
 
 	private final RelationImpl relation;
 	private IScrollTableWidget<Object> table;
@@ -108,6 +109,9 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 				panel.clear();
 				table = (IScrollTableWidget<Object>) panel.add().widget(
 						IScrollTableWidget.class);
+				if (relation.views != null) {
+					table.addViewComboBox(relation.views, relation.viewListener);
+				}
 				table.statusPanel(bottom);
 				final ISelection<Object> selection0 = table.selection();
 				ISingleSelection<Object> selection = selection0.single();
