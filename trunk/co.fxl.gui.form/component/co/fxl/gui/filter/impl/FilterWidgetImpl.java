@@ -393,4 +393,9 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 		clear.clickable(true);
 		notifyListeners();
 	}
+
+	@Override
+	public IFilterWidget addConfigurationListener(IUpdateListener<String> l) {
+		throw new MethodNotImplementedException();
+	}
 }
