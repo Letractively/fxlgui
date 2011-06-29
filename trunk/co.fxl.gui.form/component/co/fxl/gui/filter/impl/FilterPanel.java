@@ -39,6 +39,8 @@ interface FilterPanel {
 	}
 
 	interface FilterGrid {
+		
+		FilterGrid rowInc(int rowInc);
 
 		Heights heights();
 

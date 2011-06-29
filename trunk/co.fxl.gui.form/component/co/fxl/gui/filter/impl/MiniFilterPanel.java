@@ -36,6 +36,31 @@ class MiniFilterPanel implements FilterPanel {
 	// TODO FEATURE: Option: Usability: Include a combobox that allows choosing
 	// the configuration (filter query) for the mini-filter-widget
 
+	class ViewComboBoxImpl implements ViewComboBox {
+
+		private IComboBox comboBox;
+
+		ViewComboBoxImpl(IComboBox comboBox) {
+			this.comboBox = comboBox;
+		}
+
+		@Override
+		public void text(String c) {
+			comboBox.text(c);
+		}
+
+		@Override
+		public void addUpdateListener(IUpdateListener<String> l) {
+			comboBox.addUpdateListener(l);
+		}
+
+		@Override
+		public void addText(String c) {
+			comboBox.addText(c);
+		}
+
+	}
+
 	class FilterGridImpl implements FilterGrid, IUpdateListener<String> {
 
 		class CellImpl implements ICell {
@@ -71,6 +96,7 @@ class MiniFilterPanel implements FilterPanel {
 		private ICardPanel cardPanel;
 		private Map<String, Integer> name2index = new HashMap<String, Integer>();
 		private Map<Integer, CellImpl> index2cell = new HashMap<Integer, CellImpl>();
+		int rowInc = 0;
 
 		FilterGridImpl(IContainer container) {
 			IHorizontalPanel panel = container.panel().horizontal();
@@ -88,10 +114,10 @@ class MiniFilterPanel implements FilterPanel {
 
 		@Override
 		public ICell cell(int row) {
-			CellImpl cellImpl = index2cell.get(row);
+			CellImpl cellImpl = index2cell.get(row + rowInc);
 			if (cellImpl == null) {
 				cellImpl = new CellImpl();
-				index2cell.put(row, cellImpl);
+				index2cell.put(row + rowInc, cellImpl);
 			}
 			return cellImpl;
 		}
@@ -99,7 +125,7 @@ class MiniFilterPanel implements FilterPanel {
 		@Override
 		public void title(int filterIndex, String name) {
 			comboBox.addText(name);
-			name2index.put(name, filterIndex);
+			name2index.put(name, filterIndex + rowInc);
 		}
 
 		@Override
@@ -126,6 +152,12 @@ class MiniFilterPanel implements FilterPanel {
 		public void show(FilterPart<?> firstConstraint) {
 			if (firstConstraint != null)
 				comboBox.text(firstConstraint.name());
+		}
+
+		@Override
+		public FilterGrid rowInc(int rowInc) {
+			this.rowInc = rowInc;
+			return this;
 		};
 	}
 
@@ -181,7 +213,12 @@ class MiniFilterPanel implements FilterPanel {
 	public ViewComboBox viewComboBox() {
 		if (viewComboBox != null)
 			return viewComboBox;
-		throw new MethodNotImplementedException();
+		if (grid == null) {
+			filterGrid();
+		}
+		grid.rowInc = 1;
+		grid.title(-1, "View");
+		return new ViewComboBoxImpl(grid.cell(-1).comboBox());
 	}
 
 }

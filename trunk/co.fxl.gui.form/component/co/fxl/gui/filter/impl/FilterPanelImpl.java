@@ -109,6 +109,11 @@ class FilterPanelImpl implements FilterPanel {
 		@Override
 		public void show(FilterPart<?> firstConstraint) {
 		}
+
+		@Override
+		public FilterGrid rowInc(int rowInc) {
+			throw new MethodNotImplementedException();
+		}
 	}
 
 	private WidgetTitle title;
