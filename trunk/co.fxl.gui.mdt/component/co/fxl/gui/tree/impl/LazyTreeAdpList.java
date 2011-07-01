@@ -66,6 +66,8 @@ public class LazyTreeAdpList {
 			int index = index(tree.object());
 			if (index < rows.size() - 1) {
 				return !rows.get(index + 1).parent().equals(tree);
+			} else {
+				return true;
 			}
 		}
 		return false;
