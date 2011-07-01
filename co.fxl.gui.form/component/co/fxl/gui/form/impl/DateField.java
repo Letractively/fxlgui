@@ -20,6 +20,7 @@ package co.fxl.gui.form.impl;
 
 import java.util.Date;
 
+import co.fxl.data.format.api.IFormat;
 import co.fxl.data.format.impl.Format;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
@@ -43,25 +44,27 @@ public class DateField {
 			calendar.addUpdateListener(new IUpdateListener<Date>() {
 				@Override
 				public void onUpdate(Date value) {
-					tf.text(Format.date().format(value));
+					tf.text(format.format(value));
 				}
 			});
 			tf.addUpdateListener(new IUpdateListener<String>() {
 				@Override
 				public void onUpdate(String value) {
-					calendar.date(Format.date().parse(value));
+					calendar.date(format.parse(value));
 				}
 			});
-			
-			// TODO Usability: GWT: this seems to not work (shows always the current date):
-			calendar.date(Format.date().parse(tf.text()));
-			
+
+			// TODO Usability: GWT: this seems to not work (shows always the
+			// current date):
+			calendar.date(format.parse(tf.text()));
+
 			popUp.visible(true);
 		}
 	}
 
 	private ITextField tf;
 	private IImage button;
+	private IFormat<Date> format = Format.date();
 
 	public DateField(ITextField tf, IContainer c) {
 		this.tf = tf;
@@ -71,6 +74,11 @@ public class DateField {
 
 	public DateField clickable(boolean clickable) {
 		button.clickable(clickable);
+		return this;
+	}
+
+	public DateField format(IFormat<Date> format) {
+		this.format = format;
 		return this;
 	}
 }
