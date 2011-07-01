@@ -136,7 +136,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		container = panel.add().panel().horizontal();
 		container.border().color().white();
 		content = container.add().panel().horizontal().spacing(2);
-		content.addSpace(depth * INDENT);
+		content.addSpace(1+depth * INDENT);
 		image = content.add().image().resource(treeIcon(lazyTree, tree));
 		if (entityIcon(tree) == null)
 			throw new MethodNotImplementedException("entity icon is null for "
