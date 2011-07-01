@@ -75,11 +75,22 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		}
 	}
 
-	public class DateDecorator implements Decorator<Date> {
+	class DateDecorator implements Decorator<Date> {
+
+		private IFormat<Date> format;
+
+		DateDecorator(boolean isLong, boolean isShort) {
+			if (isLong)
+				format = Format.dateTime();
+			else if (isShort)
+				format = Format.time();
+			else
+				format = Format.date();
+		}
 
 		@Override
 		public void decorate(Object identifier, ICell cell, Date value) {
-			cell.text(value == null ? null : FORMAT.format(value));
+			cell.text(value == null ? null : format.format(value));
 		}
 
 		@Override
@@ -126,7 +137,6 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		}
 	}
 
-	private static IFormat<Date> FORMAT = Format.date();
 	String name;
 	boolean sortable = false;
 	FieldTypeImpl type = new FieldTypeImpl();
@@ -172,9 +182,9 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 					|| type.clazz.equals(Integer.class)) {
 				decorator = new NumberDecorator();
 			} else if (type.clazz.equals(Date.class)) {
-				decorator = new DateDecorator();
+				decorator = new DateDecorator(type.isLong, type.isShort);
 			} else if (type.clazz.equals(Timestamp.class)) {
-				decorator = new DateDecorator();
+				decorator = new DateDecorator(true, false);
 			} else if (type.clazz.equals(Boolean.class)) {
 				decorator = new BooleanDecorator();
 			} else
