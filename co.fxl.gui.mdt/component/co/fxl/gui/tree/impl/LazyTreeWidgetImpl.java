@@ -68,6 +68,7 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 		if (elementAt >= firstRow && elementAt <= lastRow) {
 			decorate(elementAt);
 		}
+		super.decorate(container, firstRow, lastRow);
 	}
 
 	void decorate(int index) {
