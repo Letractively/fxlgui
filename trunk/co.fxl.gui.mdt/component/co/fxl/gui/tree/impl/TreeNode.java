@@ -119,7 +119,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		// if (tree.children().size() != 0)
 		// expandLoadedNode();
 		label.addClickListener(this);
-		container.addClickListener(this);
+		content.addClickListener(this);
 		if (icon != null)
 			icon.addClickListener(this);
 		image.addClickListener(new LazyClickListener() {
@@ -136,7 +136,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		container = panel.add().panel().horizontal();
 		container.border().color().white();
 		content = container.add().panel().horizontal().spacing(2);
-		content.addSpace(1+depth * INDENT);
+		content.addSpace(1 + depth * INDENT);
 		image = content.add().image().resource(treeIcon(lazyTree, tree));
 		if (entityIcon(tree) == null)
 			throw new MethodNotImplementedException("entity icon is null for "
@@ -147,7 +147,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		boolean isNull = name == null || name.trim().equals("");
 		label = content.add().label().text(isNull ? "unnamed" : name);
 		label.font().pixel(12);
-		buttonPanel = content.addSpace(4).add().panel().horizontal()
+		buttonPanel = container.addSpace(4).add().panel().horizontal()
 				.visible(false);
 		if (isNull)
 			label.font().weight().italic().color().gray();
