@@ -23,6 +23,7 @@ import java.util.Date;
 import co.fxl.data.format.impl.Format;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.form.api.IFormField;
+import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.IFieldType;
 
 class FormDateFieldImpl extends FormTextFieldImpl<Date> {
@@ -33,6 +34,20 @@ class FormDateFieldImpl extends FormTextFieldImpl<Date> {
 		super(widget, index, name);
 		dateField = new DateField(valueElement(), addContainer());
 		editable(widget.saveListener != null);
+		type = new FieldTypeImpl() {
+
+			@Override
+			public IFieldType dateTime() {
+				dateField.format(Format.dateTime());
+				return super.dateTime();
+			}
+
+			@Override
+			public IFieldType time() {
+				dateField.format(Format.time());
+				return super.time();
+			}
+		};
 	}
 
 	@Override
@@ -41,93 +56,4 @@ class FormDateFieldImpl extends FormTextFieldImpl<Date> {
 			dateField.clickable(editable);
 		return super.editable(editable);
 	}
-
-	@Override
-	public IFieldType type() {
-		return new IFieldType() {
-
-			@Override
-			public IFieldType integer() {
-				throw new MethodNotImplementedException();
-			}
-
-			@Override
-			public IFieldType date() {
-				return this;
-			}
-
-			@Override
-			public IFieldType dateTime() {
-				dateField.format(Format.dateTime());
-				return this;
-			}
-
-			@Override
-			public IFieldType time() {
-				dateField.format(Format.time());
-				return this;
-			}
-
-			@Override
-			public IFieldType text() {
-				throw new MethodNotImplementedException();
-			}
-
-			@Override
-			public IFieldType encryptedText() {
-				throw new MethodNotImplementedException();
-			}
-
-			@Override
-			public IFieldType longText() {
-				throw new MethodNotImplementedException();
-			}
-
-			@Override
-			public IFieldType image() {
-				throw new MethodNotImplementedException();
-			}
-
-			@Override
-			public IFieldType longType() {
-				throw new MethodNotImplementedException();
-			}
-
-			@Override
-			public IFieldType addConstraint(Object... values) {
-				throw new MethodNotImplementedException();
-			}
-
-			@Override
-			public IFieldType type(Class<?> clazz) {
-				throw new MethodNotImplementedException();
-			}
-
-			@Override
-			public IFieldType maxLength(int maxLength) {
-				throw new MethodNotImplementedException();
-			}
-
-			@Override
-			public IFieldType logic() {
-				throw new MethodNotImplementedException();
-			}
-
-			@Override
-			public IFieldType relation() {
-				throw new MethodNotImplementedException();
-			}
-
-			@Override
-			public Class<?> clazz() {
-				throw new MethodNotImplementedException();
-			}
-
-			@Override
-			public IFieldType clearConstraints() {
-				throw new MethodNotImplementedException();
-			}
-		};
-	}
-
 }
