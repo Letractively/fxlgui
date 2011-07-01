@@ -120,6 +120,8 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		}
 		p0.add(p);
 		fp.setWidget(p0);
+		fp.setHeight(height + "px");
+		fp.getElement().getStyle().setOverflow(Overflow.HIDDEN);
 		container.nativeElement(fp);
 	}
 
@@ -162,7 +164,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		for (int i = firstRow; i <= lastRow; i++) {
 			ITree<Object> row = rows.get(i - firstRow);
 			String hTML = HTML.replace("${INDENT}",
-					String.valueOf(tree.indent(row) * 10));
+					String.valueOf(1 + tree.indent(row) * 10));
 			hTML = hTML.replace("${STATE_ICON}", TreeNode.treeIcon(this, row));
 			hTML = hTML.replace("${ICON}", TreeNode.entityIcon(row));
 			hTML = hTML.replace("${LABEL}",
