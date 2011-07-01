@@ -93,9 +93,9 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			@Override
 			public void onMouseWheel(MouseWheelEvent event) {
 				if (event.isNorth()) {
-					pane.onUp(event.getDeltaY());
+					pane.onUp(Math.abs(event.getDeltaY()));
 				} else if (event.isSouth()) {
-					pane.onUp(event.getDeltaY());
+					pane.onDown(Math.abs(event.getDeltaY()));
 				}
 			}
 		});
