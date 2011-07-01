@@ -417,8 +417,10 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		int offsetY = splitPane.offsetY();
 		offsetY = Math.max(offsetY, 130);
 		int maxFromDisplay = height - offsetY - 28;
-		if (maxFromDisplay > 0)
+		if (maxFromDisplay > 0) {
 			splitPane.height(maxFromDisplay);
+			lazyTree.height(splitPane.height());
+		}
 	}
 
 	@Override
