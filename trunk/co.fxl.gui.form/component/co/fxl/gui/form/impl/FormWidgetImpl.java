@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.data.format.impl.Format;
 import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable;
@@ -383,8 +384,18 @@ class FormWidgetImpl implements IFormWidget {
 			validation.linkInput((ITextArea) valueElement, formField.required);
 		} else if (valueElement instanceof ITextField) {
 			if (formField.type.clazz.equals(Date.class)) {
-				validation.validateDate((ITextField) formField.valueElement(),
-						formField.required);
+				if (formField.type.isLong) {
+					validation.validateDate(
+							(ITextField) formField.valueElement(),
+							Format.dateTime(), formField.required);
+				} else if (formField.type.isShort) {
+					validation.validateDate(
+							(ITextField) formField.valueElement(),
+							Format.time(), formField.required);
+				} else
+					validation.validateDate(
+							(ITextField) formField.valueElement(),
+							formField.required);
 			} else if (formField.type.clazz.equals(Integer.class)) {
 				validation.validateLong((ITextField) formField.valueElement(),
 						formField.required);
