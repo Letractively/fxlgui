@@ -331,11 +331,13 @@ public abstract class DetailViewDecorator implements IDecorator<Object> {
 							decorateEditable(property, formField);
 							formField.type().date();
 							final IFormat<Date> dateFormat;
-							if (property.type.isLong)
+							if (property.type.isLong) {
+								formField.type().dateTime();
 								dateFormat = Format.dateTime();
-							else if (property.type.isShort)
+							} else if (property.type.isShort) {
+								formField.type().time();
 								dateFormat = Format.time();
-							else
+							} else
 								dateFormat = DetailView.DATE_FORMAT;
 							String value = valueOf == null ? null : dateFormat
 									.format((Date) valueOf);
