@@ -38,6 +38,7 @@ public abstract class LazyTreeWidgetTemplate implements
 	private ITree<Object> realTree;
 	protected int elementAt = -1;
 	protected IDecorator decorator;
+	private int lastFirstRow = -1;
 
 	public LazyTreeWidgetTemplate(IContainer c) {
 		this(c, true);
@@ -101,16 +102,25 @@ public abstract class LazyTreeWidgetTemplate implements
 			pane.minRowHeight(heightElement);
 			pane.height(height);
 			pane.decorator(this);
-			int index = tree.index(selection);
-			if (index != -1) {
-				pane.rowIndex(index);
-				selection = null;
+			if (lastFirstRow != -1) {
+				pane.rowIndex(lastFirstRow);
+			} else {
+				int index = tree.index(selection);
+				if (index != -1) {
+					pane.rowIndex(index);
+					selection = null;
+				}
+				elementAt = index;
 			}
-			elementAt = index;
 			pane.visible(true);
 		} else
 			throw new MethodNotImplementedException();
 		return this;
+	}
+
+	@Override
+	public void decorate(IContainer container, int firstRow, int lastRow) {
+		lastFirstRow = firstRow;
 	}
 
 	@Override
