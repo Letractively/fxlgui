@@ -123,6 +123,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		fp.setHeight((height) + "px");
 		fp.getElement().getStyle().setOverflow(Overflow.HIDDEN);
 		container.nativeElement(fp);
+		super.decorate(container, firstRow, lastRow);
 	}
 
 	@SuppressWarnings("rawtypes")
