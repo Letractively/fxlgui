@@ -283,4 +283,9 @@ class N2MWidgetImpl implements IN2MWidget<Object> {
 	boolean hasItemImage() {
 		return itemImage != null || imageProvider != null;
 	}
+
+	@Override
+	public boolean visible() {
+		return grid.visible();
+	}
 }

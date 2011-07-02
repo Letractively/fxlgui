@@ -35,7 +35,7 @@ public class ModelResizeListener implements IResizeListener {
 	}
 
 	@Override
-	public void onResize(int width, int height) {
-		listener.onResize(width, height);
+	public boolean onResize(int width, int height) {
+		return listener.onResize(width, height);
 	}
 }

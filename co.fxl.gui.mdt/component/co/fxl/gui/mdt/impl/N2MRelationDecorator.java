@@ -124,7 +124,9 @@ final class N2MRelationDecorator implements IDecorator<Object>, IResizeListener 
 	}
 
 	@Override
-	public void onResize(int width, int height) {
+	public boolean onResize(int width, int height) {
+		if (!table.visible())
+			return false;
 		int offsetY = table.offsetY();
 		// TODO ... un-hard-code
 		if (offsetY == 0)
@@ -132,5 +134,6 @@ final class N2MRelationDecorator implements IDecorator<Object>, IResizeListener 
 		int maxFromDisplay = height - offsetY - 60;
 		if (maxFromDisplay > 0)
 			table.height(maxFromDisplay);
+		return true;
 	}
 }

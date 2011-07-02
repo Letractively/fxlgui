@@ -377,7 +377,9 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	@Override
-	public void onResize(int width, int height) {
+	public boolean onResize(int width, int height) {
+		if (!splitPane.visible())
+			return false;
 		int offsetY = splitPane.offsetY();
 		offsetY = Math.max(offsetY, 130);
 		int maxFromDisplay = height - offsetY - 28;
@@ -386,6 +388,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			if (lazyTree != null)
 				lazyTree.height(splitPane.height());
 		}
+		return true;
 	}
 
 	@Override
