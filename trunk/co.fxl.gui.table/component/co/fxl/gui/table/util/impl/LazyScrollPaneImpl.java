@@ -149,12 +149,13 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				dock.visible(true);
 			}
 		};
-		if (adjustHeights) {
+//		if (adjustHeights) {
 			update(firstIndex);
 			dock.display().invokeLater(runnable);
-		} else {
-			runnable.run();
-		}
+//		} else {
+//			setLastIndex(firstIndex);
+//			runnable.run();
+//		}
 	}
 
 	private void update() {
@@ -163,11 +164,7 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	}
 
 	private int update(int rowIndex) {
-		lastIndex = rowIndex + rows2Paint - 1;
-		if (lastIndex >= size)
-			lastIndex = size - 1;
-		else if (lastIndex < 0)
-			lastIndex = 0;
+		setLastIndex(rowIndex);
 		IContainer invisibleCard = contentPanel.add();
 		IContainer c = invisibleCard;
 		if (horizontalScrollPane) {
@@ -180,6 +177,14 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		}
 		lastCard = invisibleCard;
 		return lastIndex;
+	}
+
+	private void setLastIndex(int rowIndex) {
+		lastIndex = rowIndex + rows2Paint - 1;
+		if (lastIndex >= size)
+			lastIndex = size - 1;
+		else if (lastIndex < 0)
+			lastIndex = 0;
 	}
 
 	private int convertScrollOffset2RowIndex(int offset) {
