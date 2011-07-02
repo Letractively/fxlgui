@@ -42,7 +42,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 
-	private static final String IMAGE_PATH = "test_gwt/images/";
+	private static final String IMAGE_PATH = "images/";
 	public static String HTML = "<table cellspacing=\"0\" cellpadding=\"0\" "
 			+ "style=\"width: 100%; cursor: pointer; border: 1px solid rgb(255, 255, 255);\">"
 			+ "<tbody>"
