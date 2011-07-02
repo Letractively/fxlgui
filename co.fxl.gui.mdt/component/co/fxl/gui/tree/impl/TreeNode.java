@@ -135,7 +135,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	void decorateCore() {
 		container = panel.add().panel().horizontal().align().begin().add()
 				.panel().horizontal().align().begin();
-		container.border().color().white();
+		panel.border().color().white();
 		content = container.add().panel().horizontal().spacing(2);
 		content.addSpace(1 + depth * INDENT);
 		image = content.add().image().resource(treeIcon(lazyTree, tree));
@@ -185,9 +185,9 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 
 	void decorate() {
 		if (widget.model.isCutCopy(this)) {
-			container.border().style().dotted();
+			panel.border().style().dotted();
 		} else
-			container.border().color().white();
+			panel.border().color().white();
 		if (tree != null && tree.decorator() != null)
 			tree.decorator().decorate(label);
 		buttonPanel.clear();
@@ -428,10 +428,12 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 
 	@Override
 	public void selected(boolean selected) {
-		if (!selected)
+		if (!selected) {
 			panel.color().white();
-		else {
+			panel.border().color().white();
+		} else {
 			panel.color().rgb(0xD0, 0xE4, 0xF6);
+			panel.border().color().rgb(0xD0, 0xE4, 0xF6);
 		}
 		// if (selected)
 		// widget.scrollIntoView(this);
