@@ -170,10 +170,12 @@ public class ViewWidget implements IUpdateable<IViewConfiguration> {
 	private Link details;
 	private Link table;
 	private boolean ignoreFire = false;
+	private MasterDetailTableWidgetImpl widget;
 
-	public ViewWidget(ILayout layout, List<String> configurations,
-			String configuration, final boolean optionalForDetail,
-			boolean neverShowFilter) {
+	public ViewWidget(MasterDetailTableWidgetImpl widget, ILayout layout,
+			List<String> configurations, String configuration,
+			final boolean optionalForDetail, boolean neverShowFilter) {
+		this.widget = widget;
 		widgetTitle = new WidgetTitle(layout, true);
 		widgetTitle.space(2);
 		widgetTitle.addTitle("VIEWS");
@@ -311,11 +313,21 @@ public class ViewWidget implements IUpdateable<IViewConfiguration> {
 		return this;
 	}
 
-	public void showDetails() {
+	public void showDetails(boolean notifyListeners) {
 		details.showActive();
+		if (notifyListeners)
+			notifyListeners();
 	}
 
-	public void showTable() {
+	public void showTable(boolean notifyListeners) {
 		table.showActive();
+		if (notifyListeners)
+			notifyListeners();
+	}
+
+	void notifyListeners() {
+		// TODO ViewConfiguration vc = new ViewConfiguration();
+		// vc.viewChanged = ActionType.VIEW_CHANGED;
+		// widget.notifyViewListeners(vc);
 	}
 }

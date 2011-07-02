@@ -91,20 +91,19 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 					@Override
 					public void onClick() {
 						// widget.r2.checked(true);
-						if (widget.views != null)
-							widget.views.showDetails();
 						Object show = null;
 						List<Object> result = table.selection().result();
 						if (!result.isEmpty())
 							show = result.get(result.size() - 1);
 						widget.showDetailView(show, true, type);
+						if (widget.views != null)
+							widget.views.showDetails(true);
 					}
 				});
 			}
 		}
 		if (widget.showCommands) {
-			delete = table.addButton("Delete",
-					co.fxl.gui.impl.Icons.CANCEL);
+			delete = table.addButton("Delete", co.fxl.gui.impl.Icons.CANCEL);
 			delete.addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {
@@ -319,9 +318,9 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 								@Override
 								public void onClick(Object identifier,
 										int rowIndex) {
-									if (widget.views != null)
-										widget.views.showDetails();
 									widget.showDetailView(identifier);
+									if (widget.views != null)
+										widget.views.showDetails(true);
 								}
 							};
 							table.addTableClickListener(showClickListener)

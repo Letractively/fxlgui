@@ -33,7 +33,7 @@ public class ViewWidgetTest {
 		IVerticalPanel p = display.container().panel().vertical();
 		IVerticalPanel v = p.add().panel().dock().left().panel().vertical()
 				.width(300);
-		ViewWidget vw = new ViewWidget(v.add().panel(),
+		ViewWidget vw = new ViewWidget(null, v.add().panel(),
 				Arrays.asList(new String[] { "A", "B" }), "A", true, false);
 		vw.addUpdateListener(new IUpdateListener<IViewConfiguration>() {
 			@Override

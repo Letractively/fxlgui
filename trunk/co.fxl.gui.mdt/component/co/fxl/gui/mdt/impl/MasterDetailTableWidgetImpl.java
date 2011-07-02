@@ -163,7 +163,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	void addViewWidget(IVerticalPanel sidePanel) {
 		if (!allowGridView || !allowDetailView)
 			return;
-		views = new ViewWidget(sidePanel.add().panel(), configurations,
+		views = new ViewWidget(this, sidePanel.add().panel(), configurations,
 				configuration, !alwaysShowFilter, neverShowFilter);
 		views.addUpdateListener(new IUpdateListener<IViewConfiguration>() {
 			@Override
@@ -450,10 +450,10 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		if (!showDetailViewByDefault)
 			showTableView(null);
 		else {
-			if (views != null)
-				views.showDetails();
 			// TODO show filter widget with relation constraint
 			showDetailView(null);
+			if (views != null)
+				views.showDetails(true);
 		}
 		return this;
 	}
@@ -461,12 +461,12 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	void showTableView(Object object) {
 		if (filterPanel != null && !neverShowFilter)
 			filterPanel.visible(true);
-		if (views != null)
-			views.showTable();
 		clear();
 		activeView = new TableView(this, object);
 		activeView.updateLinks();
 		((TableView) activeView).onDelete(null);
+		if (views != null)
+			views.showTable(true);
 	}
 
 	DetailView showDetailView(Object show) {
@@ -735,5 +735,10 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 			co.fxl.gui.api.IUpdateable.IUpdateListener<IViewConfiguration> listener) {
 		configurationListeners.add(listener);
 		return this;
+	}
+
+	void notifyViewListeners(IViewConfiguration vc) {
+		for (IUpdateListener<IViewConfiguration> l : configurationListeners)
+			l.onUpdate(vc);
 	}
 }
