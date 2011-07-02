@@ -150,13 +150,13 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				dock.visible(true);
 			}
 		};
-		// if (adjustHeights) {
-		update(firstIndex);
-		dock.display().invokeLater(runnable);
-		// } else {
-		// setLastIndex(firstIndex);
-		// runnable.run();
-		// }
+		if (adjustHeights) {
+			update(firstIndex);
+			dock.display().invokeLater(runnable);
+		} else {
+			lastIndex = size - 1;
+			runnable.run();
+		}
 	}
 
 	private void update() {
@@ -169,8 +169,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		IContainer invisibleCard = contentPanel.add();
 		IContainer c = invisibleCard;
 		if (horizontalScrollPane) {
-			c = c.scrollPane().horizontal()
-					.viewPort();
+			c = c.scrollPane().horizontal().viewPort();
 		}
 		decorator.decorate(c, rowIndex, lastIndex);
 		contentPanel.show(invisibleCard.element());
