@@ -104,6 +104,7 @@ public abstract class LazyTreeWidgetTemplate implements
 			pane.minRowHeight(heightElement);
 			pane.height(height);
 			pane.decorator(this);
+			pane.adjustHeights(false);
 			if (lastFirstRow != -1) {
 				pane.rowIndex(lastFirstRow);
 			} else {
