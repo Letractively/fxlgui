@@ -44,6 +44,7 @@ import co.fxl.gui.mdt.impl.Icons;
 import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
 import co.fxl.gui.navigation.api.IMenuWidget;
+import co.fxl.gui.table.util.impl.LazyScrollPaneImpl;
 import co.fxl.gui.tree.api.ILazyTreeWidget;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
@@ -453,7 +454,8 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			lazyTree.selection(previousSelection);
 		}
 		lazyTree.spacing(10);
-		lazyTree.height(splitPane.height());
+		lazyTree.height(splitPane.height()
+				- LazyScrollPaneImpl.HEIGHT_SCROLL_BAR);
 		lazyTree.selection(previousSelection);
 		lazyTree.visible(true);
 	}
