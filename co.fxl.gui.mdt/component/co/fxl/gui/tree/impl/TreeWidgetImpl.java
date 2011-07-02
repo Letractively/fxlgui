@@ -59,51 +59,15 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		void onRefresh();
 	}
 
-	public class ViewID implements IViewID {
-
-		private String title;
-		private Class<?>[] constrainType;
-
-		public ViewID(DetailView detailView) {
-			title = detailView.title;
-			constrainType = detailView.constrainType;
-		}
-
-		@Override
-		public int hashCode() {
-			return title.hashCode();
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		public boolean equals(Object o) {
-			ViewID iD = (ViewID) o;
-			if (!title.equals(iD.title))
-				return false;
-			return equals(constrainType, iD.constrainType);
-		}
-
-		private boolean equals(Class<?>[] c1, Class<?>[] c2) {
-			if (c1 == null || c2 == null)
-				return c1 == c2;
-			if (c1.length != c2.length)
-				return false;
-			for (int i = 0; i < c1.length; i++)
-				if (!c1[i].equals(c2[i]))
-					return false;
-			return true;
-		}
-	}
-
-	private class DetailView implements co.fxl.gui.tree.api.ITreeWidget.IView {
+	class DetailView implements co.fxl.gui.tree.api.ITreeWidget.IView {
 
 		private IDecorator<T> decorator;
 		private ITree<T> node;
 		boolean onTop = false;
 		private IVerticalPanel contentPanel;
 		private IMenuItem register;
-		private Class<?>[] constrainType;
-		private String title;
+		Class<?>[] constrainType;
+		String title;
 		boolean isDefaultView;
 		boolean deactivatedUpdate = false;
 
@@ -174,7 +138,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 		@Override
 		public co.fxl.gui.tree.api.ITreeWidget.IViewID iD() {
-			return new ViewID(this);
+			return new ViewID(title, constrainType);
 		}
 
 		@Override

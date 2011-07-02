@@ -26,6 +26,7 @@ import co.fxl.gui.mdt.api.IMasterDetailTableWidget.IStatePacker;
 import co.fxl.gui.mdt.api.IStateMemento;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.tree.api.ITreeWidget.IViewID;
+import co.fxl.gui.tree.impl.ViewID;
 
 class StateMementoImpl implements IStateMemento {
 
@@ -98,6 +99,12 @@ class StateMementoImpl implements IStateMemento {
 	@Override
 	public IStateMemento configuration(String configuration) {
 		this.configuration = configuration;
+		return this;
+	}
+
+	@Override
+	public IStateMemento register(String register, Class<?>[] constrainType) {
+		registerSelection = new ViewID(register, constrainType);
 		return this;
 	}
 }

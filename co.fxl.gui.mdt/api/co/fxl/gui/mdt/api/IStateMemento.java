@@ -31,4 +31,6 @@ public interface IStateMemento {
 	IFilterConstraints constraints();
 
 	IStateMemento configuration(String configuration);
+
+	IStateMemento register(String register, Class<?>[] constrainType);
 }
