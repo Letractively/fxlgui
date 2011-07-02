@@ -108,6 +108,9 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private void draw() {
 		final IVerticalPanel v = container.panel().vertical();
 		final IDockPanel dock = v.add().panel().dock();
+		if (!adjustHeights) {
+			dock.height(height - LazyScrollPaneImpl.HEIGHT_SCROLL_BAR);
+		}
 		dock.visible(false);
 		dock.height(height);
 		contentPanel = dock.center().panel().card();
@@ -146,8 +149,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				if (rowIndex > 0) {
 					int y = convertRowIndex2ScrollOffset(rowIndex);
 					scrollContentPanel.offset(token, 0, y);
-					scrollPane.scrollTo(y);
 					scrollPane.scrollIntoView(token);
+					scrollPane.scrollTo(y);
 				}
 				update();
 				scrollPane.addScrollListener(LazyScrollPaneImpl.this);
