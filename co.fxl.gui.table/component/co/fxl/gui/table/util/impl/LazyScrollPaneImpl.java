@@ -22,6 +22,7 @@ import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
@@ -113,7 +114,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		scrollPane = dock.right().scrollPane();
 		scrollPane.size(35, height);
 		scrollContentPanel = scrollPane.viewPort().panel().absolute();
-		scrollContentPanel.add().label().text("&#160;");
+		final ILabel token = scrollContentPanel.add().label().text("&#160;");
 		int scrollPanelHeight = size * minRowHeight;
 		scrollContentPanel.size(1, scrollPanelHeight);
 		maxOffset = scrollPanelHeight - height;
@@ -143,7 +144,10 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				if (rowIndex > maxRowIndex)
 					rowIndex = maxRowIndex;
 				if (rowIndex > 0) {
-					scrollPane.scrollTo(convertRowIndex2ScrollOffset(rowIndex));
+					int y = convertRowIndex2ScrollOffset(rowIndex);
+					token.offset(0, y);
+					scrollPane.scrollTo(y);
+					scrollPane.scrollIntoView(token);
 				}
 				update();
 				scrollPane.addScrollListener(LazyScrollPaneImpl.this);
