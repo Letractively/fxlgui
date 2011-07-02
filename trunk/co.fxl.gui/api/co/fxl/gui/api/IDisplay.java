@@ -24,7 +24,7 @@ public interface IDisplay {
 
 	public interface IResizeListener {
 
-		void onResize(int width, int height);
+		boolean onResize(int width, int height);
 	}
 
 	public interface IExceptionHandler {
