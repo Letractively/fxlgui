@@ -121,6 +121,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	private boolean neverShowFilter;
 	boolean allowDetailView = true;
 	private List<IUpdateListener<IViewConfiguration>> configurationListeners = new LinkedList<IUpdateListener<IViewConfiguration>>();
+	private NavigationView navigationView;
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -350,14 +351,14 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	void addNavigationLinks(IVerticalPanel sidePanel) {
 		if (!navigationLinks.isEmpty()) {
-			NavigationView t = new NavigationView(sidePanel.add().panel());
+			navigationView = new NavigationView(sidePanel.add().panel());
 			if (navigationListener != null)
-				t.navigationViewListener(navigationListener);
+				navigationView.navigationViewListener(navigationListener);
 			for (Object link0 : navigationLinks) {
 				if (link0 instanceof NavigationLinkImpl) {
 					NavigationLinkImpl link = (NavigationLinkImpl) link0;
-					ImageButton l = t.addHyperlink(link.imageResource).text(
-							link.name);
+					ImageButton l = navigationView.addHyperlink(
+							link.imageResource).text(link.name);
 					for (final INavigationLinkListener<Object> cl : link.listeners) {
 						l.addClickListener(new LazyClickListener() {
 
@@ -370,8 +371,9 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 					link.setLabel(l);
 				} else {
 					ComboBoxLinkImpl cbl = (ComboBoxLinkImpl) link0;
-					IUpdateable<String> cb = t.addComboBoxLink(cbl.name,
-							cbl.text, cbl.texts.toArray(new String[0]));
+					IUpdateable<String> cb = navigationView.addComboBoxLink(
+							cbl.name, cbl.text,
+							cbl.texts.toArray(new String[0]));
 					for (IUpdateListener<String> ul : cbl.listeners)
 						cb.addUpdateListener(ul);
 				}
@@ -736,9 +738,10 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		configurationListeners.add(listener);
 		return this;
 	}
-
+	
 	void notifyViewListeners(IViewConfiguration vc) {
 		for (IUpdateListener<IViewConfiguration> l : configurationListeners)
 			l.onUpdate(vc);
+		navigationView.updateNavigationButtons();
 	}
 }
