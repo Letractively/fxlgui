@@ -149,6 +149,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		label.font().pixel(12);
 		buttonPanel = container.addSpace(4).add().panel().horizontal()
 				.visible(false);
+		container.addSpace(4);
 		if (isNull)
 			label.font().weight().italic().color().gray();
 	}
@@ -427,9 +428,9 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	@Override
 	public void selected(boolean selected) {
 		if (!selected)
-			container.color().white();
+			panel.color().white();
 		else {
-			container.color().rgb(0xD0, 0xE4, 0xF6);
+			panel.color().rgb(0xD0, 0xE4, 0xF6);
 		}
 		// if (selected)
 		// widget.scrollIntoView(this);
