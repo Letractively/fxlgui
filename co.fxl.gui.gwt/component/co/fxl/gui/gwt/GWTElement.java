@@ -152,7 +152,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	@Override
 	public boolean visible() {
-		return container.widget.isVisible();
+		return container.widget.isAttached() && container.widget.isVisible();
 	}
 
 	public IKey<R> addClickListener(IClickListener clickListener) {
