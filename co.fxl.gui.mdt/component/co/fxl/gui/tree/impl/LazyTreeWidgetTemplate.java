@@ -29,7 +29,7 @@ public abstract class LazyTreeWidgetTemplate implements
 
 	protected int heightElement = 22;
 	protected LazyTreeAdpList tree;
-	protected int height = 600;
+	private int height = 600;
 	protected IContainer c;
 	private boolean showRoot;
 	protected int spacing = 0;
@@ -47,6 +47,10 @@ public abstract class LazyTreeWidgetTemplate implements
 	public LazyTreeWidgetTemplate(IContainer c, boolean showRoot) {
 		this.c = c;
 		this.showRoot = showRoot;
+	}
+
+	protected int height() {
+		return height - 20;
 	}
 
 	@Override
