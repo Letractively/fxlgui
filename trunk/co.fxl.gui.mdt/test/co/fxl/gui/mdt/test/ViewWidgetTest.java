@@ -24,8 +24,8 @@ import java.util.Arrays;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.mdt.api.IViewConfiguration;
 import co.fxl.gui.mdt.impl.ViewWidget;
-import co.fxl.gui.mdt.impl.ViewWidget.ViewConfiguration;
 
 public class ViewWidgetTest {
 
@@ -35,9 +35,9 @@ public class ViewWidgetTest {
 				.width(300);
 		ViewWidget vw = new ViewWidget(v.add().panel(),
 				Arrays.asList(new String[] { "A", "B" }), "A", true, false);
-		vw.addUpdateListener(new IUpdateListener<ViewWidget.ViewConfiguration>() {
+		vw.addUpdateListener(new IUpdateListener<IViewConfiguration>() {
 			@Override
-			public void onUpdate(ViewConfiguration value) {
+			public void onUpdate(IViewConfiguration value) {
 				System.out.println(value);
 			}
 		});

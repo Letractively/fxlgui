@@ -34,9 +34,11 @@ import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.LazyUpdateListener;
 import co.fxl.gui.impl.WidgetTitle;
-import co.fxl.gui.mdt.impl.ViewWidget.ViewConfiguration;
+import co.fxl.gui.mdt.api.IViewConfiguration;
+import co.fxl.gui.mdt.api.IViewConfiguration.ActionType;
+import co.fxl.gui.mdt.api.IViewConfiguration.ViewType;
 
-public class ViewWidget implements IUpdateable<ViewConfiguration> {
+public class ViewWidget implements IUpdateable<IViewConfiguration> {
 
 	// TODO ...
 
@@ -132,22 +134,30 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 		}
 	}
 
-	public enum ViewType {
-		TABLE, DETAILS;
-	}
+	private class ViewConfiguration implements IViewConfiguration {
 
-	public enum ActionType {
-		VIEW_CHANGED, CONFIGURATION_CHANGED, REFRESH;
-	}
+		private ViewType viewType;
+		private String configuration;
+		private ActionType viewChanged;
 
-	public class ViewConfiguration {
-
-		public ViewType viewType;
-		public String configuration;
-		public ActionType viewChanged;
-
+		@Override
 		public String toString() {
 			return viewType + " " + configuration + " " + viewChanged;
+		}
+
+		@Override
+		public String configuration() {
+			return configuration;
+		}
+
+		@Override
+		public ViewType viewType() {
+			return viewType;
+		}
+
+		@Override
+		public ActionType actionType() {
+			return viewChanged;
 		}
 	}
 
@@ -156,7 +166,7 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 	private WidgetTitle widgetTitle;
 	private IVerticalPanel panel;
 	private List<Link> links = new LinkedList<Link>();
-	private List<IUpdateListener<ViewConfiguration>> listeners = new LinkedList<IUpdateListener<ViewConfiguration>>();
+	private List<IUpdateListener<IViewConfiguration>> listeners = new LinkedList<IUpdateListener<IViewConfiguration>>();
 	private Link details;
 	private Link table;
 	private boolean ignoreFire = false;
@@ -235,7 +245,7 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 	private void fire(ViewType viewType, Link link, ActionType b) {
 		if (ignoreFire)
 			return;
-		for (IUpdateListener<ViewConfiguration> listener : listeners) {
+		for (IUpdateListener<IViewConfiguration> listener : listeners) {
 			ViewConfiguration cfg = new ViewConfiguration();
 			cfg.viewType = viewType;
 			cfg.configuration = link.cbText();
@@ -245,8 +255,8 @@ public class ViewWidget implements IUpdateable<ViewConfiguration> {
 	}
 
 	@Override
-	public IUpdateable<ViewConfiguration> addUpdateListener(
-			co.fxl.gui.api.IUpdateable.IUpdateListener<ViewConfiguration> listener) {
+	public IUpdateable<IViewConfiguration> addUpdateListener(
+			co.fxl.gui.api.IUpdateable.IUpdateListener<IViewConfiguration> listener) {
 		listeners.add(listener);
 		return this;
 	}

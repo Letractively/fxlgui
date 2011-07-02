@@ -26,7 +26,6 @@ import java.util.Map;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IUpdateable;
-import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
@@ -51,9 +50,9 @@ import co.fxl.gui.mdt.api.IPropertyGroup;
 import co.fxl.gui.mdt.api.IPropertyPage;
 import co.fxl.gui.mdt.api.IRelation;
 import co.fxl.gui.mdt.api.IStateMemento;
-import co.fxl.gui.mdt.impl.ViewWidget.ActionType;
-import co.fxl.gui.mdt.impl.ViewWidget.ViewConfiguration;
-import co.fxl.gui.mdt.impl.ViewWidget.ViewType;
+import co.fxl.gui.mdt.api.IViewConfiguration;
+import co.fxl.gui.mdt.api.IViewConfiguration.ActionType;
+import co.fxl.gui.mdt.api.IViewConfiguration.ViewType;
 import co.fxl.gui.tree.api.ITreeWidget;
 import co.fxl.gui.tree.api.ITreeWidget.IViewID;
 
@@ -121,6 +120,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	private boolean alwaysShowFilter;
 	private boolean neverShowFilter;
 	boolean allowDetailView = true;
+	private List<IUpdateListener<IViewConfiguration>> configurationListeners = new LinkedList<IUpdateListener<IViewConfiguration>>();
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
@@ -165,22 +165,22 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 			return;
 		views = new ViewWidget(sidePanel.add().panel(), configurations,
 				configuration, !alwaysShowFilter, neverShowFilter);
-		views.addUpdateListener(new IUpdateListener<ViewWidget.ViewConfiguration>() {
+		views.addUpdateListener(new IUpdateListener<IViewConfiguration>() {
 			@Override
-			public void onUpdate(ViewConfiguration value) {
-				configuration = value.configuration;
+			public void onUpdate(IViewConfiguration value) {
+				configuration = value.configuration();
 				if (constraints != null) {
 					constraints.configuration(configuration);
 				}
-				if (value.viewType.equals(ViewType.DETAILS)) {
+				if (value.viewType().equals(ViewType.DETAILS)) {
 					filterWidget.constraints(constraints);
 					filterWidget.setConfiguration(configuration);
 				}
 				udpateFilterPanel();
-				if (value.viewChanged.equals(ActionType.REFRESH)) {
+				if (value.actionType().equals(ActionType.REFRESH)) {
 					queryList = null;
 					refresh(null);
-				} else if (value.viewType.equals(ViewType.TABLE)) {
+				} else if (value.viewType().equals(ViewType.TABLE)) {
 					if (listener instanceof TableView)
 						notifyConfigurationListener(configuration);
 					else {
@@ -192,12 +192,14 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 							show = selection.get(selection.size() - 1);
 						showTableView(show);
 					}
-				} else if (value.viewType.equals(ViewType.DETAILS)) {
+				} else if (value.viewType().equals(ViewType.DETAILS)) {
 					Object show = null;
 					if (!selection.isEmpty())
 						show = selection.get(selection.size() - 1);
 					showDetailView(show);
 				}
+				for (IUpdateListener<IViewConfiguration> l : configurationListeners)
+					l.onUpdate(value);
 			}
 		});
 		return;
@@ -726,5 +728,12 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		if (filterPanel != null)
 			filterPanel.visible(!neverShowFilter
 					&& (alwaysShowFilter || configuration != null));
+	}
+
+	@Override
+	public IUpdateable<IViewConfiguration> addUpdateListener(
+			co.fxl.gui.api.IUpdateable.IUpdateListener<IViewConfiguration> listener) {
+		configurationListeners.add(listener);
+		return this;
 	}
 }

@@ -20,6 +20,7 @@ package co.fxl.gui.mdt.api;
 
 import java.util.List;
 
+import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.impl.ICallback;
@@ -27,7 +28,8 @@ import co.fxl.gui.impl.INavigationListener;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 
-public interface IMasterDetailTableWidget<T> {
+public interface IMasterDetailTableWidget<T> extends
+		IUpdateable<IViewConfiguration> {
 
 	public interface IStatePacker<T> {
 
@@ -127,5 +129,5 @@ public interface IMasterDetailTableWidget<T> {
 
 	IMasterDetailTableWidget<T> allowReorder(boolean allowReorder);
 
-	IMasterDetailTableWidget<Object> allowDetailView(boolean allowDetailView);
+	IMasterDetailTableWidget<T> allowDetailView(boolean allowDetailView);
 }
