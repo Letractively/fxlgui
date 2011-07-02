@@ -101,7 +101,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		});
 		VerticalPanel p0 = new VerticalPanel();
 		p0.setSpacing(spacing);
-		p0.setHeight(height + "px");
+		p0.setHeight(height() + "px");
 		p0.getElement().getStyle().setOverflow(Overflow.HIDDEN);
 		VerticalPanel p = new VerticalPanel();
 		p.setSpacing(0);
@@ -120,7 +120,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		}
 		p0.add(p);
 		fp.setWidget(p0);
-		fp.setHeight(height + "px");
+		fp.setHeight(height() + "px");
 		fp.getElement().getStyle().setOverflow(Overflow.HIDDEN);
 		container.nativeElement(fp);
 		super.decorate(container, firstRow, lastRow);
