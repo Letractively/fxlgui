@@ -48,8 +48,9 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class GWTDisplay implements IDisplay, WidgetParent {
-	
-	// TODO 2DECIDE: Feature: Usability: GWT/IE: marking of text has been deactivated
+
+	// TODO 2DECIDE: Feature: Usability: GWT/IE: marking of text has been
+	// deactivated
 
 	public interface BlockListener {
 
@@ -189,7 +190,9 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		HandlerRegistration reg = Window.addResizeHandler(new ResizeHandler() {
 			@Override
 			public void onResize(ResizeEvent event) {
-				listener.onResize(width(), height());
+				boolean active = listener.onResize(width(), height());
+				if (!active)
+					removeResizeListener(listener);
 			}
 		});
 		resizeListeners.put(listener, reg);
