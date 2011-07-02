@@ -42,6 +42,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 
+	private static final String IMAGE_PATH = "test_gwt/images/";
 	public static String HTML = "<table cellspacing=\"0\" cellpadding=\"0\" "
 			+ "style=\"width: 100%; cursor: pointer; border: 1px solid rgb(255, 255, 255);\">"
 			+ "<tbody>"
@@ -53,15 +54,17 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			+ "<td align=\"left\" style=\"vertical-align: middle;\">"
 			+ "<div "
 			+ "style=\"position: relative; overflow: hidden; width: ${INDENT}px; height: 1px;\">&nbsp;</div>"
-			+ "</td>"
-			+ "<td align=\"left\" style=\"vertical-align: middle;\">"
-			+ "<img class=\"gwt-Image\" "
-			+ "src=\"images/${STATE_ICON}\" "
+			+ "</td>" + "<td align=\"left\" style=\"vertical-align: middle;\">"
+			+ "<img class=\"gwt-Image\" " + "src=\""
+			+ IMAGE_PATH
+			+ "${STATE_ICON}\" "
 			+ "style=\"cursor: pointer;\">"
 			+ "</td>"
 			+ "<td align=\"left\" style=\"vertical-align: middle;\">"
 			+ "<img class=\"gwt-Image\" "
-			+ "src=\"images/${ICON}\" "
+			+ "src=\""
+			+ IMAGE_PATH
+			+ "${ICON}\" "
 			+ "style=\"cursor: pointer;\">"
 			+ "</td>"
 			+ "<td align=\"left\" style=\"vertical-align: middle;\">"
@@ -72,7 +75,12 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			+ "<div class=\"gwt-HTML gwt-Label-FXL font-family-arial font-size-12px\" "
 			+ "style=\"white-space: nowrap; -moz-user-select: none; cursor: pointer;\">"
 			+ "<div class=\"unselectable\" unselectable=\"on\">${LABEL}</div>"
-			+ "</div>" + "</td>" + "</td>" + "</tr>" + "</tbody>" + "</table>"
+			+ "</div>"
+			+ "</td>"
+			+ "</td>"
+			+ "</tr>"
+			+ "</tbody>"
+			+ "</table>"
 			+ "</td>" + "</tr>" + "</tbody>" + "</table>";
 	private int firstRow;
 	private int lastRow;
