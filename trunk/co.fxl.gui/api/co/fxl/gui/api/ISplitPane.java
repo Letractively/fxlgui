@@ -20,6 +20,11 @@ package co.fxl.gui.api;
 
 public interface ISplitPane extends IElement<ISplitPane>, IBordered {
 
+	public interface ISplitPaneResizeListener {
+
+		void onResize(int left, int right);
+	}
+
 	ISplitPane vertical();
 
 	IContainer first();
@@ -27,4 +32,6 @@ public interface ISplitPane extends IElement<ISplitPane>, IBordered {
 	IContainer second();
 
 	ISplitPane splitPosition(int pixel);
+
+	ISplitPane addResizeListener(ISplitPaneResizeListener l);
 }
