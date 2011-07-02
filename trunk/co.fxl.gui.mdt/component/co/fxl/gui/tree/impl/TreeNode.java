@@ -133,7 +133,8 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	}
 
 	void decorateCore() {
-		container = panel.add().panel().horizontal();
+		container = panel.add().panel().horizontal().align().begin().add()
+				.panel().horizontal().align().begin();
 		container.border().color().white();
 		content = container.add().panel().horizontal().spacing(2);
 		content.addSpace(1 + depth * INDENT);
