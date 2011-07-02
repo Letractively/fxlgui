@@ -169,7 +169,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		IContainer invisibleCard = contentPanel.add();
 		IContainer c = invisibleCard;
 		if (horizontalScrollPane) {
-			c = c.scrollPane().height(height - HEIGHT_SCROLL_BAR).horizontal()
+			c = c.scrollPane().horizontal()
 					.viewPort();
 		}
 		decorator.decorate(c, rowIndex, lastIndex);
