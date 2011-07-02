@@ -145,7 +145,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 					rowIndex = maxRowIndex;
 				if (rowIndex > 0) {
 					int y = convertRowIndex2ScrollOffset(rowIndex);
-					token.offset(0, y);
+					scrollContentPanel.offset(token, 0, y);
 					scrollPane.scrollTo(y);
 					scrollPane.scrollIntoView(token);
 				}
