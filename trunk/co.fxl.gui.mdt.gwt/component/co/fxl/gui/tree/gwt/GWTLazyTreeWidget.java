@@ -132,6 +132,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 
 			@Override
 			public void add(Widget widget) {
+				widget.setWidth("100%");
 				p.add(widget);
 			}
 
