@@ -50,7 +50,7 @@ public abstract class LazyTreeWidgetTemplate implements
 	}
 
 	protected int height() {
-		return height - 20;
+		return height - 17;
 	}
 
 	@Override
