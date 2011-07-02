@@ -326,8 +326,8 @@ public class ViewWidget implements IUpdateable<IViewConfiguration> {
 	}
 
 	void notifyListeners() {
-		// TODO ViewConfiguration vc = new ViewConfiguration();
-		// vc.viewChanged = ActionType.VIEW_CHANGED;
-		// widget.notifyViewListeners(vc);
+		ViewConfiguration vc = new ViewConfiguration();
+		vc.viewChanged = ActionType.VIEW_CHANGED;
+		widget.notifyViewListeners(vc);
 	}
 }
