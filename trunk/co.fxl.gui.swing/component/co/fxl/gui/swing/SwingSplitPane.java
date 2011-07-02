@@ -71,4 +71,9 @@ class SwingSplitPane extends SwingElement<JSplitPane, ISplitPane> implements
 	public IBorder border() {
 		return new SwingBorder(container.component);
 	}
+
+	@Override
+	public ISplitPane addResizeListener(ISplitPaneResizeListener l) {
+		throw new MethodNotImplementedException();
+	}
 }
