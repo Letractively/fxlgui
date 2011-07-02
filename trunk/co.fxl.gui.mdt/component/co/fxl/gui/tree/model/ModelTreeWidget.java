@@ -47,6 +47,7 @@ import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
 import co.fxl.gui.navigation.api.IMenuWidget;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
+import co.fxl.gui.tree.impl.ViewID;
 
 public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
@@ -58,42 +59,6 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	interface RefreshListener {
 
 		void onRefresh();
-	}
-
-	public class ViewID implements IViewID {
-
-		private String title;
-		private Class<?>[] constrainType;
-
-		public ViewID(DetailView detailView) {
-			title = detailView.title;
-			constrainType = detailView.constrainType;
-		}
-
-		@Override
-		public int hashCode() {
-			return title.hashCode();
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		public boolean equals(Object o) {
-			ViewID iD = (ViewID) o;
-			if (!title.equals(iD.title))
-				return false;
-			return equals(constrainType, iD.constrainType);
-		}
-
-		private boolean equals(Class<?>[] c1, Class<?>[] c2) {
-			if (c1 == null || c2 == null)
-				return c1 == c2;
-			if (c1.length != c2.length)
-				return false;
-			for (int i = 0; i < c1.length; i++)
-				if (!c1[i].equals(c2[i]))
-					return false;
-			return true;
-		}
 	}
 
 	private class DetailView implements co.fxl.gui.tree.api.ITreeWidget.IView {
@@ -175,7 +140,7 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 
 		@Override
 		public co.fxl.gui.tree.api.ITreeWidget.IViewID iD() {
-			return new ViewID(this);
+			return new ViewID(title, constrainType);
 		}
 
 		@Override
@@ -369,8 +334,8 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 					dl.visible(true);
 				}
 			};
-			delete = widgetTitle.addHyperlink(
-					co.fxl.gui.impl.Icons.CANCEL, "Delete");
+			delete = widgetTitle.addHyperlink(co.fxl.gui.impl.Icons.CANCEL,
+					"Delete");
 			delete.addClickListener(deleteListener);
 			if (showRefresh && this instanceof RefreshListener)
 				refresh().addClickListener(new LazyClickListener() {

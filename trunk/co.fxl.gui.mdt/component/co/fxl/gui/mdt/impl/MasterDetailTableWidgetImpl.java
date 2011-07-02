@@ -738,7 +738,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 		configurationListeners.add(listener);
 		return this;
 	}
-	
+
 	void notifyViewListeners(IViewConfiguration vc) {
 		for (IUpdateListener<IViewConfiguration> l : configurationListeners)
 			l.onUpdate(vc);
