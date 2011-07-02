@@ -176,7 +176,9 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 
 	@Override
 	public boolean visible() {
-		return container.component.isVisible();
+		boolean visible = container.component.isDisplayable()
+				&& container.component.isVisible();
+		return visible;
 	}
 
 	@Override
