@@ -396,12 +396,15 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	@Override
-	public void onResize(int width, int height) {
+	public boolean onResize(int width, int height) {
+		if (!splitPane.visible())
+			return false;
 		int offsetY = splitPane.offsetY();
 		offsetY = Math.max(offsetY, 130);
 		int maxFromDisplay = height - offsetY - 28;
 		if (maxFromDisplay > 0)
 			splitPane.height(maxFromDisplay);
+		return true;
 	}
 
 	@Override

@@ -57,4 +57,6 @@ public interface IN2MWidget<T> {
 	T selectedItem();
 
 	IN2MWidget<T> selectedItem(T o);
+
+	boolean visible();
 }

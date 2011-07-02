@@ -263,7 +263,9 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 	}
 
 	@Override
-	public void onResize(int width, int height) {
+	public boolean onResize(int width, int height) {
+		if (!panel.visible())
+			return false;
 		int offsetY = Math.max(panel.offsetY(), 180);
 		int maxFromDisplay = height - offsetY - 80;
 		maxFromDisplay = Math.max(maxFromDisplay, 60);
@@ -271,6 +273,7 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 			maxFromDisplay -= 35;
 		}
 		table.height(maxFromDisplay);
+		return true;
 	}
 
 	@Override
