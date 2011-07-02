@@ -49,4 +49,6 @@ public interface ILazyScrollPane extends IMouseWheelListener {
 	ILazyScrollPane adjustHeights(boolean adjustHeights);
 
 	void remove();
+
+	ILazyScrollPane width(int width);
 }
