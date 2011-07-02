@@ -27,8 +27,9 @@ import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 
-class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
+public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
+	public static final int HEIGHT_SCROLL_BAR = 17;
 	private IDecorator decorator;
 	private int minRowHeight = 22;
 	private int height = 400;
@@ -168,7 +169,8 @@ class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		IContainer invisibleCard = contentPanel.add();
 		IContainer c = invisibleCard;
 		if (horizontalScrollPane) {
-			c = c.scrollPane().height(height - 17).horizontal().viewPort();
+			c = c.scrollPane().height(height - HEIGHT_SCROLL_BAR).horizontal()
+					.viewPort();
 		}
 		decorator.decorate(c, rowIndex, lastIndex);
 		contentPanel.show(invisibleCard.element());
