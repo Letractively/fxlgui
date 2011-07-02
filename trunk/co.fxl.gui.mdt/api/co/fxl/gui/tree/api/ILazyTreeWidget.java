@@ -48,4 +48,6 @@ public interface ILazyTreeWidget<T> {
 	boolean isCollapsed(ITree<T> tree);
 
 	ILazyTreeWidget<T> collapse(ITree<T> tree, boolean collapse);
+
+	ILazyTreeWidget<T> width(int width);
 }

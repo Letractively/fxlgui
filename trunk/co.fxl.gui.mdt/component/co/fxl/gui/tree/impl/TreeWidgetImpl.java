@@ -33,6 +33,7 @@ import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISplitPane;
+import co.fxl.gui.api.ISplitPane.ISplitPaneResizeListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.ICallback;
@@ -375,6 +376,14 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				IMenuWidget.class);
 		ResizeListenerImpl.setup(panel.display(), this);
 		onResize(-1, panel.display().height());
+//		splitPane.addResizeListener(new ISplitPaneResizeListener() {
+//
+//			@Override
+//			public void onResize(int left, int right) {
+//				if (lazyTree != null)
+//					lazyTree.width(splitPane.width() - right - 7);
+//			}
+//		});
 	}
 
 	@Override
@@ -457,6 +466,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		lazyTree.height(splitPane.height()
 				- LazyScrollPaneImpl.HEIGHT_SCROLL_BAR);
 		lazyTree.selection(previousSelection);
+//		lazyTree.width(SPLIT_POSITION);
 		lazyTree.visible(true);
 	}
 
