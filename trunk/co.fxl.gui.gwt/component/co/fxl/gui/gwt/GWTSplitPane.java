@@ -21,6 +21,9 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ISplitPane;
 
+import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -72,5 +75,19 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 	@Override
 	public IBorder border() {
 		return new GWTWidgetBorder(container.widget);
+	}
+
+	@Override
+	public ISplitPane addResizeListener(final ISplitPaneResizeListener l) {
+		container.widget.addHandler(new MouseUpHandler() {
+			@Override
+			public void onMouseUp(MouseUpEvent event) {
+				HorizontalSplitPanel p = (HorizontalSplitPanel) GWTSplitPane.super.container.widget;
+				int offsetWidth1 = p.getLeftWidget().getOffsetWidth();
+				int offsetWidth2 = p.getRightWidget().getOffsetWidth();
+				l.onResize(offsetWidth1, offsetWidth2);
+			}
+		}, MouseUpEvent.getType());
+		return this;
 	}
 }
