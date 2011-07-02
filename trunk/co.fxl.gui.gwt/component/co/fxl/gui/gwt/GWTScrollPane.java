@@ -99,6 +99,10 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 
 	@Override
 	public IScrollPane horizontal() {
+		container.widget.getElement().getStyle()
+				.setProperty("overflowX", "auto");
+		container.widget.getElement().getStyle()
+				.setProperty("overflowY", "hidden");
 		return this;
 	}
 
