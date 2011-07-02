@@ -39,6 +39,9 @@ public class NavigationView {
 	private IVerticalPanel panel;
 	private int index = 1;
 	private boolean hasLinks;
+	private INavigationListener nl;
+	private IClickable<?> back;
+	private IClickable<?> forward;
 
 	public NavigationView(ILayout layout) {
 		widgetTitle = new WidgetTitle(layout, true);
@@ -52,28 +55,31 @@ public class NavigationView {
 		panel = widgetTitle.content().panel().vertical().spacing(6);
 	}
 
-	public NavigationView navigationViewListener(final INavigationListener l) {
-		if (l == null)
+	public NavigationView navigationViewListener(final INavigationListener nl) {
+		if (nl == null)
 			return this;
-		IClickable<?> back = widgetTitle.addHyperlink(Icons.NAVIGATION_BACK,
-				"Back");
+		this.nl = nl;
+		back = widgetTitle.addHyperlink(Icons.NAVIGATION_BACK, "Back");
 		back.addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
-				l.previous();
+				nl.previous();
 			}
 		});
-		back.clickable(l.hasPrevious());
-		IClickable<?> forward = widgetTitle.addHyperlink(
-				Icons.NAVIGATION_FORWARD, "Forward");
+		forward = widgetTitle.addHyperlink(Icons.NAVIGATION_FORWARD, "Forward");
 		forward.addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
-				l.next();
+				nl.next();
 			}
 		});
-		forward.clickable(l.hasNext());
+		updateNavigationButtons();
 		return this;
+	}
+
+	public void updateNavigationButtons() {
+		back.clickable(nl.hasPrevious());
+		forward.clickable(nl.hasNext());
 	}
 
 	public ImageButton addHyperlink() {
