@@ -25,7 +25,7 @@ public class ResizeListener implements IResizeListener {
 
 	// TODO Code: Potential Bug / Option: Optimization: holds references,
 	// impairs garbage collection
-	
+
 	// TODO Code: Architecture: Architecture: use only one Resize-Listener
 
 	private static ResizeListener instance;
@@ -42,8 +42,8 @@ public class ResizeListener implements IResizeListener {
 	}
 
 	@Override
-	public void onResize(int width, int height) {
-		listener.onResize(width, height);
+	public boolean onResize(int width, int height) {
+		return listener.onResize(width, height);
 	}
 
 	public static void remove(IResizeListener l) {

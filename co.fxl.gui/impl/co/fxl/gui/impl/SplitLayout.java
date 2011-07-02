@@ -66,9 +66,12 @@ public class SplitLayout implements IResizeListener// , IClickListener
 	}
 
 	@Override
-	public void onResize(int width, int height) {
+	public boolean onResize(int width, int height) {
+		if (!panel.visible())
+			return false;
 		resizeSidePanel(height);
 		cell0.width(width - WIDTH_SIDE_PANEL);
+		return true;
 	}
 
 	private void resizeSidePanel(int height) {
