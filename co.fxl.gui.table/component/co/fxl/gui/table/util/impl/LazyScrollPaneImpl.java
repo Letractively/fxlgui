@@ -232,4 +232,9 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		update(rowIndex);
 		return this;
 	}
+
+	@Override
+	public void remove() {
+		container.clear();
+	}
 }
