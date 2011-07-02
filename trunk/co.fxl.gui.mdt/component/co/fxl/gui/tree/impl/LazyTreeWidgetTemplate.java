@@ -95,8 +95,10 @@ public abstract class LazyTreeWidgetTemplate implements
 	@Override
 	public ILazyTreeWidget<Object> height(int height) {
 		this.height = height;
-		if (pane != null)
+		if (pane != null) {
+			pane.remove();
 			visible(true);
+		}
 		return this;
 	}
 
