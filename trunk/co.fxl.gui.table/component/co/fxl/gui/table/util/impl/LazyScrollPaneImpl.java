@@ -178,6 +178,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		decorator.decorate(c, rowIndex, lastIndex);
 		contentPanel.show(invisibleCard.element());
 		if (lastCard != null) {
+			lastCard.clear();
 			lastCard.element().remove();
 		}
 		lastCard = invisibleCard;
