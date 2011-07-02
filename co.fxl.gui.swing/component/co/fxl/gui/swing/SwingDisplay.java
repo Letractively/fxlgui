@@ -207,7 +207,10 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		ComponentAdapter adp = new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent arg0) {
-				listener.onResize(width(), height());
+				boolean active = listener.onResize(width(), height());
+				if (!active) {
+					removeResizeListener(listener);
+				}
 			}
 		};
 		resizeListeners.put(listener, adp);
