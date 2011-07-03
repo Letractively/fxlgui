@@ -30,7 +30,6 @@ import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.impl.LazyTreeWidgetTemplate;
 import co.fxl.gui.tree.impl.TreeNode;
 
-import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseWheelEvent;
@@ -110,7 +109,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		VerticalPanel p0 = new VerticalPanel();
 		p0.setSpacing(spacing);
 		p0.setHeight(height() + "px");
-		p0.getElement().getStyle().setOverflow(Overflow.HIDDEN);
+		p0.getElement().getStyle().setProperty("overflowY", "hidden");
 		VerticalPanel p = new VerticalPanel();
 		p.setSpacing(0);
 		if (elementAt > firstRow && elementAt < lastRow) {
@@ -129,7 +128,7 @@ class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		p0.add(p);
 		fp.setWidget(p0);
 		fp.setHeight(height() + "px");
-		fp.getElement().getStyle().setOverflow(Overflow.HIDDEN);
+		fp.getElement().getStyle().setProperty("overflowY", "hidden");
 		container.nativeElement(fp);
 		super.decorate(container, firstRow, lastRow);
 	}
