@@ -53,16 +53,16 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			+ "<td align=\"left\" style=\"vertical-align: middle;\">"
 			+ "<div "
 			+ "style=\"position: relative; overflow: hidden; width: ${INDENT}px; height: 1px;\">&nbsp;</div>"
-			+ "</td>" + "<td align=\"left\" style=\"vertical-align: middle;\">"
-			+ "<img class=\"gwt-Image\" " + "src=\""
-			+ IMAGE_PATH
+			+ "</td>"
+			+ "<td align=\"left\" style=\"vertical-align: middle;\">"
+			+ "<img class=\"gwt-Image\" "
+			+ "src=\""
 			+ "${STATE_ICON}\" "
 			+ "style=\"cursor: pointer;\">"
 			+ "</td>"
 			+ "<td align=\"left\" style=\"vertical-align: middle;\">"
 			+ "<img class=\"gwt-Image\" "
 			+ "src=\""
-			+ IMAGE_PATH
 			+ "${ICON}\" "
 			+ "style=\"cursor: pointer;\">"
 			+ "</td>"
@@ -74,12 +74,7 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			+ "<div class=\"gwt-HTML gwt-Label-FXL font-family-arial font-size-12px\" "
 			+ "style=\"white-space: nowrap; -moz-user-select: none; cursor: pointer;\">"
 			+ "<div class=\"unselectable\" unselectable=\"on\">${LABEL}</div>"
-			+ "</div>"
-			+ "</td>"
-			+ "</td>"
-			+ "</tr>"
-			+ "</tbody>"
-			+ "</table>"
+			+ "</div>" + "</td>" + "</td>" + "</tr>" + "</tbody>" + "</table>"
 			+ "</td>" + "</tr>" + "</tbody>" + "</table>";
 	private int firstRow;
 	private int lastRow;
@@ -174,8 +169,10 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			ITree<Object> row = rows.get(i - firstRow);
 			String hTML = HTML.replace("${INDENT}",
 					String.valueOf(1 + tree.indent(row) * 10));
-			hTML = hTML.replace("${STATE_ICON}", TreeNode.treeIcon(this, row));
-			hTML = hTML.replace("${ICON}", TreeNode.entityIcon(row));
+			hTML = hTML.replace("${STATE_ICON}",
+					IMAGE_PATH + TreeNode.treeIcon(this, row));
+			hTML = hTML.replace("${ICON}",
+					IMAGE_PATH + TreeNode.entityIcon(row));
 			hTML = hTML.replace("${LABEL}",
 					HTMLText.html(row.name().replace("<", "&#060;")));
 			b.append("<tr>" + hTML + "</tr>");
