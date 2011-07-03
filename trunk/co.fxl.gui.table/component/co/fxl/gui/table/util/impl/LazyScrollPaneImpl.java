@@ -30,7 +30,7 @@ import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
-	private static final int WIDTH_SCROLL_PANEL = 35;
+	public static int WIDTH_SCROLL_PANEL = 35;
 	public static final int HEIGHT_SCROLL_BAR = 17;
 	private IDecorator decorator;
 	private int minRowHeight = 22;
@@ -206,7 +206,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	public ILazyScrollPane width(int width) {
 		this.width = width;
 		if (width != -1 && scrollPane2 != null)
-			scrollPane2.width(width - 35);
+			scrollPane2.width(width - WIDTH_SCROLL_PANEL);
 		return this;
 	}
 
