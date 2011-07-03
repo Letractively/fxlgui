@@ -19,6 +19,8 @@
 package co.fxl.gui.swing;
 
 import java.awt.Color;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.JComponent;
 import javax.swing.JSplitPane;
@@ -73,7 +75,20 @@ class SwingSplitPane extends SwingElement<JSplitPane, ISplitPane> implements
 	}
 
 	@Override
-	public ISplitPane addResizeListener(ISplitPaneResizeListener l) {
-		throw new MethodNotImplementedException();
+	public ISplitPane addResizeListener(final ISplitPaneResizeListener l) {
+		container.component
+				.addPropertyChangeListener(new PropertyChangeListener() {
+
+					@Override
+					public void propertyChange(PropertyChangeEvent arg0) {
+						if (arg0.getPropertyName().equals(
+								JSplitPane.DIVIDER_LOCATION_PROPERTY)) {
+							l.onResize(container.component.getLeftComponent()
+									.getWidth(), container.component
+									.getRightComponent().getWidth());
+						}
+					}
+				});
+		return this;
 	}
 }
