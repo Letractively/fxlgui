@@ -29,7 +29,7 @@ public class GWTLazyTreeWidgetProvider implements
 		IWidgetProvider<ILazyTreeWidget> {
 
 	public GWTLazyTreeWidgetProvider() {
-		if (!GWTDisplay.isInternetExplorer()) {
+		if (!GWTDisplay.isInternetExplorer() && !GWTDisplay.isOpera()) {
 			LazyScrollPaneImpl.WIDTH_SCROLL_PANEL = LazyScrollPaneImpl.HEIGHT_SCROLL_BAR;
 		}
 	}
