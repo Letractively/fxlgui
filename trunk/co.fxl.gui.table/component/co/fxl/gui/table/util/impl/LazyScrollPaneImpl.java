@@ -22,7 +22,6 @@ import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
-import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
@@ -111,11 +110,13 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 	private void draw() {
 		v = container.panel().vertical();
+		v.color().white();
+//		v.border().style().bottom().color().lightgray();
 		// if (width != -1)
 		// v.width(width);
 		final IDockPanel dock = v.add().panel().dock();
 		if (!adjustHeights) {
-			dock.height(height - LazyScrollPaneImpl.HEIGHT_SCROLL_BAR);
+			dock.height(height);
 		}
 		dock.visible(false);
 		dock.height(height);
@@ -154,17 +155,22 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 					rowIndex = maxRowIndex;
 				if (rowIndex > 0) {
 					int y = convertRowIndex2ScrollOffset(rowIndex);
-					IPanel<?> quader = scrollContentPanel.add().panel()
-							.absolute();
-					quader.size(4, 4);
-					scrollContentPanel.offset(quader, 0, y);
-					scrollPane.scrollIntoView(quader);
-					// scrollPane.scrollTo(y);
+					// IPanel<?> quader =
+					// scrollContentPanel.add().panel()
+					// .absolute();
+					// quader.size(4, 4);
+					// scrollContentPanel.offset(token, 0, y);
+					// scrollPane.scrollIntoView(token);
+					if (lastCard != null)
+						lastCard.clear();
+					dock.visible(true);
+					scrollPane.scrollTo(y);
+					dock.visible(false);
 					// TODO style="overflow:auto" on body element
 					// FocusPanel around Widget to scroll into view
 				}
-				update();
 				scrollPane.addScrollListener(LazyScrollPaneImpl.this);
+				update();
 				dock.visible(true);
 			}
 		};
