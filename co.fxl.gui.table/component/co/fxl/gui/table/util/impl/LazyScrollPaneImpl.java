@@ -30,6 +30,7 @@ import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
+	private static final int WIDTH_SCROLL_PANEL = 35;
 	public static final int HEIGHT_SCROLL_BAR = 17;
 	private IDecorator decorator;
 	private int minRowHeight = 22;
@@ -49,6 +50,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private boolean adjustHeights = true;
 	private int width = -1;
 	private IVerticalPanel v;
+	private IScrollPane scrollPane2;
 
 	LazyScrollPaneImpl(IContainer container) {
 		this.container = container;
@@ -109,8 +111,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 	private void draw() {
 		v = container.panel().vertical();
-		if (width != -1)
-			v.width(width);
+		// if (width != -1)
+		// v.width(width);
 		final IDockPanel dock = v.add().panel().dock();
 		if (!adjustHeights) {
 			dock.height(height - LazyScrollPaneImpl.HEIGHT_SCROLL_BAR);
@@ -118,10 +120,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		dock.visible(false);
 		dock.height(height);
 		contentPanel = dock.center().panel().card();
-		if (width != -1)
-			contentPanel.width(width - 35);
 		scrollPane = dock.right().scrollPane();
-		scrollPane.size(35, height);
+		scrollPane.size(WIDTH_SCROLL_PANEL, height);
 		scrollContentPanel = scrollPane.viewPort().panel().absolute();
 		scrollContentPanel.add().label().text("&#160;");
 		int scrollPanelHeight = size * minRowHeight;
@@ -187,7 +187,9 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		IContainer invisibleCard = contentPanel.add();
 		IContainer c = invisibleCard;
 		if (horizontalScrollPane) {
-			IScrollPane scrollPane2 = c.scrollPane();
+			scrollPane2 = c.scrollPane();
+			if (width != -1)
+				scrollPane2.width(width - WIDTH_SCROLL_PANEL);
 			c = scrollPane2.horizontal().viewPort();
 		}
 		decorator.decorate(c, rowIndex, lastIndex);
@@ -203,11 +205,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	@Override
 	public ILazyScrollPane width(int width) {
 		this.width = width;
-		System.out.println(width + " ");
-		if (v != null) {
-			v.remove();
-			visible(true);
-		}
+		if (width != -1 && scrollPane2 != null)
+			scrollPane2.width(width - 35);
 		return this;
 	}
 
