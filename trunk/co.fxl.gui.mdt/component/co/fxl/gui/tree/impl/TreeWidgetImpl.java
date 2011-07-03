@@ -371,6 +371,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			return;
 		splitPane = panel().add().splitPane().splitPosition(SPLIT_POSITION);
 		panel = splitPane.first().panel().vertical();
+		panel.color().rgb(240, 240, 240);
 		IScrollPane scrollPane = splitPane.second().scrollPane();
 		registers = (IMenuWidget) scrollPane.viewPort().widget(
 				IMenuWidget.class);
