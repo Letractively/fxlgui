@@ -20,11 +20,19 @@ package co.fxl.gui.tree.gwt;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
+import co.fxl.gui.gwt.GWTDisplay;
+import co.fxl.gui.table.util.impl.LazyScrollPaneImpl;
 import co.fxl.gui.tree.api.ILazyTreeWidget;
 
 @SuppressWarnings("rawtypes")
 public class GWTLazyTreeWidgetProvider implements
 		IWidgetProvider<ILazyTreeWidget> {
+
+	public GWTLazyTreeWidgetProvider() {
+		if (!GWTDisplay.isInternetExplorer()) {
+			LazyScrollPaneImpl.WIDTH_SCROLL_PANEL = LazyScrollPaneImpl.HEIGHT_SCROLL_BAR;
+		}
+	}
 
 	@Override
 	public Class<ILazyTreeWidget> widgetType() {

@@ -39,9 +39,9 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
+public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 
-	private static final String IMAGE_PATH = "images/";
+	public static String IMAGE_PATH = "images/";
 	public static String HTML = "<table cellspacing=\"0\" cellpadding=\"0\" "
 			+ "style=\"width: 100%; cursor: pointer; border: 1px solid rgb(255, 255, 255);\">"
 			+ "<tbody>"
