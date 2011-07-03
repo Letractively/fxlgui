@@ -159,7 +159,9 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 					quader.size(4, 4);
 					scrollContentPanel.offset(quader, 0, y);
 					scrollPane.scrollIntoView(quader);
-//					scrollPane.scrollTo(y);
+					// scrollPane.scrollTo(y);
+					// TODO style="overflow:auto" on body element
+					// FocusPanel around Widget to scroll into view
 				}
 				update();
 				scrollPane.addScrollListener(LazyScrollPaneImpl.this);
