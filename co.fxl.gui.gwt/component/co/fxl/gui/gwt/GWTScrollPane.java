@@ -80,6 +80,15 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 
 	@Override
 	public IScrollPane scrollTo(int pos) {
+		// if (container.widget.getWidget() instanceof AbsolutePanel) {
+		// AbsolutePanel ap = (AbsolutePanel) container.widget.getWidget();
+		// ap.getElement().getStyle().setOverflow(Overflow.AUTO);
+		// Label l = new Label("&#160;");
+		// FocusPanel p = new FocusPanel(l);
+		// ap.add(p, 0, pos);
+		// p.getElement().scrollIntoView();
+		// ap.remove(p);
+		// } else
 		container.widget.setScrollPosition(pos);
 		return this;
 	}
