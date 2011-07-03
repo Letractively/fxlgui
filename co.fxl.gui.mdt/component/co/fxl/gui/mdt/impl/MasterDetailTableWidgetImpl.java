@@ -742,6 +742,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	void notifyViewListeners(IViewConfiguration vc) {
 		for (IUpdateListener<IViewConfiguration> l : configurationListeners)
 			l.onUpdate(vc);
-		navigationView.updateNavigationButtons();
+		if (navigationView != null)
+			navigationView.updateNavigationButtons();
 	}
 }
