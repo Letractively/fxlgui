@@ -21,6 +21,7 @@ package co.fxl.gui.tree.impl;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 import co.fxl.gui.table.util.api.ILazyScrollPane.IDecorator;
+import co.fxl.gui.table.util.impl.LazyScrollPaneImpl;
 import co.fxl.gui.tree.api.ILazyTreeWidget;
 import co.fxl.gui.tree.api.ITree;
 
@@ -51,7 +52,7 @@ public abstract class LazyTreeWidgetTemplate implements
 	}
 
 	protected int height() {
-		return height;
+		return height ;
 	}
 
 	@Override
