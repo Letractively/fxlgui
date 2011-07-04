@@ -42,4 +42,6 @@ public interface INavigationItem {
 	boolean isActive();
 
 	IDecorator initDecorator();
+
+	INavigationItem visible(boolean visible);
 }
