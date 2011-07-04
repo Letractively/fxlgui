@@ -35,6 +35,7 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	// private IColor borderColor;
 	private NavigationWidgetImpl widget;
 	private IHorizontalPanel itemPanel;
+	private IHorizontalPanel basicPanel;
 
 	NavigationItemImpl(NavigationGroupImpl group) {
 		this(group.widget, group.itemPanel);
@@ -46,9 +47,10 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	}
 
 	void initButtonPanel() {
-		if (buttonPanel == null) {
-			itemPanel.addSpace(3);
-			buttonPanel = itemPanel.add().panel().horizontal();
+		if (basicPanel == null) {
+			basicPanel = itemPanel.add().panel().horizontal();
+			basicPanel.addSpace(3);
+			buttonPanel = basicPanel.add().panel().horizontal();
 			buttonPanel.spacing(5).align().center();
 			buttonPanel.addSpace(2);
 			// borderColor =
@@ -162,5 +164,11 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	@Override
 	public IDecorator initDecorator() {
 		return decorator;
+	}
+
+	@Override
+	public INavigationItem visible(boolean visible) {
+		basicPanel.visible(visible);
+		return this;
 	}
 }
