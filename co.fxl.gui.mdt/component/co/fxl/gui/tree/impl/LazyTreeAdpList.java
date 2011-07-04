@@ -47,6 +47,8 @@ public class LazyTreeAdpList {
 	}
 
 	public List<ITree<Object>> rows(int start, int end) {
+		if (rows.isEmpty())
+			return new LinkedList<ITree<Object>>();
 		return rows.subList(start, end + 1);
 	}
 
