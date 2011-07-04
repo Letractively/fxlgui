@@ -111,7 +111,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private void draw() {
 		v = container.panel().vertical();
 		v.color().white();
-//		v.border().style().bottom().color().lightgray();
+		// v.border().style().bottom().color().lightgray();
 		// if (width != -1)
 		// v.width(width);
 		final IDockPanel dock = v.add().panel().dock();
@@ -140,6 +140,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				assert firstIndex >= 0;
 				int h = adjustHeights ? decorator.rowHeight(lastIndex)
 						: minRowHeight;
+				assert lastIndex >= 0;
 				maxRowIndex = lastIndex;
 				for (int i = lastIndex - 1; i >= firstIndex && h < height; i--) {
 					int rowHeight = Math.max(minRowHeight,
@@ -179,6 +180,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 			dock.display().invokeLater(runnable);
 		} else {
 			lastIndex = size - 1;
+			if (lastIndex < 0)
+				lastIndex = 0;
 			runnable.run();
 		}
 	}
@@ -220,7 +223,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		lastIndex = rowIndex + rows2Paint - 1;
 		if (lastIndex >= size)
 			lastIndex = size - 1;
-		else if (lastIndex < 0)
+		if (lastIndex < 0)
 			lastIndex = 0;
 	}
 
