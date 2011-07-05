@@ -237,7 +237,11 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				IClickable<?> hl = widgetTitle
 						.addHyperlink(type == null ? Icons.NEW
 								: creatableTypeIcons.get(type), "New"
-								+ (type == null ? "" : " " + type));
+								+ (type == null ? "" : " " + type),
+								"Create a new "
+										+ (type == null ? "Entity" : type),
+								"Switch to Detail View to create a new "
+										+ (type == null ? "Entity" : type));
 				newClickHyperlink.put(type, hl);
 				hl.addClickListener(cl);
 			}

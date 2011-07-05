@@ -85,7 +85,10 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 			for (final String type : widget.creatableTypes) {
 				IClickable<?> button = table.addButton(type == null ? "New"
 						: "New " + type, type == null ? Icons.NEW
-						: widget.creatableTypeIcons.get(type));
+						: widget.creatableTypeIcons.get(type), "Create a new "
+						+ (type == null ? "Entity" : type),
+						"Switch to Detail View to create a new "
+								+ (type == null ? "Entity" : type));
 				buttons.put(type, button);
 				button.addClickListener(new IClickListener() {
 					@Override
@@ -235,8 +238,9 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 
 	private void updateCreatable() {
 		if (widget.selection.size() > 1) {
-			for (IClickable<?> c : buttons.values())
+			for (IClickable<?> c : buttons.values()) {
 				c.clickable(false);
+			}
 			return;
 		}
 		Object o = null;
