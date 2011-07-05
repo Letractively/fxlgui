@@ -42,6 +42,8 @@ public class WidgetTitle implements IClickListener {
 		private IHorizontalPanel iPanel;
 		private ILabel label;
 		private IImage image;
+		private String toolTipClickable = null;
+		private String toolTipNotClickable = null;
 
 		public CommandLink(IHorizontalPanel iPanel, IImage image,
 				ILabel headerLabel) {
@@ -74,6 +76,12 @@ public class WidgetTitle implements IClickListener {
 			if (image != null)
 				image.clickable(clickable);
 			iPanel.clickable(clickable);
+			String tooltip = clickable ? toolTipClickable : toolTipNotClickable;
+			if (tooltip != null) {
+				iPanel.tooltip(tooltip);
+				image.tooltip(tooltip);
+				label.tooltip(tooltip);
+			}
 			Styles.instance().dialog().button().clickable(label, clickable);
 			return this;
 		}
@@ -91,6 +99,13 @@ public class WidgetTitle implements IClickListener {
 				image.addClickListener(clickListener);
 			iPanel.addClickListener(clickListener);
 			return null;
+		}
+
+		public IClickable<?> tooltips(String toolTipClickable,
+				String toolTipNotClickable) {
+			this.toolTipClickable = toolTipClickable;
+			this.toolTipNotClickable = toolTipNotClickable;
+			return this;
 		}
 	}
 
@@ -290,6 +305,12 @@ public class WidgetTitle implements IClickListener {
 		CommandLink cl = new CommandLink(iPanel0, image, label);
 		cl.clickable(true);
 		return cl;
+	}
+
+	public IClickable<?> addHyperlink(String imageResource, String name,
+			String toolTipClickable, String toolTipNotClickable) {
+		return addHyperlink(imageResource, name).tooltips(toolTipClickable,
+				toolTipNotClickable);
 	}
 
 	private ILabel addHyperlinkLabel(String text, IHorizontalPanel iPanel) {
