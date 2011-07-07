@@ -161,8 +161,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						preselectedList.clear();
 					} else {
 						rows.selected(preselectedIndex, preselectedList.get(0));
-						commandButtons.selection = preselectedList.get(0);
-						commandButtons.selectionIndex = preselectedIndex;
+						if (commandButtons != null) {
+							commandButtons.selection = preselectedList.get(0);
+							commandButtons.selectionIndex = preselectedIndex;
+						}
 					}
 				} else {
 					rows.selected(preselectedList);
@@ -664,7 +666,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IClickable<?> addButton(String name, String imageResource,
 			String toolTipClickable, String toolTipNotClickable) {
-		return widgetTitle().addHyperlink(imageResource, name, toolTipClickable, toolTipNotClickable);
+		return widgetTitle().addHyperlink(imageResource, name,
+				toolTipClickable, toolTipNotClickable);
 	}
 
 	@Override
