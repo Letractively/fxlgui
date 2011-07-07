@@ -27,12 +27,12 @@ class ChildRegisterStyle extends RegisterStyle {
 
 	@Override
 	void decorateWidget(RegisterWidgetImpl widget) {
-		widget.separators(true);
+		widget.separators(false);
 		// widget.headerPanel.spacing(4);
 		widget.background(new ColorDecorator() {
 			@Override
 			public void decorate(IColor color) {
-				color.rgb(255, 0, 0);
+				color.rgb(240, 240, 240);
 			}
 
 		});
@@ -41,17 +41,18 @@ class ChildRegisterStyle extends RegisterStyle {
 	@Override
 	void init(ITitle title) {
 		onBack(title);
+		title.border().width(1).color().lightgray();
 	}
 
 	@Override
 	public void onBack(ITitle title) {
-		title.font().pixel(12).weight().bold().color().blue();
+		title.font().pixel(11).weight().plain().color().blue();
 		title.font().underline(true);
 	}
 
 	@Override
 	public void onFront(ITitle title) {
-		title.font().pixel(14).weight().bold().color().black();
+		title.font().pixel(11).weight().plain().color().black();
 		title.font().underline(false);
 	}
 }
