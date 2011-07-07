@@ -51,6 +51,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	private List<ClickListenerMouseAdapter<R>> adapters = new LinkedList<ClickListenerMouseAdapter<R>>();
 	private boolean clickListenerAdded = false;
 	private Boolean disabled;
+	private SwingBorder swingBorder;
 
 	SwingElement(SwingContainer<T> container) {
 		this.container = container;
@@ -115,7 +116,9 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	}
 
 	public IBorder border() {
-		return new SwingBorder(this);
+		if (swingBorder == null)
+			swingBorder = new SwingBorder(this);
+		return swingBorder;
 	}
 
 	public boolean clickable() {
