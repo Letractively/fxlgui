@@ -18,12 +18,10 @@
  */
 package co.fxl.gui.demo;
 
-import java.util.List;
-
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
 import co.fxl.gui.table.api.ITableWidget;
-import co.fxl.gui.table.api.ISelection.IMultiSelection.IChangeListener;
 import co.fxl.gui.table.filter.api.IFilterTableWidget;
 
 class WidgetsDemo extends DemoTemplate implements Decorator {
@@ -37,16 +35,15 @@ class WidgetsDemo extends DemoTemplate implements Decorator {
 		IContainer container = example.title("Table Widget");
 		ITableWidget<String> table = (ITableWidget<String>) container
 				.widget(IFilterTableWidget.class);
-		table.selection().multi().addChangeListener(
-				new IChangeListener<String>() {
+		table.selection().single().addSelectionListener(new ISelectionListener<String>() {
 					@Override
-					public void onChange(List<String> selection) {
-						example.output("Selection: " + selection.toString());
+					public void onSelection(int index, String selection) {
+						example.output("Selection: " + selection);
 					}
 				});
-		table.addColumn().name("Column 1").sortable();
-		table.addColumn().name("Column 2").sortable();
-		table.addColumn().name("Column 3").sortable();
+		table.addColumn().name("Column 1");
+		table.addColumn().name("Column 2");
+		table.addColumn().name("Column 3");
 		table.addRow().identifier("Row 1").add("Cell 1.1", "Cell 2.1",
 				"Cell 3.1");
 		table.addRow().identifier("Row 2").add("Cell 1.2", "Cell 2.2",
@@ -58,17 +55,17 @@ class WidgetsDemo extends DemoTemplate implements Decorator {
 		b
 				.append("ITableWidget table = (ITableWidget) panel.add().widget(ITableWidget.class);");
 		b
-				.append("\ntable.selection().multi().addChangeListener(new IChangeListener<String>() {");
+				.append("\ntable.selection().single().addSelectionListener(new ISelectionListener<String>() {");
 		b.append("\n&nbsp;&nbsp;&nbsp;&nbsp;@Override");
 		b
-				.append("\n&nbsp;&nbsp;&nbsp;&nbsp;public void onChange(List<String> selection) {");
+				.append("\n&nbsp;&nbsp;&nbsp;&nbsp;public void onSelection(int index, String selection) {");
 		b
-				.append("\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output.text(\"Selection: \" + selection.toString());");
+				.append("\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output.text(\"Selection: \" + selection);");
 		b.append("\n&nbsp;&nbsp;&nbsp;&nbsp;}");
 		b.append("\n&nbsp;&nbsp;});");
-		b.append("\ntable.addColumn().name(\"Column 1\").sortable();");
-		b.append("\ntable.addColumn().name(\"Column 2\").sortable();");
-		b.append("\ntable.addColumn().name(\"Column 3\").sortable();");
+		b.append("\ntable.addColumn().name(\"Column 1\");");
+		b.append("\ntable.addColumn().name(\"Column 2\");");
+		b.append("\ntable.addColumn().name(\"Column 3\");");
 		b
 				.append("\ntable.addRow().identifier(\"Row 1\").add(\"Cell 1.1\", \"Cell 2.1\", \"Cell 3.3\");");
 		b

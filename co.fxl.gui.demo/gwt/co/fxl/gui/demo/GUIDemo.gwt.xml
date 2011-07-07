@@ -1,11 +1,15 @@
 <module>
-	<inherits name='co.fxl.gui.api.IDisplay' />
+	<inherits name='co.fxl.gui.IDisplay' />
 	<inherits name='co.fxl.gui.table.api.ITableWidget' />
 	<inherits name='co.fxl.gui.table.filter.api.IFilterTableWidget' />
 	<inherits name='co.fxl.gui.table.filter.impl.FilterTableWidgetImpl' />
+	<inherits name='co.fxl.gui.table.impl.TableWidgetImpl' />
+	<inherits name='co.fxl.gui.filter.impl.FilterWidgetImpl' />
 	<inherits name='co.fxl.gui.navigation.api.INavigationWidget' />
 	<inherits name='co.fxl.gui.navigation.impl.NavigationWidgetImpl' />
 	<inherits name='co.fxl.gui.filter.api.IFilterWidget' />
+	<inherits name='co.fxl.gui.filter.impl.FilterWidgetImpl' />
+	<inherits name='co.fxl.data.format.gwt.GWTFormat' />
 	<source path="" />
 </module>
   

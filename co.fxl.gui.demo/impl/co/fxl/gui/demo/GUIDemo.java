@@ -30,6 +30,7 @@ import co.fxl.gui.table.impl.TableWidgetImplProvider;
 public class GUIDemo {
 
 	private ExampleDecorator decorator;
+	private IVerticalPanel panel;
 
 	public GUIDemo() {
 	}
@@ -46,17 +47,24 @@ public class GUIDemo {
 	}
 
 	public IContainer addHeader(IDisplay display) {
-		IVerticalPanel panel = display.container().panel().vertical();
-		IVerticalPanel headerPanel = panel.add().panel().vertical().spacing(10);
+		IVerticalPanel headerPanel = panel(display).add().panel().vertical()
+				.spacing(10);
 		IDockPanel dock = headerPanel.add().panel().dock();
-		headerPanel.color().rgb(0, 51, 102);
+		headerPanel.color().rgb(50, 101, 152);
 		dock.center().label().text("GUI-API Demo & Showcase").font().weight()
 				.bold().pixel(20).color().white();
 		return dock.right();
 	}
 
+	private IVerticalPanel panel(IDisplay display) {
+		if (panel == null) {
+			panel = display.container().panel().vertical();
+		}
+		return panel;
+	}
+
 	public void addContent(IDisplay display) {
-		IVerticalPanel panel = display.container().panel().vertical();
+		IVerticalPanel panel = panel(display).add().panel().vertical();
 		display.register(new NavigationWidgetImplProvider());
 		display.register(new TableWidgetImplProvider());
 		display.register(new FilterTableWidgetImplProvider());
