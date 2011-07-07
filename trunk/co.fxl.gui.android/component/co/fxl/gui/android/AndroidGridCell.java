@@ -27,12 +27,18 @@ import co.fxl.gui.api.IGridPanel.IGridCell;
 
 class AndroidGridCell extends AndroidContainer implements IGridCell {
 
-	AndroidGridCell(final AndroidDisplay androidDisplay, final TableRow row,
+	AndroidGridCell(final AndroidDisplay androidDisplay,
+			final AndroidGridPanel grid, final TableRow row,
 			final int columnIndex) {
 		super(new Parent() {
 
 			@Override
 			public void add(View view) {
+				if (grid.spacing != 0) {
+					// TODO adjust outer spacing
+					view.setPadding(grid.spacing / 2, grid.spacing / 2,
+							grid.spacing / 2, grid.spacing / 2);
+				}
 				row.addView(view, columnIndex);
 			}
 

@@ -33,12 +33,18 @@ class AndroidGridPanel extends AndroidPanel<TableLayout, IGridPanel> implements
 	private Activity activity;
 	private Map<Integer, TableRow> rows = new HashMap<Integer, TableRow>();
 	private AndroidDisplay androidDisplay;
+	int spacing = 0;
 
 	AndroidGridPanel(AndroidContainer container) {
 		super(container);
 		androidDisplay = container.parent.androidDisplay();
 		view = new TableLayout(activity);
 		container.parent.add(view);
+	}
+
+	@Override
+	public void add(View view) {
+		throw new MethodNotImplementedException();
 	}
 
 	@Override
@@ -49,7 +55,7 @@ class AndroidGridPanel extends AndroidPanel<TableLayout, IGridPanel> implements
 	@Override
 	public IGridCell cell(int columnIndex, int rowIndex) {
 		TableRow row = getRow(rowIndex);
-		return new AndroidGridCell(androidDisplay, row, columnIndex);
+		return new AndroidGridCell(androidDisplay, this, row, columnIndex);
 	}
 
 	private TableRow getRow(int rowIndex) {
@@ -79,12 +85,10 @@ class AndroidGridPanel extends AndroidPanel<TableLayout, IGridPanel> implements
 
 	@Override
 	public IGridPanel spacing(int pixel) {
-		throw new MethodNotImplementedException();
-	}
-
-	@Override
-	public void add(View view) {
-		throw new MethodNotImplementedException();
+		this.spacing = pixel;
+		if (!rows.isEmpty())
+			throw new MethodNotImplementedException();
+		return this;
 	}
 
 	@Override
