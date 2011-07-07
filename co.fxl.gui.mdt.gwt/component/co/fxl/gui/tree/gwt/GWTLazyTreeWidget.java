@@ -90,6 +90,7 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		this.firstRow = firstRow;
 		this.lastRow = lastRow;
 		FocusPanel fp = new FocusPanel();
+		fp.setWidth("100%");
 		fp.addStyleName("nooutline");
 		fp.addMouseWheelHandler(new MouseWheelHandler() {
 			@Override
@@ -102,21 +103,23 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			}
 		});
 		VerticalPanel p0 = new VerticalPanel();
+		p0.setWidth("100%");
 		p0.setSpacing(spacing);
 		p0.setHeight(height() + "px");
 		p0.getElement().getStyle().setProperty("overflowY", "hidden");
 		VerticalPanel p = new VerticalPanel();
+		p.setWidth("100%");
 		p.setSpacing(0);
-		if (elementAt > firstRow && elementAt < lastRow) {
-			p.add(getHTML(firstRow, elementAt - 1));
-			decorator.decorate(getContainer(p), elementAt);
-			p.add(getHTML(elementAt + 1, lastRow));
-		} else if (elementAt == firstRow) {
-			decorator.decorate(getContainer(p), elementAt);
+		if (selectionIndex > firstRow && selectionIndex < lastRow) {
+			p.add(getHTML(firstRow, selectionIndex - 1));
+			decorator.decorate(getContainer(p), selectionIndex);
+			p.add(getHTML(selectionIndex + 1, lastRow));
+		} else if (selectionIndex == firstRow) {
+			decorator.decorate(getContainer(p), selectionIndex);
 			p.add(getHTML(firstRow + 1, lastRow));
-		} else if (elementAt == lastRow) {
+		} else if (selectionIndex == lastRow) {
 			p.add(getHTML(firstRow, lastRow - 1));
-			decorator.decorate(getContainer(p), elementAt);
+			decorator.decorate(getContainer(p), selectionIndex);
 		} else {
 			p.add(getHTML(firstRow, lastRow));
 		}
@@ -169,6 +172,9 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			ITree<Object> row = rows.get(i - firstRow);
 			String hTML = HTML.replace("${INDENT}",
 					String.valueOf(1 + tree.indent(row) * 10));
+			if (isMarked(i))
+				hTML = hTML.replace("1px solid rgb(255, 255, 255)",
+						"1px dotted rgb(175, 175, 175)");
 			hTML = hTML.replace("${STATE_ICON}",
 					IMAGE_PATH + TreeNode.treeIcon(this, row));
 			hTML = hTML.replace("${ICON}",
@@ -182,7 +188,7 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		html.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				elementAt = firstRow + (event.getY() / heightElement);
+				selectionIndex = firstRow + (event.getY() / heightElement);
 				update();
 			}
 		});
