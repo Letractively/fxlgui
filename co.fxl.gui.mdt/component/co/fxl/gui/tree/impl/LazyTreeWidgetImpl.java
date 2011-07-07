@@ -51,22 +51,22 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 		int index = firstRow;
 		for (final ITree<Object> row : rows) {
 			IVerticalPanel p = decorator.setUp(this, panel, row,
-					tree.indent(row));
+					tree.indent(row), isMarked(index));
 			decorator.panel.height(heightElement);
 			decorator.decorateCore();
 			final int fIndex = index;
 			p.addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {
-					elementAt = fIndex;
+					selectionIndex = fIndex;
 					decorate(fIndex);
 				}
 			});
 			LazyTreeWidgetImpl.this.panels.put(index, p);
 			index++;
 		}
-		if (elementAt >= firstRow && elementAt <= lastRow) {
-			decorate(elementAt);
+		if (selectionIndex >= firstRow && selectionIndex <= lastRow) {
+			decorate(selectionIndex);
 		}
 		super.decorate(container, firstRow, lastRow);
 	}
@@ -76,6 +76,7 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 			return;
 		IVerticalPanel p = panels.get(index);
 		assert p != null : index + " not in " + panels.keySet();
+		p.border().remove();
 		IContainer c = p.clear().add();
 		decorator.decorate(c, index);
 	}

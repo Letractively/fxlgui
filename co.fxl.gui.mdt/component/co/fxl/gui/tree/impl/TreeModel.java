@@ -70,8 +70,10 @@ class TreeModel<T> {
 		selection = tree;
 		if (selection != null) {
 			NodeRef<T> node = node(selection);
-			node.selected(true);
-			selection = node.tree();
+			if (node != null) {
+				node.selected(true);
+				selection = node.tree();
+			}
 		}
 		if (setDetailViewTree)
 			widget.setDetailViewTree(this.selection);
@@ -122,6 +124,7 @@ class TreeModel<T> {
 		}
 		cutCopy = selection;
 		refresh(cutCopy);
+		widget.lazyTree.marked(cutCopy.object());
 	}
 
 	NodeRef<T> refresh() {
@@ -230,7 +233,11 @@ class TreeModel<T> {
 	}
 
 	boolean isCutCopy(TreeNode<T> node) {
-		return cutCopy != null && cutCopy.equals(node.tree);
+		return isCutCopy(node.tree);
+	}
+
+	boolean isCutCopy(ITree<T> tree) {
+		return cutCopy != null && cutCopy.equals(tree);
 	}
 
 	boolean allowDelete() {
@@ -287,5 +294,9 @@ class TreeModel<T> {
 		if (selection == null)
 			return false;
 		return selection.isCopieable() && !selection.isNew();
+	}
+
+	public void clearCutCopy() {
+		cutCopy = null;
 	}
 }

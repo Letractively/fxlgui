@@ -253,6 +253,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					@Override
 					public void onAllowedClick() {
 						model.cutCopy(false);
+						refreshLazyTree(false);
 					}
 				});
 				copy = widgetTitle.addHyperlink(Icons.COPY, "Copy");
@@ -260,14 +261,15 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					@Override
 					public void onAllowedClick() {
 						model.cutCopy(true);
+						refreshLazyTree(false);
 					}
 				});
 				paste = widgetTitle.addHyperlink(Icons.PASTE, "Paste");
 				paste.addClickListener(new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
-						final ITree<T> p1 = model.cutCopy().parent();
-						final ITree<T> p2 = model.selection();
+						// final ITree<T> p1 = model.cutCopy().parent();
+						// final ITree<T> p2 = model.selection();
 						model.cutCopy().reassign(model.selection(),
 								model.isCopy(),
 								new CallbackTemplate<ITree<T>>() {
@@ -275,9 +277,13 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 									public void onSuccess(ITree<T> result) {
 										// widgetTitle.reset();
 										paste.clickable(false);
-										model.refresh(p1, true);
-										model.refresh(p2, true);
+										model.clearCutCopy();
+										lazyTree.marked(null);
+										// model.refresh(p1, true);
+										// model.refresh(p2, true);
 										model.selection(result);
+										lazyTree.selection(result.object());
+										refreshLazyTree(true);
 									}
 								});
 					}
@@ -456,7 +462,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				if (!showRoot)
 					indent--;
 				new TreeNode<T>(lazyTree, TreeWidgetImpl.this, c.panel()
-						.vertical(), tree, indent);
+						.vertical(), tree, indent, model.isCutCopy(tree));
 				model.selection(tree);
 			}
 		});
@@ -695,7 +701,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	private T lastSelection;
 	private String runAfterVisible = null;
-	private ILazyTreeWidget<T> lazyTree;
+	ILazyTreeWidget<T> lazyTree;
 
 	void notifyChange() {
 		notifyChange(false);

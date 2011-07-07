@@ -41,6 +41,8 @@ public interface ILazyTreeWidget<T> {
 
 	ILazyTreeWidget<T> selection(T selection);
 
+	ILazyTreeWidget<T> marked(T selection);
+
 	ILazyTreeWidget<T> selectionDecorator(IDecorator decorator);
 
 	ILazyTreeWidget<T> refresh(boolean reset);
