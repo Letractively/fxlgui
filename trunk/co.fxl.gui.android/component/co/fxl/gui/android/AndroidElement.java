@@ -75,7 +75,8 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 
 	@Override
 	public T size(int width, int height) {
-		throw new MethodNotImplementedException();
+		width(width);
+		return height(height);
 	}
 
 	@Override
@@ -93,9 +94,11 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 		return view.getWidth();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T width(int width) {
-		throw new MethodNotImplementedException();
+		view.getLayoutParams().width = width;
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")

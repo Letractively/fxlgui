@@ -39,7 +39,9 @@ class AndroidGridCell extends AndroidContainer implements IGridCell {
 					view.setPadding(grid.spacing / 2, grid.spacing / 2,
 							grid.spacing / 2, grid.spacing / 2);
 				}
-				row.addView(view, columnIndex);
+				TableRow.LayoutParams cellLp = new TableRow.LayoutParams(
+						columnIndex);
+				row.addView(view, cellLp);
 			}
 
 			@Override
