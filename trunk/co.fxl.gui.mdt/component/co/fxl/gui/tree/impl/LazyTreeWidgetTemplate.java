@@ -36,10 +36,12 @@ public abstract class LazyTreeWidgetTemplate implements
 	protected Object selection;
 	protected ILazyScrollPane pane;
 	private ITree<Object> realTree;
-	protected int elementAt = -1;
+	protected int selectionIndex = -1;
 	protected IDecorator decorator;
 	private int lastFirstRow = -1;
 	private int width = -1;
+	protected Object marked;
+	private int markedIndex = -1;
 
 	public LazyTreeWidgetTemplate(IContainer c) {
 		this(c, true);
@@ -64,6 +66,20 @@ public abstract class LazyTreeWidgetTemplate implements
 	public ILazyTreeWidget<Object> selection(Object selection) {
 		this.selection = selection;
 		return this;
+	}
+
+	@Override
+	public ILazyTreeWidget<Object> marked(Object marked) {
+		this.marked = marked;
+		markedIndex = -1;
+		return this;
+	}
+
+	protected boolean isMarked(int i) {
+		if (marked != null) {
+			markedIndex = tree.index(marked);
+		}
+		return i == markedIndex;
 	}
 
 	@Override
@@ -122,7 +138,8 @@ public abstract class LazyTreeWidgetTemplate implements
 				pane.rowIndex(index);
 				selection = null;
 			}
-			elementAt = index;
+			selectionIndex = index;
+			markedIndex = -1;
 			pane.visible(true);
 		} else
 			throw new MethodNotImplementedException();
@@ -144,8 +161,8 @@ public abstract class LazyTreeWidgetTemplate implements
 
 	@Override
 	public ILazyTreeWidget<Object> refresh(boolean reset) {
-		if (selection == null && elementAt != -1)
-			selection = tree.row(elementAt).object();
+		if (selection == null && selectionIndex != -1)
+			selection = tree.row(selectionIndex).object();
 		if (reset) {
 			tree(realTree);
 		}

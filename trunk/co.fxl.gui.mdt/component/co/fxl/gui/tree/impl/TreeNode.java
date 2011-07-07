@@ -70,6 +70,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	private IClickable<?> gridButton;
 	private IImage acceptMove;
 	private ILazyTreeWidget<T> lazyTree;
+	private boolean isMarked;
 
 	// TODO FEATURE: Option: Usability: Click on cursor left / right expands /
 	// collapses tree node
@@ -78,20 +79,22 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	}
 
 	TreeNode(ILazyTreeWidget<T> lazyTree, final TreeWidgetImpl<T> widget,
-			IVerticalPanel panel, final ITree<T> root, int depth) {
+			IVerticalPanel panel, final ITree<T> root, int depth,
+			boolean isMarked) {
 		assert root != null && root.object() != null;
 		this.widget = widget;
-		setUp(lazyTree, panel, root, depth);
+		setUp(lazyTree, panel, root, depth, isMarked);
 		draw();
 		widget.model.register(this);
 	}
 
 	IVerticalPanel setUp(ILazyTreeWidget<T> lazyTree, IVerticalPanel panel,
-			final ITree<T> root, int depth) {
+			final ITree<T> root, int depth, boolean isMarked) {
 		this.lazyTree = lazyTree;
 		this.panel = panel.add().panel().vertical();
 		this.tree = root;
 		this.depth = depth;
+		this.isMarked = isMarked;
 		return this.panel;
 	}
 
@@ -135,7 +138,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	void decorateCore() {
 		container = panel.add().panel().horizontal().align().begin().add()
 				.panel().horizontal().align().begin();
-		panel.border().color().white();
+		updateMarked();
 		content = container.add().panel().horizontal().spacing(2);
 		content.addSpace(1 + depth * INDENT);
 		image = content.add().image().resource(treeIcon(lazyTree, tree));
@@ -153,6 +156,13 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		container.addSpace(4);
 		if (isNull)
 			label.font().weight().italic().color().gray();
+	}
+
+	protected void updateMarked() {
+		if (isMarked)
+			panel.border().style().dotted().color().rgb(175, 175, 175);
+		else
+			panel.border().color().white();
 	}
 
 	@SuppressWarnings({ "rawtypes" })
@@ -184,10 +194,11 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	}
 
 	void decorate() {
-		if (widget.model.isCutCopy(this)) {
-			panel.border().style().dotted();
-		} else
-			panel.border().color().white();
+		// updateMarked();
+		// if (widget.model.isCutCopy(this)) {
+		// panel.border().style().dotted();
+		// } else
+		// panel.border().color().white();
 		if (tree != null && tree.decorator() != null)
 			tree.decorator().decorate(label);
 		buttonPanel.clear();
@@ -430,10 +441,14 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	public void selected(boolean selected) {
 		if (!selected) {
 			panel.color().white();
-			panel.border().color().white();
+			updateMarked();
 		} else {
 			panel.color().rgb(0xD0, 0xE4, 0xF6);
-			panel.border().color().rgb(0xD0, 0xE4, 0xF6);
+			if (!isMarked) {
+				panel.border().color().rgb(0xD0, 0xE4, 0xF6);
+			} else {
+				updateMarked();
+			}
 		}
 		// if (selected)
 		// widget.scrollIntoView(this);
