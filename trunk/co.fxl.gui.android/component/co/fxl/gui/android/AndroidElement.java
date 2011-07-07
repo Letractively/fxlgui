@@ -46,9 +46,11 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 		return view.getHeight();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T height(int height) {
-		throw new MethodNotImplementedException();
+		view.getLayoutParams().height = height;
+		return (T) this;
 	}
 
 	@Override
