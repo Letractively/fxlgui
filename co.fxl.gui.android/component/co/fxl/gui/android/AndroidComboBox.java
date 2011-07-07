@@ -37,20 +37,23 @@ class AndroidComboBox extends AndroidElement<Spinner, IComboBox> implements
 	private ArrayAdapter<String> adapter;
 	private Activity activity;
 	private List<IUpdateListener<String>> listeners = new LinkedList<IUpdateListener<String>>();
-	private String[] texts;
 
 	AndroidComboBox(AndroidContainer container) {
 		super(container);
 		activity = container.parent.androidDisplay().activity;
 		view = new Spinner(activity);
-		view.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+		adapter = new ArrayAdapter<String>(activity,
+				android.R.layout.simple_spinner_dropdown_item);
+		view.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT));
+		view.setAdapter(adapter);
+		view.setOnItemSelectedListener(this);
 		container.parent.add(view);
 	}
 
 	@Override
 	public String text() {
-		throw new MethodNotImplementedException();
+		return (String) view.getSelectedItem();
 	}
 
 	@Override
@@ -76,23 +79,16 @@ class AndroidComboBox extends AndroidElement<Spinner, IComboBox> implements
 
 	@Override
 	public IComboBox addText(String... texts) {
-		if (adapter != null)
-			throw new MethodNotImplementedException();
-		this.texts = texts;
-		adapter = new ArrayAdapter<String>(activity,
-				android.R.layout.simple_spinner_dropdown_item, texts);
-		view.setAdapter(adapter);
-		view.setOnItemSelectedListener(this);
+		for (String text : texts) {
+			adapter.add(text);
+		}
+		view.setSelection(0);
 		return this;
 	}
 
 	@Override
 	public IComboBox text(String text) {
-		for (int i = 0; i < texts.length; i++) {
-			if (texts[i].equals(text)) {
-				view.setSelection(i);
-			}
-		}
+		view.setSelection(adapter.getPosition(text));
 		return this;
 	}
 
@@ -107,7 +103,7 @@ class AndroidComboBox extends AndroidElement<Spinner, IComboBox> implements
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 			long arg3) {
 		for (IUpdateListener<String> listener : listeners) {
-			listener.onUpdate(texts[arg2]);
+			listener.onUpdate(adapter.getItem(arg2));
 		}
 	}
 
