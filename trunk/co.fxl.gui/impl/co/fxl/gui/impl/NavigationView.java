@@ -78,6 +78,8 @@ public class NavigationView {
 	}
 
 	public void updateNavigationButtons() {
+		if (back == null)
+			return;
 		back.clickable(nl.hasPrevious());
 		forward.clickable(nl.hasNext());
 	}
