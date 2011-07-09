@@ -21,8 +21,6 @@ package co.fxl.gui.style;
 import java.util.HashMap;
 import java.util.Map;
 
-import co.fxl.gui.impl.Style;
-
 public class Styles {
 
 	private static final Styles INSTANCE = new Styles();
@@ -38,10 +36,6 @@ public class Styles {
 	}
 
 	public void style(Object e, Object... styles) {
-
-		// TODO extract aspect
-		Style.setUp();
-
 		IStyle<Object> style = STYLES.get(toString(styles));
 		if (style != null)
 			style.style(e);
