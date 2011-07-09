@@ -110,7 +110,8 @@ public class NavigationView {
 		IHorizontalPanel panel = (IHorizontalPanel) panels[1];
 		addImage(panel, null);
 		ILabel label = addTextLabel(panel);
-		Styles.instance().window().navigation().choice().title(label);
+		Styles.instance().style(label, Style.ID.WINDOW, Style.ID.NAVIGATION,
+				Style.ID.CHOICE);
 		label.text(title);
 		IComboBox cb = panel.addSpace(8).add().comboBox();
 		new Heights(0).decorate(cb);
@@ -125,7 +126,8 @@ public class NavigationView {
 		if (SHOW_NUMBERS) {
 			String s = String.valueOf(index++) + ".";
 			ILabel label = panel.add().label().text(s);
-			Styles.instance().window().navigation().number(label);
+			Styles.instance().style(label, Style.ID.WINDOW,
+					Style.ID.NAVIGATION, Style.ID.NUMBER);
 			panel.addSpace(4);
 		} else if (SHOW_TRIANGLE) {
 			image = panel

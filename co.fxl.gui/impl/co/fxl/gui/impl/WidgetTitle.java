@@ -82,7 +82,7 @@ public class WidgetTitle implements IClickListener {
 				image.tooltip(tooltip);
 				label.tooltip(tooltip);
 			}
-			Styles.instance().dialog().button().clickable(label, clickable);
+			Styles.instance().style(label, Style.ID.DIALOG, Style.ID.BUTTON);
 			return this;
 		}
 
@@ -245,7 +245,8 @@ public class WidgetTitle implements IClickListener {
 	public ILabel addTitle(String title) {
 		initHeader();
 		ILabel label = titlePanel.add().label().text(title);
-		Styles.instance().window().header().title().small(label);
+		Styles.instance().style(label, Style.ID.WINDOW, Style.ID.HEADER,
+				Style.ID.TITLE, Style.ID.SMALL);
 		headerLabel = label;
 		if (foldable) {
 			headerLabel.addClickListener(this);
@@ -315,7 +316,7 @@ public class WidgetTitle implements IClickListener {
 
 	private ILabel addHyperlinkLabel(String text, IHorizontalPanel iPanel) {
 		ILabel label = iPanel.addSpace(4).add().label().text(text);
-		Styles.instance().window().button(label);
+		Styles.instance().style(label, Style.ID.WINDOW, Style.ID.BUTTON);
 		return label;
 	}
 
@@ -332,7 +333,7 @@ public class WidgetTitle implements IClickListener {
 
 	protected ILabel addSeparator(IHorizontalPanel cp) {
 		ILabel label = cp.add().label().text("|");
-		Styles.instance().separator(label);
+		Styles.instance().style(label, Style.ID.SEPARATOR);
 		return label;
 	}
 
