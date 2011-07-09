@@ -26,7 +26,7 @@ import co.fxl.gui.impl.Style;
 public class Styles {
 
 	private static final Styles INSTANCE = new Styles();
-	private Map<Object[], IStyle<Object>> STYLES = new HashMap<Object[], IStyle<Object>>();
+	private Map<String, IStyle<Object>> STYLES = new HashMap<String, IStyle<Object>>();
 
 	public static Styles instance() {
 		return INSTANCE;
@@ -34,7 +34,7 @@ public class Styles {
 
 	@SuppressWarnings("unchecked")
 	public void register(IStyle<?> style, Object... iDs) {
-		STYLES.put(iDs, (IStyle<Object>) style);
+		STYLES.put(toString(iDs), (IStyle<Object>) style);
 	}
 
 	public void style(Object e, Object... styles) {
@@ -42,28 +42,11 @@ public class Styles {
 		// TODO extract aspect
 		Style.setUp();
 
-//		IStyle<Object> s = STYLES.get(styles);
-//		if (s != null)
-//			s.style(e);
-
-		// TODO lookup more efficient (use linked hashmaps)
-
-		for (Object[] o : STYLES.keySet()) {
-			if (equals(o, styles)) {
-				STYLES.get(o).style(e);
-				return;
-			}
-		}
-		throw new RuntimeException(toString(styles));
-	}
-
-	private boolean equals(Object[] o, Object[] s) {
-		if (o.length != s.length)
-			return false;
-		for (int i = 0; i < o.length; i++)
-			if (!o[i].equals(s[i]))
-				return false;
-		return true;
+		IStyle<Object> style = STYLES.get(toString(styles));
+		if (style != null)
+			style.style(e);
+		else
+			throw new RuntimeException(toString(styles));
 	}
 
 	private String toString(Object[] styles) {
