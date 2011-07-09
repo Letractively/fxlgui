@@ -60,11 +60,13 @@ public class ErrorDialog {
 									.add().panel().vertical();
 							ILabel label = panel.add().label()
 									.text("Stacktrace:");
-							Styles.instance().dialog().error().header()
-									.stacktrace(label);
+							Styles.instance().style(label, Style.ID.DIALOG,
+									Style.ID.ERROR, Style.ID.HEADER,
+									Style.ID.STACKTRACE);
 							ITextArea textArea = panel.add().textArea()
 									.size(400, 100).text(pStacktrace);
-							Styles.instance().input().field().border(textArea);
+							Styles.instance().style(textArea, Style.ID.INPUT,
+									Style.ID.FIELD, Style.ID.BORDER);
 							detailDialog.visible(true);
 						}
 					});
