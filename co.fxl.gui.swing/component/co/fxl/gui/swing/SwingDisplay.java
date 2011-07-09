@@ -43,6 +43,7 @@ import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.impl.DialogImpl;
 import co.fxl.gui.impl.DiscardChangesDialog;
+import co.fxl.gui.impl.Style;
 
 public class SwingDisplay implements IDisplay, ComponentParent {
 
@@ -81,6 +82,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		// .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		DiscardChangesDialog.display = this;
 		fullscreen();
+		Style.setUp();
 	}
 
 	private void resize() {
