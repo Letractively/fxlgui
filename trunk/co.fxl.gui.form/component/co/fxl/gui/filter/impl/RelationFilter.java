@@ -53,8 +53,8 @@ class RelationFilter extends StringFilter {
 		super(grid, name, filterIndex);
 		this.widget = widget;
 		this.adapter = adapter;
-		textField.text(toString(preset)).editable(false).font().weight().bold()
-				.color().gray();
+		textField.text(toString(preset)).editable(false);
+		textField.font().weight().bold().color().gray();
 		this.cl = cl;
 		remove.addClickListener(clear);
 		this.preset = preset;
