@@ -18,18 +18,8 @@
  */
 package co.fxl.gui.style;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-
-import co.fxl.gui.api.IElement;
-import co.fxl.gui.impl.Style;
-import co.fxl.gui.impl.Style.Element;
-import co.fxl.gui.impl.Style.Outline;
-import co.fxl.gui.impl.Style.Status;
-import co.fxl.gui.impl.Style.Window;
 
 public class Styles {
 
@@ -62,14 +52,16 @@ public class Styles {
 		// }
 	}
 
-	public Boolean stylePart(Object e, boolean assertStyled, Object... styles) {
+	public boolean stylePart(Object e, boolean assertStyled, Object... styles) {
 		IStyle<Object> style = STYLES.get(toString(styles));
 		if (style != null) {
-			return style.style(e);
-		} else if (assertStyled) {
-			throw new RuntimeException(toString(styles));
+			style.style(e);
+			return false;
 		}
 		return true;
+		// else if (assertStyled) {
+		// throw new RuntimeException(toString(styles));
+		// }
 	}
 
 	private String toString(Object[] styles) {

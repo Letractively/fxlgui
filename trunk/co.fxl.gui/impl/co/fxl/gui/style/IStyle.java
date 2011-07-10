@@ -20,5 +20,5 @@ package co.fxl.gui.style;
 
 public interface IStyle<T> {
 
-	public boolean style(T element);
+	public void style(T element);
 }
