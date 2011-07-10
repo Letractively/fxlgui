@@ -33,6 +33,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.impl.Style.Element;
 
 public class WidgetTitle implements IClickListener {
 
@@ -357,8 +358,8 @@ public class WidgetTitle implements IClickListener {
 		return label;
 	}
 
+	@Style(element = Element.SEPARATOR)
 	public void styleSeparator(ILabel label) {
-		// Styles.instance().style(label, Style.Element.SEPARATOR);
 		label.font().color().gray();
 	}
 
