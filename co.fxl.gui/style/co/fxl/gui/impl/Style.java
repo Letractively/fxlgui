@@ -28,6 +28,22 @@ import co.fxl.gui.style.Styles;
 
 public class Style {
 
+	public enum Window {
+		DIALOG, VIEWLIST, HEADER, CONTENT, FOOTER, TITLE, MAIN, SIDE;
+	}
+
+	public enum List {
+		CHOICE, NUMBER, ENTRY;
+	}
+
+	public enum Element {
+		HYPERLINK, SEPARATOR, INPUT, BUTTON, BORDER, BACKGROUND;
+	}
+
+	public enum Status {
+		ACTIVE, INACTIVE, HIGHLIGHT, UNHIGHLIGHT, ERROR;
+	}
+
 	private static boolean setUp = false;
 
 	public static void setUp() {
@@ -39,13 +55,13 @@ public class Style {
 			public void style(ILabel label) {
 				label.font().weight().italic();
 			}
-		}, ID.DIALOG, ID.ERROR, ID.HEADER, ID.STACKTRACE);
+		}, Window.DIALOG, Status.ERROR);
 		Styles.instance().register(new IStyle<ILabel>() {
 			@Override
 			public void style(ILabel label) {
 				label.font().color().gray();
 			}
-		}, ID.SEPARATOR);
+		}, Element.SEPARATOR);
 		Styles.instance().register(new IStyle<ILabel>() {
 			@Override
 			public void style(ILabel label) {
@@ -54,55 +70,55 @@ public class Style {
 				else
 					label.font().color().gray();
 			}
-		}, ID.DIALOG, ID.BUTTON);
+		}, Window.DIALOG, Element.BUTTON);
 		Styles.instance().register(new IStyle<IColored>() {
 			@Override
 			public void style(IColored label) {
 				label.color().rgb(249, 249, 249);
 			}
-		}, ID.INPUT, ID.FIELD, ID.BACKGROUND);
+		}, Element.INPUT, Element.BACKGROUND);
 		Styles.instance().register(new IStyle<IBordered>() {
 			@Override
 			public void style(IBordered bordered) {
 				bordered.border().color().rgb(211, 211, 211);
 			}
-		}, ID.INPUT, ID.FIELD, ID.BORDER);
+		}, Element.INPUT, Element.BORDER);
 		Styles.instance().register(new IStyle<ILabel>() {
 			@Override
 			public void style(ILabel label) {
 				label.font().color().rgb(0, 87, 141);
 			}
-		}, ID.HYPERLINK, ID.ACTIVE);
+		}, Element.HYPERLINK, Status.ACTIVE);
 		Styles.instance().register(new IStyle<ILabel>() {
 			@Override
 			public void style(ILabel label) {
 				label.font().color().gray();
 			}
-		}, ID.HYPERLINK, ID.INACTIVE);
+		}, Element.HYPERLINK, Status.INACTIVE);
 		Styles.instance().register(new IStyle<ILabel>() {
 			@Override
 			public void style(ILabel label) {
 				label.font().pixel(12);
 			}
-		}, ID.WINDOW, ID.BUTTON);
+		}, Window.HEADER, Element.BUTTON);
 		Styles.instance().register(new IStyle<ILabel>() {
 			@Override
 			public void style(ILabel label) {
 				label.font().weight().bold().pixel(12).color().white();
 			}
-		}, ID.WINDOW, ID.HEADER, ID.TITLE, ID.SMALL);
+		}, Window.HEADER, Window.TITLE, Window.SIDE);
 		Styles.instance().register(new IStyle<ILabel>() {
 			@Override
 			public void style(ILabel label) {
 				label.font().weight().bold();
 			}
-		}, ID.WINDOW, ID.NAVIGATION, ID.CHOICE);
+		}, Window.CONTENT, List.CHOICE);
 		Styles.instance().register(new IStyle<ILabel>() {
 			@Override
 			public void style(ILabel label) {
 				label.font().pixel(13).color().gray();
 			}
-		}, ID.WINDOW, ID.NAVIGATION, ID.NUMBER);
+		}, Window.CONTENT, List.NUMBER);
 		Styles.instance().register(new IStyle<IElement<?>>() {
 			@Override
 			public void style(IElement<?> e) {
@@ -115,7 +131,7 @@ public class Style {
 					label.font().color().mix().black().gray();
 				}
 			}
-		}, ID.WINDOW, ID.VIEW, ID.ENTRY, ID.ACTIVE);
+		}, Window.VIEWLIST, List.ENTRY, Status.ACTIVE);
 		Styles.instance().register(new IStyle<IElement<?>>() {
 			@Override
 			public void style(IElement<?> e) {
@@ -127,23 +143,18 @@ public class Style {
 					label.font().pixel(13);
 				}
 			}
-		}, ID.WINDOW, ID.VIEW, ID.ENTRY, ID.INACTIVE);
-
+		}, Window.VIEWLIST, List.ENTRY, Status.INACTIVE);
 		Styles.instance().register(new IStyle<ILabel>() {
 			@Override
 			public void style(ILabel label) {
 				label.font().underline(false);
 			}
-		}, ID.HYPERLINK, ID.UNHIGHLIGHT);
+		}, Element.HYPERLINK, Status.UNHIGHLIGHT);
 		Styles.instance().register(new IStyle<ILabel>() {
 			@Override
 			public void style(ILabel label) {
 				label.font().underline(true);
 			}
-		}, ID.HYPERLINK, ID.HIGHLIGHT);
-	}
-
-	public enum ID {
-		HYPERLINK, WINDOW, NAVIGATION, CHOICE, NUMBER, SEPARATOR, VIEW, ENTRY, ACTIVE, INACTIVE, ERROR, DIALOG, HEADER, STACKTRACE, INPUT, FIELD, BORDER, BACKGROUND, HIGHLIGHT, UNHIGHLIGHT, BUTTON, TITLE, SMALL;
+		}, Element.HYPERLINK, Status.HIGHLIGHT);
 	}
 }

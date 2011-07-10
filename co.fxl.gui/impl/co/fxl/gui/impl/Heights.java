@@ -48,13 +48,12 @@ public class Heights {
 	}
 
 	private void background(IColored colored) {
-		Styles.instance().style(colored, Style.ID.INPUT, Style.ID.FIELD,
-				Style.ID.BACKGROUND);
+		Styles.instance().style(colored, Style.Element.INPUT,
+				Style.Element.BACKGROUND);
 	}
 
 	private void border(IBordered bordered) {
-		Styles.instance().style(bordered, Style.ID.INPUT, Style.ID.FIELD,
-				Style.ID.BORDER);
+		Styles.instance().style(bordered, Style.Element.INPUT, Style.Element.BORDER);
 	}
 
 	public void decorateHeight(IComboBox textField) {
