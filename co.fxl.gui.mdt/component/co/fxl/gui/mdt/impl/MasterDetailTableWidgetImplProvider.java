@@ -27,7 +27,7 @@ public class MasterDetailTableWidgetImplProvider implements
 		IWidgetProvider<IMasterDetailTableWidget> {
 
 	public MasterDetailTableWidgetImplProvider() {
-		Style.setUp();
+		// Style.setUp();
 	}
 
 	@Override
