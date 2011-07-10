@@ -357,7 +357,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			bottom = widgetTitle.bottom().panel().vertical();
 			bottom.add().label().text("&#160;");
 			bottom.height(32);
-			WidgetTitle.decorateGradient(bottom);
+			WidgetTitle.styleMainFooter(bottom);
 		}
 		return panel;
 	}
