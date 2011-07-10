@@ -34,7 +34,6 @@ import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
 import co.fxl.gui.impl.DialogImpl;
 import co.fxl.gui.impl.DiscardChangesDialog;
-import co.fxl.gui.impl.Style;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -76,7 +75,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 			}
 		};
 		DiscardChangesDialog.display = this;
-		Style.setUp();
+		// Style.setUp();
 	}
 
 	@Override
