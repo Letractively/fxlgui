@@ -34,8 +34,7 @@ class ColumnSelection {
 				.begin().valign().center();
 		IHorizontalPanel p = clear.panel().horizontal().add().panel()
 				.horizontal();
-		IHorizontalPanel b0 = p.add().panel().horizontal();// .spacing(4);
-		// b0.color().lightgray();
+		IHorizontalPanel b0 = p.add().panel().horizontal();
 		b0.add().label().text("SHOW COLUMNS:").font().pixel(10).weight().bold();
 		for (final ScrollTableColumnImpl c : widget.columns) {
 			p.addSpace(4);
