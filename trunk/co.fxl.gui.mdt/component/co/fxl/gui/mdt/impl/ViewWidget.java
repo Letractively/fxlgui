@@ -37,6 +37,7 @@ import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.mdt.api.IViewConfiguration;
 import co.fxl.gui.mdt.api.IViewConfiguration.ActionType;
 import co.fxl.gui.mdt.api.IViewConfiguration.ViewType;
+import co.fxl.gui.style.Styles;
 
 public class ViewWidget implements IUpdateable<IViewConfiguration> {
 
@@ -65,11 +66,7 @@ public class ViewWidget implements IUpdateable<IViewConfiguration> {
 			if (image != null)
 				image.clickable(clickable);
 			label.clickable(clickable);
-			if (!clickable) {
-				label.font().weight().bold().color().black();
-			} else {
-				label.font().weight().plain();
-			}
+			Styles.instance().style(label, Style.MDT.VIEW);
 			for (ILabel l : additionalLabels)
 				l.clickable(clickable);
 			panel.clickable(clickable);

@@ -26,6 +26,10 @@ import co.fxl.gui.mdt.api.IMasterDetailTableWidget;
 public class MasterDetailTableWidgetImplProvider implements
 		IWidgetProvider<IMasterDetailTableWidget> {
 
+	public MasterDetailTableWidgetImplProvider() {
+		Style.setUp();
+	}
+
 	@Override
 	public IMasterDetailTableWidget createWidget(IContainer panel) {
 		return new MasterDetailTableWidgetImpl(panel);
