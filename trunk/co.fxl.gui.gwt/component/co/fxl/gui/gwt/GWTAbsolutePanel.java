@@ -52,7 +52,7 @@ class GWTAbsolutePanel extends GWTPanel<AbsolutePanel, IAbsolutePanel>
 	public IAbsolutePanel offset(IElement<?> element, int x, int y) {
 		Widget widget = (Widget) element.nativeElement();
 		container.widget.setWidgetPosition(widget, x, y);
-		int newY = container.widget.getWidgetTop(widget);
+		// int newY = container.widget.getWidgetTop(widget);
 		return this;
 	}
 
