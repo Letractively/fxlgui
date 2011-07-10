@@ -225,18 +225,18 @@ public class WidgetTitle implements IClickListener {
 			vertical.center().panel().vertical();
 			IContainer cell = vertical.right();
 			commandPanel = cell.panel().horizontal().spacing(6);
-			decorateGradient(vertical);
+			styleMainFooter(vertical);
 		}
 	}
 
-	public static IBorder decorateGradient(IPanel<?> vertical) {
+	@Style(window = Window.SIDE, outline = Outline.FOOTER)
+	public static void styleMainFooter(IPanel<?> vertical) {
 		vertical.color().rgb(249, 249, 249).gradient().vertical()
 				.rgb(216, 216, 216);
 		IBorder border2 = vertical.border();
 		IColor c = border2.color();
 		decorateBorder(c);
 		border2.style().top();
-		return border2;
 	}
 
 	public static void decorateBorder(IColor c) {
@@ -288,11 +288,7 @@ public class WidgetTitle implements IClickListener {
 		IHorizontalPanel iPanel0 = cp.add().panel().horizontal();
 		IHorizontalPanel iPanel = iPanel0;
 		if (commandsOnTop) {
-			iPanel.color().rgb(248, 248, 248).gradient().vertical()
-					.rgb(216, 216, 216);
-			IBorder b = iPanel.border();
-			b.color().rgb(172, 197, 213);
-			b.style().rounded();
+			styleWindowHeaderButton(iPanel);
 			iPanel.spacing(4);
 			iPanel = iPanel.add().panel().horizontal();
 		}
@@ -324,6 +320,15 @@ public class WidgetTitle implements IClickListener {
 		CommandLink cl = new CommandLink(iPanel0, image, label);
 		cl.clickable(true);
 		return cl;
+	}
+
+	@Style(window = Window.SIDE, outline = Outline.HEADER, element = Element.BUTTON)
+	public void styleWindowHeaderButton(IHorizontalPanel iPanel) {
+		iPanel.color().rgb(248, 248, 248).gradient().vertical()
+				.rgb(216, 216, 216);
+		IBorder b = iPanel.border();
+		b.color().rgb(172, 197, 213);
+		b.style().rounded();
 	}
 
 	public IClickable<?> addHyperlink(String imageResource, String name,
