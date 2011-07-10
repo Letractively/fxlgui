@@ -51,11 +51,10 @@ class StringFilter extends FilterTemplate<String> {
 
 	StringFilter(FilterGrid panel, String name, int filterIndex) {
 		super(panel, name, filterIndex);
-		ICell width = panel.cell(filterIndex);// .width(WIDTH_SINGLE_CELL);
+		ICell width = panel.cell(filterIndex);
 		textField = textField(width, filterIndex).width(width());
 		panel.heights().decorate(textField);
 		panel.register(textField);
-		// textField.height(HEIGHT);
 	}
 
 	ITextField textField(ICell c, int filterIndex) {

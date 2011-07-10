@@ -102,10 +102,14 @@ class MiniFilterPanel implements FilterPanel {
 		FilterGridImpl(IContainer container) {
 			IHorizontalPanel panel = container.panel().horizontal();
 			comboBox = panel.add().comboBox();
-			comboBox.border().color().rgb(211, 211, 211);
-			comboBox.color().rgb(249, 249, 249);
+			styleInput(comboBox);
 			panel.addSpace(4);
 			cardPanel = panel.add().panel().card();
+		}
+
+		private void styleInput(IComboBox comboBox) {
+			comboBox.border().color().rgb(211, 211, 211);
+			comboBox.color().rgb(249, 249, 249);
 		}
 
 		void visible() {
