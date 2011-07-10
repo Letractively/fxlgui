@@ -37,7 +37,7 @@ public class Style {
 	}
 
 	public enum Element {
-		HYPERLINK, SEPARATOR, INPUT, BUTTON, BORDER, BACKGROUND;
+		HYPERLINK, SEPARATOR, INPUT, BUTTON, BORDER, BACKGROUND, LABEL;
 	}
 
 	public enum Status {
