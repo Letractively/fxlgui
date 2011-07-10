@@ -24,12 +24,14 @@ import co.fxl.gui.api.IElement;
 
 public aspect StyleAspect {
 
+	private static final boolean ACTIVE = false;
+
 	public StyleAspect() {
 		StyleImpl.setUp();
 	}
 
 	void around(IElement<?> element) : execution(@Style * *.*(IElement+)) 
-	&& args(element){
+	&& args(element) && if(ACTIVE) {
 		Signature sig = thisJoinPoint.getSignature();
 		Class<?> c = sig.getDeclaringType();
 		String methodName = sig.getName();
