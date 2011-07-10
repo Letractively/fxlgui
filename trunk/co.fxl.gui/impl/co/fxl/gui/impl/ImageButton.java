@@ -27,7 +27,6 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.style.Styles;
 
 public class ImageButton implements IClickable<Object> {
 
@@ -96,10 +95,15 @@ public class ImageButton implements IClickable<Object> {
 	public ILabel addHyperlink(String text) {
 		panel.addSpace(4);
 		ILabel label = panel.add().label().text("|");
-		Styles.instance().style(label, Style.Element.SEPARATOR);
+		styleSeparator(label);
 		ILabel l = panel.addSpace(4).add().label().text(text).hyperlink();
 		additionalLabels.add(l);
 		return l;
+	}
+
+	public void styleSeparator(ILabel label) {
+		// Styles.instance().style(label, Style.Element.SEPARATOR);
+		label.font().color().gray();
 	}
 
 	public void imageResource(String string) {

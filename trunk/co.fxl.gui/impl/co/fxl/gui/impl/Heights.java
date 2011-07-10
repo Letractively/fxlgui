@@ -29,7 +29,6 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.style.Styles;
 
 public class Heights {
 
@@ -44,45 +43,48 @@ public class Heights {
 
 	public void decorate(IComboBox textField) {
 		decorateHeight(textField);
-		background(textField);
+		styleColor(textField);
 	}
 
-	private void background(IColored colored) {
-		Styles.instance().style(colored, Style.Element.INPUT,
-				Style.Element.BACKGROUND);
+	private void styleColor(IColored label) {
+		// Styles.instance().style(colored, Style.Element.INPUT,
+		// Style.Element.BACKGROUND);
+		label.color().rgb(249, 249, 249);
 	}
 
-	private void border(IBordered bordered) {
-		Styles.instance().style(bordered, Style.Element.INPUT, Style.Element.BORDER);
+	private void styleInputBorder(IBordered bordered) {
+		// Styles.instance().style(bordered, Style.Element.INPUT,
+		// Style.Element.BORDER);
+		bordered.border().color().rgb(211, 211, 211);
 	}
 
 	public void decorateHeight(IComboBox textField) {
 		textField.height(inc + COMBOBOX_HEIGHT);
-		border(textField);
+		styleInputBorder((IBordered) textField);
 	}
 
 	public void decorate(ITextField textField) {
 		decorateHeight(textField);
-		background(textField);
+		styleColor(textField);
 	}
 
 	public void decorate(ITextArea textField) {
-		background(textField);
+		styleColor(textField);
 	}
 
 	public void decorateHeight(ITextField textField) {
 		textField.height(inc + TEXTFIELD_HEIGHT);
-		border(textField);
+		styleInputBorder((IBordered) textField);
 	}
 
 	public void decorate(IPasswordField textField) {
 		decorateHeight(textField);
-		background(textField);
+		styleColor(textField);
 	}
 
 	public void decorateHeight(IPasswordField textField) {
 		textField.height(inc + TEXTFIELD_HEIGHT);
-		border(textField);
+		styleInputBorder((IBordered) textField);
 	}
 
 	public void decorate(IGridPanel.IGridCell cell) {
@@ -103,7 +105,7 @@ public class Heights {
 
 	public void decorate(IPanel<?> panel) {
 		decorateHeight(panel);
-		background(panel);
+		styleColor(panel);
 	}
 
 	public void decorateHeight(IPanel<?> panel) {
@@ -115,6 +117,6 @@ public class Heights {
 	}
 
 	public void decorateBorder(IBordered border) {
-		border(border);
+		styleInputBorder(border);
 	}
 }

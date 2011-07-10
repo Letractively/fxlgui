@@ -25,7 +25,6 @@ import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.style.Styles;
 
 public class ErrorDialog {
 
@@ -60,13 +59,24 @@ public class ErrorDialog {
 									.add().panel().vertical();
 							ILabel label = panel.add().label()
 									.text("Stacktrace:");
-							Styles.instance().style(label,
-									Style.Window.DIALOG, Style.Status.ERROR);
+							styleDialogError(label);
 							ITextArea textArea = panel.add().textArea()
 									.size(400, 100).text(pStacktrace);
-							Styles.instance().style(textArea,
-									Style.Element.INPUT, Style.Element.BORDER);
+							styleInputBorder(textArea);
 							detailDialog.visible(true);
+						}
+
+						private void styleInputBorder(ITextArea textArea) {
+							// Styles.instance().style(textArea,
+							// Style.Element.INPUT, Style.Element.BORDER);
+							textArea.border().color().rgb(211, 211, 211);
+						}
+
+						private void styleDialogError(ILabel label) {
+							// Styles.instance().style(label,
+							// Style.Window.DIALOG,
+							// Style.Status.ERROR);
+							label.font().weight().italic();
 						}
 					});
 		}
