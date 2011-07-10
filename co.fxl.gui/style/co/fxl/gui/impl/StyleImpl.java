@@ -18,8 +18,15 @@
  */
 package co.fxl.gui.impl;
 
+import java.lang.reflect.Method;
+import java.util.LinkedList;
+import java.util.List;
+
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.impl.Style.Element;
 import co.fxl.gui.impl.Style.Outline;
+import co.fxl.gui.impl.Style.Status;
 import co.fxl.gui.impl.Style.Window;
 import co.fxl.gui.style.IStyle;
 import co.fxl.gui.style.Styles;
@@ -33,5 +40,27 @@ public class StyleImpl {
 				return true;
 			}
 		}, Window.SIDE, Outline.HEADER);
+	}
+
+	public static boolean apply(Class<?> clazz, String methodName,
+			IElement<?> element) {
+		for (Method m : clazz.getMethods()) {
+			if (m.getName().equals(methodName)) {
+				Style style = m.getAnnotation(Style.class);
+				List<Object> styles = new LinkedList<Object>();
+				if (!style.window().equals(Window.NONE))
+					styles.add(style.window());
+				if (!style.outline().equals(Outline.NONE))
+					styles.add(style.outline());
+				if (!style.list().equals(Style.List.NONE))
+					styles.add(style.list());
+				if (!style.element().equals(Element.NONE))
+					styles.add(style.element());
+				if (!style.status().equals(Status.NONE))
+					styles.add(style.status());
+				return Styles.instance().style(element, styles.toArray());
+			}
+		}
+		return false;
 	}
 }

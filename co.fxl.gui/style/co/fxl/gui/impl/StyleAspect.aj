@@ -18,18 +18,9 @@
  */
 package co.fxl.gui.impl;
 
-import java.lang.reflect.Method;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.aspectj.lang.Signature;
 
 import co.fxl.gui.api.IElement;
-import co.fxl.gui.impl.Style.Element;
-import co.fxl.gui.impl.Style.Outline;
-import co.fxl.gui.impl.Style.Status;
-import co.fxl.gui.impl.Style.Window;
-import co.fxl.gui.style.Styles;
 
 public aspect StyleAspect {
 
@@ -41,26 +32,9 @@ public aspect StyleAspect {
 	&& args(element){
 		Signature sig = thisJoinPoint.getSignature();
 		Class<?> c = sig.getDeclaringType();
-		for (Method m : c.getMethods()) {
-			if (m.getName().equals(sig.getName())) {
-				Style style = m.getAnnotation(Style.class);
-				List<Object> styles = new LinkedList<Object>();
-				if (!style.window().equals(Window.NONE))
-					styles.add(style.window());
-				if (!style.outline().equals(Outline.NONE))
-					styles.add(style.outline());
-				if (!style.list().equals(Style.List.NONE))
-					styles.add(style.list());
-				if (!style.element().equals(Element.NONE))
-					styles.add(style.element());
-				if (!style.status().equals(Status.NONE))
-					styles.add(style.status());
-				boolean proceedStyle = Styles.instance().style(element,
-						styles.toArray());
-				if (proceedStyle)
-					proceed(element);
-			}
-		}
-		// TODO ...
+		String methodName = sig.getName();
+		boolean proceedStyle = StyleImpl.apply(c, methodName, element);
+		if (proceedStyle)
+			proceed(element);
 	}
 }

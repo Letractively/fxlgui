@@ -18,8 +18,18 @@
  */
 package co.fxl.gui.style;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+
+import co.fxl.gui.api.IElement;
+import co.fxl.gui.impl.Style;
+import co.fxl.gui.impl.Style.Element;
+import co.fxl.gui.impl.Style.Outline;
+import co.fxl.gui.impl.Style.Status;
+import co.fxl.gui.impl.Style.Window;
 
 public class Styles {
 
