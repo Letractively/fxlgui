@@ -33,7 +33,6 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.style.Styles;
 
 public class ViewList {
 
@@ -81,8 +80,7 @@ public class ViewList {
 				labelPanel.addSpace(4);
 			if (!isNew) {
 				label = labelPanel.add().label().hyperlink();
-				Styles.instance().style(label, Style.Window.VIEWLIST,
-						Style.List.ENTRY, Style.Status.ACTIVE);
+				styleViewlistEntryActive(label);
 				label.addClickListener(this);
 				labelPanel.addSpace(4);
 				content = widget.contentPanel().add();
@@ -216,19 +214,30 @@ public class ViewList {
 		}
 
 		public void clickable() {
-			Styles.instance().style(label, Style.Window.VIEWLIST,
-					Style.List.ENTRY, Style.Status.INACTIVE);
+			styleViewlistEntryInactive(label);
 			if (removeImage != null) {
 				removeImage.visible(false);
 			}
 		}
 
+		public void styleViewlistEntryInactive(ILabel label) {
+			// Styles.instance().style(label, Style.Window.VIEWLIST,
+			// Style.List.ENTRY, Style.Status.INACTIVE);
+			label.font().pixel(13);
+		}
+
 		public void notClickable() {
-			Styles.instance().style(label, Style.Window.VIEWLIST,
-					Style.List.ENTRY, Style.Status.ACTIVE);
+			styleViewlistEntryActive(label);
 			if (removeImage != null && newListener.isRemovable(this)) {
 				removeImage.visible(true);
 			}
+		}
+
+		public void styleViewlistEntryActive(ILabel label) {
+			// Styles.instance().style(label, Style.Window.VIEWLIST,
+			// Style.List.ENTRY, Style.Status.ACTIVE);
+			label.font().pixel(13);
+			label.font().color().mix().black().gray();
 		}
 
 		public ViewImpl decorator(ViewDecorator decorator) {

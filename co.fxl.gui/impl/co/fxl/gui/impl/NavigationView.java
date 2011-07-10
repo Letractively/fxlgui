@@ -29,7 +29,6 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.style.Styles;
 
 public class NavigationView {
 
@@ -110,7 +109,7 @@ public class NavigationView {
 		IHorizontalPanel panel = (IHorizontalPanel) panels[1];
 		addImage(panel, null);
 		ILabel label = addTextLabel(panel);
-		Styles.instance().style(label, Style.Window.CONTENT, Style.List.CHOICE);
+		styleContentChoice(label);
 		label.text(title);
 		IComboBox cb = panel.addSpace(8).add().comboBox();
 		new Heights(0).decorate(cb);
@@ -120,13 +119,18 @@ public class NavigationView {
 		return cb;
 	}
 
+	public void styleContentChoice(ILabel label) {
+		// Styles.instance().style(label, Style.Window.CONTENT,
+		// Style.List.CHOICE);
+		label.font().weight().bold();
+	}
+
 	protected IImage addImage(IHorizontalPanel panel, String imageResource) {
 		IImage image = null;
 		if (SHOW_NUMBERS) {
 			String s = String.valueOf(index++) + ".";
 			ILabel label = panel.add().label().text(s);
-			Styles.instance().style(label, Style.Window.CONTENT,
-					Style.List.NUMBER);
+			styleContentNumber(label);
 			panel.addSpace(4);
 		} else if (SHOW_TRIANGLE) {
 			image = panel
@@ -137,6 +141,12 @@ public class NavigationView {
 			panel.addSpace(4);
 		}
 		return image;
+	}
+
+	public void styleContentNumber(ILabel label) {
+		// Styles.instance().style(label, Style.Window.CONTENT,
+		// Style.List.NUMBER);
+		label.font().pixel(13).color().gray();
 	}
 
 	protected IPanel<?>[] addPanel() {

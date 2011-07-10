@@ -33,7 +33,6 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
-import co.fxl.gui.style.Styles;
 
 public class WidgetTitle implements IClickListener {
 
@@ -82,9 +81,17 @@ public class WidgetTitle implements IClickListener {
 				image.tooltip(tooltip);
 				label.tooltip(tooltip);
 			}
-			Styles.instance().style(label, Style.Window.DIALOG,
-					Style.Element.BUTTON);
+			styleDialogButton(label);
 			return this;
+		}
+
+		public void styleDialogButton(ILabel label) {
+			// Styles.instance().style(label, Style.Window.DIALOG,
+			// Style.Element.BUTTON);
+			if (label.clickable())
+				label.font().color().black();
+			else
+				label.font().color().gray();
 		}
 
 		@Override
@@ -246,14 +253,20 @@ public class WidgetTitle implements IClickListener {
 	public ILabel addTitle(String title) {
 		initHeader();
 		ILabel label = titlePanel.add().label().text(title);
-		Styles.instance().style(label, Style.Window.HEADER, Style.Window.TITLE,
-				Style.Window.SIDE);
+		styleHeaderTitleSide(label);
 		headerLabel = label;
 		if (foldable) {
 			headerLabel.addClickListener(this);
 			headerLabel.tooltip(FOLDABLE);
 		}
 		return headerLabel;
+	}
+
+	public void styleHeaderTitleSide(ILabel label) {
+		// Styles.instance().style(label, Style.Window.HEADER,
+		// Style.Window.TITLE,
+		// Style.Window.SIDE);
+		label.font().weight().bold().pixel(12).color().white();
 	}
 
 	public CommandLink addHyperlink(String text) {
@@ -317,9 +330,14 @@ public class WidgetTitle implements IClickListener {
 
 	private ILabel addHyperlinkLabel(String text, IHorizontalPanel iPanel) {
 		ILabel label = iPanel.addSpace(4).add().label().text(text);
-		Styles.instance().style(label, Style.Window.HEADER,
-				Style.Element.BUTTON);
+		styleHeaderButton(label);
 		return label;
+	}
+
+	private void styleHeaderButton(ILabel label) {
+		// Styles.instance().style(label, Style.Window.HEADER,
+		// Style.Element.BUTTON);
+		label.font().pixel(12);
 	}
 
 	public IImage addImage(String image) {
@@ -335,8 +353,13 @@ public class WidgetTitle implements IClickListener {
 
 	protected ILabel addSeparator(IHorizontalPanel cp) {
 		ILabel label = cp.add().label().text("|");
-		Styles.instance().style(label, Style.Element.SEPARATOR);
+		styleSeparator(label);
 		return label;
+	}
+
+	public void styleSeparator(ILabel label) {
+		// Styles.instance().style(label, Style.Element.SEPARATOR);
+		label.font().color().gray();
 	}
 
 	public IContainer content() {

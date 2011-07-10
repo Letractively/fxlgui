@@ -20,7 +20,6 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
-import co.fxl.gui.style.Styles;
 
 public class HyperlinkDecorator implements IMouseOverListener {
 
@@ -30,36 +29,40 @@ public class HyperlinkDecorator implements IMouseOverListener {
 	public HyperlinkDecorator(ILabel label) {
 		this.label = label;
 		// TODO doesn't work (yet) with GWT: label.addMouseOverListener(this);
-		activeColor();
+		styleHyperlinkActive(label);
 	}
 
-	private void activeColor() {
-		Styles.instance().style(label, Style.Element.HYPERLINK,
-				Style.Status.ACTIVE);
+	private void styleHyperlinkActive(ILabel label) {
+		// Styles.instance().style(label, Style.Element.HYPERLINK,
+		// Style.Status.ACTIVE);
+		label.font().color().rgb(0, 87, 141);
 	}
 
-	private void inactiveColor() {
-		Styles.instance().style(label, Style.Element.HYPERLINK,
-				Style.Status.INACTIVE);
+	private void styleHyperlinkInactive(ILabel label) {
+		// Styles.instance().style(label, Style.Element.HYPERLINK,
+		// Style.Status.INACTIVE);
+		label.font().color().gray();
 	}
 
-	private void activeHighlight() {
-		Styles.instance().style(label, Style.Element.HYPERLINK,
-				Style.Status.HIGHLIGHT);
+	private void styleHyperlinkHighlight(ILabel label) {
+		// Styles.instance().style(label, Style.Element.HYPERLINK,
+		// Style.Status.HIGHLIGHT);
+		label.font().underline(true);
 	}
 
-	private void inactiveHighlight() {
-		Styles.instance().style(label, Style.Element.HYPERLINK,
-				Style.Status.UNHIGHLIGHT);
+	private void styleHyperlinkUnhighlight(ILabel label) {
+		// Styles.instance().style(label, Style.Element.HYPERLINK,
+		// Style.Status.UNHIGHLIGHT);
+		label.font().underline(false);
 	}
 
 	public HyperlinkDecorator clickable(boolean enable) {
 		this.enabled = enable;
 		if (enabled) {
-			activeColor();
+			styleHyperlinkActive(label);
 		} else {
-			inactiveColor();
-			inactiveHighlight();
+			styleHyperlinkInactive(label);
+			styleHyperlinkUnhighlight(label);
 		}
 		return this;
 	}
@@ -71,9 +74,9 @@ public class HyperlinkDecorator implements IMouseOverListener {
 
 	protected void update(boolean over) {
 		if (enabled && over) {
-			activeHighlight();
+			styleHyperlinkHighlight(label);
 		} else {
-			inactiveHighlight();
+			styleHyperlinkUnhighlight(label);
 		}
 	}
 
