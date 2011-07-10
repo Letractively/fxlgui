@@ -34,6 +34,8 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.impl.Style.Element;
+import co.fxl.gui.impl.Style.Outline;
+import co.fxl.gui.impl.Style.Window;
 
 public class WidgetTitle implements IClickListener {
 
@@ -263,6 +265,7 @@ public class WidgetTitle implements IClickListener {
 		return headerLabel;
 	}
 
+	@Style(window = Window.SIDE, outline = Outline.HEADER)
 	public void styleHeaderTitleSide(ILabel label) {
 		// Styles.instance().style(label, Style.Window.HEADER,
 		// Style.Window.TITLE,
