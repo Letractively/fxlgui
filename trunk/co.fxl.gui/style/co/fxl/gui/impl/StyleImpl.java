@@ -18,29 +18,20 @@
  */
 package co.fxl.gui.impl;
 
-public @interface Style {
+import co.fxl.gui.api.ILabel;
+import co.fxl.gui.impl.Style.Outline;
+import co.fxl.gui.impl.Style.Window;
+import co.fxl.gui.style.IStyle;
+import co.fxl.gui.style.Styles;
 
-	public enum Window {
-		DIALOG, VIEWLIST, HEADER, CONTENT, FOOTER, TITLE, MAIN, SIDE, NONE;
+public class StyleImpl {
+
+	public static void setUp() {
+		Styles.instance().register(new IStyle<ILabel>() {
+			@Override
+			public boolean style(ILabel element) {
+				return true;
+			}
+		}, Window.SIDE, Outline.HEADER);
 	}
-
-	public enum List {
-		CHOICE, NUMBER, ENTRY, NONE;
-	}
-
-	public enum Element {
-		HYPERLINK, SEPARATOR, INPUT, BUTTON, BORDER, BACKGROUND, LABEL, COMBOBOX, NONE;
-	}
-
-	public enum Status {
-		ACTIVE, INACTIVE, HIGHLIGHT, UNHIGHLIGHT, ERROR, NONE;
-	}
-
-	Window window() default Window.NONE;
-
-	List list() default List.NONE;
-
-	Element element() default Element.NONE;
-
-	Status status() default Status.NONE;
 }

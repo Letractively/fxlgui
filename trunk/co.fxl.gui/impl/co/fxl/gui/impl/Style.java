@@ -16,9 +16,41 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.style;
+package co.fxl.gui.impl;
 
-public interface IStyle<T> {
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
-	public boolean style(T element);
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Style {
+
+	public enum Window {
+		DIALOG, MAIN, SIDE, NONE;
+	}
+
+	public enum Outline {
+		HEADER, CONTENT, FOOTER, NONE;
+	}
+
+	public enum List {
+		CHOICE, NUMBER, ENTRY, NONE;
+	}
+
+	public enum Element {
+		HYPERLINK, SEPARATOR, INPUT, BUTTON, BORDER, BACKGROUND, LABEL, COMBOBOX, NONE;
+	}
+
+	public enum Status {
+		ACTIVE, INACTIVE, HIGHLIGHT, UNHIGHLIGHT, ERROR, NONE;
+	}
+
+	Window window() default Window.NONE;
+
+	Outline outline() default Outline.NONE;
+
+	List list() default List.NONE;
+
+	Element element() default Element.NONE;
+
+	Status status() default Status.NONE;
 }
