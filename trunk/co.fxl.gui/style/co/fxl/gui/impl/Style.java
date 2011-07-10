@@ -96,7 +96,7 @@ public class Style {
 			public void style(ILabel label) {
 				label.font().weight().bold();
 			}
-		}, ID.WINDOW, ID.NAVIGATION, ID.CHOICE, ID.TITLE);
+		}, ID.WINDOW, ID.NAVIGATION, ID.CHOICE);
 		Styles.instance().register(new IStyle<ILabel>() {
 			@Override
 			public void style(ILabel label) {
