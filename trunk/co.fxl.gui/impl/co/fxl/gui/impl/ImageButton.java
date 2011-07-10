@@ -96,7 +96,7 @@ public class ImageButton implements IClickable<Object> {
 	public ILabel addHyperlink(String text) {
 		panel.addSpace(4);
 		ILabel label = panel.add().label().text("|");
-		Styles.instance().style(label, Style.ID.SEPARATOR);
+		Styles.instance().style(label, Style.Element.SEPARATOR);
 		ILabel l = panel.addSpace(4).add().label().text(text).hyperlink();
 		additionalLabels.add(l);
 		return l;

@@ -34,19 +34,23 @@ public class HyperlinkDecorator implements IMouseOverListener {
 	}
 
 	private void activeColor() {
-		Styles.instance().style(label, Style.ID.HYPERLINK, Style.ID.ACTIVE);
+		Styles.instance().style(label, Style.Element.HYPERLINK,
+				Style.Status.ACTIVE);
 	}
 
 	private void inactiveColor() {
-		Styles.instance().style(label, Style.ID.HYPERLINK, Style.ID.INACTIVE);
+		Styles.instance().style(label, Style.Element.HYPERLINK,
+				Style.Status.INACTIVE);
 	}
 
 	private void activeHighlight() {
-		Styles.instance().style(label, Style.ID.HYPERLINK, Style.ID.HIGHLIGHT);
+		Styles.instance().style(label, Style.Element.HYPERLINK,
+				Style.Status.HIGHLIGHT);
 	}
 
 	private void inactiveHighlight() {
-		Styles.instance().style(label, Style.ID.HYPERLINK, Style.ID.UNHIGHLIGHT);
+		Styles.instance().style(label, Style.Element.HYPERLINK,
+				Style.Status.UNHIGHLIGHT);
 	}
 
 	public HyperlinkDecorator clickable(boolean enable) {

@@ -24,6 +24,7 @@ import java.util.Map;
 public class Styles {
 
 	private static final Styles INSTANCE = new Styles();
+	private static final boolean REGRESS = false;
 	private Map<String, IStyle<Object>> STYLES = new HashMap<String, IStyle<Object>>();
 
 	public static Styles instance() {
@@ -36,10 +37,21 @@ public class Styles {
 	}
 
 	public void style(Object e, Object... styles) {
+		if (!REGRESS) {
+			stylePart(e, true, styles);
+		} else
+			for (int i = styles.length; i >= 1; i--) {
+				Object[] subList = new Object[i];
+				System.arraycopy(styles, 0, subList, 0, i);
+				stylePart(e, false, subList);
+			}
+	}
+
+	public void stylePart(Object e, boolean assertStyled, Object... styles) {
 		IStyle<Object> style = STYLES.get(toString(styles));
 		if (style != null)
 			style.style(e);
-		else
+		else if (assertStyled)
 			throw new RuntimeException(toString(styles));
 	}
 

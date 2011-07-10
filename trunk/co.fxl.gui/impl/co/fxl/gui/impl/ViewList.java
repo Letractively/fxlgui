@@ -81,8 +81,8 @@ public class ViewList {
 				labelPanel.addSpace(4);
 			if (!isNew) {
 				label = labelPanel.add().label().hyperlink();
-				Styles.instance().style(label, Style.ID.WINDOW, Style.ID.VIEW,
-						Style.ID.ENTRY, Style.ID.ACTIVE);
+				Styles.instance().style(label, Style.Window.VIEWLIST,
+						Style.List.ENTRY, Style.Status.ACTIVE);
 				label.addClickListener(this);
 				labelPanel.addSpace(4);
 				content = widget.contentPanel().add();
@@ -216,16 +216,16 @@ public class ViewList {
 		}
 
 		public void clickable() {
-			Styles.instance().style(label, Style.ID.WINDOW, Style.ID.VIEW,
-					Style.ID.ENTRY, Style.ID.INACTIVE);
+			Styles.instance().style(label, Style.Window.VIEWLIST,
+					Style.List.ENTRY, Style.Status.INACTIVE);
 			if (removeImage != null) {
 				removeImage.visible(false);
 			}
 		}
 
 		public void notClickable() {
-			Styles.instance().style(label, Style.ID.WINDOW, Style.ID.VIEW,
-					Style.ID.ENTRY, Style.ID.ACTIVE);
+			Styles.instance().style(label, Style.Window.VIEWLIST,
+					Style.List.ENTRY, Style.Status.ACTIVE);
 			if (removeImage != null && newListener.isRemovable(this)) {
 				removeImage.visible(true);
 			}
