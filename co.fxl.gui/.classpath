@@ -2,10 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="api"/>
 	<classpathentry kind="src" path="impl"/>
-	<classpathentry kind="src" path="style"/>
+	<classpathentry excluding="co/fxl/gui/impl/StyleAspect.aj" kind="src" path="style"/>
 	<classpathentry kind="src" path="gwt"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.ajdt.core.ASPECTJRT_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
