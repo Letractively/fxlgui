@@ -294,4 +294,9 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		r.removeHandler();
 		return this;
 	}
+
+	@Override
+	public IDisplay size(int width, int height) {
+		return width(width).height(height);
+	}
 }
