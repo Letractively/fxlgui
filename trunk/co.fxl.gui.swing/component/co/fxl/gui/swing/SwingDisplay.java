@@ -48,8 +48,8 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	SwingContainer<JComponent> container;
 	JFrame frame = new JFrame();
-	private int widthPixel = 800;
-	private int heightPixel = 600;
+	private int widthPixel = 480;
+	private int heightPixel = 800;
 	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
 	private SwingUncaughtExceptionHandler uncaughtExceptionHandler;
 	boolean waiting;
@@ -65,28 +65,28 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 					((JScrollPane) component)
 							.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 				frame.setContentPane(container.component);
-				container.component.setPreferredSize(new Dimension(widthPixel,
-						heightPixel));
 				container.component.setBackground(Color.WHITE);
-				container.component.setSize(widthPixel, heightPixel);
+				updateSize();
 			}
 		};
 		// layout = container.panel();
 		// frame.setSize(widthPixel, heightPixel);
 		frame.setBackground(Color.WHITE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setMinimumSize(new Dimension(800, 600));
+		frame.setMinimumSize(new Dimension(widthPixel, heightPixel));
 		// scrollPane = new JScrollPane(container.component);
 		// scrollPane
 		// .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		DiscardChangesDialog.display = this;
-		fullscreen();
+//		fullscreen();
 		// Style.setUp();
 	}
 
 	private void resize() {
 		frame.pack();
-		container.component.setSize(widthPixel, heightPixel);
+		if (container.component != null) {
+			updateSize();
+		}
 	}
 
 	@Override
@@ -276,5 +276,16 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		resizeListeners.remove(listener);
 		container.component.removeComponentListener(adp);
 		return this;
+	}
+
+	@Override
+	public IDisplay size(int width, int height) {
+		return width(width).height(height);
+	}
+
+	private void updateSize() {
+		container.component.setPreferredSize(new Dimension(widthPixel,
+				heightPixel));
+		container.component.setSize(widthPixel, heightPixel);
 	}
 }
