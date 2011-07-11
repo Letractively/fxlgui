@@ -36,7 +36,7 @@ public class SplitLayout implements IResizeListener// , IClickListener
 	public static int SCROLLBAR_WIDTH = 20;
 	public static int WIDTH_SIDE_PANEL = 320;
 	private ILayout layout;
-	public IGridPanel panel;
+	private IGridPanel panel;
 	public IVerticalPanel mainPanel;
 	public IVerticalPanel sidePanel;
 	private IGridCell cell;
