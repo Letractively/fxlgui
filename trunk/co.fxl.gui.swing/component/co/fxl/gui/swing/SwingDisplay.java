@@ -48,8 +48,8 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	SwingContainer<JComponent> container;
 	JFrame frame = new JFrame();
-	private int widthPixel = 480;
-	private int heightPixel = 800;
+	private int widthPixel = 320;
+	private int heightPixel = 240;
 	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
 	private SwingUncaughtExceptionHandler uncaughtExceptionHandler;
 	boolean waiting;
@@ -78,7 +78,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		// scrollPane
 		// .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		DiscardChangesDialog.display = this;
-//		fullscreen();
+		// fullscreen();
 		// Style.setUp();
 	}
 
@@ -284,8 +284,9 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 	}
 
 	private void updateSize() {
-		container.component.setPreferredSize(new Dimension(widthPixel,
-				heightPixel));
+		Dimension dim = new Dimension(widthPixel, heightPixel);
+		frame.setMinimumSize(dim);
+		container.component.setPreferredSize(dim);
 		container.component.setSize(widthPixel, heightPixel);
 	}
 }
