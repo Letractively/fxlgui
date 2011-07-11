@@ -106,7 +106,8 @@ public class ImageButton implements IClickable<Object> {
 		label.font().color().gray();
 	}
 
-	public void imageResource(String string) {
+	public ImageButton imageResource(String string) {
 		image.resource(string);
+		return this;
 	}
 }
