@@ -38,6 +38,8 @@ public interface IDisplay {
 
 	IDisplay height(int height);
 
+	IDisplay size(int width, int height);
+
 	IDisplay visible(boolean visible);
 
 	IContainer container();
