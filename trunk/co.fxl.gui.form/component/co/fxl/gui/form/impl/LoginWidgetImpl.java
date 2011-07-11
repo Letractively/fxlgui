@@ -18,10 +18,12 @@
  */
 package co.fxl.gui.form.impl;
 
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.form.api.ILoginWidget;
@@ -70,9 +72,9 @@ class LoginWidgetImpl implements ILoginWidget {
 
 	private IHorizontalPanel cards;
 	private IAuthorizationListener listener;
-	private ITextField loginID;
+	ITextField loginID;
 	private IPasswordField password;
-	private LoginListener loginListener = new LoginListener();
+	IClickListener loginListener = new LoginListener();
 	private LogoutListener logoutListener = new LogoutListener();
 	private ILabel loggedInAs;
 	private IStatusPanelDecorator decorator;
@@ -108,17 +110,25 @@ class LoginWidgetImpl implements ILoginWidget {
 		IHorizontalPanel liPanel = cards.add().panel().horizontal().spacing(4);
 		if (decorator != null)
 			decorator.decorateBegin(liPanel, false);
+		addLoginForm(liPanel);
+		// decorateHyperlink(label);
+		if (decorator != null)
+			decorator.decorateEnd(liPanel, false);
+	}
+
+	private void addLoginForm(IPanel<?> liPanel) {
+		addLoginFields(liPanel);
+		liPanel.add().label().text("Login").hyperlink()
+				.addClickListener(loginListener).mouseLeft();
+	}
+
+	void addLoginFields(IPanel<?> liPanel) {
 		decorate(liPanel.add().label().text("ID"));
 		decorate(loginID = liPanel.add().textField()
 				.addKeyListener(loginListener).enter().focus(true));
 		decorate(liPanel.add().label().text("Password"));
 		decorate(password = liPanel.add().passwordField()
 				.addKeyListener(loginListener).enter());
-		liPanel.add().label().text("Login").hyperlink()
-				.addClickListener(loginListener).mouseLeft();
-		// decorateHyperlink(label);
-		if (decorator != null)
-			decorator.decorateEnd(liPanel, false);
 	}
 
 	private void addLogout() {
@@ -126,8 +136,7 @@ class LoginWidgetImpl implements ILoginWidget {
 		IHorizontalPanel loPanel = cards.add().panel().horizontal().spacing(4);
 		if (decorator != null)
 			decorator.decorateBegin(loPanel, true);
-		ILabel loggedInHead = loPanel.add().label().text("Logged in as");
-		decorate(loggedInHead).font().color().gray();
+		addLoggedInAs(loPanel);
 		loggedInAs = loPanel.add().label();
 		decorate(loggedInAs).font().weight().bold().color().mix().black()
 				.gray();
@@ -136,6 +145,11 @@ class LoginWidgetImpl implements ILoginWidget {
 		// decorateHyperlink(label);
 		if (decorator != null)
 			decorator.decorateEnd(loPanel, true);
+	}
+
+	private void addLoggedInAs(IHorizontalPanel loPanel) {
+		ILabel loggedInHead = loPanel.add().label().text("Logged in as");
+		decorate(loggedInHead).font().color().gray();
 	}
 
 	private ILabel decorate(ILabel label) {
