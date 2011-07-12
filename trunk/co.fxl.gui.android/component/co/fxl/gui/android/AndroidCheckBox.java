@@ -46,11 +46,6 @@ class AndroidCheckBox extends AndroidElement<CheckBox, ICheckBox> implements
 	}
 
 	@Override
-	public ICheckBox tooltip(String text) {
-		throw new MethodNotImplementedException();
-	}
-
-	@Override
 	public IFont font() {
 		return new AndroidFont(view);
 	}

@@ -47,11 +47,6 @@ class AndroidButton extends AndroidElement<TextView, IButton> implements
 	}
 
 	@Override
-	public IButton tooltip(String text) {
-		throw new MethodNotImplementedException();
-	}
-
-	@Override
 	public IFont font() {
 		return new AndroidFont(view);
 	}

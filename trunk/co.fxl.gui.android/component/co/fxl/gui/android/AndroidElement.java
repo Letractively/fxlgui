@@ -23,12 +23,14 @@ import java.util.List;
 
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 class AndroidElement<R extends View, T> implements IElement<T> {
@@ -151,9 +153,20 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 		throw new MethodNotImplementedException();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public T tooltip(String tooltip) {
-		throw new MethodNotImplementedException();
+	public final T tooltip(final String tooltip) {
+		view.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View arg0) {
+				IPopUp popUp = display().showPopUp();
+				popUp.container().label().text(tooltip);
+				popUp.autoHide(true);
+				popUp.visible(true);
+				return false;
+			}
+		});
+		return (T) this;
 	}
 
 	@Override
