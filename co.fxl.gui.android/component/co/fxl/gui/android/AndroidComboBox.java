@@ -57,11 +57,6 @@ class AndroidComboBox extends AndroidElement<Spinner, IComboBox> implements
 	}
 
 	@Override
-	public IComboBox tooltip(String text) {
-		throw new MethodNotImplementedException();
-	}
-
-	@Override
 	public IFont font() {
 		throw new MethodNotImplementedException();
 	}

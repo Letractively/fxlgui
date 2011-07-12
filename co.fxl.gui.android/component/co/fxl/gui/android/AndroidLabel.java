@@ -98,11 +98,6 @@ class AndroidLabel extends AndroidElement<TextView, ILabel> implements ILabel {
 	}
 
 	@Override
-	public ILabel tooltip(String text) {
-		throw new MethodNotImplementedException();
-	}
-
-	@Override
 	public IFont font() {
 		return new AndroidFont(view);
 	}

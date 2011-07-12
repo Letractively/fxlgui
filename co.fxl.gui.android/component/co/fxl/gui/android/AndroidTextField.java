@@ -50,11 +50,6 @@ class AndroidTextField extends AndroidElement<EditText, ITextField> implements
 	}
 
 	@Override
-	public ITextField tooltip(String text) {
-		throw new MethodNotImplementedException();
-	}
-
-	@Override
 	public IFont font() {
 		return new AndroidFont(view);
 	}
