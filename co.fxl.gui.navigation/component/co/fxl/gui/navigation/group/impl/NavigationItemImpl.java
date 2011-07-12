@@ -36,14 +36,12 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	private NavigationWidgetImpl widget;
 	private IHorizontalPanel itemPanel;
 	private IHorizontalPanel basicPanel;
+	NavigationGroupImpl group;
 
 	NavigationItemImpl(NavigationGroupImpl group) {
-		this(group.widget, group.itemPanel);
-	}
-
-	NavigationItemImpl(NavigationWidgetImpl widget, IHorizontalPanel itemPanel) {
-		this.widget = widget;
-		this.itemPanel = itemPanel;
+		this.group = group;
+		widget = group.widget;
+		itemPanel = group.itemPanel;
 	}
 
 	void initButtonPanel() {
