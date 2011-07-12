@@ -265,6 +265,11 @@ public class WidgetTitle implements IClickListener {
 		return headerLabel;
 	}
 
+	public WidgetTitle addTitleSpace() {
+		titlePanel.addSpace(10);
+		return this;
+	}
+
 	@Style(window = Window.SIDE, outline = Outline.HEADER)
 	public void styleHeaderTitleSide(ILabel label) {
 		// Styles.instance().style(label, Style.Window.HEADER,
