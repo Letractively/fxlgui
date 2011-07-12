@@ -28,7 +28,6 @@ import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.impl.WidgetTitle.CommandLink;
 
 public class DialogImpl implements IDialog {
 

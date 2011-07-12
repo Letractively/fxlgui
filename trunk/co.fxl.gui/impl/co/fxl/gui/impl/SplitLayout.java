@@ -25,8 +25,7 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IVerticalPanel;
 
-public class SplitLayout implements IResizeListener// , IClickListener
-{
+public class SplitLayout implements IResizeListener {
 
 	// TODO nice-2-have: SplitLayout consists of 3 cells, coupled to height of
 	// display
@@ -39,7 +38,7 @@ public class SplitLayout implements IResizeListener// , IClickListener
 	private IGridPanel panel;
 	public IVerticalPanel mainPanel;
 	public IVerticalPanel sidePanel;
-	private IGridCell cell;
+	private IGridCell cell1;
 	// private IImage button;
 	private IScrollPane sideScrollPanel;
 	private IGridCell cell0;
@@ -55,9 +54,9 @@ public class SplitLayout implements IResizeListener// , IClickListener
 		IVerticalPanel vpanel = cell0.valign().begin().panel().vertical()
 				.spacing(10);
 		mainPanel = addMainPanel(vpanel);
-		cell = panel.cell(1, 0).width(WIDTH_SIDE_PANEL).valign().begin()
+		cell1 = panel.cell(1, 0).width(WIDTH_SIDE_PANEL).valign().begin()
 				.align().end();
-		sideScrollPanel = cell.panel().vertical().addSpace(10).add()
+		sideScrollPanel = cell1.panel().vertical().addSpace(10).add()
 				.scrollPane();
 		sidePanel = sideScrollPanel.viewPort().panel().vertical();
 		sidePanel.spacing().right(10).inner(10);
