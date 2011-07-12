@@ -18,9 +18,6 @@
  */
 package co.fxl.gui.navigation.group.impl;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import co.fxl.gui.api.IContainer;
 
 privileged aspect NavigationWidgetImplLayout {
