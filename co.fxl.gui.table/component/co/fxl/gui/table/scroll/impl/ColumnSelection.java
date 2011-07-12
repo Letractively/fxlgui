@@ -19,23 +19,35 @@
 package co.fxl.gui.table.scroll.impl;
 
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.ILinearPanel;
 
 class ColumnSelection {
+
+	ScrollTableWidgetImpl widget;
 
 	// TODO FEATURE: Option: Look: Column-Selection: if > n Columns or
 	// sum(characters of column-headers) > m
 	// then dynamically resize font size of column selection labels
 
 	ColumnSelection(final ScrollTableWidgetImpl widget) {
-		IGridCell clear = widget.statusPanel().cell(1, 0).clear().align()
+		this.widget = widget;
+		IContainer clear = widget.statusPanel().cell(1, 0).clear().align()
 				.begin().valign().center();
 		IHorizontalPanel p = clear.panel().horizontal().add().panel()
 				.horizontal();
-		IHorizontalPanel b0 = p.add().panel().horizontal();
-		b0.add().label().text("SHOW COLUMNS:").font().pixel(10).weight().bold();
+		addToPanel(p, new IClickListener() {
+			@Override
+			public void onClick() {
+				widget.update();
+			}
+		});
+	}
+
+	void addToPanel(ILinearPanel p, final IClickListener clickListener) {
+		addTitle(p);
 		for (final ScrollTableColumnImpl c : widget.columns) {
 			p.addSpace(4);
 			IHorizontalPanel b = p.add().panel().horizontal().spacing(4);
@@ -60,9 +72,13 @@ class ColumnSelection {
 					if (allInvisible)
 						c.visible = true;
 					else
-						widget.update();
+						clickListener.onClick();
 				}
 			});
 		}
+	}
+
+	void addTitle(ILinearPanel p) {
+		p.add().label().text("SHOW COLUMNS:").font().pixel(10).weight().bold();
 	}
 }
