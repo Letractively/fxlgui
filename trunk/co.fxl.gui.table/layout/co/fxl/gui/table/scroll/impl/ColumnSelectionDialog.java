@@ -29,9 +29,6 @@ public class ColumnSelectionDialog implements IClickListener {
 		p.add().label().text("COLUMNS >").hyperlink()
 				.addClickListener(new ColumnSelectionDialog(cs, p)).mouseLeft()
 				.font().pixel(10).weight().bold();
-		for (int i = 2; i < cs.widget.columns.size(); i++) {
-			cs.widget.columns.get(i).visible = false;
-		}
 	}
 
 	private ColumnSelection cs;
