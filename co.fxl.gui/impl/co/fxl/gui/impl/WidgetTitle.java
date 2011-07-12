@@ -39,87 +39,6 @@ import co.fxl.gui.impl.Style.Window;
 
 public class WidgetTitle implements IClickListener {
 
-	public class CommandLink implements IClickable<IClickable<?>> {
-
-		private IHorizontalPanel iPanel;
-		private ILabel label;
-		private IImage image;
-		private String toolTipClickable = null;
-		private String toolTipNotClickable = null;
-
-		public CommandLink(IHorizontalPanel iPanel, IImage image,
-				ILabel headerLabel) {
-			this.iPanel = iPanel;
-			noDoubleClicks(iPanel);
-			this.image = image;
-			if (image != null)
-				noDoubleClicks(image);
-			this.label = headerLabel;
-			noDoubleClicks(label);
-		}
-
-		private void noDoubleClicks(IClickable<?> c) {
-			c.addClickListener(new IClickListener() {
-
-				@Override
-				public void onClick() {
-				}
-			}).doubleClick();
-		}
-
-		public CommandLink label(String l) {
-			label.text(l);
-			return this;
-		}
-
-		@Override
-		public IClickable<?> clickable(boolean clickable) {
-			label.clickable(clickable);
-			if (image != null)
-				image.clickable(clickable);
-			iPanel.clickable(clickable);
-			String tooltip = clickable ? toolTipClickable : toolTipNotClickable;
-			if (tooltip != null) {
-				iPanel.tooltip(tooltip);
-				image.tooltip(tooltip);
-				label.tooltip(tooltip);
-			}
-			styleDialogButton(label);
-			return this;
-		}
-
-		public void styleDialogButton(ILabel label) {
-			// Styles.instance().style(label, Style.Window.DIALOG,
-			// Style.Element.BUTTON);
-			if (label.clickable())
-				label.font().color().black();
-			else
-				label.font().color().gray();
-		}
-
-		@Override
-		public boolean clickable() {
-			return label.clickable();
-		}
-
-		@Override
-		public co.fxl.gui.api.IClickable.IKey<IClickable<?>> addClickListener(
-				co.fxl.gui.api.IClickable.IClickListener clickListener) {
-			label.addClickListener(clickListener);
-			if (image != null)
-				image.addClickListener(clickListener);
-			iPanel.addClickListener(clickListener);
-			return null;
-		}
-
-		public IClickable<?> tooltips(String toolTipClickable,
-				String toolTipNotClickable) {
-			this.toolTipClickable = toolTipClickable;
-			this.toolTipNotClickable = toolTipNotClickable;
-			return this;
-		}
-	}
-
 	public static final int LARGE_FONT = 18;
 	private static final String FOLDABLE = "Click to minimize/maximize";
 	public IGridPanel panel;
@@ -322,7 +241,7 @@ public class WidgetTitle implements IClickListener {
 		// image.addClickListener(clickListener);
 		// clickableState.put(label, true);
 		// }
-		CommandLink cl = new CommandLink(iPanel0, image, label);
+		CommandLink cl = new CommandLink(this, iPanel0, image, label);
 		cl.clickable(true);
 		return cl;
 	}

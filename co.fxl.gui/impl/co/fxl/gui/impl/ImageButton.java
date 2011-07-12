@@ -80,6 +80,11 @@ public class ImageButton implements IClickable<Object> {
 		return label.clickable();
 	}
 
+	public ImageButton hyperlink() {
+		label.hyperlink();
+		return this;
+	}
+
 	@Override
 	public IKey<Object> addClickListener(IClickListener clickListener) {
 		label.addClickListener(clickListener);
