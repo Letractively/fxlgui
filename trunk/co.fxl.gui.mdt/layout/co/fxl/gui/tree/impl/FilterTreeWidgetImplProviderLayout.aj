@@ -18,23 +18,9 @@
  */
 package co.fxl.gui.tree.impl;
 
-import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.tree.api.ITreeWidget;
+privileged aspect FilterTreeWidgetImplProviderLayout {
 
-@SuppressWarnings("rawtypes")
-public class TreeWidgetImplProvider implements IWidgetProvider<ITreeWidget> {
-
-	private TreeWidgetImplProvider() {
-	}
-	
-	@Override
-	public ITreeWidget createWidget(IContainer panel) {
-		return new TreeWidgetImpl(panel);
-	}
-
-	@Override
-	public Class<ITreeWidget> widgetType() {
-		return ITreeWidget.class;
+	after() : execution(public FilterTreeWidgetImplProvider.new()) {
+		TreeWidgetImpl.SPLIT_POSITION = 150;
 	}
 }
