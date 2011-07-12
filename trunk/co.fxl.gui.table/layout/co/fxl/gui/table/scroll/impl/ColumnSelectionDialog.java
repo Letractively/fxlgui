@@ -38,12 +38,14 @@ public class ColumnSelectionDialog implements IClickListener {
 			final ILinearPanel<?> p) {
 		this.cs = cs;
 		this.p0 = p;
+		for (int i = 2; i < cs.widget.columns.size(); i++) {
+			cs.widget.columns.get(i).visible = false;
+		}
 	}
 
 	@Override
 	public void onClick() {
-		final IDialog dialog = p0.display().showDialog()
-				.title("SHOW COLUMNS");
+		final IDialog dialog = p0.display().showDialog().title("SHOW COLUMNS");
 		dialog.addButton().ok().addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
