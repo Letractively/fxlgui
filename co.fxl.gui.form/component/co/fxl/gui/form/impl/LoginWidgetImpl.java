@@ -122,6 +122,7 @@ class LoginWidgetImpl implements ILoginWidget {
 				.addClickListener(loginListener).mouseLeft();
 	}
 
+	// TODO extract class LoginPanel
 	void addLoginFields(IPanel<?> liPanel) {
 		decorate(liPanel.add().label().text("ID"));
 		decorate(loginID = liPanel.add().textField()
