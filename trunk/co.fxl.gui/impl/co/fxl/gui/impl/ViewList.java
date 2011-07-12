@@ -214,6 +214,7 @@ public class ViewList {
 		}
 
 		public void clickable() {
+			grid.color().remove();
 			styleViewlistEntryInactive(label);
 			if (removeImage != null) {
 				removeImage.visible(false);
@@ -227,6 +228,7 @@ public class ViewList {
 		}
 
 		public void notClickable() {
+			grid.color().rgb(0xD0, 0xE4, 0xF6);
 			styleViewlistEntryActive(label);
 			if (removeImage != null && newListener.isRemovable(this)) {
 				removeImage.visible(true);
