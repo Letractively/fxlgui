@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.navigation.group.impl;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
@@ -35,6 +38,7 @@ class NavigationGroupImpl implements INavigationGroup {
 	private ILabel header;
 	IHorizontalPanel itemPanel;
 	private boolean first = true;
+	List<NavigationItemImpl> items = new LinkedList<NavigationItemImpl>();
 
 	NavigationGroupImpl(NavigationWidgetImpl widget) {
 		this.widget = widget;
@@ -59,7 +63,9 @@ class NavigationGroupImpl implements INavigationGroup {
 			itemPanel.addSpace(1);
 		}
 		first = false;
-		return new NavigationItemImpl(this);
+		NavigationItemImpl item = new NavigationItemImpl(this);
+		items.add(item);
+		return item;
 	}
 
 	@Override

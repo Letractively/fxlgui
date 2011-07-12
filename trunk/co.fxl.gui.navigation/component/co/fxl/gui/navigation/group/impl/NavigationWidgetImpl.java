@@ -27,6 +27,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.ICallback;
@@ -34,10 +35,10 @@ import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.group.api.INavigationWidget;
 
-public class NavigationWidgetImpl implements INavigationWidget {
+class NavigationWidgetImpl implements INavigationWidget {
 
 	private IDockPanel mainPanel;
-	IHorizontalPanel navigationPanel;
+	ILinearPanel<?> navigationPanel;
 	private ICardPanel history;
 	private NavigationItemImpl active;
 	private boolean first = true;
@@ -48,14 +49,17 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	private IVerticalPanel panel0;
 	private IVerticalPanel panel1;
 	private List<INavigationListener> listeners = new LinkedList<INavigationListener>();
+	IHorizontalPanel masterPanel;
+	IGridPanel hPanel;
+	List<NavigationGroupImpl> groups = new LinkedList<NavigationGroupImpl>();
 
-	protected NavigationWidgetImpl(IContainer layout) {
+	NavigationWidgetImpl(IContainer layout) {
 		mainPanel = layout.panel().dock();
-		IGridPanel hPanel = mainPanel.top().panel().grid();
-		hPanel.color().rgb(235, 235, 235).gradient().fallback(235, 235, 235).vertical()
-				.rgb(211, 211, 211);
-		navigationPanel = hPanel.cell(0, 0).panel().horizontal().add().panel()
-				.horizontal();
+		hPanel = mainPanel.top().panel().grid();
+		hPanel.color().rgb(235, 235, 235).gradient().fallback(235, 235, 235)
+				.vertical().rgb(211, 211, 211);
+		masterPanel = hPanel.cell(0, 0).panel().horizontal();
+		navigationPanel = masterPanel.add().panel().horizontal();
 		navigationPanel.addSpace(10);
 		history = mainPanel.center().panel().card();
 		panel0 = history.add().panel().vertical();
@@ -75,11 +79,17 @@ public class NavigationWidgetImpl implements INavigationWidget {
 
 	@Override
 	public INavigationGroup addGroup() {
+		ensureSpaceBetweenGroups();
+		NavigationGroupImpl group = new NavigationGroupImpl(this);
+		groups.add(group);
+		return group;
+	}
+
+	private void ensureSpaceBetweenGroups() {
 		if (!first) {
 			navigationPanel.addSpace(5);
 		}
 		first = false;
-		return new NavigationGroupImpl(this);
 	}
 
 	@Override
@@ -133,14 +143,6 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	@Override
 	public IColor colorBackground() {
 		throw new MethodNotImplementedException();
-		// return new NonRemovableColorTemplate() {
-		//
-		// @Override
-		// public IColor rgb(int r, int g, int b) {
-		// // colorBackground = new int[] { r, g, b };
-		// return this;
-		// }
-		// };
 	}
 
 	@Override
