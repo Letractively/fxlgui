@@ -21,6 +21,7 @@ package co.fxl.gui.table.scroll.impl;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 
 privileged aspect ColumnSelectionLayout {
 
@@ -39,5 +40,13 @@ privileged aspect ColumnSelectionLayout {
 	&& args(in) 
 	&& if(in.equals("DISPLAYING ROWS")) {
 		return proceed("ROWS");
+	}
+
+	after(ScrollTableWidgetImpl widget) returning(IScrollTableColumn column) : 
+	execution(public IScrollTableColumn ScrollTableWidgetImpl.addColumn()) 
+	&& this(widget) {
+		if (widget.columns.size() > 2) {
+			column.visible(false);
+		}
 	}
 }
