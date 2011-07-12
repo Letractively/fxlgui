@@ -174,6 +174,7 @@ public class DialogImpl implements IDialog {
 			WidgetTitle t = new WidgetTitle(panel.add().panel())
 					.foldable(false).space(0);
 			t.addTitle(title.toUpperCase());
+			t.addTitleSpace();
 			if (message != null && buttons.isEmpty()) {
 				addButton().ok().addClickListener(new IClickListener() {
 					@Override
