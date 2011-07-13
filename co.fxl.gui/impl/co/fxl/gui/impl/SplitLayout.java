@@ -35,13 +35,13 @@ public class SplitLayout implements IResizeListener {
 	public static int SCROLLBAR_WIDTH = 20;
 	public static int WIDTH_SIDE_PANEL = 320;
 	private ILayout layout;
-	private IGridPanel panel;
+	IGridPanel panel;
 	public IVerticalPanel mainPanel;
 	public IVerticalPanel sidePanel;
-	private IGridCell cell1;
+	IGridCell cell1;
 	// private IImage button;
 	private IScrollPane sideScrollPanel;
-	private IGridCell cell0;
+	IGridCell cell0;
 
 	public SplitLayout(ILayout layout) {
 		this.layout = layout;
