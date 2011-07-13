@@ -19,10 +19,11 @@
 package co.fxl.gui.navigation.group.impl;
 
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.ICallback;
-import co.fxl.gui.impl.SplitLayoutNavigation;
+import co.fxl.gui.layout.impl.Layout;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.group.api.INavigationWidget.INavigationListener;
 
@@ -69,8 +70,9 @@ public class NavigationDialog {
 						dialog.visible(true);
 					}
 				}).mouseLeft();
-		SplitLayoutNavigation.panel = widget.hPanel.cell(1, 0).align().end()
-				.valign().center().panel().horizontal();
+		IContainer c = widget.hPanel.cell(1, 0).align().end().valign().center()
+				.panel().horizontal().add();
+		Layout.instance().actionMenu().container(c);
 		widget.addNavigationListener(new INavigationListener() {
 			@Override
 			public void onBeforeNavigation(INavigationItem activeItem,
