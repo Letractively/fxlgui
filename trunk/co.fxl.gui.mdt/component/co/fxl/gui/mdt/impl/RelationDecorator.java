@@ -300,14 +300,14 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 		};
 		if (relation.addRemoveListener != null) {
 			if (relation.addRemoveListener.isDetailedAdd()) {
-				table.commandButtons().listenOnAdd(
-						new IScrollTableWidget.IDecorator() {
-							@Override
-							public IClickable<?> decorate(IContainer c) {
-								return relation.addRemoveListener.decorateAdd(
-										node, c);
-							}
-						}, addListener);
+				IScrollTableWidget.IDecorator dec = new IScrollTableWidget.IDecorator() {
+					@Override
+					public IClickable<?> decorate(IContainer c) {
+						return relation.addRemoveListener.decorateAdd(node, c);
+					}
+				};
+				// TODO intercept && replace decorator, on click: call original decorator (inside use verticalpanel in dialog)
+				table.commandButtons().listenOnAdd(dec, addListener);
 			} else {
 				table.commandButtons().listenOnAdd(addListener);
 			}
