@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="api"/>
 	<classpathentry kind="src" path="component"/>
 	<classpathentry kind="src" path="style"/>
-	<classpathentry excluding="co/fxl/gui/mdt/impl/RelationDecoratorLayout.aj|co/fxl/gui/mdt/impl/ViewWidgetLayout.aj|co/fxl/gui/mdt/impl/MasterDetailTableWidgetImplLayout.aj|co/fxl/gui/tree/impl/FilterTreeWidgetImplProviderLayout.aj" kind="src" path="layout"/>
+	<classpathentry excluding="co/fxl/gui/mdt/impl/MasterDetailTableWidgetImplLayout.aj|co/fxl/gui/mdt/impl/ViewWidgetLayout.aj|co/fxl/gui/mdt/impl/RelationDecoratorLayout.aj|co/fxl/gui/mdt/impl/MasterDetailTableWidgetImplLayout.aj|co/fxl/gui/mdt/impl/RelationDecoratorLayout.aj|co/fxl/gui/mdt/impl/ViewWidgetLayout.aj|co/fxl/gui/tree/impl/FilterTreeWidgetImplProviderLayout.aj|co/fxl/gui/tree/impl/FilterTreeWidgetImplProviderLayout.aj" kind="src" path="layout"/>
 	<classpathentry kind="src" path="gwt"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
