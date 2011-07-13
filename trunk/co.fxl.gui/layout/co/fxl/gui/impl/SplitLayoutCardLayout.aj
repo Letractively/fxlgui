@@ -18,47 +18,10 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IHorizontalPanel;
-
 public privileged aspect SplitLayoutCardLayout {
-	
-	// TODO generic mini menu on Container
 
-	after(final SplitLayout sl) : execution(private void SplitLayout.init()) 
+	after(SplitLayout sl) : execution(private void SplitLayout.init()) 
 	&& this(sl) {
-		IHorizontalPanel panel = SplitLayoutConfig.panel;
-		sl.sidePanel.spacing().left(10);
-		sl.cell1.visible(false);
-		sl.cell0.width(sl.panel.width());
-		if (panel != null) {
-			panel.clear();
-			final ImageButton table = new ImageButton(panel.add()).hyperlink()
-					.text("Content");// .imageResource("grid.png");
-			panel.addSpace(4).add().label().text("|").font().color().gray();
-			panel.addSpace(4);
-			final ImageButton actions = new ImageButton(panel.add())
-					.hyperlink().text("Menu");// .imageResource("link.png");
-			panel.addSpace(10);
-			table.addClickListener(new IClickListener() {
-				@Override
-				public void onClick() {
-					table.clickable(false);
-					actions.clickable(true);
-					sl.cell0.visible(true).width(sl.panel.width());
-					sl.cell1.visible(false);
-				}
-			});
-			actions.addClickListener(new IClickListener() {
-				@Override
-				public void onClick() {
-					table.clickable(true);
-					actions.clickable(false);
-					sl.cell1.visible(true).width(sl.panel.width());
-					sl.cell0.visible(false);
-				}
-			});
-			table.clickable(false);
-		}
+		SplitLayoutNavigation.addNavigation(sl);
 	}
 }
