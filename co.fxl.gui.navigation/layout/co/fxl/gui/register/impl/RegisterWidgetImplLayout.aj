@@ -16,39 +16,20 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.navigation.group.api;
+package co.fxl.gui.register.impl;
 
-import co.fxl.gui.api.IVerticalPanel;
 
-public interface INavigationItem {
+privileged aspect RegisterWidgetImplLayout {
 
-	interface INavigationListener {
-
-		void onActive(boolean active);
+	after(RegisterWidgetImpl widget) : call(private void RegisterWidgetImpl.show()) 
+	&& this(widget) {
+		RegisterDialog.addButton(widget);
 	}
 
-	public interface IDecorator {
-
-		void decorate(IVerticalPanel panel);
+	after(RegisterImpl register) : execution(private void RegisterImpl.init()) 
+	&& this(register) {
+		boolean visible = register.widget.registers.isEmpty();
+		if (!register.disabled)
+			register.visible(visible);
 	}
-
-	INavigationItem name(String name);
-
-	String name();
-
-	INavigationItem initDecorator(IDecorator decorator);
-
-	INavigationItem active();
-
-	INavigationItem back();
-
-	IVerticalPanel addExtraPanel();
-
-	boolean isActive();
-
-	IDecorator initDecorator();
-
-	INavigationItem visible(boolean visible);
-
-	INavigationItem addListener(INavigationListener l);
 }

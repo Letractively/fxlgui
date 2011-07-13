@@ -25,7 +25,6 @@ import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IDockPanel;
-import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
@@ -39,7 +38,7 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 		void decorate(IColor color);
 	}
 
-	public IFlowPanel headerPanel;
+	public IPanel<?> headerPanel;
 	ICardPanel cardPanel;
 	List<RegisterImpl> registers = new LinkedList<RegisterImpl>();
 	int selection = -1;
@@ -49,10 +48,11 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 	private ColorDecorator background;
 	public int spacing = 6;
 	public int fontSize = 14;
+	private List<IRegisterListener> registerListeners = new LinkedList<IRegisterListener>();
 
 	public RegisterWidgetImpl(ILayout panel) {
 		mainBorders = panel.dock();
-		headerPanel = mainBorders.top().panel().flow();
+		headerPanel = mainBorders.top().panel().flow().spacing(4);
 		cardPanel = mainBorders.center().panel().card();
 	}
 
@@ -70,15 +70,25 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 
 	@Override
 	public IRegisterWidget visible(boolean visible) {
-		mainBorders.visible(visible);
+		if (visible) {
+			show();
+		} else {
+			throw new MethodNotImplementedException();
+		}
+		return this;
+	}
+
+	private void show() {
+		mainBorders.visible(true);
 		if (selection != -1)
 			registers.get(selection).top();
-		return this;
 	}
 
 	void top(RegisterImpl registerImpl) {
 		selection = registerImpl.index;
 		cardPanel.show(registerImpl.contentPanel());
+		for (IRegisterListener l : registerListeners)
+			l.onTop(registerImpl);
 	}
 
 	public IRegisterWidget separators(boolean separators) {
@@ -108,5 +118,11 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 
 	public int heightMenu() {
 		return headerPanel.height();
+	}
+
+	@Override
+	public IRegisterWidget addRegisterListener(IRegisterListener l) {
+		registerListeners.add(l);
+		return this;
 	}
 }

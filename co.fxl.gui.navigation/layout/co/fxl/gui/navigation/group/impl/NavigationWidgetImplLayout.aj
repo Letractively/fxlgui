@@ -22,15 +22,11 @@ import co.fxl.gui.api.IContainer;
 
 privileged aspect NavigationWidgetImplLayout {
 
-	static boolean active = true;
-
 	after(NavigationWidgetImpl widget): execution(NavigationWidgetImpl.new(IContainer)) 
-	&& this(widget) 
-	&& if(active) {
+	&& this(widget) {
 		NavigationDialog.addButton(widget);
 	}
 
-	void around(): execution(private void NavigationWidgetImpl.ensureSpaceBetweenGroups()) 
-	&& if(active) {
+	void around(): execution(private void NavigationWidgetImpl.ensureSpaceBetweenGroups())  {
 	}
 }
