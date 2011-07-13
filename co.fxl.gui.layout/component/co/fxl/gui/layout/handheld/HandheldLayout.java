@@ -18,8 +18,13 @@
  */
 package co.fxl.gui.layout.handheld;
 
+import co.fxl.gui.layout.api.IActionMenu;
 import co.fxl.gui.layout.api.ILayout;
 
 public class HandheldLayout implements ILayout {
 
+	@Override
+	public IActionMenu actionMenu() {
+		throw new MethodNotImplementedException();
+	}
 }
