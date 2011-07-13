@@ -20,13 +20,16 @@ package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDialog;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 
 public class LogInDialog {
 
-	public static void addButton(final LoginWidgetImpl widget,
+	public static IHorizontalPanel addButton(final LoginWidgetImpl widget,
 			final IPanel<?> liPanel) {
+		IHorizontalPanel hPanel = liPanel.add().panel().horizontal()
+				.visible(false);
 		liPanel.add().label().text("Login").hyperlink()
 				.addClickListener(new IClickListener() {
 					@Override
@@ -64,5 +67,6 @@ public class LogInDialog {
 						widget.loginID.focus(true);
 					}
 				}).mouseLeft();
+		return hPanel;
 	}
 }
