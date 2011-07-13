@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.register.impl;
 
-
 privileged aspect RegisterWidgetImplLayout {
 
 	after(RegisterWidgetImpl widget) : call(private void RegisterWidgetImpl.show()) 

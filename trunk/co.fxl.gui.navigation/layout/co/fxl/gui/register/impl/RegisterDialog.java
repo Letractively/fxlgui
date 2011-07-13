@@ -45,8 +45,7 @@ public class RegisterDialog {
 								.vertical().spacing(6).add().panel().vertical()
 								.spacing(4);
 						for (final RegisterImpl register : widget.registers) {
-							if (!register.disabled
-									&& !register.buttonPanel.visible())
+							if (!register.disabled)
 								p.add().label()
 										.text(register.buttonLabel.text())
 										.hyperlink()
