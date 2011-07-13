@@ -44,7 +44,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	// TODO FEATURE: Option: Usability: After delete: select next item at same
 	// index position
 
-	static final int SPACE = 4;
+	static int SPACE = 4;
 
 	class Edit {
 
@@ -201,11 +201,11 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		}
 	}
 
-	public static IClickable<?> clickable(IContainer c, String string) {
+	public static Link clickable(IContainer c, String string) {
 		return clickable(c, string, true);
 	}
 
-	public static IClickable<?> clickable(IContainer c, String string,
+	public static Link clickable(IContainer c, String string,
 			boolean clickable) {
 		IHorizontalPanel p = c.panel().horizontal();
 		// p.spacing(4);

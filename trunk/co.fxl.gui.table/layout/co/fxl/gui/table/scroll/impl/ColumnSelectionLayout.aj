@@ -19,9 +19,11 @@
 package co.fxl.gui.table.scroll.impl;
 
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
+import co.fxl.gui.table.scroll.impl.CommandButtonsImpl.Link;
 
 privileged aspect ColumnSelectionLayout {
 
@@ -48,5 +50,14 @@ privileged aspect ColumnSelectionLayout {
 		if (widget.columns.size() > 2) {
 			column.visible(false);
 		}
+	}
+
+	Link around(IContainer c, String string, boolean clickable) : 
+	execution(public static Link clickable(IContainer, String, boolean)) 
+	&& args(c, string,clickable) {
+		CommandButtonsImpl.SPACE = 0;
+		Link link = proceed(c, string, clickable);
+		link.label.visible(false);
+		return link;
 	}
 }

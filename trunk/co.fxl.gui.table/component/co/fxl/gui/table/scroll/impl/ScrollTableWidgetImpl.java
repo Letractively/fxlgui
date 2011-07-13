@@ -37,6 +37,7 @@ import co.fxl.gui.api.IMouseWheelListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IMiniFilterWidget;
@@ -144,7 +145,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		return this;
 	}
 
-	private IGridPanel topPanel;
+	IGridPanel topPanel;
 	boolean showNoRowsFound = true;
 	private IVerticalPanel contentPanel0;
 
@@ -320,6 +321,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	protected void addFilter() {
 		filter = null;
+		setUpFilter();
+	}
+
+	protected void setUpFilter() {
 		if (viewComboBoxText != null) {
 			createFilter();
 			IFilter vl = filter.addFilter().name("View").required();
@@ -395,7 +400,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private ILazyScrollPane sp;
 	private ISortListener sortListener;
 	boolean addClickListeners = false;
-	private IMiniFilterWidget filter;
+	IFilterWidget filter;
 	private boolean allowColumnSelection = true;
 	private IFilterConstraints constraints;
 	private IFilterListener filterListener;
