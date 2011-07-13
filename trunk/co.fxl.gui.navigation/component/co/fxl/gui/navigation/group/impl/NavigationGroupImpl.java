@@ -21,8 +21,9 @@ package co.fxl.gui.navigation.group.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
@@ -34,21 +35,26 @@ class NavigationGroupImpl implements INavigationGroup {
 	// panel invisible, decorator with callback: switch when returned
 
 	NavigationWidgetImpl widget;
-	private IHorizontalPanel panel;
-	private ILabel header;
-	IHorizontalPanel itemPanel;
+	private ILinearPanel<?> panel;
+	ILabel header;
+	ILinearPanel<?> itemPanel;
 	private boolean first = true;
 	List<NavigationItemImpl> items = new LinkedList<NavigationItemImpl>();
 
 	NavigationGroupImpl(NavigationWidgetImpl widget) {
 		this.widget = widget;
-		panel = widget.navigationPanel.add().panel().horizontal();
+		ILayout layout = widget.navigationPanel.add().panel();
+		panel = createPanel(layout);
 		panel.addSpace(3);
 		IVerticalPanel headerPanel = panel.add().panel().vertical();
 		header = headerPanel.addSpace(2).add().label();
 		header.font().weight().bold().pixel(11);// .color().white();
 		panel.addSpace(1);
-		itemPanel = panel.add().panel().horizontal();
+		itemPanel = createPanel(panel.add().panel());
+	}
+
+	ILinearPanel<?> createPanel(ILayout layout) {
+		return layout.horizontal();
 	}
 
 	@Override

@@ -30,7 +30,6 @@ class RootRegisterStyle extends RegisterStyle {
 		// this.widget = widget;
 		widget.headerPanel.color().rgb(249, 249, 249).gradient().vertical()
 				.rgb(216, 216, 216);
-		widget.headerPanel.spacing(4);
 		// IPanel<?> filler = widget.addFillerPanel();
 		// background(filler.color());
 		widget.separators(false);

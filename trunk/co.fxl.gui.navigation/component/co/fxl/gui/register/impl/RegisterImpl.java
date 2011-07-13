@@ -36,19 +36,16 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 
 		@Override
 		public IFont font() {
-			init();
 			return buttonLabel.font();
 		}
 
 		@Override
 		public IColor color() {
-			init();
 			return buttonPanel.color();
 		}
 
 		@Override
 		public ITitle text(String title) {
-			init();
 			buttonLabel.text(title);
 			return this;
 		}
@@ -59,11 +56,11 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 		}
 	}
 
-	private RegisterWidgetImpl widget;
+	RegisterWidgetImpl widget;
 	int index;
 	private ILabel separator;
 	IHorizontalPanel buttonPanel;
-	private ILabel buttonLabel;
+	ILabel buttonLabel;
 	private IVerticalPanel content;
 	private List<IRegisterListener> listeners = new LinkedList<IRegisterListener>();
 	private boolean init = false;
@@ -74,7 +71,7 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 		init();
 	}
 
-	public void init() {
+	private void init() {
 		if (init)
 			return;
 		if (index > 0 && widget.separators) {
@@ -104,7 +101,6 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 
 	@Override
 	public IRegister top() {
-		init();
 		for (RegisterImpl register : widget.registers) {
 			if (register != this)
 				register.notifyVisible(false);
@@ -132,7 +128,6 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 
 	@Override
 	public IVerticalPanel contentPanel() {
-		init();
 		return content;
 	}
 
@@ -155,7 +150,7 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 		return this;
 	}
 
-	private boolean disabled = false;
+	boolean disabled = false;
 
 	@Override
 	public IRegister enabled(boolean enabled) {

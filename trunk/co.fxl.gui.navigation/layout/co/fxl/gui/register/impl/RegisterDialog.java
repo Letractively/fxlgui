@@ -16,24 +16,23 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.navigation.group.impl;
+package co.fxl.gui.register.impl;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDialog;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.impl.ICallback;
-import co.fxl.gui.impl.SplitLayoutConfig;
-import co.fxl.gui.navigation.group.api.INavigationItem;
-import co.fxl.gui.navigation.group.api.INavigationWidget.INavigationListener;
+import co.fxl.gui.register.api.IRegister;
+import co.fxl.gui.register.api.IRegisterWidget;
 
-public class NavigationDialog {
+public class RegisterDialog {
 
-	public static void addButton(final NavigationWidgetImpl widget) {
-		widget.masterPanel.addSpace(4).add().label().text("More >").hyperlink()
-				.addClickListener(new IClickListener() {
+	public static void addButton(final RegisterWidgetImpl widget) {
+		final ILabel label = widget.headerPanel.add().label().text("More >")
+				.hyperlink().addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
-						final IDialog dialog = widget.masterPanel.display()
+						final IDialog dialog = widget.headerPanel.display()
 								.showDialog().title("SELECT REGISTER");
 						dialog.addButton().cancel()
 								.addClickListener(new IClickListener() {
@@ -42,43 +41,40 @@ public class NavigationDialog {
 										dialog.visible(false);
 									}
 								});
-						IVerticalPanel sp = dialog.container().panel()
+						IVerticalPanel p = dialog.container().panel()
 								.vertical().spacing(6).add().panel().vertical()
 								.spacing(4);
-						for (final NavigationGroupImpl group : widget.groups) {
-							String text = group.header.text();
-							sp.add().label().text(text).font().weight().bold()
-									.pixel(11);
-							for (final NavigationItemImpl item : group.items) {
-								sp.add().label().text(item.button.text())
+						for (final RegisterImpl register : widget.registers) {
+							if (!register.disabled
+									&& !register.buttonPanel.visible())
+								p.add().label()
+										.text(register.buttonLabel.text())
 										.hyperlink()
 										.addClickListener(new IClickListener() {
 
 											@Override
 											public void onClick() {
 												dialog.visible(false);
-												item.active();
+												register.onAllowedClick();
 											}
 										}).mouseLeft().font().pixel(14);
-							}
 						}
 						dialog.visible(true);
 					}
 				}).mouseLeft();
-		SplitLayoutConfig.panel = widget.hPanel.cell(1, 0).align().end()
-				.valign().center().panel().horizontal();
-		widget.addNavigationListener(new INavigationListener() {
+		widget.addRegisterListener(new IRegisterWidget.IRegisterListener() {
 			@Override
-			public void onBeforeNavigation(INavigationItem activeItem,
-					boolean viaClick, ICallback<Void> cb) {
-				NavigationItemImpl item = (NavigationItemImpl) activeItem;
-				for (NavigationGroupImpl group : widget.groups) {
-					group.visible(item.group == group);
+			public void onTop(IRegister register) {
+				RegisterImpl item = (RegisterImpl) register;
+				boolean hasMore = false;
+				for (RegisterImpl widgetRegister : widget.registers) {
+					widgetRegister.visible(widgetRegister == item);
+					if (widgetRegister != item) {
+						if (!widgetRegister.disabled)
+							hasMore = true;
+					}
 				}
-				for (NavigationItemImpl groupItem : item.group.items) {
-					groupItem.visible(groupItem == item);
-				}
-				cb.onSuccess(null);
+				label.clickable(hasMore);
 			}
 		});
 	}

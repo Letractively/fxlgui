@@ -26,7 +26,7 @@ import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
-import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
@@ -49,7 +49,7 @@ class NavigationWidgetImpl implements INavigationWidget {
 	private IVerticalPanel panel0;
 	private IVerticalPanel panel1;
 	private List<INavigationListener> listeners = new LinkedList<INavigationListener>();
-	IHorizontalPanel masterPanel;
+	ILinearPanel<?> masterPanel;
 	IGridPanel hPanel;
 	List<NavigationGroupImpl> groups = new LinkedList<NavigationGroupImpl>();
 
@@ -58,13 +58,18 @@ class NavigationWidgetImpl implements INavigationWidget {
 		hPanel = mainPanel.top().panel().grid();
 		hPanel.color().rgb(235, 235, 235).gradient().fallback(235, 235, 235)
 				.vertical().rgb(211, 211, 211);
-		masterPanel = hPanel.cell(0, 0).panel().horizontal();
-		navigationPanel = masterPanel.add().panel().horizontal();
+		ILayout l = hPanel.cell(0, 0).panel();
+		masterPanel = createPanel(l);
+		navigationPanel = createPanel(masterPanel.add().panel());
 		navigationPanel.addSpace(10);
 		history = mainPanel.center().panel().card();
 		panel0 = history.add().panel().vertical();
 		panel1 = history.add().panel().vertical();
 		history.show(panel0);
+	}
+
+	ILinearPanel<?> createPanel(ILayout l) {
+		return l.horizontal();
 	}
 
 	IVerticalPanel panel0() {

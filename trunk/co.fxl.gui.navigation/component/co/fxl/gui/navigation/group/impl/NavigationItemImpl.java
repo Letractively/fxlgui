@@ -18,10 +18,14 @@
  */
 package co.fxl.gui.navigation.group.impl;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.LazyClickListener;
@@ -29,14 +33,15 @@ import co.fxl.gui.navigation.group.api.INavigationItem;
 
 class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 
-	private ILabel button;
+	ILabel button;
 	private IDecorator decorator;
 	private IHorizontalPanel buttonPanel;
 	// private IColor borderColor;
 	private NavigationWidgetImpl widget;
-	private IHorizontalPanel itemPanel;
+	private ILinearPanel<?> itemPanel;
 	private IHorizontalPanel basicPanel;
 	NavigationGroupImpl group;
+	private List<INavigationListener> listeners = new LinkedList<INavigationListener>();
 
 	NavigationItemImpl(NavigationGroupImpl group) {
 		this.group = group;
@@ -84,6 +89,8 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 		buttonPanel.border().remove();
 		// borderColor.remove();
 		// applyColor(borderColor, widget.colorBackground);
+		for (INavigationListener l : listeners)
+			l.onActive(false);
 	}
 
 	@Override
@@ -130,6 +137,8 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 		addBorder();
 		// applyColor(borderColor, widget.colorActive);
 		widget.active(this, viaClick, cb, notify);
+		for (INavigationListener l : listeners)
+			l.onActive(true);
 	}
 
 	private void applyColor(IColor color, int[] rgb) {
@@ -167,6 +176,12 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	@Override
 	public INavigationItem visible(boolean visible) {
 		basicPanel.visible(visible);
+		return this;
+	}
+
+	@Override
+	public INavigationItem addListener(INavigationListener l) {
+		listeners.add(l);
 		return this;
 	}
 }

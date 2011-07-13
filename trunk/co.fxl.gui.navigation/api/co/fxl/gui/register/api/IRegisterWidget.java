@@ -20,7 +20,14 @@ package co.fxl.gui.register.api;
 
 public interface IRegisterWidget {
 
+	interface IRegisterListener {
+
+		void onTop(IRegister register);
+	}
+
 	IRegister addRegister();
 
 	IRegisterWidget visible(boolean visible);
+
+	IRegisterWidget addRegisterListener(IRegisterListener l);
 }
