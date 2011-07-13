@@ -16,19 +16,9 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.layout.impl;
+package co.fxl.gui.layout.handheld;
 
-import co.fxl.gui.layout.api.ILayout;
+@SuppressWarnings("serial")
+class MethodNotImplementedException extends RuntimeException {
 
-public class Layout {
-
-	private static ILayout instance;
-
-	public static void register(ILayout instance) {
-		Layout.instance = instance;
-	}
-
-	public static ILayout instance() {
-		return instance;
-	}
 }
