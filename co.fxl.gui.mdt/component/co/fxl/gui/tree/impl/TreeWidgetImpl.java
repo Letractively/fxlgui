@@ -155,7 +155,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	private IVerticalPanel panel;
-	private IMenuWidget registers;
+	IMenuWidget registers;
 	private List<DetailView> detailViews = new LinkedList<DetailView>();
 	private WidgetTitle widgetTitle;
 	private IClickable<?> refresh;

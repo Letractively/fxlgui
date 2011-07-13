@@ -52,6 +52,7 @@ class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
 
 	@Override
 	public IFilterTreeWidget<T> visible(boolean visible) {
+		registers.visible(visible);
 		addButtons();
 		if (filterList != null)
 			filterList.apply();
