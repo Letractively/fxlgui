@@ -35,7 +35,7 @@ class NavigationGroupImpl implements INavigationGroup {
 	// panel invisible, decorator with callback: switch when returned
 
 	NavigationWidgetImpl widget;
-	private ILinearPanel<?> panel;
+	ILinearPanel<?> panel;
 	ILabel header;
 	ILinearPanel<?> itemPanel;
 	private boolean first = true;
