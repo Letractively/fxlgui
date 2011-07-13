@@ -106,9 +106,10 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	private boolean showConfiguration = true;
 	Heights heights = new Heights(0);
 	private ClearClickListener clearClickListener;
+	private FilterPanel title;
 
 	FilterWidgetImpl(IContainer panel) {
-		FilterPanel title = newFilterPanel(panel);
+		title = newFilterPanel(panel);
 		title.addTitle("FILTER");
 		apply = title.addHyperlink(Icons.ACCEPT, "Update");
 		validation.linkClickable(apply);
@@ -402,6 +403,13 @@ class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 	@Override
 	public IFilterWidget addConfigurationListener(IUpdateListener<String> l) {
 		mainPanel.viewComboBox().addUpdateListener(l);
+		return this;
+	}
+
+	@Override
+	public IFilterWidget addCancelListener(IClickListener cancelListener) {
+		title.addHyperlink("cancel.png", "Cancel").addClickListener(
+				cancelListener);
 		return this;
 	}
 }
