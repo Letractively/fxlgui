@@ -43,9 +43,10 @@ class SwingDockPanel extends SwingPanel<IDockPanel> implements IDockPanel {
 	}
 
 	private void setPosition(String position) {
-		boolean removed = positions.remove(position);
-		if (!removed)
-			throw new MethodNotImplementedException(position);
+		// boolean removed =
+		positions.remove(position);
+		// if (!removed)
+		// throw new MethodNotImplementedException(position);
 		positions.add(0, position);
 	}
 
