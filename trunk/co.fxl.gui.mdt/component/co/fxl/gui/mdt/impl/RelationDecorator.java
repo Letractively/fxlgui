@@ -41,6 +41,7 @@ import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
+import co.fxl.gui.table.scroll.api.IScrollTableWidget.ICommandButtons;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IMoveRowListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.INavigationPanelDecorator;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IRowListener;
@@ -283,6 +284,24 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 	}
 
 	private void addAddButton(final Object node) {
+		if (relation.addRemoveListener != null) {
+			ICommandButtons<Object> commandButtons = table.commandButtons();
+			if (relation.addRemoveListener.isDetailedAdd()) {
+				IScrollTableWidget.IDecorator dec = new IScrollTableWidget.IDecorator() {
+					@Override
+					public IClickable<?> decorate(IContainer c) {
+						return relation.addRemoveListener.decorateAdd(node, c);
+					}
+				};
+				listenOnAdd(dec);
+			} else {
+				IRowListener<IRows<Object>> addListener = getRowListener(node);
+				commandButtons.listenOnAdd(addListener);
+			}
+		}
+	}
+
+	protected IRowListener<IRows<Object>> getRowListener(final Object node) {
 		IRowListener<IRows<Object>> addListener = new IRowListener<IRows<Object>>() {
 			@Override
 			public void onClick(Object identifier, int rowIndex,
@@ -298,20 +317,12 @@ final class RelationDecorator implements IDecorator<Object>, IResizeListener,
 				});
 			}
 		};
-		if (relation.addRemoveListener != null) {
-			if (relation.addRemoveListener.isDetailedAdd()) {
-				IScrollTableWidget.IDecorator dec = new IScrollTableWidget.IDecorator() {
-					@Override
-					public IClickable<?> decorate(IContainer c) {
-						return relation.addRemoveListener.decorateAdd(node, c);
-					}
-				};
-				// TODO intercept && replace decorator, on click: call original decorator (inside use verticalpanel in dialog)
-				table.commandButtons().listenOnAdd(dec, addListener);
-			} else {
-				table.commandButtons().listenOnAdd(addListener);
-			}
-		}
+		return addListener;
+	}
+
+	void listenOnAdd(IScrollTableWidget.IDecorator dec) {
+		IRowListener<IRows<Object>> addListener = getRowListener(node);
+		table.commandButtons().listenOnAdd(dec, addListener);
 	}
 
 	private void addRemoveButton(final IVerticalPanel panel,
