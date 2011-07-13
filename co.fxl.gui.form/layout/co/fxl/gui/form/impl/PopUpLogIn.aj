@@ -23,13 +23,12 @@ import co.fxl.gui.api.IPanel;
 
 privileged aspect PopUpLogIn {
 
-	void around(LoginWidgetImpl widget, IPanel<?> liPanel) : execution(private void LoginWidgetImpl.addLoginForm(IPanel<?>)) 
+	void around(LoginWidgetImpl widget, IPanel<?> liPanel) : 
+	execution(private void LoginWidgetImpl.addLoginForm(IPanel<?>)) 
 	&& args(liPanel)
 	&& target(widget) {
-		IHorizontalPanel ohp = liPanel.add().panel().horizontal();
-		proceed(widget, ohp);
-		ohp.visible(false);
-		LogInDialog.addButton(widget, liPanel);
+		liPanel = LogInDialog.addButton(widget, liPanel);
+		proceed(widget, liPanel);
 	}
 
 	void around() : execution(private void LoginWidgetImpl.addLoggedInAs(IHorizontalPanel)) {
