@@ -35,7 +35,7 @@ privileged aspect ColumnSelectionLayout {
 	void around() : call(* ColumnSelection.addTitle(..)) {
 	}
 
-	ILabel around(String in) : call(* ILabel.text(String)) 
+	ILabel around(String in) : call(public ILabel ILabel.text(String)) 
 	&& withincode(private void ScrollTableWidgetImpl.addDisplayingNote()) 
 	&& args(in) 
 	&& if(in.equals("DISPLAYING ROWS")) {
