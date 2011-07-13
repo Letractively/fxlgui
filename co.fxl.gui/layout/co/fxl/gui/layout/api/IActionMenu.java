@@ -33,5 +33,5 @@ public interface IActionMenu {
 
 	IActionMenu showContent();
 
-	IActionMenu addListener(IActionMenuListener l);
+	IActionMenu listener(IActionMenuListener l);
 }

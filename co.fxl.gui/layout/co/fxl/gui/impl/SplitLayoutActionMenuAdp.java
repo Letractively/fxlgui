@@ -20,16 +20,31 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.layout.api.IActionMenu;
 
-class SplitLayoutActionMenuListener implements IActionMenu.IActionMenuListener {
+class SplitLayoutActionMenuAdp implements IActionMenu.IActionMenuListener {
+
+	private SplitLayout splitLayout;
+
+	SplitLayoutActionMenuAdp(SplitLayout splitLayout) {
+		this.splitLayout = splitLayout;
+		splitLayout.sidePanel.spacing().left(10);
+		int width = splitLayout.panel.width();
+		splitLayout.cell0.width(width);
+		splitLayout.cell1.width(width);
+		onShowContent();
+	}
+
+	private void onShow(boolean b) {
+		splitLayout.cell0.visible(b);
+		splitLayout.cell1.visible(!b);
+	}
 
 	@Override
 	public void onShowContent() {
-		throw new MethodNotImplementedException();
+		onShow(true);
 	}
 
 	@Override
 	public void onShowMenu() {
-		throw new MethodNotImplementedException();
+		onShow(false);
 	}
-
 }
