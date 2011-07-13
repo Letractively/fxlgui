@@ -103,12 +103,14 @@ class SwingPopUp implements IPopUp {
 					component.getPreferredSize().width = w - 12;
 				else if (h > 0)
 					component.getPreferredSize().height = h;
-				if (center) {
-					x = panel.width() / 2 - Math.max(80, p.getWidth() / 2);
-					y = panel.height() / 2 - Math.max(40, p.getHeight() / 2);
-				}
 				PopupFactory factory = PopupFactory.getSharedInstance();
 				p.add(component);
+				if (center) {
+					x = panel.width() / 2
+							- Math.max(80, p.getPreferredSize().width / 2);
+					y = panel.height() / 2
+							- Math.max(40, p.getPreferredSize().height / 2);
+				}
 				dialog = factory.getPopup(panel.frame, p, x, y + 20);
 			}
 		assert dialog != null;
