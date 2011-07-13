@@ -32,7 +32,7 @@ privileged aspect ScrollTableWidgetImplLayout {
 	&& this(widget) 
 	&& if(widget.hasFilter() || widget.viewComboBoxText!=null) {
 		widget.topPanel.cell(0, 0).clear().panel().horizontal().addSpace(8)
-				.add().label().text("Filter >").hyperlink()
+				.add().label().text("Filter >>").hyperlink()
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
