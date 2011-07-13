@@ -20,6 +20,7 @@ package co.fxl.gui.filter.api;
 
 import java.util.List;
 
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.IFieldType;
 
@@ -80,6 +81,8 @@ public interface IFilterWidget {
 	IFilterWidget addLiveFilterListener(IFilterListener listener);
 
 	IFilterWidget holdFilterClicks(boolean holdFilterClicks);
+
+	IFilterWidget addCancelListener(IClickListener cancelListener);
 
 	IFilterWidget apply();
 
