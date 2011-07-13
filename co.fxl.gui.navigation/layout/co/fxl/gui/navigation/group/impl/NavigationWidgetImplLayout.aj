@@ -30,7 +30,7 @@ privileged aspect NavigationWidgetImplLayout {
 		NavigationDialog.addButton(widget);
 	}
 
-	void around(): execution(* NavigationWidgetImpl.ensureSpaceBetweenGroups()) 
+	void around(): execution(private void NavigationWidgetImpl.ensureSpaceBetweenGroups()) 
 	&& if(active) {
 	}
 }
