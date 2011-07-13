@@ -26,7 +26,7 @@ public class ColumnSelectionDialog implements IClickListener {
 
 	public static void addButton(final ColumnSelection cs,
 			final ILinearPanel<?> p) {
-		p.addSpace(4).add().label().text("COLUMNS >").hyperlink()
+		p.addSpace(4).add().label().text("COLUMNS >>").hyperlink()
 				.addClickListener(new ColumnSelectionDialog(cs, p)).mouseLeft()
 				.font().pixel(10);// .weight().bold();
 	}
