@@ -18,9 +18,9 @@
  */
 package co.fxl.gui.mdt.impl;
 
-import co.fxl.gui.impl.SplitLayoutNavigation;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
+import co.fxl.gui.layout.impl.Layout;
 
 public aspect MasterDetailTableWidgetImplLayout {
 
@@ -30,7 +30,7 @@ public aspect MasterDetailTableWidgetImplLayout {
 				.addFilterListener(new IFilterWidget.IFilterListener() {
 					@Override
 					public void onApply(IFilterConstraints constraints) {
-						SplitLayoutNavigation.showTable();
+						Layout.instance().actionMenu().showContent();
 					}
 				});
 	}

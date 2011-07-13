@@ -19,7 +19,7 @@
 package co.fxl.gui.mdt.impl;
 
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
-import co.fxl.gui.impl.SplitLayoutNavigation;
+import co.fxl.gui.layout.impl.Layout;
 import co.fxl.gui.mdt.api.IViewConfiguration;
 
 public aspect ViewWidgetLayout {
@@ -29,7 +29,7 @@ public aspect ViewWidgetLayout {
 		viewWidget.addUpdateListener(new IUpdateListener<IViewConfiguration>() {
 			@Override
 			public void onUpdate(IViewConfiguration value) {
-				SplitLayoutNavigation.showTable();
+				Layout.instance().actionMenu().showContent();
 			}
 		});
 	}
