@@ -22,15 +22,15 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.ICallback;
-import co.fxl.gui.impl.SplitLayoutConfig;
+import co.fxl.gui.impl.SplitLayoutNavigation;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.group.api.INavigationWidget.INavigationListener;
 
 public class NavigationDialog {
 
 	public static void addButton(final NavigationWidgetImpl widget) {
-		widget.masterPanel.addSpace(4).add().label().text("More >").hyperlink()
-				.addClickListener(new IClickListener() {
+		widget.masterPanel.addSpace(4).add().label().text("More >>")
+				.hyperlink().addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
 						final IDialog dialog = widget.masterPanel.display()
@@ -45,7 +45,11 @@ public class NavigationDialog {
 						IVerticalPanel sp = dialog.container().panel()
 								.vertical().spacing(6).add().panel().vertical()
 								.spacing(4);
+						boolean isFirst = true;
 						for (final NavigationGroupImpl group : widget.groups) {
+							if (!isFirst)
+								sp.addSpace(4);
+							isFirst = false;
 							String text = group.header.text();
 							sp.add().label().text(text).font().weight().bold()
 									.pixel(11);
@@ -59,13 +63,13 @@ public class NavigationDialog {
 												dialog.visible(false);
 												item.active();
 											}
-										}).mouseLeft().font().pixel(14);
+										}).mouseLeft().font().pixel(13);
 							}
 						}
 						dialog.visible(true);
 					}
 				}).mouseLeft();
-		SplitLayoutConfig.panel = widget.hPanel.cell(1, 0).align().end()
+		SplitLayoutNavigation.panel = widget.hPanel.cell(1, 0).align().end()
 				.valign().center().panel().horizontal();
 		widget.addNavigationListener(new INavigationListener() {
 			@Override
@@ -76,7 +80,7 @@ public class NavigationDialog {
 					group.visible(item.group == group);
 				}
 				for (NavigationItemImpl groupItem : item.group.items) {
-					groupItem.visible(groupItem == item);
+					groupItem.basicPanel.visible(groupItem == item);
 				}
 				cb.onSuccess(null);
 			}

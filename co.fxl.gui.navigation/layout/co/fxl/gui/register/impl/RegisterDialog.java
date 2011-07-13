@@ -28,7 +28,7 @@ import co.fxl.gui.register.api.IRegisterWidget;
 public class RegisterDialog {
 
 	public static void addButton(final RegisterWidgetImpl widget) {
-		final ILabel label = widget.headerPanel.add().label().text("More >")
+		final ILabel label = widget.headerPanel.add().label().text("More >>")
 				.hyperlink().addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
@@ -57,7 +57,7 @@ public class RegisterDialog {
 												dialog.visible(false);
 												register.onAllowedClick();
 											}
-										}).mouseLeft().font().pixel(14);
+										}).mouseLeft().font().pixel(13);
 						}
 						dialog.visible(true);
 					}

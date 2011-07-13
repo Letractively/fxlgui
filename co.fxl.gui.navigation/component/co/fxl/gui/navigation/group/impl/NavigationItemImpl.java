@@ -39,7 +39,7 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	// private IColor borderColor;
 	private NavigationWidgetImpl widget;
 	private ILinearPanel<?> itemPanel;
-	private IHorizontalPanel basicPanel;
+	IHorizontalPanel basicPanel;
 	NavigationGroupImpl group;
 	private List<INavigationListener> listeners = new LinkedList<INavigationListener>();
 
