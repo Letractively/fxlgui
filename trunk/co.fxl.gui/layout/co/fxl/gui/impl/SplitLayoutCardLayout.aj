@@ -18,10 +18,13 @@
  */
 package co.fxl.gui.impl;
 
+import co.fxl.gui.layout.impl.Layout;
+
 public privileged aspect SplitLayoutCardLayout {
 
 	after(SplitLayout sl) : execution(private void SplitLayout.init()) 
 	&& this(sl) {
-		SplitLayoutNavigation.addNavigation(sl);
+		SplitLayoutActionMenuAdp l = new SplitLayoutActionMenuAdp(sl);
+		Layout.instance().actionMenu().listener(l);
 	}
 }

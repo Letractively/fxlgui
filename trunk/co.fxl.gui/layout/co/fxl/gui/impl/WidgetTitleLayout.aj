@@ -24,7 +24,7 @@ import co.fxl.gui.api.ILabel;
 privileged aspect WidgetTitleLayout {
 
 	ILabel around(WidgetTitle widgetTitle, IHorizontalPanel panel) : 
-	execution(private ILabel addHyperlinkLabel(String, IHorizontalPanel)) 
+	execution(private ILabel WidgetTitle.addHyperlinkLabel(String, IHorizontalPanel)) 
 	&& args(.., panel)
 	&& this(widgetTitle) 
 	&& if(widgetTitle.commandsOnTop){
