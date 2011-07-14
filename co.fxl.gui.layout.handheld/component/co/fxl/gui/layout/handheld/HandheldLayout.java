@@ -18,17 +18,29 @@
  */
 package co.fxl.gui.layout.handheld;
 
+import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.layout.api.IActionMenu;
 import co.fxl.gui.layout.api.ILayout;
 
 public class HandheldLayout implements ILayout {
 
-	private HandheldActionMenu actionMenu;
+	private HandheldActionMenu actionMenu = new HandheldActionMenu();
 
 	@Override
 	public IActionMenu actionMenu() {
-		if (actionMenu == null)
-			actionMenu = new HandheldActionMenu();
 		return actionMenu;
+	}
+
+	@Override
+	public ILinearPanel<?> createLinearPanel(IContainer c) {
+		return c.panel().vertical();
+	}
+
+	@Override
+	public ILabel createButtonLabel(IPanel<?> panel) {
+		return panel.add().label().visible(false);
 	}
 }
