@@ -18,25 +18,29 @@
  */
 package co.fxl.gui.impl;
 
-import org.aspectj.lang.Signature;
+import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.ILabel;
+import co.fxl.gui.layout.impl.Layout;
 
-import co.fxl.gui.api.IElement;
+privileged aspect WidgetTemplateLayout {
 
-public aspect StyleAspect {
-
-	private static final boolean ACTIVE = false;
-
-	public StyleAspect() {
-		StyleImpl.setUp();
+	ILabel around(WidgetTitle widgetTitle, String text, IHorizontalPanel panel) : 
+	execution(private ILabel WidgetTitle.addHyperlinkLabel(String, IHorizontalPanel)) 
+	&& args(text, panel)
+	&& this(widgetTitle) 
+	&& if (widgetTitle.commandsOnTop) {
+		return Layout.instance().createButtonLabel(panel);
 	}
 
-	void around(IElement<?> element) : execution(@Style * *.*(IElement+)) 
-	&& args(element) && if(ACTIVE) {
-		Signature sig = thisJoinPoint.getSignature();
-		Class<?> c = sig.getDeclaringType();
-		String methodName = sig.getName();
-		boolean proceedStyle = StyleImpl.apply(c, methodName, element);
-		if (proceedStyle)
-			proceed(element);
+	after() : 
+	execution(public void ViewImpl.onAllowedClick()) {
+		Layout.instance().actionMenu().showContent();
+	}
+
+	after(SplitLayout sl) : 
+	execution(private void SplitLayout.init()) 
+	&& this(sl) {
+		ActionMenuAdp l = new ActionMenuAdp(sl);
+		Layout.instance().actionMenu().listener(l);
 	}
 }

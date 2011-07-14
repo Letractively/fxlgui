@@ -22,35 +22,32 @@ import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IElement;
-import co.fxl.gui.api.IPanel;
 import co.fxl.gui.impl.Style.Element;
 import co.fxl.gui.impl.Style.Outline;
 import co.fxl.gui.impl.Style.Status;
 import co.fxl.gui.impl.Style.Window;
-import co.fxl.gui.style.IStyle;
 import co.fxl.gui.style.Styles;
 
 public class StyleImpl {
 
 	public static void setUp() {
-		Styles.instance().register(new IStyle<IPanel<?>>() {
-			@Override
-			public void style(IPanel<?> panel) {
-				panel.color().remove();
-				panel.color().white();
-				panel.border().style().rounded().color().lightgray();
-			}
-		}, Window.SIDE, Outline.HEADER, Element.BUTTON);
-		Styles.instance().register(new IStyle<IPanel<?>>() {
-			@Override
-			public void style(IPanel<?> panel) {
-				IBorder border = panel.border();
-				border.color().lightgray();
-				border.style().top();
-			}
-		}, Window.SIDE, Outline.FOOTER);
+		// Styles.instance().register(new IStyle<IPanel<?>>() {
+		// @Override
+		// public void style(IPanel<?> panel) {
+		// panel.color().remove();
+		// panel.color().white();
+		// panel.border().style().rounded().color().lightgray();
+		// }
+		// }, Window.SIDE, Outline.HEADER, Element.BUTTON);
+		// Styles.instance().register(new IStyle<IPanel<?>>() {
+		// @Override
+		// public void style(IPanel<?> panel) {
+		// IBorder border = panel.border();
+		// border.color().lightgray();
+		// border.style().top();
+		// }
+		// }, Window.SIDE, Outline.FOOTER);
 	}
 
 	public static boolean apply(Class<?> clazz, String methodName,

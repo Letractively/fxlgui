@@ -18,8 +18,17 @@
  */
 package co.fxl.gui.layout.api;
 
+import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.api.IPanel;
+
 public interface ILayout {
-	
+
 	IActionMenu actionMenu();
+
+	ILabel createButtonLabel(IPanel<?> panel);
+
+	ILinearPanel<?> createLinearPanel(IContainer c);
 
 }
