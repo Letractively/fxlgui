@@ -20,11 +20,11 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.layout.api.IActionMenu;
 
-class SplitLayoutActionMenuAdp implements IActionMenu.IActionMenuListener {
+class ActionMenuAdp implements IActionMenu.IActionMenuListener {
 
 	private SplitLayout splitLayout;
 
-	SplitLayoutActionMenuAdp(SplitLayout splitLayout) {
+	ActionMenuAdp(SplitLayout splitLayout) {
 		this.splitLayout = splitLayout;
 		splitLayout.sidePanel.spacing().left(10);
 		int width = splitLayout.panel.width();

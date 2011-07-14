@@ -21,17 +21,8 @@ package co.fxl.gui.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.ICardPanel;
-import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
-import co.fxl.gui.api.IHorizontalPanel;
-import co.fxl.gui.api.IImage;
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 
 public class ViewList {
@@ -45,214 +36,11 @@ public class ViewList {
 		void onRemove(ViewImpl view, ICallback<Boolean> remove);
 	}
 
-	public class ViewImpl extends LazyClickListener {
-
-		private ILabel label;
-		private IGridPanel grid;
-		private IHorizontalPanel labelPanel0;
-		private ViewDecorator decorator;
-		private IContainer content;
-		private Object bo;
-		private IImage removeImage;
-		private IImage image;
-		private IHorizontalPanel labelPanel;
-		private String imageResource;
-
-		ViewImpl(String imageResource) {
-			this(imageResource, false);
-		}
-
-		ViewImpl(String imageResource, boolean isNew) {
-			this.imageResource = imageResource;
-			grid = ViewList.this.panel.add().panel().grid();
-			labelPanel0 = grid.cell(0, 0).panel().horizontal();
-			labelPanel = labelPanel0.add().panel().horizontal().spacing(2);
-			decorate(isNew);
-		}
-
-		protected void decorate(boolean isNew) {
-			if (imageResource != null) {
-				image = labelPanel.addSpace(4).add().image()
-						.resource(imageResource);
-				image.addClickListener(this);
-				labelPanel.addSpace(2);
-			} else
-				labelPanel.addSpace(4);
-			if (!isNew) {
-				label = labelPanel.add().label().hyperlink();
-				styleViewlistEntryActive(label);
-				label.addClickListener(this);
-				labelPanel.addSpace(4);
-				content = widget.contentPanel().add();
-				if (newListener != null) {
-					removeImage = grid.cell(1, 0).valign().center().width(30)
-							.align().end().panel().horizontal().addSpace(4)
-							.add().image();
-					removeImage.resource(Icons.CANCEL).addClickListener(
-							new LazyClickListener() {
-								@Override
-								public void onAllowedClick() {
-									remove(grid, ViewImpl.this,
-											new CallbackTemplate<Boolean>() {
-												@Override
-												public void onSuccess(
-														Boolean result) {
-												}
-											});
-								}
-							});
-					removeImage.visible(false);
-				}
-			} else {
-				final ITextField tf = labelPanel.add().textField();
-				tf.focus(true);
-				new Heights(0).decorate(tf);
-				tf.width(199);
-				final IClickListener acceptListener = new IClickListener() {
-					@Override
-					public void onClick() {
-						labelPanel.clear();
-						decorate(false);
-						title(tf.text().trim());
-						newListener.onNew(ViewImpl.this,
-								new CallbackTemplate<Void>() {
-
-									@Override
-									public void onSuccess(Void result) {
-										onAllowedClick();
-									}
-								});
-					}
-				};
-				final IImage accept = labelPanel.addSpace(4).add().image()
-						.resource(Icons.ACCEPT)
-						.addClickListener(acceptListener).mouseLeft();
-				tf.addKeyListener(new IClickListener() {
-					@Override
-					public void onClick() {
-						if (accept.clickable())
-							acceptListener.onClick();
-					}
-				}).enter();
-				accept.clickable(false);
-				tf.addUpdateListener(new IUpdateListener<String>() {
-
-					@Override
-					public void onUpdate(String value) {
-						accept.clickable(check(value));
-					}
-				});
-				labelPanel.addSpace(4).add().image().resource(Icons.CANCEL)
-						.addClickListener(new IClickListener() {
-							@Override
-							public void onClick() {
-								remove(grid, ViewImpl.this, null);
-							}
-						}).mouseLeft();
-			}
-		}
-
-		private boolean check(String value) {
-			if (value.trim().length() == 0)
-				return false;
-			for (int i = 0; i < value.length(); i++)
-				if (!(Character.isLetterOrDigit(value.charAt(i)) || value
-						.charAt(i) == ' '))
-					return false;
-			return true;
-		}
-
-		public ViewImpl businessObject(Object bo) {
-			this.bo = bo;
-			return this;
-		}
-
-		public String title() {
-			if (label == null)
-				return null;
-			return label.text();
-		}
-
-		public Object businessObject() {
-			return bo;
-		}
-
-		public ViewImpl title(String title) {
-			label.text(title);
-			return this;
-		}
-
-		@Override
-		public void onAllowedClick() {
-			for (ViewList viewList : widget.viewLists) {
-				for (ViewImpl view : viewList.views) {
-					view.clickable(view != this);
-				}
-			}
-			if (content == null)
-				return;
-			content.clear();
-			decorator.decorate(content);
-			ICardPanel contentPanel = widget.contentPanel();
-			assert contentPanel != null : "ViewList: contentPanel is null";
-			IElement<?> element = content.element();
-			assert element != null : "ViewList: element is null";
-			contentPanel.show(element);
-		}
-
-		private void clickable(boolean clickable) {
-			if (label == null)
-				return;
-			label.clickable(clickable);
-			if (image != null)
-				image.clickable(clickable);
-			if (!clickable) {
-				notClickable();
-			} else {
-				clickable();
-			}
-		}
-
-		public void clickable() {
-			grid.color().remove();
-			styleViewlistEntryInactive(label);
-			if (removeImage != null) {
-				removeImage.visible(false);
-			}
-		}
-
-		public void styleViewlistEntryInactive(ILabel label) {
-			// Styles.instance().style(label, Style.Window.VIEWLIST,
-			// Style.List.ENTRY, Style.Status.INACTIVE);
-			label.font().pixel(13);
-		}
-
-		public void notClickable() {
-			grid.color().rgb(0xD0, 0xE4, 0xF6);
-			styleViewlistEntryActive(label);
-			if (removeImage != null && newListener.isRemovable(this)) {
-				removeImage.visible(true);
-			}
-		}
-
-		public void styleViewlistEntryActive(ILabel label) {
-			// Styles.instance().style(label, Style.Window.VIEWLIST,
-			// Style.List.ENTRY, Style.Status.ACTIVE);
-			label.font().pixel(13);
-			label.font().color().mix().black().gray();
-		}
-
-		public ViewImpl decorator(ViewDecorator decorator) {
-			this.decorator = decorator;
-			return this;
-		}
-	}
-
-	private MetaViewList widget;
+	MetaViewList widget;
 	WidgetTitle widgetTitle;
-	private IVerticalPanel panel;
+	IVerticalPanel panel;
 	List<ViewImpl> views = new LinkedList<ViewImpl>();
-	private NewListener newListener = null;
+	NewListener newListener = null;
 
 	public ViewList(MetaViewList widget, ILayout layout) {
 		this.widget = widget;
@@ -276,7 +64,7 @@ public class ViewList {
 			panel = vertical.add().panel().vertical().spacing(2);
 			vertical.addSpace(4);
 		}
-		ViewImpl view = new ViewImpl(imageResource, isNew);
+		ViewImpl view = new ViewImpl(this, imageResource, isNew);
 		views.add(view);
 		return view;
 	}
