@@ -18,18 +18,18 @@
  */
 package co.fxl.gui.form.impl;
 
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.IContainer;
 
 privileged aspect FormWidgetImplLayout {
 
-	IGridPanel.IGridCell around(int column, int row) : 
+	IGridPanel.IGridCell around(IGridPanel panel, int column, int row) : 
 	call(IGridPanel.IGridCell IGridPanel.cell(int, int)) 
 	&& withincode(* FormWidgetImpl.*(..))
-	&& args(column, row) {
-		IGridPanel.IGridCell cell = proceed(0, row * 2 + column);
-		return cell;
+	&& args(column, row) 
+	&& target(panel) {
+		return panel.cell(0, row * 2 + column);
 	}
 
 	after(IGridPanel.IGridCell cell) : 
@@ -39,16 +39,19 @@ privileged aspect FormWidgetImplLayout {
 		cell.align().begin();
 	}
 
-	IGridPanel.IGridCell around(int column, int row) : 
+	IGridPanel.IGridCell around(IGridPanel panel, int column, int row) : 
 	call(IGridPanel.IGridCell IGridPanel.cell(int, int)) 
 	&& withincode(* FormFieldImpl.*(..))
-	&& args(column, row) {
-		return proceed(1, row * 2 + 1);
+	&& args(column, row) 
+	&& target(panel) {
+		return panel.cell(1, row * 2 + 1);
 	}
 
-	IGridPanel.IGridColumn around(int column) : 
+	IGridPanel.IGridColumn around(IGridPanel panel, int column) : 
 	call(IGridPanel.IGridColumn IGridPanel.column(int)) 
-	&& args(column) {
-		return proceed(0);
+	&& !within(FormWidgetImplLayout)
+	&& args(column) 
+	&& target(panel) {
+		return panel.column(0);
 	}
 }
