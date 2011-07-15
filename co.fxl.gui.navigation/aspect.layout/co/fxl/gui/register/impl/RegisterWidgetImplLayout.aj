@@ -20,12 +20,14 @@ package co.fxl.gui.register.impl;
 
 privileged aspect RegisterWidgetImplLayout {
 
-	after(RegisterWidgetImpl widget) : call(private void RegisterWidgetImpl.show()) 
+	after(RegisterWidgetImpl widget) : 
+	call(private void RegisterWidgetImpl.show()) 
 	&& this(widget) {
 		RegisterDialog.addButton(widget);
 	}
 
-	after(RegisterImpl register) : execution(private void RegisterImpl.init()) 
+	after(RegisterImpl register) : 
+	execution(private void RegisterImpl.init()) 
 	&& this(register) {
 		boolean visible = register.widget.registers.isEmpty();
 		if (!register.disabled)

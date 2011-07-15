@@ -28,6 +28,8 @@ import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.group.api.INavigationWidget.INavigationListener;
 
 public class NavigationDialog {
+	
+	// TODO extract -> component
 
 	public static void addButton(final NavigationWidgetImpl widget) {
 		widget.masterPanel.addSpace(4).add().label().text("More >>")

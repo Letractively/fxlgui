@@ -24,7 +24,8 @@ import co.fxl.gui.navigation.group.api.INavigationItem;
 
 privileged aspect NavigationWidgetImplLayout {
 
-	after(NavigationWidgetImpl widget): execution(NavigationWidgetImpl.new(IContainer)) 
+	after(NavigationWidgetImpl widget) : 
+	execution(NavigationWidgetImpl.new(IContainer)) 
 	&& this(widget) {
 		NavigationDialog.addButton(widget);
 	}
