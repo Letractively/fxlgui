@@ -18,21 +18,30 @@
  */
 package co.fxl.gui.layout.api;
 
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IPanel;
 
-public interface IActionMenu {
+public interface ILayoutDialog {
 
-	interface IActionMenuListener {
+	public interface IClickTarget {
 
-		void onShowContent();
+		void onOK();
 
-		void onShowMenu();
+		void onCancel();
+		
 	}
 
-	IActionMenu container(IContainer container);
+	public interface IDecorator {
 
-	IActionMenu showContent();
+		void decorate(IContainer container);
 
-	IActionMenu listener(IActionMenuListener l);
-	
+	}
+
+	ILayoutDialog decorator(IDecorator decorator);
+
+	IClickTarget addClickListener(IClickListener clickListener);
+
+	IPanel<?> createButton(IPanel<?> panel);
+
 }

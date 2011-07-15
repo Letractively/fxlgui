@@ -25,10 +25,16 @@ import co.fxl.gui.api.IPanel;
 
 public interface ILayout {
 
+	public enum DialogType {
+
+		LOGIN, FILTER;
+	}
+
 	IActionMenu actionMenu();
 
 	ILabel createButtonLabel(IPanel<?> panel);
 
 	ILinearPanel<?> createLinearPanel(IContainer c);
 
+	ILayoutDialog dialog(DialogType type);
 }
