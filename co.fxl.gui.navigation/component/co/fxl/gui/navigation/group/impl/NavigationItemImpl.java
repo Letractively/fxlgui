@@ -175,6 +175,10 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 
 	@Override
 	public INavigationItem visible(boolean visible) {
+		return updateVisibility(visible);
+	}
+
+	INavigationItem updateVisibility(boolean visible) {
 		basicPanel.visible(visible);
 		return this;
 	}
