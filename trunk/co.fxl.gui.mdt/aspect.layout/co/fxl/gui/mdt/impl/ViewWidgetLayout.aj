@@ -24,7 +24,8 @@ import co.fxl.gui.mdt.api.IViewConfiguration;
 
 public aspect ViewWidgetLayout {
 
-	after(ViewWidget viewWidget) : execution(public ViewWidget.new(..)) 
+	after(ViewWidget viewWidget) : 
+	execution(public ViewWidget.new(..)) 
 	&& this(viewWidget) {
 		viewWidget.addUpdateListener(new IUpdateListener<IViewConfiguration>() {
 			@Override

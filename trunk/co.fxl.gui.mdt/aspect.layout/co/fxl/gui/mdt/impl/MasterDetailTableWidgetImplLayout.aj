@@ -24,7 +24,8 @@ import co.fxl.gui.layout.impl.Layout;
 
 public aspect MasterDetailTableWidgetImplLayout {
 
-	after(MasterDetailTableWidgetImpl widget) : execution(void MasterDetailTableWidgetImpl.setUpFilter(String)) 
+	after(MasterDetailTableWidgetImpl widget) : 
+	execution(void MasterDetailTableWidgetImpl.setUpFilter(String)) 
 	&& this(widget) {
 		widget.filterWidget
 				.addFilterListener(new IFilterWidget.IFilterListener() {
