@@ -26,6 +26,8 @@ import co.fxl.gui.layout.api.IActionMenu;
 
 class HandheldActionMenu implements IActionMenu {
 
+	// TODO use touchscreen-wiping to switch between content & menu
+
 	private IClickListener contentClickListener;
 	private IActionMenuListener listener;
 
