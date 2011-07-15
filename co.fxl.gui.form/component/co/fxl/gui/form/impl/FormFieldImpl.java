@@ -19,6 +19,7 @@
 package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IUpdateable;
@@ -85,9 +86,12 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 
 	@Override
 	public IContainer addContainer() {
-		return widget.grid().cell(column, row).valign().center().align()
-				.begin().panel().horizontal().align().begin().add().panel()
-				.horizontal().align().begin().addSpace(1).add();
+		IGridPanel grid = widget.grid();
+		int gridIndex = row;
+		IGridCell cell2 = grid.cell(column, gridIndex);
+		return cell2.valign().center().align().begin().panel().horizontal()
+				.align().begin().add().panel().horizontal().align().begin()
+				.addSpace(1).add();
 	}
 
 	@Override
@@ -133,7 +137,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 
 	@Override
 	public void remove() {
-		widget.gridPanel.row(getVisibleIndex()).remove();
+		widget.grid.row(getVisibleIndex()).remove();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -157,7 +161,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 			widget.removeInput(this);
 		int index = getVisibleIndex();
 		if (visible) {
-			widget.gridPanel.row(index).insert();
+			widget.grid.row(index).insert();
 			createLabelColumn(index);
 			createContentColumn(index);
 		} else {

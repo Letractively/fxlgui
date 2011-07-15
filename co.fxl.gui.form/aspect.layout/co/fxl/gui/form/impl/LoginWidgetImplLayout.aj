@@ -25,13 +25,15 @@ privileged aspect LoginWidgetImplLayout {
 
 	void around(LoginWidgetImpl widget, IPanel<?> liPanel) : 
 	call(private void LoginWidgetImpl.addLoginForm(IPanel<?>)) 
-	&& !within(LoginWidgetImplLayout)
+	&& withincode(* LoginWidgetImpl.*(..))
 	&& args(liPanel)
-	&& target(widget) {
+	&& this(widget) {
 		liPanel = LogInDialog.addButton(widget, liPanel);
 		widget.addLoginForm(liPanel);
 	}
 
-	void around() : execution(private void LoginWidgetImpl.addLoggedInAs(IHorizontalPanel)) {
+	void around() : 
+	call(private void LoginWidgetImpl.addLoggedInAs(IHorizontalPanel)) 
+	&& withincode(* LoginWidgetImpl.*(..)) {
 	}
 }

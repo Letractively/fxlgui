@@ -20,38 +20,39 @@ package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
 
 privileged aspect FormWidgetImplLayout {
 
-	IGridPanel.IGridCell around(IGridPanel panel, int column, int row) : 
-	call(IGridPanel.IGridCell IGridPanel.cell(int, int)) 
+	IGridCell around(IGridPanel grid, int column, int gridIndex) : 
+	call(IGridCell IGridPanel.cell(int, int)) 
 	&& withincode(* FormWidgetImpl.*(..))
-	&& args(column, row) 
-	&& target(panel) {
-		return panel.cell(0, row * 2 + column);
+	&& args(column, gridIndex) 
+	&& target(grid) {
+		return grid.cell(0, gridIndex * 2 + column);
 	}
 
-	after(IGridPanel.IGridCell cell) : 
+	after(IGridCell cell) : 
 	call(public ILabel IContainer.label()) 
 	&& withincode(* FormWidgetImpl.*(..)) 
 	&& target(cell) {
-		cell.align().begin();
+		((IGridCell) cell).align().begin();
 	}
 
-	IGridPanel.IGridCell around(IGridPanel panel, int column, int row) : 
-	call(IGridPanel.IGridCell IGridPanel.cell(int, int)) 
+	IGridCell around(IGridPanel grid, int column, int gridIndex) : 
+	call(IGridCell IGridPanel.cell(int, int)) 
 	&& withincode(* FormFieldImpl.*(..))
-	&& args(column, row) 
-	&& target(panel) {
-		return panel.cell(1, row * 2 + 1);
+	&& args(column, gridIndex) 
+	&& target(grid) {
+		return grid.cell(1, gridIndex * 2 + 1);
 	}
 
-	IGridPanel.IGridColumn around(IGridPanel panel, int column) : 
-	call(IGridPanel.IGridColumn IGridPanel.column(int)) 
-	&& !within(FormWidgetImplLayout)
+	void around(FormWidgetImpl widget, int column) : 
+	call(void FormWidgetImpl.expand(int)) 
+	&& withincode(* FormWidgetImpl.*(..))
 	&& args(column) 
-	&& target(panel) {
-		return panel.column(0);
+	&& this(widget){
+		widget.grid.column(0).expand();
 	}
 }

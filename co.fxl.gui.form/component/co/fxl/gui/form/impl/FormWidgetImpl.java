@@ -32,6 +32,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IFocusable;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.IGridPanel.IGridColumn;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IKeyRecipient;
@@ -68,7 +69,7 @@ class FormWidgetImpl implements IFormWidget {
 
 	private int gridIndex = -1;
 	private WidgetTitle widgetTitle;
-	IGridPanel gridPanel;
+	IGridPanel grid;
 	private IVerticalPanel contentPanel;
 	ISaveListener saveListener = null;
 	List<FormFieldImpl<?, ?>> fields = new LinkedList<FormFieldImpl<?, ?>>();
@@ -95,19 +96,25 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	FormEntryLabel addFormEntryLabel(String name, int gridIndex) {
-		IGridCell cell = grid().cell(0, gridIndex).align().end().valign()
-				.center();// .height(HEIGHT_CELL);
+		IGridPanel grid = grid();
+		int column = 0;
+		IGridCell cell = grid.cell(column, gridIndex);
+		cell.align().end().valign().center();// .height(HEIGHT_CELL);
 		if (fixLabelWidth != -1)
 			cell.width(fixLabelWidth);
-		ILabel formEntryLabel = cell.label().autoWrap(false);
+		ILabel formEntryLabel = cell.label();
+		formEntryLabel.autoWrap(false);
 		formEntryLabel.text(name);
 		formEntryLabel.font().pixel(12);
 		return new FormEntryLabel(cell, formEntryLabel);
 	}
 
 	private IContainer container(int gridIndex) {
-		IGridCell cell = grid().cell(1, gridIndex).valign().center();
-		if (fixValueWidth != -1)
+		IGridPanel grid = grid();
+		int column = 1;
+		IGridCell cell = grid.cell(column, gridIndex);
+		cell.valign().center();
+		if (fixValueWidth != -column)
 			cell.width(fixValueWidth);
 		heights.decorate(cell);
 		gridIndex++;
@@ -186,7 +193,8 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	ILabel addFormLabel(int gridIndex) {
-		ILabel label = container(gridIndex).label();
+		IContainer cell = container(gridIndex);
+		ILabel label = cell.label();
 		heights.decorate(label);
 		return label;
 	}
@@ -281,8 +289,12 @@ class FormWidgetImpl implements IFormWidget {
 			}
 			if (hasRequiredAttributes()) {
 				if (requiredAttributeLabel == null) {
-					requiredAttributeLabel = bottomPanel.cell(1, 0).align()
-							.end().label().text("* Required Attribute");
+					int column = 1;
+					IGridCell cell = bottomPanel.cell(column, gridIndex);
+					cell.align().end();
+					ILabel label = cell.label();
+					requiredAttributeLabel = label;
+					requiredAttributeLabel.text("* Required Attribute");
 					requiredAttributeLabel.font().pixel(10);
 				}
 			} else {
@@ -313,8 +325,11 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	private void addSaveButton(IGridPanel grid) {
-		IHorizontalPanel panel = grid.cell(0, 0).panel().horizontal().add()
-				.panel().horizontal().spacing(2);
+		int column = 0;
+		int gridIndex = 0;
+		IGridCell cell = grid.cell(column, gridIndex);
+		IHorizontalPanel panel = cell.panel().horizontal().add().panel()
+				.horizontal().spacing(2);
 		saveButton = panel.add().button();
 		final IButton clickable1 = panel.add().button();
 		// TODO un-hack
@@ -416,15 +431,22 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	public IGridPanel grid() {
-		if (gridPanel == null) {
+		if (grid == null) {
 			contentPanel = widgetTitle.content().panel().vertical()
 					.spacing(spacing).add().panel().vertical();
-			gridPanel = contentPanel.add().panel().grid();
-			gridPanel.indent(1);
-			gridPanel.spacing(1);
-			gridPanel.resize(2, 1).column(1).expand();
+			grid = contentPanel.add().panel().grid();
+			grid.indent(1);
+			grid.spacing(1);
+			grid.resize(2, 1);
+			int column = 1;
+			expand(column);
 		}
-		return gridPanel;
+		return grid;
+	}
+
+	void expand(int column) {
+		IGridColumn c = grid.column(column);
+		c.expand();
 	}
 
 	@Override
