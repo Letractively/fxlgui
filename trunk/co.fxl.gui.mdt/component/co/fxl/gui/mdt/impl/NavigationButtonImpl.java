@@ -19,8 +19,8 @@
 package co.fxl.gui.mdt.impl;
 
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.mdt.api.IRelation.INavigation;
-import co.fxl.gui.mdt.api.IRelation.INavigation.INavigationButton;
+import co.fxl.gui.mdt.api.IRelation.IRelationNavigation;
+import co.fxl.gui.mdt.api.IRelation.IRelationNavigation.INavigationButton;
 
 class NavigationButtonImpl implements INavigationButton<Object, Object> {
 
@@ -41,7 +41,7 @@ class NavigationButtonImpl implements INavigationButton<Object, Object> {
 	}
 
 	@SuppressWarnings({ "rawtypes" })
-	void forward(INavigation.INavigationButton b) {
+	void forward(IRelationNavigation.INavigationButton b) {
 		b.imageResource(imageResource);
 		b.label(text);
 		b.clickable(clickable);

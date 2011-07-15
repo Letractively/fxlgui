@@ -21,9 +21,9 @@ package co.fxl.gui.mdt.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.mdt.api.IRelation.INavigation;
+import co.fxl.gui.mdt.api.IRelation.IRelationNavigation;
 
-public class NavigationImpl implements INavigation<Object, Object> {
+public class NavigationImpl implements IRelationNavigation<Object, Object> {
 
 	List<NavigationButtonImpl> navigationButtons = new LinkedList<NavigationButtonImpl>();
 
@@ -45,7 +45,7 @@ public class NavigationImpl implements INavigation<Object, Object> {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public void forward(INavigation navigation) {
+	public void forward(IRelationNavigation navigation) {
 		for (NavigationButtonImpl b : navigationButtons)
 			b.forward(navigation.addButton());
 	}

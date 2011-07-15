@@ -29,10 +29,10 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 
 	public interface INavigationDecorator<T, R> {
 
-		void decorate(T base, INavigation<T, R> navigation);
+		void decorate(T base, IRelationNavigation<T, R> navigation);
 	}
 
-	public interface INavigation<T, R> {
+	public interface IRelationNavigation<T, R> {
 
 		public interface INavigationButton<T, R> {
 
