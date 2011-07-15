@@ -27,6 +27,8 @@ import co.fxl.gui.register.api.IRegisterWidget;
 
 public class RegisterDialog {
 
+	// TODO extract -> component
+
 	public static void addButton(final RegisterWidgetImpl widget) {
 		final ILabel label = widget.headerPanel.add().label().text("More >>")
 				.hyperlink().addClickListener(new IClickListener() {
