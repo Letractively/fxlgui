@@ -312,7 +312,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		return this;
 	}
 
-	private boolean hasFilter() {
+	boolean hasFilter() {
 		for (ScrollTableColumnImpl c : columns)
 			if (c.filterable)
 				return true;
@@ -413,7 +413,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private boolean externalStatusPanel;
 	private IVerticalPanel bottom;
 	private int buttonColumn = 1;
-	private String[] viewComboBoxText;
+	String[] viewComboBoxText;
 	private IUpdateListener<String> viewComboBoxUpdateListener;
 	private int viewInc;
 	private String viewComboBoxChoice;
@@ -539,8 +539,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		clear.align().end();
 		IHorizontalPanel p = clear.panel().horizontal().align().end().add()
 				.panel().horizontal().align().end();
+		ILabel label = p.add().label();
 		if (constraints != null && constraints.rowIterator().hasPrevious()) {
-			ILabel l = p.add().label().text("<<");
+			String in = "<<";
+			ILabel l = label.text(in);
 			l.hyperlink().font().pixel(10);
 			p.addSpace(4);
 			l.addClickListener(new IClickListener() {
@@ -559,12 +561,14 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		int firstRow = constraints != null ? constraints.rowIterator()
 				.firstRow() : 0;
 		String status = +(firstRow + rowOffset + 1) + " - " + (firstRow + rt);
-		p.add().label().text("DISPLAYING ROWS").font().pixel(10);
-		p.addSpace(4).add().label().text(status).font().weight().bold()
-				.pixel(10);
+		String in = "DISPLAYING ROWS";
+		label.text(in);
+		label.font().pixel(10);
+		addStatus(p, status);
 		if (constraints != null && constraints.rowIterator().hasNext()) {
 			p.addSpace(4);
-			ILabel l = p.add().label().text(">>");
+			in = ">>";
+			ILabel l = label.text(in);
 			l.hyperlink().font().pixel(10);
 			l.addClickListener(new IClickListener() {
 				@Override
@@ -576,6 +580,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			});
 		}
 		p.addSpace(4);
+	}
+
+	void addStatus(IHorizontalPanel p, String status) {
+		p.addSpace(4).add().label().text(status).font().weight().bold()
+				.pixel(10);
 	}
 
 	private int computeRowsToPaint() {

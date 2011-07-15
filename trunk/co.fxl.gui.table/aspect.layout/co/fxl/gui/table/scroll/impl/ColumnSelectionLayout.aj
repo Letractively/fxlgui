@@ -18,30 +18,35 @@
  */
 package co.fxl.gui.table.scroll.impl;
 
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.api.ITextElement;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
-import co.fxl.gui.table.scroll.impl.CommandButtonsImpl.Link;
 
 privileged aspect ColumnSelectionLayout {
 
-	void around(ColumnSelection columnSelection, ILinearPanel<?> p,
-			IClickListener clickListener) : call(* ColumnSelection.addToPanel(..)) 
+	void around(ColumnSelection columnSelection, Object p,
+			IClickListener clickListener) : 
+	call(void ColumnSelection.addToPanel(..))
+	&& withincode(ColumnSelection.new(ScrollTableWidgetImpl))
 	&& args(p, clickListener) 
 	&& this(columnSelection) {
-		ColumnSelectionDialog.addButton(columnSelection, p);
+		ColumnSelectionDialog.addButton(columnSelection, (ILinearPanel) p);
 	}
 
-	void around() : call(* ColumnSelection.addTitle(..)) {
+	void around() : 
+	call(void ColumnSelection.addTitle(ILinearPanel)) 
+	&& withincode(void ColumnSelection.addToPanel(..)) {
 	}
 
-	ILabel around(String in) : call(public ILabel ILabel.text(String)) 
+	ILabel around(ILabel label, String in) : 
+	call(public ILabel ITextElement.text(String)) 
 	&& withincode(private void ScrollTableWidgetImpl.addDisplayingNote()) 
 	&& args(in) 
-	&& if(in.equals("DISPLAYING ROWS")) {
-		return proceed("ROWS");
+	&& target(label) {
+		return label.text(in.equals("DISPLAYING ROWS") ? "ROWS" : in);
 	}
 
 	after(ScrollTableWidgetImpl widget) returning(IScrollTableColumn column) : 
@@ -52,12 +57,15 @@ privileged aspect ColumnSelectionLayout {
 		}
 	}
 
-	Link around(IContainer c, String string, boolean clickable) : 
-	execution(public static Link clickable(IContainer, String, boolean)) 
-	&& args(c, string,clickable) {
-		CommandButtonsImpl.SPACE = 0;
-		Link link = proceed(c, string, clickable);
+	after() returning(Link link) : 
+	call(private Link Link.clickable(IContainer, String, boolean))
+	&& withincode(public Link Link.clickableLink(IContainer, String))  {
 		link.label.visible(false);
-		return link;
+	}
+
+	before(Link link) : 
+	execution(private Link Link.clickable(IContainer, String, boolean)) 
+	&& this(link) {
+		Link.SPACE = 0;
 	}
 }
