@@ -29,6 +29,8 @@ import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 
 privileged aspect RelationDecoratorLayout {
+	
+	// TODO extract -> component
 
 	void around(final IScrollTableWidget.IDecorator dec) : 
 	call(void RelationDecorator.listenOnAdd(IScrollTableWidget.IDecorator)) 
