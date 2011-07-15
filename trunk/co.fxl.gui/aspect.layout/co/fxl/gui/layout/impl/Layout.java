@@ -31,4 +31,5 @@ public class Layout {
 	public static ILayout instance() {
 		return instance;
 	}
+	
 }
