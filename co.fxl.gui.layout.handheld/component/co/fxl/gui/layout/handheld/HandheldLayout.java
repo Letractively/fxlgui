@@ -24,9 +24,10 @@ import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.layout.api.IActionMenu;
 import co.fxl.gui.layout.api.ILayout;
+import co.fxl.gui.layout.api.ILayoutDialog;
 
 public class HandheldLayout implements ILayout {
-
+	
 	private HandheldActionMenu actionMenu = new HandheldActionMenu();
 
 	@Override
@@ -42,5 +43,10 @@ public class HandheldLayout implements ILayout {
 	@Override
 	public ILabel createButtonLabel(IPanel<?> panel) {
 		return panel.add().label().visible(false);
+	}
+
+	@Override
+	public ILayoutDialog dialog(DialogType type) {
+		throw new MethodNotImplementedException();
 	}
 }
