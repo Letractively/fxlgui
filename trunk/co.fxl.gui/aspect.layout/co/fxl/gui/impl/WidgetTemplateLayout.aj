@@ -20,16 +20,17 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.layout.impl.Layout;
 
 privileged aspect WidgetTemplateLayout {
 
-	ILabel around(WidgetTitle widgetTitle, String text, IHorizontalPanel panel) : 
-	execution(private ILabel WidgetTitle.addHyperlinkLabel(String, IHorizontalPanel)) 
-	&& args(text, panel)
-	&& this(widgetTitle) 
-	&& if (widgetTitle.commandsOnTop) {
-		return Layout.instance().createButtonLabel(panel);
+	ILabel around(WidgetTitle widgetTitle, String text, IHorizontalPanel iPanel) : 
+	call(private ILabel WidgetTitle.addHyperlinkLabel(String, IHorizontalPanel)) 
+	&& withincode(public CommandLink WidgetTitle.addHyperlink(String, String))
+	&& args(text, iPanel)
+	&& this(widgetTitle) {
+		return widgetTitle.commandsOnTop ? Layout.instance().createButtonLabel(iPanel) : widgetTitle.addHyperlinkLabel(text, iPanel);
 	}
 
 	after() : 
