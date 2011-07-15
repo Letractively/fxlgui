@@ -38,12 +38,13 @@ class ColumnSelection {
 				.begin().valign().center();
 		IHorizontalPanel p = clear.panel().horizontal().add().panel()
 				.horizontal();
-		addToPanel(p, new IClickListener() {
+		IClickListener clickListener = new IClickListener() {
 			@Override
 			public void onClick() {
 				widget.update();
 			}
-		});
+		};
+		addToPanel(p, clickListener);
 	}
 
 	void addToPanel(ILinearPanel p, final IClickListener clickListener) {

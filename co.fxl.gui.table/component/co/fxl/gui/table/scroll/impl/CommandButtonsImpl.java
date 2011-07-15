@@ -23,8 +23,6 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
-import co.fxl.gui.api.IImage;
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
 import co.fxl.gui.table.scroll.api.IRows;
@@ -43,8 +41,6 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 
 	// TODO FEATURE: Option: Usability: After delete: select next item at same
 	// index position
-
-	static int SPACE = 4;
 
 	class Edit {
 
@@ -159,69 +155,10 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		}
 	}
 
-	static class Link implements IClickable<Link> {
-
-		private IImage image;
-		private ILabel label;
-		private IHorizontalPanel p;
-
-		Link(IHorizontalPanel p, IImage image, ILabel label) {
-			this.p = p;
-			this.image = image;
-			this.label = label;
-		}
-
-		@Override
-		public Link clickable(boolean clickable) {
-			p.clickable(clickable);
-			image.clickable(clickable);
-			label.clickable(clickable);
-			if (clickable) {
-				label.font().color().black();
-				// label.font().underline(true);
-			} else {
-				label.font().color().gray();
-				// label.font().underline(false);
-			}
-			return this;
-		}
-
-		@Override
-		public boolean clickable() {
-			return label.clickable();
-		}
-
-		@Override
-		public co.fxl.gui.api.IClickable.IKey<Link> addClickListener(
-				co.fxl.gui.api.IClickable.IClickListener clickListener) {
-			p.addClickListener(clickListener);
-			image.addClickListener(clickListener);
-			label.addClickListener(clickListener);
-			return null;
-		}
-	}
-
 	public static Link clickable(IContainer c, String string) {
-		return clickable(c, string, true);
-	}
-
-	public static Link clickable(IContainer c, String string,
-			boolean clickable) {
-		IHorizontalPanel p = c.panel().horizontal();
-		// p.spacing(4);
-		// p.color().gray();
-		// p.border().color().gray();
-		String imageR = string.toLowerCase();
-		if (imageR.equals("remove"))
-			imageR = "cancel";
-		if (imageR.equals("edit") || imageR.equals("show"))
-			imageR = "detail";
-		IImage image = p.add().image().resource(imageR + ".png");
-		p.addSpace(SPACE);
-		ILabel label = p.add().label().text(string);
-		Link l = new Link(p, image, label);
-		l.clickable(clickable);
-		return l;
+		Link link = new Link();
+		link = link.clickableLink(c, string);
+		return link;
 	}
 
 	private static IClickable<?> clickable(IClickable<?> c, String string) {
@@ -270,6 +207,10 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			selectionIndex = widget.preselectedIndex;
 			selection = widget.preselectedList.get(0);
 		}
+	}
+
+	void setSpace(int i) {
+		Link.SPACE = i;
 	}
 
 	@Override
