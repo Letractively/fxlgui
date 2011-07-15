@@ -19,20 +19,12 @@
 package co.fxl.gui.mdt.impl;
 
 import co.fxl.gui.filter.api.IFilterConstraints;
-import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.layout.impl.Layout;
 
 public aspect MasterDetailTableWidgetImplLayout {
 
-	after(MasterDetailTableWidgetImpl widget) : 
-	execution(void MasterDetailTableWidgetImpl.setUpFilter(String)) 
-	&& this(widget) {
-		widget.filterWidget
-				.addFilterListener(new IFilterWidget.IFilterListener() {
-					@Override
-					public void onApply(IFilterConstraints constraints) {
-						Layout.instance().actionMenu().showContent();
-					}
-				});
+	after() : 
+	execution(	public void MasterDetailTableWidgetImpl.onApply(IFilterConstraints)) {
+		Layout.instance().actionMenu().showContent();
 	}
 }
