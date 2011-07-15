@@ -20,7 +20,6 @@ package co.fxl.gui.filter.impl;
 
 import java.util.Date;
 
-import co.fxl.data.format.api.IFormat;
 import co.fxl.data.format.impl.Format;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -54,7 +53,6 @@ class DateFilter extends RangeFilter<Date> {
 		}
 	}
 
-	static IFormat<Date> DATE_FORMAT = Format.date();
 	private Date lowerBound = null;
 	private Date upperBound = null;
 
@@ -65,7 +63,7 @@ class DateFilter extends RangeFilter<Date> {
 	public String wNull(Date lowerBound) {
 		if (lowerBound == null)
 			return "";
-		return DATE_FORMAT.format(lowerBound);
+		return Format.date().format(lowerBound);
 	}
 
 	@Override
@@ -81,14 +79,14 @@ class DateFilter extends RangeFilter<Date> {
 	private String format(Date bound) {
 		if (bound == null)
 			return "";
-		return DATE_FORMAT.format(bound);
+		return Format.date().format(bound);
 	}
 
 	private Date getDate(String split, String prefix) {
 		split = split.trim();
 		if (split.length() == 4)
 			split = prefix + split;
-		return DATE_FORMAT.parse(split);
+		return Format.date().parse(split);
 	}
 
 	@Override
