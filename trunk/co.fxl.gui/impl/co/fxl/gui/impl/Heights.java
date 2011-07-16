@@ -19,6 +19,7 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IBordered;
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IComboBox;
@@ -52,10 +53,12 @@ public class Heights {
 		label.color().rgb(249, 249, 249);
 	}
 
-	private void styleInputBorder(IBordered bordered) {
+	private IBorder styleInputBorder(IBordered bordered) {
 		// Styles.instance().style(bordered, Style.Element.INPUT,
 		// Style.Element.BORDER);
-		bordered.border().color().rgb(211, 211, 211);
+		IBorder border = bordered.border();
+		border.color().rgb(211, 211, 211);
+		return border;
 	}
 
 	public void decorateHeight(IComboBox textField) {
@@ -116,7 +119,7 @@ public class Heights {
 		c.height(inc + COMBOBOX_HEIGHT);
 	}
 
-	public void decorateBorder(IBordered border) {
-		styleInputBorder(border);
+	public IBorder decorateBorder(IBordered border) {
+		return styleInputBorder(border);
 	}
 }
