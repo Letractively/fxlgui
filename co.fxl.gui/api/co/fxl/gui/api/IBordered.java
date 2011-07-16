@@ -24,6 +24,8 @@ public interface IBordered {
 
 		public interface IBorderStyle {
 
+			IBorder shadow();
+
 			IBorder dotted();
 
 			IBorder rounded();
