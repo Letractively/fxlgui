@@ -1,0 +1,3 @@
+<module>
+	<inherits name="co.fxl.gui.IDisplay" />
+</module>
