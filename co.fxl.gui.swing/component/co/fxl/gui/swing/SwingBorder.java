@@ -79,6 +79,12 @@ class SwingBorder implements IBorder {
 			element.setBorder(new NoBottomBorder(SwingBorder.this, true));
 			return SwingBorder.this;
 		}
+
+		@Override
+		public IBorder shadow() {
+			// TODO ...
+			return SwingBorder.this;
+		}
 	}
 
 	private static final int SOLID = 0;
