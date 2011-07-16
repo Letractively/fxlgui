@@ -6,6 +6,12 @@ html, body {height:100%; width:100%;}
 hr { margin:0px; border:none; width:100%; border-top: 1px solid #E00060; color: #FFFFFF; background-color: #FFFFFF; height: 1px; }
 *.unselectable {
 }
+.shadowblur{ 
+box-shadow: 7px 7px 8px #000000; 
+-webkit-box-shadow: 7px 7px 8px #000000;
+-moz-box-shadow: 7px 7px 8px #000000; 
+filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=7, offY=7, positive=true);
+}
 .font-size-1px { font-size: 1px }
 .font-size-2px { font-size: 2px }
 .font-size-3px { font-size: 3px }
