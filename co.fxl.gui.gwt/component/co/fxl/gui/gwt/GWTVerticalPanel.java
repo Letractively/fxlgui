@@ -21,8 +21,8 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IVerticalPanel;
 
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -49,7 +49,7 @@ class GWTVerticalPanel extends GWTPanel<VerticalPanel, IVerticalPanel>
 
 	@Override
 	public void add(Widget widget) {
-		if (stretch)
+		if (stretch && !(widget instanceof HorizontalPanel))
 			widget.setWidth("100%");
 		if (innerSpace > 0 && container.widget.getWidgetCount() > 0)
 			addSpace(innerSpace);
