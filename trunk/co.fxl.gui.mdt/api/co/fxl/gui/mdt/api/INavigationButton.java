@@ -16,39 +16,15 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.mdt.impl;
+package co.fxl.gui.mdt.api;
 
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.mdt.api.INavigationButton;
 
-class NavigationButtonImpl implements INavigationButton<Object, Object> {
+public interface INavigationButton<T, R> {
 
-	String imageResource;
-	String text;
-	IClickListener clickable = null;
+	INavigationButton<T, R> imageResource(String imageResource);
 
-	@Override
-	public INavigationButton<Object, Object> imageResource(String imageResource) {
-		this.imageResource = imageResource;
-		return this;
-	}
+	INavigationButton<T, R> label(String text);
 
-	@Override
-	public INavigationButton<Object, Object> label(String text) {
-		this.text = text;
-		return this;
-	}
-
-	@SuppressWarnings({ "rawtypes" })
-	void forward(INavigationButton b) {
-		b.imageResource(imageResource);
-		b.label(text);
-		b.clickable(clickable);
-	}
-
-	@Override
-	public INavigationButton<Object, Object> clickable(IClickListener clickable) {
-		this.clickable = clickable;
-		return this;
-	}
+	INavigationButton<T, R> clickable(IClickListener clickable);
 }

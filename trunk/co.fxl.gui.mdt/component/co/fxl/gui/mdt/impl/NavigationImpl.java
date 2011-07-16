@@ -21,7 +21,8 @@ package co.fxl.gui.mdt.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.mdt.api.IRelation.IRelationNavigation;
+import co.fxl.gui.mdt.api.INavigationButton;
+import co.fxl.gui.mdt.api.IRelationNavigation;
 
 public class NavigationImpl implements IRelationNavigation<Object, Object> {
 

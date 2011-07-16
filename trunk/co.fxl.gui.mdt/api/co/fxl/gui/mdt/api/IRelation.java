@@ -19,7 +19,6 @@
 package co.fxl.gui.mdt.api;
 
 import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -30,24 +29,6 @@ public interface IRelation<T, R> extends IPropertyGroup<R> {
 	public interface INavigationDecorator<T, R> {
 
 		void decorate(T base, IRelationNavigation<T, R> navigation);
-	}
-
-	public interface IRelationNavigation<T, R> {
-
-		public interface INavigationButton<T, R> {
-
-			INavigationButton<T, R> imageResource(String imageResource);
-
-			INavigationButton<T, R> label(String text);
-
-			INavigationButton<T, R> clickable(IClickListener clickable);
-		}
-
-		INavigationButton<T, R> back();
-
-		INavigationButton<T, R> forward();
-
-		INavigationButton<T, R> addButton();
 	}
 
 	public interface IEditableAdapter<T> {
