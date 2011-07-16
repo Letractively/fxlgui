@@ -2,5 +2,6 @@
 	<inherits name="com.google.gwt.user.User" />
 	<source path="api" />
 	<source path="impl" />
-	<source path="style" />
+	<source path="layout/api" />
+	<source path="layout/impl" />
 </module>
