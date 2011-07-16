@@ -41,7 +41,7 @@ class ElementPopUp {
 
 	IVerticalPanel create() {
 		popUp = element.display().showPopUp().autoHide(true);
-		HEIGHTS.decorateBorder(popUp);
+		HEIGHTS.decorateBorder(popUp).style().shadow();
 		int w = Math.min(320, element.width());
 		int h = Math.min(240, 2 + 19 * lines);
 		popUp.size(w, h);
