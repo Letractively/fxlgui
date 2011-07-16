@@ -18,25 +18,47 @@
  */
 package co.fxl.gui.input.impl;
 
+import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IMouseOverElement;
+import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.ColorMemento;
 import co.fxl.gui.impl.Heights;
 
-class ElementPopUp {
+public class ElementPopUp {
+
+	public interface Decorator {
+
+		void decorate(IVerticalPanel panel);
+	}
 
 	static Heights HEIGHTS = new Heights(0);
 	private IPopUp popUp;
 	private IElement<?> element;
-	private int lines;
+	private int lines = -1;
+	private ColorMemento color;
+	private boolean scrollPane = true;
 
-	ElementPopUp(IElement<?> element) {
+	public ElementPopUp(IElement<?> element) {
 		this.element = element;
 	}
 
-	void lines(int lines) {
+	public ElementPopUp lines(int lines) {
 		this.lines = lines;
+		return this;
+	}
+
+	public IColor color() {
+		return color = new ColorMemento();
+	}
+
+	public ElementPopUp scrollPane(boolean scrollPane) {
+		this.scrollPane = scrollPane;
+		return this;
 	}
 
 	IVerticalPanel create() {
@@ -44,23 +66,60 @@ class ElementPopUp {
 		HEIGHTS.decorateBorder(popUp).style().shadow();
 		int w = Math.min(320, element.width());
 		int h = Math.min(240, 2 + 19 * lines);
-		popUp.size(w, h);
+		if (h > 0)
+			popUp.size(w, h);
+		else
+			popUp.width(w);
 		popUp.offset(element.offsetX(), element.offsetY() + element.height());
-		IScrollPane scrollPane = popUp.container().scrollPane();
-		scrollPane.border().remove();
-		scrollPane.color().white();
-		// TODO refine, 16 = hack for GWT
-		return scrollPane.viewPort().panel().vertical().width(w - 16);
+		IContainer container = popUp.container();
+		if (scrollPane) {
+			IScrollPane scrollPane = container.scrollPane();
+			scrollPane.color().white();
+			if (color != null)
+				color.forward(scrollPane.color());
+			scrollPane.border().remove();
+			// TODO refine, 16 = hack for GWT
+			container = scrollPane.viewPort();
+		}
+		IVerticalPanel panel = container.panel().vertical().width(w - 16)
+				.spacing(4);
+		if (color != null)
+			color.forward(panel.color());
+		return panel;
 	}
 
-	void clear() {
+	ElementPopUp clear() {
 		if (popUp != null) {
 			popUp.visible(false);
 			popUp = null;
 		}
+		return this;
 	}
 
-	void visible(boolean b) {
+	ElementPopUp visible(boolean b) {
 		popUp.visible(b);
+		return this;
+	}
+
+	public ElementPopUp onMouseOver(final Decorator decorator) {
+		if (element instanceof IMouseOverElement) {
+			@SuppressWarnings("rawtypes")
+			IMouseOverElement moe = (IMouseOverElement) element;
+			moe.addMouseOverListener(new IMouseOverListener() {
+
+				@Override
+				public void onMouseOver() {
+					IVerticalPanel p = create();
+					decorator.decorate(p);
+					visible(true);
+				}
+
+				@Override
+				public void onMouseOut() {
+					clear();
+				}
+			});
+		}
+		return this;
 	}
 }
