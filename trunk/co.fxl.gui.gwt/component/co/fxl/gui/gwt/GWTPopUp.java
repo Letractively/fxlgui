@@ -4,6 +4,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWidgetProvider;
 
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -18,6 +19,7 @@ class GWTPopUp implements IPopUp, WidgetParent {
 	GWTPopUp(GWTDisplay display) {
 		this.display = display;
 		popUp = new PopupPanel(false, false);
+		popUp.getElement().getStyle().setPadding(0, Unit.PX);
 	}
 
 	@Override
