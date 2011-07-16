@@ -37,6 +37,7 @@ public class DateField {
 		@Override
 		public void onClick() {
 			final IPopUp popUp = button.display().showPopUp().autoHide(true);
+			popUp.border().style().shadow();
 			int height = button.height();
 			popUp.offset(button.offsetX(), button.offsetY() + height);
 			final ICalendarWidget calendar = (ICalendarWidget) popUp
