@@ -35,6 +35,7 @@ class FilterDialog {
 						public void onClick() {
 							final IPopUp popUp = widget.topPanel.display()
 									.showPopUp().center();
+							popUp.border().style().shadow();
 							widget.filter = (IFilterWidget) popUp.container()
 									.widget(IFilterWidget.class);
 							widget.filter
