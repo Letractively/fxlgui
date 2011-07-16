@@ -42,22 +42,22 @@ public class HTMLText {
 		for (int i = 0; i < toString.length(); i++) {
 			char c = toString.charAt(i);
 			switch (c) {
-			case 228:
+			case 'ä':
 				b.append("&auml;");
 				break;
-			case 246:
+			case 'ö':
 				b.append("&ouml;");
 				break;
-			case 252:
+			case 'ü':
 				b.append("&uuml;");
 				break;
-			case 196:
+			case 'Ä':
 				b.append("&Auml;");
 				break;
-			case 214:
+			case 'Ö':
 				b.append("&Ouml;");
 				break;
-			case 220:
+			case 'Ü':
 				b.append("&Uuml;");
 				break;
 			default:
