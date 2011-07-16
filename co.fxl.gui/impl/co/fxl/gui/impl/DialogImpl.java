@@ -152,6 +152,7 @@ public class DialogImpl implements IDialog {
 				getPopUp();
 			else {
 				popUp = display.showPopUp().modal(modal);
+				popUp.border().style().shadow();
 				container = popUp.container();
 			}
 		}
@@ -161,6 +162,7 @@ public class DialogImpl implements IDialog {
 	IPopUp getPopUp() {
 		if (popUp == null) {
 			popUp = display.showPopUp().modal(modal).autoHide(false);
+			popUp.border().style().shadow();
 			if (width != -1 && height != -1) {
 				popUp.size(width, height);
 			} else if (width != -1) {
