@@ -26,6 +26,7 @@ public class GWTWidgetBorder extends GWTBorder {
 
 	private Element element;
 	private String lastBorderType;
+	private Widget widget;
 
 	public GWTWidgetBorder(Element element) {
 		this.element = element;
@@ -33,6 +34,13 @@ public class GWTWidgetBorder extends GWTBorder {
 
 	public GWTWidgetBorder(Widget widget) {
 		this(widget.getElement());
+		this.widget = widget;
+	}
+
+	@Override
+	protected void shadow() {
+		if (widget != null)
+			widget.addStyleName("shadowblur");
 	}
 
 	@Override

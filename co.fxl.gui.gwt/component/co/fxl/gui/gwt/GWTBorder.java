@@ -23,7 +23,7 @@ import co.fxl.gui.api.IBordered.IBorder;
 public abstract class GWTBorder implements IBorder {
 
 	static final String BORDER_BOTTOM_LESS = "borderBottomLess";
-	static final String BORDER_ROUNDED= "borderRounded";
+	static final String BORDER_ROUNDED = "borderRounded";
 
 	private class BorderStyle implements IBorderStyle {
 
@@ -73,6 +73,12 @@ public abstract class GWTBorder implements IBorder {
 			update();
 			return GWTBorder.this;
 		}
+
+		@Override
+		public IBorder shadow() {
+			GWTBorder.this.shadow();
+			return GWTBorder.this;
+		}
 	}
 
 	protected int width = 1;
@@ -82,6 +88,9 @@ public abstract class GWTBorder implements IBorder {
 
 	@Override
 	public abstract void remove();
+
+	protected void shadow() {
+	}
 
 	protected abstract void update();
 
