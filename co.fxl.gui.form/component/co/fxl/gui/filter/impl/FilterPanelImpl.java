@@ -125,7 +125,7 @@ class FilterPanelImpl implements FilterPanel {
 		this.widget = widget;
 		title = new WidgetTitle(panel.panel(), true)// .grayBackground()
 				.space(2);
-		mainPanel = title.content().panel().vertical().addSpace(2).add()
+		mainPanel = title.content().panel().vertical().align().end().addSpace(2).add()
 				.panel().horizontal().align().end().add().panel().vertical();
 	}
 
