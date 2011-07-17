@@ -55,6 +55,10 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 	boolean waiting;
 	private Map<IResizeListener, ComponentAdapter> resizeListeners = new HashMap<IResizeListener, ComponentAdapter>();
 	private static SwingDisplay instance = null;
+	
+	// TODO ... (never updated)
+	int lastClickX = 0;
+	int lastClickY = 0;
 
 	private SwingDisplay() {
 		container = new SwingContainer<JComponent>(this) {
