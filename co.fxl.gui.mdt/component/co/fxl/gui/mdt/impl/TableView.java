@@ -71,6 +71,7 @@ class TableView extends ViewTemplate implements IResizeListener, ISortListener,
 		buttons.clear();
 		table = (IScrollTableWidget<Object>) widget.mainPanel.add().widget(
 				IScrollTableWidget.class);
+		table.addToContextMenu(true);
 		table.addTitle(
 				widget.title != null ? widget.title : widget.configuration)
 				.font().pixel(WidgetTitle.LARGE_FONT);
