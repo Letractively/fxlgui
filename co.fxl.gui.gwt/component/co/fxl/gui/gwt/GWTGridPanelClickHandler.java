@@ -61,6 +61,7 @@ public class GWTGridPanelClickHandler extends KeyTemplate<IGridPanel> implements
 		GWTDisplay d = (GWTDisplay) ((IElement<?>) element).display();
 		if (d.waiting)
 			return;
+		GWTDisplay.notifyEvent(event);
 		clickListener.onClick(cell.getCellIndex(), cell.getRowIndex());
 	}
 

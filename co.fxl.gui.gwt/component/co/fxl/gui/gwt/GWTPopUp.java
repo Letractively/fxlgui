@@ -136,4 +136,10 @@ class GWTPopUp implements IPopUp, WidgetParent {
 		popUp.setHeight(h + "px");
 		return this;
 	}
+
+	@Override
+	public IPopUp atLastClick() {
+		offset(GWTDisplay.lastClickX, GWTDisplay.lastClickY);
+		return this;
+	}
 }
