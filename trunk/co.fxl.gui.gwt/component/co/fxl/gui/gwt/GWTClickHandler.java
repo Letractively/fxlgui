@@ -118,14 +118,14 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 		if (buttonType == ButtonType.LEFT)
 			return true;
 		else
-			throw new MethodNotImplementedException();
+			return false;
 	}
 
 	private boolean buttonMatches(DoubleClickEvent event) {
 		if (buttonType == ButtonType.LEFT)
 			return true;
 		else
-			throw new MethodNotImplementedException();
+			return false;
 	}
 
 	boolean keyMatches(KeyType key, NativeEvent nativeEvent) {
