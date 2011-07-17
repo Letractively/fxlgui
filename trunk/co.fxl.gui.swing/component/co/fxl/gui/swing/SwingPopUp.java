@@ -195,4 +195,10 @@ class SwingPopUp implements IPopUp {
 		}
 		return this;
 	}
+
+	@Override
+	public IPopUp atLastClick() {
+		offset(panel.lastClickX, panel.lastClickY);
+		return this;
+	}
 }
