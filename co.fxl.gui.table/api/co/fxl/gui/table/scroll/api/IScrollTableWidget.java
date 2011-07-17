@@ -103,6 +103,8 @@ public interface IScrollTableWidget<T> {
 
 	IClickable<?> addButton(String name);
 
+	IScrollTableWidget<Object> addToContextMenu(boolean addToContextMenu);
+
 	IClickable<?> addButton(String name, String imageResource);
 
 	IClickable<?> addButton(String name, String imageResource,

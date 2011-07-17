@@ -895,4 +895,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		showNoRowsFound = false;
 		return this;
 	}
+
+	@Override
+	public IScrollTableWidget<Object> addToContextMenu(boolean addToContextMenu) {
+		widgetTitle().addToContextMenu(true);
+		return this;
+	}
 }
