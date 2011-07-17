@@ -31,6 +31,7 @@ import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.form.impl.Validation;
 import co.fxl.gui.form.impl.Validation.IValidation;
+import co.fxl.gui.impl.ElementPopUp;
 import co.fxl.gui.input.api.IMultiComboBoxWidget;
 
 class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
