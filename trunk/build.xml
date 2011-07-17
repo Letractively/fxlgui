@@ -25,6 +25,11 @@
 	<property name="co.fxl.gui.form.gwt.src.dir" value="${co.fxl.gui.form.dir}/gwt"/>
 				
 	<property name="co.fxl.gui.form.gwt.dir" value="${project.dir}/co.fxl.gui.form.gwt"/>
+<<<<<<< .mine
+	<property name="co.fxl.gui.form.gwt.component.src.dir" value="${co.fxl.gui.form.gwt.dir}/component"/>
+	<property name="co.fxl.gui.form.gwt.gwt.src.dir" value="${co.fxl.gui.form.gwt.dir}/gwt"/>
+	
+=======
 	<property name="co.fxl.gui.form.gwt.component.src.dir" value="${co.fxl.gui.form.gwt.dir}/component"/>
 	<property name="co.fxl.gui.form.gwt.gwt.src.dir" value="${co.fxl.gui.form.gwt.dir}/gwt"/>
 
@@ -37,6 +42,7 @@
 	<property name="co.fxl.data.format.gwt.component.src.dir" value="${co.fxl.data.format.gwt.dir}/component"/>
 	<property name="co.fxl.data.format.gwt.gwt.src.dir" value="${co.fxl.data.format.gwt.dir}/gwt"/>
 
+>>>>>>> .r2115
 	<property name="co.fxl.gui.gwt.dir" value="${project.dir}/co.fxl.gui.gwt"/>
 	<property name="co.fxl.gui.gwt.build.src.dir" value="${co.fxl.gui.gwt.dir}/build"/>
 	<property name="co.fxl.gui.gwt.component.src.dir" value="${co.fxl.gui.gwt.dir}/component"/>
