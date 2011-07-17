@@ -27,6 +27,7 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -297,7 +298,13 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		container.component.setSize(widthPixel, heightPixel);
 	}
 
-	static void lastClick(int x, int y) {
+	static void lastClick(MouseEvent e) {
+		Point p = SwingUtilities.convertPoint(e.getComponent(), e.getPoint(),
+				instance.frame);
+		lastClick(p.x, p.y);
+	}
+
+	private static void lastClick(int x, int y) {
 		if (popUp != null) {
 			Rectangle bounds = SwingUtilities.convertRectangle(popUp.p,
 					popUp.p.getBounds(), instance.frame);

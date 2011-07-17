@@ -48,8 +48,7 @@ class ClickListenerMouseAdapter<T> extends KeyTemplate<T> implements IKey<T> {
 			SwingDisplay d = (SwingDisplay) ((IElement<?>) element).display();
 			if (d.waiting)
 				return;
-			// TODO ... doesn't work correctly, google...
-			SwingDisplay.lastClick(e.getXOnScreen(), e.getYOnScreen());
+			SwingDisplay.lastClick(e);
 			clickListener.onClick();
 		}
 
