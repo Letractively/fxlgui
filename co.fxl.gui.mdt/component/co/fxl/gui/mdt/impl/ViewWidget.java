@@ -30,6 +30,8 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.ContextMenu;
+import co.fxl.gui.impl.ContextMenu.Entry;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.LazyUpdateListener;
@@ -49,6 +51,7 @@ public class ViewWidget implements IUpdateable<IViewConfiguration> {
 		private IHorizontalPanel panel;
 		private List<ILabel> additionalLabels = new LinkedList<ILabel>();
 		private IComboBox cb;
+		private Entry entry;
 
 		private Link(IHorizontalPanel panel, IImage image, ILabel textLabel) {
 			this.panel = panel;
@@ -58,6 +61,8 @@ public class ViewWidget implements IUpdateable<IViewConfiguration> {
 
 		public Link text(String text) {
 			label.text(text);
+			entry = ContextMenu.instance().addEntry(text);
+			entry.imageResource(image.resource());
 			return this;
 		}
 
@@ -71,6 +76,7 @@ public class ViewWidget implements IUpdateable<IViewConfiguration> {
 			panel.clickable(clickable);
 			if (cb != null)
 				cb.visible(!clickable);
+			entry.clickable(clickable);
 			return this;
 		}
 
@@ -102,11 +108,13 @@ public class ViewWidget implements IUpdateable<IViewConfiguration> {
 			if (image != null)
 				image.addClickListener(clickListener);
 			panel.addClickListener(clickListener);
+			entry.addClickListener(clickListener);
 			return null;
 		}
 
 		public void imageResource(String string) {
 			image.resource(string);
+			entry.imageResource(string);
 		}
 
 		public void width(int i) {
@@ -182,6 +190,7 @@ public class ViewWidget implements IUpdateable<IViewConfiguration> {
 			final boolean optionalForDetail, boolean neverShowFilter) {
 		this.widget = widget;
 		widgetTitle = new WidgetTitle(layout, true);
+		widgetTitle.addToContextMenu(true);
 		widgetTitle.space(2);
 		widgetTitle.addTitle("VIEWS");
 		panel = widgetTitle.content().panel().vertical().spacing(6);

@@ -22,9 +22,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.tree.api.ITree;
 
@@ -54,7 +54,7 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 			IVerticalPanel p = decorator.setUp(this, panel, row,
 					tree.indent(row), isMarked(index));
 			decorator.panel.height(heightElement);
-			ILabel label = decorator.decorateCore();
+			IClickable<?> label = decorator.decorateCore();
 			final int fIndex = index;
 			IClickListener clickListener = new IClickListener() {
 				@Override
