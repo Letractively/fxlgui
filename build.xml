@@ -16,7 +16,7 @@
 	<property name="co.fxl.gui.dir" value="${project.dir}/co.fxl.gui"/>
 	<property name="co.fxl.gui.api.src.dir" value="${co.fxl.gui.dir}/api"/>
 	<property name="co.fxl.gui.impl.src.dir" value="${co.fxl.gui.dir}/impl"/>
-	<property name="co.fxl.gui.style.src.dir" value="${co.fxl.gui.dir}/style"/>
+	<property name="co.fxl.gui.aspect.layout.src.dir" value="${co.fxl.gui.dir}/aspect.layout"/>
 	<property name="co.fxl.gui.gwt.src.dir" value="${co.fxl.gui.dir}/gwt"/>
 		
 	<property name="co.fxl.gui.form.dir" value="${project.dir}/co.fxl.gui.form"/>
@@ -25,11 +25,6 @@
 	<property name="co.fxl.gui.form.gwt.src.dir" value="${co.fxl.gui.form.dir}/gwt"/>
 				
 	<property name="co.fxl.gui.form.gwt.dir" value="${project.dir}/co.fxl.gui.form.gwt"/>
-<<<<<<< .mine
-	<property name="co.fxl.gui.form.gwt.component.src.dir" value="${co.fxl.gui.form.gwt.dir}/component"/>
-	<property name="co.fxl.gui.form.gwt.gwt.src.dir" value="${co.fxl.gui.form.gwt.dir}/gwt"/>
-	
-=======
 	<property name="co.fxl.gui.form.gwt.component.src.dir" value="${co.fxl.gui.form.gwt.dir}/component"/>
 	<property name="co.fxl.gui.form.gwt.gwt.src.dir" value="${co.fxl.gui.form.gwt.dir}/gwt"/>
 
@@ -42,7 +37,6 @@
 	<property name="co.fxl.data.format.gwt.component.src.dir" value="${co.fxl.data.format.gwt.dir}/component"/>
 	<property name="co.fxl.data.format.gwt.gwt.src.dir" value="${co.fxl.data.format.gwt.dir}/gwt"/>
 
->>>>>>> .r2115
 	<property name="co.fxl.gui.gwt.dir" value="${project.dir}/co.fxl.gui.gwt"/>
 	<property name="co.fxl.gui.gwt.build.src.dir" value="${co.fxl.gui.gwt.dir}/build"/>
 	<property name="co.fxl.gui.gwt.component.src.dir" value="${co.fxl.gui.gwt.dir}/component"/>
@@ -70,10 +64,9 @@
 	<property name="co.fxl.gui.table.component.src.dir" value="${co.fxl.gui.table.dir}/component"/>
 	<property name="co.fxl.gui.table.gwt.src.dir" value="${co.fxl.gui.table.dir}/gwt"/>		
 
-	<property name="co.fxl.gui.wizard.dir" value="${project.dir}/co.fxl.gui.wizard"/>
-	<property name="co.fxl.gui.wizard.api.src.dir" value="${co.fxl.gui.wizard.dir}/api"/>
-	<property name="co.fxl.gui.wizard.component.src.dir" value="${co.fxl.gui.wizard.dir}/component"/>
-	<property name="co.fxl.gui.wizard.gwt.src.dir" value="${co.fxl.gui.wizard.dir}/gwt"/>		
+	<property name="co.fxl.gui.layout.handheld.dir" value="${project.dir}/co.fxl.gui.layout.handheld"/>
+	<property name="co.fxl.gui.layout.handheld.component.src.dir" value="${co.fxl.gui.layout.handheld.dir}/component"/>
+	<property name="co.fxl.gui.layout.handheld.gwt.src.dir" value="${co.fxl.gui.layout.handheld.dir}/gwt"/>		
 
 	<path id="gwt.class.path">
 		<pathelement path="${gwt.home}/gwt-user.jar"/>
@@ -110,7 +103,7 @@
 		<copy todir="${project.build.src.dir}">
     	<fileset dir="${co.fxl.gui.api.src.dir}"/>
     	<fileset dir="${co.fxl.gui.impl.src.dir}"/>
-    	<fileset dir="${co.fxl.gui.style.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.aspect.layout.src.dir}"/>
     	<fileset dir="${co.fxl.gui.gwt.src.dir}"/>
     	<fileset dir="${co.fxl.gui.form.api.src.dir}"/>
     	<fileset dir="${co.fxl.data.format.api.gwt.dir}"/>
@@ -135,9 +128,8 @@
     	<fileset dir="${co.fxl.gui.table.api.src.dir}"/>	
     	<fileset dir="${co.fxl.gui.table.component.src.dir}"/>	
     	<fileset dir="${co.fxl.gui.table.gwt.src.dir}"/>
-    	<fileset dir="${co.fxl.gui.wizard.api.src.dir}"/>
-    	<fileset dir="${co.fxl.gui.wizard.component.src.dir}"/>
-    	<fileset dir="${co.fxl.gui.wizard.gwt.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.layout.handheld.component.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.layout.handheld.gwt.src.dir}"/>
   	</copy>
 	</target>
 	
