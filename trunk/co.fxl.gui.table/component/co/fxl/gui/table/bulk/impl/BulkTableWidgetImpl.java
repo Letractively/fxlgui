@@ -40,6 +40,7 @@ import co.fxl.gui.api.IMouseWheelListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.AlignmentMemento;
+import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 
 class BulkTableWidgetImpl implements IBulkTableWidget {
@@ -102,6 +103,13 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 		grid = mainPanel.add().panel().grid();
 		grid.spacing(0);
 		grid.indent(3);
+		grid.addGridClickListener(new IGridClickListener() {
+
+			@Override
+			public void onClick(int column, int row) {
+				ContextMenu.instance().show();
+			}
+		}).mouseRight();
 	}
 
 	@Override
