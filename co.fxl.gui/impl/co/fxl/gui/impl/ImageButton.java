@@ -87,6 +87,8 @@ public class ImageButton implements IClickable<Object>,
 			p0.clickable(clickable);
 		else
 			panel.clickable(clickable);
+		if (entry != null)
+			entry.clickable(clickable);
 		return this;
 	}
 
