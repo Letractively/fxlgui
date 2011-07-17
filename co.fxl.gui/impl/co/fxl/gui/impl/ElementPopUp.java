@@ -65,7 +65,9 @@ public class ElementPopUp {
 		popUp = element.display().showPopUp().autoHide(true);
 		HEIGHTS.decorateBorder(popUp).style().shadow();
 		int w = Math.min(320, element.width());
-		int h = Math.min(240, 2 + 19 * lines);
+		int h = 0;
+		if (lines > 24)
+			h = 2 + 19 * lines;
 		if (h > 0)
 			popUp.size(w, h);
 		else
@@ -73,16 +75,15 @@ public class ElementPopUp {
 		popUp.offset(element.offsetX(), element.offsetY() + element.height());
 		IContainer container = popUp.container();
 		if (scrollPane) {
-			IScrollPane scrollPane = container.scrollPane();
+			IScrollPane scrollPane = container.scrollPane().width(w);
 			scrollPane.color().white();
 			if (color != null)
 				color.forward(scrollPane.color());
 			scrollPane.border().remove();
-			// TODO refine, 16 = hack for GWT
 			container = scrollPane.viewPort();
 		}
-		IVerticalPanel panel = container.panel().vertical().width(w - 16)
-				.spacing(4);
+		// TODO refine, 17 = hack for GWT
+		IVerticalPanel panel = container.panel().vertical().spacing(4);
 		if (color != null)
 			color.forward(panel.color());
 		return panel;

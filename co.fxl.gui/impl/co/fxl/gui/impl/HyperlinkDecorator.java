@@ -23,12 +23,13 @@ import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 
 public class HyperlinkDecorator implements IMouseOverListener {
 
-	private boolean enabled;
+	private boolean enabled = true;
 	private ILabel label;
 
 	public HyperlinkDecorator(ILabel label) {
 		this.label = label;
-		// TODO doesn't work (yet) with GWT: label.addMouseOverListener(this);
+		// TODO doesn't work (yet) with GWT:
+		label.addMouseOverListener(this);
 		styleHyperlinkActive(label);
 	}
 
