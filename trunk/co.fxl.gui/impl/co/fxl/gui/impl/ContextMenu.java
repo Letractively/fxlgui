@@ -114,49 +114,52 @@ public class ContextMenu {
 
 			@Override
 			public void onClick() {
-				final IPopUp popUp = display.showPopUp().autoHide(true)// .width(320)
-						.atLastClick();
-				new Heights(0).decorateBorder(popUp).style().shadow();
-				IVerticalPanel v = popUp.container().panel().vertical()
-						.spacing(8);
-				// v.color().rgb(250, 250, 250);
-				IVerticalPanel panel = v.add().panel().vertical();
-				panel.spacing(4);
-				for (Object o : entries) {
-					if (o instanceof Entry) {
-						final Entry e = (Entry) o;
-						IHorizontalPanel h = panel.add().panel().horizontal()
-								.addSpace(10);
-						IClickListener clickListener = new IClickListener() {
-							@Override
-							public void onClick() {
-								popUp.visible(false);
-								for (IClickListener cl : e.clickListeners)
-									cl.onClick();
-							}
-						};
-						if (e.imageResource != null) {
-							h.add().image().resource(e.imageResource)
-									.addClickListener(clickListener)
-									.mouseLeft().clickable(e.clickable);
-							h.addSpace(4);
-						}
-						ILabel l = h.add().label().text(e.text).hyperlink();
-						l.addClickListener(clickListener);
-						l.clickable(e.clickable);
-					} else if (o instanceof String) {
-						IHorizontalPanel h = panel.add().panel().horizontal();
-						h.add().label().text((String) o).font().pixel(9)
-								.weight().bold().color().gray();
-						h.addSpace(4).add().line();
-					} else {
-						panel.add().line();
-					}
-				}
-				popUp.visible(true);
+				show();
 			}
 		}).mouseRight();
 		return this;
+	}
+
+	public void show() {
+		final IPopUp popUp = display.showPopUp().autoHide(true)// .width(320)
+				.atLastClick();
+		new Heights(0).decorateBorder(popUp).style().shadow();
+		IVerticalPanel v = popUp.container().panel().vertical().spacing(8);
+		// v.color().rgb(250, 250, 250);
+		IVerticalPanel panel = v.add().panel().vertical();
+		panel.spacing(4);
+		for (Object o : entries) {
+			if (o instanceof Entry) {
+				final Entry e = (Entry) o;
+				IHorizontalPanel h = panel.add().panel().horizontal()
+						.addSpace(10);
+				IClickListener clickListener = new IClickListener() {
+					@Override
+					public void onClick() {
+						popUp.visible(false);
+						for (IClickListener cl : e.clickListeners)
+							cl.onClick();
+					}
+				};
+				if (e.imageResource != null) {
+					h.add().image().resource(e.imageResource)
+							.addClickListener(clickListener).mouseLeft()
+							.clickable(e.clickable);
+					h.addSpace(4);
+				}
+				ILabel l = h.add().label().text(e.text).hyperlink();
+				l.addClickListener(clickListener);
+				l.clickable(e.clickable);
+			} else if (o instanceof String) {
+				IHorizontalPanel h = panel.add().panel().horizontal();
+				h.add().label().text((String) o).font().pixel(9).weight()
+						.bold().color().gray();
+				h.addSpace(4).add().line();
+			} else {
+				panel.add().line();
+			}
+		}
+		popUp.visible(true);
 	}
 
 	public static ContextMenu instance(IDisplay display) {
