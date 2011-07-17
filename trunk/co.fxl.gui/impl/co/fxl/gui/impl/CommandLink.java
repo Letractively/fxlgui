@@ -18,10 +18,14 @@
  */
 package co.fxl.gui.impl;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.impl.ContextMenu.Entry;
 
 public class CommandLink implements IClickable<IClickable<?>> {
 
@@ -31,6 +35,8 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	private IImage image;
 	private String toolTipClickable = null;
 	private String toolTipNotClickable = null;
+	private List<IClickListener> clickListeners = new LinkedList<IClickListener>();
+	private Entry contextMenuEntry;
 
 	public CommandLink(WidgetTitle widgetTitle, IHorizontalPanel iPanel,
 			IImage image, ILabel headerLabel) {
@@ -71,6 +77,8 @@ public class CommandLink implements IClickable<IClickable<?>> {
 			label.tooltip(tooltip);
 		}
 		styleDialogButton(label);
+		if (contextMenuEntry != null)
+			contextMenuEntry.clickable(clickable);
 		return this;
 	}
 
@@ -95,6 +103,7 @@ public class CommandLink implements IClickable<IClickable<?>> {
 		if (image != null)
 			image.addClickListener(clickListener);
 		iPanel.addClickListener(clickListener);
+		clickListeners.add(clickListener);
 		return null;
 	}
 
@@ -102,6 +111,21 @@ public class CommandLink implements IClickable<IClickable<?>> {
 			String toolTipNotClickable) {
 		this.toolTipClickable = toolTipClickable;
 		this.toolTipNotClickable = toolTipNotClickable;
+		return this;
+	}
+
+	public CommandLink addToContextMenu(boolean addToContextMenu) {
+		if (addToContextMenu) {
+			contextMenuEntry = ContextMenu.instance().addEntry(label.text());
+			contextMenuEntry.imageResource(image.resource());
+			contextMenuEntry.addClickListener(new IClickListener() {
+				@Override
+				public void onClick() {
+					for (IClickListener l : clickListeners)
+						l.onClick();
+				}
+			});
+		}
 		return this;
 	}
 }

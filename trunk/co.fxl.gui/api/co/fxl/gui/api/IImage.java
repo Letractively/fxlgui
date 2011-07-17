@@ -25,4 +25,6 @@ public interface IImage extends IClickable<IImage>, IElement<IImage> {
 	IImage uRI(String uRI);
 
 	IImage resource(String iD);
+
+	String resource();
 }

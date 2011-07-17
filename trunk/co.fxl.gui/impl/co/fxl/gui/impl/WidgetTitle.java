@@ -60,6 +60,7 @@ public class WidgetTitle implements IClickListener {
 	private IContainer bottomContainer;
 	private IHorizontalPanel commandPanelTop;
 	private boolean commandsOnTop = false;
+	private boolean addToContextMenu = false;
 
 	public WidgetTitle(ILayout layout) {
 		this(layout, false);
@@ -181,6 +182,9 @@ public class WidgetTitle implements IClickListener {
 			headerLabel.addClickListener(this);
 			headerLabel.tooltip(FOLDABLE);
 		}
+		if (addToContextMenu) {
+			ContextMenu.instance().addHeader(title);
+		}
 		return headerLabel;
 	}
 
@@ -243,6 +247,7 @@ public class WidgetTitle implements IClickListener {
 		// }
 		CommandLink cl = new CommandLink(this, iPanel0, image, label);
 		cl.clickable(true);
+		cl.addToContextMenu(addToContextMenu);
 		return cl;
 	}
 
@@ -319,6 +324,11 @@ public class WidgetTitle implements IClickListener {
 
 	public WidgetTitle visible(boolean b) {
 		panel.visible(b);
+		return this;
+	}
+
+	public WidgetTitle addToContextMenu(boolean b) {
+		addToContextMenu = b;
 		return this;
 	}
 }

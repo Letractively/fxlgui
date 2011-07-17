@@ -27,8 +27,10 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.ContextMenu.Entry;
 
-public class ImageButton implements IClickable<Object> {
+public class ImageButton implements IClickable<Object>,
+		co.fxl.gui.api.IClickable.IClickListener {
 
 	private static final int SPACE = 4;
 	IImage image;
@@ -36,6 +38,9 @@ public class ImageButton implements IClickable<Object> {
 	private IHorizontalPanel panel;
 	private List<ILabel> additionalLabels = new LinkedList<ILabel>();
 	private IVerticalPanel p0;
+	private boolean addToContextMenu = false;
+	private List<IClickListener> clickListeners = new LinkedList<IClickListener>();
+	private Entry entry;
 
 	public ImageButton(IContainer c) {
 		this.panel = c.panel().horizontal();
@@ -59,6 +64,16 @@ public class ImageButton implements IClickable<Object> {
 
 	public ImageButton text(String text) {
 		label.text(text);
+		if (addToContextMenu)
+			if (entry == null) {
+				entry = ContextMenu.instance().addEntry(text);
+				entry.addClickListener(this);
+				if (image != null) {
+					entry.imageResource(image.resource());
+				}
+			} else {
+				entry.text(text);
+			}
 		return this;
 	}
 
@@ -94,6 +109,7 @@ public class ImageButton implements IClickable<Object> {
 			p0.addClickListener(clickListener);
 		else
 			panel.addClickListener(clickListener);
+		clickListeners.add(clickListener);
 		return null;
 	}
 
@@ -114,5 +130,16 @@ public class ImageButton implements IClickable<Object> {
 	public ImageButton imageResource(String string) {
 		image.resource(string);
 		return this;
+	}
+
+	public ImageButton addToContextMenu(boolean b) {
+		addToContextMenu = b;
+		return this;
+	}
+
+	@Override
+	public void onClick() {
+		for (IClickListener l : clickListeners)
+			l.onClick();
 	}
 }

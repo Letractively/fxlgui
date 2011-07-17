@@ -44,7 +44,9 @@ public class NavigationView {
 
 	public NavigationView(ILayout layout) {
 		widgetTitle = new WidgetTitle(layout, true);
+		widgetTitle.addToContextMenu(true);
 		widgetTitle.space(2);
+		setUp();
 	}
 
 	private void setUp() {
@@ -94,7 +96,7 @@ public class NavigationView {
 		IImage image = addImage(panel, imageResource);
 		ILabel textLabel = addTextLabel(panel);
 		return new ImageButton((IVerticalPanel) panels[0], panel, image,
-				textLabel);
+				textLabel).addToContextMenu(true);
 	}
 
 	protected ILabel addTextLabel(IHorizontalPanel panel) {
