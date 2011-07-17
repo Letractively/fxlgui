@@ -37,6 +37,8 @@ import co.fxl.gui.api.ISplitPane.ISplitPaneResizeListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.CommandLink;
+import co.fxl.gui.impl.ContextMenu;
+import co.fxl.gui.impl.ContextMenu.Entry;
 import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.KeyAdapter;
 import co.fxl.gui.impl.LazyClickListener;
@@ -181,8 +183,10 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	TreeModel<T> model;
 	boolean showRoot = true;
 	boolean moveActive = false;
+	private IContainer container;
 
 	TreeWidgetImpl(IContainer layout) {
+		this.container = layout;
 		widgetTitle = new WidgetTitle(layout.panel(), true).space(0)
 				.commandsOnTop();
 		widgetTitle.foldable(false);
@@ -193,6 +197,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			return;
 		}
 		hasButtons = true;
+		ContextMenu contextMenu = ContextMenu.instance().reset();
 		if (showCommands && allowCreate) {
 			if (creatableTypes.isEmpty())
 				creatableTypes.add(null);
@@ -234,15 +239,19 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					}
 				};
 				newClick.put(type, cl);
-				IClickable<?> hl = widgetTitle
-						.addHyperlink(type == null ? Icons.NEW
-								: creatableTypeIcons.get(type), "New"
-								+ (type == null ? "" : " " + type),
-								"Create a new "
-										+ (type == null ? "Entity" : type),
-								"Switch to Detail View to create a new "
-										+ (type == null ? "Entity" : type));
-				newClickHyperlink.put(type, hl);
+				String text = "New" + (type == null ? "" : " " + type);
+				String imageResource = type == null ? Icons.NEW
+						: creatableTypeIcons.get(type);
+				Entry entry = contextMenu.addEntry(text).imageResource(
+						imageResource);
+				entry.addClickListener(cl);
+				IClickable<?> hl = widgetTitle.addHyperlink(imageResource,
+						text, "Create a new "
+								+ (type == null ? "Entity" : type),
+						"Switch to Detail View to create a new "
+								+ (type == null ? "Entity" : type));
+				newClickHyperlink
+						.put(type, new ClickableMultiplexer(entry, hl));
 				hl.addClickListener(cl);
 			}
 		}
@@ -348,6 +357,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	@Override
 	public ITreeWidget<T> title(String title) {
 		widgetTitle.addTitle(title).font().pixel(18);
+		ContextMenu.instance(container.display()).addHeader(title);
 		return this;
 	}
 

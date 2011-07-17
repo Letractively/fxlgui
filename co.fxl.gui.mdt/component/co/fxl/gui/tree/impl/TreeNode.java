@@ -28,6 +28,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.tree.api.ILazyTreeWidget;
@@ -135,7 +136,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		decorate();
 	}
 
-	void decorateCore() {
+	ILabel decorateCore() {
 		container = panel.add().panel().horizontal().align().begin().add()
 				.panel().horizontal().align().begin();
 		updateMarked();
@@ -156,6 +157,8 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		container.addSpace(4);
 		if (isNull)
 			label.font().weight().italic().color().gray();
+		ContextMenu.instance().decorate(label);
+		return label;
 	}
 
 	protected void updateMarked() {
