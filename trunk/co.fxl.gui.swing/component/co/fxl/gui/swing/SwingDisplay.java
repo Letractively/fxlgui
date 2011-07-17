@@ -22,6 +22,8 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -41,6 +43,7 @@ import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
+import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.DialogImpl;
 import co.fxl.gui.impl.DiscardChangesDialog;
 
@@ -54,6 +57,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 	private SwingUncaughtExceptionHandler uncaughtExceptionHandler;
 	boolean waiting;
 	private Map<IResizeListener, ComponentAdapter> resizeListeners = new HashMap<IResizeListener, ComponentAdapter>();
+	private static SwingPopUp popUp;
 	private static SwingDisplay instance = null;
 	static int lastClickX = 0;
 	static int lastClickY = 0;
@@ -80,6 +84,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		// scrollPane
 		// .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		DiscardChangesDialog.display = this;
+		ContextMenu.instance(this);
 		// fullscreen();
 		// Style.setUp();
 	}
@@ -290,5 +295,26 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		frame.setMinimumSize(dim);
 		container.component.setPreferredSize(dim);
 		container.component.setSize(widthPixel, heightPixel);
+	}
+
+	static void lastClick(int x, int y) {
+		if (popUp != null) {
+			Rectangle bounds = SwingUtilities.convertRectangle(popUp.p,
+					popUp.p.getBounds(), instance.frame);
+			if (!bounds.contains(new Point(x, y))) {
+				popUp.visible(false);
+				popUp = null;
+			}
+		}
+		lastClickX = x;
+		lastClickY = y;
+	}
+
+	static void popUp(SwingPopUp popUp) {
+		SwingDisplay.popUp = popUp;
+	}
+
+	public static SwingPopUp popUp() {
+		return popUp;
 	}
 }

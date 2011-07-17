@@ -29,6 +29,7 @@ import co.fxl.gui.api.IImage;
 class SwingImage extends SwingElement<JLabel, IImage> implements IImage {
 
 	private Icon icon;
+	private String resource;
 
 	SwingImage(SwingContainer<JLabel> container) {
 		super(container);
@@ -42,6 +43,7 @@ class SwingImage extends SwingElement<JLabel, IImage> implements IImage {
 
 	@Override
 	public IImage resource(String name) {
+		resource = name;
 		if (name == null) {
 			container.component.setIcon(null);
 			return this;
@@ -63,5 +65,10 @@ class SwingImage extends SwingElement<JLabel, IImage> implements IImage {
 	@Override
 	public IImage localURI(String uRI) {
 		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public String resource() {
+		return resource;
 	}
 }
