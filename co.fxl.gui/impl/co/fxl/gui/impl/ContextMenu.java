@@ -33,10 +33,10 @@ public class ContextMenu {
 
 	public class Entry implements IClickable<Entry> {
 
-		private String text;
+		private String text = null;
 		private boolean clickable = true;
 		private List<IClickListener> clickListeners = new LinkedList<IClickListener>();
-		private String imageResource;
+		private String imageResource = null;
 
 		private Entry(String text) {
 			this.text = text;
@@ -64,6 +64,11 @@ public class ContextMenu {
 			clickListeners.add(clickListener);
 			return null;
 		}
+
+		public Entry text(String text) {
+			this.text = text;
+			return this;
+		}
 	}
 
 	private static ContextMenu instance;
@@ -75,6 +80,13 @@ public class ContextMenu {
 	}
 
 	public Entry addEntry(String text) {
+		for (Object o : entries) {
+			if (o instanceof Entry && text.equals(((Entry) o).text)) {
+				Entry entry = (Entry) o;
+				entry.clickListeners.clear();
+				return entry;
+			}
+		}
 		Entry entry = new Entry(text);
 		entries.add(entry);
 		return entry;
@@ -86,7 +98,9 @@ public class ContextMenu {
 	}
 
 	public ContextMenu addHeader(String header) {
-		entries.add(header);
+		header = header.toUpperCase();
+		if (!entries.contains(header))
+			entries.add(header);
 		return this;
 	}
 
@@ -103,10 +117,11 @@ public class ContextMenu {
 				final IPopUp popUp = display.showPopUp().autoHide(true)// .width(320)
 						.atLastClick();
 				new Heights(0).decorateBorder(popUp).style().shadow();
-				IVerticalPanel v = popUp.container().panel().vertical();
+				IVerticalPanel v = popUp.container().panel().vertical()
+						.spacing(8);
 				// v.color().rgb(250, 250, 250);
-				IVerticalPanel panel = v.spacing(8).add().panel().vertical()
-						.spacing(2);
+				IVerticalPanel panel = v.add().panel().vertical();
+				panel.spacing(4);
 				for (Object o : entries) {
 					if (o instanceof Entry) {
 						final Entry e = (Entry) o;
@@ -128,8 +143,6 @@ public class ContextMenu {
 						}
 						ILabel l = h.add().label().text(e.text).hyperlink();
 						l.addClickListener(clickListener);
-						for (IClickListener cl : e.clickListeners)
-							l.addClickListener(cl);
 						l.clickable(e.clickable);
 					} else if (o instanceof String) {
 						IHorizontalPanel h = panel.add().panel().horizontal();
