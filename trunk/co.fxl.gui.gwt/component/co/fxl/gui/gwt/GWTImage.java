@@ -25,6 +25,8 @@ import com.google.gwt.user.client.ui.Image;
 
 class GWTImage extends GWTElement<Image, IImage> implements IImage {
 
+	private String resource;
+
 	GWTImage(GWTContainer<Image> container) {
 		super(container);
 	}
@@ -49,6 +51,7 @@ class GWTImage extends GWTElement<Image, IImage> implements IImage {
 
 	@Override
 	public IImage resource(String name) {
+		this.resource = name;
 		if (name == null) {
 			container.widget.setVisible(false);
 			return this;
@@ -60,5 +63,10 @@ class GWTImage extends GWTElement<Image, IImage> implements IImage {
 	@Override
 	GWTClickHandler<IImage> newGWTClickHandler(IClickListener clickListener) {
 		return new GWTClickHandler<IImage>(this, clickListener);
+	}
+
+	@Override
+	public String resource() {
+		return resource;
 	}
 }

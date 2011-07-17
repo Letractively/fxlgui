@@ -32,6 +32,7 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
+import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.DialogImpl;
 import co.fxl.gui.impl.DiscardChangesDialog;
 
@@ -83,6 +84,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 			}
 		};
 		DiscardChangesDialog.display = this;
+		ContextMenu.instance(this);
 		// Style.setUp();
 	}
 
