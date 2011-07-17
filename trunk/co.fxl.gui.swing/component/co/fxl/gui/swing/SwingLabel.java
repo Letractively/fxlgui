@@ -59,6 +59,9 @@ class SwingLabel extends SwingTextElement<JLabel, ILabel> implements ILabel {
 
 	@Override
 	public IKey<ILabel> addClickListener(IClickListener listener) {
+		if (hyperlinkDecorator != null) {
+			hyperlinkDecorator.clickable(clickable());
+		}
 		return super.addClickListener(listener);
 	}
 
