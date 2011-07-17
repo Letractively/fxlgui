@@ -21,11 +21,14 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridClickListener;
+import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.KeyTemplate;
 
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ContextMenuEvent;
+import com.google.gwt.event.dom.client.ContextMenuHandler;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTMLTable.Cell;
 
@@ -41,6 +44,28 @@ public class GWTGridPanelClickHandler extends KeyTemplate<IGridPanel> implements
 		Grid grid = (Grid) element.container.widget;
 		grid.addClickHandler(this);
 		grid.addStyleName("cursor-pointer");
+	}
+
+	boolean isWaiting() {
+		GWTDisplay d = (GWTDisplay) ((IElement<?>) element).display();
+		return d.waiting;
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public IGridPanel mouseRight() {
+		((GWTElement) element).container.widget.addDomHandler(
+				new ContextMenuHandler() {
+					@Override
+					public void onContextMenu(ContextMenuEvent event) {
+						if (isWaiting())
+							return;
+						GWTDisplay.notifyEvent(event);
+						ContextMenu.instance().show();
+						event.preventDefault();
+					}
+				}, ContextMenuEvent.getType());
+		return (IGridPanel) super.mouseRight();
 	}
 
 	@Override
@@ -69,7 +94,7 @@ public class GWTGridPanelClickHandler extends KeyTemplate<IGridPanel> implements
 		if (buttonType == ButtonType.LEFT)
 			return true;
 		else
-			throw new MethodNotImplementedException();
+			return false;
 	}
 
 	boolean keyMatches(KeyType key, NativeEvent nativeEvent) {
