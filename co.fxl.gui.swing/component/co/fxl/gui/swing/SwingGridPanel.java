@@ -66,6 +66,7 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 			SwingDisplay d = (SwingDisplay) ((IElement<?>) element).display();
 			if (d.waiting)
 				return;
+			SwingDisplay.lastClick(e);
 			listener.onClick(column, row);
 		}
 
