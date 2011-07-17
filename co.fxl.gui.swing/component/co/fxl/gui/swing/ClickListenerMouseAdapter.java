@@ -39,13 +39,18 @@ class ClickListenerMouseAdapter<T> extends KeyTemplate<T> implements IKey<T> {
 				if (keyMatches(pressedKey, e) != check)
 					return;
 			}
-			if (e.getButton() != getMouseButton())
+			int button = e.getButton();
+			int mouseButton = getMouseButton();
+			if (button != mouseButton)
 				return;
 			if (isDoubleClick && e.getClickCount() < 2)
 				return;
 			SwingDisplay d = (SwingDisplay) ((IElement<?>) element).display();
 			if (d.waiting)
 				return;
+			// TODO ... doesn't work correctly, google...
+			SwingDisplay.lastClickX = e.getXOnScreen();
+			SwingDisplay.lastClickY = e.getYOnScreen();
 			clickListener.onClick();
 		}
 

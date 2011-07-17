@@ -46,7 +46,7 @@ class SwingPopUp implements IPopUp {
 	SwingPopUp(SwingDisplay panel) {
 		this.panel = panel;
 		p = new JPanel();
-		p.getInsets().set(3, 3, 3, 3);
+		// p.getInsets().set(3, 3, 3, 3);
 		p.setBackground(Color.WHITE);
 		p.setBorder(new LineBorder(new Color(195, 217, 255), 3));
 	}
@@ -95,7 +95,7 @@ class SwingPopUp implements IPopUp {
 		if (autoHide) {
 			// TODO Swing: Code: IMPL: Implement Auto-Hide
 			new MethodNotImplementedException().printStackTrace();
-			return this;
+			// return this;
 		}
 		if (dialog == null)
 			if (component != null) {
@@ -198,7 +198,7 @@ class SwingPopUp implements IPopUp {
 
 	@Override
 	public IPopUp atLastClick() {
-		offset(panel.lastClickX, panel.lastClickY);
+		offset(SwingDisplay.lastClickX, SwingDisplay.lastClickY);
 		return this;
 	}
 }
