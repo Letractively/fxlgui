@@ -71,6 +71,7 @@ public class ContextMenu {
 		}
 	}
 
+	private static final boolean SHOW_INACTIVE = false;
 	private static ContextMenu instance;
 	private IDisplay display;
 	private List<Object> entries = new LinkedList<Object>();
@@ -92,10 +93,10 @@ public class ContextMenu {
 		return entry;
 	}
 
-	public ContextMenu addSeparator() {
-		entries.add(this);
-		return this;
-	}
+	// public ContextMenu addSeparator() {
+	// entries.add(this);
+	// return this;
+	// }
 
 	public ContextMenu addHeader(String header) {
 		header = header.toUpperCase();
@@ -129,6 +130,8 @@ public class ContextMenu {
 		IVerticalPanel panel = v.add().panel().vertical();
 		panel.spacing(4);
 		for (Object o : entries) {
+			if (!visible(o))
+				continue;
 			if (o instanceof Entry) {
 				final Entry e = (Entry) o;
 				IHorizontalPanel h = panel.add().panel().horizontal()
@@ -155,11 +158,31 @@ public class ContextMenu {
 				h.add().label().text((String) o).font().pixel(9).weight()
 						.bold().color().gray();
 				h.addSpace(4).add().line();
-			} else {
-				panel.add().line();
 			}
+			// else {
+			// panel.add().line();
+			// }
 		}
 		popUp.visible(true);
+	}
+
+	private boolean visible(Object o) {
+		if (SHOW_INACTIVE)
+			return true;
+		if (o instanceof Entry) {
+			return ((Entry) o).clickable;
+		} else if (o instanceof String) {
+			int index = entries.indexOf(o);
+			for (int i = index + 1; i < entries.size(); i++) {
+				Object o2 = entries.get(i);
+				if (o2 instanceof String)
+					return false;
+				else if (((Entry) o2).clickable)
+					return true;
+			}
+			return false;
+		}
+		return true;
 	}
 
 	public static ContextMenu instance(IDisplay display) {
