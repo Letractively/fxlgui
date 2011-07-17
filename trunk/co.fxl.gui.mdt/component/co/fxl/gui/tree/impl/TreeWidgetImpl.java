@@ -38,7 +38,6 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.ContextMenu;
-import co.fxl.gui.impl.ContextMenu.Entry;
 import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.KeyAdapter;
 import co.fxl.gui.impl.LazyClickListener;
@@ -190,6 +189,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		widgetTitle = new WidgetTitle(layout.panel(), true).space(0)
 				.commandsOnTop();
 		widgetTitle.foldable(false);
+		widgetTitle.addToContextMenu(true);
 	}
 
 	void addButtons() {
@@ -197,7 +197,6 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			return;
 		}
 		hasButtons = true;
-		ContextMenu contextMenu = ContextMenu.instance().reset();
 		if (showCommands && allowCreate) {
 			if (creatableTypes.isEmpty())
 				creatableTypes.add(null);
@@ -242,16 +241,12 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				String text = "New" + (type == null ? "" : " " + type);
 				String imageResource = type == null ? Icons.NEW
 						: creatableTypeIcons.get(type);
-				Entry entry = contextMenu.addEntry(text).imageResource(
-						imageResource);
-				entry.addClickListener(cl);
 				IClickable<?> hl = widgetTitle.addHyperlink(imageResource,
 						text, "Create a new "
 								+ (type == null ? "Entity" : type),
 						"Switch to Detail View to create a new "
 								+ (type == null ? "Entity" : type));
-				newClickHyperlink
-						.put(type, new ClickableMultiplexer(entry, hl));
+				newClickHyperlink.put(type, hl);
 				hl.addClickListener(cl);
 			}
 		}

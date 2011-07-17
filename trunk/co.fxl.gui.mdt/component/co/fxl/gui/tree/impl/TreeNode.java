@@ -136,7 +136,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		decorate();
 	}
 
-	ILabel decorateCore() {
+	IClickable<?> decorateCore() {
 		container = panel.add().panel().horizontal().align().begin().add()
 				.panel().horizontal().align().begin();
 		updateMarked();
@@ -158,7 +158,8 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		if (isNull)
 			label.font().weight().italic().color().gray();
 		ContextMenu.instance().decorate(label);
-		return label;
+		ContextMenu.instance().decorate(icon);
+		return new ClickableMultiplexer(label, icon);
 	}
 
 	protected void updateMarked() {

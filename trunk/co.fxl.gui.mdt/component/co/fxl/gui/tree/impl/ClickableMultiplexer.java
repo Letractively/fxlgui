@@ -43,7 +43,9 @@ public class ClickableMultiplexer implements IClickable<Object> {
 	@Override
 	public co.fxl.gui.api.IClickable.IKey<Object> addClickListener(
 			co.fxl.gui.api.IClickable.IClickListener clickListener) {
-		throw new MethodNotImplementedException();
+		for (IClickable<?> c : cs)
+			c.addClickListener(clickListener);
+		return null;
 	}
 
 }

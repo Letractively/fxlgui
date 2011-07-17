@@ -32,6 +32,7 @@ import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
+import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.INavigationListener;
@@ -125,6 +126,7 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 
 	MasterDetailTableWidgetImpl(IContainer layout) {
 		this.layout = layout.panel();
+		ContextMenu.instance().reset();
 	}
 
 	void setUpSidePanel() {
@@ -352,8 +354,6 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 	void addNavigationLinks(IVerticalPanel sidePanel) {
 		if (!navigationLinks.isEmpty()) {
 			navigationView = new NavigationView(sidePanel.add().panel());
-			if (navigationListener != null)
-				navigationView.navigationViewListener(navigationListener);
 			for (Object link0 : navigationLinks) {
 				if (link0 instanceof NavigationLinkImpl) {
 					NavigationLinkImpl link = (NavigationLinkImpl) link0;
@@ -378,6 +378,8 @@ class MasterDetailTableWidgetImpl implements IMasterDetailTableWidget<Object>,
 						cb.addUpdateListener(ul);
 				}
 			}
+			if (navigationListener != null)
+				navigationView.navigationViewListener(navigationListener);
 		}
 	}
 
