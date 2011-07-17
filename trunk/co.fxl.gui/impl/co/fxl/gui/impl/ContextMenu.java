@@ -66,6 +66,7 @@ public class ContextMenu {
 		}
 	}
 
+	private static ContextMenu instance;
 	private IDisplay display;
 	private List<Object> entries = new LinkedList<Object>();
 
@@ -84,30 +85,57 @@ public class ContextMenu {
 		return this;
 	}
 
-	public ContextMenu addTo(IClickable<?> c) {
+	public ContextMenu addHeader(String header) {
+		entries.add(header);
+		return this;
+	}
+
+	public ContextMenu reset() {
+		entries.clear();
+		return this;
+	}
+
+	public ContextMenu decorate(IClickable<?> c) {
 		c.addClickListener(new IClickListener() {
 
 			@Override
 			public void onClick() {
-				IPopUp popUp = display.showPopUp().autoHide(true)//.width(320)
+				final IPopUp popUp = display.showPopUp().autoHide(true)// .width(320)
 						.atLastClick();
 				new Heights(0).decorateBorder(popUp).style().shadow();
 				IVerticalPanel v = popUp.container().panel().vertical();
-				v.color().rgb(250, 250, 250);
+				// v.color().rgb(250, 250, 250);
 				IVerticalPanel panel = v.spacing(8).add().panel().vertical()
 						.spacing(2);
 				for (Object o : entries) {
 					if (o instanceof Entry) {
-						Entry e = (Entry) o;
-						IHorizontalPanel h = panel.add().panel().horizontal();
+						final Entry e = (Entry) o;
+						IHorizontalPanel h = panel.add().panel().horizontal()
+								.addSpace(10);
+						IClickListener clickListener = new IClickListener() {
+							@Override
+							public void onClick() {
+								popUp.visible(false);
+								for (IClickListener cl : e.clickListeners)
+									cl.onClick();
+							}
+						};
 						if (e.imageResource != null) {
-							h.add().image().resource(e.imageResource);
+							h.add().image().resource(e.imageResource)
+									.addClickListener(clickListener)
+									.mouseLeft().clickable(e.clickable);
 							h.addSpace(4);
 						}
 						ILabel l = h.add().label().text(e.text).hyperlink();
+						l.addClickListener(clickListener);
 						for (IClickListener cl : e.clickListeners)
 							l.addClickListener(cl);
 						l.clickable(e.clickable);
+					} else if (o instanceof String) {
+						IHorizontalPanel h = panel.add().panel().horizontal();
+						h.add().label().text((String) o).font().pixel(9)
+								.weight().bold().color().gray();
+						h.addSpace(4).add().line();
 					} else {
 						panel.add().line();
 					}
@@ -116,5 +144,15 @@ public class ContextMenu {
 			}
 		}).mouseRight();
 		return this;
+	}
+
+	public static ContextMenu instance(IDisplay display) {
+		if (instance == null)
+			instance = new ContextMenu(display);
+		return instance;
+	}
+
+	public static ContextMenu instance() {
+		return instance;
 	}
 }
