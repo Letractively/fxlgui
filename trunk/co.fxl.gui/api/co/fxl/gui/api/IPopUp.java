@@ -28,5 +28,7 @@ public interface IPopUp extends IBordered, ILocated<IPopUp> {
 
 	IPopUp center();
 
+	IPopUp atLastClick();
+
 	IPopUp autoHide(boolean autoHide);
 }
