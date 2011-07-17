@@ -24,6 +24,8 @@ import co.fxl.gui.impl.KeyTemplate;
 
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ContextMenuEvent;
+import com.google.gwt.event.dom.client.ContextMenuHandler;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 
@@ -43,6 +45,23 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 		this.stopPropagation = stopPropagation;
 	}
 
+	@SuppressWarnings("rawtypes")
+	@Override
+	public T mouseRight() {
+		((GWTElement) element).container.widget.addDomHandler(
+				new ContextMenuHandler() {
+					@Override
+					public void onContextMenu(ContextMenuEvent event) {
+						if (isWaiting())
+							return;
+						GWTDisplay.notifyEvent(event);
+						clickListener.onClick();
+						event.preventDefault();
+					}
+				}, ContextMenuEvent.getType());
+		return (T) super.mouseRight();
+	}
+
 	public void onClick(ClickEvent event) {
 		for (KeyType pressedKey : pressedKeys.keySet()) {
 			Boolean check = pressedKeys.get(pressedKey);
@@ -57,10 +76,15 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 			event.preventDefault();
 			event.stopPropagation();
 		}
-		GWTDisplay d = (GWTDisplay) ((IElement<?>) element).display();
-		if (d.waiting)
+		if (isWaiting())
 			return;
+		GWTDisplay.notifyEvent(event);
 		clickListener.onClick();
+	}
+
+	boolean isWaiting() {
+		GWTDisplay d = (GWTDisplay) ((IElement<?>) element).display();
+		return d.waiting;
 	}
 
 	public void onClick(KeyPressEvent event) {
