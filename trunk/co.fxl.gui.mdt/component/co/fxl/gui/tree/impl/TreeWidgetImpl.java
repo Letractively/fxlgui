@@ -362,7 +362,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			bottom = widgetTitle.bottom().panel().vertical();
 			bottom.add().label().text("&#160;");
 			bottom.height(32);
-			WidgetTitle.styleMainFooter(bottom);
+			WidgetTitle.styleFooter(bottom);
 		}
 		return panel;
 	}
