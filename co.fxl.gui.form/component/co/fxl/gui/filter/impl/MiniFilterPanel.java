@@ -192,7 +192,8 @@ class MiniFilterPanel implements FilterPanel {
 
 	@Override
 	public void addTitle(String string) {
-		titlePanel.add().label().text(string).font().weight().bold();
+		titlePanel.add().label().text(string.toUpperCase()).font().weight()
+				.bold();
 	}
 
 	@Override
