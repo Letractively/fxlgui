@@ -54,6 +54,13 @@ public abstract class GWTBorder implements IBorder {
 		}
 
 		@Override
+		public IBorder left() {
+			borderType = "borderLeft";
+			update();
+			return GWTBorder.this;
+		}
+
+		@Override
 		public IBorder bottom() {
 			borderType = "borderBottom";
 			update();
