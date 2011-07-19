@@ -18,63 +18,66 @@
  */
 package co.fxl.gui.impl;
 
-import java.lang.reflect.Method;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.Signature;
-
-import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IPanel;
-import co.fxl.gui.impl.Style.Element;
-import co.fxl.gui.impl.Style.Outline;
-import co.fxl.gui.impl.Style.Status;
-import co.fxl.gui.impl.Style.Window;
+import co.fxl.gui.style.impl.Style;
 
 privileged aspect StyleAspect {
 
-	declare @method: 
-	public void WidgetTitle.styleHeader(IPanel<?>):
-	@Style(window = Window.ALL, outline = Outline.HEADER);
-
-	declare @method: 
-	public static void WidgetTitle.styleFooter(IPanel<?>):
-	@Style(window = Window.ALL, outline = Outline.FOOTER);
-
-	declare @method: 
-	public void WidgetTitle.stylePanel(IPanel<?>):
-	@Style(window = Window.ALL, outline = Outline.BACKGROUND);
-
-	after(IElement<?> element) : 
-	execution(@Style * *.*(IElement+)) 
-	&& args(element) 
-	&& if(co.fxl.gui.style.impl.Style.enabled) {
-		List<Object> styles = getAnnotation(thisJoinPoint);
-		co.fxl.gui.style.impl.Style.instance().style(element, styles);
+	after(WidgetTitle widgetTitle, IHorizontalPanel panel) :
+	execution(public void WidgetTitle.styleWindowHeaderButton(IHorizontalPanel)) 
+	&& args(panel) 
+	&& this(widgetTitle) 
+	&& if(Style.enabled) {
+		Style.instance().window().button(panel, widgetTitle.sideWidget);
 	}
 
-	List<Object> getAnnotation(JoinPoint joinPoint) {
-		Signature sig = joinPoint.getSignature();
-		Class<?> c = sig.getDeclaringType();
-		String methodName = sig.getName();
-		for (Method m : c.getMethods()) {
-			if (m.getName().equals(methodName)) {
-				Style style = m.getAnnotation(Style.class);
-				List<Object> styles = new LinkedList<Object>();
-				if (!style.window().equals(Window.NONE))
-					styles.add(style.window());
-				if (!style.outline().equals(Outline.NONE))
-					styles.add(style.outline());
-				if (!style.list().equals(Style.List.NONE))
-					styles.add(style.list());
-				if (!style.element().equals(Element.NONE))
-					styles.add(style.element());
-				if (!style.status().equals(Status.NONE))
-					styles.add(style.status());
-				return styles;
-			}
-		}
-		return null;
+	CommandLink around(WidgetTitle widgetTitle, String text) :
+	execution(public CommandLink WidgetTitle.addHyperlink(String, String)) 
+	&& this(widgetTitle) 
+	&& args(.., text) 
+	&& if(Style.enabled) {
+		return proceed(widgetTitle, widgetTitle.sideWidget ? null : text);
+	}
+
+	after(WidgetTitle widgetTitle) :
+	execution(public WidgetTitle.new(ILayout, boolean)) 
+	&& this(widgetTitle) 
+	&& if(Style.enabled) {
+		Style.instance().window().main(widgetTitle.panel)
+				.header(widgetTitle.headerPanel);
+		widgetTitle.commandsOnTop();
+	}
+
+	after(WidgetTitle widgetTitle, String title) returning(ILabel label) :
+	execution(public ILabel WidgetTitle.addTitle(String))
+	&& this(widgetTitle)
+	&& args(title) 
+	&& if(Style.enabled) {
+		Style.instance().window().title(label, title, widgetTitle.sideWidget);
+	}
+
+	after(IPanel<?> panel) :
+	execution(public void WidgetTitle.styleFooter(IPanel<?>)) 
+	&& args(panel) 
+	&& if(Style.enabled) {
+		Style.instance().window().footer(panel);
+	}
+
+	after() returning(IPanel<?>[] panels):
+	execution(protected IPanel<?>[] addPanel()) 
+	&& if(Style.enabled) {
+		Style.instance().window().navigationEntry((ILinearPanel<?>) panels[0]);
+	}
+
+	after(SplitLayout splitLayout) :
+	execution(private void SplitLayout.init()) 
+	&& this(splitLayout) 
+	&& if(Style.enabled) {
+		Style.instance().background(splitLayout.panel)
+				.side(splitLayout.sidePanel);
 	}
 }

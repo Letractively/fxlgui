@@ -43,7 +43,7 @@ public class NavigationView {
 	private IClickable<?> forward;
 
 	public NavigationView(ILayout layout) {
-		widgetTitle = new WidgetTitle(layout, true);
+		widgetTitle = new WidgetTitle(layout, true).sideWidget(true);
 		widgetTitle.addToContextMenu(true);
 		widgetTitle.space(2);
 		setUp();
@@ -52,7 +52,7 @@ public class NavigationView {
 	private void setUp() {
 		if (panel != null)
 			return;
-		widgetTitle.addTitle("NAVIGATION");
+		widgetTitle.addTitle("Navigation");
 		panel = widgetTitle.content().panel().vertical().spacing(6);
 	}
 

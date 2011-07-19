@@ -60,6 +60,10 @@ public class WidgetTitle implements IClickListener {
 	private IHorizontalPanel commandPanelTop;
 	private boolean commandsOnTop = false;
 	private boolean addToContextMenu = false;
+	private boolean sideWidget = false;
+
+	public WidgetTitle() {
+	}
 
 	public WidgetTitle(ILayout layout) {
 		this(layout, false);
@@ -69,7 +73,11 @@ public class WidgetTitle implements IClickListener {
 		panel = layout.grid();
 		panel.color().white();
 		headerPanel = panel.cell(0, 0).panel().grid();
-		styleHeader(headerPanel);
+		headerPanel.color().rgb(136, 136, 136).gradient().vertical()
+				.rgb(113, 113, 113);
+		IBorder border = headerPanel.border();
+		border.color().rgb(172, 197, 213);
+		border.style().bottom();
 		headerPanel.visible(false);
 		if (addBorder)
 			panel.border().color().rgb(172, 197, 213);
@@ -141,7 +149,7 @@ public class WidgetTitle implements IClickListener {
 	}
 
 	// @Style(window = Window.SIDE, outline = Outline.FOOTER)
-	public static void styleFooter(IPanel<?> vertical) {
+	public void styleFooter(IPanel<?> vertical) {
 		vertical.color().rgb(249, 249, 249).gradient().vertical()
 				.rgb(216, 216, 216);
 		IBorder border2 = vertical.border();
@@ -166,7 +174,8 @@ public class WidgetTitle implements IClickListener {
 
 	public ILabel addTitle(String title) {
 		initHeader();
-		ILabel label = titlePanel.add().label().text(title);
+		ILabel label = titlePanel.add().label()
+				.text(sideWidget ? title.toUpperCase() : title);
 		styleHeaderTitleSide(label);
 		headerLabel = label;
 		if (foldable) {
@@ -213,7 +222,8 @@ public class WidgetTitle implements IClickListener {
 			image = iPanel.add().image().resource(imageResource);
 			images.add(image);
 		}
-		final ILabel label = addHyperlinkLabel(text, iPanel);
+		final ILabel label = text == null ? iPanel.add().label().visible(false)
+				: addHyperlinkLabel(text, iPanel);
 		labels.add(label);
 		// if (holdOnClicks) {
 		// IClickListener clickListener = new IClickListener() {
@@ -318,6 +328,11 @@ public class WidgetTitle implements IClickListener {
 
 	public WidgetTitle addToContextMenu(boolean b) {
 		addToContextMenu = b;
+		return this;
+	}
+
+	public WidgetTitle sideWidget(boolean sideWidget) {
+		this.sideWidget = sideWidget;
 		return this;
 	}
 }
