@@ -33,9 +33,8 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
-import co.fxl.gui.impl.Style.Element;
-import co.fxl.gui.impl.Style.Outline;
-import co.fxl.gui.impl.Style.Window;
+
+//import co.fxl.style.impl.Style;
 
 public class WidgetTitle implements IClickListener {
 
@@ -70,27 +69,19 @@ public class WidgetTitle implements IClickListener {
 		panel = layout.grid();
 		panel.color().white();
 		headerPanel = panel.cell(0, 0).panel().grid();
-		headerPanel.color().rgb(136, 136, 136).gradient().vertical()
-				.rgb(113, 113, 113);
-		IBorder border = headerPanel.border();
-		border.color().rgb(172, 197, 213);
-		border.style().bottom();
+		styleHeader(headerPanel);
 		headerPanel.visible(false);
 		if (addBorder)
 			panel.border().color().rgb(172, 197, 213);
 	}
 
-	// public WidgetTitle holdOnClick() {
-	// holdOnClicks = true;
-	// return this;
-	// }
-
-	// public WidgetTitle reset() {
-	// for (ILabel l : clickableState.keySet()) {
-	// l.clickable(clickableState.get(l));
-	// }
-	// return this;
-	// }
+	public void styleHeader(IPanel<?> headerPanel) {
+		headerPanel.color().rgb(136, 136, 136).gradient().vertical()
+				.rgb(113, 113, 113);
+		IBorder border = headerPanel.border();
+		border.color().rgb(172, 197, 213);
+		border.style().bottom();
+	}
 
 	public WidgetTitle space(int space) {
 		this.space = space;
@@ -145,12 +136,12 @@ public class WidgetTitle implements IClickListener {
 			vertical.center().panel().vertical();
 			IContainer cell = vertical.right();
 			commandPanel = cell.panel().horizontal().spacing(6);
-			styleMainFooter(vertical);
+			styleFooter(vertical);
 		}
 	}
 
-	@Style(window = Window.SIDE, outline = Outline.FOOTER)
-	public static void styleMainFooter(IPanel<?> vertical) {
+	// @Style(window = Window.SIDE, outline = Outline.FOOTER)
+	public static void styleFooter(IPanel<?> vertical) {
 		vertical.color().rgb(249, 249, 249).gradient().vertical()
 				.rgb(216, 216, 216);
 		IBorder border2 = vertical.border();
@@ -193,11 +184,8 @@ public class WidgetTitle implements IClickListener {
 		return this;
 	}
 
-	@Style(window = Window.SIDE, outline = Outline.HEADER)
+	// @Style(window = Window.SIDE, outline = Outline.HEADER)
 	public void styleHeaderTitleSide(ILabel label) {
-		// Styles.instance().style(label, Style.Window.HEADER,
-		// Style.Window.TITLE,
-		// Style.Window.SIDE);
 		label.font().weight().bold().pixel(12).color().white();
 	}
 
@@ -251,7 +239,8 @@ public class WidgetTitle implements IClickListener {
 		return cl;
 	}
 
-	@Style(window = Window.SIDE, outline = Outline.HEADER, element = Element.BUTTON)
+	// @Style(window = Window.SIDE, outline = Outline.HEADER, element =
+	// Element.BUTTON)
 	public void styleWindowHeaderButton(IHorizontalPanel iPanel) {
 		iPanel.color().rgb(248, 248, 248).gradient().vertical()
 				.rgb(216, 216, 216);
@@ -295,7 +284,7 @@ public class WidgetTitle implements IClickListener {
 		return label;
 	}
 
-	@Style(element = Element.SEPARATOR)
+	// @Style(element = Element.SEPARATOR)
 	public void styleSeparator(ILabel label) {
 		label.font().color().gray();
 	}

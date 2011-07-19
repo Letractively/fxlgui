@@ -16,9 +16,21 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.style;
+package co.fxl.gui.style.impl;
 
-public interface IStyle<T> {
+import co.fxl.gui.style.api.IStyle;
 
-	public void style(T element);
+public class Style {
+
+	public static boolean enabled = false;
+	private static IStyle instance;
+
+	public static void register(IStyle instance) {
+		Style.instance = instance;
+	}
+
+	public static IStyle instance() {
+		return instance;
+	}
+
 }
