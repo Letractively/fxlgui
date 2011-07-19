@@ -18,14 +18,31 @@
  */
 package co.fxl.gui.style.api;
 
-import java.util.List;
-
-import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.api.IPanel;
 
 public interface IStyle {
-	
+
+	public interface IWindow {
+
+		IWindow main(IPanel<?> panel);
+
+		IWindow header(IPanel<?> panel);
+
+		IWindow footer(IPanel<?> panel);
+
+		IWindow title(ILabel label, String title, boolean isSideWidget);
+
+		IWindow navigationEntry(ILinearPanel<?> panel);
+		
+		IWindow button(IPanel<?> panel, boolean isSideWidget);
+	}
+
 	IWindow window();
 
-	void style(IElement<?> element, List<?> styles);
+	IStyle background(IPanel<?> panel);
+
+	IStyle side(ILinearPanel<?> panel);
 
 }

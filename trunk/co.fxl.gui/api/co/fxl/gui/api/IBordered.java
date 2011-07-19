@@ -39,6 +39,8 @@ public interface IBordered {
 			IBorder bottom();
 
 			IBorder noBottom();
+
+			IBorder left();
 		}
 
 		IBorderStyle style();
