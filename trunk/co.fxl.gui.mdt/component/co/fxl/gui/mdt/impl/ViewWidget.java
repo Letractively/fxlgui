@@ -189,10 +189,10 @@ public class ViewWidget implements IUpdateable<IViewConfiguration> {
 			List<String> configurations, String configuration,
 			final boolean optionalForDetail, boolean neverShowFilter) {
 		this.widget = widget;
-		widgetTitle = new WidgetTitle(layout, true);
+		widgetTitle = new WidgetTitle(layout, true).sideWidget(true);
 		widgetTitle.addToContextMenu(true);
 		widgetTitle.space(2);
-		widgetTitle.addTitle("VIEWS");
+		widgetTitle.addTitle("Views");
 		panel = widgetTitle.content().panel().vertical().spacing(6);
 		String tableC = configuration;
 		if (tableC == null)
