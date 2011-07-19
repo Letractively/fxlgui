@@ -29,18 +29,21 @@ privileged aspect WidgetTemplateLayout {
 	call(private ILabel WidgetTitle.addHyperlinkLabel(String, IHorizontalPanel)) 
 	&& withincode(public CommandLink WidgetTitle.addHyperlink(String, String))
 	&& args(text, iPanel)
-	&& this(widgetTitle) {
+	&& this(widgetTitle) 
+	&& if(Layout.ENABLED) {
 		return widgetTitle.commandsOnTop ? Layout.instance().createButtonLabel(iPanel) : widgetTitle.addHyperlinkLabel(text, iPanel);
 	}
 
 	after() : 
-	execution(public void ViewImpl.onAllowedClick()) {
+	execution(public void ViewImpl.onAllowedClick()) 
+	&& if(Layout.ENABLED) {
 		Layout.instance().actionMenu().showContent();
 	}
 
 	after(SplitLayout sl) : 
 	execution(private void SplitLayout.init()) 
-	&& this(sl) {
+	&& this(sl) 
+	&& if(Layout.ENABLED) {
 		ActionMenuAdp l = new ActionMenuAdp(sl);
 		Layout.instance().actionMenu().listener(l);
 	}

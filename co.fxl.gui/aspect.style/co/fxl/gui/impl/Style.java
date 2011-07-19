@@ -16,21 +16,41 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.layout.impl;
+package co.fxl.gui.impl;
 
-import co.fxl.gui.layout.api.ILayout;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
-public class Layout {
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Style {
 
-	public static final boolean ENABLED = false;
-	private static ILayout instance;
-
-	public static void register(ILayout instance) {
-		Layout.instance = instance;
+	public enum Window {
+		DIALOG, ALL, MAIN, SIDE, NONE;
 	}
 
-	public static ILayout instance() {
-		return instance;
+	public enum Outline {
+		BACKGROUND, HEADER, CONTENT, FOOTER, NONE;
 	}
 
+	public enum List {
+		CHOICE, NUMBER, ENTRY, NONE;
+	}
+
+	public enum Element {
+		HYPERLINK, SEPARATOR, INPUT, BUTTON, BORDER, BACKGROUND, LABEL, COMBOBOX, NONE;
+	}
+
+	public enum Status {
+		ACTIVE, INACTIVE, HIGHLIGHT, UNHIGHLIGHT, ERROR, NONE;
+	}
+
+	Window window() default Window.NONE;
+
+	Outline outline() default Outline.NONE;
+
+	List list() default List.NONE;
+
+	Element element() default Element.NONE;
+
+	Status status() default Status.NONE;
 }

@@ -16,21 +16,16 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.layout.impl;
+package co.fxl.gui.style.api;
 
-import co.fxl.gui.layout.api.ILayout;
+import java.util.List;
 
-public class Layout {
+import co.fxl.gui.api.IElement;
 
-	public static final boolean ENABLED = false;
-	private static ILayout instance;
+public interface IStyle {
+	
+	IWindow window();
 
-	public static void register(ILayout instance) {
-		Layout.instance = instance;
-	}
-
-	public static ILayout instance() {
-		return instance;
-	}
+	void style(IElement<?> element, List<?> styles);
 
 }
