@@ -69,6 +69,12 @@ class SwingBorder implements IBorder {
 		}
 
 		@Override
+		public IBorder left() {
+			element.setBorder(new LeftBorder(SwingBorder.this, false));
+			return SwingBorder.this;
+		}
+
+		@Override
 		public IBorder top() {
 			element.setBorder(new TopBorder(SwingBorder.this, true));
 			return SwingBorder.this;
