@@ -8,7 +8,8 @@ import co.fxl.gui.mdt.impl.ViewWidget.Link;
 privileged aspect ViewWidgetLayout {
 
 	after() :
-	execution(private void ViewWidget.fire(ViewType, Link, ActionType)) {
+	execution(private void ViewWidget.fire(ViewType, Link, ActionType)) 
+	&& if(Layout.ENABLED) {
 		Layout.instance().actionMenu().showContent();
 	}
 }

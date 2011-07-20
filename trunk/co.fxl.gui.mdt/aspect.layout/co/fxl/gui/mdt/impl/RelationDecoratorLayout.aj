@@ -19,6 +19,7 @@
 package co.fxl.gui.mdt.impl;
 
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
+import co.fxl.gui.layout.impl.Layout;
 
 privileged aspect RelationDecoratorLayout {
 	
@@ -27,7 +28,8 @@ privileged aspect RelationDecoratorLayout {
 	void around(RelationDecorator rdec, IScrollTableWidget.IDecorator dec) : 
 	call(void RelationDecorator.listenOnAdd(IScrollTableWidget.IDecorator))
 	&& this(rdec)
-	&& args(dec) {
+	&& args(dec) 
+	&& if(Layout.ENABLED) {
 		rdec.listenOnAdd(AddEntityDialog.show(dec));
 	}
 }

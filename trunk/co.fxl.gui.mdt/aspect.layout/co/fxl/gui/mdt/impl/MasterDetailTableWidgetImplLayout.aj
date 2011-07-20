@@ -24,7 +24,8 @@ import co.fxl.gui.layout.impl.Layout;
 public aspect MasterDetailTableWidgetImplLayout {
 
 	after() : 
-	execution(	public void MasterDetailTableWidgetImpl.onApply(IFilterConstraints)) {
+	execution(	public void MasterDetailTableWidgetImpl.onApply(IFilterConstraints)) 
+	&& if(Layout.ENABLED) {
 		Layout.instance().actionMenu().showContent();
 	}
 }
