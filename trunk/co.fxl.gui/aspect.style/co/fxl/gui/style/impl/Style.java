@@ -22,7 +22,7 @@ import co.fxl.gui.style.api.IStyle;
 
 public class Style {
 
-	public static boolean ENABLED = false;
+	public static boolean ENABLED = true;
 	private static IStyle instance;
 
 	public static void register(IStyle instance) {
