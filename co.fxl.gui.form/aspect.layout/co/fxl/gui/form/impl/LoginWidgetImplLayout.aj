@@ -19,6 +19,7 @@
 package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.layout.impl.Layout;
 import co.fxl.gui.api.IPanel;
 
 privileged aspect LoginWidgetImplLayout {
@@ -27,13 +28,15 @@ privileged aspect LoginWidgetImplLayout {
 	call(private void LoginWidgetImpl.addLoginForm(IPanel<?>)) 
 	&& withincode(* LoginWidgetImpl.*(..))
 	&& args(liPanel)
-	&& this(widget) {
+	&& this(widget) 
+	&& if(Layout.ENABLED) {
 		liPanel = LogInDialog.addButton(widget, liPanel);
 		widget.addLoginForm(liPanel);
 	}
 
 	void around() : 
 	call(private void LoginWidgetImpl.addLoggedInAs(IHorizontalPanel)) 
-	&& withincode(* LoginWidgetImpl.*(..)) {
+	&& withincode(* LoginWidgetImpl.*(..)) 
+	&& if(Layout.ENABLED) {
 	}
 }

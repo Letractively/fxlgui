@@ -118,8 +118,9 @@ class LoginWidgetImpl implements ILoginWidget {
 
 	private void addLoginForm(IPanel<?> liPanel) {
 		addLoginFields(liPanel);
-		liPanel.add().label().text("Login").hyperlink()
-				.addClickListener(loginListener).mouseLeft();
+		ILabel text = liPanel.add().label().text("Login");
+		hyperlink(text);
+		text.addClickListener(loginListener).mouseLeft();
 	}
 
 	// TODO extract class LoginPanel
@@ -139,18 +140,22 @@ class LoginWidgetImpl implements ILoginWidget {
 			decorator.decorateBegin(loPanel, true);
 		addLoggedInAs(loPanel);
 		loggedInAs = loPanel.add().label();
-		decorate(loggedInAs).font().weight().bold().color().mix().black()
-				.gray();
-		loPanel.add().label().text("Logout").hyperlink()
-				.addClickListener(logoutListener).mouseLeft();
+		decorate(loggedInAs).font().weight().bold();
+		ILabel text = loPanel.add().label().text("Logout");
+		hyperlink(text);
+		text.addClickListener(logoutListener).mouseLeft();
 		// decorateHyperlink(label);
 		if (decorator != null)
 			decorator.decorateEnd(loPanel, true);
 	}
 
+	void hyperlink(ILabel text) {
+		text.hyperlink();
+	}
+
 	private void addLoggedInAs(IHorizontalPanel loPanel) {
 		ILabel loggedInHead = loPanel.add().label().text("Logged in as");
-		decorate(loggedInHead).font().color().gray();
+		decorate(loggedInHead);
 	}
 
 	private ILabel decorate(ILabel label) {
