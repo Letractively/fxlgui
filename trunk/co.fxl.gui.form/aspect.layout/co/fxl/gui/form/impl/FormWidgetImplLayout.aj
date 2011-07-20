@@ -22,6 +22,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.layout.impl.Layout;
 
 privileged aspect FormWidgetImplLayout {
 
@@ -29,14 +30,16 @@ privileged aspect FormWidgetImplLayout {
 	call(IGridCell IGridPanel.cell(int, int)) 
 	&& withincode(* FormWidgetImpl.*(..))
 	&& args(column, gridIndex) 
-	&& target(grid) {
+	&& target(grid) 
+	&& if(Layout.ENABLED) {
 		return grid.cell(0, gridIndex * 2 + column);
 	}
 
 	after(IGridCell cell) : 
 	call(public ILabel IContainer.label()) 
 	&& withincode(* FormWidgetImpl.*(..)) 
-	&& target(cell) {
+	&& target(cell) 
+	&& if(Layout.ENABLED) {
 		((IGridCell) cell).align().begin();
 	}
 
@@ -44,7 +47,8 @@ privileged aspect FormWidgetImplLayout {
 	call(IGridCell IGridPanel.cell(int, int)) 
 	&& withincode(* FormFieldImpl.*(..))
 	&& args(column, gridIndex) 
-	&& target(grid) {
+	&& target(grid) 
+	&& if(Layout.ENABLED) {
 		return grid.cell(1, gridIndex * 2 + 1);
 	}
 
@@ -52,7 +56,8 @@ privileged aspect FormWidgetImplLayout {
 	call(void FormWidgetImpl.expand(int)) 
 	&& withincode(* FormWidgetImpl.*(..))
 	&& args(column) 
-	&& this(widget){
+	&& this(widget) 
+	&& if(Layout.ENABLED) {
 		widget.grid.column(0).expand();
 	}
 }
