@@ -39,7 +39,8 @@ public class GPlusStyle implements IStyle {
 		@Override
 		public IWindow header(IPanel<?> panel) {
 			panel.color().remove();
-			panel.border().color().lightgray();
+			panel.border().color().mix().lightgray().gray();
+			panel.border().width(1);
 			panel.border().style().bottom();
 			return this;
 		}
@@ -105,6 +106,7 @@ public class GPlusStyle implements IStyle {
 		panel.spacing().left(10);
 		IBorder border = panel.border();
 		border.color().lightgray();
+		border.width(1);
 		border.style().left();
 		panel.color().white();
 		return this;
