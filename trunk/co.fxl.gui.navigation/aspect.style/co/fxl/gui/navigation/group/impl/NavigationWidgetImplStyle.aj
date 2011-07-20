@@ -16,25 +16,22 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.register.impl;
+package co.fxl.gui.navigation.group.impl;
 
-import co.fxl.gui.layout.impl.Layout;
+import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.style.impl.Style;
 
-privileged aspect RegisterWidgetImplLayout {
+privileged aspect NavigationWidgetImplStyle {
 
-	after(RegisterWidgetImpl widget) : 
-	execution(private void RegisterWidgetImpl.show()) 
+	after(NavigationWidgetImpl widget) :
+	execution(NavigationWidgetImpl.new(IContainer)) 
 	&& this(widget) 
-	&& if(Layout.ENABLED) {
-		RegisterDialog.addButton(widget);
+	&& if(Style.ENABLED) {
+		widget.hPanel.color().rgb(245, 245, 245);
+		IBorder b = widget.hPanel.border();
+		b.color().lightgray();
+		b.style().bottom();
 	}
 
-	after(RegisterImpl registerImpl) : 
-	execution(private void RegisterImpl.init()) 
-	&& this(registerImpl) 
-	&& if(Layout.ENABLED) {
-		boolean visible = registerImpl.widget.registers.isEmpty();
-		if (!registerImpl.disabled)
-			registerImpl.visible(visible);
-	}
 }

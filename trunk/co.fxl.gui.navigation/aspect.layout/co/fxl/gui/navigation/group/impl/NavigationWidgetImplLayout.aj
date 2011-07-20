@@ -21,26 +21,28 @@ package co.fxl.gui.navigation.group.impl;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
-
-//import co.fxl.gui.navigation.group.api.INavigationItem;
+import co.fxl.gui.layout.impl.Layout;
 
 privileged aspect NavigationWidgetImplLayout {
 
 	after(NavigationWidgetImpl widget) : 
 	execution(NavigationWidgetImpl.new(IContainer)) 
-	&& this(widget) {
+	&& this(widget) 
+	&& if(Layout.ENABLED) {
 		NavigationDialog.addButton(widget);
 	}
 
 	INavigationItem around(NavigationItemImpl item) :
 	call(INavigationItem NavigationItemImpl.updateVisibility(boolean))
 	&& withincode(public INavigationItem NavigationItemImpl.visible(boolean)) 
-	&& this(item) {
+	&& this(item) 
+	&& if(Layout.ENABLED) {
 		return item;
 	}
 
 	void around() : 
 	call(private void NavigationWidgetImpl.ensureSpaceBetweenGroups())  
-	&& withincode(public INavigationGroup NavigationWidgetImpl.addGroup()) {
+	&& withincode(public INavigationGroup NavigationWidgetImpl.addGroup()) 
+	&& if(Layout.ENABLED) {
 	}
 }
