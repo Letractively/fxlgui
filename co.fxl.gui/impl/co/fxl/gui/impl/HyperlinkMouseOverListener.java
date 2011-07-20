@@ -16,21 +16,29 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.style.impl;
+package co.fxl.gui.impl;
 
-import co.fxl.gui.style.api.IStyle;
+import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 
-public class Style {
+public class HyperlinkMouseOverListener implements IMouseOverListener {
 
-	public static boolean ENABLED = true;
-	private static IStyle instance;
+	ILabel label;
 
-	public static void register(IStyle instance) {
-		Style.instance = instance;
+	public HyperlinkMouseOverListener(ILabel label) {
+		this.label = label;
+		label.addMouseOverListener(this);
 	}
 
-	public static IStyle instance() {
-		return instance;
+	@Override
+	public void onMouseOver() {
+		if (label.clickable())
+			label.font().underline(true);
+	}
+
+	@Override
+	public void onMouseOut() {
+		label.font().underline(false);
 	}
 
 }
