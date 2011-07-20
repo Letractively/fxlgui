@@ -25,6 +25,7 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.layout.api.IActionMenu;
 import co.fxl.gui.layout.api.ILayout;
 import co.fxl.gui.layout.api.ILayoutDialog;
+import co.fxl.gui.layout.impl.Layout;
 
 public class HandheldLayout implements ILayout {
 	
@@ -32,21 +33,29 @@ public class HandheldLayout implements ILayout {
 
 	@Override
 	public IActionMenu actionMenu() {
+		assertEnabled();
 		return actionMenu;
+	}
+
+	void assertEnabled() {
+		assert Layout.ENABLED;
 	}
 
 	@Override
 	public ILinearPanel<?> createLinearPanel(IContainer c) {
+		assertEnabled();
 		return c.panel().vertical();
 	}
 
 	@Override
 	public ILabel createButtonLabel(IPanel<?> panel) {
+		assertEnabled();
 		return panel.add().label().visible(false);
 	}
 
 	@Override
 	public ILayoutDialog dialog(DialogType type) {
+		assertEnabled();
 		throw new MethodNotImplementedException();
 	}
 }
