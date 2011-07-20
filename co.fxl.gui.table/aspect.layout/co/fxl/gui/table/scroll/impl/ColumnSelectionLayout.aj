@@ -24,6 +24,7 @@ import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
+import co.fxl.gui.layout.impl.Layout;
 
 privileged aspect ColumnSelectionLayout {
 
@@ -32,26 +33,30 @@ privileged aspect ColumnSelectionLayout {
 	call(void ColumnSelection.addToPanel(..))
 	&& withincode(ColumnSelection.new(ScrollTableWidgetImpl))
 	&& args(p, clickListener) 
-	&& this(columnSelection) {
+	&& this(columnSelection)
+	&& if(Layout.ENABLED) {
 		ColumnSelectionDialog.addButton(columnSelection, (ILinearPanel) p);
 	}
 
 	void around() : 
 	call(void ColumnSelection.addTitle(ILinearPanel)) 
-	&& withincode(void ColumnSelection.addToPanel(..)) {
+	&& withincode(void ColumnSelection.addToPanel(..))
+	&& if(Layout.ENABLED) {
 	}
 
 	ILabel around(ILabel label, String in) : 
 	call(public ILabel ITextElement.text(String)) 
 	&& withincode(private void ScrollTableWidgetImpl.addDisplayingNote()) 
 	&& args(in) 
-	&& target(label) {
+	&& target(label)
+	&& if(Layout.ENABLED) {
 		return label.text(in.equals("DISPLAYING ROWS") ? "ROWS" : in);
 	}
 
 	after(ScrollTableWidgetImpl widget) returning(IScrollTableColumn column) : 
 	execution(public IScrollTableColumn ScrollTableWidgetImpl.addColumn()) 
-	&& this(widget) {
+	&& this(widget)
+	&& if(Layout.ENABLED) {
 		if (widget.columns.size() > 2) {
 			column.visible(false);
 		}
@@ -59,13 +64,15 @@ privileged aspect ColumnSelectionLayout {
 
 	after() returning(Link link) : 
 	call(private Link Link.clickable(IContainer, String, boolean))
-	&& withincode(public Link Link.clickableLink(IContainer, String))  {
+	&& withincode(public Link Link.clickableLink(IContainer, String))
+	&& if(Layout.ENABLED) {
 		link.label.visible(false);
 	}
 
 	before(Link link) : 
 	execution(private Link Link.clickable(IContainer, String, boolean)) 
-	&& this(link) {
+	&& this(link)
+	&& if(Layout.ENABLED) {
 		Link.SPACE = 0;
 	}
 }
