@@ -31,10 +31,12 @@ class LeftBorder extends AbstractBorder implements SwingConstants {
 	private static final long serialVersionUID = 3170444957341182701L;
 	private SwingBorder borderStyle;
 	private boolean top;
+	private int borderThickness;
 
-	public LeftBorder(SwingBorder borderStyle, boolean top) {
+	public LeftBorder(SwingBorder borderStyle, boolean top, int borderThickness) {
 		this.borderStyle = borderStyle;
 		this.top = top;
+		this.borderThickness = borderThickness;
 	}
 
 	@Override
@@ -42,7 +44,7 @@ class LeftBorder extends AbstractBorder implements SwingConstants {
 			int height) {
 		Color oldColor = g.getColor();
 		g.setColor(borderStyle.borderColor);
-		g.drawLine(x, y, x, y + height - 1);
+		g.drawRect(x, y, x + borderThickness - 1, y + height - 1);
 		g.setColor(oldColor);
 	}
 

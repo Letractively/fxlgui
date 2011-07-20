@@ -64,19 +64,19 @@ class SwingBorder implements IBorder {
 
 		@Override
 		public IBorder bottom() {
-			element.setBorder(new TopBorder(SwingBorder.this, false));
+			element.setBorder(new TopBorder(SwingBorder.this, false, borderThickness));
 			return SwingBorder.this;
 		}
 
 		@Override
 		public IBorder left() {
-			element.setBorder(new LeftBorder(SwingBorder.this, false));
+			element.setBorder(new LeftBorder(SwingBorder.this, false, borderThickness));
 			return SwingBorder.this;
 		}
 
 		@Override
 		public IBorder top() {
-			element.setBorder(new TopBorder(SwingBorder.this, true));
+			element.setBorder(new TopBorder(SwingBorder.this, true, borderThickness));
 			return SwingBorder.this;
 		}
 
