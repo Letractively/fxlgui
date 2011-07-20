@@ -16,25 +16,30 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.register.impl;
+package co.fxl.gui.navigation.group.impl;
 
-import co.fxl.gui.layout.impl.Layout;
+import co.fxl.gui.style.impl.Style;
 
-privileged aspect RegisterWidgetImplLayout {
+privileged aspect NavigationItemImplStyle {
 
-	after(RegisterWidgetImpl widget) : 
-	execution(private void RegisterWidgetImpl.show()) 
-	&& this(widget) 
-	&& if(Layout.ENABLED) {
-		RegisterDialog.addButton(widget);
+	after(NavigationItemImpl item) :
+	execution(void NavigationItemImpl.showLabelAsInactive()) 
+	&& this(item) 
+	&& if(Style.ENABLED) {
+		item.buttonPanel.spacing(4);
+		item.button.font().pixel(13);
+		item.buttonPanel.border().color().gray();
+		item.buttonPanel.color().gray();
+		item.button.font().color().white();
 	}
 
-	after(RegisterImpl registerImpl) : 
-	execution(private void RegisterImpl.init()) 
-	&& this(registerImpl) 
-	&& if(Layout.ENABLED) {
-		boolean visible = registerImpl.widget.registers.isEmpty();
-		if (!registerImpl.disabled)
-			registerImpl.visible(visible);
+	after(NavigationItemImpl item) :
+	execution(private void NavigationItemImpl.showLabelAsActive(..)) 
+	&& this(item) 
+	&& if(Style.ENABLED) {
+		item.buttonPanel.border().color().mix().gray().black();
+		item.buttonPanel.color().white();
+		item.button.font().color().gray();
+		item.button.font().color().black();
 	}
 }

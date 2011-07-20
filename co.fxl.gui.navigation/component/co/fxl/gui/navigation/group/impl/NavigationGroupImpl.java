@@ -21,6 +21,7 @@ package co.fxl.gui.navigation.group.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.ILinearPanel;
@@ -54,7 +55,8 @@ class NavigationGroupImpl implements INavigationGroup {
 	}
 
 	ILinearPanel<?> createPanel(ILayout layout) {
-		return layout.horizontal();
+		IHorizontalPanel panel = layout.horizontal();
+		return panel;
 	}
 
 	@Override

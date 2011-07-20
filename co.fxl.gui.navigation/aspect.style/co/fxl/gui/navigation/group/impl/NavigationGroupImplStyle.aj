@@ -16,25 +16,18 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.register.impl;
+package co.fxl.gui.navigation.group.impl;
 
-import co.fxl.gui.layout.impl.Layout;
+import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.api.ILayout;
+import co.fxl.gui.style.impl.Style;
 
-privileged aspect RegisterWidgetImplLayout {
+privileged aspect NavigationGroupImplStyle {
 
-	after(RegisterWidgetImpl widget) : 
-	execution(private void RegisterWidgetImpl.show()) 
-	&& this(widget) 
-	&& if(Layout.ENABLED) {
-		RegisterDialog.addButton(widget);
+	after() returning(ILinearPanel<?> panel) :
+	call(ILinearPanel<?> NavigationGroupImpl.createPanel(ILayout)) 
+	&& if(Style.ENABLED) {
+		panel.spacing(3);
 	}
 
-	after(RegisterImpl registerImpl) : 
-	execution(private void RegisterImpl.init()) 
-	&& this(registerImpl) 
-	&& if(Layout.ENABLED) {
-		boolean visible = registerImpl.widget.registers.isEmpty();
-		if (!registerImpl.disabled)
-			registerImpl.visible(visible);
-	}
 }

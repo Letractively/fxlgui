@@ -18,23 +18,15 @@
  */
 package co.fxl.gui.register.impl;
 
-import co.fxl.gui.layout.impl.Layout;
+import co.fxl.gui.register.api.IRegisterWidget;
+import co.fxl.gui.style.impl.Style;
 
-privileged aspect RegisterWidgetImplLayout {
+public aspect RegisterWidgetImplStyle {
 
-	after(RegisterWidgetImpl widget) : 
-	execution(private void RegisterWidgetImpl.show()) 
-	&& this(widget) 
-	&& if(Layout.ENABLED) {
-		RegisterDialog.addButton(widget);
-	}
-
-	after(RegisterImpl registerImpl) : 
-	execution(private void RegisterImpl.init()) 
-	&& this(registerImpl) 
-	&& if(Layout.ENABLED) {
-		boolean visible = registerImpl.widget.registers.isEmpty();
-		if (!registerImpl.disabled)
-			registerImpl.visible(visible);
+	after(RegisterWidgetImpl register) :
+	execution(public IRegisterWidget RegisterWidgetImpl.topBorder()) 
+	&& this(register) 
+	&& if(Style.ENABLED) {
+		register.cardPanel.border().remove();
 	}
 }
