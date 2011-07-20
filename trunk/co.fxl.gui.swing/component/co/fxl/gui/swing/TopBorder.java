@@ -31,10 +31,12 @@ class TopBorder extends AbstractBorder implements SwingConstants {
 	private static final long serialVersionUID = 3170444957341182701L;
 	private SwingBorder borderStyle;
 	private boolean top;
+	private int borderThickness;
 
-	public TopBorder(SwingBorder borderStyle, boolean top) {
+	public TopBorder(SwingBorder borderStyle, boolean top, int borderThickness) {
 		this.borderStyle = borderStyle;
 		this.top = top;
+		this.borderThickness = borderThickness;
 	}
 
 	@Override
@@ -42,8 +44,8 @@ class TopBorder extends AbstractBorder implements SwingConstants {
 			int height) {
 		Color oldColor = g.getColor();
 		g.setColor(borderStyle.borderColor);
-		g.drawLine(x, top ? y : y + height - 1, x + width - 1, top ? y : y
-				+ height - 1);
+		g.drawRect(x, top ? y : y + height - 1 - borderThickness + 1, x + width
+				- 1, top ? y + borderThickness - 1 : y + height - 1);
 		g.setColor(oldColor);
 	}
 

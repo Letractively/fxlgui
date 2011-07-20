@@ -50,10 +50,10 @@ class SwingLabel extends SwingTextElement<JLabel, ILabel> implements ILabel {
 
 	@Override
 	public ILabel clickable(boolean enable) {
+		super.clickable(enable);
 		if (hyperlinkDecorator != null) {
 			hyperlinkDecorator.clickable(enable);
 		}
-		super.clickable(enable);
 		return this;
 	}
 
