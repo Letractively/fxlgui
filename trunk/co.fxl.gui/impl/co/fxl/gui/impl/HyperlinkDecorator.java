@@ -19,70 +19,28 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 
-public class HyperlinkDecorator implements IMouseOverListener {
-
-	private boolean enabled = true;
-	private ILabel label;
+public class HyperlinkDecorator extends HyperlinkMouseOverListener {
 
 	public HyperlinkDecorator(ILabel label) {
-		this.label = label;
-		// TODO doesn't work (yet) with GWT:
-		label.addMouseOverListener(this);
+		super(label);
 		styleHyperlinkActive(label);
 	}
 
 	private void styleHyperlinkActive(ILabel label) {
-		// Styles.instance().style(label, Style.Element.HYPERLINK,
-		// Style.Status.ACTIVE);
 		label.font().color().rgb(0, 87, 141);
 	}
 
 	private void styleHyperlinkInactive(ILabel label) {
-		// Styles.instance().style(label, Style.Element.HYPERLINK,
-		// Style.Status.INACTIVE);
 		label.font().color().gray();
 	}
 
-	private void styleHyperlinkHighlight(ILabel label) {
-		// Styles.instance().style(label, Style.Element.HYPERLINK,
-		// Style.Status.HIGHLIGHT);
-		label.font().underline(true);
-	}
-
-	private void styleHyperlinkUnhighlight(ILabel label) {
-		// Styles.instance().style(label, Style.Element.HYPERLINK,
-		// Style.Status.UNHIGHLIGHT);
-		label.font().underline(false);
-	}
-
 	public HyperlinkDecorator clickable(boolean enable) {
-		this.enabled = enable;
-		if (enabled) {
+		if (label.clickable()) {
 			styleHyperlinkActive(label);
 		} else {
 			styleHyperlinkInactive(label);
-			styleHyperlinkUnhighlight(label);
 		}
 		return this;
-	}
-
-	@Override
-	public void onMouseOver() {
-		update(true);
-	}
-
-	protected void update(boolean over) {
-		if (enabled && over) {
-			styleHyperlinkHighlight(label);
-		} else {
-			styleHyperlinkUnhighlight(label);
-		}
-	}
-
-	@Override
-	public void onMouseOut() {
-		update(false);
 	}
 }
