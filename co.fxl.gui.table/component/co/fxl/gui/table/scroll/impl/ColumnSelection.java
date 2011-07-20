@@ -52,31 +52,40 @@ class ColumnSelection {
 		for (final ScrollTableColumnImpl c : widget.columns) {
 			p.addSpace(4);
 			IHorizontalPanel b = p.add().panel().horizontal().spacing(4);
-			b.border().color().rgb(172, 197, 213);
-			if (c.visible)
-				b.color().gray();
-			else
-				b.color().white();
-			ILabel l = b.add().label().text(c.name).autoWrap(true);
-			l.font().pixel(11);
-			if (c.visible)
-				l.font().color().white();
-			else
-				l.font().color().rgb(102, 102, 102);
-			b.addClickListener(new IClickListener() {
-				@Override
-				public void onClick() {
-					c.visible = !c.visible;
-					boolean allInvisible = true;
-					for (ScrollTableColumnImpl c1 : widget.columns)
-						allInvisible &= !c1.visible;
-					if (allInvisible)
-						c.visible = true;
-					else
-						clickListener.onClick();
-				}
-			});
+			decoratePanel(clickListener, c, b);
 		}
+	}
+
+	void decoratePanel(final IClickListener clickListener,
+			final ScrollTableColumnImpl c, IHorizontalPanel b) {
+		b.border().color().rgb(172, 197, 213);
+		if (c.visible)
+			b.color().gray();
+		else
+			b.color().white();
+		ILabel l = b.add().label().text(c.name).autoWrap(true);
+		l.font().pixel(11);
+		decorateLabel(c, l);
+		b.addClickListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				c.visible = !c.visible;
+				boolean allInvisible = true;
+				for (ScrollTableColumnImpl c1 : widget.columns)
+					allInvisible &= !c1.visible;
+				if (allInvisible)
+					c.visible = true;
+				else
+					clickListener.onClick();
+			}
+		});
+	}
+
+	void decorateLabel(final ScrollTableColumnImpl c, ILabel l) {
+		if (c.visible)
+			l.font().color().white();
+		else
+			l.font().color().rgb(102, 102, 102);
 	}
 
 	void addTitle(ILinearPanel p) {
