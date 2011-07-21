@@ -21,7 +21,6 @@ package co.fxl.gui.tree.api;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
-import co.fxl.gui.mdt.api.IProperty;
 
 public interface IFilterList<T> {
 
