@@ -41,7 +41,7 @@ import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.Icons;
 import co.fxl.gui.impl.LazyClickListener;
 
-class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
+public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 
 	// TODO Swing: cells are too small
 
