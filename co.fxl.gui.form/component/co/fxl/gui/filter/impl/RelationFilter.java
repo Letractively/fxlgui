@@ -160,7 +160,7 @@ class RelationFilter extends StringFilter {
 
 	@Override
 	public void clear() {
-		clear.onClick();
+		clear(false);
 	}
 
 	@Override
