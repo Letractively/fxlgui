@@ -31,6 +31,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 	public static int WIDTH_SCROLL_PANEL = 35;
 	public static final int HEIGHT_SCROLL_BAR = 17;
+	private int widthScrollPanel = WIDTH_SCROLL_PANEL;
 	private IDecorator decorator;
 	private int minRowHeight = 22;
 	private int height = 400;
@@ -122,7 +123,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		dock.height(height);
 		contentPanel = dock.center().panel().card();
 		scrollPane = dock.right().scrollPane();
-		scrollPane.size(WIDTH_SCROLL_PANEL, height);
+		scrollPane.size(widthScrollPanel, height);
 		scrollContentPanel = scrollPane.viewPort().panel().absolute();
 		scrollContentPanel.add().label().text("&#160;");
 		int scrollPanelHeight = size * minRowHeight;
@@ -156,12 +157,6 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 					rowIndex = maxRowIndex;
 				if (rowIndex > 0) {
 					int y = convertRowIndex2ScrollOffset(rowIndex);
-					// IPanel<?> quader =
-					// scrollContentPanel.add().panel()
-					// .absolute();
-					// quader.size(4, 4);
-					// scrollContentPanel.offset(token, 0, y);
-					// scrollPane.scrollIntoView(token);
 					if (lastCard != null)
 						lastCard.clear();
 					dock.visible(true);
@@ -169,6 +164,9 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 					dock.visible(false);
 					// TODO style="overflow:auto" on body element
 					// FocusPanel around Widget to scroll into view
+				} else if (rowIndex == 0) {
+					scrollPane.remove();
+					widthScrollPanel = 0;
 				}
 				scrollPane.addScrollListener(LazyScrollPaneImpl.this);
 				update();
@@ -198,7 +196,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		if (horizontalScrollPane) {
 			scrollPane2 = c.scrollPane();
 			if (width != -1)
-				scrollPane2.width(width - WIDTH_SCROLL_PANEL);
+				scrollPane2.width(width - widthScrollPanel);
 			c = scrollPane2.horizontal().viewPort();
 		}
 		decorator.decorate(c, rowIndex, lastIndex);
@@ -215,7 +213,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	public ILazyScrollPane width(int width) {
 		this.width = width;
 		if (width != -1 && scrollPane2 != null)
-			scrollPane2.width(width - WIDTH_SCROLL_PANEL);
+			scrollPane2.width(width - widthScrollPanel);
 		return this;
 	}
 
