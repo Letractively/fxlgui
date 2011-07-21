@@ -119,8 +119,11 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		if (!adjustHeights) {
 			dock.height(height);
 		}
-		if (size == 0)
+		if (size == 0) {
+			dock.left().panel().vertical().spacing(16).add().label()
+					.text("NO ENTITIES FOUND").font().pixel(10).color().gray();
 			return;
+		}
 		dock.visible(false);
 		dock.height(height);
 		contentPanel = dock.center().panel().card();
