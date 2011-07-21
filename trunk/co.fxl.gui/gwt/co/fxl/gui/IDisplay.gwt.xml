@@ -4,4 +4,6 @@
 	<source path="impl" />
 	<source path="layout/api" />
 	<source path="layout/impl" />
+	<source path="style/api" />
+	<source path="style/impl" />
 </module>
