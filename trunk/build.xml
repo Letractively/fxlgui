@@ -16,6 +16,7 @@
 	<property name="co.fxl.gui.dir" value="${project.dir}/co.fxl.gui"/>
 	<property name="co.fxl.gui.api.src.dir" value="${co.fxl.gui.dir}/api"/>
 	<property name="co.fxl.gui.impl.src.dir" value="${co.fxl.gui.dir}/impl"/>
+	<property name="co.fxl.gui.aspect.style.src.dir" value="${co.fxl.gui.dir}/aspect.style"/>
 	<property name="co.fxl.gui.aspect.layout.src.dir" value="${co.fxl.gui.dir}/aspect.layout"/>
 	<property name="co.fxl.gui.gwt.src.dir" value="${co.fxl.gui.dir}/gwt"/>
 		
@@ -107,6 +108,7 @@
 		<copy todir="${project.build.src.dir}">
     	<fileset dir="${co.fxl.gui.api.src.dir}"/>
     	<fileset dir="${co.fxl.gui.impl.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.aspect.style.src.dir}"/>
     	<fileset dir="${co.fxl.gui.aspect.layout.src.dir}"/>
     	<fileset dir="${co.fxl.gui.gwt.src.dir}"/>
     	<fileset dir="${co.fxl.gui.form.api.src.dir}"/>
