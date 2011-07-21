@@ -20,7 +20,6 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -61,16 +60,17 @@ public class NavigationView {
 			return this;
 		this.nl = nl;
 		back = widgetTitle.addHyperlink(Icons.NAVIGATION_BACK, "Back");
-		back.addClickListener(new IClickListener() {
+		back.addClickListener(new LazyClickListener() {
+
 			@Override
-			public void onClick() {
+			protected void onAllowedClick() {
 				nl.previous();
 			}
 		});
 		forward = widgetTitle.addHyperlink(Icons.NAVIGATION_FORWARD, "Forward");
-		forward.addClickListener(new IClickListener() {
+		forward.addClickListener(new LazyClickListener() {
 			@Override
-			public void onClick() {
+			public void onAllowedClick() {
 				nl.next();
 			}
 		});

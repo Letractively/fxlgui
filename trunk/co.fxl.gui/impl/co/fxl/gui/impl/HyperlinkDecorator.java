@@ -36,7 +36,7 @@ public class HyperlinkDecorator extends HyperlinkMouseOverListener {
 	}
 
 	public HyperlinkDecorator clickable(boolean enable) {
-		if (label.clickable()) {
+		if (enable) {
 			styleHyperlinkActive(label);
 		} else {
 			styleHyperlinkInactive(label);
