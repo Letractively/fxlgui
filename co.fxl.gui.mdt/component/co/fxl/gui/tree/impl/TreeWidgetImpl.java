@@ -52,6 +52,8 @@ import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 
 public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
+	
+	// TODO Swing: native implementation: required for automated testing
 
 	static int SPLIT_POSITION = 250;
 	private boolean showRefresh = true;
