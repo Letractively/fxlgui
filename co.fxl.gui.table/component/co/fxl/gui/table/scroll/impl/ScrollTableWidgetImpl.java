@@ -313,6 +313,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	boolean hasFilter() {
+		// if (rows.size() >= (Integer) FilterWidgetImpl.DEFAULT_SIZES.get(0))
+		// return true;
 		for (ScrollTableColumnImpl c : columns)
 			if (c.filterable)
 				return true;
@@ -562,12 +564,14 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				.firstRow() : 0;
 		String status = +(firstRow + rowOffset + 1) + " - " + (firstRow + rt);
 		String in = "DISPLAYING ROWS";
+		label = p.add().label();
 		label.text(in);
 		label.font().pixel(10);
 		addStatus(p, status);
 		if (constraints != null && constraints.rowIterator().hasNext()) {
 			p.addSpace(4);
 			in = ">>";
+			label = p.add().label();
 			ILabel l = label.text(in);
 			l.hyperlink().font().pixel(10);
 			l.addClickListener(new IClickListener() {
