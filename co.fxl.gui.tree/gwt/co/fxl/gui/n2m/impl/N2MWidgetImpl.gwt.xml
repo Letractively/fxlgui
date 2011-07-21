@@ -1,0 +1,4 @@
+<module>
+	<inherits name='co.fxl.gui.n2m.api.IN2MWidget' />
+	<source path='' />
+</module>

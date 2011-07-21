@@ -1,0 +1,5 @@
+<module>
+	<inherits name='co.fxl.gui.mdt.api.IMasterDetailTableWidget' />
+	<inherits name='co.fxl.gui.navigation.api.INavigationWidget' />
+	<source path='' />
+</module>
