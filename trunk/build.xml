@@ -68,6 +68,10 @@
 	<property name="co.fxl.gui.layout.handheld.component.src.dir" value="${co.fxl.gui.layout.handheld.dir}/component"/>
 	<property name="co.fxl.gui.layout.handheld.gwt.src.dir" value="${co.fxl.gui.layout.handheld.dir}/gwt"/>		
 
+	<property name="co.fxl.gui.style.gplus.dir" value="${project.dir}/co.fxl.gui.style.gplus"/>
+	<property name="co.fxl.gui.style.gplus.component.src.dir" value="${co.fxl.gui.style.gplus.dir}/component"/>
+	<property name="co.fxl.gui.style.gplus.gwt.src.dir" value="${co.fxl.gui.style.gplus.dir}/gwt"/>		
+
 	<path id="gwt.class.path">
 		<pathelement path="${gwt.home}/gwt-user.jar"/>
 		<pathelement path="${gwt.home}/gwt-dev.jar"/>
@@ -130,6 +134,8 @@
     	<fileset dir="${co.fxl.gui.table.gwt.src.dir}"/>
     	<fileset dir="${co.fxl.gui.layout.handheld.component.src.dir}"/>
     	<fileset dir="${co.fxl.gui.layout.handheld.gwt.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.style.gplus.component.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.style.gplus.gwt.src.dir}"/>
   	</copy>
 	</target>
 	
@@ -154,7 +160,9 @@
     	<fileset dir="${co.fxl.gui.table.component.src.dir}"/>	
     	<fileset dir="${co.fxl.gui.wizard.api.src.dir}"/>
     	<fileset dir="${co.fxl.gui.wizard.component.src.dir}"/>
-    </copy>
+   	<fileset dir="${co.fxl.gui.layout.handheld.component.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.style.gplus.component.src.dir}"/>
+     </copy>
 	</target>
 	
 	<target name="compileGWT" depends="copyGWT">	
