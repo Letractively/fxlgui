@@ -119,6 +119,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		if (!adjustHeights) {
 			dock.height(height);
 		}
+		if (size == 0)
+			return;
 		dock.visible(false);
 		dock.height(height);
 		contentPanel = dock.center().panel().card();
@@ -164,7 +166,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 					dock.visible(false);
 					// TODO style="overflow:auto" on body element
 					// FocusPanel around Widget to scroll into view
-				} 
+				}
 				if (maxRowIndex == 0) {
 					scrollPane.remove();
 					widthScrollPanel = 0;
