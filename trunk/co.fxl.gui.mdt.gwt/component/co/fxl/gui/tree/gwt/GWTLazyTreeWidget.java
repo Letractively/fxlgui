@@ -166,6 +166,9 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 
 	HTML getHTML(final int firstRow, int lastRow) {
 		List<ITree<Object>> rows = tree.rows(firstRow, lastRow);
+		if (rows.isEmpty())
+			throw new RuntimeException("illegal range: " + firstRow + " - "
+					+ lastRow);
 		StringBuilder b = new StringBuilder(
 				"<table cellspacing=\"0\" cellpadding=\"0\">");
 		for (int i = firstRow; i <= lastRow; i++) {
