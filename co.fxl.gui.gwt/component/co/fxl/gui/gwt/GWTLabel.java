@@ -69,10 +69,11 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 
 	@Override
 	public ILabel clickable(boolean enable) {
+		ILabel clickable = super.clickable(enable);
 		if (hyperlinkDecorator != null) {
 			hyperlinkDecorator.clickable(enable);
 		}
-		return super.clickable(enable);
+		return clickable;
 	}
 
 	@Override
