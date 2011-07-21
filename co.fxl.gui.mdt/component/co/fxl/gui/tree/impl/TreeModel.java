@@ -30,7 +30,7 @@ class TreeModel<T> {
 
 	private TreeWidgetImpl<T> widget;
 	ITree<T> root;
-	private ITree<T> selection;
+	ITree<T> selection;
 	private boolean isCopy;
 	private ITree<T> cutCopy;
 	private Map<T, NodeRef<T>> nodes = new HashMap<T, NodeRef<T>>();
@@ -56,11 +56,11 @@ class TreeModel<T> {
 		selection(tree, true);
 	}
 
-//	private boolean ignore = false;
+	// private boolean ignore = false;
 
 	void selection(ITree<T> tree, boolean setDetailViewTree) {
-//		if (ignore)
-//			return;
+		// if (ignore)
+		// return;
 		// widget.previousSelection = tree.object();
 		// widget.lazyTree.refresh(false);
 		if (selection != null) {
@@ -81,10 +81,10 @@ class TreeModel<T> {
 				selection = node.tree();
 			} else {
 				throw new MethodNotImplementedException();
-//				widget.previousSelection = tree.object();
-//				ignore = true;
-//				widget.lazyTree.refresh(false);
-//				ignore = false;
+				// widget.previousSelection = tree.object();
+				// ignore = true;
+				// widget.lazyTree.refresh(false);
+				// ignore = false;
 			}
 		}
 		if (setDetailViewTree)
@@ -228,6 +228,7 @@ class TreeModel<T> {
 	}
 
 	void register(NodeRef<T> node) {
+		nodes.clear();
 		nodes.put(node.tree().object(), node);
 		if (widget.previousSelection != null
 				&& widget.previousSelection.equals(node.tree().object())) {
@@ -246,8 +247,30 @@ class TreeModel<T> {
 		}
 	}
 
-	NodeRef<T> node(ITree<T> tree) {
-		return nodes.get(tree.object());
+	NodeRef<T> node(final ITree<T> tree) {
+		NodeRef<T> nodeRef = nodes.get(tree.object());
+		if (nodeRef == null) {
+			nodeRef = new NodeRef<T>() {
+
+				@Override
+				public ITree<T> tree() {
+					return tree;
+				}
+
+				@Override
+				public void selected(boolean selected) {
+					widget.previousSelection = tree.object();
+					widget.refreshLazyTree(false);
+				}
+
+				@Override
+				public NodeRef<T> refresh(boolean recurse) {
+					widget.refreshLazyTree(false);
+					return this;
+				}
+			};
+		}
+		return nodeRef;
 	}
 
 	boolean isCutCopy(TreeNode<T> node) {
