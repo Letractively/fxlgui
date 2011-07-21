@@ -18,18 +18,28 @@
  */
 package co.fxl.gui.i18n.impl;
 
+import co.fxl.gui.i18n.api.II18N;
+
 public class I18N {
 
-	private static I18N instance;
+	public static final boolean ENABLED = false;
+	private static II18N instance = new II18N() {
+
+		@Override
+		public String translate(String text) {
+			return text;
+		}
+	};
 
 	private I18N() {
 	}
 
-	public static void register(I18N i18N) {
+	public static void register(II18N i18N) {
+		assert ENABLED;
 		instance = i18N;
 	}
 
-	public static I18N instance() {
+	public static II18N instance() {
 		return instance;
 	}
 }
