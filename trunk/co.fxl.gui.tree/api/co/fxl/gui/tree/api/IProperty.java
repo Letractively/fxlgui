@@ -16,7 +16,7 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.mdt.api;
+package co.fxl.gui.tree.api;
 
 import java.util.List;
 

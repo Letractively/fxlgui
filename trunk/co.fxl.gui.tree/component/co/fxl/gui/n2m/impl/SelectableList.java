@@ -30,7 +30,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.mdt.impl.Icons;
+import co.fxl.gui.tree.impl.Icons;
 
 class SelectableList {
 

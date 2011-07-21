@@ -16,26 +16,15 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.mdt.impl;
+package co.fxl.gui.tree.impl;
 
-import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.api.IDisplay.IResizeListener;
+public class Icons {
 
-public class RelationPageResizeListener implements IResizeListener {
+	public static String PASTE = "paste.png";
+	public static String CUT = "cut.png";
+	public static String COPY = "copy.png";
+	public static String MOVE = "move.png";
+	public static String NEW = "new.png";
+	public static String REFRESH = "refresh.png";
 
-	private static RelationPageResizeListener instance;
-	private static IResizeListener listener;
-
-	public static void setup(IDisplay display, IResizeListener l) {
-		if (instance == null) {
-			instance = new RelationPageResizeListener();
-			display.addResizeListener(instance);
-		}
-		listener = l;
-	}
-
-	@Override
-	public boolean onResize(int width, int height) {
-		return listener.onResize(width, height);
-	}
 }

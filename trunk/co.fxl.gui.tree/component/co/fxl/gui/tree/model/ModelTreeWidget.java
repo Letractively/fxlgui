@@ -41,12 +41,12 @@ import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.KeyAdapter;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.WidgetTitle;
-import co.fxl.gui.mdt.impl.Icons;
 import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
 import co.fxl.gui.navigation.api.IMenuWidget;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
+import co.fxl.gui.tree.impl.Icons;
 import co.fxl.gui.tree.impl.ViewID;
 
 public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
