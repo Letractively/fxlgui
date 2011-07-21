@@ -23,8 +23,8 @@ public class GermanI18N extends I18NTemplate {
 	private static final long serialVersionUID = -432280219994971029L;
 
 	public GermanI18N() {
-		put("Back", "Zurück");
-		put("Forward", "Vorwärts");
+		put("Back", "Zur\u00fcck");
+		put("Forward", "Vorw\u00e4rts");
 		put("Navigation", "Navigation");
 	}
 }

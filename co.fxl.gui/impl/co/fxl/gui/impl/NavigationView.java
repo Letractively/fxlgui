@@ -31,7 +31,9 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class NavigationView {
 
-	private static final String NAVIGATION = "Navigation";
+	static String FORWARD = "Forward";
+	static String BACK = "Back";
+	static String NAVIGATION = "Navigation";
 	private static final boolean SHOW_NUMBERS = false;
 	private static final boolean SHOW_TRIANGLE = true;
 	private WidgetTitle widgetTitle;
@@ -60,7 +62,7 @@ public class NavigationView {
 		if (nl == null)
 			return this;
 		this.nl = nl;
-		back = widgetTitle.addHyperlink(Icons.NAVIGATION_BACK, "Back");
+		back = widgetTitle.addHyperlink(Icons.NAVIGATION_BACK, BACK);
 		back.addClickListener(new LazyClickListener() {
 
 			@Override
@@ -68,7 +70,7 @@ public class NavigationView {
 				nl.previous();
 			}
 		});
-		forward = widgetTitle.addHyperlink(Icons.NAVIGATION_FORWARD, "Forward");
+		forward = widgetTitle.addHyperlink(Icons.NAVIGATION_FORWARD, FORWARD);
 		forward.addClickListener(new LazyClickListener() {
 			@Override
 			public void onAllowedClick() {

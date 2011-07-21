@@ -16,21 +16,17 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.style.impl;
+package co.fxl.gui.impl;
 
-import co.fxl.gui.style.api.IStyle;
+import co.fxl.gui.i18n.impl.I18N;
 
-public class Style {
+privileged aspect NavigationViewI18N {
 
-	public static boolean ENABLED = false;
-	private static IStyle instance;
+	declare @field : static String NavigationView.* : @Translate;
 
-	public static void register(IStyle instance) {
-		Style.instance = instance;
+	String around() :
+	get(@Translate static String *.*) 
+	&& if(I18N.ENABLED) {
+		return I18N.instance().translate(proceed());
 	}
-
-	public static IStyle instance() {
-		return instance;
-	}
-
 }
