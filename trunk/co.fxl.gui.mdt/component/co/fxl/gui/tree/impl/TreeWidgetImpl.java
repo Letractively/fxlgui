@@ -52,7 +52,7 @@ import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 
 public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
-	
+
 	// TODO Swing: native implementation: required for automated testing
 
 	static int SPLIT_POSITION = 250;
@@ -470,7 +470,8 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					indent--;
 				new TreeNode<T>(lazyTree, TreeWidgetImpl.this, c.panel()
 						.vertical(), tree, indent, model.isCutCopy(tree));
-				model.selection(tree);
+				// model.selection = tree;
+				model.selection(tree, false);
 			}
 		});
 		lazyTree.showRoot(showRoot);
@@ -882,7 +883,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		int i = t.parent().children().indexOf(t);
 		assert i >= 0 : t + " not found in " + t.parent().children();
 		ITree<T> c = t.parent().children().get(i + j);
-		model.selection(c);
+		model.selection(c, false);
 		return this;
 	}
 }
