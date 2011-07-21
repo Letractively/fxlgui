@@ -31,6 +31,7 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class NavigationView {
 
+	private static final String NAVIGATION = "Navigation";
 	private static final boolean SHOW_NUMBERS = false;
 	private static final boolean SHOW_TRIANGLE = true;
 	private WidgetTitle widgetTitle;
@@ -51,7 +52,7 @@ public class NavigationView {
 	private void setUp() {
 		if (panel != null)
 			return;
-		widgetTitle.addTitle("Navigation");
+		widgetTitle.addTitle(NAVIGATION);
 		panel = widgetTitle.content().panel().vertical().spacing(6);
 	}
 
