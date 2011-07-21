@@ -164,7 +164,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 					dock.visible(false);
 					// TODO style="overflow:auto" on body element
 					// FocusPanel around Widget to scroll into view
-				} else if (rowIndex == 0) {
+				} 
+				if (maxRowIndex == 0) {
 					scrollPane.remove();
 					widthScrollPanel = 0;
 				}
