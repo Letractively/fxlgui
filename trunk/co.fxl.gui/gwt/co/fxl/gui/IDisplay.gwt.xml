@@ -6,4 +6,7 @@
 	<source path="layout/impl" />
 	<source path="style/api" />
 	<source path="style/impl" />
+	<source path="i18n/api" />
+	<source path="i18n/impl" />
+	<source path="i18n/german" />
 </module>
