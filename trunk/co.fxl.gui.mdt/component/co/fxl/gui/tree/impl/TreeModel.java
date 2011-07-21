@@ -56,7 +56,13 @@ class TreeModel<T> {
 		selection(tree, true);
 	}
 
+//	private boolean ignore = false;
+
 	void selection(ITree<T> tree, boolean setDetailViewTree) {
+//		if (ignore)
+//			return;
+		// widget.previousSelection = tree.object();
+		// widget.lazyTree.refresh(false);
 		if (selection != null) {
 			if (selection.equals(tree)) {
 				return;
@@ -73,6 +79,12 @@ class TreeModel<T> {
 			if (node != null) {
 				node.selected(true);
 				selection = node.tree();
+			} else {
+				throw new MethodNotImplementedException();
+//				widget.previousSelection = tree.object();
+//				ignore = true;
+//				widget.lazyTree.refresh(false);
+//				ignore = false;
 			}
 		}
 		if (setDetailViewTree)
@@ -94,17 +106,18 @@ class TreeModel<T> {
 	}
 
 	void selection(T selection) {
-		if (root.object().equals(selection) && !widget.showRoot) {
-			this.selection = null;
-		} else {
-			NodeRef<T> node = nodes.get(selection);
-			if (node != null)
-				selection(node.tree());
-			else {
-				node(this.selection).selected(false);
-				widget.previousSelection = selection;
-			}
-		}
+		// if (root.object().equals(selection) && !widget.showRoot) {
+		// this.selection = null;
+		// } else {
+		// NodeRef<T> node = nodes.get(selection);
+		// if (node != null)
+		// selection(node.tree());
+		// else {
+		widget.previousSelection = selection;
+		widget.refreshLazyTree(false);
+		// node(this.selection).selected(false);
+		// }
+		// }
 	}
 
 	boolean isSelected(ITree<T> t) {
@@ -166,13 +179,18 @@ class TreeModel<T> {
 				}
 			}
 		}
-		assert node != null : trace(object) + " not found in "
-				+ trace(nodes.keySet());
-		ITree<T> tree = node.tree();
-		refresh(tree, recurse);
-		if (tree.equals(selection)) {
-			// widget.scrollIntoView(node);
-			widget.setDetailViewTree(tree);
+		if (node == null) {
+			widget.refreshLazyTree(true);
+			// TODO ...
+		} else {
+			assert node != null : trace(object) + " not found in "
+					+ trace(nodes.keySet());
+			ITree<T> tree = node.tree();
+			refresh(tree, recurse);
+			if (tree.equals(selection)) {
+				// widget.scrollIntoView(node);
+				widget.setDetailViewTree(tree);
+			}
 		}
 		return node;
 	}
