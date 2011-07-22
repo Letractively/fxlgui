@@ -26,8 +26,9 @@ import co.fxl.gui.tree.api.ITree;
 
 class TestLazyTree implements ITree<Object> {
 
-	public class LazyListImpl<T> extends LinkedList<T> implements ILazyList<T> {
-		private static final long serialVersionUID = -1897500793221385532L;
+	public class LazyListImpl<Object> extends LinkedList<Object> implements
+			ILazyList<Object> {
+
 	}
 
 	private String label;

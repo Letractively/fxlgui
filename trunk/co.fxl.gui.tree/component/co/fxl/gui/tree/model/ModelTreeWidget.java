@@ -830,12 +830,6 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		return this;
 	}
 
-	public static IDialog queryDeleteEntity(IDisplay display, boolean plural) {
-		return display.showDialog()
-				.message("Delete " + (plural ? "Entities" : "Entity") + "?")
-				.warn().confirm();
-	}
-
 	@Override
 	public ITreeWidget<T> navigateUp() {
 		return navigation(-1);
@@ -853,5 +847,11 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		ITree<T> c = t.parent().children().get(i + j);
 		model.selection(c);
 		return this;
+	}
+
+	public static IDialog queryDeleteEntity(IDisplay display, boolean plural) {
+		return display.showDialog()
+				.message("Delete " + (plural ? "Entities" : "Entity") + "?")
+				.warn().confirm();
 	}
 }
