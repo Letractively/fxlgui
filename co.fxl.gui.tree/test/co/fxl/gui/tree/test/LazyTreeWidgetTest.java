@@ -22,7 +22,6 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.table.util.impl.LazyScrollPanelImplWidgetProvider;
 import co.fxl.gui.tree.api.ILazyTreeWidget;
 import co.fxl.gui.tree.api.ILazyTreeWidget.IDecorator;
 import co.fxl.gui.tree.api.ITree;
@@ -33,7 +32,6 @@ public class LazyTreeWidgetTest implements IDecorator {
 
 	@SuppressWarnings("unchecked")
 	public LazyTreeWidgetTest(IDisplay display) {
-		display.register(new LazyScrollPanelImplWidgetProvider());
 		IVerticalPanel panel = display.container().panel().vertical();
 		tree = (ILazyTreeWidget<Object>) panel.add().widget(
 				ILazyTreeWidget.class);

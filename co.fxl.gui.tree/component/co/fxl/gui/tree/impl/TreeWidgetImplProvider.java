@@ -25,7 +25,7 @@ import co.fxl.gui.tree.api.ITreeWidget;
 @SuppressWarnings("rawtypes")
 public class TreeWidgetImplProvider implements IWidgetProvider<ITreeWidget> {
 
-	private TreeWidgetImplProvider() {
+	public TreeWidgetImplProvider() {
 	}
 	
 	@Override

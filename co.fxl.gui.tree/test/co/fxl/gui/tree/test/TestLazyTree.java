@@ -31,8 +31,10 @@ class TestLazyTree implements ITree<Object> {
 	}
 
 	private String label;
+	private List<ITree<Object>> childrenList = new LinkedList<ITree<Object>>();
 	private LazyListImpl<ITree<Object>> children = new LazyListImpl<ITree<Object>>();
 	private ITree<Object> parent;
+	private int i;
 
 	TestLazyTree(int i) {
 		this(null, null, i);
@@ -49,8 +51,16 @@ class TestLazyTree implements ITree<Object> {
 			label = prefix + "." + i;
 		} else
 			label = "";
+		this.i = i;
+		if (i > 2)
+			addChildren();
+	}
+
+	void addChildren() {
 		for (int j = 0; j < i; j++) {
-			children.add(new TestLazyTree(this, label, i - 1));
+			TestLazyTree testLazyTree = new TestLazyTree(this, label, i - 1);
+			childrenList.add(testLazyTree);
+			children.add(testLazyTree);
 		}
 	}
 
@@ -66,7 +76,7 @@ class TestLazyTree implements ITree<Object> {
 
 	@Override
 	public int childCount() {
-		return children.size();
+		return i;
 	}
 
 	@Override
@@ -90,8 +100,15 @@ class TestLazyTree implements ITree<Object> {
 	}
 
 	@Override
-	public void loadChildren(ICallback<List<Object>> callback) {
-		throw new MethodNotImplementedException();
+	public void loadChildren(final ICallback<List<Object>> callback) {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				addChildren();
+				callback.onSuccess(null);
+			}
+		}).start();
 	}
 
 	@Override
@@ -116,47 +133,47 @@ class TestLazyTree implements ITree<Object> {
 
 	@Override
 	public String[] getCreatableTypes() {
-		throw new MethodNotImplementedException();
+		return null;
 	}
 
 	@Override
 	public boolean isLeaf() {
-		throw new MethodNotImplementedException();
+		return false;
 	}
 
 	@Override
 	public boolean isDeletable() {
-		throw new MethodNotImplementedException();
+		return false;
 	}
 
 	@Override
 	public boolean isUpdateable() {
-		throw new MethodNotImplementedException();
+		return false;
 	}
 
 	@Override
 	public boolean isReassignable() {
-		throw new MethodNotImplementedException();
+		return false;
 	}
 
 	@Override
 	public boolean isCopieable() {
-		throw new MethodNotImplementedException();
+		return false;
 	}
 
 	@Override
 	public boolean isReassignableTo(ITree<Object> tree) {
-		throw new MethodNotImplementedException();
+		return false;
 	}
 
 	@Override
 	public boolean isMovable() {
-		throw new MethodNotImplementedException();
+		return false;
 	}
 
 	@Override
 	public boolean isCopieableTo(ITree<Object> tree) {
-		throw new MethodNotImplementedException();
+		return false;
 	}
 
 	@Override
@@ -167,7 +184,7 @@ class TestLazyTree implements ITree<Object> {
 
 	@Override
 	public boolean isNew() {
-		throw new MethodNotImplementedException();
+		return false;
 	}
 
 	@Override
@@ -182,7 +199,7 @@ class TestLazyTree implements ITree<Object> {
 
 	@Override
 	public co.fxl.gui.tree.api.ITree.IDecorator decorator() {
-		throw new MethodNotImplementedException();
+		return null;
 	}
 
 	@Override
