@@ -21,11 +21,9 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ISplitPane;
 
-import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane {
@@ -91,8 +89,6 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 	}
 
 	private void prepare(Widget component) {
-		if (!(component instanceof ScrollPanel))
-			component.getElement().getStyle().setOverflow(Overflow.HIDDEN);
 		component.setWidth("100%");
 		component.setHeight("100%");
 	}
