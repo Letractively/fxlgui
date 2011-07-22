@@ -74,14 +74,6 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 
 	@Override
 	public IScrollPane addScrollListener(final IScrollListener listener) {
-		BoundedRangeModel model = container.component.getVerticalScrollBar()
-				.getModel();
-		int max = model.getMaximum();
-		int componentHeight = viewPort.component.getPreferredSize().height;
-		if (componentHeight > max) {
-			model.setMaximum(componentHeight);
-			model.setExtent(container.component.getHeight());
-		}
 		container.component.getVerticalScrollBar().addAdjustmentListener(
 				new AdjustmentListener() {
 
@@ -128,6 +120,14 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 
 	@Override
 	public IScrollPane scrollTo(int pos) {
+		BoundedRangeModel model = container.component.getVerticalScrollBar()
+				.getModel();
+		int max = model.getMaximum();
+		int componentHeight = viewPort.component.getPreferredSize().height;
+		if (componentHeight > max) {
+			model.setMaximum(componentHeight);
+			model.setExtent(container.component.getHeight());
+		}
 		container.component.getVerticalScrollBar().setValue(pos);
 		return this;
 	}
