@@ -18,9 +18,7 @@
  */
 package co.fxl.gui.tree.impl;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -32,8 +30,6 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 
 	// TODO Usability: Swing: Mouse-Wheel not active on content panel
 
-	private Map<Integer, IVerticalPanel> panels = new HashMap<Integer, IVerticalPanel>();
-
 	LazyTreeWidgetImpl(IContainer container) {
 		super(container);
 	}
@@ -43,44 +39,37 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 	}
 
 	@Override
-	public void decorate(IContainer container, int firstRow, int lastRow) {
-		panels.clear();
+	public void decorate(final IContainer container, final int firstRow,
+			final int lastRow) {
 		IVerticalPanel panel = container.panel().vertical().spacing(spacing)
 				.add().panel().vertical();
 		TreeNode<Object> decorator = new TreeNode<Object>();
 		List<ITree<Object>> rows = tree.rows(firstRow, lastRow);
 		int index = firstRow;
 		for (final ITree<Object> row : rows) {
-			IVerticalPanel p = decorator.setUp(this, panel, row,
-					tree.indent(row), isMarked(index));
-			decorator.panel.height(heightElement);
-			IClickable<?> label = decorator.decorateCore();
-			final int fIndex = index;
-			IClickListener clickListener = new IClickListener() {
-				@Override
-				public void onClick() {
-					selectionIndex = fIndex;
-					decorate(fIndex);
-				}
-			};
-			p.addClickListener(clickListener);
-			label.addClickListener(clickListener);
-			LazyTreeWidgetImpl.this.panels.put(index, p);
+			if (index == selectionIndex) {
+				IVerticalPanel v = panel.add().panel().vertical();
+				v.height(heightElement);
+				this.decorator.decorate(v.add(), index);
+			} else {
+				IVerticalPanel p = decorator.setUp(this, panel, row,
+						tree.indent(row), isMarked(index));
+				decorator.panel.height(heightElement);
+				IClickable<?> label = decorator.decorateCore();
+				final int fIndex = index;
+				IClickListener clickListener = new IClickListener() {
+					@Override
+					public void onClick() {
+						selectionIndex = fIndex;
+						container.element().remove();
+						decorate(container, firstRow, lastRow);
+					}
+				};
+				p.addClickListener(clickListener);
+				label.addClickListener(clickListener);
+			}
 			index++;
 		}
-		if (selectionIndex >= firstRow && selectionIndex <= lastRow) {
-			decorate(selectionIndex);
-		}
 		super.decorate(container, firstRow, lastRow);
-	}
-
-	void decorate(int index) {
-		if (decorator == null)
-			return;
-		IVerticalPanel p = panels.get(index);
-		assert p != null : index + " not in " + panels.keySet();
-		p.border().remove();
-		IContainer c = p.clear().add();
-		decorator.decorate(c, index);
 	}
 }

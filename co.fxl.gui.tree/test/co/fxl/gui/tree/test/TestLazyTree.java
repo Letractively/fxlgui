@@ -32,18 +32,25 @@ class TestLazyTree implements ITree<Object> {
 
 	private String label;
 	private LazyListImpl<ITree<Object>> children = new LazyListImpl<ITree<Object>>();
+	private ITree<Object> parent;
 
 	TestLazyTree(int i) {
-		this(null, i);
+		this(null, null, i);
 	}
 
-	TestLazyTree(String prefix, int i) {
+	@Override
+	public int hashCode() {
+		return name().hashCode();
+	}
+
+	TestLazyTree(ITree<Object> parent, String prefix, int i) {
+		this.parent = parent;
 		if (prefix != null) {
 			label = prefix + "." + i;
 		} else
 			label = "";
 		for (int j = 0; j < i; j++) {
-			children.add(new TestLazyTree(label, i - 1));
+			children.add(new TestLazyTree(this, label, i - 1));
 		}
 	}
 
@@ -64,12 +71,12 @@ class TestLazyTree implements ITree<Object> {
 
 	@Override
 	public Object object() {
-		throw new MethodNotImplementedException();
+		return this;
 	}
 
 	@Override
 	public ITree<Object> parent() {
-		throw new MethodNotImplementedException();
+		return parent;
 	}
 
 	@Override
@@ -165,12 +172,12 @@ class TestLazyTree implements ITree<Object> {
 
 	@Override
 	public String icon() {
-		return "folder_open.png";
+		return "save.png";
 	}
 
 	@Override
 	public String iconClosed() {
-		return "folder_closed.png";
+		return "save.png";
 	}
 
 	@Override

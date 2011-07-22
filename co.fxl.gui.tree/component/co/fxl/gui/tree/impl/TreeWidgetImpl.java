@@ -470,7 +470,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				new TreeNode<T>(lazyTree, TreeWidgetImpl.this, c.panel()
 						.vertical(), tree, indent, model.isCutCopy(tree));
 				// model.selection = tree;
-				model.selection(tree, false);
+				model.selection(tree, true);
 			}
 		});
 		lazyTree.showRoot(showRoot);

@@ -394,8 +394,9 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	}
 
 	protected void expandLoadedNode() {
-		clear();
-		if (!isExpanded) {
+		if (isExpanded) {
+			clear();
+		} else {
 			isExpanded = true;
 			// lazyTree.collapse(tree, false);
 			refreshLazyTree(true);
@@ -438,7 +439,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		// if (imageRefresh != null)
 		// imageRefresh.resource(null);
 		lazyTree.collapse(tree, true);
-		refreshLazyTree(false);
+//		refreshLazyTree(false);
 	}
 
 	@Override

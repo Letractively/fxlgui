@@ -259,6 +259,8 @@ class TreeModel<T> {
 
 				@Override
 				public void selected(boolean selected) {
+					if (!selected)
+						return;
 					widget.previousSelection = tree.object();
 					widget.refreshLazyTree(false);
 				}
