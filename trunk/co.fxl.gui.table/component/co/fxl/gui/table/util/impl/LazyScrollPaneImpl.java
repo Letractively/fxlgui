@@ -28,6 +28,8 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
+	
+	// TODO BUG/Usability: sometimes / under certain circumstances: an expand shifts the displayed range upwards
 
 	public static int WIDTH_SCROLL_PANEL = 35;
 	public static final int HEIGHT_SCROLL_BAR = 17;
