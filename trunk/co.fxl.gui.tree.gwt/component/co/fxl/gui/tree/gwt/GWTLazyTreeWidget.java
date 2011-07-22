@@ -182,8 +182,12 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 					IMAGE_PATH + TreeNode.treeIcon(this, row));
 			hTML = hTML.replace("${ICON}",
 					IMAGE_PATH + TreeNode.entityIcon(row));
+			String name = row.name();
+			if (name == null)
+				throw new MethodNotImplementedException("name is null of row "
+						+ i + ", " + row);
 			hTML = hTML.replace("${LABEL}",
-					HTMLText.html(row.name().replace("<", "&#060;")));
+					HTMLText.html(name.replace("<", "&#060;")));
 			b.append("<tr>" + hTML + "</tr>");
 		}
 		b.append("</table>");
