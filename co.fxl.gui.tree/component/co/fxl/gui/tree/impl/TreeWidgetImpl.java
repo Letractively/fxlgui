@@ -53,8 +53,9 @@ import co.fxl.gui.tree.api.ITreeWidget;
 public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	// TODO Swing: native implementation: required for automated testing
-	
-	// TODO BUG: Opera & Firefox: unnecessary horizontal scrollbar for right splitpane content
+
+	// TODO BUG: Opera & Firefox: unnecessary horizontal scrollbar for right
+	// splitpane content
 
 	static int SPLIT_POSITION = 250;
 	private boolean showRefresh = true;
