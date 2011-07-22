@@ -117,7 +117,10 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	public CommandLink addToContextMenu(boolean addToContextMenu) {
 		if (addToContextMenu) {
 			contextMenuEntry = ContextMenu.instance().addEntry(label.text());
-			contextMenuEntry.imageResource(image.resource());
+			if (image != null) {
+				String resource = image.resource();
+				contextMenuEntry.imageResource(resource);
+			}
 			contextMenuEntry.addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {
