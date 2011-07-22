@@ -87,7 +87,9 @@ public class LazyTreeAdpList {
 			List<ITree<Object>> cs = new LinkedList<ITree<Object>>();
 			for (ITree<Object> c : tree.children())
 				cs.add(c);
-			int index = index(tree) + 1;
+			int i = index(tree.object());
+			assert i >= 0 : tree + " not found in " + rows;
+			int index = i + 1;
 			if (index < rows.size())
 				rows.addAll(index, cs);
 			else

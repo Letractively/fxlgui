@@ -399,7 +399,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		} else {
 			isExpanded = true;
 			// lazyTree.collapse(tree, false);
-			refreshLazyTree(true);
+			lazyTree.collapse(tree, false);
 		}
 		// for (ITree<T> child : tree.children()) {
 		// widget.newNode(widget, childrenPanel, child, depth + 1, null, false);
@@ -439,7 +439,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		// if (imageRefresh != null)
 		// imageRefresh.resource(null);
 		lazyTree.collapse(tree, true);
-//		refreshLazyTree(false);
+		// refreshLazyTree(false);
 	}
 
 	@Override
