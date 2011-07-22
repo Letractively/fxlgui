@@ -1,4 +1,4 @@
 <module>
-	<inherits name='co.fxl.gui.tree.model.ModelTreeWidget' />
+	<inherits name='co.fxl.gui.tree.impl.TreeWidgetImpl' />
 	<source path='' />
 </module>
