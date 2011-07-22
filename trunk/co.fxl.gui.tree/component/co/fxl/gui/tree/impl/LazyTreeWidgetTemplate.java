@@ -41,7 +41,7 @@ public abstract class LazyTreeWidgetTemplate implements
 	private int lastFirstRow = -1;
 	private int width = -1;
 	protected Object marked;
-	private int markedIndex = -1;
+	int markedIndex = -1;
 
 	public LazyTreeWidgetTemplate(IContainer c) {
 		this(c, true);
@@ -121,29 +121,35 @@ public abstract class LazyTreeWidgetTemplate implements
 	@Override
 	public ILazyTreeWidget<Object> visible(boolean visible) {
 		if (visible) {
-			pane = (ILazyScrollPane) c.widget(ILazyScrollPane.class);
-			pane.size(tree.size());
-			pane.horizontalScrollPane(true);
-			pane.minRowHeight(heightElement);
-			pane.height(height);
-			pane.decorator(this);
-			pane.adjustHeights(false);
-			if (width != -1)
-				pane.width(width);
-			if (lastFirstRow != -1) {
-				pane.rowIndex(lastFirstRow);
-			}
-			int index = tree.index(selection);
-			if (index != -1) {
-				pane.rowIndex(index);
-				selection = null;
-			}
-			selectionIndex = index;
-			markedIndex = -1;
-			pane.visible(true);
+			show(true);
 		} else
 			throw new MethodNotImplementedException();
 		return this;
+	}
+
+	void show(boolean checkSelection) {
+		pane = (ILazyScrollPane) c.widget(ILazyScrollPane.class);
+		pane.size(tree.size());
+		pane.horizontalScrollPane(true);
+		pane.minRowHeight(heightElement);
+		pane.height(height);
+		pane.decorator(this);
+		pane.adjustHeights(false);
+		if (width != -1)
+			pane.width(width);
+		if (lastFirstRow != -1) {
+			pane.rowIndex(lastFirstRow);
+		}
+		int index = tree.index(selection);
+		if (index != -1) {
+			if (checkSelection) {
+				pane.rowIndex(index);
+			}
+			selection = null;
+		}
+		selectionIndex = index;
+		markedIndex = -1;
+		pane.visible(true);
 	}
 
 	@Override
@@ -167,7 +173,7 @@ public abstract class LazyTreeWidgetTemplate implements
 			tree(realTree);
 		}
 		c.element().remove();
-		visible(true);
+		show(false);
 		return this;
 	}
 
@@ -183,7 +189,15 @@ public abstract class LazyTreeWidgetTemplate implements
 
 	@Override
 	public ILazyTreeWidget<Object> collapse(ITree<Object> tree, boolean collapse) {
+		selection = tree.object();
+		selectionIndex = -1;
 		this.tree.collapse(tree, collapse);
+		refresh(false);
 		return this;
+	}
+
+	@Override
+	public int indent(ITree<Object> t) {
+		return this.tree.indent(t);
 	}
 }

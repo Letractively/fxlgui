@@ -18,12 +18,14 @@
  */
 package co.fxl.gui.tree.test;
 
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.table.util.impl.LazyScrollPanelImplWidgetProvider;
 import co.fxl.gui.tree.api.ILazyTreeWidget;
 import co.fxl.gui.tree.api.ILazyTreeWidget.IDecorator;
+import co.fxl.gui.tree.api.ITree;
 
 public class LazyTreeWidgetTest implements IDecorator {
 
@@ -36,14 +38,22 @@ public class LazyTreeWidgetTest implements IDecorator {
 		tree = (ILazyTreeWidget<Object>) panel.add().widget(
 				ILazyTreeWidget.class);
 		tree.selectionDecorator(this);
-		tree.tree(new TestLazyTree(5));
+		tree.tree(new TestLazyTree(3));
 		tree.height(600);
-		tree.visible(true);
 		display.fullscreen().visible(true);
+		tree.visible(true);
 	}
 
 	@Override
 	public void decorate(IContainer c, int index) {
-		c.label().text("# " + index);
+		final ITree<Object> t = tree.getTreeByIndex(index);
+		c.panel().horizontal().addSpace(tree.indent(t) * 10).add().button()
+				.size(120, 22).text(t.name())
+				.addClickListener(new IClickListener() {
+					@Override
+					public void onClick() {
+						tree.collapse(t, !tree.isCollapsed(t));
+					}
+				});
 	}
 }
