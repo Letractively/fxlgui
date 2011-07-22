@@ -244,7 +244,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		double r = rowIndex;
 		r *= maxOffset;
 		r /= maxRowIndex;
-		return (int) r;
+		return (int) Math.round(r);
 	}
 
 	@Override
