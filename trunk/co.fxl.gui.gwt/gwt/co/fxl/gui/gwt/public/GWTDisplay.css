@@ -12,6 +12,12 @@ box-shadow: 4px 4px 5px #000000;
 -moz-box-shadow: 4px 4px 5px #000000; 
 filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=4, offY=4, positive=true);
 }
+.mozBorderRadius {
+  -moz-border-radius: 3px;
+}
+.noOverflowX {
+  overflow-x: hidden;
+}
 .font-size-1px { font-size: 1px }
 .font-size-2px { font-size: 2px }
 .font-size-3px { font-size: 3px }
