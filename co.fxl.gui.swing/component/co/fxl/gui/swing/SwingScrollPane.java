@@ -22,6 +22,7 @@ import java.awt.Color;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
+import javax.swing.BoundedRangeModel;
 import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
@@ -73,6 +74,14 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 
 	@Override
 	public IScrollPane addScrollListener(final IScrollListener listener) {
+		BoundedRangeModel model = container.component.getVerticalScrollBar()
+				.getModel();
+		int max = model.getMaximum();
+		int componentHeight = viewPort.component.getPreferredSize().height;
+		if (componentHeight > max) {
+			model.setMaximum(componentHeight);
+			model.setExtent(container.component.getHeight());
+		}
 		container.component.getVerticalScrollBar().addAdjustmentListener(
 				new AdjustmentListener() {
 
@@ -80,6 +89,13 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 
 					@Override
 					public void adjustmentValueChanged(AdjustmentEvent evt) {
+						BoundedRangeModel model = container.component
+								.getVerticalScrollBar().getModel();
+						int max = model.getMaximum();
+						int componentHeight = viewPort.component
+								.getPreferredSize().height;
+						if (componentHeight > max)
+							return;
 						// if (evt.getValueIsAdjusting()) {
 						// return;
 						// }
