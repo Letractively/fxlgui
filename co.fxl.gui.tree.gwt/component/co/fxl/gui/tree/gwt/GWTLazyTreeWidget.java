@@ -41,6 +41,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 
+	// TODO BUG: Opera: unnecessary horizontal scrollbar for left splitpane content
+
 	public static String IMAGE_PATH = "images/";
 	public static String HTML = "<table cellspacing=\"0\" cellpadding=\"0\" "
 			+ "style=\"width: 100%; cursor: pointer; border: 1px solid rgb(255, 255, 255);\">"
