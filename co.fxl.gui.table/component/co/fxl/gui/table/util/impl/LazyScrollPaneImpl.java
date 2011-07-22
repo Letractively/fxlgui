@@ -28,8 +28,9 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
-	
-	// TODO BUG/Usability: sometimes / under certain circumstances: an expand shifts the displayed range upwards
+
+	// TODO BUG/Usability: sometimes / under certain circumstances: an expand
+	// shifts the displayed range upwards
 
 	public static int WIDTH_SCROLL_PANEL = 35;
 	public static final int HEIGHT_SCROLL_BAR = 17;
@@ -160,25 +161,48 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 					}
 				}
 				assert maxRowIndex >= 0;
-				if (rowIndex > maxRowIndex)
-					rowIndex = maxRowIndex;
-				if (rowIndex > 0) {
-					int y = convertRowIndex2ScrollOffset(rowIndex);
-					if (lastCard != null)
-						lastCard.clear();
-					dock.visible(true);
-					scrollPane.scrollTo(y);
-					dock.visible(false);
-					// TODO style="overflow:auto" on body element
-					// FocusPanel around Widget to scroll into view
-				}
 				if (maxRowIndex == 0) {
 					scrollPane.remove();
 					widthScrollPanel = 0;
+					return;
 				}
-				scrollPane.addScrollListener(LazyScrollPaneImpl.this);
-				update();
-				dock.visible(true);
+				if (rowIndex > maxRowIndex)
+					rowIndex = maxRowIndex;
+				if (adjustHeights) {
+					scrollPane.addScrollListener(LazyScrollPaneImpl.this);
+					dock.display().invokeLater(new Runnable() {
+
+						@Override
+						public void run() {
+							if (rowIndex > 0) {
+								int y = convertRowIndex2ScrollOffset(rowIndex);
+								if (lastCard != null)
+									lastCard.clear();
+								dock.visible(true);
+								scrollPane.scrollTo(y);
+								dock.visible(false);
+								// TODO style="overflow:auto" on body element
+								// FocusPanel around Widget to scroll into view
+							} else
+								update();
+							dock.visible(true);
+						}
+					});
+				} else {
+					if (rowIndex > 0) {
+						int y = convertRowIndex2ScrollOffset(rowIndex);
+						if (lastCard != null)
+							lastCard.clear();
+						dock.visible(true);
+						scrollPane.scrollTo(y);
+						dock.visible(false);
+						// TODO style="overflow:auto" on body element
+						// FocusPanel around Widget to scroll into view
+					}
+					scrollPane.addScrollListener(LazyScrollPaneImpl.this);
+					update();
+					dock.visible(true);
+				}
 			}
 		};
 		if (adjustHeights) {
