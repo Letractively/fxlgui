@@ -353,7 +353,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	@Override
 	public ITreeWidget<T> title(String title) {
 		widgetTitle.addTitle(title).font().pixel(18);
-		ContextMenu.instance(container.display()).addHeader(title);
+		ContextMenu.instance(container.display()).group(title);
 		return this;
 	}
 
