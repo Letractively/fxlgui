@@ -38,7 +38,7 @@ public class ImageButton implements IClickable<Object>,
 	private IHorizontalPanel panel;
 	private List<ILabel> additionalLabels = new LinkedList<ILabel>();
 	private IVerticalPanel p0;
-	private boolean addToContextMenu = false;
+	private String addToContextMenu = null;
 	private List<IClickListener> clickListeners = new LinkedList<IClickListener>();
 	private Entry entry;
 
@@ -64,9 +64,10 @@ public class ImageButton implements IClickable<Object>,
 
 	public ImageButton text(String text) {
 		label.text(text);
-		if (addToContextMenu)
+		if (addToContextMenu != null)
 			if (entry == null) {
-				entry = ContextMenu.instance().addEntry(text);
+				entry = ContextMenu.instance().group(addToContextMenu)
+						.addEntry(text);
 				entry.addClickListener(this);
 				if (image != null) {
 					entry.imageResource(image.resource());
@@ -134,8 +135,8 @@ public class ImageButton implements IClickable<Object>,
 		return this;
 	}
 
-	public ImageButton addToContextMenu(boolean b) {
-		addToContextMenu = b;
+	public ImageButton addToContextMenu(String group) {
+		addToContextMenu = group;
 		return this;
 	}
 

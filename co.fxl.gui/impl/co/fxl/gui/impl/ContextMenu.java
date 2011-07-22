@@ -71,42 +71,56 @@ public class ContextMenu {
 		}
 	}
 
+	@SuppressWarnings("serial")
+	public class Group extends LinkedList<Entry> {
+
+		private String name;
+
+		public Group(String name) {
+			this.name = name;
+		}
+
+		public Entry addEntry(String text) {
+			for (Entry o : this) {
+				if (text.equals(o.text)) {
+					Entry entry = (Entry) o;
+					entry.clickListeners.clear();
+					return entry;
+				}
+			}
+			Entry entry = new Entry(text);
+			add(entry);
+			return entry;
+		}
+
+	}
+
 	private static final boolean SHOW_INACTIVE = false;
 	private static ContextMenu instance;
 	private IDisplay display;
-	private List<Object> entries = new LinkedList<Object>();
+	private List<Group> groups = new LinkedList<Group>();
 
 	public ContextMenu(IDisplay display) {
 		this.display = display;
 	}
 
-	public Entry addEntry(String text) {
-		for (Object o : entries) {
-			if (o instanceof Entry && text.equals(((Entry) o).text)) {
-				Entry entry = (Entry) o;
-				entry.clickListeners.clear();
-				return entry;
-			}
+	public Group group(String name) {
+		assert name != null;
+		Group group = null;
+		for (Group g : groups) {
+			String gName = g.name;
+			if (gName.equals(name))
+				group = g;
 		}
-		Entry entry = new Entry(text);
-		entries.add(entry);
-		return entry;
-	}
-
-	// public ContextMenu addSeparator() {
-	// entries.add(this);
-	// return this;
-	// }
-
-	public ContextMenu addHeader(String header) {
-		header = header.toUpperCase();
-		if (!entries.contains(header))
-			entries.add(header);
-		return this;
+		if (group == null) {
+			group = new Group(name);
+			groups.add(group);
+		}
+		return group;
 	}
 
 	public ContextMenu reset() {
-		entries.clear();
+		groups.clear();
 		return this;
 	}
 
@@ -129,60 +143,55 @@ public class ContextMenu {
 		// v.color().rgb(250, 250, 250);
 		IVerticalPanel panel = v.add().panel().vertical();
 		panel.spacing(4);
-		for (Object o : entries) {
-			if (!visible(o))
-				continue;
-			if (o instanceof Entry) {
-				final Entry e = (Entry) o;
-				IHorizontalPanel h = panel.add().panel().horizontal()
-						.addSpace(10);
-				IClickListener clickListener = new IClickListener() {
-					@Override
-					public void onClick() {
-						popUp.visible(false);
-						for (IClickListener cl : e.clickListeners)
-							cl.onClick();
-					}
-				};
-				if (e.imageResource != null) {
-					h.add().image().resource(e.imageResource)
-							.addClickListener(clickListener).mouseLeft()
-							.clickable(e.clickable);
-					h.addSpace(4);
-				}
-				ILabel l = h.add().label().text(e.text).hyperlink();
-				l.addClickListener(clickListener);
-				l.clickable(e.clickable);
-			} else if (o instanceof String) {
+		for (Group g : groups) {
+			if (visible(g)) {
 				IHorizontalPanel h = panel.add().panel().horizontal();
-				h.add().label().text((String) o).font().pixel(9).weight()
-						.bold().color().gray();
+				h.add().label().text(g.name).font().pixel(9).weight().bold()
+						.color().gray();
 				h.addSpace(4).add().line();
+				for (Entry o : g) {
+					if (!visible(o))
+						continue;
+					if (o instanceof Entry) {
+						final Entry e = (Entry) o;
+						IHorizontalPanel h2 = panel.add().panel().horizontal()
+								.addSpace(10);
+						IClickListener clickListener = new IClickListener() {
+							@Override
+							public void onClick() {
+								popUp.visible(false);
+								for (IClickListener cl : e.clickListeners)
+									cl.onClick();
+							}
+						};
+						if (e.imageResource != null) {
+							h2.add().image().resource(e.imageResource)
+									.addClickListener(clickListener)
+									.mouseLeft().clickable(e.clickable);
+							h2.addSpace(4);
+						}
+						ILabel l = h2.add().label().text(e.text).hyperlink();
+						l.addClickListener(clickListener);
+						l.clickable(e.clickable);
+					}
+				}
 			}
-			// else {
-			// panel.add().line();
-			// }
 		}
 		popUp.visible(true);
 	}
 
-	private boolean visible(Object o) {
+	private boolean visible(Entry o) {
 		if (SHOW_INACTIVE)
 			return true;
-		if (o instanceof Entry) {
-			return ((Entry) o).clickable;
-		} else if (o instanceof String) {
-			int index = entries.indexOf(o);
-			for (int i = index + 1; i < entries.size(); i++) {
-				Object o2 = entries.get(i);
-				if (o2 instanceof String)
-					return false;
-				else if (((Entry) o2).clickable)
-					return true;
-			}
-			return false;
+		return o.clickable;
+	}
+
+	private boolean visible(Group g) {
+		for (Entry o : g) {
+			if (visible(o))
+				return true;
 		}
-		return true;
+		return false;
 	}
 
 	public static ContextMenu instance(IDisplay display) {

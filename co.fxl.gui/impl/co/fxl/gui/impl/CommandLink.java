@@ -114,21 +114,20 @@ public class CommandLink implements IClickable<IClickable<?>> {
 		return this;
 	}
 
-	public CommandLink addToContextMenu(boolean addToContextMenu) {
-		if (addToContextMenu) {
-			contextMenuEntry = ContextMenu.instance().addEntry(label.text());
-			if (image != null) {
-				String resource = image.resource();
-				contextMenuEntry.imageResource(resource);
-			}
-			contextMenuEntry.addClickListener(new IClickListener() {
-				@Override
-				public void onClick() {
-					for (IClickListener l : clickListeners)
-						l.onClick();
-				}
-			});
+	public CommandLink addToContextMenu(String group) {
+		contextMenuEntry = ContextMenu.instance().group(group)
+				.addEntry(label.text());
+		if (image != null) {
+			String resource = image.resource();
+			contextMenuEntry.imageResource(resource);
 		}
+		contextMenuEntry.addClickListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				for (IClickListener l : clickListeners)
+					l.onClick();
+			}
+		});
 		return this;
 	}
 }

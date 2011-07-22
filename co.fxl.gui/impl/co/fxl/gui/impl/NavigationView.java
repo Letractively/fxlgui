@@ -98,8 +98,9 @@ public class NavigationView {
 		IHorizontalPanel panel = (IHorizontalPanel) panels[1];
 		IImage image = addImage(panel, imageResource);
 		ILabel textLabel = addTextLabel(panel);
-		return new ImageButton((IVerticalPanel) panels[0], panel, image,
-				textLabel).addToContextMenu(true);
+		ImageButton imageButton = new ImageButton((IVerticalPanel) panels[0],
+				panel, image, textLabel);
+		return imageButton.addToContextMenu(NAVIGATION);
 	}
 
 	protected ILabel addTextLabel(IHorizontalPanel panel) {

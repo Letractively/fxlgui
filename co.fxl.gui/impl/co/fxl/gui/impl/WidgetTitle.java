@@ -61,6 +61,7 @@ public class WidgetTitle implements IClickListener {
 	private boolean commandsOnTop = false;
 	private boolean addToContextMenu = false;
 	private boolean sideWidget = false;
+	private String title;
 
 	public WidgetTitle() {
 	}
@@ -182,8 +183,9 @@ public class WidgetTitle implements IClickListener {
 			headerLabel.addClickListener(this);
 			headerLabel.tooltip(FOLDABLE);
 		}
+		this.title = title;
 		if (addToContextMenu) {
-			ContextMenu.instance().addHeader(title);
+			ContextMenu.instance().group(title);
 		}
 		return headerLabel;
 	}
@@ -245,7 +247,8 @@ public class WidgetTitle implements IClickListener {
 		// }
 		CommandLink cl = new CommandLink(this, iPanel0, image, label);
 		cl.clickable(true);
-		cl.addToContextMenu(addToContextMenu);
+		if (addToContextMenu)
+			cl.addToContextMenu(title);
 		return cl;
 	}
 
