@@ -34,10 +34,6 @@ import co.fxl.gui.tree.api.ITree;
 
 class ModelTreeNode<T> extends LazyClickListener {
 
-	// TODO FEATURE: Option: Usability: GWT: double click on table shortcut from
-	// tree node doesn't work when discard changes intercepts (works only like a
-	// single click)
-
 	private static final String FOLDER_CLOSED = "folder_closed.png";
 	private static final String FOLDER_EMPTY = "folder_empty.png";
 	private static final String FOLDER_OPEN = "folder_open.png";
