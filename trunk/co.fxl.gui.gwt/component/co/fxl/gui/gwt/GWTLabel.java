@@ -48,7 +48,16 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 
 	@Override
 	public ILabel text(String text) {
+		html.allowHTML(false);
 		html.setText(text);
+		container.widget.setHTML(html.toString());
+		return this;
+	}
+
+	@Override
+	public ILabel html(String string) {
+		html.allowHTML(true);
+		html.setText(string);
 		container.widget.setHTML(html.toString());
 		return this;
 	}
