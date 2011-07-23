@@ -25,11 +25,16 @@ public class HTMLText {
 	public boolean underline = false;
 	public boolean autoWrap = true;
 	public boolean selectable = true;
+	private boolean allowHTML = false;
 
 	public void setText(String text) {
 		if (text == null)
 			text = "";
 		this.text = text;
+	}
+
+	public void allowHTML(boolean allowHTML) {
+		this.allowHTML = allowHTML;
 	}
 
 	private String center(String text) {
@@ -78,7 +83,8 @@ public class HTMLText {
 
 	@Override
 	public String toString() {
-		String toString = text.replace("<", "&#060;").replace("\n", "<br>");
+		String toString = allowHTML ? text : text.replace("<", "&#060;");
+		toString = toString.replace("\n", "<br>");
 		if (center)
 			toString = center(toString);
 		if (underline)
