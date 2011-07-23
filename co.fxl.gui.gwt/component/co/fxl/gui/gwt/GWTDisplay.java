@@ -40,6 +40,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.core.client.impl.SchedulerImpl;
+import com.google.gwt.event.dom.client.ContextMenuEvent;
+import com.google.gwt.event.dom.client.ContextMenuHandler;
 import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
@@ -85,7 +87,6 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		};
 		DiscardChangesDialog.display = this;
 		ContextMenu.instance(this);
-		// Style.setUp();
 	}
 
 	@Override
