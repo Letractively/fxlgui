@@ -28,7 +28,7 @@ class ChildRegisterStyle extends RegisterStyle {
 	@Override
 	void decorateWidget(RegisterWidgetImpl widget) {
 		widget.separators(false);
-		widget.outerSpacing(1);
+		widget.outerSpacing(0);
 		// widget.headerPanel.spacing(4);
 		widget.background(new ColorDecorator() {
 			@Override
@@ -43,7 +43,7 @@ class ChildRegisterStyle extends RegisterStyle {
 	void init(ITitle title) {
 		onBack(title);
 		title.border().width(1).color().lightgray();
-		title.color().white();
+//		title.color().white();
 	}
 
 	@Override
