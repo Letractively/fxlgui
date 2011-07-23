@@ -77,4 +77,10 @@ class NavigationWidgetImpl implements IMenuWidget {
 	public int heightMenu() {
 		return registerWidget.heightMenu();
 	}
+
+	@Override
+	public IMenuWidget outerSpacing(int outerSpacing) {
+		registerWidget.outerSpacing(outerSpacing);
+		return this;
+	}
 }

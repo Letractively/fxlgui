@@ -28,6 +28,7 @@ import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.register.api.IRegister;
 import co.fxl.gui.register.api.IRegisterWidget;
 
@@ -49,21 +50,33 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 	public int spacing = 6;
 	public int fontSize = 14;
 	private List<IRegisterListener> registerListeners = new LinkedList<IRegisterListener>();
+	public IVerticalPanel backgroundPanel;
+	int outerSpacing = 4;
+	private boolean setUp = false;
 
 	public RegisterWidgetImpl(ILayout panel) {
 		mainBorders = panel.dock();
-		headerPanel = mainBorders.top().panel().vertical().addSpace(4).add()
-				.panel().flow();
+	}
+
+	private void setUp() {
+		if (setUp)
+			return;
+		setUp = true;
+		backgroundPanel = mainBorders.top().panel().vertical();
+		headerPanel = backgroundPanel.addSpace(outerSpacing).add().panel()
+				.flow();
 		cardPanel = mainBorders.center().panel().card();
 	}
 
 	public void background(ColorDecorator background) {
-		background.decorate(headerPanel.color());
+		setUp();
+		background.decorate(backgroundPanel.color());
 		this.background = background;
 	}
 
 	@Override
 	public IRegister addRegister() {
+		setUp();
 		RegisterImpl register = new RegisterImpl(this, registers.size());
 		registers.add(register);
 		return register;
@@ -76,6 +89,12 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 		} else {
 			throw new MethodNotImplementedException();
 		}
+		return this;
+	}
+
+	@Override
+	public IRegisterWidget outerSpacing(int outerSpacing) {
+		this.outerSpacing = outerSpacing;
 		return this;
 	}
 
@@ -107,6 +126,7 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 	}
 
 	public IRegisterWidget topBorder() {
+		setUp();
 		IBorder border = cardPanel.border();
 		border.color().rgb(172, 197, 213);
 		border.style().top();
@@ -118,7 +138,7 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 	}
 
 	public int heightMenu() {
-		return headerPanel.height();
+		return backgroundPanel.height();
 	}
 
 	@Override

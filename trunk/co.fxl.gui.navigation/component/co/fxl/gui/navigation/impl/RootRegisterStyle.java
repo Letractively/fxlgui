@@ -28,7 +28,7 @@ class RootRegisterStyle extends RegisterStyle {
 	@Override
 	void decorateWidget(RegisterWidgetImpl widget) {
 		// this.widget = widget;
-		widget.headerPanel.color().rgb(249, 249, 249).gradient().vertical()
+		widget.backgroundPanel.color().rgb(249, 249, 249).gradient().vertical()
 				.rgb(216, 216, 216);
 		// IPanel<?> filler = widget.addFillerPanel();
 		// background(filler.color());
@@ -55,7 +55,8 @@ class RootRegisterStyle extends RegisterStyle {
 	@Override
 	public void onFront(ITitle title) {
 		// background(title.border().width(2).color());
-		title.color().rgb(255, 255, 255).gradient().vertical().rgb(245, 245, 245);
+		title.color().rgb(255, 255, 255).gradient().vertical()
+				.rgb(245, 245, 245);
 		title.border().color().black();
 		title.font().underline(false).weight().plain().color().black();// .color().white();
 	}

@@ -78,7 +78,7 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 			addSeparator();
 		}
 		verticalContainer = widget.headerPanel.add().panel().vertical();
-		verticalContainer.spacing().left(4).right(0).top(0).bottom(4);
+		verticalContainer.spacing().left(widget.outerSpacing).right(0).top(0).bottom(widget.outerSpacing);
 		buttonPanel = verticalContainer.add().panel().horizontal();
 		buttonPanel.spacing(widget.spacing);// .align().center();
 		buttonPanel.addSpace(3);
