@@ -72,6 +72,14 @@ class SwingLabel extends SwingTextElement<JLabel, ILabel> implements ILabel {
 
 	@Override
 	public ILabel text(String text) {
+		html.allowHTML(false);
+		super.setText(text);
+		return this;
+	}
+
+	@Override
+	public ILabel html(String text) {
+		html.allowHTML(true);
 		super.setText(text);
 		return this;
 	}
