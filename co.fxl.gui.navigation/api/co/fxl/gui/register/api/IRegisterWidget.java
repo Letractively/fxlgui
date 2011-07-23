@@ -27,6 +27,8 @@ public interface IRegisterWidget {
 
 	IRegister addRegister();
 
+	IRegisterWidget outerSpacing(int outerSpacing);
+
 	IRegisterWidget visible(boolean visible);
 
 	IRegisterWidget addRegisterListener(IRegisterListener l);
