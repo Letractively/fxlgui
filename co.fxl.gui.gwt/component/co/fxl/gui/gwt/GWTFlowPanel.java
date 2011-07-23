@@ -49,7 +49,7 @@ class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 		container.widget.add(widget);
 	}
 
-	@Override
+//	@Override
 	public IFlowPanel spacing(int spacing) {
 		this.margin = spacing / 2;
 		// TODO Code: Look: GWT: Firefox: Margin doesn't work if items are
