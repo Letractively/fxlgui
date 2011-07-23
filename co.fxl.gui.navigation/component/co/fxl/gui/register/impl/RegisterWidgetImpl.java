@@ -52,7 +52,8 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 
 	public RegisterWidgetImpl(ILayout panel) {
 		mainBorders = panel.dock();
-		headerPanel = mainBorders.top().panel().flow().spacing(4);
+		headerPanel = mainBorders.top().panel().vertical().addSpace(4).add()
+				.panel().flow();
 		cardPanel = mainBorders.center().panel().card();
 	}
 

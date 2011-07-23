@@ -77,7 +77,9 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 		if (index > 0 && widget.separators) {
 			addSeparator();
 		}
-		buttonPanel = widget.headerPanel.add().panel().horizontal();
+		verticalContainer = widget.headerPanel.add().panel().vertical();
+		verticalContainer.spacing().left(4).right(0).top(0).bottom(4);
+		buttonPanel = verticalContainer.add().panel().horizontal();
 		buttonPanel.spacing(widget.spacing);// .align().center();
 		buttonPanel.addSpace(3);
 		buttonLabel = buttonPanel.add().label();
@@ -146,22 +148,23 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 	public IRegister visible(boolean visible) {
 		if (separator != null)
 			separator.visible(visible);
-		buttonPanel.visible(visible);
+		verticalContainer.visible(visible);
 		return this;
 	}
 
 	boolean disabled = false;
+	private IVerticalPanel verticalContainer;
 
 	@Override
 	public IRegister enabled(boolean enabled) {
 		if (!enabled) {
 			buttonLabel.font().color().white();
-			buttonPanel.visible(false);
+			verticalContainer.visible(false);
 			disabled = true;
 		} else {
 			if (disabled) {
 				buttonLabel.font().color().white();
-				buttonPanel.visible(true);
+				verticalContainer.visible(true);
 				disabled = false;
 			}
 		}
