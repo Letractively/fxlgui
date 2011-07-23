@@ -280,17 +280,10 @@ class FormWidgetImpl implements IFormWidget {
 		if (saveListener != null || hasRequiredAttributes()) {
 			if (fields.isEmpty())
 				return;
-			if (bottomPanel == null) {
-				contentPanel.addSpace(8);
-				bottomPanel = contentPanel.add().panel().grid();
-				if (saveListener != null) {
-					addSaveButton(bottomPanel);
-				}
-			}
 			if (hasRequiredAttributes()) {
 				if (requiredAttributeLabel == null) {
 					int column = 1;
-					IGridCell cell = bottomPanel.cell(column, gridIndex);
+					IGridCell cell = grid().cell(column, gridIndex + 1);
 					cell.align().end();
 					ILabel label = cell.label();
 					requiredAttributeLabel = label;
@@ -301,6 +294,13 @@ class FormWidgetImpl implements IFormWidget {
 				if (requiredAttributeLabel != null)
 					requiredAttributeLabel.remove();
 				requiredAttributeLabel = null;
+			}
+			if (saveListener != null) {
+				if (bottomPanel == null) {
+					contentPanel.addSpace(8);
+					bottomPanel = contentPanel.add().panel().grid();
+				}
+				addSaveCancelButtons(bottomPanel);
 			}
 		}
 	}
@@ -324,7 +324,7 @@ class FormWidgetImpl implements IFormWidget {
 		return this;
 	}
 
-	private void addSaveButton(IGridPanel grid) {
+	private void addSaveCancelButtons(IGridPanel grid) {
 		int column = 0;
 		int gridIndex = 0;
 		IGridCell cell = grid.cell(column, gridIndex);
