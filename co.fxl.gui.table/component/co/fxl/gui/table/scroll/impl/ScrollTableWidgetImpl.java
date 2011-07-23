@@ -66,7 +66,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	// widths / Look: use a heuristic on the client side
 	// to determine column width
 
-	// TODO FEATURE: Option: Usability: Implement live filter on current table
+	// TODO FEATURE: Option: Usability: Table-Live-Filter: Implement live filter
+	// on current table
 	// content, every update notification in filter-widget on the side is
 	// directly applied to the loaded table content
 
