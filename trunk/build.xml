@@ -46,14 +46,14 @@
 	<property name="co.fxl.gui.swing.dir" value="${project.dir}/co.fxl.gui.swing"/>
 	<property name="co.fxl.gui.swing.component.src.dir" value="${co.fxl.gui.swing.dir}/component"/>
 
-	<property name="co.fxl.gui.mdt.dir" value="${project.dir}/co.fxl.gui.mdt"/>
-	<property name="co.fxl.gui.mdt.api.src.dir" value="${co.fxl.gui.mdt.dir}/api"/>
-	<property name="co.fxl.gui.mdt.component.src.dir" value="${co.fxl.gui.mdt.dir}/component"/>
-	<property name="co.fxl.gui.mdt.gwt.src.dir" value="${co.fxl.gui.mdt.dir}/gwt"/>	
+	<property name="co.fxl.gui.tree.dir" value="${project.dir}/co.fxl.gui.tree"/>
+	<property name="co.fxl.gui.tree.api.src.dir" value="${co.fxl.gui.tree.dir}/api"/>
+	<property name="co.fxl.gui.tree.component.src.dir" value="${co.fxl.gui.tree.dir}/component"/>
+	<property name="co.fxl.gui.tree.gwt.src.dir" value="${co.fxl.gui.tree.dir}/gwt"/>	
 
-	<property name="co.fxl.gui.mdt.gwt.dir" value="${project.dir}/co.fxl.gui.mdt.gwt"/>
-	<property name="co.fxl.gui.mdt.gwt.component.src.dir" value="${co.fxl.gui.mdt.gwt.dir}/component"/>
-	<property name="co.fxl.gui.mdt.gwt.gwt.src.dir" value="${co.fxl.gui.mdt.gwt.dir}/gwt"/>	
+	<property name="co.fxl.gui.tree.gwt.dir" value="${project.dir}/co.fxl.gui.tree.gwt"/>
+	<property name="co.fxl.gui.tree.gwt.component.src.dir" value="${co.fxl.gui.tree.gwt.dir}/component"/>
+	<property name="co.fxl.gui.tree.gwt.gwt.src.dir" value="${co.fxl.gui.tree.gwt.dir}/gwt"/>	
 
 	<property name="co.fxl.gui.navigation.dir" value="${project.dir}/co.fxl.gui.navigation"/>
 	<property name="co.fxl.gui.navigation.api.src.dir" value="${co.fxl.gui.navigation.dir}/api"/>
@@ -123,11 +123,11 @@
     	<fileset dir="${co.fxl.data.format.gwt.gwt.src.dir}"/>    	
     	<fileset dir="${co.fxl.gui.gwt.component.src.dir}"/>
     	<fileset dir="${co.fxl.gui.gwt.gwt.src.dir}"/>
-    	<fileset dir="${co.fxl.gui.mdt.api.src.dir}"/>	
-    	<fileset dir="${co.fxl.gui.mdt.component.src.dir}"/>
-    	<fileset dir="${co.fxl.gui.mdt.gwt.src.dir}"/>	
-    	<fileset dir="${co.fxl.gui.mdt.gwt.component.src.dir}"/>
-    	<fileset dir="${co.fxl.gui.mdt.gwt.gwt.src.dir}"/>	
+    	<fileset dir="${co.fxl.gui.tree.api.src.dir}"/>	
+    	<fileset dir="${co.fxl.gui.tree.component.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.tree.gwt.src.dir}"/>	
+    	<fileset dir="${co.fxl.gui.tree.gwt.component.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.tree.gwt.gwt.src.dir}"/>	
     	<fileset dir="${co.fxl.gui.navigation.api.src.dir}"/>	
     	<fileset dir="${co.fxl.gui.navigation.component.src.dir}"/>	
     	<fileset dir="${co.fxl.gui.navigation.gwt.src.dir}"/>	
@@ -154,8 +154,8 @@
     	<fileset dir="${co.fxl.gui.common.gwt.gwt.src.dir}"/>
     	<fileset dir="${co.fxl.gui.common.gwt.component.src.dir}"/>   		
 	<fileset dir="${co.fxl.gui.swing.component.src.dir}"/>
-    	<fileset dir="${co.fxl.gui.mdt.api.src.dir}"/>	
-    	<fileset dir="${co.fxl.gui.mdt.component.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.tree.api.src.dir}"/>	
+    	<fileset dir="${co.fxl.gui.tree.component.src.dir}"/>
     	<fileset dir="${co.fxl.gui.navigation.api.src.dir}"/>	
     	<fileset dir="${co.fxl.gui.navigation.component.src.dir}"/>	
     	<fileset dir="${co.fxl.gui.table.api.src.dir}"/>	
