@@ -33,9 +33,6 @@ import co.fxl.gui.impl.Heights;
 
 class MiniFilterPanel implements FilterPanel {
 
-	// TODO FEATURE: Option: Usability: Include a combobox that allows choosing
-	// the configuration (filter query) for the mini-filter-widget
-
 	class ViewComboBoxImpl implements ViewComboBox {
 
 		private IComboBox comboBox;
