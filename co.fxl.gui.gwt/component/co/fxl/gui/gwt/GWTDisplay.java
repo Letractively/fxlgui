@@ -40,8 +40,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.core.client.impl.SchedulerImpl;
-import com.google.gwt.event.dom.client.ContextMenuEvent;
-import com.google.gwt.event.dom.client.ContextMenuHandler;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
@@ -66,14 +65,19 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	private List<BlockListener> blockListeners = new LinkedList<BlockListener>();
 	private GWTContainer<Widget> container;
 	private GWTUncaughtExceptionHandler uncaughtExceptionHandler;
-	boolean waiting = false;
+	public static boolean waiting = false;
 	private Map<IResizeListener, HandlerRegistration> resizeListeners = new HashMap<IResizeListener, HandlerRegistration>();
 	static int lastClickX = 0;
 	static int lastClickY = 0;
 
-	static void notifyEvent(DomEvent<?> event) {
-		lastClickX = event.getNativeEvent().getClientX();
-		lastClickY = event.getNativeEvent().getClientY();
+	public static void notifyEvent(DomEvent<?> event) {
+		final NativeEvent nativeEvent = event.getNativeEvent();
+		notifyEvent(nativeEvent);
+	}
+
+	public static void notifyEvent(NativeEvent nativeEvent) {
+		lastClickX = nativeEvent.getClientX();
+		lastClickY = nativeEvent.getClientY();
 	}
 
 	private GWTDisplay() {

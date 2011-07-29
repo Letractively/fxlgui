@@ -52,7 +52,7 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 				new ContextMenuHandler() {
 					@Override
 					public void onContextMenu(ContextMenuEvent event) {
-						if (isWaiting())
+						if (GWTDisplay.waiting)
 							return;
 						GWTDisplay.notifyEvent(event);
 						clickListener.onClick();
@@ -76,22 +76,16 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 			event.preventDefault();
 			event.stopPropagation();
 		}
-		if (isWaiting())
+		if (GWTDisplay.waiting)
 			return;
 		GWTDisplay.notifyEvent(event);
 		clickListener.onClick();
 	}
 
-	boolean isWaiting() {
-		GWTDisplay d = (GWTDisplay) ((IElement<?>) element).display();
-		return d.waiting;
-	}
-
 	public void onClick(KeyPressEvent event) {
 		event.preventDefault();
 		event.stopPropagation();
-		GWTDisplay d = (GWTDisplay) ((IElement<?>) element).display();
-		if (d.waiting)
+		if (GWTDisplay.waiting)
 			return;
 		clickListener.onClick();
 	}
