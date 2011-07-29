@@ -36,7 +36,7 @@ import co.fxl.gui.tree.api.ITree;
 
 public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 
-	// TODO FEATURE: Option: Usability: GWT: double click on table shortcut from
+	// TODO Usability: GWT: double click on table shortcut from
 	// tree node doesn't work when discard changes intercepts (works only like a
 	// single click)
 
