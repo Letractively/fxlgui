@@ -46,6 +46,7 @@ public class DateField {
 				@Override
 				public void onUpdate(Date value) {
 					tf.text(format.format(value));
+					popUp.visible(false);
 				}
 			});
 			tf.addUpdateListener(new IUpdateListener<String>() {
