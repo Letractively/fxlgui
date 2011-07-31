@@ -28,6 +28,11 @@ import co.fxl.gui.table.filter.impl.FilterTableWidgetImplProvider;
 import co.fxl.gui.table.impl.TableWidgetImplProvider;
 
 public class GUIDemo {
+	
+	// TODO include more text & explanations
+	// TODO adjust demo & examples to release 2.0
+	// TODO release 2.0: only 2 files: gwt & swing: widgets are integrated
+	// TODO ensure validity & completeness of .gwt.xml - references for each widget
 
 	private ExampleDecorator decorator;
 	private IVerticalPanel panel;
