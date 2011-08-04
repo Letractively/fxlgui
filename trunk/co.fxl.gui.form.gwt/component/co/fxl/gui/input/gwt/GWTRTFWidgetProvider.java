@@ -20,24 +20,18 @@ package co.fxl.gui.input.gwt;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.gwt.GWTContainer;
-import co.fxl.gui.input.api.ICalendarWidget;
+import co.fxl.gui.input.api.IRTFWidget;
 
-import com.google.gwt.user.datepicker.client.DatePicker;
-
-public class GWTCalendarWidgetProvider implements
-		IWidgetProvider<ICalendarWidget> {
+public class GWTRTFWidgetProvider implements IWidgetProvider<IRTFWidget> {
 
 	@Override
-	public Class<ICalendarWidget> widgetType() {
-		return ICalendarWidget.class;
+	public Class<IRTFWidget> widgetType() {
+		return IRTFWidget.class;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public ICalendarWidget createWidget(IContainer container) {
-		GWTContainer<DatePicker> c = (GWTContainer<DatePicker>) container;
-		c.setComponent(new DatePicker());
-		return new GWTCalendarWidget(c);
+	public IRTFWidget createWidget(IContainer container) {
+		return new GWTRTFWidget(container);
 	}
+
 }
