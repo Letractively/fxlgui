@@ -41,7 +41,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 
-	// TODO BUG: Opera: unnecessary horizontal scrollbar for left splitpane content
+	// TODO BUG: Opera: unnecessary horizontal scrollbar for left splitpane
+	// content
 
 	public static String IMAGE_PATH = "images/";
 	public static String HTML = "<table cellspacing=\"0\" cellpadding=\"0\" "
@@ -118,7 +119,8 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			p.add(getHTML(selectionIndex + 1, lastRow));
 		} else if (selectionIndex == firstRow) {
 			decorator.decorate(getContainer(p), selectionIndex);
-			p.add(getHTML(firstRow + 1, lastRow));
+			if (firstRow + 1 <= lastRow)
+				p.add(getHTML(firstRow + 1, lastRow));
 		} else if (selectionIndex == lastRow) {
 			p.add(getHTML(firstRow, lastRow - 1));
 			decorator.decorate(getContainer(p), selectionIndex);
@@ -170,7 +172,7 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		List<ITree<Object>> rows = tree.rows(firstRow, lastRow);
 		if (rows.isEmpty())
 			throw new RuntimeException("illegal range: " + firstRow + " - "
-					+ lastRow);
+					+ lastRow + ", selection=" + selectionIndex);
 		StringBuilder b = new StringBuilder(
 				"<table cellspacing=\"0\" cellpadding=\"0\">");
 		for (int i = firstRow; i <= lastRow; i++) {
@@ -185,11 +187,11 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			hTML = hTML.replace("${ICON}",
 					IMAGE_PATH + TreeNode.entityIcon(row));
 			String name = row.name();
-			if (name == null)
-				throw new MethodNotImplementedException("name is null of row "
-						+ i + ", " + row);
-			hTML = hTML.replace("${LABEL}",
-					HTMLText.html(name.replace("<", "&#060;")));
+			if (name == null) {
+				name = "<font weight=\"light\" color=\"gray\">unnamed</font>";
+			} else
+				name = HTMLText.html(name.replace("<", "&#060;"));
+			hTML = hTML.replace("${LABEL}", name);
 			b.append("<tr>" + hTML + "</tr>");
 		}
 		b.append("</table>");
