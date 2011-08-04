@@ -19,25 +19,27 @@
 package co.fxl.gui.input.gwt;
 
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.gwt.GWTContainer;
-import co.fxl.gui.input.api.ICalendarWidget;
+import co.fxl.gui.input.api.IRTFWidget;
 
-import com.google.gwt.user.datepicker.client.DatePicker;
+class GWTRTFWidget implements IRTFWidget {
 
-public class GWTCalendarWidgetProvider implements
-		IWidgetProvider<ICalendarWidget> {
-
-	@Override
-	public Class<ICalendarWidget> widgetType() {
-		return ICalendarWidget.class;
+	GWTRTFWidget(IContainer container) {
+		throw new MethodNotImplementedException();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public ICalendarWidget createWidget(IContainer container) {
-		GWTContainer<DatePicker> c = (GWTContainer<DatePicker>) container;
-		c.setComponent(new DatePicker());
-		return new GWTCalendarWidget(c);
+	public IRTFWidget visible(boolean visible) {
+		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public IRTFWidget addToken(IToken token) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IRTFWidget addCompositeToken(ICompositeToken token) {
+		throw new MethodNotImplementedException();
+	}
+
 }
