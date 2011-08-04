@@ -107,4 +107,9 @@ class AndroidLabel extends AndroidElement<TextView, ILabel> implements ILabel {
 			co.fxl.gui.api.IMouseOverElement.IMouseOverListener l) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public ILabel html(String html) {
+		throw new MethodNotImplementedException();
+	}
 }
