@@ -104,7 +104,11 @@ public abstract class LazyTreeWidgetTemplate implements
 	@Override
 	public ILazyTreeWidget<Object> tree(ITree<Object> tree) {
 		this.realTree = tree;
-		this.tree = new LazyTreeAdpList(tree, showRoot);
+		final LazyTreeAdpList newTree = new LazyTreeAdpList(tree, showRoot);
+		if (this.tree != null) {
+			this.tree.copyCollapseState(newTree);
+		}
+		this.tree = newTree;
 		return this;
 	}
 

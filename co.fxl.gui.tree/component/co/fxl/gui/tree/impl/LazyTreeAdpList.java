@@ -110,4 +110,8 @@ public class LazyTreeAdpList {
 		return indent;
 	}
 
+	void copyCollapseState(LazyTreeAdpList newTree) {
+		throw new MethodNotImplementedException();
+	}
+
 }
