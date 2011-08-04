@@ -30,8 +30,9 @@ public class RegisterDialog {
 	// TODO extract -> component
 
 	public static void addButton(final RegisterWidgetImpl widget) {
-		final ILabel label = widget.headerPanel.add().label().text("More >>")
-				.hyperlink().addClickListener(new IClickListener() {
+		final ILabel label = widget.headerPanel.add().panel().vertical()
+				.spacing(8).add().label().text("More >>").hyperlink()
+				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
 						final IDialog dialog = widget.headerPanel.display()
