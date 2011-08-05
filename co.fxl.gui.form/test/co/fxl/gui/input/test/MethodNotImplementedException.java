@@ -16,10 +16,9 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.input.impl;
+package co.fxl.gui.input.test;
 
+@SuppressWarnings("serial")
 class MethodNotImplementedException extends RuntimeException {
-
-	private static final long serialVersionUID = 6282989723242176406L;
 
 }

@@ -18,8 +18,38 @@
  */
 package co.fxl.gui.input.impl;
 
-class MethodNotImplementedException extends RuntimeException {
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
-	private static final long serialVersionUID = 6282989723242176406L;
+import co.fxl.gui.input.api.IRTFWidget;
+
+public abstract class RTFWidgetImpl implements IRTFWidget {
+
+	protected List<Object> tokens = new LinkedList<Object>();
+
+	@Override
+	public IRTFWidget addToken(String label, String token) {
+		tokens.add(new String[] { label, token });
+		return this;
+	}
+
+	@Override
+	public IComposite addComposite() {
+		IComposite c = new CompositeImpl();
+		tokens.add(c);
+		return c;
+	}
+
+	public String toString() {
+		StringBuilder b = new StringBuilder();
+		for (Object o : tokens) {
+			if (b.length() > 0)
+				b.append("\n");
+			b.append(o instanceof String[] ? Arrays.toString((String[]) o) : o
+					.toString());
+		}
+		return b.toString();
+	}
 
 }

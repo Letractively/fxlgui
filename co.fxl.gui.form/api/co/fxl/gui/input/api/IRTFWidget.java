@@ -18,29 +18,25 @@
  */
 package co.fxl.gui.input.api;
 
-import java.util.List;
-
 public interface IRTFWidget {
 
 	// TODO ...
 
-	public interface IToken {
+	public interface IComposite {
 
-		String label();
+		IComposite addComposite(String label);
 
-		String token();
-
-	}
-
-	public interface ICompositeToken extends IToken {
-
-		List<IToken> tokens();
+		void token(String token);
 
 	}
 
-	IRTFWidget addToken(IToken token);
+	String html();
 
-	IRTFWidget addCompositeToken(ICompositeToken token);
+	IRTFWidget html(String html);
+
+	IRTFWidget addToken(String label, String token);
+
+	IComposite addComposite();
 
 	IRTFWidget visible(boolean visible);
 
