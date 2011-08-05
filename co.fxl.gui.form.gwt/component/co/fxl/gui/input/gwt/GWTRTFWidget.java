@@ -20,8 +20,9 @@ package co.fxl.gui.input.gwt;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.input.api.IRTFWidget;
+import co.fxl.gui.input.impl.RTFWidgetImpl;
 
-class GWTRTFWidget implements IRTFWidget {
+class GWTRTFWidget extends RTFWidgetImpl implements IRTFWidget {
 
 	GWTRTFWidget(IContainer container) {
 		throw new MethodNotImplementedException();
@@ -33,13 +34,12 @@ class GWTRTFWidget implements IRTFWidget {
 	}
 
 	@Override
-	public IRTFWidget addToken(IToken token) {
+	public String html() {
 		throw new MethodNotImplementedException();
 	}
 
 	@Override
-	public IRTFWidget addCompositeToken(ICompositeToken token) {
+	public IRTFWidget html(String html) {
 		throw new MethodNotImplementedException();
 	}
-
 }
