@@ -22,11 +22,25 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.ITextArea;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.input.api.IRTFWidget;
 
-public abstract class RTFWidgetImpl implements IRTFWidget {
+public class RTFWidgetImpl implements IRTFWidget {
 
+	private IVerticalPanel panel;
+	private ITextArea textArea;
+	private IHorizontalPanel buttonPanel;
 	protected List<Object> tokens = new LinkedList<Object>();
+
+	protected RTFWidgetImpl(IContainer container) {
+		panel = container.panel().vertical();
+		textArea = panel.add().textArea();
+		buttonPanel = panel.addSpace(6).add().panel().horizontal().spacing(4);
+	}
 
 	@Override
 	public IRTFWidget addToken(String label, String token) {
@@ -50,6 +64,38 @@ public abstract class RTFWidgetImpl implements IRTFWidget {
 					.toString());
 		}
 		return b.toString();
+	}
+
+	@Override
+	public String html() {
+		return textArea.text();
+	}
+
+	@Override
+	public IRTFWidget html(String html) {
+		textArea.text(html);
+		return this;
+	}
+
+	@Override
+	public IRTFWidget visible(boolean visible) {
+		for (Object o : tokens) {
+			if (o instanceof String[]) {
+				String[] t = (String[]) o;
+				buttonPanel.add().button().text(t[0])
+						.addClickListener(new IClickListener() {
+							@Override
+							public void onClick() {
+								throw new MethodNotImplementedException();
+							}
+						});
+				// TODO ...
+			} else {
+				CompositeImpl c = (CompositeImpl) o;
+				// TODO ...
+			}
+		}
+		return this;
 	}
 
 }
