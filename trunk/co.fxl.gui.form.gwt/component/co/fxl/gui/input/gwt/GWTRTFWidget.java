@@ -25,7 +25,7 @@ import co.fxl.gui.input.impl.RTFWidgetImpl;
 class GWTRTFWidget extends RTFWidgetImpl implements IRTFWidget {
 
 	GWTRTFWidget(IContainer container) {
-		throw new MethodNotImplementedException();
+		super(container);
 	}
 
 	@Override
