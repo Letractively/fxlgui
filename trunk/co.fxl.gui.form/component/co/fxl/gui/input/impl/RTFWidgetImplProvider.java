@@ -16,26 +16,21 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.input.test;
+package co.fxl.gui.input.impl;
 
-import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.input.api.IRTFWidget;
-import co.fxl.gui.input.api.IRTFWidget.IComposite;
 
-public class RTFWidgetTest {
+public class RTFWidgetImplProvider implements IWidgetProvider<IRTFWidget> {
 
-	public void run(IDisplay display) {
-		IRTFWidget w = (IRTFWidget) display.container()
-				.widget(IRTFWidget.class);
-		w.addToken("#", "{#}");
-		w.addToken("name", "{name}");
-		IComposite c = w.addComposite();
-		IComposite rc = c.addComposite("ReleaseCycle");
-		rc.addComposite("id").token("ReleaseCycle.id");
-		rc.addComposite("version").token("ReleaseCycle.version");
-		IComposite rf = c.addComposite("ReleaseFolder");
-		rf.addComposite("id").token("ReleaseFolder.id");
-		rf.addComposite("version").token("ReleaseFolder.version");
-		w.visible(true);
+	@Override
+	public Class<IRTFWidget> widgetType() {
+		return IRTFWidget.class;
+	}
+
+	@Override
+	public IRTFWidget createWidget(IContainer container) {
+		return new RTFWidgetImpl(container);
 	}
 }
