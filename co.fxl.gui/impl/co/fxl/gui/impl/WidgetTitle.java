@@ -62,6 +62,7 @@ public class WidgetTitle implements IClickListener {
 	private boolean addToContextMenu = false;
 	private boolean sideWidget = false;
 	private String title;
+	private IGridPanel bPanel;
 
 	public WidgetTitle() {
 	}
@@ -76,6 +77,7 @@ public class WidgetTitle implements IClickListener {
 		headerPanel = panel.cell(0, 0).panel().grid();
 		headerPanel.color().rgb(136, 136, 136).gradient().vertical()
 				.rgb(113, 113, 113);
+		bPanel = panel.cell(0, 1).panel().grid();
 		IBorder border = headerPanel.border();
 		border.color().rgb(172, 197, 213);
 		border.style().bottom();
@@ -166,24 +168,25 @@ public class WidgetTitle implements IClickListener {
 	@Override
 	public void onClick() {
 		open = !open;
-		contentContainer.element().visible(open);
-		for (ILabel l : labels)
-			l.visible(open);
-		for (IImage l : images)
-			l.visible(open);
+		bPanel.visible(open);
+		// for (ILabel l : labels)
+		// l.visible(open);
+		// for (IImage l : images)
+		// l.visible(open);
+		headerLabel.text(open ? title : "+ " + title);
 	}
 
 	public ILabel addTitle(String title) {
 		initHeader();
-		ILabel label = titlePanel.add().label()
-				.text(sideWidget ? title.toUpperCase() : title);
+		String text = sideWidget ? title.toUpperCase() : title;
+		ILabel label = titlePanel.add().label().text(text);
 		styleHeaderTitleSide(label);
 		headerLabel = label;
 		if (foldable) {
 			headerLabel.addClickListener(this);
 			headerLabel.tooltip(FOLDABLE);
 		}
-		this.title = title;
+		this.title = text;
 		if (addToContextMenu) {
 			ContextMenu.instance().group(title);
 		}
@@ -305,8 +308,8 @@ public class WidgetTitle implements IClickListener {
 	public IContainer content() {
 		if (contentContainer != null)
 			return contentContainer;
-		return contentContainer = space == 0 ? panel.cell(0, 1).panel()
-				.vertical().add() : panel.cell(0, 1).panel().vertical()
+		return contentContainer = space == 0 ? bPanel.cell(0, 0).panel()
+				.vertical().add() : bPanel.cell(0, 0).panel().vertical()
 				.addSpace(space).add();
 	}
 
@@ -314,8 +317,8 @@ public class WidgetTitle implements IClickListener {
 		content();
 		if (bottomContainer != null)
 			return bottomContainer;
-		return bottomContainer = space == 0 ? panel.cell(0, 2) : panel
-				.cell(0, 2).panel().vertical().addSpace(space).add();
+		return bottomContainer = space == 0 ? bPanel.cell(0, 1) : bPanel
+				.cell(0, 1).panel().vertical().addSpace(space).add();
 	}
 
 	public WidgetTitle clearHyperlinks() {
