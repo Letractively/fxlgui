@@ -111,7 +111,7 @@ public class LazyTreeAdpList {
 	}
 
 	void copyCollapseState(LazyTreeAdpList newTree) {
-		throw new MethodNotImplementedException();
+		// TODO ... throw new MethodNotImplementedException();
 	}
 
 }
