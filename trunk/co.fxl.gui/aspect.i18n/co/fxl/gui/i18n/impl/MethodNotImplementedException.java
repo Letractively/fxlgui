@@ -16,13 +16,9 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.i18n.api;
+package co.fxl.gui.i18n.impl;
 
-import co.fxl.gui.api.ILabel;
+@SuppressWarnings("serial")
+class MethodNotImplementedException extends RuntimeException {
 
-public interface II18N {
-
-	String translate(String text);
-
-	void addHelp(String iD, ILabel label);
 }

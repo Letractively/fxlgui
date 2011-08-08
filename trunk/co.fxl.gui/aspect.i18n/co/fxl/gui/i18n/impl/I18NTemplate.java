@@ -16,10 +16,11 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.i18n.german;
+package co.fxl.gui.i18n.impl;
 
 import java.util.HashMap;
 
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.i18n.api.II18N;
 
 @SuppressWarnings("serial")
@@ -36,6 +37,10 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 			return text;
 		}
 		return translation;
+	}
+
+	@Override
+	public void addHelp(String iD, ILabel label) {
 	}
 
 }

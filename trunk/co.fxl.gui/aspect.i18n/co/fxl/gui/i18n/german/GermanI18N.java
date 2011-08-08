@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.i18n.german;
 
+import co.fxl.gui.api.ILabel;
+import co.fxl.gui.i18n.impl.I18NTemplate;
+
 public class GermanI18N extends I18NTemplate {
 
 	private static final long serialVersionUID = -432280219994971029L;
@@ -26,5 +29,25 @@ public class GermanI18N extends I18NTemplate {
 		put("Back", "Zur\u00fcck");
 		put("Forward", "Vorw\u00e4rts");
 		put("Navigation", "Navigation");
+	}
+
+	@Override
+	public void addHelp(final String iD, final ILabel label) {
+		// label.addMouseOverListener(new IMouseOverListener() {
+		//
+		// private IPopUp popUp;
+		//
+		// @Override
+		// public void onMouseOver() {
+		// popUp = label.display().showPopUp();
+		// popUp.container().label().text("help for " + iD);
+		// popUp.visible(true);
+		// }
+		//
+		// @Override
+		// public void onMouseOut() {
+		// popUp.visible(false);
+		// }
+		// });
 	}
 }

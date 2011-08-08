@@ -54,6 +54,7 @@ privileged aspect StyleAspect {
 	execution(public WidgetTitle.new(ILayout, boolean)) 
 	&& this(widgetTitle) 
 	&& if(Style.ENABLED) {
+		// TODO return boolean and call commandsOnTop if true
 		Style.instance().window().main(widgetTitle.panel)
 				.header(widgetTitle.headerPanel);
 		widgetTitle.commandsOnTop();
