@@ -111,7 +111,18 @@ public class LazyTreeAdpList {
 	}
 
 	void copyCollapseState(LazyTreeAdpList newTree) {
-		// TODO ... throw new MethodNotImplementedException();
+		int index = 0;
+		for (ITree<Object> t : rows) {
+			if (t.childCount() > 0) {
+				if (index < rows.size() - 1) {
+					if (!rows.get(index + 1).parent().equals(t)) {
+						newTree.collapse(t, true);
+					}
+				} else {
+					newTree.collapse(t, true);
+				}
+			}
+			index++;
+		}
 	}
-
 }
