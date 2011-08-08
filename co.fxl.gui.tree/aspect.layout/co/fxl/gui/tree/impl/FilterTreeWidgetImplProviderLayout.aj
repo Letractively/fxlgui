@@ -18,10 +18,13 @@
  */
 package co.fxl.gui.tree.impl;
 
+import co.fxl.gui.layout.impl.Layout;
+
 privileged aspect FilterTreeWidgetImplProviderLayout {
 
 	after() : 
-	execution(public FilterTreeWidgetImplProvider.new()) {
+	execution(public FilterTreeWidgetImplProvider.new()) 
+	&& if(Layout.ENABLED) {
 		TreeWidgetImpl.SPLIT_POSITION = 150;
 	}
 }

@@ -149,7 +149,7 @@ public abstract class LazyTreeWidgetTemplate implements
 			if (checkSelection) {
 				pane.rowIndex(index);
 			}
-			selection = null;
+//			selection = null;
 		}
 		selectionIndex = index;
 		markedIndex = -1;
