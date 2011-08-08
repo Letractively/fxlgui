@@ -23,7 +23,7 @@ import co.fxl.gui.i18n.impl.I18N;
 
 aspect NavigationItemImplI18N {
 
-	declare @field : ILabel NavigationItemImpl.button : @Help;
+	declare @field : ILabel NavigationItemImpl.button : @Help("register.main");
 
 	after(ILabel label) :
 	set(@Help ILabel *.*) 
