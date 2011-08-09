@@ -28,7 +28,7 @@ import co.fxl.gui.layout.api.ILayoutDialog;
 import co.fxl.gui.layout.impl.Layout;
 
 public class HandheldLayout implements ILayout {
-	
+
 	private HandheldActionMenu actionMenu = new HandheldActionMenu();
 
 	@Override
@@ -47,9 +47,7 @@ public class HandheldLayout implements ILayout {
 		return c.panel().vertical();
 	}
 
-	@Override
-	public ILabel createButtonLabel(IPanel<?> panel) {
-		assertEnabled();
+	private ILabel createButtonLabel(IPanel<?> panel) {
 		return panel.add().label().visible(false);
 	}
 
@@ -57,5 +55,15 @@ public class HandheldLayout implements ILayout {
 	public ILayoutDialog dialog(DialogType type) {
 		assertEnabled();
 		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public ILabel createWindowButton(boolean commandsOnTop, IPanel<?> iPanel,
+			String text) {
+		assertEnabled();
+		if (commandsOnTop)
+			return createButtonLabel(iPanel);
+		else
+			return null;
 	}
 }
