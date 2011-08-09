@@ -16,25 +16,18 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.layout.api;
+package co.fxl.gui.impl;
 
-import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.ILinearPanel;
-import co.fxl.gui.api.IPanel;
+import co.fxl.gui.style.impl.Style;
 
-public interface ILayout {
+privileged aspect HyperlinkDecoratorStyle {
 
-	public enum DialogType {
-
-		LOGIN, FILTER;
+	after(ILabel label) :
+	execution(private void HyperlinkDecorator.styleHyperlinkActive(ILabel)) 
+	&& args(label) 
+	&& if(Style.ENABLED) {
+		label.font().color().rgb(51, 102, 204);
 	}
 
-	IActionMenu actionMenu();
-
-	ILabel createWindowButton(boolean commandsOnTop, IPanel<?> panel, String text);
-
-	ILinearPanel<?> createLinearPanel(IContainer c);
-
-	ILayoutDialog dialog(DialogType type);
 }
