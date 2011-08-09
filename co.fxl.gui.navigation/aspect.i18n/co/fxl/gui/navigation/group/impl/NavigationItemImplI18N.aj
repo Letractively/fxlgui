@@ -30,6 +30,6 @@ aspect NavigationItemImplI18N {
 	&& args(label)
 	&& if(I18N.ENABLED) {
 		Help help = JoinPointUtil.getAnnotation(thisJoinPoint);
-		I18N.instance().addHelp(help.value(), label);
+		I18N.instance().addHelp(help != null ? help.value() : null, label);
 	}
 }
