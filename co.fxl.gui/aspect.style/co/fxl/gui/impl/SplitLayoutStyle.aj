@@ -16,25 +16,26 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.layout.api;
+package co.fxl.gui.impl;
 
-import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.style.impl.Style;
 
-public interface ILayout {
+privileged aspect SplitLayoutStyle {
 
-	public enum DialogType {
-
-		LOGIN, FILTER;
+	after() returning(IPanel<?>[] panels):
+	execution(protected IPanel<?>[] addPanel()) 
+	&& if(Style.ENABLED) {
+		Style.instance().window().navigationEntry((ILinearPanel<?>) panels[0]);
 	}
 
-	IActionMenu actionMenu();
+	after(SplitLayout splitLayout) :
+	execution(private void SplitLayout.init()) 
+	&& this(splitLayout) 
+	&& if(Style.ENABLED) {
+		Style.instance().background(splitLayout.panel)
+				.side(splitLayout.sidePanel);
+	}
 
-	ILabel createWindowButton(boolean commandsOnTop, IPanel<?> panel, String text);
-
-	ILinearPanel<?> createLinearPanel(IContainer c);
-
-	ILayoutDialog dialog(DialogType type);
 }

@@ -21,18 +21,10 @@ package co.fxl.gui.impl;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.style.impl.Style;
 
-privileged aspect StyleAspect {
-
-	after(ILabel label) :
-	execution(private void HyperlinkDecorator.styleHyperlinkActive(ILabel)) 
-	&& args(label) 
-	&& if(Style.ENABLED) {
-		label.font().color().rgb(51, 102, 204);
-	}
+privileged aspect WidgetTitleStyle {
 
 	after(WidgetTitle widgetTitle, IHorizontalPanel panel) :
 	execution(public void WidgetTitle.styleWindowHeaderButton(IHorizontalPanel)) 
@@ -75,17 +67,4 @@ privileged aspect StyleAspect {
 		Style.instance().window().footer(panel);
 	}
 
-	after() returning(IPanel<?>[] panels):
-	execution(protected IPanel<?>[] addPanel()) 
-	&& if(Style.ENABLED) {
-		Style.instance().window().navigationEntry((ILinearPanel<?>) panels[0]);
-	}
-
-	after(SplitLayout splitLayout) :
-	execution(private void SplitLayout.init()) 
-	&& this(splitLayout) 
-	&& if(Style.ENABLED) {
-		Style.instance().background(splitLayout.panel)
-				.side(splitLayout.sidePanel);
-	}
 }
