@@ -40,7 +40,7 @@ privileged aspect FormWidgetImplLayout {
 	&& withincode(* FormWidgetImpl.*(..)) 
 	&& target(cell) 
 	&& if(Layout.ENABLED) {
-		((IGridCell) cell).align().begin();
+		cell.align().begin();
 	}
 
 	IGridCell around(IGridPanel grid, int column, int gridIndex) : 
