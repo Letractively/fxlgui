@@ -113,6 +113,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (widgetTitle == null) {
 			widgetTitle = new WidgetTitle(c0.panel(), addBorders)
 					.foldable(false);
+			widgetTitle.addToContextMenu(true);
 			widgetTitle.commandsOnTop();
 			this.container = widgetTitle.content().panel().vertical();
 		}
@@ -422,6 +423,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IUpdateListener<String> viewComboBoxUpdateListener;
 	private int viewInc;
 	private String viewComboBoxChoice;
+	private boolean addToContextMenu = false;
 
 	void update() {
 		paintedRows = computeRowsToPaint();
@@ -905,7 +907,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	@Override
 	public IScrollTableWidget<Object> addToContextMenu(boolean addToContextMenu) {
-		widgetTitle().addToContextMenu(true);
+		this.addToContextMenu = addToContextMenu;
 		return this;
 	}
 }
