@@ -111,4 +111,10 @@ public class GPlusStyle implements IStyle {
 		panel.color().white();
 		return this;
 	}
+
+	@Override
+	public IStyle hyperlink(ILabel label) {
+		label.font().color().rgb(51, 102, 204);
+		return this;
+	}
 }
