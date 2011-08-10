@@ -149,7 +149,7 @@ public abstract class LazyTreeWidgetTemplate implements
 			if (checkSelection) {
 				pane.rowIndex(index);
 			}
-//			selection = null;
+			selection = null;
 		}
 		selectionIndex = index;
 		markedIndex = -1;
@@ -171,13 +171,18 @@ public abstract class LazyTreeWidgetTemplate implements
 
 	@Override
 	public ILazyTreeWidget<Object> refresh(boolean reset) {
+		return refresh(reset, false);
+	}
+
+	@Override
+	public ILazyTreeWidget<Object> refresh(boolean reset, boolean checkSelection) {
 		if (selection == null && selectionIndex != -1)
 			selection = tree.row(selectionIndex).object();
 		if (reset) {
 			tree(realTree);
 		}
 		c.element().remove();
-		show(false);
+		show(checkSelection);
 		return this;
 	}
 

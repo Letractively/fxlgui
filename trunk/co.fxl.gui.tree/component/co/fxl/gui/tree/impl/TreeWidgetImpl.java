@@ -57,6 +57,18 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	// TODO BUG: Opera & Firefox: unnecessary horizontal scrollbar for right
 	// splitpane content
 
+	private static final String DELETE2 = "Delete";
+	private static final String REFRESH2 = "Refresh";
+	private static final String MOVE = "Move";
+	private static final String PASTE2 = "Paste";
+	private static final String COPY2 = "Copy";
+	private static final String CUT2 = "Cut";
+	private static final String SWITCH_TO_DETAIL_VIEW_TO_CREATE_A_NEW = "Switch to Detail View to create a new";
+	private static final String ENTITY = "Entity";
+	private static final String CREATE_A_NEW = "Create a new";
+	private static final String NEW = "New";
+	private static final String DELETE_ENTITIES = "Delete Entities";
+	private static final String DELETE_ENTITY = "Delete Entity";
 	static int SPLIT_POSITION = 250;
 	private boolean showRefresh = true;
 	private boolean showCommands = true;
@@ -215,7 +227,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 							public void onSuccess(ITree<T> result) {
 								lazyTree.collapse(parent, false);
 								previousSelection = result.object();
-								refreshLazyTree(true);
+								refreshLazyTree(true, true);
 							}
 						};
 						if (parent != null) {
@@ -238,21 +250,21 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					}
 				};
 				newClick.put(type, cl);
-				String text = "New" + (type == null ? "" : " " + type);
+				String text = NEW + (type == null ? "" : " " + type);
 				String imageResource = type == null ? Icons.NEW
 						: creatableTypeIcons.get(type);
 				IClickable<?> hl = widgetTitle.addHyperlink(imageResource,
-						text, "Create a new "
-								+ (type == null ? "Entity" : type),
-						"Switch to Detail View to create a new "
-								+ (type == null ? "Entity" : type));
+						text, CREATE_A_NEW + " "
+								+ (type == null ? ENTITY : type),
+						SWITCH_TO_DETAIL_VIEW_TO_CREATE_A_NEW + " "
+								+ (type == null ? ENTITY : type));
 				newClickHyperlink.put(type, hl);
 				hl.addClickListener(cl);
 			}
 		}
 		if (showCommands) {
 			if (allowCutPaste) {
-				cut = widgetTitle.addHyperlink(Icons.CUT, "Cut");
+				cut = widgetTitle.addHyperlink(Icons.CUT, CUT2);
 				cut.addClickListener(new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
@@ -260,7 +272,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 						refreshLazyTree(false);
 					}
 				});
-				copy = widgetTitle.addHyperlink(Icons.COPY, "Copy");
+				copy = widgetTitle.addHyperlink(Icons.COPY, COPY2);
 				copy.addClickListener(new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
@@ -268,7 +280,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 						refreshLazyTree(false);
 					}
 				});
-				paste = widgetTitle.addHyperlink(Icons.PASTE, "Paste");
+				paste = widgetTitle.addHyperlink(Icons.PASTE, PASTE2);
 				paste.addClickListener(new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
@@ -285,9 +297,11 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 										lazyTree.marked(null);
 										// model.refresh(p1, true);
 										// model.refresh(p2, true);
-										model.selection(result);
-										lazyTree.selection(result.object());
-										refreshLazyTree(true);
+										// model.selection(result);
+										lazyTree.collapse(result.parent(),
+												false);
+										previousSelection = result.object();
+										refreshLazyTree(true, true);
 									}
 								});
 					}
@@ -298,10 +312,11 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 					@Override
 					protected void onAllowedClick() {
+						previousSelection = model.selection().object();
 						model.move();
 					}
 				};
-				reorder = widgetTitle.addHyperlink(Icons.MOVE, "Move");
+				reorder = widgetTitle.addHyperlink(Icons.MOVE, MOVE);
 				reorder.addClickListener(reorderCL);
 			}
 			deleteListener = new LazyClickListener() {
@@ -336,7 +351,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				}
 			};
 			delete = widgetTitle.addHyperlink(co.fxl.gui.impl.Icons.CANCEL,
-					"Delete");
+					DELETE2);
 			delete.addClickListener(deleteListener);
 			if (showRefresh && this instanceof RefreshListener)
 				refresh().addClickListener(new LazyClickListener() {
@@ -488,9 +503,13 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	void refreshLazyTree(boolean r) {
+		refreshLazyTree(r, false);
+	}
+
+	void refreshLazyTree(boolean r, boolean checkSelection) {
 		if (previousSelection != null)
 			lazyTree.selection(previousSelection);
-		lazyTree.refresh(r);
+		lazyTree.refresh(r, checkSelection);
 	}
 
 	// @SuppressWarnings("rawtypes")
@@ -743,7 +762,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	private IClickable<?> refresh() {
 		if (refresh == null)
-			refresh = widgetTitle.addHyperlink("Refresh");
+			refresh = widgetTitle.addHyperlink(REFRESH2);
 		return refresh;
 	}
 
@@ -862,7 +881,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	public static IDialog queryDeleteEntity(IDisplay display, boolean plural) {
 		return display.showDialog()
-				.message("Delete " + (plural ? "Entities" : "Entity") + "?")
+				.message((plural ? DELETE_ENTITIES : DELETE_ENTITY) + "?")
 				.warn().confirm();
 	}
 
