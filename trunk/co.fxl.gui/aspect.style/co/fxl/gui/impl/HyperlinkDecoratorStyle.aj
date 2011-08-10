@@ -27,7 +27,7 @@ privileged aspect HyperlinkDecoratorStyle {
 	execution(private void HyperlinkDecorator.styleHyperlinkActive(ILabel)) 
 	&& args(label) 
 	&& if(Style.ENABLED) {
-		label.font().color().rgb(51, 102, 204);
+		Style.instance().hyperlink(label);
 	}
 
 }

@@ -25,9 +25,10 @@ import co.fxl.gui.style.impl.Style;
 privileged aspect NavigationViewStyle {
 
 	after() returning(IPanel<?>[] panels):
-	execution(protected IPanel<?>[] addPanel()) 
+	execution(protected IPanel<?>[] NavigationView.addPanel()) 
 	&& if(Style.ENABLED) {
-		Style.instance().window().navigationEntry((ILinearPanel<?>) panels[0]);
+		ILinearPanel<?> panel = (ILinearPanel<?>) panels[0];
+		Style.instance().window().navigationEntry(panel);
 	}
 
 }
