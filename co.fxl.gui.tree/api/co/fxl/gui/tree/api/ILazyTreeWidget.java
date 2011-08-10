@@ -47,6 +47,8 @@ public interface ILazyTreeWidget<T> {
 
 	ILazyTreeWidget<T> refresh(boolean reset);
 
+	ILazyTreeWidget<T> refresh(boolean reset, boolean checkSelection);
+
 	boolean isCollapsed(ITree<T> tree);
 
 	ILazyTreeWidget<T> collapse(ITree<T> tree, boolean collapse);
