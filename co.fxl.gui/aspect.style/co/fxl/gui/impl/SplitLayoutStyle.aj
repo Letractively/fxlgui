@@ -24,18 +24,11 @@ import co.fxl.gui.style.impl.Style;
 
 privileged aspect SplitLayoutStyle {
 
-	after() returning(IPanel<?>[] panels):
-	execution(protected IPanel<?>[] addPanel()) 
-	&& if(Style.ENABLED) {
-		Style.instance().window().navigationEntry((ILinearPanel<?>) panels[0]);
-	}
-
 	after(SplitLayout splitLayout) :
 	execution(private void SplitLayout.init()) 
 	&& this(splitLayout) 
 	&& if(Style.ENABLED) {
-		Style.instance().background(splitLayout.panel)
-				.side(splitLayout.sidePanel);
+		Style.instance().background(splitLayout.panel).side(splitLayout.sidePanel);
 	}
 
 }

@@ -43,6 +43,8 @@ public interface IStyle {
 
 	IStyle background(IPanel<?> panel);
 
+	IStyle hyperlink(ILabel label);
+
 	IStyle side(ILinearPanel<?> panel);
 
 }
