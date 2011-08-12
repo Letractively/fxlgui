@@ -15,6 +15,9 @@ class GWTPopUp implements IPopUp, WidgetParent {
 	private boolean center;
 	private int w;
 	private int h;
+	private boolean fitInScreen;
+	private int x = -1;
+	private int y = -1;
 
 	GWTPopUp(GWTDisplay display) {
 		this.display = display;
@@ -32,6 +35,25 @@ class GWTPopUp implements IPopUp, WidgetParent {
 		if (visible) {
 			if (center)
 				popUp.center();
+			if (fitInScreen && x != -1 && y != -1) {
+				GWTDisplay.instance().invokeLater(new Runnable() {
+					public void run() {
+						int left = x;
+						int top = y;
+						if (x + popUp.getOffsetWidth() > GWTDisplay.instance()
+								.width()) {
+							left = GWTDisplay.instance().width() - 10
+									- popUp.getOffsetWidth();
+						}
+						if (y + popUp.getOffsetHeight() > GWTDisplay.instance()
+								.height()) {
+							top = GWTDisplay.instance().height() - 10
+									- popUp.getOffsetHeight();
+						}
+						popUp.setPopupPosition(left, top);
+					}
+				});
+			}
 			popUp.show();
 		} else
 			popUp.hide();
@@ -64,6 +86,8 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	@Override
 	public IPopUp offset(int x, int y) {
+		this.x = x;
+		this.y = y;
 		popUp.setPopupPosition(x, y);
 		return this;
 	}
@@ -140,6 +164,12 @@ class GWTPopUp implements IPopUp, WidgetParent {
 	@Override
 	public IPopUp atLastClick() {
 		offset(GWTDisplay.lastClickX, GWTDisplay.lastClickY);
+		return this;
+	}
+
+	@Override
+	public IPopUp fitInScreen(boolean fitInScreen) {
+		this.fitInScreen = fitInScreen;
 		return this;
 	}
 }
