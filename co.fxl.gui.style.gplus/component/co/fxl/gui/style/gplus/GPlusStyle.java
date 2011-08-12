@@ -27,6 +27,22 @@ import co.fxl.gui.style.impl.Style;
 
 public class GPlusStyle implements IStyle {
 
+	public class GPlusLogin implements ILogin {
+
+		@Override
+		public ILogin label(ILabel label) {
+			label.font().color().mix().gray().lightgray();
+			return this;
+		}
+
+		@Override
+		public ILogin hyperlink(ILabel label) {
+			label.font().weight().bold().color().white();
+			return this;
+		}
+
+	}
+
 	class GPlusWindow implements IWindow {
 
 		@Override
@@ -79,6 +95,23 @@ public class GPlusStyle implements IStyle {
 			}
 			return this;
 		}
+
+		@Override
+		public ILabel addCommandLabel(ILinearPanel<?> panel, String text,
+				boolean isSideWidget) {
+			if (isSideWidget)
+				return panel.add().label().visible(false);
+			else {
+				ILabel l = panel.addSpace(4).add().label().text(text);
+				l.font().pixel(12);
+				return l;
+			}
+		}
+
+		@Override
+		public boolean commandsOnTop() {
+			return true;
+		}
 	}
 
 	private GPlusWindow window = new GPlusWindow();
@@ -116,5 +149,10 @@ public class GPlusStyle implements IStyle {
 	public IStyle hyperlink(ILabel label) {
 		label.font().color().rgb(51, 102, 204);
 		return this;
+	}
+
+	@Override
+	public ILogin login() {
+		return new GPlusLogin();
 	}
 }
