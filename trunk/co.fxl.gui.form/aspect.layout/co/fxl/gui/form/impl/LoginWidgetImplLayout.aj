@@ -30,6 +30,9 @@ privileged aspect LoginWidgetImplLayout {
 	&& args(liPanel)
 	&& this(widget) 
 	&& if(Layout.ENABLED) {
+		
+		// TODO move both statements to LoginImpl
+		
 		liPanel = LogInDialog.addButton(widget, liPanel);
 		widget.addLoginForm(liPanel);
 	}
@@ -38,5 +41,7 @@ privileged aspect LoginWidgetImplLayout {
 	call(private void LoginWidgetImpl.addLoggedInAs(IHorizontalPanel)) 
 	&& withincode(* LoginWidgetImpl.*(..)) 
 	&& if(Layout.ENABLED) {
+		
+		// TODO conditional proceed
 	}
 }

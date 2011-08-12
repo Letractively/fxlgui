@@ -9,13 +9,13 @@ privileged aspect LoginWidgetImplStyle {
 	execution(private ILabel LoginWidgetImpl.decorate(ILabel)) 
 	&& args(label) 
 	&& if(Style.ENABLED) {
-		label.font().color().mix().gray().lightgray();
+		Style.instance().login().label(label);
 	}
 
 	void around(ILabel label) :
 	execution(void LoginWidgetImpl.hyperlink(ILabel)) 
 	&& args(label) 
 	&& if(Style.ENABLED) {
-		label.font().weight().bold().color().white();
+		Style.instance().login().hyperlink(label);
 	}
 }
