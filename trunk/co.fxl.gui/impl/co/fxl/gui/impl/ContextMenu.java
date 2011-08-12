@@ -99,6 +99,7 @@ public class ContextMenu {
 	private static ContextMenu instance;
 	private IDisplay display;
 	private List<Group> groups = new LinkedList<Group>();
+	private boolean active = true;
 
 	public ContextMenu(IDisplay display) {
 		this.display = display;
@@ -136,6 +137,8 @@ public class ContextMenu {
 	}
 
 	public void show() {
+		if (!active)
+			return;
 		final IPopUp popUp = display.showPopUp().autoHide(true)// .width(320)
 				.atLastClick();
 		new Heights(0).decorateBorder(popUp).style().shadow();
@@ -143,8 +146,12 @@ public class ContextMenu {
 		// v.color().rgb(250, 250, 250);
 		IVerticalPanel panel = v.add().panel().vertical();
 		panel.spacing(4);
+		boolean first = true;
 		for (Group g : groups) {
 			if (visible(g)) {
+				if (!first)
+					panel.addSpace(1);
+				first = false;
 				IHorizontalPanel h = panel.add().panel().horizontal();
 				h.add().label().text(g.name).font().pixel(9).weight().bold()
 						.color().gray();
@@ -177,6 +184,7 @@ public class ContextMenu {
 				}
 			}
 		}
+		popUp.fitInScreen(true);
 		popUp.visible(true);
 	}
 
@@ -202,5 +210,9 @@ public class ContextMenu {
 
 	public static ContextMenu instance() {
 		return instance;
+	}
+
+	public void active(boolean active) {
+		this.active = active;
 	}
 }

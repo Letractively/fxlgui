@@ -20,7 +20,6 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.layout.api.IActionMenu;
 import co.fxl.gui.layout.impl.Layout;
 
 privileged aspect WidgetTemplateLayout {
@@ -33,9 +32,9 @@ privileged aspect WidgetTemplateLayout {
 	&& if(Layout.ENABLED) {
 		ILabel label = Layout.instance().createWindowButton(
 				widgetTitle.commandsOnTop, iPanel, text);
-		if (label != null)
-			return label;
-		return proceed(widgetTitle, text, iPanel);
+		if (label == null)
+			label = widgetTitle.addHyperlinkLabel(text, iPanel);
+		return label;
 	}
 
 	after() : 
@@ -48,8 +47,8 @@ privileged aspect WidgetTemplateLayout {
 	execution(private void SplitLayout.init()) 
 	&& this(sl) 
 	&& if(Layout.ENABLED) {
-		IActionMenu actionMenu = Layout.instance().actionMenu();
-		if (actionMenu != null)
-			actionMenu.listener(new ActionMenuAdp(sl));
+		boolean hasActionMenu = Layout.instance().hasActionMenu();
+		if (hasActionMenu)
+			Layout.instance().actionMenu().listener(new ActionMenuAdp(sl));
 	}
 }

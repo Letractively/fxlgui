@@ -24,6 +24,14 @@ import co.fxl.gui.api.IPanel;
 
 public interface IStyle {
 
+	public interface ILogin {
+
+		ILogin label(ILabel text);
+
+		ILogin hyperlink(ILabel text);
+
+	}
+
 	public interface IWindow {
 
 		IWindow main(IPanel<?> panel);
@@ -35,11 +43,17 @@ public interface IStyle {
 		IWindow title(ILabel label, String title, boolean isSideWidget);
 
 		IWindow navigationEntry(ILinearPanel<?> panel);
-		
+
 		IWindow button(IPanel<?> panel, boolean isSideWidget);
+
+		ILabel addCommandLabel(ILinearPanel<?> panel, String text, boolean isSideWidget);
+
+		boolean commandsOnTop();
 	}
 
 	IWindow window();
+
+	ILogin login();
 
 	IStyle background(IPanel<?> panel);
 

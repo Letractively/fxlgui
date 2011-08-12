@@ -31,4 +31,6 @@ public interface IPopUp extends IBordered, ILocated<IPopUp> {
 	IPopUp atLastClick();
 
 	IPopUp autoHide(boolean autoHide);
+
+	IPopUp fitInScreen(boolean fitInScreen);
 }

@@ -34,22 +34,22 @@ privileged aspect WidgetTitleStyle {
 		Style.instance().window().button(panel, widgetTitle.sideWidget);
 	}
 
-	CommandLink around(WidgetTitle widgetTitle, String text) :
-	execution(public CommandLink WidgetTitle.addHyperlink(String, String)) 
+	ILabel around(WidgetTitle widgetTitle, String text, IHorizontalPanel iPanel) :
+	execution(private ILabel WidgetTitle.addHyperlinkLabel(String, IHorizontalPanel)) 
 	&& this(widgetTitle) 
-	&& args(.., text) 
+	&& args(text, iPanel) 
 	&& if(Style.ENABLED) {
-		return proceed(widgetTitle, widgetTitle.sideWidget ? null : text);
+		return Style.instance().window().addCommandLabel(iPanel, text, widgetTitle.sideWidget);
 	}
 
 	after(WidgetTitle widgetTitle) :
 	execution(public WidgetTitle.new(ILayout, boolean)) 
 	&& this(widgetTitle) 
 	&& if(Style.ENABLED) {
-		// TODO return boolean and call commandsOnTop if true
 		Style.instance().window().main(widgetTitle.panel)
 				.header(widgetTitle.headerPanel);
-		widgetTitle.commandsOnTop();
+		if (Style.instance().window().commandsOnTop())
+			widgetTitle.commandsOnTop();
 	}
 
 	after(WidgetTitle widgetTitle, String title) returning(ILabel label) :

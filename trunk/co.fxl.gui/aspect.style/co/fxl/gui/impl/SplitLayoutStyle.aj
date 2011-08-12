@@ -18,8 +18,6 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.api.ILinearPanel;
-import co.fxl.gui.api.IPanel;
 import co.fxl.gui.style.impl.Style;
 
 privileged aspect SplitLayoutStyle {
@@ -28,7 +26,8 @@ privileged aspect SplitLayoutStyle {
 	execution(private void SplitLayout.init()) 
 	&& this(splitLayout) 
 	&& if(Style.ENABLED) {
-		Style.instance().background(splitLayout.panel).side(splitLayout.sidePanel);
+		Style.instance().background(splitLayout.panel)
+				.side(splitLayout.sidePanel);
 	}
 
 }

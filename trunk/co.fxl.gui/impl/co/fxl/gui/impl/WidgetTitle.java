@@ -63,6 +63,7 @@ public class WidgetTitle implements IClickListener {
 	private boolean sideWidget = false;
 	private String title;
 	private IGridPanel bPanel;
+	private String titleUpperCase;
 
 	public WidgetTitle() {
 	}
@@ -173,7 +174,7 @@ public class WidgetTitle implements IClickListener {
 		// l.visible(open);
 		// for (IImage l : images)
 		// l.visible(open);
-		headerLabel.text(open ? title : "+ " + title);
+		headerLabel.text(open ? titleUpperCase : "+ " + titleUpperCase);
 	}
 
 	public ILabel addTitle(String title) {
@@ -186,7 +187,8 @@ public class WidgetTitle implements IClickListener {
 			headerLabel.addClickListener(this);
 			headerLabel.tooltip(FOLDABLE);
 		}
-		this.title = text;
+		this.title = title;
+		this.titleUpperCase = text;
 		if (addToContextMenu) {
 			ContextMenu.instance().group(title);
 		}
