@@ -25,6 +25,8 @@ import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 
 public class LogInDialog {
+	
+	// TODO move to HandheldLayout
 
 	public static IHorizontalPanel addButton(final LoginWidgetImpl widget,
 			final IPanel<?> liPanel) {
