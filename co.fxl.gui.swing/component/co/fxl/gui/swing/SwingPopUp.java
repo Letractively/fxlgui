@@ -42,6 +42,7 @@ class SwingPopUp implements IPopUp {
 	private int h = -1;
 	private boolean autoHide = false;
 	JPanel p;
+	private boolean fitInScreen;
 
 	SwingPopUp(SwingDisplay panel) {
 		this.panel = panel;
@@ -112,6 +113,18 @@ class SwingPopUp implements IPopUp {
 							- Math.max(80, p.getPreferredSize().width / 2);
 					y = panel.height() / 2
 							- Math.max(40, p.getPreferredSize().height / 2);
+				}
+				if (fitInScreen) {
+					if (y + 20 + p.getPreferredSize().height > SwingDisplay
+							.instance().height()) {
+						y = SwingDisplay.instance().height() - 30
+								- p.getPreferredSize().height;
+					}
+					if (x + p.getPreferredSize().width > SwingDisplay
+							.instance().width()) {
+						y = SwingDisplay.instance().width() - 10
+								- p.getPreferredSize().width;
+					}
 				}
 				dialog = factory.getPopup(panel.frame, p, x, y + 20);
 			}
@@ -202,6 +215,12 @@ class SwingPopUp implements IPopUp {
 	@Override
 	public IPopUp atLastClick() {
 		offset(SwingDisplay.lastClickX, SwingDisplay.lastClickY);
+		return this;
+	}
+
+	@Override
+	public IPopUp fitInScreen(boolean fitInScreen) {
+		this.fitInScreen = fitInScreen;
 		return this;
 	}
 }
