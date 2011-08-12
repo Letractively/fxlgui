@@ -43,10 +43,17 @@ public class NavigationView {
 	private INavigationListener nl;
 	private IClickable<?> back;
 	private IClickable<?> forward;
+	private boolean addToContextMenu = false;
 
 	public NavigationView(ILayout layout) {
+		this(layout, true);
+	}
+
+	public NavigationView(ILayout layout, boolean addToContextMenu) {
 		widgetTitle = new WidgetTitle(layout, true).sideWidget(true);
-		widgetTitle.addToContextMenu(true);
+		this.addToContextMenu = addToContextMenu;
+		if (addToContextMenu)
+			widgetTitle.addToContextMenu(addToContextMenu);
 		widgetTitle.space(2);
 		setUp();
 	}
@@ -100,7 +107,9 @@ public class NavigationView {
 		ILabel textLabel = addTextLabel(panel);
 		ImageButton imageButton = new ImageButton((IVerticalPanel) panels[0],
 				panel, image, textLabel);
-		return imageButton.addToContextMenu(NAVIGATION);
+		if (addToContextMenu)
+			imageButton = imageButton.addToContextMenu(NAVIGATION);
+		return imageButton;
 	}
 
 	protected ILabel addTextLabel(IHorizontalPanel panel) {

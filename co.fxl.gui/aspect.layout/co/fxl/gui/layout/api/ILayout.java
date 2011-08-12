@@ -30,6 +30,10 @@ public interface ILayout {
 		LOGIN, FILTER;
 	}
 
+	boolean hasActionMenu();
+	
+	ILogin login();
+	
 	IActionMenu actionMenu();
 
 	ILabel createWindowButton(boolean commandsOnTop, IPanel<?> panel, String text);
