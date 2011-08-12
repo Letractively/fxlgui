@@ -60,6 +60,8 @@ public interface ITreeWidget<T> {
 
 	ITreeWidget<T> title(String title);
 
+	ITreeWidget<T> addToContextMenu(boolean addToContextMenu);
+
 	IClickable<?> addHyperlink(String title);
 
 	ITreeWidget<T> setDetailView(IDecorator<T> decorator);

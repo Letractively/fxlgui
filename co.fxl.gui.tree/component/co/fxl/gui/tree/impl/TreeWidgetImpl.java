@@ -903,4 +903,10 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		model.selection(c, false);
 		return this;
 	}
+
+	@Override
+	public ITreeWidget<T> addToContextMenu(boolean addToContextMenu) {
+		widgetTitle.addToContextMenu(addToContextMenu);
+		return this;
+	}
 }
