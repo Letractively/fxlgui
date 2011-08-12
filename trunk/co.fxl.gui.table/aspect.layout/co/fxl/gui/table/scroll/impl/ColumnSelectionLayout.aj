@@ -35,7 +35,7 @@ privileged aspect ColumnSelectionLayout {
 	&& args(p, clickListener) 
 	&& this(columnSelection)
 	&& if(Layout.ENABLED) {
-		ColumnSelectionDialog.addButton(columnSelection, (ILinearPanel) p);
+		ColumnSelectionDialog.addButton(columnSelection, (ILinearPanel<?>) p);
 	}
 
 	void around() : 
@@ -53,7 +53,7 @@ privileged aspect ColumnSelectionLayout {
 		return label.text(in.equals("DISPLAYING ROWS") ? "ROWS" : in);
 	}
 
-	after(ScrollTableWidgetImpl widget) returning(IScrollTableColumn column) : 
+	after(ScrollTableWidgetImpl widget) returning(IScrollTableColumn<?> column) : 
 	execution(public IScrollTableColumn ScrollTableWidgetImpl.addColumn()) 
 	&& this(widget)
 	&& if(Layout.ENABLED) {
