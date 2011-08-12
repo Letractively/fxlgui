@@ -25,6 +25,7 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.layout.api.IActionMenu;
 import co.fxl.gui.layout.api.ILayout;
 import co.fxl.gui.layout.api.ILayoutDialog;
+import co.fxl.gui.layout.api.ILogin;
 import co.fxl.gui.layout.impl.Layout;
 
 public class HandheldLayout implements ILayout {
@@ -65,5 +66,15 @@ public class HandheldLayout implements ILayout {
 			return createButtonLabel(iPanel);
 		else
 			return null;
+	}
+
+	@Override
+	public boolean hasActionMenu() {
+		return true;
+	}
+
+	@Override
+	public ILogin login() {
+		return new HandheldLogin();
 	}
 }
