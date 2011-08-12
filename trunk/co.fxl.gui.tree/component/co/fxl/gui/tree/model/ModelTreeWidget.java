@@ -854,4 +854,9 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 				.message("Delete " + (plural ? "Entities" : "Entity") + "?")
 				.warn().confirm();
 	}
+
+	@Override
+	public ITreeWidget<T> addToContextMenu(boolean addToContextMenu) {
+		throw new MethodNotImplementedException();
+	}
 }
