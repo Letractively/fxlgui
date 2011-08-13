@@ -190,7 +190,7 @@ public class WidgetTitle implements IClickListener {
 		this.title = title;
 		this.titleUpperCase = text;
 		if (addToContextMenu) {
-			ContextMenu.instance().group(title);
+			ContextMenu.instance().group(title).clear();
 		}
 		return headerLabel;
 	}
