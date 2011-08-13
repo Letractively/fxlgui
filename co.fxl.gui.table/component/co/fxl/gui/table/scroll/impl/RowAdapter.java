@@ -28,7 +28,7 @@ import co.fxl.gui.table.scroll.api.IRows;
 class RowAdapter implements IRows<Object>, IComparableList {
 
 	private QuickSort quickSort = new QuickSort();
-	private IRows<Object> rows;
+	IRows<Object> rows;
 	private int[] indices;
 	private ScrollTableColumnImpl comparator;
 	private int negator = 1;

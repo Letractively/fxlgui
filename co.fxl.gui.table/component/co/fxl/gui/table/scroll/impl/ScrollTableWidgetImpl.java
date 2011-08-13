@@ -268,6 +268,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						int rowIndex = rows.find(preselectedList);
 						if (rowIndex != -1)
 							sp.rowIndex(rowIndex);
+						if (this.rowIndex != -1) {
+							sp.rowIndex(this.rowIndex);
+							this.rowIndex = -1;
+						}
 					}
 					sp.height(heightMinusTopPanel());
 					sp.decorator(new ILazyScrollPane.IDecorator() {
@@ -424,6 +428,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private int viewInc;
 	private String viewComboBoxChoice;
 	private boolean addToContextMenu = false;
+	private List<IRowIndexListener> scrollListeners = new LinkedList<IRowIndexListener>();
+	private int rowIndex = -1;
 
 	void update() {
 		paintedRows = computeRowsToPaint();
@@ -441,6 +447,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		grid = (IBulkTableWidget) vpanel.spacing(6).add()
 				.widget(IBulkTableWidget.class);
 		grid.height(heightMinusTopPanel());
+		for (IRowIndexListener rowIndexL : scrollListeners)
+			rowIndexL.onScroll(rowOffset);
 		updateHeaderRow(grid);
 		for (int r = 0; r < paintedRows; r++) {
 			int index = r + rowOffset;
@@ -908,6 +916,19 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> addToContextMenu(boolean addToContextMenu) {
 		this.addToContextMenu = addToContextMenu;
+		return this;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> addScrollListener(
+			co.fxl.gui.table.scroll.api.IScrollTableWidget.IRowIndexListener scrollListener) {
+		scrollListeners.add(scrollListener);
+		return this;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> rowIndex(int rowIndex) {
+		this.rowIndex = rowIndex;
 		return this;
 	}
 }
