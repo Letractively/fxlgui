@@ -225,7 +225,8 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 							@Override
 							public void onSuccess(ITree<T> result) {
-								lazyTree.collapse(parent, false);
+								if (parent != null)
+									lazyTree.collapse(parent, false);
 								previousSelection = result.object();
 								refreshLazyTree(true, true);
 							}

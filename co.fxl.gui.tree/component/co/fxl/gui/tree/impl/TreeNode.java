@@ -336,8 +336,13 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	@Override
 	public TreeNode<T> refresh(boolean refreshChildren) {
 		update(null);
-		if (refreshChildren)
-			expand();
+		if (refreshChildren) {
+			if (isExpanded) {
+				clear();
+				isExpanded = true;
+				lazyTree.collapse(tree, false);
+			}
+		}
 		return this;
 	}
 
