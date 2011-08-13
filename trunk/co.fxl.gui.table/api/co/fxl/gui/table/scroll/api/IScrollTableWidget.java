@@ -32,6 +32,11 @@ import co.fxl.gui.table.api.ISelection;
 
 public interface IScrollTableWidget<T> {
 
+	public interface IRowIndexListener {
+
+		void onScroll(int rowIndex);
+	}
+
 	public interface IScrollTableClickListener {
 
 		void onClick(Object identifier, int rowIndex);
@@ -148,4 +153,8 @@ public interface IScrollTableWidget<T> {
 	IScrollTableWidget<T> showDisplayedRange(boolean showDisplayedRange);
 
 	IScrollTableWidget<T> statusPanel(IVerticalPanel bottom);
+
+	IScrollTableWidget<T> addScrollListener(IRowIndexListener scrollListener);
+
+	IScrollTableWidget<T> rowIndex(int rowIndex);
 }

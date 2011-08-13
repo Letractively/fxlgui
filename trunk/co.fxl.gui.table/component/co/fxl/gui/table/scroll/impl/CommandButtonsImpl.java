@@ -140,7 +140,9 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 						new CallbackTemplate<IRows<Object>>() {
 							@Override
 							public void onSuccess(IRows<Object> result) {
-								throw new MethodNotImplementedException();
+								assert result != null;
+								widget.rows(result);
+								widget.update();
 							}
 						});
 			else {
