@@ -36,25 +36,23 @@ class GWTPopUp implements IPopUp, WidgetParent {
 			if (center)
 				popUp.center();
 			if (fitInScreen && x != -1 && y != -1) {
-				GWTDisplay.instance().invokeLater(new Runnable() {
-					public void run() {
+				popUp.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+					public void setPosition(int offsetWidth, int offsetHeight) {
 						int left = x;
 						int top = y;
-						if (x + popUp.getOffsetWidth() > GWTDisplay.instance()
-								.width()) {
+						if (x + offsetWidth > GWTDisplay.instance().width()) {
 							left = GWTDisplay.instance().width() - 10
-									- popUp.getOffsetWidth();
+									- offsetWidth;
 						}
-						if (y + popUp.getOffsetHeight() > GWTDisplay.instance()
-								.height()) {
+						if (y + offsetHeight > GWTDisplay.instance().height()) {
 							top = GWTDisplay.instance().height() - 10
-									- popUp.getOffsetHeight();
+									- offsetHeight;
 						}
 						popUp.setPopupPosition(left, top);
 					}
 				});
-			}
-			popUp.show();
+			} else
+				popUp.show();
 		} else
 			popUp.hide();
 		return this;
