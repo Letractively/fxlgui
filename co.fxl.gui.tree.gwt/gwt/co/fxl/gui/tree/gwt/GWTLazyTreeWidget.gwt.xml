@@ -1,4 +1,5 @@
 <module>
 	<inherits name='co.fxl.gui.tree.impl.TreeWidgetImpl' />
+	<inherits name='co.fxl.gui.table.util.impl.LazyScrollPaneImpl' />
 	<source path='' />
 </module>
