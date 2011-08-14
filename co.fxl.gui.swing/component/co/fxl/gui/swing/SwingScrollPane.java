@@ -170,4 +170,17 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 	public void onDown(int turns) {
 		onScrollTurns(turns);
 	}
+
+	@Override
+	public IScrollPane showScrollbarsAlways(boolean showScrollbarsAlways) {
+		if (container.component.getVerticalScrollBarPolicy() == JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED) {
+			container.component
+					.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		}
+		if (container.component.getHorizontalScrollBarPolicy() == JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED) {
+			container.component
+					.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		}
+		return this;
+	}
 }
