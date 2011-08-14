@@ -263,7 +263,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					contentPanel0.clear();
 					sp = (ILazyScrollPane) contentPanel0.add().widget(
 							ILazyScrollPane.class);
-					sp.minRowHeight(ROW_HEIGHT);
+					sp.minRowHeight(getRowHeight());
 					if (!preselectedList.isEmpty()) {
 						int rowIndex = rows.find(preselectedList);
 						if (rowIndex != -1)
@@ -318,6 +318,15 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			throw new MethodNotImplementedException();
 		}
 		return this;
+	}
+
+	public int getRowHeight() {
+		for (ScrollTableColumnImpl c : columns) {
+			if (c.type.clazz.equals(Boolean.class)) {
+				return ROW_HEIGHT + 4;
+			}
+		}
+		return ROW_HEIGHT;
 	}
 
 	boolean hasFilter() {
@@ -609,7 +618,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		int prognosedHeight = HEADER_ROW_HEIGHT;
 		int heightMinusTopPanel = heightMinusTopPanel();
 		while (prognosedHeight < heightMinusTopPanel) {
-			prognosedHeight += ROW_HEIGHT;
+			prognosedHeight += getRowHeight();
 			paintedRows++;
 		}
 		paintedRows--;
