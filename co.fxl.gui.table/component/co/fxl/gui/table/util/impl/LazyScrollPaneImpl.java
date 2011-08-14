@@ -133,7 +133,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		if (inc)
 			ctr = ctr.panel().vertical().addSpace(7).add();
 		scrollPane = ctr.scrollPane();
-		scrollPane.size(widthScrollPanel, height);// + HEIGHT_SCROLL_BAR);
+		scrollPane.size(widthScrollPanel, height);// +
+													// HEIGHT_SCROLL_BAR);
 		scrollContentPanel = scrollPane.viewPort().panel().absolute();
 		scrollContentPanel.add().label().text("&#160;");
 		int scrollPanelHeight = size * minRowHeight;
