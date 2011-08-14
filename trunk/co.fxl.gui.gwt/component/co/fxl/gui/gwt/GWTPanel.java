@@ -25,6 +25,7 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.ISpaced.ISpacing;
 import co.fxl.gui.api.IWidgetProvider;
 
+import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -38,6 +39,9 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 
 	GWTPanel(GWTContainer<T> container) {
 		super(container);
+		if (container.widget != null)
+			container.widget.getElement().getStyle()
+					.setOverflow(Overflow.HIDDEN);
 	}
 
 	@Override
@@ -55,6 +59,14 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 				}
 			}
 		}, ClickEvent.getType());
+	}
+
+	@Override
+	public R height(int height) {
+		if (height != -1)
+			container.widget.getElement().getStyle()
+					.setOverflow(Overflow.HIDDEN);
+		return super.height(height);
 	}
 
 	@Override
