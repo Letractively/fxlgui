@@ -1,4 +1,5 @@
 <module>
 	<inherits name='co.fxl.gui.IDisplay' />
+	<inherits name='co.fxl.gui.filter.api.IFilterWidget' />
 	<source path='' />
 </module>

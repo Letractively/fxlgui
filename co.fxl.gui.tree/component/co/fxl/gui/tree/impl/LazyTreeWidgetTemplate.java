@@ -159,8 +159,9 @@ public abstract class LazyTreeWidgetTemplate implements
 	@Override
 	public ILazyTreeWidget<Object> width(int width) {
 		this.width = width;
-		if (pane != null)
+		if (pane != null) {
 			pane.width(width);
+		}
 		return this;
 	}
 

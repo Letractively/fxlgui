@@ -1,4 +1,6 @@
 <module>
-	<inherits name='co.fxl.gui.tree.api.ITreeWidget' />
+	<inherits name='co.fxl.gui.tree.api.IFilterTreeWidget' />
+	<inherits name='co.fxl.gui.navigation.api.INavigationWidget' />
+	<inherits name='co.fxl.gui.table.util.api.ILazyScrollPane' />
 	<source path='' />
 </module>

@@ -45,7 +45,6 @@ import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
 import co.fxl.gui.navigation.api.IMenuWidget;
-import co.fxl.gui.table.util.impl.LazyScrollPaneImpl;
 import co.fxl.gui.tree.api.ILazyTreeWidget;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
@@ -403,7 +402,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		splitPane = panel().add().splitPane().splitPosition(SPLIT_POSITION);
 		panel = splitPane.first().panel().vertical();
 		panel.color().rgb(240, 240, 240);
-		IScrollPane scrollPane = splitPane.second().scrollPane();
+		final IScrollPane scrollPane = splitPane.second().scrollPane();
 		registers = (IMenuWidget) scrollPane.viewPort().widget(
 				IMenuWidget.class);
 		ResizeListenerImpl.setup(panel.display(), this);
@@ -413,7 +412,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			@Override
 			public void onResize(int left, int right) {
 				if (lazyTree != null)
-					lazyTree.width(splitPane.width() - right - 7);
+					lazyTree.width(splitPane.width() - scrollPane.width() - 7);
 			}
 		});
 	}
@@ -497,7 +496,8 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		}
 		lazyTree.spacing(10);
 		lazyTree.height(splitPane.height()
-				- LazyScrollPaneImpl.HEIGHT_SCROLL_BAR);
+		// - LazyScrollPaneImpl.HEIGHT_SCROLL_BAR
+		);
 		lazyTree.selection(previousSelection);
 		// lazyTree.width(SPLIT_POSITION);
 		lazyTree.visible(true);
