@@ -21,8 +21,13 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ISplitPane;
 
+import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -31,6 +36,7 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 	GWTSplitPane(GWTContainer<Widget> container) {
 		super(container);
 		container.widget.setHeight("600px");
+		container.widget.getElement().getStyle().setOverflow(Overflow.HIDDEN);
 	}
 
 	@Override
@@ -41,6 +47,8 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 				prepare(component);
 				HorizontalSplitPanel p = (HorizontalSplitPanel) container.widget;
 				p.setLeftWidget(component);
+				component.getElement().getParentElement().getStyle()
+						.setOverflow(Overflow.HIDDEN);
 			}
 		};
 	}
@@ -74,22 +82,54 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 		return new GWTWidgetBorder(container.widget);
 	}
 
+	private boolean dragging = false;
+
 	@Override
 	public ISplitPane addResizeListener(final ISplitPaneResizeListener l) {
+		container.widget.addHandler(new MouseDownHandler() {
+			@Override
+			public void onMouseDown(MouseDownEvent event) {
+				dragging = true;
+				onResize(l);
+			}
+		}, MouseDownEvent.getType());
 		container.widget.addHandler(new MouseMoveHandler() {
 			@Override
 			public void onMouseMove(MouseMoveEvent event) {
-				HorizontalSplitPanel p = (HorizontalSplitPanel) GWTSplitPane.super.container.widget;
-				int offsetWidth1 = p.getLeftWidget().getOffsetWidth();
-				int offsetWidth2 = p.getRightWidget().getOffsetWidth();
-				l.onResize(offsetWidth1, offsetWidth2);
+				if (dragging)
+					onResize(l);
 			}
 		}, MouseMoveEvent.getType());
+		container.widget.addHandler(new MouseUpHandler() {
+			@Override
+			public void onMouseUp(MouseUpEvent event) {
+				dragging = false;
+				onResize(l);
+			}
+		}, MouseUpEvent.getType());
 		return this;
 	}
 
-	private void prepare(Widget component) {
-		component.setWidth("100%");
-		component.setHeight("100%");
+	private int oWidth1 = -1;
+	private int oWidth2 = -1;
+
+	private void onResize(final ISplitPaneResizeListener l) {
+		// display().invokeLater(new Runnable() {
+		// public void run() {
+		final HorizontalSplitPanel p = (HorizontalSplitPanel) GWTSplitPane.super.container.widget;
+		int offsetWidth1 = p.getLeftWidget().getOffsetWidth();
+		int offsetWidth2 = p.getRightWidget().getOffsetWidth();
+		if (oWidth1 != offsetWidth1 || oWidth2 != offsetWidth2) {
+			oWidth1 = offsetWidth1;
+			oWidth2 = offsetWidth2;
+			l.onResize(offsetWidth1, offsetWidth2);
+		}
+		// }
+		// });
+	}
+
+	private void prepare(Widget widget) {
+		widget.setWidth("100%");
+		widget.setHeight("100%");
 	}
 }

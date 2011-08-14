@@ -41,6 +41,7 @@ class GWTDockPanel extends GWTPanel<DockPanel, IDockPanel> implements
 			Arrays.asList(new DockLayoutConstant[] { DockPanel.CENTER,
 					DockPanel.NORTH, DockPanel.WEST, DockPanel.EAST,
 					DockPanel.SOUTH }));
+	private int height = -1;
 
 	@SuppressWarnings("unchecked")
 	GWTDockPanel(GWTContainer<?> container) {
@@ -54,7 +55,15 @@ class GWTDockPanel extends GWTPanel<DockPanel, IDockPanel> implements
 	}
 
 	@Override
+	public IDockPanel height(int height) {
+		this.height = height;
+		return super.height(height);
+	}
+
+	@Override
 	public void add(Widget widget) {
+		// if (!(widget instanceof ScrollPanel))
+		// widget.getElement().getStyle().setOverflow(Overflow.HIDDEN);
 		DockLayoutConstant location = positions.remove(0);
 		container.widget.add(widget, location);
 		if (widget instanceof HasHorizontalAlignment) {
@@ -73,8 +82,9 @@ class GWTDockPanel extends GWTPanel<DockPanel, IDockPanel> implements
 		}
 		if (location.equals(DockPanel.EAST) || location.equals(DockPanel.WEST)
 				|| location.equals(DockPanel.CENTER)) {
-			container.widget.setCellHeight(widget, "100%");
-			widget.setHeight("100%");
+			container.widget.setCellHeight(widget, height != -1 ? height + "px"
+					: "100%");
+			widget.setHeight(height != -1 ? height + "px" : "100%");
 		}
 	}
 

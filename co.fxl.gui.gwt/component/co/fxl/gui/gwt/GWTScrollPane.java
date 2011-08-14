@@ -131,4 +131,10 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 	public void onDown(int turns) {
 		onScrollTurns(turns);
 	}
+
+	@Override
+	public IScrollPane showScrollbarsAlways(boolean showScrollbarsAlways) {
+		container.widget.setAlwaysShowScrollBars(showScrollbarsAlways);
+		return this;
+	}
 }
