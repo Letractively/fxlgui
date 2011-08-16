@@ -60,6 +60,7 @@ import co.fxl.gui.table.util.api.ILazyScrollPane;
 class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		ILabelMouseListener {
 
+	private static final int HEIGHT_TOP_PANEL = 40;
 	// TODO Swing: native implementation: required for automated testing
 
 	// TODO 2DECIDE: Option: DESIGN: Look: Scroll-Table-Widget: use fixed column
@@ -203,9 +204,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 							|| !constraints.isConstraintSpecified() || !hasFilter())) {
 				IVerticalPanel dock = container.add().panel().vertical();
 				if (showNoRowsFound) {
-					topPanel.cell(viewInc + 0, 0).width(10).label()
+					topPanelCell(viewInc + 0, 0).width(10).label()
 							.text("&#160;");
-					IGridCell begin = topPanel.cell(1, 0).valign().begin()
+					IGridCell begin = topPanelCell(1, 0).valign().begin()
 							.align().begin();
 					IVerticalPanel nef = begin.panel().vertical();
 					nef.add().panel().vertical().spacing(4).add().label()
@@ -299,7 +300,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 							return grid.rowHeight(visibleRowIndex);
 						}
 					});
-					sp.size(rows.size());
+					sp.size(rows.size() + 1);
 					sp.visible(true);
 				}
 			}
@@ -372,7 +373,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	void createFilter() {
 		if (filter == null) {
-			filter = (IMiniFilterWidget) topPanel.cell(0, 0).panel()
+			filter = (IMiniFilterWidget) topPanelCell(0, 0).panel()
 					.horizontal().addSpace(8).add()
 					.widget(IMiniFilterWidget.class);
 		}
@@ -383,7 +384,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				&& (topPanel == null || topPanel.rows() == 0))
 			return height;
 		else
-			return height - 40;
+			return height - HEIGHT_TOP_PANEL;
 	}
 
 	private void topPanel() {
@@ -436,7 +437,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IUpdateListener<String> viewComboBoxUpdateListener;
 	private int viewInc;
 	private String viewComboBoxChoice;
-	private boolean addToContextMenu = false;
 	private List<IRowIndexListener> scrollListeners = new LinkedList<IRowIndexListener>();
 	private int rowIndex = -1;
 
@@ -833,7 +833,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public IScrollTableWidget<Object> navigationPanel(
 			INavigationPanelDecorator dec) {
 		if (topPanel != null) {
-			dec.decorate(topPanel.cell(viewInc + buttonColumn++, 0).align()
+			dec.decorate(topPanelCell(viewInc + buttonColumn++, 0).align()
 					.end());
 		} else
 			navigationDecorator = dec;
@@ -843,13 +843,17 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> buttonPanel(IButtonPanelDecorator dec) {
 		if (topPanel != null) {
-			IGridCell cell = topPanel.cell(viewInc + buttonColumn, 0);
+			IGridCell cell = topPanelCell(viewInc + buttonColumn, 0);
 			if (navigationDecorator != null)
 				cell.width(100);
 			dec.decorate(cell.align().end());
 		} else
 			buttonDecorator = dec;
 		return this;
+	}
+
+	IGridCell topPanelCell(int i, int j) {
+		return topPanel.height(HEIGHT_TOP_PANEL).cell(i, j);
 	}
 
 	void editable(int gridRowIndex, boolean editable) {
@@ -921,12 +925,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		this.viewComboBoxChoice = viewComboBoxChoice;
 		viewComboBoxUpdateListener = ul;
 		showNoRowsFound = false;
-		return this;
-	}
-
-	@Override
-	public IScrollTableWidget<Object> addToContextMenu(boolean addToContextMenu) {
-		this.addToContextMenu = addToContextMenu;
 		return this;
 	}
 

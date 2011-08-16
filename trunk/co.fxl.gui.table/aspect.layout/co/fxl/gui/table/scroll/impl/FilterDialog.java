@@ -28,7 +28,7 @@ class FilterDialog {
 
 	static void addButton(final ScrollTableWidgetImpl widget) {
 		if (widget.hasFilter() || widget.viewComboBoxText != null) {
-			widget.topPanel.cell(0, 0).clear().panel().horizontal().addSpace(8)
+			widget.topPanelCell(0, 0).clear().panel().horizontal().addSpace(8)
 					.add().label().text("Filter >>").hyperlink()
 					.addClickListener(new IClickListener() {
 						@Override
