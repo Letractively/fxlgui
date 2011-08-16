@@ -30,6 +30,8 @@ public interface IFieldType {
 
 	IFieldType text();
 
+	IFieldType color();
+
 	IFieldType encryptedText();
 
 	IFieldType longText();
