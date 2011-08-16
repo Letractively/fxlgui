@@ -227,6 +227,11 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		setLastIndex(rowIndex);
 		IContainer invisibleCard = treeScrollPanelContainer.add();
 		IContainer c = invisibleCard;
+
+		// TODO BUG: after switch to Detail-View: horizontal
+		// scrollpane is not displayed for tree.
+		// required is a click in tree or scrolling to surface
+
 		if (horizontalScrollPane) {
 			treeScrollPanel = c.scrollPane();
 			if (width != -1)
