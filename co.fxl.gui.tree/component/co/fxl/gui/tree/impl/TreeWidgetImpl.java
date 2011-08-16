@@ -284,6 +284,13 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				paste.addClickListener(new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
+						if (model.cutCopy().equals(model.selection())) {
+							paste.clickable(false);
+							model.clearCutCopy();
+							previousSelection = model.selection().object();
+							refreshLazyTree(true, true);
+							return;
+						}
 						// final ITree<T> p1 = model.cutCopy().parent();
 						// final ITree<T> p2 = model.selection();
 						model.cutCopy().reassign(model.selection(),
