@@ -23,6 +23,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.ITextField;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 
 public class ColorField {
@@ -43,6 +44,7 @@ public class ColorField {
 			int height = button.height();
 			popUp.offset(button.offsetX(), button.offsetY() + height + 4);
 			IGridPanel grid = popUp.container().panel().grid().spacing(4);
+			grid.resize(4, 4);
 			for (int i = 0; i < 4; i++) {
 				for (int j = 0; j < 4; j++) {
 					int n = i * 4 + j;
@@ -83,10 +85,21 @@ public class ColorField {
 		button.add().label().text("&#160;");
 		button.border().width(1);
 		button.addClickListener(new PopUp());
+		tf.addUpdateListener(new IUpdateListener<String>() {
+			@Override
+			public void onUpdate(String value) {
+				updateColor(value);
+			}
+		});
 	}
 
 	public void updateColor(String colorValue) {
-		button.color().rgb(r(colorValue), g(colorValue), b(colorValue));
+		if (colorValue == null || colorValue.equals(""))
+			colorValue = "#FFFFFF";
+		try {
+			button.color().rgb(r(colorValue), g(colorValue), b(colorValue));
+		} catch (Exception e) {
+		}
 	}
 
 	private int hex(String colorValue, int i1, int i2) {
@@ -116,6 +129,10 @@ public class ColorField {
 
 	public ColorField clickable(boolean clickable) {
 		button.clickable(clickable);
+		if (clickable)
+			button.border().color().black();
+		else
+			button.border().color().lightgray();
 		return this;
 	}
 }
