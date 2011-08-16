@@ -33,6 +33,7 @@ public class FieldTypeImpl implements IFieldType {
 	public int maxLength = -1;
 	public boolean encryptedText = false;
 	public boolean isShort = false;
+	public boolean isColor = false;
 
 	@Override
 	public String toString() {
@@ -48,6 +49,12 @@ public class FieldTypeImpl implements IFieldType {
 	@Override
 	public IFieldType date() {
 		return type(Date.class);
+	}
+
+	@Override
+	public IFieldType color() {
+		isColor = true;
+		return type(String.class);
 	}
 
 	@Override
