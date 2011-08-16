@@ -112,4 +112,6 @@ public interface IBulkTableWidget {
 	IElement<?> element();
 
 	IBulkTableWidget showAsLink(int column, int row, boolean asLink);
+
+	IBulkTableWidget addToContextMenu(boolean addToContextMenu);
 }

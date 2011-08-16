@@ -97,6 +97,7 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 	private int numRows = 0;
 	private List<ColumnImpl> columns = new LinkedList<ColumnImpl>();
 	private Map<Integer, Boolean> highlighted = new HashMap<Integer, Boolean>();
+	private boolean addToContextMenu = true;
 
 	BulkTableWidgetImpl(IContainer container) {
 		mainPanel = container.panel().vertical();
@@ -107,7 +108,8 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 
 			@Override
 			public void onClick(int column, int row) {
-				ContextMenu.instance().show();
+				if (addToContextMenu)
+					ContextMenu.instance().show();
 			}
 		}).mouseRight();
 	}
@@ -345,5 +347,11 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 	@Override
 	public IBulkTableWidget css(boolean css) {
 		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IBulkTableWidget addToContextMenu(boolean addToContextMenu) {
+		this.addToContextMenu = addToContextMenu;
+		return this;
 	}
 }
