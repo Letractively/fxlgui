@@ -280,7 +280,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						public void decorate(IContainer container,
 								int firstRow, int lastRow) {
 							rowOffset = firstRow;
-							paintedRows = lastRow - firstRow + 1;
+							paintedRows = lastRow - firstRow;
 							contentPanel = container.panel().vertical();
 							updateWithPaintedRowsSet();
 						}
@@ -379,11 +379,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	protected int heightMinusTopPanel() {
-		if (topPanel.height() == 0 && buttonDecorator == null
-				&& navigationDecorator == null)
-			return height + 40;
+		if (buttonDecorator == null && navigationDecorator == null
+				&& (topPanel == null || topPanel.rows() == 0))
+			return height;
 		else
-			return height + 0 - topPanel.height();
+			return height - 40;
 	}
 
 	private void topPanel() {
@@ -456,7 +456,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		grid = (IBulkTableWidget) vpanel.spacing(6).add()
 				.widget(IBulkTableWidget.class);
 		grid.addToContextMenu(false);
-		grid.height(heightMinusTopPanel());
+		final int heightMinusTopPanel = heightMinusTopPanel();
+		grid.height(heightMinusTopPanel);
 		for (IRowIndexListener rowIndexL : scrollListeners)
 			rowIndexL.onScroll(rowOffset);
 		updateHeaderRow(grid);
