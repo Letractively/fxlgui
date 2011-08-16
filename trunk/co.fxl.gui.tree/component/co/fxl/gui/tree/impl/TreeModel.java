@@ -320,6 +320,8 @@ class TreeModel<T> {
 			return false;
 		if (selection.isNew())
 			return false;
+		if (cutCopy.equals(selection))
+			return true;
 		if (!isCopy) {
 			return cutCopy.isReassignableTo(selection);
 		} else {
