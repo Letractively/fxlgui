@@ -76,6 +76,8 @@ public interface IFormWidget {
 
 	IFormField<ITextField, Date> addDateField(String name);
 
+	IFormField<ITextField, String> addColorField(String name);
+
 	IFormField<IPasswordField, String> addPasswordField(String name);
 
 	IFormField<ITextArea, String> addTextArea(String name);

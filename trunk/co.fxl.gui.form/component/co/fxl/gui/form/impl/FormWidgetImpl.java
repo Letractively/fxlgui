@@ -224,6 +224,11 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	@Override
+	public IFormField<ITextField, String> addColorField(String name) {
+		return new FormColorFieldImpl(this, nextGridIndex(), name);
+	}
+
+	@Override
 	public IFormField<IPasswordField, String> addPasswordField(String name) {
 		return new FormPasswordFieldImpl(this, nextGridIndex(), name);
 	}
