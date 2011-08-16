@@ -302,4 +302,10 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	public String name() {
 		return name;
 	}
+
+	@Override
+	public IScrollTableColumn<Object> colorAdapter(
+			co.fxl.gui.table.scroll.api.IScrollTableColumn.IColorAdapter<Object> colorAdapter) {
+		throw new MethodNotImplementedException();
+	}
 }
