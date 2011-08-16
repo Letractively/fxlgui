@@ -455,6 +455,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		IVerticalPanel vpanel = contentPanel.add().panel().vertical();
 		grid = (IBulkTableWidget) vpanel.spacing(6).add()
 				.widget(IBulkTableWidget.class);
+		grid.addToContextMenu(false);
 		grid.height(heightMinusTopPanel());
 		for (IRowIndexListener rowIndexL : scrollListeners)
 			rowIndexL.onScroll(rowOffset);
