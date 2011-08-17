@@ -72,6 +72,8 @@ public interface IBulkTableWidget {
 
 		ICell html(String text);
 
+		ICell color(String color);
+
 		ICell checkBox(Boolean value);
 
 		ICell updateAdapter(IUpdateAdapter<Boolean> updateAdapter);
