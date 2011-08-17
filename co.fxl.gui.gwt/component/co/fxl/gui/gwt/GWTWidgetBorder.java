@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.gwt;
 
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Widget;
@@ -53,12 +54,26 @@ public class GWTWidgetBorder extends GWTBorder {
 				DOM.setStyleAttribute(element, "borderLeft", "none");
 				DOM.setStyleAttribute(element, "borderRight", "none");
 			}
+		} else {
+			element.getStyle().setBorderWidth(0, Unit.PX);
 		}
 	}
 
 	@Override
 	protected void update() {
 		remove();
+		if (top)
+			DOM.setStyleAttribute(element, "borderTop", width + "px " + color
+					+ " " + style);
+		if (left)
+			DOM.setStyleAttribute(element, "borderLeft", width + "px " + color
+					+ " " + style);
+		if (right)
+			DOM.setStyleAttribute(element, "borderRight", width + "px " + color
+					+ " " + style);
+		if (bottom)
+			DOM.setStyleAttribute(element, "borderBottom", width + "px "
+					+ color + " " + style);
 		if (borderType.equals(GWTBorder.BORDER_BOTTOM_LESS)) {
 			DOM.setStyleAttribute(element, "borderTop", width + "px " + color
 					+ " " + style);
