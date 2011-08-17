@@ -220,6 +220,11 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 			public ICell color(String color) {
 				throw new MethodNotImplementedException();
 			}
+
+			@Override
+			public ICell image(String image) {
+				throw new MethodNotImplementedException();
+			}
 		};
 	}
 
