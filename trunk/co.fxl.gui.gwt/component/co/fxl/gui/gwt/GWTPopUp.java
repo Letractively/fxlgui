@@ -2,9 +2,12 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IWidgetProvider;
 
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.logical.shared.CloseEvent;
+import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -168,6 +171,18 @@ class GWTPopUp implements IPopUp, WidgetParent {
 	@Override
 	public IPopUp fitInScreen(boolean fitInScreen) {
 		this.fitInScreen = fitInScreen;
+		return this;
+	}
+
+	@Override
+	public IPopUp addVisibleListener(final IUpdateListener<Boolean> l) {
+		popUp.addCloseHandler(new CloseHandler<PopupPanel>() {
+
+			@Override
+			public void onClose(CloseEvent<PopupPanel> event) {
+				l.onUpdate(false);
+			}
+		});
 		return this;
 	}
 }

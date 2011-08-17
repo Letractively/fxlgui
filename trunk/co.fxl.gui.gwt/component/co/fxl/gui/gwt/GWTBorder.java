@@ -48,6 +48,7 @@ public abstract class GWTBorder implements IBorder {
 
 		@Override
 		public IBorder top() {
+			top = true;
 			borderType = "borderTop";
 			update();
 			return GWTBorder.this;
@@ -55,6 +56,7 @@ public abstract class GWTBorder implements IBorder {
 
 		@Override
 		public IBorder left() {
+			left = true;
 			borderType = "borderLeft";
 			update();
 			return GWTBorder.this;
@@ -62,6 +64,7 @@ public abstract class GWTBorder implements IBorder {
 
 		@Override
 		public IBorder bottom() {
+			bottom = true;
 			borderType = "borderBottom";
 			update();
 			return GWTBorder.this;
@@ -69,6 +72,9 @@ public abstract class GWTBorder implements IBorder {
 
 		@Override
 		public IBorder noBottom() {
+			left = true;
+			right = true;
+			top = true;
 			borderType = BORDER_BOTTOM_LESS;
 			update();
 			return GWTBorder.this;
@@ -86,12 +92,24 @@ public abstract class GWTBorder implements IBorder {
 			GWTBorder.this.shadow();
 			return GWTBorder.this;
 		}
+
+		@Override
+		public IBorder right() {
+			right = true;
+			borderType = "borderRight";
+			update();
+			return GWTBorder.this;
+		}
 	}
 
-	protected int width = 1;
-	protected String color = "black";
-	protected String style = "solid";
-	protected String borderType = "border";
+	int width = 1;
+	String color = "black";
+	String style = "solid";
+	String borderType = "border";
+	boolean top = false;
+	boolean bottom = false;
+	boolean left = false;
+	boolean right = false;
 
 	@Override
 	public abstract void remove();
