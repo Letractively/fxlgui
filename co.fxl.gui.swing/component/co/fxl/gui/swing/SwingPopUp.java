@@ -19,6 +19,8 @@
 package co.fxl.gui.swing;
 
 import java.awt.Color;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -28,6 +30,7 @@ import javax.swing.border.LineBorder;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IWidgetProvider;
 
 class SwingPopUp implements IPopUp {
@@ -43,6 +46,7 @@ class SwingPopUp implements IPopUp {
 	private boolean autoHide = false;
 	JPanel p;
 	private boolean fitInScreen;
+	private List<IUpdateListener<Boolean>> visibleListeners = new LinkedList<IUpdateListener<Boolean>>();
 
 	SwingPopUp(SwingDisplay panel) {
 		this.panel = panel;
@@ -135,7 +139,13 @@ class SwingPopUp implements IPopUp {
 			dialog.hide();
 			SwingDisplay.popUp(null);
 		}
+		notifyVisible(visible);
 		return this;
+	}
+
+	private void notifyVisible(boolean visible) {
+		for (IUpdateListener<Boolean> l : visibleListeners)
+			l.onUpdate(visible);
 	}
 
 	@Override
@@ -189,7 +199,13 @@ class SwingPopUp implements IPopUp {
 
 	@Override
 	public IBorder border() {
-		return new SwingBorder(p);
+		return new SwingBorder(p) {
+
+			@Override
+			public void remove() {
+				super.remove();
+			}
+		};
 	}
 
 	@Override
@@ -221,6 +237,12 @@ class SwingPopUp implements IPopUp {
 	@Override
 	public IPopUp fitInScreen(boolean fitInScreen) {
 		this.fitInScreen = fitInScreen;
+		return this;
+	}
+
+	@Override
+	public IPopUp addVisibleListener(IUpdateListener<Boolean> l) {
+		visibleListeners.add(l);
 		return this;
 	}
 }
