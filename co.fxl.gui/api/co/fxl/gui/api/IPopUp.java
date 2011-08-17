@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.api;
 
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
+
 public interface IPopUp extends IBordered, ILocated<IPopUp> {
 
 	IPopUp modal(boolean modal);
@@ -33,4 +35,6 @@ public interface IPopUp extends IBordered, ILocated<IPopUp> {
 	IPopUp autoHide(boolean autoHide);
 
 	IPopUp fitInScreen(boolean fitInScreen);
+
+	IPopUp addVisibleListener(IUpdateListener<Boolean> l);
 }
