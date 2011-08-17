@@ -1,6 +1,4 @@
 /**
- * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
- *  
  * This file is part of FXL GUI API.
  *  
  * FXL GUI API is free software: you can redistribute it and/or modify
@@ -15,45 +13,15 @@
  *  
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.api;
+package co.fxl.gui.impl;
 
-public interface IBordered {
+import co.fxl.gui.api.IContainer;
 
-	public interface IBorder extends IColored {
+public interface IDecorator {
 
-		public interface IBorderStyle {
+	void decorate(IContainer c);
 
-			IBorder shadow();
-
-			IBorder dotted();
-
-			IBorder rounded();
-
-			IBorder solid();
-
-			IBorder etched();
-
-			IBorder top();
-
-			IBorder bottom();
-			
-			// TODO remove, replace calls with left().right().top()
-			IBorder noBottom();
-
-			IBorder right();
-
-			IBorder left();
-		}
-
-		IBorderStyle style();
-
-		IBorder width(int width);
-
-		IBorder title(String title);
-
-		void remove();
-	}
-
-	IBorder border();
 }
