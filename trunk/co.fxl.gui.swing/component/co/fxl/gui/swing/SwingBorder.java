@@ -64,19 +64,19 @@ class SwingBorder implements IBorder {
 
 		@Override
 		public IBorder bottom() {
-			element.setBorder(new TopBorder(SwingBorder.this, false, borderThickness));
+			ensurePartialBorder().bottom = true;
 			return SwingBorder.this;
 		}
 
 		@Override
 		public IBorder left() {
-			element.setBorder(new LeftBorder(SwingBorder.this, false, borderThickness));
+			ensurePartialBorder().left = true;
 			return SwingBorder.this;
 		}
 
 		@Override
 		public IBorder top() {
-			element.setBorder(new TopBorder(SwingBorder.this, true, borderThickness));
+			ensurePartialBorder().top = true;
 			return SwingBorder.this;
 		}
 
@@ -89,6 +89,12 @@ class SwingBorder implements IBorder {
 		@Override
 		public IBorder shadow() {
 			// TODO ...
+			return SwingBorder.this;
+		}
+
+		@Override
+		public IBorder right() {
+			ensurePartialBorder().right = true;
 			return SwingBorder.this;
 		}
 	}
@@ -104,6 +110,14 @@ class SwingBorder implements IBorder {
 
 	public SwingBorder(SwingElement<?, ?> component) {
 		this(component.container.component);
+	}
+
+	public PartialBorder ensurePartialBorder() {
+		if (element.getBorder() == null
+				|| !(element.getBorder() instanceof PartialBorder)) {
+			element.setBorder(new PartialBorder(this, borderThickness));
+		}
+		return (PartialBorder) element.getBorder();
 	}
 
 	public SwingBorder(JComponent component) {
