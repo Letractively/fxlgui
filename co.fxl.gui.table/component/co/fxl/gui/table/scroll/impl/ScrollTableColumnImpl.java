@@ -27,6 +27,7 @@ import java.util.List;
 import co.fxl.data.format.api.IFormat;
 import co.fxl.data.format.impl.Format;
 import co.fxl.gui.api.IAlignment;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.AlignmentMemento;
 import co.fxl.gui.impl.AlignmentMemento.Type;
@@ -137,6 +138,19 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		}
 	}
 
+	public class ImageDecorator implements Decorator<String> {
+
+		@Override
+		public void decorate(Object identifier, ICell cell, String value) {
+			cell.image((String) value);
+		}
+
+		@Override
+		public void prepare(
+				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
+		}
+	}
+
 	String name;
 	boolean sortable = false;
 	FieldTypeImpl type = new FieldTypeImpl();
@@ -178,6 +192,8 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		if (decorator == null) {
 			if (type.clazz.equals(String.class)) {
 				decorator = new StringDecorator();
+			} else if (type.clazz.equals(IImage.class)) {
+				decorator = new ImageDecorator();
 			} else if (type.clazz.equals(Long.class)
 					|| type.clazz.equals(Integer.class)) {
 				decorator = new NumberDecorator();
