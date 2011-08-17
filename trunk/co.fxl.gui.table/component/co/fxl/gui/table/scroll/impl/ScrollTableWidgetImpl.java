@@ -439,6 +439,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private String viewComboBoxChoice;
 	private List<IRowIndexListener> scrollListeners = new LinkedList<IRowIndexListener>();
 	private int rowIndex = -1;
+	private boolean addToContextMenu;
 
 	void update() {
 		paintedRows = computeRowsToPaint();
@@ -455,7 +456,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		IVerticalPanel vpanel = contentPanel.add().panel().vertical();
 		grid = (IBulkTableWidget) vpanel.spacing(6).add()
 				.widget(IBulkTableWidget.class);
-		grid.addToContextMenu(false);
+		grid.addToContextMenu(addToContextMenu);
 		final int heightMinusTopPanel = heightMinusTopPanel();
 		grid.height(heightMinusTopPanel);
 		for (IRowIndexListener rowIndexL : scrollListeners)
@@ -938,6 +939,12 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> rowIndex(int rowIndex) {
 		this.rowIndex = rowIndex;
+		return this;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> addToContextMenu(boolean addToContextMenu) {
+		this.addToContextMenu = addToContextMenu;
 		return this;
 	}
 }
