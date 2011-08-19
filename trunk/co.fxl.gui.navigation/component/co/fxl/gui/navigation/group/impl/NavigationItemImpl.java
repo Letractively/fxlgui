@@ -119,9 +119,13 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 		showLabelAsActive(viaClick, new CallbackTemplate<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				widget.panel0().clear();
-				applyColor(widget.panel0().color(), widget.colorActive);
-				decorator.decorate(widget.panel0());
+				IVerticalPanel panel0 = widget.panel0();
+				panel0.clear();
+//				panel0.add().panel().vertical().add().panel().horizontal()
+//						.add().panel().horizontal().spacing(10).add().image()
+//						.resource("loading.gif").size(16, 16);
+				applyColor(panel0.color(), widget.colorActive);
+				decorator.decorate(panel0);
 			}
 		}, true);
 		return this;
