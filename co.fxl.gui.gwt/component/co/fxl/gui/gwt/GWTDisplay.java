@@ -267,7 +267,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 	@Override
 	public IDisplay block(boolean waiting) {
-		this.waiting = waiting;
+		GWTDisplay.waiting = waiting;
 		DOM.setStyleAttribute(RootPanel.get().getElement(), "cursor",
 				waiting ? "wait" : "default");
 		for (BlockListener l : blockListeners)
