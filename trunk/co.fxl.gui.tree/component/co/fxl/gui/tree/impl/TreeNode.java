@@ -309,18 +309,8 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	void update(T object) {
 		label.text(tree.name());
 		label.font().weight().plain().color().black();
-		if (tree.childCount() != 0) {
-			if (icon() != null) {
-				// isExpanded = false;
-				image.resource(CLOSED);
-			} else
-				image.resource(FOLDER_CLOSED);
-		} else {
-			if (icon() != null) {
-				image.resource(EMPTY);
-			} else
-				image.resource(tree.isLeaf() ? LEAF : FOLDER_EMPTY);
-		}
+		image.resource(treeIcon(lazyTree, tree));
+		isExpanded = tree.children().size() > 0;
 		if (icon != null)
 			icon.resource(icon());
 		decorate();
