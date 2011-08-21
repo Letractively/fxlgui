@@ -343,7 +343,8 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 								@Override
 								public void onSuccess(T result) {
 									model.selection(nextSelection, false);
-									model.refresh(parent, true);
+									lazyTree.refresh(true);
+//									model.refresh(parent, true);
 								}
 							};
 							tree.delete(callback);
@@ -787,7 +788,8 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> notifyUpdate(T originalObject) {
-		return notifyUpdate(originalObject, false);
+		lazyTree.refresh(true);
+		return this;//notifyUpdate(originalObject, true);
 	}
 
 	@Override
