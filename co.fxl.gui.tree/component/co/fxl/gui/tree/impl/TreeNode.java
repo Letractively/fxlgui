@@ -40,13 +40,13 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	// tree node doesn't work when discard changes intercepts (works only like a
 	// single click)
 
-	private static final String FOLDER_CLOSED = "folder_closed.png";
-	private static final String FOLDER_EMPTY = "folder_empty.png";
+//	private static final String FOLDER_CLOSED = "folder_closed.png";
+//	private static final String FOLDER_EMPTY = "folder_empty.png";
 	private static final String FOLDER_OPEN = "folder_open.png";
 	public static final String CLOSED = "closed.png";
 	public static final String EMPTY = "empty.png";
 	public static final String OPEN = "open.png";
-	private static final String LEAF = "leaf.png";
+//	private static final String LEAF = "leaf.png";
 	private static final int INDENT = 10;
 	private static final String OPENORCLOSED = "openorclosed.png";
 	IHorizontalPanel content;
