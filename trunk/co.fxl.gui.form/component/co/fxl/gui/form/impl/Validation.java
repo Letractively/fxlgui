@@ -161,7 +161,8 @@ public class Validation {
 		}
 
 		protected void update(String value, boolean wColors) {
-			isSpecified = value != null && !value.equals(originalValue);
+			isSpecified = (value != null && !value.equals(originalValue))
+					|| (value == null && originalValue != null);
 			isNull = value == null || value.equals("");
 			updateClickables();
 			if (required) {
