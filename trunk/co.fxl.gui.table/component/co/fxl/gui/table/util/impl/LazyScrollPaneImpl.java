@@ -167,6 +167,10 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				if (maxRowIndex == 0) {
 					scrollPane.remove();
 					widthScrollPanel = 0;
+				} else {
+//					if (maxRowIndex < size - 1) {
+//						maxRowIndex++;
+//					}
 				}
 				if (rowIndex > maxRowIndex)
 					rowIndex = maxRowIndex;
