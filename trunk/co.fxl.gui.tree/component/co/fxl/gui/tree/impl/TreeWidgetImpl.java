@@ -335,7 +335,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 						@Override
 						public void onClick() {
 							final ITree<T> tree = model.selection();
-							final ITree<T> parent = tree.parent();
+//							final ITree<T> parent = tree.parent();
 							final ITree<T> nextSelection = model
 									.nextSelection(tree);
 							ICallback<T> callback = new CallbackTemplate<T>() {
