@@ -179,14 +179,15 @@ class TreeModel<T> {
 				}
 			}
 		}
+		widget.refreshLazyTree(true);
 		if (node == null) {
-			widget.refreshLazyTree(true);
+//			widget.refreshLazyTree(true);
 			// TODO ...
 		} else {
 			assert node != null : trace(object) + " not found in "
 					+ trace(nodes.keySet());
 			ITree<T> tree = node.tree();
-			refresh(tree, recurse);
+//			refresh(tree, recurse);
 			if (tree.equals(selection)) {
 				// widget.scrollIntoView(node);
 				widget.setDetailViewTree(tree);
