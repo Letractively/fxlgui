@@ -23,7 +23,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
@@ -201,14 +200,36 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		throw new MethodNotImplementedException();
 	}
 
+//	private boolean resizing = false;
+//	private Runnable r = null;
+
+	private void resize(final IResizeListener listener) {
+//		if (resizing) {
+//			if (r == null) {
+//				r = new Runnable() {
+//					@Override
+//					public void run() {
+//						r = null;
+//						resize(listener);
+//					}
+//				};
+//				invokeLater(r);
+//			}
+//			return;
+//		}
+//		resizing = true;
+		boolean active = listener.onResize(width(), height());
+		if (!active)
+			removeResizeListener(listener);
+//		resizing = false;
+	}
+
 	@Override
 	public IDisplay addResizeListener(final IResizeListener listener) {
 		HandlerRegistration reg = Window.addResizeHandler(new ResizeHandler() {
 			@Override
 			public void onResize(ResizeEvent event) {
-				boolean active = listener.onResize(width(), height());
-				if (!active)
-					removeResizeListener(listener);
+				resize(listener);
 			}
 		});
 		resizeListeners.put(listener, reg);
