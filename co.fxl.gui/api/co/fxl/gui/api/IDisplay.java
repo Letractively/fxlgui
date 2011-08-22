@@ -18,9 +18,7 @@
  */
 package co.fxl.gui.api;
 
-import co.fxl.gui.api.IColored.IColor;
-
-public interface IDisplay {
+public interface IDisplay extends IColored{
 
 	public interface IResizeListener {
 
@@ -55,8 +53,6 @@ public interface IDisplay {
 	IWebsite showWebsite();
 
 	IPopUp showPopUp();
-
-	IColor color();
 
 	IDisplay addExceptionHandler(IExceptionHandler handler);
 

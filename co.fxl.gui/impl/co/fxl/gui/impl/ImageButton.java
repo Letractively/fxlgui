@@ -41,6 +41,7 @@ public class ImageButton implements IClickable<Object>,
 	private String addToContextMenu = null;
 	private List<IClickListener> clickListeners = new LinkedList<IClickListener>();
 	private Entry entry;
+	private boolean hasElements = false;
 
 	public ImageButton(IContainer c) {
 		this.panel = c.panel().horizontal();
@@ -84,10 +85,12 @@ public class ImageButton implements IClickable<Object>,
 		label.clickable(clickable);
 		for (ILabel l : additionalLabels)
 			l.clickable(clickable);
-		if (p0 != null)
-			p0.clickable(clickable);
-		else
-			panel.clickable(clickable);
+		if (!hasElements) {
+			if (p0 != null)
+				p0.clickable(clickable);
+			else
+				panel.clickable(clickable);
+		}
 		if (entry != null)
 			entry.clickable(clickable);
 		return this;
@@ -117,7 +120,7 @@ public class ImageButton implements IClickable<Object>,
 	}
 
 	public ILabel addHyperlink(String text) {
-		panel.addSpace(4);
+		panel.addSpace(SPACE);
 		ILabel label = panel.add().label().text("|");
 		styleSeparator(label);
 		ILabel l = panel.addSpace(4).add().label().text(text).hyperlink();
@@ -144,5 +147,21 @@ public class ImageButton implements IClickable<Object>,
 	public void onClick() {
 		for (IClickListener l : clickListeners)
 			l.onClick();
+	}
+
+	public IContainer addElement() {
+		return addElement(SPACE);
+	}
+
+	public IContainer addElement(int i) {
+		hasElements = true;
+		p0.clickable(false);
+		panel.clickable(false);
+		return panel.addSpace(i).add();
+	}
+
+	public ImageButton addSpace(int i) {
+		panel.addSpace(i);
+		return this;
 	}
 }
