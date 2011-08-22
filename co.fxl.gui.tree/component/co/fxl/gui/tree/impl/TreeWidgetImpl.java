@@ -788,8 +788,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> notifyUpdate(T originalObject) {
-		lazyTree.refresh(true);
-		return this;//notifyUpdate(originalObject, true);
+		return notifyUpdate(originalObject, true);
 	}
 
 	@Override
