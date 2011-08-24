@@ -66,7 +66,7 @@ public class ElementPopUp {
 		HEIGHTS.decorateBorder(popUp).style().shadow();
 		int w = Math.min(320, element.width());
 		int h = 0;
-		if (lines > 24)
+		if (lines >= 1)
 			h = 2 + 19 * lines;
 		if (h > 0)
 			popUp.size(w, h);
