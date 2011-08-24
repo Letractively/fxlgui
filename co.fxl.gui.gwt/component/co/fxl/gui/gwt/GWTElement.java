@@ -309,4 +309,12 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	public R offset(int x, int y) {
 		throw new MethodNotImplementedException();
 	}
+
+	public IColor color() {
+		return newBackgroundColor();
+	}
+
+	public IFont font() {
+		return new GWTFont(container.widget);
+	}
 }

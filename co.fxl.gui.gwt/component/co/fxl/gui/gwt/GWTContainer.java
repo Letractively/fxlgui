@@ -33,6 +33,7 @@ import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.IRadioButton;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISplitPane;
+import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IToggleButton;
@@ -45,9 +46,11 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.ToggleButton;
@@ -141,6 +144,13 @@ public class GWTContainer<T extends Widget> implements IContainer {
 		setComponent((T) new TextBox());
 		return (ITextField) (element = new GWTTextField(
 				(GWTContainer<TextBox>) this));
+	}
+
+	@Override
+	public ISuggestField suggestField() {
+		setComponent((T) new SuggestBox(new MultiWordSuggestOracle()));
+		return (ISuggestField) (element = new GWTSuggestField(
+				(GWTContainer<SuggestBox>) this));
 	}
 
 	@Override
