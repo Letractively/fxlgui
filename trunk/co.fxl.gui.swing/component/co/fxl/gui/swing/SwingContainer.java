@@ -48,6 +48,7 @@ import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.IRadioButton;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISplitPane;
+import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IToggleButton;
@@ -152,6 +153,13 @@ public class SwingContainer<T extends JComponent> implements IContainer {
 	public ITextField textField() {
 		setComponent((T) new TextFieldComponent());
 		return (ITextField) (element = new SwingTextField(
+				(SwingContainer<JTextField>) this));
+	}
+
+	@Override
+	public ISuggestField suggestField() {
+		setComponent((T) new TextFieldComponent());
+		return (ISuggestField) (element = new SwingSuggestField(
 				(SwingContainer<JTextField>) this));
 	}
 
