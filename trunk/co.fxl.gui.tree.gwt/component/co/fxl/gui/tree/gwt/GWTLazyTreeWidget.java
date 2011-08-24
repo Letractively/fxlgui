@@ -25,6 +25,8 @@ import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.gwt.GWTContainer;
 import co.fxl.gui.gwt.GWTDisplay;
 import co.fxl.gui.gwt.WidgetParent;
+import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.HTMLText;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.impl.LazyTreeWidgetTemplate;
@@ -198,9 +200,15 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		HTML html = new HTML(b.toString());
 		html.addClickHandler(new ClickHandler() {
 			@Override
-			public void onClick(ClickEvent event) {
-				selectionIndex = firstRow + (event.getY() / heightElement);
-				update();
+			public void onClick(final ClickEvent event) {
+				DiscardChangesDialog.show(new CallbackTemplate<Boolean>() {
+					@Override
+					public void onSuccess(Boolean result) {
+						selectionIndex = firstRow
+								+ (event.getY() / heightElement);
+						update();
+					}
+				});
 			}
 		});
 		return html;
