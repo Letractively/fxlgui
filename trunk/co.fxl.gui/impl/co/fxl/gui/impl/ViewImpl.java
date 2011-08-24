@@ -26,8 +26,10 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextField;
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.api.IVerticalPanel;
 
 public class ViewImpl extends LazyClickListener {
 
@@ -50,7 +52,16 @@ public class ViewImpl extends LazyClickListener {
 	ViewImpl(ViewList viewList, String imageResource, boolean isNew) {
 		this.viewList = viewList;
 		this.imageResource = imageResource;
-		grid = this.viewList.panel.add().panel().grid();
+		IVerticalPanel p = this.viewList.panel.add().panel().vertical();
+		if (viewList.hasLinks) {
+			p.addSpace(3);
+			IBorder border = p.border();
+			border.color().rgb(172, 197, 213);
+			border.style().top();
+		}
+		viewList.hasLinks = true;
+		grid = p.add().panel().grid();
+		p.addSpace(4);
 		labelPanel0 = grid.cell(0, 0).panel().horizontal();
 		labelPanel = labelPanel0.add().panel().horizontal().spacing(2);
 		decorate(isNew);
@@ -200,7 +211,7 @@ public class ViewImpl extends LazyClickListener {
 	}
 
 	public void clickable() {
-		grid.color().remove();
+//		grid.color().remove();
 		styleViewlistEntryInactive(label);
 		if (removeImage != null) {
 			removeImage.visible(false);
@@ -210,11 +221,11 @@ public class ViewImpl extends LazyClickListener {
 	public void styleViewlistEntryInactive(ILabel label) {
 		// Styles.instance().style(label, Style.Window.VIEWLIST,
 		// Style.List.ENTRY, Style.Status.INACTIVE);
-		label.font().pixel(13);
+		label.font().pixel(13).weight().plain();
 	}
 
 	public void notClickable() {
-		grid.color().rgb(0xD0, 0xE4, 0xF6);
+//		grid.color().rgb(0xD0, 0xE4, 0xF6);
 		styleViewlistEntryActive(label);
 		if (removeImage != null && this.viewList.newListener.isRemovable(this)) {
 			removeImage.visible(true);
@@ -224,8 +235,8 @@ public class ViewImpl extends LazyClickListener {
 	public void styleViewlistEntryActive(ILabel label) {
 		// Styles.instance().style(label, Style.Window.VIEWLIST,
 		// Style.List.ENTRY, Style.Status.ACTIVE);
-		label.font().pixel(13);
-		label.font().color().mix().black().gray();
+		label.font().pixel(13).weight().bold();
+		label.font().color().black();
 	}
 
 	public ViewImpl decorator(ViewDecorator decorator) {

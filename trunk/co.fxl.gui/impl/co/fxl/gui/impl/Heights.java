@@ -29,7 +29,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
-import co.fxl.gui.api.ITextField;
+import co.fxl.gui.api.ITextInput;
 
 public class Heights {
 
@@ -66,7 +66,7 @@ public class Heights {
 		styleInputBorder((IBordered) textField);
 	}
 
-	public void decorate(ITextField textField) {
+	public void decorate(ITextInput<?> textField) {
 		decorateHeight(textField);
 		styleColor(textField);
 	}
@@ -75,7 +75,7 @@ public class Heights {
 		styleColor(textField);
 	}
 
-	public void decorateHeight(ITextField textField) {
+	public void decorateHeight(ITextInput<?> textField) {
 		textField.height(inc + TEXTFIELD_HEIGHT);
 		styleInputBorder((IBordered) textField);
 	}

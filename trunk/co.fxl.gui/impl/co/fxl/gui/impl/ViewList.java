@@ -41,6 +41,7 @@ public class ViewList {
 	IVerticalPanel panel;
 	List<ViewImpl> views = new LinkedList<ViewImpl>();
 	NewListener newListener = null;
+	boolean hasLinks;
 
 	public ViewList(MetaViewList widget, ILayout layout) {
 		this.widget = widget;
