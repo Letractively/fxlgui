@@ -24,6 +24,7 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.tree.api.ITree;
 
 class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
@@ -57,9 +58,9 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 				decorator.panel.height(heightElement);
 				IClickable<?> label = decorator.decorateCore();
 				final int fIndex = index;
-				IClickListener clickListener = new IClickListener() {
+				IClickListener clickListener = new LazyClickListener() {
 					@Override
-					public void onClick() {
+					public void onAllowedClick() {
 						selectionIndex = fIndex;
 						container.element().remove();
 						decorate(container, firstRow, lastRow);
