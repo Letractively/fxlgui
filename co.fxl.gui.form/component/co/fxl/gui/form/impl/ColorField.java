@@ -21,6 +21,7 @@ package co.fxl.gui.form.impl;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridClickListener;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
@@ -39,11 +40,11 @@ public class ColorField {
 
 		@Override
 		public void onClick() {
-			final IPopUp popUp = button.display().showPopUp().autoHide(true);
+			final IPopUp popUp = button.display().showPopUp().autoHide(true).width(180);
 			popUp.border().style().shadow();
 			int height = button.height();
 			popUp.offset(button.offsetX(), button.offsetY() + height + 4);
-			IGridPanel grid = popUp.container().panel().grid().spacing(4);
+			IGridPanel grid = popUp.container().panel().grid().spacing(4).width(180);
 			grid.resize(4, 4);
 			for (int i = 0; i < 4; i++) {
 				for (int j = 0; j < 4; j++) {
@@ -61,9 +62,9 @@ public class ColorField {
 					p.tooltip(colorName);
 					p.cell(0, 1).align().center().label().text(colorName)
 							.font().pixel(10).color().gray();
-					p.addClickListener(new IClickListener() {
+					p.addGridClickListener(new IGridClickListener() {
 						@Override
-						public void onClick() {
+						public void onClick(int column, int row) {
 							tf.text(colorValue);
 							updateColor(colorValue);
 							popUp.visible(false);

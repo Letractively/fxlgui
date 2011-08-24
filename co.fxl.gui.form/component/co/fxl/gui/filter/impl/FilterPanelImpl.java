@@ -79,7 +79,7 @@ class FilterPanelImpl implements FilterPanel {
 
 		@Override
 		public void title(int filterIndex, String name) {
-			IGridCell cell = grid.cell(0, filterIndex).width(50);
+			IGridCell cell = grid.cell(0, filterIndex);//.width(50);
 			widget.heights.decorate(cell);
 
 			// TODO Look: Swing: Align filter labels to the right, grid cell

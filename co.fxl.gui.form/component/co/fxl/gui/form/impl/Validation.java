@@ -29,9 +29,11 @@ import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IPasswordField;
+import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.ITextField;
+import co.fxl.gui.api.ITextInput;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.ICallback;
@@ -180,6 +182,10 @@ public class Validation {
 						errorColor(tf, isNull);
 				} else if (textElement instanceof IComboBox) {
 					IComboBox tf = (IComboBox) textElement;
+					if (wColors)
+						errorColor(tf, isNull);
+				} else if (textElement instanceof ISuggestField) {
+					ISuggestField tf = (ISuggestField) textElement;
 					if (wColors)
 						errorColor(tf, isNull);
 				} else
@@ -354,11 +360,11 @@ public class Validation {
 		return this;
 	}
 
-	public Validation linkInput(ITextField textField) {
+	public Validation linkInput(ITextInput<?> textField) {
 		return linkInput(textField, false);
 	}
 
-	public Validation linkInput(ITextField textField, boolean required) {
+	public Validation linkInput(ITextInput<?> textField, boolean required) {
 		Field field = new Field(textField, required);
 		textField.addUpdateListener(field);
 		return this;
@@ -385,6 +391,14 @@ public class Validation {
 	}
 
 	private void errorColor(ITextArea textField, boolean hasError) {
+		if (hasError) {
+			textField.color().mix().red().white().white();
+		} else {
+			textField.color().rgb(249, 249, 249);
+		}
+	}
+
+	private void errorColor(ISuggestField textField, boolean hasError) {
 		if (hasError) {
 			textField.color().mix().red().white().white();
 		} else {
