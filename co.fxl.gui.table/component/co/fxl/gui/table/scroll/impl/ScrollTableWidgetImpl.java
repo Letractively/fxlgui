@@ -133,11 +133,34 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		return container().offsetY();
 	}
 
+	private boolean drawing = false;
+	private Integer nextHeight = null;
+
 	@Override
-	public IScrollTableWidget<Object> height(int height) {
+	public IScrollTableWidget<Object> height(final int height) {
 		this.height = height;
-		if (visible)
-			visible(true);
+		if (visible) {
+			if (drawing) {
+				if (nextHeight == null) {
+					nextHeight = height;
+					c0.display().invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							int height = nextHeight;
+							nextHeight = null;
+							height(height);
+						}
+					});
+				} else {
+					nextHeight = height;
+				}
+				return this;
+			} else {
+				drawing = true;
+				visible(true);
+				drawing = false;
+			}
+		}
 		return this;
 	}
 
