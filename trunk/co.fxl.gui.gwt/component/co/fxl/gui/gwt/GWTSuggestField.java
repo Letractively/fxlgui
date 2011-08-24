@@ -21,25 +21,29 @@ package co.fxl.gui.gwt;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.ITextField;
+import co.fxl.gui.api.ISuggestField;
 
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
+import com.google.gwt.user.client.ui.SuggestBox;
 
-class GWTTextField extends GWTElement<TextBox, ITextField> implements
-		ITextField {
+class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
+		ISuggestField {
 
 	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();
+	private MultiWordSuggestOracle oracle;
 
-	GWTTextField(GWTContainer<TextBox> container) {
+	GWTSuggestField(GWTContainer<SuggestBox> container) {
 		super(container);
 		assert container != null : "GWTTextField.new: container is null";
 		container.widget.addStyleName("gwt-TextBox-FXL");
 		defaultFont();
+		oracle = (MultiWordSuggestOracle) ((SuggestBox) container.widget)
+				.getSuggestOracle();
 	}
 
-	public ITextField text(String text) {
+	public ISuggestField text(String text) {
 		if (text == null)
 			text = "";
 		container.widget.setText(text);
@@ -49,7 +53,7 @@ class GWTTextField extends GWTElement<TextBox, ITextField> implements
 	}
 
 	@Override
-	public ITextField addUpdateListener(
+	public ISuggestField addUpdateListener(
 			final IUpdateListener<String> changeListener) {
 		updateListeners.add(changeListener);
 		container.widget.addKeyUpHandler(new KeyUpHandler() {
@@ -71,24 +75,29 @@ class GWTTextField extends GWTElement<TextBox, ITextField> implements
 	}
 
 	@Override
-	public ITextField editable(boolean editable) {
-		container.widget.setReadOnly(!editable);
-		return this;
-	}
-
-	@Override
 	public int width() {
 		return super.width() + 8;
 	}
 
 	@Override
-	public ITextField width(int width) {
-		return (ITextField) super.width(width - 8);
+	public ISuggestField width(int width) {
+		return (ISuggestField) super.width(width - 8);
 	}
 
 	@Override
-	public ITextField maxLength(int rows) {
-		container.widget.setMaxLength(rows);
+	public ISuggestField addText(String... texts) {
+		for (String t : texts)
+			oracle.add(t);
 		return this;
+	}
+
+	@Override
+	public ISuggestField editable(boolean editable) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public ISuggestField maxLength(int maxLength) {
+		throw new MethodNotImplementedException();
 	}
 }
