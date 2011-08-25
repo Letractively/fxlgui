@@ -34,6 +34,7 @@ import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.IRadioButton;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISplitPane;
+import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IToggleButton;
@@ -160,6 +161,11 @@ public class AndroidContainer implements IContainer {
 
 	@Override
 	public IDisplay display() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public ISuggestField suggestField() {
 		throw new MethodNotImplementedException();
 	}
 }

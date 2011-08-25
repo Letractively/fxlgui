@@ -175,4 +175,9 @@ class AndroidScrollPane implements IScrollPane, Parent {
 	public IScrollPane horizontal() {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public IScrollPane showScrollbarsAlways(boolean showScrollbarsAlways) {
+		throw new MethodNotImplementedException();
+	}
 }
