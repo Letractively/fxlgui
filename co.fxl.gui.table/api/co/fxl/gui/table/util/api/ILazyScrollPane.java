@@ -27,6 +27,8 @@ public interface ILazyScrollPane extends IMouseWheelListener {
 
 		void decorate(IContainer container, int firstRow, int lastRow);
 
+		boolean checkIndex(int rowIndex);
+
 		int rowHeight(int rowIndex);
 	}
 

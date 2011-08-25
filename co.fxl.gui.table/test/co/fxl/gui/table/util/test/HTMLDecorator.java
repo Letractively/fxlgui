@@ -85,4 +85,9 @@ public class HTMLDecorator implements IDecorator {
 	public int rowHeight(int rowIndex) {
 		return elements.get(rowIndex).height();
 	}
+
+	@Override
+	public boolean checkIndex(int rowIndex) {
+		return true;
+	}
 }
