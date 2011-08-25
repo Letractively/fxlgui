@@ -210,4 +210,9 @@ public abstract class LazyTreeWidgetTemplate implements
 	public int indent(ITree<Object> t) {
 		return this.tree.indent(t);
 	}
+
+	@Override
+	public boolean checkIndex(int rowIndex) {
+		return true;
+	}
 }
