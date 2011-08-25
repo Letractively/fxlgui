@@ -180,6 +180,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> visible(boolean visible) {
 		if (visible) {
+			if (sp != null)
+				sp.visible(false);
 			rows = new RowAdapter(actualRows);
 			if (commandButtons != null)
 				commandButtons.reset();
@@ -310,16 +312,17 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						}
 
 						@Override
-						public int rowHeight(int rowIndex) {
+						public boolean checkIndex(int rowIndex) {
 							int visibleRowIndex = convert2GridRow(rowIndex);
 							if (visibleRowIndex >= grid.rowCount()
 									|| visibleRowIndex < 0)
-								throw new MethodNotImplementedException(
-										"Illegal row index: " + rowIndex + "/"
-												+ visibleRowIndex
-												+ ", row offset=" + rowOffset
-												+ ", row count="
-												+ grid.rowCount());
+								return false;
+							return true;
+						}
+
+						@Override
+						public int rowHeight(int rowIndex) {
+							int visibleRowIndex = convert2GridRow(rowIndex);
 							return grid.rowHeight(visibleRowIndex);
 						}
 					});

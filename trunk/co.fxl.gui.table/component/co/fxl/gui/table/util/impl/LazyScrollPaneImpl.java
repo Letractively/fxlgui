@@ -55,6 +55,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private IVerticalPanel v;
 	private IScrollPane treeScrollPanel;
 	private IDockPanel treeDockPanel;
+	private boolean allowRepaint = false;
 
 	LazyScrollPaneImpl(IContainer container) {
 		this.container = container;
@@ -107,9 +108,11 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	@Override
 	public ILazyScrollPane visible(boolean visible) {
 		if (visible) {
+			allowRepaint = true;
 			draw();
-		} else
-			throw new MethodNotImplementedException();
+		} else {
+			v.visible(false);
+		}
 		return this;
 	}
 
@@ -133,8 +136,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		if (inc)
 			ctr = ctr.panel().vertical().addSpace(7).add();
 		scrollPane = ctr.scrollPane();
-		scrollPane.size(widthScrollPanel, height);// +
-													// HEIGHT_SCROLL_BAR);
+		scrollPane.size(widthScrollPanel, height);
 		scrollContentPanel = scrollPane.viewPort().panel().absolute();
 		scrollContentPanel.add().label().text("&#160;");
 		int scrollPanelHeight = size * minRowHeight;
@@ -150,11 +152,25 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				if (!v.visible())
 					return;
 				assert firstIndex >= 0;
+				if (adjustHeights && !decorator.checkIndex(lastIndex)) {
+					if(allowRepaint) {
+						allowRepaint = false;
+						draw();
+					}
+					return;
+				}
 				int h = adjustHeights ? decorator.rowHeight(lastIndex)
 						: minRowHeight;
 				assert lastIndex >= 0;
 				maxRowIndex = lastIndex;
 				for (int i = lastIndex - 1; i >= firstIndex && h < height; i--) {
+					if (adjustHeights && !decorator.checkIndex(lastIndex)) {
+						if(allowRepaint) {
+							allowRepaint = false;
+							draw();
+						}
+						return;
+					}
 					int rowHeight = Math.max(minRowHeight,
 							adjustHeights ? decorator.rowHeight(i)
 									: minRowHeight);
@@ -209,6 +225,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 					update();
 					treeDockPanel.visible(true);
 				}
+				allowRepaint = false;
 			}
 		};
 		if (adjustHeights) {

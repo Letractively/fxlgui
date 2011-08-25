@@ -95,6 +95,11 @@ class LazyScrollPaneTest implements IDecorator, IClickListener {
 	}
 
 	@Override
+	public boolean checkIndex(int rowIndex) {
+		return true;
+	}
+
+	@Override
 	public void onClick() {
 		throw new MethodNotImplementedException();
 	}
