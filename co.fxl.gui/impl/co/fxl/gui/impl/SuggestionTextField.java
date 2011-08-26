@@ -40,7 +40,6 @@ public class SuggestionTextField implements
 		textField = container.textField().visible(false);
 		ElementPopUp.HEIGHTS.decorate(textField);
 		popUp = new ElementPopUp(textField);
-		popUp.scrollPane(false);
 	}
 
 	@Override
@@ -55,6 +54,7 @@ public class SuggestionTextField implements
 	public SuggestionTextField addText(String... texts) {
 		this.texts.addAll(Arrays.asList(texts));
 		popUp.lines(this.texts.size());
+		popUp.scrollPane(this.texts.size() > 1);
 		return this;
 	}
 
