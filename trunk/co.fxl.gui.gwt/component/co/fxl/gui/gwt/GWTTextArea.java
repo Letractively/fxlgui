@@ -113,6 +113,7 @@ class GWTTextArea extends GWTElement<TextArea, ITextArea> implements ITextArea {
 
 	@Override
 	public ITextArea cursorPosition(int position) {
+		position = Math.max(position, text().length());
 		container.widget.setCursorPos(position);
 		return this;
 	}
