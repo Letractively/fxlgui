@@ -74,6 +74,7 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 	public ISplitPane splitPosition(int pixel) {
 		HorizontalSplitPanel p = (HorizontalSplitPanel) container.widget;
 		p.setSplitPosition(pixel + "px");
+		oWidth1 = pixel;
 		return this;
 	}
 
@@ -131,5 +132,10 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 	private void prepare(Widget widget) {
 		widget.setWidth("100%");
 		widget.setHeight("100%");
+	}
+
+	@Override
+	public int splitPosition() {
+		return oWidth1;
 	}
 }
