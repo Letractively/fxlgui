@@ -91,4 +91,9 @@ class SwingSplitPane extends SwingElement<JSplitPane, ISplitPane> implements
 				});
 		return this;
 	}
+
+	@Override
+	public int splitPosition() {
+		return container.component.getDividerLocation();
+	}
 }
