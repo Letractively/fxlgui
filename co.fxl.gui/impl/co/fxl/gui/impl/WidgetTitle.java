@@ -64,6 +64,7 @@ public class WidgetTitle implements IClickListener {
 	private String title;
 	private IGridPanel bPanel;
 	private String titleUpperCase;
+	private boolean hyperlinkVisible = true;
 
 	public WidgetTitle() {
 	}
@@ -251,7 +252,7 @@ public class WidgetTitle implements IClickListener {
 		// clickableState.put(label, true);
 		// }
 		CommandLink cl = new CommandLink(this, iPanel0, image, label);
-		cl.clickable(true);
+		cl.clickable(hyperlinkVisible);
 		if (addToContextMenu)
 			cl.addToContextMenu(title);
 		return cl;
@@ -341,6 +342,11 @@ public class WidgetTitle implements IClickListener {
 
 	public WidgetTitle sideWidget(boolean sideWidget) {
 		this.sideWidget = sideWidget;
+		return this;
+	}
+
+	public WidgetTitle hyperlinkVisible(boolean hyperlinkVisible) {
+		this.hyperlinkVisible = hyperlinkVisible;
 		return this;
 	}
 }

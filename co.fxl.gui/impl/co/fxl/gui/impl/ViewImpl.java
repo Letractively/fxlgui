@@ -60,8 +60,9 @@ public class ViewImpl extends LazyClickListener {
 			border.style().top();
 		}
 		viewList.hasLinks = true;
+		p.addSpace(2);
 		grid = p.add().panel().grid();
-		p.addSpace(4);
+		p.addSpace(2);
 		labelPanel0 = grid.cell(0, 0).panel().horizontal();
 		labelPanel = labelPanel0.add().panel().horizontal().spacing(2);
 		decorate(isNew);
@@ -69,12 +70,12 @@ public class ViewImpl extends LazyClickListener {
 
 	protected void decorate(boolean isNew) {
 		if (imageResource != null) {
-			image = labelPanel.addSpace(4).add().image()
+			image = labelPanel.addSpace(0).add().image()
 					.resource(imageResource);
 			image.addClickListener(this);
 			labelPanel.addSpace(2);
 		} else
-			labelPanel.addSpace(4);
+			labelPanel.addSpace(0);
 		if (!isNew) {
 			label = labelPanel.add().label().hyperlink();
 			styleViewlistEntryActive(label);

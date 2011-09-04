@@ -60,7 +60,10 @@ public class ViewList {
 		if (widgetTitle.headerLabel == null)
 			title("Views");
 		if (panel == null) {
-			IVerticalPanel vertical = widgetTitle.content().panel().vertical();
+			final IGridPanel grid = widgetTitle.content().panel().grid();
+			grid.cell(0, 0).width(4).label();
+			IVerticalPanel vertical = grid.cell(1, 0).panel().vertical();
+			grid.cell(2, 0).width(4).label();
 			vertical.addSpace(2);
 			panel = vertical.add().panel().vertical().spacing(2);
 			vertical.addSpace(4);
