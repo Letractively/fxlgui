@@ -35,6 +35,10 @@ class NavigationGroupImpl implements INavigationGroup {
 	// TODO Code: Look: Register-Widget: no flickering -> use Card-Panel, set
 	// panel invisible, decorator with callback: switch when returned
 
+	// TODO Code: for large numbers of groups, click on group name: popup surfaces
+	// list of groups plus cancel button (to hide group), on the right side
+	// of last group: +-button to show additional groups
+
 	NavigationWidgetImpl widget;
 	ILinearPanel<?> panel;
 	ILabel header;
@@ -49,7 +53,7 @@ class NavigationGroupImpl implements INavigationGroup {
 		panel.addSpace(3);
 		IVerticalPanel headerPanel = panel.add().panel().vertical();
 		header = headerPanel.addSpace(2).add().label();
-		header.font().weight().bold().pixel(11); 
+		header.font().weight().bold().pixel(11);
 		panel.addSpace(1);
 		itemPanel = createPanel(panel.add().panel());
 	}
