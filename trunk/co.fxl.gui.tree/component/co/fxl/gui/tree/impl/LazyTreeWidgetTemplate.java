@@ -147,7 +147,15 @@ public abstract class LazyTreeWidgetTemplate implements
 		int index = tree.index(selection);
 		if (index != -1) {
 			if (checkSelection) {
-				pane.rowIndex(index);
+				int firstIndex = lastFirstRow == -1 ? 0 : lastFirstRow;
+				int lastIndex = firstIndex + (height / heightElement) - 1;
+				if (lastIndex < firstIndex)
+					lastIndex = firstIndex;
+				if (index < firstIndex) {
+					pane.rowIndex(index);
+				} else if (index > lastIndex) {
+					pane.rowIndex(firstIndex + index - lastIndex);
+				}
 			}
 			selection = null;
 		}

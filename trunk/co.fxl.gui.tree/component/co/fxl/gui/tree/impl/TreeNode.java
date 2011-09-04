@@ -40,13 +40,13 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	// tree node doesn't work when discard changes intercepts (works only like a
 	// single click)
 
-//	private static final String FOLDER_CLOSED = "folder_closed.png";
-//	private static final String FOLDER_EMPTY = "folder_empty.png";
+	// private static final String FOLDER_CLOSED = "folder_closed.png";
+	// private static final String FOLDER_EMPTY = "folder_empty.png";
 	private static final String FOLDER_OPEN = "folder_open.png";
 	public static final String CLOSED = "closed.png";
 	public static final String EMPTY = "empty.png";
 	public static final String OPEN = "open.png";
-//	private static final String LEAF = "leaf.png";
+	// private static final String LEAF = "leaf.png";
 	private static final int INDENT = 10;
 	private static final String OPENORCLOSED = "openorclosed.png";
 	IHorizontalPanel content;
@@ -72,6 +72,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	private IImage acceptMove;
 	private ILazyTreeWidget<T> lazyTree;
 	private boolean isMarked;
+	private IHorizontalPanel p0;
 
 	// TODO FEATURE: Option: Usability: Click on cursor left / right expands /
 	// collapses tree node
@@ -116,7 +117,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	}
 
 	void draw() {
-		isExpanded = !lazyTree.isCollapsed(tree);
+		updateIsExpanded();
 		decorateCore();
 		content.addSpace(10);
 		// childrenPanel = panel.add().panel().vertical();
@@ -133,12 +134,22 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 				widget.model.selection(tree);
 			}
 		});
+		// panel.addClickListener(this);
+		// p0.addClickListener(this);
+		// container.addClickListener(this);
 		decorate();
 	}
 
+	public void updateIsExpanded() {
+		isExpanded = tree.childCount() > 0
+				&& tree.childCount() == tree.children().size()
+				&& !lazyTree.isCollapsed(tree);
+	}
+
 	IClickable<?> decorateCore() {
-		container = panel.add().panel().horizontal().align().begin().add()
-				.panel().horizontal().align().begin();
+		p0 = panel.add().panel().horizontal();
+		container = p0.align().begin().add().panel().horizontal().align()
+				.begin();
 		updateMarked();
 		content = container.add().panel().horizontal().spacing(2);
 		content.addSpace(1 + depth * INDENT);
@@ -157,6 +168,11 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		container.addSpace(4);
 		if (isNull)
 			label.font().weight().italic().color().gray();
+		// ContextMenu.instance().decorate(panel);
+		// ContextMenu.instance().decorate(buttonPanel);
+		// ContextMenu.instance().decorate(p0);
+		ContextMenu.instance().decorate(content);
+		// ContextMenu.instance().decorate(container);
 		ContextMenu.instance().decorate(label);
 		ContextMenu.instance().decorate(icon);
 		return new ClickableMultiplexer(label, icon);
@@ -281,6 +297,9 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 					@Override
 					public void onClick() {
 						widget.model.moveStop();
+						if (widget.preMoveSplitPosition != -1)
+							widget.splitPane
+									.splitPosition(widget.preMoveSplitPosition);
 					}
 				}).mouseLeft().visible(allowMove);
 	}
@@ -310,7 +329,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		label.text(tree.name());
 		label.font().weight().plain().color().black();
 		image.resource(treeIcon(lazyTree, tree));
-		isExpanded = tree.children().size() > 0;
+		updateIsExpanded();
 		if (icon != null)
 			icon.resource(icon());
 		decorate();

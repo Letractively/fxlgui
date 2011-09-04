@@ -142,15 +142,19 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 		@Override
 		public IView constrainType(Class<?> clazz) {
-			if (clazz != null)
+			if (clazz != null) {
 				this.constrainType = new Class<?>[] { clazz };
+				register.enabled(false);
+			}
 			return this;
 		}
 
 		@Override
 		public IView constrainType(Class<?>[] clazz) {
-			if (clazz.length > 1 || (clazz.length == 1 && clazz[0] != null))
+			if (clazz.length > 1 || (clazz.length == 1 && clazz[0] != null)) {
 				this.constrainType = clazz;
+				register.enabled(false);
+			}
 			return this;
 		}
 
@@ -198,6 +202,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	boolean showRoot = true;
 	boolean moveActive = false;
 	private IContainer container;
+	int preMoveSplitPosition = -1;
 
 	TreeWidgetImpl(IContainer layout) {
 		this.container = layout;
@@ -211,6 +216,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		if (hasButtons) {
 			return;
 		}
+		widgetTitle.hyperlinkVisible(false);
 		hasButtons = true;
 		if (showCommands && allowCreate) {
 			if (creatableTypes.isEmpty())
@@ -316,11 +322,21 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			}
 			if (allowReorder) {
 				IClickListener reorderCL = new LazyClickListener() {
-
 					@Override
 					protected void onAllowedClick() {
 						previousSelection = model.selection().object();
 						model.move();
+						panel.display().invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								if (lazyTree.width() > splitPane
+										.splitPosition()) {
+									TreeWidgetImpl.this.preMoveSplitPosition = splitPane
+											.splitPosition();
+									splitPane.splitPosition(lazyTree.width());
+								}
+							}
+						});
 					}
 				};
 				reorder = widgetTitle.addHyperlink(Icons.MOVE, MOVE);
@@ -335,7 +351,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 						@Override
 						public void onClick() {
 							final ITree<T> tree = model.selection();
-//							final ITree<T> parent = tree.parent();
+							// final ITree<T> parent = tree.parent();
 							final ITree<T> nextSelection = model
 									.nextSelection(tree);
 							ICallback<T> callback = new CallbackTemplate<T>() {
@@ -344,7 +360,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 								public void onSuccess(T result) {
 									model.selection(nextSelection, false);
 									lazyTree.refresh(true);
-//									model.refresh(parent, true);
+									// model.refresh(parent, true);
 								}
 							};
 							tree.delete(callback);
@@ -587,8 +603,10 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				public void onSuccess(Boolean result) {
 					if (result)
 						expand(tree.object(), true);
-					else
+					else {
+						refreshSelection(false);
 						setLoadedDetailViewTree(tree);
+					}
 				}
 			});
 		} else {
