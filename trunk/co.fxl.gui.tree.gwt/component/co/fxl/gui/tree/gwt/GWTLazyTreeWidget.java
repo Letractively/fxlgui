@@ -84,6 +84,7 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 	private int firstRow;
 	private int lastRow;
 	private IContainer container;
+	private FocusPanel fp;
 
 	public GWTLazyTreeWidget(IContainer c) {
 		super(c);
@@ -94,7 +95,7 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		this.container = container;
 		this.firstRow = firstRow;
 		this.lastRow = lastRow;
-		FocusPanel fp = new FocusPanel();
+		fp = new FocusPanel();
 		fp.setWidth("100%");
 		fp.addStyleName("nooutline");
 		fp.addMouseWheelHandler(new MouseWheelHandler() {
@@ -212,5 +213,10 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			}
 		});
 		return html;
+	}
+
+	@Override
+	public int width() {
+		return fp.getOffsetWidth();
 	}
 }
