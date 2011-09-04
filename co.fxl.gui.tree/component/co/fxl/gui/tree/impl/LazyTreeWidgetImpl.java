@@ -29,6 +29,8 @@ import co.fxl.gui.tree.api.ITree;
 
 class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 
+	private IVerticalPanel vertical;
+
 	// TODO Usability: Swing: Mouse-Wheel not active on content panel
 
 	LazyTreeWidgetImpl(IContainer container) {
@@ -42,8 +44,9 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 	@Override
 	public void decorate(final IContainer container, final int firstRow,
 			final int lastRow) {
-		IVerticalPanel panel = container.panel().vertical().spacing(spacing)
-				.add().panel().vertical();
+		vertical = container.panel().vertical();
+		IVerticalPanel panel = vertical.spacing(spacing).add().panel()
+				.vertical();
 		TreeNode<Object> decorator = new TreeNode<Object>();
 		List<ITree<Object>> rows = tree.rows(firstRow, lastRow);
 		int index = firstRow;
@@ -72,5 +75,10 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 			index++;
 		}
 		super.decorate(container, firstRow, lastRow);
+	}
+
+	@Override
+	public int width() {
+		return vertical.width();
 	}
 }

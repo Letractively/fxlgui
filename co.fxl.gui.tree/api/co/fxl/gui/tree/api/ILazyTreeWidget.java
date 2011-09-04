@@ -56,4 +56,6 @@ public interface ILazyTreeWidget<T> {
 	ILazyTreeWidget<T> width(int width);
 
 	int indent(ITree<Object> t);
+
+	int width();
 }
