@@ -119,12 +119,19 @@ public class NavigationView {
 
 	public IUpdateable<String> addComboBoxLink(String title, String text,
 			String... options) {
+		return addComboBoxLink(null, title, text, options);
+	}
+
+	public IUpdateable<String> addComboBoxLink(String img, String title,
+			String text, String... options) {
 		setUp();
 		IPanel<?>[] panels = addPanel();
 		IHorizontalPanel panel = (IHorizontalPanel) panels[1];
-		addImage(panel, null);
+		addImage(panel, img);
 		ILabel label = addTextLabel(panel);
-		styleContentChoice(label);
+		label.clickable(false);
+//		styleContentChoice(label);
+		label.font().color().black();
 		label.text(title);
 		IComboBox cb = panel.addSpace(8).add().comboBox();
 		new Heights(0).decorate(cb);

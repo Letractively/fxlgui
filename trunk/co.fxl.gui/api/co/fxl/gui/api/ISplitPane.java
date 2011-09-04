@@ -34,4 +34,6 @@ public interface ISplitPane extends IElement<ISplitPane>, IBordered {
 	ISplitPane splitPosition(int pixel);
 
 	ISplitPane addResizeListener(ISplitPaneResizeListener l);
+
+	int splitPosition();
 }
