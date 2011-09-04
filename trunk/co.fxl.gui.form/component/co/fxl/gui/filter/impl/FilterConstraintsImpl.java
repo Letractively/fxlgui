@@ -226,7 +226,12 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 
 	@Override
 	public Boolean booleanValue(String uiLabel) {
-		return ((IBooleanConstraint) constraints.get(uiLabel)).value();
+		final INamedConstraint c = constraints.get(uiLabel);
+		if (c instanceof IStringPrefixConstraint) {
+			IStringPrefixConstraint sc = (IStringPrefixConstraint) c;
+			return sc.equals(BooleanFilter.TRUE);
+		}
+		return ((IBooleanConstraint) c).value();
 	}
 
 	@Override
