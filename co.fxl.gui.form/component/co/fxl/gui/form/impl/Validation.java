@@ -509,9 +509,11 @@ public class Validation {
 		updateClickables();
 	}
 
-	private void linkInput(Object valueElement, boolean status) {
+	public void linkInput(Object valueElement, boolean status) {
 		if (valueElement instanceof IComboBox)
 			linkInput((IComboBox) valueElement, status);
+		else if (valueElement instanceof ITextField)
+			linkInput((ITextField) valueElement, status);
 		else
 			throw new MethodNotImplementedException();
 	}

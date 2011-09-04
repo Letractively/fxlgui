@@ -69,7 +69,8 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			}
 			clear.clickable(false);
 			apply.clickable(false);
-			if (!configuration.equals(firstConfiguration)
+			if (configuration != null
+					&& !configuration.equals(firstConfiguration)
 					&& configurationComboBox != null)
 				configurationComboBox.text(firstConfiguration);
 			else
@@ -152,11 +153,17 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		List<FilterTemplate<Object>> activeFilters = new LinkedList<FilterTemplate<Object>>();
 		for (FilterPart<?> filter : guiFilterElements) {
 			boolean active = filter.update();
+			if (guiFilterElements.indexOf(filter) == 0 && showConfiguration)
+				active = false;
 			if (active)
 				activeFilters.add((FilterTemplate<Object>) filter);
 		}
 		FilterConstraintsImpl constraints = new FilterConstraintsImpl(
 				configuration);
+		if (this.constraints != null && this.constraints.sortOrder() != null) {
+			constraints.sortOrder(this.constraints.sortOrder());
+			constraints.sortDirection(this.constraints.sortDirection());
+		}
 		for (FilterTemplate<Object> filter : activeFilters) {
 			constraints.add(filter.asConstraint());
 		}

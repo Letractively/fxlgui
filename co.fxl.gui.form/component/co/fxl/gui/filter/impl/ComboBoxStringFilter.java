@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.filter.impl;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IComboBox;
@@ -49,6 +50,8 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 
 	IComboBox comboBox;
 	private String text;
+	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();
+	private boolean updateListeningActive = true;
 
 	ComboBoxStringFilter(FilterGrid panel, String name, List<Object> values,
 			int filterIndex) {
@@ -59,6 +62,14 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 		for (Object object : values) {
 			comboBox.addText(string(object));
 		}
+		comboBox.addUpdateListener(new IUpdateListener<String>() {
+			@Override
+			public void onUpdate(String value) {
+				if (updateListeningActive)
+					for (IUpdateListener<String> l : updateListeners)
+						l.onUpdate(value);
+			}
+		});
 	}
 
 	private String string(Object object) {
@@ -77,7 +88,9 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 
 	@Override
 	public void clear() {
+		updateListeningActive = false;
 		comboBox.text("");
+		updateListeningActive = true;
 		text = null;
 	}
 
@@ -88,7 +101,7 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 
 	@Override
 	public void addUpdateListener(final FilterListener l) {
-		comboBox.addUpdateListener(new IUpdateListener<String>() {
+		updateListeners.add(new IUpdateListener<String>() {
 
 			@Override
 			public void onUpdate(String value) {
@@ -121,7 +134,7 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 	@Override
 	public IUpdateable<String> addUpdateListener(
 			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
-		comboBox.addUpdateListener(listener);
+		updateListeners.add(listener);
 		return this;
 	}
 }
