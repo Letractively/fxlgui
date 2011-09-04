@@ -116,6 +116,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					.foldable(false);
 			widgetTitle.addToContextMenu(true);
 			widgetTitle.commandsOnTop();
+			widgetTitle.hyperlinkVisible(false);
 			this.container = widgetTitle.content().panel().vertical();
 		}
 		return widgetTitle;

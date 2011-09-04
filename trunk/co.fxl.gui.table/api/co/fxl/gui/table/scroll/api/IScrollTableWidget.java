@@ -157,4 +157,5 @@ public interface IScrollTableWidget<T> {
 	IScrollTableWidget<T> rowIndex(int rowIndex);
 
 	IScrollTableWidget<T> addToContextMenu(boolean addToContextMenu);
+
 }
