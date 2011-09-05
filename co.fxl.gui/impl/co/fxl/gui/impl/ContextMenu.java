@@ -180,6 +180,8 @@ public class ContextMenu {
 						ILabel l = h2.add().label().text(e.text).hyperlink();
 						l.addClickListener(clickListener);
 						l.clickable(e.clickable);
+						h2.addClickListener(clickListener);
+						h2.clickable(e.clickable);
 					}
 				}
 			}
