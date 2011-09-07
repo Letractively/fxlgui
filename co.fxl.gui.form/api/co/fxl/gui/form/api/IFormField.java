@@ -23,6 +23,7 @@ import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.impl.IFieldType;
+import co.fxl.gui.impl.ITooltipResolver;
 
 public interface IFormField<T, R> extends IUpdateable<R> {
 
@@ -51,4 +52,6 @@ public interface IFormField<T, R> extends IUpdateable<R> {
 	boolean visible();
 
 	IFormField<T, R> required(boolean required);
+
+	IFormField<T, R> tooltip(ITooltipResolver tooltip);
 }

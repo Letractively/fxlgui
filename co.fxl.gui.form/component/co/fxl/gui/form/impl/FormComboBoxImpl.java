@@ -20,21 +20,23 @@ package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.form.api.IFormField;
+import co.fxl.gui.impl.ITooltipResolver;
 
 class FormComboBoxImpl extends FormFieldImpl<IComboBox, String> {
 
 	private IComboBox comboBox;
-//	private boolean withFocus = true;
+
+	// private boolean withFocus = true;
 
 	FormComboBoxImpl(FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
 	}
 
-//	FormComboBoxImpl(FormWidgetImpl widget, int index, String name,
-//			boolean withFocus) {
-//		super(widget, index, name);
-//		this.withFocus = withFocus;
-//	}
+	// FormComboBoxImpl(FormWidgetImpl widget, int index, String name,
+	// boolean withFocus) {
+	// super(widget, index, name);
+	// this.withFocus = withFocus;
+	// }
 
 	@Override
 	public IFormField<IComboBox, String> editable(boolean editable) {
@@ -49,7 +51,18 @@ class FormComboBoxImpl extends FormFieldImpl<IComboBox, String> {
 
 	@Override
 	void createContentColumn(int index) {
-		comboBox = widget.addFormValueComboBox(index, true);//withFocus);
+		comboBox = widget.addFormValueComboBox(index, true);// withFocus);
 		editable(widget.saveListener != null);
+	}
+
+	@Override
+	public IFormField<IComboBox, String> tooltip(final ITooltipResolver tooltip) {
+		comboBox.addUpdateListener(new IUpdateListener<String>() {
+			@Override
+			public void onUpdate(String value) {
+				comboBox.tooltip(tooltip.tooltip(value));
+			}
+		});
+		return this;
 	}
 }

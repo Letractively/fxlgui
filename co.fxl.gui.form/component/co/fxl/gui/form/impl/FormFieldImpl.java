@@ -27,6 +27,7 @@ import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.impl.FormWidgetImpl.FormEntryLabel;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.IFieldType;
+import co.fxl.gui.impl.ITooltipResolver;
 
 public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 
@@ -181,6 +182,11 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 					index++;
 			}
 		}
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IFormField<T, R> tooltip(ITooltipResolver tooltip) {
 		throw new MethodNotImplementedException();
 	}
 }
