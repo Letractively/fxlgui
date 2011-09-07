@@ -22,6 +22,7 @@ import java.util.List;
 
 import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.IFieldType;
+import co.fxl.gui.impl.ITooltipResolver;
 
 public interface IProperty<T, S> {
 
@@ -94,6 +95,8 @@ public interface IProperty<T, S> {
 	IProperty<T, S> visible(boolean b);
 
 	IProperty<T, S> filterable();
+
+	IProperty<T, S> tooltip(ITooltipResolver tooltip);
 
 	IConditionRule<T, S, ?> addConditionRule();
 
