@@ -27,6 +27,22 @@ import co.fxl.gui.style.impl.Style;
 
 public class GPlusStyle implements IStyle {
 
+	public class GPlusRegister implements IRegister {
+
+		@Override
+		public IRegister cardPanel(IPanel<?> panel) {
+			panel.border().remove();
+			return this;
+		}
+
+		@Override
+		public IRegister topPanel(IPanel<?> panel) {
+			panel.color().remove();
+			return this;
+		}
+
+	}
+
 	class GPlusNavigation implements INavigation {
 
 		@Override
@@ -211,5 +227,10 @@ public class GPlusStyle implements IStyle {
 	@Override
 	public INavigation navigation() {
 		return new GPlusNavigation();
+	}
+
+	@Override
+	public IRegister register() {
+		return new GPlusRegister();
 	}
 }
