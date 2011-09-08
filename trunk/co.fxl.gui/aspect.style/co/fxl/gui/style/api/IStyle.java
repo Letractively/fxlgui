@@ -24,6 +24,14 @@ import co.fxl.gui.api.IPanel;
 
 public interface IStyle {
 
+	public interface IRegister {
+
+		IRegister cardPanel(IPanel<?> panel);
+
+		IRegister topPanel(IPanel<?> panel);
+
+	}
+
 	public interface ILogin {
 
 		ILogin label(ILabel text);
@@ -74,6 +82,8 @@ public interface IStyle {
 	}
 
 	INavigation navigation();
+
+	IRegister register();
 
 	IWindow window();
 
