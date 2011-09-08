@@ -27,6 +27,58 @@ import co.fxl.gui.style.impl.Style;
 
 public class GPlusStyle implements IStyle {
 
+	class GPlusNavigation implements INavigation {
+
+		@Override
+		public INavigationGroup group() {
+			return new INavigationGroup() {
+
+				@Override
+				public INavigation mainPanel(IPanel<?> panel) {
+					panel.color().rgb(245, 245, 245);
+					IBorder b = panel.border();
+					b.color().lightgray();
+					b.style().bottom();
+					return GPlusNavigation.this;
+				}
+
+				@Override
+				public INavigation groupPanel(ILinearPanel<?> panel) {
+					panel.spacing(3);
+					return GPlusNavigation.this;
+				}
+
+				@Override
+				public INavigationItem item() {
+					return new INavigationItem() {
+
+						@Override
+						public INavigation inactive(
+								ILinearPanel<?> buttonPanel, ILabel button) {
+							buttonPanel.spacing(4);
+							button.font().pixel(13);
+							buttonPanel.border().color().gray();
+							buttonPanel.color().gray();
+							button.font().color().white();
+							return GPlusNavigation.this;
+						}
+
+						@Override
+						public INavigation active(ILinearPanel<?> buttonPanel,
+								ILabel button) {
+							buttonPanel.border().color().mix().gray().black();
+							buttonPanel.color().white();
+							button.font().color().gray();
+							button.font().color().black();
+							return GPlusNavigation.this;
+						}
+					};
+				}
+			};
+		}
+
+	}
+
 	public class GPlusLogin implements ILogin {
 
 		@Override
@@ -154,5 +206,10 @@ public class GPlusStyle implements IStyle {
 	@Override
 	public ILogin login() {
 		return new GPlusLogin();
+	}
+
+	@Override
+	public INavigation navigation() {
+		return new GPlusNavigation();
 	}
 }
