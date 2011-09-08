@@ -26,20 +26,13 @@ privileged aspect NavigationItemImplStyle {
 	execution(void NavigationItemImpl.showLabelAsInactive()) 
 	&& this(item) 
 	&& if(Style.ENABLED) {
-		item.buttonPanel.spacing(4);
-		item.button.font().pixel(13);
-		item.buttonPanel.border().color().gray();
-		item.buttonPanel.color().gray();
-		item.button.font().color().white();
+		Style.instance().navigation().group().item().inactive(item.buttonPanel, item.button);
 	}
 
 	after(NavigationItemImpl item) :
 	execution(private void NavigationItemImpl.showLabelAsActive(..)) 
 	&& this(item) 
 	&& if(Style.ENABLED) {
-		item.buttonPanel.border().color().mix().gray().black();
-		item.buttonPanel.color().white();
-		item.button.font().color().gray();
-		item.button.font().color().black();
+		Style.instance().navigation().group().item().active(item.buttonPanel, item.button);
 	}
 }
