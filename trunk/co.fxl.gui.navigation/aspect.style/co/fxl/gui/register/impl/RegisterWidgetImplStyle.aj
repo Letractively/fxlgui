@@ -27,6 +27,6 @@ public aspect RegisterWidgetImplStyle {
 	execution(public IRegisterWidget RegisterWidgetImpl.topBorder()) 
 	&& this(register) 
 	&& if(Style.ENABLED) {
-		register.cardPanel.border().remove();
+		Style.instance().register().cardPanel(register.cardPanel);
 	}
 }

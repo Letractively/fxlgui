@@ -27,6 +27,6 @@ privileged aspect RootRegisterStyleStyle {
 	execution(void RootRegisterStyle.decorateWidget(RegisterWidgetImpl)) 
 	&& args(widget) 
 	&& if(Style.ENABLED) {
-		widget.headerPanel.color().remove();
+		Style.instance().register().topPanel(widget.headerPanel);
 	}
 }
