@@ -19,7 +19,6 @@
 package co.fxl.gui.navigation.group.impl;
 
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.style.impl.Style;
 
 privileged aspect NavigationWidgetImplStyle {
@@ -28,10 +27,7 @@ privileged aspect NavigationWidgetImplStyle {
 	execution(NavigationWidgetImpl.new(IContainer)) 
 	&& this(widget) 
 	&& if(Style.ENABLED) {
-		widget.hPanel.color().rgb(245, 245, 245);
-		IBorder b = widget.hPanel.border();
-		b.color().lightgray();
-		b.style().bottom();
+		Style.instance().navigation().group().mainPanel(widget.hPanel);
 	}
 
 }
