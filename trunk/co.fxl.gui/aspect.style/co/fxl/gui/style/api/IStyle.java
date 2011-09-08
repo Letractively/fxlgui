@@ -46,10 +46,34 @@ public interface IStyle {
 
 		IWindow button(IPanel<?> panel, boolean isSideWidget);
 
-		ILabel addCommandLabel(ILinearPanel<?> panel, String text, boolean isSideWidget);
+		ILabel addCommandLabel(ILinearPanel<?> panel, String text,
+				boolean isSideWidget);
 
 		boolean commandsOnTop();
 	}
+
+	public interface INavigation {
+
+		public interface INavigationGroup {
+
+			public interface INavigationItem {
+
+				INavigation active(ILinearPanel<?> panel, ILabel label);
+
+				INavigation inactive(ILinearPanel<?> panel, ILabel label);
+			}
+
+			INavigation groupPanel(ILinearPanel<?> panel);
+
+			INavigationItem item();
+
+			INavigation mainPanel(IPanel<?> panel);
+		}
+
+		INavigationGroup group();
+	}
+
+	INavigation navigation();
 
 	IWindow window();
 
