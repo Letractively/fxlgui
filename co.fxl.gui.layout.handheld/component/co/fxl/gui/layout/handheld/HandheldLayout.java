@@ -94,4 +94,9 @@ public class HandheldLayout implements ILayout {
 		return !(isForFilterQuery) ? createLinearPanel(c) : c.panel()
 				.horizontal();
 	}
+
+	@Override
+	public INavigation navigation() {
+		return new HandheldNavigation();
+	}
 }
