@@ -25,6 +25,6 @@ privileged aspect FilterTreeWidgetImplProviderLayout {
 	after() : 
 	execution(public FilterTreeWidgetImplProvider.new()) 
 	&& if(Layout.ENABLED) {
-		TreeWidgetImpl.SPLIT_POSITION = 150;
+		TreeWidgetImpl.SPLIT_POSITION = Layout.instance().tree().defaultSplitPosition();
 	}
 }
