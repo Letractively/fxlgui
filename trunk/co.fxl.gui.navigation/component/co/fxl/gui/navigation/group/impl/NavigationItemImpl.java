@@ -36,7 +36,6 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	ILabel button;
 	private IDecorator decorator;
 	IHorizontalPanel buttonPanel;
-	// private IColor borderColor;
 	private NavigationWidgetImpl widget;
 	private ILinearPanel<?> itemPanel;
 	IHorizontalPanel basicPanel;
@@ -56,7 +55,6 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 			buttonPanel = basicPanel.add().panel().horizontal();
 			buttonPanel.spacing(5).align().center();
 			buttonPanel.addSpace(2);
-			// borderColor =
 			addBorder();
 			button = buttonPanel.add().label();
 			button.font().pixel(14).weight().bold().color().white();
@@ -87,8 +85,6 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 		applyGradient(buttonPanel.color(), widget.colorInactive,
 				widget.colorInactiveGradient);
 		buttonPanel.border().remove();
-		// borderColor.remove();
-		// applyColor(borderColor, widget.colorBackground);
 		for (INavigationListener l : listeners)
 			l.onActive(false);
 	}
@@ -111,19 +107,16 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	}
 
 	@Override
-	public INavigationItem active() {
+	public NavigationItemImpl active() {
 		return active(false);
 	}
 
-	INavigationItem active(boolean viaClick) {
+	NavigationItemImpl active(boolean viaClick) {
 		showLabelAsActive(viaClick, new CallbackTemplate<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				IVerticalPanel panel0 = widget.panel0();
 				panel0.clear();
-//				panel0.add().panel().vertical().add().panel().horizontal()
-//						.add().panel().horizontal().spacing(10).add().image()
-//						.resource("loading.gif").size(16, 16);
 				applyColor(panel0.color(), widget.colorActive);
 				decorator.decorate(panel0);
 			}
@@ -139,7 +132,6 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 			return;
 		applyColor(buttonPanel.color(), widget.colorActive);
 		addBorder();
-		// applyColor(borderColor, widget.colorActive);
 		widget.active(this, viaClick, cb, notify);
 		for (INavigationListener l : listeners)
 			l.onActive(true);
@@ -178,11 +170,12 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	}
 
 	@Override
-	public INavigationItem visible(boolean visible) {
-		return updateVisibility(visible);
+	public NavigationItemImpl visible(boolean visible) {
+		basicPanel.visible(visible);
+		return this;
 	}
 
-	INavigationItem updateVisibility(boolean visible) {
+	NavigationItemImpl updateVisibility(boolean visible) {
 		basicPanel.visible(visible);
 		return this;
 	}

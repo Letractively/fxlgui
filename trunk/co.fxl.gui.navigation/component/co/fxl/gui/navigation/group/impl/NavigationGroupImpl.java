@@ -81,7 +81,7 @@ class NavigationGroupImpl implements INavigationGroup {
 	}
 
 	@Override
-	public INavigationGroup visible(boolean visible) {
+	public NavigationGroupImpl visible(boolean visible) {
 		panel.visible(visible);
 		return this;
 	}
