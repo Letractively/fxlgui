@@ -27,7 +27,7 @@ privileged aspect NavigationGroupImplStyle {
 	after() returning(ILinearPanel<?> panel) :
 	call(ILinearPanel<?> NavigationGroupImpl.createPanel(ILayout)) 
 	&& if(Style.ENABLED) {
-		Style.instance().navigation().group().mainPanel(panel);
+		Style.instance().navigation().group().groupPanel(panel);
 	}
 
 }
