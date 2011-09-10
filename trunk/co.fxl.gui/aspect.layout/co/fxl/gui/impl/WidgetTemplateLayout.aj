@@ -30,11 +30,8 @@ privileged aspect WidgetTemplateLayout {
 	&& args(text, iPanel)
 	&& this(widgetTitle) 
 	&& if(Layout.ENABLED) {
-		ILabel label = Layout.instance().createWindowButton(
+		return Layout.instance().createWindowButton(
 				widgetTitle.commandsOnTop, iPanel, text);
-		if (label == null)
-			label = widgetTitle.addHyperlinkLabel(text, iPanel);
-		return label;
 	}
 
 	after() : 
@@ -47,8 +44,6 @@ privileged aspect WidgetTemplateLayout {
 	execution(private void SplitLayout.init()) 
 	&& this(sl) 
 	&& if(Layout.ENABLED) {
-		boolean hasActionMenu = Layout.instance().hasActionMenu();
-		if (hasActionMenu)
-			Layout.instance().actionMenu().listener(new ActionMenuAdp(sl));
+		Layout.instance().actionMenu().grid(sl.panel).sidePanel(sl.sidePanel);
 	}
 }

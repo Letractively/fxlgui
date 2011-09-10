@@ -275,15 +275,14 @@ public class WidgetTitle implements IClickListener {
 	}
 
 	private ILabel addHyperlinkLabel(String text, IHorizontalPanel iPanel) {
-		ILabel label = iPanel.addSpace(4).add().label().text(text);
-		styleHeaderButton(label);
-		return label;
+		return addHyperlinkLabel2Panel(text, iPanel);
 	}
 
-	private void styleHeaderButton(ILabel label) {
-		// Styles.instance().style(label, Style.Window.HEADER,
-		// Style.Element.BUTTON);
+	public static ILabel addHyperlinkLabel2Panel(String text,
+			IHorizontalPanel iPanel) {
+		ILabel label = iPanel.addSpace(4).add().label().text(text);
 		label.font().pixel(12);
+		return label;
 	}
 
 	public IImage addImage(String image) {

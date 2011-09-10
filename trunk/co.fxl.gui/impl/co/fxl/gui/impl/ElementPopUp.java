@@ -104,8 +104,7 @@ public class ElementPopUp {
 
 	public ElementPopUp onMouseOver(final Decorator decorator) {
 		if (element instanceof IMouseOverElement) {
-			@SuppressWarnings("rawtypes")
-			IMouseOverElement moe = (IMouseOverElement) element;
+			IMouseOverElement<?> moe = (IMouseOverElement<?>) element;
 			moe.addMouseOverListener(new IMouseOverListener() {
 
 				@Override
@@ -126,8 +125,7 @@ public class ElementPopUp {
 
 	public ElementPopUp onRightClick(final Decorator decorator) {
 		if (element instanceof IClickable) {
-			@SuppressWarnings("rawtypes")
-			IClickable c = (IClickable) element;
+			IClickable<?> c = (IClickable<?>) element;
 			c.addClickListener(new IClickListener() {
 
 				@Override
