@@ -28,15 +28,13 @@ privileged aspect ColumnSelectionStyle {
 	execution(void ColumnSelection.decoratePanel(..)) 
 	&& args(.., c, b) 
 	&& if(Style.ENABLED) {
-		if (c.visible)
-			b.color().lightgray();
+		Style.instance().table().columnSelection().panel(b, c.visible);
 	}
 
 	after(ScrollTableColumnImpl c, ILabel b) :
 	execution(void ColumnSelection.decorateLabel(..)) 
 	&& args(.., c, b) 
 	&& if(Style.ENABLED) {
-		if (c.visible)
-			b.font().color().mix().gray().black();
+		Style.instance().table().columnSelection().label(b, c.visible);
 	}
 }

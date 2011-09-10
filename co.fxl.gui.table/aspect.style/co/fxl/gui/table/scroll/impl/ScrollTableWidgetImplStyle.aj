@@ -27,7 +27,6 @@ privileged aspect ScrollTableWidgetImplStyle {
 	execution(IGridPanel ScrollTableWidgetImpl.statusPanel()) 
 	&& this(widget)
 	&& if(Style.ENABLED) {
-		widget.statusPanel.color().remove();
-		widget.statusPanel.border().remove();
+		Style.instance().table().statusPanel(widget.statusPanel);
 	}
 }
