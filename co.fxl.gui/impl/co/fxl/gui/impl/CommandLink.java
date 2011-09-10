@@ -37,6 +37,7 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	private String toolTipNotClickable = null;
 	private List<IClickListener> clickListeners = new LinkedList<IClickListener>();
 	private Entry contextMenuEntry;
+	private String text;
 
 	public CommandLink(WidgetTitle widgetTitle, IHorizontalPanel iPanel,
 			IImage image, ILabel headerLabel) {
@@ -47,26 +48,32 @@ public class CommandLink implements IClickable<IClickable<?>> {
 		if (image != null)
 			noDoubleClicks(image);
 		this.label = headerLabel;
+		if (headerLabel != null)
+			text = headerLabel.text();
 		noDoubleClicks(label);
 	}
 
 	private void noDoubleClicks(IClickable<?> c) {
-		c.addClickListener(new IClickListener() {
+		if (c != null)
+			c.addClickListener(new IClickListener() {
 
-			@Override
-			public void onClick() {
-			}
-		}).doubleClick();
+				@Override
+				public void onClick() {
+				}
+			}).doubleClick();
 	}
 
 	public CommandLink label(String l) {
-		label.text(l);
+		this.text = l;
+		if (label != null)
+			label.text(l);
 		return this;
 	}
 
 	@Override
 	public IClickable<?> clickable(boolean clickable) {
-		label.clickable(clickable);
+		if (label != null)
+			label.clickable(clickable);
 		if (image != null)
 			image.clickable(clickable);
 		iPanel.clickable(clickable);
@@ -85,6 +92,8 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	public void styleDialogButton(ILabel label) {
 		// Styles.instance().style(label, Style.Window.DIALOG,
 		// Style.Element.BUTTON);
+		if (label == null)
+			return;
 		if (label.clickable())
 			label.font().color().black();
 		else
@@ -93,7 +102,10 @@ public class CommandLink implements IClickable<IClickable<?>> {
 
 	@Override
 	public boolean clickable() {
-		return label.clickable();
+		if (label != null)
+			return label.clickable();
+		else
+			return image.clickable();
 	}
 
 	@Override
@@ -115,8 +127,7 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	}
 
 	public CommandLink addToContextMenu(String group) {
-		contextMenuEntry = ContextMenu.instance().group(group)
-				.addEntry(label.text());
+		contextMenuEntry = ContextMenu.instance().group(group).addEntry(text);
 		if (image != null) {
 			String resource = image.resource();
 			contextMenuEntry.imageResource(resource);

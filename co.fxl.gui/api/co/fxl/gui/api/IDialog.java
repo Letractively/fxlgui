@@ -39,6 +39,8 @@ public interface IDialog {
 		IDialogButton addClickListener(IClickListener l);
 
 		IDialogButton close();
+
+		IDialogButton clickable(boolean clickable);
 	}
 
 	public interface IType {

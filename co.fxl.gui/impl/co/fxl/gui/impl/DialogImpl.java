@@ -36,6 +36,7 @@ public class DialogImpl implements IDialog {
 		private List<IClickListener> listeners = new LinkedList<IClickListener>();
 		private String imageResource;
 		private String text;
+		private CommandLink l;
 
 		@Override
 		public IDialogButton imageResource(String imageResource) {
@@ -85,6 +86,17 @@ public class DialogImpl implements IDialog {
 				}
 			});
 			return this;
+		}
+
+		@Override
+		public IDialogButton clickable(boolean clickable) {
+			if (l != null)
+				l.clickable(clickable);
+			return this;
+		}
+
+		public void link(CommandLink l) {
+			this.l = l;
 		}
 	}
 
@@ -187,6 +199,7 @@ public class DialogImpl implements IDialog {
 				CommandLink l = t.addHyperlink(b.imageResource, b.text);
 				for (IClickListener cl : b.listeners)
 					l.addClickListener(cl);
+				b.link(l);
 			}
 			if (message != null) {
 				IGridPanel grid = t.content().panel().vertical().add().panel()

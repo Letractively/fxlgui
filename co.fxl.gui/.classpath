@@ -2,11 +2,12 @@
 <classpath>
 	<classpathentry kind="src" path="api"/>
 	<classpathentry kind="src" path="impl"/>
-	<classpathentry excluding="co/fxl/gui/impl/NavigationViewI18N.aj" kind="src" path="aspect.i18n"/>
-	<classpathentry excluding="co/fxl/gui/impl/SplitLayoutStyle.aj|co/fxl/gui/impl/HyperlinkDecoratorStyle.aj|co/fxl/gui/impl/NavigationViewStyle.aj|co/fxl/gui/impl/WidgetTitleStyle.aj|co/fxl/gui/impl/SplitLayoutStyle.aj|co/fxl/gui/impl/HyperlinkDecoratorStyle.aj|co/fxl/gui/impl/NavigationViewStyle.aj|co/fxl/gui/impl/WidgetTitleStyle.aj" kind="src" path="aspect.style"/>
-	<classpathentry excluding="co/fxl/gui/impl/WidgetTemplateLayout.aj" kind="src" path="aspect.layout"/>
+	<classpathentry kind="src" path="aspect.i18n"/>
+	<classpathentry kind="src" path="aspect.style"/>
+	<classpathentry kind="src" path="aspect.layout"/>
 	<classpathentry kind="src" path="gwt"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.ajdt.core.ASPECTJRT_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

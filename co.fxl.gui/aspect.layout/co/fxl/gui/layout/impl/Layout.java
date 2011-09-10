@@ -22,7 +22,7 @@ import co.fxl.gui.layout.api.ILayout;
 
 public class Layout {
 
-	public static final boolean ENABLED = false;
+	public static final boolean ENABLED = true;
 	private static ILayout instance;
 
 	public static void register(ILayout instance) {

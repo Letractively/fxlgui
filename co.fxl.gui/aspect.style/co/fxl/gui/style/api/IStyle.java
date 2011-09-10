@@ -18,11 +18,46 @@
  */
 package co.fxl.gui.style.api;
 
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 
 public interface IStyle {
+
+	public interface ITop {
+
+		ITop panel(IGridPanel panel);
+	}
+
+	public interface IOptionMenu {
+
+		ILabel addCommand(IPanel<?> panel, String text);
+
+		IOptionMenu label(ILabel label);
+
+	}
+
+	public interface ITree {
+
+		ITree panel(IPanel<?> panel);
+
+	}
+
+	public interface ITable {
+
+		public interface IColumnSelection {
+
+			IColumnSelection panel(IPanel<?> panel, boolean visible);
+
+			IColumnSelection label(ILabel label, boolean visible);
+		}
+
+		ITable statusPanel(IPanel<?> panel);
+
+		IColumnSelection columnSelection();
+
+	}
 
 	public interface IRegister {
 
@@ -80,6 +115,14 @@ public interface IStyle {
 
 		INavigationGroup group();
 	}
+
+	ITop top();
+
+	IOptionMenu optionMenu();
+
+	ITable table();
+
+	ITree tree();
 
 	INavigation navigation();
 
