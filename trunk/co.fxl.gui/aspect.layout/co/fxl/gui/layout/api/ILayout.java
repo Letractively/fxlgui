@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.layout.api;
 
+import java.util.List;
+
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
@@ -30,6 +32,33 @@ import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextField;
 
 public interface ILayout {
+
+	public interface INavigation {
+
+		public interface INavigationGroup {
+
+			public interface INavigationItem {
+
+				String name();
+
+				INavigationItem active();
+
+				INavigationItem listener(Runnable l);
+
+			}
+
+			String name();
+
+			List<INavigationItem> items();
+
+		}
+
+		INavigation groups(List<INavigationGroup> groups);
+
+		INavigation group(INavigationGroup group);
+
+		INavigation panel(ILinearPanel<?> panel);
+	}
 
 	public interface ITree {
 
@@ -107,6 +136,8 @@ public interface ILayout {
 
 		LOGIN, FILTER;
 	}
+
+	INavigation navigation();
 
 	IForm form();
 
