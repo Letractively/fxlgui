@@ -27,167 +27,10 @@ import co.fxl.gui.style.impl.Style;
 
 public class GPlusStyle implements IStyle {
 
-	public class GPlusRegister implements IRegister {
-
-		@Override
-		public IRegister cardPanel(IPanel<?> panel) {
-			panel.border().remove();
-			return this;
-		}
-
-		@Override
-		public IRegister topPanel(IPanel<?> panel) {
-			panel.color().remove();
-			return this;
-		}
-
-	}
-
-	class GPlusNavigation implements INavigation {
-
-		@Override
-		public INavigationGroup group() {
-			return new INavigationGroup() {
-
-				@Override
-				public INavigation mainPanel(IPanel<?> panel) {
-					panel.color().rgb(245, 245, 245);
-					IBorder b = panel.border();
-					b.color().lightgray();
-					b.style().bottom();
-					return GPlusNavigation.this;
-				}
-
-				@Override
-				public INavigation groupPanel(ILinearPanel<?> panel) {
-					panel.spacing(3);
-					return GPlusNavigation.this;
-				}
-
-				@Override
-				public INavigationItem item() {
-					return new INavigationItem() {
-
-						@Override
-						public INavigation inactive(
-								ILinearPanel<?> buttonPanel, ILabel button) {
-							buttonPanel.spacing(4);
-							button.font().pixel(13);
-							buttonPanel.border().color().gray();
-							buttonPanel.color().gray();
-							button.font().color().white();
-							return GPlusNavigation.this;
-						}
-
-						@Override
-						public INavigation active(ILinearPanel<?> buttonPanel,
-								ILabel button) {
-							buttonPanel.border().color().mix().gray().black();
-							buttonPanel.color().white();
-							button.font().color().gray();
-							button.font().color().black();
-							return GPlusNavigation.this;
-						}
-					};
-				}
-			};
-		}
-
-	}
-
-	public class GPlusLogin implements ILogin {
-
-		@Override
-		public ILogin label(ILabel label) {
-			label.font().color().mix().gray().lightgray();
-			return this;
-		}
-
-		@Override
-		public ILogin hyperlink(ILabel label) {
-			label.font().weight().bold().color().white();
-			return this;
-		}
-
-	}
-
-	class GPlusWindow implements IWindow {
-
-		@Override
-		public IWindow main(IPanel<?> panel) {
-			panel.color().white();
-			panel.border().remove();
-			return this;
-		}
-
-		@Override
-		public IWindow header(IPanel<?> panel) {
-			panel.color().remove();
-			panel.border().color().mix().lightgray().gray();
-			panel.border().width(1);
-			panel.border().style().bottom();
-			return this;
-		}
-
-		@Override
-		public IWindow footer(IPanel<?> panel) {
-			panel.color().remove();
-			panel.border().remove();
-			return this;
-		}
-
-		@Override
-		public IWindow title(ILabel label, String title, boolean isSideWidget) {
-			label.text(title);
-			if (isSideWidget)
-				label.font().color().gray();
-			else
-				label.font().color().black();
-			return this;
-		}
-
-		@Override
-		public IWindow navigationEntry(ILinearPanel<?> panel) {
-			panel.spacing(0).border().remove();
-			return this;
-		}
-
-		@Override
-		public IWindow button(IPanel<?> panel, boolean isSideWidget) {
-			if (isSideWidget) {
-				panel.color().remove();
-				panel.border().remove();
-			} else {
-				panel.color().mix().white().lightgray();
-				panel.border().color().lightgray();
-			}
-			return this;
-		}
-
-		@Override
-		public ILabel addCommandLabel(ILinearPanel<?> panel, String text,
-				boolean isSideWidget) {
-			if (isSideWidget)
-				return panel.add().label().visible(false);
-			else {
-				ILabel l = panel.addSpace(4).add().label().text(text);
-				l.font().pixel(12);
-				return l;
-			}
-		}
-
-		@Override
-		public boolean commandsOnTop() {
-			return true;
-		}
-	}
-
-	private GPlusWindow window = new GPlusWindow();
-
 	@Override
 	public IWindow window() {
 		assertEnabled();
-		return window;
+		return new GPlusWindow();
 	}
 
 	private void assertEnabled() {
@@ -232,5 +75,25 @@ public class GPlusStyle implements IStyle {
 	@Override
 	public IRegister register() {
 		return new GPlusRegister();
+	}
+
+	@Override
+	public ITable table() {
+		return new GPlusTable();
+	}
+
+	@Override
+	public ITree tree() {
+		return new GPlusTree();
+	}
+
+	@Override
+	public IOptionMenu optionMenu() {
+		return new GPlusOptionMenu();
+	}
+
+	@Override
+	public ITop top() {
+		return new GPlusTop();
 	}
 }
