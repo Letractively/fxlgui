@@ -20,16 +20,21 @@ package co.fxl.gui.layout.handheld;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.impl.ImageButton;
-import co.fxl.gui.layout.api.IActionMenu;
+import co.fxl.gui.layout.api.ILayout.IActionMenu;
 
 class HandheldActionMenu implements IActionMenu {
 
 	// TODO use touchscreen-wiping to switch between content & menu
 
 	private IClickListener contentClickListener;
-	private IActionMenuListener listener;
+	private ILinearPanel<?> panel;
+	private IGridPanel grid;
+
+	// private IActionMenuListener listener;
 
 	@Override
 	public IActionMenu container(IContainer container) {
@@ -46,7 +51,7 @@ class HandheldActionMenu implements IActionMenu {
 			public void onClick() {
 				table.clickable(false);
 				actions.clickable(true);
-				listener.onShowContent();
+				onShowContent();
 			}
 		});
 		actions.addClickListener(new IClickListener() {
@@ -54,11 +59,24 @@ class HandheldActionMenu implements IActionMenu {
 			public void onClick() {
 				table.clickable(true);
 				actions.clickable(false);
-				listener.onShowMenu();
+				onShowMenu();
 			}
 		});
 		table.clickable(false);
 		return this;
+	}
+
+	private void onShowContent() {
+		onShow(true);
+	}
+
+	private void onShow(boolean b) {
+		grid.cell(0, 0).visible(b);
+		grid.cell(1, 0).visible(!b);
+	}
+
+	private void onShowMenu() {
+		onShow(false);
 	}
 
 	@Override
@@ -68,8 +86,32 @@ class HandheldActionMenu implements IActionMenu {
 	}
 
 	@Override
-	public IActionMenu listener(IActionMenuListener l) {
-		this.listener = l;
+	public IActionMenu sidePanel(ILinearPanel<?> panel) {
+		this.panel = panel;
+		init();
 		return this;
 	}
+
+	@Override
+	public IActionMenu grid(IGridPanel grid) {
+		this.grid = grid;
+		init();
+		return this;
+	}
+
+	private void init() {
+		if (panel == null || grid == null)
+			return;
+		panel.spacing().left(10);
+		int width = grid.width();
+		grid.cell(0, 0).width(width);
+		grid.cell(1, 0).width(width);
+		onShowContent();
+	}
+
+	// @Override
+	// public IActionMenu listener(IActionMenuListener l) {
+	// this.listener = l;
+	// return this;
+	// }
 }

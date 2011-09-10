@@ -4,5 +4,6 @@
 	<classpathentry kind="src" path="gwt"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/co.fxl.gui"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/co.fxl.gui.form"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

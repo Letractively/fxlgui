@@ -19,13 +19,13 @@
 package co.fxl.gui.layout.handheld;
 
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
-import co.fxl.gui.layout.api.IActionMenu;
+import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.layout.api.ILayout;
-import co.fxl.gui.layout.api.ILayoutDialog;
-import co.fxl.gui.layout.api.ILogin;
 import co.fxl.gui.layout.impl.Layout;
 
 public class HandheldLayout implements ILayout {
@@ -59,22 +59,39 @@ public class HandheldLayout implements ILayout {
 	}
 
 	@Override
-	public ILabel createWindowButton(boolean commandsOnTop, IPanel<?> iPanel,
-			String text) {
+	public ILabel createWindowButton(boolean commandsOnTop,
+			IHorizontalPanel iPanel, String text) {
 		assertEnabled();
 		if (commandsOnTop)
 			return createButtonLabel(iPanel);
 		else
-			return null;
-	}
-
-	@Override
-	public boolean hasActionMenu() {
-		return true;
+			return WidgetTitle.addHyperlinkLabel2Panel(text, iPanel);
 	}
 
 	@Override
 	public ILogin login() {
 		return new HandheldLogin();
+	}
+
+	@Override
+	public IForm form() {
+		return new HandheldForm();
+	}
+
+	@Override
+	public ITree tree() {
+		return new HandheldTree();
+	}
+
+	@Override
+	public IImage logo(IImage image) {
+		return image.resource("android.png");
+	}
+
+	@Override
+	public ILinearPanel<?> createLinearPanel(IContainer c,
+			boolean isForFilterQuery) {
+		return !(isForFilterQuery) ? createLinearPanel(c) : c.panel()
+				.horizontal();
 	}
 }
