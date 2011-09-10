@@ -25,8 +25,6 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.layout.impl.Layout;
 
 privileged aspect FormWidgetImplLayout {
-	
-	// TODO call HandheldLayout
 
 	IGridCell around(IGridPanel grid, int column, int gridIndex) : 
 	call(IGridCell IGridPanel.cell(int, int)) 
@@ -34,7 +32,7 @@ privileged aspect FormWidgetImplLayout {
 	&& args(column, gridIndex) 
 	&& target(grid) 
 	&& if(Layout.ENABLED) {
-		return grid.cell(0, gridIndex * 2 + column);
+		return Layout.instance().form().middleCell(grid, gridIndex, column);
 	}
 
 	after(IGridCell cell) : 
@@ -42,7 +40,7 @@ privileged aspect FormWidgetImplLayout {
 	&& withincode(* FormWidgetImpl.*(..)) 
 	&& target(cell) 
 	&& if(Layout.ENABLED) {
-		cell.align().begin();
+		Layout.instance().form().cell(cell);
 	}
 
 	IGridCell around(IGridPanel grid, int column, int gridIndex) : 
@@ -51,7 +49,7 @@ privileged aspect FormWidgetImplLayout {
 	&& args(column, gridIndex) 
 	&& target(grid) 
 	&& if(Layout.ENABLED) {
-		return grid.cell(1, gridIndex * 2 + 1);
+		return Layout.instance().form().outerCell(grid, gridIndex);
 	}
 
 	void around(FormWidgetImpl widget, int column) : 
@@ -60,6 +58,6 @@ privileged aspect FormWidgetImplLayout {
 	&& args(column) 
 	&& this(widget) 
 	&& if(Layout.ENABLED) {
-		widget.grid.column(0).expand();
+		Layout.instance().form().grid(widget.grid);
 	}
 }

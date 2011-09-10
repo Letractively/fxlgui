@@ -23,14 +23,13 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.form.api.ILoginWidget;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.LazyClickListener;
 
-class LoginWidgetImpl implements ILoginWidget {
+public class LoginWidgetImpl implements ILoginWidget {
 
 	class LoginListener extends LazyClickListener {
 
@@ -78,7 +77,8 @@ class LoginWidgetImpl implements ILoginWidget {
 	private LogoutListener logoutListener = new LogoutListener();
 	private ILabel loggedInAs;
 	private IStatusPanelDecorator decorator;
-	private Heights heights = new Heights(0);
+	private ILabel loginLabel;
+	private IHorizontalPanel pPanel;
 
 	LoginWidgetImpl(IContainer display) {
 		cards = display.panel().horizontal().align().end();
@@ -116,20 +116,21 @@ class LoginWidgetImpl implements ILoginWidget {
 			decorator.decorateEnd(liPanel, false);
 	}
 
-	private void addLoginForm(IPanel<?> liPanel) {
+	private void addLoginForm(IHorizontalPanel liPanel) {
 		addLoginFields(liPanel);
-		ILabel text = liPanel.add().label().text("Login");
-		hyperlink(text);
-		text.addClickListener(loginListener).mouseLeft();
+		loginLabel = liPanel.add().label().text("Login");
+		hyperlink(loginLabel);
+		loginLabel.addClickListener(loginListener).mouseLeft();
 	}
 
 	// TODO extract class LoginPanel
-	void addLoginFields(IPanel<?> liPanel) {
-		decorate(liPanel.add().label().text("ID"));
-		decorate(loginID = liPanel.add().textField()
+	void addLoginFields(IHorizontalPanel liPanel) {
+		pPanel = liPanel.add().panel().horizontal();
+		decorate(pPanel.add().label().text("ID"));
+		decorate(loginID = pPanel.add().textField()
 				.addKeyListener(loginListener).enter().focus(true));
-		decorate(liPanel.add().label().text("Password"));
-		decorate(password = liPanel.add().passwordField()
+		decorate(pPanel.add().label().text("Password"));
+		decorate(password = pPanel.add().passwordField()
 				.addKeyListener(loginListener).enter());
 	}
 
@@ -138,9 +139,10 @@ class LoginWidgetImpl implements ILoginWidget {
 		IHorizontalPanel loPanel = cards.add().panel().horizontal().spacing(4);
 		if (decorator != null)
 			decorator.decorateBegin(loPanel, true);
-		addLoggedInAs(loPanel);
-		loggedInAs = loPanel.add().label();
-		decorate(loggedInAs).font().weight().bold();
+		loggedInAs = loPanel.add().label().text("Logged in as");
+		decorate(loggedInAs);
+		ILabel loggedInHead = loPanel.add().label().text(loginID.text());
+		decorate(loggedInHead).font().weight().bold();
 		ILabel text = loPanel.add().label().text("Logout");
 		hyperlink(text);
 		text.addClickListener(logoutListener).mouseLeft();
@@ -153,12 +155,7 @@ class LoginWidgetImpl implements ILoginWidget {
 		text.hyperlink();
 	}
 
-	private void addLoggedInAs(IHorizontalPanel loPanel) {
-		ILabel loggedInHead = loPanel.add().label().text("Logged in as");
-		decorate(loggedInHead);
-	}
-
-	private ILabel decorate(ILabel label) {
+	public static ILabel decorate(ILabel label) {
 		label.font().color().mix().gray().black();
 		return label;
 	}
@@ -167,17 +164,17 @@ class LoginWidgetImpl implements ILoginWidget {
 	// label.font().color().rgb(0, 87, 141);
 	// }
 
-	private void decorate(ITextField formField) {
+	public static void decorate(ITextField formField) {
 		formField.font().pixel(11);
 		formField.width(100);
-		heights.decorateHeight(formField);
+		new Heights(0).decorateHeight(formField);
 	}
 
-	private void decorate(IPasswordField formField) {
+	public static void decorate(IPasswordField formField) {
 		formField.font().pixel(11);
 		formField.width(100);
 		formField.border().color().lightgray();
-		heights.decorateHeight(formField);
+		new Heights(0).decorateHeight(formField);
 	}
 
 	@Override

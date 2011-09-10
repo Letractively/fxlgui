@@ -20,28 +20,23 @@ package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.layout.impl.Layout;
-import co.fxl.gui.api.IPanel;
 
 privileged aspect LoginWidgetImplLayout {
 
-	void around(LoginWidgetImpl widget, IPanel<?> liPanel) : 
-	call(private void LoginWidgetImpl.addLoginForm(IPanel<?>)) 
-	&& withincode(* LoginWidgetImpl.*(..))
-	&& args(liPanel)
-	&& this(widget) 
-	&& if(Layout.ENABLED) {
-		
-		// TODO move both statements to LoginImpl
-		
-		liPanel = LogInDialog.addButton(widget, liPanel);
-		widget.addLoginForm(liPanel);
+	after(LoginWidgetImpl widget, IHorizontalPanel panel) :
+	execution(private void LoginWidgetImpl.addLoginForm(IHorizontalPanel)) 
+	&& this(widget)
+	&& args(panel)
+	&& if(Layout.ENABLED)  {
+		Layout.instance().login().loginListener(widget.loginListener)
+				.id(widget.loginID).password(widget.password)
+				.label(widget.loginLabel).loginPanel(widget.pPanel).panel(panel);
 	}
 
-	void around() : 
-	call(private void LoginWidgetImpl.addLoggedInAs(IHorizontalPanel)) 
-	&& withincode(* LoginWidgetImpl.*(..)) 
-	&& if(Layout.ENABLED) {
-		
-		// TODO conditional proceed
+	after(LoginWidgetImpl widget) :
+	execution(private void LoginWidgetImpl.addLogout()) 
+	&& this(widget)
+	&& if(Layout.ENABLED)  {
+		Layout.instance().login().loggedInAs(widget.loggedInAs);
 	}
 }
