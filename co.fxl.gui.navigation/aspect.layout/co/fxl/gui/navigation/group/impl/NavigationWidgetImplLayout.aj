@@ -18,12 +18,35 @@
  */
 package co.fxl.gui.navigation.group.impl;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.layout.api.ILayout.INavigation;
+import co.fxl.gui.layout.impl.Layout;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
-import co.fxl.gui.layout.impl.Layout;
 
 privileged aspect NavigationWidgetImplLayout {
+
+	declare parents : NavigationGroupImpl implements INavigation.INavigationGroup;
+	declare parents : NavigationItemImpl implements INavigation.INavigationGroup.INavigationItem;
+
+	public String NavigationGroupImpl.name() {
+		return header.text();
+	}
+
+	public List<INavigation.INavigationGroup.INavigationItem> NavigationGroupImpl.items() {
+		List<INavigation.INavigationGroup.INavigationItem> is = new LinkedList<INavigation.INavigationGroup.INavigationItem>();
+		// TODO ...
+		return is;
+	}
+
+	public INavigation.INavigationGroup.INavigationItem NavigationItemImpl.listener(
+			Runnable l) {
+		// TODO ...
+		return this;
+	}
 
 	after(NavigationWidgetImpl widget) : 
 	execution(NavigationWidgetImpl.new(IContainer)) 
@@ -32,13 +55,14 @@ privileged aspect NavigationWidgetImplLayout {
 		NavigationDialog.addButton(widget);
 	}
 
-	INavigationItem around(NavigationItemImpl item) :
-	call(INavigationItem NavigationItemImpl.updateVisibility(boolean))
-	&& withincode(public INavigationItem NavigationItemImpl.visible(boolean)) 
-	&& this(item) 
-	&& if(Layout.ENABLED) {
-		return item;
-	}
+//	TODO ... 
+// 	INavigationItem around(NavigationItemImpl item) :
+//	call(NavigationItemImpl NavigationItemImpl.updateVisibility(boolean))
+//	&& withincode(public NavigationItemImpl NavigationItemImpl.visible(boolean)) 
+//	&& this(item) 
+//	&& if(Layout.ENABLED) {
+//		return item;
+//	}
 
 	void around() : 
 	call(private void NavigationWidgetImpl.ensureSpaceBetweenGroups())  
