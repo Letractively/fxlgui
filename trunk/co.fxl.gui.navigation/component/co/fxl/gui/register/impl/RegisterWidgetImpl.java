@@ -83,7 +83,7 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 	}
 
 	@Override
-	public IRegisterWidget visible(boolean visible) {
+	public RegisterWidgetImpl visible(boolean visible) {
 		if (visible) {
 			show();
 		} else {

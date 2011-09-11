@@ -78,7 +78,8 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 			addSeparator();
 		}
 		verticalContainer = widget.headerPanel.add().panel().vertical();
-		verticalContainer.spacing().left(widget.outerSpacing).right(0).top(0).bottom(widget.outerSpacing);
+		verticalContainer.spacing().left(widget.outerSpacing).right(0).top(0)
+				.bottom(widget.outerSpacing);
 		buttonPanel = verticalContainer.add().panel().horizontal();
 		buttonPanel.spacing(widget.spacing);// .align().center();
 		buttonPanel.addSpace(3);
@@ -102,7 +103,11 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 	}
 
 	@Override
-	public IRegister top() {
+	public RegisterImpl top() {
+		return updateActive();
+	}
+
+	public RegisterImpl updateActive() {
 		for (RegisterImpl register : widget.registers) {
 			if (register != this)
 				register.notifyVisible(false);
@@ -145,7 +150,11 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 	}
 
 	@Override
-	public IRegister visible(boolean visible) {
+	public RegisterImpl visible(boolean visible) {
+		return updateVisible(visible);
+	}
+
+	public RegisterImpl updateVisible(boolean visible) {
 		if (separator != null)
 			separator.visible(visible);
 		verticalContainer.visible(visible);
@@ -156,7 +165,7 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 	private IVerticalPanel verticalContainer;
 
 	@Override
-	public IRegister enabled(boolean enabled) {
+	public RegisterImpl enabled(boolean enabled) {
 		if (!enabled) {
 			buttonLabel.font().color().white();
 			verticalContainer.visible(false);
