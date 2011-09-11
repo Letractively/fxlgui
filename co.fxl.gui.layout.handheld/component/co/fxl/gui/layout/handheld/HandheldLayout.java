@@ -31,6 +31,8 @@ import co.fxl.gui.layout.impl.Layout;
 public class HandheldLayout implements ILayout {
 
 	private HandheldActionMenu actionMenu = new HandheldActionMenu();
+	private INavigation navigationMain;
+	private INavigation navigationSub;
 
 	@Override
 	public IActionMenu actionMenu() {
@@ -96,7 +98,21 @@ public class HandheldLayout implements ILayout {
 	}
 
 	@Override
-	public INavigation navigation() {
-		return new HandheldNavigation();
+	public INavigation navigationMain() {
+		if (navigationMain == null)
+			navigationMain = new HandheldNavigation();
+		return navigationMain;
+	}
+
+	@Override
+	public INavigation navigationSub() {
+		if (navigationSub == null)
+			navigationSub = new HandheldNavigation();
+		return navigationSub;
+	}
+
+	@Override
+	public IMDT mdt() {
+		return new HandheldMDT();
 	}
 }

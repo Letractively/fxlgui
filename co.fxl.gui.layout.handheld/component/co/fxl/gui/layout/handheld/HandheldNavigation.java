@@ -18,12 +18,14 @@
  */
 package co.fxl.gui.layout.handheld;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDialog;
-import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.layout.api.ILayout.INavigation;
 import co.fxl.gui.layout.api.ILayout.INavigation.INavigationGroup.INavigationItem;
@@ -31,25 +33,45 @@ import co.fxl.gui.layout.api.ILayout.INavigation.INavigationGroup.INavigationIte
 class HandheldNavigation implements INavigation, IClickListener {
 
 	private List<INavigationGroup> groups = new LinkedList<INavigationGroup>();
-	private ILinearPanel<?> panel;
+	private IPanel<?> panel;
+	private Map<INavigationItem, Boolean> visible = new HashMap<INavigationItem, Boolean>();
 
 	@Override
-	public INavigation panel(ILinearPanel<?> panel) {
+	public INavigation panel(IPanel<?> panel) {
 		this.panel = panel;
-		panel.addSpace(4).add().label().text("More >>").hyperlink()
-				.addClickListener(this);
+		panel.add().panel().horizontal().addSpace(4).add().label()
+				.text("More >>").hyperlink().addClickListener(this);
 		return this;
 	}
 
 	@Override
 	public INavigation groups(List<INavigationGroup> groups) {
 		this.groups = groups;
+		visible.clear();
+		updateVisible(true);
 		return this;
+	}
+
+	private void updateVisible(boolean init) {
+		for (INavigationGroup g : groups) {
+			boolean visible = false;
+			for (INavigationItem i : g.items()) {
+				if (init)
+					this.visible.put(i, true);
+				i.updateVisible(i.isActive());
+				visible |= i.isActive();
+			}
+			if (g.name() != null)
+				g.visible(visible);
+		}
 	}
 
 	@Override
 	public INavigation group(INavigationGroup group) {
+		visible.clear();
+		groups.clear();
 		groups.add(group);
+		updateVisible(true);
 		return this;
 	}
 
@@ -67,6 +89,8 @@ class HandheldNavigation implements INavigation, IClickListener {
 				.add().panel().vertical().spacing(4);
 		boolean isFirst = true;
 		for (final INavigationGroup group : groups) {
+			if (!hasVisibleItem(group))
+				continue;
 			if (group.name() != null) {
 				if (!isFirst)
 					sp.addSpace(4);
@@ -75,20 +99,39 @@ class HandheldNavigation implements INavigation, IClickListener {
 				sp.add().label().text(text).font().weight().bold().pixel(11);
 			}
 			for (final INavigationItem item : group.items()) {
-				sp.add().label().text(item.name()).hyperlink()
-						.addClickListener(new IClickListener() {
+				if (visible.get(item))
+					sp.add().label().text(item.name()).hyperlink()
+							.addClickListener(new IClickListener() {
 
-							@Override
-							public void onClick() {
-								dialog.visible(false);
-								item.active();
-							}
-						}).mouseLeft().font().pixel(13);
+								@Override
+								public void onClick() {
+									dialog.visible(false);
+									item.updateActive();
+									updateVisible(false);
+								}
+							}).mouseLeft().font().pixel(13);
 			}
 		}
-
-		// TODO ensure correct visibility
-
 		dialog.visible(true);
+	}
+
+	private boolean hasVisibleItem(INavigationGroup group) {
+		for (INavigationItem item : group.items())
+			if (visible.get(item))
+				return true;
+		return false;
+	}
+
+	@Override
+	public INavigation visible(INavigationItem item, boolean visible) {
+		this.visible.put(item, visible);
+		updateVisible(false);
+		return this;
+	}
+
+	@Override
+	public INavigation active(INavigationItem item, boolean active) {
+		updateVisible(false);
+		return this;
 	}
 }
