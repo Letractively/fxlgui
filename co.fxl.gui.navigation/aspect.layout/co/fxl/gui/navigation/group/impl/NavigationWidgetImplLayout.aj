@@ -25,44 +25,60 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.layout.api.ILayout.INavigation;
 import co.fxl.gui.layout.impl.Layout;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
-import co.fxl.gui.navigation.group.api.INavigationItem;
+import co.fxl.gui.navigation.group.api.INavigationWidget;
 
 privileged aspect NavigationWidgetImplLayout {
 
 	declare parents : NavigationGroupImpl implements INavigation.INavigationGroup;
 	declare parents : NavigationItemImpl implements INavigation.INavigationGroup.INavigationItem;
 
+	private List<INavigation.INavigationGroup> NavigationWidgetImpl.groups() {
+		List<INavigation.INavigationGroup> is = new LinkedList<INavigation.INavigationGroup>();
+		for (NavigationGroupImpl item : groups)
+			is.add(item);
+		return is;
+	}
+
 	public String NavigationGroupImpl.name() {
 		return header.text();
 	}
 
+	public boolean NavigationItemImpl.visible() {
+		return basicPanel.visible();
+	}
+
 	public List<INavigation.INavigationGroup.INavigationItem> NavigationGroupImpl.items() {
 		List<INavigation.INavigationGroup.INavigationItem> is = new LinkedList<INavigation.INavigationGroup.INavigationItem>();
-		// TODO ...
+		for (NavigationItemImpl item : items)
+			is.add(item);
 		return is;
 	}
 
-	public INavigation.INavigationGroup.INavigationItem NavigationItemImpl.listener(
-			Runnable l) {
-		// TODO ...
-		return this;
-	}
-
 	after(NavigationWidgetImpl widget) : 
-	execution(NavigationWidgetImpl.new(IContainer)) 
+	execution(public INavigationWidget NavigationWidgetImpl.visible(boolean)) 
 	&& this(widget) 
 	&& if(Layout.ENABLED) {
-		NavigationDialog.addButton(widget);
+		Layout.instance().navigationMain().groups(widget.groups())
+				.panel(widget.navigationPanel);
+		IContainer c = widget.hPanel.cell(1, 0).align().end().valign().center()
+				.panel().horizontal().add();
+		Layout.instance().actionMenu().container(c);
 	}
 
-//	TODO ... 
-// 	INavigationItem around(NavigationItemImpl item) :
-//	call(NavigationItemImpl NavigationItemImpl.updateVisibility(boolean))
-//	&& withincode(public NavigationItemImpl NavigationItemImpl.visible(boolean)) 
-//	&& this(item) 
-//	&& if(Layout.ENABLED) {
-//		return item;
-//	}
+	after(NavigationItemImpl item, boolean visible) :
+	execution(public NavigationItemImpl NavigationItemImpl.visible(boolean))
+	&& this(item)
+	&& args(visible)
+	&& if(Layout.ENABLED) {
+		Layout.instance().navigationMain().visible(item, visible);
+	}
+
+	after(NavigationItemImpl item) :
+	execution(public NavigationItemImpl NavigationItemImpl.active())
+	&& this(item)
+	&& if(Layout.ENABLED) {
+		Layout.instance().navigationMain().active(item, true);
+	}
 
 	void around() : 
 	call(private void NavigationWidgetImpl.ensureSpaceBetweenGroups())  
