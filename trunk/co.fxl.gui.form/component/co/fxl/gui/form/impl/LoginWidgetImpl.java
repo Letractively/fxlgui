@@ -51,7 +51,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 						dialog("Unknown user or password");
 					} else {
 						addLogout();
-						loggedInAs.text(loginID.text());
+						loggedInHead.text(loginID.text());
 						loginID.text("");
 						password.text("");
 					}
@@ -79,6 +79,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 	private IStatusPanelDecorator decorator;
 	private ILabel loginLabel;
 	private IHorizontalPanel pPanel;
+	private ILabel loggedInHead;
 
 	LoginWidgetImpl(IContainer display) {
 		cards = display.panel().horizontal().align().end();
@@ -126,6 +127,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 	// TODO extract class LoginPanel
 	void addLoginFields(IHorizontalPanel liPanel) {
 		pPanel = liPanel.add().panel().horizontal();
+		pPanel.spacing(4);
 		decorate(pPanel.add().label().text("ID"));
 		decorate(loginID = pPanel.add().textField()
 				.addKeyListener(loginListener).enter().focus(true));
@@ -141,7 +143,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 			decorator.decorateBegin(loPanel, true);
 		loggedInAs = loPanel.add().label().text("Logged in as");
 		decorate(loggedInAs);
-		ILabel loggedInHead = loPanel.add().label().text(loginID.text());
+		loggedInHead = loPanel.add().label().text(loginID.text());
 		decorate(loggedInHead).font().weight().bold();
 		ILabel text = loPanel.add().label().text("Logout");
 		hyperlink(text);
