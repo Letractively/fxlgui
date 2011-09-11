@@ -29,6 +29,8 @@ public class GermanI18N extends I18NTemplate {
 		put("Back", "Zur\u00fcck");
 		put("Forward", "Vorw\u00e4rts");
 		put("Navigation", "Navigation");
+		put("ID", "ID");
+		put("Password", "Passwort");
 	}
 
 	@Override

@@ -18,15 +18,10 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.i18n.impl.I18N;
+import co.fxl.gui.i18n.impl.I18NAspect;
+import co.fxl.gui.i18n.impl.Translate;
 
-privileged aspect NavigationViewI18N {
+privileged aspect NavigationViewI18N extends I18NAspect {
 
 	declare @field : static String NavigationView.* : @Translate;
-
-	String around() :
-	get(@Translate static String *.*) 
-	&& if(I18N.ENABLED) {
-		return I18N.instance().translate(proceed());
-	}
 }

@@ -20,6 +20,7 @@ package co.fxl.gui.layout.api;
 
 import java.util.List;
 
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
@@ -30,8 +31,19 @@ import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextField;
+import co.fxl.gui.layout.api.ILayout.INavigation.INavigationGroup.INavigationItem;
 
 public interface ILayout {
+
+	public interface IMDT {
+
+		public interface IDecorator {
+
+			IClickable<?> decorate(IContainer c);
+		}
+
+		IDecorator show(IDecorator dec);
+	}
 
 	public interface INavigation {
 
@@ -41,11 +53,15 @@ public interface ILayout {
 
 				String name();
 
-				INavigationItem active();
+				INavigationItem updateActive();
 
-				INavigationItem listener(Runnable l);
+				boolean isActive();
+
+				INavigationItem updateVisible(boolean visible);
 
 			}
+
+			INavigationGroup visible(boolean visible);
 
 			String name();
 
@@ -57,7 +73,12 @@ public interface ILayout {
 
 		INavigation group(INavigationGroup group);
 
-		INavigation panel(ILinearPanel<?> panel);
+		INavigation panel(IPanel<?> panel);
+
+		INavigation visible(INavigationItem item, boolean visible);
+
+		INavigation active(INavigationItem item, boolean active);
+
 	}
 
 	public interface ITree {
@@ -137,7 +158,9 @@ public interface ILayout {
 		LOGIN, FILTER;
 	}
 
-	INavigation navigation();
+	INavigation navigationMain();
+
+	INavigation navigationSub();
 
 	IForm form();
 
@@ -155,6 +178,8 @@ public interface ILayout {
 	ILayoutDialog dialog(DialogType type);
 
 	ITree tree();
+
+	IMDT mdt();
 
 	IImage logo(IImage image);
 

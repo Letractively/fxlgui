@@ -16,7 +16,7 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.impl;
+package co.fxl.gui.i18n.impl;
 
 public @interface Translate {
 
