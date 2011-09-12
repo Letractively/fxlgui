@@ -104,6 +104,8 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 
 	@Override
 	public RegisterImpl top() {
+		if (disabled)
+			enabled(true);
 		return updateActive();
 	}
 
