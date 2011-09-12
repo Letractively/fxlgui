@@ -16,15 +16,12 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.i18n.api;
+package co.fxl.gui.impl;
 
-import co.fxl.gui.api.ILabel;
+import co.fxl.gui.i18n.impl.Translate;
+import co.fxl.gui.i18n.impl.I18NAspect;
 
-public interface II18N {
+public aspect WidgetTitleI18N extends I18NAspect {
 
-	String put(String text, String translation);
-
-	String translate(String text);
-
-	void addHelp(String iD, ILabel label);
+	declare @type : WidgetTitle : @Translate;
 }

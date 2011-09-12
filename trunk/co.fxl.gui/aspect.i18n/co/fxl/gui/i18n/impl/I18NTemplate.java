@@ -33,10 +33,26 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 	public String translate(String text) {
 		String translation = get(text);
 		if (translation == null) {
-			System.err.println("no translation found for " + text);
-			return text;
+			translation = translateComposite(text);
+			if (translation == null) {
+				System.err.println("no translation found for " + text);
+				return text;
+			}
 		}
 		return translation;
+	}
+
+	private String translateComposite(String text) {
+		for (String key : keySet()) {
+			if (key.endsWith("$")) {
+				String prefix = key.substring(0, key.length() - 1);
+				if (text.startsWith(prefix)) {
+					String suffix = text.substring(prefix.length());
+					return get(key).replace("$", suffix);
+				}
+			}
+		}
+		return null;
 	}
 
 	@Override
