@@ -280,7 +280,8 @@ public class WidgetTitle implements IClickListener {
 
 	public static ILabel addHyperlinkLabel2Panel(String text,
 			IHorizontalPanel iPanel) {
-		ILabel label = iPanel.addSpace(4).add().label().text(text);
+		ILabel l = iPanel.addSpace(4).add().label();
+		ILabel label = l.text(text);
 		label.font().pixel(12);
 		return label;
 	}

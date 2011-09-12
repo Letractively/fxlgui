@@ -18,10 +18,11 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.i18n.impl.I18NAspect;
 import co.fxl.gui.i18n.impl.Translate;
+import co.fxl.gui.i18n.impl.I18NAspect;
 
 privileged aspect NavigationViewI18N extends I18NAspect {
 
-	declare @field : static String NavigationView.* : @Translate;
+	declare @method : * NavigationView.addComboBoxLink(..) : @Translate;
+//	declare @method : * NavigationView.addTextLabel(..) : @Translate;
 }

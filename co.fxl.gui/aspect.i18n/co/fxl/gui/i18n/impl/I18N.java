@@ -34,6 +34,11 @@ public class I18N {
 		@Override
 		public void addHelp(String iD, ILabel label) {
 		}
+
+		@Override
+		public String put(String text, String translation) {
+			return text;
+		}
 	};
 
 	private I18N() {

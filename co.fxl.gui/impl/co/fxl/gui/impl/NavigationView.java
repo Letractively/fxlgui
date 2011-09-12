@@ -133,6 +133,12 @@ public class NavigationView {
 //		styleContentChoice(label);
 		label.font().color().black();
 		label.text(title);
+		IComboBox cb = addComboBox(text, panel, options);
+		return cb;
+	}
+
+	public IComboBox addComboBox(String text, IHorizontalPanel panel,
+			String... options) {
 		IComboBox cb = panel.addSpace(8).add().comboBox();
 		new Heights(0).decorate(cb);
 		cb.width(202);
