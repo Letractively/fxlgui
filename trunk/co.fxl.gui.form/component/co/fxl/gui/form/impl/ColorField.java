@@ -40,11 +40,13 @@ public class ColorField {
 
 		@Override
 		public void onClick() {
-			final IPopUp popUp = button.display().showPopUp().autoHide(true).width(180);
+			final IPopUp popUp = button.display().showPopUp().autoHide(true)
+					.width(180);
 			popUp.border().style().shadow();
 			int height = button.height();
 			popUp.offset(button.offsetX(), button.offsetY() + height + 4);
-			IGridPanel grid = popUp.container().panel().grid().spacing(4).width(180);
+			IGridPanel grid = popUp.container().panel().grid().spacing(4)
+					.width(180);
 			grid.resize(4, 4);
 			for (int i = 0; i < 4; i++) {
 				for (int j = 0; j < 4; j++) {
