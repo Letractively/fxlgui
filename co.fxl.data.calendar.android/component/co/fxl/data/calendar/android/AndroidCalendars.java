@@ -33,9 +33,9 @@ public class AndroidCalendars implements ICalendars {
 
 	public AndroidCalendars(Activity activity) {
 		String[] projection = new String[] { "_id", "name" };
-		Uri calendars = Uri.parse("content://calendar/calendars");
+		Uri calendars = Uri.parse("content://com.android.calendar/calendars");
 		Cursor managedCursor = activity.managedQuery(calendars, projection,
-				"selected=1", null, null);
+				/*"selected=1"*/null, null, null);
 		if (managedCursor.moveToFirst()) {
 			int nameColumn = managedCursor.getColumnIndex("name");
 			int idColumn = managedCursor.getColumnIndex("_id");
