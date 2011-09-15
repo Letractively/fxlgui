@@ -93,6 +93,11 @@ class AndroidDialog implements IDialog {
 		public IDialogButton close() {
 			throw new MethodNotImplementedException();
 		}
+
+		@Override
+		public IDialogButton clickable(boolean clickable) {
+			throw new MethodNotImplementedException();
+		}
 	}
 
 	private AlertDialog.Builder builder;

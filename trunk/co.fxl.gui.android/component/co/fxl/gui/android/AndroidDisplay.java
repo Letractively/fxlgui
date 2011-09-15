@@ -23,7 +23,6 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.view.View;
-import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
