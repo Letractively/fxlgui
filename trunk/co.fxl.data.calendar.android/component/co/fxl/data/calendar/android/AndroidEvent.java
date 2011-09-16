@@ -27,6 +27,8 @@ import co.fxl.data.calendar.api.IEvent;
 
 class AndroidEvent implements IEvent {
 
+	static final String ANDROID_CALENDAR_EVENTS = AndroidCalendars.ANDROID_CALENDAR
+			+ "/events";
 	private static final String TITLE = "title";
 	private static final String DESCRIPTION = "description";
 	private static final String ID = "_id";
@@ -149,7 +151,7 @@ class AndroidEvent implements IEvent {
 			return false;
 		if (title.equals(originalTitle) && startTime == originalStartTime)
 			return false;
-		Uri eventsUri = Uri.parse("content://calendar/events");
+		Uri eventsUri = Uri.parse(ANDROID_CALENDAR_EVENTS);
 		ContentValues event = new ContentValues();
 		event.put("calendar_id", calID);
 		event.put("title", title);
@@ -175,7 +177,7 @@ class AndroidEvent implements IEvent {
 
 	@Override
 	public void delete() {
-		Uri CALENDAR_URI = Uri.parse("content://calendar/events");
+		Uri CALENDAR_URI = Uri.parse(ANDROID_CALENDAR_EVENTS);
 		Uri uri = ContentUris.withAppendedId(CALENDAR_URI, Long.valueOf(iD));
 		if (ALLOW_CHANGE) {
 			activity.getContentResolver().delete(uri, null, null);
