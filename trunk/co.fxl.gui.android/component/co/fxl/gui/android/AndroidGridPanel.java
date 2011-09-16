@@ -38,6 +38,7 @@ class AndroidGridPanel extends AndroidPanel<TableLayout, IGridPanel> implements
 	AndroidGridPanel(AndroidContainer container) {
 		super(container);
 		androidDisplay = container.parent.androidDisplay();
+		activity = container.parent.androidDisplay().activity;
 		view = new TableLayout(activity);
 		container.parent.add(view);
 	}
