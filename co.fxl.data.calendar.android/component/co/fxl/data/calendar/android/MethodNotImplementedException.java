@@ -21,4 +21,11 @@ package co.fxl.data.calendar.android;
 @SuppressWarnings("serial")
 class MethodNotImplementedException extends RuntimeException {
 
+	MethodNotImplementedException() {
+	}
+
+	MethodNotImplementedException(String string) {
+		super(string);
+	}
+
 }

@@ -48,7 +48,8 @@ class AndroidCalendar implements ICalendar {
 	@Override
 	public List<IEvent> events() {
 		events.clear();
-		Uri eventsUri = Uri.parse("content://calendar/events");
+		Uri eventsUri = Uri
+				.parse(AndroidEvent.ANDROID_CALENDAR_EVENTS);
 		Cursor c = activity.getContentResolver().query(eventsUri,
 				AndroidEvent.COLUMNS, "calendar_id=?", new String[] { iD },
 				null);

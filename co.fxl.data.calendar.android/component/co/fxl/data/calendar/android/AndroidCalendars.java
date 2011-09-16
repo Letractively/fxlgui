@@ -29,13 +29,18 @@ import co.fxl.data.calendar.api.ICalendars;
 
 public class AndroidCalendars implements ICalendars {
 
+	static final String ANDROID_CALENDAR = "content://com.android.calendar";
 	private List<ICalendar> calendars = new LinkedList<ICalendar>();
 
 	public AndroidCalendars(Activity activity) {
 		String[] projection = new String[] { "_id", "name" };
-		Uri calendars = Uri.parse("content://com.android.calendar/calendars");
+		Uri calendars = Uri.parse(ANDROID_CALENDAR + "/calendars");
 		Cursor managedCursor = activity.managedQuery(calendars, projection,
-				/*"selected=1"*/null, null, null);
+		/* "selected=1" */null, null, null);
+		if (managedCursor == null) {
+			throw new MethodNotImplementedException("URI " + calendars
+					+ " not found");
+		}
 		if (managedCursor.moveToFirst()) {
 			int nameColumn = managedCursor.getColumnIndex("name");
 			int idColumn = managedCursor.getColumnIndex("_id");
