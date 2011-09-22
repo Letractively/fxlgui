@@ -185,4 +185,9 @@ class GWTPopUp implements IPopUp, WidgetParent {
 		});
 		return this;
 	}
+
+	@Override
+	public boolean visible() {
+		return popUp.isVisible();
+	}
 }
