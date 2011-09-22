@@ -324,6 +324,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				IClickListener reorderCL = new LazyClickListener() {
 					@Override
 					protected void onAllowedClick() {
+						preMoveSplitPosition = -1;
 						previousSelection = model.selection().object();
 						model.move();
 						panel.display().invokeLater(new Runnable() {
