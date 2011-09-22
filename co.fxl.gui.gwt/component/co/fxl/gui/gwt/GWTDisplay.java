@@ -36,6 +36,7 @@ import co.fxl.gui.impl.DialogImpl;
 import co.fxl.gui.impl.DiscardChangesDialog;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.core.client.impl.SchedulerImpl;
@@ -200,28 +201,28 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		throw new MethodNotImplementedException();
 	}
 
-//	private boolean resizing = false;
-//	private Runnable r = null;
+	// private boolean resizing = false;
+	// private Runnable r = null;
 
 	private void resize(final IResizeListener listener) {
-//		if (resizing) {
-//			if (r == null) {
-//				r = new Runnable() {
-//					@Override
-//					public void run() {
-//						r = null;
-//						resize(listener);
-//					}
-//				};
-//				invokeLater(r);
-//			}
-//			return;
-//		}
-//		resizing = true;
+		// if (resizing) {
+		// if (r == null) {
+		// r = new Runnable() {
+		// @Override
+		// public void run() {
+		// r = null;
+		// resize(listener);
+		// }
+		// };
+		// invokeLater(r);
+		// }
+		// return;
+		// }
+		// resizing = true;
 		boolean active = listener.onResize(width(), height());
 		if (!active)
 			removeResizeListener(listener);
-//		resizing = false;
+		// resizing = false;
 	}
 
 	@Override
@@ -334,5 +335,22 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	@Override
 	public IDisplay size(int width, int height) {
 		return width(width).height(height);
+	}
+
+	@Override
+	public IDisplay runAsync(final Runnable runnable) {
+		GWT.runAsync(new RunAsyncCallback() {
+
+			@Override
+			public void onSuccess() {
+				runnable.run();
+			}
+
+			@Override
+			public void onFailure(Throwable reason) {
+				throw new RuntimeException(reason);
+			}
+		});
+		return this;
 	}
 }
