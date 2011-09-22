@@ -353,4 +353,9 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		});
 		return this;
 	}
+
+	@Override
+	public String title() {
+		return Window.getTitle();
+	}
 }
