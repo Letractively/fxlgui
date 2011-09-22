@@ -45,6 +45,7 @@ import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
 import co.fxl.gui.navigation.api.IMenuWidget;
+import co.fxl.gui.table.util.impl.LazyScrollPaneImpl;
 import co.fxl.gui.tree.api.ILazyTreeWidget;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
@@ -334,7 +335,8 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 										.splitPosition()) {
 									TreeWidgetImpl.this.preMoveSplitPosition = splitPane
 											.splitPosition();
-									splitPane.splitPosition(lazyTree.width());
+									splitPane.splitPosition(lazyTree.width()
+											+ LazyScrollPaneImpl.WIDTH_SCROLL_PANEL);
 								}
 							}
 						});
