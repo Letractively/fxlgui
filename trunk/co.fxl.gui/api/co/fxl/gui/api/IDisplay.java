@@ -69,4 +69,6 @@ public interface IDisplay extends IColored{
 	IDisplay block(boolean waiting);
 
 	IDisplay invokeLater(Runnable runnable);
+
+	IDisplay runAsync(Runnable runnable);
 }
