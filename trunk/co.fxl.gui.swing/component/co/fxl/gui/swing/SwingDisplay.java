@@ -329,4 +329,9 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		runnable.run();
 		return this;
 	}
+
+	@Override
+	public String title() {
+		return frame.getTitle();
+	}
 }

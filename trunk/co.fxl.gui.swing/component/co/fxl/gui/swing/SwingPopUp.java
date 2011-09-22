@@ -47,6 +47,7 @@ class SwingPopUp implements IPopUp {
 	JPanel p;
 	private boolean fitInScreen;
 	private List<IUpdateListener<Boolean>> visibleListeners = new LinkedList<IUpdateListener<Boolean>>();
+	private boolean visible;
 
 	SwingPopUp(SwingDisplay panel) {
 		this.panel = panel;
@@ -140,6 +141,7 @@ class SwingPopUp implements IPopUp {
 			SwingDisplay.popUp(null);
 		}
 		notifyVisible(visible);
+		this.visible = visible;
 		return this;
 	}
 
@@ -244,5 +246,10 @@ class SwingPopUp implements IPopUp {
 	public IPopUp addVisibleListener(IUpdateListener<Boolean> l) {
 		visibleListeners.add(l);
 		return this;
+	}
+
+	@Override
+	public boolean visible() {
+		return visible;
 	}
 }
