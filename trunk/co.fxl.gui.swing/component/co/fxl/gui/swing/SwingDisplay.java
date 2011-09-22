@@ -36,7 +36,6 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
-import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
@@ -323,5 +322,11 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	public static SwingPopUp popUp() {
 		return popUp;
+	}
+
+	@Override
+	public IDisplay runAsync(Runnable runnable) {
+		runnable.run();
+		return this;
 	}
 }
