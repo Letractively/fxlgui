@@ -71,4 +71,6 @@ public interface IDisplay extends IColored{
 	IDisplay invokeLater(Runnable runnable);
 
 	IDisplay runAsync(Runnable runnable);
+
+	String title();
 }
