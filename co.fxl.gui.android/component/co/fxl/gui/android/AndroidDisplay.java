@@ -187,4 +187,15 @@ public class AndroidDisplay implements IDisplay, Parent {
 	public IDisplay size(int width, int height) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public IDisplay runAsync(Runnable runnable) {
+		runnable.run();
+		return this;
+	}
+
+	@Override
+	public String title() {
+		throw new MethodNotImplementedException();
+	}
 }
