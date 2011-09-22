@@ -37,4 +37,6 @@ public interface IPopUp extends IBordered, ILocated<IPopUp> {
 	IPopUp fitInScreen(boolean fitInScreen);
 
 	IPopUp addVisibleListener(IUpdateListener<Boolean> l);
+
+	boolean visible();
 }

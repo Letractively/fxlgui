@@ -100,6 +100,7 @@ public class ContextMenu {
 	private IDisplay display;
 	private List<Group> groups = new LinkedList<Group>();
 	private boolean active = true;
+	private IPopUp popUp;
 
 	public ContextMenu(IDisplay display) {
 		this.display = display;
@@ -139,7 +140,9 @@ public class ContextMenu {
 	public void show() {
 		if (!active)
 			return;
-		final IPopUp popUp = display.showPopUp().autoHide(true)// .width(320)
+		if (popUp != null && popUp.visible())
+			return;
+		popUp = display.showPopUp().autoHide(true)// .width(320)
 				.atLastClick();
 		new Heights(0).decorateBorder(popUp).style().shadow();
 		IVerticalPanel v = popUp.container().panel().vertical().spacing(8);
@@ -167,6 +170,7 @@ public class ContextMenu {
 							@Override
 							public void onClick() {
 								popUp.visible(false);
+								popUp = null;
 								for (IClickListener cl : e.clickListeners)
 									cl.onClick();
 							}
