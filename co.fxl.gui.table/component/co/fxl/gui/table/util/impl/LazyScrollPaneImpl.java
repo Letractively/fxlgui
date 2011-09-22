@@ -94,6 +94,11 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	}
 
 	@Override
+	public int rowIndex() {
+		return rowIndex;
+	}
+
+	@Override
 	public ILazyScrollPane size(int size) {
 		this.size = size;
 		return updateRows2Paint();
