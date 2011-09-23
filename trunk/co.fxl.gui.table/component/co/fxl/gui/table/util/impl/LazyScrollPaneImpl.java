@@ -46,8 +46,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private int size;
 	private int rows2Paint = height / minRowHeight;
 	private IScrollPane scrollPane;
-	private int maxRowIndex;
-	private int maxOffset;
+	int maxRowIndex;
+	int maxOffset;
 	private int lastIndex;
 	private boolean horizontalScrollPane = false;
 	private boolean adjustHeights = true;
@@ -158,7 +158,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 					return;
 				assert firstIndex >= 0;
 				if (adjustHeights && !decorator.checkIndex(lastIndex)) {
-					if(allowRepaint) {
+					if (allowRepaint) {
 						allowRepaint = false;
 						draw();
 					}
@@ -170,7 +170,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				maxRowIndex = lastIndex;
 				for (int i = lastIndex - 1; i >= firstIndex && h < height; i--) {
 					if (adjustHeights && !decorator.checkIndex(lastIndex)) {
-						if(allowRepaint) {
+						if (allowRepaint) {
 							allowRepaint = false;
 							draw();
 						}
@@ -293,20 +293,19 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 			lastIndex = 0;
 	}
 
-	private int convertScrollOffset2RowIndex(int offset) {
-		assert offset >= 0;
-		assert maxOffset > 0 : maxOffset + " is scroll offset";
+	int convertScrollOffset2RowIndex(int offset) {
 		double r = offset;
 		r /= maxOffset;
 		r *= maxRowIndex;
-		return (int) r;
+		return (int) Math.round(r);
 	}
 
-	private int convertRowIndex2ScrollOffset(int rowIndex) {
+	int convertRowIndex2ScrollOffset(int rowIndex) {
 		double r = rowIndex;
 		r *= maxOffset;
 		r /= maxRowIndex;
-		return (int) Math.round(r);
+		int round = (int) Math.round(r);
+		return round;
 	}
 
 	@Override
