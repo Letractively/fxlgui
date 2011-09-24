@@ -84,8 +84,12 @@ public class ErrorDialog {
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
+						onClose();
 					}
 				});
 		dialog.visible(true);
+	}
+
+	protected void onClose() {
 	}
 }
