@@ -22,7 +22,7 @@ public interface ISplitPane extends IElement<ISplitPane>, IBordered {
 
 	public interface ISplitPaneResizeListener {
 
-		void onResize(int left, int right);
+		void onResize(boolean finished, int left, int right);
 	}
 
 	ISplitPane vertical();
