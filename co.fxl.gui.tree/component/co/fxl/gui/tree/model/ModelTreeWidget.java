@@ -152,6 +152,12 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 		public boolean enabled() {
 			return register.enabled();
 		}
+
+		@Override
+		public co.fxl.gui.tree.api.ITreeWidget.IView resizeListener(
+				IResizeListener l) {
+			throw new MethodNotImplementedException();
+		}
 	}
 
 	private IVerticalPanel panel;

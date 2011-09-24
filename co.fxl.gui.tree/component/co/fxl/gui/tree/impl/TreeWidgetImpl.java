@@ -89,6 +89,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		String title;
 		boolean isDefaultView;
 		boolean deactivatedUpdate = false;
+		private List<IResizeListener> resizeListeners = new LinkedList<IResizeListener>();
 
 		DetailView(String title, IDecorator<T> decorator) {
 			this.decorator = decorator;
@@ -173,6 +174,13 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		public boolean enabled() {
 			return register.enabled();
 		}
+
+		@Override
+		public co.fxl.gui.tree.api.ITreeWidget.IView resizeListener(
+				IResizeListener l) {
+			resizeListeners.add(l);
+			return this;
+		}
 	}
 
 	IVerticalPanel panel;
@@ -231,8 +239,13 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 							@Override
 							public void onSuccess(ITree<T> result) {
-								if (parent != null)
-									lazyTree.collapse(parent, false);
+								ITree<T> p = parent;
+								if (p != null && result.parent() != null
+										&& !result.parent().equals(p)) {
+									p = result.parent();
+								}
+								if (p != null)
+									lazyTree.collapse(p, false);
 								previousSelection = result.object();
 								refreshLazyTree(true, true);
 							}
@@ -438,6 +451,13 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 			@Override
 			public void onResize(int left, int right) {
+				if (TreeWidgetImpl.this.activeView != null) {
+					@SuppressWarnings("unchecked")
+					DetailView view = (DetailView) TreeWidgetImpl.this.activeView;
+					for (IView.IResizeListener l : view.resizeListeners) {
+						l.onResize();
+					}
+				}
 				if (lazyTree != null)
 					lazyTree.width(splitPane.width() - scrollPane.width() - 7);
 			}

@@ -30,11 +30,18 @@ public interface ITreeWidget<T> {
 
 	public interface IView {
 
+		public interface IResizeListener {
+
+			void onResize();
+		}
+
 		IView constrainType(Class<?> clazz);
 
 		IView constrainType(Class<?>[] clazz);
 
 		IView isDefaultView();
+
+		IView resizeListener(IResizeListener l);
 
 		IViewID iD();
 	}
