@@ -70,6 +70,7 @@ public interface IDisplay extends IColored{
 
 	IDisplay invokeLater(Runnable runnable);
 
+	// TODO eventually extract to ICodeSplit or something similar
 	IDisplay runAsync(Runnable runnable);
 
 	String title();

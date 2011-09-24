@@ -18,7 +18,9 @@
  */
 package co.fxl.gui.impl;
 
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICardPanel;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
@@ -26,8 +28,6 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.IBordered.IBorder;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 
@@ -44,6 +44,8 @@ public class ViewImpl extends LazyClickListener {
 	private IImage image;
 	private IHorizontalPanel labelPanel;
 	private String imageResource;
+	private IVerticalPanel basicPanel;
+	private boolean disabled;
 
 	ViewImpl(ViewList viewList, String imageResource) {
 		this(viewList, imageResource, false);
@@ -52,17 +54,17 @@ public class ViewImpl extends LazyClickListener {
 	ViewImpl(ViewList viewList, String imageResource, boolean isNew) {
 		this.viewList = viewList;
 		this.imageResource = imageResource;
-		IVerticalPanel p = this.viewList.panel.add().panel().vertical();
+		basicPanel = this.viewList.panel.add().panel().vertical();
 		if (viewList.hasLinks) {
-			p.addSpace(3);
-			IBorder border = p.border();
+			basicPanel.addSpace(3);
+			IBorder border = basicPanel.border();
 			border.color().rgb(172, 197, 213);
 			border.style().top();
 		}
 		viewList.hasLinks = true;
-		p.addSpace(2);
-		grid = p.add().panel().grid();
-		p.addSpace(2);
+		basicPanel.addSpace(2);
+		grid = basicPanel.add().panel().grid();
+		basicPanel.addSpace(2);
 		labelPanel0 = grid.cell(0, 0).panel().horizontal();
 		labelPanel = labelPanel0.add().panel().horizontal().spacing(2);
 		decorate(isNew);
@@ -84,17 +86,17 @@ public class ViewImpl extends LazyClickListener {
 			content = this.viewList.widget.contentPanel().add();
 			if (this.viewList.newListener != null) {
 				removeImage = grid.cell(1, 0).valign().center().width(30)
-						.align().end().panel().horizontal().addSpace(4)
-						.add().image();
+						.align().end().panel().horizontal().addSpace(4).add()
+						.image();
 				removeImage.resource(Icons.CANCEL).addClickListener(
 						new LazyClickListener() {
 							@Override
 							public void onAllowedClick() {
-								ViewImpl.this.viewList.remove(grid, ViewImpl.this,
+								ViewImpl.this.viewList.remove(grid,
+										ViewImpl.this,
 										new CallbackTemplate<Boolean>() {
 											@Override
-											public void onSuccess(
-													Boolean result) {
+											public void onSuccess(Boolean result) {
 											}
 										});
 							}
@@ -123,8 +125,8 @@ public class ViewImpl extends LazyClickListener {
 				}
 			};
 			final IImage accept = labelPanel.addSpace(4).add().image()
-					.resource(Icons.ACCEPT)
-					.addClickListener(acceptListener).mouseLeft();
+					.resource(Icons.ACCEPT).addClickListener(acceptListener)
+					.mouseLeft();
 			tf.addKeyListener(new IClickListener() {
 				@Override
 				public void onClick() {
@@ -144,7 +146,8 @@ public class ViewImpl extends LazyClickListener {
 					.addClickListener(new IClickListener() {
 						@Override
 						public void onClick() {
-							ViewImpl.this.viewList.remove(grid, ViewImpl.this, null);
+							ViewImpl.this.viewList.remove(grid, ViewImpl.this,
+									null);
 						}
 					}).mouseLeft();
 		}
@@ -154,8 +157,7 @@ public class ViewImpl extends LazyClickListener {
 		if (value.trim().length() == 0)
 			return false;
 		for (int i = 0; i < value.length(); i++)
-			if (!(Character.isLetterOrDigit(value.charAt(i)) || value
-					.charAt(i) == ' '))
+			if (!(Character.isLetterOrDigit(value.charAt(i)) || value.charAt(i) == ' '))
 				return false;
 		return true;
 	}
@@ -199,6 +201,8 @@ public class ViewImpl extends LazyClickListener {
 	}
 
 	private void clickable(boolean clickable) {
+		if (disabled && clickable)
+			return;
 		if (label == null)
 			return;
 		label.clickable(clickable);
@@ -212,7 +216,7 @@ public class ViewImpl extends LazyClickListener {
 	}
 
 	public void clickable() {
-//		grid.color().remove();
+		// grid.color().remove();
 		styleViewlistEntryInactive(label);
 		if (removeImage != null) {
 			removeImage.visible(false);
@@ -226,7 +230,7 @@ public class ViewImpl extends LazyClickListener {
 	}
 
 	public void notClickable() {
-//		grid.color().rgb(0xD0, 0xE4, 0xF6);
+		// grid.color().rgb(0xD0, 0xE4, 0xF6);
 		styleViewlistEntryActive(label);
 		if (removeImage != null && this.viewList.newListener.isRemovable(this)) {
 			removeImage.visible(true);
@@ -243,5 +247,18 @@ public class ViewImpl extends LazyClickListener {
 	public ViewImpl decorator(ViewDecorator decorator) {
 		this.decorator = decorator;
 		return this;
+	}
+
+	public ViewImpl visible(boolean showModule) {
+		if (!showModule) {
+			disabled = true;
+			clickable(false);
+			label.clickable(false).font().weight().italic();
+		}
+		return this;
+	}
+
+	public boolean visible() {
+		return !disabled;
 	}
 }
