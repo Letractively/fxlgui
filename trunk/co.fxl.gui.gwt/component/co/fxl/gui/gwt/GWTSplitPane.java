@@ -49,21 +49,21 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 			@Override
 			public void onMouseDown(MouseDownEvent event) {
 				dragging = true;
-				onResize();
+				onResize(false);
 			}
 		}, MouseDownEvent.getType());
 		container.widget.addHandler(new MouseMoveHandler() {
 			@Override
 			public void onMouseMove(MouseMoveEvent event) {
 				if (dragging)
-					onResize();
+					onResize(false);
 			}
 		}, MouseMoveEvent.getType());
 		container.widget.addHandler(new MouseUpHandler() {
 			@Override
 			public void onMouseUp(MouseUpEvent event) {
 				dragging = false;
-				onResize();
+				onResize(true);
 			}
 		}, MouseUpEvent.getType());
 	}
@@ -114,23 +114,20 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 
 	@Override
 	public ISplitPane addResizeListener(final ISplitPaneResizeListener l) {
+		listeners.add(l);
 		return this;
 	}
 
-	private void onResize() {
-		// display().invokeLater(new Runnable() {
-		// public void run() {
+	private void onResize(boolean finished) {
 		final HorizontalSplitPanel p = (HorizontalSplitPanel) GWTSplitPane.super.container.widget;
 		int offsetWidth1 = p.getLeftWidget().getOffsetWidth();
 		int offsetWidth2 = p.getRightWidget().getOffsetWidth();
-		if (oWidth1 != offsetWidth1 || oWidth2 != offsetWidth2) {
+		if (finished || oWidth1 != offsetWidth1 || oWidth2 != offsetWidth2) {
 			oWidth1 = offsetWidth1;
 			oWidth2 = offsetWidth2;
 			for (ISplitPaneResizeListener l : listeners)
-				l.onResize(offsetWidth1, offsetWidth2);
+				l.onResize(finished, offsetWidth1, offsetWidth2);
 		}
-		// }
-		// });
 	}
 
 	private void prepare(Widget widget) {
