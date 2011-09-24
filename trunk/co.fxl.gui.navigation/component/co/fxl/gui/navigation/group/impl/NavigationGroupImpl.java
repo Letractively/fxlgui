@@ -35,7 +35,8 @@ class NavigationGroupImpl implements INavigationGroup {
 	// TODO Code: Look: Register-Widget: no flickering -> use Card-Panel, set
 	// panel invisible, decorator with callback: switch when returned
 
-	// TODO Code: for large numbers of groups, click on group name: popup surfaces
+	// TODO Code: for large numbers of groups, click on group name: popup
+	// surfaces
 	// list of groups plus cancel button (to hide group), on the right side
 	// of last group: +-button to show additional groups
 
@@ -89,5 +90,14 @@ class NavigationGroupImpl implements INavigationGroup {
 	@Override
 	public boolean visible() {
 		return panel.visible();
+	}
+
+	void updateVisible() {
+		boolean visible = false;
+		panel.visible(true);
+		for (NavigationItemImpl item : items) {
+			visible |= item.basicPanel.visible();
+		}
+		panel.visible(visible);
 	}
 }
