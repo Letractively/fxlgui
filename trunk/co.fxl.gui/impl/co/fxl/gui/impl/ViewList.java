@@ -123,4 +123,13 @@ public class ViewList {
 		} else
 			widget.selectFirst();
 	}
+
+	public void showFirstVisible() {
+		for (ViewImpl view : views) {
+			if (view.visible()) {
+				view.onClick();
+				return;
+			}
+		}
+	}
 }
