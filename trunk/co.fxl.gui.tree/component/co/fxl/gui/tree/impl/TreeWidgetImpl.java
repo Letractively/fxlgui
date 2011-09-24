@@ -89,7 +89,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		String title;
 		boolean isDefaultView;
 		boolean deactivatedUpdate = false;
-		private List<IResizeListener> resizeListeners = new LinkedList<IResizeListener>();
+//		private List<IResizeListener> resizeListeners = new LinkedList<IResizeListener>();
 
 		DetailView(String title, IDecorator<T> decorator) {
 			this.decorator = decorator;
@@ -175,12 +175,12 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			return register.enabled();
 		}
 
-		@Override
-		public co.fxl.gui.tree.api.ITreeWidget.IView resizeListener(
-				IResizeListener l) {
-			resizeListeners.add(l);
-			return this;
-		}
+//		@Override
+//		public co.fxl.gui.tree.api.ITreeWidget.IView resizeListener(
+//				IResizeListener l) {
+//			resizeListeners.add(l);
+//			return this;
+//		}
 	}
 
 	IVerticalPanel panel;
@@ -454,9 +454,10 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				if (TreeWidgetImpl.this.activeView != null) {
 					@SuppressWarnings("unchecked")
 					DetailView view = (DetailView) TreeWidgetImpl.this.activeView;
-					for (IView.IResizeListener l : view.resizeListeners) {
-						l.onResize();
-					}
+					view.update();
+//					for (IView.IResizeListener l : view.resizeListeners) {
+//						l.onResize();
+//					}
 				}
 				if (lazyTree != null)
 					lazyTree.width(splitPane.width() - scrollPane.width() - 7);

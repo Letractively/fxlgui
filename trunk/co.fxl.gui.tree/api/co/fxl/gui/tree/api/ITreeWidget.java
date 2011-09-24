@@ -30,18 +30,16 @@ public interface ITreeWidget<T> {
 
 	public interface IView {
 
-		public interface IResizeListener {
-
-			void onResize();
-		}
+//		public interface IResizeListener {
+//
+//			void onResize();
+//		}
 
 		IView constrainType(Class<?> clazz);
 
 		IView constrainType(Class<?>[] clazz);
 
 		IView isDefaultView();
-
-		IView resizeListener(IResizeListener l);
 
 		IViewID iD();
 	}
@@ -61,7 +59,7 @@ public interface ITreeWidget<T> {
 		void decorate(IVerticalPanel panel, IVerticalPanel bottom, ITree<T> tree);
 
 		void decorate(IVerticalPanel panel, IVerticalPanel bottom, Object tree);
-
+		
 		boolean clear(IVerticalPanel contentPanel);
 	}
 
