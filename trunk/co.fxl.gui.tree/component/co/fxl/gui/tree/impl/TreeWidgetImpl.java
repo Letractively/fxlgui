@@ -454,7 +454,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				if (finished && TreeWidgetImpl.this.activeView != null) {
 					@SuppressWarnings("unchecked")
 					DetailView view = (DetailView) TreeWidgetImpl.this.activeView;
-					view.update();
+					view.decorator.resize();
 //					for (IView.IResizeListener l : view.resizeListeners) {
 //						l.onResize();
 //					}

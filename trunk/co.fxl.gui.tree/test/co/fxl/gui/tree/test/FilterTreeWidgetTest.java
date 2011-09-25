@@ -43,4 +43,9 @@ public class FilterTreeWidgetTest implements IDecorator<Object> {
 		contentPanel.clear();
 		return false;
 	}
+
+	@Override
+	public void resize() {
+		throw new MethodNotImplementedException();
+	}
 }
