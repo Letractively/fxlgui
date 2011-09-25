@@ -62,6 +62,11 @@ class TreeWidgetSingleViewTest {
 				return true;
 			}
 
+			@Override
+			public void resize() {
+				throw new MethodNotImplementedException();
+			}
+
 		});
 		widget.root(new TestTree(null, "Folder", 0));
 		display.fullscreen().visible(true);
