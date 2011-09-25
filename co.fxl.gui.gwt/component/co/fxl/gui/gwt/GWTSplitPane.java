@@ -36,7 +36,44 @@ import com.google.gwt.user.client.ui.Widget;
 
 class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane {
 
+	private class MouseHandler implements MouseDownHandler, MouseMoveHandler,
+			MouseUpHandler {
+
+		private int x = -1;
+		private int y = -1;
+		private boolean down = false;
+		private boolean move = false;
+
+		@Override
+		public void onMouseDown(MouseDownEvent event) {
+			down = true;
+			move = false;
+			x = event.getClientX();
+			y = event.getClientY();
+		}
+
+		@Override
+		public void onMouseMove(MouseMoveEvent event) {
+			if (down) {
+				move = true;
+				if (event.getClientX() != x || event.getClientY() != y)
+					onResize(false);
+			}
+		}
+
+		@Override
+		public void onMouseUp(MouseUpEvent event) {
+			if (down && move) {
+				down = false;
+				move = false;
+				onResize(true);
+			}
+		}
+
+	}
+
 	private boolean dragging = false;
+	private boolean moving = false;
 	private int oWidth1 = -1;
 	private int oWidth2 = -1;
 	private List<ISplitPaneResizeListener> listeners = new LinkedList<ISplitPaneResizeListener>();
@@ -55,15 +92,20 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 		container.widget.addHandler(new MouseMoveHandler() {
 			@Override
 			public void onMouseMove(MouseMoveEvent event) {
-				if (dragging)
+				if (dragging) {
+					moving = true;
 					onResize(false);
+				}
 			}
 		}, MouseMoveEvent.getType());
 		container.widget.addHandler(new MouseUpHandler() {
 			@Override
 			public void onMouseUp(MouseUpEvent event) {
+				if (dragging & moving) {
+					onResize(true);
+				}
 				dragging = false;
-				onResize(true);
+				moving = false;
 			}
 		}, MouseUpEvent.getType());
 	}
