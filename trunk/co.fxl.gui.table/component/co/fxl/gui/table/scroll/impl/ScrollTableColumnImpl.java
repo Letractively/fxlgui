@@ -45,13 +45,25 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	public class BooleanDecorator implements Decorator<Boolean> {
 
 		@Override
-		public void decorate(final Object identifier, ICell cell, Boolean value) {
+		public void decorate(final Object identifier, final ICell cell,
+				Boolean value) {
 			cell.checkBox(value);
 			if (value != null && updateListener != null
 					&& updateListener.isEditable(identifier)) {
 				cell.updateListener(new IUpdateListener<Boolean>() {
+
+					private boolean ignore = false;
+
 					@Override
 					public void onUpdate(Boolean value) {
+						if (ignore)
+							return;
+						if (!updateListener.isEditable(identifier)) {
+							ignore = true;
+							cell.checkBox(!value);
+							ignore = false;
+							return;
+						}
 						boolean refresh = updateListener.onUpdate(identifier,
 								value);
 						if (refresh) {
