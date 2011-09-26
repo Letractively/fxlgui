@@ -46,6 +46,7 @@ import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.DialogImpl;
 import co.fxl.gui.impl.DiscardChangesDialog;
+import co.fxl.gui.impl.Display;
 
 public class SwingDisplay implements IDisplay, ComponentParent {
 
@@ -87,6 +88,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		ContextMenu.instance(this);
 		// fullscreen();
 		// Style.setUp();
+		Display.instance(this);
 	}
 
 	private void resize() {
