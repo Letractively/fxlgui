@@ -69,7 +69,7 @@ public abstract class LazyTreeWidgetTemplate implements
 	}
 
 	@Override
-	public ILazyTreeWidget<Object> marked(Object marked) {
+	public final ILazyTreeWidget<Object> marked(Object marked) {
 		this.marked = marked;
 		markedIndex = -1;
 		return this;
