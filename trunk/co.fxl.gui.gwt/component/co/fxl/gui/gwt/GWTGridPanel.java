@@ -181,7 +181,6 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 	@SuppressWarnings("unchecked")
 	public GWTGridPanel(GWTContainer<?> container) {
 		super((GWTContainer<HTMLTable>) container);
-		super.container.setComponent(new Grid());
 		super.container.widget.setWidth("100%");
 		indent(0);
 		spacing(0);

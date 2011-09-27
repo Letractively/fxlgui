@@ -32,7 +32,6 @@ class GWTHorizontalPanel extends GWTPanel<HorizontalPanel, IHorizontalPanel>
 	@SuppressWarnings("unchecked")
 	GWTHorizontalPanel(GWTContainer<?> container) {
 		super((GWTContainer<HorizontalPanel>) container);
-		super.container.setComponent(new HorizontalPanel());
 		align().begin();
 		super.container.widget
 				.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);

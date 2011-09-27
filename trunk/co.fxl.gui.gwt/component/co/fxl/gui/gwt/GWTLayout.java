@@ -28,6 +28,15 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
 
+import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.DeckPanel;
+import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
+
 class GWTLayout implements ILayout {
 
 	GWTContainer<?> panel;
@@ -43,36 +52,48 @@ class GWTLayout implements ILayout {
 
 	@Override
 	public IDockPanel dock() {
+		setComponent(new DockPanel());
 		return (IDockPanel) (panel.element = new GWTDockPanel(panel));
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void setComponent(Widget component) {
+		((GWTContainer) panel).setComponent(component);
 	}
 
 	@Override
 	public IGridPanel grid() {
+		setComponent(new Grid());
 		return (IGridPanel) (panel.element = new GWTGridPanel(panel));
 	}
 
 	@Override
 	public IHorizontalPanel horizontal() {
+		setComponent(new HorizontalPanel());
 		return (IHorizontalPanel) (panel.element = new GWTHorizontalPanel(panel));
 	}
 
 	@Override
 	public IVerticalPanel vertical() {
+		setComponent(new VerticalPanel());
 		return (IVerticalPanel) (panel.element = new GWTVerticalPanel(panel));
 	}
 
 	@Override
 	public ICardPanel card() {
+		setComponent(new DeckPanel());
 		return (ICardPanel) (panel.element = new GWTCardPanel(panel));
 	}
 
 	@Override
 	public IAbsolutePanel absolute() {
+		setComponent(new AbsolutePanel());
 		return (IAbsolutePanel) (panel.element = new GWTAbsolutePanel(panel));
 	}
 
 	@Override
 	public IFlowPanel flow() {
+		setComponent(new FlowPanel());
 		return (IFlowPanel) (panel.element = new GWTFlowPanel(panel));
 	}
 }

@@ -146,6 +146,7 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 		HorizontalSplitPanel p = (HorizontalSplitPanel) container.widget;
 		p.setSplitPosition(pixel + "px");
 		oWidth1 = pixel;
+		onResize(true);
 		return this;
 	}
 
@@ -161,9 +162,13 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 	}
 
 	private void onResize(boolean finished) {
-		final HorizontalSplitPanel p = (HorizontalSplitPanel) GWTSplitPane.super.container.widget;
-		int offsetWidth1 = p.getLeftWidget().getOffsetWidth();
-		int offsetWidth2 = p.getRightWidget().getOffsetWidth();
+		HorizontalSplitPanel p = (HorizontalSplitPanel) GWTSplitPane.super.container.widget;
+		Widget leftWidget = p.getLeftWidget();
+		Widget rightWidget = p.getRightWidget();
+		if (leftWidget == null || rightWidget == null)
+			return;
+		int offsetWidth1 = leftWidget.getOffsetWidth();
+		int offsetWidth2 = rightWidget.getOffsetWidth();
 		if (finished || oWidth1 != offsetWidth1 || oWidth2 != offsetWidth2) {
 			oWidth1 = offsetWidth1;
 			oWidth2 = offsetWidth2;
