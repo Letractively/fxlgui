@@ -33,7 +33,6 @@ class GWTAbsolutePanel extends GWTPanel<AbsolutePanel, IAbsolutePanel>
 	@SuppressWarnings("unchecked")
 	GWTAbsolutePanel(GWTContainer<?> container) {
 		super((GWTContainer<AbsolutePanel>) container);
-		super.container.setComponent(new AbsolutePanel());
 	}
 
 	@Override

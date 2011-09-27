@@ -35,7 +35,6 @@ class GWTVerticalPanel extends GWTPanel<VerticalPanel, IVerticalPanel>
 	@SuppressWarnings("unchecked")
 	GWTVerticalPanel(GWTContainer<?> container) {
 		super((GWTContainer<VerticalPanel>) container);
-		super.container.setComponent(new VerticalPanel());
 		super.container.widget.setBorderWidth(0);
 		spacing(0);
 		align().begin();

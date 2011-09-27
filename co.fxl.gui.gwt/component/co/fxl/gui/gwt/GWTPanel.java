@@ -39,9 +39,9 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 
 	GWTPanel(GWTContainer<T> container) {
 		super(container);
-		if (container.widget != null)
-			container.widget.getElement().getStyle()
-					.setOverflow(Overflow.HIDDEN);
+//		if (container.widget != null)
+//			container.widget.getElement().getStyle()
+//					.setOverflow(Overflow.HIDDEN);
 	}
 
 	@Override

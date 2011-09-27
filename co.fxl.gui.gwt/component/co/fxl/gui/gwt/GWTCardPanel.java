@@ -36,7 +36,6 @@ class GWTCardPanel extends GWTPanel<DeckPanel, ICardPanel> implements
 	@SuppressWarnings("unchecked")
 	GWTCardPanel(GWTContainer<?> container) {
 		super((GWTContainer<DeckPanel>) container);
-		super.container.setComponent(new DeckPanel());
 	}
 
 	@Override
