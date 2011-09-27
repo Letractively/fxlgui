@@ -56,6 +56,12 @@ class TreeModel<T> {
 		selection(tree, true);
 	}
 
+	boolean isHiddenRoot(ITree<T> tree) {
+		if (widget.showRoot)
+			return false;
+		return tree.equals(root);
+	}
+
 	// private boolean ignore = false;
 
 	void selection(ITree<T> tree, boolean setDetailViewTree) {
@@ -181,13 +187,13 @@ class TreeModel<T> {
 		}
 		widget.refreshLazyTree(true);
 		if (node == null) {
-//			widget.refreshLazyTree(true);
+			// widget.refreshLazyTree(true);
 			// TODO ...
 		} else {
 			assert node != null : trace(object) + " not found in "
 					+ trace(nodes.keySet());
 			ITree<T> tree = node.tree();
-//			refresh(tree, recurse);
+			// refresh(tree, recurse);
 			if (tree.equals(selection)) {
 				// widget.scrollIntoView(node);
 				widget.setDetailViewTree(tree);
@@ -344,5 +350,6 @@ class TreeModel<T> {
 
 	public void clearCutCopy() {
 		cutCopy = null;
+		widget.lazyTree.marked(null);
 	}
 }

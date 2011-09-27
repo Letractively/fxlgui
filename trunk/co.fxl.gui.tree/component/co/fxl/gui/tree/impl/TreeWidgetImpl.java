@@ -89,7 +89,9 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		String title;
 		boolean isDefaultView;
 		boolean deactivatedUpdate = false;
-//		private List<IResizeListener> resizeListeners = new LinkedList<IResizeListener>();
+
+		// private List<IResizeListener> resizeListeners = new
+		// LinkedList<IResizeListener>();
 
 		DetailView(String title, IDecorator<T> decorator) {
 			this.decorator = decorator;
@@ -175,12 +177,12 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			return register.enabled();
 		}
 
-//		@Override
-//		public co.fxl.gui.tree.api.ITreeWidget.IView resizeListener(
-//				IResizeListener l) {
-//			resizeListeners.add(l);
-//			return this;
-//		}
+		// @Override
+		// public co.fxl.gui.tree.api.ITreeWidget.IView resizeListener(
+		// IResizeListener l) {
+		// resizeListeners.add(l);
+		// return this;
+		// }
 	}
 
 	IVerticalPanel panel;
@@ -244,7 +246,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 										&& !result.parent().equals(p)) {
 									p = result.parent();
 								}
-								if (p != null)
+								if (p != null && !model.isHiddenRoot(p))
 									lazyTree.collapse(p, false);
 								previousSelection = result.object();
 								refreshLazyTree(true, true);
@@ -341,18 +343,20 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 						preMoveSplitPosition = -1;
 						previousSelection = model.selection().object();
 						model.move();
-						panel.display().invokeLater(new Runnable() {
-							@Override
-							public void run() {
-								if (lazyTree.width() > splitPane
-										.splitPosition()) {
-									TreeWidgetImpl.this.preMoveSplitPosition = splitPane
-											.splitPosition();
-									splitPane.splitPosition(lazyTree.width()
-											+ LazyScrollPaneImpl.WIDTH_SCROLL_PANEL);
-								}
-							}
-						});
+//						Display.instance().title(
+//								lazyTree.width() + ">"
+//										+ splitPane.splitPosition() + "?");
+						// panel.display().invokeLater(new Runnable() {
+						// @Override
+						// public void run() {
+						if (lazyTree.width() > splitPane.splitPosition()) {
+							TreeWidgetImpl.this.preMoveSplitPosition = splitPane
+									.splitPosition();
+							splitPane.splitPosition(lazyTree.width()
+									+ LazyScrollPaneImpl.WIDTH_SCROLL_PANEL);
+						}
+						// }
+						// });
 					}
 				};
 				reorder = widgetTitle.addHyperlink(Icons.MOVE, MOVE);
@@ -455,9 +459,9 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					@SuppressWarnings("unchecked")
 					DetailView view = (DetailView) TreeWidgetImpl.this.activeView;
 					view.decorator.resize();
-//					for (IView.IResizeListener l : view.resizeListeners) {
-//						l.onResize();
-//					}
+					// for (IView.IResizeListener l : view.resizeListeners) {
+					// l.onResize();
+					// }
 				}
 				if (lazyTree != null)
 					lazyTree.width(splitPane.width() - scrollPane.width() - 7);
