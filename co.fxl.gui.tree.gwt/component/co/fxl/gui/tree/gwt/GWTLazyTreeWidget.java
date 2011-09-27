@@ -85,6 +85,7 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 	private int lastRow;
 	private IContainer container;
 	private FocusPanel fp;
+	private VerticalPanel p0;
 
 	public GWTLazyTreeWidget(IContainer c) {
 		super(c);
@@ -108,7 +109,7 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 				}
 			}
 		});
-		VerticalPanel p0 = new VerticalPanel();
+		p0 = new VerticalPanel();
 		p0.setWidth("100%");
 		p0.setSpacing(spacing);
 		p0.setHeight(height() + "px");
@@ -217,6 +218,6 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 
 	@Override
 	public int width() {
-		return fp.getOffsetWidth();
+		return p0.getOffsetWidth();
 	}
 }
