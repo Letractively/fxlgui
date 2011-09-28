@@ -343,9 +343,9 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 						preMoveSplitPosition = -1;
 						previousSelection = model.selection().object();
 						model.move();
-//						Display.instance().title(
-//								lazyTree.width() + ">"
-//										+ splitPane.splitPosition() + "?");
+						// Display.instance().title(
+						// lazyTree.width() + ">"
+						// + splitPane.splitPosition() + "?");
 						// panel.display().invokeLater(new Runnable() {
 						// @Override
 						// public void run() {
@@ -454,7 +454,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		splitPane.addResizeListener(new ISplitPaneResizeListener() {
 
 			@Override
-			public void onResize(boolean finished, int left, int right) {
+			public void onResize(int left, int right) {
 				if (TreeWidgetImpl.this.activeView != null) {
 					@SuppressWarnings("unchecked")
 					DetailView view = (DetailView) TreeWidgetImpl.this.activeView;
