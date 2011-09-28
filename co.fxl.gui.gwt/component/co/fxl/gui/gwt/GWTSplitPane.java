@@ -57,7 +57,7 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 			if (down) {
 				move = true;
 				if (event.getClientX() != x || event.getClientY() != y)
-					onResize(false);
+					onResize();
 			}
 		}
 
@@ -66,7 +66,7 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 			if (down && move) {
 				down = false;
 				move = false;
-				onResize(true);
+				onResize();
 			}
 		}
 
@@ -86,7 +86,6 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 			@Override
 			public void onMouseDown(MouseDownEvent event) {
 				dragging = true;
-				onResize(false);
 			}
 		}, MouseDownEvent.getType());
 		container.widget.addHandler(new MouseMoveHandler() {
@@ -94,7 +93,7 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 			public void onMouseMove(MouseMoveEvent event) {
 				if (dragging) {
 					moving = true;
-					onResize(false);
+					onResize();
 				}
 			}
 		}, MouseMoveEvent.getType());
@@ -102,7 +101,7 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 			@Override
 			public void onMouseUp(MouseUpEvent event) {
 				if (dragging & moving) {
-					onResize(true);
+					onResize();
 				}
 				dragging = false;
 				moving = false;
@@ -146,7 +145,7 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 		HorizontalSplitPanel p = (HorizontalSplitPanel) container.widget;
 		p.setSplitPosition(pixel + "px");
 		oWidth1 = pixel;
-		onResize(true);
+		onResize();
 		return this;
 	}
 
@@ -161,7 +160,7 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 		return this;
 	}
 
-	private void onResize(boolean finished) {
+	private void onResize() {
 		HorizontalSplitPanel p = (HorizontalSplitPanel) GWTSplitPane.super.container.widget;
 		Widget leftWidget = p.getLeftWidget();
 		Widget rightWidget = p.getRightWidget();
@@ -169,11 +168,11 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 			return;
 		int offsetWidth1 = leftWidget.getOffsetWidth();
 		int offsetWidth2 = rightWidget.getOffsetWidth();
-		if (finished || oWidth1 != offsetWidth1 || oWidth2 != offsetWidth2) {
+		if (oWidth1 != offsetWidth1 || oWidth2 != offsetWidth2) {
 			oWidth1 = offsetWidth1;
 			oWidth2 = offsetWidth2;
 			for (ISplitPaneResizeListener l : listeners)
-				l.onResize(finished, offsetWidth1, offsetWidth2);
+				l.onResize(offsetWidth1, offsetWidth2);
 		}
 	}
 
