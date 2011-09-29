@@ -65,6 +65,7 @@ public abstract class LazyTreeWidgetTemplate implements
 	@Override
 	public ILazyTreeWidget<Object> selection(Object selection) {
 		this.selection = selection;
+		selectionIndex = -1;
 		return this;
 	}
 
@@ -190,9 +191,9 @@ public abstract class LazyTreeWidgetTemplate implements
 		if (reset) {
 			tree(realTree);
 		}
-//		if (pane != null) {
-//			lastFirstRow = pane.rowIndex();
-//		}
+		// if (pane != null) {
+		// lastFirstRow = pane.rowIndex();
+		// }
 		c.element().remove();
 		show(checkSelection);
 		return this;
@@ -212,8 +213,15 @@ public abstract class LazyTreeWidgetTemplate implements
 	public ILazyTreeWidget<Object> collapse(ITree<Object> tree, boolean collapse) {
 		selection = tree.object();
 		selectionIndex = -1;
-		this.tree.collapse(tree, collapse);
+		collapseNoRefresh(tree, collapse);
 		refresh(false);
+		return this;
+	}
+
+	@Override
+	public ILazyTreeWidget<Object> collapseNoRefresh(ITree<Object> tree,
+			boolean collapse) {
+		this.tree.collapse(tree, collapse);
 		return this;
 	}
 

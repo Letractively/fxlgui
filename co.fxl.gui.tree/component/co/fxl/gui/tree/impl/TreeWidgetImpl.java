@@ -246,10 +246,11 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 										&& !result.parent().equals(p)) {
 									p = result.parent();
 								}
-								if (p != null && !model.isHiddenRoot(p))
-									lazyTree.collapse(p, false);
-								previousSelection = result.object();
-								refreshLazyTree(true, true);
+								if (p != null && !model.isHiddenRoot(p)
+										&& lazyTree.isCollapsed(p))
+									lazyTree.collapseNoRefresh(p, false);
+								lazyTree.selection(result.object());
+								lazyTree.refresh(true, true);
 							}
 						};
 						if (parent != null) {
@@ -444,7 +445,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		if (registers != null)
 			return;
 		splitPane = panel().add().splitPane().splitPosition(SPLIT_POSITION);
-		panel = splitPane.first().panel().vertical();
+		createLeftSideWidget();
 		panel.color().rgb(240, 240, 240);
 		final IScrollPane scrollPane = splitPane.second().scrollPane();
 		registers = (IMenuWidget) scrollPane.viewPort().widget(
@@ -467,6 +468,10 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					lazyTree.width(splitPane.width() - scrollPane.width() - 7);
 			}
 		});
+	}
+
+	public void createLeftSideWidget() {
+		panel = splitPane.first().panel().vertical();
 	}
 
 	@Override
