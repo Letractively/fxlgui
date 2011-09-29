@@ -53,6 +53,8 @@ public interface ILazyTreeWidget<T> {
 
 	ILazyTreeWidget<T> collapse(ITree<T> tree, boolean collapse);
 
+	ILazyTreeWidget<T> collapseNoRefresh(ITree<T> tree, boolean collapse);
+
 	ILazyTreeWidget<T> width(int width);
 
 	int indent(ITree<Object> t);
