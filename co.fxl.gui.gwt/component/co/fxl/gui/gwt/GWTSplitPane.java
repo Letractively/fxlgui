@@ -36,40 +36,74 @@ import com.google.gwt.user.client.ui.Widget;
 
 class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane {
 
-	private class MouseHandler implements MouseDownHandler, MouseMoveHandler,
-			MouseUpHandler {
+	// private class MouseHandler implements MouseDownHandler, MouseMoveHandler,
+	// MouseUpHandler {
+	//
+	// private int x = -1;
+	// private int y = -1;
+	// private boolean down = false;
+	// private boolean move = false;
+	//
+	// @Override
+	// public void onMouseDown(MouseDownEvent event) {
+	// down = true;
+	// move = false;
+	// x = event.getClientX();
+	// y = event.getClientY();
+	// }
+	//
+	// @Override
+	// public void onMouseMove(MouseMoveEvent event) {
+	// if (down) {
+	// move = true;
+	// if (event.getClientX() != x || event.getClientY() != y)
+	// onResize();
+	// }
+	// }
+	//
+	// @Override
+	// public void onMouseUp(MouseUpEvent event) {
+	// if (down && move) {
+	// down = false;
+	// move = false;
+	// onResize();
+	// }
+	// }
+	//
+	// }
 
-		private int x = -1;
-		private int y = -1;
-		private boolean down = false;
-		private boolean move = false;
+	private final class LeftSideContainer extends GWTContainer<Widget> {
+		private final HorizontalSplitPanel p;
 
-		@Override
-		public void onMouseDown(MouseDownEvent event) {
-			down = true;
-			move = false;
-			x = event.getClientX();
-			y = event.getClientY();
+		private LeftSideContainer(WidgetParent parent, HorizontalSplitPanel p) {
+			super(parent);
+			this.p = p;
 		}
 
 		@Override
-		public void onMouseMove(MouseMoveEvent event) {
-			if (down) {
-				move = true;
-				if (event.getClientX() != x || event.getClientY() != y)
-					onResize();
-			}
+		public void setComponent(Widget component) {
+			widget = component;
+			prepare(component);
+			p.setLeftWidget(component);
+			widget.getElement().getParentElement().getStyle()
+					.setOverflow(Overflow.HIDDEN);
+		}
+	}
+
+	private final class RightSideContainer extends GWTContainer<Widget> {
+		private final HorizontalSplitPanel p;
+
+		private RightSideContainer(WidgetParent parent, HorizontalSplitPanel p) {
+			super(parent);
+			this.p = p;
 		}
 
 		@Override
-		public void onMouseUp(MouseUpEvent event) {
-			if (down && move) {
-				down = false;
-				move = false;
-				onResize();
-			}
+		public void setComponent(Widget component) {
+			widget = component;
+			prepare(component);
+			p.setRightWidget(component);
 		}
-
 	}
 
 	private boolean dragging = false;
@@ -77,6 +111,8 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 	private int oWidth1 = -1;
 	private int oWidth2 = -1;
 	private List<ISplitPaneResizeListener> listeners = new LinkedList<ISplitPaneResizeListener>();
+	private GWTContainer<Widget> leftContainer;
+	private GWTContainer<Widget> rightContainer;
 
 	GWTSplitPane(GWTContainer<Widget> container) {
 		super(container);
@@ -107,32 +143,23 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 				moving = false;
 			}
 		}, MouseUpEvent.getType());
+		setUpContainers(container);
+	}
+
+	public void setUpContainers(final GWTContainer<Widget> container) {
+		final HorizontalSplitPanel p = (HorizontalSplitPanel) container.widget;
+		leftContainer = new LeftSideContainer(container.parent, p);
+		rightContainer = new RightSideContainer(container.parent, p);
 	}
 
 	@Override
 	public IContainer first() {
-		return new GWTContainer<Widget>(container.parent) {
-			public void setComponent(Widget component) {
-				super.widget = component;
-				prepare(component);
-				HorizontalSplitPanel p = (HorizontalSplitPanel) container.widget;
-				p.setLeftWidget(component);
-				component.getElement().getParentElement().getStyle()
-						.setOverflow(Overflow.HIDDEN);
-			}
-		};
+		return leftContainer;
 	}
 
 	@Override
 	public IContainer second() {
-		return new GWTContainer<Widget>(container.parent) {
-			public void setComponent(Widget component) {
-				super.widget = component;
-				prepare(component);
-				HorizontalSplitPanel p = (HorizontalSplitPanel) container.widget;
-				p.setRightWidget(component);
-			}
-		};
+		return rightContainer;
 	}
 
 	@Override
