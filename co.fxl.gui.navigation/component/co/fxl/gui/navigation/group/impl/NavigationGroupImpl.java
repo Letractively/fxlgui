@@ -31,8 +31,8 @@ import co.fxl.gui.navigation.group.api.INavigationItem;
 
 class NavigationGroupImpl implements INavigationGroup {
 
-	// TODO Code: Look: add horizontal line spanning width (color: #000000)
-	// TODO Code: Look: Register-Widget: no flickering -> use Card-Panel, set
+	// TODO LOOK: add horizontal line spanning width (color: #000000)
+	// TODO LOOK: Register-Widget: no flickering -> use Card-Panel, set
 	// panel invisible, decorator with callback: switch when returned
 
 	// TODO Code: for large numbers of groups, click on group name: popup
