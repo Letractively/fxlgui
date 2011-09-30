@@ -24,11 +24,14 @@ import co.fxl.gui.api.ILinearPanel;
 
 public class ColumnSelectionDialog implements IClickListener {
 
+	// TODO ARCHITECTURE: Decomposition: extract layout, move as much as
+	// possible into component, only leave minimum of glue code in aspect
+
 	public static void addButton(final ColumnSelection cs,
 			final ILinearPanel<?> p) {
 		p.addSpace(4).add().label().text("COLUMNS >>").hyperlink()
 				.addClickListener(new ColumnSelectionDialog(cs, p)).mouseLeft()
-				.font().pixel(10); 
+				.font().pixel(10);
 	}
 
 	private ColumnSelection cs;

@@ -28,6 +28,9 @@ import co.fxl.gui.layout.impl.Layout;
 
 privileged aspect ColumnSelectionLayout {
 
+	// TODO ARCHITECTURE: Decomposition: extract layout, move as much as
+	// possible into component, only leave minimum of glue code in aspect
+
 	void around(ColumnSelection columnSelection, Object p,
 			IClickListener clickListener) : 
 	call(void ColumnSelection.addToPanel(..))
