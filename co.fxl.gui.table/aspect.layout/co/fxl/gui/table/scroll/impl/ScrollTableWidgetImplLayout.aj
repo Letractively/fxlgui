@@ -5,6 +5,9 @@ import co.fxl.gui.layout.impl.Layout;
 
 privileged aspect ScrollTableWidgetImplLayout {
 
+	// TODO ARCHITECTURE: Decomposition: extract layout, move as much as
+	// possible into component, only leave minimum of glue code in aspect
+
 	void around(final ScrollTableWidgetImpl widget) : 
 	call(protected void ScrollTableWidgetImpl.addFilter()) 
 	&& withincode(public IScrollTableWidget ScrollTableWidgetImpl.visible(boolean)) 
