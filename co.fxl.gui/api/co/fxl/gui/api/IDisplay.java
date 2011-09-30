@@ -71,6 +71,7 @@ public interface IDisplay extends IColored{
 	IDisplay invokeLater(Runnable runnable);
 
 	// TODO eventually extract to ICodeSplit or something similar
+	// TODO eventually implement code splitting as aspect
 	IDisplay runAsync(Runnable runnable);
 
 	String title();

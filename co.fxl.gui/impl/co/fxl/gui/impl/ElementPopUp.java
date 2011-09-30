@@ -82,7 +82,6 @@ public class ElementPopUp {
 			scrollPane.border().remove();
 			container = scrollPane.viewPort();
 		}
-		// TODO refine, 17 = hack for GWT
 		IVerticalPanel panel = container.panel().vertical().spacing(4);
 		if (color != null)
 			color.forward(panel.color());
