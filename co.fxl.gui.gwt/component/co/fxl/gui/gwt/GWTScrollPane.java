@@ -32,6 +32,7 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 		IScrollPane {
 
 	private static final int BLOCK_INCREMENT = 22;
+	private int initialScrollPosition = -1;
 
 	GWTScrollPane(GWTContainer<ScrollPanel> container) {
 		super(container);
@@ -74,7 +75,14 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 		container.widget.addScrollHandler(new ScrollHandler() {
 			@Override
 			public void onScroll(ScrollEvent event) {
-				listener.onScroll(container.widget.getScrollPosition());
+				final int scrollPosition = container.widget.getScrollPosition();
+				if (initialScrollPosition != -1
+						&& scrollPosition != initialScrollPosition) {
+					int lp = initialScrollPosition;
+					initialScrollPosition = -1;
+					container.widget.setScrollPosition(lp);
+				} else
+					listener.onScroll(scrollPosition);
 			}
 		});
 		return this;
@@ -91,7 +99,10 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 		// p.getElement().scrollIntoView();
 		// ap.remove(p);
 		// } else
-		container.widget.setScrollPosition(pos);
+//		if (container.widget.isVisible())
+			container.widget.setScrollPosition(pos);
+//		else
+			initialScrollPosition = pos;
 		return this;
 	}
 

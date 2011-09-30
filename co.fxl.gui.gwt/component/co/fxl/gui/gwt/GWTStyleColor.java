@@ -54,7 +54,7 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 							+ original.color + "), to(" + color + "))";
 					if (GWTDisplay.isInternetExplorer()) {
 
-						// TODO Look: GWT: use repeating image a la
+						// TODO LOOK: GWT: use repeating image a la
 						// background-image: url(h64_FFAACC_FFAAAA.png);
 						// background-repeat: repeat-x; background: mittelwert
 
@@ -82,7 +82,7 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 							gradient = mix(original.color, color);
 						}
 
-						// TODO Look: GWT: use repeating image a la
+						// TODO LOOK: GWT: use repeating image a la
 						// background-image: url(h64_FFAACC_FFAAAA.png);
 						// background-repeat: repeat-x; background: mittelwert
 
