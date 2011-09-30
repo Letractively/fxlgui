@@ -85,8 +85,7 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 			widget = component;
 			prepare(component);
 			p.setLeftWidget(component);
-			widget.getElement().getParentElement().getStyle()
-					.setOverflow(Overflow.HIDDEN);
+			hideOverflow(component);
 		}
 	}
 
@@ -103,6 +102,7 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 			widget = component;
 			prepare(component);
 			p.setRightWidget(component);
+			hideOverflow(component);
 		}
 	}
 
@@ -211,5 +211,10 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 	@Override
 	public int splitPosition() {
 		return oWidth1;
+	}
+
+	public void hideOverflow(Widget widget) {
+		widget.getElement().getParentElement().getStyle()
+				.setOverflow(Overflow.HIDDEN);
 	}
 }

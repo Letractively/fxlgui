@@ -35,6 +35,7 @@ import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.DialogImpl;
 import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.log.Log;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -93,6 +94,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		DiscardChangesDialog.display = this;
 		ContextMenu.instance(this);
 		Display.instance(this);
+		Log.instance(new GWTLog());
 	}
 
 	@Override
