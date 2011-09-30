@@ -57,8 +57,11 @@ class GWTLayout implements ILayout {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void setComponent(Widget component) {
-		((GWTContainer) panel).setComponent(component);
+	public final void setComponent(Widget component) {
+		if (panel == null)
+			throw new MethodNotImplementedException();
+		GWTContainer c = (GWTContainer) panel;
+		c.setComponent(component);
 	}
 
 	@Override
@@ -75,7 +78,12 @@ class GWTLayout implements ILayout {
 
 	@Override
 	public IVerticalPanel vertical() {
-		setComponent(new VerticalPanel());
+		Widget component = (Widget) new VerticalPanel();
+		GWTLayout l = this;
+		if (l == null)
+			// GWT-Javascript: potential bug / -ly not dead in Javascript...
+			throw new MethodNotImplementedException();
+		l.setComponent(component);
 		return (IVerticalPanel) (panel.element = new GWTVerticalPanel(panel));
 	}
 
