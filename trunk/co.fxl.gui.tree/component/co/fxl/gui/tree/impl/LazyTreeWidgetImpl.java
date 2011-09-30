@@ -31,7 +31,7 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 
 	private IVerticalPanel vertical;
 
-	// TODO Usability: Swing: Mouse-Wheel not active on content panel
+	// TODO USABILITY: Swing: Mouse-Wheel not active on content panel
 
 	LazyTreeWidgetImpl(IContainer container) {
 		super(container);
