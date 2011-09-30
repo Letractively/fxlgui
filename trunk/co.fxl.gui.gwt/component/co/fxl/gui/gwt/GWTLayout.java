@@ -76,14 +76,14 @@ class GWTLayout implements ILayout {
 		return (IHorizontalPanel) (panel.element = new GWTHorizontalPanel(panel));
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public IVerticalPanel vertical() {
 		Widget component = (Widget) new VerticalPanel();
-		GWTLayout l = this;
-		if (l == null)
-			// GWT-Javascript: potential bug / -ly not dead in Javascript...
+		if (panel == null)
 			throw new MethodNotImplementedException();
-		l.setComponent(component);
+		GWTContainer c = (GWTContainer) panel;
+		c.setComponent(component);
 		return (IVerticalPanel) (panel.element = new GWTVerticalPanel(panel));
 	}
 
