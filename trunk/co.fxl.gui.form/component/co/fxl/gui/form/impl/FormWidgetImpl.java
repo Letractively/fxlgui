@@ -339,7 +339,6 @@ class FormWidgetImpl implements IFormWidget {
 				.horizontal().spacing(2);
 		saveButton = panel.add().button();
 		final IButton clickable1 = panel.add().button();
-		// TODO un-hack
 		if (!saveListener.allowsCancel())
 			clickable1.visible(false);
 		saveClickListener = new IClickListener() {

@@ -56,7 +56,7 @@ public class DateField {
 				}
 			});
 
-			// TODO Usability: GWT: this seems to not work (shows always the
+			// TODO testen: USABILITY: GWT: this seems to not work (shows always the
 			// current date):
 			calendar.date(format.parse(tf.text()));
 
