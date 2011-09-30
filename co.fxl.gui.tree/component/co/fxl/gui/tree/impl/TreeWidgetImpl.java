@@ -31,7 +31,6 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDisplay.IResizeListener;
-import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.ISplitPane.ISplitPaneResizeListener;
 import co.fxl.gui.api.IVerticalPanel;
@@ -435,39 +434,45 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public IView addDetailView(String title, IDecorator<T> decorator) {
-		setUpRegisters();
+		lazySetUpRegisters();
 		DetailView detailView = new DetailView(title, decorator);
 		detailViews.add(detailView);
 		return detailView;
 	}
 
-	private void setUpRegisters() {
+	private void lazySetUpRegisters() {
 		if (registers != null)
 			return;
-		splitPane = panel().add().splitPane().splitPosition(SPLIT_POSITION);
-		createLeftSideWidget();
-		panel.color().rgb(240, 240, 240);
-		final IScrollPane scrollPane = splitPane.second().scrollPane();
-		registers = (IMenuWidget) scrollPane.viewPort().widget(
-				IMenuWidget.class);
-		ResizeListenerImpl.setup(panel.display(), this);
-		onResize(-1, panel.display().height());
-		splitPane.addResizeListener(new ISplitPaneResizeListener() {
+		setUpRegistersNow();
+	}
 
+	public void setUpRegistersNow() {
+		IVerticalPanel panel2 = panel();
+		splitPane = panel2.add().splitPane().splitPosition(SPLIT_POSITION);
+		createLeftSideWidget();
+		panel2.color().rgb(240, 240, 240);
+		final IVerticalPanel vertical = createRightSideWidget();
+		registers = (IMenuWidget) vertical.add().widget(IMenuWidget.class);
+		ResizeListenerImpl.setup(panel2.display(), this);
+		onResize(-1, panel2.display().height());
+		splitPane.addResizeListener(new ISplitPaneResizeListener() {
 			@Override
 			public void onResize(int left, int right) {
 				if (TreeWidgetImpl.this.activeView != null) {
 					@SuppressWarnings("unchecked")
 					DetailView view = (DetailView) TreeWidgetImpl.this.activeView;
 					view.decorator.resize();
-					// for (IView.IResizeListener l : view.resizeListeners) {
-					// l.onResize();
-					// }
 				}
 				if (lazyTree != null)
-					lazyTree.width(splitPane.width() - scrollPane.width() - 7);
+					lazyTree.width(splitPane.width() - vertical.width() - 7);
 			}
 		});
+	}
+
+	public IVerticalPanel createRightSideWidget() {
+		final IVerticalPanel vertical = splitPane.second().panel().vertical();
+		vertical.color().white();
+		return vertical;
 	}
 
 	public void createLeftSideWidget() {
