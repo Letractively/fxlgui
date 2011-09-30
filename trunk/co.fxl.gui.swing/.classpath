@@ -3,5 +3,7 @@
 	<classpathentry kind="src" path="component"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/co.fxl.gui"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/co.fxl.data.format"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/co.fxl.data.format.swing"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
