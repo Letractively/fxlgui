@@ -34,6 +34,8 @@ import co.fxl.gui.tree.impl.TreeNode;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.DoubleClickEvent;
+import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.event.dom.client.MouseWheelEvent;
 import com.google.gwt.event.dom.client.MouseWheelHandler;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -203,17 +205,27 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		html.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(final ClickEvent event) {
-				DiscardChangesDialog.show(new CallbackTemplate<Boolean>() {
-					@Override
-					public void onSuccess(Boolean result) {
-						selectionIndex = firstRow
-								+ (event.getY() / heightElement);
-						update();
-					}
-				});
+				handleClick(firstRow, event.getY());
+			}
+		});
+		html.addDoubleClickHandler(new DoubleClickHandler() {
+			@Override
+			public void onDoubleClick(final DoubleClickEvent event) {
+				// TODO FEATURE: Usability: expand node before selection
+				handleClick(firstRow, event.getY());
 			}
 		});
 		return html;
+	}
+
+	private void handleClick(final int firstRow, final int y) {
+		DiscardChangesDialog.show(new CallbackTemplate<Boolean>() {
+			@Override
+			public void onSuccess(Boolean result) {
+				selectionIndex = firstRow + (y / heightElement);
+				update();
+			}
+		});
 	}
 
 	@Override
