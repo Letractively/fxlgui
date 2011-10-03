@@ -104,6 +104,9 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 			addText(choice);
 		int index = constraints.indexOf(token);
 		container.widget.setSelectedIndex(index);
+		// TODO check
+		for (IUpdateListener<String> l : listeners)
+			l.onUpdate(text());
 		return this;
 	}
 
