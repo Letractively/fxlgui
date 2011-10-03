@@ -73,7 +73,7 @@ public class ElementPopUp {
 		int w = Math.min(320, element.width());
 		int h = 0;
 		if (lines >= 1)
-			h = 2 + rowHeight * lines;
+			h = 4 + rowHeight * lines;
 		if (h > 0)
 			popUp.size(w, h);
 		else
