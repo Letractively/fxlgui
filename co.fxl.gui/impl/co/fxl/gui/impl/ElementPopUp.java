@@ -42,6 +42,7 @@ public class ElementPopUp {
 	private int lines = -1;
 	private ColorMemento color;
 	private boolean scrollPane = true;
+	private int rowHeight = 19;
 
 	public ElementPopUp(IElement<?> element) {
 		this.element = element;
@@ -61,13 +62,18 @@ public class ElementPopUp {
 		return this;
 	}
 
+	public ElementPopUp rowHeight(int rowHeight) {
+		this.rowHeight = rowHeight;
+		return this;
+	}
+
 	public IVerticalPanel create() {
 		popUp = element.display().showPopUp().autoHide(true);
 		HEIGHTS.decorateBorder(popUp).style().shadow();
 		int w = Math.min(320, element.width());
 		int h = 0;
 		if (lines >= 1)
-			h = 2 + 19 * lines;
+			h = 2 + rowHeight * lines;
 		if (h > 0)
 			popUp.size(w, h);
 		else
