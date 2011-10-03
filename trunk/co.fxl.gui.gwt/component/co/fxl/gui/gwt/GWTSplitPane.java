@@ -102,7 +102,7 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 			widget = component;
 			prepare(component);
 			p.setRightWidget(component);
-			hideOverflow(component);
+//			hideOverflow(component);
 		}
 	}
 
