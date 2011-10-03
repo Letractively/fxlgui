@@ -117,7 +117,7 @@ class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements ISplitPane 
 	GWTSplitPane(GWTContainer<Widget> container) {
 		super(container);
 		container.widget.setHeight("600px");
-		container.widget.getElement().getStyle().setOverflow(Overflow.HIDDEN);
+//		container.widget.getElement().getStyle().setOverflow(Overflow.HIDDEN);
 		container.widget.addHandler(new MouseDownHandler() {
 			@Override
 			public void onMouseDown(MouseDownEvent event) {
