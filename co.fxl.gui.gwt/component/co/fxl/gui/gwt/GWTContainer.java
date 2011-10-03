@@ -67,7 +67,7 @@ public class GWTContainer<T extends Widget> implements IContainer {
 		this.parent = parent;
 	}
 
-	public void setComponent(T component) {
+	final void setComponent(T component) {
 		this.widget = component;
 		if (parent != null)
 			parent.add(component);
