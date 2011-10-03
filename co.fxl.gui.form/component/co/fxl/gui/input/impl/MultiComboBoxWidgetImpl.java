@@ -47,7 +47,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	MultiComboBoxWidgetImpl(IContainer container) {
 		textField = container.textField().visible(false);
 		ElementPopUp.HEIGHTS.decorate(textField);
-		popUp = new ElementPopUp(textField);
+		popUp = new ElementPopUp(textField).rowHeight(23);
 	}
 
 	@Override
