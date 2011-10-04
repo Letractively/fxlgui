@@ -470,7 +470,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	public IVerticalPanel createRightSideWidget() {
-		final IVerticalPanel vertical = splitPane.second().scrollPane()
+		final IVerticalPanel vertical = splitPane.second().scrollPane().horizontal()
 				.viewPort().panel().vertical();
 		vertical.color().white();
 		return vertical;
