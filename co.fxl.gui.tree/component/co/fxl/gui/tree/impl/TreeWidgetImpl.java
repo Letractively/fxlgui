@@ -31,7 +31,6 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDisplay.IResizeListener;
-import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.ISplitPane.ISplitPaneResizeListener;
 import co.fxl.gui.api.IVerticalPanel;
@@ -471,10 +470,12 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	public IVerticalPanel createRightSideWidget() {
-		IScrollPane scrollPane = splitPane.second().scrollPane();
-		scrollPane.color().white();
-		IVerticalPanel vertical = scrollPane.horizontal().viewPort().panel()
-				.vertical();
+		// IScrollPane scrollPane =
+		// splitPane.second().scrollPane().horizontal();
+		// scrollPane.color().white();
+		// IVerticalPanel vertical = scrollPane.viewPort().panel()
+		// .vertical();
+		IVerticalPanel vertical = splitPane.second().panel().vertical();
 		vertical.color().white();
 		return vertical;
 	}
