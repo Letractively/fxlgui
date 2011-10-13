@@ -188,7 +188,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	private IRowListener<IRows<Object>> listenOnShowListener;
 	int selectionIndex = -1;
 	Object selection;
-	private IHorizontalPanel panel;
+	private IPanel<?> panel;
 	private IClickable<?> imageUp;
 	private IClickable<?> imageDown;
 	private IClickable<?> remove;
@@ -290,7 +290,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	public void decorate(IGridCell container) {
 		widget.selection().single().addSelectionListener(this);
 		panel = container.panel().horizontal().align().end().add().panel()
-				.horizontal().align().end().spacing(8);
+				.horizontal().align().end().add().panel().flow().spacing(8);
 		if (listenOnAdd) {
 			IClickable<?> image = listenOnAddListenerDecorator.decorate(panel);
 			image.addClickListener(new Update(listenOnAddListener));
