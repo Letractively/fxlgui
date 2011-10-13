@@ -20,6 +20,6 @@ package co.fxl.gui.api;
 
 public interface IFlowPanel extends IPanel<IFlowPanel> {
 
-	// TODO IFlowPanel spacing(int spacing);
+	IFlowPanel spacing(int spacing);
 
 }
