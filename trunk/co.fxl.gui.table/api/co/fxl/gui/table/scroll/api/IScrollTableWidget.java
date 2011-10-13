@@ -23,6 +23,7 @@ import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -62,7 +63,7 @@ public interface IScrollTableWidget<T> {
 
 	public interface IDecorator {
 
-		IClickable<?> decorate(IContainer c);
+		IClickable<?> decorate(IPanel<?> p);
 	}
 
 	public interface ICommandButtons<T> {

@@ -103,7 +103,9 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 		@Override
 		public void decorate(Object identifier, ICell cell, Date value) {
-			cell.text(value == null ? null : format.format(value));
+			String text = value == null ? null : format.format(value);
+			injectColor(identifier, cell);
+			cell.text(text);
 		}
 
 		@Override
@@ -120,7 +122,9 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 		@Override
 		public void decorate(Object identifier, ICell cell, Number value) {
-			cell.text(String.valueOf(value));
+			String text = String.valueOf(value);
+			injectColor(identifier, cell);
+			cell.text(text);
 		}
 
 		@Override
@@ -141,7 +145,9 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 		@Override
 		public void decorate(Object identifier, ICell cell, String value) {
-			cell.text((String) value);
+			String text = (String) value;
+			injectColor(identifier, cell);
+			cell.text(text);
 		}
 
 		@Override
@@ -180,10 +186,18 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	int widthInt = -1;
 	double widthDouble = -1;
 	boolean editable = false;
+	private IColorAdapter<Object> colorAdapter;
 
 	ScrollTableColumnImpl(ScrollTableWidgetImpl widget, int index) {
 		this.widget = widget;
 		this.index = index;
+	}
+
+	private void injectColor(Object identifier, ICell cell) {
+		if (colorAdapter != null) {
+			String color = colorAdapter.color(identifier);
+			cell.color(color);
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -334,6 +348,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	@Override
 	public IScrollTableColumn<Object> colorAdapter(
 			co.fxl.gui.table.scroll.api.IScrollTableColumn.IColorAdapter<Object> colorAdapter) {
-		throw new MethodNotImplementedException();
+		this.colorAdapter = colorAdapter;
+		return this;
 	}
 }
