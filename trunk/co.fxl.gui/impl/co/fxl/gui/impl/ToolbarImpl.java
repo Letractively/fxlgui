@@ -32,7 +32,6 @@ public class ToolbarImpl implements IToolbar {
 	private ToolbarImpl parent;
 	private List<Object> content = new LinkedList<Object>();
 	private boolean hasContent = false;
-	private int spacing = SPACING;
 
 	public ToolbarImpl(IContainer container) {
 		panel = container.panel().flow();
@@ -53,10 +52,11 @@ public class ToolbarImpl implements IToolbar {
 		ToolbarImpl root = root();
 		IHorizontalPanel childPanel = root.panel.add().panel().horizontal()
 				.height(40).align().center();
-		childPanel.spacing().left(root.hasContent ? 0 : spacing).top(spacing)
-				.bottom(spacing).right(spacing);
+			childPanel.spacing().left(root.hasContent ? 0 : SPACING)
+					.top(0).bottom(0).right(SPACING);
 		childPanel = childPanel.add().panel().horizontal().align().center();
 		content.add(childPanel);
+		root.hasContent = true;
 		return childPanel.add();
 	}
 
@@ -92,12 +92,6 @@ public class ToolbarImpl implements IToolbar {
 				childPanel.visible(visible);
 			}
 		}
-		return this;
-	}
-
-	@Override
-	public IToolbar spacing(int spacing) {
-		this.spacing = spacing;
 		return this;
 	}
 
