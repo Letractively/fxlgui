@@ -60,7 +60,7 @@ import co.fxl.gui.table.util.api.ILazyScrollPane;
 class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		ILabelMouseListener {
 
-	private static final int HEIGHT_TOP_PANEL = 40;
+//	private static final int HEIGHT_TOP_PANEL = 40;
 	// TODO Swing: native implementation: required for automated testing
 
 	// TODO 2DECIDE: Option: DESIGN: Look: Scroll-Table-Widget: use fixed column
@@ -215,16 +215,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			container().clear();
 			topPanel();
 			viewInc = 0;
-			// if (viewComboBoxText != null) {
-			// IHorizontalPanel p = topPanel.cell(viewInc + 0, 0).panel()
-			// .horizontal();
-			// p.add().label().text("VIEW:").font().weight().bold();
-			// p.addSpace(4).add().comboBox().width(100)
-			// .addText(viewComboBoxText)
-			// .addUpdateListener(viewComboBoxUpdateListener);
-			// p.addSpace(4);
-			// viewInc = 1;
-			// }
 			if (rows.size() == 0
 					&& (constraints == null
 							|| !constraints.isConstraintSpecified() || !hasFilter())) {
@@ -246,17 +236,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 								.grid()
 								.resize(3, constraints.description().size())
 								.spacing(4);
-						// if (filter != null || filterListener != null)
-						// gp.cell(0, 0).label().text("Remove").hyperlink()
-						// .addClickListener(new IClickListener() {
-						// @Override
-						// public void onClick() {
-						// if (filter != null)
-						// filter.clear();
-						// else
-						// throw new MethodNotImplementedException();
-						// }
-						// });
 						gp.cell(0, 0).label().text("FILTER").font().pixel(9)
 								.color().gray();
 						int i = 0;
@@ -280,8 +259,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					statusPanel2.cell(0, 0).label().text("&#160;");
 					statusPanel2.height(32);
 				}
+				setUpTopPanel();
 			} else {
 				addFilter();
+				setUpTopPanel();
 				contentPanel0 = container.add().panel().vertical();
 				contentPanel0.height(heightMinusTopPanel());
 				contentPanel = contentPanel0.add().panel().vertical();
@@ -331,21 +312,24 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					sp.visible(true);
 				}
 			}
-			if (navigationDecorator != null) {
-				navigationPanel(navigationDecorator);
-			}
-			if (buttonDecorator != null) {
-				buttonPanel(buttonDecorator);
-			}
 			preselectedList.clear();
-			if (commandButtons != null) {
-				commandButtons.updateButtons();
-			}
 		} else {
 			this.visible = false;
 			throw new MethodNotImplementedException();
 		}
 		return this;
+	}
+
+	void setUpTopPanel() {
+		if (navigationDecorator != null) {
+			navigationPanel(navigationDecorator);
+		}
+		if (buttonDecorator != null) {
+			buttonPanel(buttonDecorator);
+		}
+		if (commandButtons != null) {
+			commandButtons.updateButtons();
+		}
 	}
 
 	public int getRowHeight() {
@@ -411,7 +395,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				&& (topPanel == null || topPanel.rows() == 0))
 			return height;
 		else
-			return height - HEIGHT_TOP_PANEL;
+			return height - topPanel.height();
 	}
 
 	private void topPanel() {
@@ -881,7 +865,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	IGridCell topPanelCell(int i, int j) {
-		return topPanel.height(HEIGHT_TOP_PANEL).cell(i, j);
+		return topPanel//.height(HEIGHT_TOP_PANEL)
+		.cell(i, j);
 	}
 
 	void editable(int gridRowIndex, boolean editable) {
