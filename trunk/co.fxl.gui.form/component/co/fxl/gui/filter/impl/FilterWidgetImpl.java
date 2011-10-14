@@ -108,17 +108,11 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	Heights heights = new Heights(0);
 	private ClearClickListener clearClickListener;
 	private FilterPanel title;
+	private boolean hyperlinksAdded;
 
 	FilterWidgetImpl(IContainer panel) {
 		title = newFilterPanel(panel);
 		title.addTitle("Filter");
-		apply = title.addHyperlink(Icons.ACCEPT, "Update");
-		validation.linkClickable(apply);
-		clear = title.addHyperlink(Icons.CANCEL, "Clear");
-		apply.addClickListener(new ApplyClickListener());
-		// apply.clickable(false);
-		clear.addClickListener(clearClickListener = new ClearClickListener());
-		clear.clickable(false);
 		mainPanel = title;
 	}
 
@@ -283,6 +277,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 
 	private IFilterWidget update() {
 		grid = mainPanel.filterGrid();
+		addHyperlinks();
 		guiFilterElements.clear();
 		addFilters4Configuration(IFilterConstraints.COMMON);
 		if (configuration != null
@@ -325,6 +320,18 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		mainPanel.visible();
 		grid.show(firstConstraint);
 		return this;
+	}
+
+	private void addHyperlinks() {
+		if (!hyperlinksAdded) {
+			apply = title.addHyperlink(Icons.ACCEPT, "Update");
+			validation.linkClickable(apply);
+			clear = title.addHyperlink(Icons.CANCEL, "Clear");
+			apply.addClickListener(new ApplyClickListener());
+			clear.addClickListener(clearClickListener = new ClearClickListener());
+			clear.clickable(false);
+			hyperlinksAdded = true;
+		}
 	}
 
 	private void addFilters4Configuration(String cfg) {
