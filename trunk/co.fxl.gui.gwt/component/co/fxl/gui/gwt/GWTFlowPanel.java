@@ -21,6 +21,7 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.api.IFlowPanel;
 
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -43,7 +44,7 @@ class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 	@Override
 	public void add(Widget widget) {
 		widget.getElement().getStyle().setProperty("display", "inline");
-//		widget.setHeight("100%");
+		// widget.setHeight("100%");
 		setMargin(widget);
 		container.widget.add(widget);
 	}
@@ -60,6 +61,14 @@ class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 			Widget w = container.widget.getWidget(i);
 			setMargin(w);
 		}
+		return this;
+	}
+
+	@Override
+	public IFlowPanel addSpace(int pixel) {
+		Widget p = new AbsolutePanel();
+		p.setSize(pixel + "px", "1px");
+		container.widget.add(p);
 		return this;
 	}
 

@@ -21,7 +21,6 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IVerticalPanel;
 
-import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
