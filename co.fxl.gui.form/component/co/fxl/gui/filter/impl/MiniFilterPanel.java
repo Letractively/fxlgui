@@ -106,6 +106,13 @@ class MiniFilterPanel implements FilterPanel {
 			cardPanel = panel.add().panel().card();
 		}
 
+		FilterGridImpl(IToolbar panel) {
+			comboBox = panel.add().comboBox();
+			styleInput(comboBox);
+			// panel.addSpace(4);
+			cardPanel = panel.add().panel().card();
+		}
+
 		private void styleInput(IComboBox comboBox) {
 			comboBox.border().color().rgb(211, 211, 211);
 			comboBox.color().rgb(249, 249, 249);
@@ -169,7 +176,7 @@ class MiniFilterPanel implements FilterPanel {
 	private IToolbar titlePanel;
 	private IToolbar mainPanel;
 	private IToolbar hyperLinkPanel;
-	private IContainer gridContainer;
+	private IToolbar gridContainer;
 	private FilterGridImpl grid;
 	// private boolean hasHyperlinks = false;
 	private MiniFilterWidgetImpl widget;
@@ -181,9 +188,9 @@ class MiniFilterPanel implements FilterPanel {
 				.align().begin().add().panel().horizontal().align().begin()
 				.add();
 		panel = new ToolbarImpl(add);
-		titlePanel = new ToolbarImpl(panel.add()).spacing(0);
-		mainPanel = new ToolbarImpl(panel.add().panel().flow().add()).spacing(0);
-		hyperLinkPanel = new ToolbarImpl(panel.add().panel().flow().add()).spacing(0);
+		titlePanel = panel.addGroup();
+		mainPanel = panel.addGroup();
+		hyperLinkPanel = panel.addGroup();
 	}
 
 	@Override
@@ -205,7 +212,7 @@ class MiniFilterPanel implements FilterPanel {
 	@Override
 	public FilterGrid filterGrid() {
 		if (gridContainer == null) {
-			gridContainer = mainPanel.add();
+			gridContainer = mainPanel.addGroup();
 		} else
 			gridContainer.clear();
 		return grid = new FilterGridImpl(gridContainer);
