@@ -43,7 +43,7 @@ class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 	@Override
 	public void add(Widget widget) {
 		widget.getElement().getStyle().setProperty("display", "inline");
-		widget.setHeight("100%");
+//		widget.setHeight("100%");
 		setMargin(widget);
 		container.widget.add(widget);
 	}

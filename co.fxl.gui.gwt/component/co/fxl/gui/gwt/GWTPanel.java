@@ -39,9 +39,9 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 
 	GWTPanel(GWTContainer<T> container) {
 		super(container);
-//		if (container.widget != null)
-//			container.widget.getElement().getStyle()
-//					.setOverflow(Overflow.HIDDEN);
+		// if (container.widget != null)
+		// container.widget.getElement().getStyle()
+		// .setOverflow(Overflow.HIDDEN);
 	}
 
 	@Override
@@ -104,8 +104,16 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 		return new GWTContainer<Widget>(this);
 	}
 
+//	public IContainer insert(int index) {
+//		return new GWTContainer<Widget>(this, index);
+//	}
+
 	@Override
 	public abstract void add(Widget widget);
+
+//	void insert(Widget widget, int index) {
+//		throw new MethodNotImplementedException();
+//	}
 
 	@Override
 	public void remove(Widget widget) {
