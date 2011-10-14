@@ -181,9 +181,9 @@ class MiniFilterPanel implements FilterPanel {
 				.align().begin().add().panel().horizontal().align().begin()
 				.add();
 		panel = new ToolbarImpl(add);
-		titlePanel = new ToolbarImpl(panel.add());
-		mainPanel = new ToolbarImpl(panel.add().panel().flow().add());
-		hyperLinkPanel = panel.addGroup();
+		titlePanel = new ToolbarImpl(panel.add()).spacing(0);
+		mainPanel = new ToolbarImpl(panel.add().panel().flow().add()).spacing(0);
+		hyperLinkPanel = new ToolbarImpl(panel.add().panel().flow().add()).spacing(0);
 	}
 
 	@Override
@@ -199,12 +199,7 @@ class MiniFilterPanel implements FilterPanel {
 
 	@Override
 	public IClickable<?> addHyperlink(String imageResource, String string) {
-		// if (hasHyperlinks) {
-		// hyperLinkPanel.addSpace(4).add().label().text("|").font().color()
-		// .gray();
-		// }
-		// hasHyperlinks = true;
-		return hyperLinkPanel.add().image().resource(imageResource);// .label().text(string).hyperlink();
+		return hyperLinkPanel.add().image().resource(imageResource);
 	}
 
 	@Override
