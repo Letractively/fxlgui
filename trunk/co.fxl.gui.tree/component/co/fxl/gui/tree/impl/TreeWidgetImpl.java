@@ -55,6 +55,8 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	// TODO BUG: Opera & Firefox: unnecessary horizontal scrollbar for right
 	// splitpane content
+	
+	// TODO FEATURE: Usability: Double click on Splitter shows optimum splitter position with respect to left-side-widget (like when moving)
 
 	private static final String DELETE2 = "Delete";
 	private static final String REFRESH2 = "Refresh";
@@ -457,14 +459,14 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		onResize(-1, panel2.display().height());
 		splitPane.addResizeListener(new ISplitPaneResizeListener() {
 			@Override
-			public void onResize(int left, int right) {
+			public void onResize(int splitPosition) {
 				if (TreeWidgetImpl.this.activeView != null) {
 					@SuppressWarnings("unchecked")
 					DetailView view = (DetailView) TreeWidgetImpl.this.activeView;
 					view.decorator.resize();
 				}
 				if (lazyTree != null)
-					lazyTree.width(splitPane.width() - vertical.width() - 7);
+					lazyTree.width(splitPosition);
 			}
 		});
 	}
