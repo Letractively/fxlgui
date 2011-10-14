@@ -60,7 +60,7 @@ import co.fxl.gui.table.util.api.ILazyScrollPane;
 class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		ILabelMouseListener {
 
-//	private static final int HEIGHT_TOP_PANEL = 40;
+	// private static final int HEIGHT_TOP_PANEL = 40;
 	// TODO Swing: native implementation: required for automated testing
 
 	// TODO 2DECIDE: Option: DESIGN: Look: Scroll-Table-Widget: use fixed column
@@ -259,6 +259,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					statusPanel2.cell(0, 0).label().text("&#160;");
 					statusPanel2.height(32);
 				}
+				setUpTopPanel();
+			} else if (rows.size() == 0
+					&& (constraints != null
+							&& constraints.isConstraintSpecified() && hasFilter())) {
+				addFilter();
 				setUpTopPanel();
 			} else {
 				addFilter();
@@ -865,8 +870,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	IGridCell topPanelCell(int i, int j) {
-		return topPanel//.height(HEIGHT_TOP_PANEL)
-		.cell(i, j);
+		return topPanel// .height(HEIGHT_TOP_PANEL)
+				.cell(i, j);
 	}
 
 	void editable(int gridRowIndex, boolean editable) {
