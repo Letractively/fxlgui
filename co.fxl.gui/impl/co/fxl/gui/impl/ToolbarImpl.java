@@ -50,9 +50,10 @@ public class ToolbarImpl implements IToolbar {
 	@Override
 	public IContainer add() {
 		ToolbarImpl root = root();
-		IHorizontalPanel childPanel = root.panel.add().panel().horizontal();
+		IHorizontalPanel childPanel = root.panel.add().panel().horizontal().align().center();
 		childPanel.spacing().left(root.hasContent ? 0 : SPACING).top(SPACING)
 				.bottom(SPACING).right(SPACING);
+		childPanel = childPanel.add().panel().horizontal().align().center();
 		content.add(childPanel);
 		return childPanel.add();
 	}
@@ -65,16 +66,31 @@ public class ToolbarImpl implements IToolbar {
 	}
 
 	@Override
-	public void remove() {
+	public void clear() {
 		for (Object o : content) {
 			if (o instanceof ToolbarImpl) {
 				ToolbarImpl toolbar = (ToolbarImpl) o;
-				toolbar.remove();
+				toolbar.clear();
 			} else {
 				IHorizontalPanel childPanel = (IHorizontalPanel) o;
 				childPanel.remove();
 			}
 		}
+		content.clear();
+	}
+
+	@Override
+	public IToolbar visible(boolean visible) {
+		for (Object o : content) {
+			if (o instanceof ToolbarImpl) {
+				ToolbarImpl toolbar = (ToolbarImpl) o;
+				toolbar.visible(visible);
+			} else {
+				IHorizontalPanel childPanel = (IHorizontalPanel) o;
+				childPanel.visible(visible);
+			}
+		}
+		return this;
 	}
 
 }

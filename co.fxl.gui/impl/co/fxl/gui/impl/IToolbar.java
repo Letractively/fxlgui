@@ -26,6 +26,8 @@ public interface IToolbar {
 
 	IToolbar addGroup();
 
-	void remove();
+	void clear();
+
+	IToolbar visible(boolean visible);
 
 }
