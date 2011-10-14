@@ -50,7 +50,7 @@ public class ToolbarImpl implements IToolbar {
 	@Override
 	public IContainer add() {
 		ToolbarImpl root = root();
-		IHorizontalPanel childPanel = root.panel.add().panel().horizontal().align().center();
+		IHorizontalPanel childPanel = root.panel.add().panel().horizontal().height(40).align().center();
 		childPanel.spacing().left(root.hasContent ? 0 : SPACING).top(SPACING)
 				.bottom(SPACING).right(SPACING);
 		childPanel = childPanel.add().panel().horizontal().align().center();
