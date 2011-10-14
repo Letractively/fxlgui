@@ -23,8 +23,9 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
-import co.fxl.gui.api.IPanel;
 import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.IToolbar;
+import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IButtonPanelDecorator;
@@ -170,7 +171,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 
 	private static final IDecorator DEFAULT_DECORATOR = new IDecorator() {
 		@Override
-		public IClickable<?> decorate(IPanel<?> c) {
+		public IClickable<?> decorate(IToolbar c) {
 			String string = "Add";
 			return clickable(c.add(), string);
 		}
@@ -188,7 +189,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	private IRowListener<IRows<Object>> listenOnShowListener;
 	int selectionIndex = -1;
 	Object selection;
-	private IPanel<?> panel;
+	private IToolbar panel;
 	private IClickable<?> imageUp;
 	private IClickable<?> imageDown;
 	private IClickable<?> remove;
@@ -289,8 +290,9 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	@Override
 	public void decorate(IGridCell container) {
 		widget.selection().single().addSelectionListener(this);
-		panel = container.panel().horizontal().align().end().add().panel()
-				.horizontal().align().end().add().panel().flow().spacing(8);
+		IHorizontalPanel ps = container.panel().horizontal().align().end()
+				.add().panel().horizontal().align().end();
+		panel = new ToolbarImpl(ps.add());
 		if (listenOnAdd) {
 			IClickable<?> image = listenOnAddListenerDecorator.decorate(panel);
 			image.addClickListener(new Update(listenOnAddListener));
