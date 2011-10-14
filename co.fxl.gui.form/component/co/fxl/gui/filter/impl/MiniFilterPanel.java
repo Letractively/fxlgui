@@ -30,6 +30,8 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.Heights;
+import co.fxl.gui.impl.IToolbar;
+import co.fxl.gui.impl.ToolbarImpl;
 
 class MiniFilterPanel implements FilterPanel {
 
@@ -163,10 +165,10 @@ class MiniFilterPanel implements FilterPanel {
 		};
 	}
 
-	private IHorizontalPanel panel;
-	private IHorizontalPanel titlePanel;
-	private IHorizontalPanel mainPanel;
-	private IHorizontalPanel hyperLinkPanel;
+	private IToolbar panel;
+	private IToolbar titlePanel;
+	private IToolbar mainPanel;
+	private IToolbar hyperLinkPanel;
 	private IContainer gridContainer;
 	private FilterGridImpl grid;
 	// private boolean hasHyperlinks = false;
@@ -175,11 +177,14 @@ class MiniFilterPanel implements FilterPanel {
 
 	MiniFilterPanel(MiniFilterWidgetImpl widget, IContainer c) {
 		this.widget = widget;
-		panel = c.panel().horizontal().add().panel().horizontal().align()
-				.begin().add().panel().horizontal().align().begin();
-		titlePanel = panel.add().panel().horizontal();
-		mainPanel = panel.addSpace(4).add().panel().horizontal();
-		hyperLinkPanel = panel.addSpace(4).add().panel().horizontal();
+		panel = new ToolbarImpl(c.panel().horizontal().add().panel()
+				.horizontal().align().begin().add().panel().horizontal()
+				.align().begin().add());
+		titlePanel = new ToolbarImpl(panel.add());
+		mainPanel = new ToolbarImpl(panel.add().panel().horizontal().add())// .addSpace(4)
+		;
+		hyperLinkPanel = panel// .addSpace(4)
+				.addGroup();
 	}
 
 	@Override
@@ -200,7 +205,7 @@ class MiniFilterPanel implements FilterPanel {
 		// .gray();
 		// }
 		// hasHyperlinks = true;
-		return hyperLinkPanel.addSpace(4).add().image().resource(imageResource);// .label().text(string).hyperlink();
+		return hyperLinkPanel.add().image().resource(imageResource);// .label().text(string).hyperlink();
 	}
 
 	@Override
