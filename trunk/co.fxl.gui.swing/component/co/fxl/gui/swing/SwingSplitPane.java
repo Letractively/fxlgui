@@ -83,9 +83,7 @@ class SwingSplitPane extends SwingElement<JSplitPane, ISplitPane> implements
 					public void propertyChange(PropertyChangeEvent arg0) {
 						if (arg0.getPropertyName().equals(
 								JSplitPane.DIVIDER_LOCATION_PROPERTY)) {
-							l.onResize(container.component.getLeftComponent()
-									.getWidth(), container.component
-									.getRightComponent().getWidth());
+							l.onResize((Integer) arg0.getNewValue());
 						}
 					}
 				});
