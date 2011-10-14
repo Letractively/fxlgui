@@ -43,7 +43,6 @@ import co.fxl.gui.api.WidgetProviderNotFoundException;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalSplitPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
@@ -62,10 +61,16 @@ public class GWTContainer<T extends Widget> implements IContainer {
 	public WidgetParent parent;
 	public T widget;
 	protected GWTElement<?, ?> element;
+	int index = -1;
 
 	public GWTContainer(WidgetParent parent) {
 		this.parent = parent;
 	}
+
+	// public GWTContainer(WidgetParent parent, int index) {
+	// this(parent);
+	// this.index = index;
+	// }
 
 	public void setComponent(T component) {
 		this.widget = component;
@@ -181,10 +186,9 @@ public class GWTContainer<T extends Widget> implements IContainer {
 				(GWTContainer<ScrollPanel>) this));
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public ISplitPane splitPane() {
-		setComponent((T) new HorizontalSplitPanel());
+		setComponent((T) GWTSplitPane.adapter.newSplitPanel());
 		return (ISplitPane) (element = new GWTSplitPane(
 				(GWTContainer<Widget>) this));
 	}
