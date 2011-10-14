@@ -177,14 +177,13 @@ class MiniFilterPanel implements FilterPanel {
 
 	MiniFilterPanel(MiniFilterWidgetImpl widget, IContainer c) {
 		this.widget = widget;
-		panel = new ToolbarImpl(c.panel().horizontal().add().panel()
-				.horizontal().align().begin().add().panel().horizontal()
-				.align().begin().add());
+		IContainer add = c.panel().horizontal().add().panel().horizontal()
+				.align().begin().add().panel().horizontal().align().begin()
+				.add();
+		panel = new ToolbarImpl(add);
 		titlePanel = new ToolbarImpl(panel.add());
-		mainPanel = new ToolbarImpl(panel.add().panel().horizontal().add())// .addSpace(4)
-		;
-		hyperLinkPanel = panel// .addSpace(4)
-				.addGroup();
+		mainPanel = new ToolbarImpl(panel.add().panel().flow().add());
+		hyperLinkPanel = panel.addGroup();
 	}
 
 	@Override
