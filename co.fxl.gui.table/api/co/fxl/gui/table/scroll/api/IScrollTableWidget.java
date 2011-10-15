@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.table.scroll.api;
 
+import java.util.List;
+
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
@@ -159,4 +161,6 @@ public interface IScrollTableWidget<T> {
 
 	IScrollTableWidget<T> addToContextMenu(boolean addToContextMenu);
 
+	IScrollTableWidget<T> hiddenColumnListener(
+			IUpdateListener<List<String>> hiddenColumnListener);
 }
