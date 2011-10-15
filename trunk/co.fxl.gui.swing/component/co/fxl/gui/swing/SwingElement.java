@@ -103,8 +103,8 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 		if (width == -1)
 			container.component.setPreferredSize(null);
 		else
-			container.component
-					.setPreferredSize(new Dimension(width, height()));
+			container.component.setPreferredSize(new Dimension(width,
+					container.component.getPreferredSize().height));
 		return (R) this;
 	}
 
