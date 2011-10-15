@@ -456,6 +456,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private List<IRowIndexListener> scrollListeners = new LinkedList<IRowIndexListener>();
 	private int rowIndex = -1;
 	private boolean addToContextMenu;
+	private IUpdateListener<List<String>> hiddenColumnListener;
 
 	void update() {
 		paintedRows = computeRowsToPaint();
@@ -528,6 +529,13 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			adp.forward(key);
 		}
 		updating = false;
+		if (hiddenColumnListener != null) {
+			List<String> hiddenColumns = new LinkedList<String>();
+			for (ScrollTableColumnImpl c : columns)
+				if (!c.visible)
+					hiddenColumns.add(c.name);
+			hiddenColumnListener.onUpdate(hiddenColumns);
+		}
 	}
 
 	private void updateSingleContentRow(IBulkTableWidget grid,
@@ -962,6 +970,13 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> addToContextMenu(boolean addToContextMenu) {
 		this.addToContextMenu = addToContextMenu;
+		return this;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> hiddenColumnListener(
+			IUpdateListener<List<String>> hiddenColumnListener) {
+		this.hiddenColumnListener = hiddenColumnListener;
 		return this;
 	}
 }
