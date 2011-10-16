@@ -362,4 +362,10 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	public String title() {
 		return Window.getTitle();
 	}
+
+	@Override
+	public IDisplay clear() {
+		RootPanel.get().clear();
+		return this;
+	}
 }
