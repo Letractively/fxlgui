@@ -54,30 +54,38 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 		@Override
 		public void addListener(final Widget widget,
 				final ISplitPaneResizeListener listener) {
-			Element rootElement = widget.getElement();
-			final EventListener oldListener = DOM.getEventListener(rootElement);
-			DOM.setEventListener(rootElement, new EventListener() {
-				public void onBrowserEvent(Event event) {
-					final HorizontalSplitPanel horizontalSplitPanel = (HorizontalSplitPanel) widget;
-					boolean fire = false;
-					if ((event.getTypeInt() == Event.ONMOUSEUP || event
-							.getTypeInt() == Event.ONMOUSEMOVE)
-							&& horizontalSplitPanel.isResizing()) {
-						fire = true;
-					}
-					oldListener.onBrowserEvent(event);
-					if (fire && !isScheduled) {
-						isScheduled = true;
-						Display.instance().invokeLater(new Runnable() {
-							@Override
-							public void run() {
-								listener.onResize(widget.getOffsetWidth()
-										- horizontalSplitPanel.getRightWidget()
-												.getOffsetWidth() - 2);
-								isScheduled = false;
+			Display.instance().invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					Element rootElement = widget.getElement();
+					final EventListener oldListener = DOM
+							.getEventListener(rootElement);
+					DOM.setEventListener(rootElement, new EventListener() {
+						public void onBrowserEvent(Event event) {
+							final HorizontalSplitPanel horizontalSplitPanel = (HorizontalSplitPanel) widget;
+							boolean fire = false;
+							if ((event.getTypeInt() == Event.ONMOUSEUP || event
+									.getTypeInt() == Event.ONMOUSEMOVE)
+									&& horizontalSplitPanel.isResizing()) {
+								fire = true;
 							}
-						});
-					}
+							oldListener.onBrowserEvent(event);
+							if (fire && !isScheduled) {
+								isScheduled = true;
+								Display.instance().invokeLater(new Runnable() {
+									@Override
+									public void run() {
+										listener.onResize(widget
+												.getOffsetWidth()
+												- horizontalSplitPanel
+														.getRightWidget()
+														.getOffsetWidth() - 2);
+										isScheduled = false;
+									}
+								});
+							}
+						}
+					});
 				}
 			});
 		}
