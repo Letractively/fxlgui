@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.api;
 
-public interface IDisplay extends IColored{
+public interface IDisplay extends IColored {
 
 	public interface IResizeListener {
 
@@ -75,4 +75,6 @@ public interface IDisplay extends IColored{
 	IDisplay runAsync(Runnable runnable);
 
 	String title();
+
+	IDisplay clear();
 }
