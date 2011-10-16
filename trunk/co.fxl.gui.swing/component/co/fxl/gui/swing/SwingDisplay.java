@@ -338,4 +338,10 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 	public String title() {
 		return frame.getTitle();
 	}
+
+	@Override
+	public IDisplay clear() {
+		// TODO ...
+		return this;
+	}
 }
