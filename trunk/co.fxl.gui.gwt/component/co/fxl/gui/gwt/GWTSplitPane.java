@@ -24,8 +24,13 @@ import java.util.List;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.ISplitPane.ISplitPaneResizeListener;
+import co.fxl.gui.impl.Display;
 
 import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -33,6 +38,8 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 		ISplitPane, ISplitPaneResizeListener {
 
 	public static ISplitPanelAdp adapter = new ISplitPanelAdp() {
+
+		private boolean isScheduled = false;
 
 		@Override
 		public void setLeftWidget(Widget p, Widget component) {
@@ -45,7 +52,34 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 		}
 
 		@Override
-		public void addListener(Widget widget, ISplitPaneResizeListener listener) {
+		public void addListener(final Widget widget,
+				final ISplitPaneResizeListener listener) {
+			Element rootElement = widget.getElement();
+			final EventListener oldListener = DOM.getEventListener(rootElement);
+			DOM.setEventListener(rootElement, new EventListener() {
+				public void onBrowserEvent(Event event) {
+					final HorizontalSplitPanel horizontalSplitPanel = (HorizontalSplitPanel) widget;
+					boolean fire = false;
+					if ((event.getTypeInt() == Event.ONMOUSEUP || event
+							.getTypeInt() == Event.ONMOUSEMOVE)
+							&& horizontalSplitPanel.isResizing()) {
+						fire = true;
+					}
+					oldListener.onBrowserEvent(event);
+					if (fire && !isScheduled) {
+						isScheduled = true;
+						Display.instance().invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								listener.onResize(widget.getOffsetWidth()
+										- horizontalSplitPanel.getRightWidget()
+												.getOffsetWidth() - 2);
+								isScheduled = false;
+							}
+						});
+					}
+				}
+			});
 		}
 
 		@Override
@@ -60,7 +94,7 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 
 		@Override
 		public boolean supportsListeners() {
-			return false;
+			return true;
 		}
 
 	};
