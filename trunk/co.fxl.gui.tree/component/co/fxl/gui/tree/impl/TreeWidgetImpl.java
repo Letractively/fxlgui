@@ -752,6 +752,21 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	@Override
+	public ITreeWidget<T> expandSelection(boolean recurse) {
+		ITree<T> c = model.selection();
+		expand(c);
+		return this;
+	}
+
+	private void expand(ITree<T> c) {
+		lazyTree.collapse(c, false);
+		model.refresh(c.object(), true);
+		for (ITree<T> cc : c.children()) {
+			expand(cc);
+		}
+	}
+
+	@Override
 	public IClickable<?> addHyperlink(String title) {
 		addButtons();
 		return widgetTitle.addHyperlink(title);

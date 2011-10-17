@@ -865,4 +865,9 @@ public class ModelTreeWidget<T> implements ITreeWidget<T>, IResizeListener {
 	public ITreeWidget<T> addToContextMenu(boolean addToContextMenu) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public ITreeWidget<T> expandSelection(boolean recurse) {
+		throw new MethodNotImplementedException();
+	}
 }

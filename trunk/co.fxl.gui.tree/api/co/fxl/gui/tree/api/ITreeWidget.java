@@ -30,10 +30,10 @@ public interface ITreeWidget<T> {
 
 	public interface IView {
 
-//		public interface IResizeListener {
-//
-//			void onResize();
-//		}
+		// public interface IResizeListener {
+		//
+		// void onResize();
+		// }
 
 		IView constrainType(Class<?> clazz);
 
@@ -59,7 +59,7 @@ public interface ITreeWidget<T> {
 		void decorate(IVerticalPanel panel, IVerticalPanel bottom, ITree<T> tree);
 
 		void decorate(IVerticalPanel panel, IVerticalPanel bottom, Object tree);
-		
+
 		boolean clear(IVerticalPanel contentPanel);
 
 		void resize();
@@ -126,4 +126,6 @@ public interface ITreeWidget<T> {
 	ITreeWidget<T> navigateUp();
 
 	ITreeWidget<T> navigateDown();
+
+	ITreeWidget<T> expandSelection(boolean recurse);
 }
