@@ -257,7 +257,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				if (showNoRowsFound) {
 					// hack for IE
 					if (height >= 80)
-						height -= 10;
+						height -= 30;
 				}
 				dock.height(height);
 				if (!externalStatusPanel) {
