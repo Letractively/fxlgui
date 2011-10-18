@@ -60,12 +60,12 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 		}
 		if (!found)
 			addText(choice);
-		if (container.component.isEditable()) {
-			container.component.setSelectedItem(token);
-		} else
-			for (int i = 0; i < container.component.getItemCount(); i++)
-				if (container.component.getItemAt(i).equals(token))
-					container.component.setSelectedIndex(i);
+		// if (container.component.isEditable()) {
+		// container.component.setSelectedItem(token);
+		// } else
+		for (int i = 0; i < container.component.getItemCount(); i++)
+			if (container.component.getItemAt(i).equals(token))
+				container.component.setSelectedIndex(i);
 		return this;
 	}
 
