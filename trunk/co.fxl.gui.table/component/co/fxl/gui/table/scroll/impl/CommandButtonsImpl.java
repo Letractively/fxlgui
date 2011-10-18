@@ -401,9 +401,8 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			imageDown.clickable(c);
 		}
 		if (remove != null) {
-			boolean c = selection != null
-					&& widget.rows
-							.deletable(getSelectionIndex());
+			boolean c = selection != null && getSelectionIndex() != -1
+					&& widget.rows.deletable(getSelectionIndex());
 			remove.clickable(c);
 		}
 		if (show != null) {
@@ -417,8 +416,8 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	}
 
 	int getSelectionIndex() {
-		return selectionIndex != -1 ? selectionIndex
-				: widget.rows.find(selection);
+		return selectionIndex != -1 ? selectionIndex : widget.rows
+				.find(selection);
 	}
 
 	public void reset() {

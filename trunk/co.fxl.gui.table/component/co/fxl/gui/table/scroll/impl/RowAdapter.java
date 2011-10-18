@@ -162,6 +162,7 @@ class RowAdapter implements IRows<Object>, IComparableList {
 
 	@Override
 	public boolean deletable(int i) {
-		return rows.deletable(indices[i]);
+		int index = indices[i];
+		return rows.deletable(index);
 	}
 }
