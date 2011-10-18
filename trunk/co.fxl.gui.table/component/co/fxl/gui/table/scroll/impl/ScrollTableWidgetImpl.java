@@ -254,11 +254,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					addFilter();
 				dock.add().label().text("&#160;");
 				int height = heightMinusTopPanel();
-				if (showNoRowsFound) {
+//				if (showNoRowsFound) {
 					// hack for IE
 					if (height >= 80)
 						height -= 30;
-				}
+//				}
 				dock.height(height);
 				if (!externalStatusPanel) {
 					IGridPanel statusPanel2 = statusPanel();
