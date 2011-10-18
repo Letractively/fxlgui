@@ -93,6 +93,7 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 
 	@Override
 	public IComboBox text(String choice) {
+		String before = text();
 		String token = choice;
 		if (choice == null) {
 			if (!hasNull) {
@@ -104,9 +105,16 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 			addText(choice);
 		int index = constraints.indexOf(token);
 		container.widget.setSelectedIndex(index);
-		for (IUpdateListener<String> l : listeners)
-			l.onUpdate(text());
+		if (!equals(before, token))
+			for (IUpdateListener<String> l : listeners)
+				l.onUpdate(text());
 		return this;
+	}
+
+	private boolean equals(String before, String token) {
+		if (before == null)
+			return token == null;
+		return before.equals(token);
 	}
 
 	@Override
