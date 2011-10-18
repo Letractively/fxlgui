@@ -403,8 +403,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		if (remove != null) {
 			boolean c = selection != null
 					&& widget.rows
-							.deletable(selectionIndex != -1 ? selectionIndex
-									: widget.rows.find(selection));
+							.deletable(getSelectionIndex());
 			remove.clickable(c);
 		}
 		if (show != null) {
@@ -415,6 +414,11 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			boolean c = selection != null;
 			edit.clickable(c);
 		}
+	}
+
+	int getSelectionIndex() {
+		return selectionIndex != -1 ? selectionIndex
+				: widget.rows.find(selection);
 	}
 
 	public void reset() {
