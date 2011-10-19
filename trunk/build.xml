@@ -145,24 +145,19 @@
 		<copy todir="${project.build.src.dir}">
     	<fileset dir="${co.fxl.gui.api.src.dir}"/>
     	<fileset dir="${co.fxl.gui.impl.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.aspect.style.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.aspect.layout.src.dir}"/>
     	<fileset dir="${co.fxl.gui.form.api.src.dir}"/>
-    	<fileset dir="${co.fxl.gui.form.component.src.dir}"/>   		
-    	<fileset dir="${co.fxl.gui.form.gwt.gwt.src.dir}"/>
-    	<fileset dir="${co.fxl.gui.form.gwt.component.src.dir}"/>   		
-    	<fileset dir="${co.fxl.gui.common.api.src.dir}"/>
-    	<fileset dir="${co.fxl.gui.common.component.src.dir}"/>   		
-    	<fileset dir="${co.fxl.gui.common.gwt.gwt.src.dir}"/>
-    	<fileset dir="${co.fxl.gui.common.gwt.component.src.dir}"/>   		
-	<fileset dir="${co.fxl.gui.swing.component.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.form.component.src.dir}"/>
+    	<fileset dir="${co.fxl.data.format.api.src.dir}"/>
+    	<fileset dir="${co.fxl.data.format.component.src.dir}"/>
     	<fileset dir="${co.fxl.gui.tree.api.src.dir}"/>	
     	<fileset dir="${co.fxl.gui.tree.component.src.dir}"/>
     	<fileset dir="${co.fxl.gui.navigation.api.src.dir}"/>	
     	<fileset dir="${co.fxl.gui.navigation.component.src.dir}"/>	
     	<fileset dir="${co.fxl.gui.table.api.src.dir}"/>	
     	<fileset dir="${co.fxl.gui.table.component.src.dir}"/>	
-    	<fileset dir="${co.fxl.gui.wizard.api.src.dir}"/>
-    	<fileset dir="${co.fxl.gui.wizard.component.src.dir}"/>
-   	<fileset dir="${co.fxl.gui.layout.handheld.component.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.layout.handheld.component.src.dir}"/>
     	<fileset dir="${co.fxl.gui.style.gplus.component.src.dir}"/>
      </copy>
 	</target>
