@@ -26,6 +26,7 @@ import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.tree.api.IFilterList;
 import co.fxl.gui.tree.api.IFilterTreeWidget;
 import co.fxl.gui.tree.api.ITree;
+import co.fxl.gui.tree.api.ITreeWidget;
 import co.fxl.gui.tree.impl.TreeWidgetImpl.RefreshListener;
 
 class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
@@ -98,5 +99,11 @@ class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
 		if (model != null && model.selection() != null)
 			previousSelection = model.selection().object();
 		root(tree, true);
+	}
+
+	@Override
+	public ITreeWidget<T> repaint() {
+		setRoot(model.root);
+		return this;
 	}
 }

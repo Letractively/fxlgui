@@ -26,6 +26,7 @@ import co.fxl.gui.tree.api.ITree;
 
 class TestLazyTree implements ITree<Object> {
 
+	@SuppressWarnings({ "hiding", "serial" })
 	public class LazyListImpl<Object> extends LinkedList<Object> implements
 			ILazyList<Object> {
 
