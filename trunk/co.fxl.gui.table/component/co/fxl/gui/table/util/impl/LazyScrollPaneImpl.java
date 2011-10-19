@@ -131,6 +131,9 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		if (size == 0) {
 			treeDockPanel.left().panel().vertical().spacing(16).add().label()
 					.text("NO ENTITIES FOUND").font().pixel(10).color().gray();
+			
+			// TODO FEATURE: Usability: nice 2 have: show filter details like in scrolltable
+			
 			return;
 		}
 		treeDockPanel.visible(false);
