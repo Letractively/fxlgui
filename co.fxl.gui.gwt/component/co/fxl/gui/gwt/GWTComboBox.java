@@ -35,6 +35,7 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 	private boolean hasNull = false;
 	private int defaultHeight;
 	private List<IUpdateListener<String>> listeners = new LinkedList<IUpdateListener<String>>();
+	private boolean hasBeenSet = false;
 
 	GWTComboBox(GWTContainer<ListBox> container) {
 		super(container);
@@ -105,9 +106,11 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 			addText(choice);
 		int index = constraints.indexOf(token);
 		container.widget.setSelectedIndex(index);
-		if (!equals(before, token))
+		if (!hasBeenSet || !equals(before, token)) {
+			hasBeenSet = true;
 			for (IUpdateListener<String> l : listeners)
 				l.onUpdate(text());
+		}
 		return this;
 	}
 
