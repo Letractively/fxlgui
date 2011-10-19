@@ -191,9 +191,6 @@ public abstract class LazyTreeWidgetTemplate implements
 		if (reset) {
 			tree(realTree);
 		}
-		// if (pane != null) {
-		// lastFirstRow = pane.rowIndex();
-		// }
 		c.element().remove();
 		show(checkSelection);
 		return this;
