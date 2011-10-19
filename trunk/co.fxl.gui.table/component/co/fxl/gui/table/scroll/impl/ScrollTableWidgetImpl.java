@@ -177,6 +177,14 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	IGridPanel topPanel;
 	boolean showNoRowsFound = true;
 	private IVerticalPanel contentPanel0;
+	private boolean reduceHeightIfEmpty = false;
+
+	@Override
+	public IScrollTableWidget<Object> reduceHeightIfEmpty(
+			boolean reduceHeightIfEmpty) {
+		this.reduceHeightIfEmpty = reduceHeightIfEmpty;
+		return this;
+	}
 
 	@Override
 	public IScrollTableWidget<Object> visible(boolean visible) {
@@ -254,11 +262,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					addFilter();
 				dock.add().label().text("&#160;");
 				int height = heightMinusTopPanel();
-//				if (showNoRowsFound) {
-					// hack for IE
-					if (height >= 80)
-						height -= 30;
-//				}
+				// if (showNoRowsFound) {
+				// hack for IE
+				if (reduceHeightIfEmpty && height >= 80)
+					height -= 30;
+				// }
 				dock.height(height);
 				if (!externalStatusPanel) {
 					IGridPanel statusPanel2 = statusPanel();
