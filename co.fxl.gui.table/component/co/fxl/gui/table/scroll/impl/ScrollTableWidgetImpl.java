@@ -236,18 +236,21 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					nef.add().panel().vertical().spacing(4).add().label()
 							.text("NO ENTITIES FOUND").font().pixel(10).color()
 							.gray();
-					if (constraints != null
-							&& constraints.isConstraintSpecified()) {
+					if (constraints != null) {
+						// && constraints.isConstraintSpecified()) {
+						List<String[]> description = constraints.description();
+						if (constraints.configuration() != null)
+							description.add(0, new String[] { "Query",
+									constraints.configuration() });
 						IGridPanel gp = nef.addSpace(4).add().panel()
 								.horizontal().align().begin().add().panel()
 								.horizontal().align().begin().add().panel()
-								.grid()
-								.resize(3, constraints.description().size())
+								.grid().resize(3, description.size())
 								.spacing(4);
 						gp.cell(0, 0).label().text("FILTER").font().pixel(9)
 								.color().gray();
 						int i = 0;
-						for (String[] d : constraints.description()) {
+						for (String[] d : description) {
 							gp.cell(1, i).label().text(d[0] + ":").font()
 									.pixel(9).color().gray();
 							if (d[1].length() > 24)
