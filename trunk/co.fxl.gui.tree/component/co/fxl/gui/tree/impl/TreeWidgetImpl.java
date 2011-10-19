@@ -119,10 +119,11 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			this.node = node;
 			if (node == null) {
 				boolean addTitle = decorator.clear(contentPanel);
-				if (addTitle)
+				if (addTitle) {
 					contentPanel.add().panel().vertical().spacing(10).add()
 							.label().text("NO ENTITY SELECTED").font()
 							.pixel(10).color().gray();
+				}
 				return false;
 			}
 			if (onTop) {
