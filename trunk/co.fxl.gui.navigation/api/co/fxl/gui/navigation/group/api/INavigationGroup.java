@@ -27,4 +27,6 @@ public interface INavigationGroup {
 	INavigationGroup visible(boolean visible);
 
 	boolean visible();
+
+	INavigationGroup active();
 }

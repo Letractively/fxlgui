@@ -51,4 +51,6 @@ public interface INavigationItem {
 	INavigationItem visible(boolean visible);
 
 	INavigationItem addListener(INavigationListener l);
+
+	boolean visible();
 }

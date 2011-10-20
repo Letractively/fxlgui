@@ -190,4 +190,9 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 		listeners.add(l);
 		return this;
 	}
+
+	@Override
+	public boolean visible() {
+		return basicPanel.visible();
+	}
 }

@@ -100,4 +100,15 @@ class NavigationGroupImpl implements INavigationGroup {
 		}
 		panel.visible(visible);
 	}
+
+	@Override
+	public INavigationGroup active() {
+		for (NavigationItemImpl item : items) {
+			if (item.visible()) {
+				item.active();
+				return this;
+			}
+		}
+		return this;
+	}
 }
