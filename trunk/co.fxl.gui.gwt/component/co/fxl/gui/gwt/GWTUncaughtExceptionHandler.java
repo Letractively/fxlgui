@@ -35,8 +35,19 @@ class GWTUncaughtExceptionHandler implements GWT.UncaughtExceptionHandler {
 
 	@Override
 	public void onUncaughtException(Throwable e) {
+		if (isIgnore(e))
+			return;
 		for (IExceptionHandler h : handlers) {
 			h.onException(e);
 		}
+	}
+
+	private boolean isIgnore(Throwable e) {
+
+		// TODO remove temporary IE hack !!!!
+
+		return GWTDisplay.isInternetExplorer()
+				&& e.getMessage().startsWith("(Error): ")
+				&& e.getMessage().endsWith("number: -2147467259");
 	}
 }
