@@ -123,6 +123,8 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	@Override
 	public void onUpdate(String value) {
 		configuration = value;
+		if (value == null)
+			return;
 		if (filterList.get(configuration) != null)
 			update();
 		else
