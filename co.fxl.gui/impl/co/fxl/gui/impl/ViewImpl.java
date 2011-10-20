@@ -184,6 +184,7 @@ public class ViewImpl extends LazyClickListener {
 
 	@Override
 	public void onAllowedClick() {
+		label.font().underline(false);
 		for (ViewList viewList : this.viewList.widget.viewLists) {
 			for (ViewImpl view : viewList.views) {
 				view.clickable(view != this);
