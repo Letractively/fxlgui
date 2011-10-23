@@ -198,4 +198,9 @@ public class AndroidDisplay implements IDisplay, Parent {
 	public String title() {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public IDisplay clear() {
+		throw new MethodNotImplementedException();
+	}
 }
