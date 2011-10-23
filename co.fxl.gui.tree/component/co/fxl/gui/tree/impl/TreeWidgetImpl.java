@@ -100,8 +100,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			this.title = title;
 			register = registers.addNavigationItem();
 			register.text(title);
-			register.addListener(new INavigationListener() {
-
+			register.listener(new INavigationListener() {
 				@Override
 				public void onActive(boolean visible) {
 					onTop = visible;
