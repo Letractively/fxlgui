@@ -18,9 +18,6 @@
  */
 package co.fxl.gui.register.impl;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IFontElement.IFont;
@@ -48,7 +45,6 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 		@Override
 		public ITitle text(String title) {
 			buttonLabel.text(title);
-//			toggleLoading(true);
 			return this;
 		}
 
@@ -64,7 +60,7 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 	IHorizontalPanel buttonPanel;
 	ILabel buttonLabel;
 	private IVerticalPanel content;
-	private List<IRegisterListener> listeners = new LinkedList<IRegisterListener>();
+	private IRegisterListener listener = null;
 	private boolean init = false;
 	private IHorizontalPanel subPanel;
 	private IImage buttonImage;
@@ -125,28 +121,23 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 
 	public RegisterImpl updateActive() {
 		for (RegisterImpl register : widget.registers) {
-			if (register != this)
-				register.notifyVisible(false);
+			register.notifyVisible(register == this);
 		}
-		widget.top(this);
-		notifyVisible(true);
 		return this;
 	}
 
 	void notifyVisible(boolean visible) {
 		if (disabled)
 			return;
-		for (IRegisterListener listener : listeners) {
+		if (listener != null)
 			listener.onTop(visible);
-		}
+		if (visible)
+			widget.top(this);
 		if (visible) {
-			// buttonLabel.font().pixel(widget.fontSize).weight().bold().color().black();
 			buttonPanel.clickable(false);
 		} else {
-			// buttonLabel.font().pixel(widget.fontSize).weight().bold().color().black();
 			buttonPanel.clickable(true);
 		}
-		// buttonLabel.font().underline(!visible);
 	}
 
 	@Override
@@ -160,8 +151,8 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 	}
 
 	@Override
-	public IRegister addListener(IRegisterListener listener) {
-		listeners.add(listener);
+	public IRegister listener(IRegisterListener listener) {
+		this.listener = listener;
 		return this;
 	}
 
