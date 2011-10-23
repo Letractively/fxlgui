@@ -48,7 +48,7 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 		@Override
 		public ITitle text(String title) {
 			buttonLabel.text(title);
-			toggleLoading(true);
+//			toggleLoading(true);
 			return this;
 		}
 
