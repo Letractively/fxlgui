@@ -29,7 +29,7 @@ public interface IMenuItem extends IMenuNode, INavigationItem<IMenuItem> {
 
 	IVerticalPanel contentPanel();
 
-	IMenuItem addListener(INavigationListener listener);
+	IMenuItem listener(INavigationListener listener);
 
 	IMenuItem visible(boolean visible);
 

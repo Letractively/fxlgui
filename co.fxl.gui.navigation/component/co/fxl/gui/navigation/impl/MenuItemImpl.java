@@ -18,9 +18,6 @@
  */
 package co.fxl.gui.navigation.impl;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.navigation.api.IMenuItem;
@@ -35,13 +32,13 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	private RegisterStyle style;
 	private RegisterWidgetImpl registerWidget;
 	private RegisterStyle styleChild;
-	private List<INavigationListener> listeners = new LinkedList<INavigationListener>();
+	private INavigationListener listener;
 
 	MenuItemImpl(RegisterWidgetImpl registerWidget, RegisterStyle style) {
 		register = registerWidget.addRegister();
 		this.style = style;
 		style.init(register.title());
-		register.addListener(this);
+		register.listener(this);
 	}
 
 	@Override
@@ -51,8 +48,8 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	}
 
 	@Override
-	public IMenuItem addListener(INavigationListener listener) {
-		listeners.add(listener);
+	public IMenuItem listener(INavigationListener listener) {
+		this.listener = listener;
 		return this;
 	}
 
@@ -89,8 +86,7 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 		} else {
 			style.onBack(register.title());
 		}
-		for (INavigationListener listener : listeners)
-			listener.onActive(visible);
+		listener.onActive(visible);
 	}
 
 	@Override

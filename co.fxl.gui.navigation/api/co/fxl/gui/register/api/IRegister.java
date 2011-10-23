@@ -45,7 +45,7 @@ public interface IRegister {
 
 	IVerticalPanel contentPanel();
 
-	IRegister addListener(IRegisterListener listener);
+	IRegister listener(IRegisterListener listener);
 
 	IRegister top();
 
