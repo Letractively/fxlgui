@@ -2,6 +2,7 @@ package co.fxl.gui.tree.test;
 
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.navigation.impl.NavigationWidgetImplProvider;
 import co.fxl.gui.table.util.impl.LazyScrollPanelImplWidgetProvider;
 import co.fxl.gui.tree.api.IFilterTreeWidget;
@@ -22,20 +23,20 @@ public class FilterTreeWidgetTest implements IDecorator<Object> {
 		panel.height(600);
 		tree = (IFilterTreeWidget<Object>) panel.add().widget(
 				IFilterTreeWidget.class);
-		tree.addDetailView("Details", this);
+		tree.addDetailView("Details", this, null);
 		tree.root(new TestLazyTree(5));
 		display.fullscreen().visible(true);
 	}
 
 	@Override
 	public void decorate(IVerticalPanel panel, IVerticalPanel bottom,
-			ITree<Object> tree) {
+			ITree<Object> tree, ICallback<Void> cb) {
 		panel.clear().add().label().text(tree.name());
 	}
 
 	@Override
 	public void decorate(IVerticalPanel panel, IVerticalPanel bottom,
-			Object tree) {
+			Object tree, ICallback<Void> cb) {
 	}
 
 	@Override
