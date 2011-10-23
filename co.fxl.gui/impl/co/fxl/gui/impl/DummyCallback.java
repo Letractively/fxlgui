@@ -29,4 +29,8 @@ public class DummyCallback<T> implements ICallback<T> {
 		throw new RuntimeException(throwable);
 	}
 
+	public static ICallback<Void> voidInstance() {
+		return new DummyCallback<Void>();
+	}
+
 }
