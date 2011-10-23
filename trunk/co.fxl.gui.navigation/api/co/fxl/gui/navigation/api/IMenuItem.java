@@ -19,12 +19,13 @@
 package co.fxl.gui.navigation.api;
 
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.ICallback;
 
 public interface IMenuItem extends IMenuNode, INavigationItem<IMenuItem> {
 
 	public interface INavigationListener {
 
-		void onActive(boolean active);
+		void onActive(boolean active, ICallback<Void> cb);
 	}
 
 	IVerticalPanel contentPanel();
@@ -42,4 +43,8 @@ public interface IMenuItem extends IMenuNode, INavigationItem<IMenuItem> {
 	boolean isActive();
 
 	boolean enabled();
+
+	IMenuItem imageResource(String imageResource);
+
+	IMenuItem toggleLoading(boolean toggleLoading);
 }

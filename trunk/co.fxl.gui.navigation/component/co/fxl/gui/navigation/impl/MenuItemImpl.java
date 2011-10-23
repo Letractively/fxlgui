@@ -18,8 +18,9 @@
  */
 package co.fxl.gui.navigation.impl;
 
-import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IToolbarItem;
 import co.fxl.gui.register.api.IRegister;
@@ -80,22 +81,23 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	}
 
 	@Override
-	public void onTop(boolean visible) {
-		if (visible) {
-			style.onFront(register.title());
-		} else {
-			style.onBack(register.title());
-		}
-		listener.onActive(visible);
+	public void onTop(final boolean visible, final ICallback<Void> cb) {
+		listener.onActive(visible, new CallbackTemplate<Void>(cb) {
+
+			@Override
+			public void onSuccess(Void result) {
+				if (visible) {
+					style.onFront(register.title());
+				} else {
+					style.onBack(register.title());
+				}
+				cb.onSuccess(result);
+			}
+		});
 	}
 
 	@Override
 	public IToolbarItem toolbarItem() {
-		throw new MethodNotImplementedException();
-	}
-
-	@Override
-	public IImage image() {
 		throw new MethodNotImplementedException();
 	}
 
@@ -119,5 +121,17 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	@Override
 	public boolean enabled() {
 		return register.enabled();
+	}
+
+	@Override
+	public IMenuItem imageResource(String imageResource) {
+		register.imageResource(imageResource);
+		return this;
+	}
+
+	@Override
+	public IMenuItem toggleLoading(boolean loading) {
+		register.toggleLoading(loading);
+		return this;
 	}
 }
