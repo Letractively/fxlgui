@@ -37,6 +37,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.ContextMenu;
+import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.KeyAdapter;
 import co.fxl.gui.impl.LazyClickListener;
@@ -95,17 +96,20 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		// private List<IResizeListener> resizeListeners = new
 		// LinkedList<IResizeListener>();
 
-		DetailView(String title, IDecorator<T> decorator) {
+		DetailView(String title, IDecorator<T> decorator, String imageResource) {
 			this.decorator = decorator;
 			this.title = title;
-			register = registers.addNavigationItem();
+			register = registers.addNavigationItem().imageResource(
+					imageResource);
 			register.text(title);
 			register.listener(new INavigationListener() {
 				@Override
-				public void onActive(boolean visible) {
+				public void onActive(boolean visible, ICallback<Void> cb) {
 					onTop = visible;
 					if (visible) {
-						update();
+						update(cb);
+					} else {
+						cb.onSuccess(null);
 					}
 				}
 			});
@@ -126,19 +130,23 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				return false;
 			}
 			if (onTop) {
-				update();
+				update(DummyCallback.voidInstance());
 				return true;
 			}
 			return false;
 		}
 
-		protected void update() {
-			if (deactivatedUpdate)
+		protected void update(ICallback<Void> cb) {
+			if (deactivatedUpdate) {
+				cb.onSuccess(null);
 				return;
+			}
 			if (node != null && node.object() != null) {
 				bottom.clear();
-				decorator.decorate(contentPanel, bottom, node);
 				activeView = this;
+				decorator.decorate(contentPanel, bottom, node, cb);
+			} else {
+				cb.onSuccess(null);
 			}
 		}
 
@@ -177,6 +185,13 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 		public boolean enabled() {
 			return register.enabled();
+		}
+
+		@Override
+		public co.fxl.gui.tree.api.ITreeWidget.IView toggleLoading(
+				boolean toggleLoading) {
+			register.toggleLoading(toggleLoading);
+			return this;
 		}
 
 		// @Override
@@ -431,14 +446,15 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	@Override
 	public ITreeWidget<T> setDetailView(IDecorator<T> decorator) {
-		addDetailView("Details", decorator);
+		addDetailView("Details", decorator, null);
 		return this;
 	}
 
 	@Override
-	public IView addDetailView(String title, IDecorator<T> decorator) {
+	public IView addDetailView(String title, IDecorator<T> decorator,
+			String imageResource) {
 		lazySetUpRegisters();
-		DetailView detailView = new DetailView(title, decorator);
+		DetailView detailView = new DetailView(title, decorator, imageResource);
 		detailViews.add(detailView);
 		return detailView;
 	}
@@ -718,7 +734,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		for (int i = 0; i < detailViews.size(); i++) {
 			DetailView view = detailViews.get(i);
 			if (view.register.isActive()) {
-				view.update();
+				view.update(DummyCallback.voidInstance());
 			}
 		}
 		return refreshTreeNode(refreshChildren);

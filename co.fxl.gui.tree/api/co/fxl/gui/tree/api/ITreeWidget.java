@@ -21,6 +21,7 @@ package co.fxl.gui.tree.api;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.ICallback;
 
 public interface ITreeWidget<T> {
 
@@ -40,6 +41,8 @@ public interface ITreeWidget<T> {
 		IView constrainType(Class<?>[] clazz);
 
 		IView isDefaultView();
+		
+		IView toggleLoading(boolean toggleLoading);
 
 		IViewID iD();
 	}
@@ -56,9 +59,11 @@ public interface ITreeWidget<T> {
 
 	public interface IDecorator<T> {
 
-		void decorate(IVerticalPanel panel, IVerticalPanel bottom, ITree<T> tree);
+		void decorate(IVerticalPanel panel, IVerticalPanel bottom,
+				ITree<T> tree, ICallback<Void> cb);
 
-		void decorate(IVerticalPanel panel, IVerticalPanel bottom, Object tree);
+		void decorate(IVerticalPanel panel, IVerticalPanel bottom, Object tree,
+				ICallback<Void> cb);
 
 		boolean clear(IVerticalPanel contentPanel);
 
@@ -73,7 +78,8 @@ public interface ITreeWidget<T> {
 
 	ITreeWidget<T> setDetailView(IDecorator<T> decorator);
 
-	IView addDetailView(String title, IDecorator<T> decorator);
+	IView addDetailView(String title, IDecorator<T> decorator,
+			String imageResource);
 
 	IViewID activeDetailView();
 

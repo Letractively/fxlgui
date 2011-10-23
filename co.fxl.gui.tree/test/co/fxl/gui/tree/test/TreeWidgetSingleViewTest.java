@@ -22,6 +22,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.navigation.impl.NavigationWidgetImplProvider;
 import co.fxl.gui.register.impl.RegisterWidgetImplProvider;
 import co.fxl.gui.tree.api.ITree;
@@ -45,7 +46,7 @@ class TreeWidgetSingleViewTest {
 
 			@Override
 			public void decorate(IVerticalPanel panel, IVerticalPanel bottom,
-					ITree<String> tree) {
+					ITree<String> tree, ICallback<Void> cb) {
 				clear(panel);
 				panel.spacing(16);
 				panel.add().label().text(tree.object());
@@ -53,7 +54,7 @@ class TreeWidgetSingleViewTest {
 
 			@Override
 			public void decorate(IVerticalPanel panel, IVerticalPanel bottom,
-					Object tree) {
+					Object tree, ICallback<Void> cb) {
 			}
 
 			@Override
