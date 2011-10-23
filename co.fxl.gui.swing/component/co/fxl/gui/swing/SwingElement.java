@@ -72,7 +72,8 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	@Override
 	public int width() {
 		Container parent = container.component.getParent();
-		if (parent instanceof JPanel
+		if (!(container.component instanceof JPanel)
+				&& parent instanceof JPanel
 				&& ((JPanel) parent).getLayout() instanceof VerticalLayoutManager) {
 			return parent.getWidth();
 		}
