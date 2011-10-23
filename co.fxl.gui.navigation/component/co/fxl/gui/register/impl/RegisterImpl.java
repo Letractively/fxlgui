@@ -25,6 +25,7 @@ import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.LazyClickListener;
@@ -47,6 +48,7 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 		@Override
 		public ITitle text(String title) {
 			buttonLabel.text(title);
+			toggleLoading(true);
 			return this;
 		}
 
@@ -64,6 +66,8 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 	private IVerticalPanel content;
 	private List<IRegisterListener> listeners = new LinkedList<IRegisterListener>();
 	private boolean init = false;
+	private IHorizontalPanel subPanel;
+	private IImage buttonImage;
 
 	RegisterImpl(RegisterWidgetImpl widget, int index) {
 		this.widget = widget;
@@ -83,12 +87,22 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 		buttonPanel = verticalContainer.add().panel().horizontal();
 		buttonPanel.spacing(widget.spacing);// .align().center();
 		buttonPanel.addSpace(3);
-		buttonLabel = buttonPanel.add().label();
+		subPanel = buttonPanel.add().panel().horizontal().align().center();
+		buttonLabel = subPanel.add().label();
+		buttonImage = subPanel.add().image().resource("loading_2.gif")
+				.visible(false);
 		buttonPanel.addClickListener(this);
 		buttonPanel.addSpace(3);
 		content = widget.cardPanel.add().panel().vertical();
 		init = true;
 		notifyVisible(false);
+	}
+
+	private void toggleLoading(boolean loading) {
+		int width = buttonPanel.width();
+		buttonLabel.visible(!loading);
+		buttonImage.visible(loading);
+		buttonPanel.width(width);
 	}
 
 	private void addSeparator() {
