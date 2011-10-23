@@ -22,6 +22,7 @@ import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.ICallback;
 
 public interface IRegister {
 
@@ -38,7 +39,7 @@ public interface IRegister {
 
 	public interface IRegisterListener {
 
-		void onTop(boolean visible);
+		void onTop(boolean visible, ICallback<Void> cb);
 	}
 
 	ITitle title();
@@ -56,4 +57,8 @@ public interface IRegister {
 	boolean isActive();
 
 	boolean enabled();
+
+	IRegister imageResource(String imageResource);
+
+	IRegister toggleLoading(boolean loading);
 }

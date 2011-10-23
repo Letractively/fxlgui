@@ -25,6 +25,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.register.api.IRegister;
 
@@ -64,6 +65,10 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 	private boolean init = false;
 	private IHorizontalPanel subPanel;
 	private IImage buttonImage;
+	boolean disabled = false;
+	private IVerticalPanel verticalContainer;
+
+	// private String imageResource = "document.png";
 
 	RegisterImpl(RegisterWidgetImpl widget, int index) {
 		this.widget = widget;
@@ -84,9 +89,11 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 		buttonPanel.spacing(widget.spacing);// .align().center();
 		buttonPanel.addSpace(3);
 		subPanel = buttonPanel.add().panel().horizontal().align().center();
-		buttonLabel = subPanel.add().label();
-		buttonImage = subPanel.add().image().resource("loading_2.gif")
+		buttonImage = subPanel.add().image().resource("loading_white.gif")
 				.visible(false);
+		buttonLabel = subPanel.
+		// addSpace(4).
+				add().label();
 		buttonPanel.addClickListener(this);
 		buttonPanel.addSpace(3);
 		content = widget.cardPanel.add().panel().vertical();
@@ -94,11 +101,23 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 		notifyVisible(false);
 	}
 
-	private void toggleLoading(boolean loading) {
-		int width = buttonPanel.width();
-		buttonLabel.visible(!loading);
+	@Override
+	public IRegister toggleLoading(boolean loading) {
+		int width = subPanel.width();
+		int height = subPanel.height();
 		buttonImage.visible(loading);
-		buttonPanel.width(width);
+		buttonLabel.visible(!loading);
+		subPanel.size(width, height);
+		if (isActive()) {
+			buttonImage.resource("loading_black.gif");
+		} else {
+			buttonImage.resource("loading_white.gif");
+		}
+		// if (loading)
+		// buttonImage.resource("loading_2.gif");
+		// else
+		// buttonImage.resource(imageResource);
+		return this;
 	}
 
 	private void addSeparator() {
@@ -126,17 +145,24 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 		return this;
 	}
 
-	void notifyVisible(boolean visible) {
+	void notifyVisible(final boolean visible) {
 		if (disabled)
 			return;
-		if (listener != null)
-			listener.onTop(visible);
-		if (visible)
-			widget.top(this);
-		if (visible) {
-			buttonPanel.clickable(false);
-		} else {
-			buttonPanel.clickable(true);
+		if (listener != null) {
+			toggleLoading(true);
+			listener.onTop(visible, new CallbackTemplate<Void>() {
+				@Override
+				public void onSuccess(Void result) {
+					toggleLoading(false);
+					if (visible)
+						widget.top(RegisterImpl.this);
+					if (visible) {
+						buttonPanel.clickable(false);
+					} else {
+						buttonPanel.clickable(true);
+					}
+				}
+			});
 		}
 	}
 
@@ -168,9 +194,6 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 		return this;
 	}
 
-	boolean disabled = false;
-	private IVerticalPanel verticalContainer;
-
 	@Override
 	public RegisterImpl enabled(boolean enabled) {
 		if (!enabled) {
@@ -195,5 +218,13 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 	@Override
 	public boolean enabled() {
 		return !disabled;
+	}
+
+	@Override
+	public IRegister imageResource(String imageResource) {
+		// if (imageResource != null)
+		// this.imageResource = imageResource;
+		// buttonImage.resource(this.imageResource);
+		return this;
 	}
 }

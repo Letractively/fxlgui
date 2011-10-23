@@ -18,11 +18,7 @@
  */
 package co.fxl.gui.navigation.api;
 
-import co.fxl.gui.api.IImage;
-
 public interface INavigationItem<T> {
 
 	T text(String text);
-
-	IImage image();
 }
