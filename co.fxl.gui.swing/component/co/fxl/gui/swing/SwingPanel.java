@@ -51,7 +51,7 @@ public class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
 		container.component.setOpaque(false);
 	}
 
-	void setLayout(LayoutManager layoutManager) {
+	protected void setLayout(LayoutManager layoutManager) {
 		container.component.setLayout(layoutManager);
 	}
 
