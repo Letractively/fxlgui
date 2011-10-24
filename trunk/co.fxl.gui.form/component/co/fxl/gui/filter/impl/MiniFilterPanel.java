@@ -196,6 +196,7 @@ class MiniFilterPanel implements FilterPanel {
 	@Override
 	public void visible() {
 		grid.visible();
+		panel.adjustHeights();
 	}
 
 	@Override
