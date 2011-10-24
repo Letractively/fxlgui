@@ -344,6 +344,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		// if (editable) {
 		// new Edit();
 		// }
+		panel.adjustHeights();
 	}
 
 	private IClickable<?> addMoveImage(String resource,
