@@ -18,9 +18,9 @@
  */
 package co.fxl.gui.api;
 
-public interface ILayoutProvider<T> {
+public interface ILayoutProvider<T extends IPanel<T>> {
 
 	Class<T> layoutType();
 
-	T createLayout(IPanel<?> panel);
+	T createPanel(IContainer container);
 }
