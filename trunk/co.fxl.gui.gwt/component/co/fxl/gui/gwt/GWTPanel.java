@@ -37,7 +37,7 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 
 	int innerSpace = 0;
 
-	GWTPanel(GWTContainer<T> container) {
+	protected GWTPanel(GWTContainer<T> container) {
 		super(container);
 		// if (container.widget != null)
 		// container.widget.getElement().getStyle()
