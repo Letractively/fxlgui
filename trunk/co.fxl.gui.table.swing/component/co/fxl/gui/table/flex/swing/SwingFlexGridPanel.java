@@ -18,6 +18,13 @@
  */
 package co.fxl.gui.table.flex.swing;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.swing.JComponent;
+
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.swing.PanelComponent;
 import co.fxl.gui.swing.SwingContainer;
@@ -31,6 +38,9 @@ public class SwingFlexGridPanel extends SwingPanel<IFlexGridPanel> implements
 
 		private int x;
 		private int y;
+		private IContainer c;
+		private int width = 1;
+		private int height = 1;
 
 		FlexCell(int x, int y) {
 			this.x = x;
@@ -39,29 +49,70 @@ public class SwingFlexGridPanel extends SwingPanel<IFlexGridPanel> implements
 
 		@Override
 		public IFlexCell width(int columns) {
-			throw new MethodNotImplementedException();
+			assert c == null;
+			width = columns;
+			return this;
 		}
 
 		@Override
 		public IFlexCell height(int rows) {
-			throw new MethodNotImplementedException();
+			assert c == null;
+			height = rows;
+			return this;
 		}
 
 		@Override
 		public IContainer container() {
-			throw new MethodNotImplementedException();
+			return c = SwingFlexGridPanel.this.add();
 		}
 
 	}
 
+	private List<FlexCell> unassociatedCells = new LinkedList<FlexCell>();
+	private GridBagLayout layout = new GridBagLayout();
+
 	@SuppressWarnings("unchecked")
 	SwingFlexGridPanel(IContainer container) {
 		super((SwingContainer<PanelComponent>) container);
+		setLayout(layout);
 	}
 
 	@Override
 	public IFlexCell cell(int x, int y) {
-		return new FlexCell(x, y);
+		FlexCell cell = new FlexCell(x, y);
+		unassociatedCells.add(cell);
+		return cell;
+	}
+
+	@Override
+	public void add(JComponent component) {
+		FlexCell cell = findCell(component);
+		unassociatedCells.remove(cell);
+		super.add(component);
+		GridBagConstraints cellConstraints = newGridBagConstraints(cell.x,
+				cell.y, cell.width, cell.height);
+		layout.setConstraints(component, cellConstraints);
+	}
+
+	private GridBagConstraints newGridBagConstraints(int x, int y, int width,
+			int height) {
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.LINE_START;
+		constraints.fill = GridBagConstraints.BOTH;
+		constraints.gridx = x;
+		constraints.gridy = y;
+		constraints.gridwidth = width;
+		constraints.gridheight = height;
+		return constraints;
+	}
+
+	@SuppressWarnings("rawtypes")
+	private FlexCell findCell(JComponent widget) {
+		for (FlexCell cell : unassociatedCells) {
+			if (((SwingContainer) cell.c).component == widget)
+				return cell;
+		}
+		throw new RuntimeException(widget + " not found");
 	}
 
 }
