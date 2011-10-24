@@ -6,6 +6,8 @@ import co.fxl.gui.table.flex.IFlexTableWidget;
 
 public class SwingFlexTableWidgetProvider implements
 		IWidgetProvider<IFlexTableWidget> {
+	
+	// TODO use LayoutProvider not WidgetProvider
 
 	@Override
 	public Class<IFlexTableWidget> widgetType() {
