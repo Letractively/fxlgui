@@ -19,8 +19,9 @@
 package co.fxl.gui.table.flex;
 
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IPanel;
 
-public interface IFlexTableWidget {
+public interface IFlexGridPanel extends IPanel<IFlexGridPanel> {
 
 	public interface IFlexCell {
 
