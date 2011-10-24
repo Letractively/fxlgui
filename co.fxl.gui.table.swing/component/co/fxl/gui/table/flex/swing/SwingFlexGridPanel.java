@@ -1,9 +1,13 @@
 package co.fxl.gui.table.flex.swing;
 
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.table.flex.IFlexTableWidget;
+import co.fxl.gui.swing.PanelComponent;
+import co.fxl.gui.swing.SwingContainer;
+import co.fxl.gui.swing.SwingPanel;
+import co.fxl.gui.table.flex.IFlexGridPanel;
 
-public class SwingFlexTableWidget implements IFlexTableWidget {
+public class SwingFlexGridPanel extends SwingPanel<IFlexGridPanel> implements
+		IFlexGridPanel {
 
 	private class FlexCell implements IFlexCell {
 
@@ -32,8 +36,9 @@ public class SwingFlexTableWidget implements IFlexTableWidget {
 
 	}
 
-	SwingFlexTableWidget(IContainer container) {
-		throw new MethodNotImplementedException();
+	@SuppressWarnings("unchecked")
+	SwingFlexGridPanel(IContainer container) {
+		super((SwingContainer<PanelComponent>) container);
 	}
 
 	@Override
