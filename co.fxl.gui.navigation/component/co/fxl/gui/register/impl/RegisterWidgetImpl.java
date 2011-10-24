@@ -62,8 +62,9 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 		if (setUp)
 			return;
 		setUp = true;
-		backgroundPanel = mainBorders.top().panel().vertical();
-		headerPanel = backgroundPanel.addSpace(outerSpacing).add().panel()
+		backgroundPanel = mainBorders.top().panel().vertical()
+				.spacing(outerSpacing / 2);
+		headerPanel = backgroundPanel.add().panel().vertical().add().panel()
 				.flow();
 		cardPanel = mainBorders.center().panel().card();
 	}
