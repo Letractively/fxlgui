@@ -33,7 +33,7 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.ISpaced.ISpacing;
 import co.fxl.gui.api.IWidgetProvider;
 
-class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
+public class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
 		IPanel<R>, ComponentParent {
 
 	final class SwingPanelColor extends SwingColor {
@@ -46,7 +46,7 @@ class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
 		}
 	}
 
-	SwingPanel(SwingContainer<PanelComponent> container) {
+	protected SwingPanel(SwingContainer<PanelComponent> container) {
 		super(container);
 		container.component.setOpaque(false);
 	}

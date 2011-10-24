@@ -9,7 +9,7 @@ import java.awt.Paint;
 
 import javax.swing.JPanel;
 
-class PanelComponent extends JPanel {
+public class PanelComponent extends JPanel {
 
 	private static final long serialVersionUID = 4786977574399962374L;
 
