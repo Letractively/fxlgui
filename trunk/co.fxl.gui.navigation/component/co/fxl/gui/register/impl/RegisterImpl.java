@@ -46,6 +46,7 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 		@Override
 		public ITitle text(String title) {
 			buttonLabel.text(title);
+			toggleLoading(false);
 			return this;
 		}
 
@@ -83,8 +84,8 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 			addSeparator();
 		}
 		verticalContainer = widget.headerPanel.add().panel().vertical();
-		verticalContainer.spacing().left(widget.outerSpacing).right(0).top(0)
-				.bottom(widget.outerSpacing);
+		int spc = widget.outerSpacing / 2;
+		verticalContainer.spacing(spc);
 		buttonPanel = verticalContainer.add().panel().horizontal();
 		buttonPanel.spacing(widget.spacing);// .align().center();
 		buttonPanel.addSpace(3);
@@ -103,11 +104,10 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 
 	@Override
 	public IRegister toggleLoading(boolean loading) {
-		int width = subPanel.width();
-		int height = subPanel.height();
+		int width = buttonPanel.width();
 		buttonImage.visible(loading);
 		buttonLabel.visible(!loading);
-		subPanel.size(width, height);
+		buttonPanel.size(width, 24);
 		if (isActive()) {
 			buttonImage.resource("loading_black.gif");
 		} else {
