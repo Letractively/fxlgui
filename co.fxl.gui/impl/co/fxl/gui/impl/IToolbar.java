@@ -30,4 +30,6 @@ public interface IToolbar {
 
 	IToolbar visible(boolean visible);
 
+	IToolbar adjustHeights();
+
 }
