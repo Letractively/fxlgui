@@ -16,7 +16,7 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.table.flex;
+package co.fxl.gui.table.flex.api;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IPanel;
