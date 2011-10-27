@@ -162,6 +162,12 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 						buttonPanel.clickable(true);
 					}
 				}
+
+				@Override
+				public void onFail(Throwable throwable) {
+					toggleLoading(false);
+					super.onFail(throwable);
+				}
 			});
 		}
 	}
