@@ -153,6 +153,10 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 			listener.onTop(visible, new CallbackTemplate<Void>() {
 				@Override
 				public void onSuccess(Void result) {
+					finish(visible);
+				}
+
+				void finish(final boolean visible) {
 					toggleLoading(false);
 					if (visible)
 						widget.top(RegisterImpl.this);
@@ -165,7 +169,12 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 
 				@Override
 				public void onFail(Throwable throwable) {
-					toggleLoading(false);
+					finish(visible);
+					IVerticalPanel panel = contentPanel().clear();
+					panel.add().panel().vertical().add().panel().horizontal()
+							.add().panel().horizontal().spacing(10).add()
+							.label().text("FAILURE LOADING REGISTER").font()
+							.pixel(10).color().gray();
 					super.onFail(throwable);
 				}
 			});

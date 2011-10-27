@@ -86,13 +86,24 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 
 			@Override
 			public void onSuccess(Void result) {
+				finish(visible);
+				cb.onSuccess(result);
+			}
+
+			void finish(final boolean visible) {
 				if (visible) {
 					style.onFront(register.title());
 				} else {
 					style.onBack(register.title());
 				}
-				cb.onSuccess(result);
 			}
+
+			@Override
+			public void onFail(Throwable throwable) {
+				finish(visible);
+				super.onFail(throwable);
+			}
+
 		});
 	}
 
