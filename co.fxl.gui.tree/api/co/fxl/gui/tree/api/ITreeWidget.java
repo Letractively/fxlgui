@@ -25,26 +25,29 @@ import co.fxl.gui.impl.ICallback;
 
 public interface ITreeWidget<T> {
 
+	public interface IDefaultViewResolver<T> {
+
+		String resolve(T entity);
+
+	}
+
 	public interface IViewID {
 
 	}
 
-	public interface IView {
+	public interface IView<T> {
 
-		// public interface IResizeListener {
-		//
-		// void onResize();
-		// }
+		IView<T> constrainType(Class<?> clazz);
 
-		IView constrainType(Class<?> clazz);
+		IView<T> constrainType(Class<?>[] clazz);
 
-		IView constrainType(Class<?>[] clazz);
+		IView<T> isDefaultView();
 
-		IView isDefaultView();
-		
-		IView toggleLoading(boolean toggleLoading);
+		IView<T> toggleLoading(boolean toggleLoading);
 
 		IViewID iD();
+
+		IView<T> constraintAdapter(IConstraintAdapter<T> constraintAdapter);
 	}
 
 	public interface ITreeClickListener<T> {
@@ -78,7 +81,7 @@ public interface ITreeWidget<T> {
 
 	ITreeWidget<T> setDetailView(IDecorator<T> decorator);
 
-	IView addDetailView(String title, IDecorator<T> decorator,
+	IView<T> addDetailView(String title, IDecorator<T> decorator,
 			String imageResource);
 
 	IViewID activeDetailView();
@@ -126,6 +129,8 @@ public interface ITreeWidget<T> {
 	ITreeWidget<T> refreshSelection(boolean refreshChildren);
 
 	ITreeWidget<T> refreshTreeNode(boolean refreshChildren);
+
+	ITreeWidget<T> defaultViewResolver(IDefaultViewResolver<T> viewResolver);
 
 	ITreeWidget<T> repaint();
 
