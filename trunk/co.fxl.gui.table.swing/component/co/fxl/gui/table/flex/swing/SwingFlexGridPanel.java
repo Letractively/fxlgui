@@ -29,7 +29,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.swing.PanelComponent;
 import co.fxl.gui.swing.SwingContainer;
 import co.fxl.gui.swing.SwingPanel;
-import co.fxl.gui.table.flex.IFlexGridPanel;
+import co.fxl.gui.table.flex.api.IFlexGridPanel;
 
 public class SwingFlexGridPanel extends SwingPanel<IFlexGridPanel> implements
 		IFlexGridPanel {

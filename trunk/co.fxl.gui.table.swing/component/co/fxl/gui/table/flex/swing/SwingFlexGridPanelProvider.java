@@ -20,7 +20,7 @@ package co.fxl.gui.table.flex.swing;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IPanelProvider;
-import co.fxl.gui.table.flex.IFlexGridPanel;
+import co.fxl.gui.table.flex.api.IFlexGridPanel;
 
 public class SwingFlexGridPanelProvider implements
 		IPanelProvider<IFlexGridPanel> {
