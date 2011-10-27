@@ -29,7 +29,7 @@ import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.register.api.IRegister;
 
-class RegisterImpl extends LazyClickListener implements IRegister {
+public class RegisterImpl extends LazyClickListener implements IRegister {
 
 	private class Title implements ITitle {
 
@@ -170,11 +170,8 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 				@Override
 				public void onFail(Throwable throwable) {
 					finish(visible);
-					IVerticalPanel panel = contentPanel().clear();
-					panel.add().panel().vertical().add().panel().horizontal()
-							.add().panel().horizontal().spacing(10).add()
-							.label().text("FAILURE LOADING REGISTER").font()
-							.pixel(10).color().gray();
+					IVerticalPanel panel = contentPanel();
+					showFailureLoadingRegister(panel);
 					super.onFail(throwable);
 				}
 			});
@@ -241,5 +238,12 @@ class RegisterImpl extends LazyClickListener implements IRegister {
 		// this.imageResource = imageResource;
 		// buttonImage.resource(this.imageResource);
 		return this;
+	}
+
+	public static void showFailureLoadingRegister(IVerticalPanel panel) {
+		panel.clear().add().panel().vertical().add().panel().horizontal().add()
+				.panel().horizontal().spacing(10).add().label()
+				.text("FAILURE LOADING REGISTER").font().pixel(10).color()
+				.gray();
 	}
 }
