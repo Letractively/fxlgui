@@ -30,6 +30,8 @@ public interface IFieldType {
 
 	IFieldType text();
 
+	IFieldType html();
+
 	IFieldType color();
 
 	IFieldType encryptedText();
