@@ -156,6 +156,20 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		}
 	}
 
+	public class HTMLDecorator implements Decorator<String> {
+
+		@Override
+		public void decorate(Object identifier, ICell cell, String value) {
+			String text = (String) value;
+			cell.html(text);
+		}
+
+		@Override
+		public void prepare(
+				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
+		}
+	}
+
 	public class ImageDecorator implements Decorator<String> {
 
 		@Override
@@ -216,7 +230,9 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	@SuppressWarnings("rawtypes")
 	Decorator decorator() {
 		if (decorator == null) {
-			if (type.clazz.equals(String.class)) {
+			if (type.isHTML) {
+				decorator = new HTMLDecorator();
+			} else if (type.clazz.equals(String.class)) {
 				decorator = new StringDecorator();
 			} else if (type.clazz.equals(IImage.class)) {
 				decorator = new ImageDecorator();
