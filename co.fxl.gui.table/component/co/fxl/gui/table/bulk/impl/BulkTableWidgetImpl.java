@@ -213,7 +213,11 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 
 			@Override
 			public ICell html(String text) {
-				throw new MethodNotImplementedException();
+
+				// TODO ...
+				new MethodNotImplementedException().printStackTrace();
+
+				return text(text);
 			}
 
 			@Override
