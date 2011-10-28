@@ -34,6 +34,7 @@ public class FieldTypeImpl implements IFieldType {
 	public boolean encryptedText = false;
 	public boolean isShort = false;
 	public boolean isColor = false;
+	public boolean isHTML = false;
 
 	@Override
 	public String toString() {
@@ -135,6 +136,12 @@ public class FieldTypeImpl implements IFieldType {
 	public IFieldType dateTime() {
 		type(Date.class);
 		isLong = true;
+		return this;
+	}
+
+	@Override
+	public IFieldType html() {
+		isHTML = true;
 		return this;
 	}
 }
