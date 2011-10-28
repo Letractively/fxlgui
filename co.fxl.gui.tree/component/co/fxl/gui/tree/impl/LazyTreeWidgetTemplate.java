@@ -117,8 +117,7 @@ public abstract class LazyTreeWidgetTemplate implements
 	public ILazyTreeWidget<Object> height(int height) {
 		this.height = height;
 		if (pane != null) {
-			pane.remove();
-			visible(true);
+			refresh(false, false);
 		}
 		return this;
 	}
