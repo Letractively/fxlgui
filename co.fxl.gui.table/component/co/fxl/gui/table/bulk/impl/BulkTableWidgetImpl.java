@@ -43,7 +43,7 @@ import co.fxl.gui.impl.AlignmentMemento;
 import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 
-class BulkTableWidgetImpl implements IBulkTableWidget {
+public class BulkTableWidgetImpl implements IBulkTableWidget {
 
 	private final class ColumnImpl implements IColumn {
 		private final int column;
@@ -99,7 +99,7 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 	private Map<Integer, Boolean> highlighted = new HashMap<Integer, Boolean>();
 	private boolean addToContextMenu = true;
 
-	BulkTableWidgetImpl(IContainer container) {
+	protected BulkTableWidgetImpl(IContainer container) {
 		mainPanel = container.panel().vertical();
 		grid = mainPanel.add().panel().grid();
 		grid.spacing(0);
@@ -140,6 +140,10 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 				IGridCell cell = grid.cell(column, row + rowOffset);
 				align(column, cell);
 				cell.label().text(text);
+				return updateBorder(row, cell);
+			}
+
+			public ICell updateBorder(final int row, IGridCell cell) {
 				IBorder b = cell.border();
 				b.color().lightgray();
 				b.style().bottom();
@@ -213,11 +217,11 @@ class BulkTableWidgetImpl implements IBulkTableWidget {
 
 			@Override
 			public ICell html(String text) {
-
-				// TODO ...
-				new MethodNotImplementedException().printStackTrace();
-
-				return text(text);
+				IGridCell cell = grid.cell(column, row + rowOffset);
+				align(column, cell);
+				ILabel label = cell.label();
+				label.html(text);
+				return updateBorder(row, cell);
 			}
 
 			@Override
