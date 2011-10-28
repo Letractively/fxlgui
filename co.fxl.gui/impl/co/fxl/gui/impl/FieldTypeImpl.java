@@ -38,7 +38,7 @@ public class FieldTypeImpl implements IFieldType {
 
 	@Override
 	public String toString() {
-		return String.valueOf(clazz);
+		return isHTML ? "HTML" : String.valueOf(clazz);
 	}
 
 	@Override
