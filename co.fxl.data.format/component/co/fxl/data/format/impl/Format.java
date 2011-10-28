@@ -64,6 +64,12 @@ public class Format {
 				return Integer.valueOf(format);
 			}
 		});
+		register(Object.class, new FormatImpl<Object>() {
+			@Override
+			public Object parseWithException(String format) {
+				return format;
+			}
+		});
 	}
 
 	public static IFormat<?> get(Class<?> clazz) {
@@ -118,5 +124,9 @@ public class Format {
 	@SuppressWarnings("unchecked")
 	public static IFormat<Boolean> bool() {
 		return (IFormat<Boolean>) get(Boolean.class);
+	}
+
+	public static IFormat<Object> object() {
+		return (IFormat<Object>) get(Object.class);
 	}
 }
