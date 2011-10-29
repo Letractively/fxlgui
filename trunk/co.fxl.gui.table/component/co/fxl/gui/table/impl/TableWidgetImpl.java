@@ -232,12 +232,7 @@ public class TableWidgetImpl implements ITableWidget<Object>,
 			Object comparable = rowImpl.content.values[column];
 			Cell<?> c = CellFactory.createCellContent(this, rowImpl, column,
 					cell, comparable);
-			if (rowImpl.cells == null)
-				rowImpl.cells = new LinkedList<Cell<?>>();
-			if (rowImpl.cells.size() == column) {
-				rowImpl.cells.add(c);
-			} else
-				throw new MethodNotImplementedException();
+			rowImpl.content.cells[column] = c;
 			ColumnImpl ccolumn = columns.get(column);
 			if (ccolumn.decorator != null)
 				ccolumn.decorator.decorate(c.element, comparable);
