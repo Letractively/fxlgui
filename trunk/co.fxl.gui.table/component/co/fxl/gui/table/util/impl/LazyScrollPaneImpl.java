@@ -58,6 +58,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private boolean allowRepaint = false;
 	private int[] rowHeights;
 	private int heightEstimate = 0;
+	private boolean holdScroll;
 
 	LazyScrollPaneImpl(IContainer container) {
 		this.container = container;
@@ -130,13 +131,15 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 	int rowHeight(int i) {
 		int rowHeight = decorator.rowHeight(i);
-		if (rowHeights[i] == 0)
-			rowHeights[i] = minRowHeight;
-		if (rowHeight > rowHeights[i]) {
-			int inc = rowHeight - rowHeights[i];
-			rowHeights[i] = rowHeight;
-			heightEstimate += inc;
-			updateScrollPanelHeight();
+		if (adjustHeights) {
+			if (rowHeights[i] == 0)
+				rowHeights[i] = minRowHeight;
+			if (rowHeight > rowHeights[i]) {
+				int inc = rowHeight - rowHeights[i];
+				rowHeights[i] = rowHeight;
+				heightEstimate += inc;
+				updateScrollPanelHeight();
+			}
 		}
 		return rowHeight;
 	}
@@ -260,10 +263,14 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	}
 
 	private void updateScrollPanelHeight() {
+		if (heightEstimate == scrollContentPanel.height())
+			return;
+		holdScroll = true;
 		scrollContentPanel.size(1, heightEstimate);
 		maxOffset = heightEstimate - height;
 		if (maxOffset <= 0)
 			maxOffset = 1;
+		holdScroll = false;
 	}
 
 	private void update() {
@@ -332,6 +339,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 	@Override
 	public void onScroll(int maxOffset) {
+		if (holdScroll)
+			return;
 		rowIndex = convertScrollOffset2RowIndex(maxOffset);
 		assert rowIndex >= 0 : maxOffset + " offset not valid: " + rowIndex;
 		update();
