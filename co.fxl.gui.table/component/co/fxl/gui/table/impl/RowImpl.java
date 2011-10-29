@@ -18,44 +18,41 @@
  */
 package co.fxl.gui.table.impl;
 
-import java.util.List;
-
 import co.fxl.gui.table.api.IRow;
 
 public class RowImpl implements IRow<Object> {
 
 	static final Comparable<?> EMPTY = null;
 
-	public static class Content {
+	public class Content {
 
 		int index;
 		public boolean selected = false;
 		public boolean visible = true;
-		public Object[] values;
+		public Object[] values = new Object[table.columns.size()];
 		Object identifier;
+		int currentColumn = 0;
+		Cell<?>[] cells = new Cell<?>[table.columns.size()];
 	}
 
 	private TableWidgetImpl table;
 	int rowIndex;
-	private int currentColumn = 0;
-	public Content content = new Content();
-	List<Cell<?>> cells;
+	public Content content;
 
 	protected RowImpl(TableWidgetImpl table, int rowIndex) {
 		this.table = table;
 		this.rowIndex = rowIndex;
+		content = new Content();
 		content.index = rowIndex;
 		content.identifier = rowIndex;
 	}
 
 	@Override
 	public IRow<Object> add(Object... content) {
-		if (this.content.values == null)
-			this.content.values = new Object[table.columns.size()];
 		for (Object comparable : content) {
 			if (comparable == null || comparable.equals(""))
 				comparable = EMPTY;
-			this.content.values[currentColumn++] = comparable;
+			this.content.values[this.content.currentColumn++] = comparable;
 		}
 		return this;
 	}
@@ -74,12 +71,13 @@ public class RowImpl implements IRow<Object> {
 
 	@SuppressWarnings("unchecked")
 	public void update() {
-		for (currentColumn = 0; currentColumn < content.values.length; currentColumn++) {
-			Object value = content.values[currentColumn];
-			Cell<Object> cell = (Cell<Object>) cells.get(currentColumn);
+		for (content.currentColumn = 0; content.currentColumn < content.values.length; content.currentColumn++) {
+			Object value = content.values[content.currentColumn];
+			Cell<Object> cell = (Cell<Object>) content.cells
+					[content.currentColumn];
 			cell.update(value);
 			cell.highlight(rowIndex, content.selected);
-			ColumnImpl column = table.columns.get(currentColumn);
+			ColumnImpl column = table.columns.get(content.currentColumn);
 			if (column.decorator != null && !content.selected)
 				column.decorator.decorate(cell.element, value);
 			cell.visible(content.visible);
@@ -101,7 +99,7 @@ public class RowImpl implements IRow<Object> {
 	void selected(boolean selected) {
 		content.selected = selected;
 		for (int i = 0; i < content.values.length; i++) {
-			cells.get(i).highlight(rowIndex, content.selected);
+			content.cells[i].highlight(rowIndex, content.selected);
 		}
 	}
 
