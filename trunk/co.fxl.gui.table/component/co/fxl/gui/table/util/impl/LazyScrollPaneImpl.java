@@ -56,6 +56,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private IScrollPane treeScrollPanel;
 	private IDockPanel treeDockPanel;
 	private boolean allowRepaint = false;
+	private int[] rowHeights;
+	private int heightEstimate = 0;
 
 	LazyScrollPaneImpl(IContainer container) {
 		this.container = container;
@@ -70,6 +72,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	@Override
 	public ILazyScrollPane minRowHeight(int minRowHeight) {
 		this.minRowHeight = minRowHeight;
+		if (size > 0)
+			heightEstimate = size * minRowHeight;
 		return updateRows2Paint();
 	}
 
@@ -101,6 +105,9 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	@Override
 	public ILazyScrollPane size(int size) {
 		this.size = size;
+		if (minRowHeight > 0)
+			heightEstimate = size * minRowHeight;
+		rowHeights = new int[size];
 		return updateRows2Paint();
 	}
 
@@ -121,6 +128,19 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		return this;
 	}
 
+	int rowHeight(int i) {
+		int rowHeight = decorator.rowHeight(i);
+		if (rowHeights[i] == 0)
+			rowHeights[i] = minRowHeight;
+		if (rowHeight > rowHeights[i]) {
+			int inc = rowHeight - rowHeights[i];
+			rowHeights[i] = rowHeight;
+			heightEstimate += inc;
+			updateScrollPanelHeight();
+		}
+		return rowHeight;
+	}
+
 	private void draw() {
 		v = container.panel().vertical();
 		v.color().white();
@@ -131,9 +151,10 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		if (size == 0) {
 			treeDockPanel.left().panel().vertical().spacing(16).add().label()
 					.text("NO ENTITIES FOUND").font().pixel(10).color().gray();
-			
-			// TODO FEATURE: Usability: nice 2 have: show filter details like in scrolltable
-			
+
+			// TODO FEATURE: Usability: nice 2 have: show filter details like in
+			// scrolltable
+
 			return;
 		}
 		treeDockPanel.visible(false);
@@ -147,11 +168,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		scrollPane.size(widthScrollPanel, height);
 		scrollContentPanel = scrollPane.viewPort().panel().absolute();
 		scrollContentPanel.add().label().text("&#160;");
-		int scrollPanelHeight = size * minRowHeight;
-		scrollContentPanel.size(1, scrollPanelHeight);
-		maxOffset = scrollPanelHeight - height;
-		if (maxOffset <= 0)
-			maxOffset = 1;
+		updateScrollPanelHeight();
 		final int firstIndex = size - rows2Paint;
 		assert firstIndex >= 0;
 		Runnable runnable = new Runnable() {
@@ -167,8 +184,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 					}
 					return;
 				}
-				int h = adjustHeights ? decorator.rowHeight(lastIndex)
-						: minRowHeight;
+				int h = adjustHeights ? rowHeight(lastIndex) : minRowHeight;
 				assert lastIndex >= 0;
 				maxRowIndex = lastIndex;
 				for (int i = lastIndex - 1; i >= firstIndex && h < height; i--) {
@@ -180,8 +196,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 						return;
 					}
 					int rowHeight = Math.max(minRowHeight,
-							adjustHeights ? decorator.rowHeight(i)
-									: minRowHeight);
+							adjustHeights ? rowHeight(i) : minRowHeight);
 					h += rowHeight;
 					if (h < height) {
 						maxRowIndex = i;
@@ -205,14 +220,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 						@Override
 						public void run() {
 							if (rowIndex > 0) {
-								int y = convertRowIndex2ScrollOffset(rowIndex);
-								if (lastCard != null)
-									lastCard.clear();
-								treeDockPanel.visible(true);
-								scrollPane.scrollTo(y);
-								treeDockPanel.visible(false);
-								// TODO style="overflow:auto" on body element
-								// FocusPanel around Widget to scroll into view
+								scrollToRowIndex();
 							} else
 								update();
 							treeDockPanel.visible(true);
@@ -220,20 +228,24 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 					});
 				} else {
 					if (rowIndex > 0) {
-						int y = convertRowIndex2ScrollOffset(rowIndex);
-						if (lastCard != null)
-							lastCard.clear();
-						treeDockPanel.visible(true);
-						scrollPane.scrollTo(y);
-						treeDockPanel.visible(false);
-						// TODO style="overflow:auto" on body element
-						// FocusPanel around Widget to scroll into view
+						scrollToRowIndex();
 					}
 					scrollPane.addScrollListener(LazyScrollPaneImpl.this);
 					update();
 					treeDockPanel.visible(true);
 				}
 				allowRepaint = false;
+			}
+
+			private void scrollToRowIndex() {
+				int y = convertRowIndex2ScrollOffset(rowIndex);
+				if (lastCard != null)
+					lastCard.clear();
+				treeDockPanel.visible(true);
+				scrollPane.scrollTo(y);
+				treeDockPanel.visible(false);
+				// TODO style="overflow:auto" on body element
+				// FocusPanel around Widget to scroll into view
 			}
 		};
 		if (adjustHeights) {
@@ -245,6 +257,13 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				lastIndex = 0;
 			runnable.run();
 		}
+	}
+
+	private void updateScrollPanelHeight() {
+		scrollContentPanel.size(1, heightEstimate);
+		maxOffset = heightEstimate - height;
+		if (maxOffset <= 0)
+			maxOffset = 1;
 	}
 
 	private void update() {

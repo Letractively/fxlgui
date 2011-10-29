@@ -288,8 +288,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				contentPanel0 = container.add().panel().vertical();
 				contentPanel0.height(heightMinusTopPanel());
 				contentPanel = contentPanel0.add().panel().vertical();
-				update();
-				if (paintedRows != rows.size()) {
+				boolean tooLarge = update();
+				if (tooLarge || paintedRows != rows.size()) {
 					contentPanel0.clear();
 					sp = (ILazyScrollPane) contentPanel0.add().widget(
 							ILazyScrollPane.class);
@@ -475,14 +475,14 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private boolean addToContextMenu;
 	private IUpdateListener<List<String>> hiddenColumnListener;
 
-	void update() {
+	boolean update() {
 		paintedRows = computeRowsToPaint();
-		updateWithPaintedRowsSet();
+		return updateWithPaintedRowsSet();
 	}
 
-	void updateWithPaintedRowsSet() {
+	boolean updateWithPaintedRowsSet() {
 		if (updating)
-			return;
+			return false;
 		updating = true;
 		highlighted.clear();
 		contentPanel.clear();
@@ -553,6 +553,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					hiddenColumns.add(c.name);
 			hiddenColumnListener.onUpdate(hiddenColumns);
 		}
+		int h1 = grid.height();
+		int h2 = grid.tableHeight();
+		return h1 < h2;
 	}
 
 	private void updateSingleContentRow(IBulkTableWidget grid,
