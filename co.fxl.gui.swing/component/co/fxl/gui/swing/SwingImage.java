@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.swing;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.swing.Icon;
@@ -64,7 +66,16 @@ class SwingImage extends SwingElement<JLabel, IImage> implements IImage {
 
 	@Override
 	public IImage localURI(String uRI) {
-		throw new MethodNotImplementedException();
+		if (uRI.startsWith("upload?name="))
+			uRI = uRI.substring("upload?name=".length());
+		try {
+			File f = new File(System.getProperty("java.io.tmpdir") + uRI);
+			URL url = f.toURI().toURL();
+			icon = new ImageIcon(url);
+			return getIcon(url.toString());
+		} catch (MalformedURLException e) {
+			throw new MethodNotImplementedException(e);
+		}
 	}
 
 	@Override
