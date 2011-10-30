@@ -45,7 +45,7 @@ public class ImageButton implements IClickable<Object>,
 
 	public ImageButton(IContainer c) {
 		this.panel = c.panel().horizontal();
-		this.image = panel.add().image();
+		this.image = panel.add().image().size(16, 16);
 		this.label = panel.addSpace(SPACE).add().label();
 		clickable(true);
 	}
