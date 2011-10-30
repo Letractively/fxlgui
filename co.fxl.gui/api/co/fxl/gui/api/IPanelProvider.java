@@ -20,7 +20,7 @@ package co.fxl.gui.api;
 
 public interface IPanelProvider<T extends IPanel<T>> {
 
-	Class<T> layoutType();
+	Class<T> panelType();
 
 	T createPanel(IContainer container);
 }
