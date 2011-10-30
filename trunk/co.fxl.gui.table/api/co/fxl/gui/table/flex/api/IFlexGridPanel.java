@@ -25,13 +25,21 @@ public interface IFlexGridPanel extends IPanel<IFlexGridPanel> {
 
 	public interface IFlexCell {
 
-		IFlexCell width(int columns);
+		IFlexCell columnSpan(int columns);
 
-		IFlexCell height(int rows);
+		IFlexCell rowSpan(int rows);
 
 		IContainer container();
+
+		int width();
+
+		int height();
 	}
 
 	IFlexCell cell(int x, int y);
+
+	IFlexGridPanel rows(int rows);
+
+	IFlexGridPanel columns(int columns);
 
 }
