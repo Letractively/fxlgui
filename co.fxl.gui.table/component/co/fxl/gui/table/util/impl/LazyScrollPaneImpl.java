@@ -25,6 +25,7 @@ import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.FlipPage;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
@@ -39,9 +40,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private int minRowHeight = 22;
 	private int height = 400;
 	private IContainer container;
-	private ICardPanel treeScrollPanelContainer;
+	private FlipPage treeScrollPanelContainer;
 	private int rowIndex = 0;
-	private IContainer lastCard = null;
 	private IAbsolutePanel scrollContentPanel;
 	private int size;
 	private int rows2Paint = height / minRowHeight;
@@ -162,7 +162,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		}
 		treeDockPanel.visible(false);
 		treeDockPanel.height(height);
-		treeScrollPanelContainer = treeDockPanel.center().panel().card();
+		treeScrollPanelContainer = new FlipPage(treeDockPanel.center());
 		IContainer ctr = treeDockPanel.right();
 		boolean inc = !horizontalScrollPane;
 		if (inc)
@@ -242,8 +242,6 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 			private void scrollToRowIndex() {
 				int y = convertRowIndex2ScrollOffset(rowIndex);
-				if (lastCard != null)
-					lastCard.clear();
 				treeDockPanel.visible(true);
 				scrollPane.scrollTo(y);
 				treeDockPanel.visible(false);
@@ -280,7 +278,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 	private int update(int rowIndex) {
 		setLastIndex(rowIndex);
-		IContainer invisibleCard = treeScrollPanelContainer.add();
+		IContainer invisibleCard = treeScrollPanelContainer.next();
 		IContainer c = invisibleCard;
 
 		// TODO BUG: after switch to Detail-View: horizontal
@@ -294,12 +292,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 			c = treeScrollPanel.horizontal().viewPort();
 		}
 		decorator.decorate(c, rowIndex, lastIndex);
-		treeScrollPanelContainer.show(invisibleCard.element());
-		if (lastCard != null) {
-			lastCard.clear();
-			lastCard.element().remove();
-		}
-		lastCard = invisibleCard;
+		treeScrollPanelContainer.flip();
 		return lastIndex;
 	}
 
