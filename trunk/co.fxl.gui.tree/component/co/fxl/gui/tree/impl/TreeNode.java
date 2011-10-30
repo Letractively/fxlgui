@@ -153,11 +153,11 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		updateMarked();
 		content = container.add().panel().horizontal().spacing(2);
 		content.addSpace(1 + depth * INDENT);
-		image = content.add().image().resource(treeIcon(lazyTree, tree));
+		image = content.add().image().resource(treeIcon(lazyTree, tree)).size(8, 16);
 		if (entityIcon(tree) == null)
 			throw new MethodNotImplementedException("entity icon is null for "
 					+ tree);
-		icon = content.add().image().resource(entityIcon(tree));
+		icon = content.add().image().resource(entityIcon(tree)).size(16, 16);
 		content.addSpace(2);
 		String name = tree.name();
 		boolean isNull = name == null || name.trim().equals("");
