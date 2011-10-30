@@ -341,6 +341,9 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	public void onScroll(int maxOffset) {
 		if (holdScroll)
 			return;
+		int newRowIndex = convertScrollOffset2RowIndex(maxOffset);
+		if (newRowIndex == rowIndex)
+			return;
 		rowIndex = convertScrollOffset2RowIndex(maxOffset);
 		assert rowIndex >= 0 : maxOffset + " offset not valid: " + rowIndex;
 		update();
