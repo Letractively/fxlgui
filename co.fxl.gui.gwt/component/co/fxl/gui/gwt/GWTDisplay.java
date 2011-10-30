@@ -27,6 +27,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IPanelProvider;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
@@ -64,6 +65,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 	private static GWTDisplay instance;
 	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
+	Map<Class<?>, IPanelProvider<?>> panelProviders = new HashMap<Class<?>, IPanelProvider<?>>();
 	private List<BlockListener> blockListeners = new LinkedList<BlockListener>();
 	private GWTContainer<Widget> container;
 	private GWTUncaughtExceptionHandler uncaughtExceptionHandler;
@@ -102,6 +104,13 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		for (IWidgetProvider<?> widgetProvider : widgetProviders)
 			this.widgetProviders.put(widgetProvider.widgetType(),
 					widgetProvider);
+		return this;
+	}
+
+	@Override
+	public IDisplay register(IPanelProvider<?>... panelProviders) {
+		for (IPanelProvider<?> panelProvider : panelProviders)
+			this.panelProviders.put(panelProvider.panelType(), panelProvider);
 		return this;
 	}
 
