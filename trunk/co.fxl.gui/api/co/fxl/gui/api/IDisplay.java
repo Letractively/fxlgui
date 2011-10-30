@@ -46,6 +46,8 @@ public interface IDisplay extends IColored {
 
 	boolean supports(Class<?> widgetClass);
 
+	IDisplay register(IPanelProvider<?>... layoutProvider);
+
 	IDisplay register(IWidgetProvider<?>... widgetProvider);
 
 	IDialog showDialog();
