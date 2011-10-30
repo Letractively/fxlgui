@@ -20,6 +20,7 @@ package co.fxl.gui.swing;
 
 import javax.swing.JComponent;
 
+import co.fxl.gui.api.IPanelProvider;
 import co.fxl.gui.api.IWidgetProvider;
 
 interface ComponentParent {

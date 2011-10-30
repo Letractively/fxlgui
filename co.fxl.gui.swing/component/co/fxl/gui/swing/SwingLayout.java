@@ -26,6 +26,7 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.IPanelProvider;
 import co.fxl.gui.api.IVerticalPanel;
 
 class SwingLayout implements ILayout {
@@ -38,7 +39,11 @@ class SwingLayout implements ILayout {
 
 	@Override
 	public IPanel<?> plugIn(Class<?> clazz) {
-		throw new MethodNotImplementedException();
+		IPanelProvider<?> provider = panel.container.parent
+				.lookupSwingDisplay().panelProviders.get(clazz);
+		if (provider == null)
+			throw new MethodNotImplementedException(clazz.getName());
+		return provider.createPanel(panel.container);
 	}
 
 	@Override

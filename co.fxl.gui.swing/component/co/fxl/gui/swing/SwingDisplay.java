@@ -40,6 +40,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IPanelProvider;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
@@ -57,6 +58,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 	private int widthPixel = 320;
 	private int heightPixel = 240;
 	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
+	Map<Class<?>, IPanelProvider<?>> panelProviders = new HashMap<Class<?>, IPanelProvider<?>>();
 	private SwingUncaughtExceptionHandler uncaughtExceptionHandler;
 	boolean waiting;
 	private Map<IResizeListener, ComponentAdapter> resizeListeners = new HashMap<IResizeListener, ComponentAdapter>();
@@ -157,6 +159,13 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		for (IWidgetProvider<?> widgetProvider : widgetProviders)
 			this.widgetProviders.put(widgetProvider.widgetType(),
 					widgetProvider);
+		return this;
+	}
+
+	@Override
+	public IDisplay register(IPanelProvider<?>... panelProviders) {
+		for (IPanelProvider<?> panelProvider : panelProviders)
+			this.panelProviders.put(panelProvider.panelType(), panelProvider);
 		return this;
 	}
 
