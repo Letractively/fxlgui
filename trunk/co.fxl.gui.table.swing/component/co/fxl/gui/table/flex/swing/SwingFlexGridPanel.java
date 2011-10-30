@@ -48,14 +48,14 @@ public class SwingFlexGridPanel extends SwingPanel<IFlexGridPanel> implements
 		}
 
 		@Override
-		public IFlexCell width(int columns) {
+		public IFlexCell columnSpan(int columns) {
 			assert c == null;
 			width = columns;
 			return this;
 		}
 
 		@Override
-		public IFlexCell height(int rows) {
+		public IFlexCell rowSpan(int rows) {
 			assert c == null;
 			height = rows;
 			return this;
@@ -66,10 +66,22 @@ public class SwingFlexGridPanel extends SwingPanel<IFlexGridPanel> implements
 			return c = SwingFlexGridPanel.this.add();
 		}
 
+		@Override
+		public int width() {
+			return container.element().width() / columns;
+		}
+
+		@Override
+		public int height() {
+			return c.element().height();
+		}
+
 	}
 
 	private List<FlexCell> unassociatedCells = new LinkedList<FlexCell>();
 	private GridBagLayout layout = new GridBagLayout();
+	private int rows;
+	private int columns;
 
 	@SuppressWarnings("unchecked")
 	SwingFlexGridPanel(IContainer container) {
@@ -103,6 +115,7 @@ public class SwingFlexGridPanel extends SwingPanel<IFlexGridPanel> implements
 		constraints.gridy = y;
 		constraints.gridwidth = width;
 		constraints.gridheight = height;
+		constraints.weightx = 1;
 		return constraints;
 	}
 
@@ -113,6 +126,18 @@ public class SwingFlexGridPanel extends SwingPanel<IFlexGridPanel> implements
 				return cell;
 		}
 		throw new RuntimeException(widget + " not found");
+	}
+
+	@Override
+	public IFlexGridPanel rows(int rows) {
+		this.rows = rows;
+		return this;
+	}
+
+	@Override
+	public IFlexGridPanel columns(int columns) {
+		this.columns = columns;
+		return this;
 	}
 
 }

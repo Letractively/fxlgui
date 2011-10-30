@@ -26,7 +26,7 @@ public class SwingFlexGridPanelProvider implements
 		IPanelProvider<IFlexGridPanel> {
 
 	@Override
-	public Class<IFlexGridPanel> layoutType() {
+	public Class<IFlexGridPanel> panelType() {
 		return IFlexGridPanel.class;
 	}
 
