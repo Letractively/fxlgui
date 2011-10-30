@@ -165,7 +165,7 @@ public class NavigationView {
 					.add()
 					.image()
 					.resource(
-							imageResource == null ? Icons.LINK : imageResource);
+							imageResource == null ? Icons.LINK : imageResource).size(16, 16);
 			panel.addSpace(4);
 		}
 		return image;
