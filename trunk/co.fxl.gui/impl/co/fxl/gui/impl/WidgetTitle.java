@@ -227,7 +227,7 @@ public class WidgetTitle implements IClickListener {
 		}
 		IImage image = null;
 		if (imageResource != null) {
-			image = iPanel.add().image().resource(imageResource);
+			image = iPanel.add().image().resource(imageResource).size(16, 16);
 			images.add(image);
 		}
 		final ILabel label = text == null ? iPanel.add().label().visible(false)
