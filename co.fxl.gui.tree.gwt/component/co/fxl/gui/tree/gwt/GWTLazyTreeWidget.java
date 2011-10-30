@@ -64,7 +64,7 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			+ "<td align=\"left\" style=\"vertical-align: middle;\">"
 			+ "<img class=\"gwt-Image\" "
 			+ "src=\""
-			+ "${STATE_ICON}\" "
+			+ "${STATE_ICON}\" width=\"16\" height=\"16\" "
 			+ "style=\"cursor: pointer;\">"
 			+ "</td>"
 			+ "<td align=\"left\" style=\"vertical-align: middle;\">"
