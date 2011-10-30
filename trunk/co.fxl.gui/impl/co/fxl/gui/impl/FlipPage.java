@@ -56,6 +56,14 @@ public class FlipPage {
 
 	public void width(int width) {
 		cardPanel.width(width);
+		page1.width(width);
+		page2.width(width);
+	}
+
+	public void height(int height) {
+		cardPanel.height(height);
+		page1.height(height);
+		page2.height(height);
 	}
 
 }
