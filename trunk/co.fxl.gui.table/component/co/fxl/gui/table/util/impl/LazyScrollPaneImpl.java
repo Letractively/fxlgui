@@ -163,6 +163,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		treeDockPanel.visible(false);
 		treeDockPanel.height(height);
 		treeScrollPanelContainer = new FlipPage(treeDockPanel.center());
+		treeScrollPanelContainer.height(height);
 		IContainer ctr = treeDockPanel.right();
 		boolean inc = !horizontalScrollPane;
 		if (inc)
