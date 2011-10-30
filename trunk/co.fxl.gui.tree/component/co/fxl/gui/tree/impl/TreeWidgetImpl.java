@@ -733,6 +733,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			if (view.enabled() && view.isDefaultView)
 				return view;
 			if (defaultViewResolver != null
+					&& tree != null
 					&& view.title.equals(defaultViewResolver.resolve(tree
 							.object())))
 				return view;
