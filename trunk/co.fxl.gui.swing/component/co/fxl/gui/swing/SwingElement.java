@@ -113,6 +113,13 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	@Override
 	public R size(int width, int height) {
 		container.component.setPreferredSize(new Dimension(width, height));
+		JComponent parent = container.parent.getComponent();
+		if (parent instanceof JPanel && parent.getLayout() == null) {
+			container.component.setBounds(container.component.getLocation().x,
+					container.component.getLocation().y,
+					container.component.getPreferredSize().width,
+					container.component.getPreferredSize().height);
+		}
 		return (R) this;
 	}
 
