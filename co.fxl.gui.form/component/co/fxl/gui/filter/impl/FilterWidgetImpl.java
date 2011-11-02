@@ -345,7 +345,8 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		if (l != null) {
 			grid.resize(l.size() + (addSizeFilter ? 1 : 0));
 			for (FilterImpl filter : l) {
-				List<Object> list = new LinkedList<Object>(filter.type.values);
+				List<Object> list = new LinkedList<Object>(
+						filter.type.getConstraints());
 				if (!filter.required && !list.isEmpty())
 					list.add(0, "");
 				List<Object> preset = null;
