@@ -64,6 +64,12 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 				IClickListener clickListener = new LazyClickListener() {
 					@Override
 					public void onAllowedClick() {
+						if (!vertical.visible())
+							return;
+
+						// TODO selection is lost after new+cancel, parent is
+						// selected, the actual tree click is lost
+
 						selectionIndex = fIndex;
 						container.element().remove();
 						decorate(container, firstRow, lastRow);
