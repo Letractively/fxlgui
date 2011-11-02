@@ -154,22 +154,22 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 		return this;
 	}
 
-	@Override
-	public void onUp(int turns) {
-		onScrollTurns(-turns);
-	}
-
-	private void onScrollTurns(int i) {
-		int newOffset = scrollOffset() + i * BLOCK_INCREMENT;
-		if (newOffset < 0)
-			newOffset = 0;
-		scrollTo(newOffset);
-	}
-
-	@Override
-	public void onDown(int turns) {
-		onScrollTurns(turns);
-	}
+//	@Override
+//	public void onUp(int turns) {
+//		onScrollTurns(-turns);
+//	}
+//
+//	private void onScrollTurns(int i) {
+//		int newOffset = scrollOffset() + i * BLOCK_INCREMENT;
+//		if (newOffset < 0)
+//			newOffset = 0;
+//		scrollTo(newOffset);
+//	}
+//
+//	@Override
+//	public void onDown(int turns) {
+//		onScrollTurns(turns);
+//	}
 
 	@Override
 	public IScrollPane showScrollbarsAlways(boolean showScrollbarsAlways) {
