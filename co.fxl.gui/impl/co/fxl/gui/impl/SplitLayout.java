@@ -42,9 +42,15 @@ public class SplitLayout implements IResizeListener {
 	// private IImage button;
 	private IScrollPane sideScrollPanel;
 	IGridCell cell0;
+	private boolean resizeMainPanel;
 
 	public SplitLayout(ILayout layout) {
+		this(layout, false);
+	}
+
+	public SplitLayout(ILayout layout, boolean resizeMainPanel) {
 		this.layout = layout;
+		this.resizeMainPanel = resizeMainPanel;
 		init();
 	}
 
@@ -76,8 +82,11 @@ public class SplitLayout implements IResizeListener {
 	private void resizeSidePanel(int height) {
 		int offsetY = sideScrollPanel.offsetY();
 		int maxFromDisplay = height - offsetY - 10;
-		if (maxFromDisplay > 0)
+		if (maxFromDisplay > 0) {
+			if (resizeMainPanel)
+				mainPanel.height(maxFromDisplay);
 			sideScrollPanel.height(maxFromDisplay);
+		}
 	}
 
 	protected IVerticalPanel addMainPanel(IVerticalPanel vpanel) {
