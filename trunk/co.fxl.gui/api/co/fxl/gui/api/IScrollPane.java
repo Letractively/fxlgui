@@ -18,8 +18,7 @@
  */
 package co.fxl.gui.api;
 
-public interface IScrollPane extends IElement<IScrollPane>, IBordered,
-		IColored, IMouseWheelListener {
+public interface IScrollPane extends IElement<IScrollPane>, IBordered, IColored {
 
 	public interface IScrollListener {
 
