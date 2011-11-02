@@ -37,8 +37,8 @@ class GWTHorizontalLine extends GWTElement<HTML, IHorizontalLine> implements
 
 			@Override
 			void setColor(String color, com.google.gwt.dom.client.Style stylable) {
-				stylable.setColor(color);
-				stylable.setBackgroundColor(color);
+				container.widget.setHTML("<hr style=\"color:" + color
+						+ "; background: " + color + ";\"/>");
 			}
 		};
 	}
