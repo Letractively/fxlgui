@@ -54,7 +54,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	ITree<T> tree;
 	private int depth;
 	IImage image;
-	private TreeWidgetImpl<T> widget;
+	TreeWidgetImpl<T> widget;
 	IHorizontalPanel container;
 	private IImage imageRefresh;
 	private ILabel label;
