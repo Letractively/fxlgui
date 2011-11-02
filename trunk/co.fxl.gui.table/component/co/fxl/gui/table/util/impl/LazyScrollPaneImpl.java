@@ -19,7 +19,6 @@
 package co.fxl.gui.table.util.impl;
 
 import co.fxl.gui.api.IAbsolutePanel;
-import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IScrollPane;
@@ -35,6 +34,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 	public static int WIDTH_SCROLL_PANEL = 35;
 	public static final int HEIGHT_SCROLL_BAR = 17;
+	private static final int BLOCK_INCREMENT = 22;
 	private int widthScrollPanel = WIDTH_SCROLL_PANEL;
 	private IDecorator decorator;
 	private int minRowHeight = 22;
@@ -345,12 +345,20 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 	@Override
 	public void onUp(int turns) {
-		scrollPane.onUp(turns);
+		onMouseWheel(-turns);
+	}
+
+	private void onMouseWheel(int turns) {
+		int newOffset = scrollPane.scrollOffset() + turns * BLOCK_INCREMENT;
+		newOffset = Math.max(0, newOffset);
+		newOffset = Math.min(newOffset,
+				convertRowIndex2ScrollOffset(maxRowIndex));
+		scrollPane.scrollTo(newOffset);
 	}
 
 	@Override
 	public void onDown(int turns) {
-		scrollPane.onDown(turns);
+		onMouseWheel(+turns);
 	}
 
 	@Override
