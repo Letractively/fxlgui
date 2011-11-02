@@ -55,4 +55,6 @@ public interface IFieldType {
 	Class<?> clazz();
 
 	IFieldType clearConstraints();
+
+	IFieldType setHasConstraints();
 }

@@ -28,7 +28,7 @@ public class FieldTypeImpl implements IFieldType {
 
 	public Class<?> clazz = String.class;
 	public boolean isLong = false;
-	public List<Object> values = new LinkedList<Object>();
+	private List<Object> values;
 	public boolean isRelation = false;
 	public int maxLength = -1;
 	public boolean encryptedText = false;
@@ -76,9 +76,27 @@ public class FieldTypeImpl implements IFieldType {
 
 	@Override
 	public IFieldType addConstraint(Object... values) {
+		if (this.values == null)
+			setHasConstraints();
 		for (Object v : values)
 			this.values.add(v);
 		return this;
+	}
+
+	@Override
+	public IFieldType setHasConstraints() {
+		this.values = new LinkedList<Object>();
+		return this;
+	}
+
+	public boolean hasConstraints() {
+		return values != null;
+	}
+
+	public List<Object> getConstraints() {
+		if (values == null)
+			return new LinkedList<Object>();
+		return values;
 	}
 
 	@Override
@@ -121,7 +139,8 @@ public class FieldTypeImpl implements IFieldType {
 
 	@Override
 	public IFieldType clearConstraints() {
-		values.clear();
+		if (values != null)
+			values.clear();
 		return this;
 	}
 
