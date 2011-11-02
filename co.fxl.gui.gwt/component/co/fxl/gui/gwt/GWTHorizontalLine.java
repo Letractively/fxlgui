@@ -20,6 +20,7 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IHorizontalLine;
 
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.ui.HTML;
 
 class GWTHorizontalLine extends GWTElement<HTML, IHorizontalLine> implements
@@ -37,8 +38,9 @@ class GWTHorizontalLine extends GWTElement<HTML, IHorizontalLine> implements
 
 			@Override
 			void setColor(String color, com.google.gwt.dom.client.Style stylable) {
-				container.widget.setHTML("<hr style=\"color:" + color
-						+ "; background: " + color + ";\"/>");
+				Style style = container.widget.getElement().getStyle();
+				style.setBackgroundColor(color);
+				style.setColor(color);
 			}
 		};
 	}
