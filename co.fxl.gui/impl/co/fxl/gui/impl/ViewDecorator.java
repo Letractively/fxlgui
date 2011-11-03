@@ -22,5 +22,7 @@ import co.fxl.gui.api.IContainer;
 
 public interface ViewDecorator {
 
+	// TODO , ICallback<Void> cb
+
 	void decorate(IContainer container);
 }
