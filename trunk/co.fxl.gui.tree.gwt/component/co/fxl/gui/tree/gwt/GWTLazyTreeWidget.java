@@ -205,16 +205,12 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		html.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(final ClickEvent event) {
-				if (!fp.isAttached())
-					return;
 				handleClick(firstRow, event.getY());
 			}
 		});
 		html.addDoubleClickHandler(new DoubleClickHandler() {
 			@Override
 			public void onDoubleClick(final DoubleClickEvent event) {
-				if (!fp.isAttached())
-					return;
 				// TODO FEATURE: Usability: expand node before selection
 				handleClick(firstRow, event.getY());
 			}
@@ -223,6 +219,8 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 	}
 
 	private void handleClick(final int firstRow, final int y) {
+		if (!fp.isAttached() || !fp.isVisible())
+			return;
 		DiscardChangesDialog.show(new CallbackTemplate<Boolean>() {
 			@Override
 			public void onSuccess(Boolean result) {
