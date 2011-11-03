@@ -37,7 +37,9 @@ import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.form.impl.Validation;
+import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Heights;
+import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.Icons;
 import co.fxl.gui.impl.LazyClickListener;
 
@@ -76,7 +78,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			else
 				update();
 			validation.update();
-			notifyListeners();
+			notifyListeners(DummyCallback.voidInstance());
 		}
 	}
 
@@ -148,7 +150,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	}
 
 	@SuppressWarnings("unchecked")
-	void notifyListeners() {
+	void notifyListeners(ICallback<Void> cb) {
 		List<FilterTemplate<Object>> activeFilters = new LinkedList<FilterTemplate<Object>>();
 		for (FilterPart<?> filter : guiFilterElements) {
 			boolean active = filter.update();
@@ -168,9 +170,8 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		}
 		if (sizeFilter != null)
 			constraints.add(sizeFilter.asConstraint());
-		for (IFilterListener listener : listeners) {
-			listener.onApply(constraints);
-		}
+		assert listeners.size() <= 1;
+		listeners.get(0).onApply(constraints, cb);
 	}
 
 	private void remove(String name) {
@@ -380,8 +381,8 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	}
 
 	@Override
-	public IFilterWidget apply() {
-		notifyListeners();
+	public IFilterWidget apply(ICallback<Void> cb) {
+		notifyListeners(cb);
 		return this;
 	}
 
@@ -419,7 +420,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			return;
 		validation.update();
 		clear.clickable(true);
-		notifyListeners();
+		notifyListeners(DummyCallback.voidInstance());
 	}
 
 	@Override

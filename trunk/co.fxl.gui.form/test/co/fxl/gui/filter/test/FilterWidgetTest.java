@@ -29,6 +29,7 @@ import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
 import co.fxl.gui.filter.api.IMiniFilterWidget;
 import co.fxl.gui.filter.impl.MiniFilterWidgetImplProvider;
+import co.fxl.gui.impl.ICallback;
 
 class FilterWidgetTest implements IFilterListener {
 
@@ -116,7 +117,7 @@ class FilterWidgetTest implements IFilterListener {
 	}
 
 	@Override
-	public void onApply(IFilterConstraints constraints) {
+	public void onApply(IFilterConstraints constraints, ICallback<Void> cb) {
 		if (constraints.isAttributeConstrained(NAME))
 			System.out.println(NAME + "=" + constraints.stringValue(NAME));
 		if (constraints.isAttributeConstrained(DESCRIPTION))
