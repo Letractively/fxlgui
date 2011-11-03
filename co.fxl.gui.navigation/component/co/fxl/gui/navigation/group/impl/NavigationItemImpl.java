@@ -57,7 +57,7 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 			buttonPanel = basicPanel.add().panel().horizontal();
 			buttonPanel.spacing(5).align().center();
 			buttonPanel.addSpace(2);
-			addBorder();
+			buttonPanel.border().width(1).style().noBottom();
 			refresh = buttonPanel.add().image().resource("loading_white.gif")
 					.visible(false);
 			button = buttonPanel.add().label();
@@ -66,12 +66,6 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 			buttonPanel.addClickListener(this);
 			showLabelAsInactive();
 		}
-	}
-
-	protected void addBorder() {
-		IBorder b = buttonPanel.border();
-		b.width(1).color();
-		b.style().noBottom();
 	}
 
 	@Override
@@ -88,7 +82,6 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 		buttonPanel.clickable(true);
 		applyGradient(buttonPanel.color(), widget.colorInactive,
 				widget.colorInactiveGradient);
-		buttonPanel.border().remove();
 		for (INavigationListener l : listeners)
 			l.onActive(false);
 	}
@@ -122,6 +115,7 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	static int c = 1;
 
 	NavigationItemImpl active(boolean viaClick) {
+		final NavigationItemImpl oldActive = widget.active;
 		showLabelAsActive(viaClick, new CallbackTemplate<Void>() {
 			@Override
 			public void onSuccess(Void result) {
@@ -137,6 +131,10 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 					@Override
 					public void onSuccess(Void result) {
 						showLabelAsActive();
+						if (oldActive != null
+								&& oldActive != NavigationItemImpl.this) {
+							oldActive.showLabelAsInactive();
+						}
 						refresh.visible(false);
 						button.visible(true);
 						widget.flipPage().flip();
@@ -158,7 +156,6 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 		button.font().color().black();
 		buttonPanel.clickable(false);
 		applyColor(buttonPanel.color(), widget.colorActive);
-		addBorder();
 	}
 
 	private void applyColor(IColor color, int[] rgb) {
