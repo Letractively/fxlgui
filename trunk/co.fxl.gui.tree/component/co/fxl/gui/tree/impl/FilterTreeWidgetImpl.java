@@ -23,6 +23,7 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.tree.api.IFilterList;
 import co.fxl.gui.tree.api.IFilterTreeWidget;
 import co.fxl.gui.tree.api.ITree;
@@ -64,9 +65,10 @@ class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
 	}
 
 	@Override
-	public void onApply(IFilterConstraints constraints) {
+	public void onApply(IFilterConstraints constraints, ICallback<Void> cb) {
 		this.constraints = constraints;
 		onRefresh();
+		cb.onSuccess(null);
 	}
 
 	@Override
