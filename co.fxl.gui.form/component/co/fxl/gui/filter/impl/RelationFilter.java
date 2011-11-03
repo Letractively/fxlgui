@@ -31,6 +31,7 @@ import co.fxl.gui.filter.impl.Constraint.IRelationConstraint;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.filter.impl.FilterPanel.ICell;
 import co.fxl.gui.form.impl.Validation;
+import co.fxl.gui.impl.DummyCallback;
 
 class RelationFilter extends StringFilter {
 
@@ -67,7 +68,7 @@ class RelationFilter extends StringFilter {
 				.weight().plain().color().black();
 		if (!notifyListeners)
 			return;
-		widget.apply();
+		widget.apply(DummyCallback.voidInstance());
 		if (cl != null)
 			cl.onClick();
 	}

@@ -22,13 +22,14 @@ import java.util.List;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.IFieldType;
 
 public interface IFilterWidget {
 
 	public interface IFilterListener {
 
-		void onApply(IFilterConstraints constraints);
+		void onApply(IFilterConstraints constraints, ICallback<Void> cb);
 	}
 
 	public interface IFilter {
@@ -84,7 +85,7 @@ public interface IFilterWidget {
 
 	IFilterWidget addCancelListener(IClickListener cancelListener);
 
-	IFilterWidget apply();
+	IFilterWidget apply(ICallback<Void> cb);
 
 	IFilterWidget clear();
 
