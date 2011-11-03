@@ -31,7 +31,14 @@ class SwingHyperlink implements IHyperlink {
 
 	@Override
 	public IHyperlink localURI(String string) {
-		throw new MethodNotImplementedException();
+		label.addClickListener(new IClickListener() {
+
+			@Override
+			public void onClick() {
+				throw new MethodNotImplementedException();
+			}
+		});
+		return this;
 	}
 
 	@Override
