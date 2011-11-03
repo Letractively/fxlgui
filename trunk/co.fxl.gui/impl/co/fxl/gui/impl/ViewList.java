@@ -132,4 +132,8 @@ public class ViewList {
 			}
 		}
 	}
+
+	public CommandLink addHyperlink(String imageResource, String text) {
+		return widgetTitle.addHyperlink(imageResource, text);
+	}
 }
