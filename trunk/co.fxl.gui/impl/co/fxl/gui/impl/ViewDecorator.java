@@ -19,10 +19,9 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IVerticalPanel;
 
 public interface ViewDecorator {
 
-	// TODO , ICallback<Void> cb
-
-	void decorate(IContainer container);
+	void decorate(IContainer container, IVerticalPanel sidePanel, ICallback<Void> cb);
 }

@@ -21,32 +21,35 @@ package co.fxl.gui.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.ILayout;
 
 public class MetaViewList {
 
 	private SplitLayout layout;
 	List<ViewList> viewLists = new LinkedList<ViewList>();
-	private ICardPanel card;
+	private FlipPage card;
+	private FlipPage sideCard;
 
 	public MetaViewList(ILayout layout) {
 		this.layout = new SplitLayout(layout);
 	}
 
-	ICardPanel contentPanel() {
+	FlipPage contentPanel() {
 		if (card == null) {
-			card = layout.mainPanel.add().panel().card();
+			card = new FlipPage(layout.mainPanel.add());
 		}
 		return card;
 	}
 
-	public ILayout addSidePanel() {
-		return layout.sidePanel.add().panel();
+	public FlipPage sideContentPanel() {
+		if (sideCard == null) {
+			sideCard = new FlipPage(layout.sidePanel.add());
+		}
+		return sideCard;
 	}
 
 	public ViewList addViewList() {
-		ViewList viewList = new ViewList(this, addSidePanel());
+		ViewList viewList = new ViewList(this, layout.sidePanel.add().panel());
 		viewLists.add(viewList);
 		return viewList;
 	}

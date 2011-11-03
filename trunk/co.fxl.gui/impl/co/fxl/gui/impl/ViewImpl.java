@@ -19,10 +19,8 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IBordered.IBorder;
-import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -38,7 +36,7 @@ public class ViewImpl extends LazyClickListener {
 	private IGridPanel grid;
 	private IHorizontalPanel labelPanel0;
 	private ViewDecorator decorator;
-	private IContainer content;
+	private FlipPage content;
 	private Object bo;
 	private IImage removeImage;
 	private IImage image;
@@ -46,6 +44,7 @@ public class ViewImpl extends LazyClickListener {
 	private String imageResource;
 	private IVerticalPanel basicPanel;
 	private boolean disabled;
+	private FlipPage sideContent;
 
 	ViewImpl(ViewList viewList, String imageResource) {
 		this(viewList, imageResource, false);
@@ -80,10 +79,11 @@ public class ViewImpl extends LazyClickListener {
 			labelPanel.addSpace(0);
 		if (!isNew) {
 			label = labelPanel.add().label().hyperlink();
-			styleViewlistEntryActive(label);
+			styleViewlistEntryInactive(label);
 			label.addClickListener(this);
 			labelPanel.addSpace(4);
-			content = this.viewList.widget.contentPanel().add();
+			content = this.viewList.widget.contentPanel();
+			sideContent = this.viewList.widget.sideContentPanel();
 			if (this.viewList.newListener != null) {
 				removeImage = grid.cell(1, 0).valign().center().width(30)
 						.align().end().panel().horizontal().addSpace(4).add()
@@ -184,21 +184,26 @@ public class ViewImpl extends LazyClickListener {
 
 	@Override
 	public void onAllowedClick() {
-		label.font().underline(false);
-		for (ViewList viewList : this.viewList.widget.viewLists) {
-			for (ViewImpl view : viewList.views) {
-				view.clickable(view != this);
-			}
-		}
 		if (content == null)
 			return;
-		content.clear();
-		decorator.decorate(content);
-		ICardPanel contentPanel = this.viewList.widget.contentPanel();
-		assert contentPanel != null : "ViewList: contentPanel is null";
-		IElement<?> element = content.element();
-		assert element != null : "ViewList: element is null";
-		contentPanel.show(element);
+		label.font().underline(false);
+		IContainer next = content.next();
+		final String resource = image.resource();
+		image.resource("loading_black.gif");
+		decorator.decorate(next, sideContent.next().panel().vertical(),
+				new CallbackTemplate<Void>() {
+					@Override
+					public void onSuccess(Void result) {
+						image.resource(resource);
+						for (ViewList viewList : ViewImpl.this.viewList.widget.viewLists) {
+							for (ViewImpl view : viewList.views) {
+								view.clickable(view != ViewImpl.this);
+							}
+						}
+						content.flip();
+						sideContent.flip();
+					}
+				});
 	}
 
 	private void clickable(boolean clickable) {
