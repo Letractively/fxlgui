@@ -30,6 +30,7 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.FlipPage;
 import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
@@ -52,6 +53,8 @@ class NavigationWidgetImpl implements INavigationWidget {
 	ILinearPanel<?> masterPanel;
 	IGridPanel hPanel;
 	List<NavigationGroupImpl> groups = new LinkedList<NavigationGroupImpl>();
+	private FlipPage flipPage;
+	private boolean panel0front;
 
 	NavigationWidgetImpl(IContainer layout) {
 		mainPanel = layout.panel().dock();
@@ -64,6 +67,7 @@ class NavigationWidgetImpl implements INavigationWidget {
 		navigationPanel.addSpace(10);
 		history = mainPanel.center().panel().card();
 		panel0 = history.add().panel().vertical();
+		flipPage = new FlipPage(panel0.add());
 		panel1 = history.add().panel().vertical();
 		history.show(panel0);
 	}
@@ -72,12 +76,20 @@ class NavigationWidgetImpl implements INavigationWidget {
 		return l.horizontal();
 	}
 
-	IVerticalPanel panel0() {
+	FlipPage flipPage() {
+		panel0();
+		return flipPage;
+	}
+
+	public void panel0() {
+		if (panel0front)
+			return;
 		history.show(panel0);
-		return panel0;
+		panel0front = true;
 	}
 
 	IVerticalPanel panel1() {
+		panel0front = false;
 		history.show(panel1);
 		return panel1;
 	}

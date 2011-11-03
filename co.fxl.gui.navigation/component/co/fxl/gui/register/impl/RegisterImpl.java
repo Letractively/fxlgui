@@ -92,9 +92,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 		subPanel = buttonPanel.add().panel().horizontal().align().center();
 		buttonImage = subPanel.add().image().resource("loading_white.gif")
 				.visible(false);
-		buttonLabel = subPanel.
-		// addSpace(4).
-				add().label();
+		buttonLabel = subPanel.add().label();
 		buttonPanel.addClickListener(this);
 		buttonPanel.addSpace(3);
 		content = widget.cardPanel.add().panel().vertical();
@@ -105,6 +103,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 	@Override
 	public IRegister toggleLoading(boolean loading) {
 		int width = buttonPanel.width();
+		subPanel.width(subPanel.width());
 		buttonImage.visible(loading);
 		buttonLabel.visible(!loading);
 		buttonPanel.size(width, 24);
@@ -113,10 +112,6 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 		} else {
 			buttonImage.resource("loading_white.gif");
 		}
-		// if (loading)
-		// buttonImage.resource("loading_2.gif");
-		// else
-		// buttonImage.resource(imageResource);
 		return this;
 	}
 

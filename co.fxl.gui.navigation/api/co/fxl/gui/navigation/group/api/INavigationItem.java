@@ -19,6 +19,7 @@
 package co.fxl.gui.navigation.group.api;
 
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.ICallback;
 
 public interface INavigationItem {
 
@@ -29,7 +30,7 @@ public interface INavigationItem {
 
 	public interface IDecorator {
 
-		void decorate(IVerticalPanel panel);
+		void decorate(IVerticalPanel panel, ICallback<Void> cb);
 	}
 
 	INavigationItem name(String name);
