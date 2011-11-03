@@ -24,6 +24,7 @@ import java.util.List;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IVerticalPanel;
@@ -41,6 +42,7 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	IHorizontalPanel basicPanel;
 	NavigationGroupImpl group;
 	private List<INavigationListener> listeners = new LinkedList<INavigationListener>();
+	private IImage refresh;
 
 	NavigationItemImpl(NavigationGroupImpl group) {
 		this.group = group;
@@ -56,6 +58,8 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 			buttonPanel.spacing(5).align().center();
 			buttonPanel.addSpace(2);
 			addBorder();
+			refresh = buttonPanel.add().image().resource("loading_white.gif")
+					.visible(false);
 			button = buttonPanel.add().label();
 			button.font().pixel(14).weight().bold().color().white();
 			buttonPanel.addSpace(3);
@@ -115,14 +119,29 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 		return active(false);
 	}
 
+	static int c = 1;
+
 	NavigationItemImpl active(boolean viaClick) {
 		showLabelAsActive(viaClick, new CallbackTemplate<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				IVerticalPanel panel0 = widget.panel0();
-				panel0.clear();
+				IVerticalPanel panel0 = widget.flipPage().next().panel()
+						.vertical();
 				applyColor(panel0.color(), widget.colorActive);
-				decorator.decorate(panel0);
+				int width = buttonPanel.width();
+				int height = buttonPanel.height();
+				refresh.visible(true);
+				button.visible(false);
+				buttonPanel.size(width, height);
+				decorator.decorate(panel0, new CallbackTemplate<Void>() {
+					@Override
+					public void onSuccess(Void result) {
+						showLabelAsActive();
+						refresh.visible(false);
+						button.visible(true);
+						widget.flipPage().flip();
+					}
+				});
 			}
 		}, true);
 		return this;
@@ -130,15 +149,16 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 
 	private void showLabelAsActive(boolean viaClick,
 			co.fxl.gui.impl.ICallback<Void> cb, boolean notify) {
-		button.font().color().black();
-		buttonPanel.clickable(false);
-		if (buttonPanel == null)
-			return;
-		applyColor(buttonPanel.color(), widget.colorActive);
-		addBorder();
 		widget.active(this, viaClick, cb, notify);
 		for (INavigationListener l : listeners)
 			l.onActive(true);
+	}
+
+	private void showLabelAsActive() {
+		button.font().color().black();
+		buttonPanel.clickable(false);
+		applyColor(buttonPanel.color(), widget.colorActive);
+		addBorder();
 	}
 
 	private void applyColor(IColor color, int[] rgb) {
