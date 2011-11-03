@@ -27,6 +27,8 @@ import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
+import co.fxl.gui.impl.DummyCallback;
+import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.filter.api.IFilterTableWidget.ITableFilter;
@@ -47,7 +49,7 @@ class TableFilterImpl implements ITableFilter<Object>, IFilterListener {
 
 	@Override
 	public ITableFilter<Object> apply() {
-		filterWidget.apply();
+		filterWidget.apply(DummyCallback.voidInstance());
 		return this;
 	}
 
@@ -76,8 +78,9 @@ class TableFilterImpl implements ITableFilter<Object>, IFilterListener {
 	}
 
 	@Override
-	public void onApply(IFilterConstraints constraints) {
+	public void onApply(IFilterConstraints constraints, ICallback<Void> cb) {
 		widget.filter(constraints);
+		cb.onSuccess(null);
 	}
 
 	@Override

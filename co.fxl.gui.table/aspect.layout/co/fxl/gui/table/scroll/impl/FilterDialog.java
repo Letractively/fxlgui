@@ -23,6 +23,7 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
+import co.fxl.gui.impl.ICallback;
 
 class FilterDialog {
 
@@ -52,8 +53,10 @@ class FilterDialog {
 									.addFilterListener(new IFilterListener() {
 										@Override
 										public void onApply(
-												IFilterConstraints constraints) {
+												IFilterConstraints constraints,
+												ICallback<Void> cb) {
 											popUp.visible(false);
+											cb.onSuccess(null);
 										}
 									});
 							widget.setUpFilter();

@@ -41,6 +41,8 @@ import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IMiniFilterWidget;
+import co.fxl.gui.impl.DummyCallback;
+import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.KeyAdapter;
 import co.fxl.gui.impl.WidgetTitle;
@@ -622,7 +624,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					int nextPreviousRow = constraints.rowIterator()
 							.nextPreviousRow();
 					constraints.rowIterator().firstRow(nextPreviousRow);
-					filterListener.onApply(constraints);
+					filterListener.onApply(constraints,
+							DummyCallback.voidInstance());
 				}
 			});
 		}
@@ -648,7 +651,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				public void onClick() {
 					constraints.rowIterator().firstRow(
 							constraints.rowIterator().nextFirstRow());
-					filterListener.onApply(constraints);
+					filterListener.onApply(constraints,
+							DummyCallback.voidInstance());
 				}
 			});
 		}
@@ -841,9 +845,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		filterListener = new IFilterListener() {
 
 			@Override
-			public void onApply(IFilterConstraints constraints) {
+			public void onApply(IFilterConstraints constraints,
+					ICallback<Void> cb) {
 				ScrollTableWidgetImpl.this.constraints = constraints;
-				l.onApply(constraints);
+				l.onApply(constraints, cb);
 			}
 		};
 		if (filter != null) {
@@ -855,7 +860,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> refresh() {
 		if (filter != null)
-			filter.apply();
+			filter.apply(DummyCallback.voidInstance());
 		else
 			visible(true);
 		return this;
