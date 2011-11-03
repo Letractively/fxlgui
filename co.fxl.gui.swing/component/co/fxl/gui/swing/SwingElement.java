@@ -60,7 +60,8 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public R visible(boolean visible) {
-		container.component.setVisible(visible);
+		if (container.component.isVisible() != visible)
+			container.component.setVisible(visible);
 		return (R) this;
 	}
 
