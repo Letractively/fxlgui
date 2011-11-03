@@ -41,7 +41,7 @@ class NavigationWidgetImpl implements INavigationWidget {
 	private IDockPanel mainPanel;
 	ILinearPanel<?> navigationPanel;
 	private ICardPanel history;
-	private NavigationItemImpl active;
+	NavigationItemImpl active;
 	private boolean first = true;
 	int[] colorActive = new int[] { 245, 245, 245 };
 	int[] colorBackground = new int[] { 199, 224, 241 };
@@ -116,9 +116,6 @@ class NavigationWidgetImpl implements INavigationWidget {
 
 	void active(NavigationItemImpl item, boolean viaClick,
 			co.fxl.gui.impl.ICallback<Void> cb, boolean notify) {
-		if (active != null && active != item) {
-			active.showLabelAsInactive();
-		}
 		active = item;
 		if (notify)
 			notifyListeners(active, viaClick, cb, listeners);
