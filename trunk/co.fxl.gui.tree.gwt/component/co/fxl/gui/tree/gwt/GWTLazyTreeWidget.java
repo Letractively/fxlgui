@@ -219,12 +219,12 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 	}
 
 	private void handleClick(final int firstRow, final int y) {
-		if (!fp.isAttached() || !fp.isVisible())
-			return;
 		DiscardChangesDialog.show(new CallbackTemplate<Boolean>() {
 			@Override
 			public void onSuccess(Boolean result) {
 				selectionIndex = firstRow + (y / heightElement);
+				if (!fp.isAttached() || !fp.isVisible())
+					return;
 				update();
 			}
 		});
