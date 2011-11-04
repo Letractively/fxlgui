@@ -97,7 +97,7 @@ public class ToolbarImpl implements IToolbar {
 				toolbar.clear();
 			} else {
 				IHorizontalPanel childPanel = (IHorizontalPanel) o;
-				childPanel.remove();
+				mainPanels.get(childPanel).remove();
 			}
 		}
 		content.clear();
