@@ -40,8 +40,9 @@ public class FlipPage {
 	public IContainer next() {
 		if (active == page2) {
 			return page1.add();
-		} else
+		} else {
 			return page2.add();
+		}
 	}
 
 	public void flip() {
