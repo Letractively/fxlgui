@@ -157,7 +157,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 								bottom.flip();
 								cb.onSuccess(null);
 							}
-						});
+						}, getDetailViewWidth());
 			} else {
 				cb.onSuccess(null);
 			}
@@ -486,8 +486,9 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		splitPane = panel2.add().splitPane().splitPosition(SPLIT_POSITION);
 		createLeftSideWidget();
 		panel2.color().white();// .rgb(240, 240, 240);
-		final IVerticalPanel vertical = createRightSideWidget();
-		registers = (IMenuWidget) vertical.add().widget(IMenuWidget.class);
+		rightSideWidget = createRightSideWidget();
+		registers = (IMenuWidget) rightSideWidget.add().widget(
+				IMenuWidget.class);
 		ResizeListenerImpl.setup(panel2.display(), this);
 		onResize(-1, panel2.display().height());
 		splitPane.addResizeListener(new ISplitPaneResizeListener() {
@@ -501,6 +502,10 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					lazyTree.width(splitPosition - 5);
 			}
 		});
+	}
+
+	private int getDetailViewWidth() {
+		return rightSideWidget.width();
 	}
 
 	public IVerticalPanel createRightSideWidget() {
@@ -861,6 +866,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private String runAfterVisible = null;
 	ILazyTreeWidget<T> lazyTree;
 	private IDefaultViewResolver<T> defaultViewResolver;
+	private IVerticalPanel rightSideWidget;
 
 	void notifyChange() {
 		notifyChange(false);

@@ -63,10 +63,10 @@ public interface ITreeWidget<T> {
 	public interface IDecorator<T> {
 
 		void decorate(IVerticalPanel panel, IVerticalPanel bottom,
-				ITree<T> tree, ICallback<Void> cb);
+				ITree<T> tree, ICallback<Void> cb, int width);
 
 		void decorate(IVerticalPanel panel, IVerticalPanel bottom, Object tree,
-				ICallback<Void> cb);
+				ICallback<Void> cb, int width);
 
 		boolean clear(IVerticalPanel contentPanel);
 

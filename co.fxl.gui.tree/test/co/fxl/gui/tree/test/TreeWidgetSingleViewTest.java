@@ -46,7 +46,7 @@ class TreeWidgetSingleViewTest {
 
 			@Override
 			public void decorate(IVerticalPanel panel, IVerticalPanel bottom,
-					ITree<String> tree, ICallback<Void> cb) {
+					ITree<String> tree, ICallback<Void> cb, int width) {
 				clear(panel);
 				panel.spacing(16);
 				panel.add().label().text(tree.object());
@@ -54,7 +54,7 @@ class TreeWidgetSingleViewTest {
 
 			@Override
 			public void decorate(IVerticalPanel panel, IVerticalPanel bottom,
-					Object tree, ICallback<Void> cb) {
+					Object tree, ICallback<Void> cb, int width) {
 			}
 
 			@Override

@@ -30,13 +30,13 @@ public class FilterTreeWidgetTest implements IDecorator<Object> {
 
 	@Override
 	public void decorate(IVerticalPanel panel, IVerticalPanel bottom,
-			ITree<Object> tree, ICallback<Void> cb) {
+			ITree<Object> tree, ICallback<Void> cb, int width) {
 		panel.clear().add().label().text(tree.name());
 	}
 
 	@Override
 	public void decorate(IVerticalPanel panel, IVerticalPanel bottom,
-			Object tree, ICallback<Void> cb) {
+			Object tree, ICallback<Void> cb, int width) {
 	}
 
 	@Override
