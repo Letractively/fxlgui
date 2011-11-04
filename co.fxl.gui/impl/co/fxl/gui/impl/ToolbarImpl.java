@@ -111,7 +111,7 @@ public class ToolbarImpl implements IToolbar {
 				toolbar.visible(visible);
 			} else {
 				IHorizontalPanel childPanel = (IHorizontalPanel) o;
-				childPanel.visible(visible);
+				mainPanels.get(childPanel).visible(visible);
 			}
 		}
 		return this;
