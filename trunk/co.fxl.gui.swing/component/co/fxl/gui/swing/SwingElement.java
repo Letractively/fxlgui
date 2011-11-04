@@ -86,6 +86,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 		assert container.component != null : "Component not set on container "
 				+ container;
 		container.parent.remove(container.component);
+		container.parent.getComponent().repaint();
 	}
 
 	@SuppressWarnings("unchecked")
