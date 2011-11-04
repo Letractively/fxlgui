@@ -733,7 +733,9 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			if (view.enabled() && view.isDefaultView)
 				return view;
 			if (defaultViewResolver != null
-					&& tree != null && view!=null && view.title!=null
+					&& tree != null
+					&& view != null
+					&& view.title != null
 					&& view.title.equals(defaultViewResolver.resolve(tree
 							.object())))
 				return view;
@@ -760,16 +762,19 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	private boolean isHide(DetailView view, Class<? extends Object> type,
 			T entity) {
-		if (view.constrainType == null)
-			return false;
-		for (Class<?> c : view.constrainType) {
-			if (c.equals(type))
-				return false;
+		if (view.constrainType != null) {
+			boolean found = false;
+			for (Class<?> c : view.constrainType) {
+				if (c.equals(type))
+					found = true;
+			}
+			if (!found)
+				return true;
 		}
 		if (view.constraintAdapter != null) {
 			return !view.constraintAdapter.hasView(entity);
 		}
-		return true;
+		return false;
 	}
 
 	@Override
