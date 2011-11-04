@@ -29,5 +29,6 @@ class SwingHorizontalLine extends SwingPanel<IVerticalPanel> implements
 		setLayout(new VerticalLayoutManager());
 		container.component.setOpaque(false);
 		height(1);
+		color().lightgray();
 	}
 }
