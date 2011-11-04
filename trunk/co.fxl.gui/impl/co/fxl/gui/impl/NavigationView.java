@@ -44,24 +44,30 @@ public class NavigationView {
 	private IClickable<?> back;
 	private IClickable<?> forward;
 	private boolean addToContextMenu = false;
+	private String title;
 
 	public NavigationView(ILayout layout) {
 		this(layout, true);
 	}
 
 	public NavigationView(ILayout layout, boolean addToContextMenu) {
+		this(layout, addToContextMenu, NAVIGATION);
+	}
+
+	public NavigationView(ILayout layout, boolean addToContextMenu, String title) {
 		widgetTitle = new WidgetTitle(layout, true).sideWidget(true);
 		this.addToContextMenu = addToContextMenu;
 		if (addToContextMenu)
 			widgetTitle.addToContextMenu(addToContextMenu);
 		widgetTitle.space(2);
+		this.title = title;
 		setUp();
 	}
 
 	private void setUp() {
 		if (panel != null)
 			return;
-		widgetTitle.addTitle(NAVIGATION);
+		widgetTitle.addTitle(title);
 		panel = widgetTitle.content().panel().vertical().spacing(6);
 	}
 
@@ -130,7 +136,7 @@ public class NavigationView {
 		addImage(panel, img);
 		ILabel label = addTextLabel(panel);
 		label.clickable(false);
-//		styleContentChoice(label);
+		// styleContentChoice(label);
 		label.font().color().black();
 		label.text(title);
 		IComboBox cb = addComboBox(text, panel, options);
@@ -165,7 +171,8 @@ public class NavigationView {
 					.add()
 					.image()
 					.resource(
-							imageResource == null ? Icons.LINK : imageResource).size(16, 16);
+							imageResource == null ? Icons.LINK : imageResource)
+					.size(16, 16);
 			panel.addSpace(4);
 		}
 		return image;
