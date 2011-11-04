@@ -38,6 +38,7 @@ import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.DummyCallback;
+import co.fxl.gui.impl.FlipPage;
 import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.KeyAdapter;
 import co.fxl.gui.impl.LazyClickListener;
@@ -138,15 +139,25 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			return false;
 		}
 
-		protected void update(ICallback<Void> cb) {
+		protected void update(final ICallback<Void> cb) {
 			if (deactivatedUpdate) {
 				cb.onSuccess(null);
 				return;
 			}
 			if (node != null && node.object() != null) {
-				bottom.clear();
+				IVerticalPanel flip = bottom.next().panel().vertical();
+				flip.add().label().text("&#160;");
+				flip.height(32);
+				new WidgetTitle().styleFooter(flip);
 				activeView = this;
-				decorator.decorate(contentPanel, bottom, node, cb);
+				decorator.decorate(contentPanel, flip, node,
+						new CallbackTemplate<Void>(cb) {
+							@Override
+							public void onSuccess(Void result) {
+								bottom.flip();
+								cb.onSuccess(null);
+							}
+						});
 			} else {
 				cb.onSuccess(null);
 			}
@@ -232,7 +243,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	private IClickable<?> cut;
 	private IClickable<?> copy;
 	private IClickable<?> paste;
-	private IVerticalPanel bottom;
+	private FlipPage bottom;
 	CommandLink reorder;
 	TreeModel<T> model;
 	boolean showRoot = true;
@@ -444,10 +455,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	IVerticalPanel panel() {
 		if (panel == null) {
 			panel = widgetTitle.content().panel().vertical();
-			bottom = widgetTitle.bottom().panel().vertical();
-			bottom.add().label().text("&#160;");
-			bottom.height(32);
-			new WidgetTitle().styleFooter(bottom);
+			bottom = new FlipPage(widgetTitle.bottom());
 		}
 		return panel;
 	}
