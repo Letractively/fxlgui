@@ -288,6 +288,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 		if (horizontalScrollPane) {
 			treeScrollPanel = c.scrollPane();
+			treeScrollPanel.height(height);
 			if (width != -1)
 				treeScrollPanel.width(width - widthScrollPanel);
 			c = treeScrollPanel.horizontal().viewPort();
