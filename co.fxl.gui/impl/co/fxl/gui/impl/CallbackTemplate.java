@@ -20,7 +20,7 @@ package co.fxl.gui.impl;
 
 public abstract class CallbackTemplate<T> implements ICallback<T> {
 
-	private ICallback<?> cb; 
+	private ICallback<?> cb;
 
 	public CallbackTemplate() {
 	}
@@ -35,5 +35,23 @@ public abstract class CallbackTemplate<T> implements ICallback<T> {
 			throw new RuntimeException(throwable);
 		else
 			cb.onFail(throwable);
+	}
+
+	public static ICallback<Boolean> adapterVoid(final ICallback<Void> cb2) {
+		return new CallbackTemplate<Boolean>(cb2) {
+			@Override
+			public void onSuccess(Boolean result) {
+				cb2.onSuccess(null);
+			}
+		};
+	}
+
+	public static ICallback<Void> adapterBoolean(final ICallback<Boolean> cb2) {
+		return new CallbackTemplate<Void>(cb2) {
+			@Override
+			public void onSuccess(Void result) {
+				cb2.onSuccess(false);
+			}
+		};
 	}
 }
