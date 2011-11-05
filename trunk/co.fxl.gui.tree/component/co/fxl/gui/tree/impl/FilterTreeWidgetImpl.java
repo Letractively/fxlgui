@@ -53,13 +53,13 @@ class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
 	}
 
 	@Override
-	public IFilterTreeWidget<T> visible(boolean visible) {
+	public IFilterTreeWidget<T> visible(ICallback<Void> cb, boolean visible) {
 		registers.visible(visible);
 		addButtons();
 		if (filterList != null)
-			filterList.apply();
+			filterList.apply(cb);
 		else {
-			onRefresh();
+			refresh(CallbackTemplate.adapterVoid(cb));
 		}
 		return this;
 	}

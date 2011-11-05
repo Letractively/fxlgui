@@ -23,7 +23,7 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
-import co.fxl.gui.impl.DummyCallback;
+import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.tree.api.IFilterList;
 import co.fxl.gui.tree.api.IProperty;
 
@@ -48,9 +48,9 @@ class FilterListImpl<T> implements IFilterList<T> {
 		throw new MethodNotImplementedException();
 	}
 
-	void apply() {
+	void apply(ICallback<Void> cb) {
 		filterWidget.visible(true);
-		filterWidget.apply(DummyCallback.voidInstance());
+		filterWidget.apply(cb);
 	}
 
 	@Override

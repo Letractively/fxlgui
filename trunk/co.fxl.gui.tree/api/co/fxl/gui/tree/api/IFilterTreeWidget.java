@@ -33,7 +33,7 @@ public interface IFilterTreeWidget<T> extends ITreeWidget<T> {
 
 	IFilterTreeWidget<T> source(ISource<T> source);
 
-	IFilterTreeWidget<T> visible(boolean visible);
+	IFilterTreeWidget<T> visible(ICallback<Void> callback, boolean visible);
 
 	IFilterTreeWidget<T> refresh(co.fxl.gui.impl.ICallback<Boolean> cb);
 }
