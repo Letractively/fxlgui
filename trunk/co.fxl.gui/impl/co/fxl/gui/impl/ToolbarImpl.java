@@ -97,9 +97,14 @@ public class ToolbarImpl implements IToolbar {
 				toolbar.clear();
 			} else {
 				IHorizontalPanel childPanel = (IHorizontalPanel) o;
-				mainPanels.get(childPanel).remove();
+				if (ADJUST_HEIGHTS)
+					mainPanels.get(childPanel).remove();
+				else
+					childPanel.remove();
 			}
 		}
+		blockers.clear();
+		mainPanels.clear();
 		content.clear();
 	}
 
@@ -111,7 +116,10 @@ public class ToolbarImpl implements IToolbar {
 				toolbar.visible(visible);
 			} else {
 				IHorizontalPanel childPanel = (IHorizontalPanel) o;
-				mainPanels.get(childPanel).visible(visible);
+				if (ADJUST_HEIGHTS)
+					mainPanels.get(childPanel).visible(visible);
+				else
+					childPanel.visible(visible);
 			}
 		}
 		return this;
@@ -120,20 +128,21 @@ public class ToolbarImpl implements IToolbar {
 	@Override
 	public IToolbar adjustHeights() {
 		if (ADJUST_HEIGHTS)
-		for (Object o : content) {
-			if (o instanceof ToolbarImpl) {
-				ToolbarImpl toolbar = (ToolbarImpl) o;
-				toolbar.adjustHeights();
-			} else {
-				IVerticalPanel childPanel = (IVerticalPanel) mainPanels.get(o);
-				if (childPanel.height() < 24) {
-					IHorizontalPanel blocker = (IHorizontalPanel) blockers
+			for (Object o : content) {
+				if (o instanceof ToolbarImpl) {
+					ToolbarImpl toolbar = (ToolbarImpl) o;
+					toolbar.adjustHeights();
+				} else {
+					IVerticalPanel childPanel = (IVerticalPanel) mainPanels
 							.get(o);
-					int inc = (24 - childPanel.height()) / 2;
-					blocker.height(inc);
+					if (childPanel.height() < 24) {
+						IHorizontalPanel blocker = (IHorizontalPanel) blockers
+								.get(o);
+						int inc = (24 - childPanel.height()) / 2;
+						blocker.height(inc);
+					}
 				}
 			}
-		}
 		return this;
 	}
 
