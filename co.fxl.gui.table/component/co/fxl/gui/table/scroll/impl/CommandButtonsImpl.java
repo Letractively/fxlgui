@@ -290,9 +290,9 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	@Override
 	public void decorate(IGridCell container) {
 		widget.selection().single().addSelectionListener(this);
-		IHorizontalPanel ps = container.panel().horizontal().align().end()
-				.add().panel().horizontal().align().end();
-		panel = new ToolbarImpl(ps.add());
+//		IHorizontalPanel ps = container.panel().horizontal().align().end()
+//				.add().panel().horizontal().align().end();
+		panel = new ToolbarImpl(container);//ps.add());
 		if (listenOnAdd) {
 			IClickable<?> image = listenOnAddListenerDecorator.decorate(panel);
 			image.addClickListener(new Update(listenOnAddListener));
