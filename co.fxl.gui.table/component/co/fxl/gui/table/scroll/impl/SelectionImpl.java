@@ -134,14 +134,19 @@ class SelectionImpl implements ISelection<Object> {
 		}
 
 		private void notifyListeners() {
+			List<Object> result = updateButtons();
+			for (IChangeListener<Object> l : listeners) {
+				l.onChange(result);
+			}
+		}
+
+		private List<Object> updateButtons() {
 			List<Object> result = result();
 			int size = widget.rows.size();
 			int size2 = result.size();
 			selectAll.clickable(size != 0 && size != size2);
 			removeSelection.clickable(!result.isEmpty());
-			for (IChangeListener<Object> l : listeners) {
-				l.onChange(result);
-			}
+			return result;
 		}
 
 		void update() {
@@ -285,5 +290,11 @@ class SelectionImpl implements ISelection<Object> {
 			single.notifyListeners(selectionIndex, selection2);
 		} else
 			multi.notifyListeners();
+	}
+
+	public void updateButtons() {
+		if (single == null) {
+			multi.updateButtons();
+		}
 	}
 }
