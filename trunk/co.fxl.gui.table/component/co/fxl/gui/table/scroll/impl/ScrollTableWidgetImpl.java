@@ -191,6 +191,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> visible(boolean visible) {
 		if (visible) {
+			boolean updateSelection = false;
 			if (sp != null)
 				sp.visible(false);
 			rows = new RowAdapter(actualRows);
@@ -213,6 +214,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					if (commandButtons != null)
 						commandButtons.selection = preselectedList.get(0);
 				}
+				updateSelection = true;
 			}
 			this.visible = true;
 			if (!externalStatusPanel)
@@ -337,6 +339,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				}
 			}
 			preselectedList.clear();
+			if (updateSelection)
+				selection.updateButtons();
 		} else {
 			this.visible = false;
 			throw new MethodNotImplementedException();
