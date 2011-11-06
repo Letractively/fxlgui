@@ -39,13 +39,14 @@ class GWTImage extends GWTElement<Image, IImage> implements IImage {
 
 	@Override
 	public IImage uRI(String uri) {
+		Image.prefetch(uri);
 		container.widget.setUrl(uri);
 		return this;
 	}
 
 	@Override
 	public IImage localURI(String uri) {
-		container.widget.setUrl(GWT.getModuleBaseURL() + uri);
+		uRI(GWT.getModuleBaseURL() + uri);
 		return this;
 	}
 
