@@ -51,7 +51,7 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=4, offY
 .font-weight-bold { font-weight: bold }
 .font-weight-normal { font-weight: normal }
 .font-weight-light { font-weight: light }
-.font-family-arial { font-family: arial }
+.font-family-arial { font-family: Arial, sans-serif; }
 .font-family-times { font-family: times }
 .font-family-verdana { font-family: verdana }
 .font-family-georgia { font-family: georgia }
@@ -119,11 +119,12 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=4, offY
 .cursor-crosshair { cursor: crosshair }
 .cursor-help { cursor: help }
 .cursor-move { cursor: move } 
-.gwt-TextBox-FXL { padding: 3px; }
-.gwt-PasswordTextBox-FXL { padding: 3px; }
-.gwt-Checkbox-FXL { }
-.gwt-Combobox-FXL { }
-.gwt-TextArea-FXL { padding: 3px; }
-.gwt-Label-FXL { white-space: nowrap; }
-.gwt-ToggleButton-FXL { }
-.gwt-RadioButton-FXL { }
+.gwt-TextBox-FXL { padding: 3px; font-family: Arial, sans-serif; font-size: 12px; }
+.gwt-PasswordTextBox-FXL { padding: 3px; font-family: Arial, sans-serif; font-size: 12px; }
+.gwt-Checkbox-FXL { font-family: Arial, sans-serif; font-size: 12px; }
+.gwt-Combobox-FXL { font-family: Arial, sans-serif; font-size: 12px; }
+.gwt-TextArea-FXL { padding: 3px; font-family: Arial, sans-serif; font-size: 12px; }
+.gwt-Label-FXL { white-space: nowrap; font-family: Arial, sans-serif; font-size: 12px; }
+.gwt-ToggleButton-FXL { font-family: Arial, sans-serif; font-size: 12px; }
+.gwt-Button-FXL { font-family: Arial, sans-serif; font-size: 12px; }
+.gwt-RadioButton-FXL { font-family: Arial, sans-serif; font-size: 12px; }
