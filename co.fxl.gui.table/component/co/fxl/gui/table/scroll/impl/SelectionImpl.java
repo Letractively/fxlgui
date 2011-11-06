@@ -135,8 +135,9 @@ class SelectionImpl implements ISelection<Object> {
 
 		private void notifyListeners() {
 			List<Object> result = result();
-			selectAll.clickable(widget.rows.size() != 0
-					&& widget.rows.size() != result.size());
+			int size = widget.rows.size();
+			int size2 = result.size();
+			selectAll.clickable(size != 0 && size != size2);
 			removeSelection.clickable(!result.isEmpty());
 			for (IChangeListener<Object> l : listeners) {
 				l.onChange(result);
