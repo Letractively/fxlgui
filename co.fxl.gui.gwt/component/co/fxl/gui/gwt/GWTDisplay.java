@@ -296,6 +296,10 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		return getUserAgent().toLowerCase().contains("msie");
 	}
 
+	public static boolean isInternetExplorer8() {
+		return getUserAgent().toLowerCase().contains("msie 8.0");
+	}
+
 	public static boolean isOpera() {
 		return getUserAgent().toLowerCase().contains("opera");
 	}

@@ -50,9 +50,11 @@ class GWTUncaughtExceptionHandler implements GWT.UncaughtExceptionHandler {
 		if (GWTDisplay.isInternetExplorer() && message != null
 				&& message.startsWith("(Error): ")) {
 			// admin: show detail view in IE9
-			if (message.contains("number: -2147467259")
+			if (message.contains("number: -2147467259"))
+				return true;
 			// resize browser in IE8
-					|| message.contains("number: -2147024809"))
+			if (message.contains("number: -2147024809")
+					&& GWTDisplay.isInternetExplorer8())
 				return true;
 		}
 
