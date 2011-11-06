@@ -101,4 +101,6 @@ public interface IProperty<T, S> {
 	IConditionRule<T, S, ?> addConditionRule();
 
 	String name();
+
+	IProperty<Object, Object> setWriteThrough();
 }
