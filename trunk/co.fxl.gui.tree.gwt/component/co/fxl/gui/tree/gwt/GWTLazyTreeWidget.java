@@ -40,6 +40,7 @@ import com.google.gwt.event.dom.client.MouseWheelEvent;
 import com.google.gwt.event.dom.client.MouseWheelHandler;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -188,10 +189,12 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			if (isMarked(i))
 				hTML = hTML.replace("1px solid rgb(255, 255, 255)",
 						"1px dotted rgb(175, 175, 175)");
-			hTML = hTML.replace("${STATE_ICON}",
-					IMAGE_PATH + TreeNode.treeIcon(this, row));
-			hTML = hTML.replace("${ICON}",
-					IMAGE_PATH + TreeNode.entityIcon(row));
+			String stateURL = IMAGE_PATH + TreeNode.treeIcon(this, row);
+			Image.prefetch(stateURL);
+			hTML = hTML.replace("${STATE_ICON}", stateURL);
+			String iconURL = IMAGE_PATH + TreeNode.entityIcon(row);
+			Image.prefetch(iconURL);
+			hTML = hTML.replace("${ICON}", iconURL);
 			String name = row.name();
 			if (name == null) {
 				name = "<font weight=\"light\" color=\"gray\">unnamed</font>";
