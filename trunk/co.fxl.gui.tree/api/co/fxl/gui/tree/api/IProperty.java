@@ -102,5 +102,5 @@ public interface IProperty<T, S> {
 
 	String name();
 
-	IProperty<Object, Object> setWriteThrough();
+	IProperty<Object, Object> setWriteThrough(IProperty<Object,Object> targetProperty);
 }
