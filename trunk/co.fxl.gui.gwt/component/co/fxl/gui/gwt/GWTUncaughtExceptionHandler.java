@@ -46,10 +46,13 @@ class GWTUncaughtExceptionHandler implements GWT.UncaughtExceptionHandler {
 
 		// TODO remove temporary IE hack !!!!
 
-		if (GWTDisplay.isInternetExplorer()
-				&& e.getMessage().startsWith("(Error): ")) {
-			if (e.getMessage().contains("number: -2147467259") // admin: show detail view in IE9
-					|| e.getMessage().contains("number: -2147024809")) // resize browser in IE8
+		String message = e.getMessage();
+		if (GWTDisplay.isInternetExplorer() && message != null
+				&& message.startsWith("(Error): ")) {
+			// admin: show detail view in IE9
+			if (message.contains("number: -2147467259")
+			// resize browser in IE8
+					|| message.contains("number: -2147024809"))
 				return true;
 		}
 
