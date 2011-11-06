@@ -39,7 +39,7 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 		super(container);
 		container.widget.addStyleName("gwt-Label-FXL");
 		container.widget.setWordWrap(false);
-		defaultFont();
+//		defaultFont();
 	}
 
 	private void update() {

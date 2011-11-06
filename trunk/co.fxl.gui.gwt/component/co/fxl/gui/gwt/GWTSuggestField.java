@@ -38,7 +38,7 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 		super(container);
 		assert container != null : "GWTTextField.new: container is null";
 		container.widget.addStyleName("gwt-TextBox-FXL");
-		defaultFont();
+//		defaultFont();
 		oracle = (MultiWordSuggestOracle) ((SuggestBox) container.widget)
 				.getSuggestOracle();
 	}

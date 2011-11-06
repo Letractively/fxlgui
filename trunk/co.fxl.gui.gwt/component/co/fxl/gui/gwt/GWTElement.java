@@ -61,9 +61,9 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		this.container = container;
 	}
 
-	IFont defaultFont() {
-		return ((IFontElement) this).font().pixel(12).family().arial();
-	}
+//	IFont defaultFont() {
+//		return ((IFontElement) this).font().pixel(12).family().arial();
+//	}
 
 	public IBorder border() {
 		return new GWTWidgetBorder(container.widget);
