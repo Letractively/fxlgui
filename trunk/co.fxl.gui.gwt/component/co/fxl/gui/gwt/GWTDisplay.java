@@ -108,7 +108,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	private static int getBrowserVersion() {
 		if (!isChrome())
 			throw new MethodNotImplementedException();
-		int index = getUserAgent().indexOf(CHROME);
+		int index = getUserAgent().indexOf(CHROME) + CHROME.length();
 		int lastIndex = getUserAgent().indexOf(".", index);
 		if (index == -1 || lastIndex == -1 || index >= lastIndex)
 			return -1;
