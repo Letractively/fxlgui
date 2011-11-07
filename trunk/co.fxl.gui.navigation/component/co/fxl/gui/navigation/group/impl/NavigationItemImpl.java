@@ -156,7 +156,6 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	private void showLabelAsActive(boolean viaClick,
 			co.fxl.gui.impl.ICallback<Void> cb, boolean notify) {
 		widget.active(this, viaClick, cb, notify);
-		border.color().rgb(172, 197, 213);
 		for (INavigationListener l : listeners)
 			l.onActive(true);
 	}
@@ -164,6 +163,7 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	private void showLabelAsActive() {
 		button.font().color().black();
 		buttonPanel.clickable(false);
+		border.color().rgb(172, 197, 213);
 		applyColor(buttonPanel.color(), widget.colorActive);
 	}
 
