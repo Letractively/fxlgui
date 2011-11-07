@@ -21,6 +21,7 @@ package co.fxl.gui.navigation.group.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -42,6 +43,7 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	NavigationGroupImpl group;
 	private List<INavigationListener> listeners = new LinkedList<INavigationListener>();
 	private IImage refresh;
+	private IBorder border;
 
 	NavigationItemImpl(NavigationGroupImpl group) {
 		this.group = group;
@@ -56,9 +58,7 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 			buttonPanel = basicPanel.add().panel().horizontal();
 			buttonPanel.spacing(5).align().center();
 			buttonPanel.addSpace(2);
-//			buttonPanel.border().width(1).style().noBottom().color().mix().lightgray().gray(); // mittelgrauer rahmen 
-//			buttonPanel.border().width(1).style().noBottom().color().rgb(172, 197, 213); // rahmen wie bei widgets
-//			buttonPanel.border().width(1).style().noBottom().color().lightgray(); // hellgrauer rahmen
+			border = buttonPanel.border().width(1).style().noBottom();
 			refresh = buttonPanel.add().image().resource("loading_white.gif")
 					.visible(false);
 			button = buttonPanel.add().label();
@@ -81,6 +81,13 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 			return;
 		button.font().color().white();
 		buttonPanel.clickable(true);
+		border.color()
+				.mix()
+				.rgb(widget.colorInactive[0], widget.colorInactive[1],
+						widget.colorInactive[2])
+				.rgb(widget.colorInactiveGradient[0],
+						widget.colorInactiveGradient[1],
+						widget.colorInactiveGradient[2]);
 		applyGradient(buttonPanel.color(), widget.colorInactive,
 				widget.colorInactiveGradient);
 		for (INavigationListener l : listeners)
@@ -149,6 +156,7 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	private void showLabelAsActive(boolean viaClick,
 			co.fxl.gui.impl.ICallback<Void> cb, boolean notify) {
 		widget.active(this, viaClick, cb, notify);
+		border.color().rgb(172, 197, 213);
 		for (INavigationListener l : listeners)
 			l.onActive(true);
 	}
