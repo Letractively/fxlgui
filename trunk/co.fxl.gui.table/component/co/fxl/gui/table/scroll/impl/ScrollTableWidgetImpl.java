@@ -913,7 +913,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IGridCell alignEnd(IGridCell cell, int column) {
 		if (ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL) {
 			cell.align().end();
-			// topPanel.column(column).expand();
+			
+			// TODO align end for Chrome <= 13, sub-optimal design with icons in the middle
+			
 		}
 		return cell;
 	}
