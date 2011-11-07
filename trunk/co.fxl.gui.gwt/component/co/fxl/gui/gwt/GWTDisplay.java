@@ -56,9 +56,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class GWTDisplay implements IDisplay, WidgetParent {
 
+	private static final String CHROME = "Chrome/";
+
 	// TODO 2DECIDE: Feature: Usability: GWT/IE: marking of text has been
 	// deactivated
-	
+
 	// TODO Look: IE8/Vista: Images are skewed
 
 	public interface BlockListener {
@@ -100,8 +102,22 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		ContextMenu.instance(this);
 		Display.instance(this);
 		Log.instance(new GWTLog());
-		ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL = !GWTDisplay
-				.isInternetExplorer8();
+		ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL = !(isChrome() && getBrowserVersion() <= 13);
+	}
+
+	private static int getBrowserVersion() {
+		if (!isChrome())
+			throw new MethodNotImplementedException();
+		int index = getUserAgent().indexOf(CHROME);
+		int lastIndex = getUserAgent().indexOf(".", index);
+		if (index == -1 || lastIndex == -1 || index >= lastIndex)
+			return -1;
+		String number = getUserAgent().substring(index, lastIndex - 1);
+		try {
+			return Integer.valueOf(number);
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 
 	@Override
