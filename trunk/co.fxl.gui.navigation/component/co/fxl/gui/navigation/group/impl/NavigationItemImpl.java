@@ -163,7 +163,7 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	private void showLabelAsActive() {
 		button.font().color().black();
 		buttonPanel.clickable(false);
-		border.color().rgb(172, 197, 213);
+		border.color().gray();
 		applyColor(buttonPanel.color(), widget.colorActive);
 	}
 
