@@ -80,6 +80,7 @@ public class ImageButton implements IClickable<Object>,
 	}
 
 	public ImageButton clickable(boolean clickable) {
+		label.font().weight().plain();
 		if (image != null)
 			image.clickable(clickable);
 		label.clickable(clickable);
@@ -163,5 +164,14 @@ public class ImageButton implements IClickable<Object>,
 	public ImageButton addSpace(int i) {
 		panel.addSpace(i);
 		return this;
+	}
+
+	public void highlight(boolean b) {
+		if (label.clickable())
+			return;
+		if (b)
+			label.font().weight().bold().color().black();
+		else
+			label.font().weight().plain().color().gray();
 	}
 }
