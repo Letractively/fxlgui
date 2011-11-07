@@ -36,6 +36,7 @@ import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.DialogImpl;
 import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.log.Log;
 
 import com.google.gwt.core.client.GWT;
@@ -57,6 +58,8 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 	// TODO 2DECIDE: Feature: Usability: GWT/IE: marking of text has been
 	// deactivated
+	
+	// TODO Look: IE8/Vista: Images are skewed
 
 	public interface BlockListener {
 
@@ -97,6 +100,8 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		ContextMenu.instance(this);
 		Display.instance(this);
 		Log.instance(new GWTLog());
+		ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL = !GWTDisplay
+				.isInternetExplorer8();
 	}
 
 	@Override
