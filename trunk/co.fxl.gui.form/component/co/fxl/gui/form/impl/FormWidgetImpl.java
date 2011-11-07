@@ -401,6 +401,8 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	void linkInput(final FormFieldImpl<?, ?> formField) {
+		if (validation == null)
+			return;
 		Object valueElement = formField.valueElement();
 		if (valueElement instanceof ITextArea) {
 			validation.linkInput((ITextArea) valueElement, formField.required);
