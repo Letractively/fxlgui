@@ -24,6 +24,7 @@ import java.util.List;
 import co.fxl.gui.api.IDisplay.IExceptionHandler;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.UmbrellaException;
 
 class GWTUncaughtExceptionHandler implements GWT.UncaughtExceptionHandler {
 
@@ -43,13 +44,22 @@ class GWTUncaughtExceptionHandler implements GWT.UncaughtExceptionHandler {
 	}
 
 	private boolean isIgnore(Throwable e) {
+		if (!GWTDisplay.isInternetExplorer())
+			return false;
+		if (GWTDisplay.isInternetExplorer8() && e instanceof UmbrellaException) {
+			UmbrellaException ue = (UmbrellaException) e;
+			boolean isIgnore = true;
+			for (Throwable cause : ue.getCauses()) {
+				isIgnore &= isIgnore(cause);
+			}
+			return isIgnore;
+		}
 
 		// TODO remove temporary IE hack !!!!
 
 		String message = e.getMessage();
-		if (GWTDisplay.isInternetExplorer() && message != null
-				&& message.startsWith("(Error): ")) {
-			// admin: show detail view in IE9
+		if (message != null && message.startsWith("(Error): ")) {
+			// show detail view in IE9 (administration)
 			if (message.contains("number: -2147467259"))
 				return true;
 			// resize browser in IE8
@@ -57,7 +67,6 @@ class GWTUncaughtExceptionHandler implements GWT.UncaughtExceptionHandler {
 					&& GWTDisplay.isInternetExplorer8())
 				return true;
 		}
-
 		return false;
 	}
 }
