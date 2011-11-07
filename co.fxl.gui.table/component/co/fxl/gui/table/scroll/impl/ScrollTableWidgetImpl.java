@@ -415,6 +415,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			filter = (IMiniFilterWidget) topPanelCell(0, 0).panel()
 					.horizontal().addSpace(8).add()
 					.widget(IMiniFilterWidget.class);
+			topPanel.column(0).expand();
 		}
 	}
 
@@ -887,8 +888,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public IScrollTableWidget<Object> navigationPanel(
 			INavigationPanelDecorator dec) {
 		if (topPanel != null) {
-			dec.decorate(topPanelCell(viewInc + buttonColumn++, 0).align()
-					.end());
+			dec.decorate(alignEnd(topPanelCell(viewInc + buttonColumn++, 0)));
 		} else
 			navigationDecorator = dec;
 		return this;
@@ -900,10 +900,16 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			IGridCell cell = topPanelCell(viewInc + buttonColumn, 0);
 			if (navigationDecorator != null)
 				cell.width(100);
-			dec.decorate(cell.align().end());
+			dec.decorate(alignEnd(cell));
 		} else
 			buttonDecorator = dec;
 		return this;
+	}
+
+	private IGridCell alignEnd(IGridCell cell) {
+		// if (ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL)
+		// cell.align().end();
+		return cell;
 	}
 
 	IGridCell topPanelCell(int i, int j) {
