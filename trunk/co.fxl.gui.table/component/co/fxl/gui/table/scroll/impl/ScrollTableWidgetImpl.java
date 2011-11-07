@@ -416,8 +416,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			filter = (IMiniFilterWidget) topPanelCell(0, 0).panel()
 					.horizontal().addSpace(8).add()
 					.widget(IMiniFilterWidget.class);
-			if (!ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL)
-				topPanel.column(0).expand();
+			// if (!ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL)
+			// topPanel.column(0).expand();
 		}
 	}
 
@@ -890,7 +890,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public IScrollTableWidget<Object> navigationPanel(
 			INavigationPanelDecorator dec) {
 		if (topPanel != null) {
-			dec.decorate(alignEnd(topPanelCell(viewInc + buttonColumn++, 0)));
+			int column = viewInc + buttonColumn++;
+			dec.decorate(alignEnd(topPanelCell(column, 0), column));
 		} else
 			navigationDecorator = dec;
 		return this;
@@ -899,24 +900,26 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> buttonPanel(IButtonPanelDecorator dec) {
 		if (topPanel != null) {
-			IGridCell cell = topPanelCell(viewInc + buttonColumn, 0);
+			int column = viewInc + buttonColumn;
+			IGridCell cell = topPanelCell(column, 0);
 			if (navigationDecorator != null)
 				cell.width(100);
-			dec.decorate(alignEnd(cell));
+			dec.decorate(alignEnd(cell, column));
 		} else
 			buttonDecorator = dec;
 		return this;
 	}
 
-	private IGridCell alignEnd(IGridCell cell) {
-		if (ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL)
+	private IGridCell alignEnd(IGridCell cell, int column) {
+		if (ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL) {
 			cell.align().end();
+			// topPanel.column(column).expand();
+		}
 		return cell;
 	}
 
 	IGridCell topPanelCell(int i, int j) {
-		return topPanel// .height(HEIGHT_TOP_PANEL)
-				.cell(i, j);
+		return topPanel.cell(i, j);
 	}
 
 	void editable(int gridRowIndex, boolean editable) {
