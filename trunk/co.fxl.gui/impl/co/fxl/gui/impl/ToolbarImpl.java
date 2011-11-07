@@ -41,6 +41,7 @@ public class ToolbarImpl implements IToolbar {
 	private Map<Object, IVerticalPanel> mainPanels = new HashMap<Object, IVerticalPanel>();
 	private boolean hasContent = false;
 	private int spacing = SPACING;
+	public static boolean ALLOW_ALIGN_END_FOR_FLOW_PANEL = true;
 
 	public ToolbarImpl(IContainer container) {
 		panel = container.panel().flow();
