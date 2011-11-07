@@ -45,6 +45,7 @@ import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.KeyAdapter;
+import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
@@ -415,7 +416,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			filter = (IMiniFilterWidget) topPanelCell(0, 0).panel()
 					.horizontal().addSpace(8).add()
 					.widget(IMiniFilterWidget.class);
-			topPanel.column(0).expand();
+			if (!ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL)
+				topPanel.column(0).expand();
 		}
 	}
 
@@ -907,8 +909,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	private IGridCell alignEnd(IGridCell cell) {
-		// if (ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL)
-		// cell.align().end();
+		if (ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL)
+			cell.align().end();
 		return cell;
 	}
 
