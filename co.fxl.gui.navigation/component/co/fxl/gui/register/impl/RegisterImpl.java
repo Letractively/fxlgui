@@ -128,6 +128,8 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 
 	@Override
 	public RegisterImpl top() {
+		if (widget.isActive(this))
+			return this;
 		if (disabled)
 			enabled(true);
 		return updateActive();
