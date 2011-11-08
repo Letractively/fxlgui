@@ -313,7 +313,7 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	void updateRequiredStatus(FormFieldImpl<?, ?> field, boolean status) {
-		if (!validate)
+		if (!validate || validation == null)
 			return;
 		validation.updateInput(field.valueElement(), status);
 	}
