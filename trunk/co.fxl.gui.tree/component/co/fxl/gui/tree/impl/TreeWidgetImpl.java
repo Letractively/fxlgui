@@ -686,7 +686,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					if (result)
 						expand(tree.object(), true);
 					else {
-						refreshSelection(false);
+						refreshTreeNode(false);
 						setLoadedDetailViewTree(tree);
 					}
 				}
