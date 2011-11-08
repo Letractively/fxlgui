@@ -119,8 +119,6 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 
 	public IPanel<?> addFillerPanel() {
 		if (stretch == null) {
-			// stretch = borders.center().panel().horizontal();
-			// stretch.height(24);
 			throw new MethodNotImplementedException();
 		}
 		return stretch;
@@ -146,5 +144,9 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 	public IRegisterWidget addRegisterListener(IRegisterListener l) {
 		registerListeners.add(l);
 		return this;
+	}
+
+	boolean isActive(RegisterImpl registerImpl) {
+		return selection == registerImpl.index;
 	}
 }
