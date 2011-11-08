@@ -37,7 +37,7 @@ class SwingCardPanel extends SwingPanel<ICardPanel> implements ICardPanel {
 	private CardLayout cardLayout;
 	private Map<JComponent, String> panel2uID = new HashMap<JComponent, String>();
 	JComponent chosen;
-	private String currentID;
+	private Map<IContainer, String> currentIDs = new HashMap<IContainer, String>();
 
 	SwingCardPanel(SwingContainer<PanelComponent> container) {
 		super(container);
@@ -48,14 +48,15 @@ class SwingCardPanel extends SwingPanel<ICardPanel> implements ICardPanel {
 	public ICardPanel clear() {
 		panel2uID.clear();
 		chosen = null;
-		currentID = null;
+		currentIDs.clear();
 		return super.clear();
 	}
 
 	@Override
 	public IContainer add() {
 		IContainer child = super.add();
-		currentID = nextID();
+		String currentID = nextID();
+		currentIDs.put(child, currentID);
 		return child;
 	}
 
@@ -70,6 +71,17 @@ class SwingCardPanel extends SwingPanel<ICardPanel> implements ICardPanel {
 
 	@Override
 	public void add(JComponent component) {
+		String currentID = null;
+		IContainer cc = null;
+		for (IContainer c : currentIDs.keySet()) {
+			assert c.element().nativeElement() != null;
+			if (c.element().nativeElement() == component) {
+				currentID = currentIDs.get(c);
+				cc = c;
+			}
+		}
+		assert cc != null;
+		currentIDs.remove(cc);
 		container.component.add(component, currentID);
 		panel2uID.put(component, currentID);
 	}
