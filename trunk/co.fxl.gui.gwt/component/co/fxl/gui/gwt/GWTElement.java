@@ -90,6 +90,8 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public R width(int width) {
+		if (isUndefined())
+			return (R) this;
 		if (width == -1)
 			container.widget.getElement().getStyle().clearWidth();
 		else
@@ -97,9 +99,15 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		return (R) this;
 	}
 
+	protected boolean isUndefined() {
+		return container == null || container.widget == null;
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public R height(int height) {
+		if (isUndefined())
+			return (R) this;
 		if (height == -1)
 			container.widget.getElement().getStyle().clearHeight();
 		else

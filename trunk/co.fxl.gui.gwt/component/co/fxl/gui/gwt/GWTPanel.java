@@ -61,8 +61,11 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 		}, ClickEvent.getType());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public R height(int height) {
+		if (isUndefined())
+			return (R) this;
 		if (height != -1)
 			container.widget.getElement().getStyle()
 					.setOverflow(Overflow.HIDDEN);
@@ -104,16 +107,16 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 		return new GWTContainer<Widget>(this);
 	}
 
-//	public IContainer insert(int index) {
-//		return new GWTContainer<Widget>(this, index);
-//	}
+	// public IContainer insert(int index) {
+	// return new GWTContainer<Widget>(this, index);
+	// }
 
 	@Override
 	public abstract void add(Widget widget);
 
-//	void insert(Widget widget, int index) {
-//		throw new MethodNotImplementedException();
-//	}
+	// void insert(Widget widget, int index) {
+	// throw new MethodNotImplementedException();
+	// }
 
 	@Override
 	public void remove(Widget widget) {
