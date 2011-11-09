@@ -51,6 +51,7 @@ import co.fxl.gui.tree.api.IConstraintAdapter;
 import co.fxl.gui.tree.api.ILazyTreeWidget;
 import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
+import co.fxl.gui.tree.api.ITypeResolver;
 
 public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
@@ -90,7 +91,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		boolean onTop = false;
 		private IVerticalPanel contentPanel;
 		private IMenuItem register;
-		Class<?>[] constrainType;
+		String[] constrainType;
 		String title;
 		boolean isDefaultView;
 		boolean deactivatedUpdate = false;
@@ -168,16 +169,16 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		}
 
 		@Override
-		public IView<T> constrainType(Class<?> clazz) {
+		public IView<T> constrainType(String clazz) {
 			if (clazz != null) {
-				this.constrainType = new Class<?>[] { clazz };
+				this.constrainType = new String[] { clazz };
 				register.enabled(false);
 			}
 			return this;
 		}
 
 		@Override
-		public IView<T> constrainType(Class<?>[] clazz) {
+		public IView<T> constrainType(String[] clazz) {
 			if (clazz.length > 1 || (clazz.length == 1 && clazz[0] != null)) {
 				this.constrainType = clazz;
 				register.enabled(false);
@@ -704,7 +705,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		for (int i = 0; i < detailViews.size(); i++) {
 			DetailView view = detailViews.get(i);
 			if (tree != null) {
-				Class<? extends Object> type = tree.object().getClass();
+				String type = typeResolver.resolve(tree.object());
 				boolean hide = isHide(view, type, tree.object());
 				if (hide && i > 0 && view.onTop) {
 					showFirst = true;
@@ -715,7 +716,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		for (int i = 0; i < detailViews.size(); i++) {
 			DetailView view = detailViews.get(i);
 			if (tree != null) {
-				Class<? extends Object> type = tree.object().getClass();
+				String type = typeResolver.resolve(tree.object());
 				boolean hide = isHide(view, type, tree.object());
 				boolean enabled = !hide && (i == 0 || !tree.isNew());
 				view.enabled(enabled);
@@ -773,11 +774,10 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		return this;
 	}
 
-	private boolean isHide(DetailView view, Class<? extends Object> type,
-			T entity) {
+	private boolean isHide(DetailView view, String type, T entity) {
 		if (view.constrainType != null) {
 			boolean found = false;
-			for (Class<?> c : view.constrainType) {
+			for (String c : view.constrainType) {
 				if (c.equals(type))
 					found = true;
 			}
@@ -867,6 +867,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	ILazyTreeWidget<T> lazyTree;
 	private IDefaultViewResolver<T> defaultViewResolver;
 	private IVerticalPanel rightSideWidget;
+	private ITypeResolver<T> typeResolver;
 
 	void notifyChange() {
 		notifyChange(false);
@@ -1059,6 +1060,12 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	public ITreeWidget<T> defaultViewResolver(
 			co.fxl.gui.tree.api.ITreeWidget.IDefaultViewResolver<T> defaultViewResolver) {
 		this.defaultViewResolver = defaultViewResolver;
+		return this;
+	}
+
+	@Override
+	public ITreeWidget<T> typeResolver(ITypeResolver<T> typeResolver) {
+		this.typeResolver = typeResolver;
 		return this;
 	}
 }

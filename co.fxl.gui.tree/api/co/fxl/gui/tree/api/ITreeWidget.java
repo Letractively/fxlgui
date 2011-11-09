@@ -37,9 +37,9 @@ public interface ITreeWidget<T> {
 
 	public interface IView<T> {
 
-		IView<T> constrainType(Class<?> clazz);
+		IView<T> constrainType(String clazz);
 
-		IView<T> constrainType(Class<?>[] clazz);
+		IView<T> constrainType(String[] clazz);
 
 		IView<T> isDefaultView();
 
@@ -135,6 +135,8 @@ public interface ITreeWidget<T> {
 	ITreeWidget<T> repaint();
 
 	int heightRegisterPanel();
+
+	ITreeWidget<T> typeResolver(ITypeResolver<T> typeResolver);
 
 	ITreeWidget<T> navigateUp();
 
