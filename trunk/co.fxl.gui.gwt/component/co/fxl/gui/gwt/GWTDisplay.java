@@ -36,6 +36,7 @@ import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.DialogImpl;
 import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.ObjectFactory;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.log.Log;
 
@@ -103,6 +104,12 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		Display.instance(this);
 		Log.instance(new GWTLog());
 		ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL = !(isChrome() && getBrowserVersion() <= 13);
+		ObjectFactory.instance(new ObjectFactory() {
+			@Override
+			public Object create(Class<?> clazz) {
+				return GWT.create(clazz);
+			}
+		});
 	}
 
 	private static int getBrowserVersion() {
