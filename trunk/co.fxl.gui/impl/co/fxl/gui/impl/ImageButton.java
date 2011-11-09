@@ -174,4 +174,8 @@ public class ImageButton implements IClickable<Object>,
 		else
 			label.font().weight().plain().color().gray();
 	}
+	
+	public String text() {
+		return label.text();
+	}
 }
