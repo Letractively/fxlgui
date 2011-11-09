@@ -23,9 +23,9 @@ import co.fxl.gui.tree.api.ITreeWidget.IViewID;
 public class ViewID implements IViewID {
 
 	private String title;
-	private Class<?>[] constrainType;
+	private String[] constrainType;
 
-	public ViewID(String title, Class<?>[] constrainType) {
+	public ViewID(String title, String[] constrainType) {
 		this.title = title;
 		this.constrainType = constrainType;
 	}
@@ -43,7 +43,7 @@ public class ViewID implements IViewID {
 		return equals(constrainType, iD.constrainType);
 	}
 
-	private boolean equals(Class<?>[] c1, Class<?>[] c2) {
+	private boolean equals(String[] c1, String[] c2) {
 		if (c1 == null || c2 == null)
 			return c1 == c2;
 		if (c1.length != c2.length)
