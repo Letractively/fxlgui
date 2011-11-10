@@ -149,6 +149,15 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 					}
 				});
 			}
+
+			@Override
+			public void onFail(Throwable t) {
+				showLabelAsInactive();
+				refresh.visible(false);
+				button.visible(true);
+				super.onFail(t);
+			}
+
 		}, true);
 		return this;
 	}
