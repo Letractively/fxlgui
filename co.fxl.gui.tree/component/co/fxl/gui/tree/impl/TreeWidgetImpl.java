@@ -62,6 +62,9 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	// TODO FEATURE: Usability: Double click on Splitter shows optimum splitter
 	// position with respect to left-side-widget (like when moving)
+	
+	// TODO Usability: Tree-Node: Klick on left/right: expand/collapse
+	// TODO Usability: Tree-Node: Klick on up/down: previous/next node
 
 	private static final String DELETE2 = "Delete";
 	private static final String REFRESH2 = "Refresh";
