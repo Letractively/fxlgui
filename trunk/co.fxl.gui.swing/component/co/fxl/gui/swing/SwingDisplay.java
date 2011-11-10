@@ -48,7 +48,6 @@ import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.DialogImpl;
 import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.Display;
-import co.fxl.gui.impl.ObjectFactory;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.log.Log;
 
@@ -97,18 +96,6 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		Log.instance(new SwingLog());
 		// TODO remove hack
 		ToolbarImpl.ADJUST_HEIGHTS = true;
-		ObjectFactory.instance(new ObjectFactory() {
-			@Override
-			public Object create(Class<?> clazz) {
-				try {
-					return clazz.newInstance();
-				} catch (InstantiationException e) {
-					throw new RuntimeException(e);
-				} catch (IllegalAccessException e) {
-					throw new RuntimeException(e);
-				}
-			}
-		});
 	}
 
 	private void resize() {

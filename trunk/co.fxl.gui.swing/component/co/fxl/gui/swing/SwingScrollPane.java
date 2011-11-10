@@ -34,7 +34,6 @@ import co.fxl.gui.api.IScrollPane;
 class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 		IScrollPane {
 
-	private static final int BLOCK_INCREMENT = 22;
 	private SwingContainer<JComponent> viewPort = new SwingContainer<JComponent>(
 			container.parent) {
 
