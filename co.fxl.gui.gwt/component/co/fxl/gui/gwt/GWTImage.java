@@ -21,9 +21,22 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.api.IImage;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.Image;
 
-class GWTImage extends GWTElement<Image, IImage> implements IImage {
+public class GWTImage extends GWTElement<Image, IImage> implements IImage {
+
+	public interface ImageResourceProvider {
+
+		ImageResource resolve(String resource);
+	}
+
+	private static ImageResourceProvider imageResourceProvider;
+
+	public static void abstractImagePrototypeProvider(
+			ImageResourceProvider imageResourceProvider) {
+		GWTImage.imageResourceProvider = imageResourceProvider;
+	}
 
 	private String resource;
 
@@ -56,6 +69,13 @@ class GWTImage extends GWTElement<Image, IImage> implements IImage {
 		if (name == null) {
 			container.widget.setVisible(false);
 			return this;
+		}
+		if (imageResourceProvider != null) {
+			ImageResource prototype = imageResourceProvider.resolve(name);
+			if (prototype != null) {
+				container.widget.setResource(prototype);
+				return this;
+			}
 		}
 		String path = GWT.getModuleBaseURL();
 		return uRI(path + "images/" + name);
