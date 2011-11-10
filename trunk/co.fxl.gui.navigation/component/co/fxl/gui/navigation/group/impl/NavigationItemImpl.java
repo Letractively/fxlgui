@@ -135,29 +135,36 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 				refresh.visible(true);
 				button.visible(false);
 				buttonPanel.size(width, height);
-				decorator.decorate(panel0, new CallbackTemplate<Void>() {
-					@Override
-					public void onSuccess(Void result) {
-						showLabelAsActive();
-						if (oldActive != null
-								&& oldActive != NavigationItemImpl.this) {
-							oldActive.showLabelAsInactive();
+				try {
+					decorator.decorate(panel0, new CallbackTemplate<Void>() {
+						@Override
+						public void onSuccess(Void result) {
+							showLabelAsActive();
+							if (oldActive != null
+									&& oldActive != NavigationItemImpl.this) {
+								oldActive.showLabelAsInactive();
+							}
+							refresh.visible(false);
+							button.visible(true);
+							widget.flipPage().flip();
 						}
-						refresh.visible(false);
-						button.visible(true);
-						widget.flipPage().flip();
-					}
-				});
+
+						@Override
+						public void onFail(Throwable t) {
+							resetLabel();
+							super.onFail(t);
+						}
+					});
+				} catch (Exception e) {
+					onFail(e);
+				}
 			}
 
 			@Override
 			public void onFail(Throwable t) {
-				showLabelAsInactive();
-				refresh.visible(false);
-				button.visible(true);
+				resetLabel();
 				super.onFail(t);
 			}
-
 		}, true);
 		return this;
 	}
@@ -229,5 +236,11 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	@Override
 	public boolean visible() {
 		return basicPanel.visible();
+	}
+
+	private void resetLabel() {
+		showLabelAsInactive();
+		refresh.visible(false);
+		button.visible(true);
 	}
 }
