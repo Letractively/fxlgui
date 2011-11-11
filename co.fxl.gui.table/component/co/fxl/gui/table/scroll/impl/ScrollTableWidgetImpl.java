@@ -608,6 +608,9 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				if (columnImpl.widthDouble != -1)
 					column.width(columnImpl.widthDouble);
 			}
+			if (columnImpl.alignment.isSpecified()) {
+				columnImpl.alignment.forward(column.align());
+			}
 		}
 	}
 
@@ -913,9 +916,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IGridCell alignEnd(IGridCell cell, int column) {
 		if (ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL) {
 			cell.align().end();
-			
-			// TODO align end for Chrome <= 13, sub-optimal design with icons in the middle
-			
+
+			// TODO align end for Chrome <= 13, sub-optimal design with icons in
+			// the middle
+
 		}
 		return cell;
 	}

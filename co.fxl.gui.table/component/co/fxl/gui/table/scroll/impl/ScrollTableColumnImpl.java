@@ -194,7 +194,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	private ScrollTableWidgetImpl widget;
 	List<IScrollTableListener<Object>> clickListeners = new LinkedList<IScrollTableListener<Object>>();
 	boolean filterable;
-	private AlignmentMemento<IScrollTableColumn<Object>> alignment = new AlignmentMemento<IScrollTableColumn<Object>>(
+	AlignmentMemento<IScrollTableColumn<Object>> alignment = new AlignmentMemento<IScrollTableColumn<Object>>(
 			this);
 	boolean visible = true;
 	int widthInt = -1;
@@ -223,8 +223,9 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 					+ ", received invalid value " + value + " ("
 					+ value.getClass().getName() + ")");
 		}
-		if (!alignment.type.equals(Type.BEGIN))
-			throw new MethodNotImplementedException();
+		if (!alignment.type.equals(Type.BEGIN)) {
+			// TODO ... throw new MethodNotImplementedException();
+		}
 	}
 
 	@SuppressWarnings("rawtypes")
