@@ -141,12 +141,12 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 				showLoading();
 				buttonPanel.size(width, height);
 				// TODO REMOVE
-				// flip();
+				 flip();
 				try {
 					decorator.decorate(panel0, new CallbackTemplate<Void>() {
 						@Override
 						public void onSuccess(Void result) {
-							flip();
+//							flip();
 						}
 
 						@Override
