@@ -38,6 +38,12 @@ public class GWTImage extends GWTElement<Image, IImage> implements IImage {
 		GWTImage.imageResourceProvider = imageResourceProvider;
 	}
 
+	public static ImageResource resolve(String resource) {
+		if (imageResourceProvider != null)
+			return imageResourceProvider.resolve(resource);
+		return null;
+	}
+
 	private String resource;
 
 	GWTImage(GWTContainer<Image> container) {
@@ -52,7 +58,6 @@ public class GWTImage extends GWTElement<Image, IImage> implements IImage {
 
 	@Override
 	public IImage uRI(String uri) {
-		Image.prefetch(uri);
 		container.widget.setUrl(uri);
 		return this;
 	}
@@ -70,15 +75,12 @@ public class GWTImage extends GWTElement<Image, IImage> implements IImage {
 			container.widget.setVisible(false);
 			return this;
 		}
-		if (imageResourceProvider != null) {
-			ImageResource prototype = imageResourceProvider.resolve(name);
-			if (prototype != null) {
-				container.widget.setResource(prototype);
-				return this;
-			}
+		ImageResource prototype = resolve(name);
+		if (prototype != null) {
+			container.widget.setResource(prototype);
+			return this;
 		}
-		String path = GWT.getModuleBaseURL();
-		return uRI(path + "images/" + name);
+		return localURI("images/" + name);
 	}
 
 	@Override
