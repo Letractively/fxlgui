@@ -77,6 +77,10 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	}
 
 	void showLabelAsInactive() {
+		showLabelAsInactive(true);
+	}
+
+	void showLabelAsInactive(boolean notify) {
 		if (buttonPanel == null)
 			return;
 		button.visible(true);
@@ -92,8 +96,9 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 						widget.colorInactiveGradient[2]);
 		applyGradient(buttonPanel.color(), widget.colorInactive,
 				widget.colorInactiveGradient);
-		for (INavigationListener l : listeners)
-			l.onActive(false);
+		if (notify)
+			for (INavigationListener l : listeners)
+				l.onActive(false);
 	}
 
 	@Override
@@ -140,16 +145,14 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 					decorator.decorate(panel0, new CallbackTemplate<Void>() {
 						@Override
 						public void onSuccess(Void result) {
-							showLabelAsActive();
 							for (NavigationGroupImpl g : group.widget.groups) {
 								for (NavigationItemImpl i : g.items) {
 									if (i != NavigationItemImpl.this) {
-										i.showLabelAsInactive();
+										i.showLabelAsInactive(false);
 									}
 								}
 							}
-							refresh.visible(false);
-							button.visible(true);
+							showLabelAsActive();
 							widget.flipPage().flip();
 						}
 
