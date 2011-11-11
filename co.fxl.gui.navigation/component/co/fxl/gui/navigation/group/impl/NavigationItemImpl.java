@@ -79,6 +79,8 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	void showLabelAsInactive() {
 		if (buttonPanel == null)
 			return;
+		button.visible(true);
+		refresh.visible(false);
 		button.font().color().white();
 		buttonPanel.clickable(true);
 		border.color()
@@ -123,7 +125,6 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 	static int c = 1;
 
 	NavigationItemImpl active(boolean viaClick) {
-		final NavigationItemImpl oldActive = widget.active;
 		showLabelAsActive(viaClick, new CallbackTemplate<Void>() {
 			@Override
 			public void onSuccess(Void result) {
@@ -140,9 +141,12 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 						@Override
 						public void onSuccess(Void result) {
 							showLabelAsActive();
-							if (oldActive != null
-									&& oldActive != NavigationItemImpl.this) {
-								oldActive.showLabelAsInactive();
+							for (NavigationGroupImpl g : group.widget.groups) {
+								for (NavigationItemImpl i : g.items) {
+									if (i != NavigationItemImpl.this) {
+										i.showLabelAsInactive();
+									}
+								}
 							}
 							refresh.visible(false);
 							button.visible(true);
@@ -181,6 +185,8 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 		buttonPanel.clickable(false);
 		border.color().gray();
 		applyColor(buttonPanel.color(), widget.colorActive);
+		button.visible(true);
+		refresh.visible(false);
 	}
 
 	private void applyColor(IColor color, int[] rgb) {
