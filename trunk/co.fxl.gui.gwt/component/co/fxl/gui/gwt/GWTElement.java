@@ -91,7 +91,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	@Override
 	public R width(int width) {
 		if (width <= 0 && width != -1)
-			throw new RuntimeException("illegal width: " + width);
+			return (R) this;
 		if (isUndefined())
 			return (R) this;
 		if (width == -1)
@@ -109,7 +109,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	@Override
 	public R height(int height) {
 		if (height <= 0 && height != -1)
-			throw new RuntimeException("illegal height: " + height);
+			return (R) this;
 		if (isUndefined())
 			return (R) this;
 		if (height == -1)
