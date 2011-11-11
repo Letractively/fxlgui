@@ -61,4 +61,8 @@ public class AlignmentMemento<T> implements IAlignment<T> {
 		else if (type == Type.END)
 			align.end();
 	}
+
+	public boolean isSpecified() {
+		return type != Type.BEGIN;
+	}
 }
