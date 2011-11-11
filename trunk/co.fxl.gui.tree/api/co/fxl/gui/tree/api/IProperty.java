@@ -20,6 +20,7 @@ package co.fxl.gui.tree.api;
 
 import java.util.List;
 
+import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.ITooltipResolver;
@@ -104,6 +105,7 @@ public interface IProperty<T, S> {
 
 	String name();
 
-	IProperty<Object, Object> setWriteThrough(
-			IProperty<Object, Object> targetProperty);
+	IProperty<T, S> setWriteThrough(IProperty<T, ?> targetProperty);
+
+	IAlignment<IProperty<T, S>> columnAlign();
 }
