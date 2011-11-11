@@ -144,8 +144,10 @@ class SelectionImpl implements ISelection<Object> {
 			List<Object> result = result();
 			int size = widget.rows.size();
 			int size2 = result.size();
-			selectAll.clickable(size != 0 && size != size2);
-			removeSelection.clickable(!result.isEmpty());
+			if (selectAll != null)
+				selectAll.clickable(size != 0 && size != size2);
+			if (removeSelection != null)
+				removeSelection.clickable(!result.isEmpty());
 			return result;
 		}
 
@@ -184,6 +186,10 @@ class SelectionImpl implements ISelection<Object> {
 					notifyListeners();
 				}
 			});// .ctrlPressed();
+			setUp();
+		}
+
+		private void setUp() {
 			if (!widget.selectionIsSetup) {
 				IHorizontalPanel p = widget.statusPanel().cell(0, 0).valign()
 						.center().width(120).panel().horizontal().add().panel()
