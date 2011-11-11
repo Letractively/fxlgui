@@ -63,15 +63,15 @@ class GWTUncaughtExceptionHandler implements GWT.UncaughtExceptionHandler {
 		String message = e.getMessage();
 		if (message != null && message.startsWith("(Error): ")) {
 			// show detail view in IE9 (administration)
-			if (message.contains("number: " + DETAIL_VIEW_IE9)) {
-				GWTDisplay.instance().title(DETAIL_VIEW_IE9);
-				return true;
-			}
-			// resize browser in IE8
-			if (message.contains("number: " + RESIZE_BROWSER_IE8)
-					&& GWTDisplay.isInternetExplorer8())
-				GWTDisplay.instance().title(RESIZE_BROWSER_IE8);
-			return true;
+//			if (message.contains("number: " + DETAIL_VIEW_IE9)) {
+//				GWTDisplay.instance().title(DETAIL_VIEW_IE9);
+//				return true;
+//			}
+//			// resize browser in IE8
+//			if (message.contains("number: " + RESIZE_BROWSER_IE8)
+//					&& GWTDisplay.isInternetExplorer8())
+//				GWTDisplay.instance().title(RESIZE_BROWSER_IE8);
+//			return true;
 		}
 		return false;
 	}
