@@ -105,9 +105,9 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL = !(isChrome() && getBrowserVersion() <= 13);
 	}
 
-	private static int getBrowserVersion() {
+	public static int getBrowserVersion() {
 		if (!isChrome())
-			throw new MethodNotImplementedException();
+			return -1;
 		String userAgent = getUserAgent();
 		return getBrowserVersion(userAgent);
 	}
