@@ -98,9 +98,12 @@ public interface IProperty<T, S> {
 
 	IProperty<T, S> tooltip(ITooltipResolver tooltip);
 
+	IProperty<T, S> columnWidth(double columnWidth);
+
 	IConditionRule<T, S, ?> addConditionRule();
 
 	String name();
 
-	IProperty<Object, Object> setWriteThrough(IProperty<Object,Object> targetProperty);
+	IProperty<Object, Object> setWriteThrough(
+			IProperty<Object, Object> targetProperty);
 }
