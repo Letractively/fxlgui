@@ -24,6 +24,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.gwt.GWTContainer;
 import co.fxl.gui.gwt.GWTDisplay;
+import co.fxl.gui.gwt.GWTImage;
 import co.fxl.gui.gwt.WidgetParent;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.DiscardChangesDialog;
@@ -38,9 +39,9 @@ import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.event.dom.client.MouseWheelEvent;
 import com.google.gwt.event.dom.client.MouseWheelHandler;
+import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -49,6 +50,8 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 	// TODO BUG: Opera: unnecessary horizontal scrollbar for left splitpane
 	// content
 
+	public static boolean IS_CHROME_15_PLUS = GWTDisplay.isChrome()
+			&& GWTDisplay.getBrowserVersion() >= 15;
 	public static String IMAGE_PATH = "images/";
 	public static String HTML = "<table cellspacing=\"0\" cellpadding=\"0\" "
 			+ "style=\"width: 100%; cursor: pointer; border: 1px solid rgb(255, 255, 255);\">"
@@ -189,11 +192,10 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			if (isMarked(i))
 				hTML = hTML.replace("1px solid rgb(255, 255, 255)",
 						"1px dotted rgb(175, 175, 175)");
-			String stateURL = IMAGE_PATH + TreeNode.treeIcon(this, row);
-			Image.prefetch(stateURL);
+			String stateURL = getImageURL(IMAGE_PATH,
+					TreeNode.treeIcon(this, row));
 			hTML = hTML.replace("${STATE_ICON}", stateURL);
-			String iconURL = IMAGE_PATH + TreeNode.entityIcon(row);
-			Image.prefetch(iconURL);
+			String iconURL = getImageURL(IMAGE_PATH, TreeNode.entityIcon(row));
 			hTML = hTML.replace("${ICON}", iconURL);
 			String name = row.name();
 			if (name == null) {
@@ -219,6 +221,15 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 			}
 		});
 		return html;
+	}
+
+	private String getImageURL(String path, String treeIcon) {
+		if (IS_CHROME_15_PLUS) {
+			ImageResource ir = GWTImage.resolve(treeIcon);
+			if (ir != null)
+				return ir.getURL();
+		}
+		return path + treeIcon;
 	}
 
 	private void handleClick(final int firstRow, final int y) {
