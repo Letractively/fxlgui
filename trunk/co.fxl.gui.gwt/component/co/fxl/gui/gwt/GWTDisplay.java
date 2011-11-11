@@ -228,7 +228,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	private GWTUncaughtExceptionHandler setUpUncaughtExceptionHandler() {
 		if (uncaughtExceptionHandler == null) {
 			uncaughtExceptionHandler = new GWTUncaughtExceptionHandler();
-//			GWT.setUncaughtExceptionHandler(uncaughtExceptionHandler);
+			GWT.setUncaughtExceptionHandler(uncaughtExceptionHandler);
 		}
 		return uncaughtExceptionHandler;
 	}
