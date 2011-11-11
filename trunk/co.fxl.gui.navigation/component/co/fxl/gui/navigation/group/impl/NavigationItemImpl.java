@@ -140,13 +140,13 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 				int height = buttonPanel.height();
 				showLoading();
 				buttonPanel.size(width, height);
+				// TODO REMOVE
+				// flip();
 				try {
 					decorator.decorate(panel0, new CallbackTemplate<Void>() {
 						@Override
 						public void onSuccess(Void result) {
-							showRestAsInactive();
-							showLabelAsActive();
-							widget.flipPage().flip();
+							flip();
 						}
 
 						@Override
@@ -267,5 +267,11 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 				}
 			}
 		}
+	}
+
+	private void flip() {
+		showRestAsInactive();
+		showLabelAsActive();
+		widget.flipPage().flip();
 	}
 }
