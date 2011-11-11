@@ -29,6 +29,8 @@ import com.google.gwt.event.shared.UmbrellaException;
 class GWTUncaughtExceptionHandler implements GWT.UncaughtExceptionHandler {
 
 	private List<IExceptionHandler> handlers = new LinkedList<IExceptionHandler>();
+	public static final String RESIZE_BROWSER_IE8 = "-2147024809";
+	public static final String DETAIL_VIEW_IE9 = "-2147467259";
 
 	void add(IExceptionHandler handler) {
 		handlers.add(handler);
@@ -36,8 +38,9 @@ class GWTUncaughtExceptionHandler implements GWT.UncaughtExceptionHandler {
 
 	@Override
 	public void onUncaughtException(Throwable e) {
-		if (isIgnore(e))
+		if (isIgnore(e)) {
 			return;
+		}
 		for (IExceptionHandler h : handlers) {
 			h.onException(e);
 		}
@@ -60,12 +63,15 @@ class GWTUncaughtExceptionHandler implements GWT.UncaughtExceptionHandler {
 		String message = e.getMessage();
 		if (message != null && message.startsWith("(Error): ")) {
 			// show detail view in IE9 (administration)
-			if (message.contains("number: -2147467259"))
+			if (message.contains("number: " + DETAIL_VIEW_IE9)) {
+				GWTDisplay.instance().title(DETAIL_VIEW_IE9);
 				return true;
+			}
 			// resize browser in IE8
-			if (message.contains("number: -2147024809")
+			if (message.contains("number: " + RESIZE_BROWSER_IE8)
 					&& GWTDisplay.isInternetExplorer8())
-				return true;
+				GWTDisplay.instance().title(RESIZE_BROWSER_IE8);
+			return true;
 		}
 		return false;
 	}
