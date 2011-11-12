@@ -179,7 +179,7 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 	}
 
 	HTML getHTML(final int firstRow, int lastRow) {
-		List<ITree<Object>> rows = tree.rows(firstRow, lastRow);
+		final List<ITree<Object>> rows = tree.rows(firstRow, lastRow);
 		if (rows.isEmpty())
 			throw new RuntimeException("illegal range: " + firstRow + " - "
 					+ lastRow + ", selection=" + selectionIndex);
@@ -210,14 +210,14 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		html.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(final ClickEvent event) {
-				handleClick(firstRow, event.getY());
+				handleClick(rows, firstRow, event.getY());
 			}
 		});
 		html.addDoubleClickHandler(new DoubleClickHandler() {
 			@Override
 			public void onDoubleClick(final DoubleClickEvent event) {
 				// TODO FEATURE: Usability: expand node before selection
-				handleClick(firstRow, event.getY());
+				handleClick(rows, firstRow, event.getY());
 			}
 		});
 		return html;
@@ -232,14 +232,21 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		return path + treeIcon;
 	}
 
-	private void handleClick(final int firstRow, final int y) {
+	private void handleClick(final List<ITree<Object>> rows,
+			final int firstRow, final int y) {
 		DiscardChangesDialog.show(new CallbackTemplate<Boolean>() {
 			@Override
 			public void onSuccess(Boolean result) {
 				selectionIndex = firstRow + (y / heightElement);
 				if (!fp.isAttached() || !fp.isVisible())
 					return;
-				update();
+				lazyLoad(rows, firstRow, selectionIndex,
+						new CallbackTemplate<Void>() {
+							@Override
+							public void onSuccess(Void result) {
+								update();
+							}
+						});
 			}
 		});
 	}
