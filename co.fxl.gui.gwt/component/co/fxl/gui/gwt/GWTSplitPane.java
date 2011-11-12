@@ -193,6 +193,8 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 
 	@Override
 	public ISplitPane splitPosition(int pixel) {
+		if (pixel < 1)
+			pixel = 300;
 		splitPosition = pixel;
 		Widget p = (Widget) container.widget;
 		holdNotify = true;
