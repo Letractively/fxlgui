@@ -21,10 +21,11 @@ package co.fxl.gui.gwt;
 import java.util.Date;
 
 import co.fxl.data.format.impl.Format;
+import co.fxl.gui.impl.Display;
 import co.fxl.gui.log.ILog;
 
 public class GWTLog implements ILog {
-	
+
 	// TODO ARCHITECTURE: extract to aspect
 
 	@Override
@@ -34,7 +35,7 @@ public class GWTLog implements ILog {
 
 	private ILog log(String string, String message) {
 		String time = Format.time().format(new Date());
-		System.out.println(time + " " + string + ": " + message);
+		Display.instance().title(time + " " + string + " " + message);
 		return this;
 	}
 
