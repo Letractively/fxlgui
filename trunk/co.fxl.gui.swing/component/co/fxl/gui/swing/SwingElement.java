@@ -92,9 +92,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public R height(int height) {
-		if (height <= 0 && height!=-1)
-			throw new RuntimeException("illegal height: " + height);
-		if (height == -1)
+		if (height < 1)
 			container.component.setPreferredSize(null);
 		else
 			container.component
@@ -105,9 +103,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public R width(int width) {
-		if (width <= 0 && width!=-1)
-			throw new RuntimeException("illegal width: " + width);
-		if (width == -1)
+		if (width < 1)
 			container.component.setPreferredSize(null);
 		else
 			container.component.setPreferredSize(new Dimension(width,
