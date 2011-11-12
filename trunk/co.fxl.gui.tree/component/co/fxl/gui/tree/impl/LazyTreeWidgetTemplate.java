@@ -18,7 +18,10 @@
  */
 package co.fxl.gui.tree.impl;
 
+import java.util.List;
+
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 import co.fxl.gui.table.util.api.ILazyScrollPane.IDecorator;
 import co.fxl.gui.tree.api.ILazyTreeWidget;
@@ -117,7 +120,7 @@ public abstract class LazyTreeWidgetTemplate implements
 	public ILazyTreeWidget<Object> height(int height) {
 		this.height = height;
 		if (pane != null) {
-			refresh(false, false); 
+			refresh(false, false);
 		}
 		return this;
 	}
@@ -229,5 +232,14 @@ public abstract class LazyTreeWidgetTemplate implements
 	@Override
 	public boolean checkIndex(int rowIndex) {
 		return true;
+	}
+
+	protected void lazyLoad(List<ITree<Object>> rows, int firstRow,
+			int selectionIndex, CallbackTemplate<Void> cb) {
+		ITree<Object> row = rows.get(selectionIndex - firstRow);
+		if (row.isLoaded())
+			cb.onSuccess(null);
+		else
+			row.load(CallbackTemplate.adapterVoid(cb));
 	}
 }
