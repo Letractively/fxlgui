@@ -25,6 +25,7 @@ import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.FlipPage;
+import co.fxl.gui.log.Log;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {

@@ -47,6 +47,7 @@ import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.KeyAdapter;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.impl.WidgetTitle;
+import co.fxl.gui.log.Log;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ICell;
