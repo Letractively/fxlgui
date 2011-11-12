@@ -51,7 +51,17 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 		@SuppressWarnings("unused")
 		private double widthDouble;
 		private AlignmentMemento<IColumn> align = new AlignmentMemento<IColumn>(
-				this);
+				this) {
+
+			@Override
+			protected IColumn set(Type type) {
+				super.set(type);
+				if (label != null) {
+					forward(c().align());
+				}
+				return ColumnImpl.this;
+			}
+		};
 
 		private ColumnImpl(int column) {
 			this.column = column;
@@ -61,7 +71,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 		public IColumn title(String title) {
 			rowOffset = 1;
 			if (label == null) {
-				IGridCell cell = grid.cell(column, 0);
+				IGridCell cell = c();
 				IBorder b = cell.border();
 				b.color().black();
 				b.style().bottom();
@@ -71,6 +81,10 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 			}
 			label.text(title);
 			return this;
+		}
+
+		private IGridCell c() {
+			return grid.cell(column, 0);
 		}
 
 		@Override
