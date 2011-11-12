@@ -66,7 +66,7 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 	public R height(int height) {
 		if (isUndefined())
 			return (R) this;
-		if (height != -1)
+		if (height >= 1)
 			container.widget.getElement().getStyle()
 					.setOverflow(Overflow.HIDDEN);
 		return super.height(height);
