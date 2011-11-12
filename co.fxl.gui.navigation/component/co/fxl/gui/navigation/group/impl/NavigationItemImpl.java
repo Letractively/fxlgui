@@ -32,8 +32,10 @@ import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 
-class NavigationItemImpl extends LazyClickListener implements INavigationItem {
+public class NavigationItemImpl extends LazyClickListener implements
+		INavigationItem {
 
+	public static boolean SHOW_REFRESH_LOGO = true;
 	ILabel button;
 	private IDecorator decorator;
 	IHorizontalPanel buttonPanel;
@@ -140,11 +142,14 @@ class NavigationItemImpl extends LazyClickListener implements INavigationItem {
 				int height = buttonPanel.height();
 				showLoading();
 				buttonPanel.size(width, height);
+				if (!SHOW_REFRESH_LOGO)
+					flip();
 				try {
 					decorator.decorate(panel0, new CallbackTemplate<Void>() {
 						@Override
 						public void onSuccess(Void result) {
-							flip();
+							if (SHOW_REFRESH_LOGO)
+								flip();
 						}
 
 						@Override
