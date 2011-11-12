@@ -24,6 +24,7 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.tree.api.ITree;
 
@@ -48,7 +49,7 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 		IVerticalPanel panel = vertical.spacing(spacing).add().panel()
 				.vertical();
 		TreeNode<Object> decorator = new TreeNode<Object>();
-		List<ITree<Object>> rows = tree.rows(firstRow, lastRow);
+		final List<ITree<Object>> rows = tree.rows(firstRow, lastRow);
 		int index = firstRow;
 		for (final ITree<Object> row : rows) {
 			if (index == selectionIndex) {
@@ -69,10 +70,15 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 
 						// TODO selection is lost after new+cancel, parent is
 						// selected, the actual tree click is lost
-
 						selectionIndex = fIndex;
-						container.element().remove();
-						decorate(container, firstRow, lastRow);
+						lazyLoad(rows, firstRow, selectionIndex,
+								new CallbackTemplate<Void>() {
+									@Override
+									public void onSuccess(Void result) {
+										container.element().remove();
+										decorate(container, firstRow, lastRow);
+									}
+								});
 					}
 				};
 				p.addClickListener(clickListener);
