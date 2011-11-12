@@ -72,17 +72,16 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 							oldListener.onBrowserEvent(event);
 							if (fire && !isScheduled) {
 								isScheduled = true;
-								Display.instance().invokeLater(new Runnable() {
-									@Override
-									public void run() {
-										listener.onResize(widget
-												.getOffsetWidth()
-												- horizontalSplitPanel
-														.getRightWidget()
-														.getOffsetWidth() - 2);
-										isScheduled = false;
-									}
-								});
+								// Display.instance().invokeLater(new Runnable()
+								// {
+								// @Override
+								// public void run() {
+								listener.onResize(widget.getOffsetWidth()
+										- horizontalSplitPanel.getRightWidget()
+												.getOffsetWidth() - 2);
+								isScheduled = false;
+								// }
+								// });
 							}
 						}
 					});
