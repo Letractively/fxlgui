@@ -38,7 +38,7 @@ public class AlignmentMemento<T> implements IAlignment<T> {
 		return set(Type.BEGIN);
 	}
 
-	private T set(Type type) {
+	protected T set(Type type) {
 		this.type = type;
 		return t;
 	}
