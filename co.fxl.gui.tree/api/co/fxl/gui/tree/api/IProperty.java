@@ -101,6 +101,8 @@ public interface IProperty<T, S> {
 
 	IProperty<T, S> columnWidth(double columnWidth);
 
+	IProperty<T, S> forceSort();
+
 	IConditionRule<T, S, ?> addConditionRule();
 
 	String name();
