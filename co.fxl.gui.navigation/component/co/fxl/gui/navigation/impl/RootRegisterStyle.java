@@ -23,21 +23,12 @@ import co.fxl.gui.register.impl.RegisterWidgetImpl;
 
 class RootRegisterStyle extends RegisterStyle {
 
-	// private RegisterWidgetImpl widget;
-
 	@Override
 	void decorateWidget(RegisterWidgetImpl widget) {
-		// this.widget = widget;
 		widget.backgroundPanel.color().rgb(249, 249, 249).gradient().vertical()
 				.rgb(216, 216, 216);
-		// IPanel<?> filler = widget.addFillerPanel();
-		// background(filler.color());
 		widget.separators(false);
 	}
-
-	// private void background(IColor color) {
-	// widget.background(color);
-	// }
 
 	@Override
 	void init(ITitle title) {
@@ -46,18 +37,16 @@ class RootRegisterStyle extends RegisterStyle {
 
 	@Override
 	public void onBack(ITitle title) {
-		// title.border().width(2).color().rgb(245, 245, 245);
 		title.color().rgb(112, 112, 112).gradient().vertical().rgb(63, 63, 63);
-		title.border().color().black();
+		title.border().color().rgb(87, 87, 87);
 		title.font().underline(false).weight().plain().color().white();// .color().black();
 	}
 
 	@Override
 	public void onFront(ITitle title) {
-		// background(title.border().width(2).color());
 		title.color().rgb(255, 255, 255).gradient().vertical()
 				.rgb(245, 245, 245);
-		title.border().color().black();
+		title.border().color().gray();
 		title.font().underline(false).weight().plain().color().black();// .color().white();
 	}
 }
