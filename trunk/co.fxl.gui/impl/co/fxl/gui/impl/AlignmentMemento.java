@@ -28,6 +28,7 @@ public class AlignmentMemento<T> implements IAlignment<T> {
 
 	private T t;
 	public Type type = Type.BEGIN;
+	private boolean isSpecified = false;
 
 	public AlignmentMemento(T t) {
 		this.t = t;
@@ -39,6 +40,7 @@ public class AlignmentMemento<T> implements IAlignment<T> {
 	}
 
 	protected T set(Type type) {
+		isSpecified = true;
 		this.type = type;
 		return t;
 	}
@@ -63,6 +65,6 @@ public class AlignmentMemento<T> implements IAlignment<T> {
 	}
 
 	public boolean isSpecified() {
-		return type != Type.BEGIN;
+		return isSpecified;
 	}
 }
