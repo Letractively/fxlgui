@@ -62,7 +62,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	// TODO FEATURE: Usability: Double click on Splitter shows optimum splitter
 	// position with respect to left-side-widget (like when moving)
-	
+
 	// TODO Usability: Tree-Node: Klick on left/right: expand/collapse
 	// TODO Usability: Tree-Node: Klick on up/down: previous/next node
 
@@ -99,9 +99,6 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		boolean isDefaultView;
 		boolean deactivatedUpdate = false;
 		private IConstraintAdapter<T> constraintAdapter;
-
-		// private List<IResizeListener> resizeListeners = new
-		// LinkedList<IResizeListener>();
 
 		DetailView(String title, IDecorator<T> decorator, String imageResource) {
 			this.decorator = decorator;
@@ -593,7 +590,6 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					indent--;
 				new TreeNode<T>(lazyTree, TreeWidgetImpl.this, c.panel()
 						.vertical(), tree, indent, model.isCutCopy(tree));
-				// model.selection = tree;
 				model.selection(tree, true);
 			}
 		});
@@ -606,10 +602,8 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		}
 		lazyTree.spacing(10);
 		lazyTree.height(splitPane.height()
-		// - LazyScrollPaneImpl.HEIGHT_SCROLL_BAR
 		);
 		lazyTree.selection(previousSelection);
-		// lazyTree.width(SPLIT_POSITION);
 		lazyTree.visible(true);
 	}
 
@@ -623,58 +617,12 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		lazyTree.refresh(r, checkSelection);
 	}
 
-	// @SuppressWarnings("rawtypes")
-	// void scrollIntoView(NodeRef<T> node) {
-	// if (node instanceof TreeNode) {
-	// leftScrollPane.scrollIntoView(((TreeNode) node).image);
-	// } else
-	// throw new MethodNotImplementedException();
-	// }
-
-	// private int painted = 0;
 	boolean allowReorder = false;
 	private IView<T> activeView;
 	T previousSelection;
 
-	// List<TreeNode<T>> topLevelNodes;
-	// private static int MAX_PAINTS = Integer.MAX_VALUE;
-
 	// TODO potential problem in combination with click-new in MDT.DetailView
 	// (if constrained)
-
-	// void newNode(TreeWidgetImpl<T> widget, IVerticalPanel panel, ITree<T>
-	// root,
-	// int depth, Runnable finish, boolean topLevel) {
-	// TreeNode<T> node = new TreeNode<T>(widget, panel, root, depth);
-	// if (topLevel)
-	// topLevelNodes.add(node);
-	// painted++;
-	// if (painted < MAX_PAINTS) {
-	// if (finish != null)
-	// finish.run();
-	// } else {
-	// painted = 0;
-	// if (finish != null)
-	// panel.display().invokeLater(finish);
-	// }
-	// }
-	//
-	// private void drawNode(final Iterator<ITree<T>> it,
-	// final TreeWidgetImpl<T> treeWidgetImpl,
-	// final IVerticalPanel panel2, final int i, final Runnable finish) {
-	// if (!it.hasNext()) {
-	// if (finish != null)
-	// finish.run();
-	// return;
-	// }
-	// ITree<T> c = it.next();
-	// newNode(this, panel(), c, 0, new Runnable() {
-	// @Override
-	// public void run() {
-	// drawNode(it, treeWidgetImpl, panel2, i, finish);
-	// }
-	// }, true);
-	// }
 
 	void setDetailViewTree(final ITree<T> tree) {
 		setDetailViewTree(tree, true);
