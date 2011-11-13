@@ -84,6 +84,10 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		@Override
 		public void prepare(
 				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
+			if (alignment.isSpecified()) {
+				alignment.forward(column.align());
+				return;
+			}
 			column.align().center();
 		}
 	}
@@ -111,6 +115,10 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		@Override
 		public void prepare(
 				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
+			if (alignment.isSpecified()) {
+				alignment.forward(column.align());
+				return;
+			}
 			if (index == 0)
 				column.align().begin();
 			else
@@ -130,6 +138,10 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		@Override
 		public void prepare(
 				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
+			if (alignment.isSpecified()) {
+				alignment.forward(column.align());
+				return;
+			}
 			column.align().center();
 		}
 	}
