@@ -48,4 +48,6 @@ public interface IScrollTableColumn<T> extends IColumn<T> {
 	boolean visible();
 
 	String name();
+
+	IScrollTableColumn<T> forceSort();
 }

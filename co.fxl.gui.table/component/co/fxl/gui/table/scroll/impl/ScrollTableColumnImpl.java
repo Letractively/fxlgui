@@ -201,6 +201,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	double widthDouble = -1;
 	boolean editable = false;
 	private IColorAdapter<Object> colorAdapter;
+	boolean forceSort = false;
 
 	ScrollTableColumnImpl(ScrollTableWidgetImpl widget, int index) {
 		this.widget = widget;
@@ -366,6 +367,12 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	public IScrollTableColumn<Object> colorAdapter(
 			co.fxl.gui.table.scroll.api.IScrollTableColumn.IColorAdapter<Object> colorAdapter) {
 		this.colorAdapter = colorAdapter;
+		return this;
+	}
+
+	@Override
+	public IScrollTableColumn<Object> forceSort() {
+		forceSort = true;
 		return this;
 	}
 }
