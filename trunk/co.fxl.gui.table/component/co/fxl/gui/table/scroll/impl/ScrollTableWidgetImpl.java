@@ -196,6 +196,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			if (sp != null)
 				sp.visible(false);
 			rows = new RowAdapter(actualRows);
+			for (ScrollTableColumnImpl c : columns)
+				if (c.forceSort) {
+					sortBy(c, false);
+				}
 			if (commandButtons != null)
 				commandButtons.reset();
 			if (!preselectedList.isEmpty()) {
@@ -713,25 +717,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						return;
 					ScrollTableColumnImpl columnImpl = columns
 							.get(realColumn(column));
-					if (columnImpl.sortable) {
-						if (rows.size() < MAX_SORT_SIZE || sortListener == null) {
-							sortColumn = columnImpl.index;
-							sortNegator = rows.sort(columnImpl);
-							if (sortListener != null)
-								sortListener.onSort(columnImpl.name,
-										sortNegator == 1, false);
-							update();
-						} else {
-							if (sortColumn != -1) {
-								sortNegator = sortColumn == column ? sortNegator
-										* -1
-										: 1;
-							}
-							sortColumn = columnImpl.index;
-							sortListener.onSort(columnImpl.name,
-									sortNegator == 1, true);
-						}
-					}
+					sortBy(columnImpl, true);
 				}
 			});
 		}
@@ -1024,5 +1010,26 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			IUpdateListener<List<String>> hiddenColumnListener) {
 		this.hiddenColumnListener = hiddenColumnListener;
 		return this;
+	}
+
+	void sortBy(ScrollTableColumnImpl columnImpl, boolean update) {
+		if (columnImpl.sortable) {
+			if (rows.size() < MAX_SORT_SIZE || sortListener == null) {
+				sortColumn = columnImpl.index;
+				sortNegator = rows.sort(columnImpl);
+				if (sortListener != null)
+					sortListener.onSort(columnImpl.name, sortNegator == 1,
+							false);
+				if (update)
+					update();
+			} else {
+				if (sortColumn != -1) {
+					sortNegator = sortColumn == columnImpl.index ? sortNegator
+							* -1 : 1;
+				}
+				sortColumn = columnImpl.index;
+				sortListener.onSort(columnImpl.name, sortNegator == 1, true);
+			}
+		}
 	}
 }
