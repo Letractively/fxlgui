@@ -601,8 +601,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			lazyTree.selection(previousSelection);
 		}
 		lazyTree.spacing(10);
-		lazyTree.height(splitPane.height()
-		);
+		lazyTree.height(splitPane.height());
 		lazyTree.selection(previousSelection);
 		lazyTree.visible(true);
 	}
@@ -975,6 +974,14 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		return display.showDialog()
 				.message((plural ? DELETE_ENTITIES : DELETE_ENTITY) + "?")
 				.warn().confirm();
+	}
+
+	@Override
+	public ITreeWidget<T> navigateToParent() {
+		ITree<T> t = model.selection();
+		ITree<T> c = t.parent();
+		model.selection(c, false);
+		return this;
 	}
 
 	@Override
