@@ -147,6 +147,10 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 	private boolean sortDirection = true;
 	private IRowIterator it = new RowIterator();
 
+	public FilterConstraintsImpl() {
+		size = (Integer) FilterWidgetImpl.DEFAULT_SIZES.get(0);
+	}
+
 	public FilterConstraintsImpl(String configuration) {
 		cfg = configuration;
 	}

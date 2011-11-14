@@ -92,4 +92,6 @@ public interface IFilterWidget {
 	IFilterWidget visible(boolean visible);
 
 	IFilterWidget constraints(IFilterConstraints constraints);
+
+	IFilterConstraints constraints();
 }
