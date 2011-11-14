@@ -245,7 +245,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					nef.add().panel().vertical().spacing(4).add().label()
 							.text("NO ENTITIES FOUND").font().pixel(10).color()
 							.gray();
-					if (constraints != null) {
+					if (constraints != null && constraints.isSpecified()) {
 						// && constraints.isConstraintSpecified()) {
 						List<String[]> description = constraints.description();
 						if (constraints.configuration() != null)
