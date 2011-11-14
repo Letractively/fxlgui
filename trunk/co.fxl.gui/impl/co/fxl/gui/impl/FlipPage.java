@@ -39,9 +39,9 @@ public class FlipPage {
 
 	public IContainer next() {
 		if (active == page2) {
-			return page1.add();
+			return page1.clear().add();
 		} else {
-			return page2.add();
+			return page2.clear().add();
 		}
 	}
 
