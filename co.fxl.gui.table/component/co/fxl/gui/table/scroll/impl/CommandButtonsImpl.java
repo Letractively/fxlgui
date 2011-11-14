@@ -22,7 +22,6 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel.IGridCell;
-import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
