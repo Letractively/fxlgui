@@ -138,6 +138,8 @@ public interface ITreeWidget<T> {
 
 	ITreeWidget<T> typeResolver(ITypeResolver<T> typeResolver);
 
+	ITreeWidget<T> navigateToParent();
+
 	ITreeWidget<T> navigateUp();
 
 	ITreeWidget<T> navigateDown();
