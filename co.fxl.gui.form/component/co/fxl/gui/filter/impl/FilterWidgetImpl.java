@@ -149,8 +149,14 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		return this;
 	}
 
-	@SuppressWarnings("unchecked")
 	void notifyListeners(ICallback<Void> cb) {
+		IFilterConstraints constraints = constraints();
+		listeners.get(0).onApply(constraints, cb);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public IFilterConstraints constraints() {
 		List<FilterTemplate<Object>> activeFilters = new LinkedList<FilterTemplate<Object>>();
 		for (FilterPart<?> filter : guiFilterElements) {
 			boolean active = filter.update();
@@ -171,7 +177,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		if (sizeFilter != null)
 			constraints.add(sizeFilter.asConstraint());
 		assert listeners.size() <= 1;
-		listeners.get(0).onApply(constraints, cb);
+		return constraints;
 	}
 
 	private void remove(String name) {
