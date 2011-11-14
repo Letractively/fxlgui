@@ -23,7 +23,6 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
-import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 class ColumnSelection {
 
