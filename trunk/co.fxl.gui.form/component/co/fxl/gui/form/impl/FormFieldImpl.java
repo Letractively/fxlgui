@@ -41,6 +41,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	private int column = 2;
 	private boolean visible = true;
 	private String name;
+	boolean validate = true;
 
 	public FormFieldImpl(FormWidgetImpl widget, int index, String name) {
 		this.widget = widget;
@@ -58,6 +59,12 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	}
 
 	abstract void createContentColumn(int index);
+
+	@Override
+	public IFormField<T, R> validate(boolean validate) {
+		this.validate = validate;
+		return this;
+	}
 
 	@Override
 	public boolean isRequired() {
