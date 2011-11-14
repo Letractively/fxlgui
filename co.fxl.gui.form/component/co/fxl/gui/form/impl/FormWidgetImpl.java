@@ -382,6 +382,7 @@ class FormWidgetImpl implements IFormWidget {
 			if (!alwaysAllowCancel)
 				validation.linkReset(clickable1);
 			for (final FormFieldImpl<?, ?> formField : fields) {
+				if(formField.validate)
 				linkInput(formField);
 			}
 			if (isNew) {
