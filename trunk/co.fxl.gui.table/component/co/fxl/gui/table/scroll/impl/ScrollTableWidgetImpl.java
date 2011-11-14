@@ -1032,4 +1032,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			}
 		}
 	}
+
+	@Override
+	public IFilterConstraints constraints() {
+		if (filter != null)
+			return filter.constraints();
+		return null;
+	}
 }

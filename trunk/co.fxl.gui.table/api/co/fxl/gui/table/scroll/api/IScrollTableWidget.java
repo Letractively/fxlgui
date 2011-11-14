@@ -165,4 +165,6 @@ public interface IScrollTableWidget<T> {
 			IUpdateListener<List<String>> hiddenColumnListener);
 
 	IScrollTableWidget<T> reduceHeightIfEmpty(boolean reduceHeightIfEmpty);
+	
+	IFilterConstraints constraints();
 }
