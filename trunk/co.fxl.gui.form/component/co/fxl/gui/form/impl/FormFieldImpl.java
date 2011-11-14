@@ -21,6 +21,7 @@ package co.fxl.gui.form.impl;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.form.api.IFormField;
@@ -82,6 +83,12 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	public ILabel addButton(String title) {
 		ILabel l = addContainer().label().hyperlink().text(title);
 		l.font().pixel(11);
+		return l;
+	}
+
+	@Override
+	public IImage addImage(String resource) {
+		IImage l = addContainer().image().resource(resource);
 		return l;
 	}
 
