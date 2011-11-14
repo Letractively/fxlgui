@@ -30,7 +30,7 @@ import co.fxl.gui.tree.api.ITree;
 import co.fxl.gui.tree.api.ITreeWidget;
 import co.fxl.gui.tree.impl.TreeWidgetImpl.RefreshListener;
 
-class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
+public class FilterTreeWidgetImpl<T> extends TreeWidgetImpl<T> implements
 		IFilterTreeWidget<T>, IFilterListener, RefreshListener {
 
 	ISource<T> source;
