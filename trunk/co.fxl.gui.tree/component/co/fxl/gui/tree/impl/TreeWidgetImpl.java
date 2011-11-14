@@ -495,7 +495,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		splitPane.addResizeListener(new ISplitPaneResizeListener() {
 			@Override
 			public void onResize(int splitPosition) {
-				fireResizeSplitPane(splitPosition);
+				fireResizeSplitPane(splitPosition - 5);
 			}
 		});
 	}
@@ -506,7 +506,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 			view.decorator.resize();
 		}
 		if (lazyTree != null)
-			lazyTree.width(splitPosition - 5);
+			lazyTree.width(splitPosition);
 	}
 
 	private int getDetailViewWidth() {
