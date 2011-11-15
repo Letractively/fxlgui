@@ -68,4 +68,16 @@ class SwingTextField extends SwingTextInput<JTextField, ITextField> implements
 		container.component.addActionListener(actionListener);
 	}
 
+	@Override
+	public int cursorPosition() {
+		return container.component.getCaretPosition();
+	}
+
+	@Override
+	public ITextField cursorPosition(int position) {
+		container.component.setCaretPosition(position);
+		container.component.requestFocus();
+		return this;
+	}
+
 }
