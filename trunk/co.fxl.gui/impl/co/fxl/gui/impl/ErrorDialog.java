@@ -21,29 +21,22 @@ package co.fxl.gui.impl;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
-import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.IVerticalPanel;
 
 public class ErrorDialog {
 
-	private IDisplay display;
-
-	public ErrorDialog(IDisplay display) {
-		this.display = display;
-	}
-
-	public void showDialog(String pTitle, final String pMessage,
+	public void show(String pTitle, final String pMessage,
 			final String pStacktrace) {
-		IDialog dialog = display.showDialog();
+		IDialog dialog = Display.instance().showDialog();
 		dialog.width(240).title(pTitle).message(pMessage).error();
 		if (pStacktrace != null) {
 			dialog.addButton().text("Details").imageResource(Icons.DETAIL)
 					.addClickListener(new IClickListener() {
 						@Override
 						public void onClick() {
-							IDialog detailDialog = display.showDialog().size(
+							IDialog detailDialog = Display.instance().showDialog().size(
 									420, 160);
 							detailDialog.title("Error Details");
 							detailDialog.addButton().close()
@@ -67,15 +60,10 @@ public class ErrorDialog {
 						}
 
 						private void styleInputBorder(ITextArea textArea) {
-							// Styles.instance().style(textArea,
-							// Style.Element.INPUT, Style.Element.BORDER);
 							textArea.border().color().rgb(211, 211, 211);
 						}
 
 						private void styleDialogError(ILabel label) {
-							// Styles.instance().style(label,
-							// Style.Window.DIALOG,
-							// Style.Status.ERROR);
 							label.font().weight().italic();
 						}
 					});
