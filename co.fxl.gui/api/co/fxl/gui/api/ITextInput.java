@@ -25,4 +25,6 @@ public interface ITextInput<T> extends ITextElement<T>, IColored, IBordered,
 
 	T maxLength(int maxLength);
 
+	boolean editable();
+
 }
