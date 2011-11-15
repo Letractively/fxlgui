@@ -19,5 +19,6 @@
 package co.fxl.gui.api;
 
 public interface ITextField extends ITextInput<ITextField>,
-		IKeyRecipient<ITextField> {
+		IKeyRecipient<ITextField>, IHasCursor<ITextField> {
+
 }

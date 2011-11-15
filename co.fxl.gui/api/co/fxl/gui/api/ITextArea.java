@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.api;
 
-public interface ITextArea extends ITextInput<ITextArea> {
+public interface ITextArea extends ITextInput<ITextArea>, IHasCursor<ITextArea> {
 
 	int cursorPosition();
 
