@@ -101,4 +101,9 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 	public ISuggestField maxLength(int maxLength) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public boolean editable() {
+		throw new MethodNotImplementedException();
+	}
 }

@@ -135,4 +135,9 @@ class GWTTextArea extends GWTElement<TextArea, ITextArea> implements ITextArea {
 		});
 		return this;
 	}
+
+	@Override
+	public boolean editable() {
+		return !container.widget.isReadOnly();
+	}
 }

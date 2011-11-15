@@ -103,4 +103,9 @@ class GWTTextField extends GWTElement<TextBox, ITextField> implements
 		container.widget.setCursorPos(position);
 		return this;
 	}
+
+	@Override
+	public boolean editable() {
+		return !container.widget.isReadOnly();
+	}
 }
