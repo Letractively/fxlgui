@@ -145,4 +145,11 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 		});
 		return this;
 	}
+
+	@Override
+	public ILabel breakWord(boolean breakWord) {
+		container.widget.getElement().getStyle()
+				.setProperty("wordWrap", "break-word");
+		return this;
+	}
 }
