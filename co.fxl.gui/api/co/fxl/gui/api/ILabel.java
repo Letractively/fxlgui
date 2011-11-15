@@ -26,4 +26,6 @@ public interface ILabel extends IClickable<ILabel>, ITextElement<ILabel>,
 	ILabel autoWrap(boolean autoWrap);
 
 	ILabel hyperlink();
+
+	ILabel breakWord(boolean breakWord);
 }
