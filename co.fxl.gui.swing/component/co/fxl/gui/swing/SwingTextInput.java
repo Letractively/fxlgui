@@ -65,6 +65,10 @@ public class SwingTextInput<T extends JTextComponent, R> extends
 		return ret;
 	}
 
+	public boolean editable() {
+		return container.component.isEditable();
+	}
+
 	@Override
 	void setTextOnComponent(String text) {
 		container.component.setText(text);
