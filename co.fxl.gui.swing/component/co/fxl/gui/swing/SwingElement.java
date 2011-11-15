@@ -234,6 +234,11 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	}
 
 	@SuppressWarnings("unchecked")
+	public boolean focus() {
+		return container.component.hasFocus();
+	}
+
+	@SuppressWarnings("unchecked")
 	public R addFocusListener(final IUpdateListener<Boolean> l) {
 		container.component.addFocusListener(new FocusListener() {
 			@Override
