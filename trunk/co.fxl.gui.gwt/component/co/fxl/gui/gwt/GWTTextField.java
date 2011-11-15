@@ -91,4 +91,16 @@ class GWTTextField extends GWTElement<TextBox, ITextField> implements
 		container.widget.setMaxLength(rows);
 		return this;
 	}
+
+	@Override
+	public int cursorPosition() {
+		return container.widget.getCursorPos();
+	}
+
+	@Override
+	public ITextField cursorPosition(int position) {
+		position = Math.max(position, text().length());
+		container.widget.setCursorPos(position);
+		return this;
+	}
 }
