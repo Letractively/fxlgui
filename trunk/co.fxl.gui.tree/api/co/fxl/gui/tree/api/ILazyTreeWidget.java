@@ -60,4 +60,6 @@ public interface ILazyTreeWidget<T> {
 	int indent(ITree<Object> t);
 
 	int width();
+
+	ILazyTreeWidget<T> clearChildren(ITree<T> tree);
 }
