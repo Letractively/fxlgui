@@ -27,7 +27,8 @@ import javax.swing.SwingConstants;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.impl.HyperlinkDecorator;
 
-public class SwingLabel extends SwingTextElement<JLabel, ILabel> implements ILabel {
+public class SwingLabel extends SwingTextElement<JLabel, ILabel> implements
+		ILabel {
 
 	private HyperlinkDecorator hyperlinkDecorator;
 
@@ -104,6 +105,12 @@ public class SwingLabel extends SwingTextElement<JLabel, ILabel> implements ILab
 				l.onMouseOut();
 			}
 		});
+		return this;
+	}
+
+	@Override
+	public ILabel breakWord(boolean breakWord) {
+		// TODO ...
 		return this;
 	}
 }
