@@ -209,6 +209,12 @@ public abstract class LazyTreeWidgetTemplate implements
 	}
 
 	@Override
+	public ILazyTreeWidget<Object> clearChildren(ITree<Object> tree) {
+		this.tree.clearChildren(tree);
+		return this;
+	}
+
+	@Override
 	public ILazyTreeWidget<Object> collapse(ITree<Object> tree, boolean collapse) {
 		selection = tree.object();
 		selectionIndex = -1;

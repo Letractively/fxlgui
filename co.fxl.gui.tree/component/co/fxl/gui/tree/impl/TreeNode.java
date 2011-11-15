@@ -153,7 +153,8 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		updateMarked();
 		content = container.add().panel().horizontal().spacing(2);
 		content.addSpace(1 + depth * INDENT);
-		image = content.add().image().resource(treeIcon(lazyTree, tree)).size(8, 16);
+		image = content.add().image().resource(treeIcon(lazyTree, tree))
+				.size(8, 16);
 		if (entityIcon(tree) == null)
 			throw new MethodNotImplementedException("entity icon is null for "
 					+ tree);
@@ -325,7 +326,8 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		}
 	}
 
-	void update(T object) {
+	boolean update(T object) {
+		boolean wasExpanded = isExpanded;
 		label.text(tree.name());
 		label.font().weight().plain().color().black();
 		image.resource(treeIcon(lazyTree, tree));
@@ -333,6 +335,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 		if (icon != null)
 			icon.resource(icon());
 		decorate();
+		return wasExpanded;
 	}
 
 	private String icon() {
@@ -344,11 +347,12 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 
 	@Override
 	public TreeNode<T> refresh(boolean refreshChildren) {
-		update(null);
+		boolean wasExpanded = update(null);
 		if (refreshChildren) {
-			if (isExpanded) {
+			if (wasExpanded) {
 				clear();
 				isExpanded = true;
+				lazyTree.clearChildren(tree);
 				lazyTree.collapse(tree, false);
 			}
 		}

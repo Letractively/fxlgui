@@ -75,6 +75,13 @@ public class LazyTreeAdpList {
 		return false;
 	}
 
+	void clearChildren(ITree<Object> tree) {
+		int i = index(tree.object()) + 1;
+		while (i < rows.size() && row(i).parent().equals(tree)) {
+			rows.remove(i);
+		}
+	}
+
 	void collapse(ITree<Object> tree, boolean collapse) {
 		if (collapse) {
 			for (ITree<Object> c : tree.children()) {
