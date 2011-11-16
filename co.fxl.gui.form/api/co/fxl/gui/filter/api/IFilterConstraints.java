@@ -98,4 +98,6 @@ public interface IFilterConstraints {
 	boolean isConstraintSpecified();
 
 	void configuration(String configuration);
+
+	boolean isContentRestricted();
 }
