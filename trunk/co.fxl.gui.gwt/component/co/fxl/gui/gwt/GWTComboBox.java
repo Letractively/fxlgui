@@ -75,8 +75,9 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 			constraints.add(choice);
 			container.widget.addItem(choice);
 		}
-		if (container.widget.getSelectedIndex() == -1)
+		if (container.widget.getSelectedIndex() == -1) {
 			container.widget.setSelectedIndex(0);
+		}
 		return this;
 	}
 
