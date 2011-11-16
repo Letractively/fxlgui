@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.register.impl;
 
+import java.util.Iterator;
+
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IFontElement.IFont;
@@ -26,6 +28,8 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.DummyCallback;
+import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.register.api.IRegister;
 
@@ -63,7 +67,6 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 	ILabel buttonLabel;
 	private IVerticalPanel content;
 	private IRegisterListener listener = null;
-	private boolean init = false;
 	private IHorizontalPanel subPanel;
 	private IImage buttonImage;
 	boolean disabled = false;
@@ -74,12 +77,6 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 	RegisterImpl(RegisterWidgetImpl widget, int index) {
 		this.widget = widget;
 		this.index = index;
-		init();
-	}
-
-	private void init() {
-		if (init)
-			return;
 		if (index > 0 && widget.separators) {
 			addSeparator();
 		}
@@ -96,8 +93,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 		buttonPanel.addClickListener(this);
 		buttonPanel.addSpace(3);
 		content = widget.cardPanel.add().panel().vertical();
-		init = true;
-		notifyVisible(false);
+		notifyVisible(false, DummyCallback.voidInstance());
 	}
 
 	@Override
@@ -128,29 +124,46 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 
 	@Override
 	public RegisterImpl top() {
-//		if (widget.isActive(this))
-//			return this;
+		// if (widget.isActive(this))
+		// return this;
 		if (disabled)
 			enabled(true);
 		return updateActive();
 	}
 
 	public RegisterImpl updateActive() {
-		for (RegisterImpl register : widget.registers) {
-			register.notifyVisible(register == this);
-		}
+		Iterator<RegisterImpl> rit = widget.registers.iterator();
+		recurse(this, rit);
 		return this;
 	}
 
-	void notifyVisible(final boolean visible) {
-		if (disabled)
+	private void recurse(final RegisterImpl active,
+			final Iterator<RegisterImpl> rit) {
+		if (!rit.hasNext())
 			return;
+		else {
+			RegisterImpl reg = rit.next();
+			reg.notifyVisible(reg == active, new CallbackTemplate<Void>() {
+				@Override
+				public void onSuccess(Void result) {
+					recurse(active, rit);
+				}
+			});
+		}
+	}
+
+	void notifyVisible(final boolean visible, final ICallback<Void> cb) {
+		if (disabled) {
+			cb.onSuccess(null);
+			return;
+		}
 		if (listener != null) {
 			toggleLoading(true);
-			listener.onTop(visible, new CallbackTemplate<Void>() {
+			listener.onTop(visible, new CallbackTemplate<Void>(cb) {
 				@Override
 				public void onSuccess(Void result) {
 					finish(visible);
+					cb.onSuccess(null);
 				}
 
 				void finish(final boolean visible) {
@@ -172,7 +185,8 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 					super.onFail(throwable);
 				}
 			});
-		}
+		} else
+			cb.onSuccess(null);
 	}
 
 	@Override
