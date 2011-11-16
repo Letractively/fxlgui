@@ -26,6 +26,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IVerticalPanel;
 
@@ -206,8 +207,12 @@ public class DialogImpl implements IDialog {
 						.grid().spacing(10).resize(2, 1);
 				grid.cell(0, 0).align().begin().valign().begin().image()
 						.resource(image(type)).size(16, 16);
-				grid.cell(1, 0).valign().center().label().autoWrap(true)
-						.breakWord(true).text(message);
+				IGridCell c = grid.cell(1, 0).valign().center();
+				if (width != -1)
+					c.width(width - 3 * 10 - 16);
+				if (height != -1)
+					c.height(height - 60);
+				c.label().text(message).autoWrap(true).breakWord(true);
 			} else
 				container = t.content();
 		}
