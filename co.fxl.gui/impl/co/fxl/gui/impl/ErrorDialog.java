@@ -27,17 +27,19 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class ErrorDialog {
 
+	private static final int DEFAULT_WIDTH = 420;
+
 	public void show(String pTitle, final String pMessage,
 			final String pStacktrace) {
 		IDialog dialog = Display.instance().showDialog();
-		dialog.width(240).title(pTitle).message(pMessage).error();
+		dialog.width(DEFAULT_WIDTH).title(pTitle).message(pMessage).error();
 		if (pStacktrace != null) {
 			dialog.addButton().text("Details").imageResource(Icons.DETAIL)
 					.addClickListener(new IClickListener() {
 						@Override
 						public void onClick() {
 							IDialog detailDialog = Display.instance()
-									.showDialog().width(420);
+									.showDialog().width(DEFAULT_WIDTH);
 							detailDialog.title("Error Details");
 							detailDialog.addButton().close()
 									.addClickListener(new IClickListener() {
