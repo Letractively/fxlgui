@@ -107,10 +107,4 @@ public class SwingLabel extends SwingTextElement<JLabel, ILabel> implements
 		});
 		return this;
 	}
-
-	@Override
-	public ILabel breakWord(boolean breakWord) {
-		// TODO ...
-		return this;
-	}
 }
