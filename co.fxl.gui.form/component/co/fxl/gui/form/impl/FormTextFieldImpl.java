@@ -35,8 +35,8 @@ class FormTextFieldImpl<R> extends FormFieldImpl<ITextField, R> {
 		return super.editable(editable);
 	}
 
-	ITextField addTextField(FormWidgetImpl widget) {
-		return widget.addFormValueTextField(row, withFocus());
+	ITextField addTextField(FormWidgetImpl widget, int index) {
+		return widget.addFormValueTextField(index, withFocus());
 	}
 
 	boolean withFocus() {
@@ -50,7 +50,7 @@ class FormTextFieldImpl<R> extends FormFieldImpl<ITextField, R> {
 
 	@Override
 	void createContentColumn(int index) {
-		textField = addTextField(widget);
+		textField = addTextField(widget, index);
 		editable(widget.saveListener != null);
 	}
 }
