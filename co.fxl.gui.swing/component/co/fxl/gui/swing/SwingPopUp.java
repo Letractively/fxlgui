@@ -19,6 +19,7 @@
 package co.fxl.gui.swing;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,7 +27,6 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
-import javax.swing.border.LineBorder;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IPopUp;
@@ -35,6 +35,7 @@ import co.fxl.gui.api.IWidgetProvider;
 
 class SwingPopUp implements IPopUp {
 
+	private static final int _12 = 0;
 	private SwingDisplay panel;
 	private Popup dialog;
 	private int x = 0;
@@ -52,9 +53,10 @@ class SwingPopUp implements IPopUp {
 	SwingPopUp(SwingDisplay panel) {
 		this.panel = panel;
 		p = new JPanel();
-		// p.getInsets().set(3, 3, 3, 3);
+		p.getInsets().set(0, 0, 0, 0);
 		p.setBackground(Color.WHITE);
-		p.setBorder(new LineBorder(new Color(195, 217, 255), 3));
+		// border().remove();
+		// p.setBorder(new LineBorder(new Color(195, 217, 255), 3));
 	}
 
 	@Override
@@ -108,8 +110,8 @@ class SwingPopUp implements IPopUp {
 		if (dialog == null)
 			if (component != null) {
 				if (w > 0)
-					component.getPreferredSize().width = w - 12;
-				else if (h > 0)
+					component.getPreferredSize().width = w - _12;
+				if (h > 0)
 					component.getPreferredSize().height = h;
 				PopupFactory factory = PopupFactory.getSharedInstance();
 				p.add(component);
@@ -185,7 +187,7 @@ class SwingPopUp implements IPopUp {
 	@Override
 	public IPopUp size(int w, int h) {
 		if (component != null)
-			component.setSize(w, h);
+			component.setPreferredSize(new Dimension(w - _12, h));
 		else {
 			this.w = w;
 			this.h = h;
@@ -213,7 +215,7 @@ class SwingPopUp implements IPopUp {
 	@Override
 	public IPopUp width(int width) {
 		if (component != null)
-			component.getPreferredSize().width = width;
+			component.getPreferredSize().width = width - _12;
 		else {
 			this.w = width;
 		}

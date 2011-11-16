@@ -247,11 +247,13 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 		private static final long serialVersionUID = -4186212502539969308L;
 
+		@Override
 		protected void moveCellDown(GridCell cell, int i) {
 			cell.constraints.gridy += i;
 			layout.setConstraints(cell.panel, cell.constraints);
 		}
 
+		@Override
 		protected void handleRemovedCell(GridCell cell) {
 			container.component.remove(cell.panel);
 		}
