@@ -67,7 +67,7 @@ class FormWidgetImpl implements IFormWidget {
 		}
 	}
 
-	private int gridIndex = -1;
+	private int gridIndex0 = -1;
 	private WidgetTitle widgetTitle;
 	IGridPanel grid;
 	private IVerticalPanel contentPanel;
@@ -117,7 +117,7 @@ class FormWidgetImpl implements IFormWidget {
 		if (fixValueWidth != -column)
 			cell.width(fixValueWidth);
 		heights.decorate(cell);
-		gridIndex++;
+//		gridIndex++;
 		return cell;
 	}
 
@@ -239,7 +239,7 @@ class FormWidgetImpl implements IFormWidget {
 	}
 
 	private int nextGridIndex() {
-		return ++gridIndex;
+		return ++gridIndex0;
 	}
 
 	@Override
