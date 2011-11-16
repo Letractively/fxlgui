@@ -29,6 +29,8 @@ public interface ITreeWidget<T> {
 
 		String resolve(T entity);
 
+		void notifyActive(T entity, String view);
+
 	}
 
 	public interface IViewID {
