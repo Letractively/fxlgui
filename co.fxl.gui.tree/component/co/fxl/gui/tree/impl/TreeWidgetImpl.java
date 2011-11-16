@@ -151,6 +151,8 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				flip.height(32);
 				new WidgetTitle().styleFooter(flip);
 				activeView = this;
+				if (defaultViewResolver != null)
+					defaultViewResolver.notifyActive(node.object(), title);
 				decorator.decorate(contentPanel, flip, node,
 						new CallbackTemplate<Void>(cb) {
 							@Override
