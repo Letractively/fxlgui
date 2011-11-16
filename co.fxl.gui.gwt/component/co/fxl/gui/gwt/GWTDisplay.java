@@ -209,8 +209,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 				Element element = gridPanel.container.widget.getElement();
 				DOM.setStyleAttribute(element, "tableLayout", "fixed");
 				element.getStyle().setOverflow(Overflow.HIDDEN);
-				DOM.setStyleAttribute(element, "wordWrap", "breakWord");
-
+				DOM.setStyleAttribute(element, "wordWrap", "break-word");
 			}
 		};
 	}
