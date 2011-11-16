@@ -657,7 +657,8 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		if (tree != null && model.selection() != null
 				&& !model.selection().equals(tree))
 			return;
-		String type = typeResolver.resolve(tree.object());
+		String type = tree != null ? typeResolver
+				.resolve(tree.object()) : null;
 		boolean showFirst = false;
 		for (int i = 0; i < detailViews.size(); i++) {
 			DetailView view = detailViews.get(i);
