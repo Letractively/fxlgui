@@ -657,11 +657,11 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		if (tree != null && model.selection() != null
 				&& !model.selection().equals(tree))
 			return;
+		String type = typeResolver.resolve(tree.object());
 		boolean showFirst = false;
 		for (int i = 0; i < detailViews.size(); i++) {
 			DetailView view = detailViews.get(i);
 			if (tree != null) {
-				String type = typeResolver.resolve(tree.object());
 				boolean hide = isHide(view, type, tree.object());
 				if (hide && i > 0 && view.onTop) {
 					showFirst = true;
@@ -672,7 +672,6 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		for (int i = 0; i < detailViews.size(); i++) {
 			DetailView view = detailViews.get(i);
 			if (tree != null) {
-				String type = typeResolver.resolve(tree.object());
 				boolean hide = isHide(view, type, tree.object());
 				boolean enabled = !hide && (i == 0 || !tree.isNew());
 				view.enabled(enabled);
@@ -702,6 +701,8 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		for (DetailView view : detailViews) {
 			if (view.enabled() && view.isDefaultView)
 				return view;
+		}
+		for (DetailView view : detailViews) {
 			if (defaultViewResolver != null
 					&& tree != null
 					&& view != null
