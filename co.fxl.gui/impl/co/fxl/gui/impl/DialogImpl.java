@@ -205,6 +205,7 @@ public class DialogImpl implements IDialog {
 			if (message != null) {
 				IGridPanel grid = t.content().panel().vertical().add().panel()
 						.grid().spacing(10).resize(2, 1);
+				decorate(grid);
 				grid.cell(0, 0).align().begin().valign().begin().image()
 						.resource(image(type)).size(16, 16);
 				IGridCell c = grid.cell(1, 0).valign().center();
@@ -212,11 +213,14 @@ public class DialogImpl implements IDialog {
 					c.width(width - 3 * 10 - 16);
 				if (height != -1)
 					c.height(height - 60);
-				c.label().text(message).autoWrap(true).breakWord(true);
+				c.label().text(message).autoWrap(true);
 			} else
 				container = t.content();
 		}
 		return popUp;
+	}
+
+	protected void decorate(IGridPanel grid) {
 	}
 
 	@Override
