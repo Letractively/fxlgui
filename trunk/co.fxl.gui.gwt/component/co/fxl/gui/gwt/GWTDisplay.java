@@ -27,6 +27,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IPanelProvider;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
@@ -45,11 +46,13 @@ import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.core.client.impl.SchedulerImpl;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -199,7 +202,17 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 	@Override
 	public IDialog showDialog() {
-		return new DialogImpl(this);
+		return new DialogImpl(this) {
+			@Override
+			protected void decorate(IGridPanel grid) {
+				GWTGridPanel gridPanel = (GWTGridPanel) grid;
+				Element element = gridPanel.container.widget.getElement();
+				DOM.setStyleAttribute(element, "tableLayout", "fixed");
+				element.getStyle().setOverflow(Overflow.HIDDEN);
+				DOM.setStyleAttribute(element, "wordWrap", "breakWord");
+
+			}
+		};
 	}
 
 	@Override
