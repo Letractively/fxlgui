@@ -249,6 +249,8 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 		@Override
 		protected void moveCellDown(GridCell cell, int i) {
+			if (cell == null)
+				return;
 			cell.constraints.gridy += i;
 			layout.setConstraints(cell.panel, cell.constraints);
 		}
