@@ -100,4 +100,6 @@ public interface IFilterConstraints {
 	void configuration(String configuration);
 
 	boolean isContentRestricted();
+
+	IFilterConstraints rowIterator(IRowIterator rowIterator);
 }
