@@ -167,7 +167,11 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 
 			private int getInt(int i) {
 				char c = color.charAt(i);
-				return c - '0';
+				if (c >= '0' && c <= '9')
+					return c - '0';
+				if (c >= 'A' && c <= 'F')
+					return 10 + (c - 'A');
+				return 0;
 			}
 
 			public ICell updateBorder(final int row, IGridCell cell) {
