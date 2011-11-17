@@ -63,9 +63,9 @@ public interface IProperty<T, S> {
 		boolean editable(T entity);
 	}
 
-	public interface IColorAdapter<T> {
+	public interface IColorAdapter<T, S> {
 
-		String color(T entity);
+		String color(T entity, S value);
 	}
 
 	public interface IUpdateListener<T> {
@@ -77,7 +77,7 @@ public interface IProperty<T, S> {
 
 	IProperty<T, S> adapter(IAdapter<T, S> adapter);
 
-	IProperty<T, S> colorAdapter(IColorAdapter<T> adapter);
+	IProperty<T, S> colorAdapter(IColorAdapter<T, S> adapter);
 
 	IProperty<T, S> constraintAdapter(IConstraintAdapter<T, S> adapter);
 
