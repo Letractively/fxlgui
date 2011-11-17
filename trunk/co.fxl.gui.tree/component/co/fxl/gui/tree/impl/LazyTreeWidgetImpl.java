@@ -44,7 +44,7 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 
 	@Override
 	public void decorate(final IContainer container, final int firstRow,
-			final int lastRow) {
+			final int lastRow, final boolean isCalibration) {
 		vertical = container.panel().vertical();
 		IVerticalPanel panel = vertical.spacing(spacing).add().panel()
 				.vertical();
@@ -76,7 +76,8 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 									@Override
 									public void onSuccess(Void result) {
 										container.element().remove();
-										decorate(container, firstRow, lastRow);
+										decorate(container, firstRow, lastRow,
+												false);
 									}
 								});
 					}
@@ -86,7 +87,7 @@ class LazyTreeWidgetImpl extends LazyTreeWidgetTemplate {
 			}
 			index++;
 		}
-		super.decorate(container, firstRow, lastRow);
+		super.decorate(container, firstRow, lastRow, isCalibration);
 	}
 
 	@Override
