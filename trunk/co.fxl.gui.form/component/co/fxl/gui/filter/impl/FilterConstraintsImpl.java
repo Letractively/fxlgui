@@ -285,8 +285,7 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 
 	@Override
 	public boolean isContentRestricted() {
-		return isConstraintSpecified()
-				|| size != Integer.MAX_VALUE;
+		return isConstraintSpecified() || size != Integer.MAX_VALUE;
 	}
 
 	@Override
@@ -316,6 +315,12 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 		for (INamedConstraint c : constraints.values())
 			desc.add(new String[] { c.column(), c.toString() });
 		return desc;
+	}
+
+	@Override
+	public IFilterConstraints rowIterator(IRowIterator rowIterator) {
+		it = rowIterator;
+		return this;
 	}
 
 }
