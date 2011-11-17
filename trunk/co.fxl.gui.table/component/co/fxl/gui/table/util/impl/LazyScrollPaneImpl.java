@@ -25,7 +25,6 @@ import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.FlipPage;
-import co.fxl.gui.log.Log;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
@@ -227,7 +226,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 							if (rowIndex > 0) {
 								scrollToRowIndex();
 							} else
-								update();
+								update(false);
 							treeDockPanel.visible(true);
 						}
 					});
@@ -236,7 +235,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 						scrollToRowIndex();
 					}
 					scrollPane.addScrollListener(LazyScrollPaneImpl.this);
-					update();
+					update(false);
 					treeDockPanel.visible(true);
 				}
 				allowRepaint = false;
@@ -252,7 +251,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 			}
 		};
 		if (adjustHeights) {
-			update(firstIndex);
+			update(firstIndex, true);
 			treeDockPanel.display().invokeLater(runnable);
 		} else {
 			lastIndex = size - 1;
@@ -274,11 +273,15 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	}
 
 	private void update() {
-		assert rowIndex >= 0;
-		update(rowIndex);
+		update(false);
 	}
 
-	private int update(int rowIndex) {
+	private void update(boolean isCalibration) {
+		assert rowIndex >= 0;
+		update(rowIndex, isCalibration);
+	}
+
+	private int update(int rowIndex, boolean isCalibration) {
 		setLastIndex(rowIndex);
 		IContainer invisibleCard = treeScrollPanelContainer.next();
 		IContainer c = invisibleCard;
@@ -294,7 +297,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				treeScrollPanel.width(width - widthScrollPanel);
 			c = treeScrollPanel.horizontal().viewPort();
 		}
-		decorator.decorate(c, rowIndex, lastIndex);
+		decorator.decorate(c, rowIndex, lastIndex, isCalibration);
 		treeScrollPanelContainer.flip();
 		return lastIndex;
 	}
@@ -371,7 +374,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 	@Override
 	public ILazyScrollPane refresh() {
-		update(rowIndex);
+		update(rowIndex, false);
 		return this;
 	}
 

@@ -181,7 +181,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	boolean showNoRowsFound = true;
 	private IVerticalPanel contentPanel0;
 	private boolean reduceHeightIfEmpty = false;
-	private boolean showConfiguration=true;
+	private boolean showConfiguration = true;
 
 	@Override
 	public IScrollTableWidget<Object> reduceHeightIfEmpty(
@@ -318,11 +318,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 						@Override
 						public void decorate(IContainer container,
-								int firstRow, int lastRow) {
+								int firstRow, int lastRow, boolean isCalibration) {
 							rowOffset = firstRow;
 							paintedRows = lastRow - firstRow;
 							contentPanel = container.panel().vertical();
-							updateWithPaintedRowsSet();
+							updateWithPaintedRowsSet(isCalibration);
 						}
 
 						@Override
@@ -498,6 +498,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	boolean updateWithPaintedRowsSet() {
+		return updateWithPaintedRowsSet(false);
+	}
+
+	boolean updateWithPaintedRowsSet(boolean isCalibration) {
 		if (updating)
 			return false;
 		updating = true;
@@ -547,7 +551,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				highlighted.add(row);
 			}
 		}
-		addDisplayingNote();
+		if (!isCalibration)
+			addDisplayingNote();
 		if (allowColumnSelection) {
 			if (ALLOW_RESIZE)
 				new ResizableColumnSelection(this);
