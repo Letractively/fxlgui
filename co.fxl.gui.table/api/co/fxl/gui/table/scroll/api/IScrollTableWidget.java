@@ -167,4 +167,8 @@ public interface IScrollTableWidget<T> {
 	IScrollTableWidget<T> reduceHeightIfEmpty(boolean reduceHeightIfEmpty);
 	
 	IFilterConstraints constraints();
+
+	IScrollTableWidget<T> filterSizeConstraint(boolean filterSizeConstraint);
+
+	IScrollTableWidget<T> showConfiguration(boolean showConfiguration);
 }

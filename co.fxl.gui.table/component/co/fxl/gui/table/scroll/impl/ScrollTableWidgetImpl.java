@@ -181,6 +181,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	boolean showNoRowsFound = true;
 	private IVerticalPanel contentPanel0;
 	private boolean reduceHeightIfEmpty = false;
+	private boolean showConfiguration=true;
 
 	@Override
 	public IScrollTableWidget<Object> reduceHeightIfEmpty(
@@ -408,7 +409,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (filter != null) {
 			if (filterListener != null)
 				filter.addFilterListener(filterListener);
-			filter.addSizeFilter();
+			if (filterSizeConstraint)
+				filter.addSizeFilter();
 			if (constraints != null)
 				filter.constraints(constraints);
 			filter.visible(true);
@@ -420,6 +422,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			filter = (IMiniFilterWidget) topPanelCell(0, 0).panel()
 					.horizontal().addSpace(8).add()
 					.widget(IMiniFilterWidget.class);
+			filter.showConfiguration(showConfiguration);
 			// if (!ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL)
 			// topPanel.column(0).expand();
 		}
@@ -487,6 +490,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private int rowIndex = -1;
 	private boolean addToContextMenu;
 	private IUpdateListener<List<String>> hiddenColumnListener;
+	private boolean filterSizeConstraint = true;
 
 	boolean update() {
 		paintedRows = computeRowsToPaint();
@@ -1038,5 +1042,19 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (filter != null)
 			return filter.constraints();
 		return null;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> filterSizeConstraint(
+			boolean filterSizeConstraint) {
+		this.filterSizeConstraint = filterSizeConstraint;
+		return this;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> showConfiguration(
+			boolean showConfiguration) {
+		this.showConfiguration = showConfiguration;
+		return this;
 	}
 }
