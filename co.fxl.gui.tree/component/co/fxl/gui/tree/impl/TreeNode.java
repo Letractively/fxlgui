@@ -314,7 +314,7 @@ public class TreeNode<T> extends LazyClickListener implements NodeRef<T> {
 	private void injectTreeListener() {
 		if (widget.treeClickListener != null) {
 			gridButton = buttonPanel.add().image().resource("grid.png")
-					.tooltip("Double-Click to switch to Grid");
+					.tooltip("Double-click to switch to table view");
 			IKey<?> key = gridButton.addClickListener(new LazyClickListener() {
 
 				@Override
