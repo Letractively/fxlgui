@@ -108,7 +108,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		@Override
 		public void decorate(Object identifier, ICell cell, Date value) {
 			String text = value == null ? null : format.format(value);
-			injectColor(identifier, cell);
+			// TODO injectColor(identifier, cell);
 			cell.text(text);
 		}
 
@@ -131,7 +131,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		@Override
 		public void decorate(Object identifier, ICell cell, Number value) {
 			String text = String.valueOf(value);
-			injectColor(identifier, cell);
+			// TODO injectColor(identifier, cell);
 			cell.text(text);
 		}
 
@@ -158,7 +158,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		@Override
 		public void decorate(Object identifier, ICell cell, String value) {
 			String text = (String) value;
-			injectColor(identifier, cell);
+			injectColor(identifier, cell, text);
 			cell.text(text);
 		}
 
@@ -212,7 +212,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	int widthInt = -1;
 	double widthDouble = -1;
 	boolean editable = false;
-	private IColorAdapter<Object> colorAdapter;
+	private IColorAdapter<Object, Object> colorAdapter;
 	boolean forceSort = false;
 
 	ScrollTableColumnImpl(ScrollTableWidgetImpl widget, int index) {
@@ -220,9 +220,9 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		this.index = index;
 	}
 
-	private void injectColor(Object identifier, ICell cell) {
+	private void injectColor(Object identifier, ICell cell, Object value) {
 		if (colorAdapter != null) {
-			String color = colorAdapter.color(identifier);
+			String color = colorAdapter.color(identifier, value);
 			cell.color(color);
 		}
 	}
@@ -377,7 +377,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 	@Override
 	public IScrollTableColumn<Object> colorAdapter(
-			co.fxl.gui.table.scroll.api.IScrollTableColumn.IColorAdapter<Object> colorAdapter) {
+			co.fxl.gui.table.scroll.api.IScrollTableColumn.IColorAdapter<Object, Object> colorAdapter) {
 		this.colorAdapter = colorAdapter;
 		return this;
 	}
