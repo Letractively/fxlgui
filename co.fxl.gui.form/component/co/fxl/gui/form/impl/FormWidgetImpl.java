@@ -117,7 +117,7 @@ class FormWidgetImpl implements IFormWidget {
 		if (fixValueWidth != -column)
 			cell.width(fixValueWidth);
 		heights.decorate(cell);
-//		gridIndex++;
+		// gridIndex++;
 		return cell;
 	}
 
@@ -382,8 +382,8 @@ class FormWidgetImpl implements IFormWidget {
 			if (!alwaysAllowCancel)
 				validation.linkReset(clickable1);
 			for (final FormFieldImpl<?, ?> formField : fields) {
-				if(formField.validate)
-				linkInput(formField);
+				if (formField.validate)
+					linkInput(formField);
 			}
 			if (isNew) {
 				validation.isNew();
@@ -497,12 +497,13 @@ class FormWidgetImpl implements IFormWidget {
 
 	@Override
 	public IFormWidget notifyUpdate() {
-		validation.notifyChange(new CallbackTemplate<Boolean>() {
+		if (validation != null)
+			validation.notifyChange(new CallbackTemplate<Boolean>() {
 
-			@Override
-			public void onSuccess(Boolean result) {
-			}
-		});
+				@Override
+				public void onSuccess(Boolean result) {
+				}
+			});
 		return this;
 	}
 
