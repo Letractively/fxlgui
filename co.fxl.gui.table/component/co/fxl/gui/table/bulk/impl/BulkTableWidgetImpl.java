@@ -148,13 +148,26 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 
 			private ICheckBox checkBox;
 			private IUpdateAdapter<Boolean> updateAdapter;
+			private String color;
 
 			@Override
 			public ICell text(String text) {
 				IGridCell cell = grid.cell(column, row + rowOffset);
 				align(column, cell);
-				cell.label().text(text);
+				ILabel l = cell.label().text(text);
+				if (color != null)
+					l.font().color()
+							.rgb(getInt(1, 2), getInt(3, 4), getInt(5, 6));
 				return updateBorder(row, cell);
+			}
+
+			private int getInt(int i, int j) {
+				return getInt(i) * 16 + getInt(j);
+			}
+
+			private int getInt(int i) {
+				char c = color.charAt(i);
+				return c - '0';
 			}
 
 			public ICell updateBorder(final int row, IGridCell cell) {
@@ -240,7 +253,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 
 			@Override
 			public ICell color(String color) {
-				// TODO ... throw new MethodNotImplementedException();
+				this.color = color;
 				return this;
 			}
 
