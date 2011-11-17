@@ -23,9 +23,9 @@ import co.fxl.gui.table.api.IColumn;
 
 public interface IScrollTableColumn<T> extends IColumn<T> {
 
-	public interface IColorAdapter<T> {
+	public interface IColorAdapter<T, S> {
 
-		String color(T identifier);
+		String color(T identifier, S value);
 	}
 
 	public interface IScrollTableListener<T> {
@@ -39,12 +39,12 @@ public interface IScrollTableColumn<T> extends IColumn<T> {
 
 	IScrollTableColumn<T> editable();
 
-	IScrollTableColumn<T> colorAdapter(IColorAdapter<T> colorAdapter);
+	IScrollTableColumn<T> colorAdapter(IColorAdapter<T, Object> colorAdapter);
 
 	IScrollTableColumn<T> addClickListener(IScrollTableListener<T> l);
 
 	IScrollTableColumn<T> visible(boolean visible);
-	
+
 	boolean visible();
 
 	String name();
