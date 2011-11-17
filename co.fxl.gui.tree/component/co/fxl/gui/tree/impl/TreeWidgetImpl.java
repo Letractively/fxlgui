@@ -122,6 +122,30 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 				register.active();
 		}
 
+		boolean fitsNode(ITree<T> node) {
+			if (node == null)
+				return false;
+			if (typeResolver == null)
+				return true;
+			if (!checkConstraintAdapter(node))
+				return false;
+			if (typeResolver == null || constrainType == null)
+				return true;
+			String type = typeResolver.resolve(node.object());
+			for (String s : constrainType) {
+				if (s.equals(type) && checkConstraintAdapter(node)) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		private boolean checkConstraintAdapter(ITree<T> node2) {
+			if (constraintAdapter == null)
+				return true;
+			return constraintAdapter.hasView(node2.object());
+		}
+
 		boolean setNode(ITree<T> node) {
 			this.node = node;
 			if (node == null) {
@@ -657,8 +681,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 		if (tree != null && model.selection() != null
 				&& !model.selection().equals(tree))
 			return;
-		String type = tree != null ? typeResolver
-				.resolve(tree.object()) : null;
+		String type = tree != null ? typeResolver.resolve(tree.object()) : null;
 		boolean showFirst = false;
 		for (int i = 0; i < detailViews.size(); i++) {
 			DetailView view = detailViews.get(i);
@@ -700,7 +723,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	private DetailView findDefaultView(ITree<T> tree) {
 		for (DetailView view : detailViews) {
-			if (view.enabled() && view.isDefaultView)
+			if (view.enabled() && view.isDefaultView && view.fitsNode(tree))
 				return view;
 		}
 		for (DetailView view : detailViews) {
@@ -709,7 +732,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					&& view != null
 					&& view.title != null
 					&& view.title.equals(defaultViewResolver.resolve(tree
-							.object())))
+							.object())) && view.fitsNode(tree))
 				return view;
 		}
 		return detailViews.get(0);
