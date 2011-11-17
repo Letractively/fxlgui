@@ -68,7 +68,7 @@ public class HTMLDecorator implements IDecorator {
 	}
 
 	@Override
-	public void decorate(IContainer container, int firstRow, int lastRow) {
+	public void decorate(IContainer container, int firstRow, int lastRow, boolean isCalibration) {
 		elements.clear();
 		IVerticalPanel p = container.panel().vertical();
 		for (int i = firstRow; i <= lastRow; i++) {
