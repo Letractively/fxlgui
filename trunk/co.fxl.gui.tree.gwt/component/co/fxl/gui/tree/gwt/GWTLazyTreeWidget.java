@@ -98,7 +98,8 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 	}
 
 	@Override
-	public void decorate(IContainer container, final int firstRow, int lastRow) {
+	public void decorate(IContainer container, final int firstRow, int lastRow,
+			boolean isCalibration) {
 		this.container = container;
 		this.firstRow = firstRow;
 		this.lastRow = lastRow;
@@ -142,7 +143,7 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 		fp.setHeight(height() + "px");
 		fp.getElement().getStyle().setProperty("overflowY", "hidden");
 		container.nativeElement(fp);
-		super.decorate(container, firstRow, lastRow);
+		super.decorate(container, firstRow, lastRow, isCalibration);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -175,7 +176,7 @@ public class GWTLazyTreeWidget extends LazyTreeWidgetTemplate {
 
 	private void update() {
 		container.element().remove();
-		decorate(container, firstRow, lastRow);
+		decorate(container, firstRow, lastRow, false);
 	}
 
 	HTML getHTML(final int firstRow, int lastRow) {
