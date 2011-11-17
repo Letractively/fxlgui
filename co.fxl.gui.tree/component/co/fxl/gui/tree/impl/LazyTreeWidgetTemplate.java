@@ -177,7 +177,7 @@ public abstract class LazyTreeWidgetTemplate implements
 	}
 
 	@Override
-	public void decorate(IContainer container, int firstRow, int lastRow) {
+	public void decorate(IContainer container, int firstRow, int lastRow, boolean isCalibration) {
 		lastFirstRow = firstRow;
 	}
 
