@@ -105,6 +105,12 @@ public class FieldTypeImpl implements IFieldType {
 	}
 
 	@Override
+	public IFieldType shortText() {
+		isShort = true;
+		return type(String.class);
+	}
+
+	@Override
 	public IFieldType longType() {
 		return type(Long.class);
 	}
