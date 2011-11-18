@@ -27,6 +27,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IPanelProvider;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
@@ -201,6 +202,11 @@ public class AndroidDisplay implements IDisplay, Parent {
 
 	@Override
 	public IDisplay clear() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IDisplay register(IPanelProvider<?>... layoutProvider) {
 		throw new MethodNotImplementedException();
 	}
 }

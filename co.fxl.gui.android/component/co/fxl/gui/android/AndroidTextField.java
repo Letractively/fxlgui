@@ -102,4 +102,19 @@ class AndroidTextField extends AndroidElement<EditText, ITextField> implements
 	public ITextField maxLength(int maxLength) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public boolean editable() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public int cursorPosition() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public ITextField cursorPosition(int position) {
+		throw new MethodNotImplementedException();
+	}
 }
