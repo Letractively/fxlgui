@@ -88,11 +88,14 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 				alignment.forward(column.align());
 				return;
 			}
-			column.align().center();
+			if (index == 0)
+				column.align().begin();
+			else
+				column.align().center();
 		}
 
 		@Override
-		public double defaultWidth() {
+		public double defaultWeight() {
 			return 1;
 		}
 	}
@@ -131,7 +134,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		}
 
 		@Override
-		public double defaultWidth() {
+		public double defaultWeight() {
 			return 1;
 		}
 	}
@@ -152,11 +155,14 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 				alignment.forward(column.align());
 				return;
 			}
-			column.align().center();
+			if (index == 0)
+				column.align().begin();
+			else
+				column.align().center();
 		}
 
 		@Override
-		public double defaultWidth() {
+		public double defaultWeight() {
 			return 1;
 		}
 	}
@@ -167,10 +173,19 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 		void prepare(IBulkTableWidget.IColumn column);
 
-		double defaultWidth();
+		double defaultWeight();
 	}
 
 	public class StringDecorator implements Decorator<String> {
+
+		private double weight = 2;
+
+		public StringDecorator(boolean isShort, boolean isLong) {
+			if (isShort)
+				weight = 1;
+			if (isLong)
+				weight = 3;
+		}
 
 		@Override
 		public void decorate(Object identifier, ICell cell, String value) {
@@ -185,8 +200,8 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		}
 
 		@Override
-		public double defaultWidth() {
-			return 2;
+		public double defaultWeight() {
+			return weight;
 		}
 	}
 
@@ -204,7 +219,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		}
 
 		@Override
-		public double defaultWidth() {
+		public double defaultWeight() {
 			return 2;
 		}
 	}
@@ -222,7 +237,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		}
 
 		@Override
-		public double defaultWidth() {
+		public double defaultWeight() {
 			return 1;
 		}
 	}
@@ -279,7 +294,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 			if (type.isHTML) {
 				decorator = new HTMLDecorator();
 			} else if (type.clazz.equals(String.class)) {
-				decorator = new StringDecorator();
+				decorator = new StringDecorator(type.isShort, type.isLong);
 			} else if (type.clazz.equals(IImage.class)) {
 				decorator = new ImageDecorator();
 			} else if (type.clazz.equals(Long.class)
@@ -421,6 +436,6 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	}
 
 	double defaultWidth() {
-		return widthDouble = decorator().defaultWidth();
+		return widthDouble = decorator().defaultWeight();
 	}
 }
