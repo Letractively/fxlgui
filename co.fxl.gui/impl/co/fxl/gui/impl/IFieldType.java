@@ -57,4 +57,6 @@ public interface IFieldType {
 	IFieldType clearConstraints();
 
 	IFieldType setHasConstraints();
+
+	IFieldType shortText();
 }
