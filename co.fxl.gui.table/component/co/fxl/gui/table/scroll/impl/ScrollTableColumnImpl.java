@@ -90,6 +90,11 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 			}
 			column.align().center();
 		}
+
+		@Override
+		public double defaultWidth() {
+			return 1;
+		}
 	}
 
 	class DateDecorator implements Decorator<Date> {
@@ -124,6 +129,11 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 			else
 				column.align().center();
 		}
+
+		@Override
+		public double defaultWidth() {
+			return 1;
+		}
 	}
 
 	public class NumberDecorator implements Decorator<Number> {
@@ -144,6 +154,11 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 			}
 			column.align().center();
 		}
+
+		@Override
+		public double defaultWidth() {
+			return 1;
+		}
 	}
 
 	public interface Decorator<T> {
@@ -151,6 +166,8 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		void decorate(Object identifier, ICell cell, T value);
 
 		void prepare(IBulkTableWidget.IColumn column);
+
+		double defaultWidth();
 	}
 
 	public class StringDecorator implements Decorator<String> {
@@ -166,6 +183,11 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		public void prepare(
 				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
 		}
+
+		@Override
+		public double defaultWidth() {
+			return 2;
+		}
 	}
 
 	public class HTMLDecorator implements Decorator<String> {
@@ -180,6 +202,11 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		public void prepare(
 				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
 		}
+
+		@Override
+		public double defaultWidth() {
+			return 2;
+		}
 	}
 
 	public class ImageDecorator implements Decorator<String> {
@@ -192,6 +219,11 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		@Override
 		public void prepare(
 				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
+		}
+
+		@Override
+		public double defaultWidth() {
+			return 1;
 		}
 	}
 
@@ -386,5 +418,9 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	public IScrollTableColumn<Object> forceSort() {
 		forceSort = true;
 		return this;
+	}
+
+	double defaultWidth() {
+		return widthDouble = decorator().defaultWidth();
 	}
 }
