@@ -596,6 +596,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	@SuppressWarnings("unused")
 	private void updateHeaderRow(IBulkTableWidget grid) {
+		adjustColumnWidths();
 		int current = 0;
 		for (int c = 0; c < columns.size(); c++) {
 			if (!columns.get(c).visible)
@@ -624,6 +625,25 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			if (columnImpl.alignment.isSpecified()) {
 				columnImpl.alignment.forward(column.align());
 			}
+		}
+	}
+
+	private void adjustColumnWidths() {
+		double sum = 0;
+		for (int c = 0; c < columns.size(); c++) {
+			if (!columns.get(c).visible)
+				continue;
+			ScrollTableColumnImpl columnImpl = columns.get(c);
+			if (columnImpl.widthDouble != -1 || columnImpl.widthInt != -1) {
+				return;
+			}
+			sum += columnImpl.defaultWidth();
+		}
+		for (int c = 0; c < columns.size(); c++) {
+			if (!columns.get(c).visible)
+				continue;
+			ScrollTableColumnImpl columnImpl = columns.get(c);
+			columnImpl.widthDouble /= sum;
 		}
 	}
 
