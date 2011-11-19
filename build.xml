@@ -41,6 +41,9 @@
 	<property name="co.fxl.data.format.swing.dir" value="${project.dir}/co.fxl.data.format.swing"/>
 	<property name="co.fxl.data.format.swing.src.dir" value="${co.fxl.data.format.swing.dir}/component"/>
 
+	<property name="co.fxl.gui.swing.dir" value="${project.dir}/co.fxl.gui.swing"/>
+	<property name="co.fxl.gui.swing.src.dir" value="${co.fxl.gui.swing.dir}/component"/>
+
 	<property name="co.fxl.gui.gwt.dir" value="${project.dir}/co.fxl.gui.gwt"/>
 	<property name="co.fxl.gui.gwt.build.src.dir" value="${co.fxl.gui.gwt.dir}/build"/>
 	<property name="co.fxl.gui.gwt.component.src.dir" value="${co.fxl.gui.gwt.dir}/component"/>
@@ -64,8 +67,10 @@
 	<property name="co.fxl.gui.navigation.gwt.src.dir" value="${co.fxl.gui.navigation.dir}/gwt"/>		
 
 	<property name="co.fxl.gui.table.dir" value="${project.dir}/co.fxl.gui.table"/>
+	<property name="co.fxl.gui.table.swing.dir" value="${project.dir}/co.fxl.gui.table.swing"/>
 	<property name="co.fxl.gui.table.api.src.dir" value="${co.fxl.gui.table.dir}/api"/>
 	<property name="co.fxl.gui.table.component.src.dir" value="${co.fxl.gui.table.dir}/component"/>
+	<property name="co.fxl.gui.table.swing.src.dir" value="${co.fxl.gui.table.swing.dir}/component"/>
 	<property name="co.fxl.gui.table.gwt.src.dir" value="${co.fxl.gui.table.dir}/gwt"/>		
 
 	<property name="co.fxl.gui.layout.handheld.dir" value="${project.dir}/co.fxl.gui.layout.handheld"/>
@@ -161,8 +166,10 @@
     	<fileset dir="${co.fxl.gui.navigation.component.src.dir}"/>	
     	<fileset dir="${co.fxl.gui.table.api.src.dir}"/>	
     	<fileset dir="${co.fxl.gui.table.component.src.dir}"/>	
+    	<fileset dir="${co.fxl.gui.table.swing.src.dir}"/>	
     	<fileset dir="${co.fxl.gui.layout.handheld.component.src.dir}"/>
     	<fileset dir="${co.fxl.gui.style.gplus.component.src.dir}"/>
+    	<fileset dir="${co.fxl.gui.swing.src.dir}"/>
      </copy>
 	</target>
 	
