@@ -35,7 +35,6 @@ import co.fxl.gui.navigation.group.api.INavigationItem;
 public class NavigationItemImpl extends LazyClickListener implements
 		INavigationItem {
 
-	public static boolean SHOW_REFRESH_LOGO = true;
 	ILabel button;
 	private IDecorator decorator;
 	IHorizontalPanel buttonPanel;
@@ -130,6 +129,9 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	static int c = 1;
+	// TODO when row height computation in scrolltablewidgetimpl is working for
+	// invisible panels (unflipped pages), set to true
+	public static boolean FLIP_AFTER_RETURN = false;
 
 	NavigationItemImpl active(boolean viaClick) {
 		showLabelAsActive(viaClick, new CallbackTemplate<Void>() {
@@ -142,14 +144,13 @@ public class NavigationItemImpl extends LazyClickListener implements
 				int height = buttonPanel.height();
 				showLoading();
 				buttonPanel.size(width, height);
-				if (!SHOW_REFRESH_LOGO)
-					flip();
+				if (!FLIP_AFTER_RETURN)
+					flipPage();
 				try {
 					decorator.decorate(panel0, new CallbackTemplate<Void>() {
 						@Override
 						public void onSuccess(Void result) {
-							if (SHOW_REFRESH_LOGO)
-								flip();
+							flipRegister(FLIP_AFTER_RETURN);
 						}
 
 						@Override
@@ -272,9 +273,14 @@ public class NavigationItemImpl extends LazyClickListener implements
 		}
 	}
 
-	private void flip() {
+	private void flipRegister(boolean flipNow) {
 		showRestAsInactive();
 		showLabelAsActive();
+		if (flipNow)
+			flipPage();
+	}
+
+	void flipPage() {
 		widget.flipPage().flip();
 	}
 }
