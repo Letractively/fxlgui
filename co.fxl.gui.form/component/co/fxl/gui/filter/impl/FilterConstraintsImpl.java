@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.filter.impl.Constraint.IBooleanConstraint;
 import co.fxl.gui.filter.impl.Constraint.IDoubleRangeConstraint;
 import co.fxl.gui.filter.impl.Constraint.INamedConstraint;
@@ -146,6 +147,15 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 	private String sortOrder;
 	private boolean sortDirection = true;
 	private IRowIterator it = new RowIterator();
+
+	public FilterConstraintsImpl(FilterConstraintsImpl f) {
+		size = f.size;
+		constraints = new HashMap<String, INamedConstraint>(f.constraints);
+		cfg = f.cfg;
+		sortOrder = f.sortOrder;
+		sortDirection = f.sortDirection;
+		it = f.it;
+	}
 
 	public FilterConstraintsImpl() {
 		size = (Integer) FilterWidgetImpl.DEFAULT_SIZES.get(0);
@@ -321,6 +331,16 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 	public IFilterConstraints rowIterator(IRowIterator rowIterator) {
 		it = rowIterator;
 		return this;
+	}
+
+	@Override
+	public IFilterConstraints copy() {
+		return new FilterConstraintsImpl(this);
+	}
+
+	@Override
+	public IRelationFilter<Object, Object> addRelationFilter() {
+		throw new MethodNotImplementedException();
 	}
 
 }

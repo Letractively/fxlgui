@@ -143,7 +143,7 @@ class RelationFilter extends StringFilter {
 	boolean fromConstraint(IFilterConstraints constraints) {
 		if (values != null) {
 			if (!constraints.isRelationConstrained(name)) {
-				clear(false);
+				// TODO ... clear(false);
 			}
 			return false;
 		} else if (constraints.isAttributeConstrained(name)) {

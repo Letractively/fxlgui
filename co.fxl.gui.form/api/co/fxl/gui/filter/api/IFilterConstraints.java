@@ -21,6 +21,8 @@ package co.fxl.gui.filter.api;
 import java.util.Date;
 import java.util.List;
 
+import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
+
 public interface IFilterConstraints {
 
 	public static final String COMMON = "C";
@@ -102,4 +104,8 @@ public interface IFilterConstraints {
 	boolean isContentRestricted();
 
 	IFilterConstraints rowIterator(IRowIterator rowIterator);
+
+	IFilterConstraints copy();
+
+	IRelationFilter<Object, Object> addRelationFilter();
 }

@@ -444,4 +444,11 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 				cancelListener);
 		return this;
 	}
+
+	@Override
+	public IFilterWidget firstConfiguration(String firstConfiguration) {
+		this.firstConfiguration = firstConfiguration;
+		configuration = firstConfiguration;
+		return this;
+	}
 }
