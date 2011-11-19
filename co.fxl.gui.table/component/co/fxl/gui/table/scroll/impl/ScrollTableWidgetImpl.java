@@ -423,6 +423,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					.horizontal().addSpace(8).add()
 					.widget(IMiniFilterWidget.class);
 			filter.showConfiguration(showConfiguration);
+			if(showConfiguration)
+				filter.firstConfiguration(viewComboBoxChoice);
 			// if (!ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL)
 			// topPanel.column(0).expand();
 		}
