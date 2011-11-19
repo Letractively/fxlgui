@@ -94,4 +94,6 @@ public interface IFilterWidget {
 	IFilterWidget constraints(IFilterConstraints constraints);
 
 	IFilterConstraints constraints();
+
+	IFilterWidget firstConfiguration(String firstConfiguration);
 }
