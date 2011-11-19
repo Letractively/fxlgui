@@ -425,7 +425,14 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 			@Override
 			public IGridColumn width(int width) {
-				throw new MethodNotImplementedException();
+				// TODO ...
+				return this;
+			}
+
+			@Override
+			public IGridColumn width(double width) {
+				// TODO ...
+				return this;
 			}
 		};
 	}
