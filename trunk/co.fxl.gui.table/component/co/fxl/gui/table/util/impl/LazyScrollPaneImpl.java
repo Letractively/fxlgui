@@ -188,6 +188,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 					}
 					return;
 				}
+				treeDockPanel.visible(true);
 				int h = adjustHeights ? rowHeight(lastIndex) : minRowHeight;
 				assert lastIndex >= 0;
 				maxRowIndex = lastIndex;
@@ -206,6 +207,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 						maxRowIndex = i;
 					}
 				}
+				treeDockPanel.visible(false);
 				assert maxRowIndex >= 0;
 				if (maxRowIndex == 0) {
 					scrollPane.remove();
