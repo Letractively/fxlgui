@@ -35,6 +35,11 @@ import co.fxl.gui.navigation.group.api.INavigationItem;
 public class NavigationItemImpl extends LazyClickListener implements
 		INavigationItem {
 
+	// TODO when row height computation in scrolltablewidgetimpl is working for
+	// invisible panels (unflipped pages), set to true
+	private static boolean FLIP_AFTER_RETURN_IS_POSSIBLE = false;
+	public static boolean FLIP_AFTER_RETURN = true;
+	static int c = 1;
 	ILabel button;
 	private IDecorator decorator;
 	IHorizontalPanel buttonPanel;
@@ -128,11 +133,6 @@ public class NavigationItemImpl extends LazyClickListener implements
 		return active(false);
 	}
 
-	static int c = 1;
-	// TODO when row height computation in scrolltablewidgetimpl is working for
-	// invisible panels (unflipped pages), set to true
-	public static boolean FLIP_AFTER_RETURN = false;
-
 	NavigationItemImpl active(boolean viaClick) {
 		showLabelAsActive(viaClick, new CallbackTemplate<Void>() {
 			@Override
@@ -144,13 +144,13 @@ public class NavigationItemImpl extends LazyClickListener implements
 				int height = buttonPanel.height();
 				showLoading();
 				buttonPanel.size(width, height);
-				if (!FLIP_AFTER_RETURN)
+				if (!flipAfterReturn())
 					flipPage();
 				try {
 					decorator.decorate(panel0, new CallbackTemplate<Void>() {
 						@Override
 						public void onSuccess(Void result) {
-							flipRegister(FLIP_AFTER_RETURN);
+							flipRegister(flipAfterReturn());
 						}
 
 						@Override
@@ -162,6 +162,10 @@ public class NavigationItemImpl extends LazyClickListener implements
 				} catch (Exception e) {
 					onFail(e);
 				}
+			}
+
+			private boolean flipAfterReturn() {
+				return FLIP_AFTER_RETURN && FLIP_AFTER_RETURN_IS_POSSIBLE;
 			}
 
 			@Override
