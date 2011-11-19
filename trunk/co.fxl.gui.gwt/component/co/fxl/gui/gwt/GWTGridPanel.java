@@ -323,6 +323,14 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 						width + "px");
 				return this;
 			}
+
+			@Override
+			public IGridColumn width(double width) {
+				int d = (int) (width * 10000);
+				double w = ((double) d) / 100;
+				container.widget.getColumnFormatter().setWidth(column, w + "%");
+				return this;
+			}
 		};
 	}
 }
