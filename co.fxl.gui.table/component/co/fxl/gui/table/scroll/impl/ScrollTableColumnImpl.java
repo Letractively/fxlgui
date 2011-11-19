@@ -42,6 +42,15 @@ import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		Comparator<Object[]> {
 
+	private static final double WEIGHT_BOOLEAN = 1;
+	private static final double WEIGHT_DATE = 1;
+	private static final double WEIGHT_NUMBER = 1;
+	private static final double WEIGHT_CUSTOM_LIST_SELECTION = 1;
+	private static final double WEIGHT_IMAGE = 1;
+	private static final double WEIGHT_TEXT = 2;
+	private static final double WEIGHT_HTML = 2;
+	private static final double WEIGHT_LONG_TEXT = 3;
+
 	public class BooleanDecorator implements Decorator<Boolean> {
 
 		@Override
@@ -96,7 +105,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 		@Override
 		public double defaultWeight() {
-			return 1;
+			return WEIGHT_BOOLEAN;
 		}
 	}
 
@@ -135,7 +144,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 		@Override
 		public double defaultWeight() {
-			return 1;
+			return WEIGHT_DATE;
 		}
 	}
 
@@ -163,7 +172,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 		@Override
 		public double defaultWeight() {
-			return 1;
+			return WEIGHT_NUMBER;
 		}
 	}
 
@@ -178,13 +187,13 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 	public class StringDecorator implements Decorator<String> {
 
-		private double weight = 2;
+		private double weight = WEIGHT_TEXT;
 
 		public StringDecorator(boolean isShort, boolean isLong) {
 			if (isShort)
-				weight = 1;
+				weight = WEIGHT_CUSTOM_LIST_SELECTION;
 			if (isLong)
-				weight = 3;
+				weight = WEIGHT_LONG_TEXT;
 		}
 
 		@Override
@@ -220,7 +229,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 		@Override
 		public double defaultWeight() {
-			return 2;
+			return WEIGHT_HTML;
 		}
 	}
 
@@ -238,7 +247,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 		@Override
 		public double defaultWeight() {
-			return 1;
+			return WEIGHT_IMAGE;
 		}
 	}
 
