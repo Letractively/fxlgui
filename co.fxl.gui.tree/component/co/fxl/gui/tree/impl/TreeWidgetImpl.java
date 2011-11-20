@@ -510,7 +510,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 
 	public void setUpRegistersNow() {
 		IVerticalPanel panel2 = panel();
-		splitPane = panel2.add().splitPane().splitPosition(SPLIT_POSITION);
+		splitPane = panel2.add().splitPane().splitPosition(SPLIT_POSITION + 5);
 		createLeftSideWidget();
 		panel2.color().white();// .rgb(240, 240, 240);
 		rightSideWidget = createRightSideWidget();
