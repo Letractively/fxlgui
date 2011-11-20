@@ -33,7 +33,6 @@ public class ErrorDialog {
 			final String pStacktrace) {
 		IDialog dialog = Display.instance().showDialog();
 		dialog.width(DEFAULT_WIDTH);
-		dialog.height(400);
 		dialog.title(pTitle).message(pMessage).error();
 		if (pStacktrace != null) {
 			dialog.addButton().text("Details").imageResource(Icons.DETAIL)
