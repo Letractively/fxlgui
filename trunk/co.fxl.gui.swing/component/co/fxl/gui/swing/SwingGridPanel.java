@@ -102,7 +102,6 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 		void setComponent(final JComponent component) {
 			if (component instanceof TextFieldComponent) {
 				super.setComponent(component);
-				final TextFieldComponent tfc = (TextFieldComponent) component;
 				ComponentAdapter adp = new ComponentAdapter() {
 					@Override
 					public void componentResized(ComponentEvent e) {
@@ -111,9 +110,11 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 								: prefWidth;
 						if (width > prefWidth)
 							panel.getPreferredSize().width = width;
-						tfc.setPreferredWidth(width);
+						component.getPreferredSize().width = width;
 					}
 				};
+				if (width != -1)
+					component.getPreferredSize().width = width;
 				panel.addComponentListener(adp);
 			} else
 				super.setComponent(component);

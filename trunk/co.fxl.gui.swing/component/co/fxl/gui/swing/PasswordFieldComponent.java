@@ -28,12 +28,14 @@ final class PasswordFieldComponent<T> extends JPasswordField {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public Dimension getPreferredSize() {
-		Dimension d = super.getPreferredSize();
+	public Dimension getMinimumSize() {
+		Dimension d = super.getMinimumSize();
 		if (d == null)
-			return null;
+			d = new Dimension();
 		if (d.height == 0)
-			d.height = SwingContainer.MIN_HEIGHT_TEXT_COMPONENT;
+			d.height = TextFieldComponent.MIN_HEIGHT_TEXT_COMPONENT;
+		if (d.width == 0)
+			d.width = TextFieldComponent.MIN_WIDTH_TEXT_COMPONENT;
 		return d;
 	}
 
