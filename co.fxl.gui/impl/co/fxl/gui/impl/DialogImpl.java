@@ -212,13 +212,15 @@ public class DialogImpl implements IDialog {
 				IGridCell c = grid.cell(1, 0).valign().center();
 				if (width != -1)
 					c.width(width - 3 * 10 - 16);
-				if (height != -1)
-					c.height(height - 60);
 				c.label().text(message).autoWrap(true);
+				decorate(popUp, panel);
 			} else
 				container = t.content();
 		}
 		return popUp;
+	}
+
+	protected void decorate(IPopUp popUp, IVerticalPanel panel) {
 	}
 
 	protected void decorate(IGridPanel grid) {
