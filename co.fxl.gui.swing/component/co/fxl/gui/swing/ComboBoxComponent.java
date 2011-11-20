@@ -27,10 +27,14 @@ class ComboBoxComponent extends JComboBox {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public Dimension getPreferredSize() {
-		Dimension d = super.getPreferredSize();
-		if (d.height < SwingContainer.MIN_HEIGHT_TEXT_COMPONENT)
-			d.height = SwingContainer.MIN_HEIGHT_TEXT_COMPONENT;
+	public Dimension getMinimumSize() {
+		Dimension d = super.getMinimumSize();
+		if (d == null)
+			d = new Dimension();
+		if (d.height == 0)
+			d.height = TextFieldComponent.MIN_HEIGHT_TEXT_COMPONENT;
+		if (d.width == 0)
+			d.width = TextFieldComponent.MIN_WIDTH_TEXT_COMPONENT;
 		return d;
 	}
 }

@@ -97,6 +97,9 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 		else
 			container.component
 					.setPreferredSize(new Dimension(width(), height));
+
+		// TODO set height & width exclusively, not always together
+		
 		return (R) this;
 	}
 
@@ -108,6 +111,9 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 		else
 			container.component.setPreferredSize(new Dimension(width,
 					container.component.getPreferredSize().height));
+
+		// TODO set height & width exclusively, not always together
+
 		return (R) this;
 	}
 

@@ -25,29 +25,34 @@ import javax.swing.JTextField;
 
 final class TextFieldComponent extends JTextField {
 
+	static final int MIN_HEIGHT_TEXT_COMPONENT = 20;
+	static final int MIN_WIDTH_TEXT_COMPONENT = 40;
 	private static final long serialVersionUID = 1L;
-	private int preferredWidth = -1;
+
+	@Override
+	public Dimension getMinimumSize() {
+		Dimension d = super.getMinimumSize();
+		if (d == null)
+			d = new Dimension();
+		if (d.height == 0)
+			d.height = MIN_HEIGHT_TEXT_COMPONENT;
+		if (d.width == 0)
+			d.width = MIN_WIDTH_TEXT_COMPONENT;
+		return d;
+	}
 
 	@Override
 	public Dimension getPreferredSize() {
 		Dimension d = super.getPreferredSize();
 		if (d == null)
 			d = new Dimension();
-		if (d.height == 0)
-			d.height = SwingContainer.MIN_HEIGHT_TEXT_COMPONENT;
 		if (d.width == 0)
-			d.width = SwingContainer.MIN_WIDTH_TEXT_COMPONENT;
-		if (preferredWidth != -1)
-			d.width = preferredWidth;
+			d.width = 200;
 		return d;
 	}
 
 	@Override
 	public Insets getInsets() {
 		return SwingContainer.INSETS;
-	}
-
-	void setPreferredWidth(int width) {
-		this.preferredWidth = width;
 	}
 }
