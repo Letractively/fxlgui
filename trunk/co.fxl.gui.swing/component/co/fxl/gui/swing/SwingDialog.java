@@ -32,7 +32,7 @@ class SwingDialog extends DialogImpl {
 	@Override
 	protected void decorate(IPopUp popUp, IVerticalPanel panel) {
 		panel.height(panel.height() + 16);
-		popUp.height(panel.height() + 12);
+//		popUp.height(panel.height() + 12);
 	}
 
 }
