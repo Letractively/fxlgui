@@ -49,7 +49,7 @@ import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.WidgetTitle;
 
-class FormWidgetImpl implements IFormWidget {
+public class FormWidgetImpl implements IFormWidget {
 
 	// TODO FEATURE: Option: Usability: Integrate an RTF-Editor, e.g.
 	// http://gwt.google.com/samples/Showcase/Showcase.html#!CwRichText, or
