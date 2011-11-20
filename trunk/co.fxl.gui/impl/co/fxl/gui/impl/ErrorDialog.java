@@ -32,14 +32,17 @@ public class ErrorDialog {
 	public void show(String pTitle, final String pMessage,
 			final String pStacktrace) {
 		IDialog dialog = Display.instance().showDialog();
-		dialog.width(DEFAULT_WIDTH).title(pTitle).message(pMessage).error();
+		dialog.width(DEFAULT_WIDTH);
+		dialog.height(400);
+		dialog.title(pTitle).message(pMessage).error();
 		if (pStacktrace != null) {
 			dialog.addButton().text("Details").imageResource(Icons.DETAIL)
 					.addClickListener(new IClickListener() {
 						@Override
 						public void onClick() {
 							IDialog detailDialog = Display.instance()
-									.showDialog().width(DEFAULT_WIDTH);
+									.showDialog();
+							detailDialog.width(DEFAULT_WIDTH);
 							detailDialog.title("Error Details");
 							detailDialog.addButton().close()
 									.addClickListener(new IClickListener() {
