@@ -171,7 +171,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	@Override
 	public IDialog showDialog() {
-		return new DialogImpl(this);
+		return new SwingDialog(this);
 	}
 
 	@Override
