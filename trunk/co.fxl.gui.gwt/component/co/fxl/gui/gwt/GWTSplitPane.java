@@ -37,6 +37,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 		ISplitPane, ISplitPaneResizeListener {
 
+	private static final int INC = 5;
 	public static ISplitPanelAdp adapter = new ISplitPanelAdp() {
 
 		private boolean isScheduled = false;
@@ -170,7 +171,7 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 		super(container);
 		container.widget.setHeight("600px");
 		setUpContainers(container);
-		splitPosition(300);
+		splitPosition(300 + INC);
 		adapter.addListener(container.widget, this);
 	}
 
@@ -202,7 +203,7 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 		splitPosition = pixel;
 		Widget p = (Widget) container.widget;
 		holdNotify = true;
-		adapter.setSplitPosition(p, pixel + "px");
+		adapter.setSplitPosition(p, (pixel - INC) + "px");
 		holdNotify = false;
 		notifyListeners();
 		return this;
