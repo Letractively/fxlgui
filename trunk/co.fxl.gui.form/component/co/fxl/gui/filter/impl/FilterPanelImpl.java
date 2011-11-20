@@ -31,7 +31,9 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.WidgetTitle;
 
-class FilterPanelImpl implements FilterPanel {
+public class FilterPanelImpl implements FilterPanel {
+
+	public static boolean ACTIVE_SET_WIDTH_COLUMN_1 = false;
 
 	class CellImpl implements ICell {
 
@@ -70,6 +72,8 @@ class FilterPanelImpl implements FilterPanel {
 		FilterGridImpl(IContainer gridContainer) {
 			grid = gridContainer.panel().vertical().align().end().spacing(5)
 					.add().panel().grid().spacing(3);
+			if (ACTIVE_SET_WIDTH_COLUMN_1)
+				grid.column(1).width(FilterTemplate.WIDTH_SINGLE_CELL);
 		}
 
 		@Override
@@ -79,7 +83,7 @@ class FilterPanelImpl implements FilterPanel {
 
 		@Override
 		public void title(int filterIndex, String name) {
-			IGridCell cell = grid.cell(0, filterIndex);//.width(50);
+			IGridCell cell = grid.cell(0, filterIndex);// .width(50);
 			widget.heights.decorate(cell);
 
 			// TODO Look: Swing: Align filter labels to the right, grid cell
@@ -125,8 +129,9 @@ class FilterPanelImpl implements FilterPanel {
 		this.widget = widget;
 		title = new WidgetTitle(panel.panel(), true).sideWidget(true)// .grayBackground()
 				.space(2);
-		mainPanel = title.content().panel().vertical().align().end().addSpace(2).add()
-				.panel().horizontal().align().end().add().panel().vertical();
+		mainPanel = title.content().panel().vertical().align().end()
+				.addSpace(2).add().panel().horizontal().align().end().add()
+				.panel().vertical();
 	}
 
 	@Override
