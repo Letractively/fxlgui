@@ -722,7 +722,7 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 	}
 
 	private DetailView findDefaultView(ITree<T> tree) {
-		if (tree.isNew())
+		if (tree == null || tree.isNew())
 			return detailViews.get(0);
 		for (DetailView view : detailViews) {
 			if (view.enabled() && view.isDefaultView && view.fitsNode(tree))
