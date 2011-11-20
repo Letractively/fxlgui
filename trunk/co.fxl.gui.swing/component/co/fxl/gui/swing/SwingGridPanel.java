@@ -29,8 +29,10 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -83,11 +85,17 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 		private GridBagConstraints constraints;
 		private VerticalLayoutManager vlayout = new VerticalLayoutManager(true);
 		private JPanel panel = new JPanel(vlayout);
+		private int width = -1;
 
 		GridCell(GridBagConstraints constraints) {
 			super(SwingGridPanel.this);
 			this.constraints = (GridBagConstraints) constraints.clone();
 			panel.setOpaque(false);
+			Integer w = columnWidths.get(constraints.gridx);
+			if (w != null) {
+				panel.getPreferredSize().width = w;
+				width = w;
+			}
 		}
 
 		@Override
@@ -98,7 +106,11 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 				ComponentAdapter adp = new ComponentAdapter() {
 					@Override
 					public void componentResized(ComponentEvent e) {
-						int width = panel.getPreferredSize().width;
+						int prefWidth = panel.getPreferredSize().width;
+						int width = GridCell.this.width != -1 ? GridCell.this.width
+								: prefWidth;
+						if (width > prefWidth)
+							panel.getPreferredSize().width = width;
 						tfc.setPreferredWidth(width);
 					}
 				};
@@ -268,6 +280,7 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 	private int spacing;
 	private int sizeColumns = -1;
 	private int sizeRows = -1;
+	protected Map<Integer, Integer> columnWidths = new HashMap<Integer, Integer>();
 
 	SwingGridPanel(SwingContainer<PanelComponent> container) {
 		super(container);
@@ -425,7 +438,7 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 			@Override
 			public IGridColumn width(int width) {
-				// TODO ...
+				columnWidths.put(column, width);
 				return this;
 			}
 

@@ -48,6 +48,5 @@ public class PanelComponent extends JPanel {
 		g2d.setPaint(paint);
 		g2d.fillRect(0, 0, width, height);
 		g2d.setPaint(oldPaint);
-		// super.paintComponent(g);
 	}
 }
