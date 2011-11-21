@@ -26,12 +26,13 @@ import javax.swing.JTextArea;
 final class TextAreaComponent<T> extends JTextArea {
 
 	private static final long serialVersionUID = 1L;
+	private static final int MIN_HEIGHT_TEXTAREA_COMPONENT = 20;
 
 	@Override
-	public Dimension getPreferredSize() {
-		Dimension d = super.getPreferredSize();
-		if (d.height < SwingContainer.MIN_HEIGHT_TEXTAREA_COMPONENT)
-			d.height = SwingContainer.MIN_HEIGHT_TEXTAREA_COMPONENT;
+	public Dimension getMinimumSize() {
+		Dimension d = super.getMinimumSize();
+		if (d.height < MIN_HEIGHT_TEXTAREA_COMPONENT)
+			d.height = MIN_HEIGHT_TEXTAREA_COMPONENT;
 		return d;
 	}
 
