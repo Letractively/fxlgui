@@ -59,7 +59,6 @@ import co.fxl.gui.api.WidgetProviderNotFoundException;
 public class SwingContainer<T extends JComponent> implements IContainer {
 
 	static final Insets INSETS = new Insets(4, 4, 4, 4);
-	static final int MIN_HEIGHT_TEXTAREA_COMPONENT = 100;
 	ComponentParent parent;
 	public T component;
 	@SuppressWarnings("rawtypes")
