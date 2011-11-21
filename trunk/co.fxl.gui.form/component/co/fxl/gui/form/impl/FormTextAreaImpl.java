@@ -32,6 +32,7 @@ class FormTextAreaImpl extends FormFieldImpl<ITextArea, String> {
 	@Override
 	void createContentColumn(int index) {
 		textArea = widget.addFormValueTextArea(index);
+		textArea.height(100);
 		textArea.border().color().rgb(211, 211, 211);
 		textArea.color().rgb(249, 249, 249);
 		editable(widget.saveListener != null);
