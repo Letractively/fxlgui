@@ -104,12 +104,12 @@ public class DialogImpl implements IDialog {
 	private IDisplay display;
 	private boolean modal = true;
 	private String title = "Dialog";
-	private String message;
-	private String type = "Information";
+	protected String message;
+	protected String type = "Information";
 	private IPopUp popUp;
 	private List<DialogButtonImpl> buttons = new LinkedList<DialogButtonImpl>();
 	private IContainer container;
-	private int width = -1;
+	protected int width = -1;
 	private int height = -1;
 
 	public DialogImpl(IDisplay display) {
@@ -202,22 +202,27 @@ public class DialogImpl implements IDialog {
 					l.addClickListener(cl);
 				b.link(l);
 			}
+			IContainer content = t.content();
 			if (message != null) {
-				IGridPanel grid = t.content().panel().vertical().add().panel()
-						.grid().spacing(10).resize(2, 1);
-				if (width != -1)
-					decorate(grid);
-				grid.cell(0, 0).align().begin().valign().begin().image()
-						.resource(image(type)).size(16, 16);
-				IGridCell c = grid.cell(1, 0).valign().center();
-				if (width != -1)
-					c.width(width - 3 * 10 - 16);
-				c.label().text(message).autoWrap(true);
+				createLabel(content);
 				decorate(popUp, panel);
 			} else
-				container = t.content();
+				container = content;
 		}
 		return popUp;
+	}
+
+	protected void createLabel(IContainer content) {
+		IGridPanel grid = content.panel().vertical().add().panel()
+				.grid().spacing(10).resize(2, 1);
+		if (width != -1)
+			decorate(grid);
+		grid.cell(0, 0).align().begin().valign().begin().image()
+				.resource(image(type)).size(16, 16);
+		IGridCell c = grid.cell(1, 0).valign().center();
+		if (width != -1)
+			c.width(width - 3 * 10 - 16);
+		c.label().text(message).autoWrap(true);
 	}
 
 	protected void decorate(IPopUp popUp, IVerticalPanel panel) {
@@ -232,7 +237,7 @@ public class DialogImpl implements IDialog {
 		return this;
 	}
 
-	private String image(String type2) {
+	protected String image(String type2) {
 		if (type.equals("Information"))
 			return Icons.INFO;
 		else if (type.equals("Warning"))
