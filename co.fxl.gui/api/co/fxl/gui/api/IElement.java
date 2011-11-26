@@ -23,6 +23,8 @@ public interface IElement<T> extends ILocated<T> {
 	// TODO maybe include methods addStyle(String) / removeStyle(String) for CSS
 	// TODO for Swing, etc.: IDisplay.registerStyle(String, IDecorator<?>)
 
+	T attach(boolean attach);
+
 	T visible(boolean visible);
 
 	boolean visible();
