@@ -11,6 +11,8 @@ import co.fxl.gui.swing.HorizontalLayoutManager.Stretch;
 
 class SwingFlowPanel extends SwingPanel<IFlowPanel> implements IFlowPanel,
 		Stretch {
+	
+	// TODO does not work! temporary fix! implement working flow layout as in gwt
 
 	Component stretch;
 
