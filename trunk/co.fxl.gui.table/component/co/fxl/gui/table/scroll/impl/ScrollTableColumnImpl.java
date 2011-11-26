@@ -112,15 +112,14 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 	class DateDecorator implements Decorator<Date> {
 
-		private static final double WEIGHT_LONG_DATE = 0;
 		private IFormat<Date> format;
-		private double weight;
+		private double weight = WEIGHT_DATE;
 
 		DateDecorator(boolean isLong, boolean isShort) {
-			this.weight = isLong ? WEIGHT_LONG_DATE : WEIGHT_DATE;
-			if (isLong)
+			if (isLong) {
 				format = Format.dateTime();
-			else if (isShort)
+				weight = WEIGHT_LONG_DATE;
+			} else if (isShort)
 				format = Format.time();
 			else
 				format = Format.date();
