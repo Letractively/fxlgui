@@ -43,8 +43,8 @@ class ResizeCardLayout extends CardLayout {
 			int h = 0;
 			for (int i = 0; i < ncomponents; i++) {
 				Component comp = parent.getComponent(i);
-				if (this.swingCardLayout.chosen != null
-						&& this.swingCardLayout.chosen != comp)
+				if (this.swingCardLayout.chosen() != null
+						&& this.swingCardLayout.chosen() != comp)
 					continue;
 				Dimension d = comp.getPreferredSize();
 				if (d.width > w) {
@@ -68,8 +68,8 @@ class ResizeCardLayout extends CardLayout {
 			int h = 0;
 			for (int i = 0; i < ncomponents; i++) {
 				Component comp = parent.getComponent(i);
-				if (this.swingCardLayout.chosen != null
-						&& this.swingCardLayout.chosen != comp)
+				if (this.swingCardLayout.chosen() != null
+						&& this.swingCardLayout.chosen() != comp)
 					continue;
 				Dimension d = comp.getMinimumSize();
 				if (d.width > w) {

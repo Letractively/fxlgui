@@ -63,9 +63,18 @@ public class SwingContainer<T extends JComponent> implements IContainer {
 	public T component;
 	@SuppressWarnings("rawtypes")
 	SwingElement element;
+	private static long nextID = 0;
+	private String uID;
 
 	SwingContainer(ComponentParent parent) {
 		this.parent = parent;
+	}
+
+	String getUID() {
+		if (uID == null) {
+			uID = String.valueOf(nextID++);
+		}
+		return uID;
 	}
 
 	void setComponent(T component) {
@@ -129,6 +138,7 @@ public class SwingContainer<T extends JComponent> implements IContainer {
 		setComponent((T) new PanelComponent());
 		SwingPanel<?> panel = new SwingDockPanel(
 				(SwingContainer<PanelComponent>) this);
+		element = panel;
 		return new SwingLayout(panel);
 	}
 
