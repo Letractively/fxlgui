@@ -325,5 +325,15 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	public IFont font() {
 		return new GWTFont(container.widget);
 	}
-	
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R attach(boolean attach) {
+		if (attach)
+			container.parent.add(container.widget);
+		else
+			container.parent.remove(container.widget);
+		return (R) this;
+	}
+
 }
