@@ -32,7 +32,7 @@ public class FlipPage {
 	public FlipPage(IContainer c) {
 		cardPanel = c.panel().card();
 		page1 = cardPanel.add().panel().vertical();
-		page2 = cardPanel.add().panel().vertical().attach(false);
+		page2 = cardPanel.add().panel().vertical();
 		active = page2;
 		cardPanel.show(page1);
 	}
@@ -51,7 +51,6 @@ public class FlipPage {
 			active = page1;
 		} else
 			active = page2;
-		active.attach(true);
 		cardPanel.show(active);
 		inactive.clear();
 	}
