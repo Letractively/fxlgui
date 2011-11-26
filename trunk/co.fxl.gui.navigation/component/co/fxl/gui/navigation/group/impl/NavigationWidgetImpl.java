@@ -37,6 +37,8 @@ import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.group.api.INavigationWidget;
 
 class NavigationWidgetImpl implements INavigationWidget {
+	
+	// TODO Code: Look: reactivate double buffering, no flickering, add temp-flip-mechanism to FlipPage 
 
 	private IDockPanel mainPanel;
 	ILinearPanel<?> navigationPanel;
