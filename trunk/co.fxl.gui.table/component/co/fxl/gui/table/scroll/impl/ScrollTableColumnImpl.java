@@ -44,6 +44,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 	private static final double WEIGHT_BOOLEAN = 1;
 	private static final double WEIGHT_DATE = 1;
+	private static final double WEIGHT_LONG_DATE = 2;
 	private static final double WEIGHT_NUMBER = 1;
 	private static final double WEIGHT_CUSTOM_LIST_SELECTION = 1;
 	private static final double WEIGHT_IMAGE = 1;
@@ -111,9 +112,12 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 	class DateDecorator implements Decorator<Date> {
 
+		private static final double WEIGHT_LONG_DATE = 0;
 		private IFormat<Date> format;
+		private double weight;
 
 		DateDecorator(boolean isLong, boolean isShort) {
+			this.weight = isLong ? WEIGHT_LONG_DATE : WEIGHT_DATE;
 			if (isLong)
 				format = Format.dateTime();
 			else if (isShort)
@@ -144,7 +148,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 		@Override
 		public double defaultWeight() {
-			return WEIGHT_DATE;
+			return weight;
 		}
 	}
 
