@@ -138,7 +138,6 @@ public class SwingContainer<T extends JComponent> implements IContainer {
 		setComponent((T) new PanelComponent());
 		SwingPanel<?> panel = new SwingDockPanel(
 				(SwingContainer<PanelComponent>) this);
-		element = panel;
 		return new SwingLayout(panel);
 	}
 
