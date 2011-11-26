@@ -19,9 +19,8 @@
 package co.fxl.gui.swing;
 
 import java.awt.CardLayout;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JComponent;
 
@@ -31,13 +30,9 @@ import co.fxl.gui.api.IElement;
 
 class SwingCardPanel extends SwingPanel<ICardPanel> implements ICardPanel {
 
-	private static Random RANDOM = new Random();
-	private String uIDPrefix = RANDOM.nextLong() + "-"
-			+ System.currentTimeMillis() + "-";
 	private CardLayout cardLayout;
-	private Map<JComponent, String> panel2uID = new HashMap<JComponent, String>();
-	JComponent chosen;
-	private Map<IContainer, String> currentIDs = new HashMap<IContainer, String>();
+	private List<SwingContainer<?>> added = new LinkedList<SwingContainer<?>>();
+	private JComponent chosen;
 
 	SwingCardPanel(SwingContainer<PanelComponent> container) {
 		super(container);
@@ -46,17 +41,13 @@ class SwingCardPanel extends SwingPanel<ICardPanel> implements ICardPanel {
 
 	@Override
 	public ICardPanel clear() {
-		panel2uID.clear();
-		chosen = null;
-		currentIDs.clear();
 		return super.clear();
 	}
 
 	@Override
 	public IContainer add() {
-		IContainer child = super.add();
-		String currentID = nextID();
-		currentIDs.put(child, currentID);
+		SwingContainer<?> child = (SwingContainer<?>) super.add();
+		added.add(child);
 		return child;
 	}
 
@@ -64,35 +55,34 @@ class SwingCardPanel extends SwingPanel<ICardPanel> implements ICardPanel {
 	public ICardPanel show(IElement<?> panel) {
 		SwingElement<?, ?> swingElement = (SwingElement<?, ?>) panel;
 		chosen = swingElement.container.component;
-		String uID = panel2uID.get(chosen);
-		cardLayout.show(container.component, uID);
+		cardLayout.show(container.component, swingElement.container.getUID());
 		return this;
 	}
 
 	@Override
 	public void add(JComponent component) {
-		String currentID = null;
-		IContainer cc = null;
-		for (IContainer c : currentIDs.keySet()) {
-			assert c.element().nativeElement() != null;
-			if (c.element().nativeElement() == component) {
-				currentID = currentIDs.get(c);
-				cc = c;
-			}
-		}
-		assert cc != null;
-		currentIDs.remove(cc);
-		container.component.add(component, currentID);
-		panel2uID.put(component, currentID);
+		SwingContainer<?> c = (SwingContainer<?>) find(component);
+		if (chosen == null)
+			chosen = c.component;
+		container.component.add(component, c.getUID());
 	}
 
 	@Override
 	public void remove(JComponent component) {
 		super.remove(component);
-		panel2uID.remove(component);
+		added.remove(find(component));
 	}
 
-	private String nextID() {
-		return uIDPrefix + panel2uID.size();
+	private IContainer find(JComponent component) {
+		for (SwingContainer<?> c : added) {
+			if (c.component == component) {
+				return c;
+			}
+		}
+		throw new RuntimeException("component in card panel not found");
+	}
+
+	JComponent chosen() {
+		return chosen;
 	}
 }

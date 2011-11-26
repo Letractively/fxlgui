@@ -99,7 +99,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 					.setPreferredSize(new Dimension(width(), height));
 
 		// TODO set height & width exclusively, not always together
-		
+
 		return (R) this;
 	}
 
@@ -239,7 +239,6 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 		return (R) this;
 	}
 
-	@SuppressWarnings("unchecked")
 	public boolean focus() {
 		return container.component.hasFocus();
 	}
@@ -297,5 +296,32 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	@Override
 	public R offset(int x, int y) {
 		throw new MethodNotImplementedException();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R attach(boolean attach) {
+		if (attach) {
+			container.parent.add(container.component);
+		} else {
+			if (isInCardPanel()) {
+				getCardPanelParent().remove(container.component);
+			} else
+				container.parent.remove(container.component);
+		}
+		return (R) this;
+	}
+
+	JPanel getCardPanelParent() {
+		if (!(container.parent.getComponent() instanceof JPanel))
+			return null;
+		JPanel p = (JPanel) container.parent.getComponent();
+		if (p.getLayout() instanceof ResizeCardLayout)
+			return p;
+		return null;
+	}
+
+	boolean isInCardPanel() {
+		return getCardPanelParent() != null;
 	}
 }

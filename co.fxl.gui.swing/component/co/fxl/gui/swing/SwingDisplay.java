@@ -45,7 +45,6 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.impl.ContextMenu;
-import co.fxl.gui.impl.DialogImpl;
 import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.ToolbarImpl;
