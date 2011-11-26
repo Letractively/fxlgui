@@ -99,4 +99,9 @@ public class ElementDecorator<T> implements IElement<T> {
 		return element.display();
 	}
 
+	@Override
+	public T attach(boolean attach) {
+		return element.attach(attach);
+	}
+
 }
