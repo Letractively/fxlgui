@@ -57,8 +57,8 @@ public class LazyTreeAdpList {
 	}
 
 	public int index(Object selection) {
-		for (int i = 0; i < rows.size(); i++)
-			if (rows.get(i).object().equals(selection))
+		for (int i = 0; i < size(); i++)
+			if (row(i).object().equals(selection))
 				return i;
 		return -1;
 	}
@@ -66,8 +66,8 @@ public class LazyTreeAdpList {
 	boolean isCollapsed(ITree<Object> tree) {
 		if (tree.childCount() > 0) {
 			int index = index(tree.object());
-			if (index < rows.size() - 1) {
-				return !rows.get(index + 1).parent().equals(tree);
+			if (index < size() - 1) {
+				return !row(index + 1).parent().equals(tree);
 			} else {
 				return true;
 			}
@@ -77,7 +77,7 @@ public class LazyTreeAdpList {
 
 	void clearChildren(ITree<Object> tree) {
 		int i = index(tree.object()) + 1;
-		while (i < rows.size() && row(i).parent().equals(tree)) {
+		while (i < size() && row(i).parent().equals(tree)) {
 			rows.remove(i);
 		}
 	}
@@ -97,7 +97,7 @@ public class LazyTreeAdpList {
 			int i = index(tree.object());
 			assert i >= 0 : tree + " not found in " + rows;
 			int index = i + 1;
-			if (index < rows.size())
+			if (index < size())
 				rows.addAll(index, cs);
 			else
 				rows.addAll(cs);
@@ -119,10 +119,11 @@ public class LazyTreeAdpList {
 
 	void copyCollapseState(LazyTreeAdpList newTree) {
 		int index = 0;
-		for (ITree<Object> t : rows) {
+		for (int i = 0; i < size(); i++) {
+			ITree<Object> t = row(i);
 			if (t.childCount() > 0) {
-				if (index < rows.size() - 1) {
-					if (!rows.get(index + 1).parent().equals(t)) {
+				if (index < size() - 1) {
+					if (!row(index + 1).parent().equals(t)) {
 						newTree.collapse(t, true);
 					}
 				} else {
