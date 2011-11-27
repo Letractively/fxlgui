@@ -20,9 +20,11 @@ package co.fxl.gui.tree.impl;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -339,7 +341,9 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					}
 				};
 				newClick.put(type, cl);
-				String text = NEW + (type == null ? "" : " " + type);
+				String text = NEW
+						+ (type == null ? "" : " "
+								+ getLabel(type, creatableTypes));
 				String imageResource = type == null ? Icons.NEW
 						: creatableTypeIcons.get(type);
 				IClickable<?> hl = widgetTitle.addHyperlink(imageResource,
@@ -473,6 +477,25 @@ public class TreeWidgetImpl<T> implements ITreeWidget<T>, IResizeListener {
 					}
 				});
 		}
+	}
+
+	public static String getLabel(String label, List<String> labels) {
+		String prefix = null;
+		for (String l1 : labels) {
+			boolean isPrefix = true;
+			for (String l2 : labels) {
+				if (!l2.contains(l1))
+					isPrefix = false;
+			}
+			if (isPrefix) {
+				prefix = l1;
+				break;
+			}
+		}
+		if (prefix != null && !label.equals(prefix)) {
+			label = label.substring(prefix.length()).trim();
+		}
+		return label;
 	}
 
 	@Override
