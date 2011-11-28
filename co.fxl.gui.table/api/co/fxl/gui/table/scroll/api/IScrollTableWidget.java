@@ -171,4 +171,6 @@ public interface IScrollTableWidget<T> {
 	IScrollTableWidget<T> filterSizeConstraint(boolean filterSizeConstraint);
 
 	IScrollTableWidget<T> showConfiguration(boolean showConfiguration);
+
+//	IVerticalPanel editPanel();
 }

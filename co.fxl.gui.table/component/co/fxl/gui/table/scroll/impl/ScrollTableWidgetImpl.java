@@ -108,6 +108,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IRows<Object> actualRows;
 	private IContainer c0;
 	private boolean addBorders;
+//	private IVerticalPanel editPanel;
 
 	ScrollTableWidgetImpl(IContainer container) {
 		c0 = container;
@@ -121,6 +122,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			widgetTitle.commandsOnTop();
 			widgetTitle.hyperlinkVisible(false);
 			this.container = widgetTitle.content().panel().vertical();
+//			editPanel = container.add().panel().vertical().visible(false);
 		}
 		return widgetTitle;
 	}
@@ -131,6 +133,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		}
 		return container;
 	}
+
+//	@Override
+//	public IVerticalPanel editPanel() {
+//		return editPanel;
+//	}
 
 	@Override
 	public int offsetY() {
@@ -423,7 +430,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					.horizontal().addSpace(8).add()
 					.widget(IMiniFilterWidget.class);
 			filter.showConfiguration(showConfiguration);
-			if(showConfiguration)
+			if (showConfiguration)
 				filter.firstConfiguration(viewComboBoxChoice);
 			// if (!ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL)
 			// topPanel.column(0).expand();
