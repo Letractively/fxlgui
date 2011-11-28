@@ -62,8 +62,9 @@ import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		ILabelMouseListener {
+	
+	// TODO Usability: Table jumps up and down when scrolling (fix on top)
 
-	// private static final int HEIGHT_TOP_PANEL = 40;
 	// TODO Swing: native implementation: required for automated testing
 
 	// TODO 2DECIDE: Option: DESIGN: Look: Scroll-Table-Widget: use fixed column
