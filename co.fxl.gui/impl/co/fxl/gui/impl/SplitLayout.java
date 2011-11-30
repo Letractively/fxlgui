@@ -43,6 +43,8 @@ public class SplitLayout implements IResizeListener {
 	private IScrollPane sideScrollPanel;
 	IGridCell cell0;
 	private boolean resizeMainPanel;
+	private IVerticalPanel sideBasePanel;
+	private boolean isDetached;
 
 	public SplitLayout(ILayout layout) {
 		this(layout, false);
@@ -63,8 +65,8 @@ public class SplitLayout implements IResizeListener {
 		mainPanel = addMainPanel(vpanel);
 		cell1 = panel.cell(1, 0).width(WIDTH_SIDE_PANEL).valign().begin()
 				.align().end();
-		sideScrollPanel = cell1.panel().vertical().addSpace(10).add()
-				.scrollPane();
+		sideBasePanel = cell1.panel().vertical();
+		sideScrollPanel = sideBasePanel.addSpace(10).add().scrollPane();
 		sidePanel = sideScrollPanel.viewPort().panel().vertical();
 		sidePanel.spacing().right(10).inner(10);
 		SidePanelResizeListener.setup(panel.display(), this);
@@ -78,6 +80,20 @@ public class SplitLayout implements IResizeListener {
 		resizeSidePanel(height);
 		cell0.width(width - WIDTH_SIDE_PANEL);
 		return true;
+	}
+
+	public void detachSidePanel() {
+		if (isDetached)
+			return;
+		sideBasePanel.remove();
+		isDetached = true;
+	}
+
+	public void attachSidePanel() {
+		if (!isDetached)
+			return;
+		cell1.element(sideBasePanel);
+		isDetached = false;
 	}
 
 	private void resizeSidePanel(int height) {
