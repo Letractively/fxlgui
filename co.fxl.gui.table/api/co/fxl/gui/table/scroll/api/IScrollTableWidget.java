@@ -165,12 +165,14 @@ public interface IScrollTableWidget<T> {
 			IUpdateListener<List<String>> hiddenColumnListener);
 
 	IScrollTableWidget<T> reduceHeightIfEmpty(boolean reduceHeightIfEmpty);
-	
+
 	IFilterConstraints constraints();
 
 	IScrollTableWidget<T> filterSizeConstraint(boolean filterSizeConstraint);
 
 	IScrollTableWidget<T> showConfiguration(boolean showConfiguration);
 
-//	IVerticalPanel editPanel();
+	List<IScrollTableColumn<T>> columns();
+
+	// IVerticalPanel editPanel();
 }

@@ -62,7 +62,7 @@ import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		ILabelMouseListener {
-	
+
 	// TODO Usability: Table jumps up and down when scrolling (fix on top)
 
 	// TODO Swing: native implementation: required for automated testing
@@ -109,7 +109,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IRows<Object> actualRows;
 	private IContainer c0;
 	private boolean addBorders;
-//	private IVerticalPanel editPanel;
+
+	// private IVerticalPanel editPanel;
 
 	ScrollTableWidgetImpl(IContainer container) {
 		c0 = container;
@@ -123,7 +124,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			widgetTitle.commandsOnTop();
 			widgetTitle.hyperlinkVisible(false);
 			this.container = widgetTitle.content().panel().vertical();
-//			editPanel = container.add().panel().vertical().visible(false);
+			// editPanel = container.add().panel().vertical().visible(false);
 		}
 		return widgetTitle;
 	}
@@ -135,10 +136,10 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		return container;
 	}
 
-//	@Override
-//	public IVerticalPanel editPanel() {
-//		return editPanel;
-//	}
+	// @Override
+	// public IVerticalPanel editPanel() {
+	// return editPanel;
+	// }
 
 	@Override
 	public int offsetY() {
@@ -1091,5 +1092,12 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			boolean showConfiguration) {
 		this.showConfiguration = showConfiguration;
 		return this;
+	}
+
+	@Override
+	public List<IScrollTableColumn<Object>> columns() {
+		List<IScrollTableColumn<Object>> columns = new LinkedList<IScrollTableColumn<Object>>();
+		columns.addAll(this.columns);
+		return columns;
 	}
 }
