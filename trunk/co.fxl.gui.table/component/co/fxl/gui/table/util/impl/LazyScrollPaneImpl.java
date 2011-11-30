@@ -20,7 +20,10 @@ package co.fxl.gui.table.util.impl;
 
 import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
@@ -35,6 +38,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	public static int WIDTH_SCROLL_PANEL = 35;
 	public static final int HEIGHT_SCROLL_BAR = 17;
 	private static final int BLOCK_INCREMENT = 22;
+	public static boolean USE_DOCK_PANEL = false;
 	private int widthScrollPanel = WIDTH_SCROLL_PANEL;
 	private IDecorator decorator;
 	private int minRowHeight = 22;
@@ -54,7 +58,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private int width = -1;
 	private IVerticalPanel v;
 	private IScrollPane treeScrollPanel;
-	private IGridPanel treeDockPanel;
+	private IPanel<?> treeDockPanel;
 	private boolean allowRepaint = false;
 	private int[] rowHeights;
 	private int heightEstimate = 0;
@@ -147,13 +151,13 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private void draw() {
 		v = container.panel().vertical();
 		v.color().white();
-		treeDockPanel = v.add().panel().grid();
-		treeDockPanel.column(0).expand();
+		ILayout layout = v.add().panel();
+		treeDockPanel = getPanel(layout);
 		if (!adjustHeights) {
 			treeDockPanel.height(height);
 		}
 		if (size == 0) {
-			treeDockPanel.cell(0, 0).panel().vertical().spacing(16).add()
+			leftPanel(treeDockPanel).panel().vertical().spacing(16).add()
 					.label().text("NO ENTITIES FOUND").font().pixel(10).color()
 					.gray();
 
@@ -164,9 +168,9 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		}
 		treeDockPanel.visible(false);
 		treeDockPanel.height(height);
-		treeScrollPanelContainer = new FlipPage(treeDockPanel.cell(0, 0));
+		treeScrollPanelContainer = new FlipPage(centerPanel(treeDockPanel));
 		treeScrollPanelContainer.height(height);
-		IContainer ctr = treeDockPanel.cell(1, 0);
+		IContainer ctr = rightPanel(treeDockPanel);
 		boolean inc = !horizontalScrollPane;
 		if (inc)
 			ctr = ctr.panel().vertical().addSpace(7).add();
@@ -262,6 +266,40 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 			if (lastIndex < 0)
 				lastIndex = 0;
 			runnable.run();
+		}
+	}
+
+	private IContainer rightPanel(IPanel<?> tdp) {
+		if (USE_DOCK_PANEL)
+			return ((IDockPanel) tdp).right();
+		else {
+			return ((IGridPanel) tdp).cell(1, 0).width(widthScrollPanel);
+		}
+	}
+
+	private IContainer centerPanel(IPanel<?> tdp) {
+		if (USE_DOCK_PANEL)
+			return ((IDockPanel) tdp).center();
+		else {
+			return ((IGridPanel) tdp).cell(0, 0);
+		}
+	}
+
+	private IContainer leftPanel(IPanel<?> tdp) {
+		if (USE_DOCK_PANEL)
+			return ((IDockPanel) tdp).left();
+		else {
+			return ((IGridPanel) tdp).cell(0, 0);
+		}
+	}
+
+	public IPanel<?> getPanel(ILayout layout) {
+		if (USE_DOCK_PANEL)
+			return layout.dock();
+		else {
+			IGridPanel grid = layout.grid();
+			grid.column(0).expand();
+			return grid;
 		}
 	}
 
