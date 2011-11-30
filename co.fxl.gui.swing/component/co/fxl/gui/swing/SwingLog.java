@@ -27,6 +27,8 @@ public class SwingLog implements ILog {
 
 	// TODO extract to aspect
 
+	private Date lastLog = null;
+
 	@Override
 	public ILog debug(String message) {
 		return log("DEBUG", message);
@@ -34,8 +36,19 @@ public class SwingLog implements ILog {
 
 	private ILog log(String string, String message) {
 		String time = Format.time().format(new Date());
-		System.out.println(time + " " + string + ": " + message);
+		System.out.println(time + " " + string + ": " + message + " ["
+				+ getDelta() + "]");
 		return this;
+	}
+
+	private String getDelta() {
+		if (lastLog != null) {
+			Date ll = lastLog;
+			lastLog = new Date();
+			return (lastLog.getTime() - ll.getTime()) + "ms";
+		}
+		lastLog = new Date();
+		return "-";
 	}
 
 }
