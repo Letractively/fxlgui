@@ -20,7 +20,7 @@ package co.fxl.gui.table.util.impl;
 
 import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IDockPanel;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
@@ -54,7 +54,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private int width = -1;
 	private IVerticalPanel v;
 	private IScrollPane treeScrollPanel;
-	private IDockPanel treeDockPanel;
+	private IGridPanel treeDockPanel;
 	private boolean allowRepaint = false;
 	private int[] rowHeights;
 	private int heightEstimate = 0;
@@ -147,13 +147,15 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private void draw() {
 		v = container.panel().vertical();
 		v.color().white();
-		treeDockPanel = v.add().panel().dock();
+		treeDockPanel = v.add().panel().grid();
+		treeDockPanel.column(0).expand();
 		if (!adjustHeights) {
 			treeDockPanel.height(height);
 		}
 		if (size == 0) {
-			treeDockPanel.left().panel().vertical().spacing(16).add().label()
-					.text("NO ENTITIES FOUND").font().pixel(10).color().gray();
+			treeDockPanel.cell(0, 0).panel().vertical().spacing(16).add()
+					.label().text("NO ENTITIES FOUND").font().pixel(10).color()
+					.gray();
 
 			// TODO FEATURE: Usability: nice 2 have: show filter details like in
 			// scrolltable
@@ -162,9 +164,9 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		}
 		treeDockPanel.visible(false);
 		treeDockPanel.height(height);
-		treeScrollPanelContainer = new FlipPage(treeDockPanel.center());
+		treeScrollPanelContainer = new FlipPage(treeDockPanel.cell(0, 0));
 		treeScrollPanelContainer.height(height);
-		IContainer ctr = treeDockPanel.right();
+		IContainer ctr = treeDockPanel.cell(1, 0);
 		boolean inc = !horizontalScrollPane;
 		if (inc)
 			ctr = ctr.panel().vertical().addSpace(7).add();
