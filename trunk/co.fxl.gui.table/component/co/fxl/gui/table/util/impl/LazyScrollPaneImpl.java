@@ -178,6 +178,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		scrollPane.size(widthScrollPanel, height);
 		scrollContentPanel = scrollPane.viewPort().panel().absolute();
 		scrollContentPanel.add().label().text("&#160;");
+		if (!USE_DOCK_PANEL)
+			((IGridPanel) treeDockPanel).column(0).expand();
 		updateScrollPanelHeight();
 		final int firstIndex = size - rows2Paint;
 		assert firstIndex >= 0;
@@ -270,25 +272,25 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	}
 
 	private IContainer rightPanel(IPanel<?> tdp) {
-		if (USE_DOCK_PANEL)
+		if (USE_DOCK_PANEL) {
 			return ((IDockPanel) tdp).right();
-		else {
+		} else {
 			return ((IGridPanel) tdp).cell(1, 0).width(widthScrollPanel);
 		}
 	}
 
 	private IContainer centerPanel(IPanel<?> tdp) {
-		if (USE_DOCK_PANEL)
+		if (USE_DOCK_PANEL) {
 			return ((IDockPanel) tdp).center();
-		else {
+		} else {
 			return ((IGridPanel) tdp).cell(0, 0);
 		}
 	}
 
 	private IContainer leftPanel(IPanel<?> tdp) {
-		if (USE_DOCK_PANEL)
+		if (USE_DOCK_PANEL) {
 			return ((IDockPanel) tdp).left();
-		else {
+		} else {
 			return ((IGridPanel) tdp).cell(0, 0);
 		}
 	}
@@ -298,7 +300,6 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 			return layout.dock();
 		else {
 			IGridPanel grid = layout.grid();
-			grid.column(0).expand();
 			return grid;
 		}
 	}
