@@ -6,7 +6,9 @@
 	<classpathentry excluding="co/fxl/gui/impl/SplitLayoutStyle.aj|co/fxl/gui/impl/HyperlinkDecoratorStyle.aj|co/fxl/gui/impl/NavigationViewStyle.aj|co/fxl/gui/impl/WidgetTitleStyle.aj" kind="src" path="aspect.style"/>
 	<classpathentry excluding="co/fxl/gui/impl/WidgetTemplateLayout.aj" kind="src" path="aspect.layout"/>
 	<classpathentry kind="src" path="gwt"/>
-	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
