@@ -22,7 +22,6 @@
   			<module>co.fxl.data.format</module>
   			<module>co.fxl.data.format.swing</module>
   			<module>co.fxl.gui.common</module>
-  			<module>co.fxl.gui.common.swing</module>
   			<module>co.fxl.gui</module>
   			<module>co.fxl.gui.swing</module>
   			<module>co.fxl.gui.form</module>
