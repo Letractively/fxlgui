@@ -1,1 +1,1 @@
-ant buildGWT
+mvn clean install -P fxl-gwt -Dmaven.test.skip=true
