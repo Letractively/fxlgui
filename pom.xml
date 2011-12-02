@@ -10,7 +10,6 @@
   	<java_compliance_source_level>1.6</java_compliance_source_level>		
   	<java_compliance_target_level>1.6</java_compliance_target_level>		
   	<gwtVersion>2.4.0</gwtVersion>
-  	<gwtRepository>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo</gwtRepository>
   </properties>
   <profiles>
   	<profile>
@@ -41,7 +40,7 @@
   		<modules>
   			<module>co.fxl.data.calendar</module>
   			<module>co.fxl.data.format</module>
-<!--  	<module>co.fxl.data.format.gwt</module> -->
+				<module>co.fxl.data.format.gwt</module>
   			<module>co.fxl.gui.common</module>
   			<module>co.fxl.gui</module>
   			<module>co.fxl.gui.form</module>
@@ -50,26 +49,34 @@
   			<module>co.fxl.gui.wizard</module>
   		</modules>	  		
   	</profile>
-	</profiles>  	
-  <dependencies>
-		<dependency>
-  		<groupId>com.google.gwt</groupId>
-  		<artifactId>gwt-servlet</artifactId>
-  		<version>${gwtVersion}</version>
-  		<scope>runtime</scope>
-  	</dependency>  
-  	<dependency>
-  		<groupId>com.google.gwt</groupId>
-  		<artifactId>gwt-user</artifactId>
-  		<version>${gwtVersion}</version>
-  		<scope>provided</scope>
-  	</dependency> 
-  	<dependency>		
-  	  <groupId>com.google.gwt</groupId>
-		  <artifactId>gwt-dev</artifactId>
-  		<version>${gwtVersion}</version>
-  	</dependency>
-  </dependencies>
+	</profiles>  
+	<dependencyManagement>	
+  	<dependencies>
+			<dependency>
+  			<groupId>com.google.gwt</groupId>
+  			<artifactId>gwt-servlet</artifactId>
+  			<version>${gwtVersion}</version>
+  			<scope>runtime</scope>
+  		</dependency>  
+  		<dependency>
+	  		<groupId>com.google.gwt</groupId>
+  			<artifactId>gwt-user</artifactId>
+  			<version>${gwtVersion}</version>
+  			<scope>provided</scope>
+  		</dependency> 
+  		<dependency>		
+	  	  <groupId>com.google.gwt</groupId>
+		  	<artifactId>gwt-dev</artifactId>
+  			<version>${gwtVersion}</version>
+  		</dependency>
+  		<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.0</version>
+  			<scope>test</scope>
+  		</dependency>
+  	</dependencies>
+	</dependencyManagement>  	
   <build>
   	<pluginManagement>
   		<plugins>
