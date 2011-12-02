@@ -18,9 +18,10 @@
  */
 package co.fxl.gui.demo;
 
+import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.navigation.api.IMenuItem;
-import co.fxl.gui.navigation.api.IMenuWidget;
 import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
+import co.fxl.gui.navigation.api.IMenuWidget;
 
 class MenuItem {
 
@@ -47,10 +48,11 @@ class MenuItem {
 
 	void apply(final Decorator decorator, final IMenuItem child) {
 		decorator.decorate(exampleDecorator, child.contentPanel());
-		child.addListener(new INavigationListener() {
+		child.listener(new INavigationListener() {
 			@Override
-			public void onActive(boolean active) {
+			public void onActive(boolean active, ICallback<Void> cb) {
 				decorator.update(child.contentPanel());
+				cb.onSuccess(null);
 			}
 		});
 	}
