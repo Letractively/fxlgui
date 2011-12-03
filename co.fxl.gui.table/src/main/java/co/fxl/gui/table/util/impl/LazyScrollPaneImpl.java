@@ -283,7 +283,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		if (USE_DOCK_PANEL) {
 			return ((IDockPanel) tdp).center();
 		} else {
-			return ((IGridPanel) tdp).cell(0, 0);
+			return ((IGridPanel) tdp).cell(0, 0).valign().begin();
 		}
 	}
 
@@ -291,7 +291,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		if (USE_DOCK_PANEL) {
 			return ((IDockPanel) tdp).left();
 		} else {
-			return ((IGridPanel) tdp).cell(0, 0);
+			return ((IGridPanel) tdp).cell(0, 0).valign().begin();
 		}
 	}
 
