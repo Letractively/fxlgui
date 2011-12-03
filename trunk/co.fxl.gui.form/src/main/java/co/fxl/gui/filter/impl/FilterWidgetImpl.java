@@ -129,9 +129,9 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			return;
 		if (filterList.get(configuration) != null)
 			update();
-		else
-			throw new MethodNotImplementedException("filter configuration "
-					+ value + " has not been set up");
+//		else
+//			throw new MethodNotImplementedException("filter configuration "
+//					+ value + " has not been set up");
 	}
 
 	@Override
