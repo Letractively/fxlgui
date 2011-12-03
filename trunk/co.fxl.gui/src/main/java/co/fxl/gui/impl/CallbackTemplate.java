@@ -54,4 +54,13 @@ public abstract class CallbackTemplate<T> implements ICallback<T> {
 			}
 		};
 	}
+
+	public static ICallback<Void> adapterBooleanTrue(final ICallback<Boolean> cb2) {
+		return new CallbackTemplate<Void>(cb2) {
+			@Override
+			public void onSuccess(Void result) {
+				cb2.onSuccess(true);
+			}
+		};
+	}
 }
