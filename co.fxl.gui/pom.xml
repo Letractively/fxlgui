@@ -12,4 +12,17 @@
   <version>1.0.0-SNAPSHOT</version>
   <name>${artifactId}</name>
   <packaging>jar</packaging>
+  <build>
+    <resources>
+      <resource>
+        <directory>aspect.i18n</directory>
+      </resource>
+      <resource>
+        <directory>aspect.layout</directory>
+      </resource>      
+      <resource>
+        <directory>aspect.style</directory>
+      </resource>            
+    </resources>
+  </build>
 </project>
