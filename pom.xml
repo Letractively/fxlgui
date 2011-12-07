@@ -46,7 +46,7 @@
   			<module>co.fxl.gui.gwt</module>
   			<module>co.fxl.gui.form</module>
   			<module>co.fxl.gui.form.gwt</module>
-  			<module>co.fxl.gui.layout.handheld</module>
+				<module>co.fxl.gui.layout.handheld</module>
   			<module>co.fxl.gui.navigation</module>
   			<module>co.fxl.gui.table</module>
   			<module>co.fxl.gui.wizard</module>
@@ -104,6 +104,22 @@
   				<warSourceExcludes>.gwt-tmp/**</warSourceExcludes>
   			</configuration>
   		</plugin> -->
+  		<plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>gwt-maven-plugin</artifactId>
+        <version>2.4.0</version>
+        <configuration>
+        	
+				</configuration>        	
+        <executions>
+          <execution>
+            <goals>
+              <goal>resources</goal>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>  		
   		<plugin>
   			<groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-eclipse-plugin</artifactId>
