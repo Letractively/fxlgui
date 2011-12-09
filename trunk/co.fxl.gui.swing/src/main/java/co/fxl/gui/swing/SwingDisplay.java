@@ -48,7 +48,6 @@ import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.ToolbarImpl;
-import co.fxl.gui.log.Log;
 
 public class SwingDisplay implements IDisplay, ComponentParent {
 
@@ -92,7 +91,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		// fullscreen();
 		// Style.setUp();
 		Display.instance(this);
-		Log.instance(new SwingLog());
+		// TODO Aspect Log.instance(new SwingLog());
 		// TODO remove hack
 		ToolbarImpl.ADJUST_HEIGHTS = true;
 	}
