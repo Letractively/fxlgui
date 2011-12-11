@@ -65,9 +65,10 @@ public class NavigationItemImpl extends LazyClickListener implements
 			buttonPanel.spacing(5).align().center();
 			buttonPanel.addSpace(2);
 			border = buttonPanel.border().width(1).style().noBottom();
-			refresh = buttonPanel.add().image().resource("loading_white.gif")
+			IHorizontalPanel subPanel = buttonPanel.add().panel().horizontal();
+			refresh = subPanel.add().image().resource("loading_white.gif")
 					.visible(false);
-			button = buttonPanel.add().label();
+			button = subPanel.add().label();
 			button.font().pixel(14).weight().bold().color().white();
 			buttonPanel.addSpace(3);
 			buttonPanel.addClickListener(this);
