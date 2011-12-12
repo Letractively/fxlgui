@@ -120,7 +120,10 @@ class MiniFilterPanel implements FilterPanel {
 
 		void visible() {
 			cardPanel.show(index2cell.get(0).container.element());
-			comboBox.addUpdateListener(this);
+			if (index2cell.size() == 1)
+				comboBox.editable(false);
+			else
+				comboBox.addUpdateListener(this);
 		}
 
 		@Override
