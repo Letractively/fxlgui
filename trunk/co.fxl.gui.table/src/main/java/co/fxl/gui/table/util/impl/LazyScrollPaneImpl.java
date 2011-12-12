@@ -425,4 +425,15 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	public void remove() {
 		container.clear();
 	}
+
+	@Override
+	public int scrollPosition() {
+		return scrollPane.scrollOffset();
+	}
+
+	@Override
+	public ILazyScrollPane scrollPosition(int scrollPosition) {
+		scrollPane.scrollTo(scrollPosition);
+		return this;
+	}
 }

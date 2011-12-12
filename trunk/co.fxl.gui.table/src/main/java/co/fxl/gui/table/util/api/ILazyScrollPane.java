@@ -25,7 +25,8 @@ public interface ILazyScrollPane extends IMouseWheelListener {
 
 	public interface IDecorator {
 
-		void decorate(IContainer container, int firstRow, int lastRow, boolean isCalibration);
+		void decorate(IContainer container, int firstRow, int lastRow,
+				boolean isCalibration);
 
 		boolean checkIndex(int rowIndex);
 
@@ -51,6 +52,10 @@ public interface ILazyScrollPane extends IMouseWheelListener {
 	ILazyScrollPane refresh();
 
 	ILazyScrollPane adjustHeights(boolean adjustHeights);
+
+	int scrollPosition();
+
+	ILazyScrollPane scrollPosition(int scrollPosition);
 
 	void remove();
 
