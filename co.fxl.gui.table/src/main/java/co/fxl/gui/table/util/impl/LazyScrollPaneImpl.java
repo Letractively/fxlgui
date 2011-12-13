@@ -229,7 +229,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 					rowIndex = maxRowIndex;
 				if (adjustHeights) {
 					scrollPane.addScrollListener(LazyScrollPaneImpl.this);
-					treeDockPanel.display().invokeLater(new Runnable() {
+					Runnable r = new Runnable() {
 
 						@Override
 						public void run() {
@@ -239,7 +239,9 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 								update(false);
 							treeDockPanel.visible(true);
 						}
-					});
+					};
+//					r.run();
+					treeDockPanel.display().invokeLater(r);
 				} else {
 					if (rowIndex > 0) {
 						scrollToRowIndex();
