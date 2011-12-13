@@ -323,6 +323,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 
 	@Override
 	public IBulkTableWidget height(int height) {
+		// Display.instance().title(Display.instance().title() + "|" + height);
 		mainPanel.height(height);
 		return this;
 	}
