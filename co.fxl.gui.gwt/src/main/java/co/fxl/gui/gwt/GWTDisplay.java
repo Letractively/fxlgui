@@ -88,6 +88,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	private Map<IResizeListener, HandlerRegistration> resizeListeners = new HashMap<IResizeListener, HandlerRegistration>();
 	static int lastClickX = 0;
 	static int lastClickY = 0;
+	private Scheduler scheduler = new SchedulerImpl();
 
 	public static void notifyEvent(DomEvent<?> event) {
 		final NativeEvent nativeEvent = event.getNativeEvent();
@@ -366,8 +367,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 	@Override
 	public IDisplay invokeLater(final Runnable runnable) {
-		Scheduler s = new SchedulerImpl();
-		s.scheduleDeferred(new ScheduledCommand() {
+		scheduler.scheduleDeferred(new ScheduledCommand() {
 			@Override
 			public void execute() {
 				runnable.run();
