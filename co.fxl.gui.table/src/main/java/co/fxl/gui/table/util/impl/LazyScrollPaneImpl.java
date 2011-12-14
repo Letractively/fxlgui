@@ -264,7 +264,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		};
 		if (adjustHeights) {
 			update(firstIndex, true);
-			treeDockPanel.display().invokeLater(runnable);
+			runnable.run();
+//			treeDockPanel.display().invokeLater(runnable);
 		} else {
 			lastIndex = size - 1;
 			if (lastIndex < 0)
