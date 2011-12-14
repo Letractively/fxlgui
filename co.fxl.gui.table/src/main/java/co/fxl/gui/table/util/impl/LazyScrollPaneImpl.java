@@ -235,15 +235,19 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 						@Override
 						public void run() {
 							v.height(height);
+							updateScrollPanelHeight();
 							if (rowIndex > 0) {
+								holdScroll = true;
 								scrollToRowIndex();
-							} else
-								update(false);
+								holdScroll = false;
+							}
+							// else
+							update(false);
 							treeDockPanel.visible(true);
 						}
 					};
-					// r.run();
-					treeDockPanel.display().invokeLater(r);
+					r.run();
+					// treeDockPanel.display().invokeLater(r);
 				} else {
 					if (rowIndex > 0) {
 						scrollToRowIndex();
@@ -267,8 +271,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		if (adjustHeights) {
 			update(firstIndex, true);
 			v.height(height + HEIGHT_CORRECTION);
-			// runnable.run();
-			treeDockPanel.display().invokeLater(runnable);
+			runnable.run();
+			// treeDockPanel.display().invokeLater(runnable);
 		} else {
 			lastIndex = size - 1;
 			if (lastIndex < 0)
