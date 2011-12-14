@@ -329,7 +329,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						public void decorate(IContainer container,
 								int firstRow, int lastRow, boolean isCalibration) {
 							rowOffset = firstRow;
-							paintedRows = lastRow - firstRow;
+							paintedRows = lastRow - firstRow + 1;
 							contentPanel = container.panel().vertical();
 							updateWithPaintedRowsSet(isCalibration);
 						}
@@ -349,7 +349,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 							return grid.rowHeight(visibleRowIndex);
 						}
 					});
-					sp.size(rows.size() + 1);
+					sp.size(rows.size());
 					sp.visible(true);
 				}
 			}
