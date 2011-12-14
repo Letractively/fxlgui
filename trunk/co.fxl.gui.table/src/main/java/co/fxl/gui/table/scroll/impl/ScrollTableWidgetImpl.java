@@ -667,11 +667,18 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		IHorizontalPanel p = clear.panel().horizontal().align().end().add()
 				.panel().horizontal().align().end();
 		ILabel label = p.add().label();
-		if (constraints != null && constraints.rowIterator().hasPrevious()) {
-			String in = "<<";
-			ILabel l = label.text(in);
-			l.hyperlink().font().pixel(10);
+		boolean hasPrevious = constraints != null
+				&& constraints.rowIterator().hasPrevious();
+		boolean hasNext = constraints != null
+				&& constraints.rowIterator().hasNext();
+		ILabel l = null;
+		if (hasPrevious) {
+			l = label.text("<<").hyperlink().clickable(false);
 			p.addSpace(4);
+		}
+		if (hasPrevious) {
+			l.clickable(true);
+			l.hyperlink().font().pixel(10);
 			l.addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {
@@ -694,11 +701,13 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		label.text(in);
 		label.font().pixel(10);
 		addStatus(p, status);
-		if (constraints != null && constraints.rowIterator().hasNext()) {
+		if (hasNext) {
 			p.addSpace(4);
-			in = ">>";
-			label = p.add().label();
-			ILabel l = label.text(in);
+			l = p.add().label().text(">>");
+			l.hyperlink().clickable(false);
+		}
+		if (hasNext) {
+			l.clickable(true);
 			l.hyperlink().font().pixel(10);
 			l.addClickListener(new IClickListener() {
 				@Override

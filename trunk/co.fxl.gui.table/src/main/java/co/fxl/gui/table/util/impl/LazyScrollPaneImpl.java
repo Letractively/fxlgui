@@ -38,6 +38,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	public static int WIDTH_SCROLL_PANEL = 35;
 	public static final int HEIGHT_SCROLL_BAR = 17;
 	private static final int BLOCK_INCREMENT = 22;
+	private static final int HEIGHT_CORRECTION = 7;
 	public static boolean USE_DOCK_PANEL = false;
 	private int widthScrollPanel = WIDTH_SCROLL_PANEL;
 	private IDecorator decorator;
@@ -233,6 +234,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 						@Override
 						public void run() {
+							v.height(height);
 							if (rowIndex > 0) {
 								scrollToRowIndex();
 							} else
@@ -240,7 +242,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 							treeDockPanel.visible(true);
 						}
 					};
-//					r.run();
+					// r.run();
 					treeDockPanel.display().invokeLater(r);
 				} else {
 					if (rowIndex > 0) {
@@ -264,8 +266,9 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		};
 		if (adjustHeights) {
 			update(firstIndex, true);
-			runnable.run();
-//			treeDockPanel.display().invokeLater(runnable);
+			v.height(height + HEIGHT_CORRECTION);
+			// runnable.run();
+			treeDockPanel.display().invokeLater(runnable);
 		} else {
 			lastIndex = size - 1;
 			if (lastIndex < 0)
