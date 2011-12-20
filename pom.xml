@@ -13,6 +13,30 @@
   </properties>
   <profiles>
   	<profile>
+  		<id>fxl-all</id>
+  		<activation>
+  			<activeByDefault>true</activeByDefault>
+  		</activation>  		
+  		<modules>
+  			<module>co.fxl.data.calendar</module>
+  			<module>co.fxl.data.format</module>
+  			<module>co.fxl.data.format.swing</module>
+  			<module>co.fxl.data.format.gwt</module>
+  			<module>co.fxl.gui.common</module>
+  			<module>co.fxl.gui</module>
+  			<module>co.fxl.gui.swing</module>
+  			<module>co.fxl.gui.gwt</module>
+  			<module>co.fxl.gui.form</module>
+  			<module>co.fxl.gui.form.gwt</module>
+  			<module>co.fxl.gui.layout.handheld</module>
+  			<module>co.fxl.gui.style.gplus</module>
+  			<module>co.fxl.gui.navigation</module>
+  			<module>co.fxl.gui.table</module>
+  			<module>co.fxl.gui.table.swing</module>
+  			<module>co.fxl.gui.wizard</module>  			
+  		</modules>
+		</profile>  			
+  	<profile>	
   		<id>fxl-swing</id>
   		<activation>
   			<activeByDefault>false</activeByDefault>
