@@ -13,10 +13,16 @@
   <name>${artifactId}</name>
   <packaging>jar</packaging>
 	<dependencies>
+		<dependency>
+  		<groupId>${groupId}</groupId>
+  		<artifactId>fxl-data-calendar</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>		
   	<dependency>
   		<groupId>${groupId}</groupId>
   		<artifactId>fxl-gui-android</artifactId>
   		<version>${project.version}</version>
-  	</dependency>			
+  	</dependency>		
+  		
 	</dependencies>
 </project>
