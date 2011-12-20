@@ -2,6 +2,7 @@
   <name>fxl-data-calendar-android</name>
   <comment/>
   <projects>
+    <project>fxl-data-calendar</project>
     <project>fxl-gui</project>
     <project>fxl-gui-android</project>
   </projects>
