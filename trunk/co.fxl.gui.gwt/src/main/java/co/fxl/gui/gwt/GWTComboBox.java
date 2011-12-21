@@ -36,6 +36,7 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 	private int defaultHeight;
 	private List<IUpdateListener<String>> listeners = new LinkedList<IUpdateListener<String>>();
 	private boolean hasBeenSet = false;
+	private String value;
 
 	GWTComboBox(GWTContainer<ListBox> container) {
 		super(container);
@@ -45,6 +46,20 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 		if (defaultHeight < 20)
 			defaultHeight = 20;
 		height(24);
+		container.widget.addChangeHandler(new ChangeHandler() {
+
+			@Override
+			public void onChange(ChangeEvent event) {
+				String text = text();
+				if (GWTDisplay.waiting) {
+					setTextNoNotify(value);
+				} else {
+					value = text;
+					for (IUpdateListener<String> l : listeners)
+						l.onUpdate(text);
+				}
+			}
+		});
 	}
 
 	@Override
@@ -78,18 +93,13 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 		if (container.widget.getSelectedIndex() == -1) {
 			container.widget.setSelectedIndex(0);
 		}
+		value = text();
 		return this;
 	}
 
 	@Override
 	public IComboBox addUpdateListener(final IUpdateListener<String> listener) {
 		listeners.add(listener);
-		container.widget.addChangeHandler(new ChangeHandler() {
-			@Override
-			public void onChange(ChangeEvent event) {
-				listener.onUpdate(text());
-			}
-		});
 		return this;
 	}
 
@@ -105,14 +115,19 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 		}
 		if (!constraints.contains(token))
 			addText(choice);
-		int index = constraints.indexOf(token);
-		container.widget.setSelectedIndex(index);
+		setTextNoNotify(token);
+		value = text();
 		if (!hasBeenSet || !equals(before, token)) {
 			hasBeenSet = true;
 			for (IUpdateListener<String> l : listeners)
 				l.onUpdate(text());
 		}
 		return this;
+	}
+
+	public void setTextNoNotify(String token) {
+		int index = constraints.indexOf(token);
+		container.widget.setSelectedIndex(index);
 	}
 
 	private boolean equals(String before, String token) {
@@ -159,6 +174,7 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 		container.widget.clear();
 		constraints.clear();
 		hasNull = false;
+		value = text();
 		return this;
 	}
 }
