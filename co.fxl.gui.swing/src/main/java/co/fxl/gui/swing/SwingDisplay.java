@@ -146,7 +146,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		return this;
 	}
 
-	public static IDisplay instance() {
+	public static SwingDisplay instance() {
 		if (instance == null)
 			instance = new SwingDisplay();
 		return instance;
