@@ -20,6 +20,8 @@ package co.fxl.gui.swing;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JComboBox;
 
@@ -29,10 +31,32 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 		implements IComboBox {
 
 	private boolean hasNull = false;
+	private List<IUpdateListener<String>> listeners = new LinkedList<IUpdateListener<String>>();
+	private String value;
 
 	public SwingComboBox(SwingContainer<JComboBox> container) {
 		super(container);
 		color().white();
+		container.component.addActionListener(new ActionListener() {
+
+			private boolean ignore = false;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (ignore)
+					return;
+				String text = text();
+				if (SwingDisplay.instance().waiting) {
+					ignore = true;
+					text(value);
+					ignore = false;
+				} else {
+					value = text();
+					for (IUpdateListener<String> l : listeners)
+						l.onUpdate(text);
+				}
+			}
+		});
 	}
 
 	@Override
@@ -66,6 +90,7 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 		for (int i = 0; i < container.component.getItemCount(); i++)
 			if (container.component.getItemAt(i).equals(token))
 				container.component.setSelectedIndex(i);
+		value = text();
 		return this;
 	}
 
@@ -83,6 +108,7 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 			}
 			container.component.addItem(choice);
 		}
+		value = text();
 		return this;
 	}
 
@@ -105,12 +131,7 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 
 	@Override
 	public IComboBox addUpdateListener(final IUpdateListener<String> listener) {
-		container.component.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				listener.onUpdate(text());
-			}
-		});
+		listeners.add(listener);
 		return this;
 	}
 
@@ -122,6 +143,7 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 	@Override
 	public IComboBox clear() {
 		container.component.removeAllItems();
+		value = text();
 		return this;
 	}
 }
