@@ -6,5 +6,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/co.fxl.data.mail"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/co.fxl.gui.android"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Android2.1"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/co.fxl.gui"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
