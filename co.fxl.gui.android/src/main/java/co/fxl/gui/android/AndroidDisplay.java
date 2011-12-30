@@ -35,12 +35,14 @@ import co.fxl.gui.api.WidgetProviderNotFoundException;
 
 public class AndroidDisplay implements IDisplay, Parent {
 
-	Activity activity;
+	private static AndroidDisplay instance;
+	public Activity activity;
 	private AndroidContainer container = new AndroidContainer(this);
 	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
 
 	private AndroidDisplay(Activity activity) {
 		this.activity = activity;
+		instance = this;
 	}
 
 	@Override
@@ -208,5 +210,9 @@ public class AndroidDisplay implements IDisplay, Parent {
 	@Override
 	public IDisplay register(IPanelProvider<?>... layoutProvider) {
 		throw new MethodNotImplementedException();
+	}
+
+	public static AndroidDisplay instance() {
+		return instance;
 	}
 }
