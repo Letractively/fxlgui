@@ -27,6 +27,9 @@ import co.fxl.gui.api.IGridPanel.IGridCell;
 
 class AndroidGridCell extends AndroidContainer implements IGridCell {
 
+	private TableRow row;
+	private int columnIndex;
+
 	AndroidGridCell(final AndroidDisplay androidDisplay,
 			final AndroidGridPanel grid, final TableRow row,
 			final int columnIndex) {
@@ -59,6 +62,8 @@ class AndroidGridCell extends AndroidContainer implements IGridCell {
 				throw new MethodNotImplementedException();
 			}
 		});
+		this.row = row;
+		this.columnIndex = columnIndex;
 	}
 
 	@Override
@@ -98,7 +103,8 @@ class AndroidGridCell extends AndroidContainer implements IGridCell {
 
 	@Override
 	public IGridCell clear() {
-		throw new MethodNotImplementedException();
+		row.removeViewAt(columnIndex);
+		return this;
 	}
 
 	@Override

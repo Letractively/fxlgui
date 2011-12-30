@@ -109,7 +109,8 @@ class AndroidComboBox extends AndroidElement<Spinner, IComboBox> implements
 
 	@Override
 	public IComboBox clear() {
-		throw new MethodNotImplementedException();
+		adapter.clear();
+		return this;
 	}
 
 	@Override
