@@ -1,10 +1,11 @@
 package co.fxl.gui.table.util.impl;
 
-import org.junit.Test;
-
 public class LazyScrollPaneConversionTest {
 
-	@Test
+	public static void main(String[] args) {
+		new LazyScrollPaneConversionTest().run();
+	}
+
 	public void run() {
 		LazyScrollPaneImpl p = new LazyScrollPaneImpl(null);
 		int rowIndex = 41;
