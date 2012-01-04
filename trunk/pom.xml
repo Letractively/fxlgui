@@ -34,49 +34,12 @@
   			<module>co.fxl.gui.table</module>
   			<module>co.fxl.gui.table.swing</module>
   			<module>co.fxl.gui.wizard</module>  			
+  			<module>co.fxl.gui.demo</module>
   			<module>co.fxl.data.calendar.android</module>
+  			<module>co.fxl.data.mail</module>
+  			<module>co.fxl.data.mail.android</module>
   		</modules>
 		</profile>  			
-  	<profile>	
-  		<id>fxl-swing</id>
-  		<activation>
-  			<activeByDefault>false</activeByDefault>
-  		</activation>
-  		<modules>
-  			<module>co.fxl.data.calendar</module>
-  			<module>co.fxl.data.format</module>
-  			<module>co.fxl.data.format.swing</module>
-  			<module>co.fxl.gui</module>
-  			<module>co.fxl.gui.swing</module>
-  			<module>co.fxl.gui.form</module>
-  			<module>co.fxl.gui.layout.handheld</module>
-  			<module>co.fxl.gui.navigation</module>
-  			<module>co.fxl.gui.table</module>
-  			<module>co.fxl.gui.table.swing</module>
-  			<module>co.fxl.gui.wizard</module>
-  		</modules>	
-  	</profile>		
-  	<profile>
-  		<id>fxl-gwt</id>
-  		<activation>
-  			<activeByDefault>true</activeByDefault>
-  		</activation>
-  		<modules>
-  			<module>co.fxl.data.calendar</module>
-  			<module>co.fxl.data.format</module>
-				<module>co.fxl.data.format.gwt</module>
-  			<module>co.fxl.gui</module>
-  			<module>co.fxl.gui.gwt</module>
-  			<module>co.fxl.gui.form</module>
-  			<module>co.fxl.gui.form.gwt</module>
-				<module>co.fxl.gui.layout.handheld</module>
-				<module>co.fxl.gui.style.gplus</module>
-  			<module>co.fxl.gui.navigation</module>
-  			<module>co.fxl.gui.table</module>
-  			<module>co.fxl.gui.wizard</module>
-  			<module>co.fxl.gui.demo</module>
-  		</modules>	  		
-  	</profile>
 	</profiles>  
 	<dependencyManagement>	
   	<dependencies>
@@ -111,7 +74,6 @@
   			<plugin>
   				<groupId>org.apache.maven.plugins</groupId>
   				<artifactId>maven-compiler-plugin</artifactId>
-<!--  				<version>2.3.2</version> -->
   				<configuration>
   					<source>${java_compliance_source_level}</source>
   					<target>${java_compliance_target_level}</target>	
@@ -120,14 +82,6 @@
   		</plugins>	
   	</pluginManagement>		
   	<plugins>
-<!--	<plugin>
-  			<groupId>org.apache.maven.plugins</groupId>
-  			<artifactId>maven-war-plugin</artifactId>
-  			<configuration>
-  				<webXml>target/web.xml</webXml>
-  				<warSourceExcludes>.gwt-tmp/**</warSourceExcludes>
-  			</configuration>
-  		</plugin> -->
   		<plugin>
   			<groupId>org.apache.maven.plugins</groupId>
   			<artifactId>maven-source-plugin</artifactId>
@@ -144,9 +98,6 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>gwt-maven-plugin</artifactId>
         <version>2.4.0</version>
-        <configuration>
-        	
-				</configuration>        	
         <executions>
           <execution>
             <goals>
