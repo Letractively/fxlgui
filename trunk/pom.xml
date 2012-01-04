@@ -120,6 +120,10 @@
           </additionalbuildcommands>
         </configuration>
       </plugin>
-  	</plugins>		
-  </build>
+  	</plugins>		  	
+  	<scm>
+  	  <connection>scm:svn:https://fxlgui.googlecode.com/svn/trunk</connection>
+  		<developerConnection>scm:svn:https://fxlgui.googlecode.com/svn/trunk</developerConnection>
+  		<url>https://fxlgui.googlecode.com/svn/trunk</url>
+  	</scm>
 </project>
