@@ -120,10 +120,11 @@
           </additionalbuildcommands>
         </configuration>
       </plugin>
-  	</plugins>		  	
-  	<scm>
-  	  <connection>scm:svn:https://fxlgui.googlecode.com/svn/trunk</connection>
-  		<developerConnection>scm:svn:https://fxlgui.googlecode.com/svn/trunk</developerConnection>
-  		<url>https://fxlgui.googlecode.com/svn/trunk</url>
-  	</scm>
+  	</plugins>	
+  </build>	  	
+ 	<scm>
+ 	  <connection>scm:svn:https://fxlgui.googlecode.com/svn/trunk</connection>
+ 		<developerConnection>scm:svn:https://fxlgui.googlecode.com/svn/trunk</developerConnection>
+ 		<url>https://fxlgui.googlecode.com/svn/trunk</url>
+ 	</scm>
 </project>
