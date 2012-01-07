@@ -73,13 +73,13 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 			if (label == null) {
 				IGridCell cell = c();
 				IBorder b = cell.border();
-				b.color().black();
+				b.color().gray();
 				b.style().bottom();
 				label = cell.label();
-				label.font().pixel(14).weight().bold();
+				label.font().pixel(11).weight().bold().color().rgb(31, 31, 31);
 				align.forward(cell.align());
 			}
-			label.text(title);
+			label.text(title.toUpperCase());
 			return this;
 		}
 
