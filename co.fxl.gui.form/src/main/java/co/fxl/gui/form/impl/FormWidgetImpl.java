@@ -89,7 +89,7 @@ public class FormWidgetImpl implements IFormWidget {
 	private IClickListener saveClickListener;
 	private IGridPanel bottomPanel;
 
-	FormWidgetImpl(IContainer panel) {
+	protected FormWidgetImpl(IContainer panel) {
 		widgetTitle = new WidgetTitle(panel.panel(), false)// .grayBackground()
 				.commandsOnTop().space(0);
 		widgetTitle.foldable(false);
@@ -440,7 +440,7 @@ public class FormWidgetImpl implements IFormWidget {
 			throw new MethodNotImplementedException(valueElement.getClass());
 	}
 
-	public IGridPanel grid() {
+	IGridPanel grid() {
 		if (grid == null) {
 			contentPanel = widgetTitle.content().panel().vertical()
 					.spacing(spacing).add().panel().vertical();
@@ -450,8 +450,12 @@ public class FormWidgetImpl implements IFormWidget {
 			grid.resize(2, 1);
 			int column = 1;
 			expand(column);
+			decorate(grid);
 		}
 		return grid;
+	}
+
+	protected void decorate(IGridPanel grid) {
 	}
 
 	void expand(int column) {
