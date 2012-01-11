@@ -18,7 +18,6 @@
   			<activeByDefault>true</activeByDefault>
   		</activation>  		
   		<modules>
-  			<module>co.fxl.data.calendar</module>
   			<module>co.fxl.data.format</module>
   			<module>co.fxl.data.format.swing</module>
   			<module>co.fxl.data.format.gwt</module>
@@ -35,9 +34,6 @@
   			<module>co.fxl.gui.table.swing</module>
   			<module>co.fxl.gui.wizard</module>  			
   			<module>co.fxl.gui.demo</module>
-  			<module>co.fxl.data.calendar.android</module>
-  			<module>co.fxl.data.mail</module>
-  			<module>co.fxl.data.mail.android</module>
   		</modules>
 		</profile>  			
 	</profiles>  
