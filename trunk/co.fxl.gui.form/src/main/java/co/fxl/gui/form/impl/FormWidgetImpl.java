@@ -117,7 +117,6 @@ public class FormWidgetImpl implements IFormWidget {
 		if (fixValueWidth != -column)
 			cell.width(fixValueWidth);
 		heights.decorate(cell);
-		decorateCell(cell);
 		// gridIndex++;
 		return cell;
 	}
@@ -170,6 +169,7 @@ public class FormWidgetImpl implements IFormWidget {
 		ITextArea valuePanel = container(gridIndex).textArea();
 		valuePanel.editable(saveListener != null);
 		setFocus(valuePanel);
+		decorateCell(grid.cell(1, gridIndex));
 		return valuePanel;
 	}
 
