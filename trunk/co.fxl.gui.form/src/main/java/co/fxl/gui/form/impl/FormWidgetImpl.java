@@ -69,7 +69,7 @@ public class FormWidgetImpl implements IFormWidget {
 
 	private int gridIndex0 = -1;
 	private WidgetTitle widgetTitle;
-	IGridPanel grid;
+	protected IGridPanel grid;
 	private IVerticalPanel contentPanel;
 	ISaveListener saveListener = null;
 	List<FormFieldImpl<?, ?>> fields = new LinkedList<FormFieldImpl<?, ?>>();
@@ -117,8 +117,12 @@ public class FormWidgetImpl implements IFormWidget {
 		if (fixValueWidth != -column)
 			cell.width(fixValueWidth);
 		heights.decorate(cell);
+		decorateCell(cell);
 		// gridIndex++;
 		return cell;
+	}
+
+	protected void decorateCell(IGridCell cell) {
 	}
 
 	ITextField addFormValueTextField(int gridIndex, boolean withFocus) {
