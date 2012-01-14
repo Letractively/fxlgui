@@ -567,4 +567,9 @@ public class FormWidgetImpl implements IFormWidget {
 	public IFormContainer insert(int index, String name) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public IFormField<IRichTextArea, String> addRichTextArea(String name) {
+		return new FormRichTextAreaImpl(this, nextGridIndex(), name);
+	}
 }
