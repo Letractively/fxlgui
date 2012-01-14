@@ -1,6 +1,4 @@
 /**
- * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
- *  
  * This file is part of FXL GUI API.
  *  
  * FXL GUI API is free software: you can redistribute it and/or modify
@@ -15,29 +13,32 @@
  *  
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
 package co.fxl.gui.gwt;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.ITextArea;
+import co.fxl.gui.api.IRichTextArea;
 
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.RichTextArea;
 
-class GWTTextArea extends GWTTextAreaTemplate<TextArea, ITextArea> implements
-		ITextArea {
+public class GWTRichTextArea extends
+		GWTTextAreaTemplate<RichTextArea, IRichTextArea> implements
+		IRichTextArea {
 
 	private List<IUpdateListener<String>> changeListeners = new LinkedList<IUpdateListener<String>>();
 
-	GWTTextArea(GWTContainer<TextArea> container) {
+	GWTRichTextArea(GWTContainer<RichTextArea> container) {
 		super(container);
 	}
 
 	@Override
-	public ITextArea text(String text) {
+	public IRichTextArea text(String text) {
 		String previous = container.widget.getText();
 		container.widget.setText(text);
 		if (!previous.equals(text)) {
@@ -56,17 +57,10 @@ class GWTTextArea extends GWTTextAreaTemplate<TextArea, ITextArea> implements
 	}
 
 	@Override
-	public ITextArea editable(boolean editable) {
-		container.widget.setReadOnly(!editable);
-		return this;
-	}
-
-	@Override
-	public ITextArea addUpdateListener(
+	public IRichTextArea addUpdateListener(
 			final IUpdateListener<String> changeListener) {
 		changeListeners.add(changeListener);
 		container.widget.addKeyUpHandler(new KeyUpHandler() {
-
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
 				changeListener.onUpdate(container.widget.getText());
@@ -76,43 +70,24 @@ class GWTTextArea extends GWTTextAreaTemplate<TextArea, ITextArea> implements
 	}
 
 	@Override
-	public ITextArea tooltip(String text) {
+	public IRichTextArea tooltip(String text) {
 		container.widget.setTitle(text);
 		return this;
 	}
 
 	@Override
-	public int cursorPosition() {
-		return container.widget.getCursorPos();
-	}
-
-	@Override
-	public ITextArea cursorPosition(int position) {
-		position = Math.max(position, text().length());
-		container.widget.setCursorPos(position);
+	public IRichTextArea editable(boolean editable) {
+		container.widget.setEnabled(editable);
 		return this;
 	}
 
 	@Override
-	public ITextArea maxLength(final int maxLength) {
-		addUpdateListener(new IUpdateListener<String>() {
-
-			@Override
-			public void onUpdate(final String value) {
-				if (value.length() > maxLength)
-					display().invokeLater(new Runnable() {
-						public void run() {
-							GWTTextArea.this.container.widget.setText(value
-									.substring(0, maxLength));
-						}
-					});
-			}
-		});
-		return this;
+	public IRichTextArea maxLength(int maxLength) {
+		throw new MethodNotImplementedException();
 	}
 
 	@Override
 	public boolean editable() {
-		return !container.widget.isReadOnly();
+		return container.widget.isEnabled();
 	}
 }
