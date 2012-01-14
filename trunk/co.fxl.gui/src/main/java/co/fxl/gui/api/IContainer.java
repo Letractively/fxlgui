@@ -36,6 +36,8 @@ public interface IContainer {
 
 	ITextArea textArea();
 
+	IRichTextArea richTextArea();
+
 	ICheckBox checkBox();
 
 	IComboBox comboBox();
