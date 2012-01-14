@@ -31,6 +31,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.IRadioButton;
+import co.fxl.gui.api.IRichTextArea;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.ISuggestField;
@@ -48,6 +49,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RadioButton;
+import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextArea;
@@ -231,5 +233,12 @@ public class GWTContainer<T extends Widget> implements IContainer {
 	@Override
 	public IDisplay display() {
 		return parent.lookupDisplay();
+	}
+
+	@Override
+	public IRichTextArea richTextArea() {
+		setComponent((T) new RichTextArea());
+		return (IRichTextArea) (element = new GWTRichTextArea(
+				(GWTContainer<RichTextArea>) this));
 	}
 }
