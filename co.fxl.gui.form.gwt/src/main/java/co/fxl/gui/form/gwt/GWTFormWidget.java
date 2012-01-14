@@ -41,6 +41,8 @@ class GWTFormWidget extends FormWidgetImpl implements IFormWidget {
 			grid.column(0).width(100);
 			Grid g = (Grid) grid.nativeElement();
 			g.getElement().getStyle().setTableLayout(TableLayout.FIXED);
+			g.getColumnFormatter().getElement(1).getStyle()
+					.setProperty("wordWrap", "break-all");
 		}
 	}
 
