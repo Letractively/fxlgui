@@ -39,8 +39,8 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 
 	public class GridCell extends GWTContainer<Widget> implements IGridCell {
 
-		int column;
-		int row;
+		public int column;
+		public int row;
 
 		GridCell(int column, int row) {
 			super((GWTPanel<?, IGridPanel>) GWTGridPanel.this);
