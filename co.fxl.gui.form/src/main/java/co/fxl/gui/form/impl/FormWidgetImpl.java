@@ -38,6 +38,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
+import co.fxl.gui.api.IRichTextArea;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
@@ -167,6 +168,14 @@ public class FormWidgetImpl implements IFormWidget {
 
 	ITextArea addFormValueTextArea(int gridIndex) {
 		ITextArea valuePanel = container(gridIndex).textArea();
+		valuePanel.editable(saveListener != null);
+		setFocus(valuePanel);
+		decorateCell(grid.cell(1, gridIndex));
+		return valuePanel;
+	}
+
+	IRichTextArea addFormValueRichTextArea(int gridIndex) {
+		IRichTextArea valuePanel = container(gridIndex).richTextArea();
 		valuePanel.editable(saveListener != null);
 		setFocus(valuePanel);
 		decorateCell(grid.cell(1, gridIndex));
