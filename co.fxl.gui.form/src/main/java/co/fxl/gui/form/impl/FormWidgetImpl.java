@@ -448,7 +448,9 @@ public class FormWidgetImpl implements IFormWidget {
 			validation.linkInput((ICheckBox) valueElement);
 		} else if (valueElement instanceof IComboBox) {
 			validation.linkInput((IComboBox) valueElement, formField.required);
-		} else if (valueElement instanceof ILabel) {
+		} else if (valueElement instanceof IRichTextArea) {
+			validation.linkInput((IRichTextArea) valueElement,
+					formField.required);
 		} else
 			throw new MethodNotImplementedException(valueElement.getClass());
 	}
