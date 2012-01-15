@@ -23,6 +23,7 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.impl.FormWidgetImpl;
+import co.fxl.gui.gwt.GWTDisplay;
 import co.fxl.gui.gwt.GWTGridPanel.GridCell;
 
 import com.google.gwt.dom.client.Style.TableLayout;
@@ -37,22 +38,30 @@ class GWTFormWidget extends FormWidgetImpl implements IFormWidget {
 
 	@Override
 	protected void decorate(IGridPanel grid) {
-		// if (GWTDisplay.isInternetExplorer()) {
-		grid.column(0).width(100);
-		Grid g = (Grid) grid.nativeElement();
-		g.getElement().getStyle().setTableLayout(TableLayout.FIXED);
-		Element element = g.getColumnFormatter().getElement(1);
-		element.addClassName("wordWrapBreakAll");
-		// }
+		if (GWTDisplay.isInternetExplorer8()) {
+			grid.column(0).width(100);
+			Grid g = (Grid) grid.nativeElement();
+			g.getElement().getStyle().setTableLayout(TableLayout.FIXED);
+			Element element = g.getColumnFormatter().getElement(1);
+			element.addClassName("wordWrapBreakAll");
+		}
 	}
 
 	@Override
 	protected void decorateCell(IGridCell cell) {
-		// if (GWTDisplay.isInternetExplorer()) {
-		Grid g = (Grid) grid.nativeElement();
-		GridCell gc = (GridCell) cell;
-		Element element = g.getCellFormatter().getElement(gc.row, gc.column);
-		element.addClassName("wordWrapBreakAll");
-		// }
+		if (GWTDisplay.isInternetExplorer8()) {
+			Grid g = (Grid) grid.nativeElement();
+			GridCell gc = (GridCell) cell;
+			Element element = g.getCellFormatter()
+					.getElement(gc.row, gc.column);
+			element.addClassName("wordWrapBreakAll");
+		}
+	}
+
+	@Override
+	protected void prepareButtonColumn(IGridPanel grid, int column) {
+		if (GWTDisplay.isInternetExplorer8()) {
+			grid.column(column).width(60);
+		}
 	}
 }
