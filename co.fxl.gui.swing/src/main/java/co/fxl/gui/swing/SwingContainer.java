@@ -159,7 +159,7 @@ public class SwingContainer<T extends JComponent> implements IContainer {
 	@Override
 	public IRichTextArea richTextArea() {
 		setComponent((T) new TextAreaComponent<T>());
-		return (IRichTextArea) (element = new SwingTextArea(
+		return (IRichTextArea) (element = new SwingRichTextArea(
 				(SwingContainer<JTextArea>) this));
 	}
 
