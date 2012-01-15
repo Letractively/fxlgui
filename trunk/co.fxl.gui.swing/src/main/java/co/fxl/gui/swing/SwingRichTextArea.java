@@ -20,11 +20,13 @@ package co.fxl.gui.swing;
 
 import javax.swing.JTextArea;
 
-import co.fxl.gui.api.ITextArea;
+import co.fxl.gui.api.IRichTextArea;
 import co.fxl.gui.api.IUpdateable;
+import co.fxl.gui.impl.RichTextToolbar;
+import co.fxl.gui.impl.RichTextToolbar.IRichTextAdapter;
 
-class SwingRichTextArea extends SwingTextInput<JTextArea, ITextArea> implements
-		ITextArea {
+class SwingRichTextArea extends SwingTextInput<JTextArea, IRichTextArea>
+		implements IRichTextArea {
 
 	// TODO add scrollpanel
 
@@ -33,6 +35,25 @@ class SwingRichTextArea extends SwingTextInput<JTextArea, ITextArea> implements
 		jTextArea().setLineWrap(true);
 		font().family().arial();
 		font().pixel(12);
+		new RichTextToolbar(this, new IRichTextAdapter() {
+
+			private boolean isBold = false;
+
+			@Override
+			public void toggleBold() {
+				if (isBold)
+					text(text() + "</b>");
+				else
+					text(text() + "<b>");
+				cursorPosition(text().length());
+				isBold = !isBold;
+			}
+
+			@Override
+			public boolean isBold() {
+				return isBold;
+			}
+		});
 	}
 
 	private JTextArea jTextArea() {
@@ -40,7 +61,7 @@ class SwingRichTextArea extends SwingTextInput<JTextArea, ITextArea> implements
 	}
 
 	@Override
-	public ITextArea text(String text) {
+	public IRichTextArea text(String text) {
 		super.setText(text);
 		return this;
 	}
@@ -50,13 +71,11 @@ class SwingRichTextArea extends SwingTextInput<JTextArea, ITextArea> implements
 		return html.text;
 	}
 
-	@Override
 	public int cursorPosition() {
 		return container.component.getCaretPosition();
 	}
 
-	@Override
-	public ITextArea cursorPosition(int position) {
+	public IRichTextArea cursorPosition(int position) {
 		container.component.setCaretPosition(position);
 		container.component.requestFocus();
 		return this;
