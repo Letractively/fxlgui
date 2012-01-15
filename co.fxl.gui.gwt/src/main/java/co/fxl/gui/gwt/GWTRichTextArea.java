@@ -33,14 +33,33 @@ public class GWTRichTextArea extends
 
 	private List<IUpdateListener<String>> changeListeners = new LinkedList<IUpdateListener<String>>();
 
-	GWTRichTextArea(GWTContainer<RichTextArea> container) {
+	GWTRichTextArea(final GWTContainer<RichTextArea> container) {
 		super(container);
-	}
+		// final RichTextArea widget = super.container.widget;
+		// final Formatter formatter = widget.getFormatter();
+		// new RichTextToolbar(this, new IRichTextAdapter() {
+		// @Override
+		// public void toggleBold() {
+		// formatter.toggleBold();
+		// container.display().invokeLater(new Runnable() {
+		// @Override
+		// public void run() {
+		// widget.setFocus(true);
+		// }
+		// });
+		// }
+		//
+		// @Override
+		// public boolean isBold() {
+		// return formatter.isBold();
+		// }
+		// });
+	};
 
 	@Override
 	public IRichTextArea text(String text) {
-		String previous = container.widget.getText();
-		container.widget.setText(text);
+		String previous = container.widget.getHTML();
+		container.widget.setHTML(text);
 		if (!previous.equals(text)) {
 			for (IUpdateListener<String> ul : changeListeners)
 				ul.onUpdate(text);
@@ -50,7 +69,7 @@ public class GWTRichTextArea extends
 
 	@Override
 	public String text() {
-		String text = container.widget.getText();
+		String text = container.widget.getHTML();
 		if (text == null)
 			return "";
 		return text;
@@ -63,7 +82,7 @@ public class GWTRichTextArea extends
 		container.widget.addKeyUpHandler(new KeyUpHandler() {
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
-				changeListener.onUpdate(container.widget.getText());
+				changeListener.onUpdate(text());
 			}
 		});
 		return this;
