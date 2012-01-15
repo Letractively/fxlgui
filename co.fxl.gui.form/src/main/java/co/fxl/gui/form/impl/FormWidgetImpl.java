@@ -572,4 +572,7 @@ public class FormWidgetImpl implements IFormWidget {
 	public IFormField<IRichTextArea, String> addRichTextArea(String name) {
 		return new FormRichTextAreaImpl(this, nextGridIndex(), name);
 	}
+
+	protected void prepareButtonColumn(IGridPanel grid, int column) {
+	}
 }

@@ -104,9 +104,11 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 		IGridPanel grid = widget.grid();
 		int gridIndex = row;
 		IGridCell cell2 = grid.cell(column, gridIndex);
-		return cell2.valign().center().align().begin().panel().horizontal()
-				.align().begin().add().panel().horizontal().align().begin()
-				.addSpace(1).add();
+		IContainer c = cell2.valign().center().align().begin().panel()
+				.horizontal().align().begin().add().panel().horizontal()
+				.align().begin().addSpace(1).add();
+		widget.prepareButtonColumn(grid, column);
+		return c;
 	}
 
 	@Override
