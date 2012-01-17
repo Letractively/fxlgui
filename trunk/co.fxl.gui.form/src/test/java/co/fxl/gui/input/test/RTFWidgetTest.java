@@ -21,9 +21,9 @@ package co.fxl.gui.input.test;
 import java.lang.reflect.InvocationTargetException;
 
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.input.api.IRTFWidget;
-import co.fxl.gui.input.api.IRTFWidget.IComposite;
-import co.fxl.gui.input.impl.RTFWidgetImplProvider;
+import co.fxl.gui.rtf.api.IRTFWidget;
+import co.fxl.gui.rtf.api.IRTFWidget.IComposite;
+import co.fxl.gui.rtf.impl.RTFWidgetImplProvider;
 
 public class RTFWidgetTest {
 

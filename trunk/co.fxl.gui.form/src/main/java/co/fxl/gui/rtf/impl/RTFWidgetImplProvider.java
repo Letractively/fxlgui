@@ -16,11 +16,11 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.input.impl;
+package co.fxl.gui.rtf.impl;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.input.api.IRTFWidget;
+import co.fxl.gui.rtf.api.IRTFWidget;
 
 public class RTFWidgetImplProvider implements IWidgetProvider<IRTFWidget> {
 

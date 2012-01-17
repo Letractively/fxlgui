@@ -5,7 +5,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ *  
  * FXL GUI API is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -16,28 +16,10 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.input.api;
+package co.fxl.gui.rtf.impl;
 
-public interface IRTFWidget {
+class MethodNotImplementedException extends RuntimeException {
 
-	// TODO ...
-
-	public interface IComposite {
-
-		IComposite addComposite(String label);
-
-		void token(String token);
-
-	}
-
-	String html();
-
-	IRTFWidget html(String html);
-
-	IRTFWidget addToken(String label, String token);
-
-	IComposite addComposite();
-
-	IRTFWidget visible(boolean visible);
+	private static final long serialVersionUID = 6282989723242176406L;
 
 }
