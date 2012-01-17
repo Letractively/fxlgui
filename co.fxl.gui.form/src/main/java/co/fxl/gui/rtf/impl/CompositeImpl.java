@@ -16,12 +16,12 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.input.impl;
+package co.fxl.gui.rtf.impl;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.input.api.IRTFWidget.IComposite;
+import co.fxl.gui.rtf.api.IRTFWidget.IComposite;
 
 class CompositeImpl implements IComposite {
 

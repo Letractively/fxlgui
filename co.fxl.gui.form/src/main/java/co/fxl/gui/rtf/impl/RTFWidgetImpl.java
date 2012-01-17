@@ -16,7 +16,7 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.input.impl;
+package co.fxl.gui.rtf.impl;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -27,7 +27,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.input.api.IRTFWidget;
+import co.fxl.gui.rtf.api.IRTFWidget;
 
 public class RTFWidgetImpl implements IRTFWidget {
 
@@ -36,6 +36,9 @@ public class RTFWidgetImpl implements IRTFWidget {
 	private IHorizontalPanel buttonPanel;
 	protected List<Object> tokens = new LinkedList<Object>();
 
+	protected RTFWidgetImpl() {
+	}
+	
 	protected RTFWidgetImpl(IContainer container) {
 		panel = container.panel().vertical();
 		textArea = panel.add().textArea();
@@ -96,6 +99,11 @@ public class RTFWidgetImpl implements IRTFWidget {
 			}
 		}
 		return this;
+	}
+
+	@Override
+	public IRTFWidget height(int height) {
+		throw new MethodNotImplementedException();
 	}
 
 }
