@@ -28,6 +28,7 @@ import com.google.gwt.event.dom.client.ContextMenuEvent;
 import com.google.gwt.event.dom.client.ContextMenuHandler;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.user.client.ui.Widget;
 
 class GWTClickHandler<T> extends KeyTemplate<T> {
 
@@ -48,7 +49,8 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public T mouseRight() {
-		((GWTElement) element).container.widget.addDomHandler(
+		Widget widget = ((GWTElement) element).container.widget;
+		widget.addDomHandler(
 				new ContextMenuHandler() {
 					@Override
 					public void onContextMenu(ContextMenuEvent event) {
