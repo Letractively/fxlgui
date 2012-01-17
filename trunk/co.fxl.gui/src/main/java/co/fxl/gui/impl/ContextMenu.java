@@ -140,6 +140,10 @@ public class ContextMenu {
 	public void show() {
 		if (!active)
 			return;
+		showAlways();
+	}
+
+	public void showAlways() {
 		if (popUp != null && popUp.visible())
 			return;
 		popUp = display.showPopUp().autoHide(true)// .width(320)
