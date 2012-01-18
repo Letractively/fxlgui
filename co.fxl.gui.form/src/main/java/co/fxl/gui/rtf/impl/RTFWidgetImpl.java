@@ -22,10 +22,13 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextArea;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.rtf.api.IRTFWidget;
 
@@ -103,6 +106,31 @@ public class RTFWidgetImpl implements IRTFWidget {
 
 	@Override
 	public IRTFWidget height(int height) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IRTFWidget editable(boolean editable) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IBorder border() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IColor color() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IRTFWidget focus(boolean focus) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IRTFWidget addFocusListener(IUpdateListener<Boolean> hasFocus) {
 		throw new MethodNotImplementedException();
 	}
 

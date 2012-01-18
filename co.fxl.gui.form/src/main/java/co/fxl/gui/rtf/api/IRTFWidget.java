@@ -18,7 +18,11 @@
  */
 package co.fxl.gui.rtf.api;
 
-public interface IRTFWidget {
+import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.IFocusable;
+
+public interface IRTFWidget extends IFocusable<IRTFWidget> {
 
 	// TODO ...
 
@@ -42,4 +46,9 @@ public interface IRTFWidget {
 
 	IRTFWidget height(int height);
 
+	IRTFWidget editable(boolean editable);
+
+	IBorder border();
+
+	IColor color();
 }
