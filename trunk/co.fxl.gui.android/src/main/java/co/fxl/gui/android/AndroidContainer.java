@@ -139,13 +139,6 @@ public class AndroidContainer implements IContainer {
 		throw new MethodNotImplementedException();
 	}
 
-	@Override
-	public Object widget(Class<?> interfaceClass) {
-		IWidgetProvider<?> provider = parent.androidDisplay().widgetProvider(
-				interfaceClass);
-		return provider.createWidget(this);
-	}
-
 	void layout(View view) {
 		view.setPadding(paddingLeft, paddingTop, 0, 0);
 	}
@@ -173,5 +166,13 @@ public class AndroidContainer implements IContainer {
 	@Override
 	public IRichTextArea richTextArea() {
 		throw new MethodNotImplementedException();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> T widget(Class<T> interfaceClass) {
+		IWidgetProvider<?> provider = parent.androidDisplay().widgetProvider(
+				interfaceClass);
+		return (T) provider.createWidget(this);
 	}
 }
