@@ -49,6 +49,7 @@ import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.WidgetTitle;
+import co.fxl.gui.rtf.api.IRTFWidget;
 
 public class FormWidgetImpl implements IFormWidget {
 
@@ -174,8 +175,8 @@ public class FormWidgetImpl implements IFormWidget {
 		return valuePanel;
 	}
 
-	IRichTextArea addFormValueRichTextArea(int gridIndex) {
-		IRichTextArea valuePanel = container(gridIndex).richTextArea();
+	IRTFWidget addFormValueRichTextArea(int gridIndex) {
+		IRTFWidget valuePanel = container(gridIndex).widget(IRTFWidget.class);
 		valuePanel.editable(saveListener != null);
 		setFocus(valuePanel);
 		decorateCell(grid.cell(1, gridIndex));
@@ -571,7 +572,7 @@ public class FormWidgetImpl implements IFormWidget {
 	}
 
 	@Override
-	public IFormField<IRichTextArea, String> addRichTextArea(String name) {
+	public IFormField<IRTFWidget, String> addRichTextArea(String name) {
 		return new FormRichTextAreaImpl(this, nextGridIndex(), name);
 	}
 
