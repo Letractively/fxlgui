@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.gwt;
 
-interface Style {
+public interface Style {
 
 	void addStyleName(String style);
 }
