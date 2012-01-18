@@ -57,6 +57,8 @@ public class FormWidgetImpl implements IFormWidget {
 	// http://gwt.google.com/samples/Showcase/Showcase.html#!CwRichText, or
 	// implement own RTF-Editor using toggle-buttons that writes html with a
 	// preview panel
+	
+	// TODO FEATURE: include Button switch between 1 and 2 columns for form entries
 
 	class FormEntryLabel {
 
