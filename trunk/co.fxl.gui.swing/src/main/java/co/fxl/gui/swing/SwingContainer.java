@@ -205,12 +205,13 @@ public class SwingContainer<T extends JComponent> implements IContainer {
 				(SwingContainer<PanelComponent>) this));
 	}
 
+	@SuppressWarnings("hiding")
 	@Override
-	public Object widget(Class<?> clazz) {
+	public <T> T widget(Class<T> clazz) {
 		IWidgetProvider<?> widgetProvider = lookupWidgetProvider(clazz);
 		if (widgetProvider == null)
 			throw new WidgetProviderNotFoundException(clazz);
-		return widgetProvider.createWidget(this);
+		return (T) widgetProvider.createWidget(this);
 	}
 
 	IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
