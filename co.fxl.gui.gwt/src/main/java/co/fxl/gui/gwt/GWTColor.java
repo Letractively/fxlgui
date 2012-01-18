@@ -21,7 +21,7 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IColored.IGradient;
 
-abstract class GWTColor implements IColor {
+public abstract class GWTColor implements IColor {
 
 	public class Gradient implements IGradient {
 
@@ -42,7 +42,7 @@ abstract class GWTColor implements IColor {
 				}
 
 				@Override
-				IColor setColorInternal(String string) {
+				public IColor setColorInternal(String string) {
 					original.setColor("-webkit-gradient(linear, left top, left bottom, from("
 							+ original.color + "), to(" + color + "))");
 					return this;
@@ -67,7 +67,7 @@ abstract class GWTColor implements IColor {
 		private String mix = "";
 
 		@Override
-		IColor setColorInternal(String string) {
+		public IColor setColorInternal(String string) {
 			if (!mix.equals(""))
 				mix += "-";
 			mix += string;
@@ -101,7 +101,7 @@ abstract class GWTColor implements IColor {
 		return this;
 	}
 
-	abstract IColor setColorInternal(String string);
+	protected abstract IColor setColorInternal(String string);
 
 	@Override
 	public IColor gray() {
@@ -140,7 +140,15 @@ abstract class GWTColor implements IColor {
 
 	@Override
 	public IColor rgb(int r, int g, int b) {
-		throw new MethodNotImplementedException();
+		setColorInternal("#" + hex(r) + hex(g) + hex(b));
+		return this;
+	}
+
+	private String hex(int r) {
+		String hexString = Integer.toHexString(r);
+		while (hexString.length() <= 1)
+			hexString = "0" + hexString;
+		return hexString;
 	}
 
 	@Override
