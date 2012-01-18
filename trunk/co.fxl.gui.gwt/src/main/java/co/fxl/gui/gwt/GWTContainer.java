@@ -202,12 +202,13 @@ public class GWTContainer<T extends Widget> implements IContainer {
 				(GWTContainer<HTML>) this));
 	}
 
+	@SuppressWarnings("hiding")
 	@Override
-	public Object widget(Class<?> clazz) {
+	public <T> T widget(Class<T> clazz) {
 		IWidgetProvider<?> widgetProvider = lookupWidgetProvider(clazz);
 		if (widgetProvider == null)
 			throw new WidgetProviderNotFoundException(clazz);
-		return widgetProvider.createWidget(this);
+		return (T) widgetProvider.createWidget(this);
 	}
 
 	GWTDisplay lookupDisplay() {
