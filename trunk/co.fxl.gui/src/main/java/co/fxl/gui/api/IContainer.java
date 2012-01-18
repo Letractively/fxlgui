@@ -60,7 +60,7 @@ public interface IContainer {
 
 	IElement<?> element();
 
-	Object widget(Class<?> interfaceClass);
+	<T> T widget(Class<T> interfaceClass);
 
 	IContainer clear();
 
