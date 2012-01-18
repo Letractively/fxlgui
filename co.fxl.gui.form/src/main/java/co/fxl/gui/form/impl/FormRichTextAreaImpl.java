@@ -21,7 +21,7 @@ package co.fxl.gui.form.impl;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.rtf.api.IRTFWidget;
 
-class FormRichTextAreaImpl extends FormFieldImpl<IRTFWidget, String> {
+public class FormRichTextAreaImpl extends FormFieldImpl<IRTFWidget, String> {
 
 	private IRTFWidget textArea;
 
