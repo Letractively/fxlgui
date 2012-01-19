@@ -3,12 +3,11 @@
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
-	<classpathentry kind="src" path="aspect.style"/>
+	<classpathentry excluding="co/fxl/gui/table/scroll/impl/ColumnSelectionStyle.aj|co/fxl/gui/table/scroll/impl/ScrollTableWidgetImplStyle.aj" kind="src" path="aspect.style"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="/fxl-data-format"/>
 	<classpathentry kind="src" path="/fxl-gui"/>
 	<classpathentry kind="src" path="/fxl-gui-form"/>
 	<classpathentry kind="var" path="M2_REPO/junit/junit/4.0/junit-4.0.jar"/>
-	<classpathentry kind="con" path="org.eclipse.ajdt.core.ASPECTJRT_CONTAINER"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
