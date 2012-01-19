@@ -23,7 +23,7 @@ import co.fxl.gui.style.impl.Style;
 privileged aspect NavigationItemImplStyle {
 
 	after(NavigationItemImpl item) :
-	execution(void NavigationItemImpl.showLabelAsInactive()) 
+	execution(void NavigationItemImpl.showLabelAsInactive(boolean)) 
 	&& this(item) 
 	&& if(Style.ENABLED) {
 		Style.instance().navigation().group().item().inactive(item.buttonPanel, item.button);
