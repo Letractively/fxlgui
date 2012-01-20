@@ -56,11 +56,20 @@ class DNDWidgetImpl implements IDNDWidget, IClickListener {
 		});
 		popUp.offset(x, y);
 		IVerticalPanel v = popUp.container().panel().vertical();
-		v.add().image().resource("up.png");
+		v.add().image().resource("up.png").size(16, 16);
+		for (int i = 0; i <= end - start; i++) {
+			int h = model.height(i + start);
+			IVerticalPanel v2 = v.add().panel().vertical();
+			v2.height(h).border().style().dotted();
+			addDragAndDrop(v2);
+		}
 		v.size(24, height);
 		popUp.autoHide(true);
 		popUp.border();
 		popUp.visible(true);
+	}
+
+	protected void addDragAndDrop(IVerticalPanel v2) {
 	}
 
 	@Override
