@@ -24,10 +24,10 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.dnd.api.IDNDWidget;
-import co.fxl.gui.dnd.api.IDNDWidget.IDNDModel;
+import co.fxl.gui.dnd.api.IDNDWidget.IHeights;
 import co.fxl.gui.dnd.impl.DNDWidgetImplProvider;
 
-class DNDWidgetTest implements IDNDModel {
+class DNDWidgetTest implements IHeights {
 
 	public static void main(String[] args) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException,
@@ -46,7 +46,9 @@ class DNDWidgetTest implements IDNDModel {
 				.size(100, 400);
 		IDNDWidget dnd = v.add().widget(IDNDWidget.class);
 		dnd.element(h);
-		dnd.model(this);
+		dnd.range(10, (400 / 22) + 10);
+		dnd.size(100);
+		dnd.heights(this);
 		v.add().button().text("test").addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
@@ -58,20 +60,5 @@ class DNDWidgetTest implements IDNDModel {
 	@Override
 	public int height(int index) {
 		return 22;
-	}
-
-	@Override
-	public int size() {
-		return 100;
-	}
-
-	@Override
-	public int rangeStart() {
-		return 10;
-	}
-
-	@Override
-	public int rangeEnd() {
-		return (400 / 22) + 10;
 	}
 }
