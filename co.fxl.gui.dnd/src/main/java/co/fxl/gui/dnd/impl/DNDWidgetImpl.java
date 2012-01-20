@@ -48,6 +48,7 @@ class DNDWidgetImpl implements IDNDWidget, IClickListener {
 		button.clickable(false);
 		IPopUp popUp = element.display().showPopUp();
 		popUp.addVisibleListener(new IUpdateListener<Boolean>() {
+			
 			@Override
 			public void onUpdate(Boolean value) {
 				if (!value) {
