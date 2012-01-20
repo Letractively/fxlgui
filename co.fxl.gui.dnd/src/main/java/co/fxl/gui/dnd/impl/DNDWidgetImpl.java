@@ -62,7 +62,7 @@ class DNDWidgetImpl implements IDNDWidget, IClickListener {
 		v.add().image().resource("up.png").size(16, 16);
 		for (int i = 0; i <= end - start; i++) {
 			int h = model.height(i + start - 1);
-			IVerticalPanel v2 = v.add().panel().vertical();
+			final IVerticalPanel v2 = v.add().panel().vertical();
 			v2.height(h).border().style().dotted();
 			v2.addMouseOverListener(new IMouseOverListener() {
 
@@ -70,14 +70,14 @@ class DNDWidgetImpl implements IDNDWidget, IClickListener {
 				public void onMouseOver() {
 					if (dragging = true)
 						return;
-					throw new MethodNotImplementedException();
+					v2.color().lightgray();
 				}
 
 				@Override
 				public void onMouseOut() {
 					if (dragging = true)
 						return;
-					throw new MethodNotImplementedException();
+					v2.color().remove();
 				}
 			});
 			addDragAndDrop(v2);
@@ -89,6 +89,13 @@ class DNDWidgetImpl implements IDNDWidget, IClickListener {
 	}
 
 	protected void addDragAndDrop(IVerticalPanel v2) {
+		v2.addClickListener(new IClickListener() {
+
+			@Override
+			public void onClick() {
+				throw new MethodNotImplementedException();
+			}
+		});
 	}
 
 	@Override
