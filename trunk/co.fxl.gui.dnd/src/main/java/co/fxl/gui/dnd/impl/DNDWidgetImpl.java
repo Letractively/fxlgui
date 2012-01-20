@@ -61,7 +61,8 @@ class DNDWidgetImpl implements IDNDWidget, IClickListener {
 		IVerticalPanel v = popUp.container().panel().vertical().spacing(1);
 		v.add().image().resource("up.png").size(16, 16);
 		for (int i = 0; i <= end - start; i++) {
-			int h = model.height(i + start - 1);
+			int index = i + start;
+			int h = model.height(i + start);
 			final IVerticalPanel v2 = v.add().panel().vertical();
 			v2.height(h).border().style().dotted();
 			v2.addMouseOverListener(new IMouseOverListener() {
@@ -80,7 +81,7 @@ class DNDWidgetImpl implements IDNDWidget, IClickListener {
 					v2.color().remove();
 				}
 			});
-			addDragAndDrop(v2);
+			addDragAndDrop(v2, index);
 		}
 		v.size(24, height);
 		popUp.autoHide(true);
@@ -88,12 +89,24 @@ class DNDWidgetImpl implements IDNDWidget, IClickListener {
 		popUp.visible(true);
 	}
 
-	protected void addDragAndDrop(IVerticalPanel v2) {
-		v2.addClickListener(new IClickListener() {
+	int selectedIndex = -1;
+	IVerticalPanel selectedPanel = null;
 
+	protected void addDragAndDrop(final IVerticalPanel v2,
+			final int selectedIndexNext) {
+		v2.addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
-				throw new MethodNotImplementedException();
+				if (selectedIndex == -1) {
+					selectedIndex = selectedIndexNext;
+					v2.color().green();
+					selectedPanel = v2;
+				} else {
+					selectedIndex = -1;
+					selectedPanel.color().remove();
+					// TODO switch
+					throw new MethodNotImplementedException();
+				}
 			}
 		});
 	}
