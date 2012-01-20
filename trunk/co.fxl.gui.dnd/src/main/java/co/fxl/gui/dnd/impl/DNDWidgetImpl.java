@@ -3,6 +3,7 @@ package co.fxl.gui.dnd.impl;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
@@ -61,6 +62,18 @@ class DNDWidgetImpl implements IDNDWidget, IClickListener {
 			int h = model.height(i + start);
 			IVerticalPanel v2 = v.add().panel().vertical();
 			v2.height(h).border().style().dotted();
+			v2.addMouseOverListener(new IMouseOverListener() {
+
+				@Override
+				public void onMouseOver() {
+					throw new MethodNotImplementedException();
+				}
+
+				@Override
+				public void onMouseOut() {
+					throw new MethodNotImplementedException();
+				}
+			});
 			addDragAndDrop(v2);
 		}
 		v.size(24, height);
