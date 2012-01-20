@@ -31,6 +31,7 @@ public interface IDNDWidget {
 		int rangeEnd();
 
 		int size();
+		
 	}
 
 	IDNDWidget element(IElement<?> element);
