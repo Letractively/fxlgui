@@ -32,6 +32,8 @@ public interface IDNDWidget {
 
 		int size();
 		
+		void notifyRangeMove();
+		
 	}
 
 	IDNDWidget element(IElement<?> element);
