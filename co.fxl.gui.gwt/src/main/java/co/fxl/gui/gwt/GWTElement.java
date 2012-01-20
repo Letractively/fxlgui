@@ -30,6 +30,7 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFontElement;
 import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IKeyRecipient;
+import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -39,8 +40,14 @@ import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.dom.client.HasDoubleClickHandlers;
 import com.google.gwt.event.dom.client.HasKeyPressHandlers;
+import com.google.gwt.event.dom.client.HasMouseOutHandlers;
+import com.google.gwt.event.dom.client.HasMouseOverHandlers;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.Focusable;
@@ -326,14 +333,33 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		return new GWTFont(container.widget);
 	}
 
-//	@SuppressWarnings("unchecked")
-//	@Override
-//	public R attach(boolean attach) {
-//		if (attach)
-//			container.parent.add(container.widget);
-//		else
-//			container.parent.remove(container.widget);
-//		return (R) this;
-//	}
+	@SuppressWarnings("unchecked")
+	public R addMouseOverListener(final IMouseOverListener l) {
+		((HasMouseOverHandlers) container.widget)
+				.addMouseOverHandler(new MouseOverHandler() {
+					@Override
+					public void onMouseOver(MouseOverEvent event) {
+						l.onMouseOver();
+					}
+				});
+		((HasMouseOutHandlers) container.widget)
+				.addMouseOutHandler(new MouseOutHandler() {
+					@Override
+					public void onMouseOut(MouseOutEvent event) {
+						l.onMouseOut();
+					}
+				});
+		return (R) this;
+	}
+
+	// @SuppressWarnings("unchecked")
+	// @Override
+	// public R attach(boolean attach) {
+	// if (attach)
+	// container.parent.add(container.widget);
+	// else
+	// container.parent.remove(container.widget);
+	// return (R) this;
+	// }
 
 }
