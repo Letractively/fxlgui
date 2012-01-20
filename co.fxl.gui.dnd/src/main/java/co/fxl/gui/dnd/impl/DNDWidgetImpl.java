@@ -56,6 +56,7 @@ class DNDWidgetImpl implements IDNDWidget, IClickListener {
 		v.add().image().resource("up.png");
 		v.size(24, height);
 		popUp.autoHide(true);
+		popUp.border();
 		popUp.visible(true);
 	}
 
