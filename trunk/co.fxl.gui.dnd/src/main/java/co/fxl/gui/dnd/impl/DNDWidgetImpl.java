@@ -55,6 +55,7 @@ class DNDWidgetImpl implements IDNDWidget, IClickListener {
 		IVerticalPanel v = popUp.container().panel().vertical();
 		v.add().image().resource("up.png");
 		v.size(24, height);
+		popUp.autoHide(true);
 		popUp.visible(true);
 	}
 
