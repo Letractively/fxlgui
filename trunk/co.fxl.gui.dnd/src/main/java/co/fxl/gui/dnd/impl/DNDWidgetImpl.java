@@ -13,7 +13,10 @@ class DNDWidgetImpl implements IDNDWidget, IClickListener {
 
 	private ImageButton button;
 	private IElement<?> element;
-	private IDNDModel model;
+	private IHeights model;
+	private int size;
+	private int start;
+	private int end;
 
 	DNDWidgetImpl(IContainer container) {
 		button = new ImageButton(container);
@@ -29,7 +32,7 @@ class DNDWidgetImpl implements IDNDWidget, IClickListener {
 	}
 
 	@Override
-	public IDNDWidget model(IDNDModel model) {
+	public IDNDWidget heights(IHeights model) {
 		this.model = model;
 		return this;
 	}
@@ -58,6 +61,19 @@ class DNDWidgetImpl implements IDNDWidget, IClickListener {
 		popUp.autoHide(true);
 		popUp.border();
 		popUp.visible(true);
+	}
+
+	@Override
+	public IDNDWidget range(int start, int end) {
+		this.start = start;
+		this.end = end;
+		return this;
+	}
+
+	@Override
+	public IDNDWidget size(int size) {
+		this.size = size;
+		return this;
 	}
 
 }

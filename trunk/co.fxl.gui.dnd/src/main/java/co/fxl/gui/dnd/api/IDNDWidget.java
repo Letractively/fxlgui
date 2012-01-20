@@ -22,22 +22,18 @@ import co.fxl.gui.api.IElement;
 
 public interface IDNDWidget {
 
-	public interface IDNDModel {
+	public interface IHeights {
 
 		int height(int index);
 
-		int rangeStart();
-
-		int rangeEnd();
-
-		int size();
-		
-		void notifyRangeMove();
-		
 	}
 
 	IDNDWidget element(IElement<?> element);
 
-	IDNDWidget model(IDNDModel model);
+	IDNDWidget heights(IHeights model);
+
+	IDNDWidget range(int start, int end);
+
+	IDNDWidget size(int size);
 
 }
