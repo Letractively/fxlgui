@@ -20,6 +20,7 @@ package co.fxl.gui.dnd.test;
 
 import java.lang.reflect.InvocationTargetException;
 
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.dnd.api.IDNDWidget;
@@ -46,6 +47,11 @@ class DNDWidgetTest implements IDNDModel {
 		IDNDWidget dnd = v.add().widget(IDNDWidget.class);
 		dnd.element(h);
 		dnd.model(this);
+		v.add().button().text("test").addClickListener(new IClickListener() {
+			@Override
+			public void onClick() {
+			}
+		});
 		display.fullscreen().visible(true);
 	}
 
