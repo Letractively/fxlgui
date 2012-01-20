@@ -82,7 +82,7 @@ class SwingPopUp implements IPopUp {
 
 			@Override
 			public JComponent getComponent() {
-				throw new MethodNotImplementedException();
+				return SwingPopUp.this.component;
 			}
 
 			@Override
