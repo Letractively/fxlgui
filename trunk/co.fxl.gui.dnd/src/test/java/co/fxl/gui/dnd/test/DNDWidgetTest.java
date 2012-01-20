@@ -57,11 +57,21 @@ class DNDWidgetTest implements IDNDModel {
 
 	@Override
 	public int height(int index) {
-		return 10;
+		return 22;
 	}
 
 	@Override
 	public int size() {
 		return 100;
+	}
+
+	@Override
+	public int rangeStart() {
+		return 10;
+	}
+
+	@Override
+	public int rangeEnd() {
+		return (400 / 22) + 10;
 	}
 }

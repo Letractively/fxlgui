@@ -26,6 +26,10 @@ public interface IDNDWidget {
 
 		int height(int index);
 
+		int rangeStart();
+
+		int rangeEnd();
+
 		int size();
 	}
 
