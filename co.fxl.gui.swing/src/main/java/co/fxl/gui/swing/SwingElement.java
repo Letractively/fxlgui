@@ -43,6 +43,8 @@ import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IKeyRecipient;
+import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 class SwingElement<T extends JComponent, R> implements IElement<R> {
@@ -296,6 +298,22 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	@Override
 	public R offset(int x, int y) {
 		throw new MethodNotImplementedException();
+	}
+
+	@SuppressWarnings("unchecked")
+	public R addMouseOverListener(final IMouseOverListener l) {
+		container.component.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				l.onMouseOver();
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				l.onMouseOut();
+			}
+		});
+		return (R) this;
 	}
 
 //	@SuppressWarnings("unchecked")
