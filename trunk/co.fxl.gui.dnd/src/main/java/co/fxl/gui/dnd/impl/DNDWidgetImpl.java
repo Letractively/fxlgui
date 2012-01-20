@@ -83,6 +83,7 @@ class DNDWidgetImpl implements IDNDWidget, IClickListener {
 			});
 			addDragAndDrop(v2, index);
 		}
+		// TODO end+1 ist letzter Index, hier wird am Schluß eingefügt
 		v.size(24, height);
 		popUp.autoHide(true);
 		popUp.border();
