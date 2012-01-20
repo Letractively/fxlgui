@@ -31,6 +31,7 @@ import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -315,6 +316,10 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		Point p = SwingUtilities.convertPoint(e.getComponent(), e.getPoint(),
 				instance.frame);
 		lastClick(p.x, p.y);
+	}
+
+	public static void lastClick(JButton e) {
+		lastClick(e.getX(), e.getY());
 	}
 
 	private static void lastClick(int x, int y) {

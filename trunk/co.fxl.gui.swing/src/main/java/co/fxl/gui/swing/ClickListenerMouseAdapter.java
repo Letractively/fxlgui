@@ -23,6 +23,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JButton;
+
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IElement;
@@ -70,6 +72,8 @@ class ClickListenerMouseAdapter<T> extends KeyTemplate<T> implements IKey<T> {
 			SwingDisplay d = (SwingDisplay) ((IElement<?>) element).display();
 			if (d.waiting)
 				return;
+			SwingDisplay.lastClick((JButton) ((SwingButton) element)
+					.nativeElement());
 			clickListener.onClick();
 		}
 	}
