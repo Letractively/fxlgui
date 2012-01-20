@@ -18,6 +18,7 @@ class DNDWidgetImpl implements IDNDWidget, IClickListener {
 	private int size;
 	private int start;
 	private int end;
+	protected boolean dragging;
 
 	DNDWidgetImpl(IContainer container) {
 		button = new ImageButton(container);
@@ -48,7 +49,7 @@ class DNDWidgetImpl implements IDNDWidget, IClickListener {
 		button.clickable(false);
 		IPopUp popUp = element.display().showPopUp();
 		popUp.addVisibleListener(new IUpdateListener<Boolean>() {
-			
+
 			@Override
 			public void onUpdate(Boolean value) {
 				if (!value) {
@@ -57,21 +58,25 @@ class DNDWidgetImpl implements IDNDWidget, IClickListener {
 			}
 		});
 		popUp.offset(x, y);
-		IVerticalPanel v = popUp.container().panel().vertical();
+		IVerticalPanel v = popUp.container().panel().vertical().spacing(1);
 		v.add().image().resource("up.png").size(16, 16);
 		for (int i = 0; i <= end - start; i++) {
-			int h = model.height(i + start);
+			int h = model.height(i + start - 1);
 			IVerticalPanel v2 = v.add().panel().vertical();
 			v2.height(h).border().style().dotted();
 			v2.addMouseOverListener(new IMouseOverListener() {
 
 				@Override
 				public void onMouseOver() {
+					if (dragging = true)
+						return;
 					throw new MethodNotImplementedException();
 				}
 
 				@Override
 				public void onMouseOut() {
+					if (dragging = true)
+						return;
 					throw new MethodNotImplementedException();
 				}
 			});
