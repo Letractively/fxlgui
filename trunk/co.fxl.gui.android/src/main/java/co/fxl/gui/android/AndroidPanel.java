@@ -83,32 +83,4 @@ class AndroidPanel<R extends ViewGroup, T extends IElement<T>> extends
 			co.fxl.gui.api.IMouseOverElement.IMouseOverListener l) {
 		throw new MethodNotImplementedException();
 	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public T draggable(boolean draggable) {
-		// TODO ... throw new MethodNotImplementedException();
-		return (T) this;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public T addDragStartListener(co.fxl.gui.api.IDraggable.IDragStartListener l) {
-		// TODO ... throw new MethodNotImplementedException();
-		return (T) this;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public T addDragOverListener(co.fxl.gui.api.IDropTarget.IDragOverListener l) {
-		// TODO ... throw new MethodNotImplementedException();
-		return (T) this;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public T addDropListener(co.fxl.gui.api.IDropTarget.IDropListener l) {
-		// TODO ... throw new MethodNotImplementedException();
-		return (T) this;
-	}
 }
