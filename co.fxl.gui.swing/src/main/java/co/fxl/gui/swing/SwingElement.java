@@ -355,13 +355,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public R addDragOverListener(co.fxl.gui.api.IDropTarget.IDragOverListener l) {
-		// TODO ... throw new MethodNotImplementedException();
-		return (R) this;
-	}
-
-	@SuppressWarnings("unchecked")
-	public R addDropListener(co.fxl.gui.api.IDropTarget.IDropListener l) {
+	public R addDragDropListener(co.fxl.gui.api.IDropTarget.IDragDropListener l) {
 		// TODO ... throw new MethodNotImplementedException();
 		return (R) this;
 	}
