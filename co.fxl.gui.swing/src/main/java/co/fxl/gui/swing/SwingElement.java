@@ -43,7 +43,6 @@ import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IKeyRecipient;
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
@@ -316,30 +315,54 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 		return (R) this;
 	}
 
-//	@SuppressWarnings("unchecked")
-//	@Override
-//	public R attach(boolean attach) {
-//		if (attach) {
-//			container.parent.add(container.component);
-//		} else {
-//			if (isInCardPanel()) {
-//				getCardPanelParent().remove(container.component);
-//			} else
-//				container.parent.remove(container.component);
-//		}
-//		return (R) this;
-//	}
-//
-//	JPanel getCardPanelParent() {
-//		if (!(container.parent.getComponent() instanceof JPanel))
-//			return null;
-//		JPanel p = (JPanel) container.parent.getComponent();
-//		if (p.getLayout() instanceof ResizeCardLayout)
-//			return p;
-//		return null;
-//	}
-//
-//	boolean isInCardPanel() {
-//		return getCardPanelParent() != null;
-//	}
+	// @SuppressWarnings("unchecked")
+	// @Override
+	// public R attach(boolean attach) {
+	// if (attach) {
+	// container.parent.add(container.component);
+	// } else {
+	// if (isInCardPanel()) {
+	// getCardPanelParent().remove(container.component);
+	// } else
+	// container.parent.remove(container.component);
+	// }
+	// return (R) this;
+	// }
+	//
+	// JPanel getCardPanelParent() {
+	// if (!(container.parent.getComponent() instanceof JPanel))
+	// return null;
+	// JPanel p = (JPanel) container.parent.getComponent();
+	// if (p.getLayout() instanceof ResizeCardLayout)
+	// return p;
+	// return null;
+	// }
+	//
+	// boolean isInCardPanel() {
+	// return getCardPanelParent() != null;
+	// }
+
+	@SuppressWarnings("unchecked")
+	public R draggable(boolean draggable) {
+		// TODO ... throw new MethodNotImplementedException();
+		return (R) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public R addDragStartListener(co.fxl.gui.api.IDraggable.IDragStartListener l) {
+		// TODO ... throw new MethodNotImplementedException();
+		return (R) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public R addDragOverListener(co.fxl.gui.api.IDropTarget.IDragOverListener l) {
+		// TODO ... throw new MethodNotImplementedException();
+		return (R) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public R addDropListener(co.fxl.gui.api.IDropTarget.IDropListener l) {
+		// TODO ... throw new MethodNotImplementedException();
+		return (R) this;
+	}
 }
