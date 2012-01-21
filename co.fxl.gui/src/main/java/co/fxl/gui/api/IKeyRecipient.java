@@ -27,6 +27,14 @@ public interface IKeyRecipient<T> {
 		T enter();
 
 		T tab();
+
+		T up();
+
+		T down();
+
+		T left();
+
+		T right();
 	}
 
 	IKey<T> addKeyListener(IClickListener listener);
