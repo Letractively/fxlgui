@@ -32,6 +32,8 @@ public interface ILayout {
 
 	ICardPanel card();
 
+	IFocusPanel focus();
+
 	IAbsolutePanel absolute();
 
 	IPanel<?> plugIn(Class<?> layoutType);
