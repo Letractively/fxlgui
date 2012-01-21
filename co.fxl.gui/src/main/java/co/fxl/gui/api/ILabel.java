@@ -19,7 +19,7 @@
 package co.fxl.gui.api;
 
 public interface ILabel extends IClickable<ILabel>, ITextElement<ILabel>,
-		IMouseOverElement<ILabel> {
+		IMouseOverElement<ILabel>, IDraggable<ILabel>, IDropTarget<ILabel> {
 
 	ILabel html(String html);
 
