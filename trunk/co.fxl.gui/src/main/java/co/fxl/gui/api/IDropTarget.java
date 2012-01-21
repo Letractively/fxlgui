@@ -20,20 +20,14 @@ package co.fxl.gui.api;
 
 public interface IDropTarget<T> {
 
-	public interface IDropListener {
-
-		void onDrop();
-
-	}
-
-	public interface IDragOverListener {
+	public interface IDragDropListener {
 
 		void onDragOver();
 
+		void onDropOn();
+
 	}
 
-	T addDragOverListener(IDragOverListener l);
+	T addDragDropListener(IDragDropListener l);
 
-	T addDropListener(IDropListener l);
-	
 }
