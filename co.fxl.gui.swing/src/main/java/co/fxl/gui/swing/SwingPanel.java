@@ -173,4 +173,32 @@ public class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
 	Insets insets() {
 		throw new MethodNotImplementedException();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R draggable(boolean draggable) {
+		// TODO ... throw new MethodNotImplementedException();
+		return (R) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R addDragStartListener(co.fxl.gui.api.IDraggable.IDragStartListener l) {
+		// TODO ... throw new MethodNotImplementedException();
+		return (R) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R addDragOverListener(co.fxl.gui.api.IDropTarget.IDragOverListener l) {
+		// TODO ... throw new MethodNotImplementedException();
+		return (R) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R addDropListener(co.fxl.gui.api.IDropTarget.IDropListener l) {
+		// TODO ... throw new MethodNotImplementedException();
+		return (R) this;
+	}
 }
