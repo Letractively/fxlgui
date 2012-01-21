@@ -66,6 +66,59 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class GWTElement<T extends Widget, R> implements IElement<R> {
 
+	private final class KeyPressHandlerAdapter implements KeyPressHandler,
+			IKeyRecipient.IKey<R> {
+
+		private final IClickListener listener;
+		private char targetCode = '\r';
+
+		private KeyPressHandlerAdapter(IClickListener listener) {
+			this.listener = listener;
+		}
+
+		@Override
+		public void onKeyPress(KeyPressEvent event) {
+			char charCode = event.getCharCode();
+			if (charCode == targetCode) {
+				listener.onClick();
+			}
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public R enter() {
+			targetCode = '\r';
+			return (R) GWTElement.this;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public R tab() {
+			targetCode = '\t';
+			return (R) GWTElement.this;
+		}
+
+		@Override
+		public R up() {
+			throw new MethodNotImplementedException();
+		}
+
+		@Override
+		public R down() {
+			throw new MethodNotImplementedException();
+		}
+
+		@Override
+		public R left() {
+			throw new MethodNotImplementedException();
+		}
+
+		@Override
+		public R right() {
+			throw new MethodNotImplementedException();
+		}
+	}
+
 	public GWTContainer<T> container;
 	protected HandlerRegistration registration;
 	protected HandlerRegistration registration2;
@@ -304,30 +357,9 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	}
 
 	public IKeyRecipient.IKey<R> addKeyListener(final IClickListener listener) {
-		((HasKeyPressHandlers) container.widget)
-				.addKeyPressHandler(new KeyPressHandler() {
-
-					@Override
-					public void onKeyPress(KeyPressEvent event) {
-						char charCode = event.getCharCode();
-						if (charCode == '\r') {
-							listener.onClick();
-						}
-					}
-				});
-		return new IKeyRecipient.IKey<R>() {
-
-			@SuppressWarnings("unchecked")
-			@Override
-			public R enter() {
-				return (R) GWTElement.this;
-			}
-
-			@Override
-			public R tab() {
-				throw new MethodNotImplementedException();
-			}
-		};
+		KeyPressHandlerAdapter adp = new KeyPressHandlerAdapter(listener);
+		((HasKeyPressHandlers) container.widget).addKeyPressHandler(adp);
+		return adp;
 	}
 
 	@Override
