@@ -20,6 +20,6 @@ package co.fxl.gui.api;
 
 public interface IFocusPanel extends IPanel<IFocusPanel>,
 		IDraggable<IFocusPanel>, IDropTarget<IFocusPanel>,
-		IKeyRecipient<IFocusPanel> {
+		IKeyRecipient<IFocusPanel>, IFocusable<IFocusPanel> {
 
 }
