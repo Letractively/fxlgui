@@ -380,6 +380,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	@SuppressWarnings("unchecked")
 	public R addDragStartListener(final IDraggable.IDragStartListener l) {
+		draggable(true);
 		container.widget.addDomHandler(new DragStartHandler() {
 			@Override
 			public void onDragStart(final DragStartEvent event) {
