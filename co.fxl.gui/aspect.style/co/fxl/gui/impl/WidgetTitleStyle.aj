@@ -47,11 +47,18 @@ privileged aspect WidgetTitleStyle {
 	&& this(widgetTitle) 
 	&& if(Style.ENABLED) {
 		Style.instance().window().main(widgetTitle.panel)
-				.header(widgetTitle.headerPanel);
+				.header(widgetTitle.headerPanel, widgetTitle.sideWidget);
 		if (Style.instance().window().commandsOnTop())
 			widgetTitle.commandsOnTop();
 	}
 
+	after(WidgetTitle widgetTitle) :
+	execution(public WidgetTitle WidgetTitle.sideWidget(boolean)) 
+	&& this(widgetTitle) 
+	&& if(Style.ENABLED) {
+		Style.instance().window().header(widgetTitle.headerPanel, widgetTitle.sideWidget);
+	}
+	
 	after(WidgetTitle widgetTitle, String title) returning(ILabel label) :
 	execution(public ILabel WidgetTitle.addTitle(String))
 	&& this(widgetTitle)
