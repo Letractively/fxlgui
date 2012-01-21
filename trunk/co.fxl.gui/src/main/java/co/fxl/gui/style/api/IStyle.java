@@ -26,6 +26,8 @@ import co.fxl.gui.api.IPanel;
 public interface IStyle {
 
 	public interface ITop {
+		
+		String imageResource();
 
 		ITop panel(IGridPanel panel);
 	}
@@ -79,7 +81,7 @@ public interface IStyle {
 
 		IWindow main(IPanel<?> panel);
 
-		IWindow header(IPanel<?> panel);
+		IWindow header(IPanel<?> panel, boolean isSide);
 
 		IWindow footer(IPanel<?> panel);
 
