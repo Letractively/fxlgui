@@ -22,6 +22,7 @@ import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IFlowPanel;
+import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
@@ -33,6 +34,7 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -108,5 +110,11 @@ class GWTLayout implements ILayout {
 	public IFlowPanel flow() {
 		setComponent(new FlowPanel());
 		return (IFlowPanel) (panel.element = new GWTFlowPanel(panel));
+	}
+
+	@Override
+	public IFocusPanel focus() {
+		setComponent(new FocusPanel());
+		return (IFocusPanel) (panel.element = new GWTFocusPanel(panel));
 	}
 }

@@ -414,7 +414,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public R addDragOverListener(final IDropTarget.IDragOverListener l) {
+	public R addDragDropListener(final IDropTarget.IDragDropListener l) {
 		container.widget.addDomHandler(new DragOverHandler() {
 
 			@Override
@@ -423,17 +423,12 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 				l.onDragOver();
 			}
 		}, DragOverEvent.getType());
-		return (R) this;
-	}
-
-	@SuppressWarnings("unchecked")
-	public R addDropListener(final IDropTarget.IDropListener l) {
 		container.widget.addDomHandler(new DropHandler() {
 
 			@Override
 			public void onDrop(DropEvent event) {
 				event.preventDefault();
-				l.onDrop();
+				l.onDropOn();
 			}
 		}, DropEvent.getType());
 		return (R) this;
