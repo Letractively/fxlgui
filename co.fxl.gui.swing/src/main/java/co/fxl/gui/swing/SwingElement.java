@@ -280,6 +280,26 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 			public R tab() {
 				throw new MethodNotImplementedException();
 			}
+
+			@Override
+			public R up() {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public R down() {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public R left() {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public R right() {
+				throw new MethodNotImplementedException();
+			}
 		};
 	}
 

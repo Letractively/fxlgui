@@ -63,6 +63,26 @@ class SwingPasswordField extends SwingTextInput<JPasswordField, IPasswordField>
 			public IPasswordField tab() {
 				throw new MethodNotImplementedException();
 			}
+
+			@Override
+			public IPasswordField up() {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public IPasswordField down() {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public IPasswordField left() {
+				throw new MethodNotImplementedException();
+			}
+
+			@Override
+			public IPasswordField right() {
+				throw new MethodNotImplementedException();
+			}
 		};
 	}
 
