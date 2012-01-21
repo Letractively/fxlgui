@@ -30,4 +30,9 @@ class GPlusTop implements ITop {
 		return this;
 	}
 
+	@Override
+	public String imageResource() {
+		return "logo-xoricon.png";
+	}
+
 }
