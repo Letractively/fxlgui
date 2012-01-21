@@ -20,26 +20,15 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.api.IDraggable;
-import co.fxl.gui.api.IDraggable.IDragStartListener.IDragStartEvent;
-import co.fxl.gui.api.IDropTarget;
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.ISpaced.ISpacing;
 import co.fxl.gui.api.IWidgetProvider;
 
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.DragOverEvent;
-import com.google.gwt.event.dom.client.DragOverHandler;
-import com.google.gwt.event.dom.client.DragStartEvent;
-import com.google.gwt.event.dom.client.DragStartHandler;
-import com.google.gwt.event.dom.client.DropEvent;
-import com.google.gwt.event.dom.client.DropHandler;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -186,76 +175,5 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 				return this;
 			}
 		};
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public R draggable(boolean draggable) {
-		container.widget.getElement().setDraggable(Element.DRAGGABLE_TRUE);
-		return (R) this;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public R addDragStartListener(final IDraggable.IDragStartListener l) {
-		container.widget.addDomHandler(new DragStartHandler() {
-			@Override
-			public void onDragStart(final DragStartEvent event) {
-				event.setData("text", "dragging");
-				l.onDragStart(new IDragStartEvent() {
-
-					@Override
-					public int offsetX() {
-						return event.getNativeEvent().getClientX()
-								- container.widget.getElement()
-										.getAbsoluteLeft();
-					}
-
-					@Override
-					public int offsetY() {
-						return event.getNativeEvent().getClientY()
-								- container.widget.getElement()
-										.getAbsoluteTop();
-					}
-
-					@Override
-					public IDragStartEvent dragImage(IElement<?> element) {
-						Widget w = (Widget) element.nativeElement();
-						event.getDataTransfer().setDragImage(w.getElement(), 0,
-								0);
-						return this;
-					}
-				});
-			}
-		}, DragStartEvent.getType());
-		return (R) this;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public R addDragOverListener(final IDropTarget.IDragOverListener l) {
-		container.widget.addDomHandler(new DragOverHandler() {
-
-			@Override
-			public void onDragOver(DragOverEvent event) {
-				event.preventDefault();
-				l.onDragOver();
-			}
-		}, DragOverEvent.getType());
-		return (R) this;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public R addDropListener(final IDropTarget.IDropListener l) {
-		container.widget.addDomHandler(new DropHandler() {
-
-			@Override
-			public void onDrop(DropEvent event) {
-				event.preventDefault();
-				l.onDrop();
-			}
-		}, DropEvent.getType());
-		return (R) this;
 	}
 }
