@@ -178,7 +178,7 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 			IClickListener listener) {
 		throw new MethodNotImplementedException();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public T draggable(boolean draggable) {
 		// TODO ... throw new MethodNotImplementedException();
@@ -192,13 +192,7 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public T addDragOverListener(co.fxl.gui.api.IDropTarget.IDragOverListener l) {
-		// TODO ... throw new MethodNotImplementedException();
-		return (T) this;
-	}
-
-	@SuppressWarnings("unchecked")
-	public T addDropListener(co.fxl.gui.api.IDropTarget.IDropListener l) {
+	public T addDragDropListener(co.fxl.gui.api.IDropTarget.IDragDropListener l) {
 		// TODO ... throw new MethodNotImplementedException();
 		return (T) this;
 	}
