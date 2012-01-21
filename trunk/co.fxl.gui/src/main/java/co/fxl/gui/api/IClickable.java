@@ -45,4 +45,5 @@ public interface IClickable<T> {
 	boolean clickable();
 
 	IKey<T> addClickListener(IClickListener clickListener);
+
 }
