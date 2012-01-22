@@ -28,7 +28,8 @@ import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDraggable;
 import co.fxl.gui.api.IDraggable.IDragStartListener.IDragStartEvent;
-import co.fxl.gui.api.IDropTarget;
+import co.fxl.gui.api.IDropTarget.IDragListener;
+import co.fxl.gui.api.IDropTarget.IDropListener;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFontElement;
 import co.fxl.gui.api.IFontElement.IFont;
@@ -41,6 +42,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.DoubleClickHandler;
+import com.google.gwt.event.dom.client.DragLeaveEvent;
+import com.google.gwt.event.dom.client.DragLeaveHandler;
 import com.google.gwt.event.dom.client.DragOverEvent;
 import com.google.gwt.event.dom.client.DragOverHandler;
 import com.google.gwt.event.dom.client.DragStartEvent;
@@ -125,6 +128,8 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	protected HandlerRegistration registration3;
 	protected List<GWTClickHandler<R>> handlers = new LinkedList<GWTClickHandler<R>>();
 	private String visibleStyle = null;
+	private boolean hasDragListener;
+	private HandlerRegistration dummyDragListener;
 
 	public GWTElement(GWTContainer<T> container) {
 		assert container != null : "GWTElement.new";
@@ -447,7 +452,11 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public R addDragDropListener(final IDropTarget.IDragDropListener l) {
+	public R addDragListener(final IDragListener l) {
+		hasDragListener = true;
+		if (dummyDragListener != null) {
+			dummyDragListener.removeHandler();
+		}
 		container.widget.addDomHandler(new DragOverHandler() {
 
 			@Override
@@ -456,6 +465,28 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 				l.onDragOver();
 			}
 		}, DragOverEvent.getType());
+		container.widget.addDomHandler(new DragLeaveHandler() {
+
+			@Override
+			public void onDragLeave(DragLeaveEvent event) {
+				event.preventDefault();
+				l.onDragOut();
+			}
+		}, DragLeaveEvent.getType());
+		return (R) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public R addDropListener(final IDropListener l) {
+		if (!hasDragListener) {
+			dummyDragListener = container.widget.addDomHandler(
+					new DragOverHandler() {
+
+						@Override
+						public void onDragOver(DragOverEvent event) {
+						}
+					}, DragOverEvent.getType());
+		}
 		container.widget.addDomHandler(new DropHandler() {
 
 			@Override
