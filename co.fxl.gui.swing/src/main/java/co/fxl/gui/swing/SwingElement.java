@@ -377,7 +377,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public R addDragListener(IDragListener l) {
+	public R addDragOverListener(IDragListener l) {
 		// TODO ... throw new MethodNotImplementedException();
 		return (R) this;
 	}
