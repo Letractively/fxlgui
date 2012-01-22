@@ -452,7 +452,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public R addDragListener(final IDragListener l) {
+	public R addDragOverListener(final IDragListener l) {
 		hasDragListener = true;
 		if (dummyDragListener != null) {
 			dummyDragListener.removeHandler();
