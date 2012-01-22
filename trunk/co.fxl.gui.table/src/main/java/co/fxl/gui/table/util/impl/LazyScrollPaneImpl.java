@@ -19,6 +19,7 @@
 package co.fxl.gui.table.util.impl;
 
 import co.fxl.gui.api.IAbsolutePanel;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IGridPanel;
@@ -151,6 +152,18 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private void draw() {
 		v = container.panel().focus();
 		v.color().white();
+		v.addKeyListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				// TODO ...
+			}
+		}).up();
+		v.addKeyListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				// TODO ...
+			}
+		}).down();
 		ILayout layout = v.add().panel();
 		treeDockPanel = getPanel(layout);
 		if (!adjustHeights) {
@@ -171,9 +184,9 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		treeScrollPanelContainer = new FlipPage(centerPanel(treeDockPanel));
 		treeScrollPanelContainer.height(height);
 		IContainer ctr = rightPanel(treeDockPanel);
-//		boolean inc = !horizontalScrollPane;
-//		if (inc)
-//			ctr = ctr.panel().vertical().addSpace(7).add();
+		// boolean inc = !horizontalScrollPane;
+		// if (inc)
+		// ctr = ctr.panel().vertical().addSpace(7).add();
 		scrollPane = ctr.scrollPane();
 		scrollPane.size(widthScrollPanel, height);
 		scrollContentPanel = scrollPane.viewPort().panel().absolute();
