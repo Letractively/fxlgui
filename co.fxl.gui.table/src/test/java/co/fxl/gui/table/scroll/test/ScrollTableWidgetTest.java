@@ -21,6 +21,7 @@ package co.fxl.gui.table.scroll.test;
 import java.lang.reflect.InvocationTargetException;
 
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.table.bulk.impl.BulkTableWidgetImplProvider;
 
 public class ScrollTableWidgetTest {
 
@@ -31,6 +32,7 @@ public class ScrollTableWidgetTest {
 		Class<?> clazz = Class.forName("co.fxl.gui.swing.SwingDisplay");
 		IDisplay display = (IDisplay) clazz.getMethod("instance",
 				new Class<?>[0]).invoke(null, new Object[0]);
+		display.register(new BulkTableWidgetImplProvider());
 		new ScrollTableWidgetDemo().run(display);
 	}
 

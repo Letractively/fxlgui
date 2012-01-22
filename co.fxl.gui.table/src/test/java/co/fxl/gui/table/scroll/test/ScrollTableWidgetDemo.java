@@ -76,7 +76,6 @@ public class ScrollTableWidgetDemo {
 
 	public void run(IDisplay display) {
 		display.register(new ScrollTableWidgetImplProvider());
-		display.register(new BulkTableWidgetImplProvider());
 		display.register(new LazyScrollPanelImplWidgetProvider());
 		IVerticalPanel panel = display.container().panel().vertical()
 				.spacing(10);
