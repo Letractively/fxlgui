@@ -192,7 +192,13 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public T addDragDropListener(co.fxl.gui.api.IDropTarget.IDragDropListener l) {
+	public T addDragListener(co.fxl.gui.api.IDropTarget.IDragListener l) {
+		// TODO ... throw new MethodNotImplementedException();
+		return (T) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public T addDropListener(co.fxl.gui.api.IDropTarget.IDropListener l) {
 		// TODO ... throw new MethodNotImplementedException();
 		return (T) this;
 	}
