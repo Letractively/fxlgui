@@ -21,36 +21,8 @@ package co.fxl.gui.table.scroll.test;
 import java.lang.reflect.InvocationTargetException;
 
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.table.bulk.impl.BulkTableWidgetImplProvider;
-import co.fxl.gui.table.scroll.api.IRows;
-import co.fxl.gui.table.scroll.api.IScrollTableColumn;
-import co.fxl.gui.table.scroll.api.IScrollTableWidget;
-import co.fxl.gui.table.scroll.impl.ScrollTableWidgetImplProvider;
-import co.fxl.gui.table.util.impl.LazyScrollPanelImplWidgetProvider;
 
-public class ScrollTableWidgetTest implements IRows<String> {
-
-	public void run(IDisplay display) {
-		display.register(new ScrollTableWidgetImplProvider());
-		display.register(new BulkTableWidgetImplProvider());
-		display.register(new LazyScrollPanelImplWidgetProvider());
-		IVerticalPanel panel = display.container().panel().vertical()
-				.spacing(10);
-		@SuppressWarnings("unchecked")
-		IScrollTableWidget<String> widget = (IScrollTableWidget<String>) panel
-				.add().widget(IScrollTableWidget.class);
-		widget.selection().multi();
-		widget.addTitle("Table");
-		widget.addButton("New");
-		for (int i = 0; i < 3; i++) {
-			IScrollTableColumn<String> c = widget.addColumn();
-			c.name("Column " + i).sortable().type().type(String.class);
-		}
-		widget.rows(this);
-		widget.visible(true);
-		display.visible(true);
-	}
+public class ScrollTableWidgetTest {
 
 	public static void main(String[] args) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException,
@@ -59,28 +31,7 @@ public class ScrollTableWidgetTest implements IRows<String> {
 		Class<?> clazz = Class.forName("co.fxl.gui.swing.SwingDisplay");
 		IDisplay display = (IDisplay) clazz.getMethod("instance",
 				new Class<?>[0]).invoke(null, new Object[0]);
-		new ScrollTableWidgetTest().run(display);
+		new ScrollTableWidgetDemo().run(display);
 	}
 
-	@Override
-	public String identifier(int i) {
-		assert i < size();
-		return String.valueOf(i);
-	}
-
-	@Override
-	public Object[] row(int i) {
-		assert i < size();
-		return new Object[] { "C0/" + i, "C1/" + (i + 47), "C2/" + (i + 95) };
-	}
-
-	@Override
-	public int size() {
-		return 1000;
-	}
-
-	@Override
-	public boolean deletable(int i) {
-		throw new MethodNotImplementedException();
-	}
 }
