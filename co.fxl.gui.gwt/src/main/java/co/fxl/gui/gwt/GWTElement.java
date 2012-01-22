@@ -35,6 +35,7 @@ import co.fxl.gui.api.IFontElement;
 import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
+import co.fxl.gui.api.IPoint;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 import com.google.gwt.dom.client.Element;
@@ -42,6 +43,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.DoubleClickHandler;
+import com.google.gwt.event.dom.client.DragDropEventBase;
 import com.google.gwt.event.dom.client.DragLeaveEvent;
 import com.google.gwt.event.dom.client.DragLeaveHandler;
 import com.google.gwt.event.dom.client.DragOverEvent;
@@ -68,6 +70,25 @@ import com.google.gwt.user.client.ui.HasFocus;
 import com.google.gwt.user.client.ui.Widget;
 
 public class GWTElement<T extends Widget, R> implements IElement<R> {
+
+	private final class GWTPoint implements IPoint {
+
+		private final DragDropEventBase<?> event;
+
+		private GWTPoint(DragDropEventBase<?> event) {
+			this.event = event;
+		}
+
+		@Override
+		public int offsetX() {
+			return event.getNativeEvent().getClientX();
+		}
+
+		@Override
+		public int offsetY() {
+			return event.getNativeEvent().getClientY();
+		}
+	}
 
 	private final class KeyPressHandlerAdapter implements KeyPressHandler,
 			IKeyRecipient.IKey<R> {
@@ -462,15 +483,15 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 			@Override
 			public void onDragOver(DragOverEvent event) {
 				event.preventDefault();
-				l.onDragOver();
+				l.onDragOver(new GWTPoint(event));
 			}
 		}, DragOverEvent.getType());
 		container.widget.addDomHandler(new DragLeaveHandler() {
 
 			@Override
-			public void onDragLeave(DragLeaveEvent event) {
+			public void onDragLeave(final DragLeaveEvent event) {
 				event.preventDefault();
-				l.onDragOut();
+				l.onDragOut(new GWTPoint(event));
 			}
 		}, DragLeaveEvent.getType());
 		return (R) this;
