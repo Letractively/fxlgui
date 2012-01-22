@@ -20,7 +20,6 @@ package co.fxl.gui.table.util.impl;
 
 import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
@@ -39,7 +38,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	public static final int HEIGHT_SCROLL_BAR = 17;
 	private static final int BLOCK_INCREMENT = 22;
 	private static final int HEIGHT_CORRECTION = 7;
-	public static boolean USE_DOCK_PANEL = false;
+	// public static boolean USE_DOCK_PANEL = false;
 	private int widthScrollPanel = WIDTH_SCROLL_PANEL;
 	private IDecorator decorator;
 	private int minRowHeight = 22;
@@ -179,8 +178,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		scrollPane.size(widthScrollPanel, height);
 		scrollContentPanel = scrollPane.viewPort().panel().absolute();
 		scrollContentPanel.add().label().text("&#160;");
-		if (!USE_DOCK_PANEL)
-			((IGridPanel) treeDockPanel).column(0).expand();
+		// if (!USE_DOCK_PANEL)
+		((IGridPanel) treeDockPanel).column(0).expand();
 		updateScrollPanelHeight();
 		final int firstIndex = size - rows2Paint;
 		assert firstIndex >= 0;
@@ -282,36 +281,36 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	}
 
 	private IContainer rightPanel(IPanel<?> tdp) {
-		if (USE_DOCK_PANEL) {
-			return ((IDockPanel) tdp).right();
-		} else {
-			return ((IGridPanel) tdp).cell(1, 0).width(widthScrollPanel);
-		}
+		// if (USE_DOCK_PANEL) {
+		// return ((IDockPanel) tdp).right();
+		// } else {
+		return ((IGridPanel) tdp).cell(1, 0).width(widthScrollPanel);
+		// }
 	}
 
 	private IContainer centerPanel(IPanel<?> tdp) {
-		if (USE_DOCK_PANEL) {
-			return ((IDockPanel) tdp).center();
-		} else {
-			return ((IGridPanel) tdp).cell(0, 0).valign().begin();
-		}
+		// if (USE_DOCK_PANEL) {
+		// return ((IDockPanel) tdp).center();
+		// } else {
+		return ((IGridPanel) tdp).cell(0, 0).valign().begin();
+		// }
 	}
 
 	private IContainer leftPanel(IPanel<?> tdp) {
-		if (USE_DOCK_PANEL) {
-			return ((IDockPanel) tdp).left();
-		} else {
-			return ((IGridPanel) tdp).cell(0, 0).valign().begin();
-		}
+		// if (USE_DOCK_PANEL) {
+		// return ((IDockPanel) tdp).left();
+		// } else {
+		return ((IGridPanel) tdp).cell(0, 0).valign().begin();
+		// }
 	}
 
 	public IPanel<?> getPanel(ILayout layout) {
-		if (USE_DOCK_PANEL)
-			return layout.dock();
-		else {
-			IGridPanel grid = layout.grid();
-			return grid;
-		}
+		// if (USE_DOCK_PANEL)
+		// return layout.dock();
+		// else {
+		IGridPanel grid = layout.grid();
+		return grid;
+		// }
 	}
 
 	private void updateScrollPanelHeight() {
