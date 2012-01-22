@@ -1,4 +1,4 @@
-<module >
+<module>
 	<inherits name='co.fxl.gui.IDisplay' />
 	<inherits name='co.fxl.gui.input.api.ICalendarWidget' />
 	<inherits name='co.fxl.data.format.api.IFormat' />
