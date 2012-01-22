@@ -80,10 +80,12 @@ public class ScrollTableWidgetDemo {
 		display.register(new LazyScrollPanelImplWidgetProvider());
 		IVerticalPanel panel = display.container().panel().vertical()
 				.spacing(10);
+		display.fullscreen().visible(true);
 		@SuppressWarnings("unchecked")
 		IScrollTableWidget<String> widget = (IScrollTableWidget<String>) panel
 				.add().widget(IScrollTableWidget.class);
 		widget.selection().multi();
+		widget.height(display.height() - 100);
 		widget.addTitle("Table");
 		widget.addButton("New");
 		for (int i = 0; i < 3; i++) {
@@ -92,7 +94,6 @@ public class ScrollTableWidgetDemo {
 		}
 		widget.rows(new Rows());
 		widget.visible(true);
-		display.fullscreen().visible(true);
 	}
 
 }
