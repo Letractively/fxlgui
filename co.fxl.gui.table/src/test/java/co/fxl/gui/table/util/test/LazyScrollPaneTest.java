@@ -50,7 +50,8 @@ class LazyScrollPaneTest implements IDecorator, IClickListener {
 	}
 
 	@Override
-	public void decorate(IContainer c, int firstRow, int lastRow, boolean isCalibration) {
+	public void decorate(IContainer c, int firstRow, int lastRow,
+			boolean isCalibration) {
 		IVerticalPanel v = c.panel().vertical();
 		for (int i = firstRow; i <= lastRow; i++) {
 			IHorizontalPanel container = v.add().panel().horizontal();
