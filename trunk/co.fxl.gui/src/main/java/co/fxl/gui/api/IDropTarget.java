@@ -34,7 +34,7 @@ public interface IDropTarget<T> {
 
 	}
 
-	T addDragListener(IDragListener l);
+	T addDragOverListener(IDragListener l);
 
 	T addDropListener(IDropListener l);
 

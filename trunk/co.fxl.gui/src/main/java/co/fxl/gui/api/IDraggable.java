@@ -34,6 +34,8 @@ public interface IDraggable<T> {
 
 		void onDragStart(IDragStartEvent event);
 
+		void onDragEnd();
+
 	}
 
 	T draggable(boolean draggable);
