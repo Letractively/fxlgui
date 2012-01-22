@@ -22,11 +22,7 @@ public interface IDraggable<T> {
 
 	public interface IDragStartListener {
 
-		public interface IDragStartEvent {
-
-			int offsetX();
-
-			int offsetY();
+		public interface IDragStartEvent extends IPoint {
 
 			IDragStartEvent dragImage(IElement<?> element);
 

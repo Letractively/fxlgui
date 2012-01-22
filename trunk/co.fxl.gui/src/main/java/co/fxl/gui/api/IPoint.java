@@ -18,18 +18,10 @@
  */
 package co.fxl.gui.api;
 
-public interface ILocated<T> extends IPoint {
+public interface IPoint {
 
-	int width();
+	int offsetX();
 
-	int height();
-
-	T offset(int x, int y);
-
-	T width(int width);
-
-	T height(int height);
-
-	T size(int width, int height);
+	int offsetY();
 
 }
