@@ -23,7 +23,6 @@ import java.util.List;
 
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.table.bulk.impl.BulkTableWidgetImplProvider;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
@@ -84,7 +83,7 @@ public class ScrollTableWidgetDemo {
 		IScrollTableWidget<String> widget = (IScrollTableWidget<String>) panel
 				.add().widget(IScrollTableWidget.class);
 		widget.selection().multi();
-		widget.height(display.height() - 100);
+		widget.height(800);
 		widget.addTitle("Table");
 		widget.addButton("New");
 		for (int i = 0; i < 3; i++) {

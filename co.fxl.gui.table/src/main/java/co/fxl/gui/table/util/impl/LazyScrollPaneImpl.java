@@ -20,12 +20,12 @@ package co.fxl.gui.table.util.impl;
 
 import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
-import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.FlipPage;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 
@@ -56,7 +56,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private boolean horizontalScrollPane = false;
 	private boolean adjustHeights = true;
 	private int width = -1;
-	private IVerticalPanel v;
+	private IFocusPanel v;
 	private IScrollPane treeScrollPanel;
 	private IPanel<?> treeDockPanel;
 	private boolean allowRepaint = false;
@@ -149,7 +149,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	}
 
 	private void draw() {
-		v = container.panel().vertical();
+		v = container.panel().focus();
 		v.color().white();
 		ILayout layout = v.add().panel();
 		treeDockPanel = getPanel(layout);
