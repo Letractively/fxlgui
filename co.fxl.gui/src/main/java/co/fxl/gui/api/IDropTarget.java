@@ -22,9 +22,9 @@ public interface IDropTarget<T> {
 
 	public interface IDragListener {
 
-		void onDragOver();
+		void onDragOver(IPoint point);
 
-		void onDragOut();
+		void onDragOut(IPoint point);
 
 	}
 
