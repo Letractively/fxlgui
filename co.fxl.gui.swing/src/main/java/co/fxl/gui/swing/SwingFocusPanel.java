@@ -23,6 +23,7 @@ import java.awt.Insets;
 import javax.swing.JComponent;
 
 import co.fxl.gui.api.IFocusPanel;
+import co.fxl.gui.api.IKeyRecipient;
 
 class SwingFocusPanel extends SwingPanel<IFocusPanel> implements IFocusPanel {
 
@@ -32,6 +33,7 @@ class SwingFocusPanel extends SwingPanel<IFocusPanel> implements IFocusPanel {
 		super(container);
 		setLayout(layoutManager = new VerticalLayoutManager());
 		container.component.setOpaque(false);
+		container.component.setFocusable(true);
 	}
 
 	@Override
@@ -48,4 +50,11 @@ class SwingFocusPanel extends SwingPanel<IFocusPanel> implements IFocusPanel {
 	public void add(JComponent component) {
 		super.add(component);
 	}
+
+	@Override
+	public IKeyRecipient.IKey<IFocusPanel> addKeyListener(
+			IClickListener clickListener) {
+		return new KeyTemplate<IFocusPanel>(this, clickListener);
+	}
+
 }
