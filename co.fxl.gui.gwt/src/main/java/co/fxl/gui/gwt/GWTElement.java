@@ -122,24 +122,32 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 			return (R) GWTElement.this;
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public R up() {
-			throw new MethodNotImplementedException();
+			targetCode = '\u0038';
+			return (R) GWTElement.this;
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public R down() {
-			throw new MethodNotImplementedException();
+			targetCode = '\u0040';
+			return (R) GWTElement.this;
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public R left() {
-			throw new MethodNotImplementedException();
+			targetCode = '\u0037';
+			return (R) GWTElement.this;
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public R right() {
-			throw new MethodNotImplementedException();
+			targetCode = '\u0039';
+			return (R) GWTElement.this;
 		}
 	}
 
