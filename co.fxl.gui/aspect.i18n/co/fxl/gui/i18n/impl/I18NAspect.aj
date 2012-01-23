@@ -44,4 +44,33 @@ public abstract aspect I18NAspect {
 		return proceed(I18N.instance().translate(text));
 	}
 
+	before() :
+	call(* *.*(..))
+	&& withincode(@DontTranslate * *.*(..)) 
+	&& args(text)
+	&& if(I18N.ENABLED) {
+		I18N.instance().active(false);
+	}
+
+	after() :
+	call(* *.*(..))
+	&& withincode(@DontTranslate * *.*(..)) 
+	&& if(I18N.ENABLED) {
+		I18N.instance().active(true);
+	}
+
+	before() :
+	call(* *.*(..))
+	&& within(@DontTranslate *) 
+	&& if(I18N.ENABLED) {
+		I18N.instance().active(false);
+	}
+
+	after() :
+	call(* *.*(..))
+	&& within(@DontTranslate *) 
+	&& if(I18N.ENABLED) {
+		I18N.instance().active(true);
+	}
+
 }

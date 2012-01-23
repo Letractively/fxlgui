@@ -18,50 +18,6 @@
  */
 package co.fxl.gui.i18n.impl;
 
-import co.fxl.gui.api.ILabel;
-import co.fxl.gui.i18n.api.II18N;
+public @interface DontTranslate {
 
-public class I18N {
-
-	public static final boolean ENABLED = true;
-	private static II18N instance = new II18N() {
-
-		@Override
-		public String translate(String text) {
-			return text;
-		}
-
-		@Override
-		public void addHelp(String iD, ILabel label) {
-		}
-
-		@Override
-		public String put(String text, String translation) {
-			return text;
-		}
-
-		@Override
-		public void active(boolean active) {
-		}
-
-		@Override
-		public void addConstant(String token) {
-		}
-
-		@Override
-		public void addRule(String template, String translationTemplate) {
-		}
-	};
-
-	private I18N() {
-	}
-
-	public static void register(II18N i18N) {
-		assert ENABLED;
-		instance = i18N;
-	}
-
-	public static II18N instance() {
-		return instance;
-	}
 }
