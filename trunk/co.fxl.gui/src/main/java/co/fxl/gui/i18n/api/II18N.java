@@ -26,7 +26,11 @@ public interface II18N {
 
 	String translate(String text);
 
-//	void addConstant(String token);
+	void addConstant(String token);
+
+	void addRule(String template, String translationTemplate);
 
 	void addHelp(String iD, ILabel label);
+
+	void active(boolean active);
 }

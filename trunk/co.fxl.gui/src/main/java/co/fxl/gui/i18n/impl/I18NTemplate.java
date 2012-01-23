@@ -28,11 +28,15 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 
 	// private Set<String> constants = new HashSet<String>();
 
+	private boolean active = true;
+
 	protected I18NTemplate() {
 	}
 
 	@Override
 	public String translate(String text) {
+		if (!active)
+			return text;
 		String translation = get(text);
 		if (translation == null) {
 			// translation = translateComposite(text);
@@ -59,6 +63,27 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 
 	@Override
 	public void addHelp(String iD, ILabel label) {
+	}
+
+	@Override
+	public String put(String text, String translation) {
+		super.put(text.toUpperCase(), translation.toUpperCase());
+		return super.put(text, translation);
+	}
+
+	@Override
+	public void active(boolean active) {
+		this.active = active;
+	}
+
+	@Override
+	public void addConstant(String token) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public void addRule(String template, String translationTemplate) {
+		throw new MethodNotImplementedException();
 	}
 
 	// @Override
