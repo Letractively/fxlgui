@@ -35,9 +35,9 @@ public class GermanI18N extends I18NTemplate {
 		put("Update", "Filter");
 		put("Clear", "Zur\u00fccksetzen");
 		put("Delete", "L\u00f6schen");
-		put("New $", "Erzeuge $");
-		put("Show $", "Zeige $");
-		put("Compare $", "Vergleiche $");
+//		put("New $", "Erzeuge $");
+//		put("Show $", "Zeige $");
+//		put("Compare $", "Vergleiche $");
 		put("NAVIGATION", "NAVIGATION");
 		put("VIEWS", "SICHTEN");
 		put("FILTER", "FILTER");
