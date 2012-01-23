@@ -26,6 +26,11 @@ public class GermanI18N extends I18NTemplate {
 	private static final long serialVersionUID = -432280219994971029L;
 
 	public GermanI18N() {
+		addRule("Show $", "Zeige $");
+		addRule("Select $", "$ auswählen");
+		addRule("New $", "$ erstellen");
+		addRule("Delete $", "$ löschen");
+		addRule("Compare $", "$ vergleichen");
 		put("Back", "Zur\u00fcck");
 		put("Forward", "Vorw\u00e4rts");
 		put("Navigation", "Navigation");
@@ -35,9 +40,9 @@ public class GermanI18N extends I18NTemplate {
 		put("Update", "Filter");
 		put("Clear", "Zur\u00fccksetzen");
 		put("Delete", "L\u00f6schen");
-//		put("New $", "Erzeuge $");
-//		put("Show $", "Zeige $");
-//		put("Compare $", "Vergleiche $");
+		// put("New $", "Erzeuge $");
+		// put("Show $", "Zeige $");
+		// put("Compare $", "Vergleiche $");
 		put("NAVIGATION", "NAVIGATION");
 		put("VIEWS", "SICHTEN");
 		put("FILTER", "FILTER");
