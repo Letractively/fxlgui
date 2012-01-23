@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
+	<classpathentry excluding="co/fxl/gui/form/impl/LoginWidgetImplI18N.aj|co/fxl/gui/form/impl/ColorFieldI18N.aj" kind="src" path="aspect.i18n"/>
 	<classpathentry excluding="co/fxl/gui/form/impl/LoginWidgetImplStyle.aj" kind="src" path="aspect.style"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="/fxl-data-format"/>
