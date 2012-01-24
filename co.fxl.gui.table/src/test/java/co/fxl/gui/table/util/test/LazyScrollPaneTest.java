@@ -27,6 +27,7 @@ import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
+import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
@@ -51,8 +52,8 @@ class LazyScrollPaneTest implements IDecorator, IClickListener {
 	}
 
 	@Override
-	public void decorate(IContainer c, int firstRow, int lastRow,
-			boolean isCalibration) {
+	public IKeyRecipient<Object> decorate(IContainer c, int firstRow,
+			int lastRow, boolean isCalibration) {
 		IVerticalPanel v = c.panel().vertical();
 		for (int i = firstRow; i <= lastRow; i++) {
 			IHorizontalPanel container = v.add().panel().horizontal();
@@ -79,6 +80,7 @@ class LazyScrollPaneTest implements IDecorator, IClickListener {
 			content.addSpace(10);
 			buttons[i] = container;
 		}
+		return null;
 	}
 
 	public static void main(String[] args) throws InstantiationException,
