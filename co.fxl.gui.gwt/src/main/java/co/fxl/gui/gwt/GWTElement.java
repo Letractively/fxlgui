@@ -81,12 +81,14 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 		@Override
 		public int offsetX() {
-			return event.getNativeEvent().getClientX();
+			return event.getNativeEvent().getClientX()
+					- container.widget.getAbsoluteLeft();
 		}
 
 		@Override
 		public int offsetY() {
-			return event.getNativeEvent().getClientY();
+			return event.getNativeEvent().getClientY()
+					- container.widget.getAbsoluteTop();
 		}
 	}
 
