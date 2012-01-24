@@ -308,7 +308,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				if (dragIndex != -1) {
 					IElement<?> element = decorator.elementAt(dragIndex);
 					event.dragImage(element);
-				} 
+				}
 			}
 
 			@Override
