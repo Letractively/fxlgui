@@ -59,13 +59,17 @@ import com.google.gwt.event.dom.client.HasDoubleClickHandlers;
 import com.google.gwt.event.dom.client.HasKeyPressHandlers;
 import com.google.gwt.event.dom.client.HasMouseOutHandlers;
 import com.google.gwt.event.dom.client.HasMouseOverHandlers;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HasFocus;
@@ -95,19 +99,36 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	}
 
 	private final class KeyPressHandlerAdapter implements KeyPressHandler,
-			IKeyRecipient.IKey<R> {
+			KeyUpHandler, IKeyRecipient.IKey<R> {
 
 		private final IClickListener listener;
 		private char targetCode = '\r';
+		private int nativeKeyCode = -1;
 
 		private KeyPressHandlerAdapter(IClickListener listener) {
+			DOM.sinkEvents(container.widget.getElement(),
+					com.google.gwt.user.client.Event.ONKEYDOWN);
+			DOM.sinkEvents(container.widget.getElement(),
+					com.google.gwt.user.client.Event.ONKEYPRESS);
 			this.listener = listener;
 		}
 
 		@Override
 		public void onKeyPress(KeyPressEvent event) {
+			if (nativeKeyCode != -1)
+				return;
 			char charCode = event.getCharCode();
 			if (charCode == targetCode) {
+				listener.onClick();
+			}
+		}
+
+		@Override
+		public void onKeyUp(KeyUpEvent event) {
+			if (nativeKeyCode == -1)
+				return;
+			int charCode = event.getNativeKeyCode();
+			if (charCode == nativeKeyCode) {
 				listener.onClick();
 			}
 		}
@@ -129,28 +150,28 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		@SuppressWarnings("unchecked")
 		@Override
 		public R up() {
-			targetCode = '\u0038';
+			nativeKeyCode = KeyCodes.KEY_UP;
 			return (R) GWTElement.this;
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public R down() {
-			targetCode = '\u0040';
+			nativeKeyCode = KeyCodes.KEY_DOWN;
 			return (R) GWTElement.this;
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public R left() {
-			targetCode = '\u0037';
+			nativeKeyCode = KeyCodes.KEY_LEFT;
 			return (R) GWTElement.this;
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public R right() {
-			targetCode = '\u0039';
+			nativeKeyCode = KeyCodes.KEY_RIGHT;
 			return (R) GWTElement.this;
 		}
 	}
