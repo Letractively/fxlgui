@@ -44,6 +44,8 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.event.dom.client.DragDropEventBase;
+import com.google.gwt.event.dom.client.DragEndEvent;
+import com.google.gwt.event.dom.client.DragEndHandler;
 import com.google.gwt.event.dom.client.DragLeaveEvent;
 import com.google.gwt.event.dom.client.DragLeaveHandler;
 import com.google.gwt.event.dom.client.DragOverEvent;
@@ -482,6 +484,14 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 				});
 			}
 		}, DragStartEvent.getType());
+		container.widget.addDomHandler(new DragEndHandler() {
+
+			@Override
+			public void onDragEnd(DragEndEvent event) {
+				l.onDragEnd();
+			}
+
+		}, DragEndEvent.getType());
 		return (R) this;
 	}
 
@@ -518,6 +528,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 						@Override
 						public void onDragOver(DragOverEvent event) {
+							event.preventDefault();
 						}
 					}, DragOverEvent.getType());
 		}
