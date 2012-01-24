@@ -160,6 +160,9 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	private boolean hasDragListener;
 	private HandlerRegistration dummyDragListener;
 
+	public GWTElement() {
+	}
+
 	public GWTElement(GWTContainer<T> container) {
 		assert container != null : "GWTElement.new";
 		this.container = container;
@@ -469,9 +472,9 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 					@Override
 					public IDragStartEvent dragImage(IElement<?> element) {
-						Widget w = (Widget) element.nativeElement();
-						event.getDataTransfer().setDragImage(w.getElement(), 0,
-								0);
+						event.getDataTransfer().setDragImage(
+								((GWTElement<?, ?>) element).getDOMElement(),
+								0, 0);
 						return this;
 					}
 				});
@@ -521,10 +524,14 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 			@Override
 			public void onDrop(DropEvent event) {
 				event.preventDefault();
-				l.onDropOn();
+				l.onDropOn(new GWTPoint(event));
 			}
 		}, DropEvent.getType());
 		return (R) this;
+	}
+
+	public Element getDOMElement() {
+		return container.widget.getElement();
 	}
 
 }
