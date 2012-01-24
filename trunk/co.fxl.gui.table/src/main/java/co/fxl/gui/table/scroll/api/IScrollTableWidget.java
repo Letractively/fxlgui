@@ -32,6 +32,8 @@ import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.table.api.ISelection;
+import co.fxl.gui.table.util.api.IDragDropListener;
+import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 public interface IScrollTableWidget<T> {
 
@@ -173,6 +175,8 @@ public interface IScrollTableWidget<T> {
 	IScrollTableWidget<T> showConfiguration(boolean showConfiguration);
 
 	List<IScrollTableColumn<T>> columns();
+
+	IScrollTableWidget<T> dragDropListener(boolean allowInsertUnder, IDragDropListener l);
 
 	// IVerticalPanel editPanel();
 }

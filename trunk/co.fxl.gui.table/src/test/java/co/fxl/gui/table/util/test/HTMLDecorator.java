@@ -90,4 +90,9 @@ public class HTMLDecorator implements IDecorator {
 	public boolean checkIndex(int rowIndex) {
 		return true;
 	}
+
+	@Override
+	public IElement<?> elementAt(int index) {
+		throw new MethodNotImplementedException();
+	}
 }

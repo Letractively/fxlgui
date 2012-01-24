@@ -118,4 +118,6 @@ public interface IBulkTableWidget {
 	IBulkTableWidget showAsLink(int column, int row, boolean asLink);
 
 	IBulkTableWidget addToContextMenu(boolean addToContextMenu);
+
+	IElement<?> elementAt(int index);
 }

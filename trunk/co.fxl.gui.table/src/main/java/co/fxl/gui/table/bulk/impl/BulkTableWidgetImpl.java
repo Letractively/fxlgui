@@ -405,4 +405,12 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 		this.addToContextMenu = addToContextMenu;
 		return this;
 	}
+
+	@Override
+	public IElement<?> elementAt(int index) {
+		
+		// TODO row, not first cell
+		
+		return grid.cell(0, index).element();
+	}
 }

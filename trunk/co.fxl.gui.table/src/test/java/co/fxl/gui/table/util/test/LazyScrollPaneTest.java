@@ -24,6 +24,7 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
@@ -102,6 +103,11 @@ class LazyScrollPaneTest implements IDecorator, IClickListener {
 
 	@Override
 	public void onClick() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IElement<?> elementAt(int index) {
 		throw new MethodNotImplementedException();
 	}
 }
