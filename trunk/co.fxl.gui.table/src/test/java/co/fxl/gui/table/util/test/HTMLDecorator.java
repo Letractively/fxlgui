@@ -25,6 +25,7 @@ import java.util.Map;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.table.util.api.ILazyScrollPane.IDecorator;
@@ -68,7 +69,8 @@ public class HTMLDecorator implements IDecorator {
 	}
 
 	@Override
-	public void decorate(IContainer container, int firstRow, int lastRow, boolean isCalibration) {
+	public IKeyRecipient<Object> decorate(IContainer container, int firstRow,
+			int lastRow, boolean isCalibration) {
 		elements.clear();
 		IVerticalPanel p = container.panel().vertical();
 		for (int i = firstRow; i <= lastRow; i++) {
@@ -79,6 +81,7 @@ public class HTMLDecorator implements IDecorator {
 			ILabel l = p.add().label().html(text);
 			elements.put(i, l);
 		}
+		return null;
 	}
 
 	@Override

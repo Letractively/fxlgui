@@ -33,6 +33,7 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMouseWheelListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
@@ -330,12 +331,14 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					sp.decorator(new ILazyScrollPane.IDecorator() {
 
 						@Override
-						public void decorate(IContainer container,
-								int firstRow, int lastRow, boolean isCalibration) {
+						public IKeyRecipient<Object> decorate(
+								IContainer container, int firstRow,
+								int lastRow, boolean isCalibration) {
 							rowOffset = firstRow;
 							paintedRows = lastRow - firstRow + 1;
 							contentPanel = container.panel().vertical();
 							updateWithPaintedRowsSet(isCalibration);
+							return grid;
 						}
 
 						@Override

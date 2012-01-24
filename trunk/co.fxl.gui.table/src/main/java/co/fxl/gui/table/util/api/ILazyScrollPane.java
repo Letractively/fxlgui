@@ -20,14 +20,15 @@ package co.fxl.gui.table.util.api;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IMouseWheelListener;
 
 public interface ILazyScrollPane extends IMouseWheelListener {
 
 	public interface IDecorator {
 
-		void decorate(IContainer container, int firstRow, int lastRow,
-				boolean isCalibration);
+		IKeyRecipient<Object> decorate(IContainer container, int firstRow,
+				int lastRow, boolean isCalibration);
 
 		boolean checkIndex(int rowIndex);
 
@@ -48,7 +49,8 @@ public interface ILazyScrollPane extends IMouseWheelListener {
 
 	ILazyScrollPane hasHeader(boolean hasHeader);
 
-	ILazyScrollPane dragDropListener(boolean allowInsertUnder, IDragDropListener l);
+	ILazyScrollPane dragDropListener(boolean allowInsertUnder,
+			IDragDropListener l);
 
 	ILazyScrollPane visible(boolean visible);
 

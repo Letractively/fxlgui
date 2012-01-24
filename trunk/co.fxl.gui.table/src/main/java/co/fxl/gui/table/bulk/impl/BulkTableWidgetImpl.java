@@ -26,14 +26,15 @@ import java.util.Map;
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICheckBox;
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IGridPanel.IGridClickListener;
+import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IMouseWheelListener;
@@ -41,6 +42,7 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.AlignmentMemento;
 import co.fxl.gui.impl.ContextMenu;
+import co.fxl.gui.impl.DummyKeyRecipientKeyTemplate;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 
 public class BulkTableWidgetImpl implements IBulkTableWidget {
@@ -299,7 +301,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	}
 
 	@Override
-	public IKey<?> addTableListener(final ITableClickListener l) {
+	public IClickable.IKey<?> addTableListener(final ITableClickListener l) {
 		return grid.addGridClickListener(new IGridClickListener() {
 
 			@Override
@@ -408,9 +410,15 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 
 	@Override
 	public IElement<?> elementAt(int index) {
-		
+
 		// TODO row, not first cell
-		
+
 		return grid.cell(0, index).element();
+	}
+
+	@Override
+	public IKeyRecipient.IKey<Object> addKeyListener(IClickListener listener) {
+		// TODO ...
+		return new DummyKeyRecipientKeyTemplate();
 	}
 }

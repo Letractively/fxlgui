@@ -19,13 +19,14 @@
 package co.fxl.gui.table.bulk.api;
 
 import co.fxl.gui.api.IAlignment;
-import co.fxl.gui.api.IClickable.IKey;
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IMouseWheelListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
-public interface IBulkTableWidget {
+public interface IBulkTableWidget extends IKeyRecipient<Object> {
 
 	public interface IUpdateAdapter<T> {
 
@@ -91,7 +92,7 @@ public interface IBulkTableWidget {
 
 	IColumn column(int column);
 
-	IKey<?> addTableListener(ITableClickListener l);
+	IClickable.IKey<?> addTableListener(ITableClickListener l);
 
 	int height();
 

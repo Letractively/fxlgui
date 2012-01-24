@@ -26,6 +26,7 @@ import co.fxl.gui.api.IDropTarget.IDropListener;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPoint;
@@ -36,6 +37,7 @@ import co.fxl.gui.impl.FlipPage;
 import co.fxl.gui.table.util.api.IDragDropListener;
 import co.fxl.gui.table.util.api.IDragDropListener.Where;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
+import co.fxl.gui.table.util.api.IUpDownIndex;
 
 public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
@@ -73,6 +75,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private boolean holdScroll;
 	private boolean allowInsertUnder;
 	private IDragDropListener dragDropListener;
+	private IUpDownIndex upDownIndex;
 
 	LazyScrollPaneImpl(IContainer container) {
 		this.container = container;
@@ -161,7 +164,6 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private void draw() {
 		v = container.panel().focus();
 		v.color().white();
-		addUpDownKeyListener(v);
 		addDragListener(v);
 		ILayout layout = v.add().panel();
 		treeDockPanel = getPanel(layout);
@@ -348,17 +350,31 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		});
 	}
 
-	public void addUpDownKeyListener(IFocusPanel v) {
+	public void addUpDownKeyListener(final IKeyRecipient<?> v) {
 		v.addKeyListener(new IClickListener() {
 			@Override
 			public void onClick() {
-				// TODO ...
+				if (upDownIndex != null) {
+					throw new MethodNotImplementedException();
+				} else {
+					if (rowIndex > 0) {
+						rowIndex--;
+						refresh();
+					}
+				}
 			}
 		}).up();
 		v.addKeyListener(new IClickListener() {
 			@Override
 			public void onClick() {
-				// TODO ...
+				if (upDownIndex != null) {
+					throw new MethodNotImplementedException();
+				} else {
+					if (rowIndex < maxRowIndex) {
+						rowIndex++;
+						refresh();
+					}
+				}
 			}
 		}).down();
 	}
