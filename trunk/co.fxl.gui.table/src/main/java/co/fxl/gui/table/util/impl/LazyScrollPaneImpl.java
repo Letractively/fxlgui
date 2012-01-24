@@ -308,7 +308,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				if (dragIndex != -1) {
 					IElement<?> element = decorator.elementAt(dragIndex);
 					event.dragImage(element);
-				}
+				} 
 			}
 
 			@Override
@@ -540,6 +540,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	public int getIndex(int y) {
 		int index = rowIndex;
 		int range = hasHeader ? decorator.headerHeight() : 0;
+		if (y <= range)
+			return 0;
 		for (; index <= lastIndex; index++) {
 			int rowHeight = rowHeight(index);
 			if (y >= range && y <= range + rowHeight) {
