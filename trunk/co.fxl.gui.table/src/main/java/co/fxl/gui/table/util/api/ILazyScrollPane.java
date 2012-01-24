@@ -31,6 +31,8 @@ public interface ILazyScrollPane extends IMouseWheelListener {
 
 		boolean checkIndex(int rowIndex);
 
+		int headerHeight();
+
 		int rowHeight(int rowIndex);
 
 		IElement<?> elementAt(int index);
@@ -43,6 +45,8 @@ public interface ILazyScrollPane extends IMouseWheelListener {
 	ILazyScrollPane minRowHeight(int height);
 
 	ILazyScrollPane decorator(IDecorator decorator);
+
+	ILazyScrollPane hasHeader(boolean hasHeader);
 
 	ILazyScrollPane dragDropListener(boolean allowInsertUnder, IDragDropListener l);
 

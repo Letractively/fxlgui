@@ -95,4 +95,9 @@ public class HTMLDecorator implements IDecorator {
 	public IElement<?> elementAt(int index) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public int headerHeight() {
+		throw new MethodNotImplementedException();
+	}
 }

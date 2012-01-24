@@ -208,7 +208,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 					return;
 				}
 				treeDockPanel.visible(true);
-				int h = adjustHeights ? rowHeight(lastIndex) : minRowHeight;
+				int h = hasHeader ? decorator.headerHeight() : 0;
+				h += adjustHeights ? rowHeight(lastIndex) : minRowHeight;
 				assert lastIndex >= 0;
 				maxRowIndex = lastIndex;
 				for (int i = lastIndex - 1; i >= firstIndex && h < height; i--) {
@@ -292,6 +293,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	}
 
 	private int dragIndex = -1;
+	private boolean hasHeader = true;
 
 	private void addDragListener(final IFocusPanel v) {
 		if (dragDropListener == null)
@@ -314,9 +316,9 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 			@Override
 			public void onDropOn(IPoint point) {
-				
+
 				// TODO header-row berücksichtigen
-				
+
 				int index = getIndex(point.offsetY());
 				if (dragDropListener.allowsDrop(index)) {
 					boolean insertUnder = allowInsertUnder
@@ -534,5 +536,11 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 			}
 		}
 		return index;
+	}
+
+	@Override
+	public ILazyScrollPane hasHeader(boolean hasHeader) {
+		this.hasHeader = hasHeader;
+		return this;
 	}
 }
