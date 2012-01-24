@@ -30,7 +30,7 @@ public interface IDropTarget<T> {
 
 	public interface IDropListener {
 
-		void onDropOn();
+		void onDropOn(IPoint point);
 
 	}
 
