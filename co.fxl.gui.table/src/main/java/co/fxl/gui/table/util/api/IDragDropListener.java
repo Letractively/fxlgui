@@ -22,9 +22,13 @@ import co.fxl.gui.impl.ICallback;
 
 public interface IDragDropListener {
 
+	public enum Where {
+
+		BEFORE, AFTER, UNDER;
+	}
+
 	boolean allowsDrop(int rowIndex);
 
-	void drop(int dragIndex, int dropIndex, boolean inserUnder,
-			ICallback<Void> cb);
+	void drop(int dragIndex, int dropIndex, Where where, ICallback<Void> cb);
 
 }

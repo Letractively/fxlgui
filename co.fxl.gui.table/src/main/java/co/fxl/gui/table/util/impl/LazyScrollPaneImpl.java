@@ -34,6 +34,7 @@ import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.FlipPage;
 import co.fxl.gui.table.util.api.IDragDropListener;
+import co.fxl.gui.table.util.api.IDragDropListener.Where;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
@@ -304,26 +305,38 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 			public void onDragStart(IDragStartEvent event) {
 				int y = event.offsetY();
 				dragIndex = getIndex(y);
-				IElement<?> element = decorator.elementAt(dragIndex);
-				event.dragImage(element);
+				if (dragIndex != -1) {
+					IElement<?> element = decorator.elementAt(dragIndex);
+					event.dragImage(element);
+				}
 			}
 
 			@Override
 			public void onDragEnd() {
+				dragIndex = -1;
 			}
 		});
 		v.addDropListener(new IDropListener() {
 
 			@Override
 			public void onDropOn(IPoint point) {
-
-				// TODO header-row berücksichtigen
-
-				int index = getIndex(point.offsetY());
-				if (dragDropListener.allowsDrop(index)) {
+				if (dragIndex == -1)
+					return;
+				int offsetY = point.offsetY();
+				int index = getIndex(offsetY);
+				if (index != -1 && dragDropListener.allowsDrop(index)) {
 					boolean insertUnder = allowInsertUnder
 							&& point.offsetX() > v.width() / 2;
-					dragDropListener.drop(dragIndex, index, insertUnder,
+					Where where = Where.UNDER;
+					if (!insertUnder) {
+						int[] rangeAndRowHeight = getRangeAndRowHeight(offsetY);
+						if (offsetY <= rangeAndRowHeight[0]
+								+ rangeAndRowHeight[1] / 2)
+							where = Where.BEFORE;
+						else
+							where = Where.AFTER;
+					}
+					dragDropListener.drop(dragIndex, index, where,
 							new CallbackTemplate<Void>() {
 								@Override
 								public void onSuccess(Void result) {
@@ -526,16 +539,30 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 	public int getIndex(int y) {
 		int index = rowIndex;
-		int range = 0;
+		int range = hasHeader ? decorator.headerHeight() : 0;
 		for (; index <= lastIndex; index++) {
 			int rowHeight = rowHeight(index);
 			if (y >= range && y <= range + rowHeight) {
-				break;
+				return index;
 			} else {
 				range += rowHeight;
 			}
 		}
-		return index;
+		return -1;
+	}
+
+	public int[] getRangeAndRowHeight(int y) {
+		int index = rowIndex;
+		int range = hasHeader ? decorator.headerHeight() : 0;
+		for (; index <= lastIndex; index++) {
+			int rowHeight = rowHeight(index);
+			if (y >= range && y <= range + rowHeight) {
+				return new int[] { range, rowHeight };
+			} else {
+				range += rowHeight;
+			}
+		}
+		throw new MethodNotImplementedException();
 	}
 
 	@Override
