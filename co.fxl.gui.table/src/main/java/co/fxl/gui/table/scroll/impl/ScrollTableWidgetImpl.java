@@ -29,6 +29,7 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -58,6 +59,7 @@ import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn.IScrollTableListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
+import co.fxl.gui.table.util.api.IDragDropListener;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
@@ -312,6 +314,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					contentPanel0.clear();
 					sp = (ILazyScrollPane) contentPanel0.add().widget(
 							ILazyScrollPane.class);
+					if (dragDropListener != null)
+						sp.dragDropListener(allowInsertUnder, dragDropListener);
 					sp.minRowHeight(getRowHeight());
 					if (!preselectedList.isEmpty()) {
 						int rowIndex = rows.find(preselectedList);
@@ -347,6 +351,11 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						public int rowHeight(int rowIndex) {
 							int visibleRowIndex = convert2GridRow(rowIndex);
 							return grid.rowHeight(visibleRowIndex);
+						}
+
+						@Override
+						public IElement<?> elementAt(int index) {
+							return grid.elementAt(index);
 						}
 					});
 					sp.size(rows.size());
@@ -502,6 +511,8 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private boolean addToContextMenu;
 	private IUpdateListener<List<String>> hiddenColumnListener;
 	private boolean filterSizeConstraint = true;
+	private boolean allowInsertUnder;
+	private IDragDropListener dragDropListener;
 
 	boolean update() {
 		paintedRows = computeRowsToPaint();
@@ -1108,5 +1119,13 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		List<IScrollTableColumn<Object>> columns = new LinkedList<IScrollTableColumn<Object>>();
 		columns.addAll(this.columns);
 		return columns;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> dragDropListener(
+			boolean allowInsertUnder, IDragDropListener l) {
+		this.allowInsertUnder = allowInsertUnder;
+		this.dragDropListener = l;
+		return this;
 	}
 }

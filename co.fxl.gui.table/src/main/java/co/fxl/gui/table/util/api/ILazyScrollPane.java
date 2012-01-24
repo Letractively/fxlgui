@@ -19,6 +19,7 @@
 package co.fxl.gui.table.util.api;
 
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IMouseWheelListener;
 
 public interface ILazyScrollPane extends IMouseWheelListener {
@@ -31,6 +32,8 @@ public interface ILazyScrollPane extends IMouseWheelListener {
 		boolean checkIndex(int rowIndex);
 
 		int rowHeight(int rowIndex);
+
+		IElement<?> elementAt(int index);
 	}
 
 	ILazyScrollPane size(int size);
@@ -40,6 +43,8 @@ public interface ILazyScrollPane extends IMouseWheelListener {
 	ILazyScrollPane minRowHeight(int height);
 
 	ILazyScrollPane decorator(IDecorator decorator);
+
+	ILazyScrollPane dragDropListener(boolean allowInsertUnder, IDragDropListener l);
 
 	ILazyScrollPane visible(boolean visible);
 

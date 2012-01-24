@@ -21,13 +21,19 @@ package co.fxl.gui.table.util.impl;
 import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IDraggable.IDragStartListener;
+import co.fxl.gui.api.IDropTarget.IDropListener;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.IPoint;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
+import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.FlipPage;
+import co.fxl.gui.table.util.api.IDragDropListener;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
@@ -64,6 +70,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private int[] rowHeights;
 	private int heightEstimate = 0;
 	private boolean holdScroll;
+	private boolean allowInsertUnder;
+	private IDragDropListener dragDropListener;
 
 	LazyScrollPaneImpl(IContainer container) {
 		this.container = container;
@@ -152,18 +160,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private void draw() {
 		v = container.panel().focus();
 		v.color().white();
-		v.addKeyListener(new IClickListener() {
-			@Override
-			public void onClick() {
-				// TODO ...
-			}
-		}).up();
-		v.addKeyListener(new IClickListener() {
-			@Override
-			public void onClick() {
-				// TODO ...
-			}
-		}).down();
+		addUpDownKeyListener(v);
+		addDragListener(v);
 		ILayout layout = v.add().panel();
 		treeDockPanel = getPanel(layout);
 		if (!adjustHeights) {
@@ -291,6 +289,63 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				lastIndex = 0;
 			runnable.run();
 		}
+	}
+
+	private int dragIndex = -1;
+
+	private void addDragListener(final IFocusPanel v) {
+		if (dragDropListener == null)
+			return;
+		v.addDragStartListener(new IDragStartListener() {
+
+			@Override
+			public void onDragStart(IDragStartEvent event) {
+				int y = event.offsetY();
+				dragIndex = getIndex(y);
+				IElement<?> element = decorator.elementAt(dragIndex);
+				event.dragImage(element);
+			}
+
+			@Override
+			public void onDragEnd() {
+			}
+		});
+		v.addDropListener(new IDropListener() {
+
+			@Override
+			public void onDropOn(IPoint point) {
+				
+				// TODO header-row berücksichtigen
+				
+				int index = getIndex(point.offsetY());
+				if (dragDropListener.allowsDrop(index)) {
+					boolean insertUnder = allowInsertUnder
+							&& point.offsetX() > v.width() / 2;
+					dragDropListener.drop(dragIndex, index, insertUnder,
+							new CallbackTemplate<Void>() {
+								@Override
+								public void onSuccess(Void result) {
+									refresh();
+								}
+							});
+				}
+			}
+		});
+	}
+
+	public void addUpDownKeyListener(IFocusPanel v) {
+		v.addKeyListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				// TODO ...
+			}
+		}).up();
+		v.addKeyListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				// TODO ...
+			}
+		}).down();
 	}
 
 	private IContainer rightPanel(IPanel<?> tdp) {
@@ -457,5 +512,27 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	public ILazyScrollPane scrollPosition(int scrollPosition) {
 		scrollPane.scrollTo(scrollPosition);
 		return this;
+	}
+
+	@Override
+	public ILazyScrollPane dragDropListener(boolean allowInsertUnder,
+			IDragDropListener l) {
+		this.allowInsertUnder = allowInsertUnder;
+		this.dragDropListener = l;
+		return this;
+	}
+
+	public int getIndex(int y) {
+		int index = rowIndex;
+		int range = 0;
+		for (; index <= lastIndex; index++) {
+			int rowHeight = rowHeight(index);
+			if (y >= range && y <= range + rowHeight) {
+				break;
+			} else {
+				range += rowHeight;
+			}
+		}
+		return index;
 	}
 }
