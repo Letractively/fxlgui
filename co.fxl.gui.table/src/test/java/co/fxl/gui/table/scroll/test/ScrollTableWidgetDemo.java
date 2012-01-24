@@ -16,7 +16,7 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package gwt.draft.client;
+package co.fxl.gui.table.scroll.test;
 
 import java.util.LinkedList;
 import java.util.List;
