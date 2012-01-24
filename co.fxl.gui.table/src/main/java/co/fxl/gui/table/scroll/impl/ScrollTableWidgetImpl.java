@@ -350,12 +350,17 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						@Override
 						public int rowHeight(int rowIndex) {
 							int visibleRowIndex = convert2GridRow(rowIndex);
-							return grid.rowHeight(visibleRowIndex);
+							return grid.rowHeight(visibleRowIndex + 1);
 						}
 
 						@Override
 						public IElement<?> elementAt(int index) {
 							return grid.elementAt(index);
+						}
+
+						@Override
+						public int headerHeight() {
+							return grid.rowHeight(0);
 						}
 					});
 					sp.size(rows.size());
