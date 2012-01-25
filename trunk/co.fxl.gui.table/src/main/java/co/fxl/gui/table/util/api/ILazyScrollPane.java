@@ -71,4 +71,6 @@ public interface ILazyScrollPane extends IMouseWheelListener {
 	void remove();
 
 	int rowIndex();
+
+	ILazyScrollPane upDownIndex(IUpDownIndex index);
 }
