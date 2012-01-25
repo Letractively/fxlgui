@@ -32,8 +32,8 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPoint;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
-import co.fxl.gui.impl.FlipPage;
 import co.fxl.gui.table.util.api.IDragDropListener;
 import co.fxl.gui.table.util.api.IDragDropListener.Where;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
@@ -54,7 +54,9 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private int minRowHeight = 22;
 	private int height = 400;
 	private IContainer container;
-	private FlipPage treeScrollPanelContainer;
+	
+	// previously: FlipPage	
+	private IVerticalPanel treeScrollPanelContainer;
 	private int rowIndex = 0;
 	private IAbsolutePanel scrollContentPanel;
 	private int size;
@@ -182,7 +184,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		}
 		treeDockPanel.visible(false);
 		treeDockPanel.height(height);
-		treeScrollPanelContainer = new FlipPage(centerPanel(treeDockPanel));
+		treeScrollPanelContainer = centerPanel(treeDockPanel).panel()
+				.vertical();
 		treeScrollPanelContainer.height(height);
 		IContainer ctr = rightPanel(treeDockPanel);
 		// boolean inc = !horizontalScrollPane;
@@ -451,7 +454,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 	private int update(int rowIndex, boolean isCalibration) {
 		setLastIndex(rowIndex);
-		IContainer invisibleCard = treeScrollPanelContainer.next();
+		IContainer invisibleCard = treeScrollPanelContainer.clear().add();
 		IContainer c = invisibleCard;
 
 		// TODO BUG: after switch to Detail-View: horizontal
