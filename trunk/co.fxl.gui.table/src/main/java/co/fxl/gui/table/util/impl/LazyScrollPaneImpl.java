@@ -448,7 +448,10 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				treeScrollPanel.width(width - widthScrollPanel);
 			c = treeScrollPanel.horizontal().viewPort();
 		}
-		decorator.decorate(c, rowIndex, lastIndex, isCalibration);
+		IKeyRecipient<Object> e = decorator.decorate(c, rowIndex, lastIndex,
+				isCalibration);
+		if (!isCalibration)
+			addUpDownKeyListener(e);
 		treeScrollPanelContainer.flip();
 		return lastIndex;
 	}
