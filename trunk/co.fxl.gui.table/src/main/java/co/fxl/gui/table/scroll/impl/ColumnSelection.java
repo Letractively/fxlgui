@@ -20,13 +20,21 @@ package co.fxl.gui.table.scroll.impl;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IDraggable.IDragStartListener;
+import co.fxl.gui.api.IDropTarget.IDropListener;
+import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.api.IPoint;
 
 class ColumnSelection {
 
 	ScrollTableWidgetImpl widget;
+	protected ScrollTableColumnImpl dragged;
+	private ScrollTableColumnImpl dummy;
+	private IFocusPanel dummyFocusPanel;
+	private ILabel dummyLabel;
 
 	// TODO FEATURE: Option: Look: Column-Selection: if > n Columns or
 	// sum(characters of column-headers) > m
@@ -34,6 +42,12 @@ class ColumnSelection {
 
 	ColumnSelection(final ScrollTableWidgetImpl widget) {
 		this.widget = widget;
+		dummy = new ScrollTableColumnImpl(widget, -1);
+		dummy.name("");
+		draw();
+	}
+
+	public void draw() {
 		IContainer clear = widget.statusPanel().cell(1, 0).clear().align()
 				.begin().valign().center();
 		IHorizontalPanel p = clear.panel().horizontal().add().panel()
@@ -51,35 +65,91 @@ class ColumnSelection {
 		addTitle(p);
 		for (final ScrollTableColumnImpl c : widget.columns) {
 			p.addSpace(4);
-			IHorizontalPanel b = p.add().panel().horizontal().spacing(4);
-			decoratePanel(clickListener, c, b);
+			IFocusPanel fp = p.add().panel().focus();
+			IHorizontalPanel b = fp.add().panel().horizontal().spacing(4);
+			decoratePanel(clickListener, c, fp, b);
 		}
+		p.addSpace(4);
+		dummyFocusPanel = p.add().panel().focus();
+		dummyFocusPanel.visible(false);
+		IHorizontalPanel b = dummyFocusPanel.add().panel().horizontal()
+				.spacing(4);
+		dummyLabel = decoratePanel(null, dummy, dummyFocusPanel, b);
 	}
 
-	void decoratePanel(final IClickListener clickListener,
-			final ScrollTableColumnImpl c, IHorizontalPanel b) {
-		b.border().color().rgb(172, 197, 213);
-		if (c.visible)
+	ILabel decoratePanel(final IClickListener clickListener,
+			final ScrollTableColumnImpl c, final IFocusPanel fp,
+			final IHorizontalPanel b) {
+		fp.addDragStartListener(new IDragStartListener() {
+
+			@Override
+			public void onDragStart(IDragStartEvent event) {
+				dragged = c;
+				dummyFocusPanel.visible(true);
+				dummyLabel.text(c.name);
+				event.dragImage(fp);
+			}
+
+			@Override
+			public void onDragEnd() {
+				dummyFocusPanel.visible(false);
+				dragged = null;
+			}
+		});
+		fp.addDropListener(new IDropListener() {
+
+			@Override
+			public void onDropOn(IPoint point) {
+				dropOnTo(c);
+				dragged = null;
+			}
+		});
+		if (c.index == -1) {
+			b.border().style().dotted();
+		} else
+			b.border().color().rgb(172, 197, 213);
+		if (c.index == -1)
+			b.color().white();
+		else if (c.visible)
 			b.color().gray();
 		else
 			b.color().white();
 		ILabel l = b.add().label().text(c.name).autoWrap(true);
 		l.font().pixel(11);
-		decorateLabel(c, l);
-		b.addClickListener(new IClickListener() {
-			@Override
-			public void onClick() {
-				c.visible = !c.visible;
-				boolean allInvisible = true;
-				for (ScrollTableColumnImpl c1 : widget.columns)
-					allInvisible &= !c1.visible;
-				if (allInvisible)
-					c.visible = true;
-				else {
-					clickListener.onClick();
+		if (c.index == -1)
+			l.font().color().white();
+		else {
+			decorateLabel(c, l);
+			b.addClickListener(new IClickListener() {
+				@Override
+				public void onClick() {
+					c.visible = !c.visible;
+					boolean allInvisible = true;
+					for (ScrollTableColumnImpl c1 : widget.columns)
+						allInvisible &= !c1.visible;
+					if (allInvisible)
+						c.visible = true;
+					else {
+						clickListener.onClick();
+					}
 				}
-			}
-		});
+			});
+		}
+		return l;
+	}
+
+	protected void dropOnTo(ScrollTableColumnImpl c) {
+		if (c == dragged)
+			return;
+		widget.columns.remove(dragged);
+		if (c == dummy) {
+			widget.columns.add(dragged);
+		} else {
+			int i = widget.columns.indexOf(c);
+			widget.columns.add(i, dragged);
+		}
+		draw();
+		widget.update();
 	}
 
 	void decorateLabel(final ScrollTableColumnImpl c, ILabel l) {
