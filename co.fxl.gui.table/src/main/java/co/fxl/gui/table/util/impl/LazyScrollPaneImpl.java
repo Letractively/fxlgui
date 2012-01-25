@@ -469,7 +469,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				isCalibration);
 		if (!isCalibration)
 			addUpDownKeyListener(e);
-		treeScrollPanelContainer.flip();
+		// treeScrollPanelContainer.flip();
 		return lastIndex;
 	}
 
