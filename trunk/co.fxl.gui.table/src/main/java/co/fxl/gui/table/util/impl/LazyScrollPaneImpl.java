@@ -299,6 +299,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		rowIndex = index;
 		int y = convertRowIndex2ScrollOffset(rowIndex);
 		scrollPane.scrollTo(y);
+		refresh();
 	}
 
 	private int dragIndex = -1;
