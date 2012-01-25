@@ -18,52 +18,88 @@
  */
 package co.fxl.gui.gwt;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IKeyRecipient.IKey;
 
 import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.ui.FocusPanel;
 
-public class GWTKeyRecipientKeyTemplate<R> implements IKey<R> {
+public class GWTKeyRecipientKeyTemplate implements IKey<Object>,
+		IKeyRecipient<Object> {
 
 	public int nativeKeyCode;
-	private R element;
+	private Object element;
+	private List<IClickListener> ls = new LinkedList<IClickListener>();
 
-	public GWTKeyRecipientKeyTemplate(R element) {
+	public GWTKeyRecipientKeyTemplate(Object element) {
 		this.element = element;
 	}
 
+	public GWTKeyRecipientKeyTemplate(FocusPanel fp) {
+		element = fp;
+		fp.addKeyUpHandler(new KeyUpHandler() {
+
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				if (event.getNativeKeyCode() == nativeKeyCode)
+					for (IClickListener l : ls)
+						l.onClick();
+			}
+		});
+	}
+
+	public GWTKeyRecipientKeyTemplate(FocusPanel focusPanel,
+			IClickListener listener) {
+		this(focusPanel);
+		ls.add(listener);
+	}
+
 	@Override
-	public R enter() {
+	public Object enter() {
 		nativeKeyCode = KeyCodes.KEY_ENTER;
-		return (R) element;
+		return element;
 	}
 
 	@Override
-	public R tab() {
+	public Object tab() {
 		nativeKeyCode = KeyCodes.KEY_TAB;
-		return (R) element;
+		return element;
 	}
 
 	@Override
-	public R up() {
+	public Object up() {
 		nativeKeyCode = KeyCodes.KEY_UP;
-		return (R) element;
+		return element;
 	}
 
 	@Override
-	public R down() {
+	public Object down() {
 		nativeKeyCode = KeyCodes.KEY_DOWN;
-		return (R) element;
+		return element;
 	}
 
 	@Override
-	public R left() {
+	public Object left() {
 		nativeKeyCode = KeyCodes.KEY_LEFT;
-		return (R) element;
+		return element;
 	}
 
 	@Override
-	public R right() {
+	public Object right() {
 		nativeKeyCode = KeyCodes.KEY_RIGHT;
-		return (R) element;
+		return element;
+	}
+
+	@Override
+	public co.fxl.gui.api.IKeyRecipient.IKey<Object> addKeyListener(
+			IClickListener listener) {
+		ls.add(listener);
+		return this;
 	}
 }

@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.gwt;
 
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.impl.HTMLText;
 import co.fxl.gui.impl.HyperlinkDecorator;
@@ -68,8 +69,8 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 	}
 
 	@Override
-	public IKey<ILabel> addClickListener(IClickListener clickListener) {
-		IKey<ILabel> key = super.addClickListener(clickListener);
+	public IClickable.IKey<ILabel> addClickListener(IClickListener clickListener) {
+		IClickable.IKey<ILabel> key = super.addClickListener(clickListener);
 		if (hyperlinkDecorator != null) {
 			hyperlinkDecorator.clickable(clickable());
 		}
