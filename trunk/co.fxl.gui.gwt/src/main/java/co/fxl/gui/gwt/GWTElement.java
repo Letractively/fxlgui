@@ -106,11 +106,23 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		private int nativeKeyCode = -1;
 
 		private KeyPressHandlerAdapter(IClickListener listener) {
+			this.listener = listener;
+		}
+
+		@SuppressWarnings("unchecked")
+		public R listenOnKeyPress(char c) {
+			// DOM.sinkEvents(container.widget.getElement(),
+			// com.google.gwt.user.client.Event.ONKEYPRESS);
+			targetCode = c;
+			return (R) GWTElement.this;
+		}
+
+		@SuppressWarnings("unchecked")
+		public R listenOnKeyDown(int keyRight) {
 			DOM.sinkEvents(container.widget.getElement(),
 					com.google.gwt.user.client.Event.ONKEYDOWN);
-			DOM.sinkEvents(container.widget.getElement(),
-					com.google.gwt.user.client.Event.ONKEYPRESS);
-			this.listener = listener;
+			nativeKeyCode = keyRight;
+			return (R) GWTElement.this;
 		}
 
 		@Override
@@ -133,46 +145,38 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 			}
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public R enter() {
-			targetCode = '\r';
-			return (R) GWTElement.this;
+			return listenOnKeyPress('\r');
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public R tab() {
-			targetCode = '\t';
-			return (R) GWTElement.this;
+			return listenOnKeyPress('\t');
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public R up() {
-			nativeKeyCode = KeyCodes.KEY_UP;
-			return (R) GWTElement.this;
+			return listenOnKeyDown(KeyCodes.KEY_UP);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public R down() {
-			nativeKeyCode = KeyCodes.KEY_DOWN;
-			return (R) GWTElement.this;
+			return listenOnKeyDown(KeyCodes.KEY_DOWN);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public R left() {
-			nativeKeyCode = KeyCodes.KEY_LEFT;
-			return (R) GWTElement.this;
+			return listenOnKeyDown(KeyCodes.KEY_LEFT);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public R right() {
-			nativeKeyCode = KeyCodes.KEY_RIGHT;
-			return (R) GWTElement.this;
+			return listenOnKeyDown(KeyCodes.KEY_RIGHT);
 		}
 	}
 
