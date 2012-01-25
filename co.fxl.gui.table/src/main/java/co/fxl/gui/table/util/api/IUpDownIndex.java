@@ -21,5 +21,7 @@ package co.fxl.gui.table.util.api;
 public interface IUpDownIndex {
 
 	int selectionIndex();
-	
+
+	void selectionIndex(int selectionIndex);
+
 }

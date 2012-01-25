@@ -295,6 +295,12 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		}
 	}
 
+	private void scrollToIndex(int index) {
+		rowIndex = index;
+		int y = convertRowIndex2ScrollOffset(rowIndex);
+		scrollPane.scrollTo(y);
+	}
+
 	private int dragIndex = -1;
 	private boolean hasHeader = true;
 
@@ -355,11 +361,16 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 			@Override
 			public void onClick() {
 				if (upDownIndex != null) {
-					throw new MethodNotImplementedException();
+					if (upDownIndex.selectionIndex() == 0)
+						return;
+					upDownIndex.selectionIndex(upDownIndex.selectionIndex() - 1);
+					if (upDownIndex.selectionIndex() == rowIndex - 1) {
+						rowIndex--;
+					}
+					scrollToIndex(rowIndex);
 				} else {
 					if (rowIndex > 0) {
-						rowIndex--;
-						refresh();
+						scrollToIndex(rowIndex - 1);
 					}
 				}
 			}
@@ -368,11 +379,16 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 			@Override
 			public void onClick() {
 				if (upDownIndex != null) {
-					throw new MethodNotImplementedException();
+					if (upDownIndex.selectionIndex() == size - 1)
+						return;
+					upDownIndex.selectionIndex(upDownIndex.selectionIndex() + 1);
+					if (upDownIndex.selectionIndex() == rowIndex + 1) {
+						rowIndex++;
+					}
+					scrollToIndex(rowIndex);
 				} else {
 					if (rowIndex < maxRowIndex) {
-						rowIndex++;
-						refresh();
+						scrollToIndex(rowIndex + 1);
 					}
 				}
 			}
@@ -589,6 +605,12 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	@Override
 	public ILazyScrollPane hasHeader(boolean hasHeader) {
 		this.hasHeader = hasHeader;
+		return this;
+	}
+
+	@Override
+	public ILazyScrollPane upDownIndex(IUpDownIndex index) {
+		this.upDownIndex = index;
 		return this;
 	}
 }
