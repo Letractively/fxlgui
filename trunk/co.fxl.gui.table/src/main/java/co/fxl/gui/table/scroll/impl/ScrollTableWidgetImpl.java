@@ -480,8 +480,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			filter.showConfiguration(showConfiguration);
 			if (showConfiguration)
 				filter.firstConfiguration(viewComboBoxChoice);
-			// if (!ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL)
-			// topPanel.column(0).expand();
 		}
 	}
 
@@ -636,7 +634,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				columnImpl.tagSortOrder = null;
 			}
 			String name = columnImpl.name;
-			if (sortColumn == c) {
+			if (sortColumn == columns.get(c).index) {
 				name += " " + (sortNegator == 1 ? ARROW_UP : ARROW_DOWN);
 			}
 			IColumn column = grid.column(current++);
