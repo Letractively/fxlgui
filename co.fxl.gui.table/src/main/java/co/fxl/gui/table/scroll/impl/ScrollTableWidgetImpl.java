@@ -112,6 +112,41 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IRows<Object> actualRows;
 	private IContainer c0;
 	private boolean addBorders;
+	private boolean updating = false;
+	private Map<ITableClickListener, KeyAdapter<Object>> listeners = new HashMap<ITableClickListener, KeyAdapter<Object>>();
+	boolean selectionIsSetup = false;
+	private ILazyScrollPane sp;
+	private ISortListener sortListener;
+	boolean addClickListeners = false;
+	IFilterWidget filter;
+	private boolean allowColumnSelection = true;
+	private IFilterConstraints constraints;
+	private IFilterListener filterListener;
+	private IButtonPanelDecorator buttonDecorator;
+	private INavigationPanelDecorator navigationDecorator;
+	private CommandButtonsImpl commandButtons;
+	List<Object> preselectedList = new LinkedList<Object>();
+	int preselectedIndex = -1;
+	private boolean showDisplayedRange = true;
+	private boolean externalStatusPanel;
+	private IVerticalPanel bottom;
+	private int buttonColumn = 1;
+	String[] viewComboBoxText;
+	private IUpdateListener<String> viewComboBoxUpdateListener;
+	private int viewInc;
+	private String viewComboBoxChoice;
+	private List<IRowIndexListener> scrollListeners = new LinkedList<IRowIndexListener>();
+	private int rowIndex = -1;
+	private boolean addToContextMenu;
+	private IUpdateListener<List<String>> hiddenColumnListener;
+	private boolean filterSizeConstraint = true;
+	private boolean allowInsertUnder;
+	private IDragDropListener dragDropListener;
+	IGridPanel topPanel;
+	boolean showNoRowsFound = true;
+	private IVerticalPanel contentPanel0;
+	private boolean reduceHeightIfEmpty = false;
+	private boolean showConfiguration = true;
 
 	// private IVerticalPanel editPanel;
 
@@ -188,12 +223,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		}
 		return this;
 	}
-
-	IGridPanel topPanel;
-	boolean showNoRowsFound = true;
-	private IVerticalPanel contentPanel0;
-	private boolean reduceHeightIfEmpty = false;
-	private boolean showConfiguration = true;
 
 	@Override
 	public IScrollTableWidget<Object> reduceHeightIfEmpty(
@@ -490,37 +519,6 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		columns.add(column);
 		return column;
 	}
-
-	private boolean updating = false;
-	private Map<ITableClickListener, KeyAdapter<Object>> listeners = new HashMap<ITableClickListener, KeyAdapter<Object>>();
-	boolean selectionIsSetup = false;
-	private ILazyScrollPane sp;
-	private ISortListener sortListener;
-	boolean addClickListeners = false;
-	IFilterWidget filter;
-	private boolean allowColumnSelection = true;
-	private IFilterConstraints constraints;
-	private IFilterListener filterListener;
-	private IButtonPanelDecorator buttonDecorator;
-	private INavigationPanelDecorator navigationDecorator;
-	private CommandButtonsImpl commandButtons;
-	List<Object> preselectedList = new LinkedList<Object>();
-	int preselectedIndex = -1;
-	private boolean showDisplayedRange = true;
-	private boolean externalStatusPanel;
-	private IVerticalPanel bottom;
-	private int buttonColumn = 1;
-	String[] viewComboBoxText;
-	private IUpdateListener<String> viewComboBoxUpdateListener;
-	private int viewInc;
-	private String viewComboBoxChoice;
-	private List<IRowIndexListener> scrollListeners = new LinkedList<IRowIndexListener>();
-	private int rowIndex = -1;
-	private boolean addToContextMenu;
-	private IUpdateListener<List<String>> hiddenColumnListener;
-	private boolean filterSizeConstraint = true;
-	private boolean allowInsertUnder;
-	private IDragDropListener dragDropListener;
 
 	boolean update() {
 		paintedRows = computeRowsToPaint();
