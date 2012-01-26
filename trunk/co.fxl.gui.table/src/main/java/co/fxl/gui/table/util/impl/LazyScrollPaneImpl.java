@@ -54,8 +54,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private int minRowHeight = 22;
 	private int height = 400;
 	private IContainer container;
-	
-	// previously: FlipPage	
+
+	// previously: FlipPage
 	private IVerticalPanel treeScrollPanelContainer;
 	private int rowIndex = 0;
 	private IAbsolutePanel scrollContentPanel;
@@ -454,7 +454,10 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 	private int update(int rowIndex, boolean isCalibration) {
 		setLastIndex(rowIndex);
-		IContainer invisibleCard = treeScrollPanelContainer.clear().add();
+		treeScrollPanelContainer.clear();
+		// hack for swing
+		treeScrollPanelContainer.add().label().remove();
+		IContainer invisibleCard = treeScrollPanelContainer.add();
 		IContainer c = invisibleCard;
 
 		// TODO BUG: after switch to Detail-View: horizontal
