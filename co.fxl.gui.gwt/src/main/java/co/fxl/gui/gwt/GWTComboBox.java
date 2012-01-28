@@ -27,8 +27,6 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.event.dom.client.DropEvent;
-import com.google.gwt.event.dom.client.DropHandler;
 import com.google.gwt.user.client.ui.ListBox;
 
 class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
@@ -52,13 +50,6 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 
 			@Override
 			public void onChange(ChangeEvent event) {
-				notifyChange();
-			}
-		});
-		container.widget.addDropHandler(new DropHandler() {
-
-			@Override
-			public void onDrop(DropEvent event) {
 				notifyChange();
 			}
 		});
@@ -121,8 +112,7 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 		value = text();
 		if (!hasBeenSet || !equals(before, token)) {
 			hasBeenSet = true;
-			for (IUpdateListener<String> l : listeners)
-				l.onUpdate(text());
+			notifyChange();
 		}
 		return this;
 	}
