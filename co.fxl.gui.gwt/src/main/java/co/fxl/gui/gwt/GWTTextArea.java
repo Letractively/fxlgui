@@ -23,6 +23,10 @@ import java.util.List;
 
 import co.fxl.gui.api.ITextArea;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.DropEvent;
+import com.google.gwt.event.dom.client.DropHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.ui.TextArea;
@@ -31,9 +35,40 @@ class GWTTextArea extends GWTTextAreaTemplate<TextArea, ITextArea> implements
 		ITextArea {
 
 	private List<IUpdateListener<String>> changeListeners = new LinkedList<IUpdateListener<String>>();
+	private String lastNotifiedValue = null;
 
 	GWTTextArea(GWTContainer<TextArea> container) {
 		super(container);
+		container.widget.addChangeHandler(new ChangeHandler() {
+
+			@Override
+			public void onChange(ChangeEvent event) {
+				notifyChange();
+			}
+		});
+		container.widget.addDropHandler(new DropHandler() {
+
+			@Override
+			public void onDrop(DropEvent event) {
+				notifyChange();
+			}
+		});
+		container.widget.addKeyUpHandler(new KeyUpHandler() {
+
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				notifyChange();
+			}
+		});
+	}
+
+	protected void notifyChange() {
+		String text = text();
+		if (lastNotifiedValue == null || !lastNotifiedValue.equals(text)) {
+			lastNotifiedValue = text;
+			for (IUpdateListener<String> l : changeListeners)
+				l.onUpdate(text);
+		}
 	}
 
 	@Override
@@ -41,8 +76,7 @@ class GWTTextArea extends GWTTextAreaTemplate<TextArea, ITextArea> implements
 		String previous = container.widget.getText();
 		container.widget.setText(text);
 		if (!previous.equals(text)) {
-			for (IUpdateListener<String> ul : changeListeners)
-				ul.onUpdate(text);
+			notifyChange();
 		}
 		return this;
 	}
@@ -65,13 +99,6 @@ class GWTTextArea extends GWTTextAreaTemplate<TextArea, ITextArea> implements
 	public ITextArea addUpdateListener(
 			final IUpdateListener<String> changeListener) {
 		changeListeners.add(changeListener);
-		container.widget.addKeyUpHandler(new KeyUpHandler() {
-
-			@Override
-			public void onKeyUp(KeyUpEvent event) {
-				changeListener.onUpdate(container.widget.getText());
-			}
-		});
 		return this;
 	}
 
