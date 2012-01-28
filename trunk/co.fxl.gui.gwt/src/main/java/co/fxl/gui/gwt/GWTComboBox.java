@@ -27,6 +27,8 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.DropEvent;
+import com.google.gwt.event.dom.client.DropHandler;
 import com.google.gwt.user.client.ui.ListBox;
 
 class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
@@ -50,14 +52,14 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 
 			@Override
 			public void onChange(ChangeEvent event) {
-				String text = text();
-				if (GWTDisplay.waiting) {
-					setTextNoNotify(value);
-				} else {
-					value = text;
-					for (IUpdateListener<String> l : listeners)
-						l.onUpdate(text);
-				}
+				notifyChange();
+			}
+		});
+		container.widget.addDropHandler(new DropHandler() {
+
+			@Override
+			public void onDrop(DropEvent event) {
+				notifyChange();
 			}
 		});
 	}
@@ -176,5 +178,18 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 		hasNull = false;
 		value = text();
 		return this;
+	}
+
+	public void notifyChange() {
+		String text = text();
+		if (GWTDisplay.waiting) {
+			setTextNoNotify(value);
+		} else {
+			if (value != null && value.equals(text))
+				return;
+			value = text;
+			for (IUpdateListener<String> l : listeners)
+				l.onUpdate(text);
+		}
 	}
 }
