@@ -33,7 +33,6 @@ import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.util.api.IDragDropListener;
-import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 public interface IScrollTableWidget<T> {
 
@@ -176,7 +175,8 @@ public interface IScrollTableWidget<T> {
 
 	List<IScrollTableColumn<T>> columns();
 
-	IScrollTableWidget<T> dragDropListener(boolean allowInsertUnder, IDragDropListener l);
+	IScrollTableWidget<T> dragDropListener(boolean allowInsertUnder,
+			IDragDropListener l);
 
 	// IVerticalPanel editPanel();
 }
