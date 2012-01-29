@@ -27,8 +27,6 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.event.dom.client.DropEvent;
-import com.google.gwt.event.dom.client.DropHandler;
 import com.google.gwt.user.client.ui.ListBox;
 
 class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
@@ -114,7 +112,8 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 		value = text();
 		if (!hasBeenSet || !equals(before, token)) {
 			hasBeenSet = true;
-			notifyChange();
+			for (IUpdateListener<String> l : listeners)
+				l.onUpdate(text());
 		}
 		return this;
 	}
@@ -177,6 +176,8 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 		if (GWTDisplay.waiting) {
 			setTextNoNotify(value);
 		} else {
+			if (value == null && text == null)
+				return;
 			if (value != null && value.equals(text))
 				return;
 			value = text;
