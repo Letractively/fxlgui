@@ -37,8 +37,9 @@ import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.group.api.INavigationWidget;
 
 class NavigationWidgetImpl implements INavigationWidget {
-	
-	// TODO Code: Look: reactivate double buffering, no flickering, add temp-flip-mechanism to FlipPage 
+
+	// TODO Code: Look: reactivate double buffering, no flickering, add
+	// temp-flip-mechanism to FlipPage
 
 	private IDockPanel mainPanel;
 	ILinearPanel<?> navigationPanel;
@@ -119,8 +120,11 @@ class NavigationWidgetImpl implements INavigationWidget {
 	void active(NavigationItemImpl item, boolean viaClick,
 			co.fxl.gui.impl.ICallback<Void> cb, boolean notify) {
 		active = item;
-		if (notify)
+		if (notify) {
+			if (listeners.isEmpty())
+				cb.onSuccess(null);
 			notifyListeners(active, viaClick, cb, listeners);
+		}
 	}
 
 	private void notifyListeners(final NavigationItemImpl activeItem,
