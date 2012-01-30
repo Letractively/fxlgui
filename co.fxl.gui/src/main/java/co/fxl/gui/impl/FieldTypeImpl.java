@@ -169,4 +169,10 @@ public class FieldTypeImpl implements IFieldType {
 		isHTML = true;
 		return this;
 	}
+
+	@Override
+	public IFieldType doubleValue() {
+		type(Double.class);
+		return this;
+	}
 }

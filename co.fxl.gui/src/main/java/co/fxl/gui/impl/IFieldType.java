@@ -59,4 +59,6 @@ public interface IFieldType {
 	IFieldType setHasConstraints();
 
 	IFieldType shortText();
+
+	IFieldType doubleValue();
 }
