@@ -33,4 +33,8 @@ public class DummyCallback<T> implements ICallback<T> {
 		return new DummyCallback<Void>();
 	}
 
+	public static ICallback<Boolean> booleanInstance() {
+		return new DummyCallback<Boolean>();
+	}
+
 }
