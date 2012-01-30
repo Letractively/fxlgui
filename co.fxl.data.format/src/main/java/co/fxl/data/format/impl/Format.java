@@ -70,6 +70,12 @@ public class Format {
 				return format;
 			}
 		});
+		register(Double.class, new FormatImpl<Object>() {
+			@Override
+			public Double parseWithException(String format) {
+				return Double.valueOf(format);
+			}
+		});
 	}
 
 	public static IFormat<?> get(Class<?> clazz) {
@@ -126,7 +132,13 @@ public class Format {
 		return (IFormat<Boolean>) get(Boolean.class);
 	}
 
+	@SuppressWarnings("unchecked")
 	public static IFormat<Object> object() {
 		return (IFormat<Object>) get(Object.class);
+	}
+
+	@SuppressWarnings("unchecked")
+	public static IFormat<Double> doubleValue() {
+		return (IFormat<Double>) get(Double.class);
 	}
 }
