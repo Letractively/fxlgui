@@ -318,6 +318,8 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 				decorator = new DateDecorator(true, false);
 			} else if (type.clazz.equals(Boolean.class)) {
 				decorator = new BooleanDecorator();
+			} else if (type.clazz.equals(Double.class)) {
+				decorator = new NumberDecorator();
 			} else
 				throw new MethodNotImplementedException(type.clazz.getName());
 		}
