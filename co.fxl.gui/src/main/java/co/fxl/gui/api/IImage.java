@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.api;
 
+import co.fxl.gui.api.IBordered.IBorder;
+
 public interface IImage extends IClickable<IImage>, IElement<IImage> {
 
 	IImage localURI(String uRI);
@@ -27,4 +29,6 @@ public interface IImage extends IClickable<IImage>, IElement<IImage> {
 	IImage resource(String iD);
 
 	String resource();
+
+	IBorder border();
 }
