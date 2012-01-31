@@ -25,7 +25,7 @@ import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 
 public interface IFilterConstraints {
 
-	public static final String COMMON = "C";
+	public static final String COMMON = "-";
 
 	public interface IRowIterator {
 
