@@ -80,7 +80,8 @@ public class CommandLink implements IClickable<IClickable<?>> {
 		String tooltip = clickable ? toolTipClickable : toolTipNotClickable;
 		if (tooltip != null) {
 			iPanel.tooltip(tooltip);
-			image.tooltip(tooltip);
+			if (image != null)
+				image.tooltip(tooltip);
 			label.tooltip(tooltip);
 		}
 		styleDialogButton(label);
