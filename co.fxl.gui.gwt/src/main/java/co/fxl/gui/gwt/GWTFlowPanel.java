@@ -25,9 +25,10 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
+public class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 		IFlowPanel {
 
+	public static boolean SET_FLOAT_LEFT = false;
 	private int margin = 0;
 
 	@SuppressWarnings("unchecked")
@@ -44,6 +45,8 @@ class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 	@Override
 	public void add(Widget widget) {
 		widget.getElement().getStyle().setProperty("display", "inline");
+		if (SET_FLOAT_LEFT)
+			widget.getElement().getStyle().setProperty("float", "left");
 		// widget.setHeight("100%");
 		setMargin(widget);
 		container.widget.add(widget);
