@@ -31,6 +31,8 @@ import co.fxl.gui.impl.LazyClickListener;
 
 public class LoginWidgetImpl implements ILoginWidget {
 
+	public static int HEIGHT_DECREMENT = 0;
+
 	class LoginListener extends LazyClickListener {
 
 		@Override
@@ -169,14 +171,14 @@ public class LoginWidgetImpl implements ILoginWidget {
 	public static void decorate(ITextField formField) {
 		formField.font().pixel(11);
 		formField.width(100);
-		new Heights(0).decorateHeight(formField);
+		new Heights(HEIGHT_DECREMENT).decorateHeight(formField);
 	}
 
 	public static void decorate(IPasswordField formField) {
 		formField.font().pixel(11);
 		formField.width(100);
 		formField.border().color().lightgray();
-		new Heights(0).decorateHeight(formField);
+		new Heights(HEIGHT_DECREMENT).decorateHeight(formField);
 	}
 
 	@Override
