@@ -35,6 +35,8 @@ import co.fxl.gui.register.api.IRegister;
 
 public class RegisterImpl extends LazyClickListener implements IRegister {
 
+	public static int SPACING_DEC_LOADING = 0;
+
 	private class Title implements ITitle {
 
 		@Override
@@ -101,6 +103,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 		int width = buttonPanel.width();
 		subPanel.width(subPanel.width());
 		buttonImage.visible(loading);
+		buttonPanel.spacing(loading ? widget.spacing - SPACING_DEC_LOADING : widget.spacing);
 		buttonLabel.visible(!loading);
 		buttonPanel.size(width, 24);
 		if (isActive()) {

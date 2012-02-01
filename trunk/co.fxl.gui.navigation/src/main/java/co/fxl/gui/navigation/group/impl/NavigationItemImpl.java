@@ -35,6 +35,7 @@ import co.fxl.gui.navigation.group.api.INavigationItem;
 public class NavigationItemImpl extends LazyClickListener implements
 		INavigationItem {
 
+	public static int SPACING_LOADING = 5;
 	// TODO when row height computation in scrolltablewidgetimpl is working for
 	// invisible panels (unflipped pages), set to true
 	private static boolean FLIP_AFTER_RETURN_IS_POSSIBLE = false;
@@ -91,6 +92,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 		if (buttonPanel == null)
 			return;
 		button.visible(true);
+		buttonPanel.spacing(5);
 		refresh.visible(false);
 		button.font().color().white();
 		buttonPanel.clickable(true);
@@ -251,6 +253,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	private void resetLabel() {
 		showLabelAsInactive();
+		buttonPanel.spacing(5);
 		refresh.visible(false);
 		button.visible(true);
 	}
@@ -266,6 +269,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	private void showLoading() {
+		buttonPanel.spacing(SPACING_LOADING);
 		refresh.visible(true);
 		button.visible(false);
 		for (NavigationGroupImpl g : group.widget.groups) {
