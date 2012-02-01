@@ -63,7 +63,7 @@ import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 import co.fxl.gui.table.util.api.IDragDropListener;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 
-class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
+public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		ILabelMouseListener {
 
 	// TODO Usability: Table jumps up and down when scrolling (fix on top)
@@ -92,7 +92,7 @@ class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	static final String ARROW_UP = "\u2191";
 	static final String ARROW_DOWN = "\u2193";
 	protected static final int SCROLL_MULT = 33;
-	protected static final int MAX_SORT_SIZE = 100;
+	public static int MAX_SORT_SIZE = 100;
 	IVerticalPanel container;
 	private int height = 400;
 	private WidgetTitle widgetTitle;
