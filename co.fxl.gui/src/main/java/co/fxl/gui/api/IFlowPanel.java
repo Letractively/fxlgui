@@ -26,4 +26,6 @@ public interface IFlowPanel extends IPanel<IFlowPanel> {
 
 	IFlowPanel addSpace(int space);
 
+	IAlignment<IFlowPanel> align();
+
 }

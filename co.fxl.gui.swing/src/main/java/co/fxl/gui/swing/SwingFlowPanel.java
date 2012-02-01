@@ -6,13 +6,15 @@ import java.awt.FlowLayout;
 
 import javax.swing.Box;
 
+import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.swing.HorizontalLayoutManager.Stretch;
 
 class SwingFlowPanel extends SwingPanel<IFlowPanel> implements IFlowPanel,
 		Stretch {
-	
-	// TODO does not work! temporary fix! implement working flow layout as in gwt
+
+	// TODO does not work! temporary fix! implement working flow layout as in
+	// gwt
 
 	Component stretch;
 
@@ -44,5 +46,30 @@ class SwingFlowPanel extends SwingPanel<IFlowPanel> implements IFlowPanel,
 	public IFlowPanel addSpace(int pixel) {
 		container.component.add(Box.createRigidArea(new Dimension(pixel, 1)));
 		return this;
+	}
+
+	@Override
+	public IAlignment<IFlowPanel> align() {
+		return new IAlignment<IFlowPanel>() {
+
+			@Override
+			public IFlowPanel begin() {
+				// TODO ... throw new MethodNotImplementedException();
+				return SwingFlowPanel.this;
+			}
+
+			@Override
+			public IFlowPanel center() {
+				// TODO ... throw new MethodNotImplementedException();
+				return SwingFlowPanel.this;
+			}
+
+			@Override
+			public IFlowPanel end() {
+				// TODO ... throw new MethodNotImplementedException();
+				return SwingFlowPanel.this;
+			}
+
+		};
 	}
 }

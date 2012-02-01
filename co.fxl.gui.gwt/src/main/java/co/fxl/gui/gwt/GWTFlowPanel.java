@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.gwt;
 
+import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IFlowPanel;
 
 import com.google.gwt.dom.client.Style.Unit;
@@ -28,8 +29,10 @@ import com.google.gwt.user.client.ui.Widget;
 public class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 		IFlowPanel {
 
+	private static final String RIGHT = "right";
 	public static boolean SET_FLOAT_LEFT = false;
 	private int margin = 0;
+	private String floatValue = "left";
 
 	@SuppressWarnings("unchecked")
 	GWTFlowPanel(GWTContainer<?> container) {
@@ -45,8 +48,7 @@ public class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 	@Override
 	public void add(Widget widget) {
 		widget.getElement().getStyle().setProperty("display", "inline");
-		if (SET_FLOAT_LEFT)
-			widget.getElement().getStyle().setProperty("float", "left");
+		updateFloatValueWidget(widget);
 		// widget.setHeight("100%");
 		setMargin(widget);
 		container.widget.add(widget);
@@ -79,5 +81,42 @@ public class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 		if (margin <= 0)
 			return;
 		w.getElement().getStyle().setMargin(margin, Unit.PX);
+	}
+
+	@Override
+	public IAlignment<IFlowPanel> align() {
+		return new IAlignment<IFlowPanel>() {
+
+			@Override
+			public IFlowPanel begin() {
+				// TODO ... throw new MethodNotImplementedException();
+				return GWTFlowPanel.this;
+			}
+
+			@Override
+			public IFlowPanel center() {
+				// TODO ... throw new MethodNotImplementedException();
+				return GWTFlowPanel.this;
+			}
+
+			@Override
+			public IFlowPanel end() {
+				floatValue = RIGHT;
+				updateFloatValueWidgets();
+				// TODO ... throw new MethodNotImplementedException();
+				return GWTFlowPanel.this;
+			}
+
+		};
+	}
+
+	private void updateFloatValueWidgets() {
+		for (int i = 0; i < container.widget.getWidgetCount(); i++)
+			updateFloatValueWidget(container.widget.getWidget(i));
+	}
+
+	private void updateFloatValueWidget(Widget widget) {
+		if (SET_FLOAT_LEFT)
+			widget.getElement().getStyle().setProperty("float", floatValue);
 	}
 }

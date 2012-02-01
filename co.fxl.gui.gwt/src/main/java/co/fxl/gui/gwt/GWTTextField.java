@@ -34,6 +34,7 @@ import com.google.gwt.user.client.ui.TextBox;
 class GWTTextField extends GWTElement<TextBox, ITextField> implements
 		ITextField {
 
+	// private static final Heights HEIGHTS = new Heights(0);
 	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();
 	private String lastNotifiedValue = null;
 

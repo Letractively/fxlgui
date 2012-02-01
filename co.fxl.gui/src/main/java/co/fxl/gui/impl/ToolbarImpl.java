@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -145,6 +146,31 @@ public class ToolbarImpl implements IToolbar {
 				}
 			}
 		return this;
+	}
+
+	@Override
+	public IAlignment<IToolbar> align() {
+		return new IAlignment<IToolbar>() {
+
+			@Override
+			public ToolbarImpl begin() {
+				panel.align().begin();
+				return ToolbarImpl.this;
+			}
+
+			@Override
+			public ToolbarImpl center() {
+				panel.align().center();
+				return ToolbarImpl.this;
+			}
+
+			@Override
+			public ToolbarImpl end() {
+				panel.align().end();
+				return ToolbarImpl.this;
+			}
+
+		};
 	}
 
 }

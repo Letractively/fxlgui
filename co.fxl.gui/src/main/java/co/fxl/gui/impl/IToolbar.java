@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.impl;
 
+import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IContainer;
 
 public interface IToolbar {
@@ -31,5 +32,7 @@ public interface IToolbar {
 	IToolbar visible(boolean visible);
 
 	IToolbar adjustHeights();
+
+	IAlignment<IToolbar> align();
 
 }

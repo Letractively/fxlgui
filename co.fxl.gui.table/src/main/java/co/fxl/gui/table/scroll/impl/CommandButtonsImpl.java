@@ -175,6 +175,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			return clickable(c.add(), string);
 		}
 	};
+	public static boolean ALIGN_END = false;
 	private ScrollTableWidgetImpl widget;
 	private boolean listenOnAdd;
 	private boolean listenOnRemove;
@@ -289,9 +290,11 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	@Override
 	public void decorate(IGridCell container) {
 		widget.selection().single().addSelectionListener(this);
-//		IHorizontalPanel ps = container.panel().horizontal().align().end()
-//				.add().panel().horizontal().align().end();
-		panel = new ToolbarImpl(container);//ps.add());
+		// IHorizontalPanel ps = container.panel().horizontal().align().end()
+		// .add().panel().horizontal().align().end();
+		panel = new ToolbarImpl(container);
+		if (ALIGN_END)
+			panel.align().end();// ps.add());
 		if (listenOnAdd) {
 			IClickable<?> image = listenOnAddListenerDecorator.decorate(panel);
 			image.addClickListener(new Update(listenOnAddListener));
