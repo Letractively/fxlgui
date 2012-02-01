@@ -293,17 +293,13 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		// IHorizontalPanel ps = container.panel().horizontal().align().end()
 		// .add().panel().horizontal().align().end();
 		panel = new ToolbarImpl(container);
-		if (ALIGN_END)
+		if (ALIGN_END) {
 			panel.align().end();// ps.add());
-		if (listenOnAdd) {
-			IClickable<?> image = listenOnAddListenerDecorator.decorate(panel);
-			image.addClickListener(new Update(listenOnAddListener));
-		}
-		if (listenOnRemove) {
-			// remove = panel.add().button().text("Remove");
-			remove = clickable(panel.add(), "Remove");
-			remove.addClickListener(new Update(listenOnRemoveListener, true));
-			remove.clickable(false);
+			addRemove();
+			addAdd();
+		} else {
+			addAdd();
+			addRemove();
 		}
 		if (listenOnShow) {
 			show = clickable(panel.add(), "Show");
@@ -347,6 +343,22 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		// new Edit();
 		// }
 		panel.adjustHeights();
+	}
+
+	void addRemove() {
+		if (listenOnRemove) {
+			// remove = panel.add().button().text("Remove");
+			remove = clickable(panel.add(), "Remove");
+			remove.addClickListener(new Update(listenOnRemoveListener, true));
+			remove.clickable(false);
+		}
+	}
+
+	void addAdd() {
+		if (listenOnAdd) {
+			IClickable<?> image = listenOnAddListenerDecorator.decorate(panel);
+			image.addClickListener(new Update(listenOnAddListener));
+		}
 	}
 
 	private IClickable<?> addMoveImage(String resource,
