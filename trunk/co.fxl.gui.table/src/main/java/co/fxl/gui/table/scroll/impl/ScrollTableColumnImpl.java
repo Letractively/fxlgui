@@ -200,7 +200,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		}
 
 		@Override
-		public void decorate(Object identifier, ICell cell, String value) {
+		public void decorate(final Object identifier, ICell cell, String value) {
 			String text = (String) value;
 			injectColor(identifier, cell, text);
 			cell.text(text);
@@ -209,6 +209,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 					@Override
 					public void onUpdate(String value) {
+						updateListener.onUpdate(identifier, value);
 					}
 				});
 			}
