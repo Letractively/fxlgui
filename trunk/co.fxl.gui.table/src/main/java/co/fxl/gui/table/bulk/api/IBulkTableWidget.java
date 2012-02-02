@@ -81,7 +81,7 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 
 		ICell updateAdapter(IUpdateAdapter<Boolean> updateAdapter);
 
-		ICell updateListener(IUpdateListener<Boolean> updateListener);
+		ICell updateListener(IUpdateListener<?> updateListener);
 
 		IContainer container();
 	}

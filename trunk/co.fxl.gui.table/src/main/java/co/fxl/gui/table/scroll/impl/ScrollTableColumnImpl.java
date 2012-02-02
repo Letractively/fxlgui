@@ -204,6 +204,14 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 			String text = (String) value;
 			injectColor(identifier, cell, text);
 			cell.text(text);
+			if (updateListener != null && updateListener.isEditable(identifier)) {
+				cell.updateListener(new IUpdateListener<String>() {
+
+					@Override
+					public void onUpdate(String value) {
+					}
+				});
+			}
 		}
 
 		@Override

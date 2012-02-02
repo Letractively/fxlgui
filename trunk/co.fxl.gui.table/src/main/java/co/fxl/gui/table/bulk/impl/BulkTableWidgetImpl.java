@@ -212,12 +212,14 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 				columns.get(column).align.forward(cell.align());
 			}
 
+			@SuppressWarnings("rawtypes")
 			@Override
 			public ICell updateListener(
-					final IUpdateListener<Boolean> updateListener) {
+					final IUpdateListener updateListener) {
 				if (checkBox != null) {
 					checkBox.editable(true);
 					checkBox.addUpdateListener(new IUpdateListener<Boolean>() {
+						@SuppressWarnings("unchecked")
 						@Override
 						public void onUpdate(Boolean value) {
 							if (updateAdapter == null)
