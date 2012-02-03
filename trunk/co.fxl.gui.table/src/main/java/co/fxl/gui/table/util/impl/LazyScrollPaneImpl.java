@@ -360,7 +360,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		});
 	}
 
-	public void addUpDownKeyListener(final IKeyRecipient<?> v) {
+	public void addKeyListeners(final IKeyRecipient<?> v) {
 		v.addKeyListener(new IClickListener() {
 			@Override
 			public void onClick() {
@@ -370,11 +370,15 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 					upDownIndex.selectionIndex(upDownIndex.selectionIndex() - 1);
 					if (upDownIndex.selectionIndex() == rowIndex - 1) {
 						rowIndex--;
+						scrollToIndex(rowIndex);
+					} else {
+						update();
 					}
-					scrollToIndex(rowIndex);
 				} else {
 					if (rowIndex > 0) {
 						scrollToIndex(rowIndex - 1);
+					} else {
+						update();
 					}
 				}
 			}
@@ -474,7 +478,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		IKeyRecipient<Object> e = decorator.decorate(c, rowIndex, lastIndex,
 				isCalibration);
 		if (!isCalibration)
-			addUpDownKeyListener(e);
+			addKeyListeners(e);
 		// treeScrollPanelContainer.flip();
 		return lastIndex;
 	}

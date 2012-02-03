@@ -31,9 +31,9 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.ui.FocusPanel;
 
 public class GWTKeyRecipientKeyTemplate implements IKey<Object>,
-		IKeyRecipient<Object> {
+		IKeyRecipient<Object>, KeyUpHandler {
 
-	public int nativeKeyCode;
+	public int nativeKeyCode = -1;
 	private Object element;
 	private List<IClickListener> ls = new LinkedList<IClickListener>();
 
@@ -43,20 +43,16 @@ public class GWTKeyRecipientKeyTemplate implements IKey<Object>,
 
 	public GWTKeyRecipientKeyTemplate(FocusPanel fp) {
 		element = fp;
-		fp.addKeyUpHandler(new KeyUpHandler() {
-
-			@Override
-			public void onKeyUp(KeyUpEvent event) {
-				if (event.getNativeKeyCode() == nativeKeyCode)
-					for (IClickListener l : ls)
-						l.onClick();
-			}
-		});
+		fp.addKeyUpHandler(this);
 	}
 
 	public GWTKeyRecipientKeyTemplate(FocusPanel focusPanel,
 			IClickListener listener) {
 		this(focusPanel);
+		ls.add(listener);
+	}
+
+	public GWTKeyRecipientKeyTemplate(IClickListener listener) {
 		ls.add(listener);
 	}
 
@@ -101,5 +97,14 @@ public class GWTKeyRecipientKeyTemplate implements IKey<Object>,
 			IClickListener listener) {
 		ls.add(listener);
 		return this;
+	}
+
+	@Override
+	public void onKeyUp(KeyUpEvent event) {
+		assert nativeKeyCode != -1;
+		int nkc = event.getNativeKeyCode();
+		if (nkc == nativeKeyCode)
+			for (IClickListener l : ls)
+				l.onClick();
 	}
 }
