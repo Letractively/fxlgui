@@ -535,11 +535,10 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		contentPanel.clear();
 		IBulkTableWidget lastGrid = grid;
 		IVerticalPanel vpanel = contentPanel.add().panel().vertical();
-		grid = (IBulkTableWidget) vpanel.spacing(6).add()
-				.widget(IBulkTableWidget.class);
+		grid = (IBulkTableWidget) vpanel.add().widget(IBulkTableWidget.class);
 		grid.addToContextMenu(addToContextMenu);
 		final int heightMinusTopPanel = heightMinusTopPanel();
-		grid.height(heightMinusTopPanel);
+		grid.height(heightMinusTopPanel - 2);
 		for (IRowIndexListener rowIndexL : scrollListeners)
 			rowIndexL.onScroll(rowOffset);
 		updateHeaderRow(grid);
