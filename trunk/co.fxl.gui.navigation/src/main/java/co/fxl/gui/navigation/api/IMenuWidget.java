@@ -29,4 +29,6 @@ public interface IMenuWidget extends IMenuNode {
 	int heightMenu();
 
 	IMenuWidget outerSpacing(int outerSpacing);
+
+	IMenuWidget showRegisterPanel(boolean showRegisterPanel);
 }

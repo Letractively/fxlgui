@@ -83,4 +83,10 @@ class NavigationWidgetImpl implements IMenuWidget {
 		registerWidget.outerSpacing(outerSpacing);
 		return this;
 	}
+
+	@Override
+	public IMenuWidget showRegisterPanel(boolean showRegisterPanel) {
+		registerWidget.showRegisterPanel(showRegisterPanel);
+		return this;
+	}
 }

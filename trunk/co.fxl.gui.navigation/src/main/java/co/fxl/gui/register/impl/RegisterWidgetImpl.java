@@ -149,4 +149,11 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 	boolean isActive(RegisterImpl registerImpl) {
 		return selection == registerImpl.index;
 	}
+
+	public void showRegisterPanel(boolean showRegisterPanel) {
+		setUp();
+		backgroundPanel.visible(showRegisterPanel);
+		if (!showRegisterPanel)
+			backgroundPanel.spacing(0);
+	}
 }
