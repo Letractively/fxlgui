@@ -36,6 +36,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMouseWheelListener;
+import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -43,6 +44,7 @@ import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IMiniFilterWidget;
+import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.IFieldType;
@@ -56,6 +58,7 @@ import co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ILabelMouseListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IRow;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableClickListener;
+import co.fxl.gui.table.scroll.api.ICellUpdateListener;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn.IScrollTableListener;
@@ -186,6 +189,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	private boolean drawing = false;
 	private Integer nextHeight = null;
+	private ICellUpdateListener updateListener;
 
 	@Override
 	public IScrollTableWidget<Object> height(final int height) {
@@ -602,7 +606,57 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		}
 		int h1 = grid.height();
 		int h2 = grid.tableHeight();
+		if (updateListener != null)
+			addCellUpdateListener();
 		return h1 < h2;
+	}
+
+	void addCellUpdateListener() {
+		grid.addTableListener(new ITableClickListener() {
+
+			@Override
+			public void onClick(final int column, final int row) {
+				if (row == 0)
+					return;
+				ScrollTableColumnImpl columnImpl = columns.get(column);
+				if (!columnImpl.editable)
+					return;
+				String t = (String) rows.row(rowOffset + row - 1)[column];
+				final ITextField tf = grid.cell(column, row).container()
+						.textField().text(t);
+				if (!columnImpl.type.clazz.equals(String.class))
+					throw new MethodNotImplementedException(
+							"type not supported in scrolltable "
+									+ columnImpl.type.clazz.getName());
+				Display.instance().invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						tf.focus(true);
+					}
+				});
+				tf.addKeyListener(new IClickListener() {
+					@Override
+					public void onClick() {
+						setValue(column, row, tf);
+					}
+				}).enter();
+				tf.addFocusListener(new IUpdateListener<Boolean>() {
+					@Override
+					public void onUpdate(Boolean value) {
+						if (!value) {
+							setValue(column, row, tf);
+						}
+					}
+				});
+			}
+		});
+	}
+
+	void setValue(final int column, final int row, final ITextField tf) {
+		Object[] ar = rows.row(rowOffset + row - 1);
+		ar[column] = tf.text();
+		refresh();
+		updateListener.notifyUpdate(column, rowOffset + row - 1, tf.text());
 	}
 
 	private void updateSingleContentRow(IBulkTableWidget grid,
@@ -1129,6 +1183,13 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			boolean allowInsertUnder, IDragDropListener l) {
 		this.allowInsertUnder = allowInsertUnder;
 		this.dragDropListener = l;
+		return this;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> cellUpdateListener(
+			ICellUpdateListener cellUpdateListener) {
+		updateListener = cellUpdateListener;
 		return this;
 	}
 }
