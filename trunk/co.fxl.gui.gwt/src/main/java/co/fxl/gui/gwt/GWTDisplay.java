@@ -23,7 +23,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import co.fxl.data.format.gwt.GWTFormat;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
@@ -43,6 +42,7 @@ import co.fxl.gui.impl.ToolbarImpl;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.core.client.impl.SchedulerImpl;
 import com.google.gwt.dom.client.NativeEvent;
@@ -374,6 +374,18 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 				runnable.run();
 			}
 		});
+		return this;
+	}
+
+	@Override
+	public IDisplay invokeLater(final Runnable runnable, int ms) {
+		scheduler.scheduleFixedDelay(new RepeatingCommand() {
+			@Override
+			public boolean execute() {
+				runnable.run();
+				return false;
+			}
+		}, ms);
 		return this;
 	}
 

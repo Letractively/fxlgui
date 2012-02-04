@@ -359,4 +359,20 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		// TODO ...
 		return this;
 	}
+
+	@Override
+	public IDisplay invokeLater(final Runnable runnable, final int ms) {
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(ms);
+				} catch (InterruptedException e) {
+					throw new RuntimeException(e);
+				}
+				runnable.run();
+			}
+		}.start();
+		return this;
+	}
 }

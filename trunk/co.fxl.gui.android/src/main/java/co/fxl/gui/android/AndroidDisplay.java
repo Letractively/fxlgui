@@ -215,4 +215,9 @@ public class AndroidDisplay implements IDisplay, Parent {
 	public static AndroidDisplay instance() {
 		return instance;
 	}
+
+	@Override
+	public IDisplay invokeLater(Runnable runnable, int ms) {
+		throw new MethodNotImplementedException();
+	}
 }

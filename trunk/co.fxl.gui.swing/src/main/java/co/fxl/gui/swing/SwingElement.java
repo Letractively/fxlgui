@@ -41,7 +41,7 @@ import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.api.IDropTarget.IDragListener;
+import co.fxl.gui.api.IDropTarget.IDragMoveListener;
 import co.fxl.gui.api.IDropTarget.IDropListener;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IKeyRecipient;
@@ -377,7 +377,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public R addDragOverListener(IDragListener l) {
+	public R addDragOverListener(IDragMoveListener l) {
 		// TODO ... throw new MethodNotImplementedException();
 		return (R) this;
 	}
