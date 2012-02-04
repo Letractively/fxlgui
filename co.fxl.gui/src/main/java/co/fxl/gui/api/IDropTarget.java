@@ -20,7 +20,7 @@ package co.fxl.gui.api;
 
 public interface IDropTarget<T> {
 
-	public interface IDragListener {
+	public interface IDragMoveListener {
 
 		void onDragOver(IPoint point);
 
@@ -34,7 +34,7 @@ public interface IDropTarget<T> {
 
 	}
 
-	T addDragOverListener(IDragListener l);
+	T addDragOverListener(IDragMoveListener l);
 
 	T addDropListener(IDropListener l);
 

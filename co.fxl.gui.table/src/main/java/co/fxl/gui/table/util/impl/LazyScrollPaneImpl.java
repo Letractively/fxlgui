@@ -311,6 +311,57 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private void addDragListener(final IFocusPanel v) {
 		if (dragDropListener == null)
 			return;
+		// v.addDragOverListener(new IDragMoveListener() {
+		//
+		// private Integer inc = null;
+		//
+		// private void start(int offsetY) {
+		// if (inc == null) {
+		// inc = getInc(offsetY);
+		// runAndSchedule();
+		// }
+		// }
+		//
+		// private void runAndSchedule() {
+		// if (inc == null)
+		// return;
+		// if (inc < 0)
+		// onKeyUp();
+		// else
+		// onKeyDown();
+		// if (inc != null)
+		// Display.instance().invokeLater(new Runnable() {
+		//
+		// @Override
+		// public void run() {
+		// runAndSchedule();
+		// }
+		// }, 200);
+		// }
+		//
+		// private int getInc(int offsetY) {
+		// if (offsetY < 0) {
+		// return -1;
+		// } else {
+		// return 1;
+		// }
+		// }
+		//
+		// private void end(int offsetY) {
+		// inc = null;
+		// }
+		//
+		// @Override
+		// public void onDragOver(IPoint point) {
+		// end(point.offsetY());
+		// }
+		//
+		// @Override
+		// public void onDragOut(IPoint point) {
+		// start(point.offsetY());
+		// }
+		//
+		// });
 		v.addDragStartListener(new IDragStartListener() {
 
 			@Override
@@ -364,41 +415,13 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		v.addKeyListener(new IClickListener() {
 			@Override
 			public void onClick() {
-				if (upDownIndex != null) {
-					if (upDownIndex.selectionIndex() == 0)
-						return;
-					upDownIndex.selectionIndex(upDownIndex.selectionIndex() - 1);
-					if (upDownIndex.selectionIndex() == rowIndex - 1) {
-						rowIndex--;
-						scrollToIndex(rowIndex);
-					} else {
-						update();
-					}
-				} else {
-					if (rowIndex > 0) {
-						scrollToIndex(rowIndex - 1);
-					} else {
-						update();
-					}
-				}
+				onKeyUp();
 			}
 		}).up();
 		v.addKeyListener(new IClickListener() {
 			@Override
 			public void onClick() {
-				if (upDownIndex != null) {
-					if (upDownIndex.selectionIndex() == size - 1)
-						return;
-					upDownIndex.selectionIndex(upDownIndex.selectionIndex() + 1);
-					if (upDownIndex.selectionIndex() == rowIndex + 1) {
-						rowIndex++;
-					}
-					scrollToIndex(rowIndex);
-				} else {
-					if (rowIndex < maxRowIndex) {
-						scrollToIndex(rowIndex + 1);
-					}
-				}
+				onKeyDown();
 			}
 		}).down();
 	}
@@ -623,5 +646,41 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	public ILazyScrollPane upDownIndex(IUpDownIndex index) {
 		this.upDownIndex = index;
 		return this;
+	}
+
+	void onKeyUp() {
+		if (upDownIndex != null) {
+			if (upDownIndex.selectionIndex() == 0)
+				return;
+			upDownIndex.selectionIndex(upDownIndex.selectionIndex() - 1);
+			if (upDownIndex.selectionIndex() == rowIndex - 1) {
+				rowIndex--;
+				scrollToIndex(rowIndex);
+			} else {
+				update();
+			}
+		} else {
+			if (rowIndex > 0) {
+				scrollToIndex(rowIndex - 1);
+			} else {
+				update();
+			}
+		}
+	}
+
+	void onKeyDown() {
+		if (upDownIndex != null) {
+			if (upDownIndex.selectionIndex() == size - 1)
+				return;
+			upDownIndex.selectionIndex(upDownIndex.selectionIndex() + 1);
+			if (upDownIndex.selectionIndex() == rowIndex + 1) {
+				rowIndex++;
+			}
+			scrollToIndex(rowIndex);
+		} else {
+			if (rowIndex < maxRowIndex) {
+				scrollToIndex(rowIndex + 1);
+			}
+		}
 	}
 }
