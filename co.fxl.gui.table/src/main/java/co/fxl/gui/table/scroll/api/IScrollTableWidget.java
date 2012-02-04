@@ -178,5 +178,8 @@ public interface IScrollTableWidget<T> {
 	IScrollTableWidget<T> dragDropListener(boolean allowInsertUnder,
 			IDragDropListener l);
 
+	IScrollTableWidget<T> cellUpdateListener(
+			ICellUpdateListener cellUpdateListener);
+
 	// IVerticalPanel editPanel();
 }
