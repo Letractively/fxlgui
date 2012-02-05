@@ -52,12 +52,12 @@ import co.fxl.gui.impl.KeyAdapter;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.table.api.ISelection;
+import co.fxl.gui.table.bulk.api.IBulkTableCell;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ILabelMouseListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IRow;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableClickListener;
-import co.fxl.gui.table.bulk.api.IBulkTableCell;
 import co.fxl.gui.table.scroll.api.ICellUpdateListener;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
@@ -68,6 +68,10 @@ import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		ILabelMouseListener {
+
+	// TODO Usability: editable table: if illegal value has been inserted (e.g.
+	// 25.13.2002), then ignore input, reset to original and show fading error
+	// message (a la google docs saving...) that doesnt requrire click on accept
 
 	// TODO Usability: Table jumps up and down when scrolling (fix on top)
 
