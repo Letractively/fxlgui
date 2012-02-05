@@ -53,11 +53,11 @@ import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
-import co.fxl.gui.table.bulk.api.IBulkTableWidget.ICell;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ILabelMouseListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IRow;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableClickListener;
+import co.fxl.gui.table.bulk.api.IBulkTableCell;
 import co.fxl.gui.table.scroll.api.ICellUpdateListener;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
@@ -1034,7 +1034,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	void editable(int gridRowIndex, boolean editable) {
 		for (ScrollTableColumnImpl c : columns) {
 			if (c.editable) {
-				ICell cell = grid.cell(c.index, gridRowIndex);
+				IBulkTableCell cell = grid.cell(c.index, gridRowIndex);
 				IContainer container = cell.container().clear();
 				if (editable) {
 					container.textField().text("edit");

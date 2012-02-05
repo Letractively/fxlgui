@@ -20,11 +20,9 @@ package co.fxl.gui.table.bulk.api;
 
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IMouseWheelListener;
-import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 public interface IBulkTableWidget extends IKeyRecipient<Object> {
 
@@ -67,26 +65,7 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 		int gridIndex();
 	}
 
-	public interface ICell {
-
-		ICell text(String text);
-
-		ICell html(String text);
-
-		ICell color(String color);
-
-		ICell image(String image);
-
-		ICell checkBox(Boolean value);
-
-		ICell updateAdapter(IUpdateAdapter<Boolean> updateAdapter);
-
-		ICell updateListener(IUpdateListener<?> updateListener);
-
-		IContainer container();
-	}
-
-	ICell cell(int column, int row);
+	IBulkTableCell cell(int column, int row);
 
 	IRow row(int row);
 

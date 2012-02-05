@@ -44,6 +44,7 @@ import co.fxl.gui.impl.AlignmentMemento;
 import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.DummyKeyRecipientKeyTemplate;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
+import co.fxl.gui.table.bulk.api.IBulkTableCell;
 
 public class BulkTableWidgetImpl implements IBulkTableWidget {
 
@@ -145,15 +146,15 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	}
 
 	@Override
-	public ICell cell(final int column, final int row) {
-		return new ICell() {
+	public IBulkTableCell cell(final int column, final int row) {
+		return new IBulkTableCell() {
 
 			private ICheckBox checkBox;
 			private IUpdateAdapter<Boolean> updateAdapter;
 			private String color;
 
 			@Override
-			public ICell text(String text) {
+			public IBulkTableCell text(String text) {
 				IGridCell cell = grid.cell(column, row + rowOffset);
 				align(column, cell);
 				ILabel l = cell.label().text(text);
@@ -176,7 +177,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 				return 0;
 			}
 
-			public ICell updateBorder(final int row, IGridCell cell) {
+			public IBulkTableCell updateBorder(final int row, IGridCell cell) {
 				IBorder b = cell.border();
 				b.color().lightgray();
 				b.style().bottom();
@@ -186,7 +187,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 			}
 
 			@Override
-			public ICell checkBox(Boolean value) {
+			public IBulkTableCell checkBox(Boolean value) {
 				IGridCell cell = grid.cell(column, row + rowOffset);
 				align(column, cell);
 				if (value != null) {
@@ -214,7 +215,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 
 			@SuppressWarnings("rawtypes")
 			@Override
-			public ICell updateListener(
+			public IBulkTableCell updateListener(
 					final IUpdateListener updateListener) {
 				if (checkBox != null) {
 					checkBox.editable(true);
@@ -245,13 +246,13 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 			}
 
 			@Override
-			public ICell updateAdapter(IUpdateAdapter<Boolean> updateAdapter) {
+			public IBulkTableCell updateAdapter(IUpdateAdapter<Boolean> updateAdapter) {
 				this.updateAdapter = updateAdapter;
 				return this;
 			}
 
 			@Override
-			public ICell html(String text) {
+			public IBulkTableCell html(String text) {
 				IGridCell cell = grid.cell(column, row + rowOffset);
 				align(column, cell);
 				ILabel label = cell.label();
@@ -260,13 +261,13 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 			}
 
 			@Override
-			public ICell color(String color) {
+			public IBulkTableCell color(String color) {
 				this.color = color;
 				return this;
 			}
 
 			@Override
-			public ICell image(String image) {
+			public IBulkTableCell image(String image) {
 				throw new MethodNotImplementedException();
 			}
 		};
