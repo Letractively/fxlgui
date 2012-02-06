@@ -1,11 +1,11 @@
 <classpath>
-  <classpathentry kind="src" path="src/main/java"/>
+  <classpathentry kind="src" path="src/main/java" including="**/*.java"/>
   <classpathentry kind="output" path="target/classes"/>
-  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
   <classpathentry kind="src" path="/fxl-data-format"/>
   <classpathentry kind="src" path="/fxl-data-format-swing"/>
   <classpathentry kind="src" path="/fxl-gui"/>
   <classpathentry kind="src" path="/fxl-gui-form"/>
   <classpathentry kind="src" path="/fxl-gui-swing"/>
   <classpathentry kind="src" path="/fxl-gui-table"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 </classpath>
