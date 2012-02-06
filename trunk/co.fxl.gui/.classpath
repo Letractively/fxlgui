@@ -1,10 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src/main/java"/>
-	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
-	<classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
-	<classpathentry excluding="co/fxl/gui/i18n/impl/I18NAspect.aj|co/fxl/gui/impl/WidgetTitleI18N.aj|co/fxl/gui/impl/NavigationViewI18N.aj|co/fxl/gui/impl/ImageButtonI18N.aj" kind="src" path="aspect.i18n"/>
-	<classpathentry excluding="co/fxl/gui/impl/WidgetTitleStyle.aj|co/fxl/gui/impl/HyperlinkDecoratorStyle.aj|co/fxl/gui/impl/NavigationViewStyle.aj|co/fxl/gui/impl/SplitLayoutStyle.aj" kind="src" path="aspect.style"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="output" path="target/classes"/>
+  <classpathentry kind="src" path="src/test/java" output="target/test-classes" including="**/*.java"/>
+  <classpathentry kind="src" path="src/main/java" including="**/*.java"/>
+  <classpathentry kind="src" path="src/main/resources" excluding="**/*.java"/>
+  <classpathentry kind="output" path="target/classes"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 </classpath>
