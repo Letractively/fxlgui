@@ -36,4 +36,9 @@ public interface IElement<T> extends ILocated<T> {
 	Object nativeElement();
 
 	IDisplay display();
+	
+	// TODO IPadding<T> padding();
+	
+	// TODO T padding(int padding);
+	
 }
