@@ -6,8 +6,6 @@
     <project>fxl-data-format-gwt</project>
     <project>fxl-gui</project>
     <project>fxl-gui-form</project>
-    <project>fxl-gui-form-gwt</project>
-    <project>fxl-gui-gwt</project>
     <project>fxl-gui-navigation</project>
     <project>fxl-gui-table</project>
   </projects>
