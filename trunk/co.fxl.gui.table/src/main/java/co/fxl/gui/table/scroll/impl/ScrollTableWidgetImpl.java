@@ -696,23 +696,32 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				name += " " + (sortNegator == 1 ? ARROW_UP : ARROW_DOWN);
 			}
 			IColumn column = grid.column(current++);
-			columnImpl.decorator().prepare(column);
 			column.title(name);
-			if (columnImpl.widthInt != -1)
-				column.width(columnImpl.widthInt);
-			else {
-				if (columnImpl.widthDouble == -1 && ALLOW_RESIZE)
-					columnImpl.widthDouble = 1d / columns.size();
-				if (columnImpl.widthDouble != -1)
-					column.width(columnImpl.widthDouble);
-			}
-			if (columnImpl.alignment.isSpecified()) {
-				columnImpl.alignment.forward(column.align());
-			}
+			prepare(columns, columnImpl, column);
+		}
+	}
+
+	public static void prepare(List<ScrollTableColumnImpl> columns,
+			ScrollTableColumnImpl columnImpl, IColumn column) {
+		columnImpl.decorator().prepare(column);
+		if (columnImpl.widthInt != -1)
+			column.width(columnImpl.widthInt);
+		else {
+			if (columnImpl.widthDouble == -1 && ALLOW_RESIZE)
+				columnImpl.widthDouble = 1d / columns.size();
+			if (columnImpl.widthDouble != -1)
+				column.width(columnImpl.widthDouble);
+		}
+		if (columnImpl.alignment.isSpecified()) {
+			columnImpl.alignment.forward(column.align());
 		}
 	}
 
 	private void adjustColumnWidths() {
+		adjustColumnWidths(columns);
+	}
+
+	public static void adjustColumnWidths(List<ScrollTableColumnImpl> columns) {
 		double sum = 0;
 		for (int c = 0; c < columns.size(); c++) {
 			if (!columns.get(c).visible)

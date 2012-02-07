@@ -286,6 +286,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	boolean editable = false;
 	private IColorAdapter<Object, Object> colorAdapter;
 	boolean forceSort = false;
+	public double explicitWidth = -1;
 
 	public ScrollTableColumnImpl(int index) {
 		this(null, index);
@@ -319,7 +320,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	}
 
 	@SuppressWarnings("rawtypes")
-	Decorator decorator() {
+	public Decorator decorator() {
 		if (decorator == null) {
 			if (type.isHTML) {
 				decorator = new HTMLDecorator();
@@ -468,6 +469,8 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	}
 
 	double defaultWidth() {
+		if (explicitWidth != -1)
+			return explicitWidth;
 		return widthDouble = decorator().defaultWeight();
 	}
 }
