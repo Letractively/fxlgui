@@ -34,12 +34,12 @@ import co.fxl.gui.impl.AlignmentMemento.Type;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.table.api.IColumn;
+import co.fxl.gui.table.bulk.api.IBulkTableCell;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IUpdateAdapter;
-import co.fxl.gui.table.bulk.api.IBulkTableCell;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 
-class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
+public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		Comparator<Object[]> {
 
 	private static final double WEIGHT_BOOLEAN = 1;
@@ -55,8 +55,8 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	public class BooleanDecorator implements Decorator<Boolean> {
 
 		@Override
-		public void decorate(final Object identifier, final IBulkTableCell cell,
-				Boolean value) {
+		public void decorate(final Object identifier,
+				final IBulkTableCell cell, Boolean value) {
 			cell.checkBox(value);
 			if (value != null && updateListener != null
 					&& updateListener.isEditable(identifier)) {
@@ -154,7 +154,8 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	public class NumberDecorator implements Decorator<Number> {
 
 		@Override
-		public void decorate(Object identifier, IBulkTableCell cell, Number value) {
+		public void decorate(Object identifier, IBulkTableCell cell,
+				Number value) {
 			String text = String.valueOf(value);
 			// TODO injectColor(identifier, cell);
 			cell.text(text);
@@ -200,7 +201,8 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		}
 
 		@Override
-		public void decorate(final Object identifier, IBulkTableCell cell, String value) {
+		public void decorate(final Object identifier, IBulkTableCell cell,
+				String value) {
 			String text = (String) value;
 			injectColor(identifier, cell, text);
 			cell.text(text);
@@ -229,7 +231,8 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	public class HTMLDecorator implements Decorator<String> {
 
 		@Override
-		public void decorate(Object identifier, IBulkTableCell cell, String value) {
+		public void decorate(Object identifier, IBulkTableCell cell,
+				String value) {
 			String text = (String) value;
 			cell.html(text);
 		}
@@ -248,7 +251,8 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	public class ImageDecorator implements Decorator<String> {
 
 		@Override
-		public void decorate(Object identifier, IBulkTableCell cell, String value) {
+		public void decorate(Object identifier, IBulkTableCell cell,
+				String value) {
 			cell.image((String) value);
 		}
 
@@ -283,12 +287,17 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	private IColorAdapter<Object, Object> colorAdapter;
 	boolean forceSort = false;
 
+	public ScrollTableColumnImpl(int index) {
+		this(null, index);
+	}
+
 	ScrollTableColumnImpl(ScrollTableWidgetImpl widget, int index) {
 		this.widget = widget;
 		this.index = index;
 	}
 
-	private void injectColor(Object identifier, IBulkTableCell cell, Object value) {
+	private void injectColor(Object identifier, IBulkTableCell cell,
+			Object value) {
 		if (colorAdapter != null) {
 			String color = colorAdapter.color(identifier, value);
 			cell.color(color);
@@ -296,7 +305,7 @@ class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	}
 
 	@SuppressWarnings("unchecked")
-	void decorate(Object identifier, IBulkTableCell cell, Object value) {
+	public void decorate(Object identifier, IBulkTableCell cell, Object value) {
 		try {
 			decorator().decorate(identifier, cell, value);
 		} catch (ClassCastException e) {
