@@ -156,7 +156,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		@Override
 		public void decorate(Object identifier, IBulkTableCell cell,
 				Number value) {
-			String text = String.valueOf(value);
+			String text = value == null ? null : String.valueOf(value);
 			// TODO injectColor(identifier, cell);
 			cell.text(text);
 		}
