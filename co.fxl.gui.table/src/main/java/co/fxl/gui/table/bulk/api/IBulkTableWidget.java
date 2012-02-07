@@ -23,6 +23,7 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IMouseWheelListener;
+import co.fxl.gui.api.IPoint;
 
 public interface IBulkTableWidget extends IKeyRecipient<Object> {
 
@@ -33,7 +34,7 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 
 	public interface ITableClickListener {
 
-		void onClick(int column, int row);
+		void onClick(int column, int row, IPoint point);
 	}
 
 	public interface ILabelMouseListener {

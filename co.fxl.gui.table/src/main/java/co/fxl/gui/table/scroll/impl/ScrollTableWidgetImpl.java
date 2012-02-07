@@ -36,6 +36,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMouseWheelListener;
+import co.fxl.gui.api.IPoint;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
@@ -619,7 +620,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		grid.addTableListener(new ITableClickListener() {
 
 			@Override
-			public void onClick(final int column, final int row) {
+			public void onClick(final int column, final int row, IPoint p) {
 				if (row == 0)
 					return;
 				ScrollTableColumnImpl columnImpl = columns.get(column);
@@ -833,7 +834,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			grid.addTableListener(new ITableClickListener() {
 
 				@Override
-				public void onClick(int column, int row) {
+				public void onClick(int column, int row, IPoint p) {
 					if (row != 0)
 						return;
 					ScrollTableColumnImpl columnImpl = columns
@@ -896,7 +897,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		ITableClickListener l2 = new ITableClickListener() {
 
 			@Override
-			public void onClick(int column, int row) {
+			public void onClick(int column, int row, IPoint p) {
 				int convert2TableRow = convert2TableRow(row);
 				if (convert2TableRow == 0) {
 					return;

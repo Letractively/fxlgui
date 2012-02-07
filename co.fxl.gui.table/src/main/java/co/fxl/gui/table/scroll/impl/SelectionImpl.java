@@ -26,6 +26,7 @@ import java.util.Map;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IPoint;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IRow;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableClickListener;
@@ -47,7 +48,7 @@ class SelectionImpl implements ISelection<Object> {
 			widget.grid.addTableListener(new ITableClickListener() {
 
 				@Override
-				public void onClick(int column, int row) {
+				public void onClick(int column, int row, IPoint p) {
 					if (row == 0)
 						return;
 					row--;
@@ -155,7 +156,7 @@ class SelectionImpl implements ISelection<Object> {
 			widget.grid.addTableListener(new ITableClickListener() {
 
 				@Override
-				public void onClick(int column, int row) {
+				public void onClick(int column, int row, IPoint p) {
 					if (row == 0)
 						return;
 					row--;
@@ -170,7 +171,7 @@ class SelectionImpl implements ISelection<Object> {
 			widget.grid.addTableListener(new ITableClickListener() {
 
 				@Override
-				public void onClick(int column, int row) {
+				public void onClick(int column, int row, IPoint p) {
 					if (row == 0)
 						return;
 					row--;
