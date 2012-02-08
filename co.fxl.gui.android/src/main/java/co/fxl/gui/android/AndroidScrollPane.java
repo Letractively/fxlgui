@@ -23,6 +23,8 @@ import android.widget.ScrollView;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IMargin;
+import co.fxl.gui.api.IPadding;
 import co.fxl.gui.api.IScrollPane;
 
 class AndroidScrollPane implements IScrollPane, Parent {
@@ -168,6 +170,26 @@ class AndroidScrollPane implements IScrollPane, Parent {
 
 	@Override
 	public IScrollPane showScrollbarsAlways(boolean showScrollbarsAlways) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IPadding padding() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IScrollPane padding(int padding) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IMargin margin() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IScrollPane margin(int margin) {
 		throw new MethodNotImplementedException();
 	}
 }

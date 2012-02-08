@@ -45,7 +45,9 @@ import co.fxl.gui.api.IDropTarget.IDragMoveListener;
 import co.fxl.gui.api.IDropTarget.IDropListener;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IKeyRecipient;
+import co.fxl.gui.api.IMargin;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
+import co.fxl.gui.api.IPadding;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 class SwingElement<T extends JComponent, R> implements IElement<R> {
@@ -191,9 +193,10 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 		return adapter;
 	}
 
+	@SuppressWarnings({ "unchecked" })
 	@Override
-	public Object nativeElement() {
-		return container.component;
+	public R nativeElement() {
+		return (R) container.component;
 	}
 
 	@Override
@@ -387,4 +390,81 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 		// TODO ... throw new MethodNotImplementedException();
 		return (R) this;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R padding(int padding) {
+		// TODO ...
+		return (R) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R margin(int margin) {
+		// TODO ...
+		return (R) this;
+	}
+
+	@Override
+	public IPadding padding() {
+		return new IPadding() {
+
+			@Override
+			public IPadding left(int pixel) {
+				// TODO ...
+				return this;
+			}
+
+			@Override
+			public IPadding right(int pixel) {
+				// TODO ...
+				return this;
+			}
+
+			@Override
+			public IPadding top(int pixel) {
+				// TODO ...
+				return this;
+			}
+
+			@Override
+			public IPadding bottom(int pixel) {
+				// TODO ...
+				return this;
+			}
+
+		};
+	}
+
+	@Override
+	public IMargin margin() {
+		return new IMargin() {
+
+			@Override
+			public IMargin left(int pixel) {
+				// TODO ...
+				return this;
+			}
+
+			@Override
+			public IMargin right(int pixel) {
+				// TODO ...
+				return this;
+			}
+
+			@Override
+			public IMargin top(int pixel) {
+				// TODO ...
+				return this;
+			}
+
+			@Override
+			public IMargin bottom(int pixel) {
+				// TODO ...
+				return this;
+			}
+
+		};
+	}
+
 }

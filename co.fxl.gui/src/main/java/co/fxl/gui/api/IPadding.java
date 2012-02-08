@@ -1,6 +1,4 @@
 /**
- * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
- *  
  * This file is part of FXL GUI API.
  *  
  * FXL GUI API is free software: you can redistribute it and/or modify
@@ -15,34 +13,18 @@
  *  
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
 package co.fxl.gui.api;
 
-public interface IElement<T> extends ILocated<T> {
+public interface IPadding {
 
-	// TODO maybe include methods addStyle(String) / removeStyle(String) for CSS
-	// TODO for Swing, etc.: IDisplay.registerStyle(String, IDecorator<?>)
+	IPadding left(int pixel);
 
-	// T attach(boolean attach);
+	IPadding right(int pixel);
 
-	T visible(boolean visible);
+	IPadding top(int pixel);
 
-	boolean visible();
-
-	void remove();
-
-	T tooltip(String tooltip);
-
-	<N> N nativeElement();
-
-	IDisplay display();
-
-	IPadding padding();
-
-	T padding(int padding);
-
-	IMargin margin();
-
-	T margin(int margin);
-
+	IPadding bottom(int pixel);
 }

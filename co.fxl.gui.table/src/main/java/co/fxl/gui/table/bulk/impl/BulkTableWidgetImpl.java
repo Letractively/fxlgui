@@ -431,4 +431,9 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 		grid.indent(indent);
 		return this;
 	}
+
+	@Override
+	public IBulkTableWidget marginTop(int marginTop) {
+		return this;
+	}
 }
