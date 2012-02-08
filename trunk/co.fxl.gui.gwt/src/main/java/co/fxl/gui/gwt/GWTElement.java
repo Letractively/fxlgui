@@ -34,11 +34,15 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFontElement;
 import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IKeyRecipient;
+import co.fxl.gui.api.IMargin;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
+import co.fxl.gui.api.IPadding;
 import co.fxl.gui.api.IPoint;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
@@ -210,13 +214,11 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	public R visible(boolean visible) {
 		if (!visible) {
 			if (visible())
-				visibleStyle = container.widget.getElement().getStyle()
-						.getProperty("display");
+				visibleStyle = style().getProperty("display");
 			container.widget.setVisible(false);
 		} else {
 			if (visibleStyle != null)
-				container.widget.getElement().getStyle()
-						.setProperty("display", visibleStyle);
+				style().setProperty("display", visibleStyle);
 			else
 				container.widget.setVisible(visible);
 		}
@@ -229,7 +231,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		if (isUndefined())
 			return (R) this;
 		if (width < 1)
-			container.widget.getElement().getStyle().clearWidth();
+			style().clearWidth();
 		else
 			container.widget.setWidth(width + "px");
 		return (R) this;
@@ -245,7 +247,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		if (isUndefined())
 			return (R) this;
 		if (height < 1)
-			container.widget.getElement().getStyle().clearHeight();
+			style().clearHeight();
 		else
 			container.widget.setHeight(height + "px");
 		return (R) this;
@@ -282,9 +284,10 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		container.parent.remove(container.widget);
 	}
 
+	@SuppressWarnings({ "unchecked" })
 	@Override
-	public Object nativeElement() {
-		return container.widget;
+	public <N> N nativeElement() {
+		return (N) container.widget;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -313,12 +316,9 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	}
 
 	private void toggleClickHandler(boolean toggle) {
-		container.widget
-				.getElement()
-				.getStyle()
-				.setCursor(
-						toggle ? com.google.gwt.dom.client.Style.Cursor.POINTER
-								: com.google.gwt.dom.client.Style.Cursor.DEFAULT);
+		style().setCursor(
+				toggle ? com.google.gwt.dom.client.Style.Cursor.POINTER
+						: com.google.gwt.dom.client.Style.Cursor.DEFAULT);
 		if (registration != null) {
 			registration.removeHandler();
 			registration = null;
@@ -570,6 +570,86 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	public Element getDOMElement() {
 		return container.widget.getElement();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R padding(int padding) {
+		style().setPadding(padding, Unit.PX);
+		return (R) this;
+	}
+
+	Style style() {
+		return container.widget.getElement().getStyle();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R margin(int margin) {
+		style().setMargin(margin, Unit.PX);
+		return (R) this;
+	}
+
+	@Override
+	public IPadding padding() {
+		return new IPadding() {
+
+			@Override
+			public IPadding left(int pixel) {
+				style().setPaddingLeft(pixel, Unit.PX);
+				return this;
+			}
+
+			@Override
+			public IPadding right(int pixel) {
+				style().setPaddingRight(pixel, Unit.PX);
+				return this;
+			}
+
+			@Override
+			public IPadding top(int pixel) {
+				style().setPaddingTop(pixel, Unit.PX);
+				return this;
+			}
+
+			@Override
+			public IPadding bottom(int pixel) {
+				style().setPaddingBottom(pixel, Unit.PX);
+				return this;
+			}
+
+		};
+	}
+
+	@Override
+	public IMargin margin() {
+		return new IMargin() {
+
+			@Override
+			public IMargin left(int pixel) {
+				style().setMarginLeft(pixel, Unit.PX);
+				return this;
+			}
+
+			@Override
+			public IMargin right(int pixel) {
+				style().setMarginRight(pixel, Unit.PX);
+				return this;
+			}
+
+			@Override
+			public IMargin top(int pixel) {
+				style().setMarginTop(pixel, Unit.PX);
+				return this;
+			}
+
+			@Override
+			public IMargin bottom(int pixel) {
+				style().setMarginBottom(pixel, Unit.PX);
+				return this;
+			}
+
+		};
 	}
 
 }

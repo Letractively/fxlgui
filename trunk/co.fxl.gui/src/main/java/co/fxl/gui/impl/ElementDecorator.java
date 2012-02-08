@@ -20,6 +20,8 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IMargin;
+import co.fxl.gui.api.IPadding;
 
 public class ElementDecorator<T> implements IElement<T> {
 
@@ -90,13 +92,33 @@ public class ElementDecorator<T> implements IElement<T> {
 	}
 
 	@Override
-	public Object nativeElement() {
+	public IDisplay display() {
+		return element.display();
+	}
+
+	@Override
+	public <N> N nativeElement() {
 		return element.nativeElement();
 	}
 
 	@Override
-	public IDisplay display() {
-		return element.display();
+	public IPadding padding() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public T padding(int padding) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IMargin margin() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public T margin(int margin) {
+		throw new MethodNotImplementedException();
 	}
 
 }

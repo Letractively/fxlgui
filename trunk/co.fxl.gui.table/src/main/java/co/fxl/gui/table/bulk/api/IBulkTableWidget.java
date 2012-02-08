@@ -82,6 +82,8 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 
 	int rowHeight(int row);
 
+	IBulkTableWidget marginTop(int marginTop);
+
 	IBulkTableWidget height(int height);
 
 	IBulkTableWidget addMouseWheelListener(IMouseWheelListener l);

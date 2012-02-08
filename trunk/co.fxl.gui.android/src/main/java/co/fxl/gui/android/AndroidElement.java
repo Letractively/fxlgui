@@ -30,6 +30,8 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IMargin;
+import co.fxl.gui.api.IPadding;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
@@ -56,8 +58,8 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 	}
 
 	@Override
-	public Object nativeElement() {
-		return view;
+	public <N> N nativeElement() {
+		return (N) view;
 	}
 
 	@Override
@@ -201,5 +203,25 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 	public T addDropListener(co.fxl.gui.api.IDropTarget.IDropListener l) {
 		// TODO ... throw new MethodNotImplementedException();
 		return (T) this;
+	}
+
+	@Override
+	public IPadding padding() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public T padding(int padding) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IMargin margin() {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public T margin(int margin) {
+		throw new MethodNotImplementedException();
 	}
 }
