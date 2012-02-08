@@ -68,7 +68,7 @@ import co.fxl.gui.table.util.api.IDragDropListener;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
-		ILabelMouseListener {
+		ILabelMouseListener, TableWidgetAdp {
 
 	// TODO Usability: editable table: if illegal value has been inserted (e.g.
 	// 25.13.2002), then ignore input, reset to original and show fading error
@@ -506,7 +506,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		}
 	}
 
-	IGridPanel statusPanel() {
+	public IGridPanel statusPanel() {
 		if (statusPanel == null) {
 			statusPanel = container().add().panel().grid().resize(3, 1);
 			statusPanel.spacing(4);
@@ -527,7 +527,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		return column;
 	}
 
-	boolean update() {
+	public boolean update() {
 		paintedRows = computeRowsToPaint();
 		return updateWithPaintedRowsSet();
 	}
@@ -1205,5 +1205,20 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			ICellUpdateListener cellUpdateListener) {
 		updateListener = cellUpdateListener;
 		return this;
+	}
+
+	@Override
+	public void addClickListeners(boolean addClickListeners) {
+		this.addClickListeners = addClickListeners;
+	}
+
+	@Override
+	public List<ScrollTableColumnImpl> columnList() {
+		return columns;
+	}
+
+	@Override
+	public void forkRefresh() {
+		refresh();
 	}
 }

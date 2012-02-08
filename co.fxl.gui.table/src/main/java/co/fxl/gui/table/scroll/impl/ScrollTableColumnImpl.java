@@ -77,7 +77,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 						boolean refresh = updateListener.onUpdate(identifier,
 								value);
 						if (refresh) {
-							widget.refresh();
+							widget.forkRefresh();
 						}
 					}
 				});
@@ -275,7 +275,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	private Decorator decorator;
 	private IColumnUpdateListener<Object, Object> updateListener;
 	Boolean tagSortOrder;
-	private ScrollTableWidgetImpl widget;
+	private TableWidgetAdp widget;
 	List<IScrollTableListener<Object>> clickListeners = new LinkedList<IScrollTableListener<Object>>();
 	boolean filterable;
 	AlignmentMemento<IScrollTableColumn<Object>> alignment = new AlignmentMemento<IScrollTableColumn<Object>>(
@@ -292,7 +292,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		this(null, index);
 	}
 
-	ScrollTableColumnImpl(ScrollTableWidgetImpl widget, int index) {
+	ScrollTableColumnImpl(TableWidgetAdp widget, int index) {
 		this.widget = widget;
 		this.index = index;
 	}
@@ -411,7 +411,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	@Override
 	public IScrollTableColumn<Object> addClickListener(
 			IScrollTableListener<Object> l) {
-		widget.addClickListeners = true;
+		widget.addClickListeners(true);
 		clickListeners.add(l);
 		return this;
 	}
