@@ -175,4 +175,9 @@ public class FieldTypeImpl implements IFieldType {
 		type(Double.class);
 		return this;
 	}
+
+	@Override
+	public boolean isRelation() {
+		return isRelation;
+	}
 }
