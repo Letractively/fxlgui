@@ -61,4 +61,6 @@ public interface IFieldType {
 	IFieldType shortText();
 
 	IFieldType doubleValue();
+
+	boolean isRelation();
 }
