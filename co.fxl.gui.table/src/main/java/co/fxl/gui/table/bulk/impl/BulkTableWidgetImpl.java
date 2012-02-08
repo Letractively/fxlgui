@@ -120,7 +120,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 		mainPanel = container.panel().vertical();
 		grid = mainPanel.add().panel().grid();
 		grid.spacing(0);
-		grid.indent(3);
+		indent(3);
 		grid.addGridClickListener(new IGridClickListener() {
 
 			@Override
@@ -424,5 +424,11 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	public IKeyRecipient.IKey<Object> addKeyListener(IClickListener listener) {
 		// TODO ...
 		return new DummyKeyRecipientKeyTemplate();
+	}
+
+	@Override
+	public IBulkTableWidget indent(int indent) {
+		grid.indent(indent);
+		return this;
 	}
 }

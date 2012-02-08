@@ -92,6 +92,8 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 
 	IBulkTableWidget css(boolean css);
 
+	IBulkTableWidget indent(int indent);
+
 	void remove();
 
 	IElement<?> element();
