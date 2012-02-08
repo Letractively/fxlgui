@@ -28,9 +28,9 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPoint;
 
-class ColumnSelection {
+public class ColumnSelection {
 
-	ScrollTableWidgetImpl widget;
+	TableWidgetAdp widget;
 	protected ScrollTableColumnImpl dragged;
 	private ScrollTableColumnImpl dummy;
 	private IFocusPanel dummyFocusPanel;
@@ -40,7 +40,7 @@ class ColumnSelection {
 	// sum(characters of column-headers) > m
 	// then dynamically resize font size of column selection labels
 
-	ColumnSelection(final ScrollTableWidgetImpl widget) {
+	public ColumnSelection(final TableWidgetAdp widget) {
 		this.widget = widget;
 		dummy = new ScrollTableColumnImpl(widget, -1);
 		dummy.name("");
@@ -63,7 +63,7 @@ class ColumnSelection {
 
 	void addToPanel(ILinearPanel p, final IClickListener clickListener) {
 		addTitle(p);
-		for (final ScrollTableColumnImpl c : widget.columns) {
+		for (final ScrollTableColumnImpl c : widget.columnList()) {
 			p.addSpace(4);
 			IFocusPanel fp = p.add().panel().focus();
 			IHorizontalPanel b = fp.add().panel().horizontal().spacing(4);
@@ -125,7 +125,7 @@ class ColumnSelection {
 				public void onClick() {
 					c.visible = !c.visible;
 					boolean allInvisible = true;
-					for (ScrollTableColumnImpl c1 : widget.columns)
+					for (ScrollTableColumnImpl c1 : widget.columnList())
 						allInvisible &= !c1.visible;
 					if (allInvisible)
 						c.visible = true;
@@ -141,12 +141,12 @@ class ColumnSelection {
 	protected void dropOnTo(ScrollTableColumnImpl c) {
 		if (c == dragged)
 			return;
-		widget.columns.remove(dragged);
+		widget.columnList().remove(dragged);
 		if (c == dummy) {
-			widget.columns.add(dragged);
+			widget.columnList().add(dragged);
 		} else {
-			int i = widget.columns.indexOf(c);
-			widget.columns.add(i, dragged);
+			int i = widget.columnList().indexOf(c);
+			widget.columnList().add(i, dragged);
 		}
 		draw();
 		widget.update();
