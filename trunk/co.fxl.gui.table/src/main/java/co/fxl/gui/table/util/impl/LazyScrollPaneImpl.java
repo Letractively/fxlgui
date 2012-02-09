@@ -166,7 +166,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private void draw() {
 		v = container.panel().focus();
 		v.color().white();
-		addDragListener(v);
+		// addDragListener(v);
 		ILayout layout = v.add().panel();
 		treeDockPanel = getPanel(layout);
 		if (!adjustHeights) {
