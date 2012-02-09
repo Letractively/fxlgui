@@ -77,7 +77,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 						boolean refresh = updateListener.onUpdate(identifier,
 								value);
 						if (refresh) {
-							widget.forkRefresh();
+							widget.refreshTable();
 						}
 					}
 				});

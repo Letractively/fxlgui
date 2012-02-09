@@ -14,6 +14,6 @@ public interface TableWidgetAdp {
 
 	void addClickListeners(boolean addClickListeners);
 
-	void forkRefresh();
+	void refreshTable();
 
 }

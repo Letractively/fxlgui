@@ -1218,7 +1218,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	@Override
-	public void forkRefresh() {
+	public void refreshTable() {
 		refresh();
 	}
 }
