@@ -472,7 +472,8 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	@SuppressWarnings("unchecked")
 	public R draggable(boolean draggable) {
-		container.widget.getElement().setDraggable(Element.DRAGGABLE_TRUE);
+		container.widget.getElement().setDraggable(
+				draggable ? Element.DRAGGABLE_TRUE : Element.DRAGGABLE_FALSE);
 		return (R) this;
 	}
 
