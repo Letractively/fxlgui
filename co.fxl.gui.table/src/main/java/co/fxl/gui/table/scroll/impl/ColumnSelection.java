@@ -48,8 +48,7 @@ public class ColumnSelection {
 	}
 
 	public void draw() {
-		IContainer clear = widget.statusPanel().cell(1, 0).clear().align()
-				.begin().valign().center();
+		IContainer clear = getContainer();
 		IHorizontalPanel p = clear.panel().horizontal().add().panel()
 				.horizontal();
 		IClickListener clickListener = new IClickListener() {
@@ -59,6 +58,13 @@ public class ColumnSelection {
 			}
 		};
 		addToPanel(p, clickListener);
+	}
+
+	protected IContainer getContainer() {
+		if (widget.statusPanel() != null)
+			return widget.statusPanel().cell(1, 0).clear().align().begin()
+					.valign().center();
+		return widget.getContainer();
 	}
 
 	void addToPanel(ILinearPanel p, final IClickListener clickListener) {

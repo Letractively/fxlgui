@@ -1221,4 +1221,9 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public void refreshTable() {
 		refresh();
 	}
+
+	@Override
+	public IContainer getContainer() {
+		return null;
+	}
 }

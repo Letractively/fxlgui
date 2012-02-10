@@ -305,6 +305,10 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		}
 	}
 
+	public void resetWidth() {
+		widthDouble = -1;
+	}
+
 	@SuppressWarnings("unchecked")
 	public void decorate(Object identifier, IBulkTableCell cell, Object value) {
 		try {
@@ -470,7 +474,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 	double defaultWidth() {
 		if (explicitWidth != -1)
-			return explicitWidth;
+			return widthDouble = explicitWidth;
 		return widthDouble = decorator().defaultWeight();
 	}
 }

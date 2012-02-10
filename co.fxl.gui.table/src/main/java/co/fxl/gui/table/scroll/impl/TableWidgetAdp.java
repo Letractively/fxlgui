@@ -2,6 +2,7 @@ package co.fxl.gui.table.scroll.impl;
 
 import java.util.List;
 
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 
 public interface TableWidgetAdp {
@@ -15,5 +16,7 @@ public interface TableWidgetAdp {
 	void addClickListeners(boolean addClickListeners);
 
 	void refreshTable();
+
+	IContainer getContainer();
 
 }
