@@ -38,8 +38,8 @@ public class NavigationItemImpl extends LazyClickListener implements
 	public static int SPACING_LOADING = 5;
 	// TODO when row height computation in scrolltablewidgetimpl is working for
 	// invisible panels (unflipped pages), set to true
-	private static boolean FLIP_AFTER_RETURN_IS_POSSIBLE = true;
-	public static boolean FLIP_AFTER_RETURN = false;
+	private static boolean FLIP_AFTER_RETURN_IS_POSSIBLE = false;
+	public static boolean FLIP_AFTER_RETURN = true;
 	static int c = 1;
 	ILabel button;
 	private IDecorator decorator;
