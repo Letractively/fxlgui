@@ -31,7 +31,7 @@ import co.fxl.gui.api.IPoint;
 public class ColumnSelection {
 
 	TableWidgetAdp widget;
-	protected ScrollTableColumnImpl dragged;
+	private ScrollTableColumnImpl dragged;
 	private ScrollTableColumnImpl dummy;
 	private IFocusPanel dummyFocusPanel;
 	private ILabel dummyLabel;
