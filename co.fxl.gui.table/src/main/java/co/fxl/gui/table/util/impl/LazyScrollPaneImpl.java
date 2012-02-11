@@ -175,6 +175,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	}
 
 	private void draw() {
+		hasScrollbar = true;
 		v = container.panel().focus();
 		v.color().white();
 		// addDragListener(v);
@@ -248,6 +249,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				assert maxRowIndex >= 0;
 				if (maxRowIndex == 0) {
 					scrollPane.remove();
+					hasScrollbar = false;
 					widthScrollPanel = 0;
 				} else {
 					// if (maxRowIndex < size - 1) {
@@ -318,6 +320,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
 	private int dragIndex = -1;
 	private boolean hasHeader = true;
+	private boolean hasScrollbar = true;
 
 	private void addDragListener(final IFocusPanel v) {
 		if (dragDropListener == null)
@@ -693,5 +696,10 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				scrollToIndex(rowIndex + 1);
 			}
 		}
+	}
+
+	@Override
+	public boolean hasScrollbar() {
+		return hasScrollbar;
 	}
 }

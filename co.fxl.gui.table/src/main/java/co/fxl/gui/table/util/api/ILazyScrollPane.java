@@ -73,4 +73,6 @@ public interface ILazyScrollPane extends IMouseWheelListener {
 	int rowIndex();
 
 	ILazyScrollPane upDownIndex(IUpDownIndex index);
+	
+	boolean hasScrollbar();
 }
