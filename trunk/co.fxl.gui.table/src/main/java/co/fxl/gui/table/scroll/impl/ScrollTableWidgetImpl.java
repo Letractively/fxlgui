@@ -293,7 +293,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 //							.text("&#160;");
 //					IGridCell begin = topPanelCell(1, 0).valign().begin()
 //							.align().begin();
-					IVerticalPanel nef = dock.add().panel().vertical().spacing(10);
+					IVerticalPanel nef = dock.spacing(10).add().panel().vertical();
 					nef.add().panel().vertical().spacing(4).add().label()
 							.text("NO ENTITIES FOUND").font().pixel(10).color()
 							.gray();
