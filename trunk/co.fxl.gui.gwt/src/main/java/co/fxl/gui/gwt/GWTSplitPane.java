@@ -42,6 +42,9 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 
 		private boolean isScheduled = false;
 
+		// private int maxTrys = 10;
+		// private Runnable runnable;
+
 		@Override
 		public void setLeftWidget(Widget p, Widget component) {
 			((HorizontalSplitPanel) p).setLeftWidget(component);
@@ -55,44 +58,55 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 		@Override
 		public void addListener(final Widget widget,
 				final ISplitPaneResizeListener listener) {
-			Display.instance().invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					Element rootElement = widget.getElement();
-					final EventListener oldListener = DOM
-							.getEventListener(rootElement);
-					DOM.setEventListener(rootElement, new EventListener() {
-						public void onBrowserEvent(Event event) {
-							final HorizontalSplitPanel horizontalSplitPanel = (HorizontalSplitPanel) widget;
-							boolean fire = false;
-							if ((event.getTypeInt() == Event.ONMOUSEUP || event
-									.getTypeInt() == Event.ONMOUSEMOVE)
-									&& horizontalSplitPanel.isResizing()) {
-								fire = true;
+			// runnable = new Runnable() {
+			// @Override
+			// public void run() {
+			Element rootElement = widget.getElement();
+			final EventListener oldListener = DOM.getEventListener(rootElement);
+			if (oldListener == null) {
+				throw new RuntimeException("Event-Listener on element "
+						+ rootElement + " not set");
+			}
+			// if (oldListener == null) {
+			// maxTrys--;
+			// if (maxTrys == 0) {
+			// throw new RuntimeException(
+			// "Maximum trys on accessing split pane exceeded");
+			// }
+			// Display.instance().invokeLater(runnable);
+			// } else
+			DOM.setEventListener(rootElement, new EventListener() {
+				public void onBrowserEvent(Event event) {
+					final HorizontalSplitPanel horizontalSplitPanel = (HorizontalSplitPanel) widget;
+					boolean fire = false;
+					if ((event.getTypeInt() == Event.ONMOUSEUP || event
+							.getTypeInt() == Event.ONMOUSEMOVE)
+							&& horizontalSplitPanel.isResizing()) {
+						fire = true;
+					}
+					if (oldListener != null)
+						oldListener.onBrowserEvent(event);
+					if (fire && !isScheduled) {
+						isScheduled = true;
+						Runnable r = new Runnable() {
+							@Override
+							public void run() {
+								listener.onResize(widget.getOffsetWidth()
+										- horizontalSplitPanel.getRightWidget()
+												.getOffsetWidth() - 2);
+								isScheduled = false;
 							}
-							oldListener.onBrowserEvent(event);
-							if (fire && !isScheduled) {
-								isScheduled = true;
-								Runnable r = new Runnable() {
-									@Override
-									public void run() {
-										listener.onResize(widget
-												.getOffsetWidth()
-												- horizontalSplitPanel
-														.getRightWidget()
-														.getOffsetWidth() - 2);
-										isScheduled = false;
-									}
-								};
-								if (GWTDisplay.isInternetExplorer())
-									Display.instance().invokeLater(r);
-								else
-									r.run();
-							}
-						}
-					});
+						};
+						if (GWTDisplay.isInternetExplorer())
+							Display.instance().invokeLater(r);
+						else
+							r.run();
+					}
 				}
 			});
+			// }
+			// };
+			// Display.instance().invokeLater(runnable);
 		}
 
 		@Override
