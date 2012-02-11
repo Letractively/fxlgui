@@ -51,7 +51,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	// TODO BUG/Usability: sometimes / under certain circumstances: an expand
 	// shifts the displayed range upwards
 
-	// TODO FEATURE-COMPLETE: Look: IScrollPane.getScrollbar:
+	// TODO Look: IScrollPane.getScrollbar:
 	// IScrollPane.IScrollbar: als widget: html5-implementierung mit d&d und
 	// g-like-design, fallback (IE, etc.): alte implementierung
 
