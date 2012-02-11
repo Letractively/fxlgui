@@ -1042,7 +1042,13 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	IGridCell topPanelCell(int i, int j) {
-		return topPanel.cell(i, j);
+		IGridCell cell = topPanel.cell(i, j);
+		topPanel.color().rgb(255, 255, 255).gradient().vertical()
+				.rgb(245, 245, 245);
+		IBorder b = topPanel.border();
+		b.color().lightgray();
+		b.style().bottom();
+		return cell;
 	}
 
 	void editable(int gridRowIndex, boolean editable) {

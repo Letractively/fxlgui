@@ -45,6 +45,7 @@ public class ViewImpl extends LazyClickListener {
 	private IVerticalPanel basicPanel;
 	private boolean disabled;
 	private FlipPage sideContent;
+	private ICallback<Void> oneTimeCallback;
 
 	ViewImpl(ViewList viewList, String imageResource) {
 		this(viewList, imageResource, false);
@@ -191,7 +192,7 @@ public class ViewImpl extends LazyClickListener {
 		final String resource = image.resource();
 		image.resource("loading_black.gif");
 		decorator.decorate(next, sideContent.next().panel().vertical(),
-				new CallbackTemplate<Void>() {
+				new CallbackTemplate<Void>(oneTimeCallback) {
 					@Override
 					public void onSuccess(Void result) {
 						image.resource(resource);
@@ -202,6 +203,8 @@ public class ViewImpl extends LazyClickListener {
 						}
 						content.flip();
 						sideContent.flip();
+						if (oneTimeCallback != null)
+							oneTimeCallback.onSuccess(null);
 					}
 				});
 	}
@@ -266,5 +269,10 @@ public class ViewImpl extends LazyClickListener {
 
 	public boolean visible() {
 		return !disabled;
+	}
+
+	public void onClick(ICallback<Void> cb) {
+		oneTimeCallback = cb;
+		onClick();
 	}
 }
