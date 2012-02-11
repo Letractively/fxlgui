@@ -96,9 +96,10 @@ public class ElementDecorator<T> implements IElement<T> {
 		return element.display();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <N> N nativeElement() {
-		return element.nativeElement();
+		return (N) element.nativeElement();
 	}
 
 	@Override
