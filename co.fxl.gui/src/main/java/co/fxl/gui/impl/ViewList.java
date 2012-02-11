@@ -124,10 +124,10 @@ public class ViewList {
 			widget.selectFirst();
 	}
 
-	public void showFirstVisible() {
+	public void showFirstVisible(ICallback<Void> cb) {
 		for (ViewImpl view : views) {
 			if (view.visible()) {
-				view.onClick();
+				view.onClick(cb);
 				return;
 			}
 		}
