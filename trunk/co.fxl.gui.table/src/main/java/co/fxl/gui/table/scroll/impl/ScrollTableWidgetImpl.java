@@ -289,11 +289,11 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 							|| !constraints.isConstraintSpecified() || !hasFilter())) {
 				IVerticalPanel dock = container.add().panel().vertical();
 				if (showNoRowsFound) {
-					topPanelCell(viewInc + 0, 0).width(10).label()
-							.text("&#160;");
-					IGridCell begin = topPanelCell(1, 0).valign().begin()
-							.align().begin();
-					IVerticalPanel nef = begin.panel().vertical();
+//					topPanelCell(viewInc + 0, 0).width(10).label()
+//							.text("&#160;");
+//					IGridCell begin = topPanelCell(1, 0).valign().begin()
+//							.align().begin();
+					IVerticalPanel nef = dock.add().panel().vertical().spacing(10);
 					nef.add().panel().vertical().spacing(4).add().label()
 							.text("NO ENTITIES FOUND").font().pixel(10).color()
 							.gray();
