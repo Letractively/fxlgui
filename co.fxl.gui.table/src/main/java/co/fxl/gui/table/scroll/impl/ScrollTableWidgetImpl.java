@@ -288,15 +288,18 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					&& (constraints == null
 							|| !constraints.isConstraintSpecified() || !hasFilter())) {
 				IVerticalPanel dock = container.add().panel().vertical();
+				boolean furtherReduce = false;
 				if (showNoRowsFound) {
-//					topPanelCell(viewInc + 0, 0).width(10).label()
-//							.text("&#160;");
-//					IGridCell begin = topPanelCell(1, 0).valign().begin()
-//							.align().begin();
-					IVerticalPanel nef = dock.spacing(10).add().panel().vertical();
+					// topPanelCell(viewInc + 0, 0).width(10).label()
+					// .text("&#160;");
+					// IGridCell begin = topPanelCell(1, 0).valign().begin()
+					// .align().begin();
+					IVerticalPanel nef = dock.spacing(10).add().panel()
+							.vertical();
 					nef.add().panel().vertical().spacing(4).add().label()
 							.text("NO ENTITIES FOUND").font().pixel(10).color()
 							.gray();
+					furtherReduce = true;
 					if (constraints != null && constraints.isSpecified()) {
 						// && constraints.isConstraintSpecified()) {
 						List<String[]> description = constraints.description();
@@ -331,6 +334,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				if (reduceHeightIfEmpty && height >= 80)
 					height -= 30;
 				// }
+				if (furtherReduce && height >= 80)
+					height -= 30;
 				dock.height(height);
 				if (!externalStatusPanel) {
 					IGridPanel statusPanel2 = statusPanel();
@@ -1121,7 +1126,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		viewComboBoxText = texts;
 		this.viewComboBoxChoice = viewComboBoxChoice;
 		viewComboBoxUpdateListener = ul;
-		showNoRowsFound = false;
+		// showNoRowsFound = false;
 		return this;
 	}
 
