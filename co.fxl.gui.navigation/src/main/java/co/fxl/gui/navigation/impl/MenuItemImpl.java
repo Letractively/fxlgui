@@ -121,6 +121,8 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	@Override
 	public IMenuItem enabled(boolean enabled) {
 		register.enabled(enabled);
+		if(!enabled)
+			style.onBack(register.title());
 		return this;
 	}
 
