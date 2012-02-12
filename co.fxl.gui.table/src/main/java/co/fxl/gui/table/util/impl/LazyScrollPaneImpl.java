@@ -48,6 +48,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	// möglichkeit: nach new, liegt in form, klick in tree: liegt in tree, nach
 	// initialen wechseln in detail-sicht: liegt in form]
 
+	// TODO FEATURE-COMPLETE: USABILITY: KEYS: Ctrl+C, Ctrl+V, etc. for Context-Menu-Items
+
 	// TODO BUG/Usability: sometimes / under certain circumstances: an expand
 	// shifts the displayed range upwards
 
