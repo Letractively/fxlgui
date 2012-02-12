@@ -131,6 +131,7 @@ public class ViewList {
 				return;
 			}
 		}
+		cb.onSuccess(null);
 	}
 
 	public CommandLink addHyperlink(String imageResource, String text) {
