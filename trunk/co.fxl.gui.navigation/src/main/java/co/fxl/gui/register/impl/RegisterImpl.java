@@ -103,7 +103,8 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 		int width = buttonPanel.width();
 		subPanel.width(subPanel.width());
 		buttonImage.visible(loading);
-		buttonPanel.spacing(loading ? widget.spacing - SPACING_DEC_LOADING : widget.spacing);
+		buttonPanel.spacing(loading ? widget.spacing - SPACING_DEC_LOADING
+				: widget.spacing);
 		buttonLabel.visible(!loading);
 		buttonPanel.size(width, 24);
 		if (isActive()) {
@@ -224,6 +225,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 	public RegisterImpl enabled(boolean enabled) {
 		if (!enabled) {
 			buttonLabel.font().color().white();
+			buttonPanel.clickable(true);
 			verticalContainer.visible(false);
 			disabled = true;
 		} else {
