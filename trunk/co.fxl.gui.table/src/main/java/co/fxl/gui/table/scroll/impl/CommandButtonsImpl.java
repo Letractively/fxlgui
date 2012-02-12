@@ -219,7 +219,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			IRowListener<IRows<Object>> l) {
 		listenOnAdd = true;
 		listenOnAddListenerDecorator = dec;
-		widget.showNoRowsFound = false;
+//		widget.showNoRowsFound = false;
 		listenOnAddListener = l;
 		return this;
 	}
