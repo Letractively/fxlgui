@@ -41,7 +41,7 @@ import co.fxl.gui.table.util.api.IUpDownIndex;
 
 public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
-	// TODO FEATURE-COMPLETE: KEYS: Usability: Up/Down-Tasten in LazyScrollPane
+	// TODO FEATURE-COMPLETE: NICE2HAVE: KEYS: Usability: Up/Down-Tasten in LazyScrollPane
 	// intercepten und hoch und
 	// runter navigieren (simulierter klick auf das element darüber/darunter)
 	// [muss entschieden werden wo fokus liegen soll, zurzeit immer in der form:
