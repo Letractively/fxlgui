@@ -203,8 +203,11 @@ public class ViewImpl extends LazyClickListener {
 						}
 						content.flip();
 						sideContent.flip();
-						if (oneTimeCallback != null)
-							oneTimeCallback.onSuccess(null);
+						if (oneTimeCallback != null) {
+							ICallback<Void> cb = oneTimeCallback;
+							oneTimeCallback = null;
+							cb.onSuccess(null);
+						}
 					}
 				});
 	}
