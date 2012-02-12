@@ -342,6 +342,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					statusPanel2.cell(0, 0).label().text("&#160;");
 					statusPanel2.height(32);
 				}
+				if (hasFilter())
+					addFilter();
 				setUpTopPanel();
 			} else if (rows.size() == 0
 					&& (constraints != null
