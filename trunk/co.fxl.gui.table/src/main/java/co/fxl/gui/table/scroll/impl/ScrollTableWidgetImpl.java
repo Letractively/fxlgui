@@ -94,7 +94,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	// TODO Swing Scroll Panel block increment for single click on arrow is not
 	// enough
 
-	private static final boolean ALLOW_RESIZE = false;
+//	private static final boolean ALLOW_RESIZE = false;
 	private static final int HEADER_ROW_HEIGHT = 24;
 	private static final int ROW_HEIGHT = 22;
 	static final String ARROW_UP = "\u2191";
@@ -300,12 +300,16 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 							.text("NO ENTITIES FOUND").font().pixel(10).color()
 							.gray();
 					furtherReduce = true;
-					if (constraints != null && constraints.isSpecified()) {
+					List<String[]> description = constraints.description();
+					if (constraints.configuration() != null)
+						description.add(
+								0,
+								new String[] { "Query",
+										constraints.configuration() });
+					if (!description.isEmpty()) {// constraints != null &&
+													// constraints.isSpecified())
+													// {
 						// && constraints.isConstraintSpecified()) {
-						List<String[]> description = constraints.description();
-						if (constraints.configuration() != null)
-							description.add(0, new String[] { "Query",
-									constraints.configuration() });
 						IGridPanel gp = nef.addSpace(4).add().panel()
 								.horizontal().align().begin().add().panel()
 								.horizontal().align().begin().add().panel()
@@ -597,9 +601,9 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (!isCalibration)
 			addDisplayingNote();
 		if (allowColumnSelection) {
-			if (ALLOW_RESIZE)
-				new ResizableColumnSelection(this);
-			else
+//			if (ALLOW_RESIZE)
+//				new ResizableColumnSelection(this);
+//			else
 				new ColumnSelection(this);
 		}
 		addSorting();
@@ -687,7 +691,6 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			}
 	}
 
-	@SuppressWarnings("unused")
 	private void updateHeaderRow(IBulkTableWidget grid) {
 		adjustColumnWidths();
 		int current = 0;
@@ -716,8 +719,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (columnImpl.widthInt != -1)
 			column.width(columnImpl.widthInt);
 		else {
-			if (columnImpl.widthDouble == -1 && ALLOW_RESIZE)
-				columnImpl.widthDouble = 1d / columns.size();
+//			if (columnImpl.widthDouble == -1 && ALLOW_RESIZE)
+//				columnImpl.widthDouble = 1d / columns.size();
 			if (columnImpl.widthDouble != -1)
 				column.width(columnImpl.widthDouble);
 		}
