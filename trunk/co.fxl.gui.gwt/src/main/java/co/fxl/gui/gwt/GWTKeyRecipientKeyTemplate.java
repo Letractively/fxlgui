@@ -24,18 +24,22 @@ import java.util.List;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IKeyRecipient.IKey;
+import co.fxl.gui.impl.Display;
 
 import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.ui.FocusPanel;
 
 public class GWTKeyRecipientKeyTemplate implements IKey<Object>,
-		IKeyRecipient<Object>, KeyUpHandler {
+		IKeyRecipient<Object>, KeyUpHandler, KeyDownHandler, Runnable {
 
 	public int nativeKeyCode = -1;
 	private Object element;
 	private List<IClickListener> ls = new LinkedList<IClickListener>();
+	private boolean running = false;
 
 	public GWTKeyRecipientKeyTemplate(Object element) {
 		this.element = element;
@@ -44,6 +48,7 @@ public class GWTKeyRecipientKeyTemplate implements IKey<Object>,
 	public GWTKeyRecipientKeyTemplate(FocusPanel fp) {
 		element = fp;
 		fp.addKeyUpHandler(this);
+		fp.addKeyDownHandler(this);
 	}
 
 	public GWTKeyRecipientKeyTemplate(FocusPanel focusPanel,
@@ -101,10 +106,28 @@ public class GWTKeyRecipientKeyTemplate implements IKey<Object>,
 
 	@Override
 	public void onKeyUp(KeyUpEvent event) {
+		running = false;
+	}
+
+	@Override
+	public void onKeyDown(KeyDownEvent event) {
 		assert nativeKeyCode != -1;
 		int nkc = event.getNativeKeyCode();
-		if (nkc == nativeKeyCode)
-			for (IClickListener l : ls)
-				l.onClick();
+		if (nkc == nativeKeyCode) {
+			running = true;
+			run();
+		}
+	}
+
+	@Override
+	public void run() {
+		if (!running)
+			return;
+		if (!((FocusPanel) element).isVisible()
+				|| !((FocusPanel) element).isAttached())
+			return;
+		for (IClickListener l : ls)
+			l.onClick();
+		Display.instance().invokeLater(this, 200);
 	}
 }
