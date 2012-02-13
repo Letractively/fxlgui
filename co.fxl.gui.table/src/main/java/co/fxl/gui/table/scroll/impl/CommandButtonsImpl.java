@@ -100,24 +100,29 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			if (l != null) {
 				Object s = selection;
 				int i = selectionIndex();
-				if (deleteSelection) {
-					selection = null;
-					// selectionIndex = -1;
-				}
 				l.onClick(s, i, new CallbackTemplate<IRows<Object>>() {
 					@Override
 					public void onSuccess(IRows<Object> result) {
-						selection = null;
+						if (deleteSelection) {
+							widget.selection().clear();
+							// selectionIndex = -1;
+						}
 						// selectionIndex = -1;
 						execute(result);
 					}
 				});
-			} else
+			} else {
+				if (deleteSelection) {
+					widget.selection().clear();
+					// selectionIndex = -1;
+				}
 				execute(null);
+			}
 		}
 
 		private void execute(IRows<Object> result) {
 			widget.visible(result);
+			updateButtons();
 		}
 	}
 
