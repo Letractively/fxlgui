@@ -130,6 +130,7 @@ class SelectionImpl implements ISelection<Object> {
 
 		private static final int PIXEL = 11;
 		private static final boolean USE_CTRL_CLICK_FOR_MULTI_SELECTION = true;
+		private static final boolean ALLOW_RANGE_SELECTION = true;
 		private List<IChangeListener<Object>> listeners = new LinkedList<IChangeListener<Object>>();
 		private ILabel selectAll;
 		private ILabel removeSelection;
@@ -159,6 +160,8 @@ class SelectionImpl implements ISelection<Object> {
 			return result;
 		}
 
+		private int lastIndex = 0;
+
 		void update() {
 			IKey<?> exclusiveSelection = widget.grid
 					.addTableListener(new ITableClickListener() {
@@ -169,7 +172,8 @@ class SelectionImpl implements ISelection<Object> {
 								return;
 							row--;
 							clearSelection();
-							widget.rows.selected(widget.convert2TableRow(row),
+							widget.rows.selected(
+									lastIndex = widget.convert2TableRow(row),
 									true);
 							IRow r = widget.grid.row(row);
 							r.highlight(true);
@@ -185,7 +189,8 @@ class SelectionImpl implements ISelection<Object> {
 							if (row == 0)
 								return;
 							row--;
-							int tableRow = widget.convert2TableRow(row);
+							int tableRow = lastIndex = widget
+									.convert2TableRow(row);
 							boolean selected = !widget.rows.selected(tableRow);
 							widget.rows.selected(tableRow, selected);
 							IRow r = widget.grid.row(row);
@@ -197,16 +202,52 @@ class SelectionImpl implements ISelection<Object> {
 							notifyListeners();
 						}
 					});// .ctrlPressed();
-			decorateKeys(exclusiveSelection, incrementalSelection);
+			IKey<?> rangeSelection = ALLOW_RANGE_SELECTION ? widget.grid
+					.addTableListener(new ITableClickListener() {
+
+						@Override
+						public void onClick(int column, int row, IPoint p) {
+							if (row == 0)
+								return;
+							row--;
+							int tableRow = widget.convert2TableRow(row);
+							int r0 = lastIndex;
+							int r1 = tableRow;
+							if (r0 > r1) {
+								int tmp = r0;
+								r0 = r1;
+								r1 = tmp;
+							}
+							for (int i = r0; i <= r1; i++) {
+								widget.rows.selected(i, true);
+								int visibleRow = widget.convert2GridRow(i);
+								if (visibleRow >= 0
+										&& visibleRow <= widget.grid.rowCount()) {
+									IRow r = widget.grid.row(visibleRow);
+									if (!r.isHighlight()) {
+										r.highlight(true);
+										widget.highlighted.add(r);
+									}
+								}
+							}
+							notifyListeners();
+						}
+					})
+					: null;// .ctrlPressed();
+			decorateKeys(exclusiveSelection, incrementalSelection,
+					rangeSelection);
 			setUp();
 		}
 
 		void decorateKeys(IKey<?> exclusiveSelection,
-				IKey<?> incrementalSelection) {
-			if (USE_CTRL_CLICK_FOR_MULTI_SELECTION)
-				exclusiveSelection.ctrlPressed();
-			else
+				IKey<?> incrementalSelection, IKey<?> rangeSelection) {
+			if (USE_CTRL_CLICK_FOR_MULTI_SELECTION) {
 				incrementalSelection.ctrlPressed();
+			} else {
+				exclusiveSelection.ctrlPressed();
+			}
+			if (rangeSelection != null)
+				rangeSelection.shiftPressed();
 		}
 
 		private void setUp() {
