@@ -280,4 +280,9 @@ class SelectionImpl implements ISelection<Object> {
 	public ISelection<Object> add(int selectionIndex, Object selection) {
 		throw new MethodNotImplementedException();
 	}
+
+	@Override
+	public void clear() {
+		throw new MethodNotImplementedException();
+	}
 }

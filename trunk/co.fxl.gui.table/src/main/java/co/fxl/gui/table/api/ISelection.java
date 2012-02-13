@@ -55,4 +55,6 @@ public interface ISelection<T> {
 	Object add(T object);
 
 	Object add(int selectionIndex, Object selection);
+
+	void clear();
 }
