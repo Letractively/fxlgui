@@ -67,7 +67,6 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private int minRowHeight = 22;
 	private int height = 400;
 	private IContainer container;
-
 	// previously: FlipPage
 	private IVerticalPanel treeScrollPanelContainer;
 	private int rowIndex = 0;
