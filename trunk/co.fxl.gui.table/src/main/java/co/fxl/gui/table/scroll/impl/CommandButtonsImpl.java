@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.table.scroll.impl;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
@@ -25,6 +28,7 @@ import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
+import co.fxl.gui.table.api.ISelection.IMultiSelection.IChangeListener;
 import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IButtonPanelDecorator;
@@ -35,7 +39,7 @@ import co.fxl.gui.table.scroll.api.IScrollTableWidget.IRowListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IScrollTableClickListener;
 
 public class CommandButtonsImpl implements ICommandButtons<Object>,
-		IButtonPanelDecorator, ISelectionListener<Object> {
+		IButtonPanelDecorator, IChangeListener<Object> {
 
 	// TODO FEATURE: Option: Usability: Enable Drag & Drop for reordering of
 	// table content (additionally to move buttons)
@@ -76,9 +80,15 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	}
 
 	private int selectionIndex() {
-		if (selection == null)
+		if (selectionList.isEmpty())
 			return -1;
-		return widget.rows.find(selection);
+		return widget.rows.find(lastSelected());
+	}
+
+	private Object lastSelected() {
+		if (selectionList.isEmpty())
+			return null;
+		return selectionList.get(selectionList.size() - 1);
 	}
 
 	private final class Update implements IClickListener {
@@ -97,32 +107,29 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 
 		@Override
 		public void onClick() {
-			if (l != null) {
-				Object s = selection;
-				int i = selectionIndex();
-				l.onClick(s, i, new CallbackTemplate<IRows<Object>>() {
-					@Override
-					public void onSuccess(IRows<Object> result) {
-						if (deleteSelection) {
-							widget.selection().clear();
-							// selectionIndex = -1;
-						}
-						// selectionIndex = -1;
-						execute(result);
-					}
-				});
-			} else {
-				if (deleteSelection) {
-					widget.selection().clear();
+			CallbackTemplate<IRows<Object>> callback = new CallbackTemplate<IRows<Object>>() {
+				@Override
+				public void onSuccess(IRows<Object> result) {
 					// selectionIndex = -1;
+					execute(result);
+					if (deleteSelection) {
+						widget.selection().clear();
+						// selectionIndex = -1;
+					}
+					updateButtons();
 				}
-				execute(null);
+			};
+			if (l != null) {
+				Object s = lastSelected();
+				int i = selectionIndex();
+				l.onClick(s, i, callback);
+			} else {
+				callback.onSuccess(null);
 			}
 		}
 
 		private void execute(IRows<Object> result) {
 			widget.visible(result);
-			updateButtons();
 		}
 	}
 
@@ -147,7 +154,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			else
 				secondIndex = index + inc;
 			if (l != null)
-				l.onClick(index, selection, inc == Integer.MAX_VALUE
+				l.onClick(index, lastSelected(), inc == Integer.MAX_VALUE
 						|| inc == Integer.MIN_VALUE,
 						new CallbackTemplate<IRows<Object>>() {
 							@Override
@@ -159,7 +166,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 						});
 			else {
 				widget.rows.swap(index, secondIndex);
-				widget.notifySelection(secondIndex, selection);
+				widget.notifySelection(secondIndex, lastSelected());
 				widget.update();
 				updateButtons();
 			}
@@ -199,7 +206,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	private IMoveRowListener<IRows<Object>> listenOnMoveDownListener;
 	private IRowListener<IRows<Object>> listenOnShowListener;
 	// int selectionIndex = -1;
-	Object selection;
+	List<Object> selectionList = new LinkedList<Object>();
 	private IToolbar panel;
 	private IClickable<?> imageUp;
 	private IClickable<?> imageDown;
@@ -215,10 +222,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	CommandButtonsImpl(ScrollTableWidgetImpl widget) {
 		this.widget = widget;
 		widget.buttonPanel(this);
-		if (!widget.preselectedList.isEmpty()) {
-			// selectionIndex = widget.preselectedIndex;
-			selection = widget.preselectedList.get(0);
-		}
+		selectionList(widget.preselectedList);
 	}
 
 	void setSpace(int i) {
@@ -300,7 +304,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 
 	@Override
 	public void decorate(IGridCell container) {
-		widget.selection().single().addSelectionListener(this);
+		widget.selection().multi().addChangeListener(this);
 		// IHorizontalPanel ps = container.panel().horizontal().align().end()
 		// .add().panel().horizontal().align().end();
 		panel = new ToolbarImpl(container);
@@ -327,7 +331,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 				@Override
 				public void onClick(Object identifier, int rowIndex) {
 					widget.rows.selected(rowIndex);
-					selection = identifier;
+					selectionList.add(identifier);
 					// selectionIndex = rowIndex;
 					clickListener.onClick();
 				}
@@ -402,8 +406,8 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	}
 
 	@Override
-	public void onSelection(int index, Object selection) {
-		this.selection = selection;
+	public void onChange(List<Object> selection) {
+		selectionList = selection;
 		// selectionIndex = index;
 		updateButtons();
 	}
@@ -416,39 +420,50 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		// }
 		//
 		// private void updateButtons(int index) {
-		int index = selection == null ? -1 : widget.rows.find(selection);
+		int index = selectionIndex();
 		if (imageUp != null) {
-			boolean up = index > 0 && selection != null;
+			boolean up = index > 0 && selectionList.size() == 1;
 			imageUp.clickable(up);
 			imageUpMax.clickable(up);
 		}
 		if (imageDown != null) {
-			boolean c = index < widget.rows.size() - 1 && selection != null;
+			boolean c = index < widget.rows.size() - 1
+					&& selectionList.size() == 1;
 			imageDownMax.clickable(c);
 			imageDown.clickable(c);
 		}
-		if (remove != null) {
-			boolean c = selection != null && getSelectionIndex() != -1
-					&& widget.rows.deletable(getSelectionIndex());
+		if (remove != null && selectionList.size() >= 1) {
+			boolean c = true;
+			for (Object o : selectionList)
+				c &= widget.rows.deletable(widget.rows.find(o));
 			remove.clickable(c);
 		}
 		if (show != null) {
-			boolean c = selection != null;
+			boolean c = lastSelected() != null && selectionList.size() == 1;
 			show.clickable(c);
 		}
 		if (edit != null) {
-			boolean c = selection != null;
+			boolean c = lastSelected() != null && selectionList.size() == 1;
 			edit.clickable(c);
 		}
 	}
 
 	int getSelectionIndex() {
-		return selection == null ? -1 : widget.rows
-				.find(selection);
+		return selectionList.isEmpty() ? -1 : widget.rows.find(lastSelected());
 	}
 
 	public void reset() {
-		selection = null;
-//		selectionIndex = -1;
+		selectionList.clear();
+		// selectionIndex = -1;
+	}
+
+	void selectionList(List<Object> preselectedList) {
+		if (preselectedList != null && !preselectedList.isEmpty()
+				&& widget.rows != null) {
+			selectionList = new LinkedList<Object>();
+			for (Object o : preselectedList)
+				if (widget.rows.find(o) != -1)
+					selectionList.add(o);
+		}
 	}
 }

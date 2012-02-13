@@ -268,8 +268,9 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				// }
 				// } else {
 				rows.selected(preselectedList);
-				if (commandButtons != null)
-					commandButtons.selection = preselectedList.get(0);
+				if (commandButtons != null) {
+					commandButtons.selectionList(preselectedList);
+				}
 				// }
 				updateSelection = true;
 			}

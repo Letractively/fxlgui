@@ -280,8 +280,9 @@ class SelectionImpl implements ISelection<Object> {
 			throw new MethodNotImplementedException();
 		}
 
-		public Object clear() {
-			throw new MethodNotImplementedException();
+		public void clear() {
+			clearSelection();
+			notifyListeners();
 		}
 	}
 
