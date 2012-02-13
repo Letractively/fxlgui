@@ -304,6 +304,7 @@ class SelectionImpl implements ISelection<Object> {
 
 	@Override
 	public ISingleSelection<Object> single() {
+		assert multi != null;
 		if (single != null)
 			return single;
 		return single = new SingleSelectionImpl();
@@ -311,6 +312,7 @@ class SelectionImpl implements ISelection<Object> {
 
 	@Override
 	public IMultiSelection<Object> multi() {
+		assert single != null;
 		if (multi != null)
 			return multi;
 		return multi = new MultiSelectionImpl();
