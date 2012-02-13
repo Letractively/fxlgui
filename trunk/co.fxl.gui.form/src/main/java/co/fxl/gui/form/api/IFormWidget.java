@@ -115,5 +115,7 @@ public interface IFormWidget {
 
 	IFormWidget alwaysAllowCancel();
 
+	IFormWidget focus(boolean focus);
+
 	IFormField<IRTFWidget, String> addRichTextArea(String name);
 }
