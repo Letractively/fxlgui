@@ -442,10 +442,11 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			imageDownMax.clickable(c);
 			imageDown.clickable(c);
 		}
-		if (remove != null && selectionList.size() >= 1) {
-			boolean c = true;
-			for (Object o : selectionList)
-				c &= widget.rows.deletable(widget.rows.find(o));
+		if (remove != null) {
+			boolean c = selectionList.size() >= 1;
+			if (c)
+				for (Object o : selectionList)
+					c &= widget.rows.deletable(widget.rows.find(o));
 			remove.clickable(c);
 		}
 		if (show != null) {
