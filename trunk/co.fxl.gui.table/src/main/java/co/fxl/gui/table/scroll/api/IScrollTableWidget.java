@@ -64,6 +64,11 @@ public interface IScrollTableWidget<T> {
 		void onClick(Object identifier, int rowIndex, ICallback<T> callback);
 	}
 
+	public interface IMultiRowListener<T> {
+
+		void onClick(List<Object> identifier, ICallback<T> callback);
+	}
+
 	public interface IDecorator {
 
 		IClickable<?> decorate(IToolbar p);
@@ -75,7 +80,7 @@ public interface IScrollTableWidget<T> {
 
 		ICommandButtons<T> listenOnAdd(IRowListener<IRows<T>> l);
 
-		ICommandButtons<T> listenOnRemove(IRowListener<IRows<T>> l);
+		ICommandButtons<T> listenOnRemove(IMultiRowListener<IRows<T>> l);
 
 		ICommandButtons<T> listenOnMoveUp(IMoveRowListener<IRows<T>> l);
 
