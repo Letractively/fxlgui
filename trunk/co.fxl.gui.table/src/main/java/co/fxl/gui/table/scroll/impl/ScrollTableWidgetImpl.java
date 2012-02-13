@@ -339,7 +339,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				if (reduceHeightIfEmpty && height >= 80)
 					height -= 30;
 				// }
-				if (furtherReduce && height >= 80)
+				if (furtherReduce && height >= 80 && externalStatusPanel)
 					height -= 30;
 				dock.height(height);
 				if (!externalStatusPanel) {
