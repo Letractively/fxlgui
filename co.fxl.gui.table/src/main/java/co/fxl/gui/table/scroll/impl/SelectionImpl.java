@@ -80,14 +80,14 @@ class SelectionImpl implements ISelection<Object> {
 
 		ISelection<Object> add(Object object) {
 			assert widget.preselectedList.isEmpty() : "Only one row can be preselected";
-			widget.preselectedIndex = -1;
+//			widget.preselectedIndex = -1;
 			widget.preselectedList.add(object);
 			return SelectionImpl.this;
 		}
 
 		ISelection<Object> add(int selectionIndex, Object object) {
 			assert widget.preselectedList.isEmpty() : "Only one row can be preselected";
-			widget.preselectedIndex = selectionIndex;
+//			widget.preselectedIndex = selectionIndex;
 			widget.preselectedList.add(object);
 			return SelectionImpl.this;
 		}

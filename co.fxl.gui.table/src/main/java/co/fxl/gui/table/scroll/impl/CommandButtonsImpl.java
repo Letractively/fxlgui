@@ -54,7 +54,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 						// TODO save
 						widget.editable(previousEdit, false);
 					}
-					previousEdit = selectionIndex;
+					previousEdit = selectionIndex();
 					widget.editable(previousEdit, true);
 					clickable(edit, "Save");
 					// TODO validation
@@ -75,6 +75,12 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		}
 	}
 
+	private int selectionIndex() {
+		if (selection == null)
+			return -1;
+		return widget.rows.find(selection);
+	}
+
 	private final class Update implements IClickListener {
 
 		private IRowListener<IRows<Object>> l;
@@ -93,16 +99,16 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		public void onClick() {
 			if (l != null) {
 				Object s = selection;
-				int i = selectionIndex;
+				int i = selectionIndex();
 				if (deleteSelection) {
 					selection = null;
-					selectionIndex = -1;
+					// selectionIndex = -1;
 				}
 				l.onClick(s, i, new CallbackTemplate<IRows<Object>>() {
 					@Override
 					public void onSuccess(IRows<Object> result) {
 						selection = null;
-						selectionIndex = -1;
+						// selectionIndex = -1;
 						execute(result);
 					}
 				});
@@ -127,7 +133,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 
 		@Override
 		public void onClick() {
-			int index = selectionIndex;
+			int index = selectionIndex();
 			int secondIndex;
 			if (inc == Integer.MIN_VALUE)
 				secondIndex = 0;
@@ -150,7 +156,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 				widget.rows.swap(index, secondIndex);
 				widget.notifySelection(secondIndex, selection);
 				widget.update();
-				updateButtons(secondIndex);
+				updateButtons();
 			}
 		}
 	}
@@ -187,7 +193,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	private IMoveRowListener<IRows<Object>> listenOnMoveUpListener;
 	private IMoveRowListener<IRows<Object>> listenOnMoveDownListener;
 	private IRowListener<IRows<Object>> listenOnShowListener;
-	int selectionIndex = -1;
+	// int selectionIndex = -1;
 	Object selection;
 	private IToolbar panel;
 	private IClickable<?> imageUp;
@@ -205,7 +211,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		this.widget = widget;
 		widget.buttonPanel(this);
 		if (!widget.preselectedList.isEmpty()) {
-			selectionIndex = widget.preselectedIndex;
+			// selectionIndex = widget.preselectedIndex;
 			selection = widget.preselectedList.get(0);
 		}
 	}
@@ -219,7 +225,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			IRowListener<IRows<Object>> l) {
 		listenOnAdd = true;
 		listenOnAddListenerDecorator = dec;
-//		widget.showNoRowsFound = false;
+		// widget.showNoRowsFound = false;
 		listenOnAddListener = l;
 		return this;
 	}
@@ -317,7 +323,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 				public void onClick(Object identifier, int rowIndex) {
 					widget.rows.selected(rowIndex);
 					selection = identifier;
-					selectionIndex = rowIndex;
+					// selectionIndex = rowIndex;
 					clickListener.onClick();
 				}
 			}).doubleClick();
@@ -382,9 +388,9 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		image.addClickListener(new Move(listenOnMoveUpListener2, i));
 		boolean canClick = widget.preselectedList.size() == 1;
 		if (canClick) {
-			canClick &= i > 0 || widget.preselectedIndex > 0;
+			canClick &= i > 0 || widget.preselectedIndex() > 0;
 			canClick &= i < 0
-					|| widget.preselectedIndex < widget.rows.size() - 1;
+					|| widget.preselectedIndex() < widget.rows.size() - 1;
 		}
 		image.clickable(canClick);
 		return image;
@@ -393,18 +399,19 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	@Override
 	public void onSelection(int index, Object selection) {
 		this.selection = selection;
-		selectionIndex = index;
+		// selectionIndex = index;
 		updateButtons();
 	}
 
 	void updateButtons() {
-		if (selectionIndex == -1 && selection != null) {
-			selectionIndex = widget.rows.find(selection);
-		}
-		updateButtons(selectionIndex);
-	}
-
-	private void updateButtons(int index) {
+		// if (selectionIndex == -1 && selection != null) {
+		// selectionIndex = widget.rows.find(selection);
+		// }
+		// updateButtons(selectionIndex);
+		// }
+		//
+		// private void updateButtons(int index) {
+		int index = selection == null ? -1 : widget.rows.find(selection);
 		if (imageUp != null) {
 			boolean up = index > 0 && selection != null;
 			imageUp.clickable(up);
@@ -431,12 +438,12 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	}
 
 	int getSelectionIndex() {
-		return selectionIndex != -1 ? selectionIndex : widget.rows
+		return selection == null ? -1 : widget.rows
 				.find(selection);
 	}
 
 	public void reset() {
 		selection = null;
-		selectionIndex = -1;
+//		selectionIndex = -1;
 	}
 }
