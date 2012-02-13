@@ -94,7 +94,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	// TODO Swing Scroll Panel block increment for single click on arrow is not
 	// enough
 
-//	private static final boolean ALLOW_RESIZE = false;
+	// private static final boolean ALLOW_RESIZE = false;
 	private static final int HEADER_ROW_HEIGHT = 24;
 	private static final int ROW_HEIGHT = 22;
 	static final String ARROW_UP = "\u2191";
@@ -134,7 +134,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private INavigationPanelDecorator navigationDecorator;
 	private CommandButtonsImpl commandButtons;
 	List<Object> preselectedList = new LinkedList<Object>();
-	int preselectedIndex = -1;
+	// int preselectedIndex = -1;
 	private boolean showDisplayedRange = true;
 	private boolean externalStatusPanel;
 	private IVerticalPanel bottom;
@@ -255,22 +255,22 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			if (commandButtons != null)
 				commandButtons.reset();
 			if (!preselectedList.isEmpty()) {
-				if (preselectedIndex != -1) {
-					preselectedIndex = rows.find(preselectedList.get(0));
-					if (preselectedIndex == -1) {
-						preselectedList.clear();
-					} else {
-						rows.selected(preselectedIndex, preselectedList.get(0));
-						if (commandButtons != null) {
-							commandButtons.selection = preselectedList.get(0);
-							commandButtons.selectionIndex = preselectedIndex;
-						}
-					}
-				} else {
-					rows.selected(preselectedList);
-					if (commandButtons != null)
-						commandButtons.selection = preselectedList.get(0);
-				}
+				// if (preselectedIndex != -1) {
+				// preselectedIndex = rows.find(preselectedList.get(0));
+				// if (preselectedIndex == -1) {
+				// preselectedList.clear();
+				// } else {
+				// rows.selected(preselectedIndex, preselectedList.get(0));
+				// if (commandButtons != null) {
+				// commandButtons.selection = preselectedList.get(0);
+				// commandButtons.selectionIndex = preselectedIndex;
+				// }
+				// }
+				// } else {
+				rows.selected(preselectedList);
+				if (commandButtons != null)
+					commandButtons.selection = preselectedList.get(0);
+				// }
 				updateSelection = true;
 			}
 			this.visible = true;
@@ -601,10 +601,10 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (!isCalibration)
 			addDisplayingNote();
 		if (allowColumnSelection) {
-//			if (ALLOW_RESIZE)
-//				new ResizableColumnSelection(this);
-//			else
-				new ColumnSelection(this);
+			// if (ALLOW_RESIZE)
+			// new ResizableColumnSelection(this);
+			// else
+			new ColumnSelection(this);
 		}
 		addSorting();
 		selection.update();
@@ -719,8 +719,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (columnImpl.widthInt != -1)
 			column.width(columnImpl.widthInt);
 		else {
-//			if (columnImpl.widthDouble == -1 && ALLOW_RESIZE)
-//				columnImpl.widthDouble = 1d / columns.size();
+			// if (columnImpl.widthDouble == -1 && ALLOW_RESIZE)
+			// columnImpl.widthDouble = 1d / columns.size();
 			if (columnImpl.widthDouble != -1)
 				column.width(columnImpl.widthDouble);
 		}
@@ -1243,5 +1243,11 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IContainer getContainer() {
 		return null;
+	}
+
+	int preselectedIndex() {
+		if (preselectedList == null || preselectedList.isEmpty())
+			return -1;
+		return rows.find(preselectedList.get(0));
 	}
 }
