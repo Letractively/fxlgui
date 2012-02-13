@@ -129,6 +129,7 @@ class SelectionImpl implements ISelection<Object> {
 		}
 
 		private static final int PIXEL = 11;
+		private static final boolean USE_CTRL_CLICK_FOR_MULTI_SELECTION = true;
 		private List<IChangeListener<Object>> listeners = new LinkedList<IChangeListener<Object>>();
 		private ILabel selectAll;
 		private ILabel removeSelection;
@@ -202,7 +203,10 @@ class SelectionImpl implements ISelection<Object> {
 
 		void decorateKeys(IKey<?> exclusiveSelection,
 				IKey<?> incrementalSelection) {
-			exclusiveSelection.ctrlPressed();
+			if (USE_CTRL_CLICK_FOR_MULTI_SELECTION)
+				exclusiveSelection.ctrlPressed();
+			else
+				incrementalSelection.ctrlPressed();
 		}
 
 		private void setUp() {
