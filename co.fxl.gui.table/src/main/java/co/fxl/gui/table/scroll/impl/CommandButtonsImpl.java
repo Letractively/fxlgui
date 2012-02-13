@@ -35,6 +35,7 @@ import co.fxl.gui.table.scroll.api.IScrollTableWidget.IButtonPanelDecorator;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.ICommandButtons;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IDecorator;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IMoveRowListener;
+import co.fxl.gui.table.scroll.api.IScrollTableWidget.IMultiRowListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IRowListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IScrollTableClickListener;
 
@@ -95,9 +96,15 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 
 		private IRowListener<IRows<Object>> l;
 		private boolean deleteSelection;
+		private IMultiRowListener<IRows<Object>> l2;
 
 		Update(IRowListener<IRows<Object>> l) {
 			this(l, false);
+		}
+
+		Update(IMultiRowListener<IRows<Object>> l2, boolean deleteSelection) {
+			this.l2 = l2;
+			this.deleteSelection = deleteSelection;
 		}
 
 		Update(IRowListener<IRows<Object>> l, boolean deleteSelection) {
@@ -123,6 +130,8 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 				Object s = lastSelected();
 				int i = selectionIndex();
 				l.onClick(s, i, callback);
+			} else if (l2 != null) {
+				l2.onClick(selectionList, callback);
 			} else {
 				callback.onSuccess(null);
 			}
@@ -201,7 +210,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	private boolean listenOnMoveDown;
 	private boolean listenOnShow;
 	private IRowListener<IRows<Object>> listenOnAddListener;
-	private IRowListener<IRows<Object>> listenOnRemoveListener;
+	private IMultiRowListener<IRows<Object>> listenOnRemoveListener;
 	private IMoveRowListener<IRows<Object>> listenOnMoveUpListener;
 	private IMoveRowListener<IRows<Object>> listenOnMoveDownListener;
 	private IRowListener<IRows<Object>> listenOnShowListener;
@@ -247,7 +256,8 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	}
 
 	@Override
-	public ICommandButtons<Object> listenOnRemove(IRowListener<IRows<Object>> l) {
+	public ICommandButtons<Object> listenOnRemove(
+			IMultiRowListener<IRows<Object>> l) {
 		listenOnRemove = true;
 		listenOnRemoveListener = l;
 		return this;

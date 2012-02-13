@@ -64,16 +64,16 @@ class ScrollTableWidgetCommandTest implements IRows<String> {
 				callback.onSuccess(null);
 			}
 		});
-		widget.commandButtons().listenOnRemove(
-				new IRowListener<IRows<String>>() {
-
-					@Override
-					public void onClick(Object identifier, int index,
-							ICallback<IRows<String>> callback) {
-						content.remove(index);
-						callback.onSuccess(null);
-					}
-				});
+//		widget.commandButtons().listenOnRemove(
+//				new IRowListener<IRows<String>>() {
+//
+//					@Override
+//					public void onClick(Object identifier, int index,
+//							ICallback<IRows<String>> callback) {
+//						content.remove(index);
+//						callback.onSuccess(null);
+//					}
+//				});
 		widget.visible(true);
 		display.visible(true);
 	}
