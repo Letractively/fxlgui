@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPoint;
@@ -158,41 +159,50 @@ class SelectionImpl implements ISelection<Object> {
 		}
 
 		void update() {
-			widget.grid.addTableListener(new ITableClickListener() {
+			IKey<?> exclusiveSelection = widget.grid
+					.addTableListener(new ITableClickListener() {
 
-				@Override
-				public void onClick(int column, int row, IPoint p) {
-					if (row == 0)
-						return;
-					row--;
-					clearSelection();
-					widget.rows.selected(widget.convert2TableRow(row), true);
-					IRow r = widget.grid.row(row);
-					r.highlight(true);
-					widget.highlighted.add(r);
-					notifyListeners();
-				}
-			}).ctrlPressed();
-			widget.grid.addTableListener(new ITableClickListener() {
+						@Override
+						public void onClick(int column, int row, IPoint p) {
+							if (row == 0)
+								return;
+							row--;
+							clearSelection();
+							widget.rows.selected(widget.convert2TableRow(row),
+									true);
+							IRow r = widget.grid.row(row);
+							r.highlight(true);
+							widget.highlighted.add(r);
+							notifyListeners();
+						}
+					});
+			IKey<?> incrementalSelection = widget.grid
+					.addTableListener(new ITableClickListener() {
 
-				@Override
-				public void onClick(int column, int row, IPoint p) {
-					if (row == 0)
-						return;
-					row--;
-					int tableRow = widget.convert2TableRow(row);
-					boolean selected = !widget.rows.selected(tableRow);
-					widget.rows.selected(tableRow, selected);
-					IRow r = widget.grid.row(row);
-					r.highlight(selected);
-					if (selected) {
-						widget.highlighted.add(r);
-					} else
-						widget.highlighted.remove(r);
-					notifyListeners();
-				}
-			});// .ctrlPressed();
+						@Override
+						public void onClick(int column, int row, IPoint p) {
+							if (row == 0)
+								return;
+							row--;
+							int tableRow = widget.convert2TableRow(row);
+							boolean selected = !widget.rows.selected(tableRow);
+							widget.rows.selected(tableRow, selected);
+							IRow r = widget.grid.row(row);
+							r.highlight(selected);
+							if (selected) {
+								widget.highlighted.add(r);
+							} else
+								widget.highlighted.remove(r);
+							notifyListeners();
+						}
+					});// .ctrlPressed();
+			decorateKeys(exclusiveSelection, incrementalSelection);
 			setUp();
+		}
+
+		void decorateKeys(IKey<?> exclusiveSelection,
+				IKey<?> incrementalSelection) {
+			exclusiveSelection.ctrlPressed();
 		}
 
 		private void setUp() {
