@@ -26,6 +26,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.table.api.ISelection.IMultiSelection.IChangeListener;
@@ -202,7 +203,8 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			return clickable(c.add(), string);
 		}
 	};
-	public static boolean ALIGN_END = false;
+	private static boolean ALIGN_END = Constants.get(
+			"CommandButtonsImpl.ALIGN_END", false);
 	private ScrollTableWidgetImpl widget;
 	private boolean listenOnAdd;
 	private boolean listenOnRemove;

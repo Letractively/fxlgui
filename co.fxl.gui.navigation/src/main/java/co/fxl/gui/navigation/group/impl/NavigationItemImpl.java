@@ -29,17 +29,20 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 
 public class NavigationItemImpl extends LazyClickListener implements
 		INavigationItem {
 
-	public static int SPACING_LOADING = 5;
+	public static int SPACING_LOADING = Constants.get(
+			"NavigationItemImpl.SPACING_LOADING", 5);
 	// TODO when row height computation in scrolltablewidgetimpl is working for
 	// invisible panels (unflipped pages), set to true
 	private static boolean FLIP_AFTER_RETURN_IS_POSSIBLE = true;
-	public static boolean FLIP_AFTER_RETURN = true;
+	private static boolean FLIP_AFTER_RETURN = Constants.get(
+			"NavigationItemImpl.FLIP_AFTER_RETURN", true);
 	static int c = 1;
 	ILabel button;
 	private IDecorator decorator;

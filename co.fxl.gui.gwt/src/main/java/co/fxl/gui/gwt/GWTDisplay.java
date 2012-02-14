@@ -403,7 +403,8 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 	@Override
 	public boolean supports(Class<?> widgetClass) {
-		return widgetProviders.containsKey(widgetClass);
+		return widgetProviders.containsKey(widgetClass)
+				|| asyncWidgetProviders.containsKey(widgetClass);
 	}
 
 	@Override
