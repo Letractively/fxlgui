@@ -436,4 +436,9 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	public IBulkTableWidget marginTop(int marginTop) {
 		return this;
 	}
+
+	@Override
+	public Object focusPanel() {
+		throw new MethodNotImplementedException();
+	}
 }
