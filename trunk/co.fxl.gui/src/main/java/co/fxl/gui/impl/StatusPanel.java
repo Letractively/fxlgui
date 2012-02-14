@@ -19,18 +19,29 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.ILabel;
 
 public class StatusPanel {
 
+	private static ILabel label;
+	private static String last = "";
+
 	public static void setUp(IContainer container) {
-		// TODO ...
+		label = container.label();
+		label.font().pixel(10).color().lightgray();
 	}
 
 	public static void start(String status) {
-		// TODO ...
+		if (label != null) {
+			last = status;
+			label.text("Loading " + status + "...");
+		}
 	}
 
 	public static void stop(String status) {
-		// TODO ...
+		if (label != null && last.equals(status)) {
+			last = "";
+			label.text("Loaded " + status);
+		}
 	}
 }
