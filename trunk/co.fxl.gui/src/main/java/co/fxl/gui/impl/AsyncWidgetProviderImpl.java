@@ -16,29 +16,32 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.gwt;
+package co.fxl.gui.impl;
 
 import co.fxl.gui.api.ICallback;
+import co.fxl.gui.api.IWidgetProvider;
+import co.fxl.gui.api.IWidgetProvider.IAsyncWidgetProvider;
 
-import com.google.gwt.core.client.RunAsyncCallback;
+public abstract class AsyncWidgetProviderImpl<T> implements
+		IAsyncWidgetProvider<T> {
 
-public abstract class RunAsyncCallbackImpl implements RunAsyncCallback {
+	protected Class<T> clazz;
 
-	private ICallback<?> callback;
-
-	public RunAsyncCallbackImpl() {
-	}
-
-	public RunAsyncCallbackImpl(ICallback<?> callback) {
-		this.callback = callback;
+	public AsyncWidgetProviderImpl(Class<T> clazz) {
+		this.clazz = clazz;
 	}
 
 	@Override
-	public void onFailure(Throwable arg0) {
-		if (callback == null)
-			throw new RuntimeException(arg0);
-		else
-			callback.onFail(arg0);
+	public Class<T> widgetType() {
+		return clazz;
 	}
+
+	@Override
+	public void loadAsync(ICallback<IWidgetProvider<T>> callback) {
+		// TODO update status ...
+		loadAsyncImpl(callback);
+	}
+
+	protected abstract void loadAsyncImpl(ICallback<IWidgetProvider<T>> callback);
 
 }
