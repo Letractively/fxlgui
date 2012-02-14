@@ -18,36 +18,19 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.api.ICallback;
-import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.api.IWidgetProvider.IAsyncWidgetProvider;
+import co.fxl.gui.api.IContainer;
 
-public abstract class AsyncWidgetProviderImpl<T> implements
-		IAsyncWidgetProvider<T> {
+public class StatusPanel {
 
-	protected Class<T> clazz;
-
-	public AsyncWidgetProviderImpl(Class<T> clazz) {
-		this.clazz = clazz;
+	public static void setUp(IContainer container) {
+		// TODO ...
 	}
 
-	@Override
-	public Class<T> widgetType() {
-		return clazz;
+	public static void start(String status) {
+		// TODO ...
 	}
 
-	@Override
-	public void loadAsync(final ICallback<IWidgetProvider<T>> callback) {
-		// TODO update status ...
-		loadAsyncImpl(new CallbackTemplate<IWidgetProvider<T>>(callback) {
-			@Override
-			public void onSuccess(IWidgetProvider<T> result) {
-				// TODO update status ...
-				callback.onSuccess(result);
-			}
-		});
+	public static void stop(String status) {
+		// TODO ...
 	}
-
-	protected abstract void loadAsyncImpl(ICallback<IWidgetProvider<T>> callback);
-
 }
