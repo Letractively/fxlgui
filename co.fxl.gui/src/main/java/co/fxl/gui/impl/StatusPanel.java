@@ -28,7 +28,7 @@ public class StatusPanel {
 
 	public static void setUp(IContainer container) {
 		label = container.label();
-		label.font().pixel(10).color().lightgray();
+		label.font().pixel(10).color().gray();
 	}
 
 	public static void start(String status) {
@@ -41,7 +41,7 @@ public class StatusPanel {
 	public static void stop(String status) {
 		if (label != null && last.equals(status)) {
 			last = "";
-			label.text("Loaded " + status);
+			label.text("");
 		}
 	}
 }
