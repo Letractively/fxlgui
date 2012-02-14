@@ -20,6 +20,7 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;

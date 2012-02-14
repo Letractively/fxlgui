@@ -18,11 +18,13 @@
  */
 package co.fxl.gui.gwt;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
@@ -32,7 +34,9 @@ import co.fxl.gui.api.IPanelProvider;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
+import co.fxl.gui.api.IWidgetProvider.IAsyncWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
+import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.DialogImpl;
 import co.fxl.gui.impl.DiscardChangesDialog;
@@ -40,7 +44,6 @@ import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.ToolbarImpl;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
@@ -81,6 +84,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 	private static GWTDisplay instance;
 	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
+	private Map<Class<?>, IAsyncWidgetProvider<?>> asyncWidgetProviders = new HashMap<Class<?>, IAsyncWidgetProvider<?>>();
 	Map<Class<?>, IPanelProvider<?>> panelProviders = new HashMap<Class<?>, IPanelProvider<?>>();
 	private List<BlockListener> blockListeners = new LinkedList<BlockListener>();
 	private GWTContainer<Widget> container;
@@ -141,6 +145,14 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	public IDisplay register(IWidgetProvider<?>... widgetProviders) {
 		for (IWidgetProvider<?> widgetProvider : widgetProviders)
 			this.widgetProviders.put(widgetProvider.widgetType(),
+					widgetProvider);
+		return this;
+	}
+
+	@Override
+	public IDisplay register(IAsyncWidgetProvider<?>... widgetProviders) {
+		for (IAsyncWidgetProvider<?> widgetProvider : widgetProviders)
+			this.asyncWidgetProviders.put(widgetProvider.widgetType(),
 					widgetProvider);
 		return this;
 	}
@@ -412,22 +424,21 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		return width(width).height(height);
 	}
 
-	@Override
-	public IDisplay runAsync(final Runnable runnable) {
-		GWT.runAsync(new RunAsyncCallback() {
-
-			@Override
-			public void onSuccess() {
-				runnable.run();
-			}
-
-			@Override
-			public void onFailure(Throwable reason) {
-				throw new RuntimeException(reason);
-			}
-		});
-		return this;
-	}
+	// public IDisplay runAsync(final Runnable runnable) {
+	// GWT.runAsync(new RunAsyncCallback() {
+	//
+	// @Override
+	// public void onSuccess() {
+	// runnable.run();
+	// }
+	//
+	// @Override
+	// public void onFailure(Throwable reason) {
+	// throw new RuntimeException(reason);
+	// }
+	// });
+	// return this;
+	// }
 
 	@Override
 	public String title() {
@@ -438,5 +449,64 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	public IDisplay clear() {
 		RootPanel.get().clear();
 		return this;
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	void createWidget(final Class interfaceClass, final IContainer c,
+			final ICallback widget) {
+		ensure(interfaceClass, new CallbackTemplate<Void>(widget) {
+			@Override
+			public void onSuccess(Void result) {
+				Object w = lookupWidgetProvider(interfaceClass).createWidget(
+						container);
+				widget.onSuccess(w);
+			}
+		});
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public IDisplay ensure(Class<?> interfaceClass,
+			final ICallback<Void> callback) {
+		if (!widgetProviders.containsKey(interfaceClass)) {
+			if (!asyncWidgetProviders.containsKey(interfaceClass))
+				throw new WidgetProviderNotFoundException(interfaceClass);
+			IAsyncWidgetProvider wp = asyncWidgetProviders.get(interfaceClass);
+			wp.loadAsync(new CallbackTemplate<IWidgetProvider>() {
+				@Override
+				public void onSuccess(IWidgetProvider result) {
+					register(result);
+					callback.onSuccess(null);
+				}
+			});
+		} else {
+			callback.onSuccess(null);
+		}
+		return this;
+	}
+
+	@Override
+	public IDisplay ensure(ICallback<Void> callback, Class<?>... widgetClass) {
+		List<Class<?>> classes = new LinkedList<Class<?>>(
+				Arrays.asList(widgetClass));
+		ensure(callback, classes);
+		return this;
+	}
+
+	private void ensure(final ICallback<Void> callback,
+			final List<Class<?>> classes) {
+		if (classes.isEmpty())
+			callback.onSuccess(null);
+		else if (classes.size() == 1)
+			ensure(classes.get(0), callback);
+		else {
+			Class<?> clazz = classes.remove(0);
+			ensure(clazz, new CallbackTemplate<Void>(callback) {
+
+				@Override
+				public void onSuccess(Void result) {
+					ensure(callback, classes);
+				}
+			});
+		}
 	}
 }

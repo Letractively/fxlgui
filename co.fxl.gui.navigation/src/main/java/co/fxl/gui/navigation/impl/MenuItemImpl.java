@@ -18,9 +18,9 @@
  */
 package co.fxl.gui.navigation.impl;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
-import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IToolbarItem;
 import co.fxl.gui.register.api.IRegister;

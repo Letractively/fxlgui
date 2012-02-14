@@ -18,8 +18,8 @@
  */
 package co.fxl.gui.navigation.group.api;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.impl.ICallback;
 
 public interface INavigationItem {
 

@@ -44,11 +44,15 @@ public interface IDisplay extends IColored {
 
 	IDisplay fullscreen();
 
-	boolean supports(Class<?> widgetClass);
-
 	IDisplay register(IPanelProvider<?>... layoutProvider);
 
 	IDisplay register(IWidgetProvider<?>... widgetProvider);
+
+	IDisplay register(IWidgetProvider.IAsyncWidgetProvider<?>... widgetProvider);
+
+	boolean supports(Class<?> widgetClass);
+
+	IDisplay ensure(ICallback<Void> callback, Class<?>... widgetClass);
 
 	IDialog showDialog();
 
@@ -76,7 +80,7 @@ public interface IDisplay extends IColored {
 
 	// TODO eventually extract to ICodeSplit or something similar
 	// TODO eventually implement code splitting as aspect
-	IDisplay runAsync(Runnable runnable);
+	// IDisplay runAsync(Runnable runnable);
 
 	String title();
 

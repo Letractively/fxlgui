@@ -37,6 +37,7 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
@@ -45,6 +46,8 @@ import co.fxl.gui.api.IPanelProvider;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
+import co.fxl.gui.api.IWidgetProvider.IAsyncWidgetProvider;
+import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.Display;
@@ -343,7 +346,6 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		return popUp;
 	}
 
-	@Override
 	public IDisplay runAsync(Runnable runnable) {
 		runnable.run();
 		return this;
@@ -373,6 +375,25 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 				runnable.run();
 			}
 		}.start();
+		return this;
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public IDisplay register(IAsyncWidgetProvider... runnables) {
+		for (IAsyncWidgetProvider runnable : runnables)
+			runnable.loadAsync(new CallbackTemplate<IWidgetProvider>() {
+				@Override
+				public void onSuccess(IWidgetProvider result) {
+					register(result);
+				}
+			});
+		return this;
+	}
+
+	@Override
+	public IDisplay ensure(ICallback<Void> callback, Class<?>... widgetClass) {
+		callback.onSuccess(null);
 		return this;
 	}
 }

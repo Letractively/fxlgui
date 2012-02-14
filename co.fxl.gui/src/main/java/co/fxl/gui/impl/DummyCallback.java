@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.impl;
 
+import co.fxl.gui.api.ICallback;
+
 public class DummyCallback<T> implements ICallback<T> {
 
 	@Override

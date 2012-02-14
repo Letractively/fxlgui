@@ -22,6 +22,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
@@ -29,7 +30,6 @@ import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
 import co.fxl.gui.filter.api.IMiniFilterWidget;
 import co.fxl.gui.filter.impl.MiniFilterWidgetImplProvider;
-import co.fxl.gui.impl.ICallback;
 
 class FilterWidgetTest implements IFilterListener {
 

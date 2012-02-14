@@ -23,13 +23,13 @@ import java.util.Iterator;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IFontElement.IFont;
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.DummyCallback;
-import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.register.api.IRegister;
 

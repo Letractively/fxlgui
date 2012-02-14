@@ -18,8 +18,8 @@
  */
 package co.fxl.gui.navigation.api;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.impl.ICallback;
 
 public interface IMenuItem extends IMenuNode, INavigationItem<IMenuItem> {
 

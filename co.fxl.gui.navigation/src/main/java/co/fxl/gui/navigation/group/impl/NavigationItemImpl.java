@@ -181,7 +181,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	private void showLabelAsActive(boolean viaClick,
-			co.fxl.gui.impl.ICallback<Void> cb, boolean notify) {
+			co.fxl.gui.api.ICallback<Void> cb, boolean notify) {
 		widget.active(this, viaClick, cb, notify);
 		for (INavigationListener l : listeners)
 			l.onActive(true);

@@ -25,6 +25,7 @@ import java.util.List;
 
 import co.fxl.data.format.api.IFormat;
 import co.fxl.data.format.impl.Format;
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IComboBox;
@@ -37,7 +38,6 @@ import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.ITextInput;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.DiscardChangesDialog;
-import co.fxl.gui.impl.ICallback;
 
 public class Validation {
 

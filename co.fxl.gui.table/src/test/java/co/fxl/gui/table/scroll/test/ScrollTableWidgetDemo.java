@@ -21,9 +21,9 @@ package co.fxl.gui.table.scroll.test;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;

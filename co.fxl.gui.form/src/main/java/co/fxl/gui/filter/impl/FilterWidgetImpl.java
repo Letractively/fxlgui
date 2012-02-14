@@ -28,6 +28,7 @@ import java.util.Map;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ITextField;
@@ -39,7 +40,6 @@ import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.form.impl.Validation;
 import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Heights;
-import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.Icons;
 import co.fxl.gui.impl.LazyClickListener;
 

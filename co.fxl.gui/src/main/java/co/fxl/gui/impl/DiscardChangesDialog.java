@@ -19,6 +19,7 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 

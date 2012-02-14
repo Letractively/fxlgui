@@ -62,6 +62,8 @@ public interface IContainer {
 
 	<T> T widget(Class<T> interfaceClass);
 
+//	<T> void widget(Class<T> interfaceClass, ICallback<T> callback);
+
 	IContainer clear();
 
 	IDisplay display();
