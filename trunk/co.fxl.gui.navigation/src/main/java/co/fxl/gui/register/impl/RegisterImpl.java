@@ -21,21 +21,23 @@ package co.fxl.gui.register.impl;
 import java.util.Iterator;
 
 import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IFontElement.IFont;
-import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.register.api.IRegister;
 
 public class RegisterImpl extends LazyClickListener implements IRegister {
 
-	public static int SPACING_DEC_LOADING = 0;
+	private static int SPACING_DEC_LOADING = Constants.get(
+			"RegisterImpl.SPACING_DEC_LOADING", 0);
 
 	private class Title implements ITitle {
 

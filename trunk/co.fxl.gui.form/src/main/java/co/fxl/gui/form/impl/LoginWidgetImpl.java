@@ -26,12 +26,14 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.form.api.ILoginWidget;
+import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.LazyClickListener;
 
 public class LoginWidgetImpl implements ILoginWidget {
 
-	public static int HEIGHT_DECREMENT = 0;
+	private static int HEIGHT_DECREMENT = Constants.get(
+			"LoginWidgetImpl.HEIGHT_DECREMENT", 0);
 
 	class LoginListener extends LazyClickListener {
 
