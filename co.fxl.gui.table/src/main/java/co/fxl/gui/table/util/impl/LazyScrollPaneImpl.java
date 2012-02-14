@@ -41,13 +41,6 @@ import co.fxl.gui.table.util.api.IUpDownIndex;
 
 public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
-	// TODO FEATURE-COMPLETE: USABILITY: KEYS: Usability: Up/Down-Tasten in LazyScrollPane
-	// intercepten und hoch und
-	// runter navigieren (simulierter klick auf das element darüber/darunter)
-	// [muss entschieden werden wo fokus liegen soll, zurzeit immer in der form:
-	// möglichkeit: nach new, liegt in form, klick in tree: liegt in tree, nach
-	// initialen wechseln in detail-sicht: liegt in form]
-
 	// TODO FEATURE-COMPLETE: USABILITY: KEYS: Ctrl+C, Ctrl+V, etc. for Context-Menu-Items
 
 	// TODO BUG/Usability: sometimes / under certain circumstances: an expand
