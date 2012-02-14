@@ -93,7 +93,6 @@ public class FormWidgetImpl implements IFormWidget {
 	private int spacing = 0;
 	private IClickListener saveClickListener;
 	private IGridPanel bottomPanel;
-	private boolean setFocus = true;
 
 	protected FormWidgetImpl(IContainer panel) {
 		widgetTitle = new WidgetTitle(panel.panel(), false)// .grayBackground()
@@ -141,8 +140,6 @@ public class FormWidgetImpl implements IFormWidget {
 	}
 
 	private void setFocus(IFocusable<?> f) {
-		if (!setFocus)
-			return;
 		if (saveListener == null)
 			return;
 		focusables.add(f);
@@ -583,11 +580,5 @@ public class FormWidgetImpl implements IFormWidget {
 	}
 
 	protected void prepareButtonColumn(IGridPanel grid, int column) {
-	}
-
-	@Override
-	public IFormWidget focus(boolean focus) {
-		setFocus = focus;
-		return this;
 	}
 }
