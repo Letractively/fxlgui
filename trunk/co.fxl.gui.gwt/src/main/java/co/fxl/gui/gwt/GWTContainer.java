@@ -242,4 +242,11 @@ public class GWTContainer<T extends Widget> implements IContainer {
 		return (IRichTextArea) (element = new GWTRichTextArea(
 				(GWTContainer<RichTextArea>) this));
 	}
+
+	// @SuppressWarnings("hiding")
+	// @Override
+	// public <T> void widget(Class<T> interfaceClass, ICallback<T> widget) {
+	// GWTDisplay d = parent.lookupDisplay();
+	// d.createWidget(interfaceClass, this, widget);
+	// }
 }

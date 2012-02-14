@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
@@ -30,7 +31,6 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
-import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.upload.api.IUpload;
 import co.fxl.gui.upload.api.IUploadListener;

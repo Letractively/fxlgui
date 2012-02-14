@@ -16,7 +16,7 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.impl;
+package co.fxl.gui.api;
 
 public interface ICallback<T> {
 

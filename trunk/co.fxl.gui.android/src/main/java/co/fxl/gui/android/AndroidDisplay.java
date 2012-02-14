@@ -23,6 +23,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.view.View;
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
@@ -31,6 +32,7 @@ import co.fxl.gui.api.IPanelProvider;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
+import co.fxl.gui.api.IWidgetProvider.IAsyncWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
 
 public class AndroidDisplay implements IDisplay, Parent {
@@ -191,7 +193,6 @@ public class AndroidDisplay implements IDisplay, Parent {
 		throw new MethodNotImplementedException();
 	}
 
-	@Override
 	public IDisplay runAsync(Runnable runnable) {
 		runnable.run();
 		return this;
@@ -218,6 +219,16 @@ public class AndroidDisplay implements IDisplay, Parent {
 
 	@Override
 	public IDisplay invokeLater(Runnable runnable, int ms) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IDisplay register(IAsyncWidgetProvider<?>... runnable) {
+		throw new MethodNotImplementedException();
+	}
+
+	@Override
+	public IDisplay ensure(ICallback<Void> callback, Class<?>... widgetClass) {
 		throw new MethodNotImplementedException();
 	}
 }

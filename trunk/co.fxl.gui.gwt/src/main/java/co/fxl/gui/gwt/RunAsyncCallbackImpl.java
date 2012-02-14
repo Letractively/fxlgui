@@ -1,6 +1,4 @@
 /**
- * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
- *  
  * This file is part of FXL GUI API.
  *  
  * FXL GUI API is free software: you can redistribute it and/or modify
@@ -15,19 +13,18 @@
  *  
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.api;
+package co.fxl.gui.gwt;
 
-public interface IWidgetProvider<T> {
+import com.google.gwt.core.client.RunAsyncCallback;
 
-	public interface IAsyncWidgetProvider<T> {
+public abstract class RunAsyncCallbackImpl implements RunAsyncCallback {
 
-		Class<T> widgetType();
-
-		void loadAsync(ICallback<IWidgetProvider<T>> callback);
+	@Override
+	public void onFailure(Throwable arg0) {
+		throw new RuntimeException(arg0);
 	}
 
-	Class<T> widgetType();
-
-	T createWidget(IContainer container);
 }

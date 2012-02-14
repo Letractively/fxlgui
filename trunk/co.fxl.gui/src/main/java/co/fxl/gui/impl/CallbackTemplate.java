@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.impl;
 
+import co.fxl.gui.api.ICallback;
+
 public abstract class CallbackTemplate<T> implements ICallback<T> {
 
 	private ICallback<?> cb;

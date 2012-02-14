@@ -20,6 +20,7 @@ package co.fxl.gui.android;
 
 import android.view.View;
 import co.fxl.gui.api.IButton;
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
@@ -175,4 +176,9 @@ public class AndroidContainer implements IContainer {
 				interfaceClass);
 		return (T) provider.createWidget(this);
 	}
+
+//	@Override
+//	public <T> void widget(Class<T> interfaceClass, ICallback<T> widget) {
+//		throw new MethodNotImplementedException();
+//	}
 }

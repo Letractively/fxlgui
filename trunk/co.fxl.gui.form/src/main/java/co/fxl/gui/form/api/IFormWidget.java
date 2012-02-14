@@ -23,12 +23,12 @@ import java.util.Date;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.rtf.api.IRTFWidget;
 
 public interface IFormWidget {

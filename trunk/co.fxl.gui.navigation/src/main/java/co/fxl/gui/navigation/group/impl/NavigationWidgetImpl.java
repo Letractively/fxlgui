@@ -23,6 +23,7 @@ import java.util.List;
 
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
@@ -31,7 +32,6 @@ import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.FlipPage;
-import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.group.api.INavigationWidget;
@@ -118,7 +118,7 @@ class NavigationWidgetImpl implements INavigationWidget {
 	}
 
 	void active(NavigationItemImpl item, boolean viaClick,
-			co.fxl.gui.impl.ICallback<Void> cb, boolean notify) {
+			co.fxl.gui.api.ICallback<Void> cb, boolean notify) {
 		active = item;
 		if (notify) {
 			if (listeners.isEmpty())

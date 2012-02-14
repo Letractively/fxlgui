@@ -21,6 +21,7 @@ package co.fxl.gui.table.filter.impl;
 import java.util.Arrays;
 import java.util.List;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
@@ -28,7 +29,6 @@ import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
 import co.fxl.gui.impl.DummyCallback;
-import co.fxl.gui.impl.ICallback;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.filter.api.IFilterTableWidget.ITableFilter;

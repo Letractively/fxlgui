@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.table.util.api;
 
-import co.fxl.gui.impl.ICallback;
+import co.fxl.gui.api.ICallback;
 
 public interface IDragDropListener {
 

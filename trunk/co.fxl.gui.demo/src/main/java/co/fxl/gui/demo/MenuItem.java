@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.demo;
 
-import co.fxl.gui.impl.ICallback;
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.navigation.api.IMenuItem;
 import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
 import co.fxl.gui.navigation.api.IMenuWidget;
