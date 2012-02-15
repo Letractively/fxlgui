@@ -18,30 +18,44 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IPopUp;
 
 public class StatusPanel {
 
-	private static ILabel label;
-	private static String last = "";
-
-	public static void setUp(IContainer container) {
-		label = container.label();
-		label.font().pixel(10).color().gray();
-	}
+	private static IPopUp lastPopUp;
+	private static String lastStatus;
 
 	public static void start(String status) {
-		if (label != null) {
-			last = status;
-			label.text("Loading " + status + "...");
-		}
+		lastStatus = status;
+		lastPopUp = showPopUp(Display.instance(), "Loading " + status + "...",
+				true, 0);
 	}
 
 	public static void stop(String status) {
-		if (label != null && last.equals(status)) {
-			last = "";
-			label.text("");
+		if (lastStatus.equals(status)) {
+			lastPopUp.visible(false);
+			lastPopUp = null;
 		}
+	}
+
+	public static IPopUp showPopUp(IDisplay display, String info,
+			boolean modal, int y) {
+		IPopUp dialog = display.showPopUp().modal(true).glass(false);
+		dialog.border().remove();
+		IBorder b = dialog.border();
+		b.style().shadow();
+		IHorizontalPanel spacing = dialog.container().panel().horizontal()
+				.spacing(6);
+		spacing.color().rgb(255, 240, 170);
+		spacing.addSpace(4).add().label().text("Please wait - " + info + "...")
+				.font().pixel(10);
+		spacing.addSpace(4);
+		// dialog.center();
+		dialog.visible(true);
+		dialog.offset((display.width() - dialog.width()) / 2, 4);
+		return dialog;
 	}
 }
