@@ -52,7 +52,7 @@ class WizardStepCard implements IWizardStepCard {
 	public IWizardStepCard title(String title) {
 		if (clickable != null) {
 			// TODO ... clickable.text(title);
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		}
 		clickable = this.wizardStepImpl.widgetTitle.addHyperlink(title);
 		clickable.addClickListener(new IClickListener() {

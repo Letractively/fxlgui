@@ -96,7 +96,7 @@ class AndroidHorizontalPanel extends
 
 	@Override
 	public IAlignment<IHorizontalPanel> align() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -106,6 +106,6 @@ class AndroidHorizontalPanel extends
 
 	@Override
 	public co.fxl.gui.api.ISpaced.ISpacing spacing() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

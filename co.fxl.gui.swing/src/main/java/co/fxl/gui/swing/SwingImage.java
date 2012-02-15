@@ -52,7 +52,7 @@ class SwingImage extends SwingElement<JLabel, IImage> implements IImage {
 		}
 		URL uri = SwingImage.class.getResource("/public/images/" + name);
 		if (uri == null)
-			throw new MethodNotImplementedException(name);
+			throw new UnsupportedOperationException(name);
 		icon = new ImageIcon(uri);
 		return getIcon(uri.toString());
 	}
@@ -74,7 +74,7 @@ class SwingImage extends SwingElement<JLabel, IImage> implements IImage {
 			icon = new ImageIcon(url);
 			return getIcon(url.toString());
 		} catch (MalformedURLException e) {
-			throw new MethodNotImplementedException(e);
+			throw new UnsupportedOperationException(e);
 		}
 	}
 

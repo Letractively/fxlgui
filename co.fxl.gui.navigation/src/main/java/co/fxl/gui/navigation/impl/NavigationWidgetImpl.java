@@ -60,7 +60,7 @@ class NavigationWidgetImpl implements IMenuWidget {
 
 	@Override
 	public IToolbar addToolbar() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	public IPanel<?> fillerPanel() {
@@ -70,7 +70,7 @@ class NavigationWidgetImpl implements IMenuWidget {
 
 	@Override
 	public IMenuWidget background(int r, int g, int b) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

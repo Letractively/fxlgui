@@ -207,7 +207,7 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 
 	@Override
 	public ISplitPane vertical() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -238,7 +238,7 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 	@Override
 	public ISplitPane addResizeListener(final ISplitPaneResizeListener l) {
 		if (!adapter.supportsListeners())
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		listeners.add(l);
 		return this;
 	}

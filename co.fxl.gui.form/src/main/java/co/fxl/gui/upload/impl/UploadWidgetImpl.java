@@ -62,7 +62,7 @@ public class UploadWidgetImpl implements IUploadWidget {
 	@Override
 	public IUploadWidget visible(boolean visible) {
 		if (!visible)
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		IVerticalPanel vertical = c0.panel().vertical();
 		final IFormWidget form = (IFormWidget) vertical.add().widget(
 				IFormWidget.class);
@@ -73,7 +73,7 @@ public class UploadWidgetImpl implements IUploadWidget {
 			public void save(final ICallback<Boolean> cb) {
 				final IUpload upload = getUpload();
 				if (upload.isFileUpload()) {
-					throw new MethodNotImplementedException();
+					throw new UnsupportedOperationException();
 				} else {
 					for (IUploadListener l : UploadWidgetImpl.this.uploadListeners) {
 						l.onUpload(upload);
@@ -87,7 +87,7 @@ public class UploadWidgetImpl implements IUploadWidget {
 
 			@Override
 			public void cancel(ICallback<Boolean> cb) {
-				throw new MethodNotImplementedException();
+				throw new UnsupportedOperationException();
 			}
 
 			@Override

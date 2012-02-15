@@ -24,7 +24,7 @@ public class ColorMemento extends ColorTemplate {
 
 	@Override
 	public IColor remove() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

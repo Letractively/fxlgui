@@ -102,7 +102,7 @@ public class GWTRichTextArea extends
 
 	@Override
 	public IRichTextArea maxLength(int maxLength) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

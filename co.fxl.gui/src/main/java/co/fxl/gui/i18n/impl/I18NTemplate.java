@@ -78,12 +78,12 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 
 	@Override
 	public void addConstant(String token) {
-		// TODO ... throw new MethodNotImplementedException();
+		// TODO ... throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void addRule(String template, String translationTemplate) {
-		// TODO ... throw new MethodNotImplementedException();
+		// TODO ... throw new UnsupportedOperationException();
 	}
 
 	// @Override

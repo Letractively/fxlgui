@@ -38,7 +38,7 @@ class SwingAbsolutePanel extends SwingPanel<IAbsolutePanel> implements
 
 	@Override
 	public IAbsolutePanel addResizeListener(IResizeListener listener) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

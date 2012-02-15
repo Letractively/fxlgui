@@ -116,7 +116,7 @@ public class ColumnImpl implements IColumn<Object> {
 
 			@Override
 			public IFieldType addConstraint(Object... values) {
-				throw new MethodNotImplementedException();
+				throw new UnsupportedOperationException();
 			}
 
 			@Override
@@ -127,7 +127,7 @@ public class ColumnImpl implements IColumn<Object> {
 
 			@Override
 			public IFieldType relation() {
-				throw new MethodNotImplementedException();
+				throw new UnsupportedOperationException();
 			}
 		};
 	}
@@ -148,16 +148,16 @@ public class ColumnImpl implements IColumn<Object> {
 
 	@Override
 	public IColumn<Object> tagSortOrder(boolean up) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IColumn<Object> type(IFieldType type) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IColumn<Object> width(double width) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

@@ -54,19 +54,19 @@ class SwingFlowPanel extends SwingPanel<IFlowPanel> implements IFlowPanel,
 
 			@Override
 			public IFlowPanel begin() {
-				// TODO ... throw new MethodNotImplementedException();
+				// TODO ... throw new UnsupportedOperationException();
 				return SwingFlowPanel.this;
 			}
 
 			@Override
 			public IFlowPanel center() {
-				// TODO ... throw new MethodNotImplementedException();
+				// TODO ... throw new UnsupportedOperationException();
 				return SwingFlowPanel.this;
 			}
 
 			@Override
 			public IFlowPanel end() {
-				// TODO ... throw new MethodNotImplementedException();
+				// TODO ... throw new UnsupportedOperationException();
 				return SwingFlowPanel.this;
 			}
 

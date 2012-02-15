@@ -245,7 +245,7 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 		@Override
 		public int width() {
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		}
 
 		void remove() {
@@ -382,7 +382,7 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 		sizeColumns = columns;
 		sizeRows = rows;
 		if (columns < columns())
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		if (rows < rows()) {
 			for (int r = rows; r < rows(); r++)
 				row(r).remove();
@@ -392,7 +392,7 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 	@Override
 	public IBorder cellBorder() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

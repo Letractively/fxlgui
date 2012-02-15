@@ -43,7 +43,7 @@ class SwingLayout implements ILayout {
 		IPanelProvider<?> provider = panel.container.parent
 				.lookupSwingDisplay().panelProviders.get(clazz);
 		if (provider == null)
-			throw new MethodNotImplementedException(clazz.getName());
+			throw new UnsupportedOperationException(clazz.getName());
 		return provider.createPanel(panel.container);
 	}
 

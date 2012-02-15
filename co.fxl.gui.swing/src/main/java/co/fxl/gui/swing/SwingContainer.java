@@ -132,7 +132,7 @@ public class SwingContainer<T extends JComponent> implements IContainer {
 
 	@Override
 	public IElement<?> nativeElement(Object object) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -251,6 +251,6 @@ public class SwingContainer<T extends JComponent> implements IContainer {
 
 //	@Override
 //	public <T> void widget(Class<T> interfaceClass, ICallback<T> widget) {
-//		throw new MethodNotImplementedException();
+//		throw new UnsupportedOperationException();
 //	}
 }

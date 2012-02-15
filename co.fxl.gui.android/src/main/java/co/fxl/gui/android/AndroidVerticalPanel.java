@@ -66,12 +66,12 @@ class AndroidVerticalPanel extends AndroidPanel<LinearLayout, IVerticalPanel>
 
 	@Override
 	public IAlignment<IVerticalPanel> align() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IVerticalPanel stretch(boolean stretch) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -115,6 +115,6 @@ class AndroidVerticalPanel extends AndroidPanel<LinearLayout, IVerticalPanel>
 
 	@Override
 	public co.fxl.gui.api.ISpaced.ISpacing spacing() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

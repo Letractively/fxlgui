@@ -426,7 +426,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				selection.updateButtons();
 		} else {
 			this.visible = false;
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		}
 		return this;
 	}
@@ -644,7 +644,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				final ITextField tf = grid.cell(column, row).container()
 						.textField().text(t);
 				if (!columnImpl.type.clazz.equals(String.class))
-					throw new MethodNotImplementedException(
+					throw new UnsupportedOperationException(
 							"type not supported in scrolltable "
 									+ columnImpl.type.clazz.getName());
 				Display.instance().invokeLater(new Runnable() {

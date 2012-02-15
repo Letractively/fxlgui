@@ -456,7 +456,8 @@ public class FormWidgetImpl implements IFormWidget {
 			validation.linkInput((IRichTextArea) valueElement,
 					formField.required);
 		} else
-			throw new MethodNotImplementedException(valueElement.getClass());
+			throw new UnsupportedOperationException(valueElement.getClass()
+					.getName());
 	}
 
 	IGridPanel grid() {
@@ -566,12 +567,12 @@ public class FormWidgetImpl implements IFormWidget {
 
 	@Override
 	public IFormContainer add(String name) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IFormContainer insert(int index, String name) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

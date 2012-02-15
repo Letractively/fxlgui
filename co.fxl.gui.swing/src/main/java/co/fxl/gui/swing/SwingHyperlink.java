@@ -35,7 +35,7 @@ class SwingHyperlink implements IHyperlink {
 
 			@Override
 			public void onClick() {
-				throw new MethodNotImplementedException();
+				throw new UnsupportedOperationException();
 			}
 		});
 		return this;
@@ -43,16 +43,16 @@ class SwingHyperlink implements IHyperlink {
 
 	@Override
 	public IHyperlink clickable(boolean clickable) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean clickable() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IKey<IHyperlink> addClickListener(IClickListener clickListener) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

@@ -115,7 +115,7 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 	public abstract void add(Widget widget);
 
 	// void insert(Widget widget, int index) {
-	// throw new MethodNotImplementedException();
+	// throw new UnsupportedOperationException();
 	// }
 
 	@Override

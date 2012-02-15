@@ -137,7 +137,7 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 
 	@Override
 	protected void setTextOnComponent(String text) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

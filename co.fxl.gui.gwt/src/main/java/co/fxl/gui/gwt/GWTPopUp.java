@@ -72,7 +72,7 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	@Override
 	public void remove(Widget widget) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

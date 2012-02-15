@@ -88,7 +88,7 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 		if (visible) {
 			show();
 		} else {
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		}
 		return this;
 	}
@@ -119,7 +119,7 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 
 	public IPanel<?> addFillerPanel() {
 		if (stretch == null) {
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		}
 		return stretch;
 	}

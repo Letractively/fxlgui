@@ -166,12 +166,12 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 	@Override
 	public IDisplay height(int pixel) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IDisplay width(int pixel) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -260,7 +260,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 	@Override
 	public void add(Widget widget) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -270,7 +270,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 	@Override
 	public void remove(Widget widget) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	// private boolean resizing = false;

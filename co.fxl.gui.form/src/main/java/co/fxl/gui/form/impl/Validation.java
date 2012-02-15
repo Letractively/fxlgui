@@ -190,7 +190,7 @@ public class Validation {
 					if (wColors)
 						errorColor(tf, isNull);
 				} else
-					throw new MethodNotImplementedException(textElement
+					throw new UnsupportedOperationException(textElement
 							.getClass().getName()
 							+ " not supported by validation");
 			}
@@ -522,7 +522,7 @@ public class Validation {
 		else if (valueElement instanceof ITextField)
 			linkInput((ITextField) valueElement, status);
 		else
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 	}
 
 }

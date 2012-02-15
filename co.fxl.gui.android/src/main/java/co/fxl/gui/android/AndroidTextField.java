@@ -72,7 +72,7 @@ class AndroidTextField extends AndroidElement<EditText, ITextField> implements
 
 	@Override
 	public IBorder border() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -100,21 +100,21 @@ class AndroidTextField extends AndroidElement<EditText, ITextField> implements
 
 	@Override
 	public ITextField maxLength(int maxLength) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean editable() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public int cursorPosition() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public ITextField cursorPosition(int position) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

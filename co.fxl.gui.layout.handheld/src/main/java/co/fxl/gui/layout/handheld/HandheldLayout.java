@@ -57,7 +57,7 @@ public class HandheldLayout implements ILayout {
 	@Override
 	public ILayoutDialog dialog(DialogType type) {
 		assertEnabled();
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

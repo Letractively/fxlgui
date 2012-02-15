@@ -198,11 +198,11 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 					index++;
 			}
 		}
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IFormField<T, R> tooltip(ITooltipResolver tooltip) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

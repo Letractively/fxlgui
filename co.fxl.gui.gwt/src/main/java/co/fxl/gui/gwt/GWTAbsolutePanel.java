@@ -37,7 +37,7 @@ class GWTAbsolutePanel extends GWTPanel<AbsolutePanel, IAbsolutePanel>
 
 	@Override
 	public IAbsolutePanel addResizeListener(IResizeListener listener) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

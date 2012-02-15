@@ -151,12 +151,12 @@ class RelationFilter extends StringFilter {
 		} else if (constraints.isRelationConstrained(name)) {
 			return true;
 		} else
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean applies(String value) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

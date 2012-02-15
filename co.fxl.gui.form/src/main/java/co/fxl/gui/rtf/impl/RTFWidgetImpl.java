@@ -92,7 +92,7 @@ public class RTFWidgetImpl implements IRTFWidget {
 						.addClickListener(new IClickListener() {
 							@Override
 							public void onClick() {
-								throw new MethodNotImplementedException();
+								throw new UnsupportedOperationException();
 							}
 						});
 				// TODO ...
@@ -106,32 +106,32 @@ public class RTFWidgetImpl implements IRTFWidget {
 
 	@Override
 	public IRTFWidget height(int height) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IRTFWidget editable(boolean editable) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IBorder border() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IColor color() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IRTFWidget focus(boolean focus) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IRTFWidget addFocusListener(IUpdateListener<Boolean> hasFocus) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 }

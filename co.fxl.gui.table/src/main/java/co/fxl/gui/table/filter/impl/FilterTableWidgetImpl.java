@@ -73,7 +73,7 @@ class FilterTableWidgetImpl extends TableWidgetImpl implements
 
 		@Override
 		public void onFail() {
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		}
 	}
 
@@ -102,7 +102,7 @@ class FilterTableWidgetImpl extends TableWidgetImpl implements
 		if (filterListener != null) {
 			filterListener.onRefresh(resetRowModel(), constraints);
 		} else
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 	}
 
 	@Override

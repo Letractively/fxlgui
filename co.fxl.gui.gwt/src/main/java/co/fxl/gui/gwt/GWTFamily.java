@@ -50,7 +50,7 @@ class GWTFamily extends GWTWidgetStyle implements IFamily {
 
 	@Override
 	public IFont name(String font) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

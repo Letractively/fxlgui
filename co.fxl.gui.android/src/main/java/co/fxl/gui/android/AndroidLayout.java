@@ -39,17 +39,17 @@ public class AndroidLayout implements ILayout {
 
 	@Override
 	public IAbsolutePanel absolute() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public ICardPanel card() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IDockPanel dock() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class AndroidLayout implements ILayout {
 
 	@Override
 	public IPanel<?> plugIn(Class<?> layoutType) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -76,11 +76,11 @@ public class AndroidLayout implements ILayout {
 
 	@Override
 	public IFlowPanel flow() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IFocusPanel focus() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

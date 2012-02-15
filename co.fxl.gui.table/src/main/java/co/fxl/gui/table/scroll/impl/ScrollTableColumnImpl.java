@@ -319,7 +319,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 					+ value.getClass().getName() + ")");
 		}
 		if (!alignment.type.equals(Type.BEGIN)) {
-			// TODO ... throw new MethodNotImplementedException();
+			// TODO ... throw new UnsupportedOperationException();
 		}
 	}
 
@@ -344,7 +344,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 			} else if (type.clazz.equals(Double.class)) {
 				decorator = new NumberDecorator();
 			} else
-				throw new MethodNotImplementedException(type.clazz.getName());
+				throw new UnsupportedOperationException(type.clazz.getName());
 		}
 		return decorator;
 	}
@@ -380,7 +380,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 	@Override
 	public IColumn<Object> decorator(IDecorator<?, ?> decorator) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@SuppressWarnings("unchecked")

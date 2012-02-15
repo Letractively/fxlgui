@@ -104,22 +104,22 @@ public class ElementDecorator<T> implements IElement<T> {
 
 	@Override
 	public IPadding padding() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public T padding(int padding) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IMargin margin() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public T margin(int margin) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 }

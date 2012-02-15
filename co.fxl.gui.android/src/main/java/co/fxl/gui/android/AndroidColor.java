@@ -25,7 +25,7 @@ abstract class AndroidColor extends ColorTemplate {
 
 	@Override
 	public IColor remove() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

@@ -42,7 +42,7 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 
 				@Override
 				public void addStyleName(String style) {
-					throw new MethodNotImplementedException();
+					throw new UnsupportedOperationException();
 				}
 			}) {
 

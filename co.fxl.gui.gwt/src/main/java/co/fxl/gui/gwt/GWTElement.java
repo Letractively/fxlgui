@@ -312,7 +312,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	}
 
 	GWTClickHandler<R> newGWTClickHandler(IClickListener clickListener) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	private void toggleClickHandler(boolean toggle) {
@@ -430,7 +430,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	@Override
 	public R offset(int x, int y) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	public IColor color() {

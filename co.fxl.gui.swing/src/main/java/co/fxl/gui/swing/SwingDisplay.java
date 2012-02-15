@@ -210,7 +210,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	@Override
 	public void add(JComponent component) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -220,7 +220,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	@Override
 	public void remove(JComponent component) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -262,12 +262,12 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	@Override
 	public JComponent getComponent() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public ICursor cursor() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

@@ -54,12 +54,12 @@ class AndroidGridCell extends AndroidContainer implements IGridCell {
 
 			@Override
 			public View element() {
-				throw new MethodNotImplementedException();
+				throw new UnsupportedOperationException();
 			}
 
 			@Override
 			public void remove(View view) {
-				throw new MethodNotImplementedException();
+				throw new UnsupportedOperationException();
 			}
 		});
 		this.row = row;
@@ -68,37 +68,37 @@ class AndroidGridCell extends AndroidContainer implements IGridCell {
 
 	@Override
 	public IAlignment<IGridCell> align() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IBorder border() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IColor color() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IGridCell height(int height) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IAlignment<IGridCell> valign() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IGridCell visible(boolean visible) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IGridCell width(int width) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -109,11 +109,11 @@ class AndroidGridCell extends AndroidContainer implements IGridCell {
 
 	@Override
 	public int height() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public int width() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

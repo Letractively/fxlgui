@@ -63,12 +63,12 @@ public class FontMemento implements IFont {
 
 	@Override
 	public IColor color() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IFamily family() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class FontMemento implements IFont {
 
 	@Override
 	public IFont underline(boolean underline) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	public void apply(IFont font) {

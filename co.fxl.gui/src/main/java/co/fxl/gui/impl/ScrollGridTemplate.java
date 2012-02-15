@@ -74,7 +74,7 @@ abstract class ScrollGridTemplate implements IScrollGrid {
 			setUp();
 			return this;
 		} else
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 	}
 
 	abstract void setUp();

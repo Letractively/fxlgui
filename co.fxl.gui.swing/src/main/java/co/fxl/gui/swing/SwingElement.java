@@ -283,27 +283,27 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 
 			@Override
 			public R tab() {
-				throw new MethodNotImplementedException();
+				throw new UnsupportedOperationException();
 			}
 
 			@Override
 			public R up() {
-				throw new MethodNotImplementedException();
+				throw new UnsupportedOperationException();
 			}
 
 			@Override
 			public R down() {
-				throw new MethodNotImplementedException();
+				throw new UnsupportedOperationException();
 			}
 
 			@Override
 			public R left() {
-				throw new MethodNotImplementedException();
+				throw new UnsupportedOperationException();
 			}
 
 			@Override
 			public R right() {
-				throw new MethodNotImplementedException();
+				throw new UnsupportedOperationException();
 			}
 		};
 	}
@@ -321,7 +321,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 
 	@Override
 	public R offset(int x, int y) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -369,25 +369,25 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 
 	@SuppressWarnings("unchecked")
 	public R draggable(boolean draggable) {
-		// TODO ... throw new MethodNotImplementedException();
+		// TODO ... throw new UnsupportedOperationException();
 		return (R) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	public R addDragStartListener(co.fxl.gui.api.IDraggable.IDragStartListener l) {
-		// TODO ... throw new MethodNotImplementedException();
+		// TODO ... throw new UnsupportedOperationException();
 		return (R) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	public R addDragOverListener(IDragMoveListener l) {
-		// TODO ... throw new MethodNotImplementedException();
+		// TODO ... throw new UnsupportedOperationException();
 		return (R) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	public R addDropListener(IDropListener l) {
-		// TODO ... throw new MethodNotImplementedException();
+		// TODO ... throw new UnsupportedOperationException();
 		return (R) this;
 	}
 
