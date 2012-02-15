@@ -40,6 +40,10 @@ public class StatusPanel {
 		}
 	}
 
+	public static void stop() {
+		stop(lastStatus);
+	}
+
 	public static IPopUp showPopUp(IDisplay display, String info,
 			boolean modal, int y) {
 		IPopUp dialog = display.showPopUp().modal(true).glass(false);
