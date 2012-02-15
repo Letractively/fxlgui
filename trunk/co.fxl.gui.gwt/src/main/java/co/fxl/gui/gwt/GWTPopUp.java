@@ -102,6 +102,12 @@ class GWTPopUp implements IPopUp, WidgetParent {
 	}
 
 	@Override
+	public IPopUp glass(boolean glass) {
+		popUp.setGlassEnabled(glass);
+		return this;
+	}
+
+	@Override
 	public IPopUp center() {
 		center = true;
 		popUp.center();

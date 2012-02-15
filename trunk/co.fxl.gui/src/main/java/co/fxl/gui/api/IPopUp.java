@@ -39,4 +39,6 @@ public interface IPopUp extends IBordered, ILocated<IPopUp> {
 	IPopUp addVisibleListener(IUpdateListener<Boolean> l);
 
 	boolean visible();
+
+	IPopUp glass(boolean glass);
 }

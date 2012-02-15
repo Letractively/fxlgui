@@ -254,4 +254,10 @@ class SwingPopUp implements IPopUp {
 	public boolean visible() {
 		return visible;
 	}
+
+	@Override
+	public IPopUp glass(boolean glass) {
+		// TODO ... throw new MethodNotImplementedException();
+		return this;
+	}
 }
