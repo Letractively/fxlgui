@@ -56,6 +56,7 @@ public class StatusPanel {
 		int x = (display.width() - dialog.width()) / 2;
 		dialog.offset(x, 4);
 		dialog.visible(true);
+		x = (display.width() - dialog.width()) / 2;
 		dialog.offset(x, 4);
 		return dialog;
 	}
