@@ -26,6 +26,6 @@ abstract class NonRemovableColorTemplate extends ColorTemplate implements
 
 	@Override
 	public IColor remove() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

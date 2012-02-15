@@ -40,7 +40,7 @@ class SwingSplitPane extends SwingElement<JSplitPane, ISplitPane> implements
 
 	@Override
 	public ISplitPane vertical() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

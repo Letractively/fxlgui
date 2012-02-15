@@ -35,7 +35,7 @@ class AndroidPanel<R extends ViewGroup, T extends IElement<T>> extends
 
 	@Override
 	public IContainer add() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -60,12 +60,12 @@ class AndroidPanel<R extends ViewGroup, T extends IElement<T>> extends
 
 	@Override
 	public ILayout layout() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IBorder border() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -81,6 +81,6 @@ class AndroidPanel<R extends ViewGroup, T extends IElement<T>> extends
 	@Override
 	public T addMouseOverListener(
 			co.fxl.gui.api.IMouseOverElement.IMouseOverListener l) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

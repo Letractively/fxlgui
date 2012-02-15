@@ -106,7 +106,7 @@ class DNDWidgetImpl implements IDNDWidget, IClickListener {
 					selectedIndex = -1;
 					selectedPanel.color().remove();
 					// TODO switch
-					throw new MethodNotImplementedException();
+					throw new UnsupportedOperationException();
 				}
 			}
 		});

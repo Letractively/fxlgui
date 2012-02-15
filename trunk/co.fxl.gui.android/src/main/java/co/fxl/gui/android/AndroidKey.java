@@ -31,12 +31,12 @@ class AndroidKey<T extends IElement<T>> implements IKey<T> {
 
 	@Override
 	public T altPressed() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public T ctrlPressed() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -46,16 +46,16 @@ class AndroidKey<T extends IElement<T>> implements IKey<T> {
 
 	@Override
 	public T mouseRight() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public T shiftPressed() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public T doubleClick() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

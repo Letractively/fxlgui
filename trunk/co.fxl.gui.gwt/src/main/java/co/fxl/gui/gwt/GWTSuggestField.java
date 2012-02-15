@@ -94,16 +94,16 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 
 	@Override
 	public ISuggestField editable(boolean editable) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public ISuggestField maxLength(int maxLength) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean editable() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

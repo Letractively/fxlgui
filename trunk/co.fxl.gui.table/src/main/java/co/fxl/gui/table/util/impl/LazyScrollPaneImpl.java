@@ -641,7 +641,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 				range += rowHeight;
 			}
 		}
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

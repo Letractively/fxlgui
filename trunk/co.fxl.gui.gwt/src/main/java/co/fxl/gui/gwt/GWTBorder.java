@@ -43,7 +43,7 @@ public abstract class GWTBorder implements IBorder {
 
 		@Override
 		public IBorder etched() {
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		}
 
 		@Override
@@ -158,7 +158,7 @@ public abstract class GWTBorder implements IBorder {
 
 	@Override
 	public IBorder title(String title) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 }

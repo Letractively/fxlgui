@@ -213,7 +213,7 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 		if (constraint instanceof IStringPrefixConstraint) {
 			return String.class;
 		} else
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -340,7 +340,7 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 
 	@Override
 	public IRelationFilter<Object, Object> addRelationFilter() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 }

@@ -74,7 +74,7 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 
 	@Override
 	public void remove() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -85,12 +85,12 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 
 	@Override
 	public T visible(boolean visible) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean visible() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -128,7 +128,7 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 	}
 
 	IKey<T> newAndroidKey(AndroidElement<R, T> androidElement) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	public boolean clickable() {
@@ -136,23 +136,23 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 	}
 
 	public IDisplay display() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	public T focus(boolean focus) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	public T addFocusListener(IUpdateListener<Boolean> hasFocus) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	public IBorder border() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	public T addCarriageReturnListener(IClickListener listener) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -173,55 +173,55 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 
 	@Override
 	public T offset(int x, int y) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	public co.fxl.gui.api.IKeyRecipient.IKey<T> addKeyListener(
 			IClickListener listener) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@SuppressWarnings("unchecked")
 	public T draggable(boolean draggable) {
-		// TODO ... throw new MethodNotImplementedException();
+		// TODO ... throw new UnsupportedOperationException();
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	public T addDragStartListener(co.fxl.gui.api.IDraggable.IDragStartListener l) {
-		// TODO ... throw new MethodNotImplementedException();
+		// TODO ... throw new UnsupportedOperationException();
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	public T addDragOverListener(co.fxl.gui.api.IDropTarget.IDragMoveListener l) {
-		// TODO ... throw new MethodNotImplementedException();
+		// TODO ... throw new UnsupportedOperationException();
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	public T addDropListener(co.fxl.gui.api.IDropTarget.IDropListener l) {
-		// TODO ... throw new MethodNotImplementedException();
+		// TODO ... throw new UnsupportedOperationException();
 		return (T) this;
 	}
 
 	@Override
 	public IPadding padding() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public T padding(int padding) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IMargin margin() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public T margin(int margin) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

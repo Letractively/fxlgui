@@ -277,7 +277,7 @@ class SelectionImpl implements ISelection<Object> {
 		}
 
 		public ISelection<Object> add(int selectionIndex, Object object) {
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		}
 
 		public void clear() {

@@ -32,20 +32,20 @@ class SwingWebsite implements IWebsite {
 		try {
 			Desktop.getDesktop().browse(new URI(uRI));
 		} catch (IOException e) {
-			throw new MethodNotImplementedException(e);
+			throw new UnsupportedOperationException(e);
 		} catch (URISyntaxException e) {
-			throw new MethodNotImplementedException(e);
+			throw new UnsupportedOperationException(e);
 		}
 		return this;
 	}
 
 	@Override
 	public IWebsite localURI(String uRI) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IWebsite title(String title) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

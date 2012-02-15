@@ -127,7 +127,7 @@ class SwingBorder implements IBorder {
 
 	private void updateBorder() {
 		if (element.getBorder() instanceof EmptyBorder)
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		if (borderStyle == SOLID)
 			element.setBorder(new LineBorder(borderColor, borderThickness));
 		else if (borderStyle == ETCHED)
@@ -136,7 +136,7 @@ class SwingBorder implements IBorder {
 			element.setBorder(new LineBorder(borderColor, borderThickness, true));
 		else {
 			if (borderThickness != 1)
-				throw new MethodNotImplementedException();
+				throw new UnsupportedOperationException();
 			element.setBorder(new DashedBorder(borderColor));
 		}
 	}

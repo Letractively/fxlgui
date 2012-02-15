@@ -117,7 +117,7 @@ class GWTPasswordField extends GWTElement<PasswordTextBox, IPasswordField>
 
 	@Override
 	public IPasswordField columns(int rows) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

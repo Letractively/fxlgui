@@ -167,10 +167,10 @@ public class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
 	}
 
 	void gap(int pixel) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	Insets insets() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

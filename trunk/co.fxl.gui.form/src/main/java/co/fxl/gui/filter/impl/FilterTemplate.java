@@ -45,7 +45,7 @@ abstract class FilterTemplate<T> implements FilterPart<T> {
 
 	boolean fromConstraint(IFilterConstraints constraints) {
 		if (constraints.isAttributeConstrained(name)) {
-			throw new MethodNotImplementedException(name);
+			throw new UnsupportedOperationException(name);
 		} else
 			return false;
 	}

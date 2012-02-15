@@ -116,7 +116,7 @@ public class FilterPanelImpl implements FilterPanel {
 
 		@Override
 		public FilterGrid rowInc(int rowInc) {
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		}
 	}
 
@@ -155,7 +155,7 @@ public class FilterPanelImpl implements FilterPanel {
 
 	@Override
 	public ViewComboBox viewComboBox() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 		// IComboBox comboBox = mainPanel.add().comboBox();
 		// mainPanel.addSpace(4);
 		// return comboBox;

@@ -53,7 +53,7 @@ class GWTLayout implements ILayout {
 		IPanelProvider<?> provider = panel.parent.lookupDisplay().panelProviders
 				.get(clazz);
 		if (provider == null)
-			throw new MethodNotImplementedException(clazz.getName());
+			throw new UnsupportedOperationException(clazz.getName());
 		return provider.createPanel(panel);
 	}
 
@@ -66,7 +66,7 @@ class GWTLayout implements ILayout {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public final void setComponent(Widget component) {
 		if (panel == null)
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		GWTContainer c = (GWTContainer) panel;
 		c.setComponent(component);
 	}
@@ -88,7 +88,7 @@ class GWTLayout implements ILayout {
 	public IVerticalPanel vertical() {
 		Widget component = (Widget) new VerticalPanel();
 		if (panel == null)
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		GWTContainer c = (GWTContainer) panel;
 		c.setComponent(component);
 		return (IVerticalPanel) (panel.element = new GWTVerticalPanel(panel));

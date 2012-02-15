@@ -40,7 +40,7 @@ class BooleanCellFactory extends CellFactory<ICheckBox, Boolean> {
 					boolean refresh = c.updateListener.onUpdate(
 							row.content.identifier, value);
 					if (refresh) {
-						throw new MethodNotImplementedException();
+						throw new UnsupportedOperationException();
 					}
 				}
 			});

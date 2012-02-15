@@ -73,7 +73,7 @@ abstract class CellFactory<R, T> {
 			return COMPARABLE_FACTORY.create(table, row, columnIndex, cell,
 					(Comparable<?>) value);
 		} else
-			throw new MethodNotImplementedException(
+			throw new UnsupportedOperationException(
 					table.columns.get(columnIndex).name);
 	}
 

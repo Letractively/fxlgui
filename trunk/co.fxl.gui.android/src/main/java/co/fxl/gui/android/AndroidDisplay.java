@@ -49,17 +49,17 @@ public class AndroidDisplay implements IDisplay, Parent {
 
 	@Override
 	public IDisplay addExceptionHandler(IExceptionHandler handler) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IDisplay addResizeListener(IResizeListener listener) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IColor color() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -69,17 +69,17 @@ public class AndroidDisplay implements IDisplay, Parent {
 
 	@Override
 	public IDisplay fullscreen() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IDisplay height(int height) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public int height() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -97,29 +97,29 @@ public class AndroidDisplay implements IDisplay, Parent {
 
 	@Override
 	public IWebsite showWebsite() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IDisplay title(String title) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IDisplay visible(boolean visible) {
 		if (!visible)
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		return this;
 	}
 
 	@Override
 	public IDisplay width(int width) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public int width() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -138,7 +138,7 @@ public class AndroidDisplay implements IDisplay, Parent {
 
 	@Override
 	public View element() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	IWidgetProvider<?> widgetProvider(Class<?> interfaceClass) {
@@ -155,42 +155,42 @@ public class AndroidDisplay implements IDisplay, Parent {
 
 	@Override
 	public void remove(View view) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean supports(Class<?> widgetClass) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IPopUp showPopUp() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IDisplay removeResizeListener(IResizeListener listener) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public ICursor cursor() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IDisplay block(boolean waiting) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IDisplay invokeLater(Runnable runnable) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IDisplay size(int width, int height) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	public IDisplay runAsync(Runnable runnable) {
@@ -200,17 +200,17 @@ public class AndroidDisplay implements IDisplay, Parent {
 
 	@Override
 	public String title() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IDisplay clear() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IDisplay register(IPanelProvider<?>... layoutProvider) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	public static AndroidDisplay instance() {
@@ -219,16 +219,16 @@ public class AndroidDisplay implements IDisplay, Parent {
 
 	@Override
 	public IDisplay invokeLater(Runnable runnable, int ms) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IDisplay register(IAsyncWidgetProvider<?>... runnable) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IDisplay ensure(ICallback<Void> callback, Class<?>... widgetClass) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

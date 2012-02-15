@@ -45,12 +45,12 @@ class AndroidGridPanel extends AndroidPanel<TableLayout, IGridPanel> implements
 
 	@Override
 	public void add(View view) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IKey<IGridPanel> addGridClickListener(IGridClickListener listener) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -71,59 +71,59 @@ class AndroidGridPanel extends AndroidPanel<TableLayout, IGridPanel> implements
 
 	@Override
 	public int columns() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IGridPanel indent(int pixel) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public int rows() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IGridPanel spacing(int pixel) {
 		this.spacing = pixel;
 		if (!rows.isEmpty())
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		return this;
 	}
 
 	@Override
 	public AndroidDisplay androidDisplay() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public View element() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void remove(View view) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IGridPanel resize(int columns, int rows) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IBorder cellBorder() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IGridColumn column(int column) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IGridRow row(int row) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

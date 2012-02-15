@@ -89,13 +89,13 @@ public class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 
 			@Override
 			public IFlowPanel begin() {
-				// TODO ... throw new MethodNotImplementedException();
+				// TODO ... throw new UnsupportedOperationException();
 				return GWTFlowPanel.this;
 			}
 
 			@Override
 			public IFlowPanel center() {
-				// TODO ... throw new MethodNotImplementedException();
+				// TODO ... throw new UnsupportedOperationException();
 				return GWTFlowPanel.this;
 			}
 
@@ -103,7 +103,7 @@ public class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 			public IFlowPanel end() {
 				floatValue = RIGHT;
 				updateFloatValueWidgets();
-				// TODO ... throw new MethodNotImplementedException();
+				// TODO ... throw new UnsupportedOperationException();
 				return GWTFlowPanel.this;
 			}
 

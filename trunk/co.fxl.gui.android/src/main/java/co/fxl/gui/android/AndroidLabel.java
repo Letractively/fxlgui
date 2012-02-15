@@ -46,7 +46,7 @@ class AndroidLabel extends AndroidElement<TextView, ILabel> implements ILabel {
 
 	@Override
 	public ILabel autoWrap(boolean autoWrap) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -94,7 +94,7 @@ class AndroidLabel extends AndroidElement<TextView, ILabel> implements ILabel {
 
 	@Override
 	public boolean clickable() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -105,11 +105,11 @@ class AndroidLabel extends AndroidElement<TextView, ILabel> implements ILabel {
 	@Override
 	public ILabel addMouseOverListener(
 			co.fxl.gui.api.IMouseOverElement.IMouseOverListener l) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public ILabel html(String html) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

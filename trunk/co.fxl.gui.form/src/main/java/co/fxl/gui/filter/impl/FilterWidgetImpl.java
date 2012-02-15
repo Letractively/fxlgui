@@ -130,7 +130,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		if (filterList.get(configuration) != null)
 			update();
 //		else
-//			throw new MethodNotImplementedException("filter configuration "
+//			throw new UnsupportedOperationException("filter configuration "
 //					+ value + " has not been set up");
 	}
 
@@ -222,9 +222,9 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 				filter = new ComboBoxStringFilter(grid, name, values,
 						guiFilterElements.size());
 			} else if (contentType.equals(Date.class)) {
-				throw new MethodNotImplementedException(contentType.getName());
+				throw new UnsupportedOperationException(contentType.getName());
 			} else
-				throw new MethodNotImplementedException(contentType.getName());
+				throw new UnsupportedOperationException(contentType.getName());
 		} else if (contentType.equals(String.class))
 			filter = new StringFilter(grid, name, guiFilterElements.size());
 		else if (contentType.equals(Date.class))
@@ -235,7 +235,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		else if (contentType.equals(Boolean.class))
 			filter = new BooleanFilter(grid, name, guiFilterElements.size());
 		else
-			throw new MethodNotImplementedException(contentType.getName());
+			throw new UnsupportedOperationException(contentType.getName());
 		activeFlags.add(false);
 		filter.validate(validation);
 		guiFilterElements.add(filter);
@@ -279,7 +279,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 
 	@Override
 	public IFilterWidget addLiveFilterListener(IFilterListener listener) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

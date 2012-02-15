@@ -58,7 +58,7 @@ class AndroidComboBox extends AndroidElement<Spinner, IComboBox> implements
 
 	@Override
 	public IFont font() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -69,7 +69,7 @@ class AndroidComboBox extends AndroidElement<Spinner, IComboBox> implements
 
 	@Override
 	public IColor color() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -104,7 +104,7 @@ class AndroidComboBox extends AndroidElement<Spinner, IComboBox> implements
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -115,6 +115,6 @@ class AndroidComboBox extends AndroidElement<Spinner, IComboBox> implements
 
 	@Override
 	public IComboBox addNull() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

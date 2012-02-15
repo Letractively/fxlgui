@@ -64,7 +64,7 @@ class AndroidFont implements IFont {
 
 	@Override
 	public IFamily family() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -80,7 +80,7 @@ class AndroidFont implements IFont {
 			content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
 			view.setText(content);
 		} else
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		return this;
 	}
 

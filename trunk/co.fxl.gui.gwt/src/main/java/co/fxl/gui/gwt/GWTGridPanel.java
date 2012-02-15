@@ -169,7 +169,7 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 
 		@Override
 		public int width() {
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		}
 	}
 
@@ -281,7 +281,7 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 
 			@Override
 			public int height() {
-				throw new MethodNotImplementedException();
+				throw new UnsupportedOperationException();
 			}
 
 			@Override

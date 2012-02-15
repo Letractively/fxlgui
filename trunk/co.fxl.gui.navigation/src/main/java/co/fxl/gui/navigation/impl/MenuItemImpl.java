@@ -109,7 +109,7 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 
 	@Override
 	public IToolbarItem toolbarItem() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

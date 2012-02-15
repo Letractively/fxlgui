@@ -257,7 +257,7 @@ class SwingPopUp implements IPopUp {
 
 	@Override
 	public IPopUp glass(boolean glass) {
-		// TODO ... throw new MethodNotImplementedException();
+		// TODO ... throw new UnsupportedOperationException();
 		return this;
 	}
 }

@@ -33,12 +33,12 @@ public abstract class GWTColor implements IColor {
 
 				@Override
 				public IGradient gradient() {
-					throw new MethodNotImplementedException();
+					throw new UnsupportedOperationException();
 				}
 
 				@Override
 				public IColor remove() {
-					throw new MethodNotImplementedException();
+					throw new UnsupportedOperationException();
 				}
 
 				@Override

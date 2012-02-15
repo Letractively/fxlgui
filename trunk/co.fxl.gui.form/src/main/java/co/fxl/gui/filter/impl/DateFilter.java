@@ -128,6 +128,6 @@ class DateFilter extends RangeFilter<Date> {
 	@Override
 	public IUpdateable<String> addUpdateListener(
 			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

@@ -77,17 +77,17 @@ public class AndroidContainer implements IContainer {
 
 	@Override
 	public IElement<?> element(IElement<?> element) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IElement<?> element() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IImage image() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class AndroidContainer implements IContainer {
 
 	@Override
 	public IElement<?> nativeElement(Object object) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -107,12 +107,12 @@ public class AndroidContainer implements IContainer {
 
 	@Override
 	public IPasswordField passwordField() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IRadioButton radioButton() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -122,12 +122,12 @@ public class AndroidContainer implements IContainer {
 
 	@Override
 	public ISplitPane splitPane() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public ITextArea textArea() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -137,7 +137,7 @@ public class AndroidContainer implements IContainer {
 
 	@Override
 	public IToggleButton toggleButton() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	void layout(View view) {
@@ -146,27 +146,27 @@ public class AndroidContainer implements IContainer {
 
 	@Override
 	public IHorizontalLine line() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IHyperlink hyperlink() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IDisplay display() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public ISuggestField suggestField() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IRichTextArea richTextArea() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -179,6 +179,6 @@ public class AndroidContainer implements IContainer {
 
 //	@Override
 //	public <T> void widget(Class<T> interfaceClass, ICallback<T> widget) {
-//		throw new MethodNotImplementedException();
+//		throw new UnsupportedOperationException();
 //	}
 }

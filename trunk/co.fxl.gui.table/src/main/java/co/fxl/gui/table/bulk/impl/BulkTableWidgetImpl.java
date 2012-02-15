@@ -99,7 +99,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 
 		@Override
 		public IColumn width(int width) {
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		}
 
 		@Override
@@ -234,7 +234,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 						}
 					});
 				} else
-					throw new MethodNotImplementedException();
+					throw new UnsupportedOperationException();
 				return this;
 			}
 
@@ -269,7 +269,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 
 			@Override
 			public IBulkTableCell image(String image) {
-				throw new MethodNotImplementedException();
+				throw new UnsupportedOperationException();
 			}
 		};
 	}
@@ -323,7 +323,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	@Override
 	public IBulkTableWidget visible(boolean visible) {
 		if (!visible)
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		return this;
 	}
 
@@ -403,7 +403,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 
 	@Override
 	public IBulkTableWidget css(boolean css) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -439,6 +439,6 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 
 	@Override
 	public Object focusPanel() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

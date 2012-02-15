@@ -37,7 +37,7 @@ class AndroidDialog implements IDialog {
 
 		@Override
 		public IDialogButton imageResource(String imageResource) {
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		}
 
 		@Override
@@ -66,7 +66,7 @@ class AndroidDialog implements IDialog {
 
 		@Override
 		public IDialogButton cancel() {
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		}
 
 		@Override
@@ -91,12 +91,12 @@ class AndroidDialog implements IDialog {
 
 		@Override
 		public IDialogButton close() {
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		}
 
 		@Override
 		public IDialogButton clickable(boolean clickable) {
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 		}
 	}
 
@@ -110,12 +110,12 @@ class AndroidDialog implements IDialog {
 
 	@Override
 	public IDialog modal(boolean modal) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IDialog title(String title) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -152,7 +152,7 @@ class AndroidDialog implements IDialog {
 
 	@Override
 	public IContainer container() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -167,21 +167,21 @@ class AndroidDialog implements IDialog {
 
 	@Override
 	public IDialog confirm() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IDialog size(int width, int height) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IDialog width(int width) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IDialog height(int height) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

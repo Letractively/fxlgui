@@ -70,7 +70,7 @@ class SwingSuggestField extends SwingTextInput<JTextField, ISuggestField>
 
 	@Override
 	public ISuggestField addText(String... texts) {
-		// TODO ... throw new MethodNotImplementedException();
+		// TODO ... throw new UnsupportedOperationException();
 		return this;
 	}
 

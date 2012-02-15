@@ -245,7 +245,7 @@ public class DialogImpl implements IDialog {
 		else if (type.equals("Error"))
 			return Icons.CANCEL;
 		else
-			throw new MethodNotImplementedException();
+			throw new UnsupportedOperationException();
 	}
 
 	@Override

@@ -273,16 +273,16 @@ class SelectionImpl implements ISelection<Object> {
 
 	@Override
 	public Map<Integer, Object> indexedResult() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public ISelection<Object> add(int selectionIndex, Object selection) {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void clear() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

@@ -162,7 +162,7 @@ class NavigationWidgetImpl implements INavigationWidget {
 
 	@Override
 	public IColor colorBackground() {
-		throw new MethodNotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

@@ -105,16 +105,16 @@
 //
 //	@Override
 //	public void onClick() {
-//		throw new MethodNotImplementedException();
+//		throw new UnsupportedOperationException();
 //	}
 //
 //	@Override
 //	public IElement<?> elementAt(int index) {
-//		throw new MethodNotImplementedException();
+//		throw new UnsupportedOperationException();
 //	}
 //
 //	@Override
 //	public int headerHeight() {
-//		throw new MethodNotImplementedException();
+//		throw new UnsupportedOperationException();
 //	}
 //}
