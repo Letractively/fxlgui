@@ -51,10 +51,10 @@ public class StatusPanel {
 		IBorder b = dialog.border();
 		b.style().shadow();
 		IHorizontalPanel spacing = dialog.container().panel().horizontal()
-				.spacing(6);
+				.spacing(5);
 		spacing.color().rgb(255, 240, 170);
 		spacing.addSpace(4).add().label().text("Please wait - " + info + "...")
-				.font().pixel(10);
+				.font().pixel(11);
 		spacing.addSpace(4);
 		// dialog.center();
 		int x = (display.width() - dialog.width()) / 2;
