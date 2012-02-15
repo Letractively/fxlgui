@@ -30,8 +30,7 @@ public class StatusPanel {
 
 	public static void start(String status) {
 		lastStatus = status;
-		lastPopUp = showPopUp(Display.instance(), "Loading " + status + "...",
-				true, 0);
+		lastPopUp = showPopUp(Display.instance(), "Loading " + status, true, 0);
 	}
 
 	public static void stop(String status) {
