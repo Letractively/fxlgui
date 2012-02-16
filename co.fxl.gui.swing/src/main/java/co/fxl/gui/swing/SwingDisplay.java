@@ -60,6 +60,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 	private int widthPixel = 320;
 	private int heightPixel = 240;
 	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
+	private Map<Class<?>, Object> services = new HashMap<Class<?>, Object>();
 	Map<Class<?>, IPanelProvider<?>> panelProviders = new HashMap<Class<?>, IPanelProvider<?>>();
 	private SwingUncaughtExceptionHandler uncaughtExceptionHandler;
 	boolean waiting;
@@ -287,7 +288,8 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	@Override
 	public boolean supports(Class<?> widgetClass) {
-		return widgetProviders.containsKey(widgetClass);
+		return widgetProviders.containsKey(widgetClass)
+				|| services.containsKey(widgetClass);
 	}
 
 	@Override
@@ -395,5 +397,24 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 	public IDisplay ensure(ICallback<Void> callback, Class<?>... widgetClass) {
 		callback.onSuccess(null);
 		return this;
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public IDisplay register(IAsyncServiceProvider... serviceProvider) {
+		for (final IAsyncServiceProvider runnable : serviceProvider)
+			runnable.loadAsync(new CallbackTemplate<Object>() {
+				@Override
+				public void onSuccess(Object result) {
+					services.put(runnable.serviceType(), result);
+				}
+			});
+		return this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> T service(Class<T> clazz) {
+		return (T) services.get(clazz);
 	}
 }

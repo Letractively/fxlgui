@@ -94,6 +94,8 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	static int lastClickX = 0;
 	static int lastClickY = 0;
 	private Scheduler scheduler = new SchedulerImpl();
+	private Map<Class<?>, IAsyncServiceProvider<?>> asyncServices = new HashMap<Class<?>, IAsyncServiceProvider<?>>();
+	private Map<Class<?>, Object> services = new HashMap<Class<?>, Object>();
 
 	public static void notifyEvent(DomEvent<?> event) {
 		final NativeEvent nativeEvent = event.getNativeEvent();
@@ -404,7 +406,9 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	@Override
 	public boolean supports(Class<?> widgetClass) {
 		return widgetProviders.containsKey(widgetClass)
-				|| asyncWidgetProviders.containsKey(widgetClass);
+				|| asyncWidgetProviders.containsKey(widgetClass)
+				|| services.containsKey(widgetClass)
+				|| asyncServices.containsKey(widgetClass);
 	}
 
 	@Override
@@ -468,9 +472,10 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public IDisplay ensure(Class<?> interfaceClass,
 			final ICallback<Void> callback) {
-		if (!widgetProviders.containsKey(interfaceClass)) {
-			if (!asyncWidgetProviders.containsKey(interfaceClass))
-				throw new WidgetProviderNotFoundException(interfaceClass);
+		if (widgetProviders.containsKey(interfaceClass)
+				|| services.containsKey(interfaceClass)) {
+			callback.onSuccess(null);
+		} else if (asyncWidgetProviders.containsKey(interfaceClass)) {
 			IAsyncWidgetProvider wp = asyncWidgetProviders.get(interfaceClass);
 			wp.loadAsync(new CallbackTemplate<IWidgetProvider>() {
 				@Override
@@ -479,8 +484,17 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 					callback.onSuccess(null);
 				}
 			});
+		} else if (asyncServices.containsKey(interfaceClass)) {
+			final IAsyncServiceProvider wp = asyncServices.get(interfaceClass);
+			wp.loadAsync(new CallbackTemplate<Object>() {
+				@Override
+				public void onSuccess(Object result) {
+					services.put(wp.serviceType(), result);
+					callback.onSuccess(null);
+				}
+			});
 		} else {
-			callback.onSuccess(null);
+			throw new WidgetProviderNotFoundException(interfaceClass);
 		}
 		return this;
 	}
@@ -509,5 +523,18 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 				}
 			});
 		}
+	}
+
+	@Override
+	public IDisplay register(IAsyncServiceProvider<?>... serviceProviders) {
+		for (IAsyncServiceProvider<?> serviceProvider : serviceProviders) {
+			asyncServices.put(serviceProvider.serviceType(), serviceProvider);
+		}
+		return this;
+	}
+
+	@Override
+	public <T> T service(Class<T> clazz) {
+		throw new UnsupportedOperationException();
 	}
 }

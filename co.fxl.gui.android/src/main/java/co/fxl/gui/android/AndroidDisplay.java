@@ -231,4 +231,14 @@ public class AndroidDisplay implements IDisplay, Parent {
 	public IDisplay ensure(ICallback<Void> callback, Class<?>... widgetClass) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public IDisplay register(IAsyncServiceProvider<?>... serviceProvider) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public <T> T service(Class<T> clazz) {
+		throw new UnsupportedOperationException();
+	}
 }
