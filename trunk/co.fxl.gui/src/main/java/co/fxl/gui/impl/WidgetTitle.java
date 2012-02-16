@@ -65,6 +65,7 @@ public class WidgetTitle implements IClickListener {
 	private IGridPanel bPanel;
 	private String titleUpperCase;
 	private boolean hyperlinkVisible = true;
+	private IDockPanel footer;
 
 	public WidgetTitle() {
 	}
@@ -145,11 +146,11 @@ public class WidgetTitle implements IClickListener {
 		} else {
 			if (commandPanel != null)
 				return;
-			IDockPanel vertical = bottom().panel().dock();
-			vertical.center().panel().vertical();
-			IContainer cell = vertical.right();
+			footer = bottom().panel().dock();
+			footer.center().panel().vertical();
+			IContainer cell = footer.right();
 			commandPanel = cell.panel().horizontal().spacing(6);
-			styleFooter(vertical);
+			styleFooter(footer);
 		}
 	}
 
@@ -348,5 +349,14 @@ public class WidgetTitle implements IClickListener {
 	public WidgetTitle hyperlinkVisible(boolean hyperlinkVisible) {
 		this.hyperlinkVisible = hyperlinkVisible;
 		return this;
+	}
+
+	public void adjustHeader() {
+		// headerPanel.color().rgb(225, 225, 225).gradient().vertical()
+		// .rgb(245, 245, 245);
+		// headerLabel.font().color().black();
+		// footer.color().white().gradient().vertical().white();
+		// footer.border().remove();
+		headerPanel.height(footer.height());
 	}
 }

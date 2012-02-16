@@ -175,6 +175,7 @@ public class DialogImpl implements IDialog {
 	IPopUp getPopUp() {
 		if (popUp == null) {
 			popUp = display.showPopUp().modal(modal).autoHide(false);
+			popUp.border().remove();
 			popUp.border().style().shadow();
 			if (width != -1 && height != -1) {
 				popUp.size(width, height);
@@ -208,18 +209,23 @@ public class DialogImpl implements IDialog {
 				decorate(popUp, panel);
 			} else
 				container = content;
+			if (panel.width() < 200)
+				panel.width(200);
+			if (content.element().height() < 40)
+				content.element().height(40);
+			t.adjustHeader();
 		}
 		return popUp;
 	}
 
 	protected void createLabel(IContainer content) {
-		IGridPanel grid = content.panel().vertical().add().panel()
-				.grid().spacing(10).resize(2, 1);
+		IGridPanel grid = content.panel().vertical().add().panel().grid()
+				.spacing(10).resize(2, 1);
 		if (width != -1)
 			decorate(grid);
-		grid.cell(0, 0).align().begin().valign().begin().image()
+		grid.cell(0, 0).width(16).align().begin().valign().begin().image()
 				.resource(image(type)).size(16, 16);
-		IGridCell c = grid.cell(1, 0).valign().center();
+		IGridCell c = grid.cell(1, 0).align().begin().valign().center();
 		if (width != -1)
 			c.width(width - 3 * 10 - 16);
 		c.label().text(message).autoWrap(true);
