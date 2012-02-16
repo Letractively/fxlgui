@@ -26,20 +26,20 @@ public abstract class AsyncWidgetProviderImpl<T> implements
 		IAsyncWidgetProvider<T> {
 
 	protected Class<T> clazz;
-	private String id;
+	private String id = "widgets";
 
 	public AsyncWidgetProviderImpl(Class<T> clazz) {
 		this.clazz = clazz;
-		String simpleName = clazz.getName().substring(
-				clazz.getName().lastIndexOf(".") + 1);
-		StringBuilder b = new StringBuilder(simpleName.charAt(0));
-		for (int i = 1; i < simpleName.length(); i++) {
-			if (Character.isUpperCase(simpleName.charAt(i))) {
-				b.append(" ");
-			}
-			b.append(simpleName.charAt(i));
-		}
-		id = b.toString().toLowerCase();
+		// String simpleName = clazz.getName().substring(
+		// clazz.getName().lastIndexOf(".") + 1);
+		// StringBuilder b = new StringBuilder(simpleName.charAt(0));
+		// for (int i = 1; i < simpleName.length(); i++) {
+		// if (Character.isUpperCase(simpleName.charAt(i))) {
+		// b.append(" ");
+		// }
+		// b.append(simpleName.charAt(i));
+		// }
+		// id = b.toString().toLowerCase();
 	}
 
 	@Override
