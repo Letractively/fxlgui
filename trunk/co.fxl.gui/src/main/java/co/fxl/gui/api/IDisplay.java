@@ -20,13 +20,6 @@ package co.fxl.gui.api;
 
 public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
-	public interface IAsyncServiceProvider<T> {
-
-		Class<T> serviceType();
-
-		void loadAsync(ICallback<T> callback);
-	}
-
 	public interface IResizeListener {
 
 		boolean onResize(int width, int height);

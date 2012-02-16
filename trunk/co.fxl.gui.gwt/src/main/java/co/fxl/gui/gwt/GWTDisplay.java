@@ -486,10 +486,10 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 			});
 		} else if (asyncServices.containsKey(interfaceClass)) {
 			final IAsyncServiceProvider wp = asyncServices.get(interfaceClass);
-			wp.loadAsync(new CallbackTemplate<Object>() {
+			wp.loadAsync(new CallbackTemplate<IServiceProvider>() {
 				@Override
-				public void onSuccess(Object result) {
-					services.put(wp.serviceType(), result);
+				public void onSuccess(IServiceProvider result) {
+					register(result);
 					callback.onSuccess(null);
 				}
 			});
@@ -533,8 +533,17 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		return this;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T service(Class<T> clazz) {
-		throw new UnsupportedOperationException();
+		return (T) services.get(clazz);
+	}
+
+	@Override
+	public IDisplay register(
+			co.fxl.gui.api.IRegistry.IServiceProvider<?>... services) {
+		for (IServiceProvider<?> service : services)
+			this.services.put(service.serviceType(), service.getService());
+		return this;
 	}
 }

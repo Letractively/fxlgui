@@ -417,4 +417,12 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 	public <T> T service(Class<T> clazz) {
 		return (T) services.get(clazz);
 	}
+
+	@Override
+	public IDisplay register(
+			co.fxl.gui.api.IRegistry.IServiceProvider<?>... services) {
+		for (IServiceProvider<?> service : services)
+			this.services.put(service.serviceType(), service.getService());
+		return this;
+	}
 }
