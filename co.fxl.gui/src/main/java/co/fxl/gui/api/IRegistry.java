@@ -18,9 +18,21 @@
  */
 package co.fxl.gui.api;
 
-import co.fxl.gui.api.IDisplay.IAsyncServiceProvider;
-
 public interface IRegistry<R> {
+
+	public interface IAsyncServiceProvider<T> {
+
+		Class<T> serviceType();
+
+		void loadAsync(ICallback<IServiceProvider<T>> callback);
+	}
+
+	public interface IServiceProvider<T> {
+
+		Class<T> serviceType();
+
+		T getService();
+	}
 
 	R register(IPanelProvider<?>... layoutProvider);
 
@@ -29,6 +41,8 @@ public interface IRegistry<R> {
 	R register(IWidgetProvider.IAsyncWidgetProvider<?>... widgetProvider);
 
 	R register(IAsyncServiceProvider<?>... serviceProvider);
+
+	R register(IServiceProvider<?>... service);
 
 	boolean supports(Class<?> widgetClass);
 

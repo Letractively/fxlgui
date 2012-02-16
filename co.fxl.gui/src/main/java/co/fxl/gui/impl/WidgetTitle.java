@@ -357,6 +357,7 @@ public class WidgetTitle implements IClickListener {
 		// headerLabel.font().color().black();
 		// footer.color().white().gradient().vertical().white();
 		// footer.border().remove();
-		headerPanel.height(footer.height());
+		if (headerPanel != null && footer != null)
+			headerPanel.height(footer.height());
 	}
 }

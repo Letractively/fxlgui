@@ -241,4 +241,10 @@ public class AndroidDisplay implements IDisplay, Parent {
 	public <T> T service(Class<T> clazz) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public IDisplay register(
+			co.fxl.gui.api.IRegistry.IServiceProvider<?>... service) {
+		throw new UnsupportedOperationException();
+	}
 }
