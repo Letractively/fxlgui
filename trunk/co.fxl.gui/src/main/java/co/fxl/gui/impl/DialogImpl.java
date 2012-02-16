@@ -165,7 +165,7 @@ public class DialogImpl implements IDialog {
 				getPopUp();
 			else {
 				popUp = display.showPopUp().modal(modal);
-				popUp.border().style().shadow();
+				decorateBorder();
 				container = popUp.container();
 			}
 		}
@@ -175,8 +175,7 @@ public class DialogImpl implements IDialog {
 	IPopUp getPopUp() {
 		if (popUp == null) {
 			popUp = display.showPopUp().modal(modal).autoHide(false);
-			popUp.border().remove();
-			popUp.border().style().shadow();
+			decorateBorder();
 			if (width != -1 && height != -1) {
 				popUp.size(width, height);
 			} else if (width != -1) {
@@ -216,6 +215,12 @@ public class DialogImpl implements IDialog {
 			t.adjustHeader();
 		}
 		return popUp;
+	}
+
+	void decorateBorder() {
+		popUp.border().remove();
+		popUp.border().width(1);
+		popUp.border().style().shadow();
 	}
 
 	protected void createLabel(IContainer content) {
