@@ -1,6 +1,4 @@
 /**
- * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
- *  
  * This file is part of FXL GUI API.
  *  
  * FXL GUI API is free software: you can redistribute it and/or modify
@@ -15,10 +13,27 @@
  *  
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.android;
+package co.fxl.gui.api;
 
-@SuppressWarnings("serial")
-class MethodNotImplementedException extends RuntimeException {
+import co.fxl.gui.api.IDisplay.IAsyncServiceProvider;
+
+public interface IRegistry<R> {
+
+	R register(IPanelProvider<?>... layoutProvider);
+
+	R register(IWidgetProvider<?>... widgetProvider);
+
+	R register(IWidgetProvider.IAsyncWidgetProvider<?>... widgetProvider);
+
+	R register(IAsyncServiceProvider<?>... serviceProvider);
+
+	boolean supports(Class<?> widgetClass);
+
+	R ensure(ICallback<Void> callback, Class<?>... widgetClass);
+
+	<T> T service(Class<T> clazz);
 
 }

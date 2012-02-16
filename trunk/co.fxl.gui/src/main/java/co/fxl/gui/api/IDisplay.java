@@ -18,7 +18,14 @@
  */
 package co.fxl.gui.api;
 
-public interface IDisplay extends IColored {
+public interface IDisplay extends IColored, IRegistry<IDisplay> {
+
+	public interface IAsyncServiceProvider<T> {
+
+		Class<T> serviceType();
+
+		void loadAsync(ICallback<T> callback);
+	}
 
 	public interface IResizeListener {
 
@@ -44,16 +51,6 @@ public interface IDisplay extends IColored {
 
 	IDisplay fullscreen();
 
-	IDisplay register(IPanelProvider<?>... layoutProvider);
-
-	IDisplay register(IWidgetProvider<?>... widgetProvider);
-
-	IDisplay register(IWidgetProvider.IAsyncWidgetProvider<?>... widgetProvider);
-
-	boolean supports(Class<?> widgetClass);
-
-	IDisplay ensure(ICallback<Void> callback, Class<?>... widgetClass);
-
 	IDialog showDialog();
 
 	IWebsite showWebsite();
@@ -77,10 +74,6 @@ public interface IDisplay extends IColored {
 	IDisplay invokeLater(Runnable runnable);
 
 	IDisplay invokeLater(Runnable runnable, int ms);
-
-	// TODO eventually extract to ICodeSplit or something similar
-	// TODO eventually implement code splitting as aspect
-	// IDisplay runAsync(Runnable runnable);
 
 	String title();
 
