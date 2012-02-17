@@ -180,4 +180,9 @@ public class FieldTypeImpl implements IFieldType {
 	public boolean isRelation() {
 		return isRelation;
 	}
+
+	@Override
+	public boolean isText() {
+		return clazz.equals(String.class) && values == null;
+	}
 }

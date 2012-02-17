@@ -63,4 +63,6 @@ public interface IFieldType {
 	IFieldType doubleValue();
 
 	boolean isRelation();
+
+	boolean isText();
 }
