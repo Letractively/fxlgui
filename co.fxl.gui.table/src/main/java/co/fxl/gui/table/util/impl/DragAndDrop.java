@@ -15,6 +15,8 @@ class DragAndDrop implements IDragStartListener, IDropListener,
 	private LazyScrollPaneImpl pane;
 	private IFocusPanel focusPanel;
 	private int dragIndex;
+	private int overIndex = -1;
+	private Where where = null;
 
 	DragAndDrop(LazyScrollPaneImpl pane, IFocusPanel focusPanel) {
 		this.pane = pane;
@@ -53,6 +55,7 @@ class DragAndDrop implements IDragStartListener, IDropListener,
 	@Override
 	public void onDragEnd() {
 		dragIndex = -1;
+		overIndex = -1;
 	}
 
 	@Override
@@ -61,20 +64,6 @@ class DragAndDrop implements IDragStartListener, IDropListener,
 		if (allowsDrop(index)) {
 			Where where = getWhere(point);
 			pane.dragDropListener.drop(dragIndex, index, where,
-					new CallbackTemplate<Void>() {
-						@Override
-						public void onSuccess(Void result) {
-							pane.refresh();
-						}
-					});
-		}
-	}
-
-	@Override
-	public void onDragOver(IPoint point) {
-		int index = getIndex(point);
-		if (allowsDrop(index)) {
-			pane.dragDropListener.over(dragIndex, index, getWhere(point),
 					new CallbackTemplate<Void>() {
 						@Override
 						public void onSuccess(Void result) {
@@ -123,6 +112,29 @@ class DragAndDrop implements IDragStartListener, IDropListener,
 			}
 		}
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void onDragOver(IPoint point) {
+		int index = getIndex(point);
+		if (index == dragIndex)
+			return;
+		if (!allowsDrop(index))
+			return;
+		if (overIndex != -1 && overIndex == index) {
+			return;
+		}
+		if (overIndex != -1)
+			pane.dragDropListener.out(pane.decorator.elementAt(overIndex), dragIndex, overIndex, where);
+		overIndex = index;
+		where = getWhere(point);
+		if (dragIndex == overIndex)
+			return;
+		if (where.equals(Where.AFTER) && dragIndex - 1 == overIndex)
+			return;
+		if (where.equals(Where.BEFORE) && dragIndex + 1 == overIndex)
+			return;
+		pane.dragDropListener.over(pane.decorator.elementAt(overIndex), dragIndex, overIndex, where);
 	}
 
 	@Override

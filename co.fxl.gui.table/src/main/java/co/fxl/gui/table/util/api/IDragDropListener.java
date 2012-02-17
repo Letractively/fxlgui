@@ -19,6 +19,7 @@
 package co.fxl.gui.table.util.api;
 
 import co.fxl.gui.api.ICallback;
+import co.fxl.gui.api.IElement;
 
 public interface IDragDropListener {
 
@@ -29,7 +30,9 @@ public interface IDragDropListener {
 
 	boolean allowsDrop(int rowIndex);
 
-	void over(int dragIndex, int dropIndex, Where where, ICallback<Void> cb);
+	void over(IElement<?> element, int dragIndex, int dropIndex, Where where);
+
+	void out(IElement<?> element, int dragIndex, int dropIndex, Where where);
 
 	void drop(int dragIndex, int dropIndex, Where where, ICallback<Void> cb);
 

@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
@@ -32,7 +33,6 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
-import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.ILabel;
@@ -1250,5 +1250,10 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (preselectedList == null || preselectedList.isEmpty())
 			return -1;
 		return rows.find(preselectedList.get(0));
+	}
+
+	@Override
+	public int width() {
+		return contentPanel.width();
 	}
 }

@@ -653,4 +653,11 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		};
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public R opacity(double opacity) {
+		container.widget.getElement().getStyle().setOpacity(opacity);
+		return (R) this;
+	}
+
 }
