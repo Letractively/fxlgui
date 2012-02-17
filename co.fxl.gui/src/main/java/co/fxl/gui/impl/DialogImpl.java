@@ -210,7 +210,8 @@ public class DialogImpl implements IDialog {
 				container = content;
 			if (panel.width() < 200)
 				panel.width(200);
-			if (content.element().nativeElement() != null
+			if (content != null && content.element() != null
+					&& content.element().nativeElement() != null
 					&& content.element().height() < 40)
 				content.element().height(40);
 			t.adjustHeader();
