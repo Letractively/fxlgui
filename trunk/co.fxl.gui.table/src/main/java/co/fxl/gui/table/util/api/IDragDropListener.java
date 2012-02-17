@@ -29,6 +29,8 @@ public interface IDragDropListener {
 
 	boolean allowsDrop(int rowIndex);
 
+	void over(int dragIndex, int dropIndex, Where where, ICallback<Void> cb);
+
 	void drop(int dragIndex, int dropIndex, Where where, ICallback<Void> cb);
 
 }
