@@ -186,5 +186,7 @@ public interface IScrollTableWidget<T> {
 	IScrollTableWidget<T> cellUpdateListener(
 			ICellUpdateListener cellUpdateListener);
 
+	int width();
+
 	// IVerticalPanel editPanel();
 }

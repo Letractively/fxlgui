@@ -45,4 +45,6 @@ public interface IElement<T> extends ILocated<T> {
 
 	T margin(int margin);
 
+	T opacity(double opacity);
+
 }

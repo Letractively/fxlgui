@@ -224,4 +224,11 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 	public T margin(int margin) {
 		throw new UnsupportedOperationException();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public T opacity(double opacity) {
+		// TODO ... throw new UnsupportedOperationException();
+		return (T) this;
+	}
 }

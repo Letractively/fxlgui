@@ -192,4 +192,9 @@ class AndroidScrollPane implements IScrollPane, Parent {
 	public IScrollPane margin(int margin) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public IScrollPane opacity(double opacity) {
+		throw new UnsupportedOperationException();
+	}
 }

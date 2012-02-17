@@ -467,4 +467,11 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 		};
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public R opacity(double opacity) {
+		// TODO ... throw new UnsupportedOperationException();
+		return (R) this;
+	}
+
 }
