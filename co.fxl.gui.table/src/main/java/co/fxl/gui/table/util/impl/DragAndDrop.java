@@ -74,8 +74,7 @@ class DragAndDrop implements IDragStartListener, IDropListener,
 	public void onDragOver(IPoint point) {
 		int index = getIndex(point);
 		if (allowsDrop(index)) {
-			Where where = getWhere(point);
-			pane.dragDropListener.over(dragIndex, index, where,
+			pane.dragDropListener.over(dragIndex, index, getWhere(point),
 					new CallbackTemplate<Void>() {
 						@Override
 						public void onSuccess(Void result) {
