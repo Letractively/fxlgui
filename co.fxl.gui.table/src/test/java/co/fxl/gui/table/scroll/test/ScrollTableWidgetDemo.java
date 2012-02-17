@@ -118,4 +118,10 @@ public class ScrollTableWidgetDemo implements IDragDropListener {
 		widget.visible(true);
 	}
 
+	@Override
+	public void over(int dragIndex, int dropIndex, Where where,
+			ICallback<Void> cb) {
+		throw new UnsupportedOperationException();
+	}
+
 }

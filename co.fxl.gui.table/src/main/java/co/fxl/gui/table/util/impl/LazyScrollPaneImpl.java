@@ -21,27 +21,22 @@ package co.fxl.gui.table.util.impl;
 import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IDraggable.IDragStartListener;
-import co.fxl.gui.api.IDropTarget.IDropListener;
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
-import co.fxl.gui.api.IPoint;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.table.util.api.IDragDropListener;
-import co.fxl.gui.table.util.api.IDragDropListener.Where;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 import co.fxl.gui.table.util.api.IUpDownIndex;
 
 public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
-	// TODO FEATURE-COMPLETE: USABILITY: KEYS: Ctrl+C, Ctrl+V, etc. for Context-Menu-Items
+	// TODO FEATURE-COMPLETE: USABILITY: KEYS: Ctrl+C, Ctrl+V, etc. for
+	// Context-Menu-Items
 
 	// TODO BUG/Usability: sometimes / under certain circumstances: an expand
 	// shifts the displayed range upwards
@@ -54,22 +49,20 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	public static final int HEIGHT_SCROLL_BAR = 17;
 	private static final int BLOCK_INCREMENT = 22;
 	private static final int HEIGHT_CORRECTION = 7;
-	// public static boolean USE_DOCK_PANEL = false;
 	private int widthScrollPanel = WIDTH_SCROLL_PANEL;
-	private IDecorator decorator;
+	IDecorator decorator;
 	private int minRowHeight = 22;
 	private int height = 400;
 	private IContainer container;
-	// previously: FlipPage
 	private IVerticalPanel treeScrollPanelContainer;
-	private int rowIndex = 0;
+	int rowIndex = 0;
 	private IAbsolutePanel scrollContentPanel;
 	private int size;
 	private int rows2Paint = height / minRowHeight;
 	private IScrollPane scrollPane;
 	int maxRowIndex;
 	int maxOffset;
-	private int lastIndex;
+	int lastIndex;
 	private boolean horizontalScrollPane = false;
 	private boolean adjustHeights = true;
 	private int width = -1;
@@ -80,8 +73,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	private int[] rowHeights;
 	private int heightEstimate = 0;
 	private boolean holdScroll;
-	private boolean allowInsertUnder;
-	private IDragDropListener dragDropListener;
+	boolean allowInsertUnder;
+	IDragDropListener dragDropListener;
 	private IUpDownIndex upDownIndex;
 
 	LazyScrollPaneImpl(IContainer container) {
@@ -172,7 +165,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		hasScrollbar = true;
 		v = container.panel().focus();
 		v.color().white();
-		// addDragListener(v);
+		// new DragAndDrop(this, v);
 		ILayout layout = v.add().panel();
 		treeDockPanel = getPanel(layout);
 		if (!adjustHeights) {
@@ -312,112 +305,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		refresh();
 	}
 
-	private int dragIndex = -1;
-	private boolean hasHeader = true;
+	boolean hasHeader = true;
 	private boolean hasScrollbar = true;
-
-	private void addDragListener(final IFocusPanel v) {
-		if (dragDropListener == null)
-			return;
-		// v.addDragOverListener(new IDragMoveListener() {
-		//
-		// private Integer inc = null;
-		//
-		// private void start(int offsetY) {
-		// if (inc == null) {
-		// inc = getInc(offsetY);
-		// runAndSchedule();
-		// }
-		// }
-		//
-		// private void runAndSchedule() {
-		// if (inc == null)
-		// return;
-		// if (inc < 0)
-		// onKeyUp();
-		// else
-		// onKeyDown();
-		// if (inc != null)
-		// Display.instance().invokeLater(new Runnable() {
-		//
-		// @Override
-		// public void run() {
-		// runAndSchedule();
-		// }
-		// }, 200);
-		// }
-		//
-		// private int getInc(int offsetY) {
-		// if (offsetY < 0) {
-		// return -1;
-		// } else {
-		// return 1;
-		// }
-		// }
-		//
-		// private void end(int offsetY) {
-		// inc = null;
-		// }
-		//
-		// @Override
-		// public void onDragOver(IPoint point) {
-		// end(point.offsetY());
-		// }
-		//
-		// @Override
-		// public void onDragOut(IPoint point) {
-		// start(point.offsetY());
-		// }
-		//
-		// });
-		v.addDragStartListener(new IDragStartListener() {
-
-			@Override
-			public void onDragStart(IDragStartEvent event) {
-				int y = event.offsetY();
-				dragIndex = getIndex(y);
-				if (dragIndex != -1) {
-					IElement<?> element = decorator.elementAt(dragIndex);
-					event.dragImage(element);
-				}
-			}
-
-			@Override
-			public void onDragEnd() {
-				dragIndex = -1;
-			}
-		});
-		v.addDropListener(new IDropListener() {
-
-			@Override
-			public void onDropOn(IPoint point) {
-				if (dragIndex == -1)
-					return;
-				int offsetY = point.offsetY();
-				int index = getIndex(offsetY);
-				if (index != -1 && dragDropListener.allowsDrop(index)) {
-					boolean insertUnder = allowInsertUnder
-							&& point.offsetX() > v.width() / 2;
-					Where where = Where.UNDER;
-					if (!insertUnder) {
-						int[] rangeAndRowHeight = getRangeAndRowHeight(offsetY);
-						if (offsetY <= rangeAndRowHeight[0]
-								+ rangeAndRowHeight[1] / 2)
-							where = Where.BEFORE;
-						else
-							where = Where.AFTER;
-					}
-					dragDropListener.drop(dragIndex, index, where,
-							new CallbackTemplate<Void>() {
-								@Override
-								public void onSuccess(Void result) {
-									refresh();
-								}
-							});
-				}
-			}
-		});
-	}
 
 	public void addKeyListeners(final IKeyRecipient<?> v) {
 		v.addKeyListener(new IClickListener() {
@@ -612,36 +501,6 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		this.allowInsertUnder = allowInsertUnder;
 		this.dragDropListener = l;
 		return this;
-	}
-
-	public int getIndex(int y) {
-		int index = rowIndex;
-		int range = hasHeader ? decorator.headerHeight() : 0;
-		if (y <= range)
-			return 0;
-		for (; index <= lastIndex; index++) {
-			int rowHeight = rowHeight(index);
-			if (y >= range && y <= range + rowHeight) {
-				return index;
-			} else {
-				range += rowHeight;
-			}
-		}
-		return -1;
-	}
-
-	public int[] getRangeAndRowHeight(int y) {
-		int index = rowIndex;
-		int range = hasHeader ? decorator.headerHeight() : 0;
-		for (; index <= lastIndex; index++) {
-			int rowHeight = rowHeight(index);
-			if (y >= range && y <= range + rowHeight) {
-				return new int[] { range, rowHeight };
-			} else {
-				range += rowHeight;
-			}
-		}
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
