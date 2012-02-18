@@ -107,4 +107,6 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 	IElement<?> elementAt(int index);
 
 	Object focusPanel();
+
+	int columnCount();
 }
