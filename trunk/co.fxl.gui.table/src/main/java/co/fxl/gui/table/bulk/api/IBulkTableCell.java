@@ -39,4 +39,6 @@ public interface IBulkTableCell {
 	IBulkTableCell updateListener(IUpdateListener<?> updateListener);
 
 	IContainer container();
+
+	Object nativeElement();
 }

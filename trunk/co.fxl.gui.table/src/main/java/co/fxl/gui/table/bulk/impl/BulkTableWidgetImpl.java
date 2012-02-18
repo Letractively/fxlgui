@@ -271,6 +271,11 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 			public IBulkTableCell image(String image) {
 				throw new UnsupportedOperationException();
 			}
+
+			@Override
+			public Object nativeElement() {
+				throw new UnsupportedOperationException();
+			}
 		};
 	}
 
