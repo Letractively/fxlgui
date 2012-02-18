@@ -18,30 +18,43 @@
  */
 package co.fxl.gui.gwt;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import co.fxl.gui.api.ICheckBox;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.CheckBox;
 
-class GWTCheckBox extends GWTElement<CheckBox, ICheckBox> implements ICheckBox {
+public class GWTCheckBox extends GWTElement<CheckBox, ICheckBox> implements
+		ICheckBox {
+
+	protected List<IUpdateListener<Boolean>> listeners = new LinkedList<IUpdateListener<Boolean>>();
 
 	GWTCheckBox(GWTContainer<CheckBox> container) {
 		super(container);
+		init();
+	}
+
+	public void init() {
 		container.widget.addStyleName("gwt-Checkbox-FXL");
 		container.widget.setValue(false);
 		defaultFont().color().black();
-	}
-
-	@Override
-	public ICheckBox addUpdateListener(final IUpdateListener<Boolean> listener) {
 		container.widget.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				listener.onUpdate(checked());
+				boolean c = checked();
+				for (IUpdateListener<Boolean> listener : listeners)
+					listener.onUpdate(c);
 			}
 		});
+	}
+
+	@Override
+	public ICheckBox addUpdateListener(final IUpdateListener<Boolean> listener) {
+		listeners.add(listener);
 		return this;
 	}
 
