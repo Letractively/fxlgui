@@ -36,6 +36,27 @@ public class FieldTypeImpl implements IFieldType {
 	public boolean isColor = false;
 	public boolean isHTML = false;
 
+	public boolean equals(Object o) {
+		FieldTypeImpl t = (FieldTypeImpl) o;
+		if (!(clazz.equals(t.clazz) && isLong == t.isLong
+				&& isRelation == t.isRelation && maxLength == t.maxLength
+				&& encryptedText == t.encryptedText && isShort == t.isShort
+				&& isColor == t.isColor && isHTML == t.isHTML))
+			return false;
+		if (values == null)
+			return t.values == null;
+		if (values.size() != t.values.size())
+			return false;
+		for (int i = 0; i < values.size(); i++) {
+			if (values.get(i) == null)
+				if (t.values.get(i) != null)
+					return false;
+			if (!values.get(i).equals(t.values.get(i)))
+				return false;
+		}
+		return true;
+	}
+
 	@Override
 	public String toString() {
 		return isHTML ? "HTML" : String.valueOf(clazz);
