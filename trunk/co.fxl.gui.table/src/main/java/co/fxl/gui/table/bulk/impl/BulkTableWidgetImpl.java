@@ -441,4 +441,9 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	public Object focusPanel() {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public int columnCount() {
+		return grid.columns();
+	}
 }
