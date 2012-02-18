@@ -185,4 +185,9 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 				l.onUpdate(text);
 		}
 	}
+
+	@Override
+	public boolean editable() {
+		return container.widget.isEnabled();
+	}
 }

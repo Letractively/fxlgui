@@ -117,4 +117,9 @@ class AndroidComboBox extends AndroidElement<Spinner, IComboBox> implements
 	public IComboBox addNull() {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public boolean editable() {
+		throw new UnsupportedOperationException();
+	}
 }

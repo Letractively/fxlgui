@@ -38,6 +38,7 @@ import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.ITextInput;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.DiscardChangesDialog;
+import co.fxl.gui.impl.FieldTypeImpl;
 
 public class Validation {
 
@@ -523,6 +524,39 @@ public class Validation {
 			linkInput((ITextField) valueElement, status);
 		else
 			throw new UnsupportedOperationException();
+	}
+
+	public void validate(Object valueElement, boolean required,
+			FieldTypeImpl type) {
+		if (valueElement instanceof ITextArea) {
+			linkInput((ITextArea) valueElement, required);
+		} else if (valueElement instanceof ITextField) {
+			if (type.clazz.equals(Date.class)) {
+				if (type.isLong) {
+					validateDate((ITextField) valueElement, Format.dateTime(),
+							required);
+				} else if (type.isShort) {
+					validateDate((ITextField) valueElement, Format.time(),
+							required);
+				} else
+
+					validateDate((ITextField) valueElement, required);
+			} else if (type.clazz.equals(Integer.class)) {
+				validateLong((ITextField) valueElement, required);
+			} else {
+				linkInput((ITextField) valueElement, required);
+			}
+		} else if (valueElement instanceof IPasswordField) {
+			linkInput((IPasswordField) valueElement, required);
+		} else if (valueElement instanceof ICheckBox) {
+			linkInput((ICheckBox) valueElement);
+		} else if (valueElement instanceof IComboBox) {
+			linkInput((IComboBox) valueElement, required);
+		} else if (valueElement instanceof IRichTextArea) {
+			linkInput((IRichTextArea) valueElement, required);
+		} else
+			throw new UnsupportedOperationException(valueElement.getClass()
+					.getName());
 	}
 
 }

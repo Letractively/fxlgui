@@ -22,7 +22,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.data.format.impl.Format;
 import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable;
@@ -38,7 +37,6 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
-import co.fxl.gui.api.IRichTextArea;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
@@ -46,6 +44,7 @@ import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IImageField;
 import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.WidgetTitle;
@@ -422,42 +421,9 @@ public class FormWidgetImpl implements IFormWidget {
 		if (validation == null)
 			return;
 		Object valueElement = formField.valueElement();
-		if (valueElement instanceof ITextArea) {
-			validation.linkInput((ITextArea) valueElement, formField.required);
-		} else if (valueElement instanceof ITextField) {
-			if (formField.type.clazz.equals(Date.class)) {
-				if (formField.type.isLong) {
-					validation.validateDate(
-							(ITextField) formField.valueElement(),
-							Format.dateTime(), formField.required);
-				} else if (formField.type.isShort) {
-					validation.validateDate(
-							(ITextField) formField.valueElement(),
-							Format.time(), formField.required);
-				} else
-					validation.validateDate(
-							(ITextField) formField.valueElement(),
-							formField.required);
-			} else if (formField.type.clazz.equals(Integer.class)) {
-				validation.validateLong((ITextField) formField.valueElement(),
-						formField.required);
-			} else {
-				validation.linkInput((ITextField) formField.valueElement(),
-						formField.required);
-			}
-		} else if (valueElement instanceof IPasswordField) {
-			validation.linkInput((IPasswordField) formField.valueElement(),
-					formField.required);
-		} else if (valueElement instanceof ICheckBox) {
-			validation.linkInput((ICheckBox) valueElement);
-		} else if (valueElement instanceof IComboBox) {
-			validation.linkInput((IComboBox) valueElement, formField.required);
-		} else if (valueElement instanceof IRichTextArea) {
-			validation.linkInput((IRichTextArea) valueElement,
-					formField.required);
-		} else
-			throw new UnsupportedOperationException(valueElement.getClass()
-					.getName());
+		boolean required = formField.required;
+		FieldTypeImpl type = formField.type;
+		validation.validate(valueElement, required, type);
 	}
 
 	IGridPanel grid() {

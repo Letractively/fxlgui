@@ -77,4 +77,9 @@ class SwingCheckBox extends SwingTextElement<JCheckBox, ICheckBox> implements
 		setText(text);
 		return this;
 	}
+
+	@Override
+	public boolean editable() {
+		return container.component.isEnabled();
+	}
 }
