@@ -78,4 +78,9 @@ class AndroidCheckBox extends AndroidElement<CheckBox, ICheckBox> implements
 		});
 		return this;
 	}
+
+	@Override
+	public boolean editable() {
+		throw new UnsupportedOperationException();
+	}
 }

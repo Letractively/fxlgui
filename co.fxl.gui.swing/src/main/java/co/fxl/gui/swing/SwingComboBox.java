@@ -146,4 +146,9 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 		value = text();
 		return this;
 	}
+
+	@Override
+	public boolean editable() {
+		return container.component.isEnabled();
+	}
 }

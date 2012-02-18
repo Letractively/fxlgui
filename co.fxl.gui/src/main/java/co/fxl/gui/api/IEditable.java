@@ -1,6 +1,4 @@
 /**
- * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
- *  
  * This file is part of FXL GUI API.
  *  
  * FXL GUI API is free software: you can redistribute it and/or modify
@@ -15,14 +13,15 @@
  *  
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
 package co.fxl.gui.api;
 
-public interface ICheckBox extends ITextElement<ICheckBox>,
-		IUpdateable<Boolean>, IFocusable<ICheckBox>, IKeyRecipient<ICheckBox>,
-		IEditable<ICheckBox> {
+public interface IEditable<T> {
 
-	ICheckBox checked(boolean checked);
+	T editable(boolean editable);
 
-	boolean checked();
+	boolean editable();
+
 }

@@ -81,4 +81,9 @@ class GWTCheckBox extends GWTElement<CheckBox, ICheckBox> implements ICheckBox {
 	public String text() {
 		return container.widget.getText();
 	}
+
+	@Override
+	public boolean editable() {
+		return container.widget.isEnabled();
+	}
 }
