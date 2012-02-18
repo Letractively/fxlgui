@@ -142,4 +142,12 @@ public class CommandLink implements IClickable<IClickable<?>> {
 		});
 		return this;
 	}
+
+	public void text(String string) {
+		label.text(string);
+	}
+
+	public void image(String string) {
+		image.resource(string);
+	}
 }
