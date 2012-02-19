@@ -20,7 +20,6 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IFocusPanel;
 
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -32,7 +31,7 @@ class GWTFocusPanel extends GWTPanel<FocusPanel, IFocusPanel> implements
 		super((GWTContainer<FocusPanel>) container);
 		container.widget.setWidth("100%");
 		container.widget.addStyleName("nooutline");
-		container.widget.getElement().setDraggable(Element.DRAGGABLE_FALSE);
+		// container.widget.getElement().setDraggable(Element.DRAGGABLE_FALSE);
 	}
 
 	@Override
