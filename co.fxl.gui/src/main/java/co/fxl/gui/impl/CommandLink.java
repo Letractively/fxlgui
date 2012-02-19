@@ -145,9 +145,13 @@ public class CommandLink implements IClickable<IClickable<?>> {
 
 	public void text(String string) {
 		label.text(string);
+		if (contextMenuEntry != null)
+			contextMenuEntry.text(string);
 	}
 
 	public void image(String string) {
 		image.resource(string);
+		if (contextMenuEntry != null)
+			contextMenuEntry.imageResource(string);
 	}
 }
