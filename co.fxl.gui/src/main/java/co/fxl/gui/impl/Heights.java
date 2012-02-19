@@ -47,7 +47,7 @@ public class Heights {
 		styleColor(textField);
 	}
 
-	private void styleColor(IColored label) {
+	public void styleColor(IColored label) {
 		// Styles.instance().style(colored, Style.Element.INPUT,
 		// Style.Element.BACKGROUND);
 		label.color().rgb(249, 249, 249);
