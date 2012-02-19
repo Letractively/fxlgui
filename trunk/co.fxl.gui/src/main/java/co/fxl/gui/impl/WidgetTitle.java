@@ -259,6 +259,11 @@ public class WidgetTitle implements IClickListener {
 		return cl;
 	}
 
+	public ToggleImageButton addToggleButton(String imageResource, String text) {
+		return new ToggleImageButton(addHyperlink(imageResource, text),
+				imageResource, text);
+	}
+
 	// @Style(window = Window.SIDE, outline = Outline.HEADER, element =
 	// Element.BUTTON)
 	public void styleWindowHeaderButton(IHorizontalPanel iPanel) {
