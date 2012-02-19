@@ -21,15 +21,16 @@ package co.fxl.gui.table.scroll.impl;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDraggable.IDragStartListener;
+import co.fxl.gui.api.IDropTarget.IDragEvent;
 import co.fxl.gui.api.IDropTarget.IDropListener;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
-import co.fxl.gui.api.IPoint;
 
 public class ColumnSelection {
 
+	private static final String COLUMN_SELECTION = "Column Selection";
 	TableWidgetAdp widget;
 	private ScrollTableColumnImpl dragged;
 	private ScrollTableColumnImpl dummy;
@@ -94,6 +95,7 @@ public class ColumnSelection {
 				dummyFocusPanel.visible(true);
 				dummyLabel.text(c.name);
 				event.dragImage(fp);
+				event.iD(COLUMN_SELECTION);
 			}
 
 			@Override
@@ -105,7 +107,9 @@ public class ColumnSelection {
 		fp.addDropListener(new IDropListener() {
 
 			@Override
-			public void onDropOn(IPoint point) {
+			public void onDropOn(IDragEvent point) {
+				if (point.iD() == null || !point.iD().equals(COLUMN_SELECTION))
+					return;
 				dropOnTo(c);
 				dragged = null;
 			}
