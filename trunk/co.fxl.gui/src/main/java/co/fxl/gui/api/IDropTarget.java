@@ -20,17 +20,22 @@ package co.fxl.gui.api;
 
 public interface IDropTarget<T> {
 
+	public interface IDragEvent extends IPoint {
+
+		String iD();
+	}
+
 	public interface IDragMoveListener {
 
-		void onDragOver(IPoint point);
+		void onDragOver(IDragEvent point);
 
-		void onDragOut(IPoint point);
+		void onDragOut(IDragEvent point);
 
 	}
 
 	public interface IDropListener {
 
-		void onDropOn(IPoint point);
+		void onDropOn(IDragEvent point);
 
 	}
 

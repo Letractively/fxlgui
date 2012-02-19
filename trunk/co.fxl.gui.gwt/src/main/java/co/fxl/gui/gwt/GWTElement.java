@@ -28,6 +28,7 @@ import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDraggable;
 import co.fxl.gui.api.IDraggable.IDragStartListener.IDragStartEvent;
+import co.fxl.gui.api.IDropTarget.IDragEvent;
 import co.fxl.gui.api.IDropTarget.IDragMoveListener;
 import co.fxl.gui.api.IDropTarget.IDropListener;
 import co.fxl.gui.api.IElement;
@@ -37,7 +38,6 @@ import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IMargin;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPadding;
-import co.fxl.gui.api.IPoint;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 import com.google.gwt.dom.client.Element;
@@ -81,7 +81,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class GWTElement<T extends Widget, R> implements IElement<R> {
 
-	private final class GWTPoint implements IPoint {
+	private final class GWTPoint implements IDragEvent {
 
 		private final DragDropEventBase<?> event;
 
@@ -99,6 +99,11 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		public int offsetY() {
 			return event.getNativeEvent().getClientY()
 					- container.widget.getAbsoluteTop();
+		}
+
+		@Override
+		public String iD() {
+			return event.getData("text");
 		}
 	}
 
@@ -505,6 +510,12 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 						event.getDataTransfer().setDragImage(
 								((GWTElement<?, ?>) element).getDOMElement(),
 								0, 0);
+						return this;
+					}
+
+					@Override
+					public IDragStartEvent iD(String iD) {
+						event.setData("text", iD);
 						return this;
 					}
 				});

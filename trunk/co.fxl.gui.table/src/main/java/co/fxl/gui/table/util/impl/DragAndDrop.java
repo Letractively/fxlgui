@@ -1,6 +1,7 @@
 package co.fxl.gui.table.util.impl;
 
 import co.fxl.gui.api.IDraggable.IDragStartListener;
+import co.fxl.gui.api.IDropTarget.IDragEvent;
 import co.fxl.gui.api.IDropTarget.IDragMoveListener;
 import co.fxl.gui.api.IDropTarget.IDropListener;
 import co.fxl.gui.api.IElement;
@@ -59,7 +60,7 @@ class DragAndDrop implements IDragStartListener, IDropListener,
 	}
 
 	@Override
-	public void onDropOn(IPoint point) {
+	public void onDropOn(IDragEvent point) {
 		int index = getIndex(point);
 		if (allowsDrop(index)) {
 			Where where = getWhere(point);
@@ -115,7 +116,7 @@ class DragAndDrop implements IDragStartListener, IDropListener,
 	}
 
 	@Override
-	public void onDragOver(IPoint point) {
+	public void onDragOver(IDragEvent point) {
 		int index = getIndex(point);
 		if (index == dragIndex)
 			return;
@@ -125,7 +126,8 @@ class DragAndDrop implements IDragStartListener, IDropListener,
 			return;
 		}
 		if (overIndex != -1)
-			pane.dragDropListener.out(pane.decorator.elementAt(overIndex), dragIndex, overIndex, where);
+			pane.dragDropListener.out(pane.decorator.elementAt(overIndex),
+					dragIndex, overIndex, where);
 		overIndex = index;
 		where = getWhere(point);
 		if (dragIndex == overIndex)
@@ -134,10 +136,11 @@ class DragAndDrop implements IDragStartListener, IDropListener,
 			return;
 		if (where.equals(Where.BEFORE) && dragIndex + 1 == overIndex)
 			return;
-		pane.dragDropListener.over(pane.decorator.elementAt(overIndex), dragIndex, overIndex, where);
+		pane.dragDropListener.over(pane.decorator.elementAt(overIndex),
+				dragIndex, overIndex, where);
 	}
 
 	@Override
-	public void onDragOut(IPoint point) {
+	public void onDragOut(IDragEvent point) {
 	}
 }

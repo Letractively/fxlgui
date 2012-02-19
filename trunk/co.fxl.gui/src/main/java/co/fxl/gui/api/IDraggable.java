@@ -26,6 +26,8 @@ public interface IDraggable<T> {
 
 			IDragStartEvent dragImage(IElement<?> element);
 
+			IDragStartEvent iD(String iD);
+
 		}
 
 		void onDragStart(IDragStartEvent event);
