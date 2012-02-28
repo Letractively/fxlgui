@@ -37,7 +37,7 @@ public class GWTKeyRecipientKeyTemplate implements IKey<Object>,
 		IKeyRecipient<Object>, KeyUpHandler, KeyDownHandler, Runnable {
 
 	public int nativeKeyCode = -1;
-	private Object element;
+	public Object element;
 	private List<IClickListener> ls = new LinkedList<IClickListener>();
 	private boolean running = false;
 
@@ -106,7 +106,11 @@ public class GWTKeyRecipientKeyTemplate implements IKey<Object>,
 
 	@Override
 	public void onKeyUp(KeyUpEvent event) {
-		running = false;
+		assert nativeKeyCode != -1;
+		int nkc = event.getNativeKeyCode();
+		if (nkc == nativeKeyCode) {
+			running = false;
+		}
 	}
 
 	@Override
