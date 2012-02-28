@@ -35,8 +35,12 @@ import co.fxl.gui.table.util.api.IUpDownIndex;
 
 public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 
-	// TODO FEATURE-COMPLETE: USABILITY: KEYS: Ctrl+C, Ctrl+V, etc. for
-	// Context-Menu-Items
+	// TODO Usability: Relation-Register-Easy-Add: Klick auf Add: untere Hälfte
+	// von Relation-Register via Split-Pane unterteilt, Filter oben gilt für
+	// beide Sichten, untere Sicht enthält alle nicht-assoziierten Objekte
+	// (Adapter.nonValueOf). Gibt Buttons dazwischen mit hoch/runter
+	// verschieben, geht aber auch mit drag und drop. eventuell lassen sich hier
+	// auch working-sets verwenden
 
 	// TODO BUG/Usability: sometimes / under certain circumstances: an expand
 	// shifts the displayed range upwards
