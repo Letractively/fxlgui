@@ -72,7 +72,7 @@ public class ContextMenu {
 			return this;
 		}
 
-		public Entry key(char key) {
+		public Entry ctrlKey(char key) {
 			this.key = key;
 			return this;
 		}
