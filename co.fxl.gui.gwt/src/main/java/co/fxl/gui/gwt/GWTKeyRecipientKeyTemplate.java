@@ -41,6 +41,7 @@ public class GWTKeyRecipientKeyTemplate implements IKey<Object>,
 	private List<IClickListener> ls = new LinkedList<IClickListener>();
 	private boolean running = false;
 	private boolean ctrl;
+	private boolean repeat = false;
 
 	public GWTKeyRecipientKeyTemplate(Object element) {
 		this.element = element;
@@ -77,24 +78,28 @@ public class GWTKeyRecipientKeyTemplate implements IKey<Object>,
 	@Override
 	public Object up() {
 		nativeKeyCode = KeyCodes.KEY_UP;
+		repeat = true;
 		return element;
 	}
 
 	@Override
 	public Object down() {
 		nativeKeyCode = KeyCodes.KEY_DOWN;
+		repeat = true;
 		return element;
 	}
 
 	@Override
 	public Object left() {
 		nativeKeyCode = KeyCodes.KEY_LEFT;
+		repeat = true;
 		return element;
 	}
 
 	@Override
 	public Object right() {
 		nativeKeyCode = KeyCodes.KEY_RIGHT;
+		repeat = true;
 		return element;
 	}
 
@@ -141,7 +146,8 @@ public class GWTKeyRecipientKeyTemplate implements IKey<Object>,
 			return;
 		for (IClickListener l : ls)
 			l.onClick();
-		Display.instance().invokeLater(this, 200);
+		if (repeat)
+			Display.instance().invokeLater(this, 200);
 	}
 
 	@Override
