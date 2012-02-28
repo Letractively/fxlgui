@@ -24,6 +24,8 @@ public interface IKeyRecipient<T> {
 
 	public interface IKey<T> {
 
+		IKey<T> ctrl();
+
 		T enter();
 
 		T tab();
@@ -35,6 +37,8 @@ public interface IKeyRecipient<T> {
 		T left();
 
 		T right();
+
+		T character(char c);
 	}
 
 	IKey<T> addKeyListener(IClickListener listener);

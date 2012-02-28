@@ -130,4 +130,14 @@ public class GWTKeyRecipientKeyTemplate implements IKey<Object>,
 			l.onClick();
 		Display.instance().invokeLater(this, 200);
 	}
+
+	@Override
+	public co.fxl.gui.api.IKeyRecipient.IKey<Object> ctrl() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Object character(char c) {
+		throw new UnsupportedOperationException();
+	}
 }

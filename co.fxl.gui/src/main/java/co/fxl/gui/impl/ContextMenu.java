@@ -25,6 +25,7 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IVerticalPanel;
@@ -37,6 +38,7 @@ public class ContextMenu {
 		private boolean clickable = true;
 		private List<IClickListener> clickListeners = new LinkedList<IClickListener>();
 		private String imageResource = null;
+		private char key;
 
 		private Entry(String text) {
 			this.text = text;
@@ -68,6 +70,16 @@ public class ContextMenu {
 		public Entry text(String text) {
 			this.text = text;
 			return this;
+		}
+
+		public Entry key(char key) {
+			this.key = key;
+			return this;
+		}
+
+		private void fireClick() {
+			for (IClickListener c : clickListeners)
+				c.onClick();
 		}
 	}
 
@@ -224,5 +236,21 @@ public class ContextMenu {
 
 	public void active(boolean active) {
 		this.active = active;
+	}
+
+	public void decorate(IKeyRecipient<?> keyRecipient) {
+		for (Group g : groups) {
+			for (final Entry e : g) {
+				if (e.key != 0) {
+					keyRecipient.addKeyListener(new IClickListener() {
+						@Override
+						public void onClick() {
+							if (e.clickable)
+								e.fireClick();
+						}
+					}).ctrl().character(e.key);
+				}
+			}
+		}
 	}
 }

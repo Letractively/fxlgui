@@ -19,43 +19,56 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IKeyRecipient;
+import co.fxl.gui.api.IKeyRecipient.IKey;
 
-public class DummyKeyRecipientKeyTemplate implements IKeyRecipient.IKey<Object> {
+public class DummyKeyRecipientKeyTemplate<T> implements IKeyRecipient.IKey<T> {
 
 	@Override
-	public Object enter() {
+	public T enter() {
+		// TODO ...
+		return (T) this;
+	}
+
+	@Override
+	public T tab() {
+		// TODO ...
+		return (T) this;
+	}
+
+	@Override
+	public T up() {
+		// TODO ...
+		return (T) this;
+	}
+
+	@Override
+	public T down() {
+		// TODO ...
+		return (T) this;
+	}
+
+	@Override
+	public T left() {
+		// TODO ...
+		return (T) this;
+	}
+
+	@Override
+	public T right() {
+		// TODO ...
+		return (T) this;
+	}
+
+	@Override
+	public IKey<T> ctrl() {
 		// TODO ...
 		return this;
 	}
 
 	@Override
-	public Object tab() {
+	public T character(char c) {
 		// TODO ...
-		return this;
-	}
-
-	@Override
-	public Object up() {
-		// TODO ...
-		return this;
-	}
-
-	@Override
-	public Object down() {
-		// TODO ...
-		return this;
-	}
-
-	@Override
-	public Object left() {
-		// TODO ...
-		return this;
-	}
-
-	@Override
-	public Object right() {
-		// TODO ...
-		return this;
+		return (T) this;
 	}
 
 }
