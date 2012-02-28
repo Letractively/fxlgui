@@ -38,6 +38,7 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	private List<IClickListener> clickListeners = new LinkedList<IClickListener>();
 	private Entry contextMenuEntry;
 	private String text;
+	private char ctrlKey;
 
 	public CommandLink(WidgetTitle widgetTitle, IHorizontalPanel iPanel,
 			IImage image, ILabel headerLabel) {
@@ -129,6 +130,8 @@ public class CommandLink implements IClickable<IClickable<?>> {
 
 	public CommandLink addToContextMenu(String group) {
 		contextMenuEntry = ContextMenu.instance().group(group).addEntry(text);
+		if (ctrlKey != 0)
+			contextMenuEntry.ctrlKey(ctrlKey);
 		if (image != null) {
 			String resource = image.resource();
 			contextMenuEntry.imageResource(resource);
@@ -153,5 +156,12 @@ public class CommandLink implements IClickable<IClickable<?>> {
 		image.resource(string);
 		if (contextMenuEntry != null)
 			contextMenuEntry.imageResource(string);
+	}
+
+	public CommandLink ctrlKey(char c) {
+		ctrlKey = c;
+		if (contextMenuEntry != null)
+			contextMenuEntry.ctrlKey(c);
+		return this;
 	}
 }
