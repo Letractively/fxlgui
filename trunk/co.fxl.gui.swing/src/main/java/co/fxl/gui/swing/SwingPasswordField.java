@@ -83,6 +83,16 @@ class SwingPasswordField extends SwingTextInput<JPasswordField, IPasswordField>
 			public IPasswordField right() {
 				throw new UnsupportedOperationException();
 			}
+
+			@Override
+			public co.fxl.gui.api.IKeyRecipient.IKey<IPasswordField> ctrl() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public IPasswordField character(char c) {
+				throw new UnsupportedOperationException();
+			}
 		};
 	}
 

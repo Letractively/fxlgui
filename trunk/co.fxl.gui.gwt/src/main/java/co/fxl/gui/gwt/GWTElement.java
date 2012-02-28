@@ -187,6 +187,16 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		public R right() {
 			return listenOnKeyDown(KeyCodes.KEY_RIGHT);
 		}
+
+		@Override
+		public co.fxl.gui.api.IKeyRecipient.IKey<R> ctrl() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public R character(char c) {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	public GWTContainer<T> container;

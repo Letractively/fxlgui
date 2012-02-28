@@ -305,6 +305,16 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 			public R right() {
 				throw new UnsupportedOperationException();
 			}
+
+			@Override
+			public co.fxl.gui.api.IKeyRecipient.IKey<R> ctrl() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public R character(char c) {
+				throw new UnsupportedOperationException();
+			}
 		};
 	}
 

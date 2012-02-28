@@ -26,6 +26,7 @@ import javax.swing.JComponent;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IKeyRecipient;
+import co.fxl.gui.api.IKeyRecipient.IKey;
 
 class KeyTemplate<T extends IElement<T>> implements IKeyRecipient.IKey<T> {
 
@@ -92,5 +93,15 @@ class KeyTemplate<T extends IElement<T>> implements IKeyRecipient.IKey<T> {
 			}
 
 		});
+	}
+
+	@Override
+	public IKey<T> ctrl() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public T character(char c) {
+		throw new UnsupportedOperationException();
 	}
 }
