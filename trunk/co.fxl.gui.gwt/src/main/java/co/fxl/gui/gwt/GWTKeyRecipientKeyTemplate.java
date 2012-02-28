@@ -40,6 +40,7 @@ public class GWTKeyRecipientKeyTemplate implements IKey<Object>,
 	public Object element;
 	private List<IClickListener> ls = new LinkedList<IClickListener>();
 	private boolean running = false;
+	private boolean ctrl;
 
 	public GWTKeyRecipientKeyTemplate(Object element) {
 		this.element = element;
@@ -106,8 +107,12 @@ public class GWTKeyRecipientKeyTemplate implements IKey<Object>,
 
 	@Override
 	public void onKeyUp(KeyUpEvent event) {
+		if (event.getNativeKeyCode() == 17)
+			return;
 		assert nativeKeyCode != -1;
 		int nkc = event.getNativeKeyCode();
+		if (ctrl && !event.isControlKeyDown())
+			return;
 		if (nkc == nativeKeyCode) {
 			running = false;
 		}
@@ -115,8 +120,12 @@ public class GWTKeyRecipientKeyTemplate implements IKey<Object>,
 
 	@Override
 	public void onKeyDown(KeyDownEvent event) {
+		if (event.getNativeKeyCode() == 17)
+			return;
 		assert nativeKeyCode != -1;
 		int nkc = event.getNativeKeyCode();
+		if (ctrl && !event.isControlKeyDown())
+			return;
 		if (nkc == nativeKeyCode) {
 			running = true;
 			run();
@@ -137,11 +146,13 @@ public class GWTKeyRecipientKeyTemplate implements IKey<Object>,
 
 	@Override
 	public co.fxl.gui.api.IKeyRecipient.IKey<Object> ctrl() {
-		throw new UnsupportedOperationException();
+		ctrl = true;
+		return this;
 	}
 
 	@Override
 	public Object character(char c) {
-		throw new UnsupportedOperationException();
+		nativeKeyCode = c;
+		return this;
 	}
 }
