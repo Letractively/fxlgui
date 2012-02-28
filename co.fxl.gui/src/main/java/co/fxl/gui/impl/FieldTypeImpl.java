@@ -48,10 +48,9 @@ public class FieldTypeImpl implements IFieldType {
 		if (values.size() != t.values.size())
 			return false;
 		for (int i = 0; i < values.size(); i++) {
-			if (values.get(i) == null)
-				if (t.values.get(i) != null)
-					return false;
-			if (!values.get(i).equals(t.values.get(i)))
+			if (values.get(i) == null) {
+				return t.values.get(i) == null;
+			} else if (!values.get(i).equals(t.values.get(i)))
 				return false;
 		}
 		return true;
