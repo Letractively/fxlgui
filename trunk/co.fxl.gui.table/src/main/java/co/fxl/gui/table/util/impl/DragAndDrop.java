@@ -67,7 +67,7 @@ public class DragAndDrop implements IDragStartListener, IDropListener,
 				range += rowHeight;
 			}
 		}
-		return 0;
+		return pane.lastIndex();
 	}
 
 	@Override
