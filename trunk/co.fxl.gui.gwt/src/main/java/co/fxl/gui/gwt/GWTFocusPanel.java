@@ -23,10 +23,11 @@ import co.fxl.gui.api.IFocusPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-class GWTFocusPanel extends GWTPanel<FocusPanel, IFocusPanel> implements
+public class GWTFocusPanel extends GWTPanel<FocusPanel, IFocusPanel> implements
 		IFocusPanel {
 
 	@SuppressWarnings("unchecked")
+	public
 	GWTFocusPanel(GWTContainer<?> container) {
 		super((GWTContainer<FocusPanel>) container);
 		container.widget.setWidth("100%");
