@@ -199,6 +199,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private boolean drawing = false;
 	private Integer nextHeight = null;
 	private ICellUpdateListener updateListener;
+	private boolean addDragAndDropDirectly;
 
 	@Override
 	public IScrollTableWidget<Object> height(final int height) {
@@ -364,7 +365,9 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				contentPanel0 = container.add().panel().vertical();
 				contentPanel0.height(heightMinusTopPanel());
 				contentPanel = contentPanel0.add().panel().vertical();
+				addDragAndDropDirectly = true;
 				boolean tooLarge = update();
+				addDragAndDropDirectly = false;
 				if (tooLarge || paintedRows != rows.size()) {
 					contentPanel0.clear();
 					sp = (ILazyScrollPane) contentPanel0.add().widget(
@@ -598,6 +601,9 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		grid = (IBulkTableWidget) vpanel.add().widget(IBulkTableWidget.class);
 		grid.marginTop(6);
 		grid.addToContextMenu(addToContextMenu);
+		if (addDragAndDropDirectly) {
+			// TODO ...
+		}
 		final int heightMinusTopPanel = heightMinusTopPanel();
 		grid.height(heightMinusTopPanel - 2);
 		for (IRowIndexListener rowIndexL : scrollListeners)
