@@ -306,6 +306,16 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 			public int gridIndex() {
 				return row + 1;
 			}
+
+			@Override
+			public void removeBackground() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void background(int r, int g, int b) {
+				throw new UnsupportedOperationException();
+			}
 		};
 	}
 

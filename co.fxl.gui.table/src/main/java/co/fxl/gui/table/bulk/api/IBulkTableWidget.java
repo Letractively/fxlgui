@@ -64,6 +64,10 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 		boolean isHighlight();
 
 		int gridIndex();
+
+		void removeBackground();
+
+		void background(int r, int g, int b);
 	}
 
 	IBulkTableCell cell(int column, int row);
