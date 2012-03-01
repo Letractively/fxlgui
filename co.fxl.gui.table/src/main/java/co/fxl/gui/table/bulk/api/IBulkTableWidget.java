@@ -104,7 +104,7 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 
 	IBulkTableWidget addToContextMenu(boolean addToContextMenu);
 
-	IElement<?> elementAt(int index);
+	IElement<?> elementAt(int column, int row);
 
 	Object focusPanel();
 
