@@ -32,8 +32,10 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.table.util.api.IDragDropListener;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 import co.fxl.gui.table.util.api.IUpDownIndex;
+import co.fxl.gui.table.util.impl.DragAndDrop.DragAndDropAdapter;
 
-public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
+public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
+		DragAndDropAdapter {
 
 	// TODO Usability: Relation-Register-Easy-Add: Klick auf Add: untere Hälfte
 	// von Relation-Register via Split-Pane unterteilt, Filter oben gilt für
@@ -150,7 +152,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 		return this;
 	}
 
-	int rowHeight(int i) {
+	@Override
+	public int rowHeight(int i) {
 		int rowHeight = decorator.rowHeight(i);
 		if (adjustHeights) {
 			if (rowHeights[i] == 0)
@@ -485,6 +488,11 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	}
 
 	@Override
+	public void refreshNow() {
+		refresh();
+	}
+
+	@Override
 	public void remove() {
 		container.clear();
 	}
@@ -559,5 +567,30 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener {
 	@Override
 	public boolean hasScrollbar() {
 		return hasScrollbar;
+	}
+
+	@Override
+	public IDragDropListener dragDropListener() {
+		return dragDropListener;
+	}
+
+	@Override
+	public IDecorator decorator() {
+		return decorator;
+	}
+
+	@Override
+	public boolean hasHeader() {
+		return hasHeader;
+	}
+
+	@Override
+	public int lastIndex() {
+		return lastIndex;
+	}
+
+	@Override
+	public boolean allowInsertUnder() {
+		return allowInsertUnder;
 	}
 }
