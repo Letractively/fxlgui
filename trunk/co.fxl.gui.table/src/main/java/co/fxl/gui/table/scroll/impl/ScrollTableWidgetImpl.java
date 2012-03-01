@@ -29,6 +29,7 @@ import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
@@ -46,6 +47,7 @@ import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IMiniFilterWidget;
+import co.fxl.gui.impl.ColorTemplate;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.IFieldType;
@@ -65,6 +67,7 @@ import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn.IScrollTableListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 import co.fxl.gui.table.util.api.IDragDropListener;
+import co.fxl.gui.table.util.api.IDragDropListener.IDragArea;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
@@ -407,8 +410,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 							return grid.rowHeight(visibleRowIndex + 1);
 						}
 
-						@Override
-						public IElement<?>[] elementsAt(int index) {
+						private IElement<?>[] elementsAt(int index) {
 							IElement<?>[] elements = new IElement<?>[grid
 									.columnCount()];
 							for (int i = 0; i < grid.columnCount(); i++) {
@@ -420,6 +422,37 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						@Override
 						public int headerHeight() {
 							return grid.rowHeight(0);
+						}
+
+						@Override
+						public IDragArea dragArea(final int index) {
+							return new IDragArea() {
+
+								@Override
+								public IColor color() {
+									return new ColorTemplate() {
+
+										@Override
+										public IColor remove() {
+											grid.row(index).removeBackground();
+											return this;
+										}
+
+										@Override
+										protected IColor setRGB(int r, int g,
+												int b) {
+											grid.row(index).background(r, g, b);
+											return this;
+										}
+									};
+								}
+
+								@Override
+								public IElement<?> imageElement() {
+									return elementsAt(0)[0];
+								}
+
+							};
 						}
 					});
 					sp.size(rows.size());

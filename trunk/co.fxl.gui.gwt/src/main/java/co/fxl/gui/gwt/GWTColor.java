@@ -140,11 +140,15 @@ public abstract class GWTColor implements IColor {
 
 	@Override
 	public IColor rgb(int r, int g, int b) {
-		setColorInternal("#" + hex(r) + hex(g) + hex(b));
+		setColorInternal(getHexColor(r, g, b));
 		return this;
 	}
 
-	private String hex(int r) {
+	public static String getHexColor(int r, int g, int b) {
+		return "#" + hex(r) + hex(g) + hex(b);
+	}
+
+	private static String hex(int r) {
 		String hexString = Integer.toHexString(r);
 		while (hexString.length() <= 1)
 			hexString = "0" + hexString;

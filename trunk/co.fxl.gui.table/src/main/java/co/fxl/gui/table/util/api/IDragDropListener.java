@@ -19,9 +19,17 @@
 package co.fxl.gui.table.util.api;
 
 import co.fxl.gui.api.ICallback;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IElement;
 
 public interface IDragDropListener {
+
+	public interface IDragArea {
+
+		IColor color();
+
+		IElement<?> imageElement();
+	}
 
 	public enum Where {
 
@@ -30,9 +38,9 @@ public interface IDragDropListener {
 
 	boolean allowsDrop(int rowIndex);
 
-	void over(IElement<?>[] element, int dragIndex, int dropIndex, Where where);
+	void over(IDragArea element, int dragIndex, int dropIndex, Where where);
 
-	void out(IElement<?>[] element, int dragIndex, int dropIndex, Where where);
+	void out(IDragArea element, int dragIndex, int dropIndex, Where where);
 
 	void drop(int dragIndex, int dropIndex, Where where, ICallback<Void> cb);
 
