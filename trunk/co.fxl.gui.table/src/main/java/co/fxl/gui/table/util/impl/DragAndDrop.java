@@ -40,7 +40,7 @@ class DragAndDrop implements IDragStartListener, IDropListener,
 				range += rowHeight;
 			}
 		}
-		return -1;
+		return 0;
 	}
 
 	@Override
@@ -56,6 +56,7 @@ class DragAndDrop implements IDragStartListener, IDropListener,
 
 	@Override
 	public void onDragEnd() {
+		callDragOut();
 		dragIndex = -1;
 		overIndex = -1;
 	}
@@ -126,10 +127,7 @@ class DragAndDrop implements IDragStartListener, IDropListener,
 		if (overIndex != -1 && overIndex == index) {
 			return;
 		}
-		if (overIndex != -1)
-			pane.dragDropListener.out(
-					pane.decorator.elementsAt(overIndex - pane.rowIndex),
-					dragIndex, overIndex, where);
+		callDragOut();
 		overIndex = index;
 		where = getWhere(point);
 		if (dragIndex == overIndex)
@@ -141,6 +139,13 @@ class DragAndDrop implements IDragStartListener, IDropListener,
 		pane.dragDropListener.over(
 				pane.decorator.elementsAt(overIndex - pane.rowIndex),
 				dragIndex, overIndex, where);
+	}
+
+	protected void callDragOut() {
+		if (overIndex != -1)
+			pane.dragDropListener.out(
+					pane.decorator.elementsAt(overIndex - pane.rowIndex),
+					dragIndex, overIndex, where);
 	}
 
 	@Override
