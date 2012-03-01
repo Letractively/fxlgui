@@ -408,8 +408,13 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						}
 
 						@Override
-						public IElement<?> elementAt(int index) {
-							return grid.elementAt(index);
+						public IElement<?>[] elementsAt(int index) {
+							IElement<?>[] elements = new IElement<?>[grid
+									.columnCount()];
+							for (int i = 0; i < grid.columnCount(); i++) {
+								elements[i] = grid.elementAt(i, index);
+							}
+							return elements;
 						}
 
 						@Override

@@ -30,9 +30,9 @@ public interface IDragDropListener {
 
 	boolean allowsDrop(int rowIndex);
 
-	void over(IElement<?> element, int dragIndex, int dropIndex, Where where);
+	void over(IElement<?>[] element, int dragIndex, int dropIndex, Where where);
 
-	void out(IElement<?> element, int dragIndex, int dropIndex, Where where);
+	void out(IElement<?>[] element, int dragIndex, int dropIndex, Where where);
 
 	void drop(int dragIndex, int dropIndex, Where where, ICallback<Void> cb);
 

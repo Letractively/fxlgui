@@ -418,13 +418,14 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	}
 
 	@Override
-	public IElement<?> elementAt(int index) {
+	public IElement<?> elementAt(int c, int index) {
 
 		// TODO row, not first cell
 
-		return grid.cell(0, index).element();
+		return grid.cell(c, index).element();
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public IKeyRecipient.IKey<Object> addKeyListener(IClickListener listener) {
 		// TODO ...

@@ -48,8 +48,9 @@ class DragAndDrop implements IDragStartListener, IDropListener,
 		int y = event.offsetY();
 		dragIndex = getIndex(y);
 		if (dragIndex != -1) {
-			IElement<?> element = pane.decorator.elementAt(dragIndex);
-			event.dragImage(element);
+			IElement<?>[] element = pane.decorator.elementsAt(dragIndex
+					- pane.rowIndex);
+			event.dragImage(element[0]);
 		}
 	}
 
@@ -126,7 +127,8 @@ class DragAndDrop implements IDragStartListener, IDropListener,
 			return;
 		}
 		if (overIndex != -1)
-			pane.dragDropListener.out(pane.decorator.elementAt(overIndex),
+			pane.dragDropListener.out(
+					pane.decorator.elementsAt(overIndex - pane.rowIndex),
 					dragIndex, overIndex, where);
 		overIndex = index;
 		where = getWhere(point);
@@ -136,7 +138,8 @@ class DragAndDrop implements IDragStartListener, IDropListener,
 			return;
 		if (where.equals(Where.BEFORE) && dragIndex + 1 == overIndex)
 			return;
-		pane.dragDropListener.over(pane.decorator.elementAt(overIndex),
+		pane.dragDropListener.over(
+				pane.decorator.elementsAt(overIndex - pane.rowIndex),
 				dragIndex, overIndex, where);
 	}
 

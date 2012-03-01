@@ -36,7 +36,7 @@ public interface ILazyScrollPane extends IMouseWheelListener {
 
 		int rowHeight(int rowIndex);
 
-		IElement<?> elementAt(int index);
+		IElement<?>[] elementsAt(int index);
 	}
 
 	ILazyScrollPane size(int size);
