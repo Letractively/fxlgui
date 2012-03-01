@@ -122,7 +122,10 @@ public class DragAndDrop implements IDragStartListener, IDropListener,
 		Where where = Where.UNDER;
 		if (!insertUnder) {
 			int[] rangeAndRowHeight = getRangeAndRowHeight(offsetY);
-			if (offsetY <= rangeAndRowHeight[0] + rangeAndRowHeight[1] / 2)
+			if (rangeAndRowHeight == null) {
+				where = Where.AFTER;
+			} else if (offsetY <= rangeAndRowHeight[0] + rangeAndRowHeight[1]
+					/ 2)
 				where = Where.BEFORE;
 			else
 				where = Where.AFTER;
@@ -141,7 +144,7 @@ public class DragAndDrop implements IDragStartListener, IDropListener,
 				range += rowHeight;
 			}
 		}
-		throw new UnsupportedOperationException();
+		return null;
 	}
 
 	@Override
