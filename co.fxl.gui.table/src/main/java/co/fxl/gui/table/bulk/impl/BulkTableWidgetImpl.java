@@ -31,6 +31,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IGridPanel.IGridClickListener;
@@ -454,7 +455,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	}
 
 	@Override
-	public Object focusPanel() {
+	public IFocusPanel focusPanel() {
 		throw new UnsupportedOperationException();
 	}
 

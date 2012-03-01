@@ -12,7 +12,7 @@ import co.fxl.gui.table.util.api.IDragDropListener;
 import co.fxl.gui.table.util.api.IDragDropListener.Where;
 import co.fxl.gui.table.util.api.ILazyScrollPane.IDecorator;
 
-class DragAndDrop implements IDragStartListener, IDropListener,
+public class DragAndDrop implements IDragStartListener, IDropListener,
 		IDragMoveListener {
 
 	public interface DragAndDropAdapter {
@@ -43,9 +43,10 @@ class DragAndDrop implements IDragStartListener, IDropListener,
 	private IDragDropListener dragDropListener;
 	private IDecorator decorator;
 
-	DragAndDrop(DragAndDropAdapter pane, IFocusPanel focusPanel) {
+	public DragAndDrop(DragAndDropAdapter pane, IFocusPanel focusPanel) {
 		this.pane = pane;
 		dragDropListener = pane.dragDropListener();
+		assert dragDropListener != null;
 		decorator = pane.decorator();
 		this.focusPanel = focusPanel;
 		focusPanel.addDragStartListener(this);

@@ -103,6 +103,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	static final String ARROW_UP = "\u2191";
 	static final String ARROW_DOWN = "\u2193";
 	protected static final int SCROLL_MULT = 33;
+	private static final boolean ADD_DRAG_AND_DROP = true;
 	public static int MAX_SORT_SIZE = 100;
 	IVerticalPanel container;
 	private int height = 400;
@@ -152,7 +153,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IUpdateListener<List<String>> hiddenColumnListener;
 	private boolean filterSizeConstraint = true;
 	private boolean allowInsertUnder;
-	private IDragDropListener dragDropListener;
+	IDragDropListener dragDropListener;
 	IGridPanel topPanel;
 	boolean showNoRowsFound = true;
 	private IVerticalPanel contentPanel0;
@@ -601,9 +602,6 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		grid = (IBulkTableWidget) vpanel.add().widget(IBulkTableWidget.class);
 		grid.marginTop(6);
 		grid.addToContextMenu(addToContextMenu);
-		if (addDragAndDropDirectly) {
-			// TODO ...
-		}
 		final int heightMinusTopPanel = heightMinusTopPanel();
 		grid.height(heightMinusTopPanel - 2);
 		for (IRowIndexListener rowIndexL : scrollListeners)
@@ -614,6 +612,10 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			updateSingleContentRow(grid, r, index);
 		}
 		grid.visible(true);
+		if (addDragAndDropDirectly && ADD_DRAG_AND_DROP
+				&& dragDropListener != null) {
+			new DragAndDropGridAdapter(this);
+		}
 		if (sp != null)
 			grid.addMouseWheelListener(new IMouseWheelListener() {
 
