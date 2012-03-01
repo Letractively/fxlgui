@@ -23,9 +23,9 @@ class DragAndDrop implements IDragStartListener, IDropListener,
 
 		int rowIndex();
 
-		boolean hasHeader();
-
 		int lastIndex();
+
+		boolean hasHeader();
 
 		int rowHeight(int index);
 
