@@ -26,13 +26,17 @@ import com.google.gwt.user.client.ui.Widget;
 public class GWTFocusPanel extends GWTPanel<FocusPanel, IFocusPanel> implements
 		IFocusPanel {
 
+	public GWTFocusPanel(GWTContainer<?> container) {
+		this(container, true);
+	}
+
 	@SuppressWarnings("unchecked")
-	public
-	GWTFocusPanel(GWTContainer<?> container) {
+	public GWTFocusPanel(GWTContainer<?> container, boolean decorate) {
 		super((GWTContainer<FocusPanel>) container);
-		container.widget.setWidth("100%");
-		container.widget.addStyleName("nooutline");
-		// container.widget.getElement().setDraggable(Element.DRAGGABLE_FALSE);
+		if (decorate) {
+			container.widget.setWidth("100%");
+			container.widget.addStyleName("nooutline");
+		}
 	}
 
 	@Override
