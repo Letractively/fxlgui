@@ -105,6 +105,16 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		public String iD() {
 			return event.getData("text");
 		}
+
+		@Override
+		public boolean shift() {
+			return event.getNativeEvent().getShiftKey();
+		}
+
+		@Override
+		public boolean ctrl() {
+			return event.getNativeEvent().getCtrlKey();
+		}
 	}
 
 	private final class KeyPressHandlerAdapter implements KeyPressHandler,
@@ -517,9 +527,12 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 					@Override
 					public IDragStartEvent dragImage(IElement<?> element) {
-						event.getDataTransfer().setDragImage(
-								((GWTElement<?, ?>) element).getDOMElement(),
-								0, 0);
+						Element domElement = ((GWTElement<?, ?>) element)
+								.getDOMElement();
+						if (domElement == null)
+							throw new RuntimeException(
+									"drag image element is null");
+						event.getDataTransfer().setDragImage(domElement, 0, 0);
 						return this;
 					}
 

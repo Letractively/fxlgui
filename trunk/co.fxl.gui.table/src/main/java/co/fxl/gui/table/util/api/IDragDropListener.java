@@ -20,6 +20,7 @@ package co.fxl.gui.table.util.api;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.IDropTarget.IDragEvent;
 import co.fxl.gui.api.IElement;
 
 public interface IDragDropListener {
@@ -36,12 +37,12 @@ public interface IDragDropListener {
 		BEFORE, AFTER, UNDER;
 	}
 
-	boolean allowsDrop(int dragIndex, int rowIndex);
+	boolean allowsDrop(IDragEvent e, int dragIndex, int rowIndex);
 
 	void over(IDragArea element, int dragIndex, int dropIndex, Where where);
 
 	void out(IDragArea element, int dragIndex, int dropIndex, Where where);
 
-	void drop(int dragIndex, int dropIndex, Where where, ICallback<Void> cb);
+	void drop(IDragEvent point, int dragIndex, int dropIndex, Where where, ICallback<Void> cb);
 
 }
