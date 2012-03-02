@@ -174,25 +174,21 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 			return listenOnKeyPress('\t');
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public R up() {
 			return listenOnKeyDown(KeyCodes.KEY_UP);
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public R down() {
 			return listenOnKeyDown(KeyCodes.KEY_DOWN);
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public R left() {
 			return listenOnKeyDown(KeyCodes.KEY_LEFT);
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public R right() {
 			return listenOnKeyDown(KeyCodes.KEY_RIGHT);
