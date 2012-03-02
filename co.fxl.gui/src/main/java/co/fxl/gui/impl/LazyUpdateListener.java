@@ -18,25 +18,48 @@
  */
 package co.fxl.gui.impl;
 
+import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 public abstract class LazyUpdateListener<T> extends CallbackTemplate<Boolean>
 		implements IUpdateListener<T> {
 
 	private T value;
+	private IComboBox cb;
+	private boolean active = true;
+	private T allowedValue;
+
+	public LazyUpdateListener() {
+	}
+
+	@SuppressWarnings("unchecked")
+	public LazyUpdateListener(IComboBox cb) {
+		this.cb = cb;
+		if (cb != null)
+			allowedValue = (T) cb.text();
+	}
 
 	@Override
 	public void onUpdate(T value) {
+		if (!active)
+			return;
 		this.value = value;
 		DiscardChangesDialog.show(this);
 	}
 
 	@Override
 	public void onSuccess(Boolean result) {
-		if (result)
+		if (result) {
+			allowedValue = value;
 			onAllowedUpdate(value);
-		else
+		} else {
 			onCancelledUpdate(value);
+			if (cb != null) {
+				active = false;
+				cb.text((String) allowedValue);
+				active = true;
+			}
+		}
 	}
 
 	protected abstract void onAllowedUpdate(T value);
