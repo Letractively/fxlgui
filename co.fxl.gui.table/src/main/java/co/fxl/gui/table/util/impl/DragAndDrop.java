@@ -106,7 +106,7 @@ public class DragAndDrop implements IDragStartListener, IDropListener,
 	boolean allowsDrop(int index) {
 		if (dragIndex == -1)
 			return false;
-		return index != -1 && dragDropListener.allowsDrop(index);
+		return index != -1 && dragDropListener.allowsDrop(dragIndex, index);
 	}
 
 	int getIndex(IPoint point) {
