@@ -23,6 +23,10 @@ public interface IDropTarget<T> {
 	public interface IDragEvent extends IPoint {
 
 		String iD();
+
+		boolean shift();
+
+		boolean ctrl();
 	}
 
 	public interface IDragMoveListener {

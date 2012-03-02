@@ -91,9 +91,9 @@ public class DragAndDrop implements IDragStartListener, IDropListener,
 	@Override
 	public void onDropOn(IDragEvent point) {
 		int index = getIndex(point);
-		if (allowsDrop(index)) {
+		if (allowsDrop(point, index)) {
 			Where where = getWhere(point);
-			dragDropListener.drop(dragIndex, index, where,
+			dragDropListener.drop(point, dragIndex, index, where,
 					new CallbackTemplate<Void>() {
 						@Override
 						public void onSuccess(Void result) {
@@ -103,10 +103,10 @@ public class DragAndDrop implements IDragStartListener, IDropListener,
 		}
 	}
 
-	boolean allowsDrop(int index) {
+	boolean allowsDrop(IDragEvent e, int index) {
 		if (dragIndex == -1)
 			return false;
-		return index != -1 && dragDropListener.allowsDrop(dragIndex, index);
+		return index != -1 && dragDropListener.allowsDrop(e, dragIndex, index);
 	}
 
 	int getIndex(IPoint point) {
@@ -152,7 +152,7 @@ public class DragAndDrop implements IDragStartListener, IDropListener,
 		int index = getIndex(point);
 		if (index == dragIndex)
 			return;
-		if (!allowsDrop(index))
+		if (!allowsDrop(point, index))
 			return;
 		if (overIndex != -1 && overIndex == index) {
 			return;
