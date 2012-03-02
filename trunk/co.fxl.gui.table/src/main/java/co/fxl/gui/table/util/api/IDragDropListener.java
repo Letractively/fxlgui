@@ -36,7 +36,7 @@ public interface IDragDropListener {
 		BEFORE, AFTER, UNDER;
 	}
 
-	boolean allowsDrop(int rowIndex);
+	boolean allowsDrop(int dragIndex, int rowIndex);
 
 	void over(IDragArea element, int dragIndex, int dropIndex, Where where);
 
