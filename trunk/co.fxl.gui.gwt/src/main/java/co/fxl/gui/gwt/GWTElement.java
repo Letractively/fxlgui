@@ -527,8 +527,8 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 					@Override
 					public IDragStartEvent dragImage(IElement<?> element) {
-						Element domElement = ((GWTElement<?, ?>) element)
-								.getDOMElement();
+						GWTElement<?, ?> gwtElement = (GWTElement<?, ?>) element;
+						Element domElement = gwtElement.getDOMElement();
 						if (domElement == null)
 							throw new RuntimeException(
 									"drag image element is null");
