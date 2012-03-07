@@ -114,4 +114,6 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 	IFocusPanel focusPanel();
 
 	int columnCount();
+
+	IBulkTableWidget editable(boolean editable);
 }

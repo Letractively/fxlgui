@@ -463,4 +463,9 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	public int columnCount() {
 		return grid.columns();
 	}
+
+	@Override
+	public IBulkTableWidget editable(boolean editable) {
+		return this;
+	}
 }
