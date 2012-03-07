@@ -56,7 +56,7 @@ public class DragAndDrop implements IDragStartListener, IDropListener,
 
 	private int getIndex(int y) {
 		int index = pane.rowIndex();
-		int range = pane.hasHeader() ? decorator.headerHeight() : 0;
+		int range = 6 + (pane.hasHeader() ? decorator.headerHeight() : 0);
 		if (y <= range)
 			return 0;
 		for (; index <= pane.lastIndex(); index++) {
