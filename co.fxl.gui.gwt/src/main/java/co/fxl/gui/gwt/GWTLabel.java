@@ -106,7 +106,8 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 	GWTClickHandler<ILabel> newGWTClickHandler(IClickListener clickListener) {
 		html.selectable = false;
 		if (!selectionDisabled) {
-			disableSelection(container.widget.getElement());
+			if (!GWTDisplay.isFirefox())
+				disableSelection(container.widget.getElement());
 			selectionDisabled = true;
 		}
 		update();
