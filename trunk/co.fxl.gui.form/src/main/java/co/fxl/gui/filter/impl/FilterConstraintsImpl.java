@@ -31,7 +31,6 @@ import co.fxl.gui.filter.impl.Constraint.IDoubleRangeConstraint;
 import co.fxl.gui.filter.impl.Constraint.INamedConstraint;
 import co.fxl.gui.filter.impl.Constraint.IRelationConstraint;
 import co.fxl.gui.filter.impl.Constraint.ISizeConstraint;
-import co.fxl.gui.filter.impl.Constraint.IStringPrefixConstraint;
 
 public class FilterConstraintsImpl implements IFilterConstraints {
 
@@ -198,7 +197,7 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 		return ((IStringPrefixConstraint) constraints.get(column)).prefix();
 	}
 
-	void add(Constraint c) {
+	public void add(Constraint c) {
 		if (c instanceof ISizeConstraint) {
 			size = ((ISizeConstraint) c).size();
 		} else {
