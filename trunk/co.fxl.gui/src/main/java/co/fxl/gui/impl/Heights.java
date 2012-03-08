@@ -20,6 +20,7 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IBordered;
 import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IComboBox;
@@ -36,6 +37,7 @@ public class Heights {
 	public static final int CELL_HEIGHT = 28;
 	public static final int TEXTFIELD_HEIGHT = 24;
 	public static final int COMBOBOX_HEIGHT = 24;
+	public static final Heights INSTANCE = new Heights(0);
 	private int inc;
 
 	public Heights(int inc) {
@@ -121,5 +123,9 @@ public class Heights {
 
 	public IBorder decorateBorder(IBordered border) {
 		return styleInputBorder(border);
+	}
+
+	public void decorateHeight(IButton b) {
+		b.height(inc + COMBOBOX_HEIGHT);
 	}
 }
