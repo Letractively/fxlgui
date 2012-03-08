@@ -35,11 +35,6 @@ interface Constraint {
 		int size();
 	}
 
-	interface IStringPrefixConstraint extends INamedConstraint {
-
-		String prefix();
-	}
-
 	interface IBooleanConstraint extends INamedConstraint {
 
 		Boolean value();
