@@ -33,7 +33,7 @@ public class NavigationView {
 
 	static String FORWARD = "Forward";
 	static String BACK = "Back";
-	static String NAVIGATION = "Navigation";
+	static String NAVIGATION = "Actions";
 	private static final boolean SHOW_NUMBERS = false;
 	private static final boolean SHOW_TRIANGLE = true;
 	private WidgetTitle widgetTitle;
