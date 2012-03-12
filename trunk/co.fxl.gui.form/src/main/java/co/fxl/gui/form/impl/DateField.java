@@ -24,6 +24,7 @@ import co.fxl.data.format.api.IFormat;
 import co.fxl.data.format.impl.Format;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.ITextField;
@@ -56,7 +57,8 @@ public class DateField {
 				}
 			});
 
-			// TODO testen: USABILITY: GWT: this seems to not work (shows always the
+			// TODO testen: USABILITY: GWT: this seems to not work (shows always
+			// the
 			// current date):
 			calendar.date(format.parse(tf.text()));
 
@@ -68,7 +70,20 @@ public class DateField {
 	private IImage button;
 	private IFormat<Date> format = Format.date();
 
+	public DateField(IContainer c) {
+		IGridPanel g = c.panel().grid();
+		ITextField tf = g.cell(0, 0).textField();
+		g.column(0).expand();
+		IContainer c1 = g.cell(1, 0);
+		setUp(tf, c1);
+		button.margin(4);
+	}
+
 	public DateField(ITextField tf, IContainer c) {
+		setUp(tf, c);
+	}
+
+	private void setUp(ITextField tf, IContainer c) {
 		this.tf = tf;
 		button = c.image().resource(Icons.CALENDAR).size(16, 16);
 		button.addClickListener(new PopUp());
