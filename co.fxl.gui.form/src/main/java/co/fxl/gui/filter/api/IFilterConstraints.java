@@ -108,4 +108,5 @@ public interface IFilterConstraints {
 	IFilterConstraints copy();
 
 	IRelationFilter<Object, Object> addRelationFilter();
+
 }
