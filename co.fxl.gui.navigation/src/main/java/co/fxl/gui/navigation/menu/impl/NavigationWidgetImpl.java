@@ -62,7 +62,7 @@ class NavigationWidgetImpl implements IMenuWidget {
 	// }
 
 	@Override
-	public int heightMenu() {
+	public int height() {
 		return registerWidget.heightMenu();
 	}
 
