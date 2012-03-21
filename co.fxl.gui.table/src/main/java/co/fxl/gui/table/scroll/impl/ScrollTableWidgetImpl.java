@@ -201,6 +201,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private Integer nextHeight = null;
 	private ICellUpdateListener updateListener;
 	private boolean addDragAndDropDirectly;
+	private boolean alwaysShowFilter;
 
 	@Override
 	public IScrollTableWidget<Object> height(final int height) {
@@ -500,7 +501,13 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		for (ScrollTableColumnImpl c : columns)
 			if (c.filterable)
 				return true;
-		return false;
+		return viewComboBoxUpdateListener != null || alwaysShowFilter;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> alwaysShowFilter() {
+		alwaysShowFilter = true;
+		return this;
 	}
 
 	protected void addFilter() {
