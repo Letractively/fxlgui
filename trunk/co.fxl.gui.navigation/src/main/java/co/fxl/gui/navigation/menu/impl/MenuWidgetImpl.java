@@ -25,11 +25,11 @@ import co.fxl.gui.navigation.menu.api.IMenuWidget;
 import co.fxl.gui.register.impl.RegisterWidgetImpl;
 import co.fxl.gui.register.impl.RegisterWidgetImpl.ColorDecorator;
 
-class NavigationWidgetImpl implements IMenuWidget {
+class MenuWidgetImpl implements IMenuWidget {
 
 	RegisterWidgetImpl registerWidget;
 
-	NavigationWidgetImpl(IContainer panel) {
+	MenuWidgetImpl(IContainer panel) {
 		registerWidget = new RegisterWidgetImpl(panel.panel());
 		registerWidget.topBorder();
 		registerWidget.background(new ColorDecorator() {
