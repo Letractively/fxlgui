@@ -120,7 +120,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	@Override
-	public INavigationItem initDecorator(IDecorator decorator) {
+	public INavigationItem decorator(IDecorator decorator) {
 		this.decorator = decorator;
 		return this;
 	}
@@ -227,7 +227,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	@Override
-	public IDecorator initDecorator() {
+	public IDecorator decorator() {
 		return decorator;
 	}
 
