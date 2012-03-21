@@ -16,19 +16,35 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.navigation.api;
+package co.fxl.gui.navigation.menu.api;
 
-public interface IMenuWidget extends IMenuNode {
+import co.fxl.gui.api.ICallback;
+import co.fxl.gui.api.IVerticalPanel;
 
-	IToolbar addToolbar();
+public interface IMenuItem extends IMenuNode, INavigationItem<IMenuItem> {
 
-	IMenuWidget visible(boolean visible);
+	public interface INavigationListener {
 
-	IMenuWidget background(int r, int g, int b);
+		void onActive(boolean active, ICallback<Void> cb);
+	}
 
-	int heightMenu();
+	IVerticalPanel contentPanel();
 
-	IMenuWidget outerSpacing(int outerSpacing);
+	IMenuItem listener(INavigationListener listener);
 
-	IMenuWidget showRegisterPanel(boolean showRegisterPanel);
+	IMenuItem visible(boolean visible);
+
+	IToolbarItem toolbarItem();
+
+	IMenuItem active();
+
+	IMenuItem enabled(boolean enabled);
+
+	boolean isActive();
+
+	boolean enabled();
+
+	IMenuItem imageResource(String imageResource);
+
+	IMenuItem toggleLoading(boolean toggleLoading);
 }

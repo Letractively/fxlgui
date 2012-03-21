@@ -16,11 +16,19 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.navigation.api;
+package co.fxl.gui.navigation.menu.api;
 
-import co.fxl.gui.api.IClickable;
+public interface IMenuWidget extends IMenuNode {
 
-public interface IToolbarItem extends IClickable<IToolbarItem>,
-		INavigationItem<IToolbarItem> {
+	IToolbar addToolbar();
 
+	IMenuWidget visible(boolean visible);
+
+	IMenuWidget background(int r, int g, int b);
+
+	int heightMenu();
+
+	IMenuWidget outerSpacing(int outerSpacing);
+
+	IMenuWidget showRegisterPanel(boolean showRegisterPanel);
 }
