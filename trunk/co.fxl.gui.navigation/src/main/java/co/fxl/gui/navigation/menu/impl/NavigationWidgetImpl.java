@@ -20,10 +20,8 @@ package co.fxl.gui.navigation.menu.impl;
 
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IPanel;
 import co.fxl.gui.navigation.menu.api.IMenuItem;
 import co.fxl.gui.navigation.menu.api.IMenuWidget;
-import co.fxl.gui.navigation.menu.api.IToolbar;
 import co.fxl.gui.register.impl.RegisterWidgetImpl;
 import co.fxl.gui.register.impl.RegisterWidgetImpl.ColorDecorator;
 
@@ -58,35 +56,23 @@ class NavigationWidgetImpl implements IMenuWidget {
 		return this;
 	}
 
-	@Override
-	public IToolbar addToolbar() {
-		throw new UnsupportedOperationException();
-	}
-
-	public IPanel<?> fillerPanel() {
-		IPanel<?> fillerPanel = registerWidget.addFillerPanel();
-		return fillerPanel;
-	}
-
-	@Override
-	public IMenuWidget background(int r, int g, int b) {
-		throw new UnsupportedOperationException();
-	}
+	// public IPanel<?> fillerPanel() {
+	// IPanel<?> fillerPanel = registerWidget.addFillerPanel();
+	// return fillerPanel;
+	// }
 
 	@Override
 	public int heightMenu() {
 		return registerWidget.heightMenu();
 	}
 
-	@Override
-	public IMenuWidget outerSpacing(int outerSpacing) {
-		registerWidget.outerSpacing(outerSpacing);
-		return this;
-	}
+	// public IMenuWidget outerSpacing(int outerSpacing) {
+	// registerWidget.outerSpacing(outerSpacing);
+	// return this;
+	// }
 
-	@Override
-	public IMenuWidget showRegisterPanel(boolean showRegisterPanel) {
-		registerWidget.showRegisterPanel(showRegisterPanel);
-		return this;
-	}
+	// public IMenuWidget showRegisterPanel(boolean showRegisterPanel) {
+	// registerWidget.showRegisterPanel(showRegisterPanel);
+	// return this;
+	// }
 }

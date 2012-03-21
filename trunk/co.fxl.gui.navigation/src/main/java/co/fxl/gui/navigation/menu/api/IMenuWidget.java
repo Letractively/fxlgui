@@ -20,15 +20,15 @@ package co.fxl.gui.navigation.menu.api;
 
 public interface IMenuWidget extends IMenuNode {
 
-	IToolbar addToolbar();
+//	IToolbar addToolbar();
 
 	IMenuWidget visible(boolean visible);
 
-	IMenuWidget background(int r, int g, int b);
+//	IMenuWidget background(int r, int g, int b);
 
 	int heightMenu();
 
-	IMenuWidget outerSpacing(int outerSpacing);
+//	IMenuWidget outerSpacing(int outerSpacing);
 
-	IMenuWidget showRegisterPanel(boolean showRegisterPanel);
+//	IMenuWidget showRegisterPanel(boolean showRegisterPanel);
 }
