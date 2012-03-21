@@ -25,6 +25,7 @@ import co.fxl.gui.navigation.menu.api.IMenuItem;
 class MenuItemAdp implements IMenuItem {
 
 	private NavigationItemImpl item;
+	private boolean enabled = true;
 
 	MenuItemAdp(NavigationItemImpl item) {
 		this.item = item;
