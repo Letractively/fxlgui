@@ -20,7 +20,8 @@ package co.fxl.gui.navigation.menu.api;
 
 import co.fxl.gui.api.IClickable;
 
-public interface IToolbarItem extends IClickable<IToolbarItem>,
-		INavigationItem<IToolbarItem> {
+public interface IToolbarItem extends IClickable<IToolbarItem> {
+
+	IToolbarItem text(String text);
 
 }
