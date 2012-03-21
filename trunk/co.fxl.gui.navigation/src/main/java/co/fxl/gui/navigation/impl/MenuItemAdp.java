@@ -24,13 +24,15 @@ import co.fxl.gui.navigation.menu.api.IMenuItem;
 
 class MenuItemAdp implements IMenuItem {
 
+	private NavigationItemImpl item;
+
 	MenuItemAdp(NavigationItemImpl item) {
-		throw new UnsupportedOperationException();
+		this.item = item;
 	}
 
 	@Override
 	public IMenuItem addNavigationItem() {
-		throw new UnsupportedOperationException();
+		throw new RuntimeException();
 	}
 
 	@Override
@@ -41,7 +43,8 @@ class MenuItemAdp implements IMenuItem {
 
 	@Override
 	public IMenuItem name(String text) {
-		throw new UnsupportedOperationException();
+		item.name(text);
+		return this;
 	}
 
 	@Override
@@ -51,12 +54,15 @@ class MenuItemAdp implements IMenuItem {
 
 	@Override
 	public IMenuItem visible(boolean visible) {
-		throw new UnsupportedOperationException();
+		item.visible(visible);
+		return this;
 	}
 
 	@Override
 	public IMenuItem active(boolean active) {
-		throw new UnsupportedOperationException();
+		assert active;
+		item.active();
+		return this;
 	}
 
 	@Override
@@ -66,7 +72,7 @@ class MenuItemAdp implements IMenuItem {
 
 	@Override
 	public boolean isActive() {
-		throw new UnsupportedOperationException();
+		return item.isActive();
 	}
 
 	@Override
