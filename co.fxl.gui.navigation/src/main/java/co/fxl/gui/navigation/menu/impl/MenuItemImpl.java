@@ -131,11 +131,11 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 		return register.enabled();
 	}
 
-	@Override
-	public IMenuItem imageResource(String imageResource) {
-		register.imageResource(imageResource);
-		return this;
-	}
+//	@Override
+//	public IMenuItem imageResource(String imageResource) {
+//		register.imageResource(imageResource);
+//		return this;
+//	}
 
 	@Override
 	public IMenuItem toggleLoading(boolean loading) {

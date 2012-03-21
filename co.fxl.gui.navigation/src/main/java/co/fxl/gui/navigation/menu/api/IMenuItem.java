@@ -44,7 +44,7 @@ public interface IMenuItem extends IMenuNode {
 
 	boolean isEnabled();
 
-	IMenuItem imageResource(String imageResource);
+//	IMenuItem imageResource(String imageResource);
 
 	IMenuItem toggleLoading(boolean toggleLoading);
 }

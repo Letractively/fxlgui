@@ -81,10 +81,10 @@ class MenuItemAdp implements IMenuItem {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public IMenuItem imageResource(String imageResource) {
-		throw new UnsupportedOperationException();
-	}
+	// @Override
+	// public IMenuItem imageResource(String imageResource) {
+	// throw new UnsupportedOperationException();
+	// }
 
 	@Override
 	public IMenuItem toggleLoading(boolean toggleLoading) {
