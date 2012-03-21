@@ -18,18 +18,23 @@
  */
 package co.fxl.gui.navigation.impl;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.navigation.group.api.INavigationItem.IDecorator;
 import co.fxl.gui.navigation.group.impl.NavigationItemImpl;
 import co.fxl.gui.navigation.menu.api.IMenuItem;
 
-class MenuItemAdp implements IMenuItem {
+class MenuItemAdp implements IMenuItem, IDecorator {
 
 	private NavigationItemImpl item;
 	private boolean enabled = true;
 	private boolean visible = true;
+	private INavigationListener listener;
+	private IVerticalPanel panel;
 
 	MenuItemAdp(NavigationItemImpl item) {
 		this.item = item;
+		item.decorator(this);
 	}
 
 	@Override
@@ -40,7 +45,8 @@ class MenuItemAdp implements IMenuItem {
 	@Override
 	public IMenuItem listener(
 			co.fxl.gui.navigation.menu.api.IMenuItem.INavigationListener listener) {
-		throw new UnsupportedOperationException();
+		this.listener = listener;
+		return this;
 	}
 
 	@Override
@@ -51,7 +57,7 @@ class MenuItemAdp implements IMenuItem {
 
 	@Override
 	public IVerticalPanel contentPanel() {
-		throw new UnsupportedOperationException();
+		return panel;
 	}
 
 	@Override
@@ -89,6 +95,12 @@ class MenuItemAdp implements IMenuItem {
 	public IMenuItem toggleLoading(boolean toggleLoading) {
 		item.toggleLoading(toggleLoading);
 		return this;
+	}
+
+	@Override
+	public void decorate(IVerticalPanel panel, ICallback<Void> cb) {
+		this.panel = panel;
+		listener.onActive(true, cb);
 	}
 
 }
