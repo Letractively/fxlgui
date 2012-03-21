@@ -58,6 +58,6 @@ class MenuItem {
 	}
 
 	void active() {
-		parent.active();
+		parent.active(true);
 	}
 }

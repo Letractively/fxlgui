@@ -36,7 +36,7 @@ public interface IMenuItem extends IMenuNode {
 
 	IMenuItem visible(boolean visible);
 
-	IMenuItem active();
+	IMenuItem active(boolean active);
 
 	IMenuItem enabled(boolean enabled);
 

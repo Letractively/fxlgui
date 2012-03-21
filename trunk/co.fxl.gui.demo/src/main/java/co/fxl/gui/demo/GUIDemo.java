@@ -87,7 +87,7 @@ public class GUIDemo {
 
 	private void addElements(IMenuWidget widget) {
 		MenuItem item = new MenuItem(widget, decorator, "Elements");
-		item.nest("Label", new LabelDemo()).active();
+		item.nest("Label", new LabelDemo()).active(true);
 		item.nest("Button", new ButtonDemo());
 		item.nest("Checkbox", new CheckboxDemo());
 		item.nest("Combobox", new ComboboxDemo());
@@ -100,7 +100,7 @@ public class GUIDemo {
 
 	private void addPanels(IMenuWidget widget) {
 		MenuItem item = new MenuItem(widget, decorator, "Panels");
-		item.nest("Horizontal", new HorizontalPanelDemo()).active();
+		item.nest("Horizontal", new HorizontalPanelDemo()).active(true);
 		item.nest("Vertical", new VerticalPanelDemo());
 		item.nest("Grid", new GridPanelDemo());
 		item.nest("Dock", new DockPanelDemo());
