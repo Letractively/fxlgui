@@ -20,7 +20,7 @@ package co.fxl.gui.navigation.impl;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.navigation.api.IMenuWidget;
+import co.fxl.gui.navigation.menu.api.IMenuWidget;
 
 public class NavigationWidgetImplProvider implements
 		IWidgetProvider<IMenuWidget> {

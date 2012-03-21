@@ -16,9 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.navigation.api;
+package co.fxl.gui.navigation.menu.api;
 
-public interface IMenuNode {
+public interface IToolbar {
 
-	IMenuItem addNavigationItem();
+	IToolbar visible(boolean visible);
+
+	IToolbarItem addItem();
+
+	IToolbar addItem(IToolbarItem item);
 }

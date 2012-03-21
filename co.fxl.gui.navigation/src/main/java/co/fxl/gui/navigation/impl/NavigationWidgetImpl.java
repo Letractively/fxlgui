@@ -21,9 +21,9 @@ package co.fxl.gui.navigation.impl;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IPanel;
-import co.fxl.gui.navigation.api.IMenuItem;
-import co.fxl.gui.navigation.api.IMenuWidget;
-import co.fxl.gui.navigation.api.IToolbar;
+import co.fxl.gui.navigation.menu.api.IMenuItem;
+import co.fxl.gui.navigation.menu.api.IMenuWidget;
+import co.fxl.gui.navigation.menu.api.IToolbar;
 import co.fxl.gui.register.impl.RegisterWidgetImpl;
 import co.fxl.gui.register.impl.RegisterWidgetImpl.ColorDecorator;
 

@@ -19,9 +19,9 @@
 package co.fxl.gui.demo;
 
 import co.fxl.gui.api.ICallback;
-import co.fxl.gui.navigation.api.IMenuItem;
-import co.fxl.gui.navigation.api.IMenuItem.INavigationListener;
-import co.fxl.gui.navigation.api.IMenuWidget;
+import co.fxl.gui.navigation.menu.api.IMenuItem;
+import co.fxl.gui.navigation.menu.api.IMenuWidget;
+import co.fxl.gui.navigation.menu.api.IMenuItem.INavigationListener;
 
 class MenuItem {
 

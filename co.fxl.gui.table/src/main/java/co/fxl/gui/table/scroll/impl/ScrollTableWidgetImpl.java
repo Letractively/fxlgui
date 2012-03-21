@@ -591,12 +591,15 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	void decorateToggleButtonCell(final IHorizontalPanel iHorizontalPanel) {
+		iHorizontalPanel.clear();
+		boolean first = true;
 		for (final State s : toggleButton.states) {
-			if (s.active) {
-				iHorizontalPanel.clear().add().image()
-						.resource(s.imageResource)
-						.addClickListener(s.clickListener);
+			if (!first) {
+				iHorizontalPanel.addSpace(4);
 			}
+			first = false;
+			iHorizontalPanel.add().image().resource(s.imageResource)
+					.clickable(s.active).addClickListener(s.clickListener);
 		}
 	}
 
