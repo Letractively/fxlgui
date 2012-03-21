@@ -36,8 +36,6 @@ public interface IMenuItem extends IMenuNode {
 
 	IMenuItem visible(boolean visible);
 
-//	IToolbarItem toolbarItem();
-
 	IMenuItem active();
 
 	IMenuItem enabled(boolean enabled);
