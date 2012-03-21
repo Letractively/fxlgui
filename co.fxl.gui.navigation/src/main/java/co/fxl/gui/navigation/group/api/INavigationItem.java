@@ -35,9 +35,9 @@ public interface INavigationItem {
 		void decorate(IVerticalPanel panel, ICallback<Void> cb);
 	}
 
-	INavigationItem initDecorator(IDecorator decorator);
+	INavigationItem decorator(IDecorator decorator);
 
-	IDecorator initDecorator();
+	IDecorator decorator();
 
 	INavigationItem name(String name);
 
