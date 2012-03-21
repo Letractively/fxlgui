@@ -29,19 +29,19 @@ class MenuItem {
 	private IMenuItem parent;
 
 	MenuItem(IMenuWidget widget, ExampleDecorator decorator, String title) {
-		parent = widget.addNavigationItem().text(title);
+		parent = widget.addNavigationItem().name(title);
 		this.exampleDecorator = decorator;
 	}
 
 	MenuItem(IMenuWidget widget, ExampleDecorator exampleDecorator,
 			String title, final Decorator decorator) {
 		this.exampleDecorator = exampleDecorator;
-		parent = widget.addNavigationItem().text(title);
+		parent = widget.addNavigationItem().name(title);
 		apply(decorator, parent);
 	}
 
 	IMenuItem nest(String title, final Decorator decorator) {
-		final IMenuItem child = parent.addNavigationItem().text(title);
+		final IMenuItem child = parent.addNavigationItem().name(title);
 		apply(decorator, child);
 		return child;
 	}
