@@ -108,7 +108,7 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	}
 
 	@Override
-	public IMenuItem text(String name) {
+	public IMenuItem name(String name) {
 		register.title().text(name);
 		return this;
 	}

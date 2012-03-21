@@ -30,7 +30,7 @@ public interface IMenuItem extends IMenuNode {
 
 	IMenuItem listener(INavigationListener listener);
 
-	IMenuItem text(String text);
+	IMenuItem name(String text);
 
 	IVerticalPanel contentPanel();
 
