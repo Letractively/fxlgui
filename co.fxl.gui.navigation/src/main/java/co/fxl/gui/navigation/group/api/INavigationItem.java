@@ -28,16 +28,20 @@ public interface INavigationItem {
 		void onActive(boolean active);
 	}
 
+	INavigationItem addListener(INavigationListener l);
+
 	public interface IDecorator {
 
 		void decorate(IVerticalPanel panel, ICallback<Void> cb);
 	}
 
+	INavigationItem initDecorator(IDecorator decorator);
+
+	IDecorator initDecorator();
+
 	INavigationItem name(String name);
 
 	String name();
-
-	INavigationItem initDecorator(IDecorator decorator);
 
 	INavigationItem active();
 
@@ -47,11 +51,7 @@ public interface INavigationItem {
 
 	boolean isActive();
 
-	IDecorator initDecorator();
-
 	INavigationItem visible(boolean visible);
-
-	INavigationItem addListener(INavigationListener l);
 
 	boolean visible();
 }
