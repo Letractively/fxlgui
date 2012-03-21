@@ -26,6 +26,8 @@ public interface INavigationWidget {
 				co.fxl.gui.api.ICallback<Void> cb);
 	}
 
+	INavigationWidget addNavigationListener(INavigationListener l);
+
 	INavigationGroup addGroup();
 
 	INavigationWidget visible(boolean visible);
@@ -33,6 +35,4 @@ public interface INavigationWidget {
 	INavigationWidget refresh();
 
 	INavigationItem activeItem();
-
-	INavigationWidget addNavigationListener(INavigationListener l);
 }
