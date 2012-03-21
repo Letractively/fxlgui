@@ -23,12 +23,12 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public interface INavigationItem {
 
-	interface INavigationListener {
+	// interface INavigationListener {
+	//
+	// void onActive(boolean active);
+	// }
 
-		void onActive(boolean active);
-	}
-
-	INavigationItem addListener(INavigationListener l);
+	// INavigationItem addListener(INavigationListener l);
 
 	public interface IDecorator {
 

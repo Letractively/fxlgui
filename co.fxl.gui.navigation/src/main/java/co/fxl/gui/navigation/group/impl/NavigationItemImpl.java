@@ -18,9 +18,6 @@
  */
 package co.fxl.gui.navigation.group.impl;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -51,7 +48,8 @@ public class NavigationItemImpl extends LazyClickListener implements
 	private ILinearPanel<?> itemPanel;
 	IHorizontalPanel basicPanel;
 	NavigationGroupImpl group;
-	private List<INavigationListener> listeners = new LinkedList<INavigationListener>();
+	// private List<INavigationListener> listeners = new
+	// LinkedList<INavigationListener>();
 	private IImage refresh;
 	private IBorder border;
 
@@ -108,9 +106,9 @@ public class NavigationItemImpl extends LazyClickListener implements
 						widget.colorInactiveGradient[2]);
 		applyGradient(buttonPanel.color(), widget.colorInactive,
 				widget.colorInactiveGradient);
-		if (notify)
-			for (INavigationListener l : listeners)
-				l.onActive(false);
+		// if (notify)
+		// for (INavigationListener l : listeners)
+		// l.onActive(false);
 	}
 
 	@Override
@@ -186,8 +184,8 @@ public class NavigationItemImpl extends LazyClickListener implements
 	private void showLabelAsActive(boolean viaClick,
 			co.fxl.gui.api.ICallback<Void> cb, boolean notify) {
 		widget.active(this, viaClick, cb, notify);
-		for (INavigationListener l : listeners)
-			l.onActive(true);
+		// for (INavigationListener l : listeners)
+		// l.onActive(true);
 	}
 
 	private void showLabelAsActive() {
@@ -243,11 +241,11 @@ public class NavigationItemImpl extends LazyClickListener implements
 		return this;
 	}
 
-	@Override
-	public INavigationItem addListener(INavigationListener l) {
-		listeners.add(l);
-		return this;
-	}
+	// @Override
+	// public INavigationItem addListener(INavigationListener l) {
+	// listeners.add(l);
+	// return this;
+	// }
 
 	@Override
 	public boolean visible() {
