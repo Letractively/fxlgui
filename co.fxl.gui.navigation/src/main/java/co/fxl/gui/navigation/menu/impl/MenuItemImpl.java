@@ -22,7 +22,6 @@ import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.navigation.menu.api.IMenuItem;
-import co.fxl.gui.navigation.menu.api.IToolbarItem;
 import co.fxl.gui.register.api.IRegister;
 import co.fxl.gui.register.api.IRegister.IRegisterListener;
 import co.fxl.gui.register.impl.RegisterWidgetImpl;
@@ -108,11 +107,6 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	}
 
 	@Override
-	public IToolbarItem toolbarItem() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public IMenuItem text(String name) {
 		register.title().text(name);
 		return this;
@@ -121,7 +115,7 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	@Override
 	public IMenuItem enabled(boolean enabled) {
 		register.enabled(enabled);
-		if(!enabled)
+		if (!enabled)
 			style.onBack(register.title());
 		return this;
 	}
