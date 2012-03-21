@@ -126,7 +126,7 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	}
 
 	@Override
-	public boolean enabled() {
+	public boolean isEnabled() {
 		return register.enabled();
 	}
 
