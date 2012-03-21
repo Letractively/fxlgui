@@ -26,7 +26,7 @@ public interface IMenuWidget extends IMenuNode {
 
 //	IMenuWidget background(int r, int g, int b);
 
-	int heightMenu();
+	int height();
 
 //	IMenuWidget outerSpacing(int outerSpacing);
 
