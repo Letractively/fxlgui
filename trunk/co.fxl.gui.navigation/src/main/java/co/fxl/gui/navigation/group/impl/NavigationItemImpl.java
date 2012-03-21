@@ -44,7 +44,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	ILabel button;
 	private IDecorator decorator;
 	IHorizontalPanel buttonPanel;
-	private NavigationWidgetImpl widget;
+	public NavigationWidgetImpl widget;
 	private ILinearPanel<?> itemPanel;
 	IHorizontalPanel basicPanel;
 	NavigationGroupImpl group;
