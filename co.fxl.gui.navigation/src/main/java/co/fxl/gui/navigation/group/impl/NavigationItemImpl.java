@@ -271,16 +271,19 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	private void showLoading() {
 		buttonPanel.spacing(SPACING_LOADING);
-		refresh.visible(true);
-		button.visible(false);
+		toggleLoading(true);
 		for (NavigationGroupImpl g : group.widget.groups) {
 			for (NavigationItemImpl i : g.items) {
 				if (i != NavigationItemImpl.this) {
-					i.refresh.visible(false);
-					i.button.visible(true);
+					i.toggleLoading(false);
 				}
 			}
 		}
+	}
+
+	public void toggleLoading(boolean t) {
+		refresh.visible(t);
+		button.visible(!t);
 	}
 
 	private void flipRegister(boolean flipNow) {

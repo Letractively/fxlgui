@@ -67,13 +67,13 @@ class MenuItemAdp implements IMenuItem {
 	}
 
 	@Override
-	public IMenuItem enabled(boolean enabled) {
-		throw new UnsupportedOperationException();
+	public boolean isActive() {
+		return item.isActive();
 	}
 
 	@Override
-	public boolean isActive() {
-		return item.isActive();
+	public IMenuItem enabled(boolean enabled) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -81,14 +81,10 @@ class MenuItemAdp implements IMenuItem {
 		throw new UnsupportedOperationException();
 	}
 
-	// @Override
-	// public IMenuItem imageResource(String imageResource) {
-	// throw new UnsupportedOperationException();
-	// }
-
 	@Override
 	public IMenuItem toggleLoading(boolean toggleLoading) {
-		throw new UnsupportedOperationException();
+		item.toggleLoading(toggleLoading);
+		return this;
 	}
 
 }
