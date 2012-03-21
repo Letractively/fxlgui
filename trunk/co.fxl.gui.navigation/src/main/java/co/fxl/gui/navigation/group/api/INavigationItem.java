@@ -43,11 +43,11 @@ public interface INavigationItem {
 
 	String name();
 
-	INavigationItem active();
+	IVerticalPanel addExtraPanel();
 
 	INavigationItem closeExtraPanel();
 
-	IVerticalPanel addExtraPanel();
+	INavigationItem active();
 
 	boolean isActive();
 
