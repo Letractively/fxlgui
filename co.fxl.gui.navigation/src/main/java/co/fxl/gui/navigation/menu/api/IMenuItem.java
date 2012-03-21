@@ -21,12 +21,14 @@ package co.fxl.gui.navigation.menu.api;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IVerticalPanel;
 
-public interface IMenuItem extends IMenuNode, INavigationItem<IMenuItem> {
+public interface IMenuItem extends IMenuNode {
 
 	public interface INavigationListener {
 
 		void onActive(boolean active, ICallback<Void> cb);
 	}
+
+	IMenuItem text(String text);
 
 	IVerticalPanel contentPanel();
 
