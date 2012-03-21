@@ -208,7 +208,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	@Override
-	public INavigationItem back() {
+	public INavigationItem closeExtraPanel() {
 		widget.panel1().clear();
 		widget.panel0();
 		return this;
