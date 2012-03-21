@@ -97,6 +97,35 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	// TODO Swing Scroll Panel block increment for single click on arrow is not
 	// enough
 
+	class State {
+
+		private String imageResource;
+		private IClickListener clickListener;
+		private boolean active;
+
+		State(String imageResource, IClickListener clickListener, boolean active) {
+			this.imageResource = imageResource;
+			this.clickListener = clickListener;
+			this.active = active;
+		}
+
+	}
+
+	public class StateToggleButton implements
+			co.fxl.gui.table.scroll.api.IScrollTableWidget.IStateToggleButton {
+
+		private List<State> states = new LinkedList<State>();
+
+		@Override
+		public co.fxl.gui.table.scroll.api.IScrollTableWidget.IStateToggleButton addState(
+				String imageResource, IClickListener clickListener,
+				boolean active) {
+			states.add(new State(imageResource, clickListener, active));
+			return this;
+		}
+
+	}
+
 	// private static final boolean ALLOW_RESIZE = false;
 	private static final int HEADER_ROW_HEIGHT = 24;
 	private static final int ROW_HEIGHT = 22;
@@ -202,6 +231,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private ICellUpdateListener updateListener;
 	private boolean addDragAndDropDirectly;
 	private boolean alwaysShowFilter;
+	private StateToggleButton toggleButton;
 
 	@Override
 	public IScrollTableWidget<Object> height(final int height) {
@@ -545,12 +575,28 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	void createFilter() {
 		if (filter == null) {
-			filter = (IMiniFilterWidget) topPanelCell(0, 0).panel()
-					.horizontal().addSpace(8).add()
+			IHorizontalPanel h = topPanelCell(0, 0).panel().horizontal()
+					.align().begin().addSpace(8);
+			if (toggleButton != null) {
+				decorateToggleButtonCell(h.add().panel().horizontal().align()
+						.begin());
+				h.addSpace(8);
+			}
+			filter = (IMiniFilterWidget) h.add()
 					.widget(IMiniFilterWidget.class);
 			filter.showConfiguration(showConfiguration);
 			if (showConfiguration)
 				filter.firstConfiguration(viewComboBoxChoice);
+		}
+	}
+
+	void decorateToggleButtonCell(final IHorizontalPanel iHorizontalPanel) {
+		for (final State s : toggleButton.states) {
+			if (s.active) {
+				iHorizontalPanel.clear().add().image()
+						.resource(s.imageResource)
+						.addClickListener(s.clickListener);
+			}
 		}
 	}
 
@@ -1308,5 +1354,10 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public int width() {
 		return contentPanel.width();
+	}
+
+	@Override
+	public co.fxl.gui.table.scroll.api.IScrollTableWidget.IStateToggleButton addToggleButton() {
+		return toggleButton = new StateToggleButton();
 	}
 }

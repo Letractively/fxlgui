@@ -68,7 +68,8 @@ public class ColumnSelection {
 		return widget.getContainer();
 	}
 
-	void addToPanel(ILinearPanel p, final IClickListener clickListener) {
+	void addToPanel(@SuppressWarnings("rawtypes") ILinearPanel p,
+			final IClickListener clickListener) {
 		addTitle(p);
 		for (final ScrollTableColumnImpl c : widget.columnList()) {
 			p.addSpace(4);
@@ -169,7 +170,7 @@ public class ColumnSelection {
 			l.font().color().rgb(102, 102, 102);
 	}
 
-	void addTitle(ILinearPanel p) {
+	void addTitle(@SuppressWarnings("rawtypes") ILinearPanel p) {
 		p.add().label().text("SHOW COLUMNS:").font().pixel(10).weight().bold();
 	}
 }
