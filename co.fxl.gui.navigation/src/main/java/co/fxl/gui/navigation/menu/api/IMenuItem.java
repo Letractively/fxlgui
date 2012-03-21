@@ -42,7 +42,7 @@ public interface IMenuItem extends IMenuNode {
 
 	boolean isActive();
 
-	boolean enabled();
+	boolean isEnabled();
 
 	IMenuItem imageResource(String imageResource);
 
