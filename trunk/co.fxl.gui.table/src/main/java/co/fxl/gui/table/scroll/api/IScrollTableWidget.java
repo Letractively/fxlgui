@@ -188,5 +188,7 @@ public interface IScrollTableWidget<T> {
 
 	int width();
 
+	IScrollTableWidget<T> alwaysShowFilter();
+
 	// IVerticalPanel editPanel();
 }
