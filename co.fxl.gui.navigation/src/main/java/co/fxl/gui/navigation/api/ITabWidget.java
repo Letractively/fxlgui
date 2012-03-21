@@ -16,23 +16,11 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.navigation.group.api;
+package co.fxl.gui.navigation.api;
 
-public interface INavigationWidget {
+import co.fxl.gui.navigation.group.api.INavigationWidget;
+import co.fxl.gui.navigation.menu.api.IMenuWidget;
 
-	public interface INavigationListener {
+public interface ITabWidget extends IMenuWidget, INavigationWidget {
 
-		void onBeforeNavigation(INavigationItem activeItem, boolean viaClick,
-				co.fxl.gui.api.ICallback<Void> cb);
-	}
-
-	INavigationWidget addNavigationListener(INavigationListener l);
-
-	INavigationGroup addGroup();
-
-	void visible(boolean visible);
-
-	INavigationWidget refresh();
-
-	INavigationItem activeItem();
 }

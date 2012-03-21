@@ -112,8 +112,7 @@ class NavigationWidgetImpl implements INavigationWidget {
 	}
 
 	@Override
-	public INavigationWidget visible(boolean visible) {
-		return this;
+	public void visible(boolean visible) {
 	}
 
 	void active(NavigationItemImpl item, boolean viaClick,

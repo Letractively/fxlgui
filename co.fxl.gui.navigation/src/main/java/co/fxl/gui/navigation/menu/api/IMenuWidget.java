@@ -20,7 +20,7 @@ package co.fxl.gui.navigation.menu.api;
 
 public interface IMenuWidget extends IMenuNode {
 
-	IMenuWidget visible(boolean visible);
+	void visible(boolean visible);
 
 	int height();
 

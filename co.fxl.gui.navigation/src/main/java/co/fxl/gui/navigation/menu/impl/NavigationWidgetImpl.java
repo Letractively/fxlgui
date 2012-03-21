@@ -51,9 +51,8 @@ class NavigationWidgetImpl implements IMenuWidget {
 	}
 
 	@Override
-	public IMenuWidget visible(boolean visible) {
+	public void visible(boolean visible) {
 		registerWidget.visible(true);
-		return this;
 	}
 
 	// public IPanel<?> fillerPanel() {
