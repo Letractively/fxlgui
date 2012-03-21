@@ -35,12 +35,12 @@ import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.group.api.INavigationWidget;
 
-class NavigationWidgetImpl implements INavigationWidget {
+public class NavigationWidgetImpl implements INavigationWidget {
 
 	// TODO Code: Look: reactivate double buffering, no flickering, add
 	// temp-flip-mechanism to FlipPage
 
-	private IDockPanel mainPanel;
+	protected IDockPanel mainPanel;
 	ILinearPanel<?> navigationPanel;
 	private ICardPanel history;
 	NavigationItemImpl active;
@@ -58,7 +58,7 @@ class NavigationWidgetImpl implements INavigationWidget {
 	private FlipPage flipPage;
 	private boolean panel0front;
 
-	NavigationWidgetImpl(IContainer layout) {
+	protected NavigationWidgetImpl(IContainer layout) {
 		mainPanel = layout.panel().dock();
 		hPanel = mainPanel.top().panel().grid();
 		hPanel.color().rgb(235, 235, 235).gradient().fallback(235, 235, 235)
