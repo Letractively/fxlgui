@@ -21,9 +21,8 @@ package co.fxl.gui.navigation.group.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.ICardPanel;
-import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.ICallback;
+import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
@@ -148,34 +147,34 @@ class NavigationWidgetImpl implements INavigationWidget {
 		}
 	}
 
-	@Override
-	public IColor colorActive() {
-		return new NonRemovableColorTemplate() {
-
-			@Override
-			public IColor setRGB(int r, int g, int b) {
-				colorActive = new int[] { r, g, b };
-				return this;
-			}
-		};
-	}
-
-	@Override
-	public IColor colorBackground() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public IColor colorInactive() {
-		return new NonRemovableColorTemplate() {
-
-			@Override
-			public IColor setRGB(int r, int g, int b) {
-				colorInactive = new int[] { r, g, b };
-				return this;
-			}
-		};
-	}
+	// @Override
+	// public IColor colorActive() {
+	// return new NonRemovableColorTemplate() {
+	//
+	// @Override
+	// public IColor setRGB(int r, int g, int b) {
+	// colorActive = new int[] { r, g, b };
+	// return this;
+	// }
+	// };
+	// }
+	//
+	// @Override
+	// public IColor colorBackground() {
+	// throw new UnsupportedOperationException();
+	// }
+	//
+	// @Override
+	// public IColor colorInactive() {
+	// return new NonRemovableColorTemplate() {
+	//
+	// @Override
+	// public IColor setRGB(int r, int g, int b) {
+	// colorInactive = new int[] { r, g, b };
+	// return this;
+	// }
+	// };
+	// }
 
 	@Override
 	public INavigationWidget refresh() {
