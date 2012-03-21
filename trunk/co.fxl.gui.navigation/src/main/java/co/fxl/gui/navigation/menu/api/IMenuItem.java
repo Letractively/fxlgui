@@ -28,11 +28,11 @@ public interface IMenuItem extends IMenuNode {
 		void onActive(boolean active, ICallback<Void> cb);
 	}
 
+	IMenuItem listener(INavigationListener listener);
+
 	IMenuItem text(String text);
 
 	IVerticalPanel contentPanel();
-
-	IMenuItem listener(INavigationListener listener);
 
 	IMenuItem visible(boolean visible);
 
