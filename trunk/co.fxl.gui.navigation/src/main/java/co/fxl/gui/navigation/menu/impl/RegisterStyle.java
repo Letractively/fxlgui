@@ -16,37 +16,41 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.navigation.impl;
+package co.fxl.gui.navigation.menu.impl;
 
 import co.fxl.gui.register.api.IRegister.ITitle;
 import co.fxl.gui.register.impl.RegisterWidgetImpl;
 
-class RootRegisterStyle extends RegisterStyle {
+abstract class RegisterStyle {
 
-	@Override
-	void decorateWidget(RegisterWidgetImpl widget) {
-		widget.backgroundPanel.color().rgb(249, 249, 249).gradient().vertical()
-				.rgb(216, 216, 216);
-		widget.separators(false);
+	private static final RegisterStyle[] STYLES = new RegisterStyle[] {
+			new RootRegisterStyle().index(0), new ChildRegisterStyle().index(1) };
+	private int index;
+
+	static RegisterStyle root() {
+		return style(0);
 	}
 
-	@Override
-	void init(ITitle title) {
-		onBack(title);
+	private static RegisterStyle style(int depth) {
+		if (depth >= STYLES.length)
+			depth = STYLES.length - 1;
+		return STYLES[depth];
 	}
 
-	@Override
-	public void onBack(ITitle title) {
-		title.color().rgb(112, 112, 112).gradient().vertical().rgb(63, 63, 63);
-		title.border().color().rgb(87, 87, 87);
-		title.font().underline(false).weight().plain().color().white();// .color().black();
+	RegisterStyle index(int index) {
+		this.index = index;
+		return this;
 	}
 
-	@Override
-	public void onFront(ITitle title) {
-		title.color().rgb(255, 255, 255).gradient().vertical()
-				.rgb(245, 245, 245);
-		title.border().color().gray();
-		title.font().underline(false).weight().plain().color().black();// .color().white();
+	RegisterStyle child() {
+		return style(index + 1);
 	}
+
+	abstract void decorateWidget(RegisterWidgetImpl widget);
+
+	abstract void init(ITitle title);
+
+	abstract void onFront(ITitle title);
+
+	abstract void onBack(ITitle title);
 }
