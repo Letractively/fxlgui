@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.navigation.impl;
+package co.fxl.gui.navigation.menu.impl;
 
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
