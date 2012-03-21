@@ -26,12 +26,6 @@ public interface INavigationWidget {
 				co.fxl.gui.api.ICallback<Void> cb);
 	}
 
-	// IColor colorBackground();
-	//
-	// IColor colorActive();
-	//
-	// IColor colorInactive();
-
 	INavigationGroup addGroup();
 
 	INavigationWidget visible(boolean visible);
