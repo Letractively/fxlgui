@@ -57,6 +57,7 @@ class MenuItemAdp implements IMenuItem, IDecorator {
 
 	@Override
 	public IVerticalPanel contentPanel() {
+		assert panel != null;
 		return panel;
 	}
 
