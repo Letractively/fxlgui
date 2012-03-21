@@ -20,9 +20,10 @@ package co.fxl.gui.table.scroll.api;
 
 import java.util.List;
 
-import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.ICallback;
+import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
@@ -35,6 +36,13 @@ import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.util.api.IDragDropListener;
 
 public interface IScrollTableWidget<T> {
+
+	public interface IStateToggleButton {
+
+		IStateToggleButton addState(String imageResource,
+				IClickListener clickListener, boolean active);
+
+	}
 
 	public interface IRowIndexListener {
 
@@ -189,6 +197,8 @@ public interface IScrollTableWidget<T> {
 	int width();
 
 	IScrollTableWidget<T> alwaysShowFilter();
+
+	IStateToggleButton addToggleButton();
 
 	// IVerticalPanel editPanel();
 }
