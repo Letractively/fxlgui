@@ -26,6 +26,7 @@ class MenuItemAdp implements IMenuItem {
 
 	private NavigationItemImpl item;
 	private boolean enabled = true;
+	private boolean visible = true;
 
 	MenuItemAdp(NavigationItemImpl item) {
 		this.item = item;
@@ -55,7 +56,8 @@ class MenuItemAdp implements IMenuItem {
 
 	@Override
 	public IMenuItem visible(boolean visible) {
-		item.visible(visible);
+		this.visible = visible;
+		item.visible(visible && enabled);
 		return this;
 	}
 
@@ -73,12 +75,14 @@ class MenuItemAdp implements IMenuItem {
 
 	@Override
 	public IMenuItem enabled(boolean enabled) {
-		throw new UnsupportedOperationException();
+		this.enabled = enabled;
+		item.visible(visible && enabled);
+		return this;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		throw new UnsupportedOperationException();
+		return enabled;
 	}
 
 	@Override
