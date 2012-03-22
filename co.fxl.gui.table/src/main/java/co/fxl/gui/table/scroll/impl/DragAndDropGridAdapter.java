@@ -23,6 +23,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.impl.ColorTemplate;
+import co.fxl.gui.impl.Constants;
 import co.fxl.gui.table.util.api.IDragDropListener;
 import co.fxl.gui.table.util.api.IDragDropListener.IDragArea;
 import co.fxl.gui.table.util.api.ILazyScrollPane.IDecorator;
@@ -31,11 +32,14 @@ import co.fxl.gui.table.util.impl.DragAndDrop.DragAndDropAdapter;
 
 class DragAndDropGridAdapter implements DragAndDropAdapter {
 
+	private static final boolean ALLOW_DRAG_AND_DROP = Constants.get(
+			"DragAndDropGridAdapter.ALLOW_DRAG_AND_DROP", true);
 	private ScrollTableWidgetImpl widget;
 
 	DragAndDropGridAdapter(ScrollTableWidgetImpl widget) {
 		this.widget = widget;
-		new DragAndDrop(this, widget.grid.focusPanel());
+		if (ALLOW_DRAG_AND_DROP)
+			new DragAndDrop(this, widget.grid.focusPanel());
 	}
 
 	@Override
