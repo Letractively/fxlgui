@@ -54,8 +54,7 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 		return this;
 	}
 
-	@Override
-	public IVerticalPanel contentPanel() {
+	private IVerticalPanel contentPanel() {
 		return register.contentPanel();
 	}
 
@@ -83,7 +82,7 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	@Override
 	public void onTop(final boolean visible, final ICallback<Void> cb) {
 		if (visible)
-			listener.onActive(new CallbackTemplate<Void>(cb) {
+			listener.onActive(contentPanel(), new CallbackTemplate<Void>(cb) {
 
 				@Override
 				public void onSuccess(Void result) {
