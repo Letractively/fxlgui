@@ -25,14 +25,14 @@ public interface IMenuItem extends IMenuNode {
 
 	public interface IActiveListener {
 
-		void onActive(ICallback<Void> cb);
+		void onActive(IVerticalPanel panel, ICallback<Void> cb);
 	}
 
 	IMenuItem listener(IActiveListener listener);
 
 	IMenuItem name(String text);
 
-	IVerticalPanel contentPanel();
+	// IVerticalPanel contentPanel();
 
 	IMenuItem visible(boolean visible);
 
@@ -44,7 +44,7 @@ public interface IMenuItem extends IMenuNode {
 
 	boolean isEnabled();
 
-//	IMenuItem imageResource(String imageResource);
+	// IMenuItem imageResource(String imageResource);
 
 	IMenuItem toggleLoading(boolean toggleLoading);
 }
