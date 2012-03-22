@@ -33,8 +33,6 @@ public interface IElement<T> extends ILocated<T> {
 
 	T tooltip(String tooltip);
 
-	<N> N nativeElement();
-
 	IDisplay display();
 
 	IPadding padding();
@@ -46,5 +44,9 @@ public interface IElement<T> extends ILocated<T> {
 	T margin(int margin);
 
 	T opacity(double opacity);
+
+	<N> N nativeElement();
+
+	<N> T nativeElement(N nativeElement);
 
 }
