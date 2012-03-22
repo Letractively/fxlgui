@@ -32,4 +32,10 @@ public interface ITab<T extends ITab<T>> {
 
 	T name(String text);
 
+	T active(boolean active);
+
+	boolean isActive();
+
+	T visible(boolean visible);
+
 }

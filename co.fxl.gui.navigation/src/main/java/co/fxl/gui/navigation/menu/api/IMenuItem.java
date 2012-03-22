@@ -24,13 +24,7 @@ public interface IMenuItem extends IMenuNode, ITab<IMenuItem> {
 
 	// IVerticalPanel contentPanel();
 
-	IMenuItem visible(boolean visible);
-
-	IMenuItem active(boolean active);
-
 	IMenuItem enabled(boolean enabled);
-
-	boolean isActive();
 
 	boolean isEnabled();
 

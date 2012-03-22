@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.navigation.api;
 
-public interface ITabGroup {
+public interface ITabGroup<T extends ITab<T>> {
 
-	public ITab addTab();
+	public T addTab();
 }
