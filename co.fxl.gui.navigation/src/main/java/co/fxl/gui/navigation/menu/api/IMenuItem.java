@@ -22,13 +22,8 @@ import co.fxl.gui.navigation.api.ITab;
 
 public interface IMenuItem extends IMenuNode, ITab<IMenuItem> {
 
-	// IVerticalPanel contentPanel();
-
 	IMenuItem enabled(boolean enabled);
 
 	boolean isEnabled();
 
-	// IMenuItem imageResource(String imageResource);
-
-	IMenuItem toggleLoading(boolean toggleLoading);
 }

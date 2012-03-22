@@ -282,9 +282,11 @@ public class NavigationItemImpl extends LazyClickListener implements
 		}
 	}
 
-	public void toggleLoading(boolean t) {
+	@Override
+	public INavigationItem toggleLoading(boolean t) {
 		refresh.visible(t);
 		button.visible(!t);
+		return this;
 	}
 
 	private void flipRegister(boolean flipNow) {
