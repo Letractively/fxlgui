@@ -23,12 +23,12 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public interface IMenuItem extends IMenuNode {
 
-	public interface INavigationListener {
+	public interface IActiveListener {
 
-		void onActive(boolean active, ICallback<Void> cb);
+		void onActive(ICallback<Void> cb);
 	}
 
-	IMenuItem listener(INavigationListener listener);
+	IMenuItem listener(IActiveListener listener);
 
 	IMenuItem name(String text);
 
