@@ -20,6 +20,8 @@ package co.fxl.gui.navigation.menu.api;
 
 import co.fxl.gui.navigation.api.ITab;
 
-public interface IMenuItem extends IMenuNode, ITab<IMenuItem> {
+public interface IMenuItem extends ITab<IMenuItem> {
+
+	IMenuItem addNavigationItem();
 
 }

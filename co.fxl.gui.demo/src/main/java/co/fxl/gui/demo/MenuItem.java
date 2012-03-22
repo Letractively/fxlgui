@@ -30,14 +30,14 @@ class MenuItem {
 	private IMenuItem parent;
 
 	MenuItem(IMenuWidget widget, ExampleDecorator decorator, String title) {
-		parent = widget.addNavigationItem().name(title);
+		parent = widget.defaultGroup().addTab().name(title);
 		this.exampleDecorator = decorator;
 	}
 
 	MenuItem(IMenuWidget widget, ExampleDecorator exampleDecorator,
 			String title, final Decorator decorator) {
 		this.exampleDecorator = exampleDecorator;
-		parent = widget.addNavigationItem().name(title);
+		parent = widget.defaultGroup().addTab().name(title);
 		apply(decorator, parent);
 	}
 

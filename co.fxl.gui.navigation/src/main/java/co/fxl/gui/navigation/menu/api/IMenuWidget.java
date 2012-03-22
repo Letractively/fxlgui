@@ -18,10 +18,8 @@
  */
 package co.fxl.gui.navigation.menu.api;
 
-public interface IMenuWidget extends IMenuNode {
+import co.fxl.gui.navigation.api.ITabWidget;
 
-	void visible(boolean visible);
-
-	int height();
+public interface IMenuWidget extends ITabWidget<IMenuItem> {
 
 }
