@@ -52,7 +52,7 @@ class MenuWidgetImpl implements IMenuWidget, ITabGroup<IMenuItem> {
 	}
 
 	@Override
-	public ITabWidget<IMenuItem> visible(boolean visible) {
+	public ITabWidget<ITabGroup<IMenuItem>, IMenuItem> visible(boolean visible) {
 		registerWidget.visible(true);
 		return this;
 	}

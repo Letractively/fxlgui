@@ -18,9 +18,9 @@
  */
 package co.fxl.gui.navigation.group.api;
 
-public interface INavigationGroup {
+import co.fxl.gui.navigation.api.ITabGroup;
 
-	INavigationItem addItem();
+public interface INavigationGroup extends ITabGroup<INavigationItem> {
 
 	INavigationGroup name(String name);
 

@@ -31,6 +31,7 @@ import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.FlipPage;
+import co.fxl.gui.navigation.api.ITabWidget;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.group.api.INavigationWidget;
@@ -112,7 +113,8 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	}
 
 	@Override
-	public void visible(boolean visible) {
+	public ITabWidget<INavigationGroup, INavigationItem> visible(boolean visible) {
+		return this;
 	}
 
 	void active(NavigationItemImpl item, boolean viaClick,
@@ -191,5 +193,15 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	public INavigationWidget addNavigationListener(INavigationListener l) {
 		listeners.add(l);
 		return this;
+	}
+
+	@Override
+	public INavigationGroup defaultGroup() {
+		return addGroup();
+	}
+
+	@Override
+	public int height() {
+		throw new UnsupportedOperationException();
 	}
 }
