@@ -20,8 +20,8 @@ package co.fxl.gui.demo;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.navigation.api.ITab.IDecorator;
 import co.fxl.gui.navigation.menu.api.IMenuItem;
-import co.fxl.gui.navigation.menu.api.IMenuItem.IDecorator;
 import co.fxl.gui.navigation.menu.api.IMenuWidget;
 
 class MenuItem {

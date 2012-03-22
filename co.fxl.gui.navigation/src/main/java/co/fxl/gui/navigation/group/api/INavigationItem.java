@@ -18,21 +18,12 @@
  */
 package co.fxl.gui.navigation.group.api;
 
-import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.navigation.api.ITab;
 
-public interface INavigationItem {
-
-	public interface IDecorator {
-
-		void decorate(IVerticalPanel panel, ICallback<Void> cb);
-	}
-
-	INavigationItem decorator(IDecorator decorator);
+public interface INavigationItem extends ITab<INavigationItem> {
 
 	IDecorator decorator();
-
-	INavigationItem name(String name);
 
 	String name();
 
