@@ -18,8 +18,10 @@
  */
 package co.fxl.gui.navigation.menu.api;
 
+import co.fxl.gui.navigation.api.ITabGroup;
 import co.fxl.gui.navigation.api.ITabWidget;
 
-public interface IMenuWidget extends ITabWidget<IMenuItem> {
+public interface IMenuWidget extends
+		ITabWidget<ITabGroup<IMenuItem>, IMenuItem> {
 
 }

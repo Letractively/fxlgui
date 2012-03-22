@@ -71,7 +71,7 @@ class NavigationGroupImpl implements INavigationGroup {
 	}
 
 	@Override
-	public INavigationItem addItem() {
+	public INavigationItem addTab() {
 		if (!first) {
 			itemPanel.addSpace(1);
 		}

@@ -18,7 +18,10 @@
  */
 package co.fxl.gui.navigation.group.api;
 
-public interface INavigationWidget {
+import co.fxl.gui.navigation.api.ITabWidget;
+
+public interface INavigationWidget extends
+		ITabWidget<INavigationGroup, INavigationItem> {
 
 	public interface INavigationListener {
 
@@ -27,10 +30,6 @@ public interface INavigationWidget {
 	}
 
 	INavigationWidget addNavigationListener(INavigationListener l);
-
-	INavigationGroup addGroup();
-
-	void visible(boolean visible);
 
 	INavigationWidget refresh();
 
