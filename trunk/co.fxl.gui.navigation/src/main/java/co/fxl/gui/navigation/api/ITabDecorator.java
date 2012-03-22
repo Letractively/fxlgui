@@ -16,21 +16,12 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.navigation.group.api;
+package co.fxl.gui.navigation.api;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.navigation.api.ITab;
-import co.fxl.gui.navigation.api.ITabDecorator;
 
-public interface INavigationItem extends ITab<INavigationItem> {
+public interface ITabDecorator {
 
-	ITabDecorator decorator();
-
-	String name();
-
-	IVerticalPanel addExtraPanel();
-
-	INavigationItem closeExtraPanel();
-
-	boolean visible();
+	void decorate(IVerticalPanel panel, ICallback<Void> cb);
 }

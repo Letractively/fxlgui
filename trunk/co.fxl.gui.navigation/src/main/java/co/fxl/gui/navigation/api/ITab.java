@@ -18,17 +18,9 @@
  */
 package co.fxl.gui.navigation.api;
 
-import co.fxl.gui.api.ICallback;
-import co.fxl.gui.api.IVerticalPanel;
-
 public interface ITab<T extends ITab<T>> {
 
-	public interface IDecorator {
-
-		void decorate(IVerticalPanel panel, ICallback<Void> cb);
-	}
-
-	T decorator(IDecorator listener);
+	T decorator(ITabDecorator listener);
 
 	T name(String text);
 
