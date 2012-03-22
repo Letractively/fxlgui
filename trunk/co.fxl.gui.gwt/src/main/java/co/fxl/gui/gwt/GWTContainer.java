@@ -103,8 +103,8 @@ public class GWTContainer<T extends Widget> implements IContainer {
 	@Override
 	public IElement<?> element(IElement<?> element) {
 		GWTElement<?, ?> gwtElement = (GWTElement<?, ?>) element;
-		setComponent((T) gwtElement.container.widget);
 		this.element = gwtElement;
+		setComponent((T) gwtElement.container.widget);
 		return element;
 	}
 

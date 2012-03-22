@@ -127,4 +127,9 @@ public class ElementDecorator<T> implements IElement<T> {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public <N> T nativeElement(N nativeElement) {
+		throw new UnsupportedOperationException();
+	}
+
 }

@@ -231,4 +231,9 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 		// TODO ... throw new UnsupportedOperationException();
 		return (T) this;
 	}
+
+	@Override
+	public <N> T nativeElement(N nativeElement) {
+		throw new UnsupportedOperationException();
+	}
 }

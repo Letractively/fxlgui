@@ -484,4 +484,9 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 		return (R) this;
 	}
 
+	@Override
+	public <N> R nativeElement(N nativeElement) {
+		throw new UnsupportedOperationException();
+	}
+
 }

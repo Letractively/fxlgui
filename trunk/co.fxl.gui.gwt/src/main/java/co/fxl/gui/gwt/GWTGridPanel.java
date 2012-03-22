@@ -49,6 +49,12 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 		}
 
 		@Override
+		public void setComponent(Widget component) {
+			gridCell = this;
+			super.setComponent(component);
+		}
+
+		@Override
 		public IGridCell clear() {
 			gridCell = this;
 			GWTGridPanel.this.container.widget.remove(container.widget);
@@ -57,6 +63,14 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 
 		@Override
 		public IElement<?> element() {
+			if (element.injector == null)
+				element.injector = new Injector() {
+
+					@Override
+					public void inject(Widget nativeElement) {
+						setComponent(nativeElement);
+					}
+				};
 			return element;
 		}
 

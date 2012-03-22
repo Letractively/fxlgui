@@ -1,6 +1,6 @@
 <module>
 	<inherits name='co.fxl.gui.IDisplay' />
-	<inherits name='co.fxl.gui.navigation.api.INavigationWidget' />
+	<inherits name='co.fxl.gui.navigation.menu.api.IMenuWidget' />
 	<inherits name='co.fxl.gui.register.impl.RegisterWidgetImpl' />
 	<source path='' />
 </module>

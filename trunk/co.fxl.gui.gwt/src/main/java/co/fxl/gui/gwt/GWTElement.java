@@ -81,6 +81,12 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class GWTElement<T extends Widget, R> implements IElement<R> {
 
+	public interface Injector {
+
+		void inject(Widget nativeElement);
+
+	}
+
 	private final class GWTPoint implements IDragEvent {
 
 		private final DragDropEventBase<?> event;
@@ -213,6 +219,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	private String visibleStyle = null;
 	private boolean hasDragListener;
 	private HandlerRegistration dummyDragListener;
+	public Injector injector;
 
 	public GWTElement() {
 	}
@@ -689,5 +696,17 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		container.widget.getElement().getStyle().setOpacity(opacity);
 		return (R) this;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <N> R nativeElement(N nativeElement) {
+		injector.inject((Widget) nativeElement);
+		return (R) this;
+	}
+
+	// @Override
+	// public <N> R nativeElement(N nativeElement) {
+	// throw new UnsupportedOperationException();
+	// }
 
 }
