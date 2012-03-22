@@ -52,6 +52,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	// LinkedList<INavigationListener>();
 	private IImage refresh;
 	private IBorder border;
+	private boolean enabled = true;
 
 	NavigationItemImpl(NavigationGroupImpl group) {
 		this.group = group;
@@ -238,7 +239,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	public NavigationItemImpl updateVisible(boolean visible) {
-		basicPanel.visible(visible);
+		basicPanel.visible(visible && enabled);
 		return this;
 	}
 
@@ -298,5 +299,18 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	void flipPage() {
 		widget.flipPage().flip();
+	}
+
+	@Override
+	public INavigationItem enabled(boolean enabled) {
+		this.enabled = enabled;
+		updateVisible(visible());
+		group.updateVisible();
+		return this;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return enabled;
 	}
 }

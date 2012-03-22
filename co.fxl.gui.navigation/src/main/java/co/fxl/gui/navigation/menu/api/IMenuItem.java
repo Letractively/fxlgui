@@ -22,8 +22,4 @@ import co.fxl.gui.navigation.api.ITab;
 
 public interface IMenuItem extends IMenuNode, ITab<IMenuItem> {
 
-	IMenuItem enabled(boolean enabled);
-
-	boolean isEnabled();
-
 }

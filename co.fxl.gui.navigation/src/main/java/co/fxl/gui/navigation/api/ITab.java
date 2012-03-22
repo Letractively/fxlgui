@@ -20,7 +20,6 @@ package co.fxl.gui.navigation.api;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.navigation.menu.api.IMenuItem;
 
 public interface ITab<T extends ITab<T>> {
 
@@ -40,5 +39,9 @@ public interface ITab<T extends ITab<T>> {
 	T visible(boolean visible);
 
 	T toggleLoading(boolean toggleLoading);
+
+	T enabled(boolean enabled);
+
+	boolean isEnabled();
 
 }
