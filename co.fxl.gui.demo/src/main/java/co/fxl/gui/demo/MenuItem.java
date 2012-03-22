@@ -20,7 +20,7 @@ package co.fxl.gui.demo;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.navigation.api.ITab.IDecorator;
+import co.fxl.gui.navigation.api.ITabDecorator;
 import co.fxl.gui.navigation.menu.api.IMenuItem;
 import co.fxl.gui.navigation.menu.api.IMenuWidget;
 
@@ -48,7 +48,7 @@ class MenuItem {
 	}
 
 	void apply(final Decorator decorator, final IMenuItem child) {
-		child.decorator(new IDecorator() {
+		child.decorator(new ITabDecorator() {
 			@Override
 			public void decorate(IVerticalPanel p, ICallback<Void> cb) {
 				decorator.decorate(exampleDecorator, p);

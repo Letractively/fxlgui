@@ -21,6 +21,7 @@ package co.fxl.gui.navigation.menu.impl;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.navigation.api.ITabDecorator;
 import co.fxl.gui.navigation.menu.api.IMenuItem;
 import co.fxl.gui.register.api.IRegister;
 import co.fxl.gui.register.api.IRegister.IRegisterListener;
@@ -32,7 +33,7 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	private RegisterStyle style;
 	private RegisterWidgetImpl registerWidget;
 	private RegisterStyle styleChild;
-	private IDecorator listener;
+	private ITabDecorator listener;
 
 	MenuItemImpl(RegisterWidgetImpl registerWidget, RegisterStyle style) {
 		register = registerWidget.addRegister();
@@ -49,7 +50,7 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	}
 
 	@Override
-	public IMenuItem decorator(IDecorator listener) {
+	public IMenuItem decorator(ITabDecorator listener) {
 		this.listener = listener;
 		return this;
 	}

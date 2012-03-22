@@ -28,6 +28,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.LazyClickListener;
+import co.fxl.gui.navigation.api.ITabDecorator;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 
 public class NavigationItemImpl extends LazyClickListener implements
@@ -42,7 +43,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 			"NavigationItemImpl.FLIP_AFTER_RETURN", true);
 	static int c = 1;
 	ILabel button;
-	private IDecorator decorator;
+	private ITabDecorator decorator;
 	IHorizontalPanel buttonPanel;
 	public NavigationWidgetImpl widget;
 	private ILinearPanel<?> itemPanel;
@@ -119,7 +120,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	@Override
-	public INavigationItem decorator(IDecorator decorator) {
+	public INavigationItem decorator(ITabDecorator decorator) {
 		this.decorator = decorator;
 		return this;
 	}
@@ -227,7 +228,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	@Override
-	public IDecorator decorator() {
+	public ITabDecorator decorator() {
 		return decorator;
 	}
 
