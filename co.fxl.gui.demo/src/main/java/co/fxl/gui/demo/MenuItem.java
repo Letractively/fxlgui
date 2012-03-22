@@ -21,7 +21,7 @@ package co.fxl.gui.demo;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.navigation.menu.api.IMenuItem;
-import co.fxl.gui.navigation.menu.api.IMenuItem.IActiveListener;
+import co.fxl.gui.navigation.menu.api.IMenuItem.IDecorator;
 import co.fxl.gui.navigation.menu.api.IMenuWidget;
 
 class MenuItem {
@@ -48,9 +48,9 @@ class MenuItem {
 	}
 
 	void apply(final Decorator decorator, final IMenuItem child) {
-		child.listener(new IActiveListener() {
+		child.decorator(new IDecorator() {
 			@Override
-			public void onActive(IVerticalPanel p, ICallback<Void> cb) {
+			public void decorate(IVerticalPanel p, ICallback<Void> cb) {
 				decorator.decorate(exampleDecorator, p);
 				decorator.update(p);
 				cb.onSuccess(null);

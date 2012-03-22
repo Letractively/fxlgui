@@ -32,7 +32,7 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	private RegisterStyle style;
 	private RegisterWidgetImpl registerWidget;
 	private RegisterStyle styleChild;
-	private IActiveListener listener;
+	private IDecorator listener;
 
 	MenuItemImpl(RegisterWidgetImpl registerWidget, RegisterStyle style) {
 		register = registerWidget.addRegister();
@@ -49,7 +49,7 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	}
 
 	@Override
-	public IMenuItem listener(IActiveListener listener) {
+	public IMenuItem decorator(IDecorator listener) {
 		this.listener = listener;
 		return this;
 	}
@@ -82,7 +82,7 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	@Override
 	public void onTop(final boolean visible, final ICallback<Void> cb) {
 		if (visible)
-			listener.onActive(contentPanel(), new CallbackTemplate<Void>(cb) {
+			listener.decorate(contentPanel(), new CallbackTemplate<Void>(cb) {
 
 				@Override
 				public void onSuccess(Void result) {
