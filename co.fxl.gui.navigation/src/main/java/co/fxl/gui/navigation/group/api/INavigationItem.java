@@ -31,7 +31,7 @@ public interface INavigationItem extends ITab<INavigationItem> {
 
 	INavigationItem closeExtraPanel();
 
-	INavigationItem active();
+	INavigationItem active(boolean active);
 
 	boolean isActive();
 

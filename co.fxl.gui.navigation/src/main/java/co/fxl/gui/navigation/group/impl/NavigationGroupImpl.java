@@ -105,7 +105,7 @@ class NavigationGroupImpl implements INavigationGroup {
 	public INavigationGroup active() {
 		for (NavigationItemImpl item : items) {
 			if (item.visible()) {
-				item.active();
+				item.active(true);
 				return this;
 			}
 		}

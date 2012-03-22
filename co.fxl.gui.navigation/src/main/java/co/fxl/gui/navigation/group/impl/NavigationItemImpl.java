@@ -125,19 +125,20 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	@Override
 	public void onAllowedClick() {
-		active(true);
+		setActive(true);
 	}
 
 	@Override
-	public NavigationItemImpl active() {
+	public NavigationItemImpl active(boolean active) {
+		assert active;
 		return updateActive();
 	}
 
 	public NavigationItemImpl updateActive() {
-		return active(false);
+		return setActive(false);
 	}
 
-	NavigationItemImpl active(boolean viaClick) {
+	NavigationItemImpl setActive(boolean viaClick) {
 		showLabelAsActive(viaClick, new CallbackTemplate<Void>() {
 			@Override
 			public void onSuccess(Void result) {

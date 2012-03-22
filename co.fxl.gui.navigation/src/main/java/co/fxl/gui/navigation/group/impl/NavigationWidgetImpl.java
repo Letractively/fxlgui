@@ -178,7 +178,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	@Override
 	public INavigationWidget refresh() {
 		if (active != null)
-			active.active();
+			active.active(true);
 		return this;
 	}
 
