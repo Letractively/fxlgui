@@ -18,19 +18,9 @@
  */
 package co.fxl.gui.navigation.menu.api;
 
-import co.fxl.gui.api.ICallback;
-import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.navigation.api.ITab;
 
-public interface IMenuItem extends IMenuNode {
-
-	public interface IDecorator {
-
-		void decorate(IVerticalPanel panel, ICallback<Void> cb);
-	}
-
-	IMenuItem decorator(IDecorator listener);
-
-	IMenuItem name(String text);
+public interface IMenuItem extends IMenuNode, ITab<IMenuItem> {
 
 	// IVerticalPanel contentPanel();
 
