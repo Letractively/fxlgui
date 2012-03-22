@@ -18,13 +18,13 @@
  */
 package co.fxl.gui.navigation.api;
 
-public interface ITabWidget {
-	
-	ITabGroup defaultGroup();
-	
-	ITabGroup addGroup();
+public interface ITabWidget<T extends ITab<T>> {
 
-	ITabWidget visible(boolean visible);
+	ITabGroup<T> defaultGroup();
+
+	ITabGroup<T> addGroup();
+
+	ITabWidget<T> visible(boolean visible);
 
 	int height();
 

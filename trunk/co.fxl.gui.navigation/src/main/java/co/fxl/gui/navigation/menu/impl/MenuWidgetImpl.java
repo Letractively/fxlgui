@@ -20,12 +20,14 @@ package co.fxl.gui.navigation.menu.impl;
 
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.navigation.api.ITabGroup;
+import co.fxl.gui.navigation.api.ITabWidget;
 import co.fxl.gui.navigation.menu.api.IMenuItem;
 import co.fxl.gui.navigation.menu.api.IMenuWidget;
 import co.fxl.gui.register.impl.RegisterWidgetImpl;
 import co.fxl.gui.register.impl.RegisterWidgetImpl.ColorDecorator;
 
-class MenuWidgetImpl implements IMenuWidget {
+class MenuWidgetImpl implements IMenuWidget, ITabGroup<IMenuItem> {
 
 	RegisterWidgetImpl registerWidget;
 
@@ -43,7 +45,6 @@ class MenuWidgetImpl implements IMenuWidget {
 		registerWidget.fontSize = 12;
 	}
 
-	@Override
 	public IMenuItem addNavigationItem() {
 		RegisterStyle style = RegisterStyle.root();
 		style.decorateWidget(registerWidget);
@@ -51,8 +52,9 @@ class MenuWidgetImpl implements IMenuWidget {
 	}
 
 	@Override
-	public void visible(boolean visible) {
+	public ITabWidget<IMenuItem> visible(boolean visible) {
 		registerWidget.visible(true);
+		return this;
 	}
 
 	// public IPanel<?> fillerPanel() {
@@ -63,6 +65,21 @@ class MenuWidgetImpl implements IMenuWidget {
 	@Override
 	public int height() {
 		return registerWidget.heightMenu();
+	}
+
+	@Override
+	public ITabGroup<IMenuItem> defaultGroup() {
+		return addGroup();
+	}
+
+	@Override
+	public ITabGroup<IMenuItem> addGroup() {
+		return this;
+	}
+
+	@Override
+	public IMenuItem addTab() {
+		return addNavigationItem();
 	}
 
 	// public IMenuWidget outerSpacing(int outerSpacing) {
