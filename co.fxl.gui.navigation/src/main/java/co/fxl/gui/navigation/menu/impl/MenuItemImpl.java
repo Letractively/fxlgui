@@ -32,7 +32,7 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	private RegisterStyle style;
 	private RegisterWidgetImpl registerWidget;
 	private RegisterStyle styleChild;
-	private INavigationListener listener;
+	private IActiveListener listener;
 
 	MenuItemImpl(RegisterWidgetImpl registerWidget, RegisterStyle style) {
 		register = registerWidget.addRegister();
@@ -49,7 +49,7 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	}
 
 	@Override
-	public IMenuItem listener(INavigationListener listener) {
+	public IMenuItem listener(IActiveListener listener) {
 		this.listener = listener;
 		return this;
 	}
@@ -82,29 +82,26 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 
 	@Override
 	public void onTop(final boolean visible, final ICallback<Void> cb) {
-		listener.onActive(visible, new CallbackTemplate<Void>(cb) {
+		if (visible)
+			listener.onActive(new CallbackTemplate<Void>(cb) {
 
-			@Override
-			public void onSuccess(Void result) {
-				finish(visible);
-				cb.onSuccess(result);
-			}
-
-			void finish(final boolean visible) {
-				if (visible) {
+				@Override
+				public void onSuccess(Void result) {
 					style.onFront(register.title());
-				} else {
-					style.onBack(register.title());
+					cb.onSuccess(result);
 				}
-			}
 
-			@Override
-			public void onFail(Throwable throwable) {
-				finish(visible);
-				super.onFail(throwable);
-			}
+				@Override
+				public void onFail(Throwable throwable) {
+					style.onFront(register.title());
+					super.onFail(throwable);
+				}
 
-		});
+			});
+		else {
+			style.onBack(register.title());
+			cb.onSuccess(null);
+		}
 	}
 
 	@Override
@@ -131,11 +128,11 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 		return register.enabled();
 	}
 
-//	@Override
-//	public IMenuItem imageResource(String imageResource) {
-//		register.imageResource(imageResource);
-//		return this;
-//	}
+	// @Override
+	// public IMenuItem imageResource(String imageResource) {
+	// register.imageResource(imageResource);
+	// return this;
+	// }
 
 	@Override
 	public IMenuItem toggleLoading(boolean loading) {
