@@ -59,7 +59,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	private FlipPage flipPage;
 	private boolean panel0front;
 
-	protected NavigationWidgetImpl(IContainer layout) {
+	public NavigationWidgetImpl(IContainer layout) {
 		mainPanel = layout.panel().dock();
 		hPanel = mainPanel.top().panel().grid();
 		hPanel.color().rgb(235, 235, 235).gradient().fallback(235, 235, 235)

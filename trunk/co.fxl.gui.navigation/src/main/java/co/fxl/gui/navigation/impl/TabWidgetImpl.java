@@ -19,29 +19,38 @@
 //package co.fxl.gui.navigation.impl;
 //
 //import co.fxl.gui.api.IContainer;
+//import co.fxl.gui.navigation.api.ITabGroup;
 //import co.fxl.gui.navigation.api.ITabWidget;
-//import co.fxl.gui.navigation.group.api.INavigationGroup;
-//import co.fxl.gui.navigation.group.impl.NavigationItemImpl;
 //import co.fxl.gui.navigation.group.impl.NavigationWidgetImpl;
 //import co.fxl.gui.navigation.menu.api.IMenuItem;
+//import co.fxl.gui.navigation.menu.api.IMenuWidget;
 //
-//class TabWidgetImpl extends NavigationWidgetImpl implements ITabWidget {
+//class TabWidgetImpl implements IMenuWidget {
 //
-//	private INavigationGroup group;
+//	private NavigationWidgetImpl widget;
 //
 //	TabWidgetImpl(IContainer layout) {
-//		super(layout);
-//		group = addGroup();
+//		widget = new NavigationWidgetImpl(layout);
+//	}
+//
+//	@Override
+//	public ITabGroup<IMenuItem> defaultGroup() {
+//		throw new UnsupportedOperationException();
+//	}
+//
+//	@Override
+//	public ITabGroup<IMenuItem> addGroup() {
+//		throw new UnsupportedOperationException();
+//	}
+//
+//	@Override
+//	public ITabWidget<ITabGroup<IMenuItem>, IMenuItem> visible(boolean visible) {
+//		throw new UnsupportedOperationException();
 //	}
 //
 //	@Override
 //	public int height() {
-//		return mainPanel.height();
-//	}
-//
-//	@Override
-//	public IMenuItem addNavigationItem() {
-//		return new MenuItemAdp((NavigationItemImpl) group.addItem());
+//		throw new UnsupportedOperationException();
 //	}
 //
 //}

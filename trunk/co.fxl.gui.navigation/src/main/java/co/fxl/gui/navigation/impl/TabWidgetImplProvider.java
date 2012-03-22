@@ -22,6 +22,7 @@
 //import co.fxl.gui.api.IWidgetProvider;
 //import co.fxl.gui.navigation.api.ITabWidget;
 //
+//@SuppressWarnings("rawtypes")
 //public class TabWidgetImplProvider implements IWidgetProvider<ITabWidget> {
 //
 //	@Override
