@@ -140,6 +140,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	RowAdapter rows;
 	private int paintedRows;
 	List<ScrollTableColumnImpl> columns = new LinkedList<ScrollTableColumnImpl>();
+	List<ScrollTableColumnImpl> filterColumns = new LinkedList<ScrollTableColumnImpl>();
 	private SelectionImpl selection = new SelectionImpl(this);
 	private IVerticalPanel contentPanel;
 	private int sortColumn = -1;
@@ -562,6 +563,12 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				filter.addFilter().name(c.name).type(c.type);
 			}
 		}
+		for (ScrollTableColumnImpl c : filterColumns) {
+			if (c.filterable) {
+				createFilter();
+				filter.addFilter().name(c.name).type(c.type);
+			}
+		}
 		if (filter == null && alwaysShowFilter) {
 			createFilter();
 		}
@@ -638,6 +645,14 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		ScrollTableColumnImpl column = new ScrollTableColumnImpl(this,
 				columns.size());
 		columns.add(column);
+		return column;
+	}
+
+	@Override
+	public IScrollTableColumn<Object> addFilterColumn() {
+		ScrollTableColumnImpl column = new ScrollTableColumnImpl(this,
+				columns.size() + filterColumns.size());
+		filterColumns.add(column);
 		return column;
 	}
 

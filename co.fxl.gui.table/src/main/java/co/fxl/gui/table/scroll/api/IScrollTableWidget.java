@@ -200,5 +200,7 @@ public interface IScrollTableWidget<T> {
 
 	IStateToggleButton addToggleButton();
 
+	IScrollTableColumn<Object> addFilterColumn();
+
 	// IVerticalPanel editPanel();
 }
