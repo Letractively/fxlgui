@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.gwt;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,8 +44,23 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 
 						@Override
 						public void onSuccess(List<String> result) {
-							Response r = null;
-							// TODO ...
+							Collection<Suggestion> cs = new LinkedList<Suggestion>();
+							for (final String s : result) {
+								cs.add(new Suggestion() {
+
+									@Override
+									public String getDisplayString() {
+										return s;
+									}
+
+									@Override
+									public String getReplacementString() {
+										return s;
+									}
+
+								});
+							}
+							Response r = new Response(cs);
 							arg1.onSuggestionsReady(arg0, r);
 						}
 					});
