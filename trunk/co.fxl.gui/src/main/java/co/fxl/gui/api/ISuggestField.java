@@ -18,9 +18,18 @@
  */
 package co.fxl.gui.api;
 
+import java.util.List;
+
 public interface ISuggestField extends ITextInput<ISuggestField>,
 		IKeyRecipient<ISuggestField> {
 
-	ISuggestField addText(String... texts);
+	public interface ISource {
+
+		void query(String prefix, ICallback<List<String>> callback);
+	}
+
+	ISuggestField source(ISource source);
+
+	// ISuggestField addText(String... texts);
 
 }

@@ -68,8 +68,14 @@ class SwingSuggestField extends SwingTextInput<JTextField, ISuggestField>
 		container.component.addActionListener(actionListener);
 	}
 
+//	@Override
+//	public ISuggestField addText(String... texts) {
+//		// TODO ... throw new UnsupportedOperationException();
+//		return this;
+//	}
+
 	@Override
-	public ISuggestField addText(String... texts) {
+	public ISuggestField source(ISource source) {
 		// TODO ... throw new UnsupportedOperationException();
 		return this;
 	}

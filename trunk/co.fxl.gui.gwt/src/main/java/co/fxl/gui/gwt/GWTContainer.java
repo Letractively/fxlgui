@@ -46,7 +46,6 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RichTextArea;
@@ -155,9 +154,13 @@ public class GWTContainer<T extends Widget> implements IContainer {
 
 	@Override
 	public ISuggestField suggestField() {
-		setComponent((T) new SuggestBox(new MultiWordSuggestOracle()));
-		return (ISuggestField) (element = new GWTSuggestField(
-				(GWTContainer<SuggestBox>) this));
+		GWTSuggestField.OracleAdapter suggestOracle = new GWTSuggestField.OracleAdapter();
+		setComponent((T) new SuggestBox(suggestOracle));
+		GWTSuggestField gsf = new GWTSuggestField(
+				(GWTContainer<SuggestBox>) this);
+		suggestOracle.element=gsf;
+		element = gsf;
+		return (ISuggestField) element;
 	}
 
 	@Override
