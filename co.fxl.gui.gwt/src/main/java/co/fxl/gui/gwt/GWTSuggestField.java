@@ -22,26 +22,45 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.ISuggestField;
-import co.fxl.gui.api.ITextField;
+import co.fxl.gui.impl.CallbackTemplate;
 
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestBox;
+import com.google.gwt.user.client.ui.SuggestOracle;
 
 class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 		ISuggestField {
 
+	static class OracleAdapter extends SuggestOracle {
+
+		GWTSuggestField element;
+
+		@Override
+		public void requestSuggestions(final Request arg0, final Callback arg1) {
+			element.source.query(arg0.getQuery(),
+					new CallbackTemplate<List<String>>() {
+
+						@Override
+						public void onSuccess(List<String> result) {
+							Response r = null;
+							// TODO ...
+							arg1.onSuggestionsReady(arg0, r);
+						}
+					});
+		}
+	}
+
 	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();
-	private MultiWordSuggestOracle oracle;
+	private ISource source;
 
 	GWTSuggestField(GWTContainer<SuggestBox> container) {
 		super(container);
 		assert container != null : "GWTTextField.new: container is null";
 		container.widget.addStyleName("gwt-TextBox-FXL");
 		defaultFont();
-		oracle = (MultiWordSuggestOracle) ((SuggestBox) container.widget)
-				.getSuggestOracle();
+		// oracle = (MultiWordSuggestOracle) ((SuggestBox) container.widget)
+		// .getSuggestOracle();
 	}
 
 	public ISuggestField text(String text) {
@@ -85,12 +104,12 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 		return (ISuggestField) super.width(width - 8);
 	}
 
-	@Override
-	public ISuggestField addText(String... texts) {
-		for (String t : texts)
-			oracle.add(t);
-		return this;
-	}
+	// @Override
+	// public ISuggestField addText(String... texts) {
+	// for (String t : texts)
+	// oracle.add(t);
+	// return this;
+	// }
 
 	@Override
 	public ISuggestField editable(boolean editable) {
@@ -105,5 +124,11 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 	@Override
 	public boolean editable() {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public ISuggestField source(ISource source) {
+		this.source = source;
+		return this;
 	}
 }
