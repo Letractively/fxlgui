@@ -25,8 +25,8 @@ import java.util.List;
 import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.impl.CallbackTemplate;
 
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestOracle;
 
@@ -92,10 +92,9 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 	public ISuggestField addUpdateListener(
 			final IUpdateListener<String> changeListener) {
 		updateListeners.add(changeListener);
-		container.widget.addKeyUpHandler(new KeyUpHandler() {
-
+		container.widget.getTextBox().addChangeHandler(new ChangeHandler() {
 			@Override
-			public void onKeyUp(KeyUpEvent event) {
+			public void onChange(ChangeEvent arg0) {
 				changeListener.onUpdate(container.widget.getText());
 			}
 		});
