@@ -562,6 +562,9 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				filter.addFilter().name(c.name).type(c.type);
 			}
 		}
+		if (filter == null && alwaysShowFilter) {
+			createFilter();
+		}
 		if (filter != null) {
 			if (filterListener != null)
 				filter.addFilterListener(filterListener);
