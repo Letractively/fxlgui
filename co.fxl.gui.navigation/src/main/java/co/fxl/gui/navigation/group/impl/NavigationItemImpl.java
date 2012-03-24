@@ -143,6 +143,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 			if (popUp == null) {
 				popUp = Display.instance().showPopUp().autoHide(true);
 				popUp.border().remove();
+				popUp.border().color().lightgray();
 				popUp.border().style().shadow();
 				popUp.width(280);
 				popUp.addVisibleListener(new IUpdateListener<Boolean>() {
@@ -155,11 +156,13 @@ public class NavigationItemImpl extends LazyClickListener implements
 				});
 				IVerticalPanel panel = popUp.container().panel().vertical();
 				panel.width(280);
-				applyColor(panel.color(), widget.colorActive);
+				panel.color().white();
 				decorator.decorate(panel, new CallbackTemplate<Void>() {
 					@Override
 					public void onSuccess(Void result) {
-						showBackgroundActive();
+						border.color().gray();
+						buttonPanel.color().remove();
+						buttonPanel.color().white();
 						refresh.resource("more_black.png");
 						int x = basicPanel.offsetX() - 280 + basicPanel.width();
 						if (x < 10)
@@ -377,6 +380,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 		isMoreTab = true;
 		refresh.resource("more.png").visible(true);
 		button.visible(false);
+		buttonPanel.spacing(3);
 		return this;
 	}
 

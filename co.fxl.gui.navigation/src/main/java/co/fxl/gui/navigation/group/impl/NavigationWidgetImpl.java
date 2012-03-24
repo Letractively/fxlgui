@@ -139,8 +139,9 @@ public class NavigationWidgetImpl implements INavigationWidget {
 							.panel().grid().spacing(6);
 					int r = 0;
 					for (final NavigationGroupImpl g : groups) {
-						ILabel lg = gp.cell(0, r).panel().vertical()
-								.addSpace(3).add().label().text(g.name());
+						ILabel lg = gp.cell(0, r).valign().begin().panel()
+								.vertical().addSpace(1).add().label()
+								.text(g.name());
 						lg.font().weight().bold().pixel(11);
 						lg.addClickListener(new IClickListener() {
 							@Override
@@ -181,6 +182,8 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	}
 
 	void update() {
+		if (!DYNAMIC_RESIZE)
+			return;
 
 		// TODO ensure active item is visible
 
@@ -212,9 +215,9 @@ public class NavigationWidgetImpl implements INavigationWidget {
 				cb.onSuccess(null);
 			notifyListeners(active, viaClick, cb, listeners);
 		}
-		if (!item.visible()) {
-			update();
-		}
+		// if (!item.visible()) {
+		update();
+		// }
 	}
 
 	private void notifyListeners(final NavigationItemImpl activeItem,
