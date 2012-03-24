@@ -189,7 +189,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 
 		for (NavigationGroupImpl g : groups)
 			for (NavigationItemImpl i : g.items)
-				i.visible(true);
+				i.displayed(true);
 		moreGroup.visible(true);
 		boolean hidden = false;
 		for (int i = groups.size() - 1; i >= 0
@@ -198,7 +198,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 			for (int j = g.items.size() - 1; j >= 0
 					&& Display.instance().width() < navigationPanel.width(); j--) {
 				NavigationItemImpl ni = g.items.get(j);
-				ni.visible(false);
+				ni.displayed(false);
 				hidden = true;
 			}
 		}

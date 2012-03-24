@@ -46,6 +46,8 @@ class NavigationGroupImpl implements INavigationGroup {
 	ILinearPanel<?> itemPanel;
 	private boolean first = true;
 	List<NavigationItemImpl> items = new LinkedList<NavigationItemImpl>();
+	private boolean visible = true;
+	private boolean displayed = true;
 
 	NavigationGroupImpl(NavigationWidgetImpl widget) {
 		this.widget = widget;
@@ -83,22 +85,27 @@ class NavigationGroupImpl implements INavigationGroup {
 
 	@Override
 	public NavigationGroupImpl visible(boolean visible) {
-		panel.visible(visible);
+		this.visible = visible;
+		updatePanelVisible();
 		return this;
+	}
+
+	private void updatePanelVisible() {
+		panel.visible(visible && displayed);
 	}
 
 	@Override
 	public boolean visible() {
-		return panel.visible();
+		return visible;
 	}
 
 	void updateVisible() {
-		boolean visible = false;
+		visible = false;
 		panel.visible(true);
 		for (NavigationItemImpl item : items) {
 			visible |= item.basicPanel.visible();
 		}
-		panel.visible(visible);
+		updatePanelVisible();
 	}
 
 	@Override
@@ -118,5 +125,9 @@ class NavigationGroupImpl implements INavigationGroup {
 
 	String name() {
 		return header.text();
+	}
+
+	void displayed(boolean displayed) {
+		this.displayed = displayed;
 	}
 }
