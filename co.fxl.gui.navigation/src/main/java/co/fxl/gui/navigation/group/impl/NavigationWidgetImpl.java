@@ -225,7 +225,6 @@ public class NavigationWidgetImpl implements INavigationWidget {
 			notifyListeners(active, viaClick, cb, listeners);
 		}
 		// if (!item.visible()) {
-		update();
 		// }
 	}
 
