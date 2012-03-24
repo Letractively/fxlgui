@@ -51,7 +51,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		private int previousEdit = -1;
 
 		Edit() {
-			edit = clickable(panel.add(), "Edit");
+			edit = clickable(panel.add(), "Edit", showLabel());
 			edit.addClickListener(new IClickListener() {
 
 				@Override
@@ -183,9 +183,9 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		}
 	}
 
-	public static Link clickable(IContainer c, String string) {
+	public static Link clickable(IContainer c, String string, boolean showLabel) {
 		Link link = new Link();
-		link = link.clickableLink(c, string);
+		link = link.clickableLink(c, string).showLabel(showLabel);
 		return link;
 	}
 
@@ -196,11 +196,11 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		return l;
 	}
 
-	private static final IDecorator DEFAULT_DECORATOR = new IDecorator() {
+	private final IDecorator DEFAULT_DECORATOR = new IDecorator() {
 		@Override
 		public IClickable<?> decorate(IToolbar c) {
 			String string = "Add";
-			return clickable(c.add(), string);
+			return clickable(c.add(), string, showLabel());
 		}
 	};
 	private static boolean ALIGN_END = Constants.get(
@@ -329,12 +329,12 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			addRemove();
 		}
 		if (listenOnShow) {
-			show = clickable(panel.add(), "Show");
+			show = clickable(panel.add(), "Show", showLabel());
 			show.addClickListener(new Update(listenOnShowListener));
 			show.clickable(!widget.preselectedList.isEmpty());
 		}
 		if (listenOnEdit) {
-			edit = clickable(panel.add(), "Edit");
+			edit = clickable(panel.add(), "Edit", showLabel());
 			final Update clickListener = new Update(listenOnEditListener);
 			edit.addClickListener(clickListener);
 			edit.clickable(!widget.preselectedList.isEmpty());
@@ -375,10 +375,15 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	void addRemove() {
 		if (listenOnRemove) {
 			// remove = panel.add().button().text("Remove");
-			remove = clickable(panel.add(), "Remove");
+			remove = clickable(panel.add(), "Remove", showLabel());
 			remove.addClickListener(new Update(listenOnRemoveListener, true));
 			remove.clickable(false);
 		}
+	}
+
+	private boolean showLabel() {
+		boolean b = !listenOnMoveDown && !listenOnMoveUp;
+		return b;
 	}
 
 	void addAdd() {
@@ -404,7 +409,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		if (resource.equals(ScrollTableWidgetImpl.ARROW_DOWN)
 				&& i == Integer.MAX_VALUE)
 			res = "Bottom";
-		IClickable<?> image = clickable(panel.add(), res);
+		IClickable<?> image = clickable(panel.add(), res, showLabel());
 		// image.font().weight().bold();
 		image.addClickListener(new Move(listenOnMoveUpListener2, i));
 		boolean canClick = widget.preselectedList.size() == 1;
