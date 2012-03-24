@@ -91,4 +91,9 @@ class Link implements IClickable<Link> {
 		Link link = clickable(c, string, true);
 		return link;
 	}
+
+	public Link showLabel(boolean showLabel) {
+		label.visible(showLabel);
+		return this;
+	}
 }
