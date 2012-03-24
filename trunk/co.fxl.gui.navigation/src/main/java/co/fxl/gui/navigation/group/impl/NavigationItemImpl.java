@@ -323,4 +323,12 @@ public class NavigationItemImpl extends LazyClickListener implements
 	int width() {
 		return basicPanel.width();
 	}
+
+	@Override
+	public INavigationItem icon(String resource, String invertResource) {
+		initButtonPanel();
+		refresh.resource(resource).visible(true);
+		button.visible(false);
+		return this;
+	}
 }
