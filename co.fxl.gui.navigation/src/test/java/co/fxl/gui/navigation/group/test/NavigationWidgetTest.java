@@ -46,7 +46,7 @@ public class NavigationWidgetTest {
 		display.register(new NavigationWidgetImplProvider());
 		INavigationWidget n = display.container().widget(
 				INavigationWidget.class);
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 4; i++) {
 			INavigationGroup g = n.addGroup().name("Group " + i);
 			for (int j = 0; j < 3; j++) {
 				final String t = "Item " + i + j;

@@ -24,12 +24,14 @@ import java.util.List;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.FlipPage;
 import co.fxl.gui.navigation.api.ITabWidget;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
@@ -41,6 +43,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	// TODO Code: Look: reactivate double buffering, no flickering, add
 	// temp-flip-mechanism to FlipPage
 
+	private static final boolean DYNAMIC_RESIZE = true;
 	protected IDockPanel mainPanel;
 	ILinearPanel<?> navigationPanel;
 	private ICardPanel history;
@@ -58,6 +61,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	List<NavigationGroupImpl> groups = new LinkedList<NavigationGroupImpl>();
 	private FlipPage flipPage;
 	private boolean panel0front;
+	private NavigationGroupImpl moreGroup;
 
 	public NavigationWidgetImpl(IContainer layout) {
 		mainPanel = layout.panel().dock();
@@ -114,12 +118,42 @@ public class NavigationWidgetImpl implements INavigationWidget {
 
 	@Override
 	public ITabWidget<INavigationGroup, INavigationItem> visible(boolean visible) {
-//		for (NavigationGroupImpl g : groups)
-//			if (g.visible()) {
-//				g.active();
-//				return this;
-//			}
+		if (DYNAMIC_RESIZE) {
+			moreGroup = new NavigationGroupImpl(this).visible(false);
+			moreGroup.addTab().icon("more.png", "more_black.png");
+			update();
+			Display.instance().addResizeListener(new IResizeListener() {
+				@Override
+				public boolean onResize(int width, int height) {
+					if (!mainPanel.visible())
+						return false;
+					update();
+					return true;
+				}
+			});
+		}
 		return this;
+	}
+
+	void update() {
+		for (NavigationGroupImpl g : groups)
+			for (NavigationItemImpl i : g.items)
+				i.visible(true);
+		moreGroup.visible(true);
+		boolean hidden = false;
+		for (int i = groups.size() - 1; i >= 0
+				&& Display.instance().width() < navigationPanel.width(); i--) {
+			NavigationGroupImpl g = groups.get(i);
+			for (int j = g.items.size() - 1; j >= 0
+					&& Display.instance().width() < navigationPanel.width(); j--) {
+				NavigationItemImpl ni = g.items.get(j);
+				ni.visible(false);
+				hidden = true;
+			}
+		}
+		if (!hidden) {
+			moreGroup.visible(false);
+		}
 	}
 
 	void active(NavigationItemImpl item, boolean viaClick,

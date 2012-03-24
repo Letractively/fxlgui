@@ -33,4 +33,6 @@ public interface INavigationItem extends ITab<INavigationItem> {
 	INavigationItem closeExtraPanel();
 
 	boolean visible();
+
+	INavigationItem icon(String resource, String string);
 }
