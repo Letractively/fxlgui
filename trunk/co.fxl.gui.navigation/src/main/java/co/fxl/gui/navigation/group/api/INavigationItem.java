@@ -34,5 +34,5 @@ public interface INavigationItem extends ITab<INavigationItem> {
 
 	boolean visible();
 
-	INavigationItem icon(String resource, String string);
+	INavigationItem moreTab();
 }

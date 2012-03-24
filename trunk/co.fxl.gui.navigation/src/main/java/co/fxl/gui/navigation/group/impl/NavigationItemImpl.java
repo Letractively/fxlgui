@@ -55,6 +55,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	private IBorder border;
 	private boolean enabled = true;
 	private boolean labelAsActive;
+	private boolean isMoreTab;
 
 	NavigationItemImpl(NavigationGroupImpl group) {
 		this.group = group;
@@ -129,7 +130,10 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	@Override
 	public void onAllowedClick() {
-		setActive(true);
+		if (isMoreTab) {
+			throw new UnsupportedOperationException();
+		} else
+			setActive(true);
 	}
 
 	@Override
@@ -325,9 +329,10 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	@Override
-	public INavigationItem icon(String resource, String invertResource) {
+	public INavigationItem moreTab() {
 		initButtonPanel();
-		refresh.resource(resource).visible(true);
+		isMoreTab = true;
+		refresh.resource("more.png").visible(true);
 		button.visible(false);
 		return this;
 	}
