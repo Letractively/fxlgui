@@ -23,10 +23,12 @@ import java.util.List;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.ICardPanel;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IVerticalPanel;
@@ -63,6 +65,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	private FlipPage flipPage;
 	private boolean panel0front;
 	private NavigationGroupImpl moreGroup;
+	private boolean setUpDynamicResize;
 
 	public NavigationWidgetImpl(IContainer layout) {
 		mainPanel = layout.panel().dock();
@@ -119,13 +122,48 @@ public class NavigationWidgetImpl implements INavigationWidget {
 
 	@Override
 	public ITabWidget<INavigationGroup, INavigationItem> visible(boolean visible) {
-		if (DYNAMIC_RESIZE) {
+		setUpDynamicResize();
+		return this;
+	}
+
+	void setUpDynamicResize() {
+		if (DYNAMIC_RESIZE && !setUpDynamicResize) {
+			setUpDynamicResize = true;
 			moreGroup = new NavigationGroupImpl(this).visible(false);
-			moreGroup.addTab().moreTab().decorator(new ITabDecorator() {
+			final NavigationItemImpl moreItem = (NavigationItemImpl) moreGroup
+					.addTab().moreTab();
+			moreItem.decorator(new ITabDecorator() {
 				@Override
 				public void decorate(IVerticalPanel panel, ICallback<Void> cb) {
-					panel.add().label().text("todo...");
-					// TODO ...
+					IGridPanel gp = panel.add().panel().horizontal().add()
+							.panel().grid().spacing(6);
+					int r = 0;
+					for (final NavigationGroupImpl g : groups) {
+						ILabel lg = gp.cell(0, r).panel().vertical()
+								.addSpace(3).add().label().text(g.name());
+						lg.font().weight().bold().pixel(11);
+						lg.addClickListener(new IClickListener() {
+							@Override
+							public void onClick() {
+								moreItem.hidePopUp();
+								g.items.get(0).active(true);
+							}
+						});
+						IVerticalPanel v = gp.cell(1, r).panel().vertical();
+						for (final NavigationItemImpl i : g.items) {
+							ILabel li = v.add().label().text(i.name());
+							li.font().pixel(14).weight().bold();
+							li.addClickListener(new IClickListener() {
+								@Override
+								public void onClick() {
+									moreItem.hidePopUp();
+									i.active(true);
+								}
+							});
+							v.addSpace(2);
+						}
+						r++;
+					}
 					cb.onSuccess(null);
 				}
 			});
@@ -140,10 +178,12 @@ public class NavigationWidgetImpl implements INavigationWidget {
 				}
 			});
 		}
-		return this;
 	}
 
 	void update() {
+
+		// TODO ensure active item is visible
+
 		for (NavigationGroupImpl g : groups)
 			for (NavigationItemImpl i : g.items)
 				i.visible(true);
@@ -171,6 +211,9 @@ public class NavigationWidgetImpl implements INavigationWidget {
 			if (listeners.isEmpty())
 				cb.onSuccess(null);
 			notifyListeners(active, viaClick, cb, listeners);
+		}
+		if (!item.visible()) {
+			update();
 		}
 	}
 
