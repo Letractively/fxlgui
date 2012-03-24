@@ -139,6 +139,13 @@ public class NavigationWidgetImpl implements INavigationWidget {
 							.panel().grid().spacing(6);
 					int r = 0;
 					for (final NavigationGroupImpl g : groups) {
+						boolean show = false;
+						for (final NavigationItemImpl i : g.items) {
+							if (!i.displayed())
+								show = true;
+						}
+						if (!show)
+							continue;
 						ILabel lg = gp.cell(0, r).valign().begin().panel()
 								.vertical().addSpace(1).add().label()
 								.text(g.name());
@@ -152,6 +159,8 @@ public class NavigationWidgetImpl implements INavigationWidget {
 						});
 						IVerticalPanel v = gp.cell(1, r).panel().vertical();
 						for (final NavigationItemImpl i : g.items) {
+							if (i.displayed())
+								continue;
 							ILabel li = v.add().label().text(i.name());
 							li.font().pixel(14).weight().bold();
 							li.addClickListener(new IClickListener() {
