@@ -145,7 +145,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 						lg.addClickListener(new IClickListener() {
 							@Override
 							public void onClick() {
-								moreItem.hidePopUp();
+								moreItem.popUp.visible(false);
 								g.items.get(0).active(true);
 							}
 						});
@@ -156,7 +156,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 							li.addClickListener(new IClickListener() {
 								@Override
 								public void onClick() {
-									moreItem.hidePopUp();
+									moreItem.popUp.visible(false);
 									i.active(true);
 								}
 							});
