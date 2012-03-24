@@ -135,7 +135,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 		return this;
 	}
 
-	private IPopUp popUp;
+	IPopUp popUp;
 
 	@Override
 	public void onAllowedClick() {
