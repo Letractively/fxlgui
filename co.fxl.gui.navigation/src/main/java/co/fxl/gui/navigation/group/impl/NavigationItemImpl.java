@@ -289,7 +289,8 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	@Override
 	public INavigationItem toggleLoading(boolean t) {
-		refresh.resource(labelAsActive ? "loading_black.gif" : "loading_white.gif");
+		refresh.resource(labelAsActive ? "loading_black.gif"
+				: "loading_white.gif");
 		refresh.visible(t);
 		button.visible(!t);
 		return this;
@@ -317,5 +318,9 @@ public class NavigationItemImpl extends LazyClickListener implements
 	@Override
 	public boolean isEnabled() {
 		return enabled;
+	}
+
+	int width() {
+		return basicPanel.width();
 	}
 }
