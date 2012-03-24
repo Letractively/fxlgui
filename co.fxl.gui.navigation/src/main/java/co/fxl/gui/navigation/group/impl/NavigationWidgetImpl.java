@@ -120,7 +120,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	public ITabWidget<INavigationGroup, INavigationItem> visible(boolean visible) {
 		if (DYNAMIC_RESIZE) {
 			moreGroup = new NavigationGroupImpl(this).visible(false);
-			moreGroup.addTab().icon("more.png", "more_black.png");
+			moreGroup.addTab().moreTab();
 			update();
 			Display.instance().addResizeListener(new IResizeListener() {
 				@Override
