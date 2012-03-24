@@ -111,4 +111,8 @@ class NavigationGroupImpl implements INavigationGroup {
 		}
 		return this;
 	}
+
+	int width() {
+		return panel.width();
+	}
 }
