@@ -24,9 +24,12 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
+import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.navigation.api.ITabDecorator;
 import co.fxl.gui.navigation.group.api.INavigationItem;
@@ -101,6 +104,13 @@ public class NavigationItemImpl extends LazyClickListener implements
 		buttonPanel.spacing(5);
 		refresh.visible(false);
 		button.font().color().white();
+		showBackgroundInactive();
+		// if (notify)
+		// for (INavigationListener l : listeners)
+		// l.onActive(false);
+	}
+
+	void showBackgroundInactive() {
 		buttonPanel.clickable(true);
 		border.color()
 				.mix()
@@ -111,9 +121,6 @@ public class NavigationItemImpl extends LazyClickListener implements
 						widget.colorInactiveGradient[2]);
 		applyGradient(buttonPanel.color(), widget.colorInactive,
 				widget.colorInactiveGradient);
-		// if (notify)
-		// for (INavigationListener l : listeners)
-		// l.onActive(false);
 	}
 
 	@Override
@@ -128,10 +135,41 @@ public class NavigationItemImpl extends LazyClickListener implements
 		return this;
 	}
 
+	private IPopUp popUp;
+
 	@Override
 	public void onAllowedClick() {
 		if (isMoreTab) {
-			throw new UnsupportedOperationException();
+			if (popUp == null) {
+				popUp = Display.instance().showPopUp().autoHide(true);
+				popUp.addVisibleListener(new IUpdateListener<Boolean>() {
+					@Override
+					public void onUpdate(Boolean value) {
+						if (!value) {
+							showBackgroundInactive();
+							refresh.resource("more.png");
+							popUp = null;
+						}
+					}
+				});
+				IVerticalPanel panel = popUp.container().panel().vertical();
+				decorator.decorate(panel, new CallbackTemplate<Void>() {
+					@Override
+					public void onSuccess(Void result) {
+						showBackgroundActive();
+						refresh.resource("more_black.png");
+						popUp.offset(basicPanel.offsetX() - basicPanel.width()
+								+ basicPanel.width(), basicPanel.offsetY()
+								+ basicPanel.height());
+						popUp.visible(true);
+					}
+				});
+			} else {
+				showBackgroundInactive();
+				refresh.resource("more.png");
+				popUp.visible(false);
+				popUp = null;
+			}
 		} else
 			setActive(true);
 	}
@@ -201,10 +239,14 @@ public class NavigationItemImpl extends LazyClickListener implements
 		labelAsActive = true;
 		button.font().color().black();
 		buttonPanel.clickable(false);
-		border.color().gray();
-		applyColor(buttonPanel.color(), widget.colorActive);
+		showBackgroundActive();
 		button.visible(true);
 		refresh.visible(false);
+	}
+
+	void showBackgroundActive() {
+		border.color().gray();
+		applyColor(buttonPanel.color(), widget.colorActive);
 	}
 
 	private void applyColor(IColor color, int[] rgb) {

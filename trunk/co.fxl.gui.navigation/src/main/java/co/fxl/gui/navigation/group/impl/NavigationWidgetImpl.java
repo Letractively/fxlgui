@@ -33,6 +33,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.FlipPage;
+import co.fxl.gui.navigation.api.ITabDecorator;
 import co.fxl.gui.navigation.api.ITabWidget;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
@@ -120,7 +121,14 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	public ITabWidget<INavigationGroup, INavigationItem> visible(boolean visible) {
 		if (DYNAMIC_RESIZE) {
 			moreGroup = new NavigationGroupImpl(this).visible(false);
-			moreGroup.addTab().moreTab();
+			moreGroup.addTab().moreTab().decorator(new ITabDecorator() {
+				@Override
+				public void decorate(IVerticalPanel panel, ICallback<Void> cb) {
+					panel.add().label().text("todo...");
+					// TODO ...
+					cb.onSuccess(null);
+				}
+			});
 			update();
 			Display.instance().addResizeListener(new IResizeListener() {
 				@Override
