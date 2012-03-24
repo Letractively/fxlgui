@@ -307,7 +307,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	@Override
 	public boolean visible() {
-		return visible ;
+		return visible;
 	}
 
 	private void resetLabel() {
@@ -353,6 +353,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 		showLabelAsActive();
 		if (flipNow)
 			flipPage();
+		widget.update();
 	}
 
 	void flipPage() {
@@ -382,7 +383,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 		isMoreTab = true;
 		refresh.resource("more.png").visible(true);
 		button.visible(false);
-		buttonPanel.spacing(3);
+		buttonPanel.spacing(SPACING_LOADING);
 		return this;
 	}
 
