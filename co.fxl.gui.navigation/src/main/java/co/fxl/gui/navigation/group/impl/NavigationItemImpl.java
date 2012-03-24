@@ -143,7 +143,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 			if (popUp == null) {
 				popUp = Display.instance().showPopUp().autoHide(true);
 				popUp.border().remove();
-				popUp.border().color().lightgray();
+				popUp.border().color().mix().white().lightgray();
 				popUp.border().style().shadow();
 				popUp.width(280);
 				popUp.addVisibleListener(new IUpdateListener<Boolean>() {
