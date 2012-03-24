@@ -142,6 +142,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 		if (isMoreTab) {
 			if (popUp == null) {
 				popUp = Display.instance().showPopUp().autoHide(true);
+				popUp.border().remove();
 				popUp.border().style().shadow();
 				popUp.width(280);
 				popUp.addVisibleListener(new IUpdateListener<Boolean>() {
@@ -383,5 +384,9 @@ public class NavigationItemImpl extends LazyClickListener implements
 		showBackgroundInactive();
 		refresh.resource("more.png");
 		popUp = null;
+	}
+
+	void displayed(boolean b) {
+		throw new UnsupportedOperationException();
 	}
 }
