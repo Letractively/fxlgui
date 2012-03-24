@@ -136,6 +136,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	IPopUp popUp;
+	private boolean visible = true;
 
 	@Override
 	public void onAllowedClick() {
@@ -287,12 +288,13 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	@Override
 	public NavigationItemImpl visible(boolean visible) {
-		updateVisible(visible);
+		this.visible = visible;
+		updateVisible();
 		group.updateVisible();
 		return this;
 	}
 
-	public NavigationItemImpl updateVisible(boolean visible) {
+	public NavigationItemImpl updateVisible() {
 		basicPanel.visible(visible && enabled);
 		return this;
 	}
@@ -305,7 +307,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	@Override
 	public boolean visible() {
-		return basicPanel.visible();
+		return visible ;
 	}
 
 	private void resetLabel() {
@@ -360,7 +362,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	@Override
 	public INavigationItem enabled(boolean enabled) {
 		this.enabled = enabled;
-		updateVisible(visible());
+		updateVisible();
 		group.updateVisible();
 		return this;
 	}
@@ -391,6 +393,6 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	void displayed(boolean b) {
-		throw new UnsupportedOperationException();
+		enabled(b);
 	}
 }
