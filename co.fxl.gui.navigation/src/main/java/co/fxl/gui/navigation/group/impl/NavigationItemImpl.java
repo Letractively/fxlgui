@@ -396,4 +396,8 @@ public class NavigationItemImpl extends LazyClickListener implements
 	void displayed(boolean b) {
 		enabled(b);
 	}
+
+	boolean displayed() {
+		return enabled;
+	}
 }
