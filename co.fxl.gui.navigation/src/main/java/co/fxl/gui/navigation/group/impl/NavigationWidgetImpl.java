@@ -184,23 +184,32 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	void update() {
 		if (!DYNAMIC_RESIZE)
 			return;
-
-		// TODO ensure active item is visible
-
 		for (NavigationGroupImpl g : groups)
 			for (NavigationItemImpl i : g.items)
 				i.displayed(true);
 		moreGroup.visible(true);
 		boolean hidden = false;
+		List<NavigationItemImpl> candidates = new LinkedList<NavigationItemImpl>();
 		for (int i = groups.size() - 1; i >= 0
 				&& Display.instance().width() < navigationPanel.width(); i--) {
 			NavigationGroupImpl g = groups.get(i);
 			for (int j = g.items.size() - 1; j >= 0
 					&& Display.instance().width() < navigationPanel.width(); j--) {
 				NavigationItemImpl ni = g.items.get(j);
+				if (ni == active)
+					continue;
+				if (active != null && ni.group == active.group) {
+					candidates.add(ni);
+					continue;
+				}
 				ni.displayed(false);
 				hidden = true;
 			}
+		}
+		for (int i = 0; i < candidates.size()
+				&& Display.instance().width() < navigationPanel.width(); i++) {
+			candidates.get(i).displayed(false);
+			hidden = true;
 		}
 		if (!hidden) {
 			moreGroup.visible(false);
