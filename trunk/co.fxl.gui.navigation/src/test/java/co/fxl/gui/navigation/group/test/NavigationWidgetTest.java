@@ -39,7 +39,7 @@ public class NavigationWidgetTest {
 		IDisplay display = (IDisplay) clazz.getMethod("instance",
 				new Class<?>[0]).invoke(null, new Object[0]);
 		new NavigationWidgetTest().run(display);
-		display.size(600, 600).visible(true);
+		display.size(600, 600);
 	}
 
 	private void run(IDisplay display) {
@@ -61,6 +61,8 @@ public class NavigationWidgetTest {
 				});
 			}
 		}
+		display.visible(true);
+		n.visible(true);
 	}
 
 }

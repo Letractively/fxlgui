@@ -114,6 +114,11 @@ public class NavigationWidgetImpl implements INavigationWidget {
 
 	@Override
 	public ITabWidget<INavigationGroup, INavigationItem> visible(boolean visible) {
+		for (NavigationGroupImpl g : groups)
+			if (g.visible()) {
+				g.active();
+				return this;
+			}
 		return this;
 	}
 
