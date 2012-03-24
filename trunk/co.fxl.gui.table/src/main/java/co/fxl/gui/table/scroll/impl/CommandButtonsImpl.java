@@ -51,7 +51,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		private int previousEdit = -1;
 
 		Edit() {
-			edit = clickable(panel.add(), "Edit", showLabel());
+			edit = clickable(panel.add(), "Edit", true);
 			edit.addClickListener(new IClickListener() {
 
 				@Override
@@ -200,7 +200,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		@Override
 		public IClickable<?> decorate(IToolbar c) {
 			String string = "Add";
-			return clickable(c.add(), string, showLabel());
+			return clickable(c.add(), string, true);
 		}
 	};
 	private static boolean ALIGN_END = Constants.get(
@@ -329,12 +329,12 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			addRemove();
 		}
 		if (listenOnShow) {
-			show = clickable(panel.add(), "Show", showLabel());
+			show = clickable(panel.add(), "Show", true);
 			show.addClickListener(new Update(listenOnShowListener));
 			show.clickable(!widget.preselectedList.isEmpty());
 		}
 		if (listenOnEdit) {
-			edit = clickable(panel.add(), "Edit", showLabel());
+			edit = clickable(panel.add(), "Edit", true);
 			final Update clickListener = new Update(listenOnEditListener);
 			edit.addClickListener(clickListener);
 			edit.clickable(!widget.preselectedList.isEmpty());
@@ -375,16 +375,16 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	void addRemove() {
 		if (listenOnRemove) {
 			// remove = panel.add().button().text("Remove");
-			remove = clickable(panel.add(), "Remove", showLabel());
+			remove = clickable(panel.add(), "Remove", true);
 			remove.addClickListener(new Update(listenOnRemoveListener, true));
 			remove.clickable(false);
 		}
 	}
 
-	private boolean showLabel() {
-		boolean b = !listenOnMoveDown && !listenOnMoveUp;
-		return b;
-	}
+//	private boolean showLabel() {
+////		boolean b = !listenOnMoveDown && !listenOnMoveUp;
+//		return true;
+//	}
 
 	void addAdd() {
 		if (listenOnAdd) {
@@ -409,7 +409,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		if (resource.equals(ScrollTableWidgetImpl.ARROW_DOWN)
 				&& i == Integer.MAX_VALUE)
 			res = "Bottom";
-		IClickable<?> image = clickable(panel.add(), res, showLabel());
+		IClickable<?> image = clickable(panel.add(), res, false);
 		// image.font().weight().bold();
 		image.addClickListener(new Move(listenOnMoveUpListener2, i));
 		boolean canClick = widget.preselectedList.size() == 1;
