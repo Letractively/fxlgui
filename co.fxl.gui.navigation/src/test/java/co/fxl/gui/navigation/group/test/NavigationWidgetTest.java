@@ -38,8 +38,8 @@ public class NavigationWidgetTest {
 		Class<?> clazz = Class.forName("co.fxl.gui.swing.SwingDisplay");
 		IDisplay display = (IDisplay) clazz.getMethod("instance",
 				new Class<?>[0]).invoke(null, new Object[0]);
-		new NavigationWidgetTest().run(display);
 		display.size(600, 600);
+		new NavigationWidgetTest().run(display);
 	}
 
 	private void run(IDisplay display) {
