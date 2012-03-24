@@ -142,33 +142,33 @@ public class NavigationItemImpl extends LazyClickListener implements
 		if (isMoreTab) {
 			if (popUp == null) {
 				popUp = Display.instance().showPopUp().autoHide(true);
+				popUp.border().style().shadow();
+				popUp.width(280);
 				popUp.addVisibleListener(new IUpdateListener<Boolean>() {
 					@Override
 					public void onUpdate(Boolean value) {
 						if (!value) {
-							showBackgroundInactive();
-							refresh.resource("more.png");
-							popUp = null;
+							hidePopUp();
 						}
 					}
 				});
 				IVerticalPanel panel = popUp.container().panel().vertical();
+				panel.width(280);
+				applyColor(panel.color(), widget.colorActive);
 				decorator.decorate(panel, new CallbackTemplate<Void>() {
 					@Override
 					public void onSuccess(Void result) {
 						showBackgroundActive();
 						refresh.resource("more_black.png");
-						popUp.offset(basicPanel.offsetX() - basicPanel.width()
-								+ basicPanel.width(), basicPanel.offsetY()
-								+ basicPanel.height());
+						int x = basicPanel.offsetX() - 280 + basicPanel.width();
+						if (x < 10)
+							x = 10;
+						popUp.offset(x,
+								basicPanel.offsetY() + basicPanel.height());
 						popUp.visible(true);
 					}
 				});
-			} else {
-				showBackgroundInactive();
-				refresh.resource("more.png");
-				popUp.visible(false);
-				popUp = null;
+				buttonPanel.clickable(false);
 			}
 		} else
 			setActive(true);
@@ -377,5 +377,11 @@ public class NavigationItemImpl extends LazyClickListener implements
 		refresh.resource("more.png").visible(true);
 		button.visible(false);
 		return this;
+	}
+
+	void hidePopUp() {
+		showBackgroundInactive();
+		refresh.resource("more.png");
+		popUp = null;
 	}
 }
