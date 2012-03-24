@@ -54,6 +54,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	private IImage refresh;
 	private IBorder border;
 	private boolean enabled = true;
+	private boolean labelAsActive;
 
 	NavigationItemImpl(NavigationGroupImpl group) {
 		this.group = group;
@@ -94,6 +95,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	void showLabelAsInactive(boolean notify) {
 		if (buttonPanel == null)
 			return;
+		labelAsActive = false;
 		button.visible(true);
 		buttonPanel.spacing(5);
 		refresh.visible(false);
@@ -192,6 +194,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	private void showLabelAsActive() {
+		labelAsActive = true;
 		button.font().color().black();
 		buttonPanel.clickable(false);
 		border.color().gray();
@@ -286,6 +289,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	@Override
 	public INavigationItem toggleLoading(boolean t) {
+		refresh.resource(labelAsActive ? "loading_black.gif" : "loading_white.gif");
 		refresh.visible(t);
 		button.visible(!t);
 		return this;
