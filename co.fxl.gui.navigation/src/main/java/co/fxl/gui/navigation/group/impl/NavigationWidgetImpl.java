@@ -135,7 +135,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 			moreItem.decorator(new ITabDecorator() {
 				@Override
 				public void decorate(IVerticalPanel panel, ICallback<Void> cb) {
-					IGridPanel gp = panel.add().panel().horizontal().add()
+					IGridPanel gp = panel.spacing(4).add().panel().horizontal().add()
 							.panel().grid().spacing(6);
 					int r = 0;
 					for (final NavigationGroupImpl g : groups) {
