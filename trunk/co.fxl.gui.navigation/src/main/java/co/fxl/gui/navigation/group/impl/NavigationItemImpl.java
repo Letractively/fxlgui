@@ -188,6 +188,11 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	@Override
 	public NavigationItemImpl active(boolean active) {
+		if (!displayed()) {
+			displayed(true);
+			widget.active = this;
+			widget.update();
+		}
 		assert active;
 		return updateActive();
 	}
@@ -360,7 +365,6 @@ public class NavigationItemImpl extends LazyClickListener implements
 		showLabelAsActive();
 		if (flipNow)
 			flipPage();
-		widget.update();
 	}
 
 	void flipPage() {
