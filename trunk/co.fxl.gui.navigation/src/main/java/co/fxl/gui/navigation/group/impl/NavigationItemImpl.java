@@ -438,6 +438,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	void hidePopUp() {
 		showBackgroundNeutral();
+		clickable(true);
 		// refresh.resource("more.png");
 		popUp = null;
 	}
