@@ -38,6 +38,7 @@ import co.fxl.gui.navigation.group.api.INavigationItem;
 public class NavigationItemImpl extends LazyClickListener implements
 		INavigationItem {
 
+	static final int POPUP_WIDTH = 280;
 	public static int SPACING_LOADING = Constants.get(
 			"NavigationItemImpl.SPACING_LOADING", 5);
 	// TODO when row height computation in scrolltablewidgetimpl is working for
@@ -94,6 +95,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	void showLabelAsInactive() {
+		buttonPanel.border().remove();
 		showLabelAsInactive(true);
 	}
 
@@ -151,8 +153,8 @@ public class NavigationItemImpl extends LazyClickListener implements
 			if (popUp == null) {
 				popUp = Display.instance().showPopUp().autoHide(true);
 				popUp.border().remove();
-				popUp.border().color().gray();// .mix().white().lightgray();
-				// popUp.border().style().shadow();
+				// popUp.border().color().gray();// .mix().white().lightgray();
+				popUp.border().style().shadow();
 				popUp.width(280);
 				popUp.addVisibleListener(new IUpdateListener<Boolean>() {
 					@Override
@@ -163,17 +165,18 @@ public class NavigationItemImpl extends LazyClickListener implements
 					}
 				});
 				IVerticalPanel panel = popUp.container().panel().vertical();
-				panel.width(280);
+				panel.width(POPUP_WIDTH);
 				panel.color().white();
 				refresh.resource("more_black.png");
 				decorator.decorate(panel, new CallbackTemplate<Void>() {
 					@Override
 					public void onSuccess(Void result) {
 						border.color().gray();
+						// border.style().shadow();
 						buttonPanel.color().remove();
 						buttonPanel.color().white();
 						// refresh.resource("more_black.png");
-						int x = basicPanel.offsetX() - 280 -2 + basicPanel.width();
+						int x = basicPanel.offsetX() - getLeftPartPopUpWidth();
 						if (x < 10)
 							x = 10;
 						popUp.offset(x,
@@ -304,6 +307,8 @@ public class NavigationItemImpl extends LazyClickListener implements
 		this.visible = visible;
 		updateVisible();
 		group.updateVisible();
+		if (!visible && popUp != null)
+			popUp.visible(false);
 		return this;
 	}
 
@@ -362,6 +367,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	private void flipRegister(boolean flipNow) {
+		// buttonPanel.border().remove();
 		showRestAsInactive();
 		showLabelAsActive();
 		if (flipNow)
@@ -400,8 +406,10 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 			@Override
 			public void onMouseOver() {
-				refresh.resource("more.png");
-				showBackgroundInactive();
+				if (popUp == null) {
+					refresh.resource("more.png");
+					showBackgroundInactive();
+				}
 			}
 
 			@Override
@@ -426,5 +434,9 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	boolean displayed() {
 		return enabled;
+	}
+
+	int getLeftPartPopUpWidth() {
+		return 280 - basicPanel.width();
 	}
 }
