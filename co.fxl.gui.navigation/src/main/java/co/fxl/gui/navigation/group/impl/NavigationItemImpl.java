@@ -175,7 +175,6 @@ public class NavigationItemImpl extends LazyClickListener implements
 				IVerticalPanel panel = popUp.container().panel().vertical();
 				panel.width(POPUP_WIDTH);
 				panel.color().white();
-				refresh.resource("more_black.png");
 				decorator.decorate(panel, new CallbackTemplate<Void>() {
 					@Override
 					public void onSuccess(Void result) {
@@ -184,6 +183,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 						buttonPanel.color().remove();
 						buttonPanel.color().white();
 						button.font().color().black();
+						refresh.resource("more_black.png");
 						// refresh.resource("more_black.png");
 						int x = basicPanel.offsetX() - getLeftPartPopUpWidth();
 						if (x < 10)
@@ -191,9 +191,9 @@ public class NavigationItemImpl extends LazyClickListener implements
 						popUp.offset(x,
 								basicPanel.offsetY() + basicPanel.height());
 						popUp.visible(true);
+						clickable(false);
 					}
 				});
-				clickable(false);
 			}
 		} else
 			setActive(true);
