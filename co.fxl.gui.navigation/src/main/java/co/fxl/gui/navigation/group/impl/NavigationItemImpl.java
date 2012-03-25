@@ -20,6 +20,7 @@ package co.fxl.gui.navigation.group.impl;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
@@ -61,6 +62,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	private boolean enabled = true;
 	private boolean labelAsActive;
 	private boolean isMoreTab;
+	private IFocusPanel focusPanel;
 
 	NavigationItemImpl(NavigationGroupImpl group) {
 		this.group = group;
@@ -70,7 +72,8 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	void initButtonPanel() {
 		if (basicPanel == null) {
-			basicPanel = itemPanel.add().panel().horizontal();
+			focusPanel = itemPanel.add().panel().focus();
+			basicPanel = focusPanel.add().panel().horizontal();
 			basicPanel.addSpace(3);
 			buttonPanel = basicPanel.add().panel().horizontal();
 			buttonPanel.spacing(5).align().center();
@@ -130,8 +133,8 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	void clickable(boolean b) {
 		buttonPanel.clickable(b);
-		button.clickable(b);
-		refresh.clickable(b);
+//		button.clickable(b);
+//		refresh.clickable(b);
 		refresh.opacity(1);
 	}
 
@@ -431,17 +434,16 @@ public class NavigationItemImpl extends LazyClickListener implements
 				}
 			}
 		};
-		button.addMouseOverListener(mol);
-		refresh.addMouseOverListener(mol);
+		focusPanel.addMouseOverListener(mol);
 		showBackgroundNeutral();
 		return this;
 	}
 
 	void hidePopUp() {
+		popUp = null;
 		showBackgroundNeutral();
 		clickable(true);
 		// refresh.resource("more.png");
-		popUp = null;
 	}
 
 	void displayed(boolean b) {
