@@ -67,6 +67,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	private boolean panel0front;
 	private NavigationGroupImpl moreGroup;
 	private boolean setUpDynamicResize;
+	private NavigationItemImpl moreItem;
 
 	public NavigationWidgetImpl(IContainer layout) {
 		mainPanel = layout.panel().dock();
@@ -131,8 +132,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		if (DYNAMIC_RESIZE && !setUpDynamicResize) {
 			setUpDynamicResize = true;
 			moreGroup = new NavigationGroupImpl(this).visible(false);
-			final NavigationItemImpl moreItem = (NavigationItemImpl) moreGroup
-					.addTab().moreTab();
+			moreItem = (NavigationItemImpl) moreGroup.addTab().moreTab();
 			moreItem.decorator(new ITabDecorator() {
 				@Override
 				public void decorate(IVerticalPanel p0, ICallback<Void> cb) {
@@ -249,6 +249,8 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		if (!hidden) {
 			moreGroup.visible(false);
 		}
+		if (moreItem.popUp != null)
+			moreItem.popUp.visible(false);
 	}
 
 	void active(NavigationItemImpl item, boolean viaClick,
