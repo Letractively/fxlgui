@@ -132,6 +132,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 		buttonPanel.clickable(b);
 		button.clickable(b);
 		refresh.clickable(b);
+		refresh.opacity(1);
 	}
 
 	void showBackgroundNeutral() {
