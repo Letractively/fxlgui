@@ -24,6 +24,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
@@ -123,6 +124,12 @@ public class NavigationItemImpl extends LazyClickListener implements
 				widget.colorInactiveGradient);
 	}
 
+	void showBackgroundNeutral() {
+		border.remove();
+		buttonPanel.color().remove();
+		refresh.resource("more_black.png");
+	}
+
 	@Override
 	public IVerticalPanel addExtraPanel() {
 		showLabelAsActive(false, null, false);
@@ -144,8 +151,8 @@ public class NavigationItemImpl extends LazyClickListener implements
 			if (popUp == null) {
 				popUp = Display.instance().showPopUp().autoHide(true);
 				popUp.border().remove();
-				popUp.border().color().mix().white().lightgray();
-				popUp.border().style().shadow();
+				popUp.border().color().black();// .mix().white().lightgray();
+				// popUp.border().style().shadow();
 				popUp.width(280);
 				popUp.addVisibleListener(new IUpdateListener<Boolean>() {
 					@Override
@@ -164,7 +171,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 						border.color().gray();
 						buttonPanel.color().remove();
 						buttonPanel.color().white();
-						refresh.resource("more_black.png");
+						// refresh.resource("more_black.png");
 						int x = basicPanel.offsetX() - 280 + basicPanel.width();
 						if (x < 10)
 							x = 10;
@@ -381,15 +388,30 @@ public class NavigationItemImpl extends LazyClickListener implements
 	public INavigationItem moreTab() {
 		initButtonPanel();
 		isMoreTab = true;
-		refresh.resource("more.png").visible(true);
+		refresh.resource("more_black.png").visible(true);
 		button.visible(false);
 		buttonPanel.spacing(SPACING_LOADING);
+		buttonPanel.addMouseOverListener(new IMouseOverListener() {
+
+			@Override
+			public void onMouseOver() {
+				refresh.resource("more.png");
+				showBackgroundInactive();
+			}
+
+			@Override
+			public void onMouseOut() {
+				if (popUp == null)
+					showBackgroundNeutral();
+			}
+		});
+		showBackgroundNeutral();
 		return this;
 	}
 
 	void hidePopUp() {
-		showBackgroundInactive();
-		refresh.resource("more.png");
+		showBackgroundNeutral();
+		// refresh.resource("more.png");
 		popUp = null;
 	}
 
