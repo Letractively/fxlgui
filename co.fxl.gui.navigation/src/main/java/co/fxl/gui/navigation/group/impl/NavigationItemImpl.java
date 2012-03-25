@@ -151,7 +151,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 			if (popUp == null) {
 				popUp = Display.instance().showPopUp().autoHide(true);
 				popUp.border().remove();
-				popUp.border().color().black();// .mix().white().lightgray();
+				popUp.border().color().gray();// .mix().white().lightgray();
 				// popUp.border().style().shadow();
 				popUp.width(280);
 				popUp.addVisibleListener(new IUpdateListener<Boolean>() {
@@ -173,7 +173,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 						buttonPanel.color().remove();
 						buttonPanel.color().white();
 						// refresh.resource("more_black.png");
-						int x = basicPanel.offsetX() - 280 + basicPanel.width();
+						int x = basicPanel.offsetX() - 280 -2 + basicPanel.width();
 						if (x < 10)
 							x = 10;
 						popUp.offset(x,
