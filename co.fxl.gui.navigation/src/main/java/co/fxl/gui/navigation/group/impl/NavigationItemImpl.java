@@ -77,10 +77,12 @@ public class NavigationItemImpl extends LazyClickListener implements
 			buttonPanel.addSpace(2);
 			border = buttonPanel.border().width(1).style().noBottom();
 			IHorizontalPanel subPanel = buttonPanel.add().panel().horizontal();
-			refresh = subPanel.add().image().resource("loading_white.gif")
-					.visible(false);
 			button = subPanel.add().label();
 			button.font().pixel(14).weight().bold().color().white();
+			button.addClickListener(this);
+			refresh = subPanel.add().image().resource("loading_white.gif")
+					.visible(false);
+			refresh.addClickListener(this);
 			buttonPanel.addSpace(3);
 			buttonPanel.addClickListener(this);
 			showLabelAsInactive();
@@ -114,7 +116,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	void showBackgroundInactive() {
-		buttonPanel.clickable(true);
+		clickable(true);
 		border.color()
 				.mix()
 				.rgb(widget.colorInactive[0], widget.colorInactive[1],
@@ -124,6 +126,12 @@ public class NavigationItemImpl extends LazyClickListener implements
 						widget.colorInactiveGradient[2]);
 		applyGradient(buttonPanel.color(), widget.colorInactive,
 				widget.colorInactiveGradient);
+	}
+
+	void clickable(boolean b) {
+		buttonPanel.clickable(b);
+		button.clickable(b);
+		refresh.clickable(b);
 	}
 
 	void showBackgroundNeutral() {
@@ -175,6 +183,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 						// border.style().shadow();
 						buttonPanel.color().remove();
 						buttonPanel.color().white();
+						button.font().color().black();
 						// refresh.resource("more_black.png");
 						int x = basicPanel.offsetX() - getLeftPartPopUpWidth();
 						if (x < 10)
@@ -184,7 +193,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 						popUp.visible(true);
 					}
 				});
-				buttonPanel.clickable(false);
+				clickable(false);
 			}
 		} else
 			setActive(true);
@@ -259,7 +268,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	private void showLabelAsActive() {
 		labelAsActive = true;
 		button.font().color().black();
-		buttonPanel.clickable(false);
+		clickable(false);
 		showBackgroundActive();
 		button.visible(true);
 		refresh.visible(false);
@@ -400,13 +409,14 @@ public class NavigationItemImpl extends LazyClickListener implements
 		initButtonPanel();
 		isMoreTab = true;
 		refresh.resource("more_black.png").visible(true);
-		button.visible(false);
+		button.text("More").font().color().black();
 		buttonPanel.spacing(SPACING_LOADING);
-		refresh.addMouseOverListener(new IMouseOverListener() {
+		IMouseOverListener mol = new IMouseOverListener() {
 
 			@Override
 			public void onMouseOver() {
 				if (popUp == null) {
+					button.font().color().white();
 					refresh.resource("more.png");
 					showBackgroundInactive();
 				}
@@ -414,10 +424,14 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 			@Override
 			public void onMouseOut() {
-				if (popUp == null)
+				if (popUp == null) {
+					button.font().color().black();
 					showBackgroundNeutral();
+				}
 			}
-		});
+		};
+		button.addMouseOverListener(mol);
+		refresh.addMouseOverListener(mol);
 		showBackgroundNeutral();
 		return this;
 	}

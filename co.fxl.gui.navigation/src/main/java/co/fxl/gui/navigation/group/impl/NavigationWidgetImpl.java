@@ -52,7 +52,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	ILinearPanel<?> navigationPanel;
 	private ICardPanel history;
 	NavigationItemImpl active;
-	private boolean first = true;
+//	private boolean first = true;
 	int[] colorActive = new int[] { 245, 245, 245 };
 	int[] colorBackground = new int[] { 199, 224, 241 };
 	int[] colorInactive = new int[] { 111, 111, 111 };
@@ -86,7 +86,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	}
 
 	ILinearPanel<?> createPanel(ILayout l) {
-		return l.horizontal();
+		return l.horizontal().align().begin();
 	}
 
 	FlipPage flipPage() {
@@ -109,18 +109,18 @@ public class NavigationWidgetImpl implements INavigationWidget {
 
 	@Override
 	public INavigationGroup addGroup() {
-		ensureSpaceBetweenGroups();
+//		ensureSpaceBetweenGroups();
 		NavigationGroupImpl group = new NavigationGroupImpl(this);
 		groups.add(group);
 		return group;
 	}
 
-	private void ensureSpaceBetweenGroups() {
-		if (!first) {
-			navigationPanel.addSpace(5);
-		}
-		first = false;
-	}
+//	private void ensureSpaceBetweenGroups() {
+//		if (!first) {
+//			navigationPanel.addSpace(5);
+//		}
+//		first = false;
+//	}
 
 	@Override
 	public ITabWidget<INavigationGroup, INavigationItem> visible(boolean visible) {
