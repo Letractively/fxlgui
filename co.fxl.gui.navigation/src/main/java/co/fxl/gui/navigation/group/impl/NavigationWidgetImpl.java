@@ -31,6 +31,7 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Display;
@@ -134,8 +135,20 @@ public class NavigationWidgetImpl implements INavigationWidget {
 					.addTab().moreTab();
 			moreItem.decorator(new ITabDecorator() {
 				@Override
-				public void decorate(IVerticalPanel panel, ICallback<Void> cb) {
-					IGridPanel gp = panel.spacing(4).add().panel().horizontal().add()
+				public void decorate(IVerticalPanel p0, ICallback<Void> cb) {
+					// IGridPanel g0 = p0.add().panel().grid().spacing(0);
+					// g0.cell(0, 0).width(moreItem.getLeftPartPopUpWidth())
+					// .panel().vertical().height(1).color().gray();
+					// g0.cell(1, 0)
+					// .width(NavigationItemImpl.POPUP_WIDTH
+					// - moreItem.getLeftPartPopUpWidth()).panel()
+					// .vertical().height(1).border().style().right()
+					// .color().gray();
+					IVerticalPanel panel = p0.add().panel().vertical()
+							.spacing(4);
+					panel.border().style().left().style().right().style()
+							.bottom().color().gray();
+					IGridPanel gp = panel.add().panel().horizontal().add()
 							.panel().grid().spacing(6);
 					int r = 0;
 					for (final NavigationGroupImpl g : groups) {
@@ -146,9 +159,21 @@ public class NavigationWidgetImpl implements INavigationWidget {
 						}
 						if (!show)
 							continue;
-						ILabel lg = gp.cell(0, r).valign().begin().panel()
-								.vertical().addSpace(1).add().label()
+						final ILabel lg = gp.cell(0, r).valign().begin()
+								.panel().vertical().addSpace(1).add().label()
 								.text(g.name());
+						lg.addMouseOverListener(new IMouseOverListener() {
+
+							@Override
+							public void onMouseOver() {
+								lg.font().underline(true);
+							}
+
+							@Override
+							public void onMouseOut() {
+								lg.font().underline(false);
+							}
+						});
 						lg.font().weight().bold().pixel(11);
 						lg.addClickListener(new IClickListener() {
 							@Override
@@ -161,7 +186,8 @@ public class NavigationWidgetImpl implements INavigationWidget {
 						for (final NavigationItemImpl i : g.items) {
 							if (i.displayed())
 								continue;
-							ILabel li = v.add().label().text(i.name());
+							ILabel li = v.add().label().text(i.name())
+									.hyperlink();
 							li.font().pixel(14).weight().bold();
 							li.addClickListener(new IClickListener() {
 								@Override
