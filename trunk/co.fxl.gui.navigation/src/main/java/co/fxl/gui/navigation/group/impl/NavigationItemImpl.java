@@ -165,6 +165,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 				IVerticalPanel panel = popUp.container().panel().vertical();
 				panel.width(280);
 				panel.color().white();
+				refresh.resource("more_black.png");
 				decorator.decorate(panel, new CallbackTemplate<Void>() {
 					@Override
 					public void onSuccess(Void result) {
@@ -395,7 +396,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 		refresh.resource("more_black.png").visible(true);
 		button.visible(false);
 		buttonPanel.spacing(SPACING_LOADING);
-		buttonPanel.addMouseOverListener(new IMouseOverListener() {
+		refresh.addMouseOverListener(new IMouseOverListener() {
 
 			@Override
 			public void onMouseOver() {
