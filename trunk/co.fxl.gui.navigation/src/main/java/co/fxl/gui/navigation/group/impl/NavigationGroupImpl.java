@@ -52,7 +52,8 @@ class NavigationGroupImpl implements INavigationGroup {
 	NavigationGroupImpl(NavigationWidgetImpl widget) {
 		this.widget = widget;
 		ILayout layout = widget.navigationPanel.add().panel();
-		panel = createPanel(layout).add().panel().horizontal();
+		panel = createPanel(layout).add().panel().horizontal()
+				.addSpace(widget.groups.isEmpty() ? 0 : 5);
 		panel.addSpace(3);
 		IVerticalPanel headerPanel = panel.add().panel().vertical();
 		header = headerPanel.addSpace(2).add().label();
