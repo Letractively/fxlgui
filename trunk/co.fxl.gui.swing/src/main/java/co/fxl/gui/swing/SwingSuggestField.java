@@ -26,6 +26,7 @@ import javax.swing.JTextField;
 
 import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.IUpdateable;
+import co.fxl.gui.impl.CallbackTemplate;
 
 class SwingSuggestField extends SwingTextInput<JTextField, ISuggestField>
 		implements ISuggestField {
@@ -68,14 +69,27 @@ class SwingSuggestField extends SwingTextInput<JTextField, ISuggestField>
 		container.component.addActionListener(actionListener);
 	}
 
-//	@Override
-//	public ISuggestField addText(String... texts) {
-//		// TODO ... throw new UnsupportedOperationException();
-//		return this;
-//	}
+	// @Override
+	// public ISuggestField addText(String... texts) {
+	// // TODO ... throw new UnsupportedOperationException();
+	// return this;
+	// }
 
 	@Override
-	public ISuggestField source(ISource source) {
+	public ISuggestField source(final ISource source) {
+		addUpdateListener(new IUpdateListener<String>() {
+
+			@Override
+			public void onUpdate(String value) {
+				source.query(value, new CallbackTemplate<List<String>>() {
+
+					@Override
+					public void onSuccess(List<String> result) {
+						System.out.println(result);
+					}
+				});
+			}
+		});
 		// TODO ... throw new UnsupportedOperationException();
 		return this;
 	}
