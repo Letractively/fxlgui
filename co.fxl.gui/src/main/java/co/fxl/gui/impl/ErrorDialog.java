@@ -28,9 +28,30 @@ import co.fxl.gui.api.IVerticalPanel;
 public class ErrorDialog {
 
 	private static final int DEFAULT_WIDTH = 420;
+	private static boolean showing = false;
+	private Runnable runnable;
 
+	private ErrorDialog() {
+		
+	}
+
+	public static void create(String pTitle, String pMessage, String pStacktrace, Runnable pRunnable) {
+		if (showing) {
+			return;
+		}
+		ErrorDialog lErrorDialog = new ErrorDialog();
+		lErrorDialog.runnable = pRunnable;
+		lErrorDialog.show(pTitle, pMessage, pStacktrace);
+	}
+	
+	public static void create(String pTitle, String pMessage, String pStacktrace) {
+		create(pTitle, pMessage, pStacktrace, null);
+	}
+	
 	public void show(String pTitle, final String pMessage,
 			final String pStacktrace) {
+		
+		showing = true;
 		IDialog dialog = Display.instance().showDialog();
 		dialog.width(DEFAULT_WIDTH);
 		dialog.title(pTitle).message(pMessage).error();
@@ -83,5 +104,9 @@ public class ErrorDialog {
 	}
 
 	protected void onClose() {
+		showing = false;
+		if (runnable != null) {
+			runnable.run();
+		}
 	}
 }
