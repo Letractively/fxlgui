@@ -28,6 +28,7 @@ import co.fxl.gui.impl.CallbackTemplate;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.SuggestBox;
+import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
 import com.google.gwt.user.client.ui.SuggestOracle;
 
 class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
@@ -73,8 +74,11 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 	GWTSuggestField(GWTContainer<SuggestBox> container) {
 		super(container);
 		assert container != null : "GWTTextField.new: container is null";
-		container.widget.addStyleName("gwt-TextBox-FXL");
-		defaultFont();
+		DefaultSuggestionDisplay sd = (DefaultSuggestionDisplay) container.widget
+				.getSuggestionDisplay();
+		sd.setPopupStyleName("gwt-SuggestBoxPopup-FXL");
+		container.widget.getTextBox().setStyleName("gwt-TextBox-FXL");
+		// defaultFont();
 		// oracle = (MultiWordSuggestOracle) ((SuggestBox) container.widget)
 		// .getSuggestOracle();
 	}

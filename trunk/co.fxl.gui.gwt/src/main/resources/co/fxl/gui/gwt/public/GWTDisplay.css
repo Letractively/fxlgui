@@ -161,3 +161,9 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=4, offY
 ::-webkit-scrollbar-thumb:hover {
     background-color: rgba(0, 0, 0, 0.3);
 }
+.gwt-SuggestBoxPopup-FXL {
+    background-color: white;
+    border: 1px darkblue solid;
+    padding-left: 2px;
+    padding-right: 2px;
+}
