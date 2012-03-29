@@ -28,9 +28,12 @@ import co.fxl.gui.impl.CallbackTemplate;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
 import com.google.gwt.user.client.ui.SuggestOracle;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 
 class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 		ISuggestField {
@@ -149,6 +152,34 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 	@Override
 	public ISuggestField source(ISource source) {
 		this.source = source;
+		return this;
+	}
+
+	@Override
+	public ISuggestField addSuggestionListener(
+			final co.fxl.gui.api.IUpdateable.IUpdateListener<ISuggestion> selection) {
+		container.widget
+				.addSelectionHandler(new SelectionHandler<Suggestion>() {
+
+					@Override
+					public void onSelection(
+							final SelectionEvent<Suggestion> arg0) {
+						selection.onUpdate(new ISuggestion() {
+
+							@Override
+							public String insertText() {
+								return arg0.getSelectedItem()
+										.getReplacementString();
+							}
+
+							@Override
+							public String displayText() {
+								return arg0.getSelectedItem()
+										.getDisplayString();
+							}
+						});
+					}
+				});
 		return this;
 	}
 }
