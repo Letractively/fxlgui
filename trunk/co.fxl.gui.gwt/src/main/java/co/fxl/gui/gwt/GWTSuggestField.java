@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.ISuggestField;
+import co.fxl.gui.api.ISuggestField.ISource.ISuggestion;
 import co.fxl.gui.impl.CallbackTemplate;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -41,22 +42,22 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 		@Override
 		public void requestSuggestions(final Request arg0, final Callback arg1) {
 			element.source.query(arg0.getQuery(),
-					new CallbackTemplate<List<String>>() {
+					new CallbackTemplate<List<ISuggestion>>() {
 
 						@Override
-						public void onSuccess(List<String> result) {
+						public void onSuccess(List<ISuggestion> result) {
 							Collection<Suggestion> cs = new LinkedList<Suggestion>();
-							for (final String s : result) {
+							for (final ISuggestion s : result) {
 								cs.add(new Suggestion() {
 
 									@Override
 									public String getDisplayString() {
-										return s;
+										return s.displayText();
 									}
 
 									@Override
 									public String getReplacementString() {
-										return s;
+										return s.insertText();
 									}
 
 								});
