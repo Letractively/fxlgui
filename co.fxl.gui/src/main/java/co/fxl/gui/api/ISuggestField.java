@@ -25,7 +25,14 @@ public interface ISuggestField extends ITextInput<ISuggestField>,
 
 	public interface ISource {
 
-		void query(String prefix, ICallback<List<String>> callback);
+		public interface ISuggestion {
+
+			String insertText();
+			
+			String displayText();
+		}
+		
+		void query(String prefix, ICallback<List<ISuggestion>> callback);
 	}
 
 	ISuggestField source(ISource source);

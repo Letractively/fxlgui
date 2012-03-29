@@ -25,6 +25,7 @@ import java.util.List;
 import javax.swing.JTextField;
 
 import co.fxl.gui.api.ISuggestField;
+import co.fxl.gui.api.ISuggestField.ISource.ISuggestion;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.impl.CallbackTemplate;
 
@@ -81,11 +82,11 @@ class SwingSuggestField extends SwingTextInput<JTextField, ISuggestField>
 
 			@Override
 			public void onUpdate(String value) {
-				source.query(value, new CallbackTemplate<List<String>>() {
+				source.query(value, new CallbackTemplate<List<ISuggestion>>() {
 
 					@Override
-					public void onSuccess(List<String> result) {
-						System.out.println(result);
+					public void onSuccess(List<ISuggestion> result) {
+						System.out.println(result.toString());
 					}
 				});
 			}
