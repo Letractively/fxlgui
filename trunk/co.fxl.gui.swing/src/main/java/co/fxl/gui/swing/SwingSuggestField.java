@@ -95,4 +95,11 @@ class SwingSuggestField extends SwingTextInput<JTextField, ISuggestField>
 		return this;
 	}
 
+	@Override
+	public ISuggestField addSuggestionListener(
+			co.fxl.gui.api.IUpdateable.IUpdateListener<ISuggestion> selection) {
+		// TODO throw new UnsupportedOperationException();
+		return this;
+	}
+
 }

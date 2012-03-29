@@ -20,6 +20,8 @@ package co.fxl.gui.api;
 
 import java.util.List;
 
+import co.fxl.gui.api.ISuggestField.ISource.ISuggestion;
+
 public interface ISuggestField extends ITextInput<ISuggestField>,
 		IKeyRecipient<ISuggestField> {
 
@@ -28,14 +30,16 @@ public interface ISuggestField extends ITextInput<ISuggestField>,
 		public interface ISuggestion {
 
 			String insertText();
-			
+
 			String displayText();
 		}
-		
+
 		void query(String prefix, ICallback<List<ISuggestion>> callback);
 	}
 
 	ISuggestField source(ISource source);
+
+	ISuggestField addSuggestionListener(IUpdateListener<ISuggestion> selection);
 
 	// ISuggestField addText(String... texts);
 
