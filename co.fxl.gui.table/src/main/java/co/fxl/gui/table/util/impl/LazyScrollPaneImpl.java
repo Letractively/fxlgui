@@ -317,6 +317,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	private boolean hasScrollbar = true;
 
 	public void addKeyListeners(final IKeyRecipient<?> v) {
+		if (v == null)
+			return;
 		v.addKeyListener(new IClickListener() {
 			@Override
 			public void onClick() {
