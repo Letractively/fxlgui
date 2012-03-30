@@ -38,6 +38,15 @@ public class DialogImpl implements IDialog {
 		private String imageResource;
 		private String text;
 		private CommandLink l;
+		
+		DialogButtonImpl() {
+			listeners.add(new IClickListener() {
+				@Override
+				public void onClick() {
+					DialogImpl.this.visible(false);
+				}
+			});
+		}
 
 		@Override
 		public IDialogButton imageResource(String imageResource) {
@@ -79,10 +88,8 @@ public class DialogImpl implements IDialog {
 		@Override
 		public IDialogButton addClickListener(final IClickListener l) {
 			listeners.add(new IClickListener() {
-
 				@Override
 				public void onClick() {
-					DialogImpl.this.visible(false);
 					l.onClick();
 				}
 			});
