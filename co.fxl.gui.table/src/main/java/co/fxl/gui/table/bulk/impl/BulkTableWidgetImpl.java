@@ -317,6 +317,11 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 			public void background(int r, int g, int b) {
 				throw new UnsupportedOperationException();
 			}
+
+			@Override
+			public void remove() {
+				grid.row(row).remove();
+			}
 		};
 	}
 

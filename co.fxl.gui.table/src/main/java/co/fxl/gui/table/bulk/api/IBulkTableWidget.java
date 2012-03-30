@@ -69,6 +69,8 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 		void removeBackground();
 
 		void background(int r, int g, int b);
+
+		void remove();
 	}
 
 	IBulkTableCell cell(int column, int row);
