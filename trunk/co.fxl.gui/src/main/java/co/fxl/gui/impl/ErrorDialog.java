@@ -93,7 +93,7 @@ public class ErrorDialog {
 						}
 					});
 		}
-		dialog.addButton().text("Close").imageResource(Icons.CANCEL)
+		dialog.addButton().close().imageResource(Icons.CANCEL)
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
