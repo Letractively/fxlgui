@@ -50,7 +50,6 @@ public class ErrorDialog {
 	
 	public void show(String pTitle, final String pMessage,
 			final String pStacktrace) {
-		
 		showing = true;
 		IDialog dialog = Display.instance().showDialog();
 		dialog.width(DEFAULT_WIDTH);
@@ -68,6 +67,7 @@ public class ErrorDialog {
 									.addClickListener(new IClickListener() {
 										@Override
 										public void onClick() {
+											onClose();
 										}
 									});
 							IContainer container = detailDialog.container();
