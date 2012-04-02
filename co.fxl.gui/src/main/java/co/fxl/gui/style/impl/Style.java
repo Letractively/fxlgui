@@ -30,6 +30,7 @@ public class Style {
 	}
 
 	public static IStyle instance() {
+		assert instance != null;
 		return instance;
 	}
 
