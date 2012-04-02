@@ -92,4 +92,9 @@ class GPlusWindow implements IWindow {
 	public boolean commandsOnTop() {
 		return true;
 	}
+
+	@Override
+	public String moreImage() {
+		return "more_gray.png";
+	}
 }
