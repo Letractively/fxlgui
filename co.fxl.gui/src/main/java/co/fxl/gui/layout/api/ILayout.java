@@ -31,6 +31,7 @@ import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextField;
+import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.layout.api.ILayout.INavigation.INavigationGroup.INavigationItem;
 
 public interface ILayout {
@@ -39,7 +40,7 @@ public interface ILayout {
 
 		public interface IDecorator {
 
-			IClickable<?> decorate(IContainer c);
+			IClickable<?> decorate(IToolbar c);
 		}
 
 		IDecorator show(IDecorator dec);

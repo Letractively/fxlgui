@@ -5,9 +5,11 @@ import java.util.List;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.IToolbar;
+import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.layout.api.ILayout.IMDT;
 
 class HandheldMDT implements IMDT {
@@ -19,13 +21,13 @@ class HandheldMDT implements IMDT {
 			private List<IClickListener> cls = new LinkedList<IClickListener>();
 
 			@Override
-			public IClickable<?> decorate(final IContainer c) {
-				c.image().resource("add.png")
+			public IClickable<?> decorate(final IToolbar c) {
+				c.add().image().resource("add.png")
 						.addClickListener(new IClickListener() {
 							@Override
 							public void onClick() {
-								final IDialog dialog = c.display().showDialog()
-										.title("ADD ENTITY");
+								final IDialog dialog = Display.instance()
+										.showDialog().title("ADD ENTITY");
 								dialog.addButton().text("Back")
 										.imageResource("back.png")
 										.addClickListener(new IClickListener() {
@@ -37,7 +39,8 @@ class HandheldMDT implements IMDT {
 								ILinearPanel<?> p = dialog.container().panel()
 										.vertical().spacing(6).add().panel()
 										.vertical();
-								IClickable<?> c = dec.decorate(p.add());
+								IClickable<?> c = dec.decorate(new ToolbarImpl(
+										p.add()));
 								for (IClickListener cl : cls)
 									c.addClickListener(cl);
 								dialog.visible(true);
