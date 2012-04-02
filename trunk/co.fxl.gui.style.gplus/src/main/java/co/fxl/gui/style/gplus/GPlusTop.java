@@ -18,21 +18,27 @@
  */
 package co.fxl.gui.style.gplus;
 
-import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.style.api.IStyle.ITop;
 
 class GPlusTop implements ITop {
 
 	@Override
-	public ITop panel(IGridPanel panel) {
-		panel.cell(0, 0).clear();
-		panel.spacing(0).color().black();
+	public ITop panel(IPanel<?> panel) {
+		// ((IGridPanel) panel).cell(0, 0).clear();
+		// ((IGridPanel) panel).spacing(0).color().black();
+		panel.color().remove().white();
 		return this;
 	}
 
 	@Override
 	public String imageResource() {
-		return "logo-xoricon.png";
+		return null;
+	}
+
+	@Override
+	public int spacing() {
+		return 4;
 	}
 
 }

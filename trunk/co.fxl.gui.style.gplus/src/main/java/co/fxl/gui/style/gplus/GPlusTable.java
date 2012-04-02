@@ -38,7 +38,7 @@ public class GPlusTable implements ITable {
 			@Override
 			public IColumnSelection label(ILabel b, boolean visible) {
 				if (visible)
-					b.font().color().mix().gray().black();
+					b.font().color().white();
 				return this;
 			}
 
@@ -48,7 +48,7 @@ public class GPlusTable implements ITable {
 	@Override
 	public ITable statusPanel(IPanel<?> statusPanel) {
 		statusPanel.color().remove();
-		statusPanel.border().remove();
+//		statusPanel.border().remove();
 		return this;
 	}
 
