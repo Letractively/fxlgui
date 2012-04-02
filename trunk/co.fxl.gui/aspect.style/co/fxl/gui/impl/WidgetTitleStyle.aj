@@ -19,6 +19,7 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
@@ -39,7 +40,16 @@ privileged aspect WidgetTitleStyle {
 	&& this(widgetTitle) 
 	&& args(text, iPanel) 
 	&& if(Style.ENABLED) {
-		return Style.instance().window().addCommandLabel(iPanel, text, widgetTitle.sideWidget);
+		return Style.instance().window()
+				.addCommandLabel(iPanel, text, widgetTitle.sideWidget);
+	}
+
+	IImage around(String r) :
+	call(public IImage IImage.resource(String))
+	&& withincode(public ILabel WidgetTitle.addTitle(String))
+	&& args(r)
+	&& if(Style.ENABLED) {
+		return proceed(Style.instance().window().moreImage());
 	}
 
 	after(WidgetTitle widgetTitle) :
@@ -56,9 +66,10 @@ privileged aspect WidgetTitleStyle {
 	execution(public WidgetTitle WidgetTitle.sideWidget(boolean)) 
 	&& this(widgetTitle) 
 	&& if(Style.ENABLED) {
-		Style.instance().window().header(widgetTitle.headerPanel, widgetTitle.sideWidget);
+		Style.instance().window()
+				.header(widgetTitle.headerPanel, widgetTitle.sideWidget);
 	}
-	
+
 	after(WidgetTitle widgetTitle, String title) returning(ILabel label) :
 	execution(public ILabel WidgetTitle.addTitle(String))
 	&& this(widgetTitle)

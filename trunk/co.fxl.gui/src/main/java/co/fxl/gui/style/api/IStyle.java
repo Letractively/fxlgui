@@ -95,6 +95,8 @@ public interface IStyle {
 				boolean isSideWidget);
 
 		boolean commandsOnTop();
+
+		String moreImage();
 	}
 
 	public interface INavigation {

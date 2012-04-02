@@ -66,6 +66,7 @@ public class WidgetTitle implements IClickListener {
 	private String titleUpperCase;
 	private boolean hyperlinkVisible = true;
 	private IDockPanel footer;
+	private IImage more;
 
 	public WidgetTitle() {
 	}
@@ -176,13 +177,16 @@ public class WidgetTitle implements IClickListener {
 		// l.visible(open);
 		// for (IImage l : images)
 		// l.visible(open);
-		headerLabel.text(open ? titleUpperCase : "+ " + titleUpperCase);
+		more.visible(!open);
+//		headerLabel.text(open ? headerLabel.text().substring(2) : "+ "
+//				+ headerLabel.text());
 	}
 
 	public ILabel addTitle(String title) {
 		initHeader();
 		String text = sideWidget ? title.toUpperCase() : title;
 		ILabel label = titlePanel.add().label().text(text);
+		more = titlePanel.add().image().resource("more.png").visible(false);
 		styleHeaderTitleSide(label);
 		headerLabel = label;
 		if (foldable) {
