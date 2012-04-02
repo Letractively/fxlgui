@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.style.api;
 
-import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
@@ -26,10 +25,12 @@ import co.fxl.gui.api.IPanel;
 public interface IStyle {
 
 	public interface ITop {
-		
+
 		String imageResource();
 
-		ITop panel(IGridPanel panel);
+		ITop panel(IPanel<?> panel);
+
+		int spacing();
 	}
 
 	public interface IOptionMenu {

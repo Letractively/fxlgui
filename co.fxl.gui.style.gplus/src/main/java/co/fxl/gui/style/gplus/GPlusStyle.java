@@ -40,7 +40,7 @@ public class GPlusStyle implements IStyle {
 	@Override
 	public IStyle background(IPanel<?> panel) {
 		assertEnabled();
-		panel.color().white();
+//		panel.color().white();
 		return this;
 	}
 
@@ -52,7 +52,7 @@ public class GPlusStyle implements IStyle {
 		border.color().lightgray();
 		border.width(1);
 		border.style().left();
-		panel.color().white();
+//		panel.color().white();
 		return this;
 	}
 

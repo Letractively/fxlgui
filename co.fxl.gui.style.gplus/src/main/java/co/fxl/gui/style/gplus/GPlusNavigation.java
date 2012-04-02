@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.style.gplus;
 
-import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
@@ -32,16 +31,17 @@ class GPlusNavigation implements INavigation {
 
 			@Override
 			public INavigation mainPanel(IPanel<?> panel) {
-				panel.color().rgb(245, 245, 245);
-				IBorder b = panel.border();
-				b.color().lightgray();
-				b.style().bottom();
+				panel.color().white();
+				// panel.color().rgb(245, 245, 245);
+				// IBorder b = panel.border();
+				// b.color().lightgray();
+				// b.style().bottom();
 				return GPlusNavigation.this;
 			}
 
 			@Override
 			public INavigation groupPanel(ILinearPanel<?> panel) {
-				panel.spacing(3);
+				// panel.spacing(3);
 				return GPlusNavigation.this;
 			}
 
@@ -53,10 +53,15 @@ class GPlusNavigation implements INavigation {
 					public INavigation inactive(ILinearPanel<?> buttonPanel,
 							ILabel button) {
 						buttonPanel.spacing(4);
-						button.font().pixel(13);
-						buttonPanel.border().color().gray();
-						buttonPanel.color().gray();
-						button.font().color().white();
+						// button.font().pixel(13);
+						buttonPanel.border().color().white();
+						buttonPanel.color().white();
+						button.font().color().gray();
+						// buttonPanel.spacing(4);
+						// button.font().pixel(13);
+						// buttonPanel.border().color().gray();
+						// buttonPanel.color().gray();
+						// button.font().color().white();
 						return GPlusNavigation.this;
 					}
 
@@ -64,7 +69,7 @@ class GPlusNavigation implements INavigation {
 					public INavigation active(ILinearPanel<?> buttonPanel,
 							ILabel button) {
 						buttonPanel.border().color().mix().gray().black();
-						buttonPanel.color().white();
+						buttonPanel.color().rgb(245, 245, 245);
 						button.font().color().gray();
 						button.font().color().black();
 						return GPlusNavigation.this;
