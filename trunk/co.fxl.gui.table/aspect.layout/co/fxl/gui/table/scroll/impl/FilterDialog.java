@@ -18,12 +18,12 @@
  */
 package co.fxl.gui.table.scroll.impl;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
-import co.fxl.gui.impl.ICallback;
 
 class FilterDialog {
 
