@@ -124,7 +124,7 @@ class NavigationGroupImpl implements INavigationGroup {
 		return panel.width();
 	}
 
-	String name() {
+	public String name() {
 		return header.text();
 	}
 
