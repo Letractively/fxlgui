@@ -38,7 +38,7 @@ class DragAndDropGridAdapter implements DragAndDropAdapter {
 
 	DragAndDropGridAdapter(ScrollTableWidgetImpl widget) {
 		this.widget = widget;
-		if (ALLOW_DRAG_AND_DROP)
+		if (ALLOW_DRAG_AND_DROP && widget.grid.focusPanel() != null)
 			new DragAndDrop(this, widget.grid.focusPanel());
 	}
 
