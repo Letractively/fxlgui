@@ -34,7 +34,7 @@ public abstract aspect I18NAspect {
 	ILabel around(String text) :
 	call(* *.text(String))
 	&& withincode(@Translate * *.*(..)) 
-	&& !within(I18NAspect+)
+//	&& !within(I18NAspect+)
 	&& args(text)
 	&& if(I18N.ENABLED) {
 		return proceed(I18N.instance().translate(text));
@@ -43,7 +43,7 @@ public abstract aspect I18NAspect {
 	ILabel around(String text) :
 	call(* ILabel.text(String))
 	&& within(@Translate *) 
-	&& !within(I18NAspect+)
+//	&& !within(I18NAspect+)
 	&& args(text)
 	&& if(I18N.ENABLED) {
 		return proceed(I18N.instance().translate(text));
