@@ -167,4 +167,7 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=4, offY
     padding-left: 2px;
     padding-right: 2px;
 }
-
+.gwt-SuggestBoxPopup-FXL .item {
+    font-size: 12px;
+    font-family: Arial, sans-serif;
+}
