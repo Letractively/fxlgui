@@ -18,15 +18,15 @@
  */
 package co.fxl.gui.register.impl;
 
-import co.fxl.gui.register.api.IRegisterWidget;
+import co.fxl.gui.register.impl.RegisterWidgetImpl.ColorDecorator;
 import co.fxl.gui.style.impl.Style;
 
 public aspect RegisterWidgetImplStyle {
 
 	after(RegisterWidgetImpl register) :
-	execution(public IRegisterWidget RegisterWidgetImpl.topBorder()) 
+	execution(public void RegisterWidgetImpl.background(ColorDecorator)) 
 	&& this(register) 
 	&& if(Style.ENABLED) {
-		Style.instance().register().cardPanel(register.cardPanel);
+		Style.instance().register().cardPanel(register.backgroundPanel);
 	}
 }

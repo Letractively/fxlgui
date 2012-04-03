@@ -25,6 +25,7 @@ public class GPlusRegister implements IRegister {
 
 	@Override
 	public IRegister cardPanel(IPanel<?> panel) {
+		panel.color().remove();
 		panel.border().remove();
 		return this;
 	}

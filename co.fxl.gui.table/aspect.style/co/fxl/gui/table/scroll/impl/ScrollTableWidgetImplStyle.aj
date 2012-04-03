@@ -29,4 +29,11 @@ privileged aspect ScrollTableWidgetImplStyle {
 	&& if(Style.ENABLED) {
 		Style.instance().table().statusPanel(widget.statusPanel);
 	}
+
+	after(ScrollTableWidgetImpl widget) :
+	execution(private void ScrollTableWidgetImpl.topPanel()) 
+	&& this(widget)
+	&& if(Style.ENABLED) {
+		Style.instance().table().topPanel(widget.topPanel);
+	}
 }

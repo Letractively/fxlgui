@@ -624,6 +624,11 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private void topPanel() {
 		if (topPanel == null) {
 			topPanel = container().add().panel().grid();
+			topPanel.color().rgb(255, 255, 255).gradient().vertical()
+					.rgb(245, 245, 245);
+			IBorder b = topPanel.border();
+			b.color().lightgray();
+			b.style().bottom();
 		}
 	}
 
@@ -1176,11 +1181,6 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	IGridCell topPanelCell(int i, int j) {
 		IGridCell cell = topPanel.cell(i, j);
-		topPanel.color().rgb(255, 255, 255).gradient().vertical()
-				.rgb(245, 245, 245);
-		IBorder b = topPanel.border();
-		b.color().lightgray();
-		b.style().bottom();
 		return cell;
 	}
 
