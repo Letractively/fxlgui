@@ -26,6 +26,15 @@ public class GermanI18N extends I18NTemplate {
 	private static final long serialVersionUID = -432280219994971029L;
 
 	public GermanI18N() {
+		put("PROJECT:", "PROJEKT:");
+		put("EXTRAS:", "EXTRAS:");
+		put("ACTIONS", "AKTIONEN");
+		put("Continue Manual Run", "Ausführung fortsetzen");
+		put("Run Manually", "Manuell ausführen");
+		put("Groups and Permissions", "Gruppen und Berechtigungen");
+		put("Custom Lists", "Benutzerdefinierte Listen");
+		put("Meta Model", "Metamodell");
+		put("User Management", "Benutzerverwaltung");
 		addRule("Show $", "Zeige $");
 		addRule("Select $", "$ auswählen");
 		addRule("New $", "$ erstellen");
