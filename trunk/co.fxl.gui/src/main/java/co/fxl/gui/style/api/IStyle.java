@@ -111,6 +111,8 @@ public interface IStyle {
 				INavigation active(ILinearPanel<?> panel, ILabel label);
 
 				INavigation inactive(ILinearPanel<?> panel, ILabel label);
+
+				String image(String resource);
 			}
 
 			INavigation groupPanel(ILinearPanel<?> panel);

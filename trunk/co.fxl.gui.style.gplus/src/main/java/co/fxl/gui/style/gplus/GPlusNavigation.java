@@ -74,6 +74,12 @@ class GPlusNavigation implements INavigation {
 						button.font().color().black();
 						return GPlusNavigation.this;
 					}
+
+					@Override
+					public String image(String resource) {
+						return resource.equals("loading_white.gif") ? "loading_black.gif"
+								: resource;
+					}
 				};
 			}
 		};

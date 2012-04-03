@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.navigation.group.impl;
 
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.style.impl.Style;
 
 privileged aspect NavigationItemImplStyle {
@@ -26,13 +27,22 @@ privileged aspect NavigationItemImplStyle {
 	execution(void NavigationItemImpl.showLabelAsInactive(boolean)) 
 	&& this(item) 
 	&& if(Style.ENABLED) {
-		Style.instance().navigation().group().item().inactive(item.buttonPanel, item.button);
+		Style.instance().navigation().group().item()
+				.inactive(item.buttonPanel, item.button);
 	}
 
 	after(NavigationItemImpl item) :
 	execution(private void NavigationItemImpl.showLabelAsActive(..)) 
 	&& this(item) 
 	&& if(Style.ENABLED) {
-		Style.instance().navigation().group().item().active(item.buttonPanel, item.button);
+		Style.instance().navigation().group().item()
+				.active(item.buttonPanel, item.button);
+	}
+
+	IImage around(String resource) :
+	call(public IImage IImage.resource(String))
+	&& args(resource)
+	&& if(Style.ENABLED) {
+		return proceed(Style.instance().navigation().group().item().image(resource));
 	}
 }
