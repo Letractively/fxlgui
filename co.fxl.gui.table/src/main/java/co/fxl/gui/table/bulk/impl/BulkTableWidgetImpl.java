@@ -461,7 +461,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 
 	@Override
 	public IFocusPanel focusPanel() {
-		throw new UnsupportedOperationException();
+		return null;
 	}
 
 	@Override
