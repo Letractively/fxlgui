@@ -60,6 +60,8 @@ public interface IStyle {
 
 		IColumnSelection columnSelection();
 
+		ITable topPanel(IPanel<?> topPanel);
+
 	}
 
 	public interface IRegister {

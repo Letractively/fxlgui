@@ -20,22 +20,21 @@ package co.fxl.gui.style.gplus;
 
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
-import co.fxl.gui.impl.HyperlinkMouseOverListener;
 import co.fxl.gui.style.api.IStyle.IOptionMenu;
 
 public class GPlusOptionMenu implements IOptionMenu {
 
 	@Override
 	public ILabel addCommand(IPanel<?> panel, String text) {
-		ILabel l = panel.add().label().text(text);
-		l.font().weight().bold().color().white();
-		new HyperlinkMouseOverListener(l);
+		ILabel l = panel.add().label().text(text).hyperlink();
+		// l.font().weight().bold().color().white();
+		// new HyperlinkMouseOverListener(l);
 		return l;
 	}
 
 	@Override
 	public IOptionMenu label(ILabel label) {
-		label.font().color().lightgray();
+		// label.font().color().lightgray();
 		return this;
 	}
 
