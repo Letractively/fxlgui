@@ -44,31 +44,32 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 
 		@Override
 		public void requestSuggestions(final Request arg0, final Callback arg1) {
-			element.source.query(arg0.getQuery(),
-					new CallbackTemplate<List<ISuggestion>>() {
+			if (!arg0.getQuery().equals(""))
+				element.source.query(arg0.getQuery(),
+						new CallbackTemplate<List<ISuggestion>>() {
 
-						@Override
-						public void onSuccess(List<ISuggestion> result) {
-							Collection<Suggestion> cs = new LinkedList<Suggestion>();
-							for (final ISuggestion s : result) {
-								cs.add(new Suggestion() {
+							@Override
+							public void onSuccess(List<ISuggestion> result) {
+								Collection<Suggestion> cs = new LinkedList<Suggestion>();
+								for (final ISuggestion s : result) {
+									cs.add(new Suggestion() {
 
-									@Override
-									public String getDisplayString() {
-										return s.displayText();
-									}
+										@Override
+										public String getDisplayString() {
+											return s.displayText();
+										}
 
-									@Override
-									public String getReplacementString() {
-										return s.insertText();
-									}
+										@Override
+										public String getReplacementString() {
+											return s.insertText();
+										}
 
-								});
+									});
+								}
+								Response r = new Response(cs);
+								arg1.onSuggestionsReady(arg0, r);
 							}
-							Response r = new Response(cs);
-							arg1.onSuggestionsReady(arg0, r);
-						}
-					});
+						});
 		}
 	}
 

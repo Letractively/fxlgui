@@ -82,13 +82,15 @@ class SwingSuggestField extends SwingTextInput<JTextField, ISuggestField>
 
 			@Override
 			public void onUpdate(String value) {
-				source.query(value, new CallbackTemplate<List<ISuggestion>>() {
+				if (!value.equals(""))
+					source.query(value,
+							new CallbackTemplate<List<ISuggestion>>() {
 
-					@Override
-					public void onSuccess(List<ISuggestion> result) {
-						System.out.println(result.toString());
-					}
-				});
+								@Override
+								public void onSuccess(List<ISuggestion> result) {
+									System.out.println(result.toString());
+								}
+							});
 			}
 		});
 		// TODO ... throw new UnsupportedOperationException();
