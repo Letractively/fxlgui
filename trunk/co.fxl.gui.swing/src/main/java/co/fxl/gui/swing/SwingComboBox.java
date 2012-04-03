@@ -43,7 +43,7 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (ignore)
+				if (ignore) // || (value == null && !hasNull))
 					return;
 				String text = text();
 				if (SwingDisplay.instance().waiting) {
@@ -106,9 +106,10 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 				hasNull = true;
 				choice = "";
 			}
+			if (value == null)
+				value = choice;
 			container.component.addItem(choice);
 		}
-		value = text();
 		return this;
 	}
 
