@@ -41,6 +41,7 @@ privileged aspect NavigationItemImplStyle {
 
 	IImage around(String resource) :
 	call(public IImage IImage.resource(String))
+	&& within(NavigationItemImpl)
 	&& args(resource)
 	&& if(Style.ENABLED) {
 		return proceed(Style.instance().navigation().group().item().image(resource));
