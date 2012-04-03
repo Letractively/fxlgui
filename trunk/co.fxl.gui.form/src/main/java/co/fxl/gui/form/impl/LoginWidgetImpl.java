@@ -135,7 +135,8 @@ public class LoginWidgetImpl implements ILoginWidget {
 		decorate(pPanel.add().label().text("ID"));
 		decorate(loginID = pPanel.add().textField()
 				.addKeyListener(loginListener).enter().focus(true));
-		decorate(pPanel.add().label().text("Password"));
+		ILabel text = pPanel.add().label().text("Password");
+		decorate(text);
 		decorate(password = pPanel.add().passwordField()
 				.addKeyListener(loginListener).enter());
 	}

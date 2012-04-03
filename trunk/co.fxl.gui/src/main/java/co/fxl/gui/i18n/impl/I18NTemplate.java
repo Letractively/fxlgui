@@ -41,8 +41,10 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 		if (translation == null) {
 			// translation = translateComposite(text);
 			// if (translation == null) {
-			System.err.println("no translation found for " + text);
-			return text;
+			String e = "no translation found for " + text;
+			System.err.println(e);
+			throw new RuntimeException(e);
+//			return text;
 			// }
 		}
 		return translation;
