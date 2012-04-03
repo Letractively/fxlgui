@@ -1,6 +1,5 @@
 package co.fxl.gui.form.impl;
 
-
 privileged aspect LoginWidgetImplStyle {
 
 	// after(ILabel label) :

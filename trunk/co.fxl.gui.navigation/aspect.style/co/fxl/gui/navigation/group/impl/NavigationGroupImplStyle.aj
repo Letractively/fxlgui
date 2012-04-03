@@ -25,7 +25,7 @@ import co.fxl.gui.style.impl.Style;
 privileged aspect NavigationGroupImplStyle {
 
 	after() returning(ILinearPanel<?> panel) :
-	call(ILinearPanel<?> NavigationGroupImpl.createPanel(ILayout)) 
+	execution(ILinearPanel<?> NavigationGroupImpl.createPanel(ILayout)) 
 	&& if(Style.ENABLED) {
 		Style.instance().navigation().group().groupPanel(panel);
 	}
