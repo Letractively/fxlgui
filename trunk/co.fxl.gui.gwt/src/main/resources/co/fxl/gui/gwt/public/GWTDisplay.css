@@ -166,4 +166,6 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=4, offY
     border: 1px darkblue solid;
     padding-left: 2px;
     padding-right: 2px;
+    font-size: 12px;
+    font-family: Arial, sans-serif;
 }
