@@ -32,9 +32,6 @@ import co.fxl.gui.impl.LazyClickListener;
 
 public class LoginWidgetImpl implements ILoginWidget {
 
-	private static int HEIGHT_DECREMENT = Constants.get(
-			"LoginWidgetImpl.HEIGHT_DECREMENT", 0);
-
 	class LoginListener extends LazyClickListener {
 
 		@Override
@@ -43,7 +40,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 				dialog("No ID specified");
 				return;
 			}
-			if (password.text().equals("")) {
+			if (!IGNORE_EMPTY_PASSWORD && password.text().equals("")) {
 				dialog("No password specified");
 				return;
 			}
@@ -71,6 +68,9 @@ public class LoginWidgetImpl implements ILoginWidget {
 		}
 	}
 
+	private static final boolean IGNORE_EMPTY_PASSWORD = true;
+	private static int HEIGHT_DECREMENT = Constants.get(
+			"LoginWidgetImpl.HEIGHT_DECREMENT", 0);
 	private IHorizontalPanel cards;
 	private IAuthorizationListener listener;
 	ITextField loginID;
