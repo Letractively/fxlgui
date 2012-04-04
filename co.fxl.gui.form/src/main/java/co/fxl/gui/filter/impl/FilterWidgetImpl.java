@@ -45,6 +45,7 @@ import co.fxl.gui.impl.LazyClickListener;
 
 public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 
+	static String MAX_ROWS = "Max Rows";
 	// TODO Look: Swing: cells are too small
 
 	public static final List<Object> DEFAULT_SIZES = Arrays
@@ -300,7 +301,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			addFilters4Configuration(configuration);
 		if (addSizeFilter) {
 			sizeFilter = (ComboBoxIntegerFilter) addFilter(Integer.class,
-					"Max Rows", DEFAULT_SIZES, null, null);
+					MAX_ROWS, DEFAULT_SIZES, null, null);
 			sizeFilter.validate(validation);
 		}
 		boolean constrained = false;
