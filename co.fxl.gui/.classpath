@@ -3,7 +3,7 @@
 	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
 	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
 	<classpathentry including="**/*.java" kind="src" output="target/test-classes" path="src/test/java"/>
-	<classpathentry excluding="co/fxl/gui/i18n/impl/I18NAspect.aj|co/fxl/gui/impl/WidgetTitleI18N.aj|co/fxl/gui/impl/NavigationViewI18N.aj|co/fxl/gui/impl/ImageButtonI18N.aj|co/fxl/gui/impl/ContextMenuI18N.aj|co/fxl/gui/impl/ViewImplI18N.aj" kind="src" path="aspect.i18n"/>
+	<classpathentry excluding="co/fxl/gui/i18n/impl/I18NAspect.aj|co/fxl/gui/impl/WidgetTitleI18N.aj|co/fxl/gui/impl/NavigationViewI18N.aj|co/fxl/gui/impl/ImageButtonI18N.aj|co/fxl/gui/impl/ContextMenuI18N.aj" kind="src" path="aspect.i18n"/>
 	<classpathentry excluding="co/fxl/gui/impl/WidgetTitleStyle.aj|co/fxl/gui/impl/HyperlinkDecoratorStyle.aj|co/fxl/gui/impl/NavigationViewStyle.aj|co/fxl/gui/impl/SplitLayoutStyle.aj" kind="src" path="aspect.style"/>
 	<classpathentry excluding="co/fxl/gui/impl/WidgetTemplateLayout.aj" kind="src" path="aspect.layout"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>

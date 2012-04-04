@@ -340,10 +340,10 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					furtherReduce = true;
 					List<String[]> description = constraints.description();
 					if (constraints.configuration() != null)
-						description.add(
-								0,
-								new String[] { "Query",
-										constraints.configuration() });
+						description
+								.add(0,
+										new String[] {
+												constraints.configuration(), "" });
 					if (!description.isEmpty()) {// constraints != null &&
 													// constraints.isSpecified())
 													// {
@@ -357,13 +357,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 								.color().gray();
 						int i = 0;
 						for (String[] d : description) {
-							gp.cell(1, i).label().text(d[0] + ":").font()
-									.pixel(9).color().gray();
-							if (d[1].length() > 24)
-								d[1] = d[1].substring(0, 24) + "...";
-							gp.cell(2, i++).label().autoWrap(true).text(d[1])
-									.font().weight().bold().pixel(9).color()
-									.gray();
+							i = addQueryLabel(gp, i, d);
 						}
 					}
 					buttonColumn++;
@@ -503,6 +497,16 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			throw new UnsupportedOperationException();
 		}
 		return this;
+	}
+
+	private int addQueryLabel(IGridPanel gp, int i, String[] d) {
+		gp.cell(1, i).label().text(d[0] + (d[1].equals("") ? "" : ":")).font()
+				.pixel(9).color().gray();
+		if (d[1].length() > 24)
+			d[1] = d[1].substring(0, 24) + "...";
+		gp.cell(2, i++).label().autoWrap(true).text(d[1]).font().weight()
+				.bold().pixel(9).color().gray();
+		return i;
 	}
 
 	void setUpTopPanel() {

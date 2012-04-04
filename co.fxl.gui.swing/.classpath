@@ -5,6 +5,6 @@
 	<classpathentry kind="src" path="/fxl-data-format-swing"/>
 	<classpathentry kind="src" path="/fxl-gui"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry excluding="co/fxl/gui/swing/SwingLabelI18N.aj|co/fxl/gui/swing/SwingButtonI18N.aj" kind="src" path="aspect.i18n"/>
+	<classpathentry excluding="co/fxl/gui/swing/SwingButtonI18N.aj|co/fxl/gui/swing/SwingLabelI18N.aj" kind="src" path="aspect.i18n"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

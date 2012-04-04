@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.table.scroll.impl;
 
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.i18n.impl.DontTranslate;
 import co.fxl.gui.i18n.impl.I18NAspect;
 import co.fxl.gui.i18n.impl.Translate;
@@ -25,6 +26,7 @@ import co.fxl.gui.i18n.impl.Translate;
 public aspect ScrollTableWidgetImplI18N extends I18NAspect {
 
 	declare @method : boolean ScrollTableWidgetImpl.updateWithPaintedRowsSet(boolean) : @DontTranslate;
+	declare @method : private int ScrollTableWidgetImpl.addQueryLabel(IGridPanel, int, String[]) : @DontTranslate;
 	declare @method : private void ScrollTableWidgetImpl.addDisplayingNote() : @Translate;
 	declare @method : private void ScrollTableWidgetImpl.addColumnSelection() : @Translate;
 }

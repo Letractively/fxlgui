@@ -60,7 +60,6 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 			// if (translation == null) {
 			String e = "no translation found for '" + text + "'";
 			System.err.println(e);
-			System.exit(0);
 			throw new RuntimeException(e);
 			// return text;
 			// }
@@ -102,6 +101,18 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 	public void addConstant(String token) {
 		dontTranslate(token);
 		constants.add(token);
+		handleRules(token);
+		if (subString(token) != null)
+			handleRules(subString(token));
+	}
+
+	private String subString(String token) {
+		if (!token.contains(" "))
+			return null;
+		return token.substring(token.indexOf(" ") + 1);
+	}
+
+	private void handleRules(String token) {
 		for (String r : rules.keySet()) {
 			handleRule(token, r, rules.get(r));
 		}
