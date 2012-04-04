@@ -152,7 +152,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	}
 
 	@Override
-	public IDisplay register(IAsyncWidgetProvider<?>... widgetProviders) {
+	public IDisplay register(@SuppressWarnings("rawtypes") IAsyncWidgetProvider... widgetProviders) {
 		for (IAsyncWidgetProvider<?> widgetProvider : widgetProviders)
 			this.asyncWidgetProviders.put(widgetProvider.widgetType(),
 					widgetProvider);
@@ -526,7 +526,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	}
 
 	@Override
-	public IDisplay register(IAsyncServiceProvider<?>... serviceProviders) {
+	public IDisplay register(@SuppressWarnings("rawtypes") IAsyncServiceProvider... serviceProviders) {
 		for (IAsyncServiceProvider<?> serviceProvider : serviceProviders) {
 			asyncServices.put(serviceProvider.serviceType(), serviceProvider);
 		}
@@ -541,7 +541,7 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 
 	@Override
 	public IDisplay register(
-			co.fxl.gui.api.IRegistry.IServiceProvider<?>... services) {
+			@SuppressWarnings("rawtypes") co.fxl.gui.api.IRegistry.IServiceProvider... services) {
 		for (IServiceProvider<?> service : services)
 			this.services.put(service.serviceType(), service.getService());
 		return this;

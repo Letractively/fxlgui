@@ -420,7 +420,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	@Override
 	public IDisplay register(
-			co.fxl.gui.api.IRegistry.IServiceProvider<?>... services) {
+			@SuppressWarnings("rawtypes") co.fxl.gui.api.IRegistry.IServiceProvider... services) {
 		for (IServiceProvider<?> service : services)
 			this.services.put(service.serviceType(), service.getService());
 		return this;
