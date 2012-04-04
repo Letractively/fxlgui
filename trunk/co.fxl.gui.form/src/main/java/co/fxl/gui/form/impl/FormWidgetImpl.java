@@ -423,6 +423,7 @@ public class FormWidgetImpl implements IFormWidget {
 		Object valueElement = formField.valueElement();
 		boolean required = formField.required;
 		FieldTypeImpl type = formField.type;
+		// if (!(formField instanceof FormPasswordFieldImpl))
 		validation.validate(valueElement, required, type);
 	}
 
