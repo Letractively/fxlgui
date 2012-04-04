@@ -20,11 +20,12 @@ package co.fxl.gui.i18n.impl;
 
 public abstract aspect I18NAspect {
 
-	// String around() :
-	// get(@Translate static String *.*)
-	// && if(I18N.ENABLED) {
-	// return I18N.instance().translate(proceed());
-	// }
+	String around() :
+	 get(@Translate static String *.*)
+	 && !within(I18NAspect+)
+	 && if(I18N.ENABLED) {
+		return I18N.instance().translate(proceed());
+	}
 
 	Object around() :
 	execution(@Translate * *.*(..)) 
