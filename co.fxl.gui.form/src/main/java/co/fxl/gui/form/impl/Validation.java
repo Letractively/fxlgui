@@ -248,7 +248,7 @@ public class Validation {
 	private boolean showDiscardChanges = false;
 	private boolean isNew = false;
 
-	private void updateClickables() {
+	void updateClickables() {
 		boolean error = false;
 		isSpecified = isNew;
 		boolean allRequiredSpecified = true;
@@ -256,8 +256,10 @@ public class Validation {
 			if (field.isSpecified())
 				isSpecified = true;
 			if (allRequiredSpecified)
-				if (field.required())
-					allRequiredSpecified = !field.isNull();
+				if (field.required()) {
+					boolean b = !field.isNull();
+					allRequiredSpecified = b;
+				}
 			if (field.isError())
 				error = true;
 		}
