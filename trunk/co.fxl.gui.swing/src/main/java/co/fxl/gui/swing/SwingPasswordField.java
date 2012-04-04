@@ -25,6 +25,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.IUpdateable;
