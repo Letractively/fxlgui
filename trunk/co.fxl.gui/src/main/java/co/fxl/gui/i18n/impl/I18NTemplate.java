@@ -52,6 +52,8 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 			return text;
 		if (text.length() <= 1)
 			return text;
+		if (Character.isDigit(text.charAt(0)))
+			return text;
 		String translation = get(text);
 		if (translation == null) {
 			// translation = translateComposite(text);

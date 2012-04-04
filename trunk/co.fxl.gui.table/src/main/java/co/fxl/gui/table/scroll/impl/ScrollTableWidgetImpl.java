@@ -727,10 +727,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (!isCalibration)
 			addDisplayingNote();
 		if (allowColumnSelection) {
-			// if (ALLOW_RESIZE)
-			// new ResizableColumnSelection(this);
-			// else
-			new ColumnSelection(this);
+			addColumnSelection();
 		}
 		addSorting();
 		selection.update();
@@ -753,6 +750,13 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (updateListener != null)
 			addCellUpdateListener();
 		return h1 < h2;
+	}
+
+	private void addColumnSelection() {
+		// if (ALLOW_RESIZE)
+		// new ResizableColumnSelection(this);
+		// else
+		new ColumnSelection(this);
 	}
 
 	void addCellUpdateListener() {

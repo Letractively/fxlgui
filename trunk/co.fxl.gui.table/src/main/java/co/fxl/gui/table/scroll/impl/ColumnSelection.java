@@ -24,6 +24,7 @@ import co.fxl.gui.api.IDraggable.IDragStartListener;
 import co.fxl.gui.api.IDropTarget.IDragEvent;
 import co.fxl.gui.api.IDropTarget.IDropListener;
 import co.fxl.gui.api.IFocusPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
@@ -62,9 +63,12 @@ public class ColumnSelection {
 	}
 
 	protected IContainer getContainer() {
-		if (widget.statusPanel() != null)
-			return widget.statusPanel().cell(1, 0).clear().align().begin()
-					.valign().center();
+		if (widget.statusPanel() != null) {
+			IGridCell center = widget.statusPanel().cell(1, 0).clear().align()
+					.begin().valign().center();
+			widget.statusPanel().column(1).expand();
+			return center;
+		}
 		return widget.getContainer();
 	}
 
