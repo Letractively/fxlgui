@@ -32,5 +32,5 @@ public interface II18N {
 
 	void addHelp(String iD, ILabel label);
 
-	void active(boolean active);
+	boolean active(boolean active);
 }

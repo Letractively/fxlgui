@@ -18,10 +18,15 @@
  */
 package co.fxl.gui.form.impl;
 
-import co.fxl.gui.i18n.impl.Translate;
+import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.i18n.impl.DontTranslate;
 import co.fxl.gui.i18n.impl.I18NAspect;
+import co.fxl.gui.i18n.impl.Translate;
 
 public aspect LoginWidgetImplI18N extends I18NAspect {
 
 	declare @method : void LoginWidgetImpl.addLoginFields(..) : @Translate;
+	declare @method : void LoginWidgetImpl.addLoggedInHead(IHorizontalPanel) : @DontTranslate;
+	declare @method : void LoginWidgetImpl.setLogIn() : @DontTranslate;
+
 }

@@ -41,7 +41,8 @@ public class I18N {
 		}
 
 		@Override
-		public void active(boolean active) {
+		public boolean active(boolean active) {
+			return true;
 		}
 
 		@Override
