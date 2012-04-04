@@ -19,6 +19,9 @@
 package co.fxl.gui.i18n.impl;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.i18n.api.II18N;
@@ -29,20 +32,33 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 	// private Set<String> constants = new HashSet<String>();
 
 	private boolean active = true;
+	private List<String> constants = new LinkedList<String>();
+	private Map<String, String> rules = new HashMap<String, String>();
 
 	protected I18NTemplate() {
+	}
+
+	protected void dontTranslate(String string) {
+		put(string, string);
+	}
+
+	protected void dontTranslateIgnoreCase(String string) {
+		putIgnoreCase(string, string);
 	}
 
 	@Override
 	public String translate(String text) {
 		if (!active)
 			return text;
+		if (text.length() <= 1)
+			return text;
 		String translation = get(text);
 		if (translation == null) {
 			// translation = translateComposite(text);
 			// if (translation == null) {
-			String e = "no translation found for " + text;
+			String e = "no translation found for '" + text + "'";
 			System.err.println(e);
+			System.exit(0);
 			throw new RuntimeException(e);
 			// return text;
 			// }
@@ -74,18 +90,38 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 	}
 
 	@Override
-	public void active(boolean active) {
+	public boolean active(boolean active) {
+		boolean state = this.active;
 		this.active = active;
+		return state;
 	}
 
 	@Override
 	public void addConstant(String token) {
-		// TODO ... throw new UnsupportedOperationException();
+		dontTranslate(token);
+		constants.add(token);
+		for (String r : rules.keySet()) {
+			handleRule(token, r, rules.get(r));
+		}
+	}
+
+	private void handleRule(String token, String template,
+			String translationTemplate) {
+		put(template.replace("$", token),
+				translationTemplate.replace("$", token));
 	}
 
 	@Override
 	public void addRule(String template, String translationTemplate) {
-		// TODO ... throw new UnsupportedOperationException();
+		rules.put(template, translationTemplate);
+		for (String c : constants) {
+			handleRule(c, template, translationTemplate);
+		}
+	}
+
+	protected void putIgnoreCase(String string, String string2) {
+		put(string, string2);
+		put(string.toUpperCase(), string2.toUpperCase());
 	}
 
 	// @Override

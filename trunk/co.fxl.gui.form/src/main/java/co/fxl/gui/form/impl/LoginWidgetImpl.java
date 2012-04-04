@@ -55,9 +55,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 						dialog("Unknown user or password");
 					} else {
 						addLogout();
-						loggedInHead.text(loginID.text());
-						loginID.text("");
-						password.text("");
+						setLogIn();
 					}
 				}
 			});
@@ -148,7 +146,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 			decorator.decorateBegin(loPanel, true);
 		loggedInAs = loPanel.add().label().text("Logged in as");
 		decorate(loggedInAs);
-		loggedInHead = loPanel.add().label().text(loginID.text());
+		addLoggedInHead(loPanel);
 		decorate(loggedInHead).font().weight().bold();
 		ILabel text = loPanel.add().label().text("Logout");
 		hyperlink(text);
@@ -156,6 +154,10 @@ public class LoginWidgetImpl implements ILoginWidget {
 		// decorateHyperlink(label);
 		if (decorator != null)
 			decorator.decorateEnd(loPanel, true);
+	}
+
+	private void addLoggedInHead(IHorizontalPanel loPanel) {
+		loggedInHead = loPanel.add().label().text(loginID.text());
 	}
 
 	void hyperlink(ILabel text) {
@@ -196,5 +198,11 @@ public class LoginWidgetImpl implements ILoginWidget {
 	public ILoginWidget statusPanelDecorator(IStatusPanelDecorator decorator) {
 		this.decorator = decorator;
 		return this;
+	}
+
+	private void setLogIn() {
+		loggedInHead.text(loginID.text());
+		loginID.text("");
+		password.text("");
 	}
 }

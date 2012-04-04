@@ -29,9 +29,18 @@ public abstract aspect I18NAspect {
 	Object around() :
 	call(@Translate * *.*(..)) 
 	&& if(I18N.ENABLED) {
-		I18N.instance().active(true);
+		boolean activeState = I18N.instance().active(true);
 		Object o = proceed();
-		I18N.instance().active(false);
+		I18N.instance().active(activeState);
+		return o;
+	}
+
+	Object around() :
+	call(@DontTranslate * *.*(..)) 
+	&& if(I18N.ENABLED) {
+		boolean activeState = I18N.instance().active(false);
+		Object o = proceed();
+		I18N.instance().active(activeState);
 		return o;
 	}
 
