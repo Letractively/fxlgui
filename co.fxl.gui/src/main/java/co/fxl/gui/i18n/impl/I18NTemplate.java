@@ -44,7 +44,7 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 			String e = "no translation found for " + text;
 			System.err.println(e);
 			throw new RuntimeException(e);
-//			return text;
+			// return text;
 			// }
 		}
 		return translation;

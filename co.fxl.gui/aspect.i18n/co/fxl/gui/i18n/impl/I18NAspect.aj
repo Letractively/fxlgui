@@ -18,63 +18,58 @@
  */
 package co.fxl.gui.i18n.impl;
 
-import co.fxl.gui.api.ILabel;
-import co.fxl.gui.i18n.impl.DontTranslate;
-import co.fxl.gui.i18n.impl.I18N;
-import co.fxl.gui.i18n.impl.Translate;
-
 public abstract aspect I18NAspect {
 
-	String around() :
-	get(@Translate static String *.*) 
+	// String around() :
+	// get(@Translate static String *.*)
+	// && if(I18N.ENABLED) {
+	// return I18N.instance().translate(proceed());
+	// }
+
+	Object around() :
+	call(@Translate * *.*(..)) 
 	&& if(I18N.ENABLED) {
-		return I18N.instance().translate(proceed());
+		I18N.instance().active(true);
+		Object o = proceed();
+		I18N.instance().active(false);
+		return o;
 	}
 
-	ILabel around(String text) :
-	call(* *.text(String))
-	&& withincode(@Translate * *.*(..)) 
-//	&& !within(I18NAspect+)
-	&& args(text)
-	&& if(I18N.ENABLED) {
-		return proceed(I18N.instance().translate(text));
-	}
+	// ILabel around(String text) :
+	// call(* ILabel.text(String))
+	// && within(@Translate *)
+	// // && !within(I18NAspect+)
+	// && args(text)
+	// && if(I18N.ENABLED) {
+	// return proceed(I18N.instance().translate(text));
+	// }
 
-//	ILabel around(String text) :
-//	call(* ILabel.text(String))
-//	&& within(@Translate *) 
-////	&& !within(I18NAspect+)
-//	&& args(text)
-//	&& if(I18N.ENABLED) {
-//		return proceed(I18N.instance().translate(text));
-//	}
-
-//	before() :
-//	call(* *.*(..))
-//	&& withincode(@DontTranslate * *.*(..)) 
-//	&& if(I18N.ENABLED) {
-//		I18N.instance().active(false);
-//	}
-//
-//	after() :
-//	call(* *.*(..))
-//	&& withincode(@DontTranslate * *.*(..)) 
-//	&& if(I18N.ENABLED) {
-//		I18N.instance().active(true);
-//	}
-//
-//	before() :
-//	call(* *.*(..))
-//	&& within(@DontTranslate *) 
-//	&& if(I18N.ENABLED) {
-//		I18N.instance().active(false);
-//	}
-//
-//	after() :
-//	call(* *.*(..))
-//	&& within(@DontTranslate *) 
-//	&& if(I18N.ENABLED) {
-//		I18N.instance().active(true);
-//	}
+	// before() :
+	// call(* *.*(..))
+	// && withincode(@DontTranslate * *.*(..))
+	// && if(I18N.ENABLED) {
+	// I18N.instance().active(false);
+	// }
+	//
+	// after() :
+	// call(* *.*(..))
+	// && withincode(@DontTranslate * *.*(..))
+	// && if(I18N.ENABLED) {
+	// I18N.instance().active(true);
+	// }
+	//
+	// before() :
+	// call(* *.*(..))
+	// && within(@DontTranslate *)
+	// && if(I18N.ENABLED) {
+	// I18N.instance().active(false);
+	// }
+	//
+	// after() :
+	// call(* *.*(..))
+	// && within(@DontTranslate *)
+	// && if(I18N.ENABLED) {
+	// I18N.instance().active(true);
+	// }
 
 }

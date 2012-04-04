@@ -16,15 +16,15 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.gwt;
+package co.fxl.gui.swing;
 
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.i18n.impl.I18N;
 
-public aspect GWTLabelI18N {
+public aspect SwingLabelI18N {
 
 	ILabel around(String text) :
-	execution(public ILabel GWTLabel.text(String)) 
+	execution(public ILabel SwingLabel.text(String)) 
 	&& args(text)
 	&& if(I18N.ENABLED) {
 		return proceed(I18N.instance().translate(text));
