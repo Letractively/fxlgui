@@ -21,8 +21,8 @@ package co.fxl.gui.form.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.ICallback;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
@@ -50,12 +50,14 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 			@Override
 			public void save(ICallback<Boolean> cb) {
 				onClick();
+				cb.onSuccess(true);
 			}
 
 			@Override
 			public void cancel(ICallback<Boolean> cb) {
 				for (IPasswordListener pl : listeners)
 					pl.onCancel();
+				cb.onSuccess(false);
 			}
 
 			@Override
@@ -120,7 +122,7 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 		}
 		if (!oK)
 			return;
-		clear();
+		// clear();
 		for (IPasswordListener l : listeners)
 			l.onChange(newPasswordText);
 		current(newPasswordText);
