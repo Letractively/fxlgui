@@ -187,7 +187,8 @@ public class WidgetTitle implements IClickListener {
 		String text = sideWidget ? title.toUpperCase() : title;
 		ILabel label = titlePanel.add().label().text(text);
 		more = titlePanel.add().image();
-		more.resource("more.png");
+		String r = "more.png";
+		more.resource(r);
 		more.visible(false);
 		styleHeaderTitleSide(label);
 		headerLabel = label;
