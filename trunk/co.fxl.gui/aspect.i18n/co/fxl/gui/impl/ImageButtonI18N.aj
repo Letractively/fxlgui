@@ -18,8 +18,8 @@
  */
 package co.fxl.gui.impl;
 
+import co.fxl.gui.i18n.api.Translate;
 import co.fxl.gui.i18n.impl.I18NAspect;
-import co.fxl.gui.i18n.impl.Translate;
 
 public aspect ImageButtonI18N extends I18NAspect {
 
