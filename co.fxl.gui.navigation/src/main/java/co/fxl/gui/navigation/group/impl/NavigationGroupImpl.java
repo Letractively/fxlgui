@@ -24,7 +24,6 @@ import java.util.List;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
@@ -41,9 +40,9 @@ class NavigationGroupImpl implements INavigationGroup {
 	// of last group: +-button to show additional groups
 
 	NavigationWidgetImpl widget;
-	ILinearPanel<?> panel;
+	IHorizontalPanel panel;
 	ILabel header;
-	ILinearPanel<?> itemPanel;
+	IHorizontalPanel itemPanel;
 	private boolean first = true;
 	List<NavigationItemImpl> items = new LinkedList<NavigationItemImpl>();
 	private boolean visible = true;
@@ -52,20 +51,14 @@ class NavigationGroupImpl implements INavigationGroup {
 	NavigationGroupImpl(NavigationWidgetImpl widget) {
 		this.widget = widget;
 		ILayout layout = widget.navigationPanel.add().panel();
-		panel = createPanel(layout).add().panel().horizontal()
+		panel = layout.horizontal().add().panel().horizontal()
 				.addSpace(widget.groups.isEmpty() ? 0 : 5);
 		panel.addSpace(3);
 		IVerticalPanel headerPanel = panel.add().panel().vertical();
 		header = headerPanel.addSpace(2).add().label();
 		header.font().weight().bold().pixel(11);
 		panel.addSpace(1);
-		itemPanel = createPanel(panel.add().panel());
-	}
-
-	@SuppressWarnings("rawtypes")
-	ILinearPanel createPanel(ILayout layout) {
-		IHorizontalPanel panel = layout.horizontal();
-		return panel;
+		itemPanel = panel.add().panel().horizontal();
 	}
 
 	@Override
