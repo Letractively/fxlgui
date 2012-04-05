@@ -25,17 +25,25 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.impl.WidgetTitle;
+import co.fxl.gui.layout.api.DialogType;
+import co.fxl.gui.layout.api.IActionMenuLayout;
+import co.fxl.gui.layout.api.IFormLayout;
 import co.fxl.gui.layout.api.ILayout;
+import co.fxl.gui.layout.api.IDialogLayout;
+import co.fxl.gui.layout.api.ILoginLayout;
+import co.fxl.gui.layout.api.IMDTLayout;
+import co.fxl.gui.layout.api.INavigationLayout;
+import co.fxl.gui.layout.api.ITreeLayout;
 import co.fxl.gui.layout.impl.Layout;
 
 public class HandheldLayout implements ILayout {
 
 	private HandheldActionMenu actionMenu = new HandheldActionMenu();
-	private INavigation navigationMain;
-	private INavigation navigationSub;
+	private INavigationLayout navigationMain;
+	private INavigationLayout navigationSub;
 
 	@Override
-	public IActionMenu actionMenu() {
+	public IActionMenuLayout actionMenu() {
 		assertEnabled();
 		return actionMenu;
 	}
@@ -55,7 +63,7 @@ public class HandheldLayout implements ILayout {
 	}
 
 	@Override
-	public ILayoutDialog dialog(DialogType type) {
+	public IDialogLayout dialog(DialogType type) {
 		assertEnabled();
 		throw new UnsupportedOperationException();
 	}
@@ -71,17 +79,17 @@ public class HandheldLayout implements ILayout {
 	}
 
 	@Override
-	public ILogin login() {
+	public ILoginLayout login() {
 		return new HandheldLogin();
 	}
 
 	@Override
-	public IForm form() {
+	public IFormLayout form() {
 		return new HandheldForm();
 	}
 
 	@Override
-	public ITree tree() {
+	public ITreeLayout tree() {
 		return new HandheldTree();
 	}
 
@@ -98,21 +106,21 @@ public class HandheldLayout implements ILayout {
 	}
 
 	@Override
-	public INavigation navigationMain() {
+	public INavigationLayout navigationMain() {
 		if (navigationMain == null)
 			navigationMain = new HandheldNavigation();
 		return navigationMain;
 	}
 
 	@Override
-	public INavigation navigationSub() {
+	public INavigationLayout navigationSub() {
 		if (navigationSub == null)
 			navigationSub = new HandheldNavigation();
 		return navigationSub;
 	}
 
 	@Override
-	public IMDT mdt() {
+	public IMDTLayout mdt() {
 		return new HandheldMDT();
 	}
 }

@@ -27,17 +27,18 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.layout.api.ILayout.INavigation;
-import co.fxl.gui.layout.api.ILayout.INavigation.INavigationGroup.INavigationItem;
+import co.fxl.gui.layout.api.INavigationGroupLayout;
+import co.fxl.gui.layout.api.INavigationItemLayout;
+import co.fxl.gui.layout.api.INavigationLayout;
 
-class HandheldNavigation implements INavigation, IClickListener {
+class HandheldNavigation implements INavigationLayout, IClickListener {
 
-	private List<INavigationGroup> groups = new LinkedList<INavigationGroup>();
+	private List<INavigationGroupLayout> groups = new LinkedList<INavigationGroupLayout>();
 	private IPanel<?> panel;
-	private Map<INavigationItem, Boolean> visible = new HashMap<INavigationItem, Boolean>();
+	private Map<INavigationItemLayout, Boolean> visible = new HashMap<INavigationItemLayout, Boolean>();
 
 	@Override
-	public INavigation panel(IPanel<?> panel) {
+	public INavigationLayout panel(IPanel<?> panel) {
 		this.panel = panel;
 		panel.add().panel().horizontal().addSpace(4).add().label()
 				.text("More >>").hyperlink().addClickListener(this);
@@ -45,7 +46,7 @@ class HandheldNavigation implements INavigation, IClickListener {
 	}
 
 	@Override
-	public INavigation groups(List<INavigationGroup> groups) {
+	public INavigationLayout groups(List<INavigationGroupLayout> groups) {
 		this.groups = groups;
 		visible.clear();
 		updateVisible(true);
@@ -53,9 +54,9 @@ class HandheldNavigation implements INavigation, IClickListener {
 	}
 
 	private void updateVisible(boolean init) {
-		for (INavigationGroup g : groups) {
+		for (INavigationGroupLayout g : groups) {
 			boolean visible = false;
-			for (INavigationItem i : g.items()) {
+			for (INavigationItemLayout i : g.items()) {
 				if (init)
 					this.visible.put(i, true);
 				i.updateVisible(i.isActive());
@@ -67,7 +68,7 @@ class HandheldNavigation implements INavigation, IClickListener {
 	}
 
 	@Override
-	public INavigation group(INavigationGroup group) {
+	public INavigationLayout group(INavigationGroupLayout group) {
 		visible.clear();
 		groups.clear();
 		groups.add(group);
@@ -88,7 +89,7 @@ class HandheldNavigation implements INavigation, IClickListener {
 		IVerticalPanel sp = dialog.container().panel().vertical().spacing(6)
 				.add().panel().vertical().spacing(4);
 		boolean isFirst = true;
-		for (final INavigationGroup group : groups) {
+		for (final INavigationGroupLayout group : groups) {
 			if (!hasVisibleItem(group))
 				continue;
 			if (group.name() != null) {
@@ -98,7 +99,7 @@ class HandheldNavigation implements INavigation, IClickListener {
 				String text = group.name();
 				sp.add().label().text(text).font().weight().bold().pixel(11);
 			}
-			for (final INavigationItem item : group.items()) {
+			for (final INavigationItemLayout item : group.items()) {
 				if (visible.get(item))
 					sp.add().label().text(item.name()).hyperlink()
 							.addClickListener(new IClickListener() {
@@ -115,22 +116,22 @@ class HandheldNavigation implements INavigation, IClickListener {
 		dialog.visible(true);
 	}
 
-	private boolean hasVisibleItem(INavigationGroup group) {
-		for (INavigationItem item : group.items())
+	private boolean hasVisibleItem(INavigationGroupLayout group) {
+		for (INavigationItemLayout item : group.items())
 			if (visible.get(item))
 				return true;
 		return false;
 	}
 
 	@Override
-	public INavigation visible(INavigationItem item, boolean visible) {
+	public INavigationLayout visible(INavigationItemLayout item, boolean visible) {
 		this.visible.put(item, visible);
 		updateVisible(false);
 		return this;
 	}
 
 	@Override
-	public INavigation active(INavigationItem item, boolean active) {
+	public INavigationLayout active(INavigationItemLayout item, boolean active) {
 		updateVisible(false);
 		return this;
 	}
