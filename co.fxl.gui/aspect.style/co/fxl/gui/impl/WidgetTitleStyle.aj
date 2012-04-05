@@ -18,7 +18,14 @@
  */
 package co.fxl.gui.impl;
 
+import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IImage;
+import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.impl.CommandLink;
+import co.fxl.gui.impl.WidgetTitle;
+import co.fxl.gui.style.impl.Style;
 
 privileged aspect WidgetTitleStyle {
 
