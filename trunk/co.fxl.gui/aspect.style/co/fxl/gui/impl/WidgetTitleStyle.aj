@@ -27,14 +27,6 @@ import co.fxl.gui.style.impl.Style;
 
 privileged aspect WidgetTitleStyle {
 
-	after(WidgetTitle widgetTitle, IHorizontalPanel panel) :
-	execution(public void WidgetTitle.styleWindowHeaderButton(IHorizontalPanel)) 
-	&& args(panel) 
-	&& this(widgetTitle) 
-	&& if(Style.ENABLED) {
-		Style.instance().window().button(panel, widgetTitle.sideWidget);
-	}
-
 	ILabel around(WidgetTitle widgetTitle, String text, IHorizontalPanel iPanel) :
 	execution(private ILabel WidgetTitle.addHyperlinkLabel(String, IHorizontalPanel)) 
 	&& this(widgetTitle) 
@@ -50,6 +42,14 @@ privileged aspect WidgetTitleStyle {
 	&& args(r)
 	&& if(Style.ENABLED) {
 		return proceed(Style.instance().window().moreImage());
+	}
+
+	after(WidgetTitle widgetTitle, IHorizontalPanel panel) :
+	execution(public void WidgetTitle.styleWindowHeaderButton(IHorizontalPanel)) 
+	&& args(panel) 
+	&& this(widgetTitle) 
+	&& if(Style.ENABLED) {
+		Style.instance().window().button(panel, widgetTitle.sideWidget);
 	}
 
 	after(WidgetTitle widgetTitle) :
