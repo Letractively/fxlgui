@@ -36,12 +36,14 @@ privileged aspect WidgetTitleStyle {
 				.addCommandLabel(iPanel, text, widgetTitle.sideWidget);
 	}
 
-	IImage around(String r) :
+	IImage around(IImage image, String r) :
 	call(public IImage IImage.resource(String))
 	&& withincode(public ILabel WidgetTitle.addTitle(String))
 	&& args(r)
+	&& target(image)
 	&& if(Style.ENABLED) {
-		return proceed(Style.instance().window().moreImage());
+		image.resource(Style.instance().window().moreImage());
+		return image;
 	}
 
 	after(WidgetTitle widgetTitle, IHorizontalPanel panel) :
