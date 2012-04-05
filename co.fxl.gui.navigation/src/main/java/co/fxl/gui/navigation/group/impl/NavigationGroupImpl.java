@@ -51,7 +51,7 @@ class NavigationGroupImpl implements INavigationGroup {
 	NavigationGroupImpl(NavigationWidgetImpl widget) {
 		this.widget = widget;
 		ILayout layout = widget.navigationPanel.add().panel();
-		panel = layout.horizontal().add().panel().horizontal()
+		panel = createPanel(layout).add().panel().horizontal()
 				.addSpace(widget.groups.isEmpty() ? 0 : 5);
 		panel.addSpace(3);
 		IVerticalPanel headerPanel = panel.add().panel().vertical();
@@ -59,6 +59,10 @@ class NavigationGroupImpl implements INavigationGroup {
 		header.font().weight().bold().pixel(11);
 		panel.addSpace(1);
 		itemPanel = panel.add().panel().horizontal();
+	}
+
+	private IHorizontalPanel createPanel(ILayout layout) {
+		return layout.horizontal();
 	}
 
 	@Override
