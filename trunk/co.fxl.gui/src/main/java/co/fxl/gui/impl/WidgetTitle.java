@@ -236,11 +236,11 @@ public class WidgetTitle implements IClickListener {
 			image = iPanel.add().image().resource(imageResource).size(16, 16);
 			images.add(image);
 		}
-		final ILabel label = null;
+		ILabel label = null;
 		if (text == null)
-			iPanel.add().label().visible(false);
+			label = iPanel.add().label().visible(false);
 		else {
-			addHyperlinkLabel(text, iPanel);
+			label = addHyperlinkLabel(text, iPanel);
 		}
 		labels.add(label);
 		// if (holdOnClicks) {
