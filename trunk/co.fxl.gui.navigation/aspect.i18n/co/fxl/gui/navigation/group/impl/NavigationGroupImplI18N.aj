@@ -18,8 +18,8 @@
  */
 package co.fxl.gui.navigation.group.impl;
 
+import co.fxl.gui.i18n.api.Translate;
 import co.fxl.gui.i18n.impl.I18NAspect;
-import co.fxl.gui.i18n.impl.Translate;
 
 public aspect NavigationGroupImplI18N extends I18NAspect {
 

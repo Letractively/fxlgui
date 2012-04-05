@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.filter.impl;
 
-import co.fxl.gui.i18n.impl.Translate;
+import co.fxl.gui.i18n.api.Translate;
 
 public aspect FilterWidgetImplI18N {
 

@@ -19,9 +19,9 @@
 package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.IFontElement.IFont;
-import co.fxl.gui.i18n.impl.Translate;
-import co.fxl.gui.i18n.impl.I18NAspect;
+import co.fxl.gui.i18n.api.Translate;
 import co.fxl.gui.i18n.impl.I18N;
+import co.fxl.gui.i18n.impl.I18NAspect;
 
 public aspect ColorFieldI18N extends I18NAspect {
 

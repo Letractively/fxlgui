@@ -21,13 +21,15 @@ package co.fxl.gui.register.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.layout.api.ILayout.INavigation;
+import co.fxl.gui.layout.api.INavigationGroupLayout;
+import co.fxl.gui.layout.api.INavigationItemLayout;
 import co.fxl.gui.layout.impl.Layout;
+import co.fxl.gui.style.api.IStyle.INavigation;
 
 privileged aspect RegisterWidgetImplLayout {
 
-	declare parents : RegisterImpl implements INavigation.INavigationGroup.INavigationItem;
-	declare parents : RegisterWidgetImpl implements INavigation.INavigationGroup;
+	declare parents : RegisterImpl implements INavigationItemLayout;
+	declare parents : RegisterWidgetImpl implements INavigationGroupLayout;
 
 	public String RegisterImpl.name() {
 		return buttonLabel.text();
@@ -37,8 +39,8 @@ privileged aspect RegisterWidgetImplLayout {
 		return null;
 	}
 
-	public List<INavigation.INavigationGroup.INavigationItem> RegisterWidgetImpl.items() {
-		List<INavigation.INavigationGroup.INavigationItem> is = new LinkedList<INavigation.INavigationGroup.INavigationItem>();
+	public List<INavigationItemLayout> RegisterWidgetImpl.items() {
+		List<INavigationItemLayout> is = new LinkedList<INavigationItemLayout>();
 		for (RegisterImpl item : registers)
 			is.add(item);
 		return is;
