@@ -19,7 +19,7 @@
 package co.fxl.gui.form.impl;
 
 import co.fxl.gui.form.api.IFormField;
-import co.fxl.gui.i18n.impl.DontTranslate;
+import co.fxl.gui.i18n.api.DontTranslate;
 
 public aspect FormFieldImplI18N {
 

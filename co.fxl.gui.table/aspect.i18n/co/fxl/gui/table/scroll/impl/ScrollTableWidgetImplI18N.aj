@@ -19,9 +19,9 @@
 package co.fxl.gui.table.scroll.impl;
 
 import co.fxl.gui.api.IGridPanel;
-import co.fxl.gui.i18n.impl.DontTranslate;
+import co.fxl.gui.i18n.api.DontTranslate;
+import co.fxl.gui.i18n.api.Translate;
 import co.fxl.gui.i18n.impl.I18NAspect;
-import co.fxl.gui.i18n.impl.Translate;
 
 public aspect ScrollTableWidgetImplI18N extends I18NAspect {
 

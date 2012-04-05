@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.filter.impl;
 
-import co.fxl.gui.i18n.impl.DontTranslate;
+import co.fxl.gui.i18n.api.DontTranslate;
 import co.fxl.gui.i18n.impl.I18NAspect;
 
 public aspect FilterGridImplI18N extends I18NAspect {

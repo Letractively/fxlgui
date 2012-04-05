@@ -19,7 +19,7 @@
 package co.fxl.gui.form.impl;
 
 import co.fxl.gui.form.impl.FormWidgetImpl.FormEntryLabel;
-import co.fxl.gui.i18n.impl.DontTranslate;
+import co.fxl.gui.i18n.api.DontTranslate;
 
 public aspect FormWidgetImplI18N {
 
