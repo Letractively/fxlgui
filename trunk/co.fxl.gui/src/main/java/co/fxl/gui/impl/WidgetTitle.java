@@ -216,6 +216,13 @@ public class WidgetTitle implements IClickListener {
 		return addHyperlink(null, text);
 	}
 
+	// hack
+	private ILabel tempLabel;
+
+	private void addHyperlinkLabel(String text, IHorizontalPanel iPanel) {
+		tempLabel = addHyperlinkLabel2Panel(text, iPanel);
+	}
+
 	public CommandLink addHyperlink(String imageResource, String text) {
 		initHeader();
 		IHorizontalPanel cp = commandPanel();
@@ -240,7 +247,8 @@ public class WidgetTitle implements IClickListener {
 		if (text == null)
 			label = iPanel.add().label().visible(false);
 		else {
-			label = addHyperlinkLabel(text, iPanel);
+			addHyperlinkLabel(text, iPanel);
+			label = tempLabel;
 		}
 		labels.add(label);
 		CommandLink cl = new CommandLink(this, iPanel0, image, label);
@@ -269,11 +277,6 @@ public class WidgetTitle implements IClickListener {
 			String toolTipClickable, String toolTipNotClickable) {
 		return addHyperlink(imageResource, name).tooltips(toolTipClickable,
 				toolTipNotClickable);
-	}
-
-	private ILabel addHyperlinkLabel(String text, IHorizontalPanel iPanel) {
-		ILabel l = addHyperlinkLabel2Panel(text, iPanel);
-		return l;
 	}
 
 	public static ILabel addHyperlinkLabel2Panel(String text,
