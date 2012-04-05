@@ -22,12 +22,12 @@ import co.fxl.gui.style.impl.Style;
 
 privileged aspect NavigationItemImplStyle {
 
-	after(NavigationItemImpl item) :
+	after(NavigationItemImpl item0) :
 	execution(void NavigationItemImpl.showLabelAsInactive(boolean)) 
-	&& this(item) 
+	&& this(item0) 
 	&& if(Style.ENABLED) {
 		Style.instance().navigation().group().item()
-				.inactive(item.buttonPanel, item.button);
+				.inactive(item0.buttonPanel, item0.button);
 	}
 
 	after(NavigationItemImpl item0) :
