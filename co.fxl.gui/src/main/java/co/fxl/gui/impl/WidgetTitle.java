@@ -178,15 +178,17 @@ public class WidgetTitle implements IClickListener {
 		// for (IImage l : images)
 		// l.visible(open);
 		more.visible(!open);
-//		headerLabel.text(open ? headerLabel.text().substring(2) : "+ "
-//				+ headerLabel.text());
+		// headerLabel.text(open ? headerLabel.text().substring(2) : "+ "
+		// + headerLabel.text());
 	}
 
 	public ILabel addTitle(String title) {
 		initHeader();
 		String text = sideWidget ? title.toUpperCase() : title;
 		ILabel label = titlePanel.add().label().text(text);
-		more = titlePanel.add().image().resource("more.png").visible(false);
+		more = titlePanel.add().image();
+		more.resource("more.png");
+		more.visible(false);
 		styleHeaderTitleSide(label);
 		headerLabel = label;
 		if (foldable) {
