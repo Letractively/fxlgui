@@ -25,8 +25,8 @@ import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IDockPanel;
+import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.register.api.IRegister;
 import co.fxl.gui.register.api.IRegisterWidget;
@@ -38,13 +38,12 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 		void decorate(IColor color);
 	}
 
-	@SuppressWarnings("rawtypes")
-	public IPanel headerPanel;
+	public IFlowPanel headerPanel;
 	ICardPanel cardPanel;
 	List<RegisterImpl> registers = new LinkedList<RegisterImpl>();
 	int selection = -1;
 	boolean separators = true;
-//	private IHorizontalPanel stretch;
+	// private IHorizontalPanel stretch;
 	private IDockPanel mainBorders;
 	private ColorDecorator background;
 	public int spacing = 6;
@@ -117,12 +116,12 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 		return this;
 	}
 
-//	public IPanel<?> addFillerPanel() {
-//		if (stretch == null) {
-//			throw new UnsupportedOperationException();
-//		}
-//		return stretch;
-//	}
+	// public IPanel<?> addFillerPanel() {
+	// if (stretch == null) {
+	// throw new UnsupportedOperationException();
+	// }
+	// return stretch;
+	// }
 
 	public IRegisterWidget topBorder() {
 		setUp();
