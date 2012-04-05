@@ -21,10 +21,10 @@ package co.fxl.gui.navigation.menu.impl;
 import co.fxl.gui.register.api.IRegister.ITitle;
 import co.fxl.gui.register.impl.RegisterWidgetImpl;
 
-class RootRegisterStyle extends RegisterStyle {
+public class RootRegisterStyle extends RegisterStyle {
 
 	@Override
-	void decorateWidget(RegisterWidgetImpl widget) {
+	public void decorateWidget(RegisterWidgetImpl widget) {
 //		widget.backgroundPanel.color().rgb(249, 249, 249).gradient().vertical()
 //				.rgb(216, 216, 216);
 		widget.separators(false);
