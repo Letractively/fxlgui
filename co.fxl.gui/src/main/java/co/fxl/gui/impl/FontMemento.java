@@ -18,9 +18,9 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.api.IFontElement.IFont;
+import co.fxl.gui.api.IFontElement;
 
-public class FontMemento implements IFont {
+public class FontMemento implements IFontElement.IFont {
 
 	private enum Type {
 		BOLD, ITALIC, PLAIN;
@@ -31,19 +31,19 @@ public class FontMemento implements IFont {
 		private Type type;
 
 		@Override
-		public IFont bold() {
+		public IFontElement.IFont bold() {
 			type = Type.BOLD;
 			return FontMemento.this;
 		}
 
 		@Override
-		public IFont italic() {
+		public IFontElement.IFont italic() {
 			type = Type.ITALIC;
 			return FontMemento.this;
 		}
 
 		@Override
-		public IFont plain() {
+		public IFontElement.IFont plain() {
 			type = Type.PLAIN;
 			return FontMemento.this;
 		}
@@ -77,17 +77,17 @@ public class FontMemento implements IFont {
 	}
 
 	@Override
-	public IFont pixel(int pixel) {
+	public IFontElement.IFont pixel(int pixel) {
 		this.pixel = pixel;
 		return this;
 	}
 
 	@Override
-	public IFont underline(boolean underline) {
+	public IFontElement.IFont underline(boolean underline) {
 		throw new UnsupportedOperationException();
 	}
 
-	public void apply(IFont font) {
+	public void apply(IFontElement.IFont font) {
 		if (pixel != -1)
 			font.pixel(pixel);
 		if (weight != null)
