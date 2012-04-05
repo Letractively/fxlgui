@@ -18,9 +18,11 @@
  */
 package co.fxl.gui.filter.impl;
 
+import co.fxl.gui.filter.impl.FilterWidgetImpl;
 import co.fxl.gui.i18n.api.Translate;
+import co.fxl.gui.i18n.impl.I18NAspect;
 
-public aspect FilterWidgetImplI18N {
+public aspect FilterWidgetImplI18N extends I18NAspect {
 
 	declare @field : static String FilterWidgetImpl.MAX_ROWS : @Translate;
 }
