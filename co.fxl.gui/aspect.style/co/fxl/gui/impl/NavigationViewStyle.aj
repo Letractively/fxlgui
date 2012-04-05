@@ -27,8 +27,8 @@ privileged aspect NavigationViewStyle {
 	after() returning(IPanel<?>[] panels):
 	execution(protected IPanel<?>[] NavigationView.addPanel()) 
 	&& if(Style.ENABLED) {
-		ILinearPanel<?> panel = (ILinearPanel<?>) panels[0];
-		Style.instance().window().navigationEntry(panel);
+		ILinearPanel<?> p2 = (ILinearPanel<?>) panels[0];
+		Style.instance().window().navigationEntry(p2);
 	}
 
 }
