@@ -25,8 +25,6 @@ public class RootRegisterStyle extends RegisterStyle {
 
 	@Override
 	public void decorateWidget(RegisterWidgetImpl widget) {
-//		widget.backgroundPanel.color().rgb(249, 249, 249).gradient().vertical()
-//				.rgb(216, 216, 216);
 		widget.separators(false);
 	}
 
