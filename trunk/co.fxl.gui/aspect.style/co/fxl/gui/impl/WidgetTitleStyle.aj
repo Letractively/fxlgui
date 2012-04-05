@@ -29,13 +29,13 @@ import co.fxl.gui.style.impl.Style;
 
 privileged aspect WidgetTitleStyle {
 
-	ILabel around(WidgetTitle widgetTitle, String text, IHorizontalPanel iPanel) :
-	call(private ILabel WidgetTitle.addHyperlinkLabel(String, IHorizontalPanel))
+	void around(WidgetTitle widgetTitle, String text, IHorizontalPanel iPanel) :
+	call(private void WidgetTitle.addHyperlinkLabel(String, IHorizontalPanel))
 	&& withincode(public CommandLink WidgetTitle.addHyperlink(String, String))
 	&& this(widgetTitle) 
 	&& args(text, iPanel) 
 	&& if(Style.ENABLED) {
-		return Style.instance().window()
+		Style.instance().window()
 				.addCommandLabel(iPanel, text, widgetTitle.sideWidget);
 	}
 
