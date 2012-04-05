@@ -23,10 +23,10 @@ import co.fxl.gui.style.impl.Style;
 
 public aspect RegisterWidgetImplStyle {
 
-	after(RegisterWidgetImpl register) :
+	after(RegisterWidgetImpl register0) :
 	execution(public void RegisterWidgetImpl.background(ColorDecorator)) 
-	&& this(register) 
+	&& this(register0) 
 	&& if(Style.ENABLED) {
-		Style.instance().register().cardPanel(register.backgroundPanel);
+		Style.instance().register().cardPanel(register0.backgroundPanel);
 	}
 }
