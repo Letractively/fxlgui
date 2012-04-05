@@ -39,12 +39,13 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 		void decorate(IColor color);
 	}
 
-	public IPanel<?> headerPanel;
+	@SuppressWarnings("rawtypes")
+	public IPanel headerPanel;
 	ICardPanel cardPanel;
 	List<RegisterImpl> registers = new LinkedList<RegisterImpl>();
 	int selection = -1;
 	boolean separators = true;
-	private IHorizontalPanel stretch;
+//	private IHorizontalPanel stretch;
 	private IDockPanel mainBorders;
 	private ColorDecorator background;
 	public int spacing = 6;
@@ -117,12 +118,12 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 		return this;
 	}
 
-	public IPanel<?> addFillerPanel() {
-		if (stretch == null) {
-			throw new UnsupportedOperationException();
-		}
-		return stretch;
-	}
+//	public IPanel<?> addFillerPanel() {
+//		if (stretch == null) {
+//			throw new UnsupportedOperationException();
+//		}
+//		return stretch;
+//	}
 
 	public IRegisterWidget topBorder() {
 		setUp();
