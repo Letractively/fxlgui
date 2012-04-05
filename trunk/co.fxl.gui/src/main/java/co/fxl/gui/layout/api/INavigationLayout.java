@@ -18,38 +18,20 @@
  */
 package co.fxl.gui.layout.api;
 
+import java.util.List;
 
-import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IHorizontalPanel;
-import co.fxl.gui.api.IImage;
-import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.api.IPanel;
 
-public interface ILayout {
+public interface INavigationLayout {
 
-	INavigationLayout navigationMain();
+	INavigationLayout groups(List<INavigationGroupLayout> groups);
 
-	INavigationLayout navigationSub();
+	INavigationLayout group(INavigationGroupLayout group);
 
-	IFormLayout form();
+	INavigationLayout panel(IPanel<?> panel);
 
-	ILoginLayout login();
+	INavigationLayout visible(INavigationItemLayout item, boolean visible);
 
-	IActionMenuLayout actionMenu();
-
-	ILabel createWindowButton(boolean commandsOnTop, IHorizontalPanel panel,
-			String text);
-
-	ILinearPanel<?> createLinearPanel(IContainer c);
-
-	ILinearPanel<?> createLinearPanel(IContainer c, boolean isForFilterQuery);
-
-	IDialogLayout dialog(DialogType type);
-
-	ITreeLayout tree();
-
-	IMDTLayout mdt();
-
-	IImage logo(IImage image);
+	INavigationLayout active(INavigationItemLayout item, boolean active);
 
 }

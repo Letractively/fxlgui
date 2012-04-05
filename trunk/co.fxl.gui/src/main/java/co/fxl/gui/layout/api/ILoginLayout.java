@@ -18,38 +18,26 @@
  */
 package co.fxl.gui.layout.api;
 
-
-import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IHorizontalPanel;
-import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.api.IPasswordField;
+import co.fxl.gui.api.ITextField;
 
-public interface ILayout {
+public interface ILoginLayout {
 
-	INavigationLayout navigationMain();
+	ILoginLayout id(ITextField id);
 
-	INavigationLayout navigationSub();
+	ILoginLayout password(IPasswordField password);
 
-	IFormLayout form();
+	ILoginLayout panel(IHorizontalPanel panel);
 
-	ILoginLayout login();
+	ILoginLayout label(ILabel loginLabel);
 
-	IActionMenuLayout actionMenu();
+	ILoginLayout loginListener(IClickListener l);
 
-	ILabel createWindowButton(boolean commandsOnTop, IHorizontalPanel panel,
-			String text);
+	ILoginLayout loggedInAs(ILabel label);
 
-	ILinearPanel<?> createLinearPanel(IContainer c);
-
-	ILinearPanel<?> createLinearPanel(IContainer c, boolean isForFilterQuery);
-
-	IDialogLayout dialog(DialogType type);
-
-	ITreeLayout tree();
-
-	IMDTLayout mdt();
-
-	IImage logo(IImage image);
+	ILoginLayout loginPanel(IHorizontalPanel p);
 
 }

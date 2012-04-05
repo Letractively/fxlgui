@@ -18,38 +18,16 @@
  */
 package co.fxl.gui.layout.api;
 
+import co.fxl.gui.api.IGridPanel;
 
-import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IHorizontalPanel;
-import co.fxl.gui.api.IImage;
-import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.ILinearPanel;
+public interface IFormLayout {
 
-public interface ILayout {
+	IGridPanel.IGridCell middleCell(IGridPanel grid, int row, int column);
 
-	INavigationLayout navigationMain();
+	IGridPanel.IGridCell outerCell(IGridPanel grid, int row);
 
-	INavigationLayout navigationSub();
+	IGridPanel.IGridCell cell(IGridPanel.IGridCell cell);
 
-	IFormLayout form();
-
-	ILoginLayout login();
-
-	IActionMenuLayout actionMenu();
-
-	ILabel createWindowButton(boolean commandsOnTop, IHorizontalPanel panel,
-			String text);
-
-	ILinearPanel<?> createLinearPanel(IContainer c);
-
-	ILinearPanel<?> createLinearPanel(IContainer c, boolean isForFilterQuery);
-
-	IDialogLayout dialog(DialogType type);
-
-	ITreeLayout tree();
-
-	IMDTLayout mdt();
-
-	IImage logo(IImage image);
+	IFormLayout grid(IGridPanel grid);
 
 }
