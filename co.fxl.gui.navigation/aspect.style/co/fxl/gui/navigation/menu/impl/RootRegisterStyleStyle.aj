@@ -24,7 +24,7 @@ import co.fxl.gui.style.impl.Style;
 privileged aspect RootRegisterStyleStyle {
 
 	after(RegisterWidgetImpl widget) :
-	execution(void RootRegisterStyle.decorateWidget(RegisterWidgetImpl)) 
+	execution(public void RootRegisterStyle.decorateWidget(RegisterWidgetImpl)) 
 	&& args(widget) 
 	&& if(Style.ENABLED) {
 		Style.instance().register().topPanel(widget.backgroundPanel);
