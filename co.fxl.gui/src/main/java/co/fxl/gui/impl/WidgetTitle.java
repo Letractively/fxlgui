@@ -287,7 +287,8 @@ public class WidgetTitle implements IClickListener {
 	}
 
 	private ILabel addHyperlinkLabel(String text, IHorizontalPanel iPanel) {
-		return addHyperlinkLabel2Panel(text, iPanel);
+		ILabel l = addHyperlinkLabel2Panel(text, iPanel);
+		return l;
 	}
 
 	public static ILabel addHyperlinkLabel2Panel(String text,
