@@ -18,38 +18,30 @@
  */
 package co.fxl.gui.layout.api;
 
-
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IHorizontalPanel;
-import co.fxl.gui.api.IImage;
-import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.api.IPanel;
 
-public interface ILayout {
+public interface IDialogLayout {
 
-	INavigationLayout navigationMain();
+	public interface IClickTarget {
 
-	INavigationLayout navigationSub();
+		void onOK();
 
-	IFormLayout form();
+		void onCancel();
 
-	ILoginLayout login();
+	}
 
-	IActionMenuLayout actionMenu();
+	public interface IDecorator {
 
-	ILabel createWindowButton(boolean commandsOnTop, IHorizontalPanel panel,
-			String text);
+		void decorate(IContainer container);
 
-	ILinearPanel<?> createLinearPanel(IContainer c);
+	}
 
-	ILinearPanel<?> createLinearPanel(IContainer c, boolean isForFilterQuery);
+	IDialogLayout decorator(IDialogLayout.IDecorator decorator);
 
-	IDialogLayout dialog(DialogType type);
+	IDialogLayout.IClickTarget addClickListener(IClickListener clickListener);
 
-	ITreeLayout tree();
-
-	IMDTLayout mdt();
-
-	IImage logo(IImage image);
+	IPanel<?> createButton(IPanel<?> panel);
 
 }
