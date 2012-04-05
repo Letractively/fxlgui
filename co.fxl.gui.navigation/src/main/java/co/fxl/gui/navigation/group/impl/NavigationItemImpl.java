@@ -24,7 +24,6 @@ import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
@@ -52,7 +51,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	private ITabDecorator decorator;
 	IHorizontalPanel buttonPanel;
 	public NavigationWidgetImpl widget;
-	private ILinearPanel<?> itemPanel;
+	private IHorizontalPanel itemPanel;
 	IHorizontalPanel basicPanel;
 	NavigationGroupImpl group;
 	// private List<INavigationListener> listeners = new
