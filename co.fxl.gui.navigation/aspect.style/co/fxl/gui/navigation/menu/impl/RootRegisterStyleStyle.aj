@@ -16,7 +16,7 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.navigation.impl;
+package co.fxl.gui.navigation.menu.impl;
 
 import co.fxl.gui.register.impl.RegisterWidgetImpl;
 import co.fxl.gui.style.impl.Style;
