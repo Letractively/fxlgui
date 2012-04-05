@@ -63,7 +63,6 @@ public class WidgetTitle implements IClickListener {
 	private boolean sideWidget = false;
 	private String title;
 	private IGridPanel bPanel;
-	private String titleUpperCase;
 	private boolean hyperlinkVisible = true;
 	private IDockPanel footer;
 	private IImage more;
@@ -197,7 +196,6 @@ public class WidgetTitle implements IClickListener {
 			headerLabel.tooltip(FOLDABLE);
 		}
 		this.title = title;
-		this.titleUpperCase = text;
 		if (addToContextMenu) {
 			ContextMenu.instance().group(title).clear();
 		}
