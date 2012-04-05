@@ -44,42 +44,4 @@ public abstract aspect I18NAspect {
 		I18N.instance().active(activeState);
 		return o;
 	}
-
-	// ILabel around(String text) :
-	// call(* ILabel.text(String))
-	// && within(@Translate *)
-	// // && !within(I18NAspect+)
-	// && args(text)
-	// && if(I18N.ENABLED) {
-	// return proceed(I18N.instance().translate(text));
-	// }
-
-	// before() :
-	// call(* *.*(..))
-	// && withincode(@DontTranslate * *.*(..))
-	// && if(I18N.ENABLED) {
-	// I18N.instance().active(false);
-	// }
-	//
-	// after() :
-	// call(* *.*(..))
-	// && withincode(@DontTranslate * *.*(..))
-	// && if(I18N.ENABLED) {
-	// I18N.instance().active(true);
-	// }
-	//
-	// before() :
-	// call(* *.*(..))
-	// && within(@DontTranslate *)
-	// && if(I18N.ENABLED) {
-	// I18N.instance().active(false);
-	// }
-	//
-	// after() :
-	// call(* *.*(..))
-	// && within(@DontTranslate *)
-	// && if(I18N.ENABLED) {
-	// I18N.instance().active(true);
-	// }
-
 }
