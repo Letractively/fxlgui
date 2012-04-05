@@ -240,12 +240,17 @@ public class WidgetTitle implements IClickListener {
 			image = iPanel.add().image().resource(imageResource).size(16, 16);
 			images.add(image);
 		}
-		ILabel label = null;
-		if (text == null)
-			label = iPanel.add().label().visible(false);
-		else {
-			label = addHyperlinkLabel(text, iPanel);
+		if (text == null) {
+			ILabel label = iPanel.add().label().visible(false);
+			return createCommandLink(iPanel0, image, label);
+		} else {
+			ILabel label = addHyperlinkLabel(text, iPanel);
+			return createCommandLink(iPanel0, image, label);
 		}
+	}
+
+	private CommandLink createCommandLink(IHorizontalPanel iPanel0,
+			IImage image, ILabel label) {
 		labels.add(label);
 		CommandLink cl = new CommandLink(this, iPanel0, image, label);
 		cl.clickable(hyperlinkVisible);
