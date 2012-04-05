@@ -30,20 +30,20 @@ privileged aspect NavigationItemImplStyle {
 				.inactive(item.buttonPanel, item.button);
 	}
 
-	after(NavigationItemImpl item) :
+	after(NavigationItemImpl item0) :
 	execution(private void NavigationItemImpl.showLabelAsActive(..)) 
-	&& this(item) 
+	&& this(item0) 
 	&& if(Style.ENABLED) {
 		Style.instance().navigation().group().item()
-				.active(item.buttonPanel, item.button);
+				.active(item0.buttonPanel, item0.button);
 	}
 
-	void around(NavigationItemImpl item, String resource) :
+	void around(NavigationItemImpl item0, String resource) :
 	execution(private void NavigationItemImpl.refreshResource(String))
-	&& this(item)
+	&& this(item0)
 	&& args(resource)
 	&& if(Style.ENABLED) {
-		item.refresh.resource(Style.instance().navigation().group().item()
+		item0.refresh.resource(Style.instance().navigation().group().item()
 				.image(resource));
 	}
 }
