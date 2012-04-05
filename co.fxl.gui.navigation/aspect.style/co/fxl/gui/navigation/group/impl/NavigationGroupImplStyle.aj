@@ -18,14 +18,14 @@
  */
 package co.fxl.gui.navigation.group.impl;
 
-import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.style.impl.Style;
 
 privileged aspect NavigationGroupImplStyle {
 
-	after() returning(ILinearPanel panel) :
-	execution(ILinearPanel NavigationGroupImpl.createPanel(ILayout)) 
+	after() returning(IHorizontalPanel panel) :
+	execution(IHorizontalPanel NavigationGroupImpl.createPanel(ILayout)) 
 	&& if(Style.ENABLED) {
 		Style.instance().navigation().group().groupPanel(panel);
 	}
