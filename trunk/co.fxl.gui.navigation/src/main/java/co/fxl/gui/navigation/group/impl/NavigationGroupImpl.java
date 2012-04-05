@@ -62,7 +62,8 @@ class NavigationGroupImpl implements INavigationGroup {
 		itemPanel = createPanel(panel.add().panel());
 	}
 
-	ILinearPanel<?> createPanel(ILayout layout) {
+	@SuppressWarnings("rawtypes")
+	ILinearPanel createPanel(ILayout layout) {
 		IHorizontalPanel panel = layout.horizontal();
 		return panel;
 	}
