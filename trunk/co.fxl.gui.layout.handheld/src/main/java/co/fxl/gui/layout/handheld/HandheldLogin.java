@@ -29,9 +29,9 @@ import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.form.impl.LoginWidgetImpl;
-import co.fxl.gui.layout.api.ILayout.ILogin;
+import co.fxl.gui.layout.api.ILoginLayout;
 
-class HandheldLogin implements ILogin, IClickListener, IUpdateListener<String> {
+class HandheldLogin implements ILoginLayout, IClickListener, IUpdateListener<String> {
 
 	private IDialog dialog;
 	private IClickListener loginListener;
@@ -42,31 +42,31 @@ class HandheldLogin implements ILogin, IClickListener, IUpdateListener<String> {
 	private IPasswordField passwordField;
 
 	@Override
-	public ILogin loginListener(IClickListener l) {
+	public ILoginLayout loginListener(IClickListener l) {
 		loginListener = l;
 		return this;
 	}
 
 	@Override
-	public ILogin loginPanel(IHorizontalPanel p) {
+	public ILoginLayout loginPanel(IHorizontalPanel p) {
 		p.visible(false);
 		return this;
 	}
 
 	@Override
-	public ILogin loggedInAs(ILabel label) {
+	public ILoginLayout loggedInAs(ILabel label) {
 		label.visible(false);
 		return this;
 	}
 
 	@Override
-	public ILogin label(ILabel label) {
+	public ILoginLayout label(ILabel label) {
 		label.visible(false);
 		return this;
 	}
 
 	@Override
-	public ILogin panel(final IHorizontalPanel liPanel) {
+	public ILoginLayout panel(final IHorizontalPanel liPanel) {
 		liPanel.add().label().text("Login").hyperlink()
 				.addClickListener(new IClickListener() {
 					@Override
@@ -127,13 +127,13 @@ class HandheldLogin implements ILogin, IClickListener, IUpdateListener<String> {
 	}
 
 	@Override
-	public ILogin id(ITextField id) {
+	public ILoginLayout id(ITextField id) {
 		this.idField = id;
 		return this;
 	}
 
 	@Override
-	public ILogin password(IPasswordField password) {
+	public ILoginLayout password(IPasswordField password) {
 		this.passwordField = password;
 		return this;
 	}

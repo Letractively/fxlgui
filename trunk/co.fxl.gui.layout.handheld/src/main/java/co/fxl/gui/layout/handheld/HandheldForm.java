@@ -20,9 +20,9 @@ package co.fxl.gui.layout.handheld;
 
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
-import co.fxl.gui.layout.api.ILayout.IForm;
+import co.fxl.gui.layout.api.IFormLayout;
 
-class HandheldForm implements IForm {
+class HandheldForm implements IFormLayout {
 
 	@Override
 	public IGridCell middleCell(IGridPanel grid, int gridIndex, int column) {
@@ -40,7 +40,7 @@ class HandheldForm implements IForm {
 	}
 
 	@Override
-	public IForm grid(IGridPanel grid) {
+	public IFormLayout grid(IGridPanel grid) {
 		grid.column(0).expand();
 		return this;
 	}

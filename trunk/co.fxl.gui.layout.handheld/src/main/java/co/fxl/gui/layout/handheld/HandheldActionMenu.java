@@ -24,9 +24,9 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.impl.ImageButton;
-import co.fxl.gui.layout.api.ILayout.IActionMenu;
+import co.fxl.gui.layout.api.IActionMenuLayout;
 
-class HandheldActionMenu implements IActionMenu {
+class HandheldActionMenu implements IActionMenuLayout {
 
 	// TODO USABILITY: Android: use touchscreen-wiping to switch between content & menu
 
@@ -37,7 +37,7 @@ class HandheldActionMenu implements IActionMenu {
 	// private IActionMenuListener listener;
 
 	@Override
-	public IActionMenu container(IContainer container) {
+	public IActionMenuLayout container(IContainer container) {
 		IHorizontalPanel panel = container.panel().horizontal();
 		final ImageButton table = new ImageButton(panel.add()).hyperlink()
 				.text("Content");
@@ -80,20 +80,20 @@ class HandheldActionMenu implements IActionMenu {
 	}
 
 	@Override
-	public IActionMenu showContent() {
+	public IActionMenuLayout showContent() {
 		contentClickListener.onClick();
 		return this;
 	}
 
 	@Override
-	public IActionMenu sidePanel(ILinearPanel<?> panel) {
+	public IActionMenuLayout sidePanel(ILinearPanel<?> panel) {
 		this.panel = panel;
 		init();
 		return this;
 	}
 
 	@Override
-	public IActionMenu grid(IGridPanel grid) {
+	public IActionMenuLayout grid(IGridPanel grid) {
 		this.grid = grid;
 		init();
 		return this;

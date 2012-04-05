@@ -10,13 +10,14 @@ import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
-import co.fxl.gui.layout.api.ILayout.IMDT;
+import co.fxl.gui.layout.api.IMDTLayoutDecorator;
+import co.fxl.gui.layout.api.IMDTLayout;
 
-class HandheldMDT implements IMDT {
+class HandheldMDT implements IMDTLayout {
 
 	@Override
-	public IDecorator show(final IDecorator dec) {
-		return new IDecorator() {
+	public IMDTLayoutDecorator show(final IMDTLayoutDecorator dec) {
+		return new IMDTLayoutDecorator() {
 
 			private List<IClickListener> cls = new LinkedList<IClickListener>();
 

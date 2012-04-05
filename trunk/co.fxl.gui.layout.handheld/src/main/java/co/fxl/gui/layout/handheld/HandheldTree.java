@@ -18,9 +18,9 @@
  */
 package co.fxl.gui.layout.handheld;
 
-import co.fxl.gui.layout.api.ILayout.ITree;
+import co.fxl.gui.layout.api.ITreeLayout;
 
-class HandheldTree implements ITree {
+class HandheldTree implements ITreeLayout {
 
 	@Override
 	public int defaultSplitPosition() {
