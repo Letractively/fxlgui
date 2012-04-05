@@ -28,9 +28,9 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
@@ -49,10 +49,10 @@ public class NavigationWidgetImpl implements INavigationWidget {
 
 	private static final boolean DYNAMIC_RESIZE = true;
 	protected IDockPanel mainPanel;
-	ILinearPanel<?> navigationPanel;
+	IHorizontalPanel navigationPanel;
 	private ICardPanel history;
 	NavigationItemImpl active;
-//	private boolean first = true;
+	// private boolean first = true;
 	int[] colorActive = new int[] { 245, 245, 245 };
 	int[] colorBackground = new int[] { 199, 224, 241 };
 	int[] colorInactive = new int[] { 111, 111, 111 };
@@ -60,7 +60,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	private IVerticalPanel panel0;
 	private IVerticalPanel panel1;
 	private List<INavigationListener> listeners = new LinkedList<INavigationListener>();
-	ILinearPanel<?> masterPanel;
+	IHorizontalPanel masterPanel;
 	IGridPanel hPanel;
 	List<NavigationGroupImpl> groups = new LinkedList<NavigationGroupImpl>();
 	private FlipPage flipPage;
@@ -85,7 +85,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		history.show(panel0);
 	}
 
-	ILinearPanel<?> createPanel(ILayout l) {
+	IHorizontalPanel createPanel(ILayout l) {
 		return l.horizontal().align().begin();
 	}
 
@@ -109,18 +109,18 @@ public class NavigationWidgetImpl implements INavigationWidget {
 
 	@Override
 	public INavigationGroup addGroup() {
-//		ensureSpaceBetweenGroups();
+		// ensureSpaceBetweenGroups();
 		NavigationGroupImpl group = new NavigationGroupImpl(this);
 		groups.add(group);
 		return group;
 	}
 
-//	private void ensureSpaceBetweenGroups() {
-//		if (!first) {
-//			navigationPanel.addSpace(5);
-//		}
-//		first = false;
-//	}
+	// private void ensureSpaceBetweenGroups() {
+	// if (!first) {
+	// navigationPanel.addSpace(5);
+	// }
+	// first = false;
+	// }
 
 	@Override
 	public ITabWidget<INavigationGroup, INavigationItem> visible(boolean visible) {
