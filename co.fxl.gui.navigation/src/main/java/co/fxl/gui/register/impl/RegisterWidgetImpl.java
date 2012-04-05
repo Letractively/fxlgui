@@ -25,7 +25,6 @@ import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IDockPanel;
-import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
