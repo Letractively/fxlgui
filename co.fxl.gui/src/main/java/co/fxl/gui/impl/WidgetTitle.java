@@ -243,24 +243,6 @@ public class WidgetTitle implements IClickListener {
 			label = addHyperlinkLabel(text, iPanel);
 		}
 		labels.add(label);
-		// if (holdOnClicks) {
-		// IClickListener clickListener = new IClickListener() {
-		//
-		// @Override
-		// public void onClick() {
-		// LinkedList<ILabel> ls = new LinkedList<ILabel>(
-		// clickableState.keySet());
-		// for (ILabel hyperlink : ls) {
-		// clickableState.put(hyperlink, label.clickable());
-		// hyperlink.clickable(false);
-		// }
-		// }
-		// };
-		// label.addClickListener(clickListener);
-		// iPanel.addClickListener(clickListener);
-		// image.addClickListener(clickListener);
-		// clickableState.put(label, true);
-		// }
 		CommandLink cl = new CommandLink(this, iPanel0, image, label);
 		cl.clickable(hyperlinkVisible);
 		if (addToContextMenu)
