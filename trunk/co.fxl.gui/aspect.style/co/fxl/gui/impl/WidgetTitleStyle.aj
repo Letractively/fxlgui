@@ -18,17 +18,13 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.api.IHorizontalPanel;
-import co.fxl.gui.api.IImage;
-import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.IPanel;
-import co.fxl.gui.style.impl.Style;
+import co.fxl.gui.impl.CommandLink;
 
 privileged aspect WidgetTitleStyle {
 
 	ILabel around(WidgetTitle widgetTitle, String text, IHorizontalPanel iPanel) :
-	execution(private ILabel WidgetTitle.addHyperlinkLabel(String, IHorizontalPanel)) 
+	call(private ILabel WidgetTitle.addHyperlinkLabel(String, IHorizontalPanel))
+	&& withincode(public CommandLink WidgetTitle.addHyperlink(String, String))
 	&& this(widgetTitle) 
 	&& args(text, iPanel) 
 	&& if(Style.ENABLED) {
