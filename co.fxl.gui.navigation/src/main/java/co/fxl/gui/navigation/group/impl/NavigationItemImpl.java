@@ -83,8 +83,8 @@ public class NavigationItemImpl extends LazyClickListener implements
 			button = subPanel.add().label();
 			button.font().pixel(14).weight().bold().color().white();
 			button.addClickListener(this);
-			refresh = subPanel.add().image().resource("loading_white.gif")
-					.visible(false);
+			refresh = subPanel.add().image().visible(false);
+			refreshResource("loading_white.gif");
 			refresh.addClickListener(this);
 			buttonPanel.addSpace(3);
 			buttonPanel.addClickListener(this);
@@ -133,15 +133,15 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	void clickable(boolean b) {
 		buttonPanel.clickable(b);
-//		button.clickable(b);
-//		refresh.clickable(b);
+		// button.clickable(b);
+		// refresh.clickable(b);
 		refresh.opacity(1);
 	}
 
 	void showBackgroundNeutral() {
 		border.remove();
 		buttonPanel.color().remove();
-		refresh.resource("more_black.png");
+		refreshResource("more_black.png");
 	}
 
 	@Override
@@ -187,7 +187,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 						buttonPanel.color().remove();
 						buttonPanel.color().white();
 						button.font().color().black();
-						refresh.resource("more_black.png");
+						refreshResource("more_black.png");
 						// refresh.resource("more_black.png");
 						int x = basicPanel.offsetX() - getLeftPartPopUpWidth();
 						if (x < 10)
@@ -372,11 +372,16 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	@Override
 	public INavigationItem toggleLoading(boolean t) {
-		refresh.resource(labelAsActive ? "loading_black.gif"
-				: "loading_white.gif");
+		String resource = labelAsActive ? "loading_black.gif"
+				: "loading_white.gif";
+		refreshResource(resource);
 		refresh.visible(t);
 		button.visible(!t);
 		return this;
+	}
+
+	private void refreshResource(String resource) {
+		refresh.resource(resource);
 	}
 
 	private void flipRegister(boolean flipNow) {
@@ -412,7 +417,8 @@ public class NavigationItemImpl extends LazyClickListener implements
 	public INavigationItem moreTab() {
 		initButtonPanel();
 		isMoreTab = true;
-		refresh.resource("more_black.png").visible(true);
+		refreshResource("more_black.png");
+		refresh.visible(true);
 		button.text("More").font().color().black();
 		buttonPanel.spacing(SPACING_LOADING);
 		IMouseOverListener mol = new IMouseOverListener() {
