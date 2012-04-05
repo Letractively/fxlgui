@@ -20,8 +20,9 @@ package co.fxl.gui.form.impl;
 
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.i18n.api.DontTranslate;
+import co.fxl.gui.i18n.impl.I18NAspect;
 
-public aspect FormFieldImplI18N {
+public aspect FormFieldImplI18N extends I18NAspect {
 
 	declare @method : public IFormField FormFieldImpl.required() : @DontTranslate;
 }

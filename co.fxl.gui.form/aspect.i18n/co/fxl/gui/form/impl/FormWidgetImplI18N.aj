@@ -20,8 +20,9 @@ package co.fxl.gui.form.impl;
 
 import co.fxl.gui.form.impl.FormWidgetImpl.FormEntryLabel;
 import co.fxl.gui.i18n.api.DontTranslate;
+import co.fxl.gui.i18n.impl.I18NAspect;
 
-public aspect FormWidgetImplI18N {
+public aspect FormWidgetImplI18N extends I18NAspect {
 
 	declare @method : FormEntryLabel FormWidgetImpl.addFormEntryLabel(String, int) : @DontTranslate;
 }
