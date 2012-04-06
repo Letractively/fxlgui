@@ -35,7 +35,8 @@ class WidgetsDemo extends DemoTemplate implements Decorator {
 		IContainer container = example.title("Table Widget");
 		ITableWidget<String> table = (ITableWidget<String>) container
 				.widget(IFilterTableWidget.class);
-		table.selection().single().addSelectionListener(new ISelectionListener<String>() {
+		table.selection().single()
+				.addSelectionListener(new ISelectionListener<String>() {
 					@Override
 					public void onSelection(int index, String selection) {
 						example.output("Selection: " + selection);
@@ -44,34 +45,27 @@ class WidgetsDemo extends DemoTemplate implements Decorator {
 		table.addColumn().name("Column 1");
 		table.addColumn().name("Column 2");
 		table.addColumn().name("Column 3");
-		table.addRow().identifier("Row 1").add("Cell 1.1", "Cell 2.1",
-				"Cell 3.1");
-		table.addRow().identifier("Row 2").add("Cell 1.2", "Cell 2.2",
-				"Cell 3.2");
-		table.addRow().identifier("Row 3").add("Cell 1.3", "Cell 2.3",
-				"Cell 3.3");
+		table.addRow().identifier("Row 1")
+				.add("Cell 1.1", "Cell 2.1", "Cell 3.1");
+		table.addRow().identifier("Row 2")
+				.add("Cell 1.2", "Cell 2.2", "Cell 3.2");
+		table.addRow().identifier("Row 3")
+				.add("Cell 1.3", "Cell 2.3", "Cell 3.3");
 		table.visible(true);
 		StringBuffer b = new StringBuffer();
-		b
-				.append("ITableWidget table = (ITableWidget) panel.add().widget(ITableWidget.class);");
-		b
-				.append("\ntable.selection().single().addSelectionListener(new ISelectionListener<String>() {");
+		b.append("ITableWidget table = (ITableWidget) panel.add().widget(ITableWidget.class);");
+		b.append("\ntable.selection().single().addSelectionListener(new ISelectionListener<String>() {");
 		b.append("\n&nbsp;&nbsp;&nbsp;&nbsp;@Override");
-		b
-				.append("\n&nbsp;&nbsp;&nbsp;&nbsp;public void onSelection(int index, String selection) {");
-		b
-				.append("\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output.text(\"Selection: \" + selection);");
+		b.append("\n&nbsp;&nbsp;&nbsp;&nbsp;public void onSelection(int index, String selection) {");
+		b.append("\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output.text(\"Selection: \" + selection);");
 		b.append("\n&nbsp;&nbsp;&nbsp;&nbsp;}");
 		b.append("\n&nbsp;&nbsp;});");
 		b.append("\ntable.addColumn().name(\"Column 1\");");
 		b.append("\ntable.addColumn().name(\"Column 2\");");
 		b.append("\ntable.addColumn().name(\"Column 3\");");
-		b
-				.append("\ntable.addRow().identifier(\"Row 1\").add(\"Cell 1.1\", \"Cell 2.1\", \"Cell 3.3\");");
-		b
-				.append("\ntable.addRow().identifier(\"Row 2\").add(\"Cell 1.2\", \"Cell 2.2\", \"Cell 3.3\");");
-		b
-				.append("\ntable.addRow().identifier(\"Row 3\").add(\"Cell 1.3\", \"Cell 2.3\", \"Cell 3.3\");");
+		b.append("\ntable.addRow().identifier(\"Row 1\").add(\"Cell 1.1\", \"Cell 2.1\", \"Cell 3.3\");");
+		b.append("\ntable.addRow().identifier(\"Row 2\").add(\"Cell 1.2\", \"Cell 2.2\", \"Cell 3.3\");");
+		b.append("\ntable.addRow().identifier(\"Row 3\").add(\"Cell 1.3\", \"Cell 2.3\", \"Cell 3.3\");");
 		b.append("\ntable.visible(true);");
 		example.codeFragment(b.toString());
 	}
