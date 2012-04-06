@@ -39,6 +39,8 @@ public class GPlusTable implements ITable {
 			public IColumnSelection label(ILabel b, boolean visible) {
 				if (visible)
 					b.font().color().white();
+				else
+					b.font().color().gray();
 				return this;
 			}
 
