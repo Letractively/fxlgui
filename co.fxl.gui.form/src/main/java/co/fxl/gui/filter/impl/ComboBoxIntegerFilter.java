@@ -22,7 +22,7 @@ import java.util.List;
 
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IUpdateable;
-import co.fxl.gui.filter.impl.Constraint.ISizeConstraint;
+import co.fxl.gui.filter.impl.IFilterConstraint.ISizeConstraint;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.form.impl.Validation;
 
@@ -96,7 +96,7 @@ class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
 	}
 
 	@Override
-	public Constraint asConstraint() {
+	public IFilterConstraint asConstraint() {
 		update();
 		return new SizeConstraint();
 	}

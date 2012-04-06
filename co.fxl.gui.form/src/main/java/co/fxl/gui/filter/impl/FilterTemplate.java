@@ -37,7 +37,7 @@ abstract class FilterTemplate<T> implements FilterPart<T> {
 		addTitle(panel, name, filterIndex);
 	}
 
-	abstract Constraint asConstraint();
+	abstract IFilterConstraint asConstraint();
 
 	static void addTitle(FilterGrid panel, String name, int filterIndex) {
 		panel.title(filterIndex, name);

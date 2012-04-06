@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.filter.impl;
 
-import co.fxl.gui.filter.impl.Constraint.INamedConstraint;
+import co.fxl.gui.filter.impl.IFilterConstraint.INamedConstraint;
 
 public interface IStringPrefixConstraint extends INamedConstraint {
 
