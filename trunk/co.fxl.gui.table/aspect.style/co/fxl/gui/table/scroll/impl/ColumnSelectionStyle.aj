@@ -31,10 +31,10 @@ privileged aspect ColumnSelectionStyle {
 		Style.instance().table().columnSelection().panel(b, c.visible);
 	}
 
-	after(ScrollTableColumnImpl c, ILabel b) :
+	after(ScrollTableColumnImpl c, ILabel l) :
 	execution(void ColumnSelection.decorateLabel(..)) 
-	&& args(.., c, b) 
+	&& args(.., c, l) 
 	&& if(Style.ENABLED) {
-		Style.instance().table().columnSelection().label(b, c.visible);
+		Style.instance().table().columnSelection().label(l, c.visible);
 	}
 }
