@@ -38,7 +38,7 @@ privileged aspect NavigationItemImplStyle {
 				.active(item0.buttonPanel, item0.button);
 	}
 
-	void around(NavigationItemImpl item0, String resource) :
+	after(NavigationItemImpl item0, String resource) :
 	execution(private void NavigationItemImpl.refreshResource(String))
 	&& this(item0)
 	&& args(resource)
