@@ -47,8 +47,7 @@ public class GWTGridPanelClickHandler extends KeyTemplate<IGridPanel> implements
 	}
 
 	boolean isWaiting() {
-		GWTDisplay d = (GWTDisplay) ((IElement<?>) element).display();
-		return d.waiting;
+		return GWTDisplay.waiting;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -83,8 +82,7 @@ public class GWTGridPanelClickHandler extends KeyTemplate<IGridPanel> implements
 		@SuppressWarnings("unchecked")
 		Grid grid = (Grid) ((GWTElement<Grid, IGridPanel>) element).container.widget;
 		Cell cell = grid.getCellForEvent(event);
-		GWTDisplay d = (GWTDisplay) ((IElement<?>) element).display();
-		if (d.waiting)
+		if (GWTDisplay.waiting)
 			return;
 		GWTDisplay.notifyEvent(event);
 		clickListener.onClick(cell.getCellIndex(), cell.getRowIndex());

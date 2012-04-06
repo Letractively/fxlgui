@@ -19,7 +19,6 @@
 package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.impl.KeyTemplate;
 
 import com.google.gwt.dom.client.NativeEvent;
@@ -104,8 +103,7 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 			return;
 		event.preventDefault();
 		event.stopPropagation();
-		GWTDisplay d = (GWTDisplay) ((IElement<?>) element).display();
-		if (d.waiting)
+		if (GWTDisplay.waiting)
 			return;
 		clickListener.onClick();
 	}
