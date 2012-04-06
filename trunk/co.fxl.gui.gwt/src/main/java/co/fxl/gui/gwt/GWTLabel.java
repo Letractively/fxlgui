@@ -49,10 +49,14 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 
 	@Override
 	public ILabel text(String text) {
+		setLabelText(text);
+		return this;
+	}
+
+	private void setLabelText(String text) {
 		html.allowHTML(false);
 		html.setText(text);
 		container.widget.setHTML(html.toString());
-		return this;
 	}
 
 	@Override

@@ -21,12 +21,14 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.i18n.impl.I18N;
 
-public aspect GWTLabelI18N {
+privileged aspect GWTLabelI18N {
 
-	ILabel around(String text) :
-	execution(public ILabel GWTLabel.text(String)) 
+	void around(GWTLabel label, String text) :
+	call(private void GWTLabel.setLabelText(String))
+	&& withincode(public ILabel GWTLabel.text(String))
+	&& this(label)
 	&& args(text)
 	&& if(I18N.ENABLED) {
-		return proceed(I18N.instance().translate(text));
+		label.setLabelText(I18N.instance().translate(text));
 	}
 }
