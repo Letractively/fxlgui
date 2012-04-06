@@ -82,7 +82,7 @@ public interface IStyle {
 
 	public interface IWindow {
 
-		IWindow main(IPanel<?> panel);
+		IWindow main(IPanel<?> panel, boolean addBorder);
 
 		IWindow header(IPanel<?> panel, boolean isSide);
 
