@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.style.gplus;
 
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
@@ -39,8 +40,9 @@ class GPlusWindow implements IWindow {
 	public IWindow header(IPanel<?> panel, boolean isSide) {
 		panel.color().remove().white();
 		panel.border().remove();
-		panel.border().color().lightgray();
-		panel.border().style().bottom();
+		IBorder border = panel.border();
+		border.style().bottom();
+		border.color().lightgray();
 		return this;
 	}
 
@@ -49,8 +51,9 @@ class GPlusWindow implements IWindow {
 		if (panel != null) {
 			panel.color().remove().white();
 			panel.border().remove();
-			panel.border().color().lightgray();
-			panel.border().style().top();
+			IBorder border = panel.border();
+			border.style().top();
+			border.color().lightgray();
 		}
 		return this;
 	}
