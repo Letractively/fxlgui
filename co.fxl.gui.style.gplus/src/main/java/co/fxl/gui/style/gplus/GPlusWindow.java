@@ -38,17 +38,16 @@ class GPlusWindow implements IWindow {
 	@Override
 	public IWindow header(IPanel<?> panel, boolean isSide) {
 		panel.color().remove().white();
-		panel.border().width(1);
+		panel.border().remove();
+		panel.border().color().lightgray();
 		panel.border().style().bottom();
-		panel.border().color().mix().lightgray().gray();
 		return this;
 	}
 
 	@Override
 	public IWindow footer(IPanel<?> panel) {
 		if (panel != null) {
-			panel.color().remove();
-			panel.color().white();
+			panel.color().remove().white();
 			panel.border().remove();
 			panel.border().color().lightgray();
 			panel.border().style().top();
