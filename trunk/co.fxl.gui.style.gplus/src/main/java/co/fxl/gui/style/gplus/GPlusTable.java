@@ -47,14 +47,14 @@ public class GPlusTable implements ITable {
 
 	@Override
 	public ITable statusPanel(IPanel<?> statusPanel) {
-		statusPanel.color().remove();
+		statusPanel.color().remove().white();
 		// statusPanel.border().remove();
 		return this;
 	}
 
 	@Override
 	public ITable topPanel(IPanel<?> topPanel) {
-		topPanel.color().remove();
+		topPanel.color().remove().white();
 		topPanel.border().remove();
 		return this;
 	}
