@@ -83,11 +83,11 @@ privileged aspect WidgetTitleStyle {
 		Style.instance().window().title(label, title, widgetTitle.sideWidget);
 	}
 
-	after(IPanel<?> panel) :
+	after(IPanel<?> vertical) :
 	execution(public void WidgetTitle.styleFooter(IPanel<?>)) 
-	&& args(panel) 
+	&& args(vertical) 
 	&& if(Style.ENABLED) {
-		Style.instance().window().footer(panel);
+		Style.instance().window().footer(vertical);
 	}
 
 }
