@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.style.gplus;
 
-import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
@@ -40,19 +39,19 @@ public class GPlusStyle implements IStyle {
 	@Override
 	public IStyle background(IPanel<?> panel) {
 		assertEnabled();
-//		panel.color().white();
+		// panel.color().white();
 		return this;
 	}
 
 	@Override
 	public IStyle side(ILinearPanel<?> panel) {
 		assertEnabled();
-		panel.spacing().left(10);
-		IBorder border = panel.border();
-		border.color().lightgray();
-		border.width(1);
-		border.style().left();
-//		panel.color().white();
+		// panel.spacing().left(10);
+		// IBorder border = panel.border();
+		// border.color().lightgray();
+		// border.width(1);
+		// border.style().left();
+		// panel.color().white();
 		return this;
 	}
 

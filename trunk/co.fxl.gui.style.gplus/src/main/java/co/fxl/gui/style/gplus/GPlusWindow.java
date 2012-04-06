@@ -28,7 +28,8 @@ class GPlusWindow implements IWindow {
 	@Override
 	public IWindow main(IPanel<?> panel) {
 		panel.color().remove().white();
-		// panel.border().remove();
+		panel.border().remove();
+		panel.border().color().lightgray();
 		return this;
 	}
 
@@ -43,9 +44,11 @@ class GPlusWindow implements IWindow {
 
 	@Override
 	public IWindow footer(IPanel<?> panel) {
-		panel.color().remove();
-		panel.color().white();
-		panel.border().remove();
+		if (panel != null) {
+			panel.color().remove();
+			panel.color().white();
+			panel.border().remove();
+		}
 		return this;
 	}
 
