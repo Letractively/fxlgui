@@ -66,6 +66,7 @@ public class WidgetTitle implements IClickListener {
 	private boolean hyperlinkVisible = true;
 	private IDockPanel footer;
 	private IImage more;
+	private boolean addBorder;
 
 	public WidgetTitle() {
 	}
@@ -77,6 +78,11 @@ public class WidgetTitle implements IClickListener {
 	public WidgetTitle(ILayout layout, boolean addBorder) {
 		panel = layout.grid();
 		panel.color().white();
+		this.addBorder = addBorder;
+		setUp();
+	}
+
+	private void setUp() {
 		headerPanel = panel.cell(0, 0).panel().grid();
 		headerPanel.color().rgb(136, 136, 136).gradient().vertical()
 				.rgb(113, 113, 113);
