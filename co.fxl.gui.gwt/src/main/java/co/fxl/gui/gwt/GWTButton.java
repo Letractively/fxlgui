@@ -43,8 +43,12 @@ class GWTButton extends GWTElement<Button, IButton> implements IButton {
 
 	@Override
 	public IButton text(String text) {
-		container.widget.setText(text);
+		setButtonText(text);
 		return this;
+	}
+
+	private void setButtonText(String text) {
+		container.widget.setText(text);
 	}
 
 	@Override

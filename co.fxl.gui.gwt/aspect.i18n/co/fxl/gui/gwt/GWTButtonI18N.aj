@@ -21,12 +21,14 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.api.IButton;
 import co.fxl.gui.i18n.impl.I18N;
 
-public aspect GWTButtonI18N {
+privileged aspect GWTButtonI18N {
 
-	IButton around(String text) :
-	execution(public IButton GWTButton.text(String)) 
+	void around(GWTButton button, String text) :
+	call(private void GWTButton.setButtonText(String))
+	&& withincode(public IButton GWTButton.text(String))
+	&& this(button)
 	&& args(text)
 	&& if(I18N.ENABLED) {
-		return proceed(I18N.instance().translate(text));
+		button.setButtonText(I18N.instance().translate(text));
 	}
 }
