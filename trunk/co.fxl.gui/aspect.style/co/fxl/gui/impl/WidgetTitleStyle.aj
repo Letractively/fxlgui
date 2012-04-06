@@ -61,7 +61,7 @@ privileged aspect WidgetTitleStyle {
 	execution(public WidgetTitle.new(ILayout, boolean)) 
 	&& this(widgetTitle) 
 	&& if(Style.ENABLED) {
-		Style.instance().window().main(widgetTitle.panel)
+		Style.instance().window().main(widgetTitle.panel, widgetTitle.addBorder)
 				.header(widgetTitle.headerPanel, widgetTitle.sideWidget);
 		if (Style.instance().window().commandsOnTop())
 			widgetTitle.commandsOnTop();

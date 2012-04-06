@@ -26,10 +26,12 @@ import co.fxl.gui.style.api.IStyle.IWindow;
 class GPlusWindow implements IWindow {
 
 	@Override
-	public IWindow main(IPanel<?> panel) {
+	public IWindow main(IPanel<?> panel, boolean addBorder) {
 		panel.color().remove().white();
-		panel.border().remove();
-		panel.border().color().lightgray();
+		if (addBorder) {
+			panel.border().remove();
+			panel.border().color().lightgray();
+		}
 		return this;
 	}
 
