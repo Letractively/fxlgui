@@ -23,11 +23,12 @@ import co.fxl.gui.i18n.impl.I18N;
 
 privileged aspect SwingLabelI18N {
 
-	ILabel around(SwingLabel l, String text) :
-	execution(public ILabel SwingLabel.text(String))
-	&& this(l)
+	void around(SwingLabel label, String text) :
+	call(private void SwingLabel.setLabelText(String))
+	&& withincode(public ILabel SwingLabel.text(String))
+	&& this(label)
 	&& args(text)
 	&& if(I18N.ENABLED) {
-		return l.setLabelText(I18N.instance().translate(text));
+		label.setLabelText(I18N.instance().translate(text));
 	}
 }

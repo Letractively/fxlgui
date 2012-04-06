@@ -70,13 +70,13 @@ public class SwingLabel extends SwingTextElement<JLabel, ILabel> implements
 
 	@Override
 	public ILabel text(String text) {
-		return setLabelText(text);
+		setLabelText(text);
+		return this;
 	}
 
-	private ILabel setLabelText(String text) {
+	private void setLabelText(String text) {
 		html.allowHTML(false);
 		super.setText(text);
-		return this;
 	}
 
 	@Override
