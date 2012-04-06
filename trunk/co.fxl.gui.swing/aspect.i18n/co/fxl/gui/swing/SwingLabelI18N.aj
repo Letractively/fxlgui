@@ -21,12 +21,13 @@ package co.fxl.gui.swing;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.i18n.impl.I18N;
 
-public aspect SwingLabelI18N {
+privileged aspect SwingLabelI18N {
 
-	ILabel around(String text) :
-	execution(public ILabel SwingLabel.text(String)) 
+	ILabel around(SwingLabel l, String text) :
+	execution(public ILabel SwingLabel.text(String))
+	&& this(l)
 	&& args(text)
 	&& if(I18N.ENABLED) {
-		return proceed(I18N.instance().translate(text));
+		return l.setLabelText(I18N.instance().translate(text));
 	}
 }
