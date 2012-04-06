@@ -60,12 +60,12 @@ class SwingButton extends SwingTextElement<JButton, IButton> implements IButton 
 
 	@Override
 	public IButton text(String text) {
-		return setButtonText(text);
+		setButtonText(text);
+		return this;
 	}
 
-	private IButton setButtonText(String text) {
+	private void setButtonText(String text) {
 		setText(text);
 		update();
-		return this;
 	}
 }

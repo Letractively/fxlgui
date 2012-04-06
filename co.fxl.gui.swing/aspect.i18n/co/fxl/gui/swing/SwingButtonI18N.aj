@@ -23,11 +23,12 @@ import co.fxl.gui.i18n.impl.I18N;
 
 privileged aspect SwingButtonI18N {
 
-	IButton around(SwingButton b, String text) :
-	execution(public IButton SwingButton.text(String))
-	&& this(b)
+	void around(SwingButton button, String text) :
+	call(private void SwingButton.setButtonText(String))
+	&& withincode(public IButton SwingButton.text(String))
+	&& this(button)
 	&& args(text)
 	&& if(I18N.ENABLED) {
-		return b.setButtonText(I18N.instance().translate(text));
+		button.setButtonText(I18N.instance().translate(text));
 	}
 }
