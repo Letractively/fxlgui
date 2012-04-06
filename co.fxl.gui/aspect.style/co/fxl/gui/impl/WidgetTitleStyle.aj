@@ -49,12 +49,12 @@ privileged aspect WidgetTitleStyle {
 		return more;
 	}
 
-	after(WidgetTitle widgetTitle, IHorizontalPanel panel) :
+	after(WidgetTitle widgetTitle, IHorizontalPanel iPanel) :
 	execution(public void WidgetTitle.styleWindowHeaderButton(IHorizontalPanel)) 
-	&& args(panel) 
+	&& args(iPanel) 
 	&& this(widgetTitle) 
 	&& if(Style.ENABLED) {
-		Style.instance().window().button(panel, widgetTitle.sideWidget);
+		Style.instance().window().button(iPanel, widgetTitle.sideWidget);
 	}
 
 	after(WidgetTitle widgetTitle) :
