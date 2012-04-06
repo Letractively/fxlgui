@@ -129,8 +129,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	// private static final boolean ALLOW_RESIZE = false;
 	private static final int HEADER_ROW_HEIGHT = 24;
 	private static final int ROW_HEIGHT = 22;
-	static final String ARROW_UP = "\u2191";
-	static final String ARROW_DOWN = "\u2193";
+	public static String ARROW_UP = "\u2191";
+	public static String ARROW_DOWN = "\u2193";
 	protected static final int SCROLL_MULT = 33;
 	private static final boolean ADD_DRAG_AND_DROP = true;
 	public static int MAX_SORT_SIZE = 100;
