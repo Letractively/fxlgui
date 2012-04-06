@@ -50,6 +50,8 @@ class GPlusWindow implements IWindow {
 			panel.color().remove();
 			panel.color().white();
 			panel.border().remove();
+			panel.border().color().lightgray();
+			panel.border().style().top();
 		}
 		return this;
 	}
