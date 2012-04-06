@@ -21,12 +21,13 @@ package co.fxl.gui.swing;
 import co.fxl.gui.api.IButton;
 import co.fxl.gui.i18n.impl.I18N;
 
-public aspect SwingButtonI18N {
+privileged aspect SwingButtonI18N {
 
-	IButton around(String text) :
-	execution(public IButton SwingButton.text(String)) 
+	IButton around(SwingButton b, String text) :
+	execution(public IButton SwingButton.text(String))
+	&& this(b)
 	&& args(text)
 	&& if(I18N.ENABLED) {
-		return proceed(I18N.instance().translate(text));
+		return b.setButtonText(I18N.instance().translate(text));
 	}
 }
