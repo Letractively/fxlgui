@@ -71,10 +71,10 @@ class GPlusWindow implements IWindow {
 	@Override
 	public IWindow button(IPanel<?> panel, boolean isSideWidget) {
 		if (isSideWidget) {
-			panel.color().remove().white();
+			panel.color().remove();
 			panel.border().remove();
 		} else {
-			panel.color().mix().white().lightgray();
+			panel.color().remove().mix().white().lightgray();
 			panel.border().color().lightgray();
 		}
 		return this;
@@ -87,7 +87,7 @@ class GPlusWindow implements IWindow {
 			return panel.add().label().visible(false);
 		else {
 			ILabel l = panel.addSpace(4).add().label().text(text);
-			l.font().pixel(12);
+			l.font().pixel(11);
 			return l;
 		}
 	}

@@ -31,7 +31,9 @@ public class GPlusTable implements ITable {
 			@Override
 			public IColumnSelection panel(IPanel<?> b, boolean visible) {
 				if (visible)
-					b.color().lightgray();
+					b.color().gray();
+				else
+					b.color().white();
 				return this;
 			}
 
