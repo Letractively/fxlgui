@@ -110,7 +110,7 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 	}
 
 	@Override
-	public Constraint asConstraint() {
+	public IFilterConstraint asConstraint() {
 		update();
 		return new StringConstraint();
 	}

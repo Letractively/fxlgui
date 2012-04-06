@@ -26,11 +26,11 @@ import java.util.Map;
 
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter;
-import co.fxl.gui.filter.impl.Constraint.IBooleanConstraint;
-import co.fxl.gui.filter.impl.Constraint.IDoubleRangeConstraint;
-import co.fxl.gui.filter.impl.Constraint.INamedConstraint;
-import co.fxl.gui.filter.impl.Constraint.IRelationConstraint;
-import co.fxl.gui.filter.impl.Constraint.ISizeConstraint;
+import co.fxl.gui.filter.impl.IFilterConstraint.IBooleanConstraint;
+import co.fxl.gui.filter.impl.IFilterConstraint.IDoubleRangeConstraint;
+import co.fxl.gui.filter.impl.IFilterConstraint.INamedConstraint;
+import co.fxl.gui.filter.impl.IFilterConstraint.IRelationConstraint;
+import co.fxl.gui.filter.impl.IFilterConstraint.ISizeConstraint;
 
 public class FilterConstraintsImpl implements IFilterConstraints {
 
@@ -197,7 +197,7 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 		return ((IStringPrefixConstraint) constraints.get(column)).prefix();
 	}
 
-	public void add(Constraint c) {
+	public void add(IFilterConstraint c) {
 		if (c instanceof ISizeConstraint) {
 			size = ((ISizeConstraint) c).size();
 		} else {

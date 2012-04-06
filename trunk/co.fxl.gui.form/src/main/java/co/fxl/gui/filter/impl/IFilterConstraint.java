@@ -23,14 +23,14 @@ import java.util.List;
 
 import co.fxl.gui.filter.api.IFilterConstraints.IRange;
 
-interface Constraint {
+public interface IFilterConstraint {
 
-	public interface INamedConstraint extends Constraint {
+	public interface INamedConstraint extends IFilterConstraint {
 
 		String column();
 	}
 
-	public interface ISizeConstraint extends Constraint {
+	public interface ISizeConstraint extends IFilterConstraint {
 
 		int size();
 	}

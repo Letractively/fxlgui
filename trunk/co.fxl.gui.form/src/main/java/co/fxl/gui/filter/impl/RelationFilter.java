@@ -27,7 +27,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
-import co.fxl.gui.filter.impl.Constraint.IRelationConstraint;
+import co.fxl.gui.filter.impl.IFilterConstraint.IRelationConstraint;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.filter.impl.FilterPanel.ICell;
 import co.fxl.gui.form.impl.Validation;
@@ -116,7 +116,7 @@ class RelationFilter extends StringFilter {
 	}
 
 	@Override
-	public Constraint asConstraint() {
+	public IFilterConstraint asConstraint() {
 		if (values != null)
 			return new IRelationConstraint() {
 
