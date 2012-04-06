@@ -31,6 +31,7 @@ class GPlusNavigation implements INavigation {
 
 			@Override
 			public INavigation mainPanel(IPanel<?> panel) {
+				panel.color().remove();
 				panel.color().white();
 				// panel.color().rgb(245, 245, 245);
 				// IBorder b = panel.border();
@@ -55,6 +56,7 @@ class GPlusNavigation implements INavigation {
 						buttonPanel.spacing(4);
 						// button.font().pixel(13);
 						buttonPanel.border().color().white();
+						buttonPanel.color().remove();
 						buttonPanel.color().white();
 						button.font().color().gray();
 						// buttonPanel.spacing(4);
@@ -69,6 +71,7 @@ class GPlusNavigation implements INavigation {
 					public INavigation active(ILinearPanel<?> buttonPanel,
 							ILabel button) {
 						buttonPanel.border().color().mix().gray().black();
+						buttonPanel.color().remove();
 						buttonPanel.color().rgb(245, 245, 245);
 						button.font().color().gray();
 						button.font().color().black();

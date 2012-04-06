@@ -27,14 +27,14 @@ class GPlusWindow implements IWindow {
 
 	@Override
 	public IWindow main(IPanel<?> panel) {
-		panel.color().white();
-//		panel.border().remove();
+		panel.color().remove().white();
+		// panel.border().remove();
 		return this;
 	}
 
 	@Override
 	public IWindow header(IPanel<?> panel, boolean isSide) {
-		panel.color().remove();
+		panel.color().remove().white();
 		panel.border().color().mix().lightgray().gray();
 		panel.border().width(1);
 		panel.border().style().bottom();
@@ -44,6 +44,7 @@ class GPlusWindow implements IWindow {
 	@Override
 	public IWindow footer(IPanel<?> panel) {
 		panel.color().remove();
+		panel.color().white();
 		panel.border().remove();
 		return this;
 	}
@@ -67,7 +68,7 @@ class GPlusWindow implements IWindow {
 	@Override
 	public IWindow button(IPanel<?> panel, boolean isSideWidget) {
 		if (isSideWidget) {
-			panel.color().remove();
+			panel.color().remove().white();
 			panel.border().remove();
 		} else {
 			panel.color().mix().white().lightgray();

@@ -25,7 +25,7 @@ public class GPlusTree implements ITree {
 
 	@Override
 	public ITree panel(IPanel<?> panel) {
-		panel.color().remove();
+		panel.color().remove().white();
 		return this;
 	}
 
