@@ -29,6 +29,6 @@ privileged aspect SwingLabelI18N {
 	&& this(label)
 	&& args(text)
 	&& if(I18N.ENABLED) {
-		label.setLabelText(I18N.instance().translate(text));
+		label.setLabelText(co.fxl.gui.i18n.impl.I18N.instance().translate(text));
 	}
 }
