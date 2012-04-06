@@ -29,6 +29,6 @@ privileged aspect SwingButtonI18N {
 	&& this(button)
 	&& args(text)
 	&& if(I18N.ENABLED) {
-		button.setButtonText(I18N.instance().translate(text));
+		button.setButtonText(co.fxl.gui.i18n.impl.I18N.instance().translate(text));
 	}
 }
