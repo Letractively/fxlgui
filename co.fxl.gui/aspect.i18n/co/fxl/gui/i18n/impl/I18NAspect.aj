@@ -18,12 +18,16 @@
  */
 package co.fxl.gui.i18n.impl;
 
+import co.fxl.gui.i18n.api.DontTranslate;
+import co.fxl.gui.i18n.api.Translate;
+import co.fxl.gui.i18n.impl.I18N;
+
 public abstract aspect I18NAspect {
 
-	 String around() :
-	 get(@Translate static String *.*)
-	 && !within(I18NAspect+)
-	 && if(I18N.ENABLED) {
+	String around() :
+	get(@Translate static String *.*)
+	&& !within(I18NAspect+)
+	&& if(I18N.ENABLED) {
 		return I18N.instance().translate(proceed());
 	}
 
