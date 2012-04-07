@@ -23,7 +23,7 @@ import co.fxl.gui.i18n.api.II18N;
 
 public class I18N {
 
-	public static final boolean ENABLED = false;
+	public static final boolean ENABLED = true;
 	private static II18N instance = new II18N() {
 
 		@Override
