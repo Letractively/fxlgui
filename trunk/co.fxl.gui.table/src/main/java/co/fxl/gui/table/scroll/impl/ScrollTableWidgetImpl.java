@@ -667,10 +667,10 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	public boolean update() {
 		paintedRows = computeRowsToPaint();
-		return updateWithPaintedRowsSet();
+		return updateWithPaintedRowsSetNoCalibration();
 	}
 
-	boolean updateWithPaintedRowsSet() {
+	boolean updateWithPaintedRowsSetNoCalibration() {
 		return updateWithPaintedRowsSet(false);
 	}
 
