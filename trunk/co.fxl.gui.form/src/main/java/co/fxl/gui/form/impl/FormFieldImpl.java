@@ -130,7 +130,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	}
 
 	@Override
-	public IFormField<T, R> required(boolean required) {
+	public IFormField<T, R> setRequired(boolean required) {
 		if (this.required == required)
 			return this;
 		if (required) {
