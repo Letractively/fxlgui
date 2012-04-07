@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.style.api;
 
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
@@ -38,6 +39,8 @@ public interface IStyle {
 		ILabel addCommand(IPanel<?> panel, String text);
 
 		IOptionMenu label(ILabel label);
+
+		IOptionMenu searchButton(IHorizontalPanel buttonPanel);
 
 	}
 
