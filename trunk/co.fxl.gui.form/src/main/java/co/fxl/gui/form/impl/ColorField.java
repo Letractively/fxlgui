@@ -63,7 +63,7 @@ public class ColorField {
 					p0.color().rgb(r(colorValue), g(colorValue), b(colorValue));
 					p.tooltip(colorName);
 					p.cell(0, 1).align().center().label().text(colorName)
-							.font().pixel(10).color().gray();
+							.font().pixel(8).color().gray();
 					p.addGridClickListener(new IGridClickListener() {
 						@Override
 						public void onClick(int column, int row) {
