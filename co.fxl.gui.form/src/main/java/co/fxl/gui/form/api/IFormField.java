@@ -54,7 +54,7 @@ public interface IFormField<T, R> extends IUpdateable<R> {
 
 	boolean visible();
 
-	IFormField<T, R> required(boolean required);
+	IFormField<T, R> setRequired(boolean required);
 
 	IFormField<T, R> tooltip(ITooltipResolver tooltip);
 
