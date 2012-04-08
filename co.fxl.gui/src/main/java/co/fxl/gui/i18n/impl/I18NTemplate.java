@@ -23,7 +23,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.i18n.api.II18N;
 
 @SuppressWarnings("serial")
@@ -80,9 +79,9 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 	// return null;
 	// }
 
-	@Override
-	public void addHelp(String iD, ILabel label) {
-	}
+	// @Override
+	// public void addHelp(String iD, ILabel label) {
+	// }
 
 	@Override
 	public String put(String text, String translation) {
@@ -97,7 +96,7 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 		return state;
 	}
 
-	@Override
+	// @Override
 	public void addConstant(String token) {
 		dontTranslate(token);
 		constants.add(token);
@@ -124,7 +123,7 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 				translationTemplate.replace("$", token));
 	}
 
-	@Override
+	// @Override
 	public void addRule(String template, String translationTemplate) {
 		rules.put(template, translationTemplate);
 		for (String c : constants) {
@@ -135,6 +134,11 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 	protected void putIgnoreCase(String string, String string2) {
 		put(string, string2);
 		put(string.toUpperCase(), string2.toUpperCase());
+	}
+
+	@Override
+	public II18N notifyEvent(String event) {
+		return this;
 	}
 
 	// @Override
