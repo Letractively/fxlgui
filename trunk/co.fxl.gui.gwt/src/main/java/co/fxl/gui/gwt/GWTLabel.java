@@ -27,13 +27,13 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.user.client.Element;
+//import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.HTML;
 
 class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 
 	private HTMLText html = new HTMLText();
-	private boolean selectionDisabled = false;
+//	private boolean selectionDisabled = false;
 	private HyperlinkDecorator hyperlinkDecorator;
 
 	GWTLabel(GWTContainer<HTML> container) {
@@ -96,7 +96,8 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 		return this;
 	}
 
-	native String disableSelection(Element target) /*-{
+//	native String disableSelection(Element target) 
+													/*-{
 													if (typeof target.onselectstart!="undefined") //IE route
 													target.onselectstart=function(){return false}
 													else if (typeof target.style.MozUserSelect!="undefined") //Firefox route
@@ -109,10 +110,10 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 	@Override
 	GWTClickHandler<ILabel> newGWTClickHandler(IClickListener clickListener) {
 		html.selectable = false;
-		if (!selectionDisabled) {
-			disableSelection(container.widget.getElement());
-			selectionDisabled = true;
-		}
+//		if (!selectionDisabled) {
+//			disableSelection(container.widget.getElement());
+//			selectionDisabled = true;
+//		}
 		update();
 		return new GWTClickHandler<ILabel>(this, clickListener);
 	}
