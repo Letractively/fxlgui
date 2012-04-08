@@ -18,19 +18,19 @@
  */
 package co.fxl.gui.i18n.api;
 
-import co.fxl.gui.api.ILabel;
-
 public interface II18N {
-
-	String put(String text, String translation);
 
 	String translate(String text);
 
-	void addConstant(String token);
+	II18N notifyEvent(String event);
 
-	void addRule(String template, String translationTemplate);
-
-	void addHelp(String iD, ILabel label);
+	// String put(String text, String translation);
+	//
+	// void addConstant(String token);
+	//
+	// void addRule(String template, String translationTemplate);
+	//
+	// void addHelp(String iD, ILabel label);
 
 	boolean active(boolean active);
 }

@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.i18n.impl;
 
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.i18n.api.II18N;
 
 public class I18N {
@@ -31,26 +30,27 @@ public class I18N {
 			return text;
 		}
 
-		@Override
-		public void addHelp(String iD, ILabel label) {
-		}
-
-		@Override
-		public String put(String text, String translation) {
-			return text;
-		}
+		// public void addHelp(String iD, ILabel label) {
+		// }
+		//
+		// public String put(String text, String translation) {
+		// return text;
+		// }
 
 		@Override
 		public boolean active(boolean active) {
 			return true;
 		}
 
-		@Override
-		public void addConstant(String token) {
-		}
+		// public void addConstant(String token) {
+		// }
+		//
+		// public void addRule(String template, String translationTemplate) {
+		// }
 
 		@Override
-		public void addRule(String template, String translationTemplate) {
+		public II18N notifyEvent(String event) {
+			return this;
 		}
 	};
 
