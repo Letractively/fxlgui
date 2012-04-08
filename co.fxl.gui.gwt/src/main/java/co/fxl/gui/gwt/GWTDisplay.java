@@ -152,7 +152,8 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	}
 
 	@Override
-	public IDisplay register(@SuppressWarnings("rawtypes") IAsyncWidgetProvider... widgetProviders) {
+	public IDisplay register(
+			@SuppressWarnings("rawtypes") IAsyncWidgetProvider... widgetProviders) {
 		for (IAsyncWidgetProvider<?> widgetProvider : widgetProviders)
 			this.asyncWidgetProviders.put(widgetProvider.widgetType(),
 					widgetProvider);
@@ -341,9 +342,9 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		};
 	}
 
-	public static native String getUserAgent() /*-{
-												return navigator.userAgent;
-												}-*/;
+	public static String getUserAgent() {
+		return Window.Navigator.getUserAgent();
+	}// /*-{ return navigator.userAgent; }-*/;
 
 	public static boolean isFirefox() {
 		return !isChrome() && !isOpera() && !isInternetExplorer();
@@ -526,7 +527,8 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	}
 
 	@Override
-	public IDisplay register(@SuppressWarnings("rawtypes") IAsyncServiceProvider... serviceProviders) {
+	public IDisplay register(
+			@SuppressWarnings("rawtypes") IAsyncServiceProvider... serviceProviders) {
 		for (IAsyncServiceProvider<?> serviceProvider : serviceProviders) {
 			asyncServices.put(serviceProvider.serviceType(), serviceProvider);
 		}
