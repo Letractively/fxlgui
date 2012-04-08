@@ -81,19 +81,6 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	// TODO Swing: native implementation: required for automated testing
 
-	// TODO 2DECIDE: Option: DESIGN: Look: Scroll-Table-Widget: use fixed column
-	// widths / Look: use a heuristic on the client side
-	// to determine column width
-
-	// TODO FEATURE: Option: Usability: Table-Live-Filter: Implement live filter
-	// on current table
-	// content, every update notification in filter-widget on the side is
-	// directly applied to the loaded table content
-
-	// TODO FEATURE: Option: Usability: Enable Drag&Drop for main table (in
-	// general: tables without reordering feature): moves displayed range up /
-	// down
-
 	// TODO Swing Scroll Panel block increment for single click on arrow is not
 	// enough
 

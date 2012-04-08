@@ -43,9 +43,6 @@ import co.fxl.gui.table.scroll.api.IScrollTableWidget.IScrollTableClickListener;
 public class CommandButtonsImpl implements ICommandButtons<Object>,
 		IButtonPanelDecorator, IChangeListener<Object> {
 
-	// TODO FEATURE: Option: Usability: Enable Drag & Drop for reordering of
-	// table content (additionally to move buttons)
-
 	class Edit {
 
 		private int previousEdit = -1;
