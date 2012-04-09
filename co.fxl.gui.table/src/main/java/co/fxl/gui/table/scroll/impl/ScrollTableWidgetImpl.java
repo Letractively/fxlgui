@@ -351,6 +351,14 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				} else
 					addFilter();
 				dock.add().label().text("&#160;");
+				if (!externalStatusPanel) {
+					IGridPanel statusPanel2 = statusPanel();
+					statusPanel2.cell(0, 0).label().text("&#160;");
+					statusPanel2.height(32);
+				}
+				if (hasFilter())
+					addFilter();
+				setUpTopPanel();
 				int height = heightMinusTopPanel();
 				// if (showNoRowsFound) {
 				// hack for IE
@@ -360,14 +368,6 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				if (furtherReduce && height >= 80 && externalStatusPanel)
 					height -= 30;
 				dock.height(height);
-				if (!externalStatusPanel) {
-					IGridPanel statusPanel2 = statusPanel();
-					statusPanel2.cell(0, 0).label().text("&#160;");
-					statusPanel2.height(32);
-				}
-				if (hasFilter())
-					addFilter();
-				setUpTopPanel();
 			} else if (rows.size() == 0
 					&& (constraints != null
 							&& constraints.isConstraintSpecified() && hasFilter())) {
@@ -608,8 +608,10 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (buttonDecorator == null && navigationDecorator == null
 				&& (topPanel == null || topPanel.rows() == 0))
 			return height;
-		else
-			return height - topPanel.height();
+		else {
+			int tHeight = topPanel.height();
+			return height - tHeight;
+		}
 	}
 
 	private void topPanel() {
