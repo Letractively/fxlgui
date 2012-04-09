@@ -38,7 +38,7 @@ public class ColumnSelection {
 	private IFocusPanel dummyFocusPanel;
 	private ILabel dummyLabel;
 
-	// TODO FEATURE: Option: Look: Column-Selection: if > n Columns or
+	// TODO FEATURE: MINOR: Option: Look: Column-Selection: if > n Columns or
 	// sum(characters of column-headers) > m
 	// then dynamically resize font size of column selection labels
 
