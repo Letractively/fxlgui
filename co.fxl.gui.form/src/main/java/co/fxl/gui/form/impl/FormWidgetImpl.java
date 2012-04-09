@@ -52,9 +52,6 @@ import co.fxl.gui.rtf.api.IRTFWidget;
 
 public class FormWidgetImpl implements IFormWidget {
 
-	// TODO FEATURE: include Button switch between 1 and 2 columns for form
-	// entries
-
 	class FormEntryLabel {
 
 		IGridCell cell;
