@@ -145,7 +145,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	@Override
 	public IVerticalPanel addExtraPanel() {
-		showLabelAsActive(false, null, false);
+		forkLabelAsActive(false, null, false);
 		return widget.panel1().clear();
 	}
 
@@ -218,7 +218,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	NavigationItemImpl setActive(boolean viaClick) {
-		showLabelAsActive(viaClick, new CallbackTemplate<Void>() {
+		forkLabelAsActive(viaClick, new CallbackTemplate<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				IVerticalPanel panel0 = widget.flipPage().next().panel()
@@ -261,7 +261,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 		return this;
 	}
 
-	private void showLabelAsActive(boolean viaClick,
+	private void forkLabelAsActive(boolean viaClick,
 			co.fxl.gui.api.ICallback<Void> cb, boolean notify) {
 		widget.active(this, viaClick, cb, notify);
 		// for (INavigationListener l : listeners)
