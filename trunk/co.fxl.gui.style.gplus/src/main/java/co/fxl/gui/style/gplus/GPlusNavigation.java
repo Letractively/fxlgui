@@ -75,7 +75,7 @@ class GPlusNavigation implements INavigation {
 					public INavigation active(ILinearPanel<?> buttonPanel,
 							ILabel button) {
 						IBorder border = buttonPanel.border();
-						border.color().lightgray();
+						border.color().gray();
 						border.style().noBottom();
 						buttonPanel.color().remove();
 						buttonPanel.color().rgb(235, 235, 235);
