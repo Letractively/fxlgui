@@ -97,7 +97,8 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		IGridPanel separatorBorder = borderTop.clear().add().panel().grid()
 				.spacing(0).height(1);
 		int c = 0;
-		if (active != null && active.buttonPanel != null) {
+		boolean b = active != null && active.buttonPanel != null;
+		if (b) {
 			IGridCell indentBorder = separatorBorder.cell(c++, 0);
 			int offsetX = active.buttonPanel.offsetX() + 1;
 			IPanel<?> leftPartBorder = indentBorder.panel().absolute()
@@ -111,7 +112,8 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		}
 		IPanel<?> rightPartBorder = separatorBorder.cell(c, 0).panel()
 				.absolute().height(1);
-		separatorBorder.column(2).expand();
+		if (b)
+			separatorBorder.column(2).expand();
 		rightPartBorder.color().gray();
 	}
 
