@@ -19,6 +19,7 @@
 package co.fxl.gui.navigation.group.impl;
 
 import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -223,7 +224,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 			public void onSuccess(Void result) {
 				IVerticalPanel panel0 = widget.flipPage().next().panel()
 						.vertical();
-				applyColor(panel0.color(), widget.colorActive);
+				activeBackground(panel0);
 				int width = buttonPanel.width();
 				int height = buttonPanel.height();
 				showLoading();
@@ -279,7 +280,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	void showBackgroundActive() {
 		border.color().gray();
-		applyColor(buttonPanel.color(), widget.colorActive);
+		activeBackground(buttonPanel);
 	}
 
 	private void applyColor(IColor color, int[] rgb) {
@@ -461,5 +462,9 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	int getLeftPartPopUpWidth() {
 		return 280 - basicPanel.width();
+	}
+
+	private void activeBackground(IColored panel0) {
+		applyColor(panel0.color(), widget.colorActive);
 	}
 }
