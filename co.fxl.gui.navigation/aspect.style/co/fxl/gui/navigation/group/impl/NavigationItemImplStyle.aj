@@ -33,7 +33,7 @@ privileged aspect NavigationItemImplStyle {
 	}
 
 	after(NavigationItemImpl item0) :
-	execution(private void NavigationItemImpl.showLabelAsActive(..)) 
+	execution(private void NavigationItemImpl.showLabelAsActive()) 
 	&& this(item0) 
 	&& if(Style.ENABLED) {
 		Style.instance().navigation().group().item()
