@@ -30,10 +30,12 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
+import com.google.gwt.user.client.ui.Widget;
 
 class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 		ISuggestField {
@@ -76,7 +78,7 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();
 	private ISource source;
 
-	GWTSuggestField(GWTContainer<SuggestBox> container) {
+	GWTSuggestField(final GWTContainer<SuggestBox> container) {
 		super(container);
 		assert container != null : "GWTTextField.new: container is null";
 		DefaultSuggestionDisplay sd = (DefaultSuggestionDisplay) container.widget
@@ -86,6 +88,28 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 		defaultFont();
 		// oracle = (MultiWordSuggestOracle) ((SuggestBox) container.widget)
 		// .getSuggestOracle();
+	}
+
+	@Override
+	public ISuggestField autoSelect(boolean autoSelect) {
+		assert autoSelect;
+		container.widget.getTextBox().addFocusListener(new FocusListener() {
+
+			@Override
+			public void onFocus(Widget arg0) {
+				display().invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						container.widget.getTextBox().selectAll();
+					}
+				});
+			}
+
+			@Override
+			public void onLostFocus(Widget arg0) {
+			}
+		});
+		return this;
 	}
 
 	public ISuggestField text(String text) {

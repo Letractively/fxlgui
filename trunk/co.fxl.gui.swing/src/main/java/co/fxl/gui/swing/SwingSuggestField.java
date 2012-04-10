@@ -104,4 +104,10 @@ class SwingSuggestField extends SwingTextInput<JTextField, ISuggestField>
 		return this;
 	}
 
+	@Override
+	public ISuggestField autoSelect(boolean autoSelect) {
+		// TODO throw new UnsupportedOperationException();
+		return this;
+	}
+
 }
