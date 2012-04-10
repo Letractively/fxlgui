@@ -55,7 +55,7 @@ class GPlusNavigation implements INavigation {
 					@Override
 					public INavigation inactive(ILinearPanel<?> buttonPanel,
 							ILabel button) {
-						buttonPanel.spacing(4);
+//						buttonPanel.spacing(4);
 						// button.font().pixel(13);
 						IBorder border = buttonPanel.border();
 						border.color().white();
