@@ -24,14 +24,18 @@ import java.util.List;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Display;
@@ -68,10 +72,14 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	private NavigationGroupImpl moreGroup;
 	private boolean setUpDynamicResize;
 	private NavigationItemImpl moreItem;
+	private IVerticalPanel borderTop;
 
 	public NavigationWidgetImpl(IContainer layout) {
 		mainPanel = layout.panel().dock();
-		hPanel = mainPanel.top().panel().grid();
+		IVerticalPanel top = mainPanel.top().panel().vertical();
+		hPanel = top.add().panel().grid();
+		borderTop = top.add().panel().vertical();
+		addSeparatorBorder();
 		hPanel.color().rgb(235, 235, 235).gradient().fallback(235, 235, 235)
 				.vertical().rgb(211, 211, 211);
 		ILayout l = hPanel.cell(0, 0).panel();
@@ -83,6 +91,27 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		flipPage = new FlipPage(panel0.add());
 		panel1 = history.add().panel().vertical();
 		history.show(panel0);
+	}
+
+	void addSeparatorBorder() {
+		if (active == null || active.buttonPanel == null)
+			return;
+		IGridPanel separatorBorder = borderTop.clear().add().panel().grid()
+				.spacing(0).height(1);
+		IGridCell indentBorder = separatorBorder.cell(0, 0);
+		int offsetX = active.buttonPanel.offsetX() + 1;
+		IPanel<?> leftPartBorder = indentBorder.panel().absolute().height(1)
+				.width(offsetX);
+		leftPartBorder.color().gray();
+		IGridCell activeBorder = separatorBorder.cell(1, 0);
+		int width = active.buttonPanel.width() - 2;
+		IPanel<?> middlePartBorder = activeBorder.panel().absolute().height(1)
+				.width(width);
+		activeBackground(middlePartBorder);
+		IPanel<?> rightPartBorder = separatorBorder.cell(2, 0).panel()
+				.absolute().height(1);
+		separatorBorder.column(2).expand();
+		rightPartBorder.color().gray();
 	}
 
 	IHorizontalPanel createPanel(ILayout l) {
@@ -263,6 +292,15 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		}
 		// if (!item.visible()) {
 		// }
+	}
+
+	void activeBackground(IColored panel0) {
+		applyColor(panel0.color(), colorActive);
+	}
+
+	void applyColor(IColor color, int[] rgb) {
+		color.remove();
+		color.rgb(rgb[0], rgb[1], rgb[2]);
 	}
 
 	private void notifyListeners(final NavigationItemImpl activeItem,
