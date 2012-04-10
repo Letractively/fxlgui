@@ -19,6 +19,7 @@
 package co.fxl.gui.style.gplus;
 
 import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
@@ -75,7 +76,7 @@ class GPlusNavigation implements INavigation {
 						border.color().lightgray();
 						border.style().noBottom();
 						buttonPanel.color().remove();
-						buttonPanel.color().rgb(245, 245, 245);
+						buttonPanel.color().rgb(235, 235, 235);
 						button.font().color().gray();
 						button.font().color().black();
 						return GPlusNavigation.this;
@@ -89,6 +90,12 @@ class GPlusNavigation implements INavigation {
 				};
 			}
 		};
+	}
+
+	@Override
+	public INavigation background(IColored color) {
+		color.color().rgb(235, 235, 235);
+		return this;
 	}
 
 }
