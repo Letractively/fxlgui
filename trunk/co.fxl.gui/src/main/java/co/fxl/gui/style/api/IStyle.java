@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.style.api;
 
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
@@ -124,6 +125,8 @@ public interface IStyle {
 
 			INavigation mainPanel(IPanel<?> panel);
 		}
+
+		INavigation background(IColored color);
 
 		INavigationGroup group();
 	}

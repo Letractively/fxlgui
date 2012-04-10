@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.navigation.group.impl;
 
+import co.fxl.gui.api.IColored;
+import co.fxl.gui.navigation.group.impl.NavigationItemImpl;
 import co.fxl.gui.style.impl.Style;
 
 privileged aspect NavigationItemImplStyle {
@@ -45,5 +47,12 @@ privileged aspect NavigationItemImplStyle {
 	&& if(Style.ENABLED) {
 		item0.refresh.resource(Style.instance().navigation().group().item()
 				.image(resource));
+	}
+	
+	after(IColored panel0) :
+	execution(private void NavigationItemImpl.activeBackground(IColored))
+	&& args(panel0)
+	&& if(Style.ENABLED) {
+		Style.instance().navigation().background(panel0);
 	}
 }
