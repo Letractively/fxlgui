@@ -24,8 +24,8 @@ import java.util.List;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IColored;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IDockPanel;
@@ -94,21 +94,22 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	}
 
 	void addSeparatorBorder() {
-		if (active == null || active.buttonPanel == null)
-			return;
 		IGridPanel separatorBorder = borderTop.clear().add().panel().grid()
 				.spacing(0).height(1);
-		IGridCell indentBorder = separatorBorder.cell(0, 0);
-		int offsetX = active.buttonPanel.offsetX() + 1;
-		IPanel<?> leftPartBorder = indentBorder.panel().absolute().height(1)
-				.width(offsetX);
-		leftPartBorder.color().gray();
-		IGridCell activeBorder = separatorBorder.cell(1, 0);
-		int width = active.buttonPanel.width() - 2;
-		IPanel<?> middlePartBorder = activeBorder.panel().absolute().height(1)
-				.width(width);
-		activeBackground(middlePartBorder);
-		IPanel<?> rightPartBorder = separatorBorder.cell(2, 0).panel()
+		int c = 0;
+		if (active != null && active.buttonPanel != null) {
+			IGridCell indentBorder = separatorBorder.cell(c++, 0);
+			int offsetX = active.buttonPanel.offsetX() + 1;
+			IPanel<?> leftPartBorder = indentBorder.panel().absolute()
+					.height(1).width(offsetX);
+			leftPartBorder.color().gray();
+			IGridCell activeBorder = separatorBorder.cell(c++, 0);
+			int width = active.buttonPanel.width() - 2;
+			IPanel<?> middlePartBorder = activeBorder.panel().absolute()
+					.height(1).width(width);
+			activeBackground(middlePartBorder);
+		}
+		IPanel<?> rightPartBorder = separatorBorder.cell(c, 0).panel()
 				.absolute().height(1);
 		separatorBorder.column(2).expand();
 		rightPartBorder.color().gray();
