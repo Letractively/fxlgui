@@ -48,11 +48,4 @@ privileged aspect NavigationItemImplStyle {
 		item0.refresh.resource(Style.instance().navigation().group().item()
 				.image(resource));
 	}
-	
-	after(IColored panel0) :
-	execution(private void NavigationItemImpl.activeBackground(IColored))
-	&& args(panel0)
-	&& if(Style.ENABLED) {
-		Style.instance().navigation().background(panel0);
-	}
 }

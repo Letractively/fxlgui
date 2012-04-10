@@ -29,5 +29,12 @@ privileged aspect NavigationWidgetImplStyle {
 	&& if(Style.ENABLED) {
 		Style.instance().navigation().group().mainPanel(widget.hPanel);
 	}
+	
+	after(IColored panel0) :
+	execution(void NavigationWidgetImpl.activeBackground(IColored))
+	&& args(panel0)
+	&& if(Style.ENABLED) {
+		Style.instance().navigation().background(panel0);
+	}
 
 }

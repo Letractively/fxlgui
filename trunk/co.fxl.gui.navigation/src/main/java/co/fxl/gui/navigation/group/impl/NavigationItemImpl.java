@@ -19,7 +19,6 @@
 package co.fxl.gui.navigation.group.impl;
 
 import co.fxl.gui.api.IBordered.IBorder;
-import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -62,7 +61,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	private boolean enabled = true;
 	private boolean labelAsActive;
 	private boolean isMoreTab;
-	private IFocusPanel focusPanel;
+	IFocusPanel focusPanel;
 
 	NavigationItemImpl(NavigationGroupImpl group) {
 		this.group = group;
@@ -224,7 +223,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 			public void onSuccess(Void result) {
 				IVerticalPanel panel0 = widget.flipPage().next().panel()
 						.vertical();
-				activeBackground(panel0);
+				widget.activeBackground(panel0);
 				int width = buttonPanel.width();
 				int height = buttonPanel.height();
 				showLoading();
@@ -276,16 +275,12 @@ public class NavigationItemImpl extends LazyClickListener implements
 		showBackgroundActive();
 		button.visible(true);
 		refresh.visible(false);
+		widget.addSeparatorBorder();
 	}
 
 	void showBackgroundActive() {
 		border.color().gray();
-		activeBackground(buttonPanel);
-	}
-
-	private void applyColor(IColor color, int[] rgb) {
-		color.remove();
-		color.rgb(rgb[0], rgb[1], rgb[2]);
+		widget.activeBackground(buttonPanel);
 	}
 
 	private void applyGradient(IColor color, int[] rgb, int[] rgb2) {
@@ -462,9 +457,5 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	int getLeftPartPopUpWidth() {
 		return 280 - basicPanel.width();
-	}
-
-	private void activeBackground(IColored panel0) {
-		applyColor(panel0.color(), widget.colorActive);
 	}
 }
