@@ -57,7 +57,9 @@ class GPlusNavigation implements INavigation {
 							ILabel button) {
 						buttonPanel.spacing(4);
 						// button.font().pixel(13);
-						buttonPanel.border().color().white();
+						IBorder border = buttonPanel.border();
+						border.color().white();
+						border.style().noBottom();
 						buttonPanel.color().remove();
 						buttonPanel.color().white();
 						button.font().color().gray();
