@@ -620,10 +620,15 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			topPanel = container().add().panel().grid();
 			topPanel.color().rgb(255, 255, 255).gradient().vertical()
 					.rgb(245, 245, 245);
-			// IBorder b = topPanel.border();
-			// b.color().lightgray();
-			// b.style().bottom();
 		}
+	}
+
+	public IGridPanel topPanelWithBorder() {
+		topPanel();
+		IBorder b = topPanel.border();
+		b.color().lightgray();
+		b.style().bottom();
+		return topPanel;
 	}
 
 	public IGridPanel statusPanel() {
@@ -1182,7 +1187,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	IGridCell topPanelCell(int i, int j) {
-		IGridCell cell = topPanel.cell(i, j);
+		IGridCell cell = topPanelWithBorder().cell(i, j);
 		return cell;
 	}
 

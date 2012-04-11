@@ -37,7 +37,7 @@ class FilterDialog {
 					.addClickListener(new IClickListener() {
 						@Override
 						public void onClick() {
-							final IPopUp popUp = widget.topPanel.display()
+							final IPopUp popUp = widget.topPanelWithBorder().display()
 									.showPopUp().center();
 							popUp.border().style().shadow();
 							widget.filter = (IFilterWidget) popUp.container()
