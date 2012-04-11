@@ -53,6 +53,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	// temp-flip-mechanism to FlipPage
 
 	private static final boolean DYNAMIC_RESIZE = true;
+	public static boolean ADD_SEPARATORBORDER = true;
 	protected IDockPanel mainPanel;
 	IHorizontalPanel navigationPanel;
 	private ICardPanel history;
@@ -95,6 +96,8 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	}
 
 	void addSeparatorBorder() {
+		if (!ADD_SEPARATORBORDER)
+			return;
 		IGridPanel separatorBorder = borderTop.clear().add().panel().grid()
 				.spacing(0).height(1);
 		int c = 0;
