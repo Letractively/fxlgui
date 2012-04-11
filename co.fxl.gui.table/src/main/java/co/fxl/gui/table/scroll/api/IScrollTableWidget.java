@@ -202,5 +202,7 @@ public interface IScrollTableWidget<T> {
 
 	IScrollTableColumn<Object> addFilterColumn();
 
+	IScrollTableWidget<T> plainContent(boolean plainContent);
+
 	// IVerticalPanel editPanel();
 }

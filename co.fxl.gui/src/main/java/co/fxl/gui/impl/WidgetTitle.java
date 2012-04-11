@@ -67,6 +67,7 @@ public class WidgetTitle implements IClickListener {
 	private IDockPanel footer;
 	private IImage more;
 	private boolean addBorder;
+	private boolean plainContent;
 
 	public WidgetTitle() {
 	}
@@ -82,26 +83,42 @@ public class WidgetTitle implements IClickListener {
 		setUp();
 	}
 
+	public WidgetTitle plainContent(boolean plainContent) {
+		this.plainContent = plainContent;
+		if (headerPanel != null) {
+			headerPanel.visible(false);
+			headerPanel.border().remove();
+			panel.border().remove();
+		}
+		return this;
+	}
+
 	private void setUp() {
 		headerPanel = panel.cell(0, 0).panel().grid();
 		headerPanel.color().rgb(136, 136, 136).gradient().vertical()
 				.rgb(113, 113, 113);
+		if (plainContent)
+			headerPanel.visible(false);
 		bPanel = panel.cell(0, 1).panel().grid();
-		IBorder border = headerPanel.border();
-		border.color().rgb(172, 197, 213);
-		border.style().bottom();
+		if (!plainContent) {
+			IBorder border = headerPanel.border();
+			border.color().rgb(172, 197, 213);
+			border.style().bottom();
+		}
 		headerPanel.visible(false);
-		if (addBorder)
+		if (addBorder && !plainContent)
 			panel.border().color().rgb(172, 197, 213);
 	}
 
-	public void styleHeader(IPanel<?> headerPanel) {
-		headerPanel.color().rgb(136, 136, 136).gradient().vertical()
-				.rgb(113, 113, 113);
-		IBorder border = headerPanel.border();
-		border.color().rgb(172, 197, 213);
-		border.style().bottom();
-	}
+	// public void styleHeader(IPanel<?> headerPanel) {
+	// if (!plainContent) {
+	// headerPanel.color().rgb(136, 136, 136).gradient().vertical()
+	// .rgb(113, 113, 113);
+	// IBorder border = headerPanel.border();
+	// border.color().rgb(172, 197, 213);
+	// border.style().bottom();
+	// }
+	// }
 
 	public WidgetTitle space(int space) {
 		this.space = space;
@@ -125,7 +142,7 @@ public class WidgetTitle implements IClickListener {
 	private void initHeader() {
 		if (hasHeaderPanel)
 			return;
-		headerPanel.visible(true);
+		headerPanel.visible(!plainContent);
 		IHorizontalPanel horizontal = headerPanel.cell(0, 0).align().begin()
 				.valign().center().panel().horizontal().align().begin();// .addSpace(3);
 		titlePanel = horizontal.add().panel().horizontal().align().begin();
