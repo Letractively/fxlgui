@@ -185,8 +185,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	private WidgetTitle widgetTitle() {
 		if (widgetTitle == null) {
-			widgetTitle = new WidgetTitle(c0.panel(), addBorders)
-					.foldable(false);
+			widgetTitle = new WidgetTitle(c0.panel(), addBorders).foldable(
+					false).plainContent(plainContent);
 			widgetTitle.addToContextMenu(true);
 			widgetTitle.commandsOnTop();
 			widgetTitle.hyperlinkVisible(false);
@@ -220,6 +220,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private boolean addDragAndDropDirectly;
 	private boolean alwaysShowFilter;
 	private StateToggleButton toggleButton;
+	private boolean plainContent;
 
 	@Override
 	public IScrollTableWidget<Object> height(final int height) {
@@ -1377,5 +1378,11 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public co.fxl.gui.table.scroll.api.IScrollTableWidget.IStateToggleButton addToggleButton() {
 		return toggleButton = new StateToggleButton();
+	}
+
+	@Override
+	public IScrollTableWidget<Object> plainContent(boolean plainContent) {
+		this.plainContent = plainContent;
+		return this;
 	}
 }
