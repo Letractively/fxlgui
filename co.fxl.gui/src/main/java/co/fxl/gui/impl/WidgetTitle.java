@@ -67,7 +67,7 @@ public class WidgetTitle implements IClickListener {
 	private IDockPanel footer;
 	private IImage more;
 	private boolean addBorder;
-	private boolean plainContent;
+	private boolean plainContent = false;
 
 	public WidgetTitle() {
 	}
@@ -77,7 +77,7 @@ public class WidgetTitle implements IClickListener {
 	}
 
 	public WidgetTitle(ILayout layout, boolean addBorder) {
-		this(layout, false, false);
+		this(layout, addBorder, false);
 	}
 
 	public WidgetTitle(ILayout layout, boolean addBorder, boolean plainContent) {
@@ -90,12 +90,13 @@ public class WidgetTitle implements IClickListener {
 
 	public WidgetTitle plainContent(boolean plainContent) {
 		this.plainContent = plainContent;
-		if (headerPanel != null) {
+		if (plainContent && headerPanel != null) {
 			headerPanel.visible(false);
 			headerPanel.border().remove();
 			panel.border().remove();
 		}
-		space(0);
+		if (plainContent)
+			space(0);
 		return this;
 	}
 
@@ -130,9 +131,9 @@ public class WidgetTitle implements IClickListener {
 		this.space0 = space;
 		return this;
 	}
-	
+
 	int space() {
-		return plainContent ? 0:space0;
+		return plainContent ? 0 : space0;
 	}
 
 	public WidgetTitle triangleIcons() {
