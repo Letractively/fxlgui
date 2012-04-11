@@ -62,7 +62,7 @@ privileged aspect WidgetTitleStyle {
 	&& this(widgetTitle) 
 	&& if(Style.ENABLED) {
 		Style.instance().window().main(widgetTitle.panel, widgetTitle.addBorder)
-				.header(widgetTitle.headerPanel, widgetTitle.sideWidget);
+				.header(widgetTitle.headerPanel, widgetTitle.sideWidget, widgetTitle.plainContent);
 		if (Style.instance().window().commandsOnTop())
 			widgetTitle.commandsOnTop();
 	}
