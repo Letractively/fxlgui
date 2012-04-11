@@ -185,8 +185,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	private WidgetTitle widgetTitle() {
 		if (widgetTitle == null) {
-			widgetTitle = new WidgetTitle(c0.panel(), addBorders).foldable(
-					false).plainContent(plainContent);
+			widgetTitle = new WidgetTitle(c0.panel(), addBorders, plainContent)
+					.foldable(false);
 			widgetTitle.addToContextMenu(true);
 			widgetTitle.commandsOnTop();
 			widgetTitle.hyperlinkVisible(false);
@@ -629,13 +629,16 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public IGridPanel statusPanel() {
 		if (statusPanel == null) {
 			statusPanel = container().add().panel().grid().resize(3, 1);
-			statusPanel.visible(!plainContent);
-			statusPanel.spacing(4);
-			IBorder border2 = statusPanel.border();
-			border2.color().rgb(172, 197, 213);
-			border2.style().top();
-			statusPanel.color().rgb(249, 249, 249).gradient()
-					.fallback(240, 240, 240).vertical().rgb(216, 216, 216);
+			if (plainContent)
+				statusPanel.visible(false).remove();
+			else {
+				statusPanel.spacing(4);
+				IBorder border2 = statusPanel.border();
+				border2.color().rgb(172, 197, 213);
+				border2.style().top();
+				statusPanel.color().rgb(249, 249, 249).gradient()
+						.fallback(240, 240, 240).vertical().rgb(216, 216, 216);
+			}
 		}
 		return statusPanel;
 	}

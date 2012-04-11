@@ -52,7 +52,7 @@ public class WidgetTitle implements IClickListener {
 	public ILabel headerLabel;
 	private List<ILabel> labels = new LinkedList<ILabel>();
 	private List<IImage> images = new LinkedList<IImage>();
-	private int space = 10;
+	private int space0 = 10;
 	// private Map<ILabel, Boolean> clickableState = new HashMap<ILabel,
 	// Boolean>();
 	// private boolean holdOnClicks = false;
@@ -77,9 +77,14 @@ public class WidgetTitle implements IClickListener {
 	}
 
 	public WidgetTitle(ILayout layout, boolean addBorder) {
+		this(layout, false, false);
+	}
+
+	public WidgetTitle(ILayout layout, boolean addBorder, boolean plainContent) {
 		panel = layout.grid();
 		panel.color().white();
 		this.addBorder = addBorder;
+		this.plainContent = plainContent;
 		setUp();
 	}
 
@@ -90,6 +95,7 @@ public class WidgetTitle implements IClickListener {
 			headerPanel.border().remove();
 			panel.border().remove();
 		}
+		space(0);
 		return this;
 	}
 
@@ -121,8 +127,12 @@ public class WidgetTitle implements IClickListener {
 	// }
 
 	public WidgetTitle space(int space) {
-		this.space = space;
+		this.space0 = space;
 		return this;
+	}
+	
+	int space() {
+		return plainContent ? 0:space0;
 	}
 
 	public WidgetTitle triangleIcons() {
@@ -337,17 +347,17 @@ public class WidgetTitle implements IClickListener {
 	public IContainer content() {
 		if (contentContainer != null)
 			return contentContainer;
-		return contentContainer = space == 0 ? bPanel.cell(0, 0).panel()
+		return contentContainer = space() == 0 ? bPanel.cell(0, 0).panel()
 				.vertical().add() : bPanel.cell(0, 0).panel().vertical()
-				.addSpace(space).add();
+				.addSpace(space()).add();
 	}
 
 	public IContainer bottom() {
 		content();
 		if (bottomContainer != null)
 			return bottomContainer;
-		return bottomContainer = space == 0 ? bPanel.cell(0, 1) : bPanel
-				.cell(0, 1).panel().vertical().addSpace(space).add();
+		return bottomContainer = space() == 0 ? bPanel.cell(0, 1) : bPanel
+				.cell(0, 1).panel().vertical().addSpace(space()).add();
 	}
 
 	public WidgetTitle clearHyperlinks() {
