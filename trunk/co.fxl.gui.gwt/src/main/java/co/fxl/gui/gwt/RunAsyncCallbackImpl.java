@@ -36,7 +36,7 @@ public abstract class RunAsyncCallbackImpl implements RunAsyncCallback {
 
 	@Override
 	public void onFailure(Throwable arg0) {
-		StatusPanel.stop();
+		StatusPanel.instance().stop();
 		if (callback == null)
 			throw new RuntimeException(arg0);
 		else

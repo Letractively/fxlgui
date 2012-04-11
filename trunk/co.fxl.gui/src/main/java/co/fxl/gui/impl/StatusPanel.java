@@ -25,22 +25,28 @@ import co.fxl.gui.api.IPopUp;
 
 public class StatusPanel {
 
-	private static IPopUp lastPopUp;
-	private static String lastStatus;
+	private IPopUp lastPopUp;
+	private String lastStatus;
+	private static StatusPanel instance;
 
-	public static void start(String status) {
-		lastStatus = status;
-		lastPopUp = showPopUp(Display.instance(), "Loading " + status, true, 0);
+	public StatusPanel() {
+		instance = this;
 	}
 
-	public static void stop(String status) {
-		if (lastStatus.equals(status)) {
+	public StatusPanel start(String status) {
+		lastStatus = status;
+		lastPopUp = showPopUp(Display.instance(), "Loading " + status, true, 0);
+		return this;
+	}
+
+	private void stop(String status) {
+		if (lastPopUp != null && lastStatus.equals(status)) {
 			lastPopUp.visible(false);
 			lastPopUp = null;
 		}
 	}
 
-	public static void stop() {
+	public void stop() {
 		stop(lastStatus);
 	}
 
@@ -63,5 +69,9 @@ public class StatusPanel {
 		x = (display.width() - dialog.width()) / 2;
 		dialog.offset(x, 4);
 		return dialog;
+	}
+
+	public static StatusPanel instance() {
+		return instance;
 	}
 }
