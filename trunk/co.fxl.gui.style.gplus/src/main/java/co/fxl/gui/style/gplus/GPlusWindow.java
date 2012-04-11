@@ -27,9 +27,9 @@ import co.fxl.gui.style.api.IStyle.IWindow;
 class GPlusWindow implements IWindow {
 
 	@Override
-	public IWindow main(IPanel<?> panel, boolean addBorder) {
+	public IWindow main(IPanel<?> panel, boolean addBorder, boolean plainContent) {
 		panel.color().remove().white();
-		if (addBorder) {
+		if (addBorder && !plainContent) {
 			panel.border().remove();
 			panel.border().color().lightgray();
 		}
@@ -37,12 +37,15 @@ class GPlusWindow implements IWindow {
 	}
 
 	@Override
-	public IWindow header(IPanel<?> panel, boolean isSide) {
+	public IWindow header(IPanel<?> panel, boolean isSide, boolean plainContent) {
 		panel.color().remove().white();
 		panel.border().remove();
-		IBorder border = panel.border();
-		border.style().bottom();
-		border.color().lightgray();
+		if (!plainContent) {
+			IBorder border = panel.border();
+			border.style().bottom();
+			border.color().lightgray();
+		} else
+			panel.border().remove();
 		return this;
 	}
 
