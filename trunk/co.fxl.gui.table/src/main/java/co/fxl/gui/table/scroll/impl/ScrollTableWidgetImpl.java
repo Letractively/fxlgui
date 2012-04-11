@@ -620,9 +620,9 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			topPanel = container().add().panel().grid();
 			topPanel.color().rgb(255, 255, 255).gradient().vertical()
 					.rgb(245, 245, 245);
-//			IBorder b = topPanel.border();
-//			b.color().lightgray();
-//			b.style().bottom();
+			// IBorder b = topPanel.border();
+			// b.color().lightgray();
+			// b.style().bottom();
 		}
 	}
 
@@ -677,7 +677,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		IBulkTableWidget lastGrid = grid;
 		IVerticalPanel vpanel = contentPanel.add().panel().vertical();
 		grid = (IBulkTableWidget) vpanel.add().widget(IBulkTableWidget.class);
-		grid.marginTop(6);
+		grid.marginTop(plainContent ? 0 : 6);
 		grid.addToContextMenu(addToContextMenu);
 		final int heightMinusTopPanel = heightMinusTopPanel();
 		grid.height(heightMinusTopPanel - 2);
