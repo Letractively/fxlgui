@@ -49,14 +49,21 @@ public abstract class AsyncServiceProviderImpl<T> implements
 
 	@Override
 	public void loadAsync(final ICallback<IServiceProvider<T>> callback) {
-		StatusPanel.start(id);
+		final StatusPanel p = new StatusPanel().start(id);
 		loadAsyncImpl(new CallbackTemplate<IServiceProvider<T>>(callback) {
 			@Override
 			public void onSuccess(IServiceProvider<T> result) {
-				StatusPanel.stop(id);
+				p.stop();
 				callback.onSuccess(result);
 			}
+
+			@Override
+			public void onFail(Throwable throwable) {
+				p.stop();
+				super.onFail(throwable);
+			}
 		});
+
 	}
 
 	protected abstract void loadAsyncImpl(
