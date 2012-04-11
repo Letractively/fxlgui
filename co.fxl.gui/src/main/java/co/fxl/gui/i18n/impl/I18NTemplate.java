@@ -108,9 +108,14 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 	private String subString(String token) {
 		if (!token.contains(" "))
 			return null;
-		
-		// TODO Dashboard Page doesn't work
-		
+		int c = 0;
+		for (int i = 0; i < token.length(); i++)
+			if (token.charAt(i) == ' ')
+				c++;
+		if (c >= 2) {
+			return token
+					.substring(token.indexOf(" ", token.indexOf(" ") + 1) + 1);
+		}
 		return token.substring(token.indexOf(" ") + 1);
 	}
 
