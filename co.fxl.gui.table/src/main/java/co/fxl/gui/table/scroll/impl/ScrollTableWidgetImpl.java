@@ -629,6 +629,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public IGridPanel statusPanel() {
 		if (statusPanel == null) {
 			statusPanel = container().add().panel().grid().resize(3, 1);
+			statusPanel.visible(!plainContent);
 			statusPanel.spacing(4);
 			IBorder border2 = statusPanel.border();
 			border2.color().rgb(172, 197, 213);
