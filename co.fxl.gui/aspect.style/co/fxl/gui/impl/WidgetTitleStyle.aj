@@ -58,7 +58,7 @@ privileged aspect WidgetTitleStyle {
 	}
 
 	after(WidgetTitle widgetTitle) :
-	execution(public WidgetTitle.new(ILayout, boolean)) 
+	execution(public WidgetTitle.new(ILayout, boolean, boolean)) 
 	&& this(widgetTitle) 
 	&& if(Style.ENABLED) {
 		Style.instance().window().main(widgetTitle.panel, widgetTitle.addBorder)
