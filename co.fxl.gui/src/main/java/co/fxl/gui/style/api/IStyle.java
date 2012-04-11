@@ -86,9 +86,9 @@ public interface IStyle {
 
 	public interface IWindow {
 
-		IWindow main(IPanel<?> panel, boolean addBorder);
+		IWindow main(IPanel<?> panel, boolean addBorder, boolean plainContent);
 
-		IWindow header(IPanel<?> panel, boolean isSide);
+		IWindow header(IPanel<?> panel, boolean isSide, boolean plainContent);
 
 		IWindow footer(IPanel<?> panel);
 
