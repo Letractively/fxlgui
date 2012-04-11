@@ -75,6 +75,14 @@ privileged aspect WidgetTitleStyle {
 				.header(widgetTitle.headerPanel, widgetTitle.sideWidget);
 	}
 
+	after(WidgetTitle widgetTitle) :
+	execution(private void WidgetTitle.setUp()) 
+	&& this(widgetTitle) 
+	&& if(Style.ENABLED) {
+		Style.instance().window()
+				.header(widgetTitle.headerPanel, widgetTitle.sideWidget);
+	}
+
 	after(WidgetTitle widgetTitle, String title) returning(ILabel label) :
 	execution(public ILabel WidgetTitle.addTitle(String))
 	&& this(widgetTitle)
