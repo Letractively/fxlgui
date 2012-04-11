@@ -21,6 +21,7 @@ package co.fxl.gui.navigation.group.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -176,6 +177,15 @@ public class NavigationWidgetImpl implements INavigationWidget {
 					// - moreItem.getLeftPartPopUpWidth()).panel()
 					// .vertical().height(1).border().style().right()
 					// .color().gray();
+					IGridPanel p02 = p0.add().panel().grid();
+					IAbsolutePanel a0 = p02.cell(0, 0).panel().absolute()
+							.height(1);
+					a0.color().gray();
+					p02.column(0).expand();
+					IAbsolutePanel a1 = p02.cell(1, 0).panel().absolute()
+							.height(1).width(moreItem.buttonPanel.width() - 2);
+					a1.color().white();
+					a1.border().style().right().color().gray();
 					IVerticalPanel panel = p0.add().panel().vertical()
 							.spacing(4);
 					panel.border().style().left().style().right().style()
