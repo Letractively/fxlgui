@@ -113,8 +113,9 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 			if (token.charAt(i) == ' ')
 				c++;
 		if (c >= 2) {
-			return token
+			String substring = token
 					.substring(token.indexOf(" ", token.indexOf(" ") + 1) + 1);
+			return substring;
 		}
 		return token.substring(token.indexOf(" ") + 1);
 	}
