@@ -170,6 +170,7 @@ public class WidgetTitle implements IClickListener {
 			if (commandPanel != null)
 				return;
 			footer = bottom().panel().dock();
+			footer.visible(!plainContent);
 			footer.center().panel().vertical();
 			IContainer cell = footer.right();
 			commandPanel = cell.panel().horizontal().spacing(6);
