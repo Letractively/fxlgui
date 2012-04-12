@@ -36,6 +36,7 @@ public class FilterPanelImpl implements FilterPanel {
 		this.widget = widget;
 		title = new WidgetTitle(panel.panel(), true).sideWidget(true)// .grayBackground()
 				.space(2);
+		title.addToContextMenu(true);
 		mainPanel = title.content().panel().vertical().align().end()
 				.addSpace(2).add().panel().horizontal().align().end().add()
 				.panel().vertical();
