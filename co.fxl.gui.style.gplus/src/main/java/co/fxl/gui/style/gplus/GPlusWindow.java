@@ -110,4 +110,15 @@ class GPlusWindow implements IWindow {
 	public String moreImage() {
 		return "more_gray.png";
 	}
+
+	@Override
+	public IWindow viewEntry(ILinearPanel<?> panel, boolean first) {
+		panel.border().remove();
+		if (!first) {
+			IBorder b = panel.border();
+			b.color().mix().lightgray().white();
+			b.style().top();
+		}
+		return this;
+	}
 }
