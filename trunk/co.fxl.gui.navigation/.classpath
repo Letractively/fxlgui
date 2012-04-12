@@ -3,6 +3,7 @@
 	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
 	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry excluding="co/fxl/gui/navigation/group/impl/NavigationWidgetImplI18N.aj" kind="src" path="aspect.i18n"/>
 	<classpathentry excluding="co/fxl/gui/navigation/group/impl/NavigationItemImplStyle.aj|co/fxl/gui/navigation/group/impl/NavigationWidgetImplStyle.aj|co/fxl/gui/navigation/group/impl/NavigationGroupImplStyle.aj|co/fxl/gui/navigation/menu/impl/RootRegisterStyleStyle.aj|co/fxl/gui/register/impl/RegisterWidgetImplStyle.aj" kind="src" path="aspect.style"/>
 	<classpathentry excluding="co/fxl/gui/register/impl/RegisterWidgetImplLayout.aj" kind="src" path="aspect.layout"/>
 	<classpathentry kind="src" path="/fxl-gui"/>
