@@ -34,7 +34,7 @@ public class DiscardChangesDialog {
 
 	public static final String DISCARD_CHANGES = "You have made changes that have not been saved!\nDiscard Changes?";
 	private static boolean active = false;
-	public static IDisplay display;
+	private static IDisplay display = Display.instance();
 	public static DiscardChangesListener listener;
 
 	public static void show(final ICallback<Boolean> callback) {

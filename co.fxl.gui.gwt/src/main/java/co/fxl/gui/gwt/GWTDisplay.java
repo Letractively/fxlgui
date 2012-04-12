@@ -116,8 +116,6 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 				RootPanel.get().add(component, 0, 0);
 			}
 		};
-		DiscardChangesDialog.display = this;
-		ContextMenu.instance(this);
 		Display.instance(this);
 		// TODO Aspect Log.instance(new GWTLog());
 		ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL = !(isChrome() && getBrowserVersion() <= 13);

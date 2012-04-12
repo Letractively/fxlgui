@@ -91,8 +91,6 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		// scrollPane = new JScrollPane(container.component);
 		// scrollPane
 		// .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		DiscardChangesDialog.display = this;
-		ContextMenu.instance(this);
 		// fullscreen();
 		// Style.setUp();
 		Display.instance(this);

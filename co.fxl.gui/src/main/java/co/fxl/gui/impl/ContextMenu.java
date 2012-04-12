@@ -114,8 +114,8 @@ public class ContextMenu {
 	private boolean active = true;
 	private IPopUp popUp;
 
-	public ContextMenu(IDisplay display) {
-		this.display = display;
+	public ContextMenu() {
+		this.display = Display.instance();
 	}
 
 	public Group group(String name) {
@@ -131,11 +131,6 @@ public class ContextMenu {
 			groups.add(group);
 		}
 		return group;
-	}
-
-	public ContextMenu reset() {
-		groups.clear();
-		return this;
 	}
 
 	public ContextMenu decorate(IClickable<?> c) {
@@ -224,9 +219,8 @@ public class ContextMenu {
 		return false;
 	}
 
-	public static ContextMenu instance(IDisplay display) {
-		if (instance == null)
-			instance = new ContextMenu(display);
+	public static ContextMenu newInstance() {
+		instance = new ContextMenu();
 		return instance;
 	}
 
