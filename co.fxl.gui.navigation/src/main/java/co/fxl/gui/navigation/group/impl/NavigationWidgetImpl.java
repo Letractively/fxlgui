@@ -195,56 +195,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 							.bottom().color().gray();
 					IGridPanel gp = panel.add().panel().horizontal().add()
 							.panel().grid().spacing(6);
-					int r = 0;
-					for (final NavigationGroupImpl g : groups) {
-						boolean show = false;
-						for (final NavigationItemImpl i : g.items) {
-							if (!i.displayed())
-								show = true;
-						}
-						if (!show)
-							continue;
-						final ILabel lg = gp.cell(0, r).valign().begin()
-								.panel().vertical().addSpace(1).add().label()
-								.text(g.name());
-						lg.addMouseOverListener(new IMouseOverListener() {
-
-							@Override
-							public void onMouseOver() {
-								lg.font().underline(true);
-							}
-
-							@Override
-							public void onMouseOut() {
-								lg.font().underline(false);
-							}
-						});
-						lg.font().weight().bold().pixel(11);
-						lg.addClickListener(new IClickListener() {
-							@Override
-							public void onClick() {
-								moreItem.popUp.visible(false);
-								g.items.get(0).active(true);
-							}
-						});
-						IVerticalPanel v = gp.cell(1, r).panel().vertical();
-						for (final NavigationItemImpl i : g.items) {
-							if (i.displayed())
-								continue;
-							ILabel li = v.add().label().text(i.name())
-									.hyperlink();
-							li.font().pixel(14).weight().bold();
-							li.addClickListener(new IClickListener() {
-								@Override
-								public void onClick() {
-									moreItem.popUp.visible(false);
-									i.active(true);
-								}
-							});
-							v.addSpace(2);
-						}
-						r++;
-					}
+					addLabelsToGridPanel(gp);
 					cb.onSuccess(null);
 				}
 			});
@@ -395,5 +346,58 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	@Override
 	public int height() {
 		throw new UnsupportedOperationException();
+	}
+
+	void addLabelsToGridPanel(IGridPanel gp) {
+		int r = 0;
+		for (final NavigationGroupImpl g : groups) {
+			boolean show = false;
+			for (final NavigationItemImpl i : g.items) {
+				if (!i.displayed())
+					show = true;
+			}
+			if (!show)
+				continue;
+			final ILabel lg = gp.cell(0, r).valign().begin()
+					.panel().vertical().addSpace(1).add().label()
+					.text(g.name());
+			lg.addMouseOverListener(new IMouseOverListener() {
+
+				@Override
+				public void onMouseOver() {
+					lg.font().underline(true);
+				}
+
+				@Override
+				public void onMouseOut() {
+					lg.font().underline(false);
+				}
+			});
+			lg.font().weight().bold().pixel(11);
+			lg.addClickListener(new IClickListener() {
+				@Override
+				public void onClick() {
+					moreItem.popUp.visible(false);
+					g.items.get(0).active(true);
+				}
+			});
+			IVerticalPanel v = gp.cell(1, r).panel().vertical();
+			for (final NavigationItemImpl i : g.items) {
+				if (i.displayed())
+					continue;
+				ILabel li = v.add().label().text(i.name())
+						.hyperlink();
+				li.font().pixel(14).weight().bold();
+				li.addClickListener(new IClickListener() {
+					@Override
+					public void onClick() {
+						moreItem.popUp.visible(false);
+						i.active(true);
+					}
+				});
+				v.addSpace(2);
+			}
+			r++;
+		}
 	}
 }
