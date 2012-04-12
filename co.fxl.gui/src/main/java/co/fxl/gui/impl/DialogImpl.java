@@ -233,6 +233,10 @@ public class DialogImpl implements IDialog {
 	}
 
 	protected void createLabel(IContainer content) {
+		createLabelILabel(content);
+	}
+
+	void createLabelILabel(IContainer content) {
 		IGridPanel grid = content.panel().vertical().add().panel().grid()
 				.spacing(10).resize(2, 1);
 		if (width != -1)
