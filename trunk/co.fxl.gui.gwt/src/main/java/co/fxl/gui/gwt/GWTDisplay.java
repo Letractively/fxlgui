@@ -37,9 +37,7 @@ import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.IWidgetProvider.IAsyncWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
 import co.fxl.gui.impl.CallbackTemplate;
-import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.DialogImpl;
-import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.ToolbarImpl;
 
@@ -340,9 +338,12 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		};
 	}
 
+	// public static native String getUserAgent()
+	/*-{ return navigator.userAgent; }-*/;
+
 	public static String getUserAgent() {
 		return Window.Navigator.getUserAgent();
-	}// /*-{ return navigator.userAgent; }-*/;
+	}
 
 	public static boolean isFirefox() {
 		return !isChrome() && !isOpera() && !isInternetExplorer();
