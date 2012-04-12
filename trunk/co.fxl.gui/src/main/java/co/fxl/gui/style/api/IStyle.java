@@ -96,6 +96,8 @@ public interface IStyle {
 
 		IWindow navigationEntry(ILinearPanel<?> panel);
 
+		IWindow viewEntry(ILinearPanel<?> panel, boolean first);
+
 		IWindow button(IPanel<?> panel, boolean isSideWidget);
 
 		ILabel addCommandLabel(ILinearPanel<?> panel, String text,
