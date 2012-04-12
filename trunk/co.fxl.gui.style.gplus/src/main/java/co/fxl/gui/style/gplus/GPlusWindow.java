@@ -93,7 +93,7 @@ class GPlusWindow implements IWindow {
 	public ILabel addCommandLabel(ILinearPanel<?> panel, String text,
 			boolean isSideWidget) {
 		if (isSideWidget)
-			return panel.add().label().visible(false);
+			return panel.add().label().text(text).visible(false);
 		else {
 			ILabel l = panel.addSpace(4).add().label().text(text);
 			l.font().pixel(11);
