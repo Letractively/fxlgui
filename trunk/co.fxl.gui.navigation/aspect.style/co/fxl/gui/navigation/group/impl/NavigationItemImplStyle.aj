@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.navigation.group.impl;
 
-import co.fxl.gui.api.IColored;
 import co.fxl.gui.navigation.group.impl.NavigationItemImpl;
 import co.fxl.gui.style.impl.Style;
 
