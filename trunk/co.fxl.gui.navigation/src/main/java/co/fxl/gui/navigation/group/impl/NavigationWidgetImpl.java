@@ -186,7 +186,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 					a0.color().gray();
 					p02.column(0).expand();
 					IAbsolutePanel a1 = p02.cell(1, 0).panel().absolute()
-							.height(1).width(moreItem.buttonPanel.width() - 2);
+							.height(1).width(moreItem.buttonPanel.width());
 					a1.color().white();
 					a1.border().style().right().color().gray();
 					IVerticalPanel panel = p0.add().panel().vertical()
