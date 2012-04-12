@@ -132,6 +132,7 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=4, offY
 .nooutline {  
 	border:none;
     outline:none; 
+    outline-width:0px; 
 }
 ​.scrollbar-container {
     position: absolute;
