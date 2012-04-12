@@ -247,6 +247,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		}
 		if (moreItem.popUp != null)
 			moreItem.popUp.visible(false);
+		addSeparatorBorder();
 	}
 
 	void active(NavigationItemImpl item, boolean viaClick,
@@ -358,9 +359,8 @@ public class NavigationWidgetImpl implements INavigationWidget {
 			}
 			if (!show)
 				continue;
-			final ILabel lg = gp.cell(0, r).valign().begin()
-					.panel().vertical().addSpace(1).add().label()
-					.text(g.name());
+			final ILabel lg = gp.cell(0, r).valign().begin().panel().vertical()
+					.addSpace(1).add().label().text(g.name());
 			lg.addMouseOverListener(new IMouseOverListener() {
 
 				@Override
@@ -385,8 +385,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 			for (final NavigationItemImpl i : g.items) {
 				if (i.displayed())
 					continue;
-				ILabel li = v.add().label().text(i.name())
-						.hyperlink();
+				ILabel li = v.add().label().text(i.name()).hyperlink();
 				li.font().pixel(14).weight().bold();
 				li.addClickListener(new IClickListener() {
 					@Override
