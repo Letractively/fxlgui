@@ -55,6 +55,11 @@ public class ViewImpl extends LazyClickListener {
 	ViewImpl(ViewList viewList, String imageResource, boolean isNew) {
 		this.viewList = viewList;
 		this.imageResource = imageResource;
+		style(viewList, isNew);
+		viewList.hasLinks = true;
+	}
+
+	void style(ViewList viewList, boolean isNew) {
 		basicPanel = this.viewList.panel.add().panel().vertical();
 		if (viewList.hasLinks) {
 			basicPanel.addSpace(3);
@@ -62,7 +67,6 @@ public class ViewImpl extends LazyClickListener {
 			border.color().rgb(172, 197, 213);
 			border.style().top();
 		}
-		viewList.hasLinks = true;
 		basicPanel.addSpace(2);
 		grid = basicPanel.add().panel().grid();
 		basicPanel.addSpace(2);
