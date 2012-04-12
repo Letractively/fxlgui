@@ -57,7 +57,7 @@ class GWTAbsolutePanel extends GWTPanel<AbsolutePanel, IAbsolutePanel>
 
 	@Override
 	public void add(Widget widget) {
-//		widget.setWidth("100%");
+		// widget.setWidth("100%");
 		container.widget.add(widget, x, y);
 	}
 }
