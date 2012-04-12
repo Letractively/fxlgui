@@ -22,11 +22,11 @@ import co.fxl.gui.style.impl.Style;
 
 privileged aspect ViewImplI18N {
 
-	after(ViewImpl view) :
+	after(ViewImpl view0) :
 	execution(void ViewImpl.style(ViewList, boolean))
-	&& this(view)
+	&& this(view0)
 	&& if(Style.ENABLED) {
 		Style.instance().window()
-				.viewEntry(view.basicPanel, !view.viewList.hasLinks);
+				.viewEntry(view0.basicPanel, !view0.viewList.hasLinks);
 	}
 }
