@@ -630,11 +630,11 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						.fallback(250, 250, 250).vertical().rgb(245, 245, 245);
 				topPanel = topPanelContainer.add().panel().grid();
 			} else if (ADD_TOP_PANEL_SPACING) {
-				IVerticalPanel vertical = container().add().panel().vertical();
-				vertical.spacing(5);
-				vertical.color().rgb(255, 255, 255).gradient()
+				topPanelContainer = container().add().panel().vertical();
+				topPanelContainer.spacing(5);
+				topPanelContainer.color().rgb(255, 255, 255).gradient()
 						.fallback(250, 250, 250).vertical().rgb(245, 245, 245);
-				topPanel = vertical.add().panel().grid();
+				topPanel = topPanelContainer.add().panel().grid();
 			} else {
 				topPanel = container().add().panel().grid();
 				topPanel.color().rgb(255, 255, 255).gradient()
