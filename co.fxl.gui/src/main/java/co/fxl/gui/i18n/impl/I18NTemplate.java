@@ -67,7 +67,7 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 			Exception ex = new Exception();
 			StringBuilder b = new StringBuilder();
 			append(b, ex);
-			ErrorDialog.createAlways("TRANSLATION-ERROR", e, b.toString());
+			ErrorDialog.createAlways("TRANSLATION ERROR", e, b.toString());
 			I18N.active(active);
 			return text;
 		}
