@@ -33,6 +33,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.impl.ContextMenu.Group;
 
 //import co.fxl.style.impl.Style;
 
@@ -232,7 +233,9 @@ public class WidgetTitle implements IClickListener {
 		}
 		this.title = title;
 		if (addToContextMenu) {
-			ContextMenu.instance().group(title).clear();
+			ContextMenu instance = ContextMenu.instance();
+			Group group = instance.group(title);
+			group.clear();
 		}
 		return headerLabel;
 	}
