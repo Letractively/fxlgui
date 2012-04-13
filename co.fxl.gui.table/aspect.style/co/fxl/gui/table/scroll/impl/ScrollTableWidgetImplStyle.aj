@@ -34,6 +34,6 @@ privileged aspect ScrollTableWidgetImplStyle {
 	execution(private void ScrollTableWidgetImpl.topPanel()) 
 	&& this(widget)
 	&& if(Style.ENABLED) {
-		Style.instance().table().topPanel(widget.topPanelContainer != null ? topPanelContainer : widget.topPanel);
+		Style.instance().table().topPanel(widget.topPanelContainer != null ? widget.topPanelContainer : widget.topPanel);
 	}
 }
