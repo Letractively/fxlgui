@@ -205,4 +205,14 @@ public class LoginWidgetImpl implements ILoginWidget {
 		loginID.text("");
 		password.text("");
 	}
+
+	@Override
+	public ILoginWidget preset(String user, String pwd) {
+		addLogin();
+		loginID.text(user);
+		password.text(pwd);
+		addLogout();
+		setLogIn();
+		return this;
+	}
 }
