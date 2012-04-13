@@ -22,7 +22,7 @@ public interface II18N {
 
 	String translate(String text);
 
-	II18N notifyEvent(String event);
+//	II18N notifyEvent(String event);
 
 	// String put(String text, String translation);
 	//

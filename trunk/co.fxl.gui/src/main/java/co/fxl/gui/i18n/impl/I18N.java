@@ -18,11 +18,14 @@
  */
 package co.fxl.gui.i18n.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import co.fxl.gui.i18n.api.II18N;
 
 public class I18N {
 
-	public static boolean ENABLED = false;
+	public static boolean ENABLED = true;
 	private static II18N instance = new II18N() {
 
 		@Override
@@ -30,36 +33,37 @@ public class I18N {
 			return text;
 		}
 
-		// public void addHelp(String iD, ILabel label) {
-		// }
-		//
-		// public String put(String text, String translation) {
-		// return text;
-		// }
-
 		@Override
 		public boolean active(boolean active) {
 			return true;
 		}
-
-		// public void addConstant(String token) {
-		// }
-		//
-		// public void addRule(String template, String translationTemplate) {
-		// }
-
-		@Override
-		public II18N notifyEvent(String event) {
-			return this;
-		}
 	};
+	private static Map<String, II18N> i18ns = new HashMap<String, II18N>();
+	private static String defaultI18N;
+
+	public static void nameDefault(String name) {
+		defaultI18N = name;
+	}
 
 	private I18N() {
 	}
 
-	public static void register(II18N i18N) {
-		assert ENABLED;
-		instance = i18N;
+	public static boolean isDefined(String name) {
+		return i18ns.containsKey(name);
+	}
+
+	public static void register(String language, II18N i18N) {
+		i18ns.put(language, i18N);
+	}
+
+	public static void activate(String language) {
+		if (language == null || language.equals(defaultI18N)) {
+			ENABLED = false;
+			instance = null;
+		} else {
+			ENABLED = true;
+			instance = i18ns.get(language);
+		}
 	}
 
 	public static II18N instance() {

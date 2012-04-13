@@ -145,10 +145,10 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 		put(string.toUpperCase(), string2.toUpperCase());
 	}
 
-	@Override
-	public II18N notifyEvent(String event) {
-		return this;
-	}
+//	@Override
+//	public II18N notifyEvent(String event) {
+//		return this;
+//	}
 
 	// @Override
 	// public void addConstant(String token) {
