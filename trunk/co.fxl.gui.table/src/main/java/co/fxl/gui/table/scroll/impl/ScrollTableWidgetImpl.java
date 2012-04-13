@@ -48,6 +48,7 @@ import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IMiniFilterWidget;
 import co.fxl.gui.impl.ColorTemplate;
+import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.IFieldType;
@@ -120,6 +121,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public static String ARROW_DOWN = "\u2193";
 	protected static final int SCROLL_MULT = 33;
 	private static final boolean ADD_DRAG_AND_DROP = true;
+	private static final boolean ADD_TOP_PANEL_SPACING = Constants.get(
+			"ScrollTableWidgetImpl.ADD_TOP_PANEL_SPACING", false);
 	public static int MAX_SORT_SIZE = 100;
 	IVerticalPanel container;
 	private int height = 400;
@@ -617,9 +620,14 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	private void topPanel() {
 		if (topPanel == null) {
-			topPanel = container().add().panel().grid();
-			topPanel.color().rgb(255, 255, 255).gradient().fallback(250, 250, 250).vertical()
-					.rgb(245, 245, 245);
+			if (ADD_TOP_PANEL_SPACING) {
+				IVerticalPanel vertical = container().add().panel().vertical();
+				vertical.padding().top(3).bottom(3);
+				topPanel = vertical.add().panel().grid();
+			} else
+				topPanel = container().add().panel().grid();
+			topPanel.color().rgb(255, 255, 255).gradient()
+					.fallback(250, 250, 250).vertical().rgb(245, 245, 245);
 		}
 	}
 
