@@ -56,6 +56,10 @@ public class I18N {
 		i18ns.put(language, i18N);
 	}
 
+	public boolean active(boolean active) {
+		return instance == null ? false : instance.active(active);
+	}
+
 	public static void activate(String language) {
 		if (language == null || language.equals(defaultI18N)) {
 			ENABLED = false;
