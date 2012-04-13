@@ -32,10 +32,11 @@ public class ErrorDialog {
 	private Runnable runnable;
 
 	private ErrorDialog() {
-		
+
 	}
 
-	public static void create(String pTitle, String pMessage, String pStacktrace, Runnable pRunnable) {
+	public static void create(String pTitle, String pMessage,
+			String pStacktrace, Runnable pRunnable) {
 		if (showing) {
 			return;
 		}
@@ -43,11 +44,19 @@ public class ErrorDialog {
 		lErrorDialog.runnable = pRunnable;
 		lErrorDialog.show(pTitle, pMessage, pStacktrace);
 	}
-	
+
 	public static void create(String pTitle, String pMessage, String pStacktrace) {
 		create(pTitle, pMessage, pStacktrace, null);
 	}
-	
+
+	public static void createAlways(String pTitle, String pMessage,
+			String pStacktrace) {
+		boolean remember = showing;
+		showing = false;
+		create(pTitle, pMessage, pStacktrace, null);
+		showing = remember;
+	}
+
 	public void show(String pTitle, final String pMessage,
 			final String pStacktrace) {
 		showing = true;
