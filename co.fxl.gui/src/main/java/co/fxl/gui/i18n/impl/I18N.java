@@ -56,7 +56,7 @@ public class I18N {
 		i18ns.put(language, i18N);
 	}
 
-	public boolean active(boolean active) {
+	public static boolean active(boolean active) {
 		return instance == null ? false : instance.active(active);
 	}
 
