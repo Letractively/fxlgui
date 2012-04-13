@@ -629,16 +629,19 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				topPanelContainer.color().rgb(255, 255, 255).gradient()
 						.fallback(250, 250, 250).vertical().rgb(245, 245, 245);
 				topPanel = topPanelContainer.add().panel().grid();
+				topPanelContainer.visible(false);
 			} else if (ADD_TOP_PANEL_SPACING) {
 				topPanelContainer = container().add().panel().vertical();
 				topPanelContainer.spacing(5);
 				topPanelContainer.color().rgb(255, 255, 255).gradient()
 						.fallback(250, 250, 250).vertical().rgb(245, 245, 245);
 				topPanel = topPanelContainer.add().panel().grid();
+				topPanelContainer.visible(false);
 			} else {
 				topPanel = container().add().panel().grid();
 				topPanel.color().rgb(255, 255, 255).gradient()
 						.fallback(250, 250, 250).vertical().rgb(245, 245, 245);
+				topPanel.visible(false);
 			}
 		}
 	}
@@ -649,6 +652,9 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				.border();
 		b.color().lightgray();
 		b.style().bottom();
+		if (topPanelContainer != null)
+			topPanelContainer.visible(true);
+		topPanel.visible(true);
 		return topPanel;
 	}
 
