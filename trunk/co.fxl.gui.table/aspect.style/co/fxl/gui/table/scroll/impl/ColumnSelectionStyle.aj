@@ -25,7 +25,7 @@ import co.fxl.gui.style.impl.Style;
 privileged aspect ColumnSelectionStyle {
 
 	after(ScrollTableColumnImpl c, IHorizontalPanel b) :
-	execution(void ColumnSelection.decoratePanel(..)) 
+	execution(ILabel ColumnSelection.decoratePanel(..)) 
 	&& args(.., c, b) 
 	&& if(Style.ENABLED) {
 		Style.instance().table().columnSelection().panel(b, c.visible);
