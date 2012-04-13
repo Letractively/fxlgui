@@ -37,31 +37,24 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
-import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.api.IPanelProvider;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.api.IWidgetProvider.IAsyncWidgetProvider;
-import co.fxl.gui.impl.CallbackTemplate;
-import co.fxl.gui.impl.ContextMenu;
-import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.RegistryImpl;
 import co.fxl.gui.impl.ToolbarImpl;
 
-public class SwingDisplay implements IDisplay, ComponentParent {
+public class SwingDisplay extends RegistryImpl<IDisplay> implements IDisplay,
+		ComponentParent {
 
 	SwingContainer<JComponent> container;
 	JFrame frame = new JFrame();
 	private int widthPixel = 320;
 	private int heightPixel = 240;
-	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
-	private Map<Class<?>, Object> services = new HashMap<Class<?>, Object>();
-	Map<Class<?>, IPanelProvider<?>> panelProviders = new HashMap<Class<?>, IPanelProvider<?>>();
 	private SwingUncaughtExceptionHandler uncaughtExceptionHandler;
 	boolean waiting;
 	private Map<IResizeListener, ComponentAdapter> resizeListeners = new HashMap<IResizeListener, ComponentAdapter>();
@@ -153,21 +146,6 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 		if (instance == null)
 			instance = new SwingDisplay();
 		return instance;
-	}
-
-	@Override
-	public IDisplay register(IWidgetProvider<?>... widgetProviders) {
-		for (IWidgetProvider<?> widgetProvider : widgetProviders)
-			this.widgetProviders.put(widgetProvider.widgetType(),
-					widgetProvider);
-		return this;
-	}
-
-	@Override
-	public IDisplay register(IPanelProvider<?>... panelProviders) {
-		for (IPanelProvider<?> panelProvider : panelProviders)
-			this.panelProviders.put(panelProvider.panelType(), panelProvider);
-		return this;
 	}
 
 	@Override
@@ -285,12 +263,6 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 	}
 
 	@Override
-	public boolean supports(Class<?> widgetClass) {
-		return widgetProviders.containsKey(widgetClass)
-				|| services.containsKey(widgetClass);
-	}
-
-	@Override
 	public IPopUp showPopUp() {
 		return new SwingPopUp(this);
 	}
@@ -375,52 +347,6 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 				runnable.run();
 			}
 		}.start();
-		return this;
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@Override
-	public IDisplay register(IAsyncWidgetProvider... runnables) {
-		for (IAsyncWidgetProvider runnable : runnables)
-			runnable.loadAsync(new CallbackTemplate<IWidgetProvider>() {
-				@Override
-				public void onSuccess(IWidgetProvider result) {
-					register(result);
-				}
-			});
-		return this;
-	}
-
-	@Override
-	public IDisplay ensure(ICallback<Void> callback, Class<?>... widgetClass) {
-		callback.onSuccess(null);
-		return this;
-	}
-
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@Override
-	public IDisplay register(IAsyncServiceProvider... serviceProvider) {
-		for (final IAsyncServiceProvider runnable : serviceProvider)
-			runnable.loadAsync(new CallbackTemplate<Object>() {
-				@Override
-				public void onSuccess(Object result) {
-					services.put(runnable.serviceType(), result);
-				}
-			});
-		return this;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T> T service(Class<T> clazz) {
-		return (T) services.get(clazz);
-	}
-
-	@Override
-	public IDisplay register(
-			@SuppressWarnings("rawtypes") co.fxl.gui.api.IRegistry.IServiceProvider... services) {
-		for (IServiceProvider<?> service : services)
-			this.services.put(service.serviceType(), service.getService());
 		return this;
 	}
 }
