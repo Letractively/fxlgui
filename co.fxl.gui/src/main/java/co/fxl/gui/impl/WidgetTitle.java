@@ -223,7 +223,7 @@ public class WidgetTitle implements IClickListener {
 		ILabel label = titlePanel.add().label().text(text);
 		more = titlePanel.add().image();
 		String r = "more.png";
-		more.resource(r);
+		more = more.resource(r);
 		more.visible(false);
 		styleHeaderTitleSide(label);
 		headerLabel = label;
