@@ -622,7 +622,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (topPanel == null) {
 			if (ADD_TOP_PANEL_SPACING) {
 				IVerticalPanel vertical = container().add().panel().vertical();
-				vertical.padding().top(3).bottom(3);
+				vertical.padding().top(5).bottom(5);
 				topPanel = vertical.add().panel().grid();
 			} else
 				topPanel = container().add().panel().grid();
