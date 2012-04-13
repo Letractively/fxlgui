@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.gwt;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,15 +29,14 @@ import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IGridPanel;
-import co.fxl.gui.api.IPanelProvider;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.api.IWidgetProvider.IAsyncWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.DialogImpl;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.RegistryImpl;
 import co.fxl.gui.impl.ToolbarImpl;
 
 import com.google.gwt.core.client.GWT;
@@ -58,7 +56,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class GWTDisplay implements IDisplay, WidgetParent {
+public class GWTDisplay extends RegistryImpl<IDisplay> implements IDisplay,
+		WidgetParent {
 
 	/**
 	 * TODO CSS body { scrollbar-face-color: #CCCCCC; scrollbar-highlight-color:
@@ -81,9 +80,6 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	}
 
 	private static GWTDisplay instance;
-	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
-	private Map<Class<?>, IAsyncWidgetProvider<?>> asyncWidgetProviders = new HashMap<Class<?>, IAsyncWidgetProvider<?>>();
-	Map<Class<?>, IPanelProvider<?>> panelProviders = new HashMap<Class<?>, IPanelProvider<?>>();
 	private List<BlockListener> blockListeners = new LinkedList<BlockListener>();
 	private GWTContainer<Widget> container;
 	private GWTUncaughtExceptionHandler uncaughtExceptionHandler;
@@ -92,8 +88,6 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	static int lastClickX = 0;
 	static int lastClickY = 0;
 	private Scheduler scheduler = new SchedulerImpl();
-	private Map<Class<?>, IAsyncServiceProvider<?>> asyncServices = new HashMap<Class<?>, IAsyncServiceProvider<?>>();
-	private Map<Class<?>, Object> services = new HashMap<Class<?>, Object>();
 
 	public static void notifyEvent(DomEvent<?> event) {
 		final NativeEvent nativeEvent = event.getNativeEvent();
@@ -137,30 +131,6 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 		} catch (Exception e) {
 			return -1;
 		}
-	}
-
-	@Override
-	public IDisplay register(IWidgetProvider<?>... widgetProviders) {
-		for (IWidgetProvider<?> widgetProvider : widgetProviders)
-			this.widgetProviders.put(widgetProvider.widgetType(),
-					widgetProvider);
-		return this;
-	}
-
-	@Override
-	public IDisplay register(
-			@SuppressWarnings("rawtypes") IAsyncWidgetProvider... widgetProviders) {
-		for (IAsyncWidgetProvider<?> widgetProvider : widgetProviders)
-			this.asyncWidgetProviders.put(widgetProvider.widgetType(),
-					widgetProvider);
-		return this;
-	}
-
-	@Override
-	public IDisplay register(IPanelProvider<?>... panelProviders) {
-		for (IPanelProvider<?> panelProvider : panelProviders)
-			this.panelProviders.put(panelProvider.panelType(), panelProvider);
-		return this;
 	}
 
 	@Override
@@ -404,14 +374,6 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 	}
 
 	@Override
-	public boolean supports(Class<?> widgetClass) {
-		return widgetProviders.containsKey(widgetClass)
-				|| asyncWidgetProviders.containsKey(widgetClass)
-				|| services.containsKey(widgetClass)
-				|| asyncServices.containsKey(widgetClass);
-	}
-
-	@Override
 	public IPopUp showPopUp() {
 		return new GWTPopUp(this);
 	}
@@ -467,84 +429,5 @@ public class GWTDisplay implements IDisplay, WidgetParent {
 				widget.onSuccess(w);
 			}
 		});
-	}
-
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public IDisplay ensure(Class<?> interfaceClass,
-			final ICallback<Void> callback) {
-		if (widgetProviders.containsKey(interfaceClass)
-				|| services.containsKey(interfaceClass)) {
-			callback.onSuccess(null);
-		} else if (asyncWidgetProviders.containsKey(interfaceClass)) {
-			IAsyncWidgetProvider wp = asyncWidgetProviders.get(interfaceClass);
-			wp.loadAsync(new CallbackTemplate<IWidgetProvider>() {
-				@Override
-				public void onSuccess(IWidgetProvider result) {
-					register(result);
-					callback.onSuccess(null);
-				}
-			});
-		} else if (asyncServices.containsKey(interfaceClass)) {
-			final IAsyncServiceProvider wp = asyncServices.get(interfaceClass);
-			wp.loadAsync(new CallbackTemplate<IServiceProvider>() {
-				@Override
-				public void onSuccess(IServiceProvider result) {
-					register(result);
-					callback.onSuccess(null);
-				}
-			});
-		} else {
-			throw new WidgetProviderNotFoundException(interfaceClass);
-		}
-		return this;
-	}
-
-	@Override
-	public IDisplay ensure(ICallback<Void> callback, Class<?>... widgetClass) {
-		List<Class<?>> classes = new LinkedList<Class<?>>(
-				Arrays.asList(widgetClass));
-		ensure(callback, classes);
-		return this;
-	}
-
-	private void ensure(final ICallback<Void> callback,
-			final List<Class<?>> classes) {
-		if (classes.isEmpty())
-			callback.onSuccess(null);
-		else if (classes.size() == 1)
-			ensure(classes.get(0), callback);
-		else {
-			Class<?> clazz = classes.remove(0);
-			ensure(clazz, new CallbackTemplate<Void>(callback) {
-
-				@Override
-				public void onSuccess(Void result) {
-					ensure(callback, classes);
-				}
-			});
-		}
-	}
-
-	@Override
-	public IDisplay register(
-			@SuppressWarnings("rawtypes") IAsyncServiceProvider... serviceProviders) {
-		for (IAsyncServiceProvider<?> serviceProvider : serviceProviders) {
-			asyncServices.put(serviceProvider.serviceType(), serviceProvider);
-		}
-		return this;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T> T service(Class<T> clazz) {
-		return (T) services.get(clazz);
-	}
-
-	@Override
-	public IDisplay register(
-			@SuppressWarnings("rawtypes") co.fxl.gui.api.IRegistry.IServiceProvider... services) {
-		for (IServiceProvider<?> service : services)
-			this.services.put(service.serviceType(), service.getService());
-		return this;
 	}
 }
