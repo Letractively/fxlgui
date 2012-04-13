@@ -221,10 +221,8 @@ public class WidgetTitle implements IClickListener {
 		initHeader();
 		String text = sideWidget ? title.toUpperCase() : title;
 		ILabel label = titlePanel.add().label().text(text);
-		more = titlePanel.add().image();
 		String r = "more.png";
-		more = more.resource(r);
-		more.visible(false);
+		addMoreIcon(r);
 		styleHeaderTitleSide(label);
 		headerLabel = label;
 		if (foldable) {
@@ -238,6 +236,12 @@ public class WidgetTitle implements IClickListener {
 			group.clear();
 		}
 		return headerLabel;
+	}
+
+	private void addMoreIcon(String r) {
+		more = titlePanel.add().image();
+		more.resource(r);
+		more.visible(false);
 	}
 
 	public WidgetTitle addTitleSpace() {
