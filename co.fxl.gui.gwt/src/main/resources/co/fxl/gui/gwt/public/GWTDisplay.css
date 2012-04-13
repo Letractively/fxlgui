@@ -122,7 +122,7 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=4, offY
 .gwt-TextBox-FXL { padding: 3px; }
 .gwt-PasswordTextBox-FXL { padding: 3px; }
 .gwt-Checkbox-FXL { }
-.gwt-Combobox-FXL { }
+.gwt-Combobox-FXL { height: 24px; }
 .gwt-TextArea-FXL { padding: 3px; }
 .gwt-Label-FXL { white-space: nowrap; }
 .gwt-ToggleButton-FXL { }
