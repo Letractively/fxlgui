@@ -25,5 +25,6 @@ import co.fxl.gui.i18n.impl.I18NAspect;
 public aspect DialogImplI18N extends I18NAspect {
 
 	declare @method : void DialogImpl.createLabelILabel(IContainer) : @DontTranslate;
+//	declare @field : public static String DialogImpl.PLEASE_CONFIRM : @Translate;
 
 }
