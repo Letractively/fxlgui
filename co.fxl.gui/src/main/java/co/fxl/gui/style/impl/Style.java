@@ -18,15 +18,38 @@
  */
 package co.fxl.gui.style.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import co.fxl.gui.style.api.IStyle;
 
 public class Style {
 
 	public static boolean ENABLED = false;
 	private static IStyle instance;
+	private static Map<String, IStyle> styles = new HashMap<String, IStyle>();
+	private static String defaultStyle;
 
-	public static void register(IStyle instance) {
-		Style.instance = instance;
+	public static void nameDefault(String name) {
+		defaultStyle = name;
+	}
+
+	public static boolean isDefined(String name) {
+		return styles.containsKey(name);
+	}
+
+	public static void register(String name, IStyle instance) {
+		styles.put(name, instance);
+	}
+
+	public static void activate(String name) {
+		if (name == null || name.equals(defaultStyle)) {
+			ENABLED = false;
+			instance = null;
+		} else {
+			ENABLED = true;
+			instance = styles.get(name);
+		}
 	}
 
 	public static IStyle instance() {
