@@ -53,4 +53,6 @@ public interface ILoginWidget {
 	ILoginWidget statusPanelDecorator(IStatusPanelDecorator decorator);
 
 	ILoginWidget visible(boolean visible);
+
+	ILoginWidget preset(String user, String pwd);
 }
