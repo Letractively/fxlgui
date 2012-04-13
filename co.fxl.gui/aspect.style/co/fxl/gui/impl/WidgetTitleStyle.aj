@@ -19,13 +19,11 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IHorizontalPanel;
-import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
-import co.fxl.gui.impl.CommandLink;
-import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.style.impl.Style;
+
 
 privileged aspect WidgetTitleStyle {
 
@@ -39,13 +37,13 @@ privileged aspect WidgetTitleStyle {
 				.addCommandLabel(iPanel, text, widgetTitle.sideWidget);
 	}
 
-	IImage around(IImage more, String r) :
-	call(public IImage IImage.resource(String))
+	void around(WidgetTitle wt, String r) :
+	call(private void WidgetTitle.addMoreIcon(String))
 	&& withincode(public ILabel WidgetTitle.addTitle(String))
+	&& this(wt)
 	&& args(r)
-	&& target(more)
 	&& if(Style.ENABLED) {
-		return more.resource(Style.instance().window().moreImage());
+		wt.addMoreIcon(Style.instance().window().moreImage());
 	}
 
 	after(WidgetTitle widgetTitle, IHorizontalPanel iPanel) :
