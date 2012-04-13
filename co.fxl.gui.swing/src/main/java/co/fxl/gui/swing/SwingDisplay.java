@@ -219,7 +219,7 @@ public class SwingDisplay implements IDisplay, ComponentParent {
 
 	@Override
 	public void remove(JComponent component) {
-		throw new UnsupportedOperationException();
+		frame.removeAll();
 	}
 
 	@Override
