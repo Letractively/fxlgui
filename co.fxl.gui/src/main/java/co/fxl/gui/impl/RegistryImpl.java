@@ -117,7 +117,11 @@ public class RegistryImpl<T> implements IRegistry<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public final <R> R service(Class<R> clazz) {
-		return (R) services.get(clazz);
+		R r = (R) services.get(clazz);
+		if (r == null)
+			throw new RuntimeException("Service not yet loaded: "
+					+ clazz.getName());
+		return r;
 	}
 
 	@SuppressWarnings("unchecked")
