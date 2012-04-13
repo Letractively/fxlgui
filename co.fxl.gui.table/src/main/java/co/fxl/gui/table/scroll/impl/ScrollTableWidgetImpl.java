@@ -618,7 +618,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private void topPanel() {
 		if (topPanel == null) {
 			topPanel = container().add().panel().grid();
-			topPanel.color().rgb(255, 255, 255).gradient().vertical()
+			topPanel.color().rgb(255, 255, 255).gradient().fallback(250, 250, 250).vertical()
 					.rgb(245, 245, 245);
 		}
 	}
