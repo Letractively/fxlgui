@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.i18n.api.II18N;
+import co.fxl.gui.impl.ErrorDialog;
 
 @SuppressWarnings("serial")
 public class I18NTemplate extends HashMap<String, String> implements II18N {
@@ -62,11 +63,24 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 		if (translation == null) {
 			String e = noTranslationPrefix + " '" + text + "'";
 			System.err.println(e);
-			throw new RuntimeException(e);
-			// return text;
-			// }
+			boolean active = I18N.active(false);
+			Exception ex = new Exception();
+			StringBuilder b = new StringBuilder();
+			append(b, ex);
+			ErrorDialog.createAlways("TRANSLATION-ERROR", e, b.toString());
+			I18N.active(active);
+			return text;
 		}
 		return translation;
+	}
+
+	private void append(StringBuilder b, Throwable ex) {
+		if (ex == null)
+			return;
+		b.append(ex.getMessage());
+		for (StackTraceElement e : ex.getStackTrace())
+			b.append("\t" + e.toString() + "\n");
+		append(b, ex.getCause());
 	}
 
 	// private String translateComposite(String text) {
