@@ -45,8 +45,7 @@ privileged aspect WidgetTitleStyle {
 	&& args(r)
 	&& target(more)
 	&& if(Style.ENABLED) {
-		more.resource(Style.instance().window().moreImage());
-		return more;
+		return more.resource(Style.instance().window().moreImage());
 	}
 
 	after(WidgetTitle widgetTitle, IHorizontalPanel iPanel) :
