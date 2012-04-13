@@ -121,6 +121,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public static String ARROW_DOWN = "\u2193";
 	protected static final int SCROLL_MULT = 33;
 	private static final boolean ADD_DRAG_AND_DROP = true;
+	private static final boolean ADD_TOP_PANEL_TOP_PADDING = Constants.get(
+			"ScrollTableWidgetImpl.ADD_TOP_PANEL_TOP_PADDING", false);
 	private static final boolean ADD_TOP_PANEL_SPACING = Constants.get(
 			"ScrollTableWidgetImpl.ADD_TOP_PANEL_SPACING", false);
 	public static int MAX_SORT_SIZE = 100;
@@ -620,9 +622,13 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	private void topPanel() {
 		if (topPanel == null) {
-			if (ADD_TOP_PANEL_SPACING) {
+			if (ADD_TOP_PANEL_TOP_PADDING) {
 				IVerticalPanel vertical = container().add().panel().vertical();
-				vertical.padding().top(5).bottom(5);
+				vertical.padding().top(5);
+				topPanel = vertical.add().panel().grid();
+			} else if (ADD_TOP_PANEL_SPACING) {
+				IVerticalPanel vertical = container().add().panel().vertical();
+				vertical.spacing(5);
 				topPanel = vertical.add().panel().grid();
 			} else
 				topPanel = container().add().panel().grid();
