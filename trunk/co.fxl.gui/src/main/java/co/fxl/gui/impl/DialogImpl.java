@@ -32,6 +32,8 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class DialogImpl implements IDialog {
 
+	public static String PLEASE_CONFIRM = "Please Confirm";
+
 	private class DialogButtonImpl implements IDialogButton {
 
 		private List<IClickListener> listeners = new LinkedList<IClickListener>();
@@ -281,7 +283,7 @@ public class DialogImpl implements IDialog {
 
 	@Override
 	public IDialog confirm() {
-		return title("Please Confirm");
+		return title(PLEASE_CONFIRM);
 	}
 
 	@Override

@@ -33,8 +33,13 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 	private boolean active = true;
 	private List<String> constants = new LinkedList<String>();
 	private Map<String, String> rules = new HashMap<String, String>();
+	private String noTranslationPrefix = "no translation found for";
 
 	protected I18NTemplate() {
+	}
+
+	protected I18NTemplate(String noTranslationPrefix) {
+		this.noTranslationPrefix = noTranslationPrefix;
 	}
 
 	protected void dontTranslate(String string) {
@@ -55,9 +60,7 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 			return text;
 		String translation = get(text);
 		if (translation == null) {
-			// translation = translateComposite(text);
-			// if (translation == null) {
-			String e = "no translation found for '" + text + "'";
+			String e = noTranslationPrefix + " '" + text + "'";
 			System.err.println(e);
 			throw new RuntimeException(e);
 			// return text;
@@ -113,8 +116,8 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 			if (token.charAt(i) == ' ')
 				c++;
 		if (c >= 2) {
-			String substring = token
-					.substring(token.indexOf(" ", token.indexOf(" ") + 1) + 1);
+			String substring = token.substring(token.indexOf(" ",
+					token.indexOf(" ") + 1) + 1);
 			return substring;
 		}
 		return token.substring(token.indexOf(" ") + 1);
@@ -145,10 +148,10 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 		put(string.toUpperCase(), string2.toUpperCase());
 	}
 
-//	@Override
-//	public II18N notifyEvent(String event) {
-//		return this;
-//	}
+	// @Override
+	// public II18N notifyEvent(String event) {
+	// return this;
+	// }
 
 	// @Override
 	// public void addConstant(String token) {
