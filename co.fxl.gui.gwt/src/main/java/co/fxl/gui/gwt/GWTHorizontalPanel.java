@@ -48,6 +48,12 @@ class GWTHorizontalPanel extends GWTPanel<HorizontalPanel, IHorizontalPanel>
 	public void add(Widget widget) {
 		if (innerSpace > 0 && container.widget.getWidgetCount() > 0)
 			addSpace(innerSpace);
+		if (container.widget.getVerticalAlignment().equals(
+				HorizontalPanel.ALIGN_MIDDLE)
+				&& widget instanceof HasVerticalAlignment)
+			((HasVerticalAlignment) widget)
+					.setVerticalAlignment(container.widget
+							.getVerticalAlignment());
 		container.widget.add(widget);
 	}
 
@@ -68,6 +74,12 @@ class GWTHorizontalPanel extends GWTPanel<HorizontalPanel, IHorizontalPanel>
 	@Override
 	public IAlignment<IHorizontalPanel> align() {
 		return new GWTHorizontalAlignment<IHorizontalPanel>(this,
+				container.widget);
+	}
+
+	@Override
+	public IAlignment<IHorizontalPanel> valign() {
+		return new GWTVerticalAlignment<IHorizontalPanel>(this,
 				container.widget);
 	}
 }
