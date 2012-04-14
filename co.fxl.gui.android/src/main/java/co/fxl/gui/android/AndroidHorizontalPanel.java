@@ -108,4 +108,9 @@ class AndroidHorizontalPanel extends
 	public co.fxl.gui.api.ISpaced.ISpacing spacing() {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public IAlignment<IHorizontalPanel> valign() {
+		throw new UnsupportedOperationException();
+	}
 }
