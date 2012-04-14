@@ -20,4 +20,6 @@ package co.fxl.gui.api;
 
 public interface IHorizontalPanel extends ILinearPanel<IHorizontalPanel> {
 
+	IAlignment<IHorizontalPanel> valign();
+
 }

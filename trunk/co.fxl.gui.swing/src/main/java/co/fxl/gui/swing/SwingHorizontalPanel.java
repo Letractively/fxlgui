@@ -121,4 +121,29 @@ class SwingHorizontalPanel extends SwingPanel<IHorizontalPanel> implements
 			insets = new Insets(0, 0, 0, 0);
 		return insets;
 	}
+
+	@Override
+	public IAlignment<IHorizontalPanel> valign() {
+		// TODO ...
+		return new IAlignment<IHorizontalPanel>() {
+
+			@Override
+			public IHorizontalPanel begin() {
+				// throw new UnsupportedOperationException();
+				return SwingHorizontalPanel.this;
+			}
+
+			@Override
+			public IHorizontalPanel center() {
+				// throw new UnsupportedOperationException();
+				return SwingHorizontalPanel.this;
+			}
+
+			@Override
+			public IHorizontalPanel end() {
+				// throw new UnsupportedOperationException();
+				return SwingHorizontalPanel.this;
+			}
+		};
+	}
 }

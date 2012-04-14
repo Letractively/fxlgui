@@ -29,6 +29,7 @@ import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
@@ -175,6 +176,8 @@ class MiniFilterPanel implements FilterPanel {
 		};
 	}
 
+	private static final boolean MODIFIED_TITLE_ADD = Constants.get(
+			"MiniFilterPanel.MODIFIED_TITLE_ADD", false);
 	private IToolbar panel;
 	private IToolbar titlePanel;
 	private IToolbar mainPanel;
@@ -204,13 +207,21 @@ class MiniFilterPanel implements FilterPanel {
 
 	@Override
 	public void addTitle(String string) {
-		titlePanel.add().label().text(string.toUpperCase()).font().weight()
+		final IToolbar tb = titlePanel;
+		getContainer(tb).label().text(string.toUpperCase()).font().weight()
 				.bold();
+	}
+
+	public IContainer getContainer(final IToolbar tb) {
+		IContainer c = tb.add();
+		if (MODIFIED_TITLE_ADD)
+			c = c.panel().vertical().height(26).addSpace(6).add();
+		return c;
 	}
 
 	@Override
 	public IClickable<?> addHyperlink(String imageResource, String string) {
-		return hyperLinkPanel.add().image().resource(imageResource);
+		return getContainer(hyperLinkPanel).image().resource(imageResource);
 	}
 
 	@Override
