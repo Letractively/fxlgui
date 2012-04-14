@@ -329,9 +329,11 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 		});
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public R offset(int x, int y) {
-		throw new UnsupportedOperationException();
+		container.component.setLocation(x, y);
+		return (R) this;
 	}
 
 	@SuppressWarnings("unchecked")
