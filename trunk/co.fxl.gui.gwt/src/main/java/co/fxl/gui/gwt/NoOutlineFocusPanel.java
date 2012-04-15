@@ -58,7 +58,7 @@ public class NoOutlineFocusPanel {
 				}
 			});
 			p.unsinkEvents(Event.FOCUSEVENTS);
-			p.getElement().setAttribute("hidefocus", "true");
+			p.getElement().setAttribute("hideFocus", "true");
 		} else {
 			p = new FocusPanel();
 		}
