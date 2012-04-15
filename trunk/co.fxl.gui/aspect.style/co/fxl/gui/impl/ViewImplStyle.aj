@@ -20,7 +20,7 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.style.impl.Style;
 
-privileged aspect ViewImplI18N {
+privileged aspect ViewImplStyle {
 
 	after(ViewImpl view0) :
 	execution(void ViewImpl.style(ViewList, boolean))
