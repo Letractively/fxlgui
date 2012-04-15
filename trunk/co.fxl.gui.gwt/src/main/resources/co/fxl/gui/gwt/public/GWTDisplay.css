@@ -129,11 +129,7 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=4, offY
 .gwt-Button-FXL { }
 .gwt-RadioButton-FXL { }
 .wordWrapBreakAll { word-wrap: break-all; }
-.nooutline {  
-	border:none;
-    outline:none; 
-    outline-width:0px; 
-}
+.nooutline { outline:0px; }
 ​.scrollbar-container {
     position: absolute;
     top: 0; 
