@@ -19,19 +19,47 @@
 package co.fxl.gui.gwt;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseWheelHandler;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class NoOutlineFocusPanel {
 
-	private FocusPanel p = new FocusPanel();
+	private FocusPanel p;
 
 	public NoOutlineFocusPanel() {
-		p.setStyleName("nooutline");
+		if (GWTDisplay.isInternetExplorer()) {
+			p = new FocusPanel() {
+				@Override
+				public void onBrowserEvent(Event event) {
+					int eventGetType = DOM.eventGetType(event);
+					if (eventGetType == Event.ONFOCUS) {
+						setFocus(false);
+						return;
+					}
+					if (eventGetType == Event.ONBLUR)
+						return;
+					super.onBrowserEvent(event);
+				}
+			};
+			p.addFocusHandler(new FocusHandler() {
+
+				@Override
+				public void onFocus(FocusEvent event) {
+				}
+			});
+			p.unsinkEvents(Event.FOCUSEVENTS);
+		} else {
+			p = new FocusPanel();
+		}
+		p.addStyleName("nooutline");
 	}
 
 	public Element getElement() {
