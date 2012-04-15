@@ -35,7 +35,7 @@ public class GWTFocusPanel extends GWTPanel<FocusPanel, IFocusPanel> implements
 		super((GWTContainer<FocusPanel>) container);
 		if (decorate) {
 			container.widget.setWidth("100%");
-			container.widget.addStyleName("nooutline");
+			removeOutline((FocusPanel) container.widget);
 		}
 	}
 
@@ -43,5 +43,19 @@ public class GWTFocusPanel extends GWTPanel<FocusPanel, IFocusPanel> implements
 	public void add(Widget widget) {
 		widget.setWidth("100%");
 		container.widget.add(widget);
+	}
+
+	public static FocusPanel create() {
+		FocusPanel p = new FocusPanel();
+		removeOutline(p);
+		return p;
+	}
+
+	private static void removeOutline(FocusPanel p) {
+		if (GWTDisplay.isInternetExplorer()) {
+			p.addStyleName("nooutlineIE");
+		} else {
+			p.addStyleName("nooutline");
+		}
 	}
 }
