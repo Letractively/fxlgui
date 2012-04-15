@@ -129,7 +129,36 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=4, offY
 .gwt-Button-FXL { }
 .gwt-RadioButton-FXL { }
 .wordWrapBreakAll { word-wrap: break-all; }
-.nooutline { outline:0px; outline:none; }
+.nooutline { 
+outline:0px;
+outline:none;
+outline:hidden;
+outline-width:0px;
+outline-color:white;
+outline-style:hidden;
+outline-style:none;
+border:0px;
+border:none;
+border:hidden;
+border-color:white;
+border-style:hidden;
+border-style:none;
+}
+​div.nooutline focus { 
+outline:0px;
+outline:none;
+outline:hidden;
+outline-width:0px;
+outline-color:white;
+outline-style:hidden;
+outline-style:none;
+border:0px;
+border:none;
+border:hidden;
+border-color:white;
+border-style:hidden;
+border-style:none;
+}
 ​.scrollbar-container {
     position: absolute;
     top: 0; 

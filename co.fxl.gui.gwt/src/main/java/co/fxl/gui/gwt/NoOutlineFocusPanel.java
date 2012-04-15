@@ -32,6 +32,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class NoOutlineFocusPanel {
 
+	// TODO Look: GWT: IE9: Outline bei Focus-Panel beim Mouse-Wheel-Scrolling
+
 	private FocusPanel p;
 
 	public NoOutlineFocusPanel() {
@@ -56,6 +58,7 @@ public class NoOutlineFocusPanel {
 				}
 			});
 			p.unsinkEvents(Event.FOCUSEVENTS);
+			p.getElement().setAttribute("hidefocus", "true");
 		} else {
 			p = new FocusPanel();
 		}
