@@ -35,11 +35,13 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 	private List<String> constants = new LinkedList<String>();
 	private Map<String, String> rules = new HashMap<String, String>();
 	private String noTranslationPrefix = "no translation found for";
+	private String pTitle = "TRANSLATION ERROR";
 
 	protected I18NTemplate() {
 	}
 
-	protected I18NTemplate(String noTranslationPrefix) {
+	protected I18NTemplate(String titleError, String noTranslationPrefix) {
+		pTitle = titleError;
 		this.noTranslationPrefix = noTranslationPrefix;
 	}
 
@@ -67,7 +69,7 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 			Exception ex = new Exception();
 			StringBuilder b = new StringBuilder();
 			append(b, ex);
-			ErrorDialog.createAlways("TRANSLATION ERROR", e, b.toString());
+			ErrorDialog.createAlways(pTitle, e, b.toString());
 			I18N.active(active);
 			return text;
 		}
