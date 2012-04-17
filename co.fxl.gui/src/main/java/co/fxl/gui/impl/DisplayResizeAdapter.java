@@ -18,24 +18,19 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 
-public class SidePanelResizeListener implements IResizeListener {
+public class DisplayResizeAdapter {
 
-	private static SidePanelResizeListener instance;
-	private static IResizeListener listener;
+	public static int decrement = 0;
 
-	public static void setup(IDisplay display, IResizeListener l) {
-		if (instance == null) {
-			instance = new SidePanelResizeListener();
-			DisplayResizeAdapter.addResizeListener(instance);
-		}
-		listener = l;
+	public static void addResizeListener(final IResizeListener listener) {
+		Display.instance().addResizeListener(new IResizeListener() {
+			@Override
+			public boolean onResize(int width, int height) {
+				return listener.onResize(width, height - decrement);
+			}
+		});
 	}
 
-	@Override
-	public boolean onResize(int width, int height) {
-		return listener.onResize(width, height);
-	}
 }

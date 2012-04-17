@@ -40,6 +40,7 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.DisplayResizeAdapter;
 import co.fxl.gui.impl.FlipPage;
 import co.fxl.gui.navigation.api.ITabDecorator;
 import co.fxl.gui.navigation.api.ITabWidget;
@@ -200,7 +201,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 				}
 			});
 			update();
-			Display.instance().addResizeListener(new IResizeListener() {
+			DisplayResizeAdapter.addResizeListener(new IResizeListener() {
 				@Override
 				public boolean onResize(int width, int height) {
 					if (!mainPanel.visible())
