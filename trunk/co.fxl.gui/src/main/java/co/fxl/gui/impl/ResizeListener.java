@@ -36,7 +36,7 @@ public class ResizeListener implements IResizeListener {
 		ResizeListener.display = display;
 		if (instance == null) {
 			instance = new ResizeListener();
-			display.addResizeListener(instance);
+			DisplayResizeAdapter.addResizeListener(instance);
 		}
 		listener = l;
 	}
