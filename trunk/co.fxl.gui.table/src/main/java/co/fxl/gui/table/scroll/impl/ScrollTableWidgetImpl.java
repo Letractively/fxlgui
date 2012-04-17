@@ -316,31 +316,36 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			container().clear();
 			topPanel();
 			viewInc = 0;
-			if (rows.size() == 0
-					&& (constraints == null
-							|| !constraints.isConstraintSpecified() || !hasFilter())) {
+			if (columns.size() == 0
+					|| (rows.size() == 0 && (constraints == null
+							|| !constraints.isConstraintSpecified() || !hasFilter()))) {
 				IVerticalPanel dock = container.add().panel().vertical();
 				boolean furtherReduce = false;
-				if (showNoRowsFound) {
+				if (showNoRowsFound || columns.size() == 0) {
 					// topPanelCell(viewInc + 0, 0).width(10).label()
 					// .text("&#160;");
 					// IGridCell begin = topPanelCell(1, 0).valign().begin()
 					// .align().begin();
 					IVerticalPanel nef = dock.spacing(10).add().panel()
 							.vertical();
+					String text = columns.isEmpty() ? "NO COLUMNS SPECIFIED"
+							: "NO ENTITIES FOUND";
 					nef.add().panel().vertical().spacing(4).add().label()
-							.text("NO ENTITIES FOUND").font().pixel(10).color()
-							.gray();
+							.text(text).font().pixel(10).color().gray();
 					furtherReduce = true;
 					List<String[]> description = constraints.description();
-					if (constraints.configuration() != null)
+					if (constraints.configuration() != null
+							&& !columns.isEmpty())
 						description
 								.add(0,
 										new String[] {
 												constraints.configuration(), "" });
-					if (!description.isEmpty()) {// constraints != null &&
-													// constraints.isSpecified())
-													// {
+					if (!description.isEmpty() && !columns.isEmpty()) {// constraints
+																		// !=
+																		// null
+																		// &&
+						// constraints.isSpecified())
+						// {
 						// && constraints.isConstraintSpecified()) {
 						IGridPanel gp = nef.addSpace(4).add().panel()
 								.horizontal().align().begin().add().panel()
