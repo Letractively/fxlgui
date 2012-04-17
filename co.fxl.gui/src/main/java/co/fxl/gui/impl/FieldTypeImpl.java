@@ -205,4 +205,8 @@ public class FieldTypeImpl implements IFieldType {
 	public boolean isText() {
 		return clazz.equals(String.class) && values == null;
 	}
+
+	public boolean isImage() {
+		return clazz.equals(IImage.class);
+	}
 }
