@@ -28,8 +28,6 @@ import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -45,10 +43,10 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.impl.Display;
-import co.fxl.gui.impl.RegistryImpl;
+import co.fxl.gui.impl.DisplayTemplate;
 import co.fxl.gui.impl.ToolbarImpl;
 
-public class SwingDisplay extends RegistryImpl<IDisplay> implements IDisplay,
+public class SwingDisplay extends DisplayTemplate implements IDisplay,
 		ComponentParent {
 
 	SwingContainer<JComponent> container;
@@ -57,7 +55,6 @@ public class SwingDisplay extends RegistryImpl<IDisplay> implements IDisplay,
 	private int heightPixel = 240;
 	private SwingUncaughtExceptionHandler uncaughtExceptionHandler;
 	boolean waiting;
-	private Map<IResizeListener, ComponentAdapter> resizeListeners = new HashMap<IResizeListener, ComponentAdapter>();
 	private static SwingPopUp popUp;
 	private static SwingDisplay instance = null;
 	static int lastClickX = 0;
@@ -90,6 +87,40 @@ public class SwingDisplay extends RegistryImpl<IDisplay> implements IDisplay,
 		// TODO Aspect Log.instance(new SwingLog());
 		// TODO remove hack
 		ToolbarImpl.ADJUST_HEIGHTS = true;
+	}
+
+	private final class GWTResizeConfiguration extends ResizeConfiguration {
+
+		private ComponentAdapter adp;
+
+		private GWTResizeConfiguration(IResizeListener listener) {
+			super(listener);
+		}
+
+		@Override
+		protected void add() {
+			adp = new ComponentAdapter() {
+				@Override
+				public void componentResized(ComponentEvent arg0) {
+					boolean active = listener.onResize(width(), height());
+					if (!active) {
+						removeResizeListener(listener);
+					}
+				}
+			};
+			container.component.addComponentListener(adp);
+		}
+
+		@Override
+		protected void remove() {
+			container.component.removeComponentListener(adp);
+		}
+	}
+
+	@Override
+	protected ResizeConfiguration newResizeConfiguration(
+			IResizeListener listener) {
+		return new GWTResizeConfiguration(listener);
 	}
 
 	private void resize() {
@@ -206,22 +237,6 @@ public class SwingDisplay extends RegistryImpl<IDisplay> implements IDisplay,
 	}
 
 	@Override
-	public IDisplay addResizeListener(final IResizeListener listener) {
-		ComponentAdapter adp = new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent arg0) {
-				boolean active = listener.onResize(width(), height());
-				if (!active) {
-					removeResizeListener(listener);
-				}
-			}
-		};
-		resizeListeners.put(listener, adp);
-		container.component.addComponentListener(adp);
-		return this;
-	}
-
-	@Override
 	public int height() {
 		if (container.component == null) {
 			return Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -265,14 +280,6 @@ public class SwingDisplay extends RegistryImpl<IDisplay> implements IDisplay,
 	@Override
 	public IPopUp showPopUp() {
 		return new SwingPopUp(this);
-	}
-
-	@Override
-	public IDisplay removeResizeListener(IResizeListener listener) {
-		ComponentAdapter adp = resizeListeners.get(listener);
-		resizeListeners.remove(listener);
-		container.component.removeComponentListener(adp);
-		return this;
 	}
 
 	@Override

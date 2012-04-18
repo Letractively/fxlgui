@@ -60,7 +60,7 @@ public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
 	IDisplay addExceptionHandler(IExceptionHandler handler);
 
-	IDisplay addResizeListener(IResizeListener listener);
+	IResizeConfiguration addResizeListener(IResizeListener listener);
 
 	IDisplay removeResizeListener(IResizeListener listener);
 

@@ -18,10 +18,8 @@
  */
 package co.fxl.gui.gwt;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IContainer;
@@ -36,7 +34,7 @@ import co.fxl.gui.api.WidgetProviderNotFoundException;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.DialogImpl;
 import co.fxl.gui.impl.Display;
-import co.fxl.gui.impl.RegistryImpl;
+import co.fxl.gui.impl.DisplayTemplate;
 import co.fxl.gui.impl.ToolbarImpl;
 
 import com.google.gwt.core.client.GWT;
@@ -56,7 +54,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class GWTDisplay extends RegistryImpl<IDisplay> implements IDisplay,
+public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		WidgetParent {
 
 	/**
@@ -74,6 +72,39 @@ public class GWTDisplay extends RegistryImpl<IDisplay> implements IDisplay,
 
 	// TODO Look: IE8/Vista: Images are skewed
 
+	private final class GWTResizeConfiguration extends ResizeConfiguration
+			implements ResizeHandler {
+
+		public HandlerRegistration reg;
+
+		private GWTResizeConfiguration(IResizeListener listener) {
+			super(listener);
+		}
+
+		@Override
+		public void onResize(ResizeEvent event) {
+			boolean active = listener.onResize(width(), height());
+			if (!active)
+				removeResizeListener(listener);
+		}
+
+		@Override
+		protected void add() {
+			reg = Window.addResizeHandler(this);
+		}
+
+		@Override
+		protected void remove() {
+			reg.removeHandler();
+		}
+	}
+
+	@Override
+	protected ResizeConfiguration newResizeConfiguration(
+			IResizeListener listener) {
+		return new GWTResizeConfiguration(listener);
+	}
+
 	public interface BlockListener {
 
 		void onBlock(boolean block);
@@ -84,7 +115,6 @@ public class GWTDisplay extends RegistryImpl<IDisplay> implements IDisplay,
 	private GWTContainer<Widget> container;
 	private GWTUncaughtExceptionHandler uncaughtExceptionHandler;
 	public static boolean waiting = false;
-	private Map<IResizeListener, HandlerRegistration> resizeListeners = new HashMap<IResizeListener, HandlerRegistration>();
 	static int lastClickX = 0;
 	static int lastClickY = 0;
 	private Scheduler scheduler = new SchedulerImpl();
@@ -242,42 +272,6 @@ public class GWTDisplay extends RegistryImpl<IDisplay> implements IDisplay,
 		throw new UnsupportedOperationException();
 	}
 
-	// private boolean resizing = false;
-	// private Runnable r = null;
-
-	private void resize(final IResizeListener listener) {
-		// if (resizing) {
-		// if (r == null) {
-		// r = new Runnable() {
-		// @Override
-		// public void run() {
-		// r = null;
-		// resize(listener);
-		// }
-		// };
-		// invokeLater(r);
-		// }
-		// return;
-		// }
-		// resizing = true;
-		boolean active = listener.onResize(width(), height());
-		if (!active)
-			removeResizeListener(listener);
-		// resizing = false;
-	}
-
-	@Override
-	public IDisplay addResizeListener(final IResizeListener listener) {
-		HandlerRegistration reg = Window.addResizeHandler(new ResizeHandler() {
-			@Override
-			public void onResize(ResizeEvent event) {
-				resize(listener);
-			}
-		});
-		resizeListeners.put(listener, reg);
-		return this;
-	}
-
 	@Override
 	public int height() {
 		return Window.getClientHeight();
@@ -376,14 +370,6 @@ public class GWTDisplay extends RegistryImpl<IDisplay> implements IDisplay,
 	@Override
 	public IPopUp showPopUp() {
 		return new GWTPopUp(this);
-	}
-
-	@Override
-	public IDisplay removeResizeListener(IResizeListener listener) {
-		HandlerRegistration r = resizeListeners.get(listener);
-		resizeListeners.remove(listener);
-		r.removeHandler();
-		return this;
 	}
 
 	@Override
