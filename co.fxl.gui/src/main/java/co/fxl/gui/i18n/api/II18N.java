@@ -22,15 +22,7 @@ public interface II18N {
 
 	String translate(String text);
 
-//	II18N notifyEvent(String event);
-
-	// String put(String text, String translation);
-	//
-	// void addConstant(String token);
-	//
-	// void addRule(String template, String translationTemplate);
-	//
-	// void addHelp(String iD, ILabel label);
+	II18N activate(boolean activate);
 
 	boolean active(boolean active);
 }

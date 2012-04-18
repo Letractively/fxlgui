@@ -37,6 +37,11 @@ public class I18N {
 		public boolean active(boolean active) {
 			return true;
 		}
+
+		@Override
+		public II18N activate(boolean activated) {
+			return this;
+		}
 	};
 	private static Map<String, II18N> i18ns = new HashMap<String, II18N>();
 	private static String defaultI18N;
@@ -61,12 +66,15 @@ public class I18N {
 	}
 
 	public static void activate(String language) {
+		if (instance != null)
+			instance.activate(false);
 		if (language == null || language.equals(defaultI18N)) {
 			ENABLED = false;
 			instance = null;
 		} else {
 			ENABLED = true;
 			instance = i18ns.get(language);
+			instance.activate(true);
 		}
 	}
 

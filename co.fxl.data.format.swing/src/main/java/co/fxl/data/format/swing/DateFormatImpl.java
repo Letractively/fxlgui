@@ -53,4 +53,9 @@ class DateFormatImpl implements IFormat<Date> {
 			return null;
 		}
 	}
+
+	@Override
+	public IFormat<Date> setLocale(String locale) {
+		return this;
+	}
 }
