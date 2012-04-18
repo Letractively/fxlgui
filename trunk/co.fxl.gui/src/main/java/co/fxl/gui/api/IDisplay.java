@@ -20,6 +20,14 @@ package co.fxl.gui.api;
 
 public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
+	public interface IResizeConfiguration {
+
+		IResizeConfiguration singleton();
+
+		IResizeConfiguration linkLifecycle(IElement<?> element);
+
+	}
+
 	public interface IResizeListener {
 
 		boolean onResize(int width, int height);
