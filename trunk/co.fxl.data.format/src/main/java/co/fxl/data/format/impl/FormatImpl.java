@@ -28,14 +28,13 @@ abstract class FormatImpl<T> implements IFormat<T> {
 			return "";
 		return String.valueOf(object);
 	}
-	
+
 	@Override
 	public String format(T object, String pFormat) {
 		return format(object);
 	}
 
-	protected abstract T parseWithException(String format)
-			throws Exception;
+	protected abstract T parseWithException(String format) throws Exception;
 
 	@Override
 	public T parse(String format) {
@@ -46,5 +45,10 @@ abstract class FormatImpl<T> implements IFormat<T> {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	@Override
+	public IFormat<T> setLocale(String locale) {
+		return (IFormat<T>) this;
 	}
 }

@@ -26,6 +26,8 @@ import co.fxl.data.format.api.IFormat;
 
 public class Format {
 
+	public static String LOCALE_DE = "DE";
+	public static String LOCALE_EN = "EN";
 	private static Map<String, IFormat<?>> formats = new HashMap<String, IFormat<?>>();
 	private static IFormat<Date> dateTimeFormat;
 	private static IFormat<Date> timeFormat;
@@ -140,5 +142,10 @@ public class Format {
 	@SuppressWarnings("unchecked")
 	public static IFormat<Double> doubleValue() {
 		return (IFormat<Double>) get(Double.class);
+	}
+
+	public static void setLocale(String locale) {
+		for (IFormat<?> f : formats.values())
+			f.setLocale(locale);
 	}
 }

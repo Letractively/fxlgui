@@ -43,7 +43,7 @@ class GWTDateFormat implements IFormat<Date> {
 			return "";
 		return impl.format(object);
 	}
-	
+
 	@Override
 	public String format(Date object, String pFormatStyle) {
 		if (object == null) {
@@ -63,5 +63,9 @@ class GWTDateFormat implements IFormat<Date> {
 			return null;
 		}
 	}
-	
+
+	@Override
+	public IFormat<Date> setLocale(String locale) {
+		return this;
+	}
 }

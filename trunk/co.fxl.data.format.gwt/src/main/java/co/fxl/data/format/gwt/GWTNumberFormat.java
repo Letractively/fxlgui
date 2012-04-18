@@ -36,9 +36,8 @@ abstract class GWTNumberFormat<T> implements IFormat<T> {
 			return "";
 		return impl.format(((Number) object));
 	}
-	
-	
-	@Override 
+
+	@Override
 	public String format(T object, String pFormat) {
 		return format(object);
 	}
@@ -55,4 +54,9 @@ abstract class GWTNumberFormat<T> implements IFormat<T> {
 	}
 
 	abstract T convert(Double d);
+
+	@Override
+	public IFormat<T> setLocale(String locale) {
+		return (IFormat<T>) this;
+	}
 }
