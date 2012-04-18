@@ -18,19 +18,32 @@
  */
 package co.fxl.gui.impl;
 
+import co.fxl.gui.api.IDisplay.IResizeConfiguration;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 
 public class DisplayResizeAdapter {
 
 	public static int decrement = 0;
 
-	public static void addResizeListener(final IResizeListener listener) {
-		Display.instance().addResizeListener(new IResizeListener() {
+	public static IResizeConfiguration addResizeListener(
+			IResizeListener listener) {
+		return addResizeListener(listener, false);
+	}
+
+	public static IResizeConfiguration addResizeListener(
+			final IResizeListener listener, boolean call) {
+		IResizeListener adp = new IResizeListener() {
 			@Override
 			public boolean onResize(int width, int height) {
 				return listener.onResize(width, height - decrement);
 			}
-		});
+		};
+		IResizeConfiguration singleton = Display.instance()
+				.addResizeListener(adp).singleton();
+		if (call)
+			adp.onResize(Display.instance().width(), Display.instance()
+					.height());
+		return singleton;
 	}
 
 }

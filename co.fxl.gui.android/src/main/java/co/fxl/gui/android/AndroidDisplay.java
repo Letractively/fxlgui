@@ -53,7 +53,7 @@ public class AndroidDisplay implements IDisplay, Parent {
 	}
 
 	@Override
-	public IDisplay addResizeListener(IResizeListener listener) {
+	public IResizeConfiguration addResizeListener(IResizeListener listener) {
 		throw new UnsupportedOperationException();
 	}
 

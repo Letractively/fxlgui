@@ -1,0 +1,103 @@
+/**
+ * This file is part of FXL GUI API.
+ *  
+ * FXL GUI API is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *  
+ * FXL GUI API is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *  
+ * You should have received a copy of the GNU General Public License
+ * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
+ */
+package co.fxl.gui.impl;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IElement;
+
+public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
+		IDisplay {
+
+	public abstract class ResizeConfiguration implements IResizeConfiguration {
+
+		protected final IResizeListener listener;
+		private IElement<?> lifecycleLink;
+
+		public ResizeConfiguration(IResizeListener listener) {
+			this.listener = listener;
+			add();
+		}
+
+		@Override
+		public IResizeConfiguration singleton() {
+			Iterator<ResizeConfiguration> it = resizeListeners.iterator();
+			while (it.hasNext()) {
+				ResizeConfiguration next = it.next();
+				if (next != this
+						&& next.listener.getClass().equals(listener.getClass()))
+					it.remove();
+			}
+			return this;
+		}
+
+		@Override
+		public IResizeConfiguration linkLifecycle(IElement<?> element) {
+			lifecycleLink = element;
+			return this;
+		}
+
+		protected abstract void add();
+
+		protected abstract void remove();
+	}
+
+	private List<ResizeConfiguration> resizeListeners = new LinkedList<ResizeConfiguration>();
+
+	@Override
+	public IResizeConfiguration addResizeListener(final IResizeListener listener) {
+		List<ResizeConfiguration> toRemove = new LinkedList<ResizeConfiguration>();
+		for (ResizeConfiguration cfg : resizeListeners) {
+			if (cfg.lifecycleLink != null && !cfg.lifecycleLink.visible()) {
+				toRemove.add(cfg);
+			}
+		}
+		for (ResizeConfiguration cfg : toRemove)
+			remove(cfg);
+		ResizeConfiguration resizeHandler = newResizeConfiguration(listener);
+		resizeListeners.add(resizeHandler);
+		return resizeHandler;
+	}
+
+	protected abstract ResizeConfiguration newResizeConfiguration(
+			IResizeListener listener);
+
+	protected void remove(ResizeConfiguration toRemove) {
+		toRemove.remove();
+		resizeListeners.remove(toRemove);
+	}
+
+	@Override
+	public IDisplay removeResizeListener(IResizeListener listener) {
+		ResizeConfiguration toRemove = null;
+		for (ResizeConfiguration cfg : resizeListeners) {
+			if (cfg.listener == listener) {
+				toRemove = cfg;
+				break;
+			}
+		}
+		if (toRemove != null) {
+			remove(toRemove);
+		}
+		return this;
+	}
+}
