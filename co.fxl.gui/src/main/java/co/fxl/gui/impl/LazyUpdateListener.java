@@ -32,6 +32,10 @@ public abstract class LazyUpdateListener<T> extends CallbackTemplate<Boolean>
 	public LazyUpdateListener() {
 	}
 
+	public LazyUpdateListener(MapComboBox<?> cb) {
+		this(cb.comboBox());
+	}
+
 	@SuppressWarnings("unchecked")
 	public LazyUpdateListener(IComboBox cb) {
 		this.cb = cb;
