@@ -101,4 +101,14 @@ public class MapComboBox<T> implements IUpdateable<T> {
 	public Collection<T> objects() {
 		return object2text.keySet();
 	}
+
+	public MapComboBox<T> visible(boolean comboBoxVisible) {
+		comboBox.visible(comboBoxVisible);
+		return this;
+	}
+
+	public MapComboBox<T> width(int width) {
+		comboBox.width(width);
+		return this;
+	}
 }
