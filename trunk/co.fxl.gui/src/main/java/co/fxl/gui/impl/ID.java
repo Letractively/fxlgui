@@ -18,23 +18,33 @@
  */
 package co.fxl.gui.impl;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 public class ID {
 
 	private String entityName;
 	private Long iD;
-	private String text;
+	private String label;
+	private boolean appendID = false;
 
-	public ID(String entityName, Long iD, String text) {
+	public ID(String entityName, Long iD, String label) {
 		this.iD = iD;
-		this.text = text;
+		this.label = label;
 	}
 
 	public String entityName() {
 		return entityName;
 	}
 
-	public String text() {
-		return text;
+	public ID appendID(boolean appendID) {
+		this.appendID = appendID;
+		return this;
+	}
+
+	public String label() {
+		return label + (appendID ? " (" + iD + ")" : "");
 	}
 
 	public Long iD() {
@@ -43,7 +53,7 @@ public class ID {
 
 	@Override
 	public String toString() {
-		return entityName + ": " + text + " (" + iD + ")";
+		return entityName + ": " + label + " (" + iD + ")";
 	}
 
 	@Override
@@ -57,5 +67,19 @@ public class ID {
 			return false;
 		ID i = (ID) o;
 		return entityName.equals(i.entityName) && iD.equals(i.iD);
+	}
+
+	public static void uniquify(Collection<ID> iDs) {
+		Map<String, Integer> notUnique = new HashMap<String, Integer>();
+		for (ID iD : iDs) {
+			if (notUnique.containsKey(iD.label)) {
+				notUnique.put(iD.label, notUnique.get(iD.label) + 1);
+			} else {
+				notUnique.put(iD.label, 1);
+			}
+		}
+		for (ID iD : iDs) {
+			iD.appendID(notUnique.get(iD.label) > 1);
+		}
 	}
 }
