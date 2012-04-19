@@ -60,26 +60,35 @@ class GWTDateFormat implements IFormat<Date> {
 		}
 	}
 
-	private Date getDate(String format) {
-		int[] s = getPart(format, 0, ".");
-		return new Date(s[2], s[1] - 1, s[0]);
+	// public static void main(String[] args) {
+	// System.out.println(getDate("10.02.2012"));
+	// System.out.println(getTime(new Date(), "14:55:11"));
+	// System.out.println(getTime(getDate("10.02.2012 14:55:11"),
+	// "10.02.2012 14:55:11"));
+	// }
+
+	static Date getDate(String format) {
+		int[] s = getPart(format, 0, "\\.");
+		assert s.length == 3;
+		return new Date(s[2] - 1900, s[1] - 1, s[0]);
 	}
 
-	private int[] getPart(String format, int i, String split) {
+	static int[] getPart(String format, int i, String split) {
 		if (!format.contains(" "))
 			return toIntArray(format.split(split));
 		return toIntArray(format.split(" ")[i].split(split));
 	}
 
-	private int[] toIntArray(String[] split) {
+	static int[] toIntArray(String[] split) {
 		int[] a = new int[split.length];
 		for (int i = 0; i < split.length; i++)
 			a[i] = Integer.valueOf(split[i]);
 		return a;
 	}
 
-	private Date getTime(Date date, String format) {
-		int[] s = getPart(format, 0, ".");
+	static Date getTime(Date date, String format) {
+		int[] s = getPart(format, 1, ":");
+		assert s.length == 3;
 		return new Date(date.getYear(), date.getMonth(), date.getDate(), s[0],
 				s[1], s[2]);
 	}
@@ -106,7 +115,7 @@ class GWTDateFormat implements IFormat<Date> {
 
 	private String getDateString(Date object) {
 		return l(object.getDate(), 2) + "." + l(object.getMonth() + 1, 2) + "."
-				+ l(object.getYear(), 4);
+				+ l(object.getYear() + 1900, 4);
 	}
 
 	private String l(int date, int i) {
