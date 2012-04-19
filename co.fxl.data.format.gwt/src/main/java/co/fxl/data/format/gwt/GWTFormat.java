@@ -23,7 +23,6 @@ import java.util.Date;
 import co.fxl.data.format.impl.Format;
 
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
-import com.google.gwt.i18n.client.NumberFormat;
 
 public class GWTFormat {
 
@@ -33,15 +32,13 @@ public class GWTFormat {
 		Format.register(Date.class, new GWTDateFormat(
 				PredefinedFormat.DATE_SHORT));
 		Format.registerTime(new GWTDateFormat(PredefinedFormat.TIME_LONG));
-		Format.register(Long.class,
-				new GWTNumberFormat<Long>(NumberFormat.getDecimalFormat()) {
-					@Override
-					Long convert(Double d) {
-						return d.longValue();
-					}
-				});
-		Format.register(Integer.class, new GWTNumberFormat<Integer>(
-				NumberFormat.getDecimalFormat()) {
+		Format.register(Long.class, new GWTNumberFormat<Long>() {
+			@Override
+			Long convert(Double d) {
+				return d.longValue();
+			}
+		});
+		Format.register(Integer.class, new GWTNumberFormat<Integer>() {
 			@Override
 			Integer convert(Double d) {
 				return d.intValue();
