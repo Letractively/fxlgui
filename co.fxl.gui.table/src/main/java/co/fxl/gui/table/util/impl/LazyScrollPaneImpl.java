@@ -29,6 +29,7 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.Display;
 import co.fxl.gui.table.util.api.IDragDropListener;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 import co.fxl.gui.table.util.api.IUpDownIndex;
@@ -246,37 +247,18 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 					scrollPane.remove();
 					hasScrollbar = false;
 					widthScrollPanel = 0;
-				} else {
-					// if (maxRowIndex < size - 1) {
-					// maxRowIndex++;
-					// }
 				}
 				if (rowIndex > maxRowIndex)
 					rowIndex = maxRowIndex;
 				if (adjustHeights) {
 					scrollPane.addScrollListener(LazyScrollPaneImpl.this);
-					Runnable r = new Runnable() {
-
-						@Override
-						public void run() {
-							v.height(height);
-							updateScrollPanelHeight();
-							if (rowIndex > 0) {
-								holdScroll = true;
-								scrollToRowIndex();
-								holdScroll = false;
-							}
-							// else
-							update(false);
-							treeDockPanel.visible(true);
-						}
-					};
-					r.run();
-					// treeDockPanel.display().invokeLater(r);
+					v.height(height);
+					updateScrollPanelHeight();
+					forkScrollToRowIndex();
+					update(false);
+					treeDockPanel.visible(true);
 				} else {
-					if (rowIndex > 0) {
-						scrollToRowIndex();
-					}
+					forkScrollToRowIndex();
 					scrollPane.addScrollListener(LazyScrollPaneImpl.this);
 					update(false);
 					treeDockPanel.visible(true);
@@ -284,13 +266,20 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 				allowRepaint = false;
 			}
 
-			private void scrollToRowIndex() {
-				int y = convertRowIndex2ScrollOffset(rowIndex);
-				treeDockPanel.visible(true);
-				scrollPane.scrollTo(y);
-				treeDockPanel.visible(false);
-				// TODO style="overflow:auto" on body element
-				// FocusPanel around Widget to scroll into view
+			private void forkScrollToRowIndex() {
+				if (rowIndex > 0) {
+					Display.instance().invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							holdScroll = true;
+							int y = convertRowIndex2ScrollOffset(rowIndex);
+							scrollPane.scrollTo(y);
+							// TODO style="overflow:auto" on body element
+							// FocusPanel around Widget to scroll into view
+							holdScroll = false;
+						}
+					});
+				}
 			}
 		};
 		if (adjustHeights) {
