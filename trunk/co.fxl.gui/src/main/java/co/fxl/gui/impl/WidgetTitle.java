@@ -33,6 +33,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.ContextMenu.Group;
 
 //import co.fxl.style.impl.Style;
@@ -54,9 +55,6 @@ public class WidgetTitle implements IClickListener {
 	private List<ILabel> labels = new LinkedList<ILabel>();
 	private List<IImage> images = new LinkedList<IImage>();
 	private int space0 = 10;
-	// private Map<ILabel, Boolean> clickableState = new HashMap<ILabel,
-	// Boolean>();
-	// private boolean holdOnClicks = false;
 	private IContainer bottomContainer;
 	private IHorizontalPanel commandPanelTop;
 	private boolean commandsOnTop = false;
@@ -87,6 +85,10 @@ public class WidgetTitle implements IClickListener {
 		this.addBorder = addBorder;
 		this.plainContent = plainContent;
 		setUp();
+	}
+
+	private int spaceBottom() {
+		return sideWidget && commandsOnTop ? 6 : 0;
 	}
 
 	public WidgetTitle plainContent(boolean plainContent) {
@@ -355,9 +357,13 @@ public class WidgetTitle implements IClickListener {
 	public IContainer content() {
 		if (contentContainer != null)
 			return contentContainer;
-		return contentContainer = space() == 0 ? bPanel.cell(0, 0).panel()
-				.vertical().add() : bPanel.cell(0, 0).panel().vertical()
-				.addSpace(space()).add();
+		IVerticalPanel vertical = bPanel.cell(0, 0).panel().vertical();
+		IVerticalPanel v = vertical;
+		if (space() == 0 && spaceBottom() == 0)
+			return contentContainer = v.add();
+		contentContainer = v.addSpace(space()).add().panel().vertical().add();
+		vertical.addSpace(spaceBottom());
+		return contentContainer;
 	}
 
 	public IContainer bottom() {
