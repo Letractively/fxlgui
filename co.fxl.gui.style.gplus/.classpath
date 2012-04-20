@@ -4,7 +4,5 @@
 	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="/fxl-gui"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/fxl-gui-mdt"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/fxl-gui-navigation"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

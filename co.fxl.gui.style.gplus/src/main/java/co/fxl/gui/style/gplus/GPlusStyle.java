@@ -21,8 +21,8 @@ package co.fxl.gui.style.gplus;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.DisplayResizeAdapter;
-import co.fxl.gui.mdt.impl.template.NavigationLayoutTemplate;
 import co.fxl.gui.style.api.IStyle;
 import co.fxl.gui.style.impl.Style;
 
@@ -104,8 +104,8 @@ public class GPlusStyle implements IStyle {
 	public IStyle activate(boolean activate) {
 		DisplayResizeAdapter.addDecrement(activate ? 2 * SPACING_TOP : -2
 				* SPACING_TOP);
-		NavigationLayoutTemplate.defaultSpacing = activate ? SPACING_TOP : 4;
-		NavigationLayoutTemplate.addTopPanel = activate;
+		Constants.put("TOP_SPACING", activate ? SPACING_TOP : 4);
+		Constants.put("ADD_NAVIGATION_BAR", activate);
 		return this;
 	}
 }
