@@ -98,7 +98,7 @@ public class ColumnSelection {
 			public void onDragStart(IDragStartEvent event) {
 				dragged = c;
 				dummyFocusPanel.visible(true);
-				dummyLabel.text(c.name);
+				dummyLabel.text("Drop here");
 				event.dragImage(fp);
 				event.iD(COLUMN_SELECTION);
 			}
