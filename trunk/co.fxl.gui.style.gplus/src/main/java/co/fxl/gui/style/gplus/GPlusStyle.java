@@ -60,7 +60,7 @@ public class GPlusStyle implements IStyle {
 
 	@Override
 	public IStyle hyperlink(ILabel label) {
-		label.font().color().rgb(51, 102, 204);
+		label.font().color().rgb(114, 102, 211);
 		return this;
 	}
 
