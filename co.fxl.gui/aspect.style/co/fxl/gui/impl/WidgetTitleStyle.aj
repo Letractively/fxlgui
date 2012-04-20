@@ -58,8 +58,12 @@ privileged aspect WidgetTitleStyle {
 	execution(public WidgetTitle.new(ILayout, boolean, boolean)) 
 	&& this(widgetTitle) 
 	&& if(Style.ENABLED) {
-		Style.instance().window().main(widgetTitle.panel, widgetTitle.addBorder, widgetTitle.plainContent)
-				.header(widgetTitle.headerPanel, widgetTitle.sideWidget, widgetTitle.plainContent);
+		Style.instance()
+				.window()
+				.main(widgetTitle.panel, widgetTitle.addBorder,
+						widgetTitle.plainContent)
+				.header(widgetTitle.headerPanel, widgetTitle.sideWidget,
+						widgetTitle.plainContent);
 		if (Style.instance().window().commandsOnTop())
 			widgetTitle.commandsOnTop();
 	}
@@ -68,16 +72,20 @@ privileged aspect WidgetTitleStyle {
 	execution(public WidgetTitle WidgetTitle.sideWidget(boolean)) 
 	&& this(widgetTitle) 
 	&& if(Style.ENABLED) {
-		Style.instance().window()
-				.header(widgetTitle.headerPanel, widgetTitle.sideWidget, widgetTitle.plainContent);
+		Style.instance()
+				.window()
+				.header(widgetTitle.headerPanel, widgetTitle.sideWidget,
+						widgetTitle.plainContent);
 	}
 
 	after(WidgetTitle widgetTitle) :
 	execution(private void WidgetTitle.setUp()) 
 	&& this(widgetTitle) 
 	&& if(Style.ENABLED) {
-		Style.instance().window()
-				.header(widgetTitle.headerPanel, widgetTitle.sideWidget, widgetTitle.plainContent);
+		Style.instance()
+				.window()
+				.header(widgetTitle.headerPanel, widgetTitle.sideWidget,
+						widgetTitle.plainContent);
 	}
 
 	after(WidgetTitle widgetTitle, String title) returning(ILabel label) :
