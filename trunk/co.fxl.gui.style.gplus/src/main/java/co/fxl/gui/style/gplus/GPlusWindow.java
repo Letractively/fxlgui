@@ -121,4 +121,9 @@ class GPlusWindow implements IWindow {
 		}
 		return this;
 	}
+
+	@Override
+	public int spaceBottom() {
+		return 6;
+	}
 }
