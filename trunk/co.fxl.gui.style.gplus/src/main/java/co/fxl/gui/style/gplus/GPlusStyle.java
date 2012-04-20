@@ -22,7 +22,6 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.impl.Constants;
-import co.fxl.gui.impl.DisplayResizeAdapter;
 import co.fxl.gui.style.api.IStyle;
 import co.fxl.gui.style.impl.Style;
 
@@ -105,6 +104,7 @@ public class GPlusStyle implements IStyle {
 		if (!activate) {
 			Constants.remove("TOP_SPACING");
 		}
+		Constants.put("ADD_NAVIGATION_BAR", activate);
 		return this;
 	}
 }
