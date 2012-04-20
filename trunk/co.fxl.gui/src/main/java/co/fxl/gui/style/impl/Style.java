@@ -43,12 +43,15 @@ public class Style {
 	}
 
 	public static void activate(String name) {
+		if (instance != null)
+			instance.activate(false);
 		if (name == null || name.equals(defaultStyle)) {
 			ENABLED = false;
 			instance = null;
 		} else {
 			ENABLED = true;
 			instance = styles.get(name);
+			instance.activate(true);
 		}
 	}
 

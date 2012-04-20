@@ -155,4 +155,6 @@ public interface IStyle {
 
 	IStyle side(ILinearPanel<?> panel);
 
+	IStyle activate(boolean activate);
+
 }
