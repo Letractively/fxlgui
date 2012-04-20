@@ -22,6 +22,7 @@ import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IHorizontalPanel;
 
 import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -54,6 +55,9 @@ class GWTHorizontalPanel extends GWTPanel<HorizontalPanel, IHorizontalPanel>
 			((HasVerticalAlignment) widget)
 					.setVerticalAlignment(container.widget
 							.getVerticalAlignment());
+		if (widget instanceof HasHorizontalAlignment)
+			((HasHorizontalAlignment) widget)
+					.setHorizontalAlignment(HorizontalPanel.ALIGN_LEFT);
 		container.widget.add(widget);
 	}
 
