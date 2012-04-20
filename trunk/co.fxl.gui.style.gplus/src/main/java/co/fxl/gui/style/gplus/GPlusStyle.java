@@ -102,10 +102,9 @@ public class GPlusStyle implements IStyle {
 
 	@Override
 	public IStyle activate(boolean activate) {
-		Constants.remove("TOP_SPACING");
-		DisplayResizeAdapter.addDecrement(activate ? 2 * SPACING_TOP : -2
-				* SPACING_TOP);
-		// Constants.put("ADD_NAVIGATION_BAR", activate);
+		if (!activate) {
+			Constants.remove("TOP_SPACING");
+		}
 		return this;
 	}
 }
