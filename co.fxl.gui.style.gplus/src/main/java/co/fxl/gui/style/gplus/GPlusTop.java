@@ -38,7 +38,7 @@ class GPlusTop implements ITop {
 
 	@Override
 	public int spacing() {
-		return 4;
+		return GPlusStyle.SPACING_TOP;
 	}
 
 }

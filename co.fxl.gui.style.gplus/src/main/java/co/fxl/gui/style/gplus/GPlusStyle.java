@@ -21,10 +21,13 @@ package co.fxl.gui.style.gplus;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.impl.DisplayResizeAdapter;
 import co.fxl.gui.style.api.IStyle;
 import co.fxl.gui.style.impl.Style;
 
 public class GPlusStyle implements IStyle {
+
+	static final int SPACING_TOP = 10;
 
 	@Override
 	public IWindow window() {
@@ -94,5 +97,12 @@ public class GPlusStyle implements IStyle {
 	@Override
 	public ITop top() {
 		return new GPlusTop();
+	}
+
+	@Override
+	public IStyle activate(boolean activate) {
+		DisplayResizeAdapter.addDecrement(activate ? 2 * SPACING_TOP : -2
+				* SPACING_TOP);
+		return this;
 	}
 }

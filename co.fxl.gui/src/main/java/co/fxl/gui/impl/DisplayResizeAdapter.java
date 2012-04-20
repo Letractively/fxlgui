@@ -23,7 +23,11 @@ import co.fxl.gui.api.IDisplay.IResizeListener;
 
 public class DisplayResizeAdapter {
 
-	public static int decrement = 0;
+	private static int decrement = 0;
+
+	public static void addDecrement(int decrement) {
+		DisplayResizeAdapter.decrement += decrement;
+	}
 
 	public static IResizeConfiguration addResizeListener(
 			IResizeListener listener) {
@@ -44,6 +48,10 @@ public class DisplayResizeAdapter {
 			adp.onResize(Display.instance().width(), Display.instance()
 					.height());
 		return singleton;
+	}
+
+	public static int withDecrement(int inc) {
+		return decrement + inc;
 	}
 
 }
