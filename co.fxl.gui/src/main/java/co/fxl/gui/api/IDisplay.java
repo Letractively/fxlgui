@@ -72,6 +72,8 @@ public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
 	IDisplay block(boolean waiting);
 
+	IDisplay scrolling(boolean scrolling);
+
 	IDisplay invokeLater(Runnable runnable);
 
 	IDisplay invokeLater(Runnable runnable, int ms);

@@ -51,6 +51,8 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.ScrollEvent;
+import com.google.gwt.user.client.Window.ScrollHandler;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -415,5 +417,18 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 				widget.onSuccess(w);
 			}
 		});
+	}
+
+	@Override
+	public IDisplay scrolling(boolean scrolling) {
+		Window.enableScrolling(scrolling);
+		Window.addWindowScrollHandler(new ScrollHandler() {
+			@Override
+			public void onWindowScroll(ScrollEvent arg0) {
+				if (arg0.getScrollLeft() > 0 || arg0.getScrollTop() > 0)
+					Window.scrollTo(0, 0);
+			}
+		});
+		return this;
 	}
 }

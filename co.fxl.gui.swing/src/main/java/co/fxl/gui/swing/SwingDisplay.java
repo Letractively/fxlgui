@@ -89,11 +89,11 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 		ToolbarImpl.ADJUST_HEIGHTS = true;
 	}
 
-	private final class GWTResizeConfiguration extends ResizeConfiguration {
+	private final class SwingResizeConfiguration extends ResizeConfiguration {
 
 		private ComponentAdapter adp;
 
-		private GWTResizeConfiguration(IResizeListener listener) {
+		private SwingResizeConfiguration(IResizeListener listener) {
 			super(listener);
 		}
 
@@ -108,7 +108,8 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 					}
 				}
 			};
-			container.component.addComponentListener(adp);
+			if (container != null && container.component != null)
+				container.component.addComponentListener(adp);
 		}
 
 		@Override
@@ -120,7 +121,7 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 	@Override
 	protected ResizeConfiguration newResizeConfiguration(
 			IResizeListener listener) {
-		return new GWTResizeConfiguration(listener);
+		return new SwingResizeConfiguration(listener);
 	}
 
 	private void resize() {
@@ -354,6 +355,11 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 				runnable.run();
 			}
 		}.start();
+		return this;
+	}
+
+	@Override
+	public IDisplay scrolling(boolean scrolling) {
 		return this;
 	}
 }

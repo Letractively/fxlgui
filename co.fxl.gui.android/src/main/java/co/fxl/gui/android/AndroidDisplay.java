@@ -247,4 +247,10 @@ public class AndroidDisplay implements IDisplay, Parent {
 			co.fxl.gui.api.IRegistry.IServiceProvider<?>... service) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public IDisplay scrolling(boolean scrolling) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
