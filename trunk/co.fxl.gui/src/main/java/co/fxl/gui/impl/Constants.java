@@ -35,4 +35,8 @@ public class Constants {
 			return (T) constants.get(string);
 		return defaultValue;
 	}
+
+	public static void remove(String string) {
+		constants.remove(string);
+	}
 }
