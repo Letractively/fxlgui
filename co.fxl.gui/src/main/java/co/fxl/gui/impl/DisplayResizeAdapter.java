@@ -43,16 +43,10 @@ public class DisplayResizeAdapter {
 
 	public static IResizeConfiguration addResizeListener(
 			final IResizeListener listener, boolean call) {
-		IResizeListener adp = new IResizeListener() {
-			@Override
-			public boolean onResize(int width, int height) {
-				return listener.onResize(width, height - decrement());
-			}
-		};
 		IResizeConfiguration singleton = Display.instance()
-				.addResizeListener(adp).singleton();
+				.addResizeListener(listener).singleton();
 		if (call)
-			adp.onResize(Display.instance().width(), Display.instance()
+			listener.onResize(Display.instance().width(), Display.instance()
 					.height());
 		return singleton;
 	}
