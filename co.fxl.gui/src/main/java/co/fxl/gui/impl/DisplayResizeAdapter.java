@@ -18,15 +18,22 @@
  */
 package co.fxl.gui.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import co.fxl.gui.api.IDisplay.IResizeConfiguration;
 import co.fxl.gui.api.IDisplay.IResizeListener;
+import co.fxl.gui.api.IElement;
 
 public class DisplayResizeAdapter {
 
-	private static int decrement = 0;
+	private static Map<String, Integer> decrement = new HashMap<String, Integer>();
 
-	public static void addDecrement(int decrement) {
-		DisplayResizeAdapter.decrement += decrement;
+	public static void setDecrement(String string, int i) {
+		if (i == 0)
+			decrement.remove(string);
+		else
+			decrement.put(string, i);
 	}
 
 	public static IResizeConfiguration addResizeListener(
@@ -39,7 +46,7 @@ public class DisplayResizeAdapter {
 		IResizeListener adp = new IResizeListener() {
 			@Override
 			public boolean onResize(int width, int height) {
-				return listener.onResize(width, height - decrement);
+				return listener.onResize(width, height - decrement());
 			}
 		};
 		IResizeConfiguration singleton = Display.instance()
@@ -50,8 +57,53 @@ public class DisplayResizeAdapter {
 		return singleton;
 	}
 
+	protected static int decrement() {
+		int i = 0;
+		for (Integer s : decrement.values())
+			i += s;
+		return i;
+	}
+
 	public static int withDecrement(int inc) {
-		return decrement + inc;
+		return decrement() + inc;
+	}
+
+	public static void autoResize(final IElement<?> e) {
+		autoResize(e, 0);
+	}
+
+	public static void autoResize(final IElement<?> e, final int dec) {
+		autoResize(e, dec, false);
+	}
+
+	public static void autoResize(final IElement<?> e, final int dec, boolean b) {
+		final IResizeListener listener = new IResizeListener() {
+			@Override
+			public boolean onResize(int width, int height) {
+				if (!e.visible())
+					return false;
+				int offsetY = e.offsetY();
+				// TODO ... un-hard-code
+				if (offsetY < DisplayResizeAdapter.withDecrement(100))
+					offsetY = DisplayResizeAdapter.withDecrement(100);
+				int maxFromDisplay = height - offsetY - 10 - dec;
+				if (maxFromDisplay > 0)
+					e.height(maxFromDisplay);
+				return e.visible();
+			}
+		};
+		Display.instance().addResizeListener(listener);
+		Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+				listener.onResize(Display.instance().width(), Display
+						.instance().height());
+			}
+		};
+		if (b) {
+			Display.instance().invokeLater(runnable);
+		} else
+			runnable.run();
 	}
 
 }
