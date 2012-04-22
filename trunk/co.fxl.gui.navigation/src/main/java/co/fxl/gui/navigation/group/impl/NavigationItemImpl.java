@@ -316,6 +316,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 		group.updateVisible();
 		if (!visible && popUp != null)
 			popUp.visible(false);
+		widget.addSeparatorBorder();
 		return this;
 	}
 
