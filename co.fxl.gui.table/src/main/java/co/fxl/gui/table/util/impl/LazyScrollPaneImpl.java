@@ -376,7 +376,10 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	}
 
 	private int update(int rowIndex, boolean isCalibration) {
+		// hack for swing
+		holdScroll = true;
 		setLastIndex(rowIndex);
+		int storeLastIndex = lastIndex;
 		treeScrollPanelContainer.clear();
 		// hack for swing
 		treeScrollPanelContainer.add().label().remove();
@@ -394,11 +397,16 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 				treeScrollPanel.width(width - widthScrollPanel);
 			c = treeScrollPanel.horizontal().viewPort();
 		}
+		assert storeLastIndex == lastIndex : "last index changed concurrently: "
+				+ lastIndex + "!=" + storeLastIndex;
+		assert lastIndex >= rowIndex : "illegal range " + rowIndex + "-"
+				+ lastIndex;
 		IKeyRecipient<Object> e = decorator.decorate(c, rowIndex, lastIndex,
 				isCalibration);
 		if (!isCalibration)
 			addKeyListeners(e);
 		// treeScrollPanelContainer.flip();
+		holdScroll = false;
 		return lastIndex;
 	}
 
