@@ -63,17 +63,21 @@ public class I18NTemplate extends HashMap<String, String> implements II18N {
 			return text;
 		String translation = get(text);
 		if (translation == null) {
-			String e = noTranslationPrefix + " '" + text + "'";
-			System.err.println(e);
-			boolean active = I18N.active(false);
-			Exception ex = new Exception();
-			StringBuilder b = new StringBuilder();
-			append(b, ex);
-			ErrorDialog.createAlways(pTitle, e, b.toString());
-			I18N.active(active);
-			return text;
+			return handleTranslationNotFound(text);
 		}
 		return translation;
+	}
+
+	protected String handleTranslationNotFound(String text) {
+		String e = noTranslationPrefix + " '" + text + "'";
+		System.err.println(e);
+		boolean active = I18N.active(false);
+		Exception ex = new Exception();
+		StringBuilder b = new StringBuilder();
+		append(b, ex);
+		ErrorDialog.createAlways(pTitle, e, b.toString());
+		I18N.active(active);
+		return text;
 	}
 
 	private void append(StringBuilder b, Throwable ex) {
