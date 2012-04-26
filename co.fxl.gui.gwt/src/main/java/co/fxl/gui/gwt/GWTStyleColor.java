@@ -61,14 +61,15 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 						if (fallback != null) {
 							gradient = toString(fallback[0], fallback[1],
 									fallback[2]);
-						} else {
+						} else if (!GWTDisplay.isInternetExplorer8()) {
 							attribute = "filter";
 							gradient = "progid:DXImageTransform.Microsoft.gradient(startColorstr='"
 									+ original.color
 									+ "', endColorstr='"
 									+ color + "')";
 							DOM.setStyleAttribute(element, "zoom", "1");
-						}
+						} else
+							gradient = mix(original.color, color);
 						// DOM.setStyleAttribute(element, "-ms-" + attribute,
 						// gradient);
 					} else if (GWTDisplay.isFirefox()) {
