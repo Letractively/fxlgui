@@ -41,6 +41,9 @@ public class GWTWidgetBorder extends GWTBorder {
 	@Override
 	protected void shadow() {
 		if (widget != null) {
+			
+			// antialiasing is missing
+			
 			if (GWTDisplay.isInternetExplorer8()) {
 				width(1);
 			} else
