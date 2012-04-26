@@ -97,7 +97,12 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 						// DOM.setStyleAttribute(element, "background",
 						// original.color);
 					}
-					DOM.setStyleAttribute(element, attribute, gradient);
+					
+					// microsoft filters: anti-aliasing (cleartype) not applied to text inside an element which has a filter applied
+					
+					if (!GWTDisplay.isInternetExplorer8()
+							|| !attribute.equals("filter"))
+						DOM.setStyleAttribute(element, attribute, gradient);
 				}
 			};
 		}
