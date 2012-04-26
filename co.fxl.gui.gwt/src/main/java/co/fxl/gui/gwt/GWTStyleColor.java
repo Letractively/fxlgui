@@ -99,6 +99,7 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 					}
 					
 					// microsoft filters: anti-aliasing (cleartype) not applied to text inside an element which has a filter applied
+					// only works in IE for >=IE9
 					
 					if (!GWTDisplay.isInternetExplorer8()
 							|| !attribute.equals("filter"))
