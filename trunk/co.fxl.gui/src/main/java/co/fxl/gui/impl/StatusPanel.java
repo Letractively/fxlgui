@@ -72,6 +72,8 @@ public class StatusPanel {
 	}
 
 	public static StatusPanel instance() {
+		if (instance == null)
+			instance = new StatusPanel();
 		return instance;
 	}
 }
