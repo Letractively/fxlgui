@@ -40,8 +40,12 @@ public class GWTWidgetBorder extends GWTBorder {
 
 	@Override
 	protected void shadow() {
-		if (widget != null)
-			widget.addStyleName("shadowblur");
+		if (widget != null) {
+			if (GWTDisplay.isInternetExplorer8()) {
+				width(1);
+			} else
+				widget.addStyleName("shadowblur");
+		}
 	}
 
 	@Override
