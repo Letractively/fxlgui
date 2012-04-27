@@ -323,8 +323,10 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		return getUserAgent().toLowerCase().contains("msie");
 	}
 
-	public static boolean isInternetExplorer8() {
-		return getUserAgent().toLowerCase().contains("msie 8.0");
+	public static boolean isInternetExplorer8OrBelow() {
+		return getUserAgent().toLowerCase().contains("msie 8.0")
+				|| getUserAgent().toLowerCase().contains("msie 7.0")
+				|| getUserAgent().toLowerCase().contains("msie 6.0");
 	}
 
 	public static boolean isOpera() {

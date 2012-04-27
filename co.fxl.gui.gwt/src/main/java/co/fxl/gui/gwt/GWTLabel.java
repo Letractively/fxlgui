@@ -27,20 +27,19 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-//import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.HTML;
 
 class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 
 	private HTMLText html = new HTMLText();
-//	private boolean selectionDisabled = false;
+	// private boolean selectionDisabled = false;
 	private HyperlinkDecorator hyperlinkDecorator;
 
 	GWTLabel(GWTContainer<HTML> container) {
 		super(container);
 		container.widget.addStyleName("gwt-Label-FXL");
-		container.widget.setWordWrap(false);
-//		defaultFont();
+		// container.widget.setWordWrap(false);
+		// defaultFont();
 	}
 
 	private void update() {
@@ -96,24 +95,24 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 		return this;
 	}
 
-//	native String disableSelection(Element target) 
-													/*-{
-													if (typeof target.onselectstart!="undefined") //IE route
-													target.onselectstart=function(){return false}
-													else if (typeof target.style.MozUserSelect!="undefined") //Firefox route
-													target.style.MozUserSelect="none"
-													else //All other route (ie: Opera)
-													target.onmousedown=function(){return false}
-													target.style.cursor = "default"
-													}-*/;
+	// native String disableSelection(Element target)
+	/*-{
+	if (typeof target.onselectstart!="undefined") //IE route
+	target.onselectstart=function(){return false}
+	else if (typeof target.style.MozUserSelect!="undefined") //Firefox route
+	target.style.MozUserSelect="none"
+	else //All other route (ie: Opera)
+	target.onmousedown=function(){return false}
+	target.style.cursor = "default"
+	}-*/;
 
 	@Override
 	GWTClickHandler<ILabel> newGWTClickHandler(IClickListener clickListener) {
 		html.selectable = false;
-//		if (!selectionDisabled) {
-//			disableSelection(container.widget.getElement());
-//			selectionDisabled = true;
-//		}
+		// if (!selectionDisabled) {
+		// disableSelection(container.widget.getElement());
+		// selectionDisabled = true;
+		// }
 		update();
 		return new GWTClickHandler<ILabel>(this, clickListener);
 	}

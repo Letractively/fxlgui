@@ -52,7 +52,22 @@ public class GWTImage extends GWTElement<Image, IImage> implements IImage {
 
 	@Override
 	public IImage clickable(boolean enable) {
-		if (!GWTDisplay.isInternetExplorer8())
+		if (GWTDisplay.isInternetExplorer8OrBelow()) {
+			ImageResource resolve = resolve(resource);
+			if (resource != null && resolve != null && !enable) {
+				String p50resource = resource.substring(0,
+						resource.indexOf(".png"))
+						+ "_50p.png";
+				if (resolve(p50resource) != null) {
+					container.widget.setResource(resolve(p50resource));
+				}
+			} else if (resource != null) {
+				if (resolve != null)
+					container.widget.setResource(resolve);
+				else
+					localURI("images/" + resource);
+			}
+		} else
 			container.widget.getElement().getStyle()
 					.setOpacity(enable ? 1 : 0.5);
 		return super.clickable(enable);
