@@ -19,8 +19,13 @@
 package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IFontElement.IFont;
+import co.fxl.gui.impl.ColorTemplate;
 
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.Style.FontStyle;
+import com.google.gwt.dom.client.Style.FontWeight;
+import com.google.gwt.dom.client.Style.TextDecoration;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.Widget;
 
 public class GWTFont extends GWTWidgetStyle implements IFont {
@@ -34,8 +39,20 @@ public class GWTFont extends GWTWidgetStyle implements IFont {
 
 	@Override
 	public IColor color() {
-		GWTWidgetStyle style = new GWTWidgetStyle("color-", widget);
-		return new GWTStyleColor(style);
+		return new ColorTemplate() {
+
+			@Override
+			public IColor remove() {
+				style.clearColor();
+				return this;
+			}
+
+			@Override
+			protected IColor setRGB(int r, int g, int b) {
+				style.setColor(GWTStyleColor.toString(r, g, b));
+				return this;
+			}
+		};
 	}
 
 	@Override
@@ -45,22 +62,43 @@ public class GWTFont extends GWTWidgetStyle implements IFont {
 
 	@Override
 	public IWeight weight() {
-		return new GWTWeight(this);
+		return new IWeight() {
+
+			@Override
+			public IFont bold() {
+				style.setFontWeight(FontWeight.BOLD);
+				return GWTFont.this;
+			}
+
+			@Override
+			public IFont italic() {
+				style.setFontStyle(FontStyle.ITALIC);
+				return GWTFont.this;
+			}
+
+			@Override
+			public IFont plain() {
+				style.setFontWeight(FontWeight.NORMAL);
+				style.setFontStyle(FontStyle.NORMAL);
+				return GWTFont.this;
+			}
+
+		};
+		// return new GWTWeight(this);
 	}
 
 	@Override
 	public IFont pixel(int i) {
-		// TODO ... style.setFontSize(i, Unit.PX);
-		addStyleName(i + "px");
+		style.setFontSize(i, Unit.PX);
 		return this;
 	}
 
 	@Override
 	public IFont underline(boolean underline) {
 		if (underline)
-			addToStyleNames("font-underline");
+			style.setTextDecoration(TextDecoration.UNDERLINE);
 		else
-			removeFromStyleNames("font-underline");
+			style.setTextDecoration(TextDecoration.NONE);
 		return this;
 	}
 }

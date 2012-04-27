@@ -32,7 +32,6 @@ import co.fxl.gui.api.IDropTarget.IDragEvent;
 import co.fxl.gui.api.IDropTarget.IDragMoveListener;
 import co.fxl.gui.api.IDropTarget.IDropListener;
 import co.fxl.gui.api.IElement;
-import co.fxl.gui.api.IFontElement;
 import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IMargin;
@@ -229,9 +228,9 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		this.container = container;
 	}
 
-	IFont defaultFont() {
-		return ((IFontElement) this).font().pixel(12).family().arial();
-	}
+	// IFont defaultFont() {
+	// return ((IFontElement) this).font().pixel(12).family().arial();
+	// }
 
 	public IBorder border() {
 		return new GWTWidgetBorder(container.widget);

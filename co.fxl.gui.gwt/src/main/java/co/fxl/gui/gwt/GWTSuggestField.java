@@ -85,7 +85,7 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 				.getSuggestionDisplay();
 		sd.setPopupStyleName("gwt-SuggestBoxPopup-FXL");
 		container.widget.getTextBox().setStyleName("gwt-TextBox-FXL");
-		defaultFont();
+//		defaultFont();
 		// oracle = (MultiWordSuggestOracle) ((SuggestBox) container.widget)
 		// .getSuggestOracle();
 	}
