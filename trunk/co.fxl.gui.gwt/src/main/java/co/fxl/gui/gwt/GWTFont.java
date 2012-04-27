@@ -20,13 +20,16 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IFontElement.IFont;
 
-import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.ui.Widget;
 
 public class GWTFont extends GWTWidgetStyle implements IFont {
 
+	private Style style;
+
 	public GWTFont(Widget label) {
 		super("font-size-", label);
+		style = label.getElement().getStyle();
 	}
 
 	@Override
@@ -47,7 +50,7 @@ public class GWTFont extends GWTWidgetStyle implements IFont {
 
 	@Override
 	public IFont pixel(int i) {
-		// TODO ... widget.getElement().getStyle().setFontSize(i, Unit.PX);
+		// TODO ... style.setFontSize(i, Unit.PX);
 		addStyleName(i + "px");
 		return this;
 	}
