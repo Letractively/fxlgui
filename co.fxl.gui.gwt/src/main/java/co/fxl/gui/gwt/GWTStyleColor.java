@@ -183,7 +183,8 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 
 	@Override
 	public IColor remove() {
-		stylable().clearProperty("filter");
+		if (!GWTDisplay.isInternetExplorer8())
+			stylable().clearProperty("filter");
 		stylable().clearProperty("background");
 		setBackgroundNone();
 		stylable().clearBackgroundColor();
@@ -195,7 +196,8 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 		GWTWidgetStyle gwtWidgetStyle = (GWTWidgetStyle) style;
 		Element element = gwtWidgetStyle.widget.getElement();
 		DOM.setStyleAttribute(element, "background", "none");
-		DOM.setStyleAttribute(element, "filter", "none");
+		if (!GWTDisplay.isInternetExplorer8())
+			DOM.setStyleAttribute(element, "filter", "none");
 	}
 
 	@Override
