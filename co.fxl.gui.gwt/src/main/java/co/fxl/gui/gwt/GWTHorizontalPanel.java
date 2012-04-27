@@ -69,6 +69,8 @@ class GWTHorizontalPanel extends GWTPanel<HorizontalPanel, IHorizontalPanel>
 
 	@Override
 	public IHorizontalPanel addSpace(int pixel) {
+		if (pixel == 0)
+			return this;
 		Widget p = new AbsolutePanel();
 		p.setSize(pixel + "px", "1px");
 		container.widget.add(p);

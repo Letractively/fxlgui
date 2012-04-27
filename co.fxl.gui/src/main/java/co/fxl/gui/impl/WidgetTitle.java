@@ -362,7 +362,8 @@ public class WidgetTitle implements IClickListener {
 		if (space() == 0 && spaceBottom() == 0)
 			return contentContainer = v.add();
 		contentContainer = v.addSpace(space()).add().panel().vertical().add();
-		vertical.addSpace(spaceBottom());
+		if (spaceBottom() != 0)
+			vertical.addSpace(spaceBottom());
 		return contentContainer;
 	}
 

@@ -67,6 +67,8 @@ class GWTVerticalPanel extends GWTPanel<VerticalPanel, IVerticalPanel>
 
 	@Override
 	public IVerticalPanel addSpace(int pixel) {
+		if (pixel == 0)
+			return this;
 		Widget p = new AbsolutePanel();
 		p.setSize("1px", pixel + "px");
 		container.widget.add(p);
