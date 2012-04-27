@@ -370,8 +370,9 @@ public class WidgetTitle implements IClickListener {
 		content();
 		if (bottomContainer != null)
 			return bottomContainer;
-		return bottomContainer = space() == 0 ? bPanel.cell(0, 1) : bPanel
-				.cell(0, 1).panel().vertical().addSpace(space()).add();
+		int space = space();
+		return bottomContainer = space == 0 ? bPanel.cell(0, 1) : bPanel
+				.cell(0, 1).panel().vertical().addSpace(space).add();
 	}
 
 	public WidgetTitle clearHyperlinks() {

@@ -35,7 +35,7 @@ import co.fxl.gui.api.ITextInput;
 public class Heights {
 
 	public static final int CELL_HEIGHT = 28;
-	public static final int TEXTFIELD_HEIGHT = 24;
+	public static int TEXTFIELD_HEIGHT = 24;
 	public static final int COMBOBOX_HEIGHT = 24;
 	public static final Heights INSTANCE = new Heights(0);
 	private int inc;
