@@ -44,7 +44,7 @@ public class GWTWidgetBorder extends GWTBorder {
 			
 			// antialiasing is missing
 			
-			if (GWTDisplay.isInternetExplorer8()) {
+			if (GWTDisplay.isInternetExplorer8OrBelow()) {
 				width(1);
 			} else
 				widget.addStyleName("shadowblur");

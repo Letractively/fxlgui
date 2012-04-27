@@ -61,7 +61,7 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 						if (fallback != null) {
 							gradient = toString(fallback[0], fallback[1],
 									fallback[2]);
-						} else if (!GWTDisplay.isInternetExplorer8()) {
+						} else if (!GWTDisplay.isInternetExplorer8OrBelow()) {
 							attribute = "filter";
 							gradient = "progid:DXImageTransform.Microsoft.gradient(startColorstr='"
 									+ original.color
@@ -183,7 +183,7 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 
 	@Override
 	public IColor remove() {
-		if (!GWTDisplay.isInternetExplorer8())
+		if (!GWTDisplay.isInternetExplorer8OrBelow())
 			stylable().clearProperty("filter");
 		stylable().clearProperty("background");
 		setBackgroundNone();
@@ -196,7 +196,7 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 		GWTWidgetStyle gwtWidgetStyle = (GWTWidgetStyle) style;
 		Element element = gwtWidgetStyle.widget.getElement();
 		DOM.setStyleAttribute(element, "background", "none");
-		if (!GWTDisplay.isInternetExplorer8())
+		if (!GWTDisplay.isInternetExplorer8OrBelow())
 			DOM.setStyleAttribute(element, "filter", "none");
 	}
 
