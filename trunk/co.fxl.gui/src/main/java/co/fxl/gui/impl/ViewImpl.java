@@ -32,6 +32,7 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class ViewImpl extends LazyClickListener {
 
+	public static boolean FLIP_BEFORE = false;
 	private final ViewList viewList;
 	private ILabel label;
 	private IGridPanel grid;
@@ -196,31 +197,38 @@ public class ViewImpl extends LazyClickListener {
 		IContainer next = content.next();
 		final String resource = image.resource();
 		image.resource("loading_black.gif");
-		decorator.decorate(next, sideContent.next().panel().vertical(),
-				new CallbackTemplate<Void>(oneTimeCallback) {
-					@Override
-					public void onSuccess(Void result) {
-						image.resource(resource);
-						for (ViewList viewList : ViewImpl.this.viewList.widget.viewLists) {
-							for (ViewImpl view : viewList.views) {
-								view.clickable(view != ViewImpl.this);
-							}
-						}
-						content.flip();
-						sideContent.flip();
-						if (oneTimeCallback != null) {
-							ICallback<Void> cb = oneTimeCallback;
-							oneTimeCallback = null;
-							cb.onSuccess(null);
-						}
+		IVerticalPanel vertical = sideContent.next().panel().vertical();
+		if (FLIP_BEFORE) {
+			content.flip();
+			sideContent.flip();
+		}
+		decorator.decorate(next, vertical, new CallbackTemplate<Void>(
+				oneTimeCallback) {
+			@Override
+			public void onSuccess(Void result) {
+				image.resource(resource);
+				for (ViewList viewList : ViewImpl.this.viewList.widget.viewLists) {
+					for (ViewImpl view : viewList.views) {
+						view.clickable(view != ViewImpl.this);
 					}
+				}
+				if (!FLIP_BEFORE) {
+					content.flip();
+					sideContent.flip();
+				}
+				if (oneTimeCallback != null) {
+					ICallback<Void> cb = oneTimeCallback;
+					oneTimeCallback = null;
+					cb.onSuccess(null);
+				}
+			}
 
-					@Override
-					public void onFail(Throwable throwable) {
-						image.resource(resource);
-						super.onFail(throwable);
-					}
-				});
+			@Override
+			public void onFail(Throwable throwable) {
+				image.resource(resource);
+				super.onFail(throwable);
+			}
+		});
 	}
 
 	private void clickable(boolean clickable) {
