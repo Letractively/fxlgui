@@ -119,15 +119,6 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=4, offY
 .cursor-crosshair { cursor: crosshair }
 .cursor-help { cursor: help }
 .cursor-move { cursor: move } 
-.gwt-TextBox-FXL { padding: 3px; }
-.gwt-PasswordTextBox-FXL { padding: 3px; }
-.gwt-Checkbox-FXL { }
-.gwt-Combobox-FXL { height: 24px; }
-.gwt-TextArea-FXL { padding: 3px; }
-.gwt-Label-FXL { white-space: nowrap; }
-.gwt-ToggleButton-FXL { }
-.gwt-Button-FXL { }
-.gwt-RadioButton-FXL { }
 .wordWrapBreakAll { word-wrap: break-all; }
 .nooutline { outline:none; }
 .nooutlineIE { outline:expression(this.onFocus=this.blur()); }
@@ -162,6 +153,15 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=4, offY
 ::-webkit-scrollbar-thumb:hover {
     background-color: rgba(0, 0, 0, 0.3);
 }
+.gwt-TextBox-FXL { padding: 3px; font-family: Arial, sans-serif; font-size: 12px; }
+.gwt-PasswordTextBox-FXL { padding: 3px; font-family: Arial, sans-serif; font-size: 12px; }
+.gwt-Checkbox-FXL { font-family: Arial, sans-serif; font-size: 12px; color: black }
+.gwt-Combobox-FXL { height: 24px; font-family: Arial, sans-serif; font-size: 12px; }
+.gwt-TextArea-FXL { height: 100px; padding: 3px; font-family: Arial, sans-serif; font-size: 12px; }
+.gwt-Label-FXL { white-space: nowrap; font-family: Arial, sans-serif; font-size: 12px; }
+.gwt-ToggleButton-FXL { font-family: Arial, sans-serif; font-size: 12px; }
+.gwt-Button-FXL { font-family: Arial, sans-serif; font-size: 12px; }
+.gwt-RadioButton-FXL { font-family: Arial, sans-serif; font-size: 12px; }
 .gwt-SuggestBoxPopup-FXL {
     background-color: white;
     border: 1px darkblue solid;

@@ -22,6 +22,8 @@ import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IFontElement.IFont.IFamily;
 
 class GWTFamily extends GWTWidgetStyle implements IFamily {
+	
+	// TODO use font.style.setFontFamily(...)
 
 	private GWTFont font;
 

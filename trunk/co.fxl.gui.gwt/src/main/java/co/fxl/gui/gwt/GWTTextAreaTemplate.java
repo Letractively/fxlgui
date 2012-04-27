@@ -31,8 +31,8 @@ class GWTTextAreaTemplate<T extends Widget, R extends IElement<R>> extends
 	GWTTextAreaTemplate(GWTContainer<T> container) {
 		super(container);
 		container.widget.addStyleName("gwt-TextArea-FXL");
-		defaultFont();
-		height(100);
+//		defaultFont();
+//		height(100);
 	}
 
 	@Override

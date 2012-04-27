@@ -42,7 +42,7 @@ class GWTTextField extends GWTElement<TextBox, ITextField> implements
 		super(container);
 		assert container != null : "GWTTextField.new: container is null";
 		container.widget.addStyleName("gwt-TextBox-FXL");
-		defaultFont();
+//		defaultFont();
 		container.widget.addChangeHandler(new ChangeHandler() {
 
 			@Override
