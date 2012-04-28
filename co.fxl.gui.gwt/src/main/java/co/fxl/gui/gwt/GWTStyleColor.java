@@ -24,6 +24,7 @@ import co.fxl.gui.impl.ColorTemplate;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.ui.Widget;
 
 public class GWTStyleColor extends ColorTemplate implements IColor {
 
@@ -38,7 +39,7 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 
 		@Override
 		public IColor vertical() {
-			return new GWTStyleColor(new Style() {
+			return new GWTStyleColor(getWidget(), new Style() {
 
 				@Override
 				public void addStyleName(String style) {
@@ -58,54 +59,53 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 						// background-image: url(h64_FFAACC_FFAAAA.png);
 						// background-repeat: repeat-x; background: mittelwert
 
-						if (fallback != null) {
-							gradient = toString(fallback[0], fallback[1],
-									fallback[2]);
-						} else if (!GWTDisplay.isInternetExplorer8OrBelow()) {
+						if (!GWTDisplay.isInternetExplorer8OrBelow()) {
 							attribute = "filter";
 							gradient = "progid:DXImageTransform.Microsoft.gradient(startColorstr='"
 									+ original.color
 									+ "', endColorstr='"
 									+ color + "')";
 							DOM.setStyleAttribute(element, "zoom", "1");
-						} else
-							gradient = mix(original.color, color);
+						} else {
+							setImageGradient(element);
+							attribute = null;
+						}
 						// DOM.setStyleAttribute(element, "-ms-" + attribute,
 						// gradient);
 					} else if (GWTDisplay.isFirefox()) {
 						gradient = "-moz-linear-gradient(top, "
 								+ original.color + ", " + color + ")";
 					} else if (GWTDisplay.isOpera()) {
-						if (fallback != null) {
-							gradient = toString(fallback[0], fallback[1],
-									fallback[2]);
-						} else {
-							gradient = mix(original.color, color);
-						}
-
-						// TODO LOOK: GWT: use repeating image a la
-						// background-image: url(h64_FFAACC_FFAAAA.png);
-						// background-repeat: repeat-x; background: mittelwert
-
-						// attribute = "background-image";
-						// gradient = "url(gradient_"
-						// + gwtWidgetStyle.widget.getOffsetHeight() + "_"
-						// + original.color.substring(1).toLowerCase()
-						// + "_" + color.substring(1).toLowerCase()
-						// + ".png";
-						// DOM.setStyleAttribute(element, "background-repeat",
-						// "repeat-x");
-						// DOM.setStyleAttribute(element, "background",
-						// original.color);
+						setImageGradient(element);
+						attribute = null;
 					}
 
 					// microsoft filters: anti-aliasing (cleartype) not applied
 					// to text inside an element which has a filter applied
 					// only works in IE for >=IE9
 
-					// if (!GWTDisplay.isInternetExplorer8()
-					// || !attribute.equals("filter"))
-					DOM.setStyleAttribute(element, attribute, gradient);
+					if (attribute != null)
+						DOM.setStyleAttribute(element, attribute, gradient);
+				}
+
+				protected void setImageGradient(Element element) {
+					String fb = original.color;
+					if (fallback != null)
+						fb = toString(fallback[0], fallback[1], fallback[2]);
+					DOM.setStyleAttribute(element, "background", fb);
+					String file = "gradient_" + original.rgb[0] + "_" + rgb[0]
+							+ ".png";
+					// if (GWTImage.resolve(file) != null) {
+					String attribute0 = "backgroundImage";
+					String resourceURI = GWTImage.getResourceURI(file);
+					String gradient0 = "url(" + resourceURI
+							+ ")";
+					DOM.setStyleAttribute(element, "backgroundRepeat",
+							"repeat-x");
+					DOM.setStyleAttribute(element, attribute0, gradient0);
+					// } else {
+//					System.out.println("gradient: " + resourceURI);
+					// }
 				}
 			};
 		}
@@ -141,14 +141,24 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 
 	private Style style;
 	private String color;
+	int[] rgb;
+	private Widget widget;
 
 	public GWTStyleColor(Style style) {
 		this.style = style;
+		if (style != null && style instanceof GWTWidgetStyle)
+			widget = getWidget();
+	}
+
+	public GWTStyleColor(Widget widget, Style style2) {
+		this.widget = widget;
+		this.style = style2;
 	}
 
 	@Override
 	public IColor setRGB(int r, int g, int b) {
 		String color = toString(r, g, b);
+		rgb = new int[] { r, g, b };
 		setColor(color);
 		return this;
 	}
@@ -160,10 +170,16 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 	}
 
 	private com.google.gwt.dom.client.Style stylable() {
-		GWTWidgetStyle gwtWidgetStyle = (GWTWidgetStyle) style;
-		com.google.gwt.dom.client.Style stylable = gwtWidgetStyle.widget
-				.getElement().getStyle();
+		Widget widget = getWidget();
+		com.google.gwt.dom.client.Style stylable = widget.getElement()
+				.getStyle();
 		return stylable;
+	}
+
+	protected Widget getWidget() {
+		GWTWidgetStyle gwtWidgetStyle = (GWTWidgetStyle) style;
+		Widget widget = gwtWidgetStyle.widget;
+		return widget;
 	}
 
 	static String toString(int r, int g, int b) {

@@ -37,8 +37,8 @@ class MenuWidgetImpl implements IMenuWidget, ITabGroup<IMenuItem> {
 		registerWidget.background(new ColorDecorator() {
 			@Override
 			public void decorate(IColor color) {
-				color.rgb(249, 249, 249).gradient().vertical()
-						.rgb(216, 216, 216);
+				color.rgb(249, 249, 249).gradient().fallback(215, 215, 215)
+						.vertical().rgb(215, 215, 215);
 			}
 		});
 		registerWidget.spacing = 3;
