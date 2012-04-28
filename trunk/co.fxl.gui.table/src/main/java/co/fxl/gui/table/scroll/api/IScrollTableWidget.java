@@ -37,6 +37,11 @@ import co.fxl.gui.table.util.api.IDragDropListener;
 
 public interface IScrollTableWidget<T> {
 
+	public interface INoEntitiesFoundDecorator {
+
+		void decorate(IContainer c);
+	}
+
 	public interface IStateToggleButton {
 
 		IStateToggleButton addState(String imageResource,
@@ -203,6 +208,8 @@ public interface IScrollTableWidget<T> {
 	IScrollTableColumn<Object> addFilterColumn();
 
 	IScrollTableWidget<T> plainContent(boolean plainContent);
+
+	IScrollTableWidget<T> noEntitiesFoundDecorator(INoEntitiesFoundDecorator d);
 
 	// IVerticalPanel editPanel();
 }

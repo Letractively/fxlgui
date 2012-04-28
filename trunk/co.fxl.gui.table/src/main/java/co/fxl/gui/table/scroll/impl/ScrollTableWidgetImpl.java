@@ -227,6 +227,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private StateToggleButton toggleButton;
 	private boolean plainContent;
 	private IVerticalPanel topPanelContainer;
+	private INoEntitiesFoundDecorator noEntitiesFoundDecorator;
 
 	@Override
 	public IScrollTableWidget<Object> height(final int height) {
@@ -326,8 +327,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					// .text("&#160;");
 					// IGridCell begin = topPanelCell(1, 0).valign().begin()
 					// .align().begin();
-					IVerticalPanel nef = dock.spacing(10).add().panel()
-							.vertical();
+					IGridPanel nefg = dock.spacing(10).add().panel().grid();
+					IVerticalPanel nef = nefg.cell(0, 0).panel().vertical();
 					String text = columns.isEmpty() ? "NO COLUMNS SPECIFIED"
 							: "NO ENTITIES FOUND";
 					nef.add().panel().vertical().spacing(4).add().label()
@@ -360,6 +361,11 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						}
 					}
 					buttonColumn++;
+					if (noEntitiesFoundDecorator != null) {
+						nefg.column(0).expand();
+						noEntitiesFoundDecorator.decorate(nefg.cell(1, 0)
+								.align().end().valign().begin());
+					}
 				} else
 					addFilter();
 				dock.add().label().text("&#160;");
@@ -1424,6 +1430,13 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> plainContent(boolean plainContent) {
 		this.plainContent = plainContent;
+		return this;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> noEntitiesFoundDecorator(
+			co.fxl.gui.table.scroll.api.IScrollTableWidget.INoEntitiesFoundDecorator d) {
+		noEntitiesFoundDecorator = d;
 		return this;
 	}
 }
