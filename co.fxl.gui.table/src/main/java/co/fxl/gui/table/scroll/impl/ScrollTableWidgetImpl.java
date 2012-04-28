@@ -353,7 +353,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 								.horizontal().align().begin().add().panel()
 								.grid().resize(3, description.size())
 								.spacing(4);
-						gp.cell(0, 0).label().text("FILTER").font().pixel(9)
+						gp.cell(0, 0).label().text("ACTIVE FILTER").font().pixel(9)
 								.color().gray();
 						int i = 0;
 						for (String[] d : description) {
