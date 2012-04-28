@@ -34,6 +34,7 @@ import co.fxl.gui.api.ITextInput;
 
 public class Heights {
 
+	public static boolean IGNORE_HEIGHTS = false;
 	public static final int CELL_HEIGHT = 28;
 	public static int TEXTFIELD_HEIGHT = 24;
 	public static final int COMBOBOX_HEIGHT = 24;
@@ -42,6 +43,8 @@ public class Heights {
 
 	public Heights(int inc) {
 		this.inc = inc;
+		if (IGNORE_HEIGHTS)
+			this.inc = 0;
 	}
 
 	public void decorate(IComboBox textField) {
