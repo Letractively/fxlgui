@@ -26,6 +26,8 @@ import com.google.gwt.user.client.ui.Image;
 
 public class GWTImage extends GWTElement<Image, IImage> implements IImage {
 
+	private static final String IMAGES = "images/";
+
 	public interface ImageResourceProvider {
 
 		ImageResource resolve(String resource);
@@ -65,7 +67,7 @@ public class GWTImage extends GWTElement<Image, IImage> implements IImage {
 				if (resolve != null)
 					container.widget.setResource(resolve);
 				else
-					localURI("images/" + resource);
+					localURI(IMAGES + resource);
 			}
 		} else
 			container.widget.getElement().getStyle()
@@ -81,8 +83,15 @@ public class GWTImage extends GWTElement<Image, IImage> implements IImage {
 
 	@Override
 	public IImage localURI(String uri) {
-		uRI(GWT.getModuleBaseURL() + uri);
-		return this;
+		return uRI(getURI(uri));
+	}
+
+	public static String getURI(String uri) {
+		return GWT.getModuleBaseURL() + uri;
+	}
+
+	public static String getResourceURI(String uri) {
+		return GWT.getModuleBaseURL() + IMAGES + uri;
 	}
 
 	@Override
@@ -97,7 +106,7 @@ public class GWTImage extends GWTElement<Image, IImage> implements IImage {
 			container.widget.setResource(prototype);
 			return this;
 		}
-		return localURI("images/" + name);
+		return localURI(IMAGES + name);
 	}
 
 	@Override
