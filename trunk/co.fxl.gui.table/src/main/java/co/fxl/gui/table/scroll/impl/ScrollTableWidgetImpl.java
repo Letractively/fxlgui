@@ -351,7 +351,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						// constraints.isSpecified())
 						// {
 						// && constraints.isConstraintSpecified()) {
-						IGridPanel gp = nef.addSpace(4).add().panel()
+						IGridPanel gp = nef.add().panel()
 								.horizontal().align().begin().add().panel()
 								.horizontal().align().begin().add().panel()
 								.grid().resize(3, description.size())
