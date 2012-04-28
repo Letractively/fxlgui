@@ -85,6 +85,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	// TODO Swing Scroll Panel block increment for single click on arrow is not
 	// enough
 
+	private static final int FONTSIZE_NOTHING_FOUND_FILTER = 12;
+
 	class State {
 
 		private String imageResource;
@@ -329,10 +331,11 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					// .align().begin();
 					IGridPanel nefg = dock.spacing(10).add().panel().grid();
 					IVerticalPanel nef = nefg.cell(0, 0).panel().vertical();
-					String text = columns.isEmpty() ? "NO COLUMNS SPECIFIED"
-							: "NO ENTITIES FOUND";
+					String text = columns.isEmpty() ? "No columns specified."
+							: "No entities found.";
 					nef.add().panel().vertical().spacing(4).add().label()
-							.text(text).font().pixel(10).color().gray();
+							.text(text);// .font().weight().bold();//
+										// .font().pixel(10).color().gray();
 					furtherReduce = true;
 					List<String[]> description = constraints.description();
 					if (constraints.configuration() != null
@@ -353,8 +356,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 								.horizontal().align().begin().add().panel()
 								.grid().resize(3, description.size())
 								.spacing(4);
-						gp.cell(0, 0).label().text("ACTIVE FILTER").font().pixel(9)
-								.color().gray();
+						gp.cell(0, 0).label().text("Active filter:").font()
+								.pixel(FONTSIZE_NOTHING_FOUND_FILTER).color().gray();
 						int i = 0;
 						for (String[] d : description) {
 							i = addQueryLabel(gp, i, d);
@@ -506,11 +509,11 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	private int addQueryLabel(IGridPanel gp, int i, String[] d) {
 		gp.cell(1, i).label().text(d[0] + (d[1].equals("") ? "" : ":")).font()
-				.pixel(9).color().gray();
+				.pixel(FONTSIZE_NOTHING_FOUND_FILTER).color().gray();
 		if (d[1].length() > 24)
 			d[1] = d[1].substring(0, 24) + "...";
 		gp.cell(2, i++).label().autoWrap(true).text(d[1]).font().weight()
-				.bold().pixel(9).color().gray();
+				.bold().pixel(FONTSIZE_NOTHING_FOUND_FILTER).color().gray();
 		return i;
 	}
 
