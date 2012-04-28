@@ -6,8 +6,6 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Paint;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.swing.JPanel;
 
@@ -32,8 +30,6 @@ public class PanelComponent extends JPanel {
 		return d;
 	}
 
-	private static Set<String> gradients = new HashSet<String>();
-
 	@Override
 	public void paintComponent(Graphics g) {
 		if (fxlColor == null || fxlColor.gradient == null) {
@@ -46,11 +42,6 @@ public class PanelComponent extends JPanel {
 		Color sc = getBackground();
 		Color ec = new Color(fxlColor.gradient.color.rgb[0],
 				fxlColor.gradient.color.rgb[1], fxlColor.gradient.color.rgb[2]);
-		String x = "gradient_" + height + "x" + fxlColor.gradient.color.rgb[0]
-				+ "_" + fxlColor.rgb[0] + ".png";
-		if (!gradients.contains(x))
-			System.out.println(x);
-		gradients.add(x);
 		paint = new GradientPaint(width / 2, 0, sc, width / 2, height, ec);
 		Graphics2D g2d = (Graphics2D) g;
 		Paint oldPaint = g2d.getPaint();
