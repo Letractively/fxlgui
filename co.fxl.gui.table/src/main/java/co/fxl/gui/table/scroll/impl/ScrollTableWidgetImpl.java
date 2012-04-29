@@ -322,73 +322,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			if (columns.size() == 0
 					|| (rows.size() == 0 && (constraints == null
 							|| !constraints.isConstraintSpecified() || !hasFilter()))) {
-				IVerticalPanel dock = container.add().panel().vertical();
-				boolean furtherReduce = false;
-				if (showNoRowsFound || columns.size() == 0) {
-					// topPanelCell(viewInc + 0, 0).width(10).label()
-					// .text("&#160;");
-					// IGridCell begin = topPanelCell(1, 0).valign().begin()
-					// .align().begin();
-					IGridPanel nefg = dock.spacing(10).add().panel().grid();
-					IVerticalPanel nef = nefg.cell(0, 0).panel().vertical();
-					String text = columns.isEmpty() ? "No columns specified."
-							: "No entities found.";
-					nef.add().panel().vertical().spacing(4).add().label()
-							.text(text);// .font().weight().bold();//
-										// .font().pixel(10).color().gray();
-					furtherReduce = true;
-					List<String[]> description = constraints.description();
-					if (constraints.configuration() != null
-							&& !columns.isEmpty())
-						description
-								.add(0,
-										new String[] {
-												constraints.configuration(), "" });
-					if (!description.isEmpty() && !columns.isEmpty()) {// constraints
-																		// !=
-																		// null
-																		// &&
-						// constraints.isSpecified())
-						// {
-						// && constraints.isConstraintSpecified()) {
-						IGridPanel gp = nef.add().panel()
-								.horizontal().align().begin().add().panel()
-								.horizontal().align().begin().add().panel()
-								.grid().resize(3, description.size())
-								.spacing(4);
-						gp.cell(0, 0).label().text("Active filter:").font()
-								.pixel(FONTSIZE_NOTHING_FOUND_FILTER).color().gray();
-						int i = 0;
-						for (String[] d : description) {
-							i = addQueryLabel(gp, i, d);
-						}
-					}
-					buttonColumn++;
-					if (noEntitiesFoundDecorator != null) {
-						nefg.column(0).expand();
-						noEntitiesFoundDecorator.decorate(nefg.cell(1, 0)
-								.align().end().valign().begin());
-					}
-				} else
-					addFilter();
-				dock.add().label().text("&#160;");
-				if (!externalStatusPanel) {
-					IGridPanel statusPanel2 = statusPanel();
-					statusPanel2.cell(0, 0).label().text("&#160;");
-					statusPanel2.height(32);
-				}
-				if (hasFilter())
-					addFilter();
-				setUpTopPanel();
-				int height = heightMinusTopPanel();
-				// if (showNoRowsFound) {
-				// hack for IE
-				if (reduceHeightIfEmpty && height >= 80)
-					height -= 30;
-				// }
-				if (furtherReduce && height >= 80 && externalStatusPanel)
-					height -= 30;
-				dock.height(height);
+				showNoRowsFound();
 			} else if (rows.size() == 0
 					&& (constraints != null
 							&& constraints.isConstraintSpecified() && hasFilter())) {
@@ -505,6 +439,76 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			throw new UnsupportedOperationException();
 		}
 		return this;
+	}
+
+	protected void showNoRowsFound() {
+		IVerticalPanel dock = container.add().panel().vertical();
+		boolean furtherReduce = false;
+		if (showNoRowsFound || columns.size() == 0) {
+			// topPanelCell(viewInc + 0, 0).width(10).label()
+			// .text("&#160;");
+			// IGridCell begin = topPanelCell(1, 0).valign().begin()
+			// .align().begin();
+			IGridPanel nefg = dock.spacing(10).add().panel().grid();
+			IVerticalPanel nef = nefg.cell(0, 0).panel().vertical();
+			String text = columns.isEmpty() ? "No columns specified."
+					: "No entities found.";
+			nef.add().panel().vertical().spacing(4).add().label()
+					.text(text);// .font().weight().bold();//
+								// .font().pixel(10).color().gray();
+			furtherReduce = true;
+			List<String[]> description = constraints.description();
+			if (constraints.configuration() != null
+					&& !columns.isEmpty())
+				description
+						.add(0,
+								new String[] {
+										constraints.configuration(), "" });
+			if (!description.isEmpty() && !columns.isEmpty()) {// constraints
+																// !=
+																// null
+																// &&
+				// constraints.isSpecified())
+				// {
+				// && constraints.isConstraintSpecified()) {
+				IGridPanel gp = nef.add().panel()
+						.horizontal().align().begin().add().panel()
+						.horizontal().align().begin().add().panel()
+						.grid().resize(3, description.size())
+						.spacing(4);
+				gp.cell(0, 0).label().text("Active filter:").font()
+						.pixel(FONTSIZE_NOTHING_FOUND_FILTER).color().gray();
+				int i = 0;
+				for (String[] d : description) {
+					i = addQueryLabel(gp, i, d);
+				}
+			}
+			buttonColumn++;
+			if (noEntitiesFoundDecorator != null) {
+				nefg.column(0).expand();
+				noEntitiesFoundDecorator.decorate(nefg.cell(1, 0)
+						.align().end().valign().begin());
+			}
+		} else
+			addFilter();
+		dock.add().label().text("&#160;");
+		if (!externalStatusPanel) {
+			IGridPanel statusPanel2 = statusPanel();
+			statusPanel2.cell(0, 0).label().text("&#160;");
+			statusPanel2.height(32);
+		}
+		if (hasFilter())
+			addFilter();
+		setUpTopPanel();
+		int height = heightMinusTopPanel();
+		// if (showNoRowsFound) {
+		// hack for IE
+		if (reduceHeightIfEmpty && height >= 80)
+			height -= 30;
+		// }
+		if (furtherReduce && height >= 80 && externalStatusPanel)
+			height -= 30;
+		dock.height(height);
 	}
 
 	private int addQueryLabel(IGridPanel gp, int i, String[] d) {
