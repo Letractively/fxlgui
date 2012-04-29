@@ -211,5 +211,7 @@ public interface IScrollTableWidget<T> {
 
 	IScrollTableWidget<T> noEntitiesFoundDecorator(INoEntitiesFoundDecorator d);
 
+	IScrollTableWidget<T> filterQueryLabel(String filterQueryLabel);
+
 	// IVerticalPanel editPanel();
 }

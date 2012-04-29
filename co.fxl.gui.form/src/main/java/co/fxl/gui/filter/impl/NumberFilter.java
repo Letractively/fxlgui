@@ -19,8 +19,8 @@
 package co.fxl.gui.filter.impl;
 
 import co.fxl.gui.api.IUpdateable;
-import co.fxl.gui.filter.impl.IFilterConstraint.IDoubleRangeConstraint;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
+import co.fxl.gui.filter.impl.IFilterConstraint.IDoubleRangeConstraint;
 import co.fxl.gui.form.impl.Validation;
 
 class NumberFilter extends RangeFilter<Number> {
@@ -44,14 +44,17 @@ class NumberFilter extends RangeFilter<Number> {
 
 		@Override
 		public String toString() {
-			return wNull(lowerBound) + "-" + wNull(upperBound);
+			return wNull(lowerBound) + " - " + wNull(upperBound);
 		}
 	}
 
 	public String wNull(Double lowerBound) {
 		if (lowerBound == null)
 			return "";
-		return lowerBound.toString();
+		String string = lowerBound.toString();
+		if (string.endsWith(".0"))
+			string = string.substring(0, string.indexOf(".0"));
+		return string;
 	}
 
 	private Double lowerBound = null;
