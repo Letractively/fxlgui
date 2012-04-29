@@ -85,8 +85,6 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	// TODO Swing Scroll Panel block increment for single click on arrow is not
 	// enough
 
-	private static final int FONTSIZE_NOTHING_FOUND_FILTER = 12;
-
 	class State {
 
 		private String imageResource;
@@ -116,6 +114,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	}
 
+	private static final int FONTSIZE_NOTHING_FOUND_FILTER = 12;
 	// private static final boolean ALLOW_RESIZE = false;
 	private static final int HEADER_ROW_HEIGHT = 24;
 	private static final int ROW_HEIGHT = 22;
@@ -230,6 +229,13 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private boolean plainContent;
 	private IVerticalPanel topPanelContainer;
 	private INoEntitiesFoundDecorator noEntitiesFoundDecorator;
+	private String filterQueryLabel;
+
+	@Override
+	public IScrollTableWidget<Object> filterQueryLabel(String filterQueryLabel) {
+		this.filterQueryLabel = filterQueryLabel;
+		return this;
+	}
 
 	@Override
 	public IScrollTableWidget<Object> height(final int height) {
@@ -326,8 +332,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			} else if (rows.size() == 0
 					&& (constraints != null
 							&& constraints.isConstraintSpecified() && hasFilter())) {
-				addFilter();
-				setUpTopPanel();
+				showNoRowsFound();
 			} else {
 				addFilter();
 				setUpTopPanel();
@@ -441,7 +446,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		return this;
 	}
 
-	protected void showNoRowsFound() {
+	private void showNoRowsFound() {
 		IVerticalPanel dock = container.add().panel().vertical();
 		boolean furtherReduce = false;
 		if (showNoRowsFound || columns.size() == 0) {
@@ -453,17 +458,20 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			IVerticalPanel nef = nefg.cell(0, 0).panel().vertical();
 			String text = columns.isEmpty() ? "No columns specified."
 					: "No entities found.";
-			nef.add().panel().vertical().spacing(4).add().label()
-					.text(text);// .font().weight().bold();//
-								// .font().pixel(10).color().gray();
+			nef.add().panel().vertical().spacing(4).add().label().text(text);// .font().weight().bold();//
+																				// .font().pixel(10).color().gray();
 			furtherReduce = true;
 			List<String[]> description = constraints.description();
-			if (constraints.configuration() != null
-					&& !columns.isEmpty())
+			boolean hasHeader = false;
+			if (constraints.configuration() != null && !columns.isEmpty()) {
+				hasHeader = true;
 				description
 						.add(0,
 								new String[] {
-										constraints.configuration(), "" });
+										filterQueryLabel != null ? filterQueryLabel
+												: "Filter Query",
+										constraints.configuration() });
+			}
 			if (!description.isEmpty() && !columns.isEmpty()) {// constraints
 																// !=
 																// null
@@ -471,23 +479,22 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				// constraints.isSpecified())
 				// {
 				// && constraints.isConstraintSpecified()) {
-				IGridPanel gp = nef.add().panel()
-						.horizontal().align().begin().add().panel()
-						.horizontal().align().begin().add().panel()
-						.grid().resize(3, description.size())
+				IGridPanel gp = nef.add().panel().horizontal().align().begin()
+						.add().panel().horizontal().align().begin().add()
+						.panel().grid().resize(3, description.size())
 						.spacing(4);
-				gp.cell(0, 0).label().text("Active filter:").font()
-						.pixel(FONTSIZE_NOTHING_FOUND_FILTER).color().gray();
+				// gp.cell(0, 0).label().text("Active filter:").font()
+				// .pixel(FONTSIZE_NOTHING_FOUND_FILTER).color().gray();
 				int i = 0;
 				for (String[] d : description) {
-					i = addQueryLabel(gp, i, d);
+					i = addQueryLabel(hasHeader && i == 0, gp, i, d);
 				}
 			}
 			buttonColumn++;
 			if (noEntitiesFoundDecorator != null) {
 				nefg.column(0).expand();
-				noEntitiesFoundDecorator.decorate(nefg.cell(1, 0)
-						.align().end().valign().begin());
+				noEntitiesFoundDecorator.decorate(nefg.cell(1, 0).align().end()
+						.valign().begin());
 			}
 		} else
 			addFilter();
@@ -511,13 +518,18 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		dock.height(height);
 	}
 
-	private int addQueryLabel(IGridPanel gp, int i, String[] d) {
-		gp.cell(1, i).label().text(d[0] + (d[1].equals("") ? "" : ":")).font()
-				.pixel(FONTSIZE_NOTHING_FOUND_FILTER).color().gray();
+	private int addQueryLabel(boolean bold, IGridPanel gp, int i, String[] d) {
+		ILabel l = gp.cell(0, i).label()
+				.text(d[0] + (d[1].equals("") ? "" : ":"));
+		// if (bold)
+		// l.font().weight().bold();
+		l.font().pixel(FONTSIZE_NOTHING_FOUND_FILTER).color().gray();
 		if (d[1].length() > 24)
 			d[1] = d[1].substring(0, 24) + "...";
-		gp.cell(2, i++).label().autoWrap(true).text(d[1]).font().weight()
-				.bold().pixel(FONTSIZE_NOTHING_FOUND_FILTER).color().gray();
+		l = gp.cell(1, i++).label().autoWrap(true).text(d[1]);
+		l.font().pixel(FONTSIZE_NOTHING_FOUND_FILTER).color().gray();
+		// if(bold)
+		// l.font().weight().bold();
 		return i;
 	}
 
