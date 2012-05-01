@@ -260,4 +260,10 @@ class SwingPopUp implements IPopUp {
 		// TODO ... throw new UnsupportedOperationException();
 		return this;
 	}
+
+	@Override
+	public IPopUp opacity(double opacity) {
+		// TODO ... throw new UnsupportedOperationException();
+		return this;
+	}
 }

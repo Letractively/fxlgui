@@ -41,4 +41,6 @@ public interface IPopUp extends IBordered, ILocated<IPopUp> {
 	boolean visible();
 
 	IPopUp glass(boolean glass);
+
+	IPopUp opacity(double opacity);
 }

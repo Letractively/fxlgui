@@ -65,8 +65,8 @@ class GWTPopUp implements IPopUp, WidgetParent {
 	public void add(Widget widget) {
 		if (w > 0)
 			widget.setWidth((w - 16) + "px");
-//		if (h > 0)
-//			widget.setHeight(h + "px");
+		// if (h > 0)
+		// widget.setHeight(h + "px");
 		popUp.setWidget(widget);
 	}
 
@@ -195,5 +195,11 @@ class GWTPopUp implements IPopUp, WidgetParent {
 	@Override
 	public boolean visible() {
 		return popUp.isVisible() && popUp.isAttached();
+	}
+
+	@Override
+	public IPopUp opacity(double opacity) {
+		popUp.getElement().getStyle().setOpacity(opacity);
+		return this;
 	}
 }
