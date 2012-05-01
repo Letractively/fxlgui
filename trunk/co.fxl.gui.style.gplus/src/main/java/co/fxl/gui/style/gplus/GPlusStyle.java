@@ -104,7 +104,7 @@ public class GPlusStyle implements IStyle {
 		if (!activate) {
 			Constants.remove("TOP_SPACING");
 		}
-		Constants.put("ADD_NAVIGATION_BAR", activate);
+//		Constants.put("ADD_NAVIGATION_BAR", activate);
 		return this;
 	}
 }
