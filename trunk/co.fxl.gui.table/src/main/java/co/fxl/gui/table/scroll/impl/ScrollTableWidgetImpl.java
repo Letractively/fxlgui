@@ -454,42 +454,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			// .text("&#160;");
 			// IGridCell begin = topPanelCell(1, 0).valign().begin()
 			// .align().begin();
-			IGridPanel nefg = dock.spacing(10).add().panel().grid();
-			IVerticalPanel nef = nefg.cell(0, 0).panel().vertical();
-			String text = columns.isEmpty() ? "No columns specified."
-					: "No entities found.";
-			nef.add().panel().vertical().spacing(4).add().label().text(text);// .font().weight().bold();//
-																				// .font().pixel(10).color().gray();
 			furtherReduce = true;
-			List<String[]> description = constraints.description();
-			boolean hasHeader = false;
-			if (constraints.configuration() != null && !columns.isEmpty()) {
-				hasHeader = true;
-				description
-						.add(0,
-								new String[] {
-										filterQueryLabel != null ? filterQueryLabel
-												: "Filter Query",
-										constraints.configuration() });
-			}
-			if (!description.isEmpty() && !columns.isEmpty()) {// constraints
-																// !=
-																// null
-																// &&
-				// constraints.isSpecified())
-				// {
-				// && constraints.isConstraintSpecified()) {
-				IGridPanel gp = nef.add().panel().horizontal().align().begin()
-						.add().panel().horizontal().align().begin().add()
-						.panel().grid().resize(3, description.size())
-						.spacing(4);
-				// gp.cell(0, 0).label().text("Active filter:").font()
-				// .pixel(FONTSIZE_NOTHING_FOUND_FILTER).color().gray();
-				int i = 0;
-				for (String[] d : description) {
-					i = addQueryLabel(hasHeader && i == 0, gp, i, d);
-				}
-			}
+			IGridPanel nefg = addNoEntitiesFound(dock);
 			buttonColumn++;
 			if (noEntitiesFoundDecorator != null) {
 				nefg.column(0).expand();
@@ -518,7 +484,50 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		dock.height(height);
 	}
 
-	private int addQueryLabel(boolean bold, IGridPanel gp, int i, String[] d) {
+	public IGridPanel addNoEntitiesFound(IVerticalPanel dock) {
+		return addNoEntitiesFound(dock, columns.isEmpty(), constraints,
+				filterQueryLabel);
+	}
+
+	public static IGridPanel addNoEntitiesFound(IVerticalPanel dock,
+			boolean columnsIsEmpty, IFilterConstraints constraints,
+			String filterQueryLabel) {
+		IGridPanel nefg = dock.spacing(10).add().panel().grid();
+		IVerticalPanel nef = nefg.cell(0, 0).panel().vertical();
+		String text = columnsIsEmpty ? "No columns specified."
+				: "No entities found.";
+		nef.add().panel().vertical().spacing(4).add().label().text(text);// .font().weight().bold();//
+																			// .font().pixel(10).color().gray();
+		List<String[]> description = constraints.description();
+		boolean hasHeader = false;
+		if (constraints.configuration() != null && !columnsIsEmpty) {
+			hasHeader = true;
+			description.add(0, new String[] {
+					filterQueryLabel != null ? filterQueryLabel
+							: "Filter Query", constraints.configuration() });
+		}
+		if (!description.isEmpty() && !columnsIsEmpty) {// constraints
+														// !=
+														// null
+														// &&
+			// constraints.isSpecified())
+			// {
+			// && constraints.isConstraintSpecified()) {
+			IGridPanel gp = nef.add().panel().horizontal().align().begin()
+					.add().panel().horizontal().align().begin().add().panel()
+					.grid().resize(3, description.size()).spacing(4);
+			// gp.cell(0, 0).label().text("Active filter:").font()
+			// .pixel(FONTSIZE_NOTHING_FOUND_FILTER).color().gray();
+			int i = 0;
+			for (String[] d : description) {
+				i = addQueryLabel(hasHeader && i == 0, gp, i, d);
+			}
+		}
+		return nefg;
+	}
+
+	private static int addQueryLabel(boolean bold, IGridPanel gp, int i,
+			String[] d) {
 		ILabel l = gp.cell(0, i).label()
 				.text(d[0] + (d[1].equals("") ? "" : ":"));
 		// if (bold)
