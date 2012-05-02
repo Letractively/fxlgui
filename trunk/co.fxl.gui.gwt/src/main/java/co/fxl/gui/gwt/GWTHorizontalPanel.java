@@ -36,6 +36,12 @@ class GWTHorizontalPanel extends GWTPanel<HorizontalPanel, IHorizontalPanel>
 		align().begin();
 		super.container.widget
 				.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+
+		// TODO this makes
+		// .add().panel().horizontal().align().begin().add().panel().horizontal().align().begin()
+		// unnecessary
+		super.container.widget.getElement().getStyle().clearWidth();
+
 		spacing(0);
 	}
 

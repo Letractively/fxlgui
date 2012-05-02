@@ -625,7 +625,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	void createFilter() {
 		if (filter == null) {
 			IHorizontalPanel h = topPanelCell(0, 0).panel().horizontal()
-					.align().begin().add().panel().horizontal().align().begin()
+					.align().begin()
 					.addSpace(8);
 			if (toggleButton != null) {
 				decorateToggleButtonCell(h.add().panel().horizontal().align()
