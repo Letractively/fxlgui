@@ -29,6 +29,7 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.table.scroll.impl.ScrollTableWidgetImpl;
 import co.fxl.gui.table.util.api.IDragDropListener;
@@ -184,7 +185,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		if (size == 0) {
 			IVerticalPanel l = leftPanel(treeDockPanel).panel().vertical()
 					.spacing(16);
-			ScrollTableWidgetImpl.addNoEntitiesFound(l, false, null, null);
+			ScrollTableWidgetImpl.addNoEntitiesFound(l, false, constraints,
+					filterQueryLabel);
 
 			// TODO FEATURE: Usability: nice 2 have: show filter details like in
 			// scrolltable
@@ -305,6 +307,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 
 	boolean hasHeader = true;
 	private boolean hasScrollbar = true;
+	protected IFilterConstraints constraints;
+	protected String filterQueryLabel;
 
 	public void addKeyListeners(final IKeyRecipient<?> v) {
 		if (v == null)
@@ -592,5 +596,13 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	@Override
 	public boolean allowInsertUnder() {
 		return allowInsertUnder;
+	}
+
+	@Override
+	public ILazyScrollPane constraints(IFilterConstraints constraints,
+			String filterQueryLabel) {
+		this.constraints = constraints;
+		this.filterQueryLabel = filterQueryLabel;
+		return this;
 	}
 }
