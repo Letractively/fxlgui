@@ -498,6 +498,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				: "No entities found.";
 		nef.add().panel().vertical().spacing(4).add().label().text(text);// .font().weight().bold();//
 																			// .font().pixel(10).color().gray();
+		if (constraints == null)
+			return nefg;
 		List<String[]> description = constraints.description();
 		boolean hasHeader = false;
 		if (constraints.configuration() != null && !columnsIsEmpty) {
