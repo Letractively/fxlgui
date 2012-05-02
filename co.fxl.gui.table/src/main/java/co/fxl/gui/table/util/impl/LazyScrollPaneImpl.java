@@ -30,6 +30,7 @@ import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.table.scroll.impl.ScrollTableWidgetImpl;
 import co.fxl.gui.table.util.api.IDragDropListener;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 import co.fxl.gui.table.util.api.IUpDownIndex;
@@ -181,9 +182,9 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 			treeDockPanel.height(height);
 		}
 		if (size == 0) {
-			leftPanel(treeDockPanel).panel().vertical().spacing(16).add()
-					.label().text("No entities found.")// .font().pixel(10).color().gray()
-			;
+			IVerticalPanel l = leftPanel(treeDockPanel).panel().vertical()
+					.spacing(16);
+			ScrollTableWidgetImpl.addNoEntitiesFound(l, false, null, null);
 
 			// TODO FEATURE: Usability: nice 2 have: show filter details like in
 			// scrolltable
