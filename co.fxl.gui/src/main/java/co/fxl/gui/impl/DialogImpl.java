@@ -40,7 +40,7 @@ public class DialogImpl implements IDialog {
 		private String imageResource;
 		private String text;
 		private CommandLink l;
-		
+
 		DialogButtonImpl() {
 			listeners.add(new IClickListener() {
 				@Override
@@ -120,6 +120,7 @@ public class DialogImpl implements IDialog {
 	private IContainer container;
 	protected int width = -1;
 	private int height = -1;
+	private boolean atLastClick = false;
 
 	public DialogImpl(IDisplay display) {
 		this.display = display;
@@ -191,7 +192,10 @@ public class DialogImpl implements IDialog {
 				popUp.width(width);
 			} else if (height != -1)
 				popUp.height(height);
-			popUp.center();
+			if (atLastClick)
+				popUp.atLastClick(0, 0);
+			else
+				popUp.center();
 			IVerticalPanel panel = popUp.container().panel().vertical();
 			WidgetTitle.decorateBorder(panel.spacing(1).border().color());
 			WidgetTitle t = new WidgetTitle(panel.add().panel())
@@ -302,6 +306,12 @@ public class DialogImpl implements IDialog {
 	@Override
 	public IDialog height(int height) {
 		this.height = height;
+		return this;
+	}
+
+	@Override
+	public IDialog atLastClick() {
+		atLastClick = true;
 		return this;
 	}
 }
