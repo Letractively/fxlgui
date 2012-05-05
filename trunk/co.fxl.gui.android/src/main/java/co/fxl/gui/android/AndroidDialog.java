@@ -184,4 +184,9 @@ class AndroidDialog implements IDialog {
 	public IDialog height(int height) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public IDialog atLastClick() {
+		throw new UnsupportedOperationException();
+	}
 }
