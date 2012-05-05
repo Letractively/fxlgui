@@ -71,4 +71,6 @@ public interface IDialog {
 	IDialog width(int width);
 
 	IDialog height(int height);
+	
+	IDialog atLastClick();
 }
