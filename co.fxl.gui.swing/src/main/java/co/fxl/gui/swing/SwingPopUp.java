@@ -233,8 +233,9 @@ class SwingPopUp implements IPopUp {
 	}
 
 	@Override
-	public IPopUp atLastClick() {
-		offset(SwingDisplay.lastClickX, SwingDisplay.lastClickY);
+	public IPopUp atLastClick(int offsetX, int offsetY) {
+		offset(SwingDisplay.lastClickX + offsetX, SwingDisplay.lastClickY
+				+ offsetY);
 		return this;
 	}
 
