@@ -58,10 +58,15 @@ class FlexHorizontalPanelImpl implements IFlexHorizontalPanel<Object> {
 
 		@Override
 		public void onDragEnd() {
+			drawChildren(children);
 		}
 
 		@Override
 		public void onDropOn(IDragEvent point) {
+			flip(this, getDroppedOn(point));
+		}
+
+		private Child getDroppedOn(IDragEvent point) {
 			String dragID = point.iD();
 			Child droppedOn = null;
 			for (Child c : children) {
@@ -71,8 +76,8 @@ class FlexHorizontalPanelImpl implements IFlexHorizontalPanel<Object> {
 				}
 			}
 			if (droppedOn == null)
-				return;
-			flip(this, droppedOn);
+				return null;
+			return droppedOn;
 		}
 	}
 
@@ -87,6 +92,12 @@ class FlexHorizontalPanelImpl implements IFlexHorizontalPanel<Object> {
 	}
 
 	protected void flip(Child dragged, Child droppedOn) {
+		flip(children, dragged, droppedOn);
+	}
+
+	protected void flip(List<Child> children, Child dragged, Child droppedOn) {
+		if (droppedOn == null)
+			return;
 		if (dragged == droppedOn)
 			return;
 		int index = children.indexOf(droppedOn);
@@ -95,6 +106,10 @@ class FlexHorizontalPanelImpl implements IFlexHorizontalPanel<Object> {
 			children.add(dragged);
 		else
 			children.add(index, dragged);
+		drawChildren(children);
+	}
+
+	protected void drawChildren(List<Child> children) {
 		panel.clear();
 		panel.addSpace(spaceLeft);
 		for (Child c : children) {

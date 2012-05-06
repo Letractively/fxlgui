@@ -111,7 +111,7 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 	@SuppressWarnings("unchecked")
 	@Override
 	public R add(IElement<?> element) {
-		add((IElement<?>) element.nativeElement());
+		add((Widget) element.nativeElement());
 		return (R) this;
 	}
 
