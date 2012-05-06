@@ -193,7 +193,7 @@ public class GWTContainer<T extends Widget> implements IContainer {
 
 	@Override
 	public ISplitPane splitPane() {
-		setComponent((T) GWTSplitPane.adapter.newSplitPanel());
+		setComponent((T) GWTSplitPane.factory.create().newSplitPanel());
 		return (ISplitPane) (element = new GWTSplitPane(
 				(GWTContainer<Widget>) this));
 	}

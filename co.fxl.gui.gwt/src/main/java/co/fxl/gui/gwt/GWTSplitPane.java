@@ -37,22 +37,58 @@ import com.google.gwt.user.client.ui.Widget;
 public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 		ISplitPane, ISplitPaneResizeListener {
 
-	private static final int INC = 5;
-	public static ISplitPanelAdp adapter = new ISplitPanelAdp() {
+	// private static final class IESplitPaneAdp implements ISplitPanelAdp {
+	// private boolean isScheduled = false;
+	//
+	// @Override
+	// public void setLeftWidget(Widget p, Widget component) {
+	// ((Grid) p).setWidget(0, 0, component);
+	// }
+	//
+	// @Override
+	// public void setRightWidget(Widget p, Widget component) {
+	// ((Grid) p).setWidget(1, 0, component);
+	// }
+	//
+	// @Override
+	// public void addListener(final Widget widget,
+	// final ISplitPaneResizeListener listener) {
+	// }
+	//
+	// @Override
+	// public void setSplitPosition(Widget p, String string) {
+	// ((Grid) p).getWidget(0, 0).setWidth(string);
+	// }
+	//
+	// @Override
+	// public Widget newSplitPanel() {
+	// return new Grid();
+	// }
+	//
+	// @Override
+	// public boolean supportsListeners() {
+	// return false;
+	// }
+	// }
 
+	private static final class SplitPaneAdp implements ISplitPanelAdp {
 		private boolean isScheduled = false;
-
-		// private int maxTrys = 10;
-		// private Runnable runnable;
+		private boolean rightSet;
+		private String lazySplitPosition;
+		private boolean leftSet;
 
 		@Override
 		public void setLeftWidget(Widget p, Widget component) {
+			leftSet = true;
 			((HorizontalSplitPanel) p).setLeftWidget(component);
+			updateSplitPosition(p);
 		}
 
 		@Override
 		public void setRightWidget(Widget p, Widget component) {
+			rightSet = true;
 			((HorizontalSplitPanel) p).setRightWidget(component);
+			updateSplitPosition(p);
 		}
 
 		@Override
@@ -111,7 +147,13 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 
 		@Override
 		public void setSplitPosition(Widget p, String string) {
-			((HorizontalSplitPanel) p).setSplitPosition(string);
+			lazySplitPosition = string;
+			updateSplitPosition(p);
+		}
+
+		protected void updateSplitPosition(Widget p) {
+			if (leftSet && rightSet && lazySplitPosition != null)
+				((HorizontalSplitPanel) p).setSplitPosition(lazySplitPosition);
 		}
 
 		@Override
@@ -123,8 +165,26 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 		public boolean supportsListeners() {
 			return true;
 		}
+	}
+
+	private static final int INC = 5;
+	public static ISplitPanelAdpFactory factory = new ISplitPanelAdpFactory() {
+
+		@Override
+		public ISplitPanelAdp create() {
+			return // GWTDisplay.isInternetExplorer() ? new
+			// IESplitPaneAdp()
+			// :
+			new SplitPaneAdp();
+		}
 
 	};
+	public ISplitPanelAdp adapter = factory.create();
+
+	public interface ISplitPanelAdpFactory {
+
+		ISplitPanelAdp create();
+	}
 
 	public interface ISplitPanelAdp {
 
