@@ -24,7 +24,9 @@ import co.fxl.gui.api.IContainer;
 
 public interface IFlexHorizontalPanel<T> {
 
-	IFlexHorizontalPanel<T> addSpace(int spaceLeft);
+	IFlexHorizontalPanel<T> spaceLeft(int spaceLeft);
+
+	IFlexHorizontalPanel<T> spaceBefore(int spaceBefore);
 
 	IContainer add();
 
