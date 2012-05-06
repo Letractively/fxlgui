@@ -18,22 +18,29 @@
  */
 package co.fxl.gui.panel.impl;
 
+import java.util.List;
+
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.panel.api.IFlexHorizontalPanel;
 
-class FlexHorizontalPanelImpl implements IFlexHorizontalPanel {
+class FlexHorizontalPanelImpl implements IFlexHorizontalPanel<Object> {
 
 	FlexHorizontalPanelImpl(IContainer container) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public IContainer add() {
+	public IContainer add(Object iD) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public IFlexHorizontalPanel addPanel() {
+	public IFlexHorizontalPanel<Object> addPanel(Object iD) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public List<Object> order() {
 		throw new UnsupportedOperationException();
 	}
 }

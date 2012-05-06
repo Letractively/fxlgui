@@ -18,12 +18,16 @@
  */
 package co.fxl.gui.panel.api;
 
+import java.util.List;
+
 import co.fxl.gui.api.IContainer;
 
-public interface IFlexHorizontalPanel {
+public interface IFlexHorizontalPanel<T> {
 
-	IContainer add();
+	IContainer add(T iD);
 
-	IFlexHorizontalPanel addPanel();
+	IFlexHorizontalPanel<T> addPanel(T iD);
+
+	List<T> order();
 
 }
