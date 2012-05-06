@@ -43,4 +43,19 @@ class FlexHorizontalPanelImpl implements IFlexHorizontalPanel<Object> {
 	public List<Object> order() {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public IFlexHorizontalPanel<Object> spaceLeft(int spaceLeft) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IFlexHorizontalPanel<Object> spaceInner(int spaceInner) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IFlexHorizontalPanel<Object> title(String title) {
+		throw new UnsupportedOperationException();
+	}
 }
