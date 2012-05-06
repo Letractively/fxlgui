@@ -37,45 +37,12 @@ import com.google.gwt.user.client.ui.Widget;
 public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 		ISplitPane, ISplitPaneResizeListener {
 
-	// private static final class IESplitPaneAdp implements ISplitPanelAdp {
-	// private boolean isScheduled = false;
-	//
-	// @Override
-	// public void setLeftWidget(Widget p, Widget component) {
-	// ((Grid) p).setWidget(0, 0, component);
-	// }
-	//
-	// @Override
-	// public void setRightWidget(Widget p, Widget component) {
-	// ((Grid) p).setWidget(1, 0, component);
-	// }
-	//
-	// @Override
-	// public void addListener(final Widget widget,
-	// final ISplitPaneResizeListener listener) {
-	// }
-	//
-	// @Override
-	// public void setSplitPosition(Widget p, String string) {
-	// ((Grid) p).getWidget(0, 0).setWidth(string);
-	// }
-	//
-	// @Override
-	// public Widget newSplitPanel() {
-	// return new Grid();
-	// }
-	//
-	// @Override
-	// public boolean supportsListeners() {
-	// return false;
-	// }
-	// }
-
 	private static final class SplitPaneAdp implements ISplitPanelAdp {
 		private boolean isScheduled = false;
 		private boolean rightSet;
 		private String lazySplitPosition;
 		private boolean leftSet;
+		private ISplitPaneResizeListener lazyListener;
 
 		@Override
 		public void setLeftWidget(Widget p, Widget component) {
@@ -94,55 +61,11 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 		@Override
 		public void addListener(final Widget widget,
 				final ISplitPaneResizeListener listener) {
-			// runnable = new Runnable() {
-			// @Override
-			// public void run() {
-			Element rootElement = widget.getElement();
-			final EventListener oldListener = DOM.getEventListener(rootElement);
-			if (oldListener == null) {
-				throw new RuntimeException("Event-Listener on element "
-						+ rootElement + " not set");
-			}
-			// if (oldListener == null) {
-			// maxTrys--;
-			// if (maxTrys == 0) {
-			// throw new RuntimeException(
-			// "Maximum trys on accessing split pane exceeded");
-			// }
-			// Display.instance().invokeLater(runnable);
-			// } else
-			DOM.setEventListener(rootElement, new EventListener() {
-				public void onBrowserEvent(Event event) {
-					final HorizontalSplitPanel horizontalSplitPanel = (HorizontalSplitPanel) widget;
-					boolean fire = false;
-					if ((event.getTypeInt() == Event.ONMOUSEUP || event
-							.getTypeInt() == Event.ONMOUSEMOVE)
-							&& horizontalSplitPanel.isResizing()) {
-						fire = true;
-					}
-					if (oldListener != null)
-						oldListener.onBrowserEvent(event);
-					if (fire && !isScheduled) {
-						isScheduled = true;
-						Runnable r = new Runnable() {
-							@Override
-							public void run() {
-								listener.onResize(widget.getOffsetWidth()
-										- horizontalSplitPanel.getRightWidget()
-												.getOffsetWidth() - 2);
-								isScheduled = false;
-							}
-						};
-						if (GWTDisplay.isInternetExplorer())
-							Display.instance().invokeLater(r);
-						else
-							r.run();
-					}
-				}
-			});
-			// }
-			// };
-			// Display.instance().invokeLater(runnable);
+			if (lazyListener != null)
+				throw new UnsupportedOperationException(
+						"split pane listener already set");
+			lazyListener = listener;
+			updateSplitPosition(widget);
 		}
 
 		@Override
@@ -151,9 +74,54 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 			updateSplitPosition(p);
 		}
 
-		protected void updateSplitPosition(Widget p) {
-			if (leftSet && rightSet && lazySplitPosition != null)
+		protected void updateSplitPosition(final Widget p) {
+			if (!leftSet || !rightSet)
+				return;
+			if (lazySplitPosition != null) {
 				((HorizontalSplitPanel) p).setSplitPosition(lazySplitPosition);
+				lazySplitPosition = null;
+			}
+			if (lazyListener != null) {
+				final ISplitPaneResizeListener ll = lazyListener;
+				Element rootElement = p.getElement();
+				final EventListener oldListener = DOM
+						.getEventListener(rootElement);
+				if (oldListener == null) {
+					throw new RuntimeException("Event-Listener on element "
+							+ rootElement + " not set");
+				}
+				DOM.setEventListener(rootElement, new EventListener() {
+					public void onBrowserEvent(Event event) {
+						final HorizontalSplitPanel horizontalSplitPanel = (HorizontalSplitPanel) p;
+						boolean fire = false;
+						if ((event.getTypeInt() == Event.ONMOUSEUP || event
+								.getTypeInt() == Event.ONMOUSEMOVE)
+								&& horizontalSplitPanel.isResizing()) {
+							fire = true;
+						}
+						if (oldListener != null)
+							oldListener.onBrowserEvent(event);
+						if (fire && !isScheduled) {
+							isScheduled = true;
+							Runnable r = new Runnable() {
+								@Override
+								public void run() {
+									ll.onResize(p.getOffsetWidth()
+											- horizontalSplitPanel
+													.getRightWidget()
+													.getOffsetWidth() - 2);
+									isScheduled = false;
+								}
+							};
+							if (GWTDisplay.isInternetExplorer())
+								Display.instance().invokeLater(r);
+							else
+								r.run();
+						}
+					}
+				});
+				lazyListener = null;
+			}
 		}
 
 		@Override
@@ -172,10 +140,7 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 
 		@Override
 		public ISplitPanelAdp create() {
-			return // GWTDisplay.isInternetExplorer() ? new
-			// IESplitPaneAdp()
-			// :
-			new SplitPaneAdp();
+			return new SplitPaneAdp();
 		}
 
 	};
