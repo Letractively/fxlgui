@@ -22,6 +22,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.panel.api.IFlexHorizontalPanel;
 
+@SuppressWarnings("rawtypes")
 public class FlexHorizontalPanelImplProvider implements
 		IWidgetProvider<IFlexHorizontalPanel> {
 
