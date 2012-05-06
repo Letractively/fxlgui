@@ -40,9 +40,12 @@ class FlexHorizontalPanelImpl implements IFlexHorizontalPanel<Object> {
 
 		private Child(Object iD) {
 			this.iD = iD;
+			panel.addSpace(spaceBefore);
 			childPanel = panel.add().panel().focus();
-			childPanel.addDragStartListener(this);
-			childPanel.addDropListener(this);
+			if (iD != null) {
+				childPanel.addDragStartListener(this);
+				childPanel.addDropListener(this);
+			}
 			container = childPanel.add();
 			dragID = String.valueOf(nextID++);
 		}
@@ -75,6 +78,8 @@ class FlexHorizontalPanelImpl implements IFlexHorizontalPanel<Object> {
 
 	private IHorizontalPanel panel;
 	private List<Child> children = new LinkedList<Child>();
+	private int spaceLeft;
+	private int spaceBefore;
 	private static long nextID = 0;
 
 	FlexHorizontalPanelImpl(IContainer container) {
@@ -90,27 +95,38 @@ class FlexHorizontalPanelImpl implements IFlexHorizontalPanel<Object> {
 			children.add(dragged);
 		else
 			children.add(index, dragged);
+		panel.clear();
+		panel.addSpace(spaceLeft);
 		for (Child c : children) {
-			c.childPanel.remove();
-		}
-		for (Child c : children) {
+			panel.addSpace(spaceBefore);
 			panel.add(c.childPanel);
 		}
 	}
 
 	@Override
-	public IFlexHorizontalPanel<Object> addSpace(int space) {
-		panel.addSpace(space);
+	public IFlexHorizontalPanel<Object> spaceLeft(int spaceLeft) {
+		this.spaceLeft = spaceLeft;
+		panel.addSpace(spaceLeft);
+		return this;
+	}
+
+	@Override
+	public IFlexHorizontalPanel<Object> spaceBefore(int spaceBefore) {
+		this.spaceBefore = spaceBefore;
 		return this;
 	}
 
 	@Override
 	public IContainer add() {
-		return panel.add();
+		return addChild(null);
 	}
 
 	@Override
 	public IContainer add(Object iD) {
+		return addChild(iD);
+	}
+
+	protected IContainer addChild(Object iD) {
 		Child c = new Child(iD);
 		children.add(c);
 		return c.container;
