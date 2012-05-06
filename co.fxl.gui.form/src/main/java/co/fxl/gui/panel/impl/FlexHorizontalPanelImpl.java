@@ -22,13 +22,48 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IDraggable.IDragStartListener;
+import co.fxl.gui.api.IDropTarget.IDragEvent;
+import co.fxl.gui.api.IDropTarget.IDropListener;
+import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.panel.api.IFlexHorizontalPanel;
 
 class FlexHorizontalPanelImpl implements IFlexHorizontalPanel<Object> {
 
+	private class Child implements IDragStartListener, IDropListener {
+
+		private Object iD;
+		private IFocusPanel childPanel;
+		private IContainer container;
+
+		private Child(Object iD) {
+			this.iD = iD;
+			childPanel = panel.add().panel().focus();
+			childPanel.addDragStartListener(this);
+			childPanel.addDropListener(this);
+			container = childPanel.add();
+		}
+
+		@Override
+		public void onDragStart(IDragStartEvent event) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void onDragEnd() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void onDropOn(IDragEvent point) {
+			throw new UnsupportedOperationException();
+		}
+
+	}
+
 	private IHorizontalPanel panel;
-	private List<Object> iDs = new LinkedList<Object>();
+	private List<Child> children = new LinkedList<Child>();
 
 	FlexHorizontalPanelImpl(IContainer container) {
 		panel = container.panel().horizontal();
@@ -47,8 +82,9 @@ class FlexHorizontalPanelImpl implements IFlexHorizontalPanel<Object> {
 
 	@Override
 	public IContainer add(Object iD) {
-		iDs.add(iD);
-		throw new UnsupportedOperationException();
+		Child c = new Child(iD);
+		children.add(c);
+		return c.container;
 	}
 
 	@Override
@@ -58,6 +94,9 @@ class FlexHorizontalPanelImpl implements IFlexHorizontalPanel<Object> {
 
 	@Override
 	public List<Object> order() {
+		List<Object> iDs = new LinkedList<Object>();
+		for (Child c : children)
+			iDs.add(c.iD);
 		return iDs;
 	}
 }
