@@ -18,6 +18,12 @@
  */
 package co.fxl.gui.panel.api;
 
+import co.fxl.gui.api.IContainer;
+
 public interface IFlexHorizontalPanel {
+
+	IContainer add();
+
+	IFlexHorizontalPanel addPanel();
 
 }
