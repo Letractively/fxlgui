@@ -36,6 +36,7 @@ class FlexHorizontalPanelImpl implements IFlexHorizontalPanel<Object> {
 		private Object iD;
 		private IFocusPanel childPanel;
 		private IContainer container;
+		private String dragID;
 
 		private Child(Object iD) {
 			this.iD = iD;
@@ -43,16 +44,17 @@ class FlexHorizontalPanelImpl implements IFlexHorizontalPanel<Object> {
 			childPanel.addDragStartListener(this);
 			childPanel.addDropListener(this);
 			container = childPanel.add();
+			dragID = String.valueOf(nextID++);
 		}
 
 		@Override
 		public void onDragStart(IDragStartEvent event) {
-			throw new UnsupportedOperationException();
+			event.iD(dragID);
+			event.dragImage(childPanel);
 		}
 
 		@Override
 		public void onDragEnd() {
-			throw new UnsupportedOperationException();
 		}
 
 		@Override
@@ -64,6 +66,7 @@ class FlexHorizontalPanelImpl implements IFlexHorizontalPanel<Object> {
 
 	private IHorizontalPanel panel;
 	private List<Child> children = new LinkedList<Child>();
+	private static long nextID = 0;
 
 	FlexHorizontalPanelImpl(IContainer container) {
 		panel = container.panel().horizontal();
