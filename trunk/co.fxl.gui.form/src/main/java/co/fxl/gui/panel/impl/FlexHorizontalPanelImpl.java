@@ -26,4 +26,14 @@ class FlexHorizontalPanelImpl implements IFlexHorizontalPanel {
 	FlexHorizontalPanelImpl(IContainer container) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public IContainer add() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IFlexHorizontalPanel addPanel() {
+		throw new UnsupportedOperationException();
+	}
 }
