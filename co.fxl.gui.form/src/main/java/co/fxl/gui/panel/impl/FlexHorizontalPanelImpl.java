@@ -18,44 +18,46 @@
  */
 package co.fxl.gui.panel.impl;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.panel.api.IFlexHorizontalPanel;
 
 class FlexHorizontalPanelImpl implements IFlexHorizontalPanel<Object> {
 
+	private IHorizontalPanel panel;
+	private List<Object> iDs = new LinkedList<Object>();
+
 	FlexHorizontalPanelImpl(IContainer container) {
-		throw new UnsupportedOperationException();
+		panel = container.panel().horizontal();
+	}
+
+	@Override
+	public IFlexHorizontalPanel<Object> addSpace(int space) {
+		panel.addSpace(space);
+		return this;
+	}
+
+	@Override
+	public IContainer add() {
+		return panel.add();
 	}
 
 	@Override
 	public IContainer add(Object iD) {
+		iDs.add(iD);
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IFlexHorizontalPanel<Object> addPanel(Object iD) {
-		throw new UnsupportedOperationException();
+		return new FlexHorizontalPanelImpl(add(iD));
 	}
 
 	@Override
 	public List<Object> order() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public IFlexHorizontalPanel<Object> spaceLeft(int spaceLeft) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public IFlexHorizontalPanel<Object> spaceInner(int spaceInner) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public IFlexHorizontalPanel<Object> title(String title) {
-		throw new UnsupportedOperationException();
+		return iDs;
 	}
 }
