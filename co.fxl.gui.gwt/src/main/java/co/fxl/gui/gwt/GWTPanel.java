@@ -20,6 +20,7 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.ISpaced.ISpacing;
@@ -30,7 +31,6 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
@@ -106,6 +106,13 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 	@Override
 	public IContainer add() {
 		return new GWTContainer<Widget>(this);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R add(IElement<?> element) {
+		add((IElement<?>) element.nativeElement());
+		return (R) this;
 	}
 
 	// public IContainer insert(int index) {

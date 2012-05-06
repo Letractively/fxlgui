@@ -23,6 +23,8 @@ public interface IPanel<T> extends IElement<T>, IBordered, IColored,
 
 	IContainer add();
 
+	T add(IElement<?> element);
+
 	ILayout layout();
 
 	T clear();

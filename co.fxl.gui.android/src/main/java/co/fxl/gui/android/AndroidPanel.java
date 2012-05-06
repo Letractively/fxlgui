@@ -83,4 +83,9 @@ class AndroidPanel<R extends ViewGroup, T extends IElement<T>> extends
 			co.fxl.gui.api.IMouseOverElement.IMouseOverListener l) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public T add(IElement<?> element) {
+		throw new UnsupportedOperationException();
+	}
 }

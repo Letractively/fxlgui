@@ -59,9 +59,18 @@ class FlexHorizontalPanelImpl implements IFlexHorizontalPanel<Object> {
 
 		@Override
 		public void onDropOn(IDragEvent point) {
-			throw new UnsupportedOperationException();
+			String dragID = point.iD();
+			Child droppedOn = null;
+			for (Child c : children) {
+				if (c.dragID.equals(dragID)) {
+					droppedOn = c;
+					break;
+				}
+			}
+			if (droppedOn == null)
+				return;
+			flip(this, droppedOn);
 		}
-
 	}
 
 	private IHorizontalPanel panel;
@@ -70,6 +79,23 @@ class FlexHorizontalPanelImpl implements IFlexHorizontalPanel<Object> {
 
 	FlexHorizontalPanelImpl(IContainer container) {
 		panel = container.panel().horizontal();
+	}
+
+	protected void flip(Child dragged, Child droppedOn) {
+		if (dragged == droppedOn)
+			return;
+		int index = children.indexOf(droppedOn);
+		children.remove(dragged);
+		if (children.indexOf(droppedOn) < index && index >= children.size())
+			children.add(dragged);
+		else
+			children.add(index, dragged);
+		for (Child c : children) {
+			c.childPanel.remove();
+		}
+		for (Child c : children) {
+			panel.add(c.childPanel);
+		}
 	}
 
 	@Override

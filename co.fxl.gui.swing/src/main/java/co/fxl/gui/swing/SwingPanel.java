@@ -28,6 +28,7 @@ import javax.swing.JFrame;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.ISpaced.ISpacing;
@@ -168,6 +169,13 @@ public class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
 
 	void gap(int pixel) {
 		throw new UnsupportedOperationException();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R add(IElement<?> element) {
+		add((IElement<?>) element.nativeElement());
+		return (R) this;
 	}
 
 	Insets insets() {
