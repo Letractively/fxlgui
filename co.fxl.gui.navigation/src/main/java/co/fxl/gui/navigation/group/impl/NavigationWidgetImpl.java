@@ -50,9 +50,6 @@ import co.fxl.gui.navigation.group.api.INavigationWidget;
 
 public class NavigationWidgetImpl implements INavigationWidget {
 
-	// TODO Code: Look: reactivate double buffering, no flickering, add
-	// temp-flip-mechanism to FlipPage
-
 	private static final boolean DYNAMIC_RESIZE = true;
 	public static boolean ADD_SEPARATORBORDER = true;
 	protected IDockPanel mainPanel;
