@@ -46,7 +46,7 @@ import co.fxl.gui.impl.LazyClickListener;
 public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 
 	static String MAX_ROWS = "Max Rows";
-	// TODO Look: Swing: cells are too small
+	// TODO Swing: Look: cells are too small
 
 	public static final List<Object> DEFAULT_SIZES = Arrays
 			.asList(new Object[] { 50, 100, 500, 1000, 5000 });

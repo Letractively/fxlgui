@@ -27,7 +27,7 @@ import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 
 class FilterDialog {
 
-	// TODO ARCHITECTURE: Decomposition: extract layout, move as much as
+	// TODO Architecture: Decomposition: extract layout, move as much as
 	// possible into component, only leave minimum of glue code in aspect
 
 	static void addButton(final ScrollTableWidgetImpl widget) {
