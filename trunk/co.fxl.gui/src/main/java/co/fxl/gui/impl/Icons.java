@@ -20,8 +20,6 @@ package co.fxl.gui.impl;
 
 public class Icons {
 
-	// TODO Code: Architecture: Decomposition: extract Icons for all widgets in Icons-Class
-
 	public static String DETAIL = "detail.png";
 	public static String NAVIGATION_BACK = "arrow_back.png";
 	public static String NAVIGATION_FORWARD = "arrow_forward.png";
