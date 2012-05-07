@@ -59,20 +59,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		WidgetParent {
 
-	/**
-	 * TODO CSS body { scrollbar-face-color: #CCCCCC; scrollbar-highlight-color:
-	 * #CCCCCC; scrollbar-3dlight-color: #999999; scrollbar-shadow-color:
-	 * #999999; scrollbar-darkshadow-color: #CCCCCC; scrollbar-arrow-color:
-	 * #FFFFFF; scrollbar-track-color: #FFFFFF; } onMouseOver: lightgray-border
-	 * otherwise: no border, track-color: ultralightgray
-	 */
-
 	private static final String CHROME = "Chrome/";
-
-	// TODO 2DECIDE: Feature: Usability: GWT/IE: marking of text has been
-	// deactivated
-
-	// TODO Look: IE8/Vista: Images are skewed
 
 	private final class GWTResizeConfiguration extends ResizeConfiguration
 			implements ResizeHandler {
