@@ -55,10 +55,6 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 							+ original.color + "), to(" + color + "))";
 					if (GWTDisplay.isInternetExplorer()) {
 
-						// TODO LOOK: GWT: use repeating image a la
-						// background-image: url(h64_FFAACC_FFAAAA.png);
-						// background-repeat: repeat-x; background: mittelwert
-
 						if (!GWTDisplay.isInternetExplorer8OrBelow()) {
 							attribute = "filter";
 							gradient = "progid:DXImageTransform.Microsoft.gradient(startColorstr='"
