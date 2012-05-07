@@ -100,13 +100,13 @@ class SwingSuggestField extends SwingTextInput<JTextField, ISuggestField>
 	@Override
 	public ISuggestField addSuggestionListener(
 			co.fxl.gui.api.IUpdateable.IUpdateListener<ISuggestion> selection) {
-		// TODO throw new UnsupportedOperationException();
+		// TODO ... throw new UnsupportedOperationException();
 		return this;
 	}
 
 	@Override
 	public ISuggestField autoSelect(boolean autoSelect) {
-		// TODO throw new UnsupportedOperationException();
+		// TODO ... throw new UnsupportedOperationException();
 		return this;
 	}
 

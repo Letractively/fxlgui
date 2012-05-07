@@ -24,7 +24,7 @@ import co.fxl.gui.api.ILinearPanel;
 
 public class ColumnSelectionDialog implements IClickListener {
 
-	// TODO ARCHITECTURE: Decomposition: extract layout, move as much as
+	// TODO Architecture: Decomposition: extract layout, move as much as
 	// possible into component, only leave minimum of glue code in aspect
 
 	public static void addButton(final ColumnSelection cs,
