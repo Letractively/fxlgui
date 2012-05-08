@@ -344,8 +344,7 @@ public class FormWidgetImpl implements IFormWidget {
 		int gridIndex = 0;
 		IGridCell cell = grid.cell(column, gridIndex);
 		cell.clear();
-		IHorizontalPanel panel = cell.panel().horizontal().add().panel()
-				.horizontal().spacing(2);
+		IHorizontalPanel panel = cell.panel().horizontal().spacing(2);
 		saveButton = panel.add().button();
 		final IButton clickable1 = panel.add().button();
 		if (!saveListener.allowsCancel())
