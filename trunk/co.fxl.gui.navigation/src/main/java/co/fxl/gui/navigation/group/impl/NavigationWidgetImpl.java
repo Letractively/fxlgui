@@ -352,7 +352,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		for (final NavigationGroupImpl g : groups) {
 			boolean show = false;
 			for (final NavigationItemImpl i : g.items) {
-				if (!i.displayed())
+				if (!i.displayed() && i.visible())
 					show = true;
 			}
 			if (!show)
@@ -381,7 +381,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 			});
 			IVerticalPanel v = gp.cell(1, r).panel().vertical();
 			for (final NavigationItemImpl i : g.items) {
-				if (i.displayed())
+				if (i.displayed() || !i.visible())
 					continue;
 				ILabel li = v.add().label().text(i.name()).hyperlink();
 				li.font().pixel(14).weight().bold();
