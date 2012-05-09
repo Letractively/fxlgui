@@ -24,6 +24,7 @@ import javax.swing.SwingConstants;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.impl.HyperlinkDecorator;
 
+@SuppressWarnings("unchecked")
 public class SwingLabel extends SwingTextElement<JLabel, ILabel> implements
 		ILabel {
 
