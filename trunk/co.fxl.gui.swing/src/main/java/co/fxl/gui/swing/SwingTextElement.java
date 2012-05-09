@@ -95,6 +95,6 @@ public abstract class SwingTextElement<T extends JComponent, R> extends
 
 	@Override
 	public String toString() {
-		return html.toString();
+		return html.text;
 	}
 }

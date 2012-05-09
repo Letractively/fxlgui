@@ -50,7 +50,7 @@ import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPadding;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
-class SwingElement<T extends JComponent, R> implements IElement<R> {
+class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 
 	protected SwingContainer<T> container;
 	private List<ClickListenerMouseAdapter<R>> adapters = new LinkedList<ClickListenerMouseAdapter<R>>();
@@ -489,6 +489,11 @@ class SwingElement<T extends JComponent, R> implements IElement<R> {
 	@Override
 	public <N> R nativeElement(N nativeElement) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String getUID() {
+		return container.getUID();
 	}
 
 }

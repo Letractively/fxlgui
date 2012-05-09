@@ -53,9 +53,8 @@ class SwingCardPanel extends SwingPanel<ICardPanel> implements ICardPanel {
 
 	@Override
 	public ICardPanel show(IElement<?> panel) {
-		SwingElement<?, ?> swingElement = (SwingElement<?, ?>) panel;
-		chosen = swingElement.container.component;
-		cardLayout.show(container.component, swingElement.container.getUID());
+		chosen = panel.nativeElement();
+		cardLayout.show(container.component, ((HasUID) panel).getUID());
 		return this;
 	}
 
