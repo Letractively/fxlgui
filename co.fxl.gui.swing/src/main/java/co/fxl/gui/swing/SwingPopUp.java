@@ -32,6 +32,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IWidgetProvider;
+import co.fxl.gui.impl.Display;
 
 class SwingPopUp implements IPopUp {
 
@@ -122,9 +123,9 @@ class SwingPopUp implements IPopUp {
 							- Math.max(40, p.getPreferredSize().height / 2);
 				}
 				if (fitInScreen) {
-					if (y + 20 + p.getPreferredSize().height > SwingDisplay
+					if (y + 20 + p.getPreferredSize().height > Display
 							.instance().height()) {
-						y = SwingDisplay.instance().height() - 30
+						y = Display.instance().height() - 30
 								- p.getPreferredSize().height;
 					}
 					if (x + p.getPreferredSize().width > SwingDisplay
