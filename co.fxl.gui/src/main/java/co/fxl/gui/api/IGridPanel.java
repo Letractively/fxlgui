@@ -43,7 +43,7 @@ public interface IGridPanel extends IPanel<IGridPanel> {
 		void onClick(int column, int row);
 	}
 
-	interface IGridCell extends IContainer {
+	public interface IGridCell extends IContainer {
 
 		IElement<?> element();
 
