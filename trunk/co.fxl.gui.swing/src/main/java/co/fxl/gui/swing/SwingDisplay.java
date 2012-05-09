@@ -56,7 +56,7 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 	private SwingUncaughtExceptionHandler uncaughtExceptionHandler;
 	boolean waiting;
 	private static SwingPopUp popUp;
-	private static SwingDisplay instance = null;
+	public static SwingDisplay instance = null;
 	static int lastClickX = 0;
 	static int lastClickY = 0;
 
