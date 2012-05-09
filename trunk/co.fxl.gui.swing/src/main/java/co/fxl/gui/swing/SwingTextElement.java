@@ -92,4 +92,9 @@ public abstract class SwingTextElement<T extends JComponent, R> extends
 		container.component.setToolTipText(text);
 		return (R) this;
 	}
+
+	@Override
+	public String toString() {
+		return html.toString();
+	}
 }
