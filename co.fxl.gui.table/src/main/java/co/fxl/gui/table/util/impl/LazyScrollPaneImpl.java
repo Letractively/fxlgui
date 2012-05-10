@@ -24,8 +24,6 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IKeyRecipient;
-import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
@@ -77,7 +75,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	private int width = -1;
 	private IFocusPanel v;
 	private IScrollPane treeScrollPanel;
-	private IPanel<?> treeDockPanel;
+	private IGridPanel treeDockPanel;
 	private boolean allowRepaint = false;
 	private int[] rowHeights;
 	private int heightEstimate = 0;
@@ -177,13 +175,13 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		v.color().white();
 		if (dragDropListener != null)
 			new DragAndDrop(this, v);
-		treeDockPanel = (IPanel<?>) v.add().panel().grid();
+		treeDockPanel = v.add().panel().grid();
 		if (!adjustHeights) {
 			treeDockPanel.height(height);
 		}
 		if (size == 0) {
-			IVerticalPanel l = ((IGridPanel) treeDockPanel).cell(0, 0).valign().begin().panel().vertical()
-					.spacing(16);
+			IVerticalPanel l = treeDockPanel.cell(0, 0).valign().begin()
+					.panel().vertical().spacing(16);
 			ScrollTableWidgetImpl.addNoEntitiesFound(l, false, constraints,
 					filterQueryLabel);
 
@@ -192,18 +190,19 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 
 			return;
 		}
-		
-//		if (size <= 50) {
-//			// TODO ...
-//			return;
-//		}
-		
+
+		// if (size <= 50) {
+		// // TODO ...
+		// return;
+		// }
+
 		treeDockPanel.visible(false);
 		treeDockPanel.height(height);
-		treeScrollPanelContainer = ((IGridPanel) treeDockPanel).cell(0, 0).valign().begin().panel()
-				.vertical();
+		treeScrollPanelContainer = ((IGridPanel) treeDockPanel).cell(0, 0)
+				.valign().begin().panel().vertical();
 		treeScrollPanelContainer.height(height);
-		IContainer ctr = ((IGridPanel) treeDockPanel).cell(1, 0).width(widthScrollPanel);
+		IContainer ctr = ((IGridPanel) treeDockPanel).cell(1, 0).width(
+				widthScrollPanel);
 		scrollPane = ctr.scrollPane();
 		scrollPane.size(widthScrollPanel, height);
 		scrollContentPanel = scrollPane.viewPort().panel().absolute();
