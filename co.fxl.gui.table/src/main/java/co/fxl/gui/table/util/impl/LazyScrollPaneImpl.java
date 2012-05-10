@@ -175,8 +175,9 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		v.color().white();
 		if (dragDropListener != null)
 			new DragAndDrop(this, v);
-//		if(size>0 && size<=50) {
-//			
+//		if (size > 0 && size <= 50) {
+//			IScrollPane sp = v.add().scrollPane().height(height);
+//			decorate(0, false, sp.viewPort());
 //			return;
 //		}
 		treeDockPanel = v.add().panel().grid();
@@ -370,13 +371,17 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 				+ lastIndex + "!=" + storeLastIndex;
 		assert lastIndex >= rowIndex : "illegal range " + rowIndex + "-"
 				+ lastIndex;
+		decorate(rowIndex, isCalibration, c);
+		// treeScrollPanelContainer.flip();
+		holdScroll = false;
+		return lastIndex;
+	}
+
+	private void decorate(int rowIndex, boolean isCalibration, IContainer c) {
 		IKeyRecipient<Object> e = decorator.decorate(c, rowIndex, lastIndex,
 				isCalibration);
 		if (!isCalibration)
 			addKeyListeners(e);
-		// treeScrollPanelContainer.flip();
-		holdScroll = false;
-		return lastIndex;
 	}
 
 	@Override
