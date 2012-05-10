@@ -1,6 +1,6 @@
 <projectDescription>
   <name>fxl-gui-wizard</name>
-  <comment>NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
+  <comment/>
   <projects>
     <project>fxl-data-format</project>
     <project>fxl-gui</project>
