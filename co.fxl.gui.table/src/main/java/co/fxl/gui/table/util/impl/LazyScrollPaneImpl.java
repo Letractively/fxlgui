@@ -175,6 +175,10 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		v.color().white();
 		if (dragDropListener != null)
 			new DragAndDrop(this, v);
+//		if(size>0 && size<=50) {
+//			
+//			return;
+//		}
 		treeDockPanel = v.add().panel().grid();
 		if (!adjustHeights) {
 			treeDockPanel.height(height);
@@ -190,12 +194,6 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 
 			return;
 		}
-
-		// if (size <= 50) {
-		// // TODO ...
-		// return;
-		// }
-
 		treeDockPanel.visible(false);
 		treeDockPanel.height(height);
 		treeScrollPanelContainer = ((IGridPanel) treeDockPanel).cell(0, 0)
