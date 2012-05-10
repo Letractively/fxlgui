@@ -178,8 +178,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		if (dragDropListener != null)
 			new DragAndDrop(this, v);
 		ILayout layout = v.add().panel();
-		IGridPanel grid = layout.grid();
-		treeDockPanel = (IPanel<?>) grid;
+		treeDockPanel = (IPanel<?>) layout.grid();
 		if (!adjustHeights) {
 			treeDockPanel.height(height);
 		}
