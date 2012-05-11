@@ -143,5 +143,9 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	@Override
 	public void showTitleAsEmpty(boolean empty) {
 		register.showTitleAsEmpty(empty);
+		if (register.isActive())
+			style.onFront(register.title());
+		else
+			style.onBack(register.title());
 	}
 }

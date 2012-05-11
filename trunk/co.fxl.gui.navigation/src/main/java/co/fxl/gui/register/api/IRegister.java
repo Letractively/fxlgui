@@ -19,9 +19,9 @@
 package co.fxl.gui.register.api;
 
 import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IFontElement.IFont;
-import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IVerticalPanel;
 
 public interface IRegister {
@@ -35,6 +35,8 @@ public interface IRegister {
 		IColor color();
 
 		IBorder border();
+
+		boolean isEmpty();
 	}
 
 	public interface IRegisterListener {
