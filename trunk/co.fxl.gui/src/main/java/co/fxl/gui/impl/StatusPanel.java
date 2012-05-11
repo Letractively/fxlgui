@@ -44,8 +44,7 @@ public class StatusPanel {
 	}
 
 	public StatusPanel warning(String warning) {
-		lastStatus = warning;
-		lastPopUp = showPopUp(Display.instance(), warning, true, 0, true);
+		showPopUp(Display.instance(), warning, true, 0, true);
 		return this;
 	}
 
@@ -74,21 +73,20 @@ public class StatusPanel {
 		b.style().shadow();
 		IHorizontalPanel spacing = dialog.container().panel().horizontal()
 				.spacing(5);
-		if (isRed)
-			spacing.color().red();
-		else
-			spacing.color().rgb(255, 240, 170);
 		IFont f = spacing.addSpace(4).add().label()
 				.text("Please wait - " + info + "...").font().pixel(11);
-		if (isRed)
-			f.color().white();
 		spacing.addSpace(4);
-		// dialog.center();
-		int x = (display.width() - dialog.width()) / 2;
-		dialog.offset(x, 4);
-		dialog.visible(true);
-		x = (display.width() - dialog.width()) / 2;
-		dialog.offset(x, 4);
+		if (isRed) {
+			spacing.color().red();
+			f.color().white();
+			dialog.center().autoHide(true).visible(true);
+		} else {
+			spacing.color().rgb(255, 240, 170);
+			int x = (display.width() - dialog.width()) / 2;
+			dialog.offset(x, 4).visible(true);
+			x = (display.width() - dialog.width()) / 2;
+			dialog.offset(x, 4);
+		}
 		return dialog;
 	}
 
