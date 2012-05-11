@@ -54,20 +54,18 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 					String gradient = "-webkit-gradient(linear, left top, left bottom, from("
 							+ original.color + "), to(" + color + "))";
 					if (GWTDisplay.isInternetExplorer()) {
-
-						if (!GWTDisplay.isInternetExplorer8OrBelow()) {
-							attribute = "filter";
-							gradient = "progid:DXImageTransform.Microsoft.gradient(startColorstr='"
-									+ original.color
-									+ "', endColorstr='"
-									+ color + "')";
-							DOM.setStyleAttribute(element, "zoom", "1");
-						} else {
-							setImageGradient(element);
-							attribute = null;
-						}
-						// DOM.setStyleAttribute(element, "-ms-" + attribute,
-						// gradient);
+						// if (!GWTDisplay.isInternetExplorer8OrBelow()) {
+						// attribute = "filter";
+						// gradient =
+						// "progid:DXImageTransform.Microsoft.gradient(startColorstr='"
+						// + original.color
+						// + "', endColorstr='"
+						// + color + "')";
+						// DOM.setStyleAttribute(element, "zoom", "1");
+						// } else {
+						setImageGradient(element);
+						attribute = null;
+						// }
 					} else if (GWTDisplay.isFirefox()) {
 						gradient = "-moz-linear-gradient(top, "
 								+ original.color + ", " + color + ")";
@@ -75,11 +73,6 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 						setImageGradient(element);
 						attribute = null;
 					}
-
-					// microsoft filters: anti-aliasing (cleartype) not applied
-					// to text inside an element which has a filter applied
-					// only works in IE for >=IE9
-
 					if (attribute != null)
 						DOM.setStyleAttribute(element, attribute, gradient);
 				}
@@ -91,17 +84,12 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 					DOM.setStyleAttribute(element, "background", fb);
 					String file = "gradient_" + original.rgb[0] + "_" + rgb[0]
 							+ ".png";
-					// if (GWTImage.resolve(file) != null) {
 					String attribute0 = "backgroundImage";
 					String resourceURI = GWTImage.getResourceURI(file);
-					String gradient0 = "url(" + resourceURI
-							+ ")";
+					String gradient0 = "url(" + resourceURI + ")";
 					DOM.setStyleAttribute(element, "backgroundRepeat",
 							"repeat-x");
 					DOM.setStyleAttribute(element, attribute0, gradient0);
-					// } else {
-//					System.out.println("gradient: " + resourceURI);
-					// }
 				}
 			};
 		}
