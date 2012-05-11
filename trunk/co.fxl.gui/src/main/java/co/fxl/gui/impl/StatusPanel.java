@@ -29,7 +29,6 @@ public class StatusPanel {
 
 	private static final String LOADING = "Loading ";
 	private IPopUp lastPopUp;
-	private Long lastTimestamp = null;
 	private String lastStatus;
 	private static StatusPanel instance;
 
@@ -39,7 +38,7 @@ public class StatusPanel {
 
 	public StatusPanel start(String status) {
 		lastStatus = status;
-		lastTimestamp = System.currentTimeMillis();
+		Log.instance().start(status);
 		lastPopUp = showPopUp(Display.instance(), LOADING + status, true, 0);
 		return this;
 	}
@@ -51,13 +50,10 @@ public class StatusPanel {
 	}
 
 	private void stop(String status) {
+		Log.instance().stop(status);
 		if (lastPopUp != null && lastStatus.equals(status)) {
 			lastPopUp.visible(false);
 			lastPopUp = null;
-			Log.instance().debug(
-					LOADING + status + " executed in "
-							+ (System.currentTimeMillis() - lastTimestamp)
-							+ "ms");
 		}
 	}
 
