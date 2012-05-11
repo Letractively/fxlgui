@@ -60,7 +60,7 @@ class LogImpl implements ILog, IClickListener {
 				.viewPort().panel().vertical().margin(10).spacing(2);
 		IGridPanel grid = panel.add().panel().grid();
 		grid.cell(0, 0).label().text("APPLICATION LOG").font().weight().bold();
-		grid.cell(1, 0).align().end().button().text("Close")
+		grid.cell(1, 0).align().end().label().text("Close").hyperlink()
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
