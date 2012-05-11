@@ -61,17 +61,25 @@ class LogImpl implements ILog, IClickListener {
 		WidgetTitle panel = new WidgetTitle(popUp.container()).spacing(0)
 				.sideWidget(true).commandsOnTop();
 		panel.addTitle("Log Trace");
-		panel.addHyperlink("cancel.png", "Close").addClickListener(
+		final IVerticalPanel content = panel.content().scrollPane()
+				.size(d.width() - SPACING * 2, d.height() - SPACING * 2 - 33)
+				.viewPort().panel().vertical().spacing(10).add().panel()
+				.vertical();
+		panel.addHyperlink("cancel.png", "Clear").addClickListener(
+				new IClickListener() {
+					@Override
+					public void onClick() {
+						lines.clear();
+						content.clear();
+					}
+				});
+		panel.addHyperlink("back.png", "Close").addClickListener(
 				new IClickListener() {
 					@Override
 					public void onClick() {
 						popUp.visible(false);
 					}
 				});
-		IVerticalPanel content = panel.content().scrollPane()
-				.size(d.width() - SPACING * 2, d.height() - SPACING * 2 - 33)
-				.viewPort().panel().vertical().spacing(10).add().panel()
-				.vertical();
 		if (lines.size() > 0) {
 			IGridPanel g = content.add().panel().grid().spacing(4);
 			int i = 0;
