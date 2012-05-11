@@ -24,6 +24,7 @@ import java.util.List;
 
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.log.impl.LogWidgetProvider;
 
 public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 		IDisplay {
@@ -62,6 +63,10 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 	}
 
 	private List<ResizeConfiguration> resizeListeners = new LinkedList<ResizeConfiguration>();
+
+	protected DisplayTemplate() {
+		register(new LogWidgetProvider());
+	}
 
 	@Override
 	public IResizeConfiguration addResizeListener(final IResizeListener listener) {

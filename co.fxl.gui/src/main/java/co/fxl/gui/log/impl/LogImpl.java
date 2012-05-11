@@ -14,12 +14,12 @@ import co.fxl.gui.log.api.ILog;
 
 class LogImpl implements ILog, IClickListener {
 
-	private static final int SPACING = 20;
+	private static final int SPACING = 40;
 	private List<String> lines = new LinkedList<String>();
 
 	@Override
 	public ILog container(IContainer c) {
-		c.button().text("Log").addClickListener(this);
+		c.label().text("Show Log").hyperlink().addClickListener(this);
 		return this;
 	}
 
@@ -35,15 +35,18 @@ class LogImpl implements ILog, IClickListener {
 		final IPopUp popUp = d.showPopUp()
 				.size(d.width() - SPACING * 2, d.height() - SPACING * 2)
 				.offset(SPACING, SPACING);
-		IVerticalPanel panel = popUp.container().scrollPane().viewPort()
-				.panel().vertical().spacing(10);
-		panel.align().end().add().button().text("Close")
-				.addClickListener(new IClickListener() {
+		popUp.border().style().shadow();
+		IVerticalPanel panel = popUp.container().scrollPane()
+				.size(d.width() - SPACING * 2, d.height() - SPACING * 2)
+				.viewPort().panel().vertical().spacing(2);
+		panel.align().end().add().panel().horizontal().add().button()
+				.text("Close").addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
 						popUp.visible(false);
 					}
 				});
+		panel.align().begin();
 		for (String l : lines)
 			panel.add().label().text(l);
 		popUp.visible(true);
