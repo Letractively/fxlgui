@@ -1,8 +1,10 @@
 package co.fxl.gui.log.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
@@ -32,6 +34,7 @@ class LogImpl implements ILog, IClickListener {
 
 	private static final int SPACING = 20;
 	private List<Entry> lines = new LinkedList<Entry>();
+	private Map<String, Long> timestamps = new HashMap<String, Long>();
 
 	@Override
 	public ILog container(IContainer c) {
@@ -83,5 +86,20 @@ class LogImpl implements ILog, IClickListener {
 			g.column(2).expand();
 		}
 		popUp.visible(true);
+	}
+
+	@Override
+	public ILog start(String message) {
+		timestamps.put(message, System.currentTimeMillis());
+		return this;
+	}
+
+	@Override
+	public ILog stop(String message) {
+		if (timestamps.containsKey(message))
+			debug(message + " required "
+					+ (System.currentTimeMillis() - timestamps.remove(message))
+					+ "ms");
+		return this;
 	}
 }
