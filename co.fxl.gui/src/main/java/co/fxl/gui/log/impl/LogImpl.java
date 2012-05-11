@@ -30,7 +30,7 @@ class LogImpl implements ILog, IClickListener {
 
 	}
 
-	private static final int SPACING = 30;
+	private static final int SPACING = 20;
 	private List<Entry> lines = new LinkedList<Entry>();
 
 	@Override
@@ -56,7 +56,7 @@ class LogImpl implements ILog, IClickListener {
 		popUp.border().remove().style().shadow().color().black();
 		IVerticalPanel panel = popUp.container().scrollPane()
 				.size(d.width() - SPACING * 2, d.height() - SPACING * 2)
-				.viewPort().panel().vertical().spacing(10).add().panel()
+				.viewPort().panel().vertical().spacing(6).add().panel()
 				.vertical().spacing(2);
 		IHorizontalPanel grid = panel.add().panel().horizontal();
 		grid.add().label().text("APPLICATION LOG").font().weight().bold();
@@ -67,6 +67,7 @@ class LogImpl implements ILog, IClickListener {
 						popUp.visible(false);
 					}
 				}).mouseLeft().font().pixel(11);
+		panel.addSpace(6);
 		for (Entry l : lines) {
 			IHorizontalPanel h = panel.add().panel().horizontal();
 			h.add().label().text(l.date.toString()).font().pixel(11).color()
