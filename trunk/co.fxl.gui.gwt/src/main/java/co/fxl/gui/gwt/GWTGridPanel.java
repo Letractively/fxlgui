@@ -276,8 +276,9 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 		return new GWTBorder() {
 
 			@Override
-			public void remove() {
+			public IBorder remove() {
 				GWTGridPanel.this.borderType = null;
+				return this;
 			}
 
 			@Override

@@ -178,7 +178,8 @@ class SwingBorder implements IBorder {
 	}
 
 	@Override
-	public void remove() {
+	public IBorder remove() {
 		element.setBorder(null);
+		return this;
 	}
 }

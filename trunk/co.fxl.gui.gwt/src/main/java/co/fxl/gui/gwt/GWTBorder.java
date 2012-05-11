@@ -112,7 +112,7 @@ public abstract class GWTBorder implements IBorder {
 	boolean right = false;
 
 	@Override
-	public abstract void remove();
+	public abstract IBorder remove();
 
 	protected void shadow() {
 	}
