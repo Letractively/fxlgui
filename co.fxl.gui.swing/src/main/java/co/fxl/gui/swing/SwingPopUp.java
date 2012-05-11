@@ -204,13 +204,7 @@ class SwingPopUp implements IPopUp {
 
 	@Override
 	public IBorder border() {
-		return new SwingBorder(p) {
-
-			@Override
-			public void remove() {
-				super.remove();
-			}
-		};
+		return new SwingBorder(p);
 	}
 
 	@Override

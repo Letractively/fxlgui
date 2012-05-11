@@ -37,7 +37,7 @@ public interface IBordered {
 			IBorder top();
 
 			IBorder bottom();
-			
+
 			// TODO remove, replace calls with left().right().top()
 			IBorder noBottom();
 
@@ -52,7 +52,7 @@ public interface IBordered {
 
 		IBorder title(String title);
 
-		void remove();
+		IBorder remove();
 	}
 
 	IBorder border();

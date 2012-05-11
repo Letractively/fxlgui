@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.gwt;
 
+import co.fxl.gui.api.IBordered.IBorder;
+
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
@@ -41,9 +43,9 @@ public class GWTWidgetBorder extends GWTBorder {
 	@Override
 	protected void shadow() {
 		if (widget != null) {
-			
+
 			// antialiasing is missing
-			
+
 			if (GWTDisplay.isInternetExplorer8OrBelow()) {
 				width(1);
 			} else
@@ -52,7 +54,7 @@ public class GWTWidgetBorder extends GWTBorder {
 	}
 
 	@Override
-	public void remove() {
+	public IBorder remove() {
 		if (lastBorderType != null) {
 			if (!lastBorderType.equals(borderType))
 				DOM.setStyleAttribute(element, lastBorderType, "none");
@@ -64,6 +66,7 @@ public class GWTWidgetBorder extends GWTBorder {
 		} else {
 			element.getStyle().setBorderWidth(0, Unit.PX);
 		}
+		return this;
 	}
 
 	@Override
