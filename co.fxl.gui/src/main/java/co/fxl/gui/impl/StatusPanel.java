@@ -38,7 +38,7 @@ public class StatusPanel {
 
 	public StatusPanel start(String status) {
 		lastStatus = status;
-		Log.instance().start(status);
+		Log.instance().start(LOADING + status);
 		lastPopUp = showPopUp(Display.instance(), LOADING + status, true, 0);
 		return this;
 	}
@@ -50,7 +50,7 @@ public class StatusPanel {
 	}
 
 	private void stop(String status) {
-		Log.instance().stop(status);
+		Log.instance().stop(LOADING + status);
 		if (lastPopUp != null && lastStatus.equals(status)) {
 			lastPopUp.visible(false);
 			lastPopUp = null;
