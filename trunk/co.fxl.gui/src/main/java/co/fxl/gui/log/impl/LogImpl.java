@@ -58,8 +58,8 @@ class LogImpl implements ILog, IClickListener {
 				.size(d.width() - SPACING * 2, d.height() - SPACING * 2)
 				.offset(SPACING, SPACING).modal(true);
 		popUp.border().remove().style().shadow().color().black();
-		WidgetTitle panel = new WidgetTitle(popUp.container()).spacing(0).sideWidget(true)
-				.commandsOnTop();
+		WidgetTitle panel = new WidgetTitle(popUp.container()).spacing(0)
+				.sideWidget(true).commandsOnTop();
 		panel.addTitle("Logging Trace");
 		panel.addHyperlink("cancel.png", "Close").addClickListener(
 				new IClickListener() {
@@ -68,11 +68,8 @@ class LogImpl implements ILog, IClickListener {
 						popUp.visible(false);
 					}
 				});
-		IVerticalPanel content = panel
-				.content()
-				.scrollPane()
-				.size(d.width() - SPACING * 2,
-						d.height() - SPACING * 2 - panel.headerPanel().height())
+		IVerticalPanel content = panel.content().scrollPane()
+				.size(d.width() - SPACING * 2, d.height() - SPACING * 2 - 33)
 				.viewPort().panel().vertical().spacing(10).add().panel()
 				.vertical();
 		if (lines.size() > 0) {
