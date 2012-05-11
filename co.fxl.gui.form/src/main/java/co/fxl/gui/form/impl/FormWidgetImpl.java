@@ -65,7 +65,7 @@ public class FormWidgetImpl implements IFormWidget {
 	}
 
 	private static final boolean FIXED_WIDTH = Constants.get(
-			"FormWidgetImpl.FIXED_WIDTH", true);
+			"FormWidgetImpl.FIXED_WIDTH", false);
 	private int gridIndex0 = -1;
 	private WidgetTitle widgetTitle;
 	protected IGridPanel grid;
@@ -102,7 +102,7 @@ public class FormWidgetImpl implements IFormWidget {
 		if (fixLabelWidth != -1)
 			cell.width(fixLabelWidth);
 		ILabel formEntryLabel = cell.label();
-		formEntryLabel.autoWrap(false);
+		formEntryLabel.autoWrap(FIXED_WIDTH);
 		formEntryLabel.text(name);
 		formEntryLabel.font().pixel(12);
 		return new FormEntryLabel(cell, formEntryLabel);
