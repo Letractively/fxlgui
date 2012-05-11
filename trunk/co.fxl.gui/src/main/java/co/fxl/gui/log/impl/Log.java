@@ -22,7 +22,7 @@ import co.fxl.gui.log.api.ILog;
 
 public class Log {
 
-	public static boolean ENABLED = false;
+	public static boolean ENABLED = true;
 	private static ILog instance = new LogImpl();
 
 	public static ILog instance() {
