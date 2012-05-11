@@ -192,7 +192,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			widgetTitle.addToContextMenu(true);
 			widgetTitle.commandsOnTop();
 			widgetTitle.hyperlinkVisible(false);
-			widgetTitle.space(0);
+			widgetTitle.spacing(0);
 			this.container = widgetTitle.content().panel().vertical();
 			// editPanel = container.add().panel().vertical().visible(false);
 		}

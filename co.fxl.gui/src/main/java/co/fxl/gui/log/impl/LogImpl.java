@@ -13,6 +13,7 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.log.api.ILog;
 
 class LogImpl implements ILog, IClickListener {
@@ -57,22 +58,25 @@ class LogImpl implements ILog, IClickListener {
 				.size(d.width() - SPACING * 2, d.height() - SPACING * 2)
 				.offset(SPACING, SPACING).modal(true);
 		popUp.border().remove().style().shadow().color().black();
-		IVerticalPanel panel = popUp.container().scrollPane()
-				.size(d.width() - SPACING * 2, d.height() - SPACING * 2)
-				.viewPort().panel().vertical().spacing(10).add().panel()
-				.vertical();
-		IGridPanel grid = panel.add().panel().grid();
-		grid.cell(0, 0).label().text("LOG").font().weight().bold().pixel(14);
-		grid.cell(1, 0).align().end().label().text("[x] Close").hyperlink()
-				.addClickListener(new IClickListener() {
+		WidgetTitle panel = new WidgetTitle(popUp.container()).spacing(0).sideWidget(true)
+				.commandsOnTop();
+		panel.addTitle("Logging Trace");
+		panel.addHyperlink("cancel.png", "Close").addClickListener(
+				new IClickListener() {
 					@Override
 					public void onClick() {
 						popUp.visible(false);
 					}
 				});
-		panel.addSpace(2);
+		IVerticalPanel content = panel
+				.content()
+				.scrollPane()
+				.size(d.width() - SPACING * 2,
+						d.height() - SPACING * 2 - panel.headerPanel().height())
+				.viewPort().panel().vertical().spacing(10).add().panel()
+				.vertical();
 		if (lines.size() > 0) {
-			IGridPanel g = panel.add().panel().grid().spacing(4);
+			IGridPanel g = content.add().panel().grid().spacing(4);
 			int i = 0;
 			for (Entry l : lines) {
 				g.cell(0, i).label().text(l.date.toString()).font().pixel(11)

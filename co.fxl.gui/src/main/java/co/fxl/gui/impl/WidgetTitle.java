@@ -71,6 +71,10 @@ public class WidgetTitle implements IClickListener {
 	public WidgetTitle() {
 	}
 
+	public WidgetTitle(IContainer c) {
+		this(c.panel());
+	}
+
 	public WidgetTitle(ILayout layout) {
 		this(layout, false);
 	}
@@ -99,7 +103,7 @@ public class WidgetTitle implements IClickListener {
 			panel.border().remove();
 		}
 		if (plainContent)
-			space(0);
+			spacing(0);
 		return this;
 	}
 
@@ -130,7 +134,7 @@ public class WidgetTitle implements IClickListener {
 	// }
 	// }
 
-	public WidgetTitle space(int space) {
+	public WidgetTitle spacing(int space) {
 		this.space0 = space;
 		return this;
 	}
@@ -410,5 +414,9 @@ public class WidgetTitle implements IClickListener {
 		// footer.border().remove();
 		if (headerPanel != null && footer != null)
 			headerPanel.height(footer.height());
+	}
+
+	public IPanel<?> headerPanel() {
+		return headerPanel;
 	}
 }
