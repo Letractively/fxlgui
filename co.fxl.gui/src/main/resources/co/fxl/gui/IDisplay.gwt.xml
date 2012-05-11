@@ -2,7 +2,8 @@
 	<inherits name="com.google.gwt.user.User" />
 	<source path="api" />
 	<source path="impl" />
-	<source path="log" />
+	<source path="log/api" />
+	<source path="log/impl" />
 	<source path="layout/api" />
 	<source path="layout/impl" />
 	<source path="style/api" />
