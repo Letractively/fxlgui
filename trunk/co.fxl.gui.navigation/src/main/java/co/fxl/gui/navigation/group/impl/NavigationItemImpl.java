@@ -416,26 +416,26 @@ public class NavigationItemImpl extends LazyClickListener implements
 		refresh.visible(true);
 		button.text("More").font().color().black();
 		buttonPanel.spacing(SPACING_LOADING);
-//		IMouseOverListener mol = new IMouseOverListener() {
-//
-//			@Override
-//			public void onMouseOver() {
-//				if (popUp == null) {
-//					button.font().color().white();
-//					refresh.resource("more.png");
-//					showBackgroundInactive();
-//				}
-//			}
-//
-//			@Override
-//			public void onMouseOut() {
-//				if (popUp == null) {
-//					button.font().color().black();
-//					showBackgroundNeutral();
-//				}
-//			}
-//		};
-//		focusPanel.addMouseOverListener(mol);
+		// IMouseOverListener mol = new IMouseOverListener() {
+		//
+		// @Override
+		// public void onMouseOver() {
+		// if (popUp == null) {
+		// button.font().color().white();
+		// refresh.resource("more.png");
+		// showBackgroundInactive();
+		// }
+		// }
+		//
+		// @Override
+		// public void onMouseOut() {
+		// if (popUp == null) {
+		// button.font().color().black();
+		// showBackgroundNeutral();
+		// }
+		// }
+		// };
+		// focusPanel.addMouseOverListener(mol);
 		showBackgroundNeutral();
 		return this;
 	}
@@ -457,5 +457,9 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	int getLeftPartPopUpWidth() {
 		return 280 - basicPanel.width();
+	}
+
+	@Override
+	public void showTitleAsEmpty(boolean empty) {
 	}
 }

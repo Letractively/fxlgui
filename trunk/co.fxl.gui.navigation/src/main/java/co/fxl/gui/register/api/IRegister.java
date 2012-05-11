@@ -61,4 +61,6 @@ public interface IRegister {
 	IRegister imageResource(String imageResource);
 
 	IRegister toggleLoading(boolean loading);
+
+	void showTitleAsEmpty(boolean empty);
 }

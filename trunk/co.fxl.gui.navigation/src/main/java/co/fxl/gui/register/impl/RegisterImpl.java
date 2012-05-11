@@ -36,6 +36,7 @@ import co.fxl.gui.register.api.IRegister;
 
 public class RegisterImpl extends LazyClickListener implements IRegister {
 
+	private static final String _0 = " (0)";
 	private static int SPACING_DEC_LOADING = Constants.get(
 			"RegisterImpl.SPACING_DEC_LOADING", 0);
 
@@ -75,6 +76,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 	private IImage buttonImage;
 	boolean disabled = false;
 	private IVerticalPanel verticalContainer;
+	private boolean empty = false;
 
 	// private String imageResource = "document.png";
 
@@ -108,7 +110,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 		buttonPanel.spacing(loading ? widget.spacing - SPACING_DEC_LOADING
 				: widget.spacing);
 		buttonLabel.visible(!loading);
-		buttonPanel.size(width, 24);
+		buttonPanel.width(width);
 		if (isActive()) {
 			buttonImage.resource("loading_black.gif");
 		} else {
@@ -263,5 +265,20 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 				.panel().horizontal().spacing(10).add().label()
 				.text("FAILURE LOADING REGISTER").font().pixel(10).color()
 				.gray();
+	}
+
+	@Override
+	public void showTitleAsEmpty(boolean empty) {
+		if (empty != this.empty) {
+			buttonPanel.width(-1);
+			subPanel.width(-1);
+			if (empty) {
+				buttonLabel.text(buttonLabel.text() + _0);
+			} else {
+				buttonLabel.text(buttonLabel.text().substring(0,
+						buttonLabel.text().length() - _0.length()));
+			}
+		}
+		this.empty = empty;
 	}
 }
