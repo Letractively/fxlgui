@@ -63,6 +63,11 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 		public IBorder border() {
 			return buttonPanel.border();
 		}
+
+		@Override
+		public boolean isEmpty() {
+			return empty;
+		}
 	}
 
 	RegisterWidgetImpl widget;
