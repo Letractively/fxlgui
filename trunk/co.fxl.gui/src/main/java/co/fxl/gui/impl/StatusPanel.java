@@ -20,6 +20,7 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IPopUp;
 
@@ -39,6 +40,12 @@ public class StatusPanel {
 		return this;
 	}
 
+	public StatusPanel warning(String warning) {
+		lastStatus = warning;
+		lastPopUp = showPopUp(Display.instance(), warning, true, 0, true);
+		return this;
+	}
+
 	private void stop(String status) {
 		if (lastPopUp != null && lastStatus.equals(status)) {
 			lastPopUp.visible(false);
@@ -52,15 +59,25 @@ public class StatusPanel {
 
 	public static IPopUp showPopUp(IDisplay display, String info,
 			boolean modal, int y) {
+		return showPopUp(display, info, modal, y, false);
+	}
+
+	private static IPopUp showPopUp(IDisplay display, String info,
+			boolean modal, int y, boolean isRed) {
 		IPopUp dialog = display.showPopUp().modal(true).glass(false);
 		dialog.border().remove();
 		IBorder b = dialog.border();
 		b.style().shadow();
 		IHorizontalPanel spacing = dialog.container().panel().horizontal()
 				.spacing(5);
-		spacing.color().rgb(255, 240, 170);
-		spacing.addSpace(4).add().label().text("Please wait - " + info + "...")
-				.font().pixel(11);
+		if (isRed)
+			spacing.color().red();
+		else
+			spacing.color().rgb(255, 240, 170);
+		IFont f = spacing.addSpace(4).add().label()
+				.text("Please wait - " + info + "...").font().pixel(11);
+		if (isRed)
+			f.color().white();
 		spacing.addSpace(4);
 		// dialog.center();
 		int x = (display.width() - dialog.width()) / 2;
