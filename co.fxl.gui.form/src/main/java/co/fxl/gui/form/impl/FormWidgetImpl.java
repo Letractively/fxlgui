@@ -44,6 +44,7 @@ import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IImageField;
 import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.LazyClickListener;
@@ -63,6 +64,8 @@ public class FormWidgetImpl implements IFormWidget {
 		}
 	}
 
+	private static final boolean FIXED_WIDTH = Constants.get(
+			"FormWidgetImpl.FIXED_WIDTH", false);
 	private int gridIndex0 = -1;
 	private WidgetTitle widgetTitle;
 	protected IGridPanel grid;
@@ -427,6 +430,8 @@ public class FormWidgetImpl implements IFormWidget {
 			grid.spacing(1);
 			grid.resize(2, 1);
 			int column = 1;
+			if (FIXED_WIDTH)
+				grid.column(0).width(100);
 			expand(column);
 			decorate(grid);
 		}
