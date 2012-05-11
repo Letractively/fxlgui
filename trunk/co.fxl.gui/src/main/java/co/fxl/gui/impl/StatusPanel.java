@@ -23,10 +23,13 @@ import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.log.impl.Log;
 
 public class StatusPanel {
 
+	private static final String LOADING = "Loading ";
 	private IPopUp lastPopUp;
+	private Long lastTimestamp = null;
 	private String lastStatus;
 	private static StatusPanel instance;
 
@@ -36,7 +39,8 @@ public class StatusPanel {
 
 	public StatusPanel start(String status) {
 		lastStatus = status;
-		lastPopUp = showPopUp(Display.instance(), "Loading " + status, true, 0);
+		lastTimestamp = System.currentTimeMillis();
+		lastPopUp = showPopUp(Display.instance(), LOADING + status, true, 0);
 		return this;
 	}
 
@@ -50,6 +54,10 @@ public class StatusPanel {
 		if (lastPopUp != null && lastStatus.equals(status)) {
 			lastPopUp.visible(false);
 			lastPopUp = null;
+			Log.instance().debug(
+					LOADING + status + " executed in "
+							+ (System.currentTimeMillis() - lastTimestamp)
+							+ "ms");
 		}
 	}
 
