@@ -307,11 +307,17 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	/*-{ return navigator.userAgent; }-*/;
 
 	public static String getUserAgent() {
-		return Window.Navigator.getUserAgent();
+		String userAgent = Window.Navigator.getUserAgent();
+		return userAgent;
 	}
 
 	public static boolean isFirefox() {
 		return !isChrome() && !isOpera() && !isInternetExplorer();
+	}
+
+	public static boolean isFirefox36() {
+		return !isChrome() && !isOpera() && !isInternetExplorer()
+				&& getUserAgent().contains("Firefox/3.6");
 	}
 
 	public static boolean isChrome() {
