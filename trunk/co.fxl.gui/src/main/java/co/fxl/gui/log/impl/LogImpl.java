@@ -7,6 +7,7 @@ import java.util.List;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IVerticalPanel;
@@ -58,16 +59,16 @@ class LogImpl implements ILog, IClickListener {
 				.size(d.width() - SPACING * 2, d.height() - SPACING * 2)
 				.viewPort().panel().vertical().spacing(6).add().panel()
 				.vertical().spacing(2);
-		IHorizontalPanel grid = panel.add().panel().horizontal();
-		grid.add().label().text("LOG").font().weight().bold();
-		grid.addSpace(8).add().label().text("[x] Close").hyperlink()
+		IGridPanel grid = panel.add().panel().grid();
+		grid.cell(0, 0).label().text("LOG").font().weight().bold().pixel(14);
+		grid.cell(1, 0).align().end().label().text("[x] Close").hyperlink()
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
 						popUp.visible(false);
 					}
-				}).mouseLeft().font().pixel(11);
-		panel.addSpace(6);
+				});
+		panel.addSpace(2);
 		for (Entry l : lines) {
 			IHorizontalPanel h = panel.add().panel().horizontal();
 			h.add().label().text(l.date.toString()).font().pixel(11).color()
