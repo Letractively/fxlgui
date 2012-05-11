@@ -139,4 +139,9 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 		register.toggleLoading(loading);
 		return this;
 	}
+
+	@Override
+	public void showTitleAsEmpty(boolean empty) {
+		register.showTitleAsEmpty(empty);
+	}
 }

@@ -36,4 +36,6 @@ public interface ITab<T extends ITab<T>> {
 
 	boolean isEnabled();
 
+	void showTitleAsEmpty(boolean empty);
+
 }

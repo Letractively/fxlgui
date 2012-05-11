@@ -59,7 +59,7 @@ public class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public R height(int height) {
-		if (height >= 1)
+		if (height >= 1 || height == -1)
 			container.component.preferredHeight = height;
 		return (R) this;
 	}
@@ -67,7 +67,7 @@ public class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public R width(int width) {
-		if (width >= 1)
+		if (width >= 1 || width == -1)
 			container.component.preferredWidth = width;
 		return (R) this;
 	}
