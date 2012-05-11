@@ -18,16 +18,19 @@
  */
 package co.fxl.gui.impl;
 
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 
-public class HyperlinkMouseOverListener implements IMouseOverListener {
+public class HyperlinkMouseOverListener implements IMouseOverListener,
+		IClickListener {
 
 	ILabel label;
 
 	public HyperlinkMouseOverListener(ILabel label) {
 		this.label = label;
 		label.addMouseOverListener(this);
+		label.addClickListener(this);
 	}
 
 	@Override
@@ -39,6 +42,11 @@ public class HyperlinkMouseOverListener implements IMouseOverListener {
 	@Override
 	public void onMouseOut() {
 		label.font().underline(false);
+	}
+
+	@Override
+	public void onClick() {
+		onMouseOut();
 	}
 
 }
