@@ -53,7 +53,7 @@ class LogImpl implements ILog, IClickListener {
 		IDisplay d = Display.instance();
 		final IPopUp popUp = d.showPopUp()
 				.size(d.width() - SPACING * 2, d.height() - SPACING * 2)
-				.offset(SPACING, SPACING);
+				.offset(SPACING, SPACING).modal(true);
 		popUp.border().style().shadow();
 		IVerticalPanel panel = popUp.container().scrollPane()
 				.size(d.width() - SPACING * 2, d.height() - SPACING * 2)
