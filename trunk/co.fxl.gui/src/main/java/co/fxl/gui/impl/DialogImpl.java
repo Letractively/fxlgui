@@ -199,7 +199,7 @@ public class DialogImpl implements IDialog {
 			IVerticalPanel panel = popUp.container().panel().vertical();
 			WidgetTitle.decorateBorder(panel.spacing(1).border().color());
 			WidgetTitle t = new WidgetTitle(panel.add().panel())
-					.foldable(false).space(0);
+					.foldable(false).spacing(0);
 			t.addTitle(title.toUpperCase());
 			t.addTitleSpace();
 			if (message != null && buttons.isEmpty()) {

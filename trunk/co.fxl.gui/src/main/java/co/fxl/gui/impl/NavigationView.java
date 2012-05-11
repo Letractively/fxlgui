@@ -59,7 +59,7 @@ public class NavigationView {
 		this.addToContextMenu = addToContextMenu;
 		if (addToContextMenu)
 			widgetTitle.addToContextMenu(addToContextMenu);
-		widgetTitle.space(2);
+		widgetTitle.spacing(2);
 		this.title = title;
 		setUp();
 	}

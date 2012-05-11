@@ -87,7 +87,7 @@ public class FormWidgetImpl implements IFormWidget {
 
 	protected FormWidgetImpl(IContainer panel) {
 		widgetTitle = new WidgetTitle(panel.panel(), false)// .grayBackground()
-				.commandsOnTop().space(0);
+				.commandsOnTop().spacing(0);
 		widgetTitle.foldable(false);
 	}
 
@@ -448,7 +448,7 @@ public class FormWidgetImpl implements IFormWidget {
 
 	@Override
 	public ILabel addTitle(String title) {
-		widgetTitle.space(0);
+		widgetTitle.spacing(0);
 		spacing = 8;
 		return widgetTitle.addTitle(title);
 	}
