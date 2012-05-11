@@ -15,7 +15,7 @@ import co.fxl.gui.log.api.ILog;
 
 class LogImpl implements ILog, IClickListener {
 
-	private static final int MAX_SIZE = 100;
+	private static final int MAX_SIZE = 500;
 
 	private class Entry {
 
@@ -59,7 +59,7 @@ class LogImpl implements ILog, IClickListener {
 				.viewPort().panel().vertical().spacing(6).add().panel()
 				.vertical().spacing(2);
 		IHorizontalPanel grid = panel.add().panel().horizontal();
-		grid.add().label().text("APPLICATION LOG").font().weight().bold();
+		grid.add().label().text("LOG").font().weight().bold();
 		grid.addSpace(8).add().label().text("[x] Close").hyperlink()
 				.addClickListener(new IClickListener() {
 					@Override
