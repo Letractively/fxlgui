@@ -65,7 +65,7 @@ public class FormWidgetImpl implements IFormWidget {
 	}
 
 	private static final boolean FIXED_WIDTH = Constants.get(
-			"FormWidgetImpl.FIXED_WIDTH", false);
+			"FormWidgetImpl.FIXED_WIDTH", true);
 	private int gridIndex0 = -1;
 	private WidgetTitle widgetTitle;
 	protected IGridPanel grid;
@@ -431,8 +431,9 @@ public class FormWidgetImpl implements IFormWidget {
 			grid.resize(2, 1);
 			int column = 1;
 			if (FIXED_WIDTH)
-				grid.column(0).width(100);
-			expand(column);
+				grid.column(0).width(120);
+			else
+				expand(column);
 			decorate(grid);
 		}
 		return grid;
