@@ -28,6 +28,7 @@ import co.fxl.gui.log.impl.Log;
 public class StatusPanel {
 
 	private static final String LOADING = "Loading ";
+	public static final double FADE_IN_MS = 1000;
 	private IPopUp lastPopUp;
 	private String lastStatus;
 	private static StatusPanel instance;

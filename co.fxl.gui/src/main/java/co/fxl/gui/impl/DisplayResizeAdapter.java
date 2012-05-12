@@ -29,7 +29,7 @@ public class DisplayResizeAdapter {
 
 	private static Map<String, Integer> decrement = new HashMap<String, Integer>();
 
-	public static void setDecrement(String string, int i) {
+	public static void setDecrement(String string, Integer i) {
 		if (i == 0)
 			decrement.remove(string);
 		else
