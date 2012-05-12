@@ -14,9 +14,11 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IScrollPane;
+import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.log.api.ILog;
 
@@ -134,7 +136,7 @@ class LogImpl implements ILog, IClickListener {
 							.hyperlink().addClickListener(new IClickListener() {
 								@Override
 								public void onClick() {
-									showException(content, l);
+									showException(scrollPane, content, l);
 								}
 							}).mouseLeft().font().pixel(11);
 				i++;
@@ -162,7 +164,7 @@ class LogImpl implements ILog, IClickListener {
 		lbl.font().pixel(11).color().gray();
 	}
 
-	private void showException(IVerticalPanel content, Entry l) {
+	private void showException(IScrollPane p, IVerticalPanel content, Entry l) {
 		cancel.visible(false);
 		details = l;
 		content.clear();
@@ -172,21 +174,29 @@ class LogImpl implements ILog, IClickListener {
 		addMessage(l, h.add().label());
 		addDate(l, h.add().label());
 		addDuration(l, h.add().label());
+		StringBuilder b = new StringBuilder();
 		for (Throwable t : l.stacktrace)
 			if (t != null)
-				addException(t, content);
+				addException(t, b);
+		ITextArea ta = content.add().textArea()
+				.size(p.width() - 40, p.height() - 60).text(b.toString())
+				.editable(false);
+		ta.border().width(1);
+		Heights.INSTANCE.decorate(ta);
 	}
 
-	private void addException(Throwable stacktrace, IVerticalPanel content) {
-		content.add().label().text(stacktrace.toString()).font().weight()
-				.bold().family().courier();
+	private void addException(Throwable stacktrace, StringBuilder b) {
+		b.append(stacktrace.toString() + "\n");
+		// content.add().label().text(stacktrace.toString()).font().weight()
+		// .bold().family().courier();
 		for (StackTraceElement e : stacktrace.getStackTrace()) {
-			ILabel l = content.add().label().text(e.toString());
-			l.margin().left(10);
-			l.font().family().courier();
+			b.append("\t" + e.toString() + "\n");
+			// ILabel l = content.add().label().text(e.toString());
+			// l.margin().left(10);
+			// l.font().family().courier();
 		}
 		if (stacktrace.getCause() != null) {
-			addException(stacktrace.getCause(), content);
+			addException(stacktrace.getCause(), b);
 		}
 	}
 
