@@ -208,10 +208,10 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 
 	GWTSplitPane(GWTContainer<Widget> container) {
 		super(container);
-		container.widget.setHeight("600px");
+		widget().setHeight("600px");
 		setUpContainers(container);
 		splitPosition(300 + INC);
-		adapter.addListener(container.widget, this);
+		adapter.addListener(widget(), this);
 	}
 
 	public void setUpContainers(final GWTContainer<Widget> container) {

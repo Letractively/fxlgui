@@ -35,25 +35,6 @@ public class GWTRichTextArea extends
 
 	GWTRichTextArea(final GWTContainer<RichTextArea> container) {
 		super(container);
-		// final RichTextArea widget = super.container.widget;
-		// final Formatter formatter = widget.getFormatter();
-		// new RichTextToolbar(this, new IRichTextAdapter() {
-		// @Override
-		// public void toggleBold() {
-		// formatter.toggleBold();
-		// container.display().invokeLater(new Runnable() {
-		// @Override
-		// public void run() {
-		// widget.setFocus(true);
-		// }
-		// });
-		// }
-		//
-		// @Override
-		// public boolean isBold() {
-		// return formatter.isBold();
-		// }
-		// });
 	};
 
 	@Override

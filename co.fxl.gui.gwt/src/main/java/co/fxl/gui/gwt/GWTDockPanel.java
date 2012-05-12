@@ -47,11 +47,11 @@ class GWTDockPanel extends GWTPanel<DockPanel, IDockPanel> implements
 	@SuppressWarnings("unchecked")
 	GWTDockPanel(GWTContainer<?> container) {
 		super((GWTContainer<DockPanel>) container);
-		super.container.widget.setWidth("100%");
-		super.container.widget.setVerticalAlignment(HasAlignment.ALIGN_TOP);
-		super.container.widget.setHorizontalAlignment(HasAlignment.ALIGN_LEFT);
-		super.container.widget.setBorderWidth(0);
-		super.container.widget.setSpacing(0);
+		widget().setWidth("100%");
+		widget().setVerticalAlignment(HasAlignment.ALIGN_TOP);
+		widget().setHorizontalAlignment(HasAlignment.ALIGN_LEFT);
+		widget().setBorderWidth(0);
+		widget().setSpacing(0);
 	}
 
 	@Override

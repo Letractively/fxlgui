@@ -31,15 +31,13 @@ import com.google.gwt.user.client.ui.Widget;
 class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 		IScrollPane {
 
-	private static final int BLOCK_INCREMENT = 22;
 	private int initialScrollPosition = -1;
 
 	GWTScrollPane(GWTContainer<ScrollPanel> container) {
 		super(container);
-		container.widget.setWidth("100%");
-		container.widget.setAlwaysShowScrollBars(false);
-		container.widget.getElement().getStyle()
-				.setProperty("overflowX", "hidden");
+		widget().setWidth("100%");
+		widget().setAlwaysShowScrollBars(false);
+		widget().getElement().getStyle().setProperty("overflowX", "hidden");
 	}
 
 	@Override
@@ -99,10 +97,10 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 		// p.getElement().scrollIntoView();
 		// ap.remove(p);
 		// } else
-//		if (container.widget.isVisible())
-			container.widget.setScrollPosition(pos);
-//		else
-			initialScrollPosition = pos;
+		// if (container.widget.isVisible())
+		container.widget.setScrollPosition(pos);
+		// else
+		initialScrollPosition = pos;
 		return this;
 	}
 
@@ -128,22 +126,22 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 		return this;
 	}
 
-//	@Override
-//	public void onUp(int turns) {
-//		onScrollTurns(-turns);
-//	}
-//
-//	private void onScrollTurns(int i) {
-//		int newOffset = scrollOffset() + i * BLOCK_INCREMENT;
-//		if (newOffset < 0)
-//			newOffset = 0;
-//		scrollTo(newOffset);
-//	}
-//
-//	@Override
-//	public void onDown(int turns) {
-//		onScrollTurns(turns);
-//	}
+	// @Override
+	// public void onUp(int turns) {
+	// onScrollTurns(-turns);
+	// }
+	//
+	// private void onScrollTurns(int i) {
+	// int newOffset = scrollOffset() + i * BLOCK_INCREMENT;
+	// if (newOffset < 0)
+	// newOffset = 0;
+	// scrollTo(newOffset);
+	// }
+	//
+	// @Override
+	// public void onDown(int turns) {
+	// onScrollTurns(turns);
+	// }
 
 	@Override
 	public IScrollPane showScrollbarsAlways(boolean showScrollbarsAlways) {
