@@ -511,9 +511,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			// constraints.isSpecified())
 			// {
 			// && constraints.isConstraintSpecified()) {
-			IGridPanel gp = nef.add().panel().horizontal().align().begin()
-					.add().panel().horizontal().align().begin().add().panel()
-					.grid().resize(3, description.size()).spacing(4);
+			IGridPanel gp = nef.add().panel().horizontal().add().panel().grid()
+					.resize(3, description.size()).spacing(4);
 			// gp.cell(0, 0).label().text("Active filter:").font()
 			// .pixel(FONTSIZE_NOTHING_FOUND_FILTER).color().gray();
 			int i = 0;
@@ -621,11 +620,9 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	void createFilter() {
 		if (filter == null) {
 			IHorizontalPanel h = topPanelCell(0, 0).panel().horizontal()
-					.align().begin()
 					.addSpace(8);
 			if (toggleButton != null) {
-				decorateToggleButtonCell(h.add().panel().horizontal().align()
-						.begin());
+				decorateToggleButtonCell(h.add().panel().horizontal());
 				h.addSpace(8);
 			}
 			filter = (IMiniFilterWidget) h.add()

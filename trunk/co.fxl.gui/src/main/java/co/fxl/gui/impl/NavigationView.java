@@ -189,8 +189,7 @@ public class NavigationView {
 		if (hasLinks) {
 			p.addSpace(3);
 		}
-		IHorizontalPanel panel = p.add().panel().horizontal().align().begin()// .addSpace(6)
-				.add().panel().horizontal().align().begin();
+		IHorizontalPanel panel = p.add().panel().horizontal();
 		if (hasLinks) {
 			IBorder border = p.border();
 			border.color().rgb(172, 197, 213);

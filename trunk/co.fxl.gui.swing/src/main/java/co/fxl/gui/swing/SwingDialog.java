@@ -35,9 +35,7 @@ class SwingDialog extends DialogImpl {
 	protected void createLabel(IContainer content) {
 		if (width != -1) {
 			IVerticalPanel grid = content.panel().vertical();
-			IHorizontalPanel p = grid.add().panel().horizontal().align()
-					.begin().add().panel().horizontal().align().begin()
-					.spacing(10);
+			IHorizontalPanel p = grid.add().panel().horizontal().spacing(10);
 			int height = 16 * (1 + (message.length() / 64));
 			p.add().image().resource(image(type)).size(16, 16);
 			ITextArea ta = p.add().textArea().text(message);

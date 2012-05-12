@@ -266,10 +266,9 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 	}
 
 	public static void showFailureLoadingRegister(IVerticalPanel panel) {
-		panel.clear().add().panel().vertical().add().panel().horizontal().add()
-				.panel().horizontal().spacing(10).add().label()
-				.text("FAILURE LOADING REGISTER").font().pixel(10).color()
-				.gray();
+		panel.clear().add().panel().vertical().add().panel().horizontal()
+				.spacing(10).add().label().text("FAILURE LOADING REGISTER")
+				.font().pixel(10).color().gray();
 	}
 
 	@Override

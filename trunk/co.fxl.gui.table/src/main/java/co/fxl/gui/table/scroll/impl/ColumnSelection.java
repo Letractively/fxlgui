@@ -51,8 +51,7 @@ public class ColumnSelection {
 
 	public void draw() {
 		IContainer clear = getContainer();
-		IHorizontalPanel p = clear.panel().horizontal().add().panel()
-				.horizontal();
+		IHorizontalPanel p = clear.panel().horizontal();
 		IClickListener clickListener = new IClickListener() {
 			@Override
 			public void onClick() {

@@ -10,7 +10,9 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.WidgetTitle;
@@ -61,10 +63,10 @@ class LogImpl implements ILog, IClickListener {
 		WidgetTitle panel = new WidgetTitle(popUp.container()).spacing(0)
 				.sideWidget(true).commandsOnTop();
 		panel.addTitle("Log Trace");
-		final IVerticalPanel content = panel.content().scrollPane()
-				.size(d.width() - SPACING * 2, d.height() - SPACING * 2 - 33)
-				.viewPort().panel().vertical().spacing(10).add().panel()
-				.vertical();
+		IScrollPane scrollPane = panel.content().scrollPane()
+				.size(d.width() - SPACING * 2, d.height() - SPACING * 2 - 33);
+		final IVerticalPanel content = scrollPane.viewPort().panel().vertical()
+				.spacing(10).add().panel().vertical();
 		panel.addHyperlink("cancel.png", "Clear").addClickListener(
 				new IClickListener() {
 					@Override
@@ -83,9 +85,10 @@ class LogImpl implements ILog, IClickListener {
 		if (lines.size() > 0) {
 			IGridPanel g = content.add().panel().grid().spacing(4);
 			int i = 0;
+			ILabel lbl = null;
 			for (Entry l : lines) {
-				g.cell(0, i).label().text(l.date.toString()).font().pixel(11)
-						.color().gray();
+				lbl = g.cell(0, i).label().text(l.date.toString());
+				lbl.font().pixel(11).color().gray();
 				g.cell(1, i).label().text(l.level).font().pixel(11).weight()
 						.bold();
 				g.cell(2, i).label().text(l.message).font().pixel(12).family()
@@ -93,6 +96,7 @@ class LogImpl implements ILog, IClickListener {
 				i++;
 			}
 			g.column(2).expand();
+			scrollPane.scrollIntoView(lbl);
 		}
 		popUp.visible(true);
 	}

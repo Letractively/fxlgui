@@ -120,7 +120,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	}
 
 	IHorizontalPanel createPanel(ILayout l) {
-		return l.horizontal().align().begin();
+		return l.horizontal();
 	}
 
 	FlipPage flipPage() {
