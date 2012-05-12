@@ -10,6 +10,10 @@ public interface ILog {
 
 	ILog debug(String message);
 
+	ILog debug(String message, long duration);
+
+	ILog debug(String message, long duration, Exception stacktrace);
+
 	ILog container(IContainer c);
 
 }
