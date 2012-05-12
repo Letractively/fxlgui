@@ -32,6 +32,7 @@ import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
@@ -169,8 +170,6 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 			};
 		}
 
-		// TODO optimize, use border for grid lines! 1000ms grid -> 600ms grid
-
 		@Override
 		public IBorder border() {
 			return new GWTWidgetBorder(formatter().getElement(row, column));
@@ -195,9 +194,8 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 	@SuppressWarnings("unchecked")
 	public GWTGridPanel(GWTContainer<?> container) {
 		super((GWTContainer<HTMLTable>) container);
-		super.container.widget.setWidth("100%");
-		indent(0);
-		spacing(0);
+		widget().setWidth("100%");
+		indent(0).spacing(0);
 	}
 
 	@Override
@@ -210,7 +208,8 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 		container.widget.setWidget(gridCell.row, gridCell.column, widget);
 		CellFormatter formatter = gridCell.formatter();
 		formatter.setHeight(gridCell.row, gridCell.column, "100%");
-		widget.setWidth("100%");
+		if (!(widget instanceof HorizontalPanel))
+			widget.setWidth("100%");
 		// widget.setHeight("100%");
 	}
 

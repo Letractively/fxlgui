@@ -229,6 +229,14 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		this.container = container;
 	}
 
+	protected T widget() {
+		return container.widget;
+	}
+
+	protected void addStyleName(String string) {
+		container.widget.addStyleName(string);
+	}
+
 	protected Style style() {
 		if (style == null) {
 			style = container.widget.getElement().getStyle();
