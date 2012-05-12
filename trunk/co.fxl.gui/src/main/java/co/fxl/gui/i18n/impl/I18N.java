@@ -26,7 +26,7 @@ import co.fxl.gui.i18n.api.II18N;
 public class I18N {
 
 	public static boolean ENABLED = true;
-	private static II18N instance = new II18N() {
+	private static II18N dummyInstance = new II18N() {
 
 		@Override
 		public String translate(String text) {
@@ -43,6 +43,7 @@ public class I18N {
 			return this;
 		}
 	};
+	private static II18N instance = dummyInstance;
 	private static Map<String, II18N> i18ns = new HashMap<String, II18N>();
 	private static String defaultI18N;
 
@@ -79,7 +80,8 @@ public class I18N {
 	}
 
 	public static II18N instance() {
-		assert ENABLED;
+		if (!ENABLED)
+			return dummyInstance;
 		return instance;
 	}
 }
