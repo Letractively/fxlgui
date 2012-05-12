@@ -72,6 +72,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	 */
 
 	private static final String CHROME = "Chrome/";
+	public static final String BROWSER_WARNING = "You are using an outdated browser with a slow javascript engine! If possible: Update to Internet Explorer 9+ or switch to another browser like Firefox or Chrome. This will significantly reduce application response time."
+			+ "\nWhen using Chrome or Firefox, Drag-and-Drop will be available.";
 
 	private final class GWTResizeConfiguration extends ResizeConfiguration
 			implements ResizeHandler {

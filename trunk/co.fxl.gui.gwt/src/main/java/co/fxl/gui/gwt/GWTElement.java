@@ -219,6 +219,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	private boolean hasDragListener;
 	private HandlerRegistration dummyDragListener;
 	public Injector injector;
+	private Style style;
 
 	public GWTElement() {
 	}
@@ -226,6 +227,13 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	public GWTElement(GWTContainer<T> container) {
 		assert container != null : "GWTElement.new";
 		this.container = container;
+	}
+
+	protected Style style() {
+		if (style == null) {
+			style = container.widget.getElement().getStyle();
+		}
+		return style;
 	}
 
 	// IFont defaultFont() {
@@ -614,10 +622,6 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	public R padding(int padding) {
 		style().setPadding(padding, Unit.PX);
 		return (R) this;
-	}
-
-	Style style() {
-		return container.widget.getElement().getStyle();
 	}
 
 	@SuppressWarnings("unchecked")

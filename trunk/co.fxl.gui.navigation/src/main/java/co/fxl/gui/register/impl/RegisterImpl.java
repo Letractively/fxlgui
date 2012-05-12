@@ -115,7 +115,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 		buttonPanel.spacing(loading ? widget.spacing - SPACING_DEC_LOADING
 				: widget.spacing);
 		buttonLabel.visible(!loading);
-		buttonPanel.width(width);
+		buttonPanel.size(width, 24);
 		if (isActive()) {
 			buttonImage.resource("loading_black.gif");
 		} else {

@@ -80,12 +80,12 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 
 	GWTSuggestField(final GWTContainer<SuggestBox> container) {
 		super(container);
-		assert container != null : "GWTTextField.new: container is null";
+		// assert container != null : "GWTTextField.new: container is null";
 		DefaultSuggestionDisplay sd = (DefaultSuggestionDisplay) container.widget
 				.getSuggestionDisplay();
 		sd.setPopupStyleName("gwt-SuggestBoxPopup-FXL");
-		container.widget.getTextBox().setStyleName("gwt-TextBox-FXL");
-//		defaultFont();
+		container.widget.getTextBox().setStyleName("gwt-TextBox");
+		// defaultFont();
 		// oracle = (MultiWordSuggestOracle) ((SuggestBox) container.widget)
 		// .getSuggestOracle();
 	}
@@ -151,13 +151,6 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 	public ISuggestField width(int width) {
 		return (ISuggestField) super.width(width - 8);
 	}
-
-	// @Override
-	// public ISuggestField addText(String... texts) {
-	// for (String t : texts)
-	// oracle.add(t);
-	// return this;
-	// }
 
 	@Override
 	public ISuggestField editable(boolean editable) {

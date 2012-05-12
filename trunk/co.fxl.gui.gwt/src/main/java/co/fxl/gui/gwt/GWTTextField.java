@@ -32,38 +32,17 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.ui.TextBox;
 
 class GWTTextField extends GWTElement<TextBox, ITextField> implements
-		ITextField {
+		ITextField, ChangeHandler, DropHandler, KeyUpHandler {
 
-	// private static final Heights HEIGHTS = new Heights(0);
 	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();
 	private String lastNotifiedValue = null;
 
 	GWTTextField(GWTContainer<TextBox> container) {
 		super(container);
 		assert container != null : "GWTTextField.new: container is null";
-		container.widget.addStyleName("gwt-TextBox-FXL");
-//		defaultFont();
-		container.widget.addChangeHandler(new ChangeHandler() {
-
-			@Override
-			public void onChange(ChangeEvent event) {
-				notifyChange();
-			}
-		});
-		container.widget.addDropHandler(new DropHandler() {
-
-			@Override
-			public void onDrop(DropEvent event) {
-				notifyChange();
-			}
-		});
-		container.widget.addKeyUpHandler(new KeyUpHandler() {
-
-			@Override
-			public void onKeyUp(KeyUpEvent event) {
-				notifyChange();
-			}
-		});
+		container.widget.addChangeHandler(this);
+		container.widget.addDropHandler(this);
+		container.widget.addKeyUpHandler(this);
 	}
 
 	protected void notifyChange() {
@@ -135,5 +114,20 @@ class GWTTextField extends GWTElement<TextBox, ITextField> implements
 	@Override
 	public boolean editable() {
 		return !container.widget.isReadOnly();
+	}
+
+	@Override
+	public void onChange(ChangeEvent event) {
+		notifyChange();
+	}
+
+	@Override
+	public void onKeyUp(KeyUpEvent event) {
+		notifyChange();
+	}
+
+	@Override
+	public void onDrop(DropEvent event) {
+		notifyChange();
 	}
 }
