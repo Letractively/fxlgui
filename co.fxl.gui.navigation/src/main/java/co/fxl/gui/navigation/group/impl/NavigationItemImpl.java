@@ -81,7 +81,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 			button = subPanel.add().label();
 			button.font().pixel(14).weight().bold().color().white();
 			button.addClickListener(this);
-			refresh = subPanel.add().image().visible(false);
+			refresh = subPanel.add().image().visible(false).size(16, 16);
 			refreshResource("loading_white.gif");
 			refresh.addClickListener(this);
 			buttonPanel.addSpace(3);
@@ -133,7 +133,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 		buttonPanel.clickable(b);
 		// button.clickable(b);
 		// refresh.clickable(b);
-		refresh.opacity(1);
+		// refresh.opacity(1);
 	}
 
 	void showBackgroundNeutral() {
@@ -370,7 +370,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 		String resource = labelAsActive ? "loading_black.gif"
 				: "loading_white.gif";
 		refreshResource(resource);
-		refresh.visible(t);
+		refresh.visible(t).size(16, 16);
 		button.visible(!t);
 		return this;
 	}

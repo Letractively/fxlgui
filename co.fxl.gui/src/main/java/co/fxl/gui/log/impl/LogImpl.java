@@ -50,6 +50,11 @@ class LogImpl implements ILog, IClickListener {
 			this.stacktrace = stacktrace;
 		}
 
+		@Override
+		public String toString() {
+			return date.toString() + " " + level + " " + message + " ";
+		}
+
 	}
 
 	private static final int SPACING = 20;
@@ -67,7 +72,9 @@ class LogImpl implements ILog, IClickListener {
 	@Override
 	public ILog debug(String message) {
 		ensureSize();
-		lines.add(new Entry("DEBUG", message));
+		Entry e = new Entry("DEBUG", message);
+		System.out.println(e);
+		lines.add(e);
 		return this;
 	}
 
