@@ -226,4 +226,9 @@ class LogImpl implements ILog, IClickListener {
 		lines.add(new Entry("DEBUG", message, duration, stacktrace));
 		return this;
 	}
+
+	@Override
+	public ILog deobfuscator(IDeobfuscator deobfuscator) {
+		throw new UnsupportedOperationException();
+	}
 }
