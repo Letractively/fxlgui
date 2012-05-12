@@ -92,9 +92,8 @@ public class ViewImpl extends LazyClickListener {
 			content = this.viewList.widget.contentPanel();
 			sideContent = this.viewList.widget.sideContentPanel();
 			if (this.viewList.newListener != null) {
-				removeImage = grid.cell(1, 0).valign().center().width(30)
-						.align().end().panel().horizontal().addSpace(4).add()
-						.image();
+				removeImage = grid.cell(1, 0).width(30).align().end().panel()
+						.horizontal().addSpace(4).add().image();
 				removeImage.resource(Icons.CANCEL).addClickListener(
 						new LazyClickListener() {
 							@Override

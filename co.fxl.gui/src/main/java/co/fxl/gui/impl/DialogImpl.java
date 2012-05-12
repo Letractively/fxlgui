@@ -249,7 +249,7 @@ public class DialogImpl implements IDialog {
 			decorate(grid);
 		grid.cell(0, 0).width(16).valign().begin().image()
 				.resource(image(type)).size(16, 16);
-		IGridCell c = grid.cell(1, 0).valign().center();
+		IGridCell c = grid.cell(1, 0);
 		if (width != -1)
 			c.width(width - 3 * 10 - 16);
 		c.label().text(message).autoWrap(true);

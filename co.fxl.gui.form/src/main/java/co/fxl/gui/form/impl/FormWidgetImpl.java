@@ -98,7 +98,7 @@ public class FormWidgetImpl implements IFormWidget {
 		IGridPanel grid = grid();
 		int column = 0;
 		IGridCell cell = grid.cell(column, gridIndex);
-		cell.align().end().valign().center();// .height(HEIGHT_CELL);
+		cell.align().end();// .height(HEIGHT_CELL);
 		if (fixLabelWidth != -1)
 			cell.width(fixLabelWidth);
 		ILabel formEntryLabel = cell.label();
@@ -112,7 +112,6 @@ public class FormWidgetImpl implements IFormWidget {
 		IGridPanel grid = grid();
 		int column = 1;
 		IGridCell cell = grid.cell(column, gridIndex);
-		cell.valign().center();
 		if (fixValueWidth != -column)
 			cell.width(fixValueWidth);
 		heights.decorate(cell);
