@@ -25,4 +25,5 @@ public interface II18N {
 	II18N activate(boolean activate);
 
 	boolean active(boolean active);
+
 }
