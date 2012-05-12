@@ -144,31 +144,34 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	@Override
 	public IMultiComboBoxWidget visible(boolean visible) {
 		textField.visible(visible);
-		textField.addFocusListener(this);
-		textField.addUpdateListener(new IUpdateListener<String>() {
-			@Override
-			public void onUpdate(String value) {
-				List<String> result = new LinkedList<String>(Arrays
-						.asList(extract(value)));
-				boolean changed = false;
-				for (String t : texts) {
-					if (!result.contains(t)) {
-						selection.remove(t);
-						changed = true;
+		textField.editable(!texts.isEmpty());
+		if (!texts.isEmpty()) {
+			textField.addFocusListener(this);
+			textField.addUpdateListener(new IUpdateListener<String>() {
+				@Override
+				public void onUpdate(String value) {
+					List<String> result = new LinkedList<String>(Arrays
+							.asList(extract(value)));
+					boolean changed = false;
+					for (String t : texts) {
+						if (!result.contains(t)) {
+							selection.remove(t);
+							changed = true;
+						}
+					}
+					for (String t : result) {
+						if (!selection.contains(t) && texts.contains(t)) {
+							selection.add(t);
+							changed = true;
+						}
+					}
+					if (changed) {
+						updateCheckBoxes();
+						notifyListeners();
 					}
 				}
-				for (String t : result) {
-					if (!selection.contains(t) && texts.contains(t)) {
-						selection.add(t);
-						changed = true;
-					}
-				}
-				if (changed) {
-					updateCheckBoxes();
-					notifyListeners();
-				}
-			}
-		});
+			});
+		}
 		return this;
 	}
 
