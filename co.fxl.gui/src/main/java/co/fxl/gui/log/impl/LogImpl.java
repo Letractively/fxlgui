@@ -73,7 +73,7 @@ class LogImpl implements ILog, IClickListener {
 	public ILog debug(String message) {
 		ensureSize();
 		Entry e = new Entry("DEBUG", message);
-		System.out.println(e);
+//		System.out.println(e);
 		lines.add(e);
 		return this;
 	}
