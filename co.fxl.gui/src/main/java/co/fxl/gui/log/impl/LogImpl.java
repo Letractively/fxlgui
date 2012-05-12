@@ -73,7 +73,7 @@ class LogImpl implements ILog, IClickListener {
 	public ILog debug(String message) {
 		ensureSize();
 		Entry e = new Entry("DEBUG", message);
-//		System.out.println(e);
+		// System.out.println(e);
 		lines.add(e);
 		return this;
 	}
@@ -91,10 +91,10 @@ class LogImpl implements ILog, IClickListener {
 				.offset(SPACING, SPACING).modal(true);
 		popUp.border().remove().style().shadow().color().black();
 		WidgetTitle panel = new WidgetTitle(popUp.container()).spacing(0)
-				.sideWidget(true).commandsOnTop();
+				.sideWidget(true).commandsOnTop().spacing(0);
 		panel.addTitle("Log Trace");
 		final IScrollPane scrollPane = panel.content().scrollPane()
-				.size(d.width() - SPACING * 2, d.height() - SPACING * 2 - 33);
+				.height(d.height() - SPACING * 2 - 33);
 		final IVerticalPanel content = scrollPane.viewPort().panel().vertical()
 				.spacing(10).add().panel().vertical();
 		cancel = panel.addHyperlink("cancel.png", "Clear");
