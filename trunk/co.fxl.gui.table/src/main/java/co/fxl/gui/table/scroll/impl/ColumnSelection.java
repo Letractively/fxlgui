@@ -38,7 +38,8 @@ public class ColumnSelection {
 	private IFocusPanel dummyFocusPanel;
 	private ILabel dummyLabel;
 
-	// TODO Feature: MinorFeature: : Option: Look: Column-Selection: if > n Columns or
+	// TODO Feature: MinorFeature: : Option: Look: Column-Selection: if > n
+	// Columns or
 	// sum(characters of column-headers) > m
 	// then dynamically resize font size of column selection labels
 
@@ -63,8 +64,8 @@ public class ColumnSelection {
 
 	protected IContainer getContainer() {
 		if (widget.statusPanel() != null) {
-			IGridCell center = widget.statusPanel().cell(1, 0).clear().align()
-					.begin().valign().center();
+			IGridCell center = widget.statusPanel().cell(1, 0).clear().valign()
+					.center();
 			widget.statusPanel().column(1).expand();
 			return center;
 		}

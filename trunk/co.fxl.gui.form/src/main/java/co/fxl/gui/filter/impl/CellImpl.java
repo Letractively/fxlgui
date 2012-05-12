@@ -43,7 +43,7 @@ class CellImpl implements ICell {
 
 	@Override
 	public IHorizontalPanel horizontal() {
-		return cell.align().begin().panel().horizontal();
+		return cell.panel().horizontal();
 	}
 
 	@Override
