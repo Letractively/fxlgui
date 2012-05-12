@@ -1,8 +1,14 @@
 package co.fxl.gui.log.api;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IContainer;
 
 public interface ILog {
+
+	public interface IDeobfuscator {
+
+		void deobfuscate(Throwable t, ICallback<Throwable> deobfuscated);
+	}
 
 	ILog start(String message);
 
@@ -13,6 +19,8 @@ public interface ILog {
 	ILog debug(String message, long duration);
 
 	ILog debug(String message, long duration, Throwable... stacktraces);
+
+	ILog deobfuscator(IDeobfuscator deobfuscator);
 
 	ILog container(IContainer c);
 

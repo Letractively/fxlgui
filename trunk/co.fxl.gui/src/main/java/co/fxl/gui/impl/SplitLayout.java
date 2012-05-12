@@ -59,7 +59,7 @@ public class SplitLayout implements IResizeListener {
 	private void init() {
 		panel = layout.grid();
 		cell0 = panel.cell(0, 0).width(
-				panel.width() - WIDTH_SIDE_PANEL - 3 * 10);
+				Display.instance().width() - WIDTH_SIDE_PANEL - 3 * 10);
 		IVerticalPanel vpanel = cell0.valign().begin().panel().vertical()
 				.spacing(10);
 		mainPanel = addMainPanel(vpanel);
