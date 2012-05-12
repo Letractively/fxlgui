@@ -164,4 +164,8 @@ public class CommandLink implements IClickable<IClickable<?>> {
 			contextMenuEntry.ctrlKey(c);
 		return this;
 	}
+
+	public void visible(boolean b) {
+		iPanel.visible(b);
+	}
 }
