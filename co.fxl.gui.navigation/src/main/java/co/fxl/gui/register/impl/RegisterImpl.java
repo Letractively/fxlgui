@@ -36,7 +36,7 @@ import co.fxl.gui.register.api.IRegister;
 
 public class RegisterImpl extends LazyClickListener implements IRegister {
 
-	private static final String _0 = " (0)";
+	private static final String _0 = "";
 	private static int SPACING_DEC_LOADING = Constants.get(
 			"RegisterImpl.SPACING_DEC_LOADING", 0);
 
@@ -276,11 +276,13 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 		if (empty != this.empty) {
 			buttonPanel.width(-1);
 			subPanel.width(-1);
-			if (empty) {
-				buttonLabel.text(buttonLabel.text() + _0);
-			} else {
-				buttonLabel.text(buttonLabel.text().substring(0,
-						buttonLabel.text().length() - _0.length()));
+			if (_0.length() > 0) {
+				if (empty) {
+					buttonLabel.text(buttonLabel.text() + _0);
+				} else {
+					buttonLabel.text(buttonLabel.text().substring(0,
+							buttonLabel.text().length() - _0.length()));
+				}
 			}
 		}
 		this.empty = empty;
