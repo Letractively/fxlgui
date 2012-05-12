@@ -61,9 +61,7 @@ public class SuggestionTextField implements
 	private void createPopUp() {
 		IVerticalPanel v = popUp.create();
 		for (final String text : texts) {
-			ILabel cb = v.add().panel().horizontal().align().begin().add()
-					.panel().horizontal().align().begin().add().label()
-					.text(text);
+			ILabel cb = v.add().panel().horizontal().add().label().text(text);
 			cb.addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {

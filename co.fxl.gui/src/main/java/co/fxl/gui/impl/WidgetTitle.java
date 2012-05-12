@@ -162,8 +162,8 @@ public class WidgetTitle implements IClickListener {
 			return;
 		headerPanel.visible(!plainContent);
 		IHorizontalPanel horizontal = headerPanel.cell(0, 0).align().begin()
-				.valign().center().panel().horizontal().align().begin();// .addSpace(3);
-		titlePanel = horizontal.add().panel().horizontal().align().begin();
+				.valign().center().panel().horizontal();// .addSpace(3);
+		titlePanel = horizontal.add().panel().horizontal();
 		titlePanel.spacing().left(10).top(6).bottom(6).right(6);
 		hasHeaderPanel = true;
 	}

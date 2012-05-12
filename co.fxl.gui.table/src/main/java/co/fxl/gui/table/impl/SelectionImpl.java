@@ -194,7 +194,7 @@ class SelectionImpl implements ISelection<Object> {
 		public void visible() {
 			IGridPanel selectionPanel = widget.selectionPanel();
 			IHorizontalPanel p = selectionPanel.cell(0, 0).panel().horizontal()
-					.add().panel().horizontal().spacing(5);
+					.spacing(5);
 			p.add().label().text("Select").font().pixel(PIXEL);
 			selectAll = p.add().label();
 			selectAll.text("All").font().pixel(PIXEL);

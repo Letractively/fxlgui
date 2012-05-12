@@ -106,9 +106,7 @@ public class TableWidgetImpl implements ITableWidget<Object>,
 		init = true;
 		mainPanel.visible(false);
 		mainPanel.clear();
-		headerPanel = mainPanel.add().panel().horizontal().add().panel()
-				.horizontal();
-		headerPanel.align().begin();
+		headerPanel = mainPanel.add().panel().horizontal();
 		gridPanel = new DynamicHeightGrid(mainPanel.add());
 		gridPanel.spacing(0);
 		gridPanel.indent(3);
