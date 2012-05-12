@@ -30,7 +30,7 @@ class LogImpl implements ILog, IClickListener {
 		private String level;
 		private String message;
 		private Long duration;
-		private Exception stacktrace;
+		private Throwable[] stacktrace;
 
 		public Entry(String string, String message) {
 			level = string;
@@ -43,7 +43,7 @@ class LogImpl implements ILog, IClickListener {
 		}
 
 		public Entry(String string, String message, long duration,
-				Exception stacktrace) {
+				Throwable... stacktrace) {
 			this(string, message, duration);
 			this.stacktrace = stacktrace;
 		}
@@ -172,7 +172,9 @@ class LogImpl implements ILog, IClickListener {
 		addMessage(l, h.add().label());
 		addDate(l, h.add().label());
 		addDuration(l, h.add().label());
-		addException(l.stacktrace, content);
+		for (Throwable t : l.stacktrace)
+			if (t != null)
+				addException(t, content);
 	}
 
 	private void addException(Throwable stacktrace, IVerticalPanel content) {
@@ -210,7 +212,7 @@ class LogImpl implements ILog, IClickListener {
 	}
 
 	@Override
-	public ILog debug(String message, long duration, Exception stacktrace) {
+	public ILog debug(String message, long duration, Throwable... stacktrace) {
 		ensureSize();
 		lines.add(new Entry("DEBUG", message, duration, stacktrace));
 		return this;

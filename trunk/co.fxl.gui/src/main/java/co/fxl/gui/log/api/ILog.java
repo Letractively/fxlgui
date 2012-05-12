@@ -12,7 +12,7 @@ public interface ILog {
 
 	ILog debug(String message, long duration);
 
-	ILog debug(String message, long duration, Exception stacktrace);
+	ILog debug(String message, long duration, Throwable... stacktraces);
 
 	ILog container(IContainer c);
 
