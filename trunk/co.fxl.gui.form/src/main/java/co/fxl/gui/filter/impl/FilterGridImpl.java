@@ -20,9 +20,9 @@ package co.fxl.gui.filter.impl;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.filter.impl.FilterPanel.ICell;
 import co.fxl.gui.impl.Heights;
@@ -34,8 +34,8 @@ class FilterGridImpl implements FilterGrid {
 
 	FilterGridImpl(FilterPanelImpl filterPanelImpl, IContainer gridContainer) {
 		this.filterPanelImpl = filterPanelImpl;
-		grid = gridContainer.panel().vertical().align().end().spacing(5)
-				.add().panel().grid().spacing(3);
+		grid = gridContainer.panel().vertical().align().end().spacing(5).add()
+				.panel().grid().spacing(3);
 		if (FilterPanelImpl.ACTIVE_SET_WIDTH_COLUMN_1)
 			grid.column(1).width(FilterTemplate.WIDTH_SINGLE_CELL);
 	}
@@ -54,8 +54,7 @@ class FilterGridImpl implements FilterGrid {
 		// alignment ist of no effect in Swing - in contrast to the GWT
 		// implementation, there it works
 
-		ILabel text = cell.align().end().valign().center().label()
-				.autoWrap(true);
+		ILabel text = cell.align().end().label().autoWrap(true);
 		text.text(name).font().pixel(10);
 	}
 

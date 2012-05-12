@@ -214,7 +214,6 @@ public class TableWidgetImpl implements ITableWidget<Object>,
 		if (row == 0) {
 			columns.get(column).visible(cell);
 		} else {
-			cell.valign().center();
 			while (rows.size() <= row) {
 				addRow();
 			}

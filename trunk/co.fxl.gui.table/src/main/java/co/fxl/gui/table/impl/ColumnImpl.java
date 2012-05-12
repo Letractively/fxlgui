@@ -61,7 +61,6 @@ public class ColumnImpl implements IColumn<Object> {
 	void visible(IGridCell cell) {
 		headerButtonCell = cell;
 		size(headerButtonCell);
-		headerButtonCell.valign().center();
 		headerButton = headerButtonCell.label();
 		IBorder border = headerButtonCell.border();
 		border.width(1);
