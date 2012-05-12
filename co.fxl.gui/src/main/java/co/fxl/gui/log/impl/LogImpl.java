@@ -142,7 +142,7 @@ class LogImpl implements ILog, IClickListener {
 				i++;
 			}
 			g.column(2).expand();
-			scrollPane.scrollIntoView(lbl);
+			scrollPane.scrollIntoView(content.add().label());
 		}
 	}
 
