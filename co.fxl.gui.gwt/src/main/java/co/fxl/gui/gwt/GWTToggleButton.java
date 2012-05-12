@@ -29,15 +29,12 @@ class GWTToggleButton extends GWTElement<ToggleButton, IToggleButton> implements
 
 	GWTToggleButton(GWTContainer<ToggleButton> container) {
 		super(container);
-		container.widget.addStyleName("gwt-ToggleButton-FXL");
-//		defaultFont();
 	}
 
 	@Override
 	public IToggleButton addUpdateListener(
 			final IUpdateListener<Boolean> listener) {
 		container.widget.addClickHandler(new ClickHandler() {
-
 			@Override
 			public void onClick(ClickEvent event) {
 				listener.onUpdate(down());
