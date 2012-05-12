@@ -169,7 +169,6 @@ class LogImpl implements ILog, IClickListener {
 		details = l;
 		content.clear();
 		IHorizontalPanel h = content.add().panel().horizontal().spacing(4);
-		h.add().label().text(l.date.toString());
 		addLevel(l, h.add().label());
 		addMessage(l, h.add().label());
 		addDate(l, h.add().label());
