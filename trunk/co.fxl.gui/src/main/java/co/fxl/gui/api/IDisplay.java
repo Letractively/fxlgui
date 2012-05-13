@@ -26,6 +26,8 @@ public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
 		IResizeConfiguration linkLifecycle(IElement<?> element);
 
+		IResizeConfiguration linkLifecycle(IPopUp dialog);
+
 	}
 
 	public interface IResizeListener {

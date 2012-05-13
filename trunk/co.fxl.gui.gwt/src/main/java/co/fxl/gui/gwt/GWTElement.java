@@ -440,12 +440,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	@SuppressWarnings("unchecked")
 	public R focus(final boolean focus) {
-		// display().invokeLater(new Runnable() {
-		// @Override
-		// public void run() {
 		((Focusable) container.widget).setFocus(focus);
-		// }
-		// });
 		return (R) this;
 	}
 

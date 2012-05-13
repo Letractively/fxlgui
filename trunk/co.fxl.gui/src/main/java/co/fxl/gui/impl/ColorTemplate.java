@@ -84,7 +84,7 @@ public abstract class ColorTemplate implements IColor {
 	}
 
 	public Gradient gradient;
-	public int[] rgb;
+	public int[] rgb = new int[3];
 
 	@Override
 	public IColor black() {

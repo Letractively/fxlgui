@@ -24,6 +24,7 @@ import java.util.List;
 
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.log.impl.LogWidgetProvider;
 
 public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
@@ -32,7 +33,7 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 	public abstract class ResizeConfiguration implements IResizeConfiguration {
 
 		protected final IResizeListener listener;
-		private IElement<?> lifecycleLink;
+		private Object lifecycleLink;
 
 		public ResizeConfiguration(IResizeListener listener) {
 			this.listener = listener;
@@ -57,6 +58,12 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 			return this;
 		}
 
+		@Override
+		public IResizeConfiguration linkLifecycle(IPopUp element) {
+			lifecycleLink = element;
+			return this;
+		}
+
 		protected abstract void add();
 
 		protected abstract void remove();
@@ -72,7 +79,7 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 	public IResizeConfiguration addResizeListener(final IResizeListener listener) {
 		List<ResizeConfiguration> toRemove = new LinkedList<ResizeConfiguration>();
 		for (ResizeConfiguration cfg : resizeListeners) {
-			if (cfg.lifecycleLink != null && !cfg.lifecycleLink.visible()) {
+			if (isInvisible(cfg)) {
 				toRemove.add(cfg);
 			}
 		}
@@ -81,6 +88,15 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 		ResizeConfiguration resizeHandler = newResizeConfiguration(listener);
 		resizeListeners.add(resizeHandler);
 		return resizeHandler;
+	}
+
+	private boolean isInvisible(ResizeConfiguration cfg) {
+		if (cfg.lifecycleLink == null)
+			return false;
+		if (cfg.lifecycleLink instanceof IElement<?>) {
+			return !((IElement<?>) cfg.lifecycleLink).visible();
+		}
+		return !((IPopUp) cfg.lifecycleLink).visible();
 	}
 
 	protected abstract ResizeConfiguration newResizeConfiguration(

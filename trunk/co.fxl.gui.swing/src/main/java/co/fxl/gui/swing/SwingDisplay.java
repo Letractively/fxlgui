@@ -114,7 +114,8 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 
 		@Override
 		protected void remove() {
-			container.component.removeComponentListener(adp);
+			if (container.component != null)
+				container.component.removeComponentListener(adp);
 		}
 	}
 
