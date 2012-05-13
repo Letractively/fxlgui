@@ -40,6 +40,7 @@ public class DialogImpl implements IDialog {
 		private String imageResource;
 		private String text;
 		private CommandLink l;
+		private boolean standard = false;
 
 		DialogButtonImpl() {
 			listeners.add(new IClickListener() {
@@ -107,6 +108,12 @@ public class DialogImpl implements IDialog {
 
 		public void link(CommandLink l) {
 			this.l = l;
+		}
+
+		@Override
+		public IDialogButton defaultButton() {
+			this.standard = true;
+			return this;
 		}
 	}
 
@@ -213,6 +220,8 @@ public class DialogImpl implements IDialog {
 				CommandLink l = t.addHyperlink(b.imageResource, b.text);
 				for (IClickListener cl : b.listeners)
 					l.addClickListener(cl);
+				if (b.standard)
+					l.acceptEnter();
 				b.link(l);
 			}
 			IContainer content = t.content();

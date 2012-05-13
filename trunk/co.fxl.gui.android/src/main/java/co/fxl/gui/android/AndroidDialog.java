@@ -98,6 +98,11 @@ class AndroidDialog implements IDialog {
 		public IDialogButton clickable(boolean clickable) {
 			throw new UnsupportedOperationException();
 		}
+
+		@Override
+		public IDialogButton defaultButton() {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	private AlertDialog.Builder builder;
