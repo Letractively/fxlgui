@@ -109,6 +109,8 @@ public class StatusPanel {
 	private static IPopUp showPopUp(final IDisplay display, String info,
 			boolean modal, int y, ColorMemento m, ColorMemento fm, boolean bold) {
 		final IPopUp dialog = display.showPopUp().modal(modal).glass(false);
+		if (!modal)
+			dialog.autoHide(false);
 		dialog.border().remove();
 		IBorder b = dialog.border();
 		b.style().shadow();
