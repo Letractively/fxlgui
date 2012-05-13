@@ -62,7 +62,7 @@ public class DisplayResizeAdapter {
 		return singleton;
 	}
 
-	protected static int decrement() {
+	public static int decrement() {
 		int i = 0;
 		for (Integer s : decrement.values())
 			i += s;
