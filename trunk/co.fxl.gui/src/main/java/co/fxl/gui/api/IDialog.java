@@ -21,6 +21,8 @@ package co.fxl.gui.api;
 import co.fxl.gui.api.IClickable.IClickListener;
 
 public interface IDialog {
+	
+	// TODO Dialog sollte widget sein, kein extra ui component (aber standardmäßig drin in GWTImpl und SwingImpl)
 
 	public interface IDialogButton {
 
