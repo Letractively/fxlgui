@@ -78,13 +78,13 @@ class LogImpl implements ILog, IClickListener {
 		ensureSize();
 		Entry e = new Entry("DEBUG", message);
 		// System.out.println(e);
-		lines.add(e);
+		lines.add(0, e);
 		return this;
 	}
 
 	private void ensureSize() {
 		if (lines.size() > MAX_SIZE)
-			lines.remove(0);
+			lines.remove(lines.size() - 1);
 	}
 
 	@Override
