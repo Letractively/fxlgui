@@ -22,6 +22,13 @@ import co.fxl.gui.api.IColored.IColor;
 
 public class ColorMemento extends ColorTemplate {
 
+	public ColorMemento() {
+	}
+
+	public ColorMemento(int r, int g, int b) {
+		rgb(r, g, b);
+	}
+
 	@Override
 	public IColor remove() {
 		throw new UnsupportedOperationException();

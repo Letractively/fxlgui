@@ -19,7 +19,9 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IPopUp;
@@ -32,6 +34,8 @@ public class StatusPanel {
 	private IPopUp lastPopUp;
 	private String lastStatus;
 	private static StatusPanel instance;
+	private ColorMemento color = new ColorMemento(255, 240, 170);
+	private ColorMemento fontColor = new ColorMemento();
 
 	public StatusPanel() {
 		instance = this;
@@ -41,13 +45,33 @@ public class StatusPanel {
 		lastStatus = status;
 		if (Log.ENABLED)
 			Log.instance().start(LOADING + status);
-		lastPopUp = showPopUp(Display.instance(), LOADING + status, true, 0);
+		lastPopUp = showLoadingPopUp(Display.instance(), LOADING + status,
+				true, 0, color, fontColor);
 		return this;
 	}
 
-	public StatusPanel warning(String warning) {
-		showPopUp(Display.instance(), warning, true, 0, true);
+	public StatusPanel status(String status) {
+		lastStatus = status;
 		return this;
+	}
+
+	public StatusPanel visible(boolean visible) {
+		if (visible)
+			lastPopUp = showPopUp(Display.instance(), lastStatus, true, 0,
+					color, fontColor);
+		else {
+			lastPopUp.visible(false);
+			lastPopUp = null;
+		}
+		return this;
+	}
+
+	public IColor color() {
+		return color;
+	}
+
+	public IColor fontColor() {
+		return fontColor;
 	}
 
 	private void stop(String status) {
@@ -65,31 +89,36 @@ public class StatusPanel {
 
 	public static IPopUp showPopUp(IDisplay display, String info,
 			boolean modal, int y) {
-		return showPopUp(display, info, modal, y, false);
+		return showLoadingPopUp(display, info, modal, y, new ColorMemento(255,
+				240, 170), new ColorMemento());
 	}
 
-	private static IPopUp showPopUp(IDisplay display, String info,
-			boolean modal, int y, boolean isRed) {
-		IPopUp dialog = display.showPopUp().modal(true).glass(false);
+	private static IPopUp showLoadingPopUp(IDisplay display, String info,
+			boolean modal, int y, ColorMemento m, ColorMemento fm) {
+		return showPopUp(display, "Please wait - " + info + "...", modal, y, m,
+				fm);
+	}
+
+	private static IPopUp showPopUp(final IDisplay display, String info,
+			boolean modal, int y, ColorMemento m, ColorMemento fm) {
+		final IPopUp dialog = display.showPopUp().modal(true).glass(false);
 		dialog.border().remove();
 		IBorder b = dialog.border();
 		b.style().shadow();
 		IHorizontalPanel spacing = dialog.container().panel().horizontal()
 				.spacing(5);
-		IFont f = spacing.addSpace(4).add().label()
-				.text("Please wait - " + info + "...").font().pixel(11);
+		IFont f = spacing.addSpace(4).add().label().text(info).font().pixel(11);
+		fm.forward(f.color());
 		spacing.addSpace(4);
-		if (isRed) {
-			spacing.color().red();
-			f.color().white();
-			dialog.center().autoHide(true).visible(true);
-		} else {
-			spacing.color().rgb(255, 240, 170);
-			int x = (display.width() - dialog.width()) / 2;
-			dialog.offset(x, 4).visible(true);
-			x = (display.width() - dialog.width()) / 2;
-			dialog.offset(x, 4);
-		}
+		m.forward(spacing.color());
+		resize(display.width(), dialog);
+		Display.instance().addResizeListener(new IResizeListener() {
+			@Override
+			public boolean onResize(int width, int height) {
+				resize(width, dialog);
+				return dialog.visible();
+			}
+		}).linkLifecycle(dialog);
 		return dialog;
 	}
 
@@ -97,5 +126,14 @@ public class StatusPanel {
 		if (instance == null)
 			instance = new StatusPanel();
 		return instance;
+	}
+
+	public static StatusPanel newInstance() {
+		return new StatusPanel();
+	}
+
+	private static void resize(int width, final IPopUp dialog) {
+		int x = (width - dialog.width()) / 2;
+		dialog.offset(x, 4).visible(true);
 	}
 }
