@@ -58,7 +58,7 @@ public class StatusPanel {
 
 	public StatusPanel visible(boolean visible) {
 		if (visible)
-			lastPopUp = showPopUp(Display.instance(), lastStatus, true, 0,
+			lastPopUp = showPopUp(Display.instance(), lastStatus, false, 0,
 					color, fontColor, bold);
 		else {
 			lastPopUp.visible(false);
@@ -108,7 +108,7 @@ public class StatusPanel {
 
 	private static IPopUp showPopUp(final IDisplay display, String info,
 			boolean modal, int y, ColorMemento m, ColorMemento fm, boolean bold) {
-		final IPopUp dialog = display.showPopUp().modal(true).glass(false);
+		final IPopUp dialog = display.showPopUp().modal(modal).glass(false);
 		dialog.border().remove();
 		IBorder b = dialog.border();
 		b.style().shadow();
