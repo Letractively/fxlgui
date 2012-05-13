@@ -117,6 +117,8 @@ public class StatusPanel {
 		IHorizontalPanel spacing = dialog.container().panel().horizontal()
 				.spacing(5);
 		IFont f = spacing.addSpace(4).add().label().text(info).font().pixel(11);
+		if (bold)
+			f.weight().bold();
 		fm.forward(f.color());
 		spacing.addSpace(4);
 		m.forward(spacing.color());
