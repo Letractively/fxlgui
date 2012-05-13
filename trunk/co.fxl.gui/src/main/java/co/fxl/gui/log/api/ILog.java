@@ -7,7 +7,9 @@ public interface ILog {
 
 	public interface IDeobfuscator {
 
-		void deobfuscate(Throwable t, ICallback<Throwable> deobfuscated);
+		boolean isDeobfuscated(Throwable t);
+
+		void deobfuscate(Throwable t, ICallback<String> deobfuscated);
 	}
 
 	ILog start(String message);
@@ -18,7 +20,8 @@ public interface ILog {
 
 	ILog debug(String message, long duration);
 
-	ILog debug(String message, long duration, Throwable... stacktraces);
+	ILog debug(String message, long duration, Throwable clientStacktrace,
+			Throwable serverStacktrace);
 
 	ILog deobfuscator(IDeobfuscator deobfuscator);
 

@@ -16,6 +16,7 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Heights;
@@ -32,7 +33,8 @@ class LogImpl implements ILog, IClickListener {
 		private String level;
 		private String message;
 		private Long duration;
-		private Throwable[] stacktrace;
+		private Throwable clientStacktrace;
+		private Throwable serverStacktrace;
 
 		public Entry(String string, String message) {
 			level = string;
@@ -45,9 +47,10 @@ class LogImpl implements ILog, IClickListener {
 		}
 
 		public Entry(String string, String message, long duration,
-				Throwable... stacktrace) {
+				Throwable clientStacktrace, Throwable serverStacktrace) {
 			this(string, message, duration);
-			this.stacktrace = stacktrace;
+			this.clientStacktrace = clientStacktrace;
+			this.serverStacktrace = serverStacktrace;
 		}
 
 		@Override
@@ -62,6 +65,7 @@ class LogImpl implements ILog, IClickListener {
 	private Map<String, Long> timestamps = new HashMap<String, Long>();
 	protected Entry details;
 	private CommandLink cancel;
+	private IDeobfuscator deobfuscator;
 
 	@Override
 	public ILog container(IContainer c) {
@@ -94,7 +98,7 @@ class LogImpl implements ILog, IClickListener {
 				.sideWidget(true).commandsOnTop().spacing(0);
 		panel.addTitle("Log Trace");
 		final IScrollPane scrollPane = panel.content().scrollPane()
-				.height(d.height() - SPACING * 2 - 33);
+				.size(d.width() - SPACING * 2, d.height() - SPACING * 2 - 33);
 		final IVerticalPanel content = scrollPane.viewPort().panel().vertical()
 				.spacing(10).add().panel().vertical();
 		cancel = panel.addHyperlink("cancel.png", "Clear");
@@ -138,7 +142,7 @@ class LogImpl implements ILog, IClickListener {
 				addMessage(l, lm);
 				ILabel ld = g.cell(3, i).align().end().label();
 				addDuration(l, ld);
-				if (l.stacktrace != null)
+				if (l.clientStacktrace != null || l.serverStacktrace != null)
 					g.cell(4, i).align().end().label().text("Stacktrace")
 							.hyperlink().addClickListener(new IClickListener() {
 								@Override
@@ -171,7 +175,8 @@ class LogImpl implements ILog, IClickListener {
 		lbl.font().pixel(11).color().gray();
 	}
 
-	private void showException(IScrollPane p, IVerticalPanel content, Entry l) {
+	private void showException(final IScrollPane p, IVerticalPanel content,
+			final Entry l) {
 		cancel.visible(false);
 		details = l;
 		content.clear();
@@ -180,15 +185,42 @@ class LogImpl implements ILog, IClickListener {
 		addMessage(l, h.add().label());
 		addDate(l, h.add().label());
 		addDuration(l, h.add().label());
-		StringBuilder b = new StringBuilder();
-		for (Throwable t : l.stacktrace)
-			if (t != null)
-				addException(t, b);
+		if (l.clientStacktrace != null && deobfuscator != null
+				&& deobfuscator.isDeobfuscated(l.clientStacktrace)) {
+			final IVerticalPanel content2 = content.add().panel().vertical();
+			content2.add().image().resource("loading_black.png");
+			deobfuscator.deobfuscate(l.clientStacktrace,
+					new CallbackTemplate<String>() {
+						@Override
+						public void onSuccess(String clientTrace) {
+							showExceptionsDeobfuscated(p, content2.clear(), l,
+									clientTrace);
+						}
+					});
+		} else {
+			showExceptionsDeobfuscated(p, content, l,
+					getExceptionString(l.clientStacktrace));
+
+		}
+	}
+
+	private void showExceptionsDeobfuscated(IScrollPane p,
+			IVerticalPanel content, Entry l, String clientTrace) {
 		ITextArea ta = content.add().textArea()
-				.size(p.width() - 40, p.height() - 60).text(b.toString())
+				.size(p.width() - 40, p.height() - 60)
+				.text(getExceptionString(l.serverStacktrace) + clientTrace)
 				.editable(false);
 		ta.border().width(1);
 		Heights.INSTANCE.decorate(ta);
+	}
+
+	private String getExceptionString(Throwable t) {
+		if (t == null)
+			return "";
+		StringBuilder b = new StringBuilder();
+		addException(t, b);
+		String string = b.toString();
+		return string;
 	}
 
 	private void addException(Throwable stacktrace, StringBuilder b) {
@@ -228,14 +260,17 @@ class LogImpl implements ILog, IClickListener {
 	}
 
 	@Override
-	public ILog debug(String message, long duration, Throwable... stacktrace) {
+	public ILog debug(String message, long duration,
+			Throwable clientStacktrace, Throwable serverStacktrace) {
 		ensureSize();
-		lines.add(new Entry("DEBUG", message, duration, stacktrace));
+		lines.add(new Entry("DEBUG", message, duration, clientStacktrace,
+				serverStacktrace));
 		return this;
 	}
 
 	@Override
 	public ILog deobfuscator(IDeobfuscator deobfuscator) {
-		throw new UnsupportedOperationException();
+		this.deobfuscator = deobfuscator;
+		return this;
 	}
 }
