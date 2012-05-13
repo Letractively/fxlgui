@@ -36,6 +36,7 @@ public class StatusPanel {
 	private static StatusPanel instance;
 	private ColorMemento color = new ColorMemento(255, 240, 170);
 	private ColorMemento fontColor = new ColorMemento();
+	private boolean bold;
 
 	public StatusPanel() {
 		instance = this;
@@ -46,7 +47,7 @@ public class StatusPanel {
 		if (Log.ENABLED)
 			Log.instance().start(LOADING + status);
 		lastPopUp = showLoadingPopUp(Display.instance(), LOADING + status,
-				true, 0, color, fontColor);
+				true, 0, color, fontColor, bold);
 		return this;
 	}
 
@@ -58,7 +59,7 @@ public class StatusPanel {
 	public StatusPanel visible(boolean visible) {
 		if (visible)
 			lastPopUp = showPopUp(Display.instance(), lastStatus, true, 0,
-					color, fontColor);
+					color, fontColor, bold);
 		else {
 			lastPopUp.visible(false);
 			lastPopUp = null;
@@ -90,17 +91,23 @@ public class StatusPanel {
 	public static IPopUp showPopUp(IDisplay display, String info,
 			boolean modal, int y) {
 		return showLoadingPopUp(display, info, modal, y, new ColorMemento(255,
-				240, 170), new ColorMemento());
+				240, 170), new ColorMemento(), false);
+	}
+
+	public static IPopUp showPopUp(IDisplay display, String info,
+			boolean modal, int y, boolean bold) {
+		return showLoadingPopUp(display, info, modal, y, new ColorMemento(255,
+				240, 170), new ColorMemento(), bold);
 	}
 
 	private static IPopUp showLoadingPopUp(IDisplay display, String info,
-			boolean modal, int y, ColorMemento m, ColorMemento fm) {
+			boolean modal, int y, ColorMemento m, ColorMemento fm, boolean bold) {
 		return showPopUp(display, "Please wait - " + info + "...", modal, y, m,
-				fm);
+				fm, bold);
 	}
 
 	private static IPopUp showPopUp(final IDisplay display, String info,
-			boolean modal, int y, ColorMemento m, ColorMemento fm) {
+			boolean modal, int y, ColorMemento m, ColorMemento fm, boolean bold) {
 		final IPopUp dialog = display.showPopUp().modal(true).glass(false);
 		dialog.border().remove();
 		IBorder b = dialog.border();
@@ -135,5 +142,10 @@ public class StatusPanel {
 	private static void resize(int width, final IPopUp dialog) {
 		int x = (width - dialog.width()) / 2;
 		dialog.offset(x, 4).visible(true);
+	}
+
+	public StatusPanel bold(boolean b) {
+		bold = b;
+		return this;
 	}
 }
