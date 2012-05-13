@@ -26,7 +26,6 @@ public class Log {
 	private static ILog instance = new LogImpl();
 
 	public static ILog instance() {
-		assert instance != null;
 		return instance;
 	}
 
