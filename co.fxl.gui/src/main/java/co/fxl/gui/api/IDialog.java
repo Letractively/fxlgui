@@ -41,6 +41,8 @@ public interface IDialog {
 		IDialogButton close();
 
 		IDialogButton clickable(boolean clickable);
+
+		IDialogButton defaultButton();
 	}
 
 	public interface IType {

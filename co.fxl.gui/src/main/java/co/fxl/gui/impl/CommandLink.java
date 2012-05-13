@@ -168,4 +168,9 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	public void visible(boolean b) {
 		iPanel.visible(b);
 	}
+
+	public void acceptEnter() {
+		// TODO image.focus(true).addKeyListener(..).enter();
+		throw new UnsupportedOperationException();
+	}
 }
