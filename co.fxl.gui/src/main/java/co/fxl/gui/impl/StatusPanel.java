@@ -111,8 +111,8 @@ public class StatusPanel {
 		final IPopUp dialog = display.showPopUp().modal(modal).glass(false);
 		if (!modal)
 			dialog.autoHide(false);
-		if (m.rgb[0] > 220 && m.rgb[1] > 220 && m.rgb[2] > 220)
-			dialog.border().color().gray();
+//		if (m.rgb[0] > 220 && m.rgb[1] > 220 && m.rgb[2] > 220)
+//			dialog.border().color().gray();
 		dialog.border().remove();
 		IBorder b = dialog.border();
 		b.style().shadow();
