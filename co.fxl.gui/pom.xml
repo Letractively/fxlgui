@@ -10,7 +10,7 @@
 	<groupId>co.fxl</groupId>
   <artifactId>fxl-gui</artifactId>
   <version>1.0.0.2</version>
-  <name>${artifactId}</name>
+  <name>${project.artifactId}</name>
   <packaging>jar</packaging>
 <!--  <build>
     <resources>

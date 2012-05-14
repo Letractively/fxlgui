@@ -10,31 +10,31 @@
 	<groupId>co.fxl</groupId>
   <artifactId>fxl-gui-demo</artifactId>
   <version>1.0.0.2</version>
-  <name>${artifactId}</name>
+  <name>${project.artifactId}</name>
   <packaging>jar</packaging>
 	<dependencies>
   	<dependency>
-  		<groupId>${groupId}</groupId>
+  		<groupId>${project.groupId}</groupId>
   		<artifactId>fxl-gui</artifactId>
   		<version>${project.version}</version>
   	</dependency>	
   	<dependency>
-  		<groupId>${groupId}</groupId>
+  		<groupId>${project.groupId}</groupId>
   		<artifactId>fxl-gui-navigation</artifactId>
   		<version>${project.version}</version>
   	</dependency>	
   	<dependency>
-  		<groupId>${groupId}</groupId>
+  		<groupId>${project.groupId}</groupId>
   		<artifactId>fxl-gui-table</artifactId>
   		<version>${project.version}</version>
   	</dependency>	
   	<dependency>
-  		<groupId>${groupId}</groupId>
+  		<groupId>${project.groupId}</groupId>
   		<artifactId>fxl-gui-form</artifactId>
   		<version>${project.version}</version>
   	</dependency>	  	
   	<dependency>
-  		<groupId>${groupId}</groupId>
+  		<groupId>${project.groupId}</groupId>
   		<artifactId>fxl-data-format-gwt</artifactId>
   		<version>${project.version}</version>
   	</dependency>	
