@@ -148,7 +148,7 @@ public class StatusPanel {
 	private static void resize(int width, final IPopUp dialog) {
 		dialog.visible(true);
 		int x = (width - dialog.width()) / 2;
-		dialog.offset(x, DisplayResizeAdapter.decrement() + 4);
+		dialog.offset(x, DisplayResizeAdapter.decrement() + 4).visible(true);
 	}
 
 	public StatusPanel bold(boolean b) {
