@@ -18,6 +18,8 @@ public interface ILog {
 
 	ILog debug(String message);
 
+	ILog test(String message);
+
 	ILog debug(String message, long duration);
 
 	ILog debug(String message, long duration, Throwable clientStacktrace,
