@@ -18,4 +18,6 @@ public interface IMultiComboBoxWidget extends IUpdateable<String[]> {
 	String[] selection();
 
 	IMultiComboBoxWidget visible(boolean visible);
+
+	String text();
 }
