@@ -44,14 +44,37 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	private ITextField textField;
 	private Map<String, ICheckBox> checkBoxes = new HashMap<String, ICheckBox>();
 	private ElementPopUp popUp;
+	private boolean editable;
 
 	MultiComboBoxWidgetImpl(IContainer container) {
 		textField = container.textField().visible(false);
+		textField.addFocusListener(this);
 		textField.addUpdateListener(new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(String value) {
 				for (IUpdateListener<String> l : textListeners)
 					l.onUpdate(value);
+				if (!texts.isEmpty()) {
+					List<String> result = new LinkedList<String>(Arrays
+							.asList(extract(value)));
+					boolean changed = false;
+					for (String t : texts) {
+						if (!result.contains(t)) {
+							selection.remove(t);
+							changed = true;
+						}
+					}
+					for (String t : result) {
+						if (!selection.contains(t) && texts.contains(t)) {
+							selection.add(t);
+							changed = true;
+						}
+					}
+					if (changed) {
+						updateCheckBoxes();
+						notifyListeners();
+					}
+				}
 			}
 		});
 		ElementPopUp.HEIGHTS.decorate(textField);
@@ -60,7 +83,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 
 	@Override
 	public void onUpdate(Boolean value) {
-		if (value) {
+		if (!texts.isEmpty() && value) {
 			clearPopUp();
 			createPopUp();
 			popUp.visible(true);
@@ -98,6 +121,8 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	private void notifyListeners() {
 		for (IUpdateListener<String[]> l : listeners)
 			l.onUpdate(selection());
+		for (IUpdateListener<String> l : textListeners)
+			l.onUpdate(textField.text());
 	}
 
 	private void setSelection(String[] selection) {
@@ -150,6 +175,12 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	}
 
 	@Override
+	public IMultiComboBoxWidget editable(boolean editable) {
+		this.editable = editable;
+		return this;
+	}
+
+	@Override
 	public IMultiComboBoxWidget clear() {
 		clearPopUp();
 		texts.clear();
@@ -161,34 +192,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	@Override
 	public IMultiComboBoxWidget visible(boolean visible) {
 		textField.visible(visible);
-		textField.editable(!texts.isEmpty());
-		if (!texts.isEmpty()) {
-			textField.addFocusListener(this);
-			textField.addUpdateListener(new IUpdateListener<String>() {
-				@Override
-				public void onUpdate(String value) {
-					List<String> result = new LinkedList<String>(Arrays
-							.asList(extract(value)));
-					boolean changed = false;
-					for (String t : texts) {
-						if (!result.contains(t)) {
-							selection.remove(t);
-							changed = true;
-						}
-					}
-					for (String t : result) {
-						if (!selection.contains(t) && texts.contains(t)) {
-							selection.add(t);
-							changed = true;
-						}
-					}
-					if (changed) {
-						updateCheckBoxes();
-						notifyListeners();
-					}
-				}
-			});
-		}
+		textField.editable(!texts.isEmpty() || editable);
 		return this;
 	}
 
