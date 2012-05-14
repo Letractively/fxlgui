@@ -117,6 +117,8 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	}
 
 	private void createPopUp() {
+		if (texts.isEmpty())
+			return;
 		IVerticalPanel v = popUp.create();
 		for (final String text : texts) {
 			ICheckBox cb = v.add().panel().horizontal().add().checkBox()
