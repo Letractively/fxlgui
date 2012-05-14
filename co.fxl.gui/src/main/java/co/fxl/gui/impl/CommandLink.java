@@ -26,6 +26,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.impl.ContextMenu.Entry;
+import co.fxl.gui.impl.ContextMenu.Group;
 
 public class CommandLink implements IClickable<IClickable<?>> {
 
@@ -129,7 +130,8 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	}
 
 	public CommandLink addToContextMenu(String group) {
-		contextMenuEntry = ContextMenu.instance().group(group).addEntry(text);
+		Group g = ContextMenu.instance().group(group);
+		contextMenuEntry = g.addEntry(text);
 		if (ctrlKey != 0)
 			contextMenuEntry.ctrlKey(ctrlKey);
 		if (image != null) {
