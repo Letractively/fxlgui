@@ -211,7 +211,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	}
 
 	void update() {
-		if (!DYNAMIC_RESIZE)
+		if (!DYNAMIC_RESIZE || moreGroup == null)
 			return;
 		for (NavigationGroupImpl g : groups)
 			for (NavigationItemImpl i : g.items)
