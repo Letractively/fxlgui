@@ -10,11 +10,11 @@
 	<groupId>co.fxl</groupId>
   <artifactId>fxl-data-format-gwt</artifactId>
   <version>1.0.0.2</version>
-  <name>${artifactId}</name>
+  <name>${project.artifactId}</name>
   <packaging>jar</packaging>
   <dependencies>
   	<dependency>
-  		<groupId>${groupId}</groupId>
+  		<groupId>${project.groupId}</groupId>
   		<artifactId>fxl-data-format</artifactId>
   		<version>${project.version}</version>
   	</dependency>	

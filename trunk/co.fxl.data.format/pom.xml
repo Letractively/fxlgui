@@ -10,6 +10,6 @@
 	<groupId>co.fxl</groupId>
   <artifactId>fxl-data-format</artifactId>
   <version>1.0.0.2</version>
-  <name>${artifactId}</name>
+  <name>${project.artifactId}</name>
   <packaging>jar</packaging>
 </project>
