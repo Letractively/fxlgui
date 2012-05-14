@@ -38,6 +38,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 		co.fxl.gui.api.IUpdateable.IUpdateListener<Boolean> {
 
 	private List<IUpdateListener<String[]>> listeners = new LinkedList<IUpdateListener<String[]>>();
+	private List<IUpdateListener<String>> textListeners = new LinkedList<IUpdateListener<String>>();
 	private List<String> texts = new LinkedList<String>();
 	private List<String> selection = new LinkedList<String>();
 	private ITextField textField;
@@ -46,6 +47,13 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 
 	MultiComboBoxWidgetImpl(IContainer container) {
 		textField = container.textField().visible(false);
+		textField.addUpdateListener(new IUpdateListener<String>() {
+			@Override
+			public void onUpdate(String value) {
+				for (IUpdateListener<String> l : textListeners)
+					l.onUpdate(value);
+			}
+		});
 		ElementPopUp.HEIGHTS.decorate(textField);
 		popUp = new ElementPopUp(textField).rowHeight(23);
 	}
@@ -63,6 +71,13 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	public IUpdateable<String[]> addUpdateListener(
 			co.fxl.gui.api.IUpdateable.IUpdateListener<String[]> listener) {
 		listeners.add(listener);
+		return this;
+	}
+
+	@Override
+	public IUpdateable<String[]> addTextUpdateListener(
+			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
+		textListeners.add(listener);
 		return this;
 	}
 

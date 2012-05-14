@@ -20,4 +20,6 @@ public interface IMultiComboBoxWidget extends IUpdateable<String[]> {
 	IMultiComboBoxWidget visible(boolean visible);
 
 	String text();
+
+	IUpdateable<String[]> addTextUpdateListener(IUpdateListener<String> listener);
 }
