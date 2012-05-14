@@ -204,4 +204,9 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	private String[] extract(String value) {
 		return value.split(";");
 	}
+
+	@Override
+	public String text() {
+		return textField.text();
+	}
 }
