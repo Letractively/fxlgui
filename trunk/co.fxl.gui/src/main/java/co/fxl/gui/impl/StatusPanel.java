@@ -34,6 +34,7 @@ public class StatusPanel {
 	private IPopUp lastPopUp;
 	private String lastStatus;
 	private static StatusPanel instance;
+	private static boolean BEFORE = Constants.get("StatusPanel.BEFORE", true);
 	private ColorMemento color = new ColorMemento(255, 240, 170);
 	private ColorMemento fontColor = new ColorMemento();
 	private boolean bold;
@@ -146,9 +147,11 @@ public class StatusPanel {
 	}
 
 	private static void resize(int width, final IPopUp dialog) {
-		dialog.visible(true);
+		if (BEFORE)
+			dialog.visible(true);
 		int x = (width - dialog.width()) / 2;
-		dialog.offset(x, DisplayResizeAdapter.decrement() + 4).visible(true);
+		dialog.offset(x, DisplayResizeAdapter.decrement() + 4);
+		dialog.visible(true);
 	}
 
 	public StatusPanel bold(boolean b) {
