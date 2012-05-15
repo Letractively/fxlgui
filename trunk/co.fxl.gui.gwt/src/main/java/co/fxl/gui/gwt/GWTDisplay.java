@@ -47,7 +47,6 @@ import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
@@ -73,40 +72,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	private static final String CHROME = "Chrome/";
 	public static final String BROWSER_WARNING = "You are using an outdated browser with a slow javascript engine! If possible: Update to Internet Explorer 9+ or switch to another browser like Firefox or Chrome. This will significantly reduce application response time.";
-//			+ "\nWhen using Chrome or Firefox, Drag-and-Drop will be available.";
 
-	private final class GWTResizeConfiguration extends ResizeConfiguration
-			implements ResizeHandler {
-
-		public HandlerRegistration reg;
-
-		private GWTResizeConfiguration(IResizeListener listener) {
-			super(listener);
-		}
-
-		@Override
-		public void onResize(ResizeEvent event) {
-			boolean active = listener.onResize(width(), height());
-			if (!active)
-				removeResizeListener(listener);
-		}
-
-		@Override
-		protected void add() {
-			reg = Window.addResizeHandler(this);
-		}
-
-		@Override
-		protected void remove() {
-			reg.removeHandler();
-		}
-	}
-
-	@Override
-	protected ResizeConfiguration newResizeConfiguration(
-			IResizeListener listener) {
-		return new GWTResizeConfiguration(listener);
-	}
+	// + "\nWhen using Chrome or Firefox, Drag-and-Drop will be available.";
 
 	public interface BlockListener {
 
@@ -144,6 +111,12 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		Display.instance(this);
 		// TODO Aspect Log.instance(new GWTLog());
 		ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL = !(isChrome() && getBrowserVersion() <= 13);
+		Window.addResizeHandler(new ResizeHandler() {
+			@Override
+			public void onResize(ResizeEvent event) {
+				notifyResizeListeners();
+			}
+		});
 	}
 
 	public static int getBrowserVersion() {

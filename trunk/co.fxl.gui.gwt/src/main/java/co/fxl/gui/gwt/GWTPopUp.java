@@ -202,4 +202,14 @@ class GWTPopUp implements IPopUp, WidgetParent {
 		popUp.getElement().getStyle().setOpacity(opacity);
 		return this;
 	}
+
+	@Override
+	public IPopUp width(double width) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IPopUp height(double height) {
+		throw new UnsupportedOperationException();
+	}
 }

@@ -236,4 +236,18 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 	public <N> T nativeElement(N nativeElement) {
 		throw new UnsupportedOperationException();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public T width(double width) {
+		// TODO ... throw new UnsupportedOperationException();
+		return (T) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public T height(double height) {
+		// TODO ... throw new UnsupportedOperationException();
+		return (T) this;
+	}
 }
