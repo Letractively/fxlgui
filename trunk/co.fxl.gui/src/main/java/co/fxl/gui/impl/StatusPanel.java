@@ -34,6 +34,7 @@ public class StatusPanel {
 			190);
 	private static final String LOADING = "Loading ";
 	public static final double FADE_IN_MS = 1000;
+	private static boolean RESIZE = Constants.get("StatusPanel.RESIZE", true);
 	private IPopUp lastPopUp;
 	private String lastStatus;
 	private static StatusPanel instance;
@@ -130,13 +131,14 @@ public class StatusPanel {
 		spacing.addSpace(4);
 		m.forward(spacing.color());
 		resize(display.width(), dialog);
-		Display.instance().addResizeListener(new IResizeListener() {
-			@Override
-			public boolean onResize(int width, int height) {
-				resize(width, dialog);
-				return dialog.visible();
-			}
-		}).linkLifecycle(dialog);
+		if (RESIZE)
+			Display.instance().addResizeListener(new IResizeListener() {
+				@Override
+				public boolean onResize(int width, int height) {
+					resize(width, dialog);
+					return dialog.visible();
+				}
+			}).linkLifecycle(dialog);
 		return dialog;
 	}
 

@@ -70,13 +70,12 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 				frame.setContentPane(container.component);
 				container.component.setBackground(Color.WHITE);
 				updateSize();
-				container.component
-						.addComponentListener(new ComponentAdapter() {
-							@Override
-							public void componentResized(ComponentEvent arg0) {
-								notifyResizeListeners();
-							}
-						});
+				frame.addComponentListener(new ComponentAdapter() {
+					@Override
+					public void componentResized(ComponentEvent arg0) {
+						notifyResizeListeners();
+					}
+				});
 			}
 		};
 		// layout = container.panel();
