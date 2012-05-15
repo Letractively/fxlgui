@@ -66,6 +66,10 @@ public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
 	IDisplay removeResizeListener(IResizeListener listener);
 
+	IDisplay notifyResizeListeners();
+
+	IDisplay notifyResizeListener(IResizeListener listener);
+
 	int width();
 
 	int height();

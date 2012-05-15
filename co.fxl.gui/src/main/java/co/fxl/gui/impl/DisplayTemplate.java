@@ -120,18 +120,22 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 		return this;
 	}
 
-	public void notifyResizeListeners() {
+	@Override
+	public IDisplay notifyResizeListeners() {
 		for (ResizeConfiguration rc : new LinkedList<ResizeConfiguration>(
 				resizeListeners)) {
 			rc.fire();
 		}
+		return this;
 	}
 
-	public void fire(IResizeListener listener) {
+	@Override
+	public IDisplay notifyResizeListener(IResizeListener listener) {
 		for (ResizeConfiguration rc : new LinkedList<ResizeConfiguration>(
 				resizeListeners)) {
 			if (rc.listener == listener)
 				rc.fire();
 		}
+		return this;
 	}
 }

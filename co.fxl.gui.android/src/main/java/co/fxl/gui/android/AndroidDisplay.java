@@ -253,4 +253,14 @@ public class AndroidDisplay implements IDisplay, Parent {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public IDisplay notifyResizeListeners() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IDisplay notifyResizeListener(IResizeListener listener) {
+		throw new UnsupportedOperationException();
+	}
 }

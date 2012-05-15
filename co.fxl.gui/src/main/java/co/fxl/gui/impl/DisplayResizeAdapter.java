@@ -44,11 +44,11 @@ public class DisplayResizeAdapter {
 	}
 
 	private static void notifyResizeListeners() {
-		((DisplayTemplate) Display.instance()).notifyResizeListeners();
+		Display.instance().notifyResizeListeners();
 	}
 
 	protected static void fire(IResizeListener listener) {
-		((DisplayTemplate) Display.instance()).fire(listener);
+		Display.instance().notifyResizeListener(listener);
 	}
 
 	public static IResizeConfiguration addResizeListener(
