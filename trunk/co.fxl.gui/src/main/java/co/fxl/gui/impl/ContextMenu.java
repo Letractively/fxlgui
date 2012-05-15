@@ -83,9 +83,9 @@ public class ContextMenu {
 		}
 	}
 
-	@SuppressWarnings("serial")
-	public class Group extends LinkedList<Entry> {
+	public class Group {
 
+		private List<Entry> list = new LinkedList<Entry>();
 		private String name;
 
 		public Group(String name) {
@@ -93,7 +93,7 @@ public class ContextMenu {
 		}
 
 		public Entry addEntry(String text) {
-			for (Entry o : this) {
+			for (Entry o : list) {
 				if (text.equals(o.text)) {
 					Entry entry = (Entry) o;
 					entry.clickListeners.clear();
@@ -101,14 +101,18 @@ public class ContextMenu {
 				}
 			}
 			Entry entry = new Entry(text);
-			add(entry);
+			list.add(entry);
 			return entry;
+		}
+
+		public void clear() {
+			list.clear();
 		}
 
 	}
 
 	private static final boolean SHOW_INACTIVE = false;
-	private static ContextMenu instance;
+	private static ContextMenu instance = new ContextMenu();
 	private IDisplay display;
 	private List<Group> groups = new LinkedList<Group>();
 	private boolean active = true;
@@ -170,7 +174,7 @@ public class ContextMenu {
 				h.add().label().text(g.name).font().pixel(9).weight().bold()
 						.color().gray();
 				h.addSpace(4).add().line();
-				for (Entry o : g) {
+				for (Entry o : g.list) {
 					if (!visible(o))
 						continue;
 					if (o instanceof Entry) {
@@ -212,14 +216,14 @@ public class ContextMenu {
 	}
 
 	private boolean visible(Group g) {
-		for (Entry o : g) {
+		for (Entry o : g.list) {
 			if (visible(o))
 				return true;
 		}
 		return false;
 	}
 
-	public static ContextMenu newInstance() {
+	public static ContextMenu reset() {
 		instance = new ContextMenu();
 		return instance;
 	}
@@ -234,7 +238,7 @@ public class ContextMenu {
 
 	public void decorate(IKeyRecipient<?> keyRecipient) {
 		for (Group g : groups) {
-			for (final Entry e : g) {
+			for (final Entry e : g.list) {
 				if (e.key != 0) {
 					keyRecipient.addKeyListener(new IClickListener() {
 						@Override
