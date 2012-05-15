@@ -311,6 +311,8 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	@Override
 	public NavigationItemImpl visible(boolean visible) {
+		if (this.visible == visible)
+			return this;
 		this.visible = visible;
 		updateVisible();
 		group.updateVisible();
