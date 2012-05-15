@@ -29,14 +29,17 @@ import co.fxl.gui.log.impl.Log;
 
 public class StatusPanel {
 
+	private static final ColorMemento FOREGROUND = new ColorMemento();
+	private static final ColorMemento BACKGROUND = new ColorMemento(249, 237,
+			190);
 	private static final String LOADING = "Loading ";
 	public static final double FADE_IN_MS = 1000;
 	private IPopUp lastPopUp;
 	private String lastStatus;
 	private static StatusPanel instance;
 	private static boolean BEFORE = Constants.get("StatusPanel.BEFORE", true);
-	private ColorMemento color = new ColorMemento(255, 240, 170);
-	private ColorMemento fontColor = new ColorMemento();
+	private ColorMemento color = BACKGROUND;
+	private ColorMemento fontColor = FOREGROUND;
 	private boolean bold;
 
 	public StatusPanel() {
@@ -91,14 +94,14 @@ public class StatusPanel {
 
 	public static IPopUp showPopUp(IDisplay display, String info,
 			boolean modal, int y) {
-		return showLoadingPopUp(display, info, modal, y, new ColorMemento(255,
-				240, 170), new ColorMemento(), false);
+		return showLoadingPopUp(display, info, modal, y, BACKGROUND,
+				FOREGROUND, false);
 	}
 
 	public static IPopUp showPopUp(IDisplay display, String info,
 			boolean modal, int y, boolean bold) {
-		return showLoadingPopUp(display, info, modal, y, new ColorMemento(255,
-				240, 170), new ColorMemento(), bold);
+		return showLoadingPopUp(display, info, modal, y, BACKGROUND,
+				FOREGROUND, bold);
 	}
 
 	private static IPopUp showLoadingPopUp(IDisplay display, String info,
@@ -116,7 +119,8 @@ public class StatusPanel {
 		// dialog.border().color().gray();
 		dialog.border().remove();
 		IBorder b = dialog.border();
-		b.style().shadow();
+		// b.style().shadow();
+		b.color().rgb(240, 195, 109);
 		IHorizontalPanel spacing = dialog.container().panel().horizontal()
 				.spacing(5);
 		IFont f = spacing.addSpace(4).add().label().text(info).font().pixel(11);
