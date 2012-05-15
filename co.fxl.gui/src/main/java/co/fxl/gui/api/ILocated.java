@@ -26,6 +26,10 @@ public interface ILocated<T> extends IPoint {
 
 	T offset(int x, int y);
 
+	T width(double width);
+
+	T height(double height);
+
 	T width(int width);
 
 	T height(int height);

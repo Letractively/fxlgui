@@ -496,4 +496,18 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 		return container.getUID();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public R width(double width) {
+		// TODO ... throw new UnsupportedOperationException();
+		return (R) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R height(double height) {
+		// TODO ... throw new UnsupportedOperationException();
+		return (R) this;
+	}
+
 }

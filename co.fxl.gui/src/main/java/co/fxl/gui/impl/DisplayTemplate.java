@@ -30,14 +30,13 @@ import co.fxl.gui.log.impl.LogWidgetProvider;
 public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 		IDisplay {
 
-	public abstract class ResizeConfiguration implements IResizeConfiguration {
+	public final class ResizeConfiguration implements IResizeConfiguration {
 
 		protected final IResizeListener listener;
 		private Object lifecycleLink;
 
 		public ResizeConfiguration(IResizeListener listener) {
 			this.listener = listener;
-			add();
 		}
 
 		@Override
@@ -64,9 +63,12 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 			return this;
 		}
 
-		protected abstract void add();
-
-		protected abstract void remove();
+		private void fire() {
+			boolean active = listener.onResize(width(), height());
+			if (!active) {
+				removeResizeListener(listener);
+			}
+		}
 	}
 
 	private List<ResizeConfiguration> resizeListeners = new LinkedList<ResizeConfiguration>();
@@ -85,7 +87,7 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 		}
 		for (ResizeConfiguration cfg : toRemove)
 			remove(cfg);
-		ResizeConfiguration resizeHandler = newResizeConfiguration(listener);
+		ResizeConfiguration resizeHandler = new ResizeConfiguration(listener);
 		resizeListeners.add(resizeHandler);
 		return resizeHandler;
 	}
@@ -99,11 +101,7 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 		return !((IPopUp) cfg.lifecycleLink).visible();
 	}
 
-	protected abstract ResizeConfiguration newResizeConfiguration(
-			IResizeListener listener);
-
 	protected void remove(ResizeConfiguration toRemove) {
-		toRemove.remove();
 		resizeListeners.remove(toRemove);
 	}
 
@@ -120,5 +118,20 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 			remove(toRemove);
 		}
 		return this;
+	}
+
+	public void notifyResizeListeners() {
+		for (ResizeConfiguration rc : new LinkedList<ResizeConfiguration>(
+				resizeListeners)) {
+			rc.fire();
+		}
+	}
+
+	public void fire(IResizeListener listener) {
+		for (ResizeConfiguration rc : new LinkedList<ResizeConfiguration>(
+				resizeListeners)) {
+			if (rc.listener == listener)
+				rc.fire();
+		}
 	}
 }

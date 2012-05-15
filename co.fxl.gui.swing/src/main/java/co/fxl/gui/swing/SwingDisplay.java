@@ -62,7 +62,6 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 
 	private SwingDisplay() {
 		container = new SwingContainer<JComponent>(this) {
-
 			void setComponent(JComponent component) {
 				super.component = component;
 				if (component instanceof JScrollPane)
@@ -71,6 +70,13 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 				frame.setContentPane(container.component);
 				container.component.setBackground(Color.WHITE);
 				updateSize();
+				container.component
+						.addComponentListener(new ComponentAdapter() {
+							@Override
+							public void componentResized(ComponentEvent arg0) {
+								notifyResizeListeners();
+							}
+						});
 			}
 		};
 		// layout = container.panel();
@@ -87,42 +93,6 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 		// TODO Aspect Log.instance(new SwingLog());
 		// TODO remove hack
 		ToolbarImpl.ADJUST_HEIGHTS = true;
-	}
-
-	private final class SwingResizeConfiguration extends ResizeConfiguration {
-
-		private ComponentAdapter adp;
-
-		private SwingResizeConfiguration(IResizeListener listener) {
-			super(listener);
-		}
-
-		@Override
-		protected void add() {
-			adp = new ComponentAdapter() {
-				@Override
-				public void componentResized(ComponentEvent arg0) {
-					boolean active = listener.onResize(width(), height());
-					if (!active) {
-						removeResizeListener(listener);
-					}
-				}
-			};
-			if (container != null && container.component != null)
-				container.component.addComponentListener(adp);
-		}
-
-		@Override
-		protected void remove() {
-			if (container.component != null)
-				container.component.removeComponentListener(adp);
-		}
-	}
-
-	@Override
-	protected ResizeConfiguration newResizeConfiguration(
-			IResizeListener listener) {
-		return new SwingResizeConfiguration(listener);
 	}
 
 	private void resize() {

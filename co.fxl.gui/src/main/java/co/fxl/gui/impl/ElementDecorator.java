@@ -132,4 +132,14 @@ public class ElementDecorator<T> implements IElement<T> {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public T width(double width) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public T height(double height) {
+		throw new UnsupportedOperationException();
+	}
+
 }

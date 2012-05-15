@@ -268,15 +268,29 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		return (R) this;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public R width(int width) {
+		return width(width < 0, width + "px");
+	}
+
+	@Override
+	public R width(double width) {
+		return width(width < 0, percent(width) + "%");
+	}
+
+	private String percent(double width) {
+		return String.valueOf(width * 100);
+	}
+
+	@SuppressWarnings("unchecked")
+	private R width(boolean isNegative, String widthString) {
 		if (isUndefined())
 			return (R) this;
-		if (width < 1)
+		if (isNegative)
 			style().clearWidth();
-		else
-			container.widget.setWidth(width + "px");
+		else {
+			container.widget.setWidth(widthString);
+		}
 		return (R) this;
 	}
 
@@ -284,15 +298,25 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		return container == null || container.widget == null;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public R height(int height) {
+		return height(height < 0, height + "px");
+	}
+
+	@Override
+	public R height(double height) {
+		return height(height < 0, percent(height) + "%");
+	}
+
+	@SuppressWarnings("unchecked")
+	private R height(boolean isNegative, String heightString) {
 		if (isUndefined())
 			return (R) this;
-		if (height < 1)
+		if (isNegative)
 			style().clearHeight();
-		else
-			container.widget.setHeight(height + "px");
+		else {
+			container.widget.setHeight(heightString);
+		}
 		return (R) this;
 	}
 

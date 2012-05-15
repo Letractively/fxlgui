@@ -262,4 +262,14 @@ class SwingPopUp implements IPopUp {
 		// TODO ... throw new UnsupportedOperationException();
 		return this;
 	}
+
+	@Override
+	public IPopUp width(double width) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IPopUp height(double height) {
+		throw new UnsupportedOperationException();
+	}
 }

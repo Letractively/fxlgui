@@ -202,4 +202,18 @@ class AndroidScrollPane implements IScrollPane, Parent {
 	public <N> IScrollPane nativeElement(N nativeElement) {
 		throw new UnsupportedOperationException();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public IScrollPane width(double width) {
+		// TODO ... throw new UnsupportedOperationException();
+		return this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public IScrollPane height(double height) {
+		// TODO ... throw new UnsupportedOperationException();
+		return this;
+	}
 }
