@@ -3,13 +3,13 @@
 	<parent>
 		<groupId>co.fxl</groupId>
   	<artifactId>fxl</artifactId>
-		<version>1.0.0.2</version>
+		<version>1.0.3-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>co.fxl</groupId>
   <artifactId>fxl-gui-form</artifactId>
-  <version>1.0.0.2</version>
+  <version>1.0.3-SNAPSHOT</version>
   <name>${project.artifactId}</name>
   <packaging>jar</packaging>
 	<dependencies>
