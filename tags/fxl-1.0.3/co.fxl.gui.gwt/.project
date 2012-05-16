@@ -1,0 +1,18 @@
+<projectDescription>
+  <name>fxl-gui-gwt</name>
+  <comment/>
+  <projects>
+    <project>fxl-data-format</project>
+    <project>fxl-data-format-gwt</project>
+    <project>fxl-gui</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+    <nature>com.google.gdt.eclipse.core.webAppNature</nature>
+  </natures>
+</projectDescription>

@@ -1,0 +1,15 @@
+<projectDescription>
+  <name>fxl-data-format-gwt</name>
+  <comment/>
+  <projects>
+    <project>fxl-data-format</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+  </natures>
+</projectDescription>
