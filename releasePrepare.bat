@@ -1,1 +1,1 @@
-mvn release:prepare -DautoVersionSubmodules=true
+mvn release:prepare -DautoVersionSubmodules=true -P google-scm
