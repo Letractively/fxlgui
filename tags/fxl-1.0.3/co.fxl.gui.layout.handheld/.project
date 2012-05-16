@@ -1,0 +1,17 @@
+<projectDescription>
+  <name>fxl-gui-layout-handheld</name>
+  <comment/>
+  <projects>
+    <project>fxl-data-format</project>
+    <project>fxl-gui</project>
+    <project>fxl-gui-form</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+  </natures>
+</projectDescription>

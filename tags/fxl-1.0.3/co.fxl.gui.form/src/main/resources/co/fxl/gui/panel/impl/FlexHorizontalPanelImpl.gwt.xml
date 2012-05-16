@@ -1,0 +1,6 @@
+<module>
+	<inherits name='co.fxl.gui.IDisplay' />
+	<inherits name='co.fxl.gui.panel.api.IFlexHorizontalPanel' />
+	<source path='' />
+</module>
+ 
