@@ -55,7 +55,13 @@ class LogImpl implements ILog, IClickListener {
 
 		@Override
 		public String toString() {
-			return date.toString() + " " + level + " " + message + " ";
+			return date.toString()
+					+ " "
+					+ level
+					+ " "
+					+ message
+					+ (duration != null ? " executed in " + duration + "ms"
+							: "");
 		}
 
 	}
@@ -77,17 +83,29 @@ class LogImpl implements ILog, IClickListener {
 	public ILog debug(String message) {
 		ensureSize();
 		Entry e = new Entry("DEBUG", message);
-		System.out.println(e);
-		lines.add(0, e);
+		addLine(e);
 		return this;
+	}
+
+	@Override
+	public ILog debug(String message, long duration,
+			Throwable clientStacktrace, Throwable serverStacktrace) {
+		ensureSize();
+		addLine(new Entry("DEBUG", message, duration, clientStacktrace,
+				serverStacktrace));
+		return this;
+	}
+
+	private void addLine(Entry entry) {
+		lines.add(0, entry);
+		System.out.println("CLIENT> " + entry);
 	}
 
 	@Override
 	public ILog test(String message) {
 		ensureSize();
 		Entry e = new Entry("TEST", message);
-		System.out.println(e);
-		lines.add(0, e);
+		addLine(e);
 		return this;
 	}
 
@@ -264,16 +282,7 @@ class LogImpl implements ILog, IClickListener {
 	@Override
 	public ILog debug(String message, long duration) {
 		ensureSize();
-		lines.add(new Entry("DEBUG", message, duration));
-		return this;
-	}
-
-	@Override
-	public ILog debug(String message, long duration,
-			Throwable clientStacktrace, Throwable serverStacktrace) {
-		ensureSize();
-		lines.add(new Entry("DEBUG", message, duration, clientStacktrace,
-				serverStacktrace));
+		addLine(new Entry("DEBUG", message, duration));
 		return this;
 	}
 
