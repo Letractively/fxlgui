@@ -1,1 +1,1 @@
-mvn release:perform
+mvn release:perform -P google-scm
