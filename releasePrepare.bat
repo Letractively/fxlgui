@@ -1,1 +1,1 @@
-mvn release:prepare -DautoVersionSubmodules=true -P google-user
+mvn release:prepare -DautoVersionSubmodules=true
