@@ -10,6 +10,8 @@
   	<java_compliance_source_level>1.6</java_compliance_source_level>		
   	<java_compliance_target_level>1.6</java_compliance_target_level>		
   	<gwtVersion>2.4.0</gwtVersion>
+  	<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+  	<project.reporting.outputEncoding>ISO-8859-1</project.reporting.outputEncoding>
   </properties>
   <profiles>
   	<profile>
