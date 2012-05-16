@@ -187,4 +187,16 @@
  		<developerConnection>scm:svn:https://fxlgui.googlecode.com/svn/trunk</developerConnection>
  		<url>https://fxlgui.googlecode.com/svn/trunk</url>
  	</scm>
+	<distributionManagement>
+    <repository>
+        <id>central</id>
+        <name>http://xoricon.com:8081-releases</name>
+        <url>http://xoricon.com:8081/artifactory/libs-release-local</url>
+    </repository>
+    <snapshotRepository>
+        <id>snapshots</id>
+        <name>http://xoricon.com:8081-snapshots</name>
+        <url>http://xoricon.com:8081/artifactory/libs-snapshot-local</url>
+    </snapshotRepository>
+	</distributionManagement>	
 </project>
