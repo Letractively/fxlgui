@@ -77,10 +77,11 @@
 				<plugin>
           <artifactId>maven-source-plugin</artifactId>
           <version>2.1.2</version>
+          
         </plugin>                
 				<plugin>		
           <artifactId>maven-eclipse-plugin</artifactId>
-          <version>2.9</version>
+          <version>2.9</version>        
         </plugin>         
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
@@ -141,13 +142,19 @@
       			</goals>
     			</execution>
 			  </executions>
+			  <configuration>
+            <attach>true</attach>
+        </configuration>			  
 			</plugin>  		
   		<plugin>
   			<groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-eclipse-plugin</artifactId>
         <configuration>
+        	<buildOutputDirectory>${project.build.outputDirectory}/../../bin</buildOutputDirectory>
+       		<downloadSources>true</downloadSources>
+       		<downloadJavadocs>false</downloadJavadocs>
           <additionalprojectnatures>
-            <projectnature>org.maven.ide.eclipse.maven2Nature</projectnature>
+	           <projectnature>org.maven.ide.eclipse.maven2Nature</projectnature>
           </additionalprojectnatures>
           <additionalbuildcommands>
             <buildcommand>org.maven.ide.eclipse.maven2Builder</buildcommand>
