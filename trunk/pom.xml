@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>co.fxl</groupId>
   <artifactId>fxl</artifactId>
-  <version>1.0.3-SNAPSHOT</version>
+  <version>1.0.3</version>
   <name>${project.artifactId}</name>
   <packaging>pom</packaging>
   <properties>
@@ -187,9 +187,9 @@
   	</plugins>	
   </build>	  	
  	<scm>
- 	  <connection>scm:svn:https://fxlgui.googlecode.com/svn/trunk</connection>
- 		<developerConnection>scm:svn:https://fxlgui.googlecode.com/svn/trunk</developerConnection>
- 		<url>https://fxlgui.googlecode.com/svn/trunk</url>
+ 	  <connection>scm:svn:https://fxlgui.googlecode.com/svn/tags/fxl-1.0.3</connection>
+ 		<developerConnection>scm:svn:https://fxlgui.googlecode.com/svn/tags/fxl-1.0.3</developerConnection>
+ 		<url>https://fxlgui.googlecode.com/svn/tags/fxl-1.0.3</url>
  	</scm>
 	<distributionManagement>
     <repository>
