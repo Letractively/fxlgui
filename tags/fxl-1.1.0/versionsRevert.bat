@@ -1,1 +1,0 @@
-mvn versions:revert
