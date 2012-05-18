@@ -1,11 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-  <classpathentry kind="src" path="src/main/java"/>
+  <classpathentry kind="src" path="src/main/java" including="**/*.java"/>
   <classpathentry kind="src" path="src/main/resources" excluding="**/*.java"/>
-  <classpathentry kind="output" path="target/classes"/>
+  <classpathentry kind="output" path="bin"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-  <classpathentry kind="src" path="/fxl-data-format"/>
   <classpathentry kind="src" path="/fxl-gui"/>
-  <classpathentry kind="src" path="/fxl-gui-form"/>
   <classpathentry kind="src" path="/fxl-gui-table"/>
-  <classpathentry kind="var" path="M2_REPO/junit/junit/4.0/junit-4.0.jar"/>
+  <classpathentry kind="src" path="/fxl-gui-form"/>
+  <classpathentry kind="src" path="/fxl-data-format"/>
+  <classpathentry kind="var" path="M2_REPO/junit/junit/4.0/junit-4.0.jar" sourcepath="M2_REPO/junit/junit/4.0/junit-4.0-sources.jar"/>
 </classpath>
