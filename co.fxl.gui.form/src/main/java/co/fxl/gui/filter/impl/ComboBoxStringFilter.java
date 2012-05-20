@@ -29,23 +29,23 @@ import co.fxl.gui.form.impl.Validation;
 
 class ComboBoxStringFilter extends FilterTemplate<String> {
 
-	class StringConstraint implements IStringPrefixConstraint {
-
-		@Override
-		public String column() {
-			return name;
-		}
-
-		@Override
-		public String prefix() {
-			return text;
-		}
-
-		@Override
-		public String toString() {
-			return text;
-		}
-	}
+//	class StringConstraint implements IStringPrefixConstraint {
+//
+//		@Override
+//		public String column() {
+//			return name;
+//		}
+//
+//		@Override
+//		public String prefix() {
+//			return text;
+//		}
+//
+//		@Override
+//		public String toString() {
+//			return text;
+//		}
+//	}
 
 	IComboBox comboBox;
 	private String text;
@@ -112,7 +112,7 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 	@Override
 	public IFilterConstraint asConstraint() {
 		update();
-		return new StringConstraint();
+		return new StringPrefixConstraint(name,text);
 	}
 
 	@Override

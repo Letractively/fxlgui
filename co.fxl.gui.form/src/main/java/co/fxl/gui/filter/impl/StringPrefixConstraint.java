@@ -16,55 +16,30 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.impl;
+package co.fxl.gui.filter.impl;
 
-public interface IFieldType {
+public class StringPrefixConstraint implements IStringPrefixConstraint {
 
-	IFieldType integer();
+	private String name;
+	private String text;
 
-	IFieldType date();
+	public StringPrefixConstraint(String name, String text) {
+		this.name=name;
+		this.text=text;
+	}
 
-	IFieldType dateTime();
+	@Override
+	public String column() {
+		return name;
+	}
 
-	IFieldType time();
+	@Override
+	public String prefix() {
+		return text;
+	}
 
-	IFieldType text();
-
-	IFieldType html();
-
-	IFieldType color();
-
-	IFieldType encryptedText();
-
-	IFieldType longText();
-
-	IFieldType image();
-
-	IFieldType longType();
-
-	IFieldType addConstraint(Object... values);
-
-	IFieldType defaultConstraint(Object value);
-
-	IFieldType type(Class<?> clazz);
-
-	IFieldType maxLength(int maxLength);
-
-	IFieldType logic();
-
-	IFieldType relation();
-
-	Class<?> clazz();
-
-	IFieldType clearConstraints();
-
-	IFieldType setHasConstraints();
-
-	IFieldType shortText();
-
-	IFieldType doubleValue();
-
-	boolean isRelation();
-
-	boolean isText();
+	@Override
+	public String toString() {
+		return text;
+	}
 }

@@ -27,26 +27,8 @@ import co.fxl.gui.form.impl.Validation;
 
 class StringFilter extends FilterTemplate<String> {
 
-	class StringPrefixConstraint implements IStringPrefixConstraint {
-
-		@Override
-		public String column() {
-			return name;
-		}
-
-		@Override
-		public String prefix() {
-			return text;
-		}
-
-		@Override
-		public String toString() {
-			return text;
-		}
-	}
-
 	ITextField textField;
-	private String text;
+	String text;
 
 	StringFilter(FilterGrid panel, String name, int filterIndex) {
 		super(panel, name, filterIndex);
@@ -97,7 +79,7 @@ class StringFilter extends FilterTemplate<String> {
 	@Override
 	public IFilterConstraint asConstraint() {
 		update();
-		return new StringPrefixConstraint();
+		return new StringPrefixConstraint(name, text);
 	}
 
 	@Override
