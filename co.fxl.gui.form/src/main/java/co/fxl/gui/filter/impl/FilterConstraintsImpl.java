@@ -242,7 +242,7 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 		final INamedConstraint c = constraints.get(uiLabel);
 		if (c instanceof IStringPrefixConstraint) {
 			IStringPrefixConstraint sc = (IStringPrefixConstraint) c;
-			return sc.equals(BooleanFilter.TRUE);
+			return sc.prefix().equals(BooleanFilter.TRUE);
 		}
 		return ((IBooleanConstraint) c).value();
 	}
