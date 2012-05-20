@@ -27,7 +27,6 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
-import co.fxl.gui.filter.impl.IFilterConstraint.IRelationConstraint;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.filter.impl.FilterPanel.ICell;
 import co.fxl.gui.form.impl.Validation;
@@ -35,7 +34,7 @@ import co.fxl.gui.impl.DummyCallback;
 
 class RelationFilter extends StringFilter {
 
-	private List<Object> values = new LinkedList<Object>();
+	List<Object> values = new LinkedList<Object>();
 	private IClickListener clear = new IClickListener() {
 		@Override
 		public void onClick() {
@@ -46,7 +45,7 @@ class RelationFilter extends StringFilter {
 	private IImage remove;
 	private FilterWidgetImpl widget;
 	private IClickListener cl;
-	private List<Object> preset;
+	List<Object> preset;
 
 	RelationFilter(FilterWidgetImpl widget, FilterGrid grid, String name,
 			int filterIndex, List<Object> preset,
@@ -91,7 +90,7 @@ class RelationFilter extends StringFilter {
 		return toString(preset);
 	}
 
-	private String toString(List<Object> preset) {
+	String toString(List<Object> preset) {
 		return toString(adapter, preset, values);
 	}
 
@@ -118,23 +117,7 @@ class RelationFilter extends StringFilter {
 	@Override
 	public IFilterConstraint asConstraint() {
 		if (values != null)
-			return new IRelationConstraint() {
-
-				@Override
-				public List<Object> values() {
-					return values;
-				}
-
-				@Override
-				public String column() {
-					return name;
-				}
-
-				@Override
-				public String toString() {
-					return RelationFilter.this.toString(preset);
-				}
-			};
+			return new RelationConstraint(name, values, toString());
 		else
 			return super.asConstraint();
 	}

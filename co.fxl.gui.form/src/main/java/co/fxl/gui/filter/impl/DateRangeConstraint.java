@@ -19,48 +19,11 @@
 package co.fxl.gui.filter.impl;
 
 import java.util.Date;
-import java.util.List;
 
-import co.fxl.gui.filter.api.IFilterConstraints.IRange;
+class DateRangeConstraint extends RangeConstraint<Date> implements IFilterConstraint.IDateRangeConstraint {
 
-public interface IFilterConstraint {
-
-	public interface INamedConstraint extends IFilterConstraint {
-
-		String column();
-	}
-
-	public interface ISizeConstraint extends IFilterConstraint {
-
-		int size();
-	}
-
-	interface IBooleanConstraint extends INamedConstraint {
-
-		Boolean value();
-	}
-
-	interface IRelationConstraint extends INamedConstraint {
-
-		List<Object> values();
-	}
-
-	interface IRangeConstraint<T> extends INamedConstraint, IRange<T> {
-
-		T lowerBound();
-
-		T upperBound();
-	}
-
-	interface IDoubleRangeConstraint extends IRangeConstraint<Double> {
-
-	}
-
-	interface IDateRangeConstraint extends IRangeConstraint<Date> {
-
-	}
-
-	interface IIntegerRangeConstraint extends IRangeConstraint<Integer> {
-
+	DateRangeConstraint(String name, Date lowerBound,
+			Date upperBound) {
+		super(name, lowerBound, upperBound);
 	}
 }

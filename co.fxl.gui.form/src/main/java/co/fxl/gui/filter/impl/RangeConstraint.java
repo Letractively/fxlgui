@@ -19,48 +19,46 @@
 package co.fxl.gui.filter.impl;
 
 import java.util.Date;
-import java.util.List;
 
-import co.fxl.gui.filter.api.IFilterConstraints.IRange;
+import co.fxl.data.format.impl.Format;
+import co.fxl.gui.filter.impl.IFilterConstraint.IRangeConstraint;
 
-public interface IFilterConstraint {
+public abstract class RangeConstraint<T> implements IRangeConstraint<T> {
 
-	public interface INamedConstraint extends IFilterConstraint {
+	private String name;
+	private T lowerBound;
+	private T upperBound;
 
-		String column();
+	RangeConstraint(String name, T lowerBound, T upperBound) {
+		this.name=name;
+		this.lowerBound=lowerBound;
+		this.upperBound=upperBound;
 	}
 
-	public interface ISizeConstraint extends IFilterConstraint {
-
-		int size();
+	@Override
+	public String column() {
+		return name;
 	}
 
-	interface IBooleanConstraint extends INamedConstraint {
-
-		Boolean value();
+	@Override
+	public T lowerBound() {
+		return lowerBound;
 	}
 
-	interface IRelationConstraint extends INamedConstraint {
-
-		List<Object> values();
+	@Override
+	public T upperBound() {
+		return upperBound;
 	}
 
-	interface IRangeConstraint<T> extends INamedConstraint, IRange<T> {
-
-		T lowerBound();
-
-		T upperBound();
+	@Override
+	public String toString() {
+		return wNull(lowerBound) + "-" + wNull(upperBound);
 	}
 
-	interface IDoubleRangeConstraint extends IRangeConstraint<Double> {
-
+	String wNull(T lowerBound) {
+		if (lowerBound == null)
+			return "";
+		return Format.format(Date.class, lowerBound);
 	}
 
-	interface IDateRangeConstraint extends IRangeConstraint<Date> {
-
-	}
-
-	interface IIntegerRangeConstraint extends IRangeConstraint<Integer> {
-
-	}
 }

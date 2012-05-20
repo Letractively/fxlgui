@@ -20,42 +20,9 @@ package co.fxl.gui.filter.impl;
 
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
-import co.fxl.gui.filter.impl.IFilterConstraint.IDoubleRangeConstraint;
 import co.fxl.gui.form.impl.Validation;
 
 class NumberFilter extends RangeFilter<Number> {
-
-	class DoubleRangeFilter implements IDoubleRangeConstraint {
-
-		@Override
-		public String column() {
-			return name;
-		}
-
-		@Override
-		public Double lowerBound() {
-			return lowerBound;
-		}
-
-		@Override
-		public Double upperBound() {
-			return upperBound;
-		}
-
-		@Override
-		public String toString() {
-			return wNull(lowerBound) + " - " + wNull(upperBound);
-		}
-	}
-
-	public String wNull(Double lowerBound) {
-		if (lowerBound == null)
-			return "";
-		String string = lowerBound.toString();
-		if (string.endsWith(".0"))
-			string = string.substring(0, string.indexOf(".0"));
-		return string;
-	}
 
 	private Double lowerBound = null;
 	private Double upperBound = null;
@@ -110,7 +77,7 @@ class NumberFilter extends RangeFilter<Number> {
 	@Override
 	public IFilterConstraint asConstraint() {
 		update();
-		return new DoubleRangeFilter();
+		return new DoubleRangeFilter(name, lowerBound, upperBound);
 	}
 
 	@Override
