@@ -22,27 +22,13 @@ import java.util.List;
 
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IUpdateable;
-import co.fxl.gui.filter.impl.IFilterConstraint.ISizeConstraint;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.form.impl.Validation;
 
 class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
 
-	class SizeConstraint implements ISizeConstraint {
-
-		@Override
-		public int size() {
-			return text;
-		}
-
-		@Override
-		public String toString() {
-			return String.valueOf(text);
-		}
-	}
-
 	IComboBox comboBox;
-	private Integer text;
+	Integer text;
 	private Integer defaultValue;
 
 	ComboBoxIntegerFilter(FilterGrid panel, String name, List<Object> values,
@@ -98,7 +84,7 @@ class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
 	@Override
 	public IFilterConstraint asConstraint() {
 		update();
-		return new SizeConstraint();
+		return new SizeConstraint(text);
 	}
 
 	@Override

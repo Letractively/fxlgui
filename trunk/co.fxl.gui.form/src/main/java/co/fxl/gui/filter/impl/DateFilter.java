@@ -24,46 +24,16 @@ import co.fxl.data.format.impl.Format;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterConstraints.IRange;
-import co.fxl.gui.filter.impl.IFilterConstraint.IDateRangeConstraint;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.form.impl.Validation;
 
 class DateFilter extends RangeFilter<Date> {
 
-	class DateRangeConstraint implements IDateRangeConstraint {
-
-		@Override
-		public String column() {
-			return name;
-		}
-
-		@Override
-		public Date lowerBound() {
-			return lowerBound;
-		}
-
-		@Override
-		public Date upperBound() {
-			return upperBound;
-		}
-
-		@Override
-		public String toString() {
-			return wNull(lowerBound) + "-" + wNull(upperBound);
-		}
-	}
-
-	private Date lowerBound = null;
-	private Date upperBound = null;
+	Date lowerBound = null;
+	Date upperBound = null;
 
 	DateFilter(FilterGrid parent, String name, int filterIndex) {
 		super(parent, name, filterIndex);
-	}
-
-	public String wNull(Date lowerBound) {
-		if (lowerBound == null)
-			return "";
-		return Format.date().format(lowerBound);
 	}
 
 	@Override
@@ -103,7 +73,7 @@ class DateFilter extends RangeFilter<Date> {
 	@Override
 	public IFilterConstraint asConstraint() {
 		update();
-		return new DateRangeConstraint();
+		return new DateRangeConstraint(name, lowerBound, upperBound);
 	}
 
 	@Override
