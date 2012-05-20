@@ -35,6 +35,7 @@ public class FieldTypeImpl implements IFieldType {
 	public boolean isShort = false;
 	public boolean isColor = false;
 	public boolean isHTML = false;
+	public Object defaultConstraint;
 
 	public boolean equals(Object o) {
 		FieldTypeImpl t = (FieldTypeImpl) o;
@@ -210,5 +211,11 @@ public class FieldTypeImpl implements IFieldType {
 
 	public boolean isImage() {
 		return clazz.equals(IImage.class);
+	}
+
+	@Override
+	public IFieldType defaultConstraint(Object value) {
+		this.defaultConstraint=value;
+		return this;
 	}
 }
