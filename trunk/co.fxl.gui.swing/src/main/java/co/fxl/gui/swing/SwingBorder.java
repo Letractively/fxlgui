@@ -97,6 +97,12 @@ class SwingBorder implements IBorder {
 			ensurePartialBorder().right = true;
 			return SwingBorder.this;
 		}
+
+		@Override
+		public IBorder shadow(int pixel) {
+			// TODO ...
+			return SwingBorder.this;
+		}
 	}
 
 	private static final int SOLID = 0;

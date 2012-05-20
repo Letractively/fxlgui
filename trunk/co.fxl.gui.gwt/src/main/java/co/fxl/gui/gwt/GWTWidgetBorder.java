@@ -41,7 +41,7 @@ public class GWTWidgetBorder extends GWTBorder {
 	}
 
 	@Override
-	protected void shadow() {
+	protected void shadow(int pixel) {
 		if (widget != null) {
 
 			// antialiasing is missing
@@ -49,7 +49,7 @@ public class GWTWidgetBorder extends GWTBorder {
 			if (GWTDisplay.isInternetExplorer8OrBelow()) {
 				width(1);
 			} else
-				widget.addStyleName("shadowblur");
+				widget.addStyleName(pixel==4 ? "shadowblur":"shadowblurLight");
 		}
 	}
 

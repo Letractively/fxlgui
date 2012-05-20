@@ -89,7 +89,14 @@ public abstract class GWTBorder implements IBorder {
 
 		@Override
 		public IBorder shadow() {
-			GWTBorder.this.shadow();
+			 return shadow(4);
+		}
+
+		@Override
+		public IBorder shadow(int pixel) {
+			if(pixel!=4 && pixel!=2)
+				throw new UnsupportedOperationException();
+			GWTBorder.this.shadow(pixel);
 			return GWTBorder.this;
 		}
 
@@ -114,7 +121,7 @@ public abstract class GWTBorder implements IBorder {
 	@Override
 	public abstract IBorder remove();
 
-	protected void shadow() {
+	protected void shadow(int pixel) {
 	}
 
 	protected abstract void update();
