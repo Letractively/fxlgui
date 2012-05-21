@@ -19,6 +19,7 @@
 package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IImage;
+import co.fxl.gui.impl.Constants;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ImageResource;
@@ -27,13 +28,17 @@ import com.google.gwt.user.client.ui.Image;
 public class GWTImage extends GWTElement<Image, IImage> implements IImage {
 
 	private static final String IMAGES = "images/";
+	private static ImageResourceProvider imageResourceProvider;
+	public static boolean IS_CHROME_15_PLUS = GWTDisplay.isChrome()
+			&& GWTDisplay.getBrowserVersion() >= 15;
+	public static String IMAGE_PATH = Constants.get(
+			"GWTLazyTreeWidget.IMAGE_PATH",
+			(IS_CHROME_15_PLUS ? "" : GWT.getModuleBaseURL()) + "images/");
 
 	public interface ImageResourceProvider {
 
 		ImageResource resolve(String resource);
 	}
-
-	private static ImageResourceProvider imageResourceProvider;
 
 	public static void abstractImagePrototypeProvider(
 			ImageResourceProvider imageResourceProvider) {
@@ -44,6 +49,19 @@ public class GWTImage extends GWTElement<Image, IImage> implements IImage {
 		if (imageResourceProvider != null)
 			return imageResourceProvider.resolve(resource);
 		return null;
+	}
+	
+	public static String getImageURL(String path, String treeIcon) {
+		if (IS_CHROME_15_PLUS) {
+			ImageResource ir = GWTImage.resolve(treeIcon);
+			if (ir != null)
+				return ir.getURL();
+		}
+		return path + treeIcon;
+	}
+
+	public static String getImageURL(String string) {
+		return getImageURL(IMAGE_PATH, string);
 	}
 
 	private String resource;
