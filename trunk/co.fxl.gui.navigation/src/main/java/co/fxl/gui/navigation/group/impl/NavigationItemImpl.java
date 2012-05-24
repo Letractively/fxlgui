@@ -31,6 +31,7 @@ import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.LazyClickListener;
+import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.navigation.api.ITabDecorator;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 
@@ -220,6 +221,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 		forkLabelAsActive(viaClick, new CallbackTemplate<Void>() {
 			@Override
 			public void onSuccess(Void result) {
+				Log.instance().start("Switching tab");
 				IVerticalPanel panel0 = widget.flipPage().next().panel()
 						.vertical();
 				widget.activeBackground(panel0);
@@ -233,6 +235,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 					decorator.decorate(panel0, new CallbackTemplate<Void>() {
 						@Override
 						public void onSuccess(Void result) {
+							Log.instance().stop("Switching tab");
 							flipRegister(flipAfterReturn());
 						}
 
