@@ -221,7 +221,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 		forkLabelAsActive(viaClick, new CallbackTemplate<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				Log.instance().start("Switching tab");
+				Log.instance().start("Showing tab "+button.text());
 				IVerticalPanel panel0 = widget.flipPage().next().panel()
 						.vertical();
 				widget.activeBackground(panel0);
@@ -235,7 +235,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 					decorator.decorate(panel0, new CallbackTemplate<Void>() {
 						@Override
 						public void onSuccess(Void result) {
-							Log.instance().stop("Switching tab");
+							Log.instance().stop("Showing tab "+button.text());
 							flipRegister(flipAfterReturn());
 						}
 
