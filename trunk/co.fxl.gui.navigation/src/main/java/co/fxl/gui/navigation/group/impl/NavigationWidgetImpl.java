@@ -201,16 +201,18 @@ public class NavigationWidgetImpl implements INavigationWidget {
 			DisplayResizeAdapter.addResizeListener(new IResizeListener() {
 				@Override
 				public boolean onResize(int width, int height) {
-					update();
+					if (!update()) {
+						addSeparatorBorder();
+					}
 					return true;
 				}
 			}).linkLifecycle(mainPanel);
 		}
 	}
 
-	void update() {
+	boolean update() {
 		if (!DYNAMIC_RESIZE || moreGroup == null)
-			return;
+			return false;
 		for (NavigationGroupImpl g : groups)
 			for (NavigationItemImpl i : g.items)
 				i.displayed(true);
@@ -244,6 +246,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		if (moreItem.popUp != null)
 			moreItem.popUp.visible(false);
 		addSeparatorBorder();
+		return true;
 	}
 
 	void active(NavigationItemImpl item, boolean viaClick,
