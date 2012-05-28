@@ -72,7 +72,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 		}
 
 		@Override
-		public IColumn title(String title) {
+		public IColumn title(String title, Boolean sortUp) {
 			rowOffset = 1;
 			if (label == null) {
 				IGridCell cell = c();
@@ -83,7 +83,10 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 				label.font().pixel(11).weight().bold().color().rgb(31, 31, 31);
 				align.forward(cell.align());
 			}
-			label.text(title.toUpperCase());
+			String t = title.toUpperCase();
+			if (sortUp != null)
+				t += " " + (sortUp ? ARROW_UP : ARROW_DOWN);
+			label.text(t);
 			return this;
 		}
 
