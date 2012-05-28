@@ -58,8 +58,7 @@ public class SplitLayout implements IResizeListener {
 
 	private void init() {
 		panel = layout.grid();
-		cell0 = panel.cell(0, 0).width(
-				Display.instance().width() - WIDTH_SIDE_PANEL - 3 * 10);
+		cell0 = panel.cell(0, 0).width(mainPanelWidth());
 		IVerticalPanel vpanel = cell0.valign().begin().panel().vertical()
 				.spacing(10);
 		mainPanel = addMainPanel(vpanel);
@@ -70,6 +69,10 @@ public class SplitLayout implements IResizeListener {
 		sidePanel = sideScrollPanel.viewPort().panel().vertical();
 		sidePanel.spacing().right(10).inner(10);
 		DisplayResizeAdapter.addResizeListener(this, true);
+	}
+
+	public static int mainPanelWidth() {
+		return Display.instance().width() - WIDTH_SIDE_PANEL - 3 * 10;
 	}
 
 	@Override
