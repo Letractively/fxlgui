@@ -24,13 +24,14 @@ import java.util.Map;
 
 public class ColumnWidths {
 
-	private static final boolean USE_MAX_TOKENS = true;
+	private static final boolean USE_MAX_TOKENS = false;
 	private Map<ScrollTableColumnImpl, Integer> intWidths = new HashMap<ScrollTableColumnImpl, Integer>();
 	private Map<ScrollTableColumnImpl, Double> doubleWidths = new HashMap<ScrollTableColumnImpl, Double>();
 
 	public ColumnWidths(boolean useMaxTokens,
 			List<ScrollTableColumnImpl> columns) {
 		double sum = 0;
+		// int widthMin = 0;
 		for (int c = 0; c < columns.size(); c++) {
 			if (!columns.get(c).visible)
 				continue;
@@ -43,13 +44,27 @@ public class ColumnWidths {
 					intWidths.put(columnImpl, width);
 				}
 			}
-			if (intWidths.get(columnImpl) != -1)
+			if (intWidths.get(columnImpl) != -1) {
+				// widthMin += intWidths.get(columnImpl);
 				continue;
+			}
 			double d = columnImpl.widthDouble != -1 ? columnImpl.widthDouble
 					: columnImpl.decorator().defaultWeight();
 			doubleWidths.put(columnImpl, d);
 			sum += d;
+			// widthMin += 100;
 		}
+		// if (widthMin < widthSum) {
+		// intWidths.clear();
+		// for (int c = 0; c < columns.size(); c++) {
+		// if (!columns.get(c).visible)
+		// continue;
+		// ScrollTableColumnImpl columnImpl = columns.get(c);
+		// double d = columnImpl.widthDouble != -1 ? columnImpl.widthDouble
+		// : columnImpl.decorator().defaultWeight();
+		// doubleWidths.put(columnImpl, d);
+		// }
+		// }
 		for (int c = 0; c < columns.size(); c++) {
 			ScrollTableColumnImpl columnImpl = columns.get(c);
 			if (!columnImpl.visible)
@@ -69,7 +84,7 @@ public class ColumnWidths {
 			co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn btc) {
 		stc.decorator().prepare(btc);
 		Integer i = intWidths.get(stc);
-		if (i != -1)
+		if (i != null && i != -1)
 			btc.width((int) i);
 		else {
 			Double d = doubleWidths.get(stc);
