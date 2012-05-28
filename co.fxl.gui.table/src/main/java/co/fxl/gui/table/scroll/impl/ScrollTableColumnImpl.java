@@ -42,16 +42,6 @@ import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		Comparator<Object[]> {
 
-	private static final double WEIGHT_BOOLEAN = 1;
-	private static final double WEIGHT_DATE = 1;
-	private static final double WEIGHT_LONG_DATE = 2;
-	private static final double WEIGHT_NUMBER = 1;
-	private static final double WEIGHT_CUSTOM_LIST_SELECTION = 1;
-	private static final double WEIGHT_IMAGE = 1;
-	private static final double WEIGHT_TEXT = 2;
-	private static final double WEIGHT_HTML = 2;
-	private static final double WEIGHT_LONG_TEXT = 3;
-
 	public class BooleanDecorator implements Decorator<Boolean> {
 
 		@Override
@@ -267,6 +257,15 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		}
 	}
 
+	private static final double WEIGHT_BOOLEAN = 1;
+	private static final double WEIGHT_DATE = 1;
+	private static final double WEIGHT_LONG_DATE = 2;
+	private static final double WEIGHT_NUMBER = 1;
+	private static final double WEIGHT_CUSTOM_LIST_SELECTION = 1;
+	private static final double WEIGHT_IMAGE = 1;
+	private static final double WEIGHT_TEXT = 2;
+	private static final double WEIGHT_HTML = 2;
+	private static final double WEIGHT_LONG_TEXT = 3;
 	String name;
 	boolean sortable = false;
 	FieldTypeImpl type = new FieldTypeImpl();
