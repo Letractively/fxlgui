@@ -233,6 +233,12 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	@Override
 	public IScrollTableWidget<Object> height(final int height) {
+		return height(height, DummyCallback.voidInstance());
+	}
+
+	@Override
+	public IScrollTableWidget<Object> height(final int height,
+			final ICallback<Void> cb) {
 		this.height = height;
 		if (visible) {
 			if (drawing) {
@@ -243,18 +249,22 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						public void run() {
 							int height = nextHeight;
 							nextHeight = null;
-							height(height);
+							height(height, cb);
 						}
 					});
 				} else {
 					nextHeight = height;
+					cb.onSuccess(null);
 				}
 				return this;
 			} else {
 				drawing = true;
 				visible(true);
 				drawing = false;
+				cb.onSuccess(null);
 			}
+		} else {
+			cb.onSuccess(null);
 		}
 		return this;
 	}
@@ -885,7 +895,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	private void updateHeaderRow(IBulkTableWidget grid) {
-		ColumnWidths cw = new ColumnWidths(columns);
+		ColumnWidths cw = new ColumnWidths(true, columns);
 		int current = 0;
 		for (int c = 0; c < columns.size(); c++) {
 			if (!columns.get(c).visible)
