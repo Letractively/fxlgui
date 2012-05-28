@@ -201,12 +201,10 @@ public class NavigationWidgetImpl implements INavigationWidget {
 			DisplayResizeAdapter.addResizeListener(new IResizeListener() {
 				@Override
 				public boolean onResize(int width, int height) {
-					if (!mainPanel.visible())
-						return false;
 					update();
 					return true;
 				}
-			});
+			}).linkLifecycle(mainPanel);
 		}
 	}
 

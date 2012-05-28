@@ -28,14 +28,15 @@ public class ColumnWidths {
 	private Map<ScrollTableColumnImpl, Integer> intWidths = new HashMap<ScrollTableColumnImpl, Integer>();
 	private Map<ScrollTableColumnImpl, Double> doubleWidths = new HashMap<ScrollTableColumnImpl, Double>();
 
-	public ColumnWidths(List<ScrollTableColumnImpl> columns) {
+	public ColumnWidths(boolean useMaxTokens,
+			List<ScrollTableColumnImpl> columns) {
 		double sum = 0;
 		for (int c = 0; c < columns.size(); c++) {
 			if (!columns.get(c).visible)
 				continue;
 			ScrollTableColumnImpl columnImpl = columns.get(c);
 			intWidths.put(columnImpl, columnImpl.widthInt);
-			if (USE_MAX_TOKENS) {
+			if (USE_MAX_TOKENS && useMaxTokens) {
 				int maxTokens = columnImpl.decorator().maxTokens();
 				if (columnImpl.widthInt == -1 && maxTokens != -1) {
 					int width = Math.max(100, (maxTokens + 4) * 7);
