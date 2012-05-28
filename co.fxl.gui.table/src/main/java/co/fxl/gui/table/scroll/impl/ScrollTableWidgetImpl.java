@@ -114,8 +114,6 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	// private static final boolean ALLOW_RESIZE = false;
 	private static final int HEADER_ROW_HEIGHT = 24;
 	private static final int ROW_HEIGHT = 22;
-	public static String ARROW_UP = "\u2191";
-	public static String ARROW_DOWN = "\u2193";
 	protected static final int SCROLL_MULT = 33;
 	private static final boolean ADD_DRAG_AND_DROP = true;
 	private static final boolean ADD_TOP_PANEL_TOP_PADDING = Constants.get(
@@ -899,11 +897,12 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				columnImpl.tagSortOrder = null;
 			}
 			String name = columnImpl.name;
+			Boolean sortUp = null;
 			if (sortColumn == columns.get(c).index) {
-				name += " " + (sortNegator == 1 ? ARROW_UP : ARROW_DOWN);
+				sortUp = sortNegator == 1;
 			}
 			IColumn column = grid.column(current++);
-			column.title(name);
+			column.title(name, sortUp);
 			prepare(columns, columnImpl, column);
 		}
 	}

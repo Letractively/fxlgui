@@ -28,6 +28,9 @@ import co.fxl.gui.api.IPoint;
 
 public interface IBulkTableWidget extends IKeyRecipient<Object> {
 
+	public String ARROW_UP = "\u2191";
+	public String ARROW_DOWN = "\u2193";
+
 	public interface IUpdateAdapter<T> {
 
 		boolean isEditable();
@@ -49,7 +52,7 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 
 	public interface IColumn {
 
-		IColumn title(String title);
+		IColumn title(String title, Boolean sortUp);
 
 		IColumn width(double width);
 

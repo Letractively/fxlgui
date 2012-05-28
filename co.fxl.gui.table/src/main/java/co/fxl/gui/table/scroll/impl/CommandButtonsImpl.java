@@ -31,6 +31,7 @@ import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.table.api.ISelection.IMultiSelection.IChangeListener;
 import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
+import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IButtonPanelDecorator;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.ICommandButtons;
@@ -347,15 +348,15 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			}).doubleClick();
 		}
 		if (listenOnMoveUp) {
-			imageUpMax = addMoveImage(ScrollTableWidgetImpl.ARROW_UP,
+			imageUpMax = addMoveImage(IBulkTableWidget.ARROW_UP,
 					listenOnMoveUpListener, Integer.MIN_VALUE);
-			imageUp = addMoveImage(ScrollTableWidgetImpl.ARROW_UP,
+			imageUp = addMoveImage(IBulkTableWidget.ARROW_UP,
 					listenOnMoveUpListener, -1);
 		}
 		if (listenOnMoveDown) {
-			imageDown = addMoveImage(ScrollTableWidgetImpl.ARROW_DOWN,
+			imageDown = addMoveImage(IBulkTableWidget.ARROW_DOWN,
 					listenOnMoveDownListener, 1);
-			imageDownMax = addMoveImage(ScrollTableWidgetImpl.ARROW_DOWN,
+			imageDownMax = addMoveImage(IBulkTableWidget.ARROW_DOWN,
 					listenOnMoveDownListener, Integer.MAX_VALUE);
 		}
 		// boolean editable = false;
@@ -378,10 +379,10 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		}
 	}
 
-//	private boolean showLabel() {
-////		boolean b = !listenOnMoveDown && !listenOnMoveUp;
-//		return true;
-//	}
+	// private boolean showLabel() {
+	// // boolean b = !listenOnMoveDown && !listenOnMoveUp;
+	// return true;
+	// }
 
 	void addAdd() {
 		if (listenOnAdd) {
@@ -396,14 +397,14 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		// resource
 		// + (i == Integer.MAX_VALUE || i == Integer.MIN_VALUE ? resource
 		// : "");
-		if (resource.equals(ScrollTableWidgetImpl.ARROW_UP)
+		if (resource.equals(IBulkTableWidget.ARROW_UP)
 				&& i == Integer.MIN_VALUE)
 			res = "Top";
-		if (resource.equals(ScrollTableWidgetImpl.ARROW_UP) && i == -1)
+		if (resource.equals(IBulkTableWidget.ARROW_UP) && i == -1)
 			res = "Up";
-		if (resource.equals(ScrollTableWidgetImpl.ARROW_DOWN) && i == 1)
+		if (resource.equals(IBulkTableWidget.ARROW_DOWN) && i == 1)
 			res = "Down";
-		if (resource.equals(ScrollTableWidgetImpl.ARROW_DOWN)
+		if (resource.equals(IBulkTableWidget.ARROW_DOWN)
 				&& i == Integer.MAX_VALUE)
 			res = "Bottom";
 		IClickable<?> image = clickable(panel.add(), res, false);
