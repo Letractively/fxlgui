@@ -30,9 +30,9 @@ import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.AlignmentMemento;
+import co.fxl.gui.impl.AlignmentMemento.Type;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.IFieldType;
-import co.fxl.gui.impl.AlignmentMemento.Type;
 import co.fxl.gui.table.api.IColumn;
 import co.fxl.gui.table.bulk.api.IBulkTableCell;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
@@ -42,7 +42,28 @@ import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		Comparator<Object[]> {
 
-	public class BooleanDecorator implements Decorator<Boolean> {
+	abstract class DefaultDecorator<T> implements Decorator<T> {
+
+		@Override
+		public void prepare(
+				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
+			if (alignment.isSpecified()) {
+				alignment.forward(column.align());
+				return;
+			}
+			if (index == 0)
+				column.align().begin();
+			else
+				column.align().center();
+		}
+
+		@Override
+		public int maxTokens() {
+			return name.length();
+		}
+	}
+
+	public class BooleanDecorator extends DefaultDecorator<Boolean> {
 
 		@Override
 		public void decorate(final Object identifier,
@@ -82,25 +103,12 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		}
 
 		@Override
-		public void prepare(
-				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
-			if (alignment.isSpecified()) {
-				alignment.forward(column.align());
-				return;
-			}
-			if (index == 0)
-				column.align().begin();
-			else
-				column.align().center();
-		}
-
-		@Override
 		public double defaultWeight() {
 			return WEIGHT_BOOLEAN;
 		}
 	}
 
-	class DateDecorator implements Decorator<Date> {
+	class DateDecorator extends DefaultDecorator<Date> {
 
 		private IFormat<Date> format;
 		private double weight = WEIGHT_DATE;
@@ -123,25 +131,17 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		}
 
 		@Override
-		public void prepare(
-				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
-			if (alignment.isSpecified()) {
-				alignment.forward(column.align());
-				return;
-			}
-			if (index == 0)
-				column.align().begin();
-			else
-				column.align().center();
-		}
-
-		@Override
 		public double defaultWeight() {
 			return weight;
 		}
+
+		@Override
+		public int maxTokens() {
+			return Math.max(12, super.maxTokens());
+		}
 	}
 
-	public class NumberDecorator implements Decorator<Number> {
+	public class NumberDecorator extends DefaultDecorator<Number> {
 
 		@Override
 		public void decorate(Object identifier, IBulkTableCell cell,
@@ -149,19 +149,6 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 			String text = value == null ? null : String.valueOf(value);
 			// TODO injectColor(identifier, cell);
 			cell.text(text);
-		}
-
-		@Override
-		public void prepare(
-				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
-			if (alignment.isSpecified()) {
-				alignment.forward(column.align());
-				return;
-			}
-			if (index == 0)
-				column.align().begin();
-			else
-				column.align().center();
 		}
 
 		@Override
@@ -177,13 +164,17 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		void prepare(IBulkTableWidget.IColumn column);
 
 		double defaultWeight();
+
+		int maxTokens();
 	}
 
-	public class StringDecorator implements Decorator<String> {
+	public class StringDecorator extends DefaultDecorator<String> {
 
 		private double weight = WEIGHT_TEXT;
+		private boolean isShort;
 
 		public StringDecorator(boolean isShort, boolean isLong) {
+			this.isShort = isShort;
 			if (isShort)
 				weight = WEIGHT_CUSTOM_LIST_SELECTION;
 			if (isLong)
@@ -216,6 +207,17 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		public double defaultWeight() {
 			return weight;
 		}
+
+		@Override
+		public int maxTokens() {
+			if (isShort && type.getConstraints() != null) {
+				int max = super.maxTokens();
+				for (Object v : type.getConstraints())
+					max = Math.max(max, String.valueOf(v).length());
+				return name.length();
+			}
+			return -1;
+		}
 	}
 
 	public class HTMLDecorator implements Decorator<String> {
@@ -236,6 +238,11 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		public double defaultWeight() {
 			return WEIGHT_HTML;
 		}
+
+		@Override
+		public int maxTokens() {
+			return -1;
+		}
 	}
 
 	public class ImageDecorator implements Decorator<String> {
@@ -254,6 +261,11 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		@Override
 		public double defaultWeight() {
 			return WEIGHT_IMAGE;
+		}
+
+		@Override
+		public int maxTokens() {
+			return -1;
 		}
 	}
 
