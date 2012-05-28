@@ -143,7 +143,7 @@ public interface IScrollTableWidget<T> {
 
 	IScrollTableWidget<T> height(int height);
 
-	IScrollTableWidget<T> height(int height, ICallback<Void> cb);
+//	IScrollTableWidget<T> height(int height, ICallback<Void> cb);
 
 	IScrollTableWidget<T> rows(IRows<T> rows);
 

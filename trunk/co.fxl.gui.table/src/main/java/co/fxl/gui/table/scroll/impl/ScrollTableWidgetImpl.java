@@ -231,14 +231,14 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		return this;
 	}
 
-	@Override
-	public IScrollTableWidget<Object> height(final int height) {
-		return height(height, DummyCallback.voidInstance());
-	}
+//	@Override
+//	public IScrollTableWidget<Object> height(final int height) {
+//		return height(height, DummyCallback.voidInstance());
+//	}
 
 	@Override
-	public IScrollTableWidget<Object> height(final int height,
-			final ICallback<Void> cb) {
+	public IScrollTableWidget<Object> height(final int height/*,
+			final ICallback<Void> cb*/) {
 		this.height = height;
 		if (visible) {
 			if (drawing) {
@@ -249,22 +249,22 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						public void run() {
 							int height = nextHeight;
 							nextHeight = null;
-							height(height, cb);
+							height(height);
 						}
 					});
 				} else {
 					nextHeight = height;
-					cb.onSuccess(null);
+//					cb.onSuccess(null);
 				}
 				return this;
 			} else {
 				drawing = true;
 				visible(true);
 				drawing = false;
-				cb.onSuccess(null);
+//				cb.onSuccess(null);
 			}
 		} else {
-			cb.onSuccess(null);
+//			cb.onSuccess(null);
 		}
 		return this;
 	}
