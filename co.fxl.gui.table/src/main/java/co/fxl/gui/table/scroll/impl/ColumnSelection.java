@@ -31,6 +31,7 @@ import co.fxl.gui.api.ILinearPanel;
 
 public class ColumnSelection {
 
+	private static final String COLUMN = "Column";
 	private static final String COLUMN_SELECTION = "Column Selection";
 	TableWidgetAdp widget;
 	private ScrollTableColumnImpl dragged;
@@ -129,7 +130,12 @@ public class ColumnSelection {
 			b.color().gray();
 		else
 			b.color().white();
-		ILabel l = b.add().label().text(c.name).autoWrap(true);
+		ILabel l = b
+				.add()
+				.label()
+				.text(c.name.equals("") ? COLUMN + " "
+						+ String.valueOf(widget.columnList().indexOf(c) + 1)
+						: c.name()).autoWrap(true);
 		l.font().pixel(11);
 		if (c.index == -1)
 			l.font().color().white();
