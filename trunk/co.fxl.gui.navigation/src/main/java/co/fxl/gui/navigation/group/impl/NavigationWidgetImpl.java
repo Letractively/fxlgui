@@ -39,6 +39,7 @@ import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DisplayResizeAdapter;
 import co.fxl.gui.impl.FlipPage;
@@ -51,6 +52,7 @@ import co.fxl.gui.navigation.group.api.INavigationWidget;
 public class NavigationWidgetImpl implements INavigationWidget {
 
 	private static final boolean DYNAMIC_RESIZE = true;
+	protected static final boolean DRAW_MORE_TOP = Constants.get("NavigationWidgetImpl.DRAW_MORE_TOP", true);
 	public static boolean ADD_SEPARATORBORDER = true;
 	protected IDockPanel mainPanel;
 	IHorizontalPanel navigationPanel;
@@ -178,15 +180,17 @@ public class NavigationWidgetImpl implements INavigationWidget {
 					// - moreItem.getLeftPartPopUpWidth()).panel()
 					// .vertical().height(1).border().style().right()
 					// .color().gray();
-					IGridPanel p02 = p0.add().panel().grid();
-					IAbsolutePanel a0 = p02.cell(0, 0).panel().absolute()
-							.height(1);
-					a0.color().gray();
-					p02.column(0).expand();
-					IAbsolutePanel a1 = p02.cell(1, 0).panel().absolute()
-							.height(1).width(moreItem.buttonPanel.width());
-					a1.color().white();
-					a1.border().style().right().color().gray();
+					if (DRAW_MORE_TOP) {
+						IGridPanel p02 = p0.add().panel().grid();
+						IAbsolutePanel a0 = p02.cell(0, 0).panel().absolute()
+								.height(1);
+						a0.color().gray();
+						p02.column(0).expand();
+						IAbsolutePanel a1 = p02.cell(1, 0).panel().absolute()
+								.height(1).width(moreItem.buttonPanel.width());
+						a1.color().white();
+						a1.border().style().right().color().gray();
+					}
 					IVerticalPanel panel = p0.add().panel().vertical()
 							.spacing(4);
 					panel.border().style().left().style().right().style()
