@@ -885,7 +885,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	private void updateHeaderRow(IBulkTableWidget grid) {
-		adjustColumnWidths();
+		ColumnWidths cw = new ColumnWidths(columns);
 		int current = 0;
 		for (int c = 0; c < columns.size(); c++) {
 			if (!columns.get(c).visible)
@@ -903,46 +903,17 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			}
 			IColumn column = grid.column(current++);
 			column.title(name, sortUp);
-			prepare(columns, columnImpl, column);
+			prepare(cw, columnImpl, column);
 		}
 	}
 
-	public static void prepare(List<ScrollTableColumnImpl> columns,
+	public static void prepare(ColumnWidths cw,
 			ScrollTableColumnImpl columnImpl, IColumn column) {
 		columnImpl.decorator().prepare(column);
-		if (columnImpl.widthInt != -1)
-			column.width(columnImpl.widthInt);
-		else {
-			// if (columnImpl.widthDouble == -1 && ALLOW_RESIZE)
-			// columnImpl.widthDouble = 1d / columns.size();
-			if (columnImpl.widthDouble != -1)
-				column.width(columnImpl.widthDouble);
-		}
+		if (cw != null)
+			cw.prepare(columnImpl, column);
 		if (columnImpl.alignment.isSpecified()) {
 			columnImpl.alignment.forward(column.align());
-		}
-	}
-
-	private void adjustColumnWidths() {
-		adjustColumnWidths(columns);
-	}
-
-	public static void adjustColumnWidths(List<ScrollTableColumnImpl> columns) {
-		double sum = 0;
-		for (int c = 0; c < columns.size(); c++) {
-			if (!columns.get(c).visible)
-				continue;
-			ScrollTableColumnImpl columnImpl = columns.get(c);
-			if (columnImpl.widthDouble != -1 || columnImpl.widthInt != -1) {
-				return;
-			}
-			sum += columnImpl.defaultWidth();
-		}
-		for (int c = 0; c < columns.size(); c++) {
-			if (!columns.get(c).visible)
-				continue;
-			ScrollTableColumnImpl columnImpl = columns.get(c);
-			columnImpl.widthDouble /= sum;
 		}
 	}
 

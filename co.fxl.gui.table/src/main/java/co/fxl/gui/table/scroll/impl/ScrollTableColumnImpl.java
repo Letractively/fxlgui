@@ -282,11 +282,10 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 			this);
 	boolean visible = true;
 	int widthInt = -1;
-	double widthDouble = -1;
+	public double widthDouble = -1;
 	boolean editable = false;
 	private IColorAdapter<Object, Object> colorAdapter;
 	boolean forceSort = false;
-	public double explicitWidth = -1;
 
 	public ScrollTableColumnImpl(int index) {
 		this(null, index);
@@ -303,10 +302,6 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 			String color = colorAdapter.color(identifier, value);
 			cell.color(color);
 		}
-	}
-
-	public void resetWidth() {
-		widthDouble = -1;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -470,11 +465,5 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	public IScrollTableColumn<Object> forceSort() {
 		forceSort = true;
 		return this;
-	}
-
-	double defaultWidth() {
-		if (explicitWidth != -1)
-			return widthDouble = explicitWidth;
-		return widthDouble = decorator().defaultWeight();
 	}
 }
