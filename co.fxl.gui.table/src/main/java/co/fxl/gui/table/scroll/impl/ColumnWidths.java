@@ -24,6 +24,7 @@ import java.util.Map;
 
 public class ColumnWidths {
 
+	private static final boolean USE_MAX_TOKENS = true;
 	private Map<ScrollTableColumnImpl, Integer> intWidths = new HashMap<ScrollTableColumnImpl, Integer>();
 	private Map<ScrollTableColumnImpl, Double> doubleWidths = new HashMap<ScrollTableColumnImpl, Double>();
 
@@ -34,7 +35,14 @@ public class ColumnWidths {
 				continue;
 			ScrollTableColumnImpl columnImpl = columns.get(c);
 			intWidths.put(columnImpl, columnImpl.widthInt);
-			if (columnImpl.widthInt != -1)
+			if (USE_MAX_TOKENS) {
+				int maxTokens = columnImpl.decorator().maxTokens();
+				if (columnImpl.widthInt == -1 && maxTokens != -1) {
+					int width = Math.max(100, (maxTokens + 4) * 7);
+					intWidths.put(columnImpl, width);
+				}
+			}
+			if (intWidths.get(columnImpl) != -1)
 				continue;
 			double d = columnImpl.widthDouble != -1 ? columnImpl.widthDouble
 					: columnImpl.decorator().defaultWeight();
@@ -46,7 +54,7 @@ public class ColumnWidths {
 			if (!columnImpl.visible)
 				continue;
 			Double w = doubleWidths.get(columnImpl);
-			if (w != -1)
+			if (w != null && w != -1)
 				doubleWidths.put(columnImpl, w / sum);
 		}
 		for (int c = 0; c < columns.size(); c++) {

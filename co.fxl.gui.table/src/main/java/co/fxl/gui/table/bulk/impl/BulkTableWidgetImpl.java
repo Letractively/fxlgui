@@ -54,6 +54,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 		private ILabel label;
 		@SuppressWarnings("unused")
 		private double widthDouble;
+		private int widthInt;
 		private AlignmentMemento<IColumn> align = new AlignmentMemento<IColumn>(
 				this) {
 
@@ -103,7 +104,9 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 
 		@Override
 		public IColumn width(int width) {
-			throw new UnsupportedOperationException();
+			// TODO ...
+			widthInt = width;
+			return this;
 		}
 
 		@Override
