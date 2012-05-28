@@ -112,8 +112,10 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 		private IFormat<Date> format;
 		private double weight = WEIGHT_DATE;
+		private boolean isLong;
 
 		DateDecorator(boolean isLong, boolean isShort) {
+			this.isLong = isLong;
 			if (isLong) {
 				format = Format.dateTime();
 				weight = WEIGHT_LONG_DATE;
@@ -137,7 +139,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 		@Override
 		public int maxTokens() {
-			return Math.max(12, super.maxTokens());
+			return Math.max(isLong ? 24 : 12, super.maxTokens());
 		}
 	}
 
