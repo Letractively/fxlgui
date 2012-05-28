@@ -237,11 +237,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	// }
 
 	@Override
-	public IScrollTableWidget<Object> height(final int height/*
-															 * , final
-															 * ICallback<Void>
-															 * cb
-															 */) {
+	public IScrollTableWidget<Object> height(final int height) {
 		this.height = height;
 		if (visible) {
 			if (drawing) {
