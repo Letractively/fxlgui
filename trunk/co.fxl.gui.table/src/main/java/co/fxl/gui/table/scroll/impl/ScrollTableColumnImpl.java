@@ -128,7 +128,6 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		@Override
 		public void decorate(Object identifier, IBulkTableCell cell, Date value) {
 			String text = value == null ? null : format.format(value);
-			// TODO injectColor(identifier, cell);
 			cell.text(text);
 		}
 
@@ -149,7 +148,6 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		public void decorate(Object identifier, IBulkTableCell cell,
 				Number value) {
 			String text = value == null ? null : String.valueOf(value);
-			// TODO injectColor(identifier, cell);
 			cell.text(text);
 		}
 
