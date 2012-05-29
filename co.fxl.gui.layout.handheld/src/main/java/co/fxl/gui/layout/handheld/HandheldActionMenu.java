@@ -28,7 +28,7 @@ import co.fxl.gui.layout.api.IActionMenuLayout;
 
 class HandheldActionMenu implements IActionMenuLayout {
 
-	// TODO USABILITY: Android: use touchscreen-wiping to switch between content & menu
+	// TODO AOPC: USABILITY: Android: use touchscreen-wiping to switch between content & menu
 
 	private IClickListener contentClickListener;
 	private ILinearPanel<?> panel;

@@ -24,7 +24,7 @@ import co.fxl.gui.filter.api.IMiniFilterWidget;
 class MiniFilterWidgetImpl extends FilterWidgetImpl implements
 		IMiniFilterWidget {
 
-	// TODO: Usability: Mini-Filter-Widget: only show buttons when not direct
+	// TODO Usability: Mini-Filter-Widget: only show buttons when not direct
 	// selection - view is selected in first combobox: don’t show buttons
 
 	MiniFilterWidgetImpl(IContainer panel) {
