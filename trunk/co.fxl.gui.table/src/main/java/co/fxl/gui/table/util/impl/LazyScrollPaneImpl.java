@@ -190,7 +190,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 			ScrollTableWidgetImpl.addNoEntitiesFound(l, false, constraints,
 					filterQueryLabel);
 
-			// TODO Feature: Usability: nice 2 have: show filter details like in
+			// TODO FEATURE: Usability: nice 2 have: show filter details like in
 			// scrolltable
 
 			return;
