@@ -95,10 +95,10 @@ public class RTFWidgetImpl implements IRTFWidget {
 								throw new UnsupportedOperationException();
 							}
 						});
-				// TODO ...
+				throw new UnsupportedOperationException();
 			} else {
 				CompositeImpl c = (CompositeImpl) o;
-				// TODO ...
+				throw new UnsupportedOperationException();
 			}
 		}
 		return this;

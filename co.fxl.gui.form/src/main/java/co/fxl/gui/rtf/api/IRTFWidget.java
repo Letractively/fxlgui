@@ -24,8 +24,6 @@ import co.fxl.gui.api.IFocusable;
 
 public interface IRTFWidget extends IFocusable<IRTFWidget> {
 
-	// TODO ...
-
 	public interface IComposite {
 
 		IComposite addComposite(String label);

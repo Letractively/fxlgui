@@ -97,14 +97,14 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 
 		@Override
 		public IColumn width(double width) {
-			// TODO ...
+			// TODO SWING-FXL: IMPL: ...
 			widthDouble = width;
 			return this;
 		}
 
 		@Override
 		public IColumn width(int width) {
-			// TODO ...
+			// TODO SWING-FXL: IMPL: ...
 			widthInt = width;
 			return this;
 		}
@@ -372,7 +372,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 
 	@Override
 	public IBulkTableWidget addMouseWheelListener(IMouseWheelListener l) {
-		// TODO ...
+		// TODO SWING-FXL: IMPL: ...
 		return this;
 	}
 
@@ -449,7 +449,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public IKeyRecipient.IKey<Object> addKeyListener(IClickListener listener) {
-		// TODO ...
+		// TODO SWING-FXL: IMPL: ...
 		return new DummyKeyRecipientKeyTemplate();
 	}
 
