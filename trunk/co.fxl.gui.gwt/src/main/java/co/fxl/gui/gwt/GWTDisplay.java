@@ -74,8 +74,6 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	public static final String BROWSER_WARNING_IE8 = "You are using an outdated browser with a slow javascript engine! If possible: Update to Internet Explorer 9+ or switch to another browser like Firefox or Chrome. This will significantly reduce application response time.";
 	public static final String BROWSER_WARNING_FIREFOX36 = "You are using an outdated browser! If possible: Update to Firefox 12+ or switch to another browser like Chrome. This will significantly reduce application response time.";
 
-	// + "\nWhen using Chrome or Firefox, Drag-and-Drop will be available.";
-
 	public interface BlockListener {
 
 		void onBlock(boolean block);
