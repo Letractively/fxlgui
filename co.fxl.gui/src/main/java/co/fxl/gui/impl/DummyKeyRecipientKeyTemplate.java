@@ -21,53 +21,46 @@ package co.fxl.gui.impl;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IKeyRecipient.IKey;
 
+@SuppressWarnings("unchecked")
 public class DummyKeyRecipientKeyTemplate<T> implements IKeyRecipient.IKey<T> {
 
 	@Override
 	public T enter() {
-		// TODO ...
 		return (T) this;
 	}
 
 	@Override
 	public T tab() {
-		// TODO ...
 		return (T) this;
 	}
 
 	@Override
 	public T up() {
-		// TODO ...
 		return (T) this;
 	}
 
 	@Override
 	public T down() {
-		// TODO ...
 		return (T) this;
 	}
 
 	@Override
 	public T left() {
-		// TODO ...
 		return (T) this;
 	}
 
 	@Override
 	public T right() {
-		// TODO ...
 		return (T) this;
 	}
 
 	@Override
 	public IKey<T> ctrl() {
-		// TODO ...
 		return this;
 	}
 
 	@Override
 	public T character(char c) {
-		// TODO ...
 		return (T) this;
 	}
 
