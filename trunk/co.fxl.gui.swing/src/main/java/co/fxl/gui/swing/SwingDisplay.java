@@ -238,7 +238,7 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 		this.waiting = waiting;
 		frame.setCursor(new Cursor(waiting ? Cursor.WAIT_CURSOR
 				: Cursor.DEFAULT_CURSOR));
-		// TODO ...
+		// TODO SWING-FXL: IMPL: ...
 		return this;
 	}
 
@@ -308,7 +308,7 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 
 	@Override
 	public IDisplay clear() {
-		// TODO ...
+		// TODO SWING-FXL: IMPL: ...
 		return this;
 	}
 
