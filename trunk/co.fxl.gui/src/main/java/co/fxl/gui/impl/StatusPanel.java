@@ -120,7 +120,7 @@ public class StatusPanel {
 		// dialog.border().color().gray();
 		dialog.border().remove();
 		IBorder b = dialog.border();
-		// b.style().shadow();
+		b.style().shadow(2);
 		b.color().rgb(240, 195, 109);
 		IHorizontalPanel spacing = dialog.container().panel().horizontal()
 				.spacing(5);
