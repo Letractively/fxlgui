@@ -68,7 +68,7 @@ class ClickListenerMouseAdapter<T> extends KeyTemplate<T> implements IKey<T> {
 				if (keyMatches(pressedKey, e) != check)
 					return;
 			}
-			// TODO left/right button
+			// TODO SWING-FXL: IMPL: left/right button
 			SwingDisplay d = (SwingDisplay) ((IElement<?>) element).display();
 			if (d.waiting)
 				return;
