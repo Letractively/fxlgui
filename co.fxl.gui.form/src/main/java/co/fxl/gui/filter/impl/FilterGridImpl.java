@@ -50,7 +50,7 @@ class FilterGridImpl implements FilterGrid {
 		IGridCell cell = grid.cell(0, filterIndex);// .width(50);
 		this.filterPanelImpl.widget.heights.decorate(cell);
 
-		// TODO Swing: Look: Align filter labels to the right, grid cell
+		// TODO SWING-FXL: Look: Align filter labels to the right, grid cell
 		// alignment ist of no effect in Swing - in contrast to the GWT
 		// implementation, there it works
 

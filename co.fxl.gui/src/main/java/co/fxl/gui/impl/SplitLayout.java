@@ -30,7 +30,7 @@ public class SplitLayout implements IResizeListener {
 	// TODO nice-2-have: SplitLayout consists of 3 cells, coupled to height of
 	// display
 
-	// TODO Swing: minimize doesn't work
+	// TODO SWING-FXL: minimize doesn't work
 
 	public static int SCROLLBAR_WIDTH = 20;
 	public static int WIDTH_SIDE_PANEL = 320;
