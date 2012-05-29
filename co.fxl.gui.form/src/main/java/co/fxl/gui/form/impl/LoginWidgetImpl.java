@@ -126,7 +126,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 		loginLabel.addClickListener(loginListener).mouseLeft();
 	}
 
-	// TODO extract class LoginPanel
+	// TODO Code Quality Fine-Tuning: extract class LoginPanel
 	void addLoginFields(IHorizontalPanel liPanel) {
 		pPanel = liPanel.add().panel().horizontal();
 		pPanel.spacing(4);

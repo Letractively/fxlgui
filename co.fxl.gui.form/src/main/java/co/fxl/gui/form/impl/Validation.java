@@ -42,7 +42,7 @@ import co.fxl.gui.impl.FieldTypeImpl;
 
 public class Validation {
 
-	// TODO extract validation to component
+	// TODO Code Quality Fine-Tuning: extract validation to component
 
 	public interface IValidation<T> {
 
