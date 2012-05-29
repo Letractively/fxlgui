@@ -78,7 +78,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	// 25.13.2002), then ignore input, reset to original and show fading error
 	// message (a la google docs saving...) that doesnt requrire click on accept
 
-	// TODO Swing: Scroll Panel block increment for single click on arrow is not
+	// TODO SWING-FXL: Scroll Panel block increment for single click on arrow is not
 	// enough
 
 	class State {
@@ -1113,7 +1113,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	@Override
 	public IScrollTableWidget<Object> addTooltip(String tooltip) {
-		// TODO Swing: tooltip doesn't work for BulkTableWidgetImpl
+		// TODO SWING-FXL: tooltip doesn't work for BulkTableWidgetImpl
 		this.tooltip += (this.tooltip.equals("") ? "" : "\n") + tooltip;
 		if (grid != null)
 			grid.element().tooltip(tooltip);
