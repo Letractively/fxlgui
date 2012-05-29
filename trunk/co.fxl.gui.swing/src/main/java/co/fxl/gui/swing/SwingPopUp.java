@@ -253,13 +253,13 @@ class SwingPopUp implements IPopUp {
 
 	@Override
 	public IPopUp glass(boolean glass) {
-		// TODO ... throw new UnsupportedOperationException();
+		// TODO SWING-FXL: IMPL: ...
 		return this;
 	}
 
 	@Override
 	public IPopUp opacity(double opacity) {
-		// TODO ... throw new UnsupportedOperationException();
+		// TODO SWING-FXL: IMPL: ...
 		return this;
 	}
 

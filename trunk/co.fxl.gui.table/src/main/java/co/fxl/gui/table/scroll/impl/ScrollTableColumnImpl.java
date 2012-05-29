@@ -327,7 +327,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 					+ value.getClass().getName() + ")");
 		}
 		if (!alignment.type.equals(Type.BEGIN)) {
-			// TODO ... throw new UnsupportedOperationException();
+			// TODO SWING-FXL: IMPL: ...
 		}
 	}
 
