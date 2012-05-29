@@ -70,12 +70,6 @@ class SwingSuggestField extends SwingTextInput<JTextField, ISuggestField>
 		container.component.addActionListener(actionListener);
 	}
 
-	// @Override
-	// public ISuggestField addText(String... texts) {
-	// // TODO ... throw new UnsupportedOperationException();
-	// return this;
-	// }
-
 	@Override
 	public ISuggestField source(final ISource source) {
 		addUpdateListener(new IUpdateListener<String>() {
@@ -93,20 +87,20 @@ class SwingSuggestField extends SwingTextInput<JTextField, ISuggestField>
 							});
 			}
 		});
-		// TODO ... throw new UnsupportedOperationException();
+		// TODO SWING-FXL: IMPL: ...
 		return this;
 	}
 
 	@Override
 	public ISuggestField addSuggestionListener(
 			co.fxl.gui.api.IUpdateable.IUpdateListener<ISuggestion> selection) {
-		// TODO ... throw new UnsupportedOperationException();
+		// TODO SWING-FXL: IMPL: ...
 		return this;
 	}
 
 	@Override
 	public ISuggestField autoSelect(boolean autoSelect) {
-		// TODO ... throw new UnsupportedOperationException();
+		// TODO SWING-FXL: IMPL: ...
 		return this;
 	}
 
