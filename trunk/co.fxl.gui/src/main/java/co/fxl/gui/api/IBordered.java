@@ -40,7 +40,7 @@ public interface IBordered {
 
 			IBorder bottom();
 
-			// TODO remove, replace calls with left().right().top()
+			// TODO CODE-DESIGN: remove, replace calls with left().right().top()
 			IBorder noBottom();
 
 			IBorder right();
