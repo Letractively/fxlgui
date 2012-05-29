@@ -155,7 +155,7 @@ class SwingPopUp implements IPopUp {
 
 	@Override
 	public IPopUp modal(boolean modal) {
-		// TODO ...
+		// TODO SWING-FXL: IMPL: ...
 		return this;
 	}
 

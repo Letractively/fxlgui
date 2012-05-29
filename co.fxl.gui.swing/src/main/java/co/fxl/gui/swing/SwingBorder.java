@@ -88,7 +88,7 @@ class SwingBorder implements IBorder {
 
 		@Override
 		public IBorder shadow() {
-			// TODO ...
+			// TODO SWING-FXL: IMPL: ...
 			return SwingBorder.this;
 		}
 
@@ -100,7 +100,7 @@ class SwingBorder implements IBorder {
 
 		@Override
 		public IBorder shadow(int pixel) {
-			// TODO ...
+			// TODO SWING-FXL: IMPL: ...
 			return SwingBorder.this;
 		}
 	}

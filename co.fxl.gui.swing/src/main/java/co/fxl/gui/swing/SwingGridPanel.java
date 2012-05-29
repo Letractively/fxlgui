@@ -433,7 +433,7 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 			@Override
 			public IGridColumn expand() {
-				// TODO ...
+				// TODO SWING-FXL: IMPL: ...
 				return this;
 			}
 
@@ -445,7 +445,7 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 
 			@Override
 			public IGridColumn width(double width) {
-				// TODO ...
+				// TODO SWING-FXL: IMPL: ...
 				return this;
 			}
 		};
