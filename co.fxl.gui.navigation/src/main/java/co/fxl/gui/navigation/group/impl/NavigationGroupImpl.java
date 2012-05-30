@@ -38,6 +38,8 @@ class NavigationGroupImpl implements INavigationGroup {
 	List<NavigationItemImpl> items = new LinkedList<NavigationItemImpl>();
 	private boolean visible = true;
 	private boolean displayed = true;
+	int[] colorInactive;
+	int[] colorInactiveGradient = new int[] { 63, 63, 63 };
 
 	NavigationGroupImpl(NavigationWidgetImpl widget) {
 		this.widget = widget;
@@ -50,6 +52,8 @@ class NavigationGroupImpl implements INavigationGroup {
 		header.font().weight().bold().pixel(11);
 		panel.addSpace(1);
 		itemPanel = panel.add().panel().horizontal();
+		colorInactive = widget.colorInactive;
+		colorInactiveGradient = widget.colorInactiveGradient;
 	}
 
 	private IHorizontalPanel createPanel(ILayout layout) {

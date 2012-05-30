@@ -62,11 +62,15 @@ public class NavigationItemImpl extends LazyClickListener implements
 	private boolean labelAsActive;
 	private boolean isMoreTab;
 	IFocusPanel focusPanel;
+	int[] colorInactive;
+	private int[] colorInactiveGradient;
 
 	NavigationItemImpl(NavigationGroupImpl group) {
 		this.group = group;
 		widget = group.widget;
 		itemPanel = group.itemPanel;
+		colorInactive = group.colorInactive;
+		colorInactiveGradient = group.colorInactiveGradient;
 	}
 
 	void initButtonPanel() {
@@ -121,13 +125,10 @@ public class NavigationItemImpl extends LazyClickListener implements
 		clickable(true);
 		border.color()
 				.mix()
-				.rgb(widget.colorInactive[0], widget.colorInactive[1],
-						widget.colorInactive[2])
-				.rgb(widget.colorInactiveGradient[0],
-						widget.colorInactiveGradient[1],
-						widget.colorInactiveGradient[2]);
-		applyGradient(buttonPanel.color(), widget.colorInactive,
-				widget.colorInactiveGradient);
+				.rgb(colorInactive[0], colorInactive[1], colorInactive[2])
+				.rgb(colorInactiveGradient[0], colorInactiveGradient[1],
+						colorInactiveGradient[2]);
+		applyGradient(buttonPanel.color(), colorInactive, colorInactiveGradient);
 	}
 
 	void clickable(boolean b) {
@@ -221,7 +222,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 		forkLabelAsActive(viaClick, new CallbackTemplate<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				Log.instance().start("Showing tab "+button.text());
+				Log.instance().start("Showing tab " + button.text());
 				IVerticalPanel panel0 = widget.flipPage().next().panel()
 						.vertical();
 				widget.activeBackground(panel0);
@@ -235,7 +236,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 					decorator.decorate(panel0, new CallbackTemplate<Void>() {
 						@Override
 						public void onSuccess(Void result) {
-							Log.instance().stop("Showing tab "+button.text());
+							Log.instance().stop("Showing tab " + button.text());
 							flipRegister(flipAfterReturn());
 						}
 
@@ -466,5 +467,12 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	@Override
 	public void showTitleAsEmpty(boolean empty) {
+	}
+
+	@Override
+	public INavigationItem colorInactive(int[] inactive, int[] inactiveGradient) {
+		colorInactive = inactive;
+		colorInactiveGradient = inactiveGradient;
+		return this;
 	}
 }

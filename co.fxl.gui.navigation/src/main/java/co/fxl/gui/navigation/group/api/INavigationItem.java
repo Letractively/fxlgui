@@ -32,6 +32,8 @@ public interface INavigationItem extends ITab<INavigationItem> {
 
 	INavigationItem closeExtraPanel();
 
+	INavigationItem colorInactive(int[] inactive, int[] inactiveGradient);
+
 	boolean visible();
 
 	INavigationItem moreTab();
