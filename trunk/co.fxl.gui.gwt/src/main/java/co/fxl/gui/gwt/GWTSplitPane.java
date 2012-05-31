@@ -25,6 +25,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.ISplitPane.ISplitPaneResizeListener;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.SplitLayout;
 
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.user.client.DOM;
@@ -38,11 +39,13 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 		ISplitPane, ISplitPaneResizeListener {
 
 	private static final class SplitPaneAdp implements ISplitPanelAdp {
+		private static final int SPLITTER_WIDTH = 7;
 		private boolean isScheduled = false;
 		private boolean rightSet;
 		private String lazySplitPosition;
 		private boolean leftSet;
 		private ISplitPaneResizeListener lazyListener;
+		private int px;
 
 		@Override
 		public void setLeftWidget(Widget p, Widget component) {
@@ -69,8 +72,9 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 		}
 
 		@Override
-		public void setSplitPosition(Widget p, String string) {
-			lazySplitPosition = string;
+		public void setSplitPosition(Widget p, int string) {
+			px = string;
+			lazySplitPosition = string + "px";
 			updateSplitPosition(p);
 		}
 
@@ -78,7 +82,10 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 			if (!leftSet || !rightSet)
 				return;
 			if (lazySplitPosition != null) {
-				((HorizontalSplitPanel) p).setSplitPosition(lazySplitPosition);
+				HorizontalSplitPanel h = (HorizontalSplitPanel) p;
+				h.setSplitPosition(lazySplitPosition);
+//				h.getRightWidget().setWidth(
+//						(SplitLayout.mainPanelWidth() - px - SPLITTER_WIDTH) + "px");
 				lazySplitPosition = null;
 			}
 			if (lazyListener != null) {
@@ -161,7 +168,7 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 
 		boolean supportsListeners();
 
-		void setSplitPosition(Widget p, String string);
+		void setSplitPosition(Widget p, int px);
 
 		Widget newSplitPanel();
 
@@ -242,7 +249,7 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 		splitPosition = pixel;
 		Widget p = (Widget) container.widget;
 		holdNotify = true;
-		adapter.setSplitPosition(p, (pixel - INC) + "px");
+		adapter.setSplitPosition(p, pixel - INC);
 		holdNotify = false;
 		notifyListeners();
 		return this;
