@@ -117,4 +117,6 @@ public interface IFormWidget {
 
 	IFormField<IRTFWidget, String> addRichTextArea(String name);
 
+	IFormWidget focus();
+
 }

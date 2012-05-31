@@ -84,6 +84,7 @@ public class FormWidgetImpl implements IFormWidget {
 	private IButton saveButton;
 	private IFocusable<?> focus = null;
 	private List<IFocusable<?>> focusables = new LinkedList<IFocusable<?>>();
+	private List<IFocusable<?>> allFocusables = new LinkedList<IFocusable<?>>();
 	private int spacing = 0;
 	private IClickListener saveClickListener;
 	private IGridPanel bottomPanel;
@@ -136,6 +137,7 @@ public class FormWidgetImpl implements IFormWidget {
 		if (saveListener == null)
 			return;
 		focusables.add(f);
+		allFocusables.add(f);
 		if (focus != null)
 			return;
 		focus = f;
@@ -544,5 +546,33 @@ public class FormWidgetImpl implements IFormWidget {
 	}
 
 	protected void prepareButtonColumn(IGridPanel grid, int column) {
+	}
+
+	@Override
+	public IFormWidget focus() {
+		for (IFocusable<?> f : allFocusables) {
+			if (f instanceof ITextField) {
+				ITextField tf = (ITextField) f;
+				if (tf.editable()) {
+					tf.focus(true);
+					return this;
+				}
+			}
+			if (f instanceof ITextArea) {
+				ITextArea tf = (ITextArea) f;
+				if (tf.editable()) {
+					tf.focus(true);
+					return this;
+				}
+			}
+			if (f instanceof IComboBox) {
+				IComboBox tf = (IComboBox) f;
+				if (tf.editable()) {
+					tf.focus(true);
+					return this;
+				}
+			}
+		}
+		return this;
 	}
 }
