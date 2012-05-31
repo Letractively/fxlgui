@@ -29,4 +29,6 @@ public interface ILog {
 
 	ILog container(IContainer c);
 
+	ILog error(String string);
+
 }
