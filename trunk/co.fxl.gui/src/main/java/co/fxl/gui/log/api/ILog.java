@@ -7,7 +7,7 @@ public interface ILog {
 
 	public interface IDeobfuscator {
 
-		boolean isDeobfuscated(Throwable t);
+//		boolean isDeobfuscated(Throwable t);
 
 		void deobfuscate(Throwable t, ICallback<String> deobfuscated);
 	}
