@@ -340,7 +340,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				addFilter();
 				setUpTopPanel();
 				contentPanel0 = container.add().panel().vertical();
-				contentPanel0.height(heightMinusTopPanel());
+				contentPanel0.height(heightCenterPanel());
 				contentPanel = contentPanel0.add().panel().vertical();
 				addDragAndDropDirectly = true;
 				boolean tooLarge = update();
@@ -361,7 +361,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 							this.rowIndex = -1;
 						}
 					}
-					sp.height(heightMinusTopPanel());
+					sp.height(heightCenterPanel());
 					sp.decorator(new ILazyScrollPane.IDecorator() {
 
 						@Override
@@ -476,7 +476,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (hasFilter())
 			addFilter();
 		setUpTopPanel();
-		int height = heightMinusTopPanel();
+		int height = heightCenterPanel();
 		// if (showNoRowsFound) {
 		// hack for IE
 		if (reduceHeightIfEmpty && height >= 80)
@@ -653,7 +653,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		}
 	}
 
-	protected int heightMinusTopPanel() {
+	protected int heightCenterPanel() {
 		if (buttonDecorator == null && navigationDecorator == null
 				&& (topPanel == null || topPanel.rows() == 0))
 			return height;
@@ -753,7 +753,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		grid = (IBulkTableWidget) vpanel.add().widget(IBulkTableWidget.class);
 		grid.marginTop(plainContent ? 0 : 6);
 		grid.addToContextMenu(addToContextMenu);
-		final int heightMinusTopPanel = heightMinusTopPanel();
+		final int heightMinusTopPanel = heightCenterPanel();
 		grid.height(heightMinusTopPanel - 2);
 		for (IRowIndexListener rowIndexL : scrollListeners)
 			rowIndexL.onScroll(rowOffset);
@@ -998,7 +998,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private int computeRowsToPaint() {
 		int paintedRows = 0;
 		int prognosedHeight = HEADER_ROW_HEIGHT;
-		int heightMinusTopPanel = heightMinusTopPanel();
+		int heightMinusTopPanel = heightCenterPanel();
 		while (prognosedHeight < heightMinusTopPanel) {
 			prognosedHeight += getRowHeight();
 			paintedRows++;
