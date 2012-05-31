@@ -38,6 +38,7 @@ import co.fxl.gui.api.IMargin;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPadding;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.log.impl.Log;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
@@ -333,7 +334,11 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	@Override
 	public int width() {
-		return container.widget.getOffsetWidth();
+		int width = container.widget.getOffsetWidth();
+		if (width == 0)
+			Log.instance().error(
+					"Illegal width 0 on " + getClass().getName());
+		return width;
 	}
 
 	@Override
@@ -343,7 +348,11 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	@Override
 	public int offsetY() {
-		return container.widget.getAbsoluteTop();
+		int absoluteTop = container.widget.getAbsoluteTop();
+		if (absoluteTop == 0)
+			Log.instance().error(
+					"Illegal offsetY 0 on " + getClass().getName());
+		return absoluteTop;
 	}
 
 	@Override
