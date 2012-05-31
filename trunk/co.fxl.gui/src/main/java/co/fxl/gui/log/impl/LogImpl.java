@@ -291,4 +291,11 @@ class LogImpl implements ILog, IClickListener {
 		this.deobfuscator = deobfuscator;
 		return this;
 	}
+
+	@Override
+	public ILog error(String message) {
+		ensureSize();
+		addLine(new Entry("ERROR", message, 0, new RuntimeException(), null));
+		return this;
+	}
 }
