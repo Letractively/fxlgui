@@ -115,4 +115,8 @@ public class DisplayResizeAdapter {
 			runnable.run();
 	}
 
+	public static int height() {
+		return Display.instance().height() - decrement();
+	}
+
 }
