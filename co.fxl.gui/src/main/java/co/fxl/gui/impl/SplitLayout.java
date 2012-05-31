@@ -99,9 +99,7 @@ public class SplitLayout implements IResizeListener {
 	}
 
 	private void resizeSidePanel(int height) {
-		int offsetY = sideScrollPanel.offsetY();
-		if (offsetY < 68)
-			offsetY = 68;
+		int offsetY = DisplayResizeAdapter.withDecrement(sideScrollPanel.offsetY(), 68);
 		int maxFromDisplay = height - offsetY - 10;
 		if (maxFromDisplay > 0) {
 			if (resizeMainPanel)

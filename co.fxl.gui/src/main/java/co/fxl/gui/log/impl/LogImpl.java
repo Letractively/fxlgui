@@ -213,9 +213,10 @@ class LogImpl implements ILog, IClickListener {
 		addDate(l, h.add().label());
 		addDuration(l, h.add().label());
 		if (l.clientStacktrace != null && deobfuscator != null
-				&& deobfuscator.isDeobfuscated(l.clientStacktrace)) {
+		// && deobfuscator.isDeobfuscated(l.clientStacktrace)
+		) {
 			final IVerticalPanel content2 = content.add().panel().vertical();
-			content2.add().image().resource("loading_black.png");
+			content2.add().image().resource("loading_black.png").size(16, 16);
 			deobfuscator.deobfuscate(l.clientStacktrace,
 					new CallbackTemplate<String>() {
 						@Override
@@ -227,7 +228,6 @@ class LogImpl implements ILog, IClickListener {
 		} else {
 			showExceptionsDeobfuscated(p, content, l,
 					getExceptionString(l.clientStacktrace));
-
 		}
 	}
 
