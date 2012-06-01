@@ -82,11 +82,11 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 
 	public class RowIterator implements IRowIterator {
 
-		private int firstRow = 0;
-		private boolean hasNext = false;
-		private boolean hasPrevious;
-		private int nextPreviousRow;
-		private int nextFirstRow;
+		public int firstRow = 0;
+		public boolean hasNext = false;
+		public boolean hasPrevious;
+		public int nextPreviousRow;
+		public int nextFirstRow;
 
 		@Override
 		public int firstRow() {
@@ -140,12 +140,12 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 
 	}
 
-	private int size = Integer.MAX_VALUE;
-	private Map<String, INamedConstraint> constraints = new HashMap<String, INamedConstraint>();
-	private String cfg;
-	private String sortOrder;
-	private boolean sortDirection = true;
-	private IRowIterator it = new RowIterator();
+	public int size = Integer.MAX_VALUE;
+	public Map<String, INamedConstraint> constraints = new HashMap<String, INamedConstraint>();
+	public String cfg;
+	public String sortOrder;
+	public boolean sortDirection = true;
+	public IRowIterator it = new RowIterator();
 
 	public FilterConstraintsImpl(FilterConstraintsImpl f) {
 		size = f.size;
