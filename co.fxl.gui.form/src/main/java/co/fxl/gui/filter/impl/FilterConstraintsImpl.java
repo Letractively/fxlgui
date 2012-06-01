@@ -80,7 +80,7 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 		}
 	}
 
-	public class RowIterator implements IRowIterator {
+	public static class RowIterator implements IRowIterator {
 
 		public int firstRow = 0;
 		public boolean hasNext = false;
