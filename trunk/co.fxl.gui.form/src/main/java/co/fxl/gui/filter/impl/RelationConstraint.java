@@ -5,16 +5,16 @@ import java.util.List;
 
 import co.fxl.gui.filter.impl.IFilterConstraint.IRelationConstraint;
 
-final class RelationConstraint implements IRelationConstraint {
+public class RelationConstraint implements IRelationConstraint {
 
-	List<Object> values = new LinkedList<Object>();
-	private String name;
-	private String toString;
+	public List<Object> values = new LinkedList<Object>();
+	public String name;
+	public String toString;
 
-	RelationConstraint(String name, List<Object> values, String toString) {
-		this.name=name;
-		this.values=values;
-		this.toString=toString;
+	public RelationConstraint(String name, List<Object> values, String toString) {
+		this.name = name;
+		this.values = values;
+		this.toString = toString;
 	}
 
 	@Override

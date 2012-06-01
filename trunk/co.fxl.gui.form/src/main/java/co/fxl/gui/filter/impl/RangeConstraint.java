@@ -25,14 +25,14 @@ import co.fxl.gui.filter.impl.IFilterConstraint.IRangeConstraint;
 
 public abstract class RangeConstraint<T> implements IRangeConstraint<T> {
 
-	private String name;
-	private T lowerBound;
-	private T upperBound;
+	public String name;
+	public T lowerBound;
+	public T upperBound;
 
 	RangeConstraint(String name, T lowerBound, T upperBound) {
-		this.name=name;
-		this.lowerBound=lowerBound;
-		this.upperBound=upperBound;
+		this.name = name;
+		this.lowerBound = lowerBound;
+		this.upperBound = upperBound;
 	}
 
 	@Override

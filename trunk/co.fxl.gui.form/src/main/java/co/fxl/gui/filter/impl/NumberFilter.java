@@ -77,7 +77,7 @@ class NumberFilter extends RangeFilter<Number> {
 	@Override
 	public IFilterConstraint asConstraint() {
 		update();
-		return new DoubleRangeFilter(name, lowerBound, upperBound);
+		return new DoubleRangeConstraint(name, lowerBound, upperBound);
 	}
 
 	@Override

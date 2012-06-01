@@ -20,12 +20,12 @@ package co.fxl.gui.filter.impl;
 
 public class StringPrefixConstraint implements IStringPrefixConstraint {
 
-	private String name;
-	private String text;
+	public String name;
+	public String text;
 
 	public StringPrefixConstraint(String name, String text) {
-		this.name=name;
-		this.text=text;
+		this.name = name;
+		this.text = text;
 	}
 
 	@Override

@@ -20,10 +20,10 @@ package co.fxl.gui.filter.impl;
 
 import java.util.Date;
 
-class DateRangeConstraint extends RangeConstraint<Date> implements IFilterConstraint.IDateRangeConstraint {
+public class DateRangeConstraint extends RangeConstraint<Date> implements
+		IFilterConstraint.IDateRangeConstraint {
 
-	DateRangeConstraint(String name, Date lowerBound,
-			Date upperBound) {
+	public DateRangeConstraint(String name, Date lowerBound, Date upperBound) {
 		super(name, lowerBound, upperBound);
 	}
 }
