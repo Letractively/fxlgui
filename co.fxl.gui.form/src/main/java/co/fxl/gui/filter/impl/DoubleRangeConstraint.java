@@ -20,10 +20,11 @@ package co.fxl.gui.filter.impl;
 
 import co.fxl.gui.filter.impl.IFilterConstraint.IDoubleRangeConstraint;
 
-class DoubleRangeFilter extends RangeConstraint<Double> implements IDoubleRangeConstraint {
+public class DoubleRangeConstraint extends RangeConstraint<Double> implements
+		IDoubleRangeConstraint {
 
-	DoubleRangeFilter(String name, Double lowerBound, Double upperBound) {
-		super(name,lowerBound,upperBound);
+	public DoubleRangeConstraint(String name, Double lowerBound, Double upperBound) {
+		super(name, lowerBound, upperBound);
 	}
 
 	@Override
