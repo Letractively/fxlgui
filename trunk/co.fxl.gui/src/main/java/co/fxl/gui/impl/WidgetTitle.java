@@ -18,8 +18,10 @@
  */
 package co.fxl.gui.impl;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
@@ -49,7 +51,6 @@ public class WidgetTitle implements IClickListener {
 	private boolean hasHeaderPanel = false;
 	private IGridPanel headerPanel;
 	private IContainer contentContainer;
-	private boolean open = true;
 	private boolean foldable = true;
 	public ILabel headerLabel;
 	private List<ILabel> labels = new LinkedList<ILabel>();
@@ -67,6 +68,7 @@ public class WidgetTitle implements IClickListener {
 	private IImage more;
 	private boolean addBorder;
 	private boolean plainContent = false;
+	private static Map<String, Boolean> foldStatus = new HashMap<String, Boolean>();
 
 	public WidgetTitle() {
 	}
@@ -212,15 +214,19 @@ public class WidgetTitle implements IClickListener {
 
 	@Override
 	public void onClick() {
-		open = !open;
-		bPanel.visible(open);
-		// for (ILabel l : labels)
-		// l.visible(open);
-		// for (IImage l : images)
-		// l.visible(open);
-		more.visible(!open);
-		// headerLabel.text(open ? headerLabel.text().substring(2) : "+ "
-		// + headerLabel.text());
+		foldStatus.put(title, !isOpen());
+		update();
+	}
+
+	public boolean isOpen() {
+		return foldStatus.get(title) == null || foldStatus.get(title);
+	}
+
+	public void update() {
+		if (bPanel != null)
+			bPanel.visible(isOpen());
+		if (more != null)
+			more.visible(!isOpen());
 	}
 
 	public ILabel addTitle(String title) {
@@ -234,6 +240,8 @@ public class WidgetTitle implements IClickListener {
 		if (foldable) {
 			headerLabel.addClickListener(this);
 			headerLabel.tooltip(FOLDABLE);
+			more.addClickListener(this);
+			more.tooltip(FOLDABLE);
 		}
 		this.title = title;
 		if (addToContextMenu) {
@@ -241,6 +249,7 @@ public class WidgetTitle implements IClickListener {
 			Group group = instance.group(title);
 			group.clear();
 		}
+		update();
 		return headerLabel;
 	}
 
@@ -388,6 +397,7 @@ public class WidgetTitle implements IClickListener {
 
 	public WidgetTitle visible(boolean b) {
 		panel.visible(b);
+		update();
 		return this;
 	}
 
