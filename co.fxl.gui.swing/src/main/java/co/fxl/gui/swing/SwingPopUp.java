@@ -28,6 +28,7 @@ import javax.swing.JPanel;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
 
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
@@ -271,5 +272,16 @@ class SwingPopUp implements IPopUp {
 	@Override
 	public IPopUp height(double height) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IColor color() {
+		return new SwingColor() {
+
+			@Override
+			protected void setColor(Color color) {
+				// TODO ... SWING-FXL: ...
+			}
+		};
 	}
 }

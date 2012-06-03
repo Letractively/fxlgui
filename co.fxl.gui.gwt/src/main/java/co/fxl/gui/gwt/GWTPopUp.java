@@ -1,5 +1,7 @@
 package co.fxl.gui.gwt;
 
+import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.IColored.IGradient;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
@@ -211,5 +213,27 @@ class GWTPopUp implements IPopUp, WidgetParent {
 	@Override
 	public IPopUp height(double height) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IColor color() {
+		return new GWTColor() {
+
+			@Override
+			public IGradient gradient() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public IColor remove() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			protected IColor setColorInternal(String string) {
+				popUp.getElement().getStyle().setBackgroundColor(string);
+				return this;
+			}
+		};
 	}
 }
