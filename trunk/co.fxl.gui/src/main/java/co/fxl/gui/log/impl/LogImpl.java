@@ -39,12 +39,12 @@ class LogImpl implements ILog, IClickListener {
 			this.message = message;
 		}
 
-		public Entry(String string, String message, long duration) {
+		public Entry(String string, String message, Long duration) {
 			this(string, message);
 			this.duration = duration;
 		}
 
-		public Entry(String string, String message, long duration,
+		public Entry(String string, String message, Long duration,
 				Throwable clientStacktrace, Throwable serverStacktrace) {
 			this(string, message, duration);
 			this.clientStacktrace = clientStacktrace;
@@ -294,14 +294,15 @@ class LogImpl implements ILog, IClickListener {
 	@Override
 	public ILog error(String message) {
 		ensureSize();
-		addLine(new Entry("ERROR", message, 0, new RuntimeException(), null));
+		addLine(new Entry("ERROR", message, null, new RuntimeException(), null));
 		return this;
 	}
 
 	@Override
 	public ILog warn(String message) {
 		ensureSize();
-		addLine(new Entry("WARNING", message, 0, new RuntimeException(), null));
+		addLine(new Entry("WARNING", message, null, new RuntimeException(),
+				null));
 		return this;
 	}
 }
