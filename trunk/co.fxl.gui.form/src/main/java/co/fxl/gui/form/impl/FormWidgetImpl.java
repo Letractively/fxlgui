@@ -28,6 +28,7 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IEditable;
 import co.fxl.gui.api.IFocusable;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
@@ -82,9 +83,7 @@ public class FormWidgetImpl implements IFormWidget {
 	private boolean isNew;
 	private boolean alwaysAllowCancel = false;
 	private IButton saveButton;
-	private IFocusable<?> focus = null;
 	private List<IFocusable<?>> focusables = new LinkedList<IFocusable<?>>();
-	private List<IFocusable<?>> allFocusables = new LinkedList<IFocusable<?>>();
 	private int spacing = 0;
 	private IClickListener saveClickListener;
 	private IGridPanel bottomPanel;
@@ -137,11 +136,6 @@ public class FormWidgetImpl implements IFormWidget {
 		if (saveListener == null)
 			return;
 		focusables.add(f);
-		allFocusables.add(f);
-		if (focus != null)
-			return;
-		focus = f;
-		f.focus(true);
 	}
 
 	private void setCRListener(IKeyRecipient<?> kr) {
@@ -290,6 +284,7 @@ public class FormWidgetImpl implements IFormWidget {
 	@Override
 	public FormWidgetImpl visible(boolean visible) {
 		setUpBottomPanel();
+		focus();
 		return this;
 	}
 
@@ -514,21 +509,21 @@ public class FormWidgetImpl implements IFormWidget {
 		return this;
 	}
 
-	void looseFocus(Object ff) {
-		int index = focusables.indexOf(focus);
-		focusables.remove(focus);
-		if (ff != focus)
-			return;
-		focus.focus(false);
-		focus = null;
-		if (index < focusables.size() - 1) {
-			focus = focusables.get(index + 1);
-		} else if (focusables.size() > 0) {
-			focus = focusables.get(0);
-		}
-		if (focus != null)
-			focus.focus(true);
-	}
+	// void looseFocus(Object ff) {
+	// int index = focusables.indexOf(focus);
+	// focusables.remove(focus);
+	// if (ff != focus)
+	// return;
+	// focus.focus(false);
+	// focus = null;
+	// if (index < focusables.size() - 1) {
+	// focus = focusables.get(index + 1);
+	// } else if (focusables.size() > 0) {
+	// focus = focusables.get(0);
+	// }
+	// if (focus != null)
+	// focus.focus(true);
+	// }
 
 	@Override
 	public IFormContainer add(String name) {
@@ -550,29 +545,13 @@ public class FormWidgetImpl implements IFormWidget {
 
 	@Override
 	public IFormWidget focus() {
-		for (IFocusable<?> f : allFocusables) {
-			if (f instanceof ITextField) {
-				ITextField tf = (ITextField) f;
-				if (tf.editable()) {
-					tf.focus(true);
-					return this;
+		for (IFocusable<?> f : focusables)
+			if (f instanceof IEditable) {
+				if (((IEditable<?>) f).editable()) {
+					f.focus(true);
+					break;
 				}
 			}
-			if (f instanceof ITextArea) {
-				ITextArea tf = (ITextArea) f;
-				if (tf.editable()) {
-					tf.focus(true);
-					return this;
-				}
-			}
-			if (f instanceof IComboBox) {
-				IComboBox tf = (IComboBox) f;
-				if (tf.editable()) {
-					tf.focus(true);
-					return this;
-				}
-			}
-		}
 		return this;
 	}
 }
