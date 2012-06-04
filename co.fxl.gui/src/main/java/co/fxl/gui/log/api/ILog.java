@@ -31,4 +31,6 @@ public interface ILog {
 
 	ILog error(String string);
 
+	ILog warn(String string);
+
 }

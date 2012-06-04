@@ -20,6 +20,7 @@ package co.fxl.gui.filter.impl;
 
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
+import co.fxl.gui.impl.SplitLayout;
 
 abstract class FilterTemplate<T> implements FilterPart<T> {
 
@@ -27,9 +28,9 @@ abstract class FilterTemplate<T> implements FilterPart<T> {
 		void onActive(boolean isActive);
 	}
 
-	static final int WIDTH_SINGLE_CELL = 200;
-	static final int WIDTH_COMBOBOX_CELL = 192;
-	static final int WIDTH_RANGE_CELL = 98;
+	static final int WIDTH_SINGLE_CELL = 200 - SplitLayout.DECREMENT;
+	static final int WIDTH_COMBOBOX_CELL = 192 - SplitLayout.DECREMENT;
+	static final int WIDTH_RANGE_CELL = 98 - (SplitLayout.DECREMENT / 2);
 	String name;
 
 	FilterTemplate(FilterGrid panel, String name, int filterIndex) {
