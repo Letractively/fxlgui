@@ -134,7 +134,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 				userText = null;
 				// passwordText = null;
 				listener.logout();
-				UserPanel.instance().update();
+				// UserPanel.instance().update();
 			}
 		}).mouseLeft();
 	}
