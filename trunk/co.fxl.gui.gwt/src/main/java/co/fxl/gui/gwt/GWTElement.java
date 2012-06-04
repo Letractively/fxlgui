@@ -271,6 +271,8 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	@Override
 	public R width(int width) {
+		if (Log.ACTIVE && width == 0)
+			Log.instance().warn("Illegal width 0 set on " + getClass().getName());
 		return width(width < 0, width + "px");
 	}
 
@@ -335,9 +337,8 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	@Override
 	public int width() {
 		int width = container.widget.getOffsetWidth();
-//		if (width == 0)
-//			Log.instance().error(
-//					"Illegal width 0 on " + getClass().getName());
+		if (Log.ACTIVE && width == 0)
+			Log.instance().warn("Illegal width 0 encountered on " + getClass().getName());
 		return width;
 	}
 
@@ -349,9 +350,8 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	@Override
 	public int offsetY() {
 		int absoluteTop = container.widget.getAbsoluteTop();
-//		if (absoluteTop == 0)
-//			Log.instance().error(
-//					"Illegal offsetY 0 on " + getClass().getName());
+		if (Log.ACTIVE && absoluteTop == 0)
+			Log.instance().warn("Potentially illegal offsetY 0 on " + getClass().getName());
 		return absoluteTop;
 	}
 

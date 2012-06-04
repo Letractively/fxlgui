@@ -25,8 +25,6 @@ import co.fxl.gui.log.api.ILog;
 
 class LogImpl implements ILog, IClickListener {
 
-	private static final int MAX_SIZE = 500;
-
 	private class Entry {
 
 		private Date date = new Date();
@@ -66,6 +64,7 @@ class LogImpl implements ILog, IClickListener {
 
 	}
 
+	private static final int MAX_SIZE = 500;
 	private static final int SPACING = 20;
 	private List<Entry> lines = new LinkedList<Entry>();
 	private Map<String, Long> timestamps = new HashMap<String, Long>();
@@ -296,6 +295,13 @@ class LogImpl implements ILog, IClickListener {
 	public ILog error(String message) {
 		ensureSize();
 		addLine(new Entry("ERROR", message, 0, new RuntimeException(), null));
+		return this;
+	}
+
+	@Override
+	public ILog warn(String message) {
+		ensureSize();
+		addLine(new Entry("WARNING", message, 0, new RuntimeException(), null));
 		return this;
 	}
 }

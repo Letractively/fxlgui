@@ -27,13 +27,15 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class SplitLayout implements IResizeListener {
 
-	// TODO Code Quality Fine-Tuning: nice-2-have: SplitLayout consists of 3 cells, coupled to height of
+	// TODO Code Quality Fine-Tuning: nice-2-have: SplitLayout consists of 3
+	// cells, coupled to height of
 	// display
 
 	// TODO SWING-FXL: minimize doesn't work
 
+	public static final int DECREMENT = 40 - 17;
 	public static int SCROLLBAR_WIDTH = 20;
-	public static int WIDTH_SIDE_PANEL = 320;
+	public static int WIDTH_SIDE_PANEL = 320 - DECREMENT;
 	private ILayout layout;
 	IGridPanel panel;
 	public IVerticalPanel mainPanel;
@@ -99,7 +101,8 @@ public class SplitLayout implements IResizeListener {
 	}
 
 	private void resizeSidePanel(int height) {
-		int offsetY = DisplayResizeAdapter.withDecrement(sideScrollPanel.offsetY(), 68);
+		int offsetY = DisplayResizeAdapter.withDecrement(
+				sideScrollPanel.offsetY(), 68);
 		int maxFromDisplay = height - offsetY - 10;
 		if (maxFromDisplay > 0) {
 			if (resizeMainPanel)
