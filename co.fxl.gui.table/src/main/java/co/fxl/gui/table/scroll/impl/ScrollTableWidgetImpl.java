@@ -47,6 +47,7 @@ import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IMiniFilterWidget;
+import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.ColorTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
@@ -78,7 +79,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	// 25.13.2002), then ignore input, reset to original and show fading error
 	// message (a la google docs saving...) that doesnt requrire click on accept
 
-	// TODO SWING-FXL: Scroll Panel block increment for single click on arrow is not
+	// TODO SWING-FXL: Scroll Panel block increment for single click on arrow is
+	// not
 	// enough
 
 	class State {
@@ -902,6 +904,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			ScrollTableColumnImpl columnImpl = columns.get(c);
 			if (columnImpl.tagSortOrder != null) {
 				sortColumn = columnImpl.index;
+				rows.sortColumn = columns.get(sortColumn);
 				sortNegator = columnImpl.tagSortOrder ? -1 : 1;
 				columnImpl.tagSortOrder = null;
 			}
@@ -1330,23 +1333,28 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		return this;
 	}
 
-	void sortBy(ScrollTableColumnImpl columnImpl, boolean update) {
+	void sortBy(ScrollTableColumnImpl columnImpl, final boolean update) {
 		if (columnImpl.sortable) {
 			if (rows.size() < MAX_SORT_SIZE || sortListener == null) {
 				sortColumn = columnImpl.index;
 				sortNegator = rows.sort(columnImpl);
 				if (sortListener != null)
 					sortListener.onSort(columnImpl.name, sortNegator == 1,
-							false);
-				if (update)
-					update();
+							false, new CallbackTemplate<Void>() {
+								@Override
+								public void onSuccess(Void result) {
+									if (update)
+										update();
+								}
+							});
 			} else {
 				if (sortColumn != -1) {
 					sortNegator = sortColumn == columnImpl.index ? sortNegator
 							* -1 : 1;
 				}
 				sortColumn = columnImpl.index;
-				sortListener.onSort(columnImpl.name, sortNegator == 1, true);
+				sortListener.onSort(columnImpl.name, sortNegator == 1, true,
+						DummyCallback.voidInstance());
 			}
 		}
 	}
