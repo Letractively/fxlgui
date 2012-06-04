@@ -115,10 +115,16 @@ class LogImpl implements ILog, IClickListener {
 
 	@Override
 	public void onClick() {
-		IDisplay d = Display.instance();
-		final IPopUp popUp = d.showPopUp()
-				.size(d.width() - SPACING * 2, d.height() - SPACING * 2)
-				.offset(SPACING, SPACING).modal(true);
+		final IDisplay d = Display.instance();
+		final IPopUp popUp = d.showPopUp().modal(true);
+		resize(d, popUp);
+		// TODO d.addResizeListener(new IResizeListener() {
+		// @Override
+		// public boolean onResize(int width, int height) {
+		// resize(d, popUp);
+		// return popUp.visible();
+		// }
+		// }).linkLifecycle(popUp);
 		popUp.border().remove().style().shadow().color().black();
 		WidgetTitle panel = new WidgetTitle(popUp.container()).spacing(0)
 				.sideWidget(true).commandsOnTop().spacing(0);
@@ -149,6 +155,11 @@ class LogImpl implements ILog, IClickListener {
 				});
 		showLog(scrollPane, content);
 		popUp.visible(true);
+	}
+
+	public void resize(IDisplay d, final IPopUp popUp) {
+		popUp.size(d.width() - SPACING * 2, d.height() - SPACING * 2).offset(
+				SPACING, SPACING);
 	}
 
 	private void showLog(final IScrollPane scrollPane,
