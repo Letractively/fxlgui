@@ -235,7 +235,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 	}
 
 	@SuppressWarnings("unchecked")
-	public R focus(boolean focus) {
+	public final R focus(boolean focus) {
 		if (focus)
 			container.component.requestFocus();
 		else {

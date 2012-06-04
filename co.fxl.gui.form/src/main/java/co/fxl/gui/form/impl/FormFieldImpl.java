@@ -77,14 +77,14 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 			label.font().color().black();
 		else
 			label.font().color().gray();
-		checkFocus(editable);
+//		checkFocus(editable);
 		return this;
 	}
 
-	void checkFocus(boolean editable) {
-		if (!editable)
-			widget.looseFocus(valueElement());
-	}
+//	void checkFocus(boolean editable) {
+//		if (!editable)
+//			widget.looseFocus(valueElement());
+//	}
 
 	@Override
 	public ILabel addButton(String title) {
