@@ -116,7 +116,7 @@ class LogImpl implements ILog, IClickListener {
 	@Override
 	public void onClick() {
 		final IDisplay d = Display.instance();
-		final IPopUp popUp = d.showPopUp().modal(true);
+		final IPopUp popUp = d.showPopUp().modal(true).offset(SPACING, SPACING);
 		resize(d, popUp);
 		// TODO d.addResizeListener(new IResizeListener() {
 		// @Override
@@ -158,8 +158,7 @@ class LogImpl implements ILog, IClickListener {
 	}
 
 	public void resize(IDisplay d, final IPopUp popUp) {
-		popUp.size(d.width() - SPACING * 2, d.height() - SPACING * 2).offset(
-				SPACING, SPACING);
+		popUp.size(d.width() - SPACING * 2, d.height() - SPACING * 2);
 	}
 
 	private void showLog(final IScrollPane scrollPane,
