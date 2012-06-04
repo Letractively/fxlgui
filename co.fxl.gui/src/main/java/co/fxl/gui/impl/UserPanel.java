@@ -18,8 +18,9 @@
  */
 package co.fxl.gui.impl;
 
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -35,6 +36,8 @@ public class UserPanel {
 	public interface Decorator {
 
 		void decorate(IPanel<?> panel);
+
+		boolean isVisible();
 	}
 
 	private class DecoratorAdp implements Weight, Comparable<DecoratorAdp> {
@@ -61,7 +64,7 @@ public class UserPanel {
 	}
 
 	private static final UserPanel INSTANCE = new UserPanel();
-	private Set<DecoratorAdp> decorators = new TreeSet<DecoratorAdp>();
+	private List<DecoratorAdp> decorators = new LinkedList<DecoratorAdp>();
 	private IHorizontalPanel panel;
 
 	public UserPanel container(IContainer container) {
@@ -70,9 +73,14 @@ public class UserPanel {
 	}
 
 	public UserPanel update() {
+		if (panel == null)
+			return this;
+		Collections.sort(decorators);
 		panel.clear();
 		boolean first = true;
 		for (DecoratorAdp d : decorators) {
+			if (!d.decorator.isVisible())
+				continue;
 			if (!first)
 				panel.add().label().text("|").font().color().gray();
 			first = false;
@@ -82,7 +90,8 @@ public class UserPanel {
 	}
 
 	public Weight add(Decorator decorator) {
-		return new DecoratorAdp(decorator);
+		DecoratorAdp d = new DecoratorAdp(decorator);
+		return d;
 	}
 
 	public static UserPanel instance() {
