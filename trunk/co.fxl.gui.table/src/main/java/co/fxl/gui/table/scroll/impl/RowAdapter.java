@@ -30,7 +30,7 @@ class RowAdapter implements IRows<Object>, IComparableList {
 	private QuickSort quickSort = new QuickSort();
 	IRows<Object> rows;
 	private int[] indices;
-	private ScrollTableColumnImpl comparator;
+	ScrollTableColumnImpl sortColumn;
 	private int negator = 1;
 	private boolean[] selected;
 
@@ -95,17 +95,17 @@ class RowAdapter implements IRows<Object>, IComparableList {
 	}
 
 	int sort(ScrollTableColumnImpl column) {
-		if (comparator != null) {
-			negator = comparator == column ? negator * -1 : 1;
+		if (sortColumn != null) {
+			negator = sortColumn == column ? negator * -1 : 1;
 		}
-		comparator = column;
+		sortColumn = column;
 		quickSort.sort(this);
 		return negator;
 	}
 
 	@Override
 	public int compare(int firstIndex, int secondIndex) {
-		return negator * comparator.compare(row(firstIndex), row(secondIndex));
+		return negator * sortColumn.compare(row(firstIndex), row(secondIndex));
 	}
 
 	@Override

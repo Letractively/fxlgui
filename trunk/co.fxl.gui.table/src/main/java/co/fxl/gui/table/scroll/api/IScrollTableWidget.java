@@ -121,7 +121,8 @@ public interface IScrollTableWidget<T> {
 
 	public interface ISortListener {
 
-		void onSort(String columnName, boolean asc, boolean update);
+		void onSort(String columnName, boolean asc, boolean update,
+				ICallback<Void> cb);
 	}
 
 	boolean visible();
@@ -143,7 +144,7 @@ public interface IScrollTableWidget<T> {
 
 	IScrollTableWidget<T> height(int height);
 
-//	IScrollTableWidget<T> height(int height, ICallback<Void> cb);
+	// IScrollTableWidget<T> height(int height, ICallback<Void> cb);
 
 	IScrollTableWidget<T> rows(IRows<T> rows);
 
