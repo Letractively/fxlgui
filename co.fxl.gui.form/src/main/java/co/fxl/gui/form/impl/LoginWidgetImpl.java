@@ -71,7 +71,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 	private static final boolean IGNORE_EMPTY_PASSWORD = true;
 	private static int HEIGHT_DECREMENT = Constants.get(
 			"LoginWidgetImpl.HEIGHT_DECREMENT", 0);
-	private IHorizontalPanel cards;
+	private IHorizontalPanel panel;
 	private IAuthorizationListener listener;
 	ITextField loginID;
 	private IPasswordField password;
@@ -84,11 +84,11 @@ public class LoginWidgetImpl implements ILoginWidget {
 	private ILabel loggedInHead;
 
 	LoginWidgetImpl(IContainer display) {
-		cards = display.panel().horizontal().align().end();
+		panel = display.panel().horizontal().align().end();
 	}
 
 	void dialog(String string) {
-		IDialog dialog = cards.display().showDialog();
+		IDialog dialog = panel.display().showDialog();
 		dialog.title("Login Failed");
 		dialog.message(string).error();
 		dialog.visible(true);
@@ -109,8 +109,8 @@ public class LoginWidgetImpl implements ILoginWidget {
 	}
 
 	private void addLogin() {
-		cards.clear();
-		IHorizontalPanel liPanel = cards.add().panel().horizontal().spacing(4);
+		panel.clear();
+		IHorizontalPanel liPanel = panel.add().panel().horizontal().spacing(4);
 		if (decorator != null)
 			decorator.decorateBegin(liPanel, false);
 		addLoginForm(liPanel);
@@ -140,8 +140,8 @@ public class LoginWidgetImpl implements ILoginWidget {
 	}
 
 	private void addLogout() {
-		cards.clear();
-		IHorizontalPanel loPanel = cards.add().panel().horizontal().spacing(4);
+		panel.clear();
+		IHorizontalPanel loPanel = panel.add().panel().horizontal().spacing(4);
 		if (decorator != null)
 			decorator.decorateBegin(loPanel, true);
 		loggedInAs = loPanel.add().label().text("Logged in as");
