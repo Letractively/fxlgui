@@ -22,13 +22,6 @@ import co.fxl.gui.api.ILinearPanel;
 
 public interface ILoginWidget {
 
-	public interface IStatusPanelDecorator {
-
-		void decorateBegin(ILinearPanel<?> panel, boolean loggedIn);
-
-		void decorateEnd(ILinearPanel<?> panel, boolean loggedIn);
-	}
-
 	public interface Callback {
 
 		void onAuthorization(Authorization auth);
@@ -49,8 +42,6 @@ public interface ILoginWidget {
 	ILoginWidget listener(IAuthorizationListener listener);
 
 	ILoginWidget login(String user, String pwd);
-
-	ILoginWidget statusPanelDecorator(IStatusPanelDecorator decorator);
 
 	ILoginWidget visible(boolean visible);
 
