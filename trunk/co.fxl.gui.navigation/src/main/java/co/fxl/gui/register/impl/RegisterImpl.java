@@ -110,12 +110,17 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 	@Override
 	public IRegister toggleLoading(boolean loading) {
 		int width = buttonPanel.width();
-		subPanel.width(subPanel.width());
+		int w = subPanel.width();
+		if (w != 0)
+			subPanel.width(w);
 		buttonImage.visible(loading);
 		buttonPanel.spacing(loading ? widget.spacing - SPACING_DEC_LOADING
 				: widget.spacing);
 		buttonLabel.visible(!loading);
-		buttonPanel.size(width, 24);
+		if (width == 0)
+			buttonPanel.height(24);
+		else
+			buttonPanel.size(width, 24);
 		if (isActive()) {
 			buttonImage.resource("loading_black.gif");
 		} else {
