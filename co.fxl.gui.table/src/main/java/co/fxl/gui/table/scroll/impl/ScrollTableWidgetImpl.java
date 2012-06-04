@@ -132,8 +132,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	List<ScrollTableColumnImpl> filterColumns = new LinkedList<ScrollTableColumnImpl>();
 	private SelectionImpl selection = new SelectionImpl(this);
 	private IVerticalPanel contentPanel;
-	private int sortColumn = -1;
-	private int sortNegator = -1;
+	int sortColumn = -1;
+	int sortNegator = -1;
 	IBulkTableWidget grid;
 	int rowOffset = 0;
 	List<IRow> highlighted = new LinkedList<IRow>();
@@ -292,7 +292,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			boolean updateSelection = false;
 			if (sp != null)
 				sp.visible(false);
-			rows = new RowAdapter(actualRows);
+			rows = new RowAdapter(this, actualRows);
 			for (ScrollTableColumnImpl c : columns)
 				if (c.forceSort) {
 					sortBy(c, false);
@@ -904,7 +904,6 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			ScrollTableColumnImpl columnImpl = columns.get(c);
 			if (columnImpl.tagSortOrder != null) {
 				sortColumn = columnImpl.index;
-				rows.sortColumn = columns.get(sortColumn);
 				sortNegator = columnImpl.tagSortOrder ? -1 : 1;
 				columnImpl.tagSortOrder = null;
 			}
@@ -1449,5 +1448,9 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			co.fxl.gui.table.scroll.api.IScrollTableWidget.INoEntitiesFoundDecorator d) {
 		noEntitiesFoundDecorator = d;
 		return this;
+	}
+
+	ScrollTableColumnImpl sortColumn() {
+		return columns.get(sortColumn);
 	}
 }
