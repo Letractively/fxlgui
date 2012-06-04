@@ -305,6 +305,9 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	@Override
 	public R height(int height) {
+		if (LOG_ILLEGAL_SIZES && height == 0)
+			Log.instance().warn(
+					"Illegal height 0 set on " + getClass().getName());
 		return height(height < 0, height + "px");
 	}
 
@@ -339,9 +342,9 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	@Override
 	public int width() {
 		int width = container.widget.getOffsetWidth();
-		if (LOG_ILLEGAL_SIZES && width == 0)
-			Log.instance().warn(
-					"Illegal width 0 encountered on " + getClass().getName());
+		// if (LOG_ILLEGAL_SIZES && width == 0)
+		// Log.instance().warn(
+		// "Illegal width 0 encountered on " + getClass().getName());
 		return width;
 	}
 
