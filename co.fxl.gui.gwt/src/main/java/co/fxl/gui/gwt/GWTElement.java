@@ -353,9 +353,9 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	@Override
 	public int offsetY() {
 		int absoluteTop = container.widget.getAbsoluteTop();
-		if (LOG_ILLEGAL_SIZES && absoluteTop == 0)
-			Log.instance().warn(
-					"Potentially illegal offsetY 0 on " + getClass().getName());
+		// if (LOG_ILLEGAL_SIZES && absoluteTop == 0)
+		// Log.instance().warn(
+		// "Potentially illegal offsetY 0 on " + getClass().getName());
 		return absoluteTop;
 	}
 
