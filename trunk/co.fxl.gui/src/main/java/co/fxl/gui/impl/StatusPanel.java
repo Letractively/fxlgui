@@ -47,35 +47,12 @@ public class StatusPanel {
 	}
 
 	public StatusPanel start(String status) {
-		lastStatus = status;
 		if (Log.ENABLED)
 			Log.instance().start(LOADING + status);
+		lastStatus = status;
 		lastPopUp = showLoadingPopUp(LOADING + status, true, 0, color,
 				fontColor, bold);
 		return this;
-	}
-
-	public StatusPanel status(String status) {
-		lastStatus = status;
-		return this;
-	}
-
-//	public StatusPanel visible(boolean visible) {
-//		if (visible)
-//			lastPopUp = showPopUp(lastStatus, false, 0, color, fontColor, bold);
-//		else {
-//			lastPopUp.visible(false);
-//			lastPopUp = null;
-//		}
-//		return this;
-//	}
-
-	public IColor color() {
-		return color;
-	}
-
-	public IColor fontColor() {
-		return fontColor;
 	}
 
 	private void stop(String status) {
@@ -89,6 +66,29 @@ public class StatusPanel {
 
 	public void stop() {
 		stop(lastStatus);
+	}
+
+	// public StatusPanel status(String status) {
+	// lastStatus = status;
+	// return this;
+	// }
+
+	// public StatusPanel visible(boolean visible) {
+	// if (visible)
+	// lastPopUp = showPopUp(lastStatus, false, 0, color, fontColor, bold);
+	// else {
+	// lastPopUp.visible(false);
+	// lastPopUp = null;
+	// }
+	// return this;
+	// }
+
+	public IColor color() {
+		return color;
+	}
+
+	public IColor fontColor() {
+		return fontColor;
 	}
 
 	public static IPopUp showPopUp(String info, boolean modal, int y) {
