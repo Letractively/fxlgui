@@ -19,7 +19,7 @@
 package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.ICallback;
-import co.fxl.gui.impl.StatusPanel;
+import co.fxl.gui.impl.StatusPopUp;
 
 import com.google.gwt.core.client.RunAsyncCallback;
 
@@ -36,7 +36,7 @@ public abstract class RunAsyncCallbackImpl implements RunAsyncCallback {
 
 	@Override
 	public void onFailure(Throwable arg0) {
-		StatusPanel.instance().stop();
+		StatusPopUp.instance().stop();
 		if (callback == null)
 			throw new RuntimeException(arg0);
 		else
