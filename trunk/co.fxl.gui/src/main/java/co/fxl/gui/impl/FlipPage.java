@@ -55,6 +55,17 @@ public class FlipPage {
 		inactive.clear();
 	}
 
+	public void showNext() {
+		if (active == page2) {
+			cardPanel.show(page1);
+		} else
+			cardPanel.show(page2);
+	}
+
+	public void showCurrent() {
+		cardPanel.show(active);
+	}
+
 	public void width(int width) {
 		cardPanel.width(width);
 		page1.width(width);
