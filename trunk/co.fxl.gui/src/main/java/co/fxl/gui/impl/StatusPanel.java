@@ -20,7 +20,6 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IColored.IColor;
-import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -35,10 +34,10 @@ public class StatusPanel {
 	private static final String LOADING = "Loading ";
 	public static final double FADE_IN_MS = 1000;
 	private static boolean RESIZE = Constants.get("StatusPanel.RESIZE", true);
+	private static boolean BEFORE = Constants.get("StatusPanel.BEFORE", true);
 	private IPopUp lastPopUp;
 	private String lastStatus;
 	private static StatusPanel instance;
-	private static boolean BEFORE = Constants.get("StatusPanel.BEFORE", true);
 	private ColorMemento color = BACKGROUND;
 	private ColorMemento fontColor = FOREGROUND;
 	private boolean bold;
@@ -51,8 +50,8 @@ public class StatusPanel {
 		lastStatus = status;
 		if (Log.ENABLED)
 			Log.instance().start(LOADING + status);
-		lastPopUp = showLoadingPopUp(Display.instance(), LOADING + status,
-				true, 0, color, fontColor, bold);
+		lastPopUp = showLoadingPopUp(LOADING + status, true, 0, color,
+				fontColor, bold);
 		return this;
 	}
 
@@ -63,8 +62,7 @@ public class StatusPanel {
 
 	public StatusPanel visible(boolean visible) {
 		if (visible)
-			lastPopUp = showPopUp(Display.instance(), lastStatus, false, 0,
-					color, fontColor, bold);
+			lastPopUp = showPopUp(lastStatus, false, 0, color, fontColor, bold);
 		else {
 			lastPopUp.visible(false);
 			lastPopUp = null;
@@ -93,27 +91,24 @@ public class StatusPanel {
 		stop(lastStatus);
 	}
 
-	public static IPopUp showPopUp(IDisplay display, String info,
-			boolean modal, int y) {
-		return showLoadingPopUp(display, info, modal, y, BACKGROUND,
-				FOREGROUND, false);
+	public static IPopUp showPopUp(String info, boolean modal, int y) {
+		return showLoadingPopUp(info, modal, y, BACKGROUND, FOREGROUND, false);
 	}
 
-	public static IPopUp showPopUp(IDisplay display, String info,
-			boolean modal, int y, boolean bold) {
-		return showLoadingPopUp(display, info, modal, y, BACKGROUND,
-				FOREGROUND, bold);
+	public static IPopUp showPopUp(String info, boolean modal, int y,
+			boolean bold) {
+		return showLoadingPopUp(info, modal, y, BACKGROUND, FOREGROUND, bold);
 	}
 
-	private static IPopUp showLoadingPopUp(IDisplay display, String info,
-			boolean modal, int y, ColorMemento m, ColorMemento fm, boolean bold) {
-		return showPopUp(display, "Please wait - " + info + "...", modal, y, m,
-				fm, bold);
+	private static IPopUp showLoadingPopUp(String info, boolean modal, int y,
+			ColorMemento m, ColorMemento fm, boolean bold) {
+		return showPopUp("Please wait - " + info + "...", modal, y, m, fm, bold);
 	}
 
-	private static IPopUp showPopUp(final IDisplay display, String info,
-			boolean modal, int y, ColorMemento m, ColorMemento fm, boolean bold) {
-		final IPopUp dialog = display.showPopUp().modal(modal).glass(false);
+	private static IPopUp showPopUp(String info, boolean modal, int y,
+			ColorMemento m, ColorMemento fm, boolean bold) {
+		final IPopUp dialog = Display.instance().showPopUp().modal(modal)
+				.glass(false);
 		if (!modal)
 			dialog.autoHide(false);
 		// if (m.rgb[0] > 220 && m.rgb[1] > 220 && m.rgb[2] > 220)
@@ -130,7 +125,7 @@ public class StatusPanel {
 		fm.forward(f.color());
 		spacing.addSpace(4);
 		m.forward(spacing.color());
-		resize(display.width(), dialog);
+		resize(Display.instance().width(), dialog);
 		if (RESIZE)
 			Display.instance().addResizeListener(new IResizeListener() {
 				@Override
