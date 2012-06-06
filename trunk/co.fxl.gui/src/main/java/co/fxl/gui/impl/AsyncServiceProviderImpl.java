@@ -49,7 +49,7 @@ public abstract class AsyncServiceProviderImpl<T> implements
 
 	@Override
 	public void loadAsync(final ICallback<IServiceProvider<T>> callback) {
-		final StatusPanel p = new StatusPanel().start(id);
+		final StatusPopUp p = new StatusPopUp().start(id);
 		loadAsyncImpl(new CallbackTemplate<IServiceProvider<T>>(callback) {
 			@Override
 			public void onSuccess(IServiceProvider<T> result) {
