@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IFontElement.IFont;
@@ -93,10 +92,7 @@ public class StatusPopUp {
 			ColorMemento fm, boolean bold) {
 		final IPopUp dialog = Display.instance().showPopUp().modal(true)
 				.glass(false);
-		dialog.border().remove();
-		IBorder b = dialog.border();
-		b.style().shadow(2);
-		b.color().rgb(240, 195, 109);
+		dialog.border().remove().style().shadow(2).color().rgb(240, 195, 109);
 		IHorizontalPanel spacing = dialog.container().panel().horizontal()
 				.spacing(5);
 		IFont f = spacing.addSpace(4).add().label().text(info).font().pixel(11);
