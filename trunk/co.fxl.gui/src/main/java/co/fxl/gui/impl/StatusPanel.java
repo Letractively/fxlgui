@@ -60,15 +60,15 @@ public class StatusPanel {
 		return this;
 	}
 
-	public StatusPanel visible(boolean visible) {
-		if (visible)
-			lastPopUp = showPopUp(lastStatus, false, 0, color, fontColor, bold);
-		else {
-			lastPopUp.visible(false);
-			lastPopUp = null;
-		}
-		return this;
-	}
+//	public StatusPanel visible(boolean visible) {
+//		if (visible)
+//			lastPopUp = showPopUp(lastStatus, false, 0, color, fontColor, bold);
+//		else {
+//			lastPopUp.visible(false);
+//			lastPopUp = null;
+//		}
+//		return this;
+//	}
 
 	public IColor color() {
 		return color;
