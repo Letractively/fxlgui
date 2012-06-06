@@ -37,6 +37,7 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	@Override
 	public IPopUp visible(boolean visible) {
+		// Log.instance().warn("PopUp: " + visible);
 		if (visible) {
 			if (center)
 				popUp.center();
