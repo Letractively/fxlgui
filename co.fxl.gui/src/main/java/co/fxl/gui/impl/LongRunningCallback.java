@@ -35,12 +35,8 @@ public abstract class LongRunningCallback<T> extends CallbackTemplate<T> {
 	}
 
 	private void set(String info) {
-		dialog = showPopUp(info);
-	}
-
-	static IPopUp showPopUp(String info) {
 		int y = Display.instance().height() / 2 - 40;
-		return StatusPopUp.showPopUp(info, y);
+		dialog = StatusPopUp.showPopUp(info, y);
 	}
 
 	@Override
