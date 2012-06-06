@@ -34,7 +34,7 @@ public abstract class LongRunningCallback<T> extends CallbackTemplate<T> {
 		set(info);
 	}
 
-	protected void set(String info) {
+	private void set(String info) {
 		dialog = showPopUp(info);
 	}
 
