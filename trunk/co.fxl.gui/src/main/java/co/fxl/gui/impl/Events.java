@@ -63,6 +63,11 @@ public class Events {
 		}
 	}
 
+	public Events clear() {
+		listeners.clear();
+		return this;
+	}
+
 	public ListenerRegistration register(String event, EventListener l) {
 		return new ListenerRegistrationAdp(event, l);
 	}
