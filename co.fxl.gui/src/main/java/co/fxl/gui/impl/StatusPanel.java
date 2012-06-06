@@ -50,8 +50,8 @@ public class StatusPanel {
 		if (Log.ENABLED)
 			Log.instance().start(LOADING + status);
 		lastStatus = status;
-		lastPopUp = showLoadingPopUp(LOADING + status, true, 0, color,
-				fontColor, bold);
+		lastPopUp = showLoadingPopUp(LOADING + status, 0, color, fontColor,
+				bold);
 		return this;
 	}
 
@@ -77,22 +77,18 @@ public class StatusPanel {
 	}
 
 	public static IPopUp showPopUp(String info, int y) {
-		return showLoadingPopUp(info, true, y, BACKGROUND, FOREGROUND, false);
+		return showLoadingPopUp(info, y, BACKGROUND, FOREGROUND, false);
 	}
 
-	private static IPopUp showLoadingPopUp(String info, boolean modal, int y,
-			ColorMemento m, ColorMemento fm, boolean bold) {
-		return showPopUp("Please wait - " + info + "...", modal, y, m, fm, bold);
+	private static IPopUp showLoadingPopUp(String info, int y, ColorMemento m,
+			ColorMemento fm, boolean bold) {
+		return showPopUp("Please wait - " + info + "...", y, m, fm, bold);
 	}
 
-	private static IPopUp showPopUp(String info, boolean modal, int y,
-			ColorMemento m, ColorMemento fm, boolean bold) {
-		final IPopUp dialog = Display.instance().showPopUp().modal(modal)
+	private static IPopUp showPopUp(String info, int y, ColorMemento m,
+			ColorMemento fm, boolean bold) {
+		final IPopUp dialog = Display.instance().showPopUp().modal(true)
 				.glass(false);
-		if (!modal)
-			dialog.autoHide(false);
-		// if (m.rgb[0] > 220 && m.rgb[1] > 220 && m.rgb[2] > 220)
-		// dialog.border().color().gray();
 		dialog.border().remove();
 		IBorder b = dialog.border();
 		b.style().shadow(2);
