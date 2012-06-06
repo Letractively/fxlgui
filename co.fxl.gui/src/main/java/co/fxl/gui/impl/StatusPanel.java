@@ -35,35 +35,38 @@ public class StatusPanel {
 	private static boolean RESIZE = Constants.get("StatusPanel.RESIZE", true);
 	private static boolean BEFORE = Constants.get("StatusPanel.BEFORE", true);
 	private IPopUp lastPopUp;
-	private String lastStatus;
 	private static StatusPanel instance;
 	private ColorMemento color = BACKGROUND;
 	private ColorMemento fontColor = FOREGROUND;
-	private boolean bold;
+	private String text;
+
+	// private boolean bold;
 
 	private StatusPanel() {
+		if (instance != null) {
+			instance.hide();
+		}
+		instance = this;
 	}
 
 	public StatusPanel start(String status) {
+		text = LOADING + status;
 		if (Log.ENABLED)
-			Log.instance().start(LOADING + status);
-		lastStatus = status;
-		lastPopUp = showLoadingPopUp(LOADING + status, 0, color, fontColor,
-				bold);
+			Log.instance().start(text);
+		lastPopUp = showLoadingPopUp(text, 0, color, fontColor, false);// bold);
 		return this;
 	}
 
-	private void stop(String status) {
-		if (Log.ENABLED)
-			Log.instance().stop(LOADING + status);
-		if (lastPopUp != null && lastStatus.equals(status)) {
-			lastPopUp.visible(false);
-			lastPopUp = null;
-		}
+	private void hide() {
+		lastPopUp.visible(false);
+		lastPopUp = null;
+		instance = null;
 	}
 
 	public void stop() {
-		stop(lastStatus);
+		if (Log.ENABLED)
+			Log.instance().stop(text);
+		hide();
 	}
 
 	public IColor color() {
@@ -89,7 +92,7 @@ public class StatusPanel {
 
 	private static IPopUp showPopUp(String info, int y, ColorMemento m,
 			ColorMemento fm, boolean bold) {
-		final IPopUp dialog = Display.instance().showPopUp().modal(true)
+		final IPopUp dialog = Display.instance().showPopUp().modal(false)
 				.glass(false);
 		dialog.border().remove().style().shadow(2).color().rgb(240, 195, 109);
 		IHorizontalPanel spacing = dialog.container().panel().horizontal()
@@ -112,11 +115,11 @@ public class StatusPanel {
 		return dialog;
 	}
 
-	public static StatusPanel instance() {
-		if (instance == null)
-			instance = new StatusPanel();
-		return instance;
-	}
+	// public static StatusPanel instance() {
+	// if (instance == null)
+	// instance = new StatusPanel();
+	// return instance;
+	// }
 
 	public static StatusPanel newInstance() {
 		return new StatusPanel();
@@ -130,8 +133,8 @@ public class StatusPanel {
 		dialog.visible(true);
 	}
 
-	public StatusPanel bold(boolean b) {
-		bold = b;
-		return this;
-	}
+	// StatusPanel bold(boolean b) {
+	// bold = b;
+	// return this;
+	// }
 }
