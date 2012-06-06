@@ -41,8 +41,7 @@ public class StatusPanel {
 	private ColorMemento fontColor = FOREGROUND;
 	private boolean bold;
 
-	public StatusPanel() {
-		instance = this;
+	private StatusPanel() {
 	}
 
 	public StatusPanel start(String status) {

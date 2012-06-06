@@ -38,7 +38,7 @@ public abstract class AsyncWidgetProviderImpl<T> implements
 
 	@Override
 	public void loadAsync(final ICallback<IWidgetProvider<T>> callback) {
-		final StatusPanel p = new StatusPanel().start("widgets");
+		final StatusPanel p = StatusPanel.newInstance().start("widgets");
 		loadAsyncImpl(new CallbackTemplate<IWidgetProvider<T>>(callback) {
 			@Override
 			public void onSuccess(IWidgetProvider<T> result) {
