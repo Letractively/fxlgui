@@ -26,7 +26,6 @@ public abstract class AsyncServiceProviderImpl<T> implements
 		IAsyncServiceProvider<T> {
 
 	protected Class<T> clazz;
-	private String id = "services";
 
 	public AsyncServiceProviderImpl(Class<T> clazz) {
 		this.clazz = clazz;
@@ -39,7 +38,7 @@ public abstract class AsyncServiceProviderImpl<T> implements
 
 	@Override
 	public void loadAsync(final ICallback<IServiceProvider<T>> callback) {
-		final StatusPanel p = new StatusPanel().start(id);
+		final StatusPanel p = new StatusPanel().start("services");
 		loadAsyncImpl(new CallbackTemplate<IServiceProvider<T>>(callback) {
 			@Override
 			public void onSuccess(IServiceProvider<T> result) {
