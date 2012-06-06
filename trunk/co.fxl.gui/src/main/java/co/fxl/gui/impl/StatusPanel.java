@@ -25,7 +25,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.log.impl.Log;
 
-public class StatusPopUp {
+public class StatusPanel {
 
 	private static final ColorMemento FOREGROUND = new ColorMemento();
 	private static final ColorMemento BACKGROUND = new ColorMemento(249, 237,
@@ -36,16 +36,16 @@ public class StatusPopUp {
 	private static boolean BEFORE = Constants.get("StatusPanel.BEFORE", true);
 	private IPopUp lastPopUp;
 	private String lastStatus;
-	private static StatusPopUp instance;
+	private static StatusPanel instance;
 	private ColorMemento color = BACKGROUND;
 	private ColorMemento fontColor = FOREGROUND;
 	private boolean bold;
 
-	public StatusPopUp() {
+	public StatusPanel() {
 		instance = this;
 	}
 
-	public StatusPopUp start(String status) {
+	public StatusPanel start(String status) {
 		if (Log.ENABLED)
 			Log.instance().start(LOADING + status);
 		lastStatus = status;
@@ -113,14 +113,14 @@ public class StatusPopUp {
 		return dialog;
 	}
 
-	public static StatusPopUp instance() {
+	public static StatusPanel instance() {
 		if (instance == null)
-			instance = new StatusPopUp();
+			instance = new StatusPanel();
 		return instance;
 	}
 
-	public static StatusPopUp newInstance() {
-		return new StatusPopUp();
+	public static StatusPanel newInstance() {
+		return new StatusPanel();
 	}
 
 	private static void resize(int width, final IPopUp dialog) {
@@ -131,7 +131,7 @@ public class StatusPopUp {
 		dialog.visible(true);
 	}
 
-	public StatusPopUp bold(boolean b) {
+	public StatusPanel bold(boolean b) {
 		bold = b;
 		return this;
 	}
