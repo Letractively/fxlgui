@@ -40,7 +40,7 @@ public abstract class LongRunningCallback<T> extends CallbackTemplate<T> {
 
 	static IPopUp showPopUp(String info) {
 		int y = Display.instance().height() / 2 - 40;
-		return StatusPanel.showPopUp(info, true, y);
+		return StatusPanel.showPopUp(info, y);
 	}
 
 	@Override

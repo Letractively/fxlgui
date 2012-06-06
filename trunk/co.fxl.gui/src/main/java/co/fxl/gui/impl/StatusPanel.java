@@ -68,21 +68,6 @@ public class StatusPanel {
 		stop(lastStatus);
 	}
 
-	// public StatusPanel status(String status) {
-	// lastStatus = status;
-	// return this;
-	// }
-
-	// public StatusPanel visible(boolean visible) {
-	// if (visible)
-	// lastPopUp = showPopUp(lastStatus, false, 0, color, fontColor, bold);
-	// else {
-	// lastPopUp.visible(false);
-	// lastPopUp = null;
-	// }
-	// return this;
-	// }
-
 	public IColor color() {
 		return color;
 	}
@@ -91,13 +76,8 @@ public class StatusPanel {
 		return fontColor;
 	}
 
-	public static IPopUp showPopUp(String info, boolean modal, int y) {
-		return showLoadingPopUp(info, modal, y, BACKGROUND, FOREGROUND, false);
-	}
-
-	public static IPopUp showPopUp(String info, boolean modal, int y,
-			boolean bold) {
-		return showLoadingPopUp(info, modal, y, BACKGROUND, FOREGROUND, bold);
+	public static IPopUp showPopUp(String info, int y) {
+		return showLoadingPopUp(info, true, y, BACKGROUND, FOREGROUND, false);
 	}
 
 	private static IPopUp showLoadingPopUp(String info, boolean modal, int y,
