@@ -92,7 +92,7 @@ public class StatusPanel {
 
 	private static IPopUp showPopUp(String info, int y, ColorMemento m,
 			ColorMemento fm, boolean bold) {
-		final IPopUp dialog = Display.instance().showPopUp().modal(false)
+		final IPopUp dialog = Display.instance().showPopUp().modal(true)
 				.glass(false);
 		dialog.border().remove().style().shadow(2).color().rgb(240, 195, 109);
 		IHorizontalPanel spacing = dialog.container().panel().horizontal()
@@ -108,6 +108,8 @@ public class StatusPanel {
 			Display.instance().addResizeListener(new IResizeListener() {
 				@Override
 				public boolean onResize(int width, int height) {
+					if (!dialog.visible())
+						return false;
 					resize(width, dialog);
 					return dialog.visible();
 				}
