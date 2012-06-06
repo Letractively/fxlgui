@@ -242,6 +242,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 					flipPage();
 				if (USE_TEMP_FLIP && flipAfterReturn()) {
 					widget.flipPage().showNext();
+					Events.instance().clear();
 					reg1 = Events.instance().register(Events.SERVER_CALL_START,
 							new EventListener() {
 								@Override
