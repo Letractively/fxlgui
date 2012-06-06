@@ -82,7 +82,11 @@ public class StatusPopUp {
 
 	private static IPopUp showLoadingPopUp(String info, int y, ColorMemento m,
 			ColorMemento fm, boolean bold) {
-		return showPopUp("Please wait - " + info + "...", y, m, fm, bold);
+		return showPopUp(pleaseWait(info), y, m, fm, bold);
+	}
+
+	public static String pleaseWait(String info) {
+		return "Please wait - " + info + "...";
 	}
 
 	private static IPopUp showPopUp(String info, int y, ColorMemento m,
