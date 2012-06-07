@@ -274,6 +274,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 							removeRegistrations();
 							Log.instance().stop("Showing tab " + button.text());
 							flipRegister(flipAfterReturn());
+							widget.update();
 						}
 
 						@Override
