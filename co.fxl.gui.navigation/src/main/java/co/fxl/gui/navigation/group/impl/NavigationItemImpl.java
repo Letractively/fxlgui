@@ -46,7 +46,8 @@ public class NavigationItemImpl extends LazyClickListener implements
 			"NavigationItemImpl.SPACING_LOADING", 5);
 	// TODO when row height computation in scrolltablewidgetimpl is working for
 	// invisible panels (unflipped pages), set to true
-	private static boolean USE_TEMP_FLIP = true;
+	private static boolean USE_TEMP_FLIP = Constants.get(
+			"NavigationItemImpl.USE_TEMP_FLIP", true);
 	private static boolean FLIP_AFTER_RETURN_IS_POSSIBLE = true;
 	private static boolean FLIP_AFTER_RETURN = Constants.get(
 			"NavigationItemImpl.FLIP_AFTER_RETURN", true);
