@@ -514,4 +514,14 @@ public class NavigationItemImpl extends LazyClickListener implements
 		colorInactiveGradient = inactiveGradient;
 		return this;
 	}
+
+	@Override
+	public IVerticalPanel newContentPanel() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void showNewContentPanel() {
+		throw new UnsupportedOperationException();
+	}
 }
