@@ -194,7 +194,7 @@ class LogImpl implements ILog, IClickListener {
 	}
 
 	private void addDuration(Entry l, ILabel ld) {
-		ld.text(l.duration != null ? l.duration + "ms" : "").font().pixel(11)
+		ld.text(l.duration != null ? l.duration + " ms" : "").font().pixel(11)
 				.weight().bold();
 	}
 
