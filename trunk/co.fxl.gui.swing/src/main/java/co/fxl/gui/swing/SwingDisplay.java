@@ -44,6 +44,7 @@ import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DisplayTemplate;
+import co.fxl.gui.impl.RuntimeTemplate;
 import co.fxl.gui.impl.ToolbarImpl;
 
 public class SwingDisplay extends DisplayTemplate implements IDisplay,
@@ -55,6 +56,7 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 	private int heightPixel = 240;
 	private SwingUncaughtExceptionHandler uncaughtExceptionHandler;
 	boolean waiting;
+	private IRuntime runtime = new RuntimeTemplate("Swing", 1.0);
 	private static SwingPopUp popUp;
 	public static SwingDisplay instance = null;
 	static int lastClickX = 0;
@@ -335,17 +337,6 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 
 	@Override
 	public IRuntime runtime() {
-		return new IRuntime() {
-
-			@Override
-			public String name() {
-				return "Swing";
-			}
-
-			@Override
-			public double version() {
-				return 1.0;
-			}
-		};
+		return runtime;
 	}
 }

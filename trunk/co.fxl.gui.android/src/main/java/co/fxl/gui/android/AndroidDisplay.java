@@ -34,6 +34,7 @@ import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.IWidgetProvider.IAsyncWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
+import co.fxl.gui.impl.RuntimeTemplate;
 
 public class AndroidDisplay implements IDisplay, Parent {
 
@@ -266,17 +267,6 @@ public class AndroidDisplay implements IDisplay, Parent {
 
 	@Override
 	public IRuntime runtime() {
-		return new IRuntime() {
-
-			@Override
-			public String name() {
-				return "Android";
-			}
-
-			@Override
-			public double version() {
-				throw new UnsupportedOperationException();
-			}
-		};
+		return new RuntimeTemplate("Android", 1.0);
 	}
 }
