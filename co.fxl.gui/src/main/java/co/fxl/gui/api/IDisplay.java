@@ -24,7 +24,17 @@ public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
 		String name();
 
+		boolean is(String name);
+
 		double version();
+
+		boolean leq(String name, double version);
+
+		boolean geq(String name, double version);
+
+		boolean leq(double version);
+
+		boolean geq(double version);
 	}
 
 	public interface IResizeConfiguration {

@@ -35,6 +35,7 @@ import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.DialogImpl;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DisplayTemplate;
+import co.fxl.gui.impl.RuntimeTemplate;
 import co.fxl.gui.impl.ToolbarImpl;
 
 import com.google.gwt.core.client.GWT;
@@ -87,6 +88,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	static int lastClickX = 0;
 	static int lastClickY = 0;
 	private Scheduler scheduler = new SchedulerImpl();
+	private IRuntime runtime;
 
 	public static void notifyEvent(DomEvent<?> event) {
 		final NativeEvent nativeEvent = event.getNativeEvent();
@@ -116,6 +118,19 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 				notifyResizeListeners();
 			}
 		});
+		runtime = new RuntimeTemplate(getBrowserName(), getBrowserVersion());
+	}
+
+	private String getBrowserName() {
+		if (GWTDisplay.isChrome())
+			return Display.CHROME;
+		else if (GWTDisplay.isOpera())
+			return Display.OPERA;
+		else if (GWTDisplay.isInternetExplorer())
+			return Display.IE;
+		else if (GWTDisplay.isFirefox())
+			return Display.FIREFOX;
+		return Display.OTHER_BROWSER;
 	}
 
 	public static int getBrowserVersion() {
@@ -415,25 +430,6 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	@Override
 	public IRuntime runtime() {
-		return new IRuntime() {
-
-			@Override
-			public String name() {
-				if (GWTDisplay.isChrome())
-					return Display.CHROME;
-				else if (GWTDisplay.isOpera())
-					return Display.OPERA;
-				else if (GWTDisplay.isInternetExplorer())
-					return Display.IE;
-				else if (GWTDisplay.isFirefox())
-					return Display.FIREFOX;
-				return Display.OTHER_BROWSER;
-			}
-
-			@Override
-			public double version() {
-				return getBrowserVersion();
-			}
-		};
+		return runtime;
 	}
 }
