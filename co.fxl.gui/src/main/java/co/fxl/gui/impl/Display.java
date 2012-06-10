@@ -22,6 +22,13 @@ import co.fxl.gui.api.IDisplay;
 
 public class Display {
 
+	// public static String SWING = "Swing";
+	// public static String ANDROID = "Android";
+	// public static String FIREFOX = "Firefox";
+	// public static String CHROME = "Chrome";
+	// public static String IE = "IE";
+	// public static String OPERA = "Opera";
+	// public static String OTHER_BROWSER = "Other Browser";
 	private static IDisplay instance;
 
 	public static void instance(IDisplay display) {
