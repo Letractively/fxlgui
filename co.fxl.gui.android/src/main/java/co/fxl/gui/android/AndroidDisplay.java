@@ -263,4 +263,20 @@ public class AndroidDisplay implements IDisplay, Parent {
 	public IDisplay notifyResizeListener(IResizeListener listener) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public IRuntime runtime() {
+		return new IRuntime() {
+
+			@Override
+			public String name() {
+				return "Android";
+			}
+
+			@Override
+			public double version() {
+				throw new UnsupportedOperationException();
+			}
+		};
+	}
 }

@@ -332,4 +332,20 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 	public IDisplay scrolling(boolean scrolling) {
 		return this;
 	}
+
+	@Override
+	public IRuntime runtime() {
+		return new IRuntime() {
+
+			@Override
+			public String name() {
+				return "Swing";
+			}
+
+			@Override
+			public double version() {
+				return 1.0;
+			}
+		};
+	}
 }

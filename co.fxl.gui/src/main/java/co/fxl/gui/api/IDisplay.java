@@ -20,6 +20,13 @@ package co.fxl.gui.api;
 
 public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
+	public interface IRuntime {
+
+		String name();
+
+		double version();
+	}
+
 	public interface IResizeConfiguration {
 
 		IResizeConfiguration singleton();
@@ -39,6 +46,8 @@ public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
 		void onException(Throwable exception);
 	}
+
+	IRuntime runtime();
 
 	IDisplay title(String title);
 

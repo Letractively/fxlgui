@@ -412,4 +412,26 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		});
 		return this;
 	}
+
+	@Override
+	public IRuntime runtime() {
+		return new IRuntime() {
+
+			@Override
+			public String name() {
+				if (GWTDisplay.isChrome())
+					return Display.CHROME;
+				else if (GWTDisplay.isOpera())
+					return Display.OPERA;
+				else if (GWTDisplay.isInternetExplorer())
+					return Display.IE;
+				return Display.OTHER_BROWSER;
+			}
+
+			@Override
+			public double version() {
+				return getBrowserVersion();
+			}
+		};
+	}
 }
