@@ -172,14 +172,6 @@ public class NavigationWidgetImpl implements INavigationWidget {
 			moreItem.decorator(new ITabDecorator() {
 				@Override
 				public void decorate(IVerticalPanel p0, ICallback<Void> cb) {
-					// IGridPanel g0 = p0.add().panel().grid().spacing(0);
-					// g0.cell(0, 0).width(moreItem.getLeftPartPopUpWidth())
-					// .panel().vertical().height(1).color().gray();
-					// g0.cell(1, 0)
-					// .width(NavigationItemImpl.POPUP_WIDTH
-					// - moreItem.getLeftPartPopUpWidth()).panel()
-					// .vertical().height(1).border().style().right()
-					// .color().gray();
 					if (DRAW_MORE_TOP) {
 						IGridPanel p02 = p0.add().panel().grid();
 						IAbsolutePanel a0 = p02.cell(0, 0).panel().absolute()
