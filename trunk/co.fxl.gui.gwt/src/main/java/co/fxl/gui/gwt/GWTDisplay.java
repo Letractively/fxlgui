@@ -425,6 +425,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 					return Display.OPERA;
 				else if (GWTDisplay.isInternetExplorer())
 					return Display.IE;
+				else if (GWTDisplay.isFirefox())
+					return Display.FIREFOX;
 				return Display.OTHER_BROWSER;
 			}
 
