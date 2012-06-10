@@ -28,6 +28,7 @@ public class FlipPage {
 	private IVerticalPanel page1;
 	private IVerticalPanel page2;
 	private IVerticalPanel active;
+	private long flips = 0;
 
 	public FlipPage(IContainer c) {
 		cardPanel = c.panel().card();
@@ -53,9 +54,12 @@ public class FlipPage {
 			active = page2;
 		cardPanel.show(active);
 		inactive.clear();
+		flips++;
 	}
 
 	public void showNext() {
+		if (flips <= 1)
+			return;
 		if (active == page2) {
 			cardPanel.show(page1);
 		} else
@@ -63,6 +67,8 @@ public class FlipPage {
 	}
 
 	public void showCurrent() {
+		if (flips <= 1)
+			return;
 		cardPanel.show(active);
 	}
 
