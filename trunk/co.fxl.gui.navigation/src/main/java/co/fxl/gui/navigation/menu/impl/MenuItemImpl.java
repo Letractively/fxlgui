@@ -148,4 +148,14 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 		else
 			style.onBack(register.title());
 	}
+
+	@Override
+	public IVerticalPanel newContentPanel() {
+		return register.newContentPanel();
+	}
+
+	@Override
+	public void showNewContentPanel() {
+		register.showNewContentPanel();
+	}
 }

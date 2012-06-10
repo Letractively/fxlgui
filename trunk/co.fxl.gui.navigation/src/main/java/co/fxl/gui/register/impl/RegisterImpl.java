@@ -103,8 +103,12 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 		buttonLabel = subPanel.add().label();
 		buttonPanel.addClickListener(this);
 		buttonPanel.addSpace(3);
-		content = widget.cardPanel.add().panel().vertical();
+		newCardPanel();
 		notifyVisible(false, DummyCallback.voidInstance());
+	}
+
+	public void newCardPanel() {
+		content = widget.cardPanel.add().panel().vertical();
 	}
 
 	@Override
@@ -291,5 +295,19 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 			}
 		}
 		this.empty = empty;
+	}
+
+	@Override
+	public IVerticalPanel newContentPanel() {
+		content.remove();
+		newCardPanel();
+//		toggleLoading(true);
+		return content;
+	}
+
+	@Override
+	public void showNewContentPanel() {
+//		toggleLoading(false);
+		widget.cardPanel.show(content);
 	}
 }

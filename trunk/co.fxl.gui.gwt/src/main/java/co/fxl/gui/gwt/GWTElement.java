@@ -257,6 +257,9 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public R visible(boolean visible) {
+		boolean visible2 = container.widget.isVisible();
+		if (visible2 == visible)
+			return (R) this;
 		if (!visible) {
 			if (visible())
 				visibleStyle = style().getProperty("display");

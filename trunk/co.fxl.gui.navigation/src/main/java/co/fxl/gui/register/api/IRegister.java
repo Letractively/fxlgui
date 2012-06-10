@@ -65,4 +65,8 @@ public interface IRegister {
 	IRegister toggleLoading(boolean loading);
 
 	void showTitleAsEmpty(boolean empty);
+
+	IVerticalPanel newContentPanel();
+
+	void showNewContentPanel();
 }

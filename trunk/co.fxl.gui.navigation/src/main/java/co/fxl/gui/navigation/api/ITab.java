@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.navigation.api;
 
+import co.fxl.gui.api.IVerticalPanel;
+
 public interface ITab<T extends ITab<T>> {
 
 	T decorator(ITabDecorator listener);
@@ -37,5 +39,9 @@ public interface ITab<T extends ITab<T>> {
 	boolean isEnabled();
 
 	void showTitleAsEmpty(boolean empty);
+
+	IVerticalPanel newContentPanel();
+
+	void showNewContentPanel();
 
 }
