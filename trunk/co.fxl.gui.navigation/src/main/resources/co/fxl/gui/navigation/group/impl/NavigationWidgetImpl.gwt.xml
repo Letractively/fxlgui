@@ -2,6 +2,7 @@
 	<inherits name='co.fxl.gui.IDisplay' />
 	<inherits name='co.fxl.gui.navigation.group.api.INavigationWidget' />
 	<inherits name='co.fxl.gui.register.impl.RegisterWidgetImpl' />
+	<inherits name='co.fxl.gui.navigation.impl.TabWidgetImpl' />
 	<source path='' />
 </module>
  

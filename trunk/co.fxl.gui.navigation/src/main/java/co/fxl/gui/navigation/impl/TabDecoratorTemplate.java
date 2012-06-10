@@ -16,14 +16,20 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.navigation.api;
+package co.fxl.gui.navigation.impl;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.navigation.api.ITabDecorator;
 
-public interface ITabDecorator {
+public abstract class TabDecoratorTemplate implements ITabDecorator {
 
-	void decorate(IVerticalPanel panel, ICallback<Void> cb);
+	protected IVerticalPanel panel;
 
-	void refresh(ICallback<Void> cb);
+	@Override
+	public void decorate(IVerticalPanel panel, ICallback<Void> cb) {
+		this.panel = panel;
+		refresh(cb);
+	}
+
 }
