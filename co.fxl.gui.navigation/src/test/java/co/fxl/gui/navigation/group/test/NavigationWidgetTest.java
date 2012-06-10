@@ -22,12 +22,11 @@ import java.lang.reflect.InvocationTargetException;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.navigation.api.ITabDecorator;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.group.api.INavigationWidget;
 import co.fxl.gui.navigation.group.impl.NavigationWidgetImplProvider;
+import co.fxl.gui.navigation.impl.TabDecoratorTemplate;
 
 public class NavigationWidgetTest {
 
@@ -51,10 +50,9 @@ public class NavigationWidgetTest {
 			for (int j = 0; j < 3; j++) {
 				final String t = "Item " + i + j;
 				INavigationItem ni = g.addTab().name(t);
-				ni.decorator(new ITabDecorator() {
+				ni.decorator(new TabDecoratorTemplate() {
 					@Override
-					public void decorate(IVerticalPanel panel,
-							ICallback<Void> cb) {
+					public void refresh(ICallback<Void> cb) {
 						panel.add().label().text(t);
 						cb.onSuccess(null);
 					}

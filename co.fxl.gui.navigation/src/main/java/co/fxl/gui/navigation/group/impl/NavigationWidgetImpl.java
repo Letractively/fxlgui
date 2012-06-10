@@ -43,16 +43,17 @@ import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DisplayResizeAdapter;
 import co.fxl.gui.impl.FlipPage;
-import co.fxl.gui.navigation.api.ITabDecorator;
 import co.fxl.gui.navigation.api.ITabWidget;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.group.api.INavigationWidget;
+import co.fxl.gui.navigation.impl.TabDecoratorTemplate;
 
 public class NavigationWidgetImpl implements INavigationWidget {
 
 	private static final boolean DYNAMIC_RESIZE = true;
-	protected static final boolean DRAW_MORE_TOP = Constants.get("NavigationWidgetImpl.DRAW_MORE_TOP", true);
+	protected static final boolean DRAW_MORE_TOP = Constants.get(
+			"NavigationWidgetImpl.DRAW_MORE_TOP", true);
 	public static boolean ADD_SEPARATORBORDER = true;
 	protected IDockPanel mainPanel;
 	IHorizontalPanel navigationPanel;
@@ -169,11 +170,11 @@ public class NavigationWidgetImpl implements INavigationWidget {
 			setUpDynamicResize = true;
 			moreGroup = new NavigationGroupImpl(this).visible(false);
 			moreItem = (NavigationItemImpl) moreGroup.addTab().moreTab();
-			moreItem.decorator(new ITabDecorator() {
+			moreItem.decorator(new TabDecoratorTemplate() {
 				@Override
-				public void decorate(IVerticalPanel p0, ICallback<Void> cb) {
+				public void refresh(ICallback<Void> cb) {
 					if (DRAW_MORE_TOP) {
-						IGridPanel p02 = p0.add().panel().grid();
+						IGridPanel p02 = panel.add().panel().grid();
 						IAbsolutePanel a0 = p02.cell(0, 0).panel().absolute()
 								.height(1);
 						a0.color().gray();
@@ -183,12 +184,12 @@ public class NavigationWidgetImpl implements INavigationWidget {
 						a1.color().white();
 						a1.border().style().right().color().gray();
 					}
-					IVerticalPanel panel = p0.add().panel().vertical()
+					IVerticalPanel p = panel.add().panel().vertical()
 							.spacing(4);
-					panel.border().style().left().style().right().style()
-							.bottom().color().gray();
-					IGridPanel gp = panel.add().panel().horizontal().add()
-							.panel().grid().spacing(6);
+					p.border().style().left().style().right().style().bottom()
+							.color().gray();
+					IGridPanel gp = p.add().panel().horizontal().add().panel()
+							.grid().spacing(6);
 					addLabelsToGridPanel(gp);
 					cb.onSuccess(null);
 				}

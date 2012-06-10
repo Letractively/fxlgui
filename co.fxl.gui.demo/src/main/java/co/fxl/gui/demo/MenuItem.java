@@ -19,8 +19,7 @@
 package co.fxl.gui.demo;
 
 import co.fxl.gui.api.ICallback;
-import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.navigation.api.ITabDecorator;
+import co.fxl.gui.navigation.impl.TabDecoratorTemplate;
 import co.fxl.gui.navigation.menu.api.IMenuItem;
 import co.fxl.gui.navigation.menu.api.IMenuWidget;
 
@@ -48,11 +47,11 @@ class MenuItem {
 	}
 
 	void apply(final Decorator decorator, final IMenuItem child) {
-		child.decorator(new ITabDecorator() {
+		child.decorator(new TabDecoratorTemplate() {
 			@Override
-			public void decorate(IVerticalPanel p, ICallback<Void> cb) {
-				decorator.decorate(exampleDecorator, p);
-				decorator.update(p);
+			public void refresh(ICallback<Void> cb) {
+				decorator.decorate(exampleDecorator, panel);
+				decorator.update(panel);
 				cb.onSuccess(null);
 			}
 		});
