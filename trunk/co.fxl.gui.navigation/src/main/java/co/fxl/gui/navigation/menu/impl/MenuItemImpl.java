@@ -22,6 +22,7 @@ import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.navigation.api.ITabDecorator;
+import co.fxl.gui.navigation.impl.BufferedPanelImpl;
 import co.fxl.gui.navigation.menu.api.IMenuItem;
 import co.fxl.gui.register.api.IRegister;
 import co.fxl.gui.register.api.IRegister.IRegisterListener;
@@ -83,21 +84,22 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	@Override
 	public void onTop(final boolean visible, final ICallback<Void> cb) {
 		if (visible)
-			listener.decorate(contentPanel(), new CallbackTemplate<Void>(cb) {
+			listener.decorate(new BufferedPanelImpl(contentPanel()),
+					new CallbackTemplate<Void>(cb) {
 
-				@Override
-				public void onSuccess(Void result) {
-					style.onFront(register.title());
-					cb.onSuccess(result);
-				}
+						@Override
+						public void onSuccess(Void result) {
+							style.onFront(register.title());
+							cb.onSuccess(result);
+						}
 
-				@Override
-				public void onFail(Throwable throwable) {
-					style.onFront(register.title());
-					super.onFail(throwable);
-				}
+						@Override
+						public void onFail(Throwable throwable) {
+							style.onFront(register.title());
+							super.onFail(throwable);
+						}
 
-			});
+					});
 		else {
 			style.onBack(register.title());
 			cb.onSuccess(null);

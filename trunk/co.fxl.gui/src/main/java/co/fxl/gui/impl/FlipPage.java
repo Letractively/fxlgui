@@ -30,6 +30,7 @@ public class FlipPage implements IColored {
 	private IVerticalPanel page2;
 	private IVerticalPanel active;
 	private long flips = 0;
+	private boolean nextCalled;
 
 	public FlipPage(IContainer c) {
 		cardPanel = c.panel().card();
@@ -40,6 +41,7 @@ public class FlipPage implements IColored {
 	}
 
 	public IContainer next() {
+		nextCalled = true;
 		if (active == page2) {
 			return page1.clear().add();
 		} else {
@@ -48,6 +50,8 @@ public class FlipPage implements IColored {
 	}
 
 	public void flip() {
+		if (!nextCalled)
+			return;
 		IVerticalPanel inactive = active;
 		if (active == page2) {
 			active = page1;
@@ -56,6 +60,7 @@ public class FlipPage implements IColored {
 		cardPanel.show(active);
 		inactive.clear();
 		flips++;
+		nextCalled = false;
 	}
 
 	public void preview() {
