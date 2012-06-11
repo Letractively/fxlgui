@@ -38,4 +38,8 @@ class FlipPageContentBuffer extends FlipPage implements IContentBuffer {
 		return false;
 	}
 
+	@Override
+	public void active(IContentPage flipPage) {
+	}
+
 }
