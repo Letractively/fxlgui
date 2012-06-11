@@ -20,6 +20,7 @@ package co.fxl.gui.navigation.impl;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.navigation.api.IBufferedPanel;
 import co.fxl.gui.navigation.api.ITabDecorator;
 
 public abstract class TabDecoratorTemplate implements ITabDecorator {
@@ -27,8 +28,8 @@ public abstract class TabDecoratorTemplate implements ITabDecorator {
 	protected IVerticalPanel panel;
 
 	@Override
-	public void decorate(IVerticalPanel panel, ICallback<Void> cb) {
-		this.panel = panel;
+	public void decorate(IBufferedPanel panel, ICallback<Void> cb) {
+		this.panel = panel.panel();
 		refresh(cb);
 	}
 

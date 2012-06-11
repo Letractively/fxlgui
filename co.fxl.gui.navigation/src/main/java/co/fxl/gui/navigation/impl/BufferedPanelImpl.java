@@ -16,13 +16,27 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.navigation.api;
+package co.fxl.gui.navigation.impl;
 
-import co.fxl.gui.api.ICallback;
+import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.navigation.api.IBufferedPanel;
 
-public interface ITabDecorator {
+public class BufferedPanelImpl implements IBufferedPanel {
 
-	void decorate(IBufferedPanel panel, ICallback<Void> cb);
+	private IVerticalPanel panel;
 
-	void refresh(ICallback<Void> cb);
+	public BufferedPanelImpl(IVerticalPanel panel) {
+		this.panel = panel;
+	}
+
+	@Override
+	public IVerticalPanel panel() {
+		return panel;
+	}
+
+	@Override
+	public IBufferedPanel show() {
+		return this;
+	}
+
 }

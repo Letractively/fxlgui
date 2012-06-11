@@ -37,6 +37,7 @@ import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.navigation.api.ITabDecorator;
 import co.fxl.gui.navigation.group.api.INavigationItem;
+import co.fxl.gui.navigation.impl.BufferedPanelImpl;
 
 public class NavigationItemImpl extends LazyClickListener implements
 		INavigationItem {
@@ -184,25 +185,27 @@ public class NavigationItemImpl extends LazyClickListener implements
 				IVerticalPanel panel = popUp.container().panel().vertical();
 				panel.width(POPUP_WIDTH);
 				panel.color().white();
-				decorator.decorate(panel, new CallbackTemplate<Void>() {
-					@Override
-					public void onSuccess(Void result) {
-						border.color().gray();
-						// border.style().shadow();
-						buttonPanel.color().remove();
-						buttonPanel.color().white();
-						button.font().color().black();
-						refreshResource("more_black.png");
-						// refresh.resource("more_black.png");
-						int x = basicPanel.offsetX() - getLeftPartPopUpWidth();
-						if (x < 10)
-							x = 10;
-						popUp.offset(x,
-								basicPanel.offsetY() + basicPanel.height());
-						popUp.visible(true);
-						clickable(false);
-					}
-				});
+				decorator.decorate(new BufferedPanelImpl(panel),
+						new CallbackTemplate<Void>() {
+							@Override
+							public void onSuccess(Void result) {
+								border.color().gray();
+								// border.style().shadow();
+								buttonPanel.color().remove();
+								buttonPanel.color().white();
+								button.font().color().black();
+								refreshResource("more_black.png");
+								// refresh.resource("more_black.png");
+								int x = basicPanel.offsetX()
+										- getLeftPartPopUpWidth();
+								if (x < 10)
+									x = 10;
+								popUp.offset(x, basicPanel.offsetY()
+										+ basicPanel.height());
+								popUp.visible(true);
+								clickable(false);
+							}
+						});
 			}
 		} else
 			setActive(true);
@@ -259,31 +262,33 @@ public class NavigationItemImpl extends LazyClickListener implements
 							});
 				}
 				try {
-					decorator.decorate(panel0, new CallbackTemplate<Void>() {
+					decorator.decorate(new BufferedPanelImpl(panel0),
+							new CallbackTemplate<Void>() {
 
-						private void removeRegistrations() {
-							if (reg1 != null) {
-								reg1.remove();
-								reg2.remove();
-								widget.flipPage().reset();
-							}
-						}
+								private void removeRegistrations() {
+									if (reg1 != null) {
+										reg1.remove();
+										reg2.remove();
+										widget.flipPage().reset();
+									}
+								}
 
-						@Override
-						public void onSuccess(Void result) {
-							removeRegistrations();
-							Log.instance().stop("Showing tab " + button.text());
-							flipRegister(flipAfterReturn());
-							widget.update();
-						}
+								@Override
+								public void onSuccess(Void result) {
+									removeRegistrations();
+									Log.instance().stop(
+											"Showing tab " + button.text());
+									flipRegister(flipAfterReturn());
+									widget.update();
+								}
 
-						@Override
-						public void onFail(Throwable t) {
-							removeRegistrations();
-							resetLabel();
-							super.onFail(t);
-						}
-					});
+								@Override
+								public void onFail(Throwable t) {
+									removeRegistrations();
+									resetLabel();
+									super.onFail(t);
+								}
+							});
 				} catch (Exception e) {
 					onFail(e);
 				}
