@@ -18,11 +18,48 @@
  */
 package co.fxl.gui.navigation.group.impl;
 
-import co.fxl.gui.api.IColored;
+import co.fxl.gui.api.ICardPanel;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.impl.IContentPage;
 
-interface IContentBuffer extends IColored {
+public class CardPanelContentBuffer implements IContentBuffer {
 
-	IContentPage newPage();
+	private ICardPanel cards;
+
+	public CardPanelContentBuffer(IContainer add) {
+		cards = add.panel().card();
+	}
+
+	@Override
+	public IContentPage newPage() {
+		return new IContentPage() {
+
+			@Override
+			public void back() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void preview() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public IContainer next() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void flip() {
+				throw new UnsupportedOperationException();
+			}
+
+		};
+	}
+
+	@Override
+	public IColor color() {
+		throw new UnsupportedOperationException();
+	}
 
 }

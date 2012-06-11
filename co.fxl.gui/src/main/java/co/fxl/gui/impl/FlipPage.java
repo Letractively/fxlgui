@@ -19,10 +19,11 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.ICardPanel;
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IVerticalPanel;
 
-public class FlipPage implements IContentPage {
+public class FlipPage implements IContentPage, IColored {
 
 	private ICardPanel cardPanel;
 	private IVerticalPanel page1;

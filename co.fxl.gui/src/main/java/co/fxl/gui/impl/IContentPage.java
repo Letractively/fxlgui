@@ -18,10 +18,9 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IContainer;
 
-public interface IContentPage extends IColored {
+public interface IContentPage {
 
 	void back();
 
