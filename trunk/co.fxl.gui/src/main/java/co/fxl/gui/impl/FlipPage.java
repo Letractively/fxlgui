@@ -22,7 +22,7 @@ import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IVerticalPanel;
 
-public class FlipPage {
+public class FlipPage implements IDoubleBuffer {
 
 	private ICardPanel cardPanel;
 	private IVerticalPanel page1;
@@ -38,6 +38,7 @@ public class FlipPage {
 		cardPanel.show(page1);
 	}
 
+	@Override
 	public IContainer next() {
 		if (active == page2) {
 			return page1.clear().add();
@@ -46,7 +47,8 @@ public class FlipPage {
 		}
 	}
 
-	public void flip() {
+	@Override
+	public IDoubleBuffer flip() {
 		IVerticalPanel inactive = active;
 		if (active == page2) {
 			active = page1;
@@ -55,6 +57,7 @@ public class FlipPage {
 		cardPanel.show(active);
 		inactive.clear();
 		flips++;
+		return this;
 	}
 
 	public void showNext() {
