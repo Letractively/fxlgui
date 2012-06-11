@@ -92,6 +92,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		history = mainPanel.center().panel().card();
 		panel0 = history.add().panel().vertical();
 		flipPage = new FlipPage(panel0.add());
+		activeBackground(flipPage);
 		panel1 = history.add().panel().vertical();
 		history.show(panel0);
 	}

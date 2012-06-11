@@ -19,10 +19,11 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.ICardPanel;
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IVerticalPanel;
 
-public class FlipPage implements IDoubleBuffer {
+public class FlipPage implements IDoubleBuffer, IColored {
 
 	private ICardPanel cardPanel;
 	private IVerticalPanel page1;
@@ -85,6 +86,26 @@ public class FlipPage implements IDoubleBuffer {
 		cardPanel.height(height);
 		page1.height(height);
 		page2.height(height);
+	}
+
+	@Override
+	public IColor color() {
+		return new ColorTemplate() {
+
+			@Override
+			public IColor remove() {
+				page1.color().remove();
+				page2.color().remove();
+				return this;
+			}
+
+			@Override
+			protected IColor setRGB(int r, int g, int b) {
+				page1.color().rgb(r, g, b);
+				page2.color().rgb(r, g, b);
+				return this;
+			}
+		};
 	}
 
 }
