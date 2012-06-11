@@ -234,7 +234,6 @@ public class NavigationItemImpl extends LazyClickListener implements
 				Log.instance().start("Showing tab " + button.text());
 				IVerticalPanel panel0 = widget.flipPage().next().panel()
 						.vertical();
-				widget.activeBackground(panel0);
 				int width = buttonPanel.width();
 				int height = buttonPanel.height();
 				showLoading();
