@@ -226,9 +226,6 @@ public class NavigationItemImpl extends LazyClickListener implements
 	NavigationItemImpl setActive(boolean viaClick) {
 		forkLabelAsActive(viaClick, new CallbackTemplate<Void>() {
 
-			// private ListenerRegistration reg1 = null;
-			// private ListenerRegistration reg2 = null;
-
 			@Override
 			public void onSuccess(Void result) {
 				Log.instance().start("Showing tab " + button.text());
@@ -240,25 +237,9 @@ public class NavigationItemImpl extends LazyClickListener implements
 				buttonPanel.size(width, height);
 				if (!flipAfterReturn())
 					flipPage();
-				if (USE_TEMP_FLIP && flipAfterReturn()) {
+				else if (USE_TEMP_FLIP) {
 					widget.flipPage().preview();
 					widget.listeningOnServerCalls = true;
-					// Events.instance().clear();
-					// reg1 =
-					// Events.instance().register(Events.SERVER_CALL_START,
-					// new EventListener() {
-					// @Override
-					// public void notifyEvent() {
-					// widget.flipPage().reset();
-					// }
-					// });
-					// reg2 = Events.instance().register(
-					// Events.SERVER_CALL_RETURN, new EventListener() {
-					// @Override
-					// public void notifyEvent() {
-					// widget.flipPage().preview();
-					// }
-					// });
 				}
 				try {
 					decorator.decorate(new BufferedPanelImpl(panel0),
@@ -269,13 +250,13 @@ public class NavigationItemImpl extends LazyClickListener implements
 										widget.listeningOnServerCalls = false;
 										widget.flipPage().reset();
 									}
+									Log.instance().stop(
+											"Showing tab " + button.text());
 								}
 
 								@Override
 								public void onSuccess(Void result) {
 									removeRegistrations();
-									Log.instance().stop(
-											"Showing tab " + button.text());
 									flipRegister(flipAfterReturn());
 									widget.update();
 								}
