@@ -26,7 +26,7 @@ import co.fxl.gui.impl.IContentPage;
 public class CardPanelContentBuffer implements IContentBuffer {
 
 	private final class ContentPage implements IContentPage {
-		
+
 		@Override
 		public void back() {
 			throw new UnsupportedOperationException();
@@ -39,18 +39,21 @@ public class CardPanelContentBuffer implements IContentBuffer {
 
 		@Override
 		public IContainer next() {
+			next = this;
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
 		public void flip() {
+			last = this;
 			throw new UnsupportedOperationException();
 		}
 	}
 
 	private ICardPanel cards;
 	private IColor color = new ColorMemento();
-	private ContentPage current;
+	private ContentPage next;
+	private ContentPage last;
 
 	public CardPanelContentBuffer(IContainer add) {
 		cards = add.panel().card();
@@ -58,7 +61,7 @@ public class CardPanelContentBuffer implements IContentBuffer {
 
 	@Override
 	public IContentPage newPage() {
-		return current = new ContentPage();
+		return new ContentPage();
 	}
 
 	@Override
@@ -68,12 +71,12 @@ public class CardPanelContentBuffer implements IContentBuffer {
 
 	@Override
 	public void preview() {
-		current.preview();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void back() {
-		current.back();
+		throw new UnsupportedOperationException();
 	}
 
 }
