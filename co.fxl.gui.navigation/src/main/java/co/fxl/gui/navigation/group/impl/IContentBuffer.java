@@ -25,4 +25,8 @@ interface IContentBuffer extends IColored {
 
 	IContentPage newPage();
 
+	void back();
+
+	void preview();
+
 }

@@ -53,12 +53,21 @@ public class CardPanelContentBuffer implements IContentBuffer {
 			public void flip() {
 				throw new UnsupportedOperationException();
 			}
-
 		};
 	}
 
 	@Override
 	public IColor color() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void back() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void preview() {
 		throw new UnsupportedOperationException();
 	}
 

@@ -129,7 +129,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		return l.horizontal();
 	}
 
-	FlipPageContentBuffer flipPage() {
+	IContentBuffer flipPage() {
 		panel0();
 		return flipPage;
 	}

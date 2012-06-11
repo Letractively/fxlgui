@@ -30,6 +30,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.IContentPage;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.navigation.api.ITabDecorator;
@@ -67,6 +68,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	IFocusPanel focusPanel;
 	int[] colorInactive;
 	private int[] colorInactiveGradient;
+	private IContentPage flipPage;
 
 	NavigationItemImpl(NavigationGroupImpl group) {
 		this.group = group;
@@ -95,6 +97,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 			buttonPanel.addSpace(3);
 			buttonPanel.addClickListener(this);
 			showLabelAsInactive();
+			flipPage = widget.flipPage().newPage();
 		}
 	}
 
@@ -229,8 +232,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 			@Override
 			public void onSuccess(Void result) {
 				Log.instance().start("Showing tab " + button.text());
-				IVerticalPanel panel0 = widget.flipPage().next().panel()
-						.vertical();
+				IVerticalPanel panel0 = flipPage.next().panel().vertical();
 				int width = buttonPanel.width();
 				int height = buttonPanel.height();
 				showLoading();
@@ -416,7 +418,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	void flipPage() {
-		widget.flipPage().flip();
+		flipPage.flip();
 	}
 
 	@Override
