@@ -53,6 +53,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	private static final boolean DYNAMIC_RESIZE = true;
 	protected static final boolean DRAW_MORE_TOP = Constants.get(
 			"NavigationWidgetImpl.DRAW_MORE_TOP", true);
+	private static final boolean USE_MULTI_BUFFER = false;
 	public static boolean ADD_SEPARATORBORDER = true;
 	protected IDockPanel mainPanel;
 	IHorizontalPanel navigationPanel;
@@ -92,7 +93,8 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		navigationPanel.addSpace(10);
 		history = mainPanel.center().panel().card();
 		panel0 = history.add().panel().vertical();
-		flipPage = new FlipPageContentBuffer(panel0.add());
+		flipPage = USE_MULTI_BUFFER ? new MultiContentBuffer(panel0.add())
+				: new DoubleContentBuffer(panel0.add());
 		activeBackground(flipPage);
 		panel1 = history.add().panel().vertical();
 		history.show(panel0);
