@@ -69,7 +69,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	IHorizontalPanel masterPanel;
 	IGridPanel hPanel;
 	List<NavigationGroupImpl> groups = new LinkedList<NavigationGroupImpl>();
-	private ContentBuffer flipPage;
+	private FlipPageContentBuffer flipPage;
 	private boolean panel0front;
 	private NavigationGroupImpl moreGroup;
 	private boolean setUpDynamicResize;
@@ -92,7 +92,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		navigationPanel.addSpace(10);
 		history = mainPanel.center().panel().card();
 		panel0 = history.add().panel().vertical();
-		flipPage = new ContentBuffer(panel0.add());
+		flipPage = new FlipPageContentBuffer(panel0.add());
 		activeBackground(flipPage);
 		panel1 = history.add().panel().vertical();
 		history.show(panel0);
@@ -129,7 +129,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		return l.horizontal();
 	}
 
-	ContentBuffer flipPage() {
+	FlipPageContentBuffer flipPage() {
 		panel0();
 		return flipPage;
 	}

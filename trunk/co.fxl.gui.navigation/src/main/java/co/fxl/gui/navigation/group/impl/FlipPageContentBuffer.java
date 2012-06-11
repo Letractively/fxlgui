@@ -22,13 +22,14 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.impl.FlipPage;
 import co.fxl.gui.impl.IContentPage;
 
-class ContentBuffer extends FlipPage {
+class FlipPageContentBuffer extends FlipPage implements IContentBuffer {
 
-	public ContentBuffer(IContainer add) {
+	public FlipPageContentBuffer(IContainer add) {
 		super(add);
 	}
 
-	IContentPage newPage() {
+	@Override
+	public IContentPage newPage() {
 		return this;
 	}
 
