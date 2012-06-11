@@ -16,20 +16,19 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.navigation.group.impl;
+package co.fxl.gui.impl;
 
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.impl.FlipPage;
-import co.fxl.gui.impl.IContentPage;
 
-class ContentBuffer extends FlipPage {
+public interface IContentPage extends IColored {
 
-	public ContentBuffer(IContainer add) {
-		super(add);
-	}
+	void back();
 
-	IContentPage newPage() {
-		return this;
-	}
+	void preview();
+
+	IContainer next();
+
+	void flip();
 
 }

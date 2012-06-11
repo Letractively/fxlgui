@@ -19,11 +19,10 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.ICardPanel;
-import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IVerticalPanel;
 
-public class FlipPage implements IColored {
+public class FlipPage implements IContentPage {
 
 	private ICardPanel cardPanel;
 	private IVerticalPanel page1;
@@ -40,6 +39,7 @@ public class FlipPage implements IColored {
 		cardPanel.show(page1);
 	}
 
+	@Override
 	public IContainer next() {
 		nextCalled = true;
 		if (active == page2) {
@@ -49,6 +49,7 @@ public class FlipPage implements IColored {
 		}
 	}
 
+	@Override
 	public void flip() {
 		if (!nextCalled)
 			return;
@@ -63,6 +64,7 @@ public class FlipPage implements IColored {
 		nextCalled = false;
 	}
 
+	@Override
 	public void preview() {
 		if (flips <= 1)
 			return;
@@ -72,7 +74,8 @@ public class FlipPage implements IColored {
 			cardPanel.show(page2);
 	}
 
-	public void reset() {
+	@Override
+	public void back() {
 		if (flips <= 1)
 			return;
 		cardPanel.show(active);
