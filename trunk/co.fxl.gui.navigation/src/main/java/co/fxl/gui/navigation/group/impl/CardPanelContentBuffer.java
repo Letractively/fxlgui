@@ -53,7 +53,6 @@ public class CardPanelContentBuffer implements IContentBuffer {
 
 		@Override
 		public IContainer next() {
-			next = this;
 			return panel.clear().add();
 		}
 
@@ -97,6 +96,11 @@ public class CardPanelContentBuffer implements IContentBuffer {
 	@Override
 	public boolean supportsRefresh() {
 		return true;
+	}
+
+	@Override
+	public void active(IContentPage flipPage) {
+		next = (ContentPage) flipPage;
 	}
 
 }

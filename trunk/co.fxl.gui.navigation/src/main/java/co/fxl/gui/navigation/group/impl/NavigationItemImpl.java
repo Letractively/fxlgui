@@ -233,6 +233,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 			@Override
 			public void onSuccess(Void result) {
 				Log.instance().start("Showing tab " + button.text());
+				widget.flipPage().active(flipPage);
 				int width = buttonPanel.width();
 				int height = buttonPanel.height();
 				showLoading();

@@ -30,4 +30,6 @@ interface IContentBuffer extends IColored {
 	void preview();
 
 	boolean supportsRefresh();
+
+	void active(IContentPage flipPage);
 }
