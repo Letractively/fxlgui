@@ -60,7 +60,7 @@ public class FlipPage implements IDoubleBuffer {
 		return this;
 	}
 
-	public void showNext() {
+	public void preview() {
 		if (flips <= 1)
 			return;
 		if (active == page2) {
@@ -69,7 +69,7 @@ public class FlipPage implements IDoubleBuffer {
 			cardPanel.show(page2);
 	}
 
-	public void showCurrent() {
+	public void reset() {
 		if (flips <= 1)
 			return;
 		cardPanel.show(active);
