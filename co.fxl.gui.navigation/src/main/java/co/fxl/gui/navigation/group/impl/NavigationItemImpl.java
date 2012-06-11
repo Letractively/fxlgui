@@ -242,20 +242,20 @@ public class NavigationItemImpl extends LazyClickListener implements
 				if (!flipAfterReturn())
 					flipPage();
 				if (USE_TEMP_FLIP && flipAfterReturn()) {
-					widget.flipPage().showNext();
+					widget.flipPage().preview();
 					Events.instance().clear();
 					reg1 = Events.instance().register(Events.SERVER_CALL_START,
 							new EventListener() {
 								@Override
 								public void notifyEvent() {
-									widget.flipPage().showCurrent();
+									widget.flipPage().reset();
 								}
 							});
 					reg2 = Events.instance().register(
 							Events.SERVER_CALL_RETURN, new EventListener() {
 								@Override
 								public void notifyEvent() {
-									widget.flipPage().showNext();
+									widget.flipPage().preview();
 								}
 							});
 				}
@@ -266,7 +266,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 							if (reg1 != null) {
 								reg1.remove();
 								reg2.remove();
-								widget.flipPage().showCurrent();
+								widget.flipPage().reset();
 							}
 						}
 
