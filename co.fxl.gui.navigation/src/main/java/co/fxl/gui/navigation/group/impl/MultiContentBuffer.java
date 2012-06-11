@@ -24,7 +24,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.ColorMemento;
 import co.fxl.gui.impl.IContentPage;
 
-public class CardPanelContentBuffer implements IContentBuffer {
+class MultiContentBuffer implements IContentBuffer {
 
 	private final class ContentPage implements IContentPage {
 
@@ -61,6 +61,7 @@ public class CardPanelContentBuffer implements IContentBuffer {
 			next = null;
 			last = this;
 			front();
+			flips++;
 		}
 	}
 
@@ -68,8 +69,9 @@ public class CardPanelContentBuffer implements IContentBuffer {
 	private ColorMemento color = new ColorMemento();
 	private ContentPage next;
 	private ContentPage last;
+	private long flips = 0;
 
-	public CardPanelContentBuffer(IContainer add) {
+	MultiContentBuffer(IContainer add) {
 		cards = add.panel().card();
 	}
 
@@ -85,11 +87,15 @@ public class CardPanelContentBuffer implements IContentBuffer {
 
 	@Override
 	public void preview() {
+		if (flips <= 1)
+			return;
 		next.preview();
 	}
 
 	@Override
 	public void back() {
+		if (flips <= 1)
+			return;
 		next.back();
 	}
 
