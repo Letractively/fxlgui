@@ -18,11 +18,11 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IVerticalPanel;
 
-public interface IDoubleBuffer {
+public interface IBufferedPanel {
 
-	IContainer next();
+	IVerticalPanel panel();
 
-	IDoubleBuffer flip();
+	IBufferedPanel show();
 }
