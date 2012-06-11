@@ -232,7 +232,6 @@ public class NavigationItemImpl extends LazyClickListener implements
 			@Override
 			public void onSuccess(Void result) {
 				Log.instance().start("Showing tab " + button.text());
-				IVerticalPanel panel0 = flipPage.next().panel().vertical();
 				int width = buttonPanel.width();
 				int height = buttonPanel.height();
 				showLoading();
@@ -244,6 +243,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 					widget.listeningOnServerCalls = true;
 				}
 				try {
+					IVerticalPanel panel0 = flipPage.next().panel().vertical();
 					decorator.decorate(new BufferedPanelImpl(panel0),
 							new CallbackTemplate<Void>() {
 
