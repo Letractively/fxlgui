@@ -20,6 +20,7 @@ package co.fxl.gui.navigation.group.impl;
 
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.ColorMemento;
 import co.fxl.gui.impl.IContentPage;
 
@@ -27,31 +28,43 @@ public class CardPanelContentBuffer implements IContentBuffer {
 
 	private final class ContentPage implements IContentPage {
 
+		private IVerticalPanel panel;
+
+		private ContentPage() {
+			panel = cards.add().panel().vertical();
+			color.forward(panel.color());
+		}
+
 		@Override
 		public void back() {
-			throw new UnsupportedOperationException();
+			last.front();
+		}
+
+		private void front() {
+			cards.show(panel);
 		}
 
 		@Override
 		public void preview() {
-			throw new UnsupportedOperationException();
+			next.front();
 		}
 
 		@Override
 		public IContainer next() {
 			next = this;
-			throw new UnsupportedOperationException();
+			return panel.clear().add();
 		}
 
 		@Override
 		public void flip() {
+			next = null;
 			last = this;
-			throw new UnsupportedOperationException();
+			front();
 		}
 	}
 
 	private ICardPanel cards;
-	private IColor color = new ColorMemento();
+	private ColorMemento color = new ColorMemento();
 	private ContentPage next;
 	private ContentPage last;
 
@@ -71,12 +84,12 @@ public class CardPanelContentBuffer implements IContentBuffer {
 
 	@Override
 	public void preview() {
-		throw new UnsupportedOperationException();
+		next.preview();
 	}
 
 	@Override
 	public void back() {
-		throw new UnsupportedOperationException();
+		next.back();
 	}
 
 }
