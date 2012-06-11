@@ -33,4 +33,9 @@ class FlipPageContentBuffer extends FlipPage implements IContentBuffer {
 		return this;
 	}
 
+	@Override
+	public boolean supportsRefresh() {
+		return false;
+	}
+
 }
