@@ -37,7 +37,8 @@ public class CardPanelContentBuffer implements IContentBuffer {
 
 		@Override
 		public void back() {
-			last.front();
+			if (last != null)
+				last.front();
 		}
 
 		private void front() {
@@ -46,7 +47,8 @@ public class CardPanelContentBuffer implements IContentBuffer {
 
 		@Override
 		public void preview() {
-			next.front();
+			if (last != null)
+				next.front();
 		}
 
 		@Override

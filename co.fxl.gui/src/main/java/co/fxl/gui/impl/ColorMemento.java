@@ -31,7 +31,8 @@ public class ColorMemento extends ColorTemplate {
 
 	@Override
 	public IColor remove() {
-		throw new UnsupportedOperationException();
+		rgb = null;
+		return this;
 	}
 
 	@Override
@@ -40,7 +41,10 @@ public class ColorMemento extends ColorTemplate {
 	}
 
 	public void forward(IColor color) {
-		color.rgb(rgb[0], rgb[1], rgb[2]);
+		if (rgb == null)
+			color.remove();
+		else
+			color.rgb(rgb[0], rgb[1], rgb[2]);
 	}
 
 }
