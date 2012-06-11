@@ -20,11 +20,37 @@ package co.fxl.gui.navigation.group.impl;
 
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.impl.ColorMemento;
 import co.fxl.gui.impl.IContentPage;
 
 public class CardPanelContentBuffer implements IContentBuffer {
 
+	private final class ContentPage implements IContentPage {
+		
+		@Override
+		public void back() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void preview() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public IContainer next() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void flip() {
+			throw new UnsupportedOperationException();
+		}
+	}
+
 	private ICardPanel cards;
+	private IColor color = new ColorMemento();
+	private ContentPage current;
 
 	public CardPanelContentBuffer(IContainer add) {
 		cards = add.panel().card();
@@ -32,43 +58,22 @@ public class CardPanelContentBuffer implements IContentBuffer {
 
 	@Override
 	public IContentPage newPage() {
-		return new IContentPage() {
-
-			@Override
-			public void back() {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
-			public void preview() {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
-			public IContainer next() {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
-			public void flip() {
-				throw new UnsupportedOperationException();
-			}
-		};
+		return current = new ContentPage();
 	}
 
 	@Override
 	public IColor color() {
-		throw new UnsupportedOperationException();
+		return color;
 	}
 
 	@Override
 	public void back() {
-		throw new UnsupportedOperationException();
+		current.back();
 	}
 
 	@Override
 	public void preview() {
-		throw new UnsupportedOperationException();
+		current.preview();
 	}
 
 }
