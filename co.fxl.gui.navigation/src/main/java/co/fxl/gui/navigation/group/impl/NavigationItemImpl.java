@@ -248,7 +248,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 								private void removeRegistrations() {
 									if (USE_TEMP_FLIP && flipAfterReturn()) {
 										widget.listeningOnServerCalls = false;
-										widget.flipPage().reset();
+										widget.flipPage().back();
 									}
 									Log.instance().stop(
 											"Showing tab " + button.text());
