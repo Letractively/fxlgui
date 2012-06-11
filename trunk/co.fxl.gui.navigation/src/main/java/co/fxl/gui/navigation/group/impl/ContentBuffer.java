@@ -35,7 +35,7 @@ class ContentBuffer implements IColored {
 		return flipPage.color();
 	}
 
-	void reset() {
+	void back() {
 		flipPage.reset();
 	}
 

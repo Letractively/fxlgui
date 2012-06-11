@@ -401,7 +401,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 
 	public void notifyServerCallStart() {
 		if (listeningOnServerCalls)
-			flipPage().reset();
+			flipPage().back();
 	}
 
 	public void notifyServerCallReturn() {
