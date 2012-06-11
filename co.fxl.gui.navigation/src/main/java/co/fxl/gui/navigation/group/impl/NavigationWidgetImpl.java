@@ -69,7 +69,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	IHorizontalPanel masterPanel;
 	IGridPanel hPanel;
 	List<NavigationGroupImpl> groups = new LinkedList<NavigationGroupImpl>();
-	private FlipPageContentBuffer flipPage;
+	private IContentBuffer flipPage;
 	private boolean panel0front;
 	private NavigationGroupImpl moreGroup;
 	private boolean setUpDynamicResize;
