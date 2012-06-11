@@ -21,6 +21,8 @@ package co.fxl.gui.impl;
 import co.fxl.gui.api.IAlignment;
 
 public class AlignmentMemento<T> implements IAlignment<T> {
+	
+	// TODO move everything except Display & DisplayTemplate to co.fxl.gui.util.api & impl
 
 	public enum Type {
 		BEGIN, CENTER, END;
