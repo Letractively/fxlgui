@@ -76,6 +76,8 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	private boolean setUpDynamicResize;
 	private NavigationItemImpl moreItem;
 	private IVerticalPanel borderTop;
+	boolean listeningOnServerCalls;
+	public static NavigationWidgetImpl instance;
 
 	public NavigationWidgetImpl(IContainer layout) {
 		mainPanel = layout.panel().dock();
@@ -95,6 +97,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		activeBackground(flipPage);
 		panel1 = history.add().panel().vertical();
 		history.show(panel0);
+		instance = this;
 	}
 
 	void addSeparatorBorder() {
@@ -395,5 +398,15 @@ public class NavigationWidgetImpl implements INavigationWidget {
 			}
 			r++;
 		}
+	}
+
+	public void notifyServerCallStart() {
+		if (listeningOnServerCalls)
+			flipPage().reset();
+	}
+
+	public void notifyServerCallReturn() {
+		if (listeningOnServerCalls)
+			flipPage().preview();
 	}
 }
