@@ -69,6 +69,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	int[] colorInactive;
 	private int[] colorInactiveGradient;
 	private IContentPage flipPage;
+	private boolean isFirst = true;
 
 	NavigationItemImpl(NavigationGroupImpl group) {
 		this.group = group;
@@ -243,33 +244,37 @@ public class NavigationItemImpl extends LazyClickListener implements
 					widget.listeningOnServerCalls = true;
 				}
 				try {
-					IVerticalPanel panel0 = flipPage.next().panel().vertical();
-					decorator.decorate(new BufferedPanelImpl(panel0),
-							new CallbackTemplate<Void>() {
+					CallbackTemplate<Void> cb = new CallbackTemplate<Void>() {
 
-								private void removeRegistrations() {
-									if (USE_TEMP_FLIP && flipAfterReturn()) {
-										widget.listeningOnServerCalls = false;
-										widget.flipPage().back();
-									}
-									Log.instance().stop(
-											"Showing tab " + button.text());
-								}
+						private void removeRegistrations() {
+							if (USE_TEMP_FLIP && flipAfterReturn()) {
+								widget.listeningOnServerCalls = false;
+								widget.flipPage().back();
+							}
+							Log.instance().stop("Showing tab " + button.text());
+							isFirst = false;
+						}
 
-								@Override
-								public void onSuccess(Void result) {
-									removeRegistrations();
-									flipRegister(flipAfterReturn());
-									widget.update();
-								}
+						@Override
+						public void onSuccess(Void result) {
+							removeRegistrations();
+							flipRegister(flipAfterReturn());
+							widget.update();
+						}
 
-								@Override
-								public void onFail(Throwable t) {
-									removeRegistrations();
-									resetLabel();
-									super.onFail(t);
-								}
-							});
+						@Override
+						public void onFail(Throwable t) {
+							removeRegistrations();
+							resetLabel();
+							super.onFail(t);
+						}
+					};
+					if (isFirst || !widget.flipPage().supportsRefresh()) {
+						decorator.decorate(new BufferedPanelImpl(flipPage
+								.next().panel().vertical()), cb);
+					} else {
+						decorator.refresh(cb);
+					}
 				} catch (Exception e) {
 					onFail(e);
 				}

@@ -94,4 +94,9 @@ public class CardPanelContentBuffer implements IContentBuffer {
 		next.back();
 	}
 
+	@Override
+	public boolean supportsRefresh() {
+		return true;
+	}
+
 }

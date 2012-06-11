@@ -29,4 +29,5 @@ interface IContentBuffer extends IColored {
 
 	void preview();
 
+	boolean supportsRefresh();
 }
