@@ -42,7 +42,6 @@ import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DisplayResizeAdapter;
-import co.fxl.gui.impl.FlipPage;
 import co.fxl.gui.navigation.api.ITabWidget;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
@@ -70,7 +69,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 	IHorizontalPanel masterPanel;
 	IGridPanel hPanel;
 	List<NavigationGroupImpl> groups = new LinkedList<NavigationGroupImpl>();
-	private FlipPage flipPage;
+	private ContentBuffer flipPage;
 	private boolean panel0front;
 	private NavigationGroupImpl moreGroup;
 	private boolean setUpDynamicResize;
@@ -93,7 +92,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		navigationPanel.addSpace(10);
 		history = mainPanel.center().panel().card();
 		panel0 = history.add().panel().vertical();
-		flipPage = new FlipPage(panel0.add());
+		flipPage = new ContentBuffer(panel0.add());
 		activeBackground(flipPage);
 		panel1 = history.add().panel().vertical();
 		history.show(panel0);
@@ -130,7 +129,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		return l.horizontal();
 	}
 
-	FlipPage flipPage() {
+	ContentBuffer flipPage() {
 		panel0();
 		return flipPage;
 	}
