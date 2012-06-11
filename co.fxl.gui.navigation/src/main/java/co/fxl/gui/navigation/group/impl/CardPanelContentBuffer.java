@@ -67,13 +67,13 @@ public class CardPanelContentBuffer implements IContentBuffer {
 	}
 
 	@Override
-	public void back() {
-		current.back();
+	public void preview() {
+		current.preview();
 	}
 
 	@Override
-	public void preview() {
-		current.preview();
+	public void back() {
+		current.back();
 	}
 
 }
