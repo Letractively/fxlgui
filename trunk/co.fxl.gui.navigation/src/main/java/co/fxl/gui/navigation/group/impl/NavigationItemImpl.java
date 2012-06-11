@@ -30,9 +30,6 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
-import co.fxl.gui.impl.Events;
-import co.fxl.gui.impl.Events.EventListener;
-import co.fxl.gui.impl.Events.ListenerRegistration;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.navigation.api.ITabDecorator;
@@ -229,8 +226,8 @@ public class NavigationItemImpl extends LazyClickListener implements
 	NavigationItemImpl setActive(boolean viaClick) {
 		forkLabelAsActive(viaClick, new CallbackTemplate<Void>() {
 
-			private ListenerRegistration reg1 = null;
-			private ListenerRegistration reg2 = null;
+			// private ListenerRegistration reg1 = null;
+			// private ListenerRegistration reg2 = null;
 
 			@Override
 			public void onSuccess(Void result) {
@@ -245,30 +242,31 @@ public class NavigationItemImpl extends LazyClickListener implements
 					flipPage();
 				if (USE_TEMP_FLIP && flipAfterReturn()) {
 					widget.flipPage().preview();
-					Events.instance().clear();
-					reg1 = Events.instance().register(Events.SERVER_CALL_START,
-							new EventListener() {
-								@Override
-								public void notifyEvent() {
-									widget.flipPage().reset();
-								}
-							});
-					reg2 = Events.instance().register(
-							Events.SERVER_CALL_RETURN, new EventListener() {
-								@Override
-								public void notifyEvent() {
-									widget.flipPage().preview();
-								}
-							});
+					widget.listeningOnServerCalls = true;
+					// Events.instance().clear();
+					// reg1 =
+					// Events.instance().register(Events.SERVER_CALL_START,
+					// new EventListener() {
+					// @Override
+					// public void notifyEvent() {
+					// widget.flipPage().reset();
+					// }
+					// });
+					// reg2 = Events.instance().register(
+					// Events.SERVER_CALL_RETURN, new EventListener() {
+					// @Override
+					// public void notifyEvent() {
+					// widget.flipPage().preview();
+					// }
+					// });
 				}
 				try {
 					decorator.decorate(new BufferedPanelImpl(panel0),
 							new CallbackTemplate<Void>() {
 
 								private void removeRegistrations() {
-									if (reg1 != null) {
-										reg1.remove();
-										reg2.remove();
+									if (USE_TEMP_FLIP && flipAfterReturn()) {
+										widget.listeningOnServerCalls = false;
 										widget.flipPage().reset();
 									}
 								}
