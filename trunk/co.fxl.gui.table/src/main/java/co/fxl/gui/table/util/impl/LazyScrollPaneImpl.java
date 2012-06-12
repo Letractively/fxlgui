@@ -106,6 +106,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		rows2Paint = height / minRowHeight;
 		if (rows2Paint > size)
 			rows2Paint = size;
+		assert rows2Paint > 0 || size == 0 : "Illegal value combination for lazy scroll pane: "
+				+ height + " / " + minRowHeight + " / " + size;
 		return this;
 	}
 
@@ -175,11 +177,11 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		v.color().white();
 		if (dragDropListener != null)
 			new DragAndDrop(this, v);
-//		if (size > 0 && size <= 50) {
-//			IScrollPane sp = v.add().scrollPane().height(height);
-//			decorate(0, false, sp.viewPort());
-//			return;
-//		}
+		// if (size > 0 && size <= 50) {
+		// IScrollPane sp = v.add().scrollPane().height(height);
+		// decorate(0, false, sp.viewPort());
+		// return;
+		// }
 		treeDockPanel = v.add().panel().grid();
 		if (!adjustHeights) {
 			treeDockPanel.height(height);
