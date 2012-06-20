@@ -22,6 +22,7 @@ import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.log.impl.Log;
 
 public class FlipPage implements IContentPage, IColored {
 
@@ -29,19 +30,21 @@ public class FlipPage implements IContentPage, IColored {
 	private IVerticalPanel page1;
 	private IVerticalPanel page2;
 	private IVerticalPanel active;
-	private long flips = 0;
 	private boolean nextCalled;
 
 	public FlipPage(IContainer c) {
 		cardPanel = c.panel().card();
 		page1 = cardPanel.add().panel().vertical();
 		page2 = cardPanel.add().panel().vertical();
-		active = page2;
+		active = null;
 		cardPanel.show(page1);
 	}
 
 	@Override
 	public IContainer next() {
+		if (active == null)
+			return page1.add();
+		Log.instance().debug("next");
 		nextCalled = true;
 		if (active == page2) {
 			return page1.clear().add();
@@ -52,6 +55,11 @@ public class FlipPage implements IContentPage, IColored {
 
 	@Override
 	public void flip() {
+		if (active == null) {
+			active = page1;
+			return;
+		}
+		Log.instance().debug("flip");
 		if (!nextCalled)
 			return;
 		IVerticalPanel inactive = active;
@@ -61,14 +69,14 @@ public class FlipPage implements IContentPage, IColored {
 			active = page2;
 		cardPanel.show(active);
 		inactive.clear();
-		flips++;
 		nextCalled = false;
 	}
 
 	@Override
 	public void preview() {
-		if (flips <= 1)
+		if (active == null)
 			return;
+		Log.instance().debug("preview");
 		if (active == page2) {
 			cardPanel.show(page1);
 		} else
@@ -77,8 +85,9 @@ public class FlipPage implements IContentPage, IColored {
 
 	@Override
 	public void back() {
-		if (flips <= 1)
+		if (active == null)
 			return;
+		Log.instance().debug("back");
 		cardPanel.show(active);
 	}
 

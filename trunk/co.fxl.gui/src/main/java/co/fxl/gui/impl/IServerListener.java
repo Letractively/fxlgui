@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.api;
+package co.fxl.gui.impl;
 
 public interface IServerListener {
 
-	void onCall();
+	void notifyServerCallStart();
 
-	void onReturn();
+	void notifyServerCallReturn();
 
 }

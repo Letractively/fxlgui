@@ -42,13 +42,15 @@ import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DisplayResizeAdapter;
+import co.fxl.gui.impl.IServerListener;
+import co.fxl.gui.impl.ServerListener;
 import co.fxl.gui.navigation.api.ITabWidget;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.group.api.INavigationWidget;
 import co.fxl.gui.navigation.impl.TabDecoratorTemplate;
 
-public class NavigationWidgetImpl implements INavigationWidget {
+public class NavigationWidgetImpl implements INavigationWidget, IServerListener {
 
 	private static final boolean DYNAMIC_RESIZE = true;
 	protected static final boolean DRAW_MORE_TOP = Constants.get(
@@ -97,6 +99,7 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		panel1 = history.add().panel().vertical();
 		history.show(panel0);
 		instance = this;
+		ServerListener.instance = this;
 	}
 
 	void addSeparatorBorder() {
@@ -399,11 +402,13 @@ public class NavigationWidgetImpl implements INavigationWidget {
 		}
 	}
 
+	@Override
 	public void notifyServerCallStart() {
 		if (listeningOnServerCalls)
 			flipPage().back();
 	}
 
+	@Override
 	public void notifyServerCallReturn() {
 		if (listeningOnServerCalls)
 			flipPage().preview();
