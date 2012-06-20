@@ -86,7 +86,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 		mainPanel = layout.panel().dock();
 		IVerticalPanel top = mainPanel.top().panel().vertical();
 		hPanel = top.add().panel().grid();
-		borderTop = top.add().panel().vertical().height(1);
+		borderTop = top.add().panel().vertical();
 		addSeparatorBorder();
 		hPanel.color().rgb(235, 235, 235).gradient().fallback(235, 235, 235)
 				.vertical().rgb(211, 211, 211);
