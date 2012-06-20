@@ -50,6 +50,7 @@ public class StatusPanel {
 	}
 
 	public StatusPanel start(String status) {
+		ServerListener.notifyCall();
 		text = LOADING + status;
 		if (Log.ENABLED)
 			Log.instance().start(text);
@@ -64,6 +65,7 @@ public class StatusPanel {
 	}
 
 	public void stop() {
+		ServerListener.notifyReturn();
 		if (Log.ENABLED)
 			Log.instance().stop(text);
 		hide();

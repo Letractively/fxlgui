@@ -238,41 +238,46 @@ public class NavigationItemImpl extends LazyClickListener implements
 				int height = buttonPanel.height();
 				showLoading();
 				buttonPanel.size(width, height);
+				boolean useTempFlip = false;
 				if (!flipAfterReturn())
 					flipPage();
 				else if (USE_TEMP_FLIP) {
-					widget.flipPage().preview();
-					widget.listeningOnServerCalls = true;
+					useTempFlip = true;
 				}
+				CallbackTemplate<Void> cb = new CallbackTemplate<Void>() {
+
+					private void removeRegistrations() {
+						if (USE_TEMP_FLIP && flipAfterReturn()) {
+							widget.listeningOnServerCalls = false;
+							widget.flipPage().back();
+						}
+						Log.instance().stop("Showing tab " + button.text());
+						isFirst = false;
+					}
+
+					@Override
+					public void onSuccess(Void result) {
+						removeRegistrations();
+						flipRegister(flipAfterReturn());
+						widget.update();
+					}
+
+					@Override
+					public void onFail(Throwable t) {
+						removeRegistrations();
+						resetLabel();
+						super.onFail(t);
+					}
+				};
 				try {
-					CallbackTemplate<Void> cb = new CallbackTemplate<Void>() {
-
-						private void removeRegistrations() {
-							if (USE_TEMP_FLIP && flipAfterReturn()) {
-								widget.listeningOnServerCalls = false;
-								widget.flipPage().back();
-							}
-							Log.instance().stop("Showing tab " + button.text());
-							isFirst = false;
-						}
-
-						@Override
-						public void onSuccess(Void result) {
-							removeRegistrations();
-							flipRegister(flipAfterReturn());
-							widget.update();
-						}
-
-						@Override
-						public void onFail(Throwable t) {
-							removeRegistrations();
-							resetLabel();
-							super.onFail(t);
-						}
-					};
 					if (isFirst || !widget.flipPage().supportsRefresh()) {
-						decorator.decorate(new BufferedPanelImpl(flipPage
-								.next().panel().vertical()), cb);
+						IVerticalPanel vertical = flipPage.next().panel()
+								.vertical();
+						if (useTempFlip) {
+							widget.flipPage().preview();
+							widget.listeningOnServerCalls = true;
+						}
+						decorator.decorate(new BufferedPanelImpl(vertical), cb);
 					} else {
 						decorator.refresh(cb);
 					}
