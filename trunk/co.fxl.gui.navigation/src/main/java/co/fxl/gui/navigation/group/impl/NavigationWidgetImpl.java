@@ -55,6 +55,8 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 	private static final boolean DYNAMIC_RESIZE = true;
 	protected static final boolean DRAW_MORE_TOP = Constants.get(
 			"NavigationWidgetImpl.DRAW_MORE_TOP", true);
+	private static final boolean FIX_SEPARATOR_BORDER = Constants.get(
+			"NavigationWidgetImpl.FIX_SEPARATOR_BORDER", false);
 	public static boolean ADD_SEPARATORBORDER = true;
 	protected IDockPanel mainPanel;
 	IHorizontalPanel navigationPanel;
@@ -84,7 +86,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 		mainPanel = layout.panel().dock();
 		IVerticalPanel top = mainPanel.top().panel().vertical();
 		hPanel = top.add().panel().grid();
-		borderTop = top.add().panel().vertical();
+		borderTop = top.add().panel().vertical().height(1);
 		addSeparatorBorder();
 		hPanel.color().rgb(235, 235, 235).gradient().fallback(235, 235, 235)
 				.vertical().rgb(211, 211, 211);
@@ -204,7 +206,15 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 			DisplayResizeAdapter.addResizeListener(new IResizeListener() {
 				@Override
 				public boolean onResize(int width, int height) {
-					if (!update()) {
+					if (FIX_SEPARATOR_BORDER) {
+						update();
+						Display.instance().invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								addSeparatorBorder();
+							}
+						});
+					} else if (!update()) {
 						addSeparatorBorder();
 					}
 					return true;
