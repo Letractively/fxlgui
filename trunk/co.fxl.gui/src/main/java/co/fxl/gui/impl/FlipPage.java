@@ -22,7 +22,6 @@ import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.log.impl.Log;
 
 public class FlipPage implements IContentPage, IColored {
 
