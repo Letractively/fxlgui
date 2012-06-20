@@ -44,7 +44,6 @@ public class FlipPage implements IContentPage, IColored {
 	public IContainer next() {
 		if (active == null)
 			return page1.add();
-		Log.instance().debug("next");
 		nextCalled = true;
 		if (active == page2) {
 			return page1.clear().add();
@@ -59,7 +58,6 @@ public class FlipPage implements IContentPage, IColored {
 			active = page1;
 			return;
 		}
-		Log.instance().debug("flip");
 		if (!nextCalled)
 			return;
 		IVerticalPanel inactive = active;
@@ -76,7 +74,6 @@ public class FlipPage implements IContentPage, IColored {
 	public void preview() {
 		if (active == null)
 			return;
-		Log.instance().debug("preview");
 		if (active == page2) {
 			cardPanel.show(page1);
 		} else
@@ -87,7 +84,6 @@ public class FlipPage implements IContentPage, IColored {
 	public void back() {
 		if (active == null)
 			return;
-		Log.instance().debug("back");
 		cardPanel.show(active);
 	}
 
