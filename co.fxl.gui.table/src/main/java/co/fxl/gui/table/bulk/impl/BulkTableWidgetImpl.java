@@ -478,4 +478,9 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	public IBulkTableWidget editable(boolean editable) {
 		return this;
 	}
+
+	@Override
+	public IBulkTableWidget clearPaddingTop() {
+		return this;
+	}
 }
