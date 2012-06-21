@@ -133,7 +133,13 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		return Display.OTHER_BROWSER;
 	}
 
-	public static int getBrowserVersion() {
+	public static double getBrowserVersion() {
+		if (GWTDisplay.isFirefox()) {
+			if (GWTDisplay.isFirefox36()) {
+				return 3.6;
+			} else
+				return 4;
+		}
 		if (!isChrome())
 			return -1;
 		String userAgent = getUserAgent();
