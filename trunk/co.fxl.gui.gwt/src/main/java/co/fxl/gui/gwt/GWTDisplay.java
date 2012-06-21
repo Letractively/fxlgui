@@ -59,6 +59,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		WidgetParent {
 
+	private static final String FIREFOX = "Firefox/";
 	/**
 	 * .scrollbar-container { position: absolute; top: 0; bottom: 0; left: 0;
 	 * right: 0; margin: 20px; border: 2px solid rgba(0, 0, 0, 0.2); overflow:
@@ -135,18 +136,27 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	public static double getBrowserVersion() {
 		if (GWTDisplay.isFirefox()) {
-			if (GWTDisplay.isFirefox36()) {
-				return 3.6;
-			} else
-				return 4;
+			return getBrowserVersionFirefox();
 		}
-		if (!isChrome())
-			return -1;
-		String userAgent = getUserAgent();
-		return getBrowserVersion(userAgent);
+		if (isChrome()) {
+			String userAgent = getUserAgent();
+			return getBrowserVersionChrome(userAgent);
+		}
+		return -1;
 	}
 
-	private static int getBrowserVersion(String userAgent) {
+	private static double getBrowserVersionFirefox() {
+		String userAgent = getUserAgent();
+		if (userAgent.contains(FIREFOX)) {
+			int index = userAgent.indexOf(FIREFOX) + FIREFOX.length();
+			int index2 = userAgent.indexOf(".", index);
+			String substring = userAgent.substring(index, index2);
+			return Double.valueOf(substring);
+		}
+		return 4;
+	}
+
+	private static int getBrowserVersionChrome(String userAgent) {
 		int index = userAgent.indexOf(CHROME) + CHROME.length();
 		int lastIndex = userAgent.indexOf(".", index);
 		if (index == -1 || lastIndex == -1 || index >= lastIndex)
