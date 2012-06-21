@@ -121,4 +121,6 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 	int columnCount();
 
 	IBulkTableWidget editable(boolean editable);
+
+	IBulkTableWidget clearPaddingTop();
 }
