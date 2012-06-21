@@ -123,14 +123,14 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	private String getBrowserName() {
 		if (GWTDisplay.isChrome())
-			return Display.CHROME;
+			return co.fxl.gui.impl.Env.CHROME;
 		else if (GWTDisplay.isOpera())
-			return Display.OPERA;
+			return co.fxl.gui.impl.Env.OPERA;
 		else if (GWTDisplay.isInternetExplorer())
-			return Display.IE;
+			return co.fxl.gui.impl.Env.IE;
 		else if (GWTDisplay.isFirefox())
-			return Display.FIREFOX;
-		return Display.OTHER_BROWSER;
+			return co.fxl.gui.impl.Env.FIREFOX;
+		return co.fxl.gui.impl.Env.OTHER_BROWSER;
 	}
 
 	public static double getBrowserVersion() {
