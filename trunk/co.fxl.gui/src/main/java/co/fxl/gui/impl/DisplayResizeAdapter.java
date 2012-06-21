@@ -24,7 +24,6 @@ import java.util.Map;
 import co.fxl.gui.api.IDisplay.IResizeConfiguration;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IElement;
-import co.fxl.gui.log.impl.Log;
 
 public class DisplayResizeAdapter {
 
@@ -79,10 +78,10 @@ public class DisplayResizeAdapter {
 
 	public static int withDecrement(int e, int inc) {
 		int i = decrement() + inc;
-//		if (e < i) {
-//			Log.instance().error(
-//					"Error computing height in resize adapter " + e + "<" + i);
-//		}
+		// if (e < i) {
+		// Log.instance().error(
+		// "Error computing height in resize adapter " + e + "<" + i);
+		// }
 		return Math.max(e, i);
 	}
 
