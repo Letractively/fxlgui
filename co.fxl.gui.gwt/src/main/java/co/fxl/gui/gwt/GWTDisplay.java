@@ -320,9 +320,9 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		return !isChrome() && !isOpera() && !isInternetExplorer();
 	}
 
-	public static boolean isFirefox36() {
+	public static boolean isFirefox3() {
 		return !isChrome() && !isOpera() && !isInternetExplorer()
-				&& getUserAgent().contains("Firefox/3.6");
+				&& getUserAgent().contains("Firefox/3.");
 	}
 
 	public static boolean isChrome() {
