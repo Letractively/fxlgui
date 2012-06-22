@@ -480,7 +480,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	}
 
 	@Override
-	public IBulkTableWidget clearPaddingTop() {
+	public IBulkTableWidget clearFixWordWrap() {
 		return this;
 	}
 }
