@@ -122,5 +122,5 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 
 	IBulkTableWidget editable(boolean editable);
 
-	IBulkTableWidget clearPaddingTop();
+	IBulkTableWidget clearFixWordWrap();
 }
