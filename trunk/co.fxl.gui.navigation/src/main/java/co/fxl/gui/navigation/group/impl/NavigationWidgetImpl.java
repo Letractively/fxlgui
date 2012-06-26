@@ -44,6 +44,7 @@ import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DisplayResizeAdapter;
 import co.fxl.gui.impl.IServerListener;
 import co.fxl.gui.impl.ServerListener;
+import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.navigation.api.ITabWidget;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
@@ -80,6 +81,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 	private NavigationItemImpl moreItem;
 	private IVerticalPanel borderTop;
 	boolean listeningOnServerCalls;
+	private boolean holdUpdate;
 	public static NavigationWidgetImpl instance;
 
 	public NavigationWidgetImpl(IContainer layout) {
@@ -207,14 +209,14 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 				@Override
 				public boolean onResize(int width, int height) {
 					if (FIX_SEPARATOR_BORDER) {
-						update();
+						update(true);
 						Display.instance().invokeLater(new Runnable() {
 							@Override
 							public void run() {
 								addSeparatorBorder();
 							}
 						});
-					} else if (!update()) {
+					} else if (!update(true)) {
 						addSeparatorBorder();
 					}
 					return true;
@@ -224,8 +226,18 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 	}
 
 	boolean update() {
+		return update(false);
+	}
+
+	@Override public
+	boolean update(boolean alwaysAdjust) {
 		if (!DYNAMIC_RESIZE || moreGroup == null)
 			return false;
+		if(holdUpdate)
+			return false;
+		if(!alwaysAdjust && Display.instance().width() > navigationPanel.width())
+			return false;
+		Log.instance().start("updating navigation widget");
 		for (NavigationGroupImpl g : groups)
 			for (NavigationItemImpl i : g.items)
 				i.displayed(true);
@@ -259,6 +271,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 		if (moreItem.popUp != null)
 			moreItem.popUp.visible(false);
 		addSeparatorBorder();
+		Log.instance().stop("updating navigation widget");
 		return true;
 	}
 
@@ -422,5 +435,11 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 	public void notifyServerCallReturn() {
 		if (listeningOnServerCalls)
 			flipPage().preview();
+	}
+
+	@Override
+	public INavigationWidget holdUpdate(boolean b) {
+		holdUpdate=b;
+		return this;
 	}
 }

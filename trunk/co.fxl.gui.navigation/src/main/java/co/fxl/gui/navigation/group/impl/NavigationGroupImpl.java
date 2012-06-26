@@ -23,7 +23,6 @@ import java.util.List;
 
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
@@ -43,8 +42,7 @@ class NavigationGroupImpl implements INavigationGroup {
 
 	NavigationGroupImpl(NavigationWidgetImpl widget) {
 		this.widget = widget;
-		ILayout layout = widget.navigationPanel.add().panel();
-		panel = createPanel(layout).add().panel().horizontal()
+		panel = widget.navigationPanel.add().panel().horizontal()
 				.addSpace(widget.groups.isEmpty() ? 0 : 5);
 		panel.addSpace(3);
 		IVerticalPanel headerPanel = panel.add().panel().vertical();
@@ -54,10 +52,6 @@ class NavigationGroupImpl implements INavigationGroup {
 		itemPanel = panel.add().panel().horizontal();
 		colorInactive = widget.colorInactive;
 		colorInactiveGradient = widget.colorInactiveGradient;
-	}
-
-	private IHorizontalPanel createPanel(ILayout layout) {
-		return layout.horizontal();
 	}
 
 	@Override
