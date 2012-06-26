@@ -34,4 +34,8 @@ public interface INavigationWidget extends
 	INavigationWidget refresh();
 
 	INavigationItem activeItem();
+
+	boolean update(boolean alwaysAdjust);
+
+	INavigationWidget holdUpdate(boolean b);
 }
