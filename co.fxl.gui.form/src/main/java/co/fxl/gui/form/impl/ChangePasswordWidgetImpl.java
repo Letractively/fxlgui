@@ -71,7 +71,7 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 
 	@Override
 	public IChangePasswordWidget current(String currentPassword) {
-		currentPasswordText = currentPassword;
+		currentPasswordText = currentPassword!=null ? currentPassword :"";
 		return this;
 	}
 
@@ -95,14 +95,14 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 
 	@Override
 	public void onClick() {
-		if (currentPassword.text().equals("") && newPassword.text().equals("")
+		if (newPassword.text().equals("")
 				&& confirmPassword.text().equals(""))
 			return;
 		boolean oK = true;
-		if (currentPassword.text().equals("")) {
-			showDialog("Field 'Current Password' is empty.");
-			oK = false;
-		}
+//		if (currentPassword.text().equals("")) {
+//			showDialog("Field 'Current Password' is empty.");
+//			oK = false;
+//		}
 		if (oK && !currentPassword.text().equals(currentPasswordText)) {
 			showDialog("Field 'Current Password' is incorrectly specified.");
 			oK = false;
@@ -133,11 +133,11 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 				.message(string).error();
 	}
 
-	private void clear() {
-		currentPassword.text("");
-		newPassword.text("");
-		confirmPassword.text("");
-	}
+//	private void clear() {
+//		currentPassword.text("");
+//		newPassword.text("");
+//		confirmPassword.text("");
+//	}
 
 	public void visible() {
 		widget.visible(true);
