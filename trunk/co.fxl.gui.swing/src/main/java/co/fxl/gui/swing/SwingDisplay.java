@@ -35,6 +35,7 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
+import co.fxl.data.format.swing.SwingFormat;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
@@ -94,6 +95,7 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 		// TODO AOPC: Aspect Log.instance(new SwingLog());
 		// TODO SWING-FXL: IMPL: remove hack
 		ToolbarImpl.ADJUST_HEIGHTS = true;
+		SwingFormat.setUp(); 
 	}
 
 	private void resize() {
