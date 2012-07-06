@@ -129,8 +129,11 @@ class GWTTextArea extends GWTTextAreaTemplate<TextArea, ITextArea> implements
 				if (value.length() > maxLength)
 					display().invokeLater(new Runnable() {
 						public void run() {
-							GWTTextArea.this.container.widget.setText(value
-									.substring(0, maxLength));
+							int c = container.widget.getCursorPos();
+							container.widget.setText(value.substring(0,
+									maxLength));
+							if (c < container.widget.getText().length())
+								container.widget.setCursorPos(c);
 						}
 					});
 			}
