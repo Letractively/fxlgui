@@ -292,7 +292,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	AlignmentMemento<IScrollTableColumn<Object>> alignment = new AlignmentMemento<IScrollTableColumn<Object>>(
 			this);
 	boolean visible = true;
-	int widthInt = -1;
+	public int widthInt = -1;
 	public double widthDouble = -1;
 	boolean editable = false;
 	private IColorAdapter<Object, Object> colorAdapter;
