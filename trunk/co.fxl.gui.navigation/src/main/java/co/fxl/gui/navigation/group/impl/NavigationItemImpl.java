@@ -30,6 +30,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.IContentPage;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.log.impl.Log;
@@ -228,16 +229,15 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	NavigationItemImpl setActive(boolean viaClick) {
+		if (!Env.runtime().is(Env.SWING))
+			startLoading();
 		forkLabelAsActive(viaClick, new CallbackTemplate<Void>() {
 
 			@Override
 			public void onSuccess(Void result) {
-				Log.instance().start("Showing tab " + button.text());
+				if (Env.runtime().is(Env.SWING))
+					startLoading();
 				widget.flipPage().active(flipPage);
-				int width = buttonPanel.width();
-				int height = buttonPanel.height();
-				showLoading();
-				buttonPanel.size(width, height);
 				boolean useTempFlip = false;
 				if (!flipAfterReturn())
 					flipPage();
@@ -297,6 +297,14 @@ public class NavigationItemImpl extends LazyClickListener implements
 			}
 		}, true);
 		return this;
+	}
+
+	public void startLoading() {
+		Log.instance().start("Showing tab " + button.text());
+		int width = buttonPanel.width();
+		int height = buttonPanel.height();
+		buttonPanel.size(width, height);
+		showLoading();
 	}
 
 	private void forkLabelAsActive(boolean viaClick,
