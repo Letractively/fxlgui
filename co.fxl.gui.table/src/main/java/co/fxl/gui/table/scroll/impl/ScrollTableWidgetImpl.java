@@ -735,6 +735,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		return column;
 	}
 
+	@Override
 	public boolean update() {
 		paintedRows = computeRowsToPaint();
 		return updateWithPaintedRowsSetNoCalibration();
