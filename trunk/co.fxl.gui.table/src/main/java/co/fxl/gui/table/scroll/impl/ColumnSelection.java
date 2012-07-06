@@ -57,7 +57,7 @@ public class ColumnSelection {
 		IClickListener clickListener = new IClickListener() {
 			@Override
 			public void onClick() {
-				widget.update();
+				widget.updateTable();
 			}
 		};
 		addToPanel(p, clickListener);
@@ -170,7 +170,7 @@ public class ColumnSelection {
 			widget.columnList().add(i, dragged);
 		}
 		draw();
-		widget.update();
+		widget.updateTable();
 	}
 
 	void decorateLabel(final ScrollTableColumnImpl c, ILabel l) {

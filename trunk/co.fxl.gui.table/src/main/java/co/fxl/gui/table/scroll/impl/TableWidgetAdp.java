@@ -9,7 +9,7 @@ public interface TableWidgetAdp {
 
 	IGridPanel statusPanel();
 
-	boolean update();
+	boolean updateTable();
 
 	List<ScrollTableColumnImpl> columnList();
 
