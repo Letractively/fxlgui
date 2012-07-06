@@ -288,7 +288,12 @@ public class FormWidgetImpl implements IFormWidget {
 		return this;
 	}
 
+	private boolean bottomPanelIsSetUp;
+
 	void setUpBottomPanel() {
+		if (bottomPanelIsSetUp)
+			return;
+		bottomPanelIsSetUp = true;
 		if (saveListener != null || hasRequiredAttributes()) {
 			if (fields.isEmpty())
 				return;
