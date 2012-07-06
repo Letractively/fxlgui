@@ -736,6 +736,11 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	@Override
+	public boolean updateTable() {
+		visible(true);
+		return true;
+	}
+
 	public boolean update() {
 		paintedRows = computeRowsToPaint();
 		return updateWithPaintedRowsSetNoCalibration();
