@@ -80,7 +80,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 	private boolean setUpDynamicResize;
 	private NavigationItemImpl moreItem;
 	private IVerticalPanel borderTop;
-	boolean listeningOnServerCalls;
+	private boolean listeningOnServerCalls;
 	private boolean holdUpdate;
 	public static NavigationWidgetImpl instance;
 
@@ -232,13 +232,14 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 		return update(false);
 	}
 
-	@Override public
-	boolean update(boolean alwaysAdjust) {
+	@Override
+	public boolean update(boolean alwaysAdjust) {
 		if (!DYNAMIC_RESIZE || moreGroup == null)
 			return false;
-		if(holdUpdate)
+		if (holdUpdate)
 			return false;
-		if(!alwaysAdjust && Display.instance().width() > navigationPanel.width())
+		if (!alwaysAdjust
+				&& Display.instance().width() > navigationPanel.width())
 			return false;
 		Log.instance().start("updating navigation widget");
 		for (NavigationGroupImpl g : groups)
@@ -428,21 +429,37 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 		}
 	}
 
+	private int serverCallCounter = 0;
+
 	@Override
 	public void notifyServerCallStart() {
-		if (listeningOnServerCalls)
-			flipPage().back();
+		if (listeningOnServerCalls) {
+			serverCallCounter++;
+			if (serverCallCounter == 1) {
+				flipPage().back();
+			}
+		}
 	}
 
 	@Override
 	public void notifyServerCallReturn() {
-		if (listeningOnServerCalls)
-			flipPage().preview();
+		if (listeningOnServerCalls) {
+			serverCallCounter--;
+			if (serverCallCounter <= 0) {
+				serverCallCounter = 0;
+				flipPage().preview();
+			}
+		}
 	}
 
 	@Override
 	public INavigationWidget holdUpdate(boolean b) {
-		holdUpdate=b;
+		holdUpdate = b;
 		return this;
+	}
+
+	void listeningOnServerCalls(boolean b) {
+		serverCallCounter = 0;
+		listeningOnServerCalls = b;
 	}
 }
