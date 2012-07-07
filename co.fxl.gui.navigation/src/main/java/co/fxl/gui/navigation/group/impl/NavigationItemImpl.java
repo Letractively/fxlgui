@@ -248,7 +248,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 					private void removeRegistrations() {
 						if (USE_TEMP_FLIP && flipAfterReturn()) {
-							widget.listeningOnServerCalls = false;
+							widget.listeningOnServerCalls(false);
 							widget.flipPage().back();
 						}
 						Log.instance().stop("Showing tab " + button.text());
@@ -275,7 +275,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 								.vertical();
 						if (useTempFlip) {
 							widget.flipPage().preview();
-							widget.listeningOnServerCalls = true;
+							widget.listeningOnServerCalls(true);
 						}
 						decorator.decorate(new BufferedPanelImpl(vertical), cb);
 					} else {
