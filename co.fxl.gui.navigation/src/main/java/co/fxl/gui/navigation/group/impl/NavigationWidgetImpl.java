@@ -113,20 +113,23 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 				.spacing(0).height(1);
 		int c = 0;
 		boolean b = active != null && active.buttonPanel != null;
+		int offsetX = 0;
+		int width = 0;
 		if (b) {
 			IGridCell indentBorder = separatorBorder.cell(c++, 0);
-			int offsetX = active.buttonPanel.offsetX() + 1;
-			IPanel<?> leftPartBorder = indentBorder.panel().absolute()
-					.height(1).width(offsetX);
+			offsetX = active.buttonPanel.offsetX() + 1;
+			IPanel<?> leftPartBorder = indentBorder.panel().horizontal()
+					.size(offsetX, 1);
 			leftPartBorder.color().gray();
 			IGridCell activeBorder = separatorBorder.cell(c++, 0);
-			int width = active.buttonPanel.width() - 2;
-			IPanel<?> middlePartBorder = activeBorder.panel().absolute()
-					.height(1).width(width);
+			width = active.buttonPanel.width() - 2;
+			IPanel<?> middlePartBorder = activeBorder.panel().horizontal()
+					.size(width, 1);
 			activeBackground(middlePartBorder);
 		}
 		IPanel<?> rightPartBorder = separatorBorder.cell(c, 0).panel()
-				.absolute().height(1);
+				.horizontal()
+				.size(Display.instance().width() - width - offsetX, 1);
 		if (b)
 			separatorBorder.column(2).expand();
 		rightPartBorder.color().gray();
