@@ -483,4 +483,9 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	public IBulkTableWidget clearFixWordWrap() {
 		return this;
 	}
+
+	@Override
+	public IBulkTableWidget rowHeight(int index, int rowHeight) {
+		return this;
+	}
 }
