@@ -433,14 +433,38 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	@Override
 	public IDisplay scrolling(boolean scrolling) {
-		Window.enableScrolling(scrolling);
-		Window.addWindowScrollHandler(new ScrollHandler() {
-			@Override
-			public void onWindowScroll(ScrollEvent arg0) {
-				if (arg0.getScrollLeft() > 0 || arg0.getScrollTop() > 0)
-					Window.scrollTo(0, 0);
-			}
-		});
+		if (isChrome()) {
+			Window.addWindowScrollHandler(new ScrollHandler() {
+
+				private Long timeToRescroll = null;
+
+				@Override
+				public void onWindowScroll(ScrollEvent arg0) {
+					boolean schedule = timeToRescroll == null;
+					timeToRescroll = System.currentTimeMillis() + 1000;
+					if (schedule)
+						schedule();
+				}
+
+				private void schedule() {
+					int l = (int) Math.max(250,
+							timeToRescroll - System.currentTimeMillis());
+					invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							if (System.currentTimeMillis() < timeToRescroll) {
+								schedule();
+								return;
+							}
+							if (Window.getScrollTop() != 0) {
+								Window.scrollTo(Window.getScrollLeft(), 0);
+							}
+							timeToRescroll = null;
+						}
+					}, l);
+				}
+			});
+		}
 		return this;
 	}
 
