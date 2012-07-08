@@ -123,4 +123,6 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 	IBulkTableWidget editable(boolean editable);
 
 	IBulkTableWidget clearFixWordWrap();
+
+	IBulkTableWidget rowHeight(int index, int rowHeight);
 }
