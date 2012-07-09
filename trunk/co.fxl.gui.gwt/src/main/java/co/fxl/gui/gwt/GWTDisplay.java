@@ -43,7 +43,6 @@ import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.core.client.impl.SchedulerImpl;
-import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.DomEvent;
@@ -52,8 +51,6 @@ import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.Window.ScrollEvent;
-import com.google.gwt.user.client.Window.ScrollHandler;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -82,7 +79,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		void onBlock(boolean block);
 	}
 
-	private static GWTDisplay instance;
+	static GWTDisplay instance;
 	private List<BlockListener> blockListeners = new LinkedList<BlockListener>();
 	private GWTContainer<Widget> container;
 	private GWTUncaughtExceptionHandler uncaughtExceptionHandler;
@@ -91,6 +88,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	static int lastClickY = 0;
 	private Scheduler scheduler = new SchedulerImpl();
 	private IRuntime runtime;
+	private boolean scrolling = true;
 
 	public static void notifyEvent(DomEvent<?> event) {
 		final NativeEvent nativeEvent = event.getNativeEvent();
@@ -434,39 +432,47 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	@Override
 	public IDisplay scrolling(boolean scrolling) {
-		if (isChrome()) {
-			Window.addWindowScrollHandler(new ScrollHandler() {
-
-				private Long timeToRescroll = null;
-
-				@Override
-				public void onWindowScroll(ScrollEvent arg0) {
-					boolean schedule = timeToRescroll == null;
-					timeToRescroll = System.currentTimeMillis() + 1000;
-					if (schedule)
-						schedule();
-				}
-
-				private void schedule() {
-					int l = (int) Math.max(250,
-							timeToRescroll - System.currentTimeMillis());
-					invokeLater(new Runnable() {
-						@Override
-						public void run() {
-							if (System.currentTimeMillis() < timeToRescroll) {
-								schedule();
-								return;
-							}
-							if (Window.getScrollTop() != 0) {
-								Window.scrollTo(Window.getScrollLeft(), 0);
-							}
-							timeToRescroll = null;
-						}
-					}, l);
-				}
-			});
-		}
+		this.scrolling = scrolling;
+		Window.enableScrolling(scrolling);
+		// if (isChrome()) {
+		// Window.addWindowScrollHandler(new ScrollHandler() {
+		//
+		// private Long timeToRescroll = null;
+		//
+		// @Override
+		// public void onWindowScroll(ScrollEvent arg0) {
+		// boolean schedule = timeToRescroll == null;
+		// timeToRescroll = System.currentTimeMillis() + 1000;
+		// if (schedule)
+		// schedule();
+		// }
+		//
+		// private void schedule() {
+		// int l = (int) Math.max(250,
+		// timeToRescroll - System.currentTimeMillis());
+		// invokeLater(new Runnable() {
+		// @Override
+		// public void run() {
+		// if (System.currentTimeMillis() < timeToRescroll) {
+		// schedule();
+		// return;
+		// }
+		// if (Window.getScrollTop() != -1) {
+		// Window.scrollTo(Window.getScrollLeft(), -1);
+		// }
+		// timeToRescroll = null;
+		// }
+		// }, l);
+		// }
+		// });
+		// }
 		return this;
+	}
+
+	void notifyDragEnd() {
+		if (!scrolling && Window.getScrollTop() != 0) {
+			Window.scrollTo(Window.getScrollLeft(), 0);
+		}
 	}
 
 	@Override

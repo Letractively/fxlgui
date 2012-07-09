@@ -604,6 +604,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 			@Override
 			public void onDragEnd(DragEndEvent event) {
+				GWTDisplay.instance.notifyDragEnd();
 				l.onDragEnd();
 			}
 
