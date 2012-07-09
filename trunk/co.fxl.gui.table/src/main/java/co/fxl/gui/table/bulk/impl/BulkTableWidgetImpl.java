@@ -488,4 +488,9 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	public IBulkTableWidget rowHeight(int index, int rowHeight) {
 		return this;
 	}
+
+	@Override
+	public IBulkTableWidget noLineBreak(boolean noLineBreak) {
+		return this;
+	}
 }
