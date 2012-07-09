@@ -125,4 +125,6 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 	IBulkTableWidget clearFixWordWrap();
 
 	IBulkTableWidget rowHeight(int index, int rowHeight);
+
+	IBulkTableWidget noLineBreak(boolean noLineBreak);
 }
