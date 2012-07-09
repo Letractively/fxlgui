@@ -36,5 +36,5 @@ public interface ILayout {
 
 	IAbsolutePanel absolute();
 
-	IPanel<?> plugIn(Class<?> layoutType);
+	<T> T plugIn(Class<T> layoutType);
 }
