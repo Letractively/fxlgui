@@ -26,7 +26,6 @@ import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPanelProvider;
 import co.fxl.gui.api.IVerticalPanel;
 
@@ -48,13 +47,14 @@ class GWTLayout implements ILayout {
 		this.panel = panel;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public IPanel<?> plugIn(Class<?> clazz) {
+	public <T> T plugIn(Class<T> clazz) {
 		IPanelProvider<?> provider = panel.parent.lookupDisplay().panelProviders
 				.get(clazz);
 		if (provider == null)
 			throw new UnsupportedOperationException(clazz.getName());
-		return provider.createPanel(panel);
+		return (T) provider.createPanel(panel);
 	}
 
 	@Override

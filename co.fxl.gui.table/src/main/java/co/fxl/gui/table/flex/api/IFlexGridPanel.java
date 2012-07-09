@@ -42,4 +42,6 @@ public interface IFlexGridPanel extends IPanel<IFlexGridPanel> {
 
 	IFlexGridPanel columns(int columns);
 
+	IFlexGridPanel spacing(int spacing);
+
 }

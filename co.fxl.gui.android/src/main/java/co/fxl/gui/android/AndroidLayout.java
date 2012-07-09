@@ -26,7 +26,6 @@ import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
 
 public class AndroidLayout implements ILayout {
@@ -64,7 +63,7 @@ public class AndroidLayout implements ILayout {
 	}
 
 	@Override
-	public IPanel<?> plugIn(Class<?> layoutType) {
+	public <T> T plugIn(Class<T> layoutType) {
 		throw new UnsupportedOperationException();
 	}
 

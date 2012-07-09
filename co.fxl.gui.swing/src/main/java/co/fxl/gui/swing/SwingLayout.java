@@ -26,7 +26,6 @@ import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILayout;
-import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPanelProvider;
 import co.fxl.gui.api.IVerticalPanel;
 
@@ -38,13 +37,14 @@ class SwingLayout implements ILayout {
 		this.panel = panel;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public IPanel<?> plugIn(Class<?> clazz) {
+	public <T> T plugIn(Class<T> clazz) {
 		IPanelProvider<?> provider = panel.container.parent
 				.lookupSwingDisplay().panelProviders.get(clazz);
 		if (provider == null)
 			throw new UnsupportedOperationException(clazz.getName());
-		return provider.createPanel(panel.container);
+		return (T) provider.createPanel(panel.container);
 	}
 
 	@Override

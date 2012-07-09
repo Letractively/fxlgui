@@ -129,7 +129,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 		}
 		IPanel<?> rightPartBorder = separatorBorder.cell(c, 0).panel()
 				.horizontal()
-				.size(borderTop.width() - width - offsetX, 1);
+				.size(Display.instance().container().element().width() - width - offsetX, 1);
 		if (b)
 			separatorBorder.column(2).expand();
 		rightPartBorder.color().gray();

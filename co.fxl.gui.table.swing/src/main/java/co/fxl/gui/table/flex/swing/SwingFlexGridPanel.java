@@ -20,6 +20,7 @@ package co.fxl.gui.table.flex.swing;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -82,6 +83,7 @@ public class SwingFlexGridPanel extends SwingPanel<IFlexGridPanel> implements
 	private GridBagLayout layout = new GridBagLayout();
 	private int rows;
 	private int columns;
+	private int spacing = 0;
 
 	@SuppressWarnings("unchecked")
 	SwingFlexGridPanel(IContainer container) {
@@ -116,6 +118,9 @@ public class SwingFlexGridPanel extends SwingPanel<IFlexGridPanel> implements
 		constraints.gridwidth = width;
 		constraints.gridheight = height;
 		constraints.weightx = 1;
+		if (spacing != 0)
+			constraints.insets = new Insets(spacing / 2, spacing / 2,
+					spacing / 2, spacing / 2);
 		return constraints;
 	}
 
@@ -137,6 +142,12 @@ public class SwingFlexGridPanel extends SwingPanel<IFlexGridPanel> implements
 	@Override
 	public IFlexGridPanel columns(int columns) {
 		this.columns = columns;
+		return this;
+	}
+
+	@Override
+	public IFlexGridPanel spacing(int spacing) {
+		this.spacing = spacing;
 		return this;
 	}
 
