@@ -101,4 +101,14 @@ public class HTMLText {
 		return "<div unselectable=\"on\" class=\"unselectable\">" + toString
 				+ "</div>";
 	}
+
+	public static String textInput(String text, int width, String align) {
+		return "<input class=\"gwt-TextBox\" style=\" background-color:transparent;border:none;width:"
+				+ (width == -1 ? "100%;" : width + "px")
+				+ ";"
+				+ (align != null ? "text-align:" + align : "")
+				+ "\" type=\"text\" value=\""
+				+ text.replace("<", "&#060;")
+				+ "\" readonly/>";
+	}
 }
