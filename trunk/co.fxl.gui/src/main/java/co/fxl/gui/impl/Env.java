@@ -29,8 +29,13 @@ public class Env {
 	public static String IE = "IE";
 	public static String OPERA = "Opera";
 	public static String OTHER_BROWSER = "Other Browser";
+	public static final int HEIGHT_SCROLLBAR = 17;
 
 	public static IRuntime runtime() {
 		return Display.instance().runtime();
+	}
+
+	public static boolean is(String name) {
+		return runtime().is(name);
 	}
 }

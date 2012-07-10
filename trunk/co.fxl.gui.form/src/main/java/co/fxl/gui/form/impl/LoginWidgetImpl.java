@@ -34,6 +34,7 @@ import co.fxl.gui.impl.UserPanel.Decorator;
 
 public class LoginWidgetImpl implements ILoginWidget {
 
+	private static final int MAX_LENGTH_USER_NAME = 20;
 	// private static final boolean IGNORE_EMPTY_PASSWORD = true;
 	private static int HEIGHT_DECREMENT = Constants.get(
 			"LoginWidgetImpl.HEIGHT_DECREMENT", 0);
@@ -124,7 +125,12 @@ public class LoginWidgetImpl implements ILoginWidget {
 	private void addLogout(IPanel<?> panel) {
 		ILabel loggedInAs = panel.add().label().text("Logged in as");
 		decorate(loggedInAs);
-		ILabel loggedInHead = panel.add().label().text(userText);
+		ILabel loggedInHead = panel
+				.add()
+				.label()
+				.text(userText.length() < MAX_LENGTH_USER_NAME ? userText
+						: userText.substring(0, MAX_LENGTH_USER_NAME - 3)
+								+ "...");
 		decorate(loggedInHead).font().weight().bold();
 		ILabel text = panel.add().label().text("Logout");
 		hyperlink(text);
