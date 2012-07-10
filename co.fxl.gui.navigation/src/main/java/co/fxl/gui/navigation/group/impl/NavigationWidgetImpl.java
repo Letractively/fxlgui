@@ -244,7 +244,6 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 		if (!alwaysAdjust
 				&& StatusDisplay.instance().width() > navigationPanel.width())
 			return false;
-		Log.instance().start("updating navigation widget");
 		for (NavigationGroupImpl g : groups)
 			for (NavigationItemImpl i : g.items)
 				i.displayed(true);

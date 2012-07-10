@@ -53,8 +53,8 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 
 	SwingContainer<JComponent> container;
 	JFrame frame = new JFrame();
-	private int widthPixel = 600;
-	private int heightPixel = 600;
+	private int widthPixel = 640;
+	private int heightPixel = 480;
 	private SwingUncaughtExceptionHandler uncaughtExceptionHandler;
 	boolean waiting;
 	private IRuntime runtime = new RuntimeTemplate("Swing", 1.0);
