@@ -50,16 +50,39 @@ public class StatusDisplay implements IResizeListener {
 		return DisplayResizeAdapter.addResizeListener(resizeListener, b);
 	}
 
-	public void autoResize(IElement<?> e) {
-		DisplayResizeAdapter.autoResize(e);
+	public void autoResize(final IElement<?> e) {
+		autoResize(e, 0);
 	}
 
-	public void autoResize(IElement<?> e, int pixel) {
-		DisplayResizeAdapter.autoResize(e, pixel);
+	public void autoResize(final IElement<?> e, final int dec) {
+		autoResize(e, dec, false);
 	}
 
-	public void autoResize(IElement<?> e, int pixel, boolean b) {
-		DisplayResizeAdapter.autoResize(e, pixel, b);
+	public void autoResize(final IElement<?> e, final int dec, boolean b) {
+		final IResizeListener listener = new IResizeListener() {
+			@Override
+			public boolean onResize(int width, int height) {
+				if (!e.visible()) {
+					return false;
+				}
+				int offsetY = offsetY(e, 100);
+				int h = height - offsetY - 10 - dec;
+				if (h > 0)
+					e.height(h);
+				return e.visible();
+			}
+		};
+		Display.instance().addResizeListener(listener);
+		Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+				DisplayResizeAdapter.fire(listener);
+			}
+		};
+		if (b) {
+			Display.instance().invokeLater(runnable);
+		} else
+			runnable.run();
 	}
 
 	public int offsetY(IElement<?> e, int min) {

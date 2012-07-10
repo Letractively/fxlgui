@@ -23,7 +23,6 @@ import java.util.Map;
 
 import co.fxl.gui.api.IDisplay.IResizeConfiguration;
 import co.fxl.gui.api.IDisplay.IResizeListener;
-import co.fxl.gui.api.IElement;
 
 class DisplayResizeAdapter {
 
@@ -82,49 +81,6 @@ class DisplayResizeAdapter {
 		// "Error computing height in resize adapter " + e + "<" + i);
 		// }
 		return Math.max(e, i);
-	}
-
-	static void autoResize(final IElement<?> e) {
-		autoResize(e, 0);
-	}
-
-	static void autoResize(final IElement<?> e, final int dec) {
-		autoResize(e, dec, false);
-	}
-
-	static void autoResize(final IElement<?> e, final int dec, boolean b) {
-		final IResizeListener listener = new IResizeListener() {
-			@Override
-			public boolean onResize(int width, int height) {
-				if (!e.visible()) {
-					return false;
-				}
-				int offsetY = e.offsetY();
-				// TODO ... un-hard-code
-				if (offsetY < DisplayResizeAdapter.withDecrement(100))
-					offsetY = DisplayResizeAdapter.withDecrement(100);
-				int maxFromDisplay = height - offsetY - 10 - dec;
-				if (maxFromDisplay > 0)
-					e.height(maxFromDisplay);
-				boolean visible = e.visible();
-				return visible;
-			}
-		};
-		Display.instance().addResizeListener(listener);
-		Runnable runnable = new Runnable() {
-			@Override
-			public void run() {
-				fire(listener);
-			}
-		};
-		if (b) {
-			Display.instance().invokeLater(runnable);
-		} else
-			runnable.run();
-	}
-
-	static int height() {
-		return Display.instance().height() - decrement();
 	}
 
 }
