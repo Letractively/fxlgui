@@ -41,6 +41,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.IServerListener;
 import co.fxl.gui.impl.ServerListener;
 import co.fxl.gui.impl.StatusDisplay;
@@ -58,7 +59,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 			"NavigationWidgetImpl.DRAW_MORE_TOP", true);
 	private static final boolean FIX_SEPARATOR_BORDER = Constants.get(
 			"NavigationWidgetImpl.FIX_SEPARATOR_BORDER", false);
-	public static boolean ADD_SEPARATORBORDER = true;
+	private static boolean ADD_SEPARATORBORDER = !Env.is(Env.SWING);
 	protected IDockPanel mainPanel;
 	IHorizontalPanel navigationPanel;
 	private ICardPanel history;
