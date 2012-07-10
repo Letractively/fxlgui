@@ -242,7 +242,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 		if (holdUpdate)
 			return false;
 		if (!alwaysAdjust
-				&& Display.instance().width() > navigationPanel.width())
+				&& StatusDisplay.instance().width() > navigationPanel.width())
 			return false;
 		Log.instance().start("updating navigation widget");
 		for (NavigationGroupImpl g : groups)
@@ -252,10 +252,11 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 		boolean hidden = false;
 		List<NavigationItemImpl> candidates = new LinkedList<NavigationItemImpl>();
 		for (int i = groups.size() - 1; i >= 0
-				&& Display.instance().width() < navigationPanel.width(); i--) {
+				&& StatusDisplay.instance().width() < navigationPanel.width(); i--) {
 			NavigationGroupImpl g = groups.get(i);
 			for (int j = g.items.size() - 1; j >= 0
-					&& Display.instance().width() < navigationPanel.width(); j--) {
+					&& StatusDisplay.instance().width() < navigationPanel
+							.width(); j--) {
 				NavigationItemImpl ni = g.items.get(j);
 				if (ni == active)
 					continue;
@@ -268,7 +269,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 			}
 		}
 		for (int i = 0; i < candidates.size()
-				&& Display.instance().width() < navigationPanel.width(); i++) {
+				&& StatusDisplay.instance().width() < navigationPanel.width(); i++) {
 			candidates.get(i).displayed(false);
 			hidden = true;
 		}

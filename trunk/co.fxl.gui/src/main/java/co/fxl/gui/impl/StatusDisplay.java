@@ -27,13 +27,14 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 
-public class StatusDisplay {
+public class StatusDisplay implements IResizeListener {
 
 	private static StatusDisplay instance = new StatusDisplay();
 	private IDisplay display = Display.instance();
 	private IVerticalPanel panel;
 
 	private StatusDisplay() {
+		Display.instance().addResizeListener(this);
 	}
 
 	public static StatusDisplay instance() {
@@ -102,6 +103,36 @@ public class StatusDisplay {
 
 	public int offsetY(int offsetY, int min) {
 		return Math.max(offsetY, DisplayResizeAdapter.withDecrement(min));
+	}
+
+	public int width() {
+		return display.width();
+	}
+
+	public int height() {
+		return display.height();
+	}
+
+	public void resetPanelDimensions() {
+		if (panel != null) {
+			final int height = StatusDisplay.instance().height();
+			panel.width(-1).width(1.0).height(height);
+			if (Env.is(Env.CHROME)) {
+				final int width = StatusDisplay.instance().width();
+				Display.instance().invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						panel.size(width, height);
+					}
+				});
+			}
+		}
+	}
+
+	@Override
+	public boolean onResize(int width, int height) {
+		resetPanelDimensions();
+		return true;
 	}
 
 }

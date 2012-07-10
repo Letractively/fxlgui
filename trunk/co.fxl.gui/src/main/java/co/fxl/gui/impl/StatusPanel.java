@@ -105,7 +105,7 @@ public class StatusPanel {
 		fm.forward(f.color());
 		spacing.addSpace(4);
 		m.forward(spacing.color());
-		resize(Display.instance().width(), dialog);
+		resize(StatusDisplay.instance().width(), dialog);
 		if (RESIZE)
 			Display.instance().addResizeListener(new IResizeListener() {
 				@Override
