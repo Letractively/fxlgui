@@ -113,13 +113,6 @@ public class StatusDisplay implements IResizeListener {
 		DisplayResizeAdapter.setDecrement("warning", g.height() + 1);
 	}
 
-	public StatusDisplay reset() {
-		panel = null;
-		display.clear();
-		panel = display.container().panel().vertical();
-		return this;
-	}
-
 	public IVerticalPanel panel() {
 		return panel;
 	}
@@ -134,6 +127,11 @@ public class StatusDisplay implements IResizeListener {
 
 	public int height() {
 		return display.height();
+	}
+
+	public StatusDisplay reset() {
+		panel = display.clear().container().panel().vertical();
+		return this;
 	}
 
 	public void resetPanelDimensions() {
