@@ -55,10 +55,8 @@ import co.fxl.gui.navigation.impl.TabDecoratorTemplate;
 public class NavigationWidgetImpl implements INavigationWidget, IServerListener {
 
 	private static final boolean DYNAMIC_RESIZE = true;
-	protected static final boolean DRAW_MORE_TOP = Constants.get(
-			"NavigationWidgetImpl.DRAW_MORE_TOP", true);
-	private static final boolean FIX_SEPARATOR_BORDER = Constants.get(
-			"NavigationWidgetImpl.FIX_SEPARATOR_BORDER", false);
+	protected static final boolean DRAW_MORE_TOP = !Env.is(Env.IE);
+	private static final boolean FIX_SEPARATOR_BORDER = Env.is(Env.IE);
 	private static boolean ADD_SEPARATORBORDER = !Env.is(Env.SWING);
 	protected IDockPanel mainPanel;
 	IHorizontalPanel navigationPanel;
