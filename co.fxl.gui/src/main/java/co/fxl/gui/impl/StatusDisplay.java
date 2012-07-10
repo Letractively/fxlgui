@@ -25,6 +25,7 @@ import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IVerticalPanel;
 
@@ -34,6 +35,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	private IDisplay display = Display.instance();
 	private IVerticalPanel panel;
 	private IScrollPane scrollPane;
+	private IVerticalPanel p0;
 
 	private StatusDisplay() {
 		Display.instance().addResizeListener(this);
@@ -92,15 +94,14 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	public void warning(String warning) {
-		final IGridPanel g = panel.add().panel().grid().spacing(6);
+		final IGridPanel g = p0.add().panel().grid().spacing(6);
 		g.color().rgb(192, 0, 0);
 		g.cell(0, 0).label().text(warning).autoWrap(true).font().pixel(11)
 				.weight().bold().color().white();
 		ILabel l = g.cell(1, 0).valign().begin().align().end().label()
 				.text("[x]");
 		l.font().pixel(11).weight().bold().color().white();
-		l// .image().resource("cancel_white.png").size(16, 16)
-		.addClickListener(new IClickListener() {
+		l.addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
 				g.remove();
@@ -116,7 +117,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	public IVerticalPanel panel() {
-		return panel;
+		return p0;
 	}
 
 	public int offsetY(int offsetY, int min) {
@@ -134,6 +135,8 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	public StatusDisplay reset() {
 		scrollPane = display.clear().container().scrollPane().horizontal();
 		panel = scrollPane.viewPort().panel().vertical();
+		stylePanel(panel);
+		p0 = panel.add().panel().vertical().add().panel().vertical();
 		return this;
 	}
 
@@ -155,6 +158,18 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	public boolean onResize(int width, int height) {
 		resetPanelDimensions();
 		return true;
+	}
+
+	public void stylePanel(IPanel<?> panel) {
+		panel.color().rgb(245, 245, 245);
+	}
+
+	public void visible(boolean b) {
+		panel.visible(b);
+	}
+
+	public void updateHeight() {
+		panel.height(height());
 	}
 
 }
