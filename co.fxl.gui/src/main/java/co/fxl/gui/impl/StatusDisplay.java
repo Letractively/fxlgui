@@ -90,7 +90,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	public int offsetY(IElement<?> e, int min) {
-		return Math.max(e.offsetY(), min);
+		return Math.max(e.offsetY(), DisplayResizeAdapter.withDecrement(min));
 	}
 
 	public void warning(String warning) {
