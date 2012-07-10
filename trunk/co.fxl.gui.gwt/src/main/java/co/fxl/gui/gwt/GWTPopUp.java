@@ -6,6 +6,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IWidgetProvider;
+import co.fxl.gui.impl.Display;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.logical.shared.CloseEvent;
@@ -46,12 +47,12 @@ class GWTPopUp implements IPopUp, WidgetParent {
 					public void setPosition(int offsetWidth, int offsetHeight) {
 						int left = x;
 						int top = y;
-						if (x + offsetWidth > GWTDisplay.instance().width()) {
-							left = GWTDisplay.instance().width() - 10
+						if (x + offsetWidth > Display.instance().width()) {
+							left = Display.instance().width() - 10
 									- offsetWidth;
 						}
-						if (y + offsetHeight > GWTDisplay.instance().height()) {
-							top = GWTDisplay.instance().height() - 10
+						if (y + offsetHeight > Display.instance().height()) {
+							top = Display.instance().height() - 10
 									- offsetHeight;
 						}
 						popUp.setPopupPosition(left, top);

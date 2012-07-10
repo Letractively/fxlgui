@@ -41,9 +41,9 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
-import co.fxl.gui.impl.DisplayResizeAdapter;
 import co.fxl.gui.impl.IServerListener;
 import co.fxl.gui.impl.ServerListener;
+import co.fxl.gui.impl.StatusDisplay;
 import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.navigation.api.ITabWidget;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
@@ -127,9 +127,12 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 					.size(width, 1);
 			activeBackground(middlePartBorder);
 		}
-		IPanel<?> rightPartBorder = separatorBorder.cell(c, 0).panel()
+		IPanel<?> rightPartBorder = separatorBorder
+				.cell(c, 0)
+				.panel()
 				.horizontal()
-				.size(Display.instance().container().element().width() - width - offsetX, 1);
+				.size(Display.instance().container().element().width() - width
+						- offsetX, 1);
 		if (b)
 			separatorBorder.column(2).expand();
 		rightPartBorder.color().gray();
@@ -208,7 +211,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 				}
 			});
 			update();
-			DisplayResizeAdapter.addResizeListener(new IResizeListener() {
+			StatusDisplay.instance().addResizeListener(new IResizeListener() {
 				@Override
 				public boolean onResize(int width, int height) {
 					if (FIX_SEPARATOR_BORDER) {

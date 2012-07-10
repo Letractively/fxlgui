@@ -25,15 +25,15 @@ import co.fxl.gui.api.IDisplay.IResizeConfiguration;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IElement;
 
-public class DisplayResizeAdapter {
+class DisplayResizeAdapter {
 
 	private static Map<String, Integer> decrement = new HashMap<String, Integer>();
 
-	public static void setDecrement(String string, Integer i) {
+	static void setDecrement(String string, Integer i) {
 		setDecrement(string, i, false);
 	}
 
-	public static void setDecrement(String string, Integer i, boolean notify) {
+	static void setDecrement(String string, Integer i, boolean notify) {
 		if (i == 0)
 			decrement.remove(string);
 		else
@@ -47,16 +47,15 @@ public class DisplayResizeAdapter {
 		Display.instance().notifyResizeListeners();
 	}
 
-	protected static void fire(IResizeListener listener) {
+	static void fire(IResizeListener listener) {
 		Display.instance().notifyResizeListener(listener);
 	}
 
-	public static IResizeConfiguration addResizeListener(
-			IResizeListener listener) {
+	static IResizeConfiguration addResizeListener(IResizeListener listener) {
 		return addResizeListener(listener, false);
 	}
 
-	public static IResizeConfiguration addResizeListener(
+	static IResizeConfiguration addResizeListener(
 			final IResizeListener listener, boolean call) {
 		IResizeConfiguration singleton = Display.instance()
 				.addResizeListener(listener).singleton();
@@ -65,18 +64,18 @@ public class DisplayResizeAdapter {
 		return singleton;
 	}
 
-	public static int decrement() {
+	static int decrement() {
 		int i = 0;
 		for (Integer s : decrement.values())
 			i += s;
 		return i;
 	}
 
-	public static int withDecrement(int inc) {
+	static int withDecrement(int inc) {
 		return decrement() + inc;
 	}
 
-	public static int withDecrement(int e, int inc) {
+	static int withDecrement(int e, int inc) {
 		int i = decrement() + inc;
 		// if (e < i) {
 		// Log.instance().error(
@@ -85,15 +84,15 @@ public class DisplayResizeAdapter {
 		return Math.max(e, i);
 	}
 
-	public static void autoResize(final IElement<?> e) {
+	static void autoResize(final IElement<?> e) {
 		autoResize(e, 0);
 	}
 
-	public static void autoResize(final IElement<?> e, final int dec) {
+	static void autoResize(final IElement<?> e, final int dec) {
 		autoResize(e, dec, false);
 	}
 
-	public static void autoResize(final IElement<?> e, final int dec, boolean b) {
+	static void autoResize(final IElement<?> e, final int dec, boolean b) {
 		final IResizeListener listener = new IResizeListener() {
 			@Override
 			public boolean onResize(int width, int height) {
@@ -124,7 +123,7 @@ public class DisplayResizeAdapter {
 			runnable.run();
 	}
 
-	public static int height() {
+	static int height() {
 		return Display.instance().height() - decrement();
 	}
 
