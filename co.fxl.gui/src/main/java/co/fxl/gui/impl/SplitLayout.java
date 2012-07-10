@@ -70,7 +70,7 @@ public class SplitLayout implements IResizeListener {
 		sideScrollPanel = sideBasePanel.addSpace(10).add().scrollPane();
 		sidePanel = sideScrollPanel.viewPort().panel().vertical();
 		sidePanel.spacing().right(10).inner(10);
-		DisplayResizeAdapter.addResizeListener(this, true);
+		StatusDisplay.instance().addResizeListener(this, true);
 	}
 
 	public static int mainPanelWidth() {

@@ -46,7 +46,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	public IResizeConfiguration addResizeListener(IResizeListener resizeListener) {
-		return DisplayResizeAdapter.addResizeListener(resizeListener);
+		return addResizeListener(resizeListener, false);
 	}
 
 	public IResizeConfiguration addResizeListener(
