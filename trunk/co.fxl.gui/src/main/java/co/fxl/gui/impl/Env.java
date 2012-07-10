@@ -31,7 +31,7 @@ public class Env {
 	public static String OTHER_BROWSER = "Other Browser";
 	public static final int HEIGHT_SCROLLBAR = 17;
 
-	private static IRuntime runtime() {
+	public static IRuntime runtime() {
 		return Display.instance().runtime();
 	}
 
