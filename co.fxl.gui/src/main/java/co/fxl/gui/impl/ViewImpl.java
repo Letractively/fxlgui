@@ -32,7 +32,7 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class ViewImpl extends LazyClickListener {
 
-	public static boolean FLIP_BEFORE = false;
+	private static boolean FLIP_BEFORE = Env.is(Env.IE);
 	private final ViewList viewList;
 	private ILabel label;
 	private IGridPanel grid;

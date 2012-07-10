@@ -48,9 +48,6 @@ public class NavigationItemImpl extends LazyClickListener implements
 	// invisible panels (unflipped pages), set to true
 	private static boolean USE_TEMP_FLIP = Constants.get(
 			"NavigationItemImpl.USE_TEMP_FLIP", true);
-	private static boolean FLIP_AFTER_RETURN_IS_POSSIBLE = true;
-	private static boolean FLIP_AFTER_RETURN = Constants.get(
-			"NavigationItemImpl.FLIP_AFTER_RETURN", true);
 	static int c = 1;
 	ILabel button;
 	private ITabDecorator decorator;
@@ -229,25 +226,23 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	NavigationItemImpl setActive(boolean viaClick) {
-		if (!Env.runtime().is(Env.SWING))
+		if (!Env.is(Env.SWING))
 			startLoading();
 		forkLabelAsActive(viaClick, new CallbackTemplate<Void>() {
 
 			@Override
 			public void onSuccess(Void result) {
-				if (Env.runtime().is(Env.SWING))
+				if (Env.is(Env.SWING))
 					startLoading();
 				widget.flipPage().active(flipPage);
 				boolean useTempFlip = false;
-				if (!flipAfterReturn())
-					flipPage();
-				else if (USE_TEMP_FLIP) {
+				if (USE_TEMP_FLIP) {
 					useTempFlip = true;
 				}
 				CallbackTemplate<Void> cb = new CallbackTemplate<Void>() {
 
 					private void removeRegistrations() {
-						if (USE_TEMP_FLIP && flipAfterReturn()) {
+						if (USE_TEMP_FLIP) {
 							widget.listeningOnServerCalls(false);
 							widget.flipPage().back();
 						}
@@ -258,7 +253,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 					@Override
 					public void onSuccess(Void result) {
 						removeRegistrations();
-						flipRegister(flipAfterReturn());
+						flipRegister(true);
 						widget.update();
 					}
 
@@ -284,10 +279,6 @@ public class NavigationItemImpl extends LazyClickListener implements
 				} catch (Exception e) {
 					onFail(e);
 				}
-			}
-
-			private boolean flipAfterReturn() {
-				return FLIP_AFTER_RETURN && FLIP_AFTER_RETURN_IS_POSSIBLE;
 			}
 
 			@Override
