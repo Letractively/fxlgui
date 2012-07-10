@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.table.util.impl;
 
-import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IFocusPanel;
@@ -63,7 +62,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	private IContainer container;
 	private IVerticalPanel treeScrollPanelContainer;
 	int rowIndex = 0;
-	private IAbsolutePanel scrollContentPanel;
+	private IVerticalPanel scrollContentPanel;
 	private int size;
 	private int rows2Paint = height / minRowHeight;
 	private IScrollPane scrollPane;
@@ -206,7 +205,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 				widthScrollPanel);
 		scrollPane = ctr.scrollPane();
 		scrollPane.size(widthScrollPanel, height);
-		scrollContentPanel = scrollPane.viewPort().panel().absolute();
+		scrollContentPanel = scrollPane.viewPort().panel().vertical();
 		scrollContentPanel.add().label().text("&#160;");
 		((IGridPanel) treeDockPanel).column(0).expand();
 		updateScrollPanelHeight();
