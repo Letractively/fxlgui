@@ -826,10 +826,12 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 					hiddenColumns.add(c.name);
 			hiddenColumnListener.onUpdate(hiddenColumns);
 		}
-		int h1 = grid.height();
+		int h1 = heightMinusTopPanel - 2;
 		int h2 = grid.tableHeight();
-		if (h1 == 0 && h2 == 0)
-			Log.instance().error("Scroll-Table-Widget: grid-heights are 0");
+		if (h2 == 0)
+			Log.instance().error(
+					"Scroll-Table-Widget: grid-heights are 0: " + h1 + " vs. "
+							+ h2 + ", " + vpanel.visible());
 		if (updateListener != null)
 			addCellUpdateListener();
 		return h1 < h2;
