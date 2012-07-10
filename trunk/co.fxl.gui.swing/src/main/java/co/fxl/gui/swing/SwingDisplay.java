@@ -229,7 +229,7 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 
 	@Override
 	public JComponent getComponent() {
-		throw new UnsupportedOperationException();
+		return container.component;
 	}
 
 	@Override
