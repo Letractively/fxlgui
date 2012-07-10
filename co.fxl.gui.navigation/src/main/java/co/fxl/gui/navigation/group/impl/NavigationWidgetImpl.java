@@ -128,12 +128,9 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 					.size(width, 1);
 			activeBackground(middlePartBorder);
 		}
-		IPanel<?> rightPartBorder = separatorBorder
-				.cell(c, 0)
-				.panel()
+		IPanel<?> rightPartBorder = separatorBorder.cell(c, 0).panel()
 				.horizontal()
-				.size(Display.instance().container().element().width() - width
-						- offsetX, 1);
+				.size(StatusDisplay.instance().width() - width - offsetX, 1);
 		if (b)
 			separatorBorder.column(2).expand();
 		rightPartBorder.color().gray();
