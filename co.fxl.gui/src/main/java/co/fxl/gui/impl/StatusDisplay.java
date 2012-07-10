@@ -25,13 +25,15 @@ import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IVerticalPanel;
 
-public class StatusDisplay implements IResizeListener {
+public class StatusDisplay implements IResizeListener, Runnable {
 
 	private static StatusDisplay instance = new StatusDisplay();
 	private IDisplay display = Display.instance();
 	private IVerticalPanel panel;
+	private IScrollPane scrollPane;
 
 	private StatusDisplay() {
 		Display.instance().addResizeListener(this);
@@ -130,24 +132,23 @@ public class StatusDisplay implements IResizeListener {
 	}
 
 	public StatusDisplay reset() {
-		panel = display.clear().container().panel().vertical();
+		scrollPane = display.clear().container().scrollPane().horizontal();
+		panel = scrollPane.viewPort().panel().vertical();
 		return this;
 	}
 
 	public void resetPanelDimensions() {
 		if (panel != null) {
-			final int height = StatusDisplay.instance().height();
-			panel.width(-1).width(1.0).height(height);
+			run();
 			if (Env.is(Env.CHROME)) {
-				final int width = StatusDisplay.instance().width();
-				Display.instance().invokeLater(new Runnable() {
-					@Override
-					public void run() {
-						panel.size(width, height);
-					}
-				});
+				Display.instance().invokeLater(this);
 			}
 		}
+	}
+
+	@Override
+	public void run() {
+		panel.size(width(), height());
 	}
 
 	@Override
