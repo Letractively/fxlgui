@@ -115,6 +115,9 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		Window.addResizeHandler(new ResizeHandler() {
 			@Override
 			public void onResize(ResizeEvent event) {
+				if (!scrolling) {
+					RootPanel.get().setSize(width() + "px", height() + "px");
+				}
 				notifyResizeListeners();
 			}
 		});
@@ -432,10 +435,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	@Override
 	public IDisplay scrolling(boolean scrolling) {
-		if (isChrome()) {
-			this.scrolling = scrolling;
-//			Window.enableScrolling(scrolling);
-		}
+		this.scrolling = scrolling;
+		// Window.enableScrolling(scrolling);
 		// if (isChrome()) {
 		// Window.addWindowScrollHandler(new ScrollHandler() {
 		//
@@ -472,7 +473,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	}
 
 	void notifyDragEnd() {
-		if (!scrolling && Window.getScrollTop() != 0) {
+		if (isChrome() && !scrolling && Window.getScrollTop() != 0) {
 			Window.scrollTo(Window.getScrollLeft(), 0);
 		}
 	}
