@@ -191,7 +191,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 						a0.color().gray();
 						p02.column(0).expand();
 						IAbsolutePanel a1 = p02.cell(1, 0).panel().absolute()
-								.height(1).width(moreItem.buttonPanel.width());
+								.size(moreItem.buttonPanel.width(), 1);
 						a1.color().white();
 						a1.border().style().right().color().gray();
 					}
