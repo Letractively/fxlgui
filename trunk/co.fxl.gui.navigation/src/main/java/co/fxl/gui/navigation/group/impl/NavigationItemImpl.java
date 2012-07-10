@@ -235,10 +235,6 @@ public class NavigationItemImpl extends LazyClickListener implements
 				if (Env.is(Env.SWING))
 					startLoading();
 				widget.flipPage().active(flipPage);
-				boolean useTempFlip = false;
-				if (USE_TEMP_FLIP) {
-					useTempFlip = true;
-				}
 				CallbackTemplate<Void> cb = new CallbackTemplate<Void>() {
 
 					private void removeRegistrations() {
@@ -268,7 +264,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 					if (isFirst || !widget.flipPage().supportsRefresh()) {
 						IVerticalPanel vertical = flipPage.next().panel()
 								.vertical();
-						if (useTempFlip) {
+						if (USE_TEMP_FLIP) {
 							widget.flipPage().preview();
 							widget.listeningOnServerCalls(true);
 						}
