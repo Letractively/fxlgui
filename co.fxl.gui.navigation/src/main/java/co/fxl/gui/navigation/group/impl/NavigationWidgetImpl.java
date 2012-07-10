@@ -113,10 +113,10 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 		IGridPanel separatorBorder = borderTop.clear().add().panel().grid()
 				.spacing(0).height(1);
 		int c = 0;
-		boolean b = active != null && active.buttonPanel != null;
+		boolean hasActiveItem = active != null && active.buttonPanel != null;
 		int offsetX = 0;
 		int width = 0;
-		if (b) {
+		if (hasActiveItem) {
 			IGridCell indentBorder = separatorBorder.cell(c++, 0);
 			offsetX = active.buttonPanel.offsetX() + 1;
 			IPanel<?> leftPartBorder = indentBorder.panel().horizontal()
@@ -131,7 +131,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 		IPanel<?> rightPartBorder = separatorBorder.cell(c, 0).panel()
 				.horizontal()
 				.size(StatusDisplay.instance().width() - width - offsetX, 1);
-		if (b)
+		if (hasActiveItem)
 			separatorBorder.column(2).expand();
 		rightPartBorder.color().gray();
 	}
