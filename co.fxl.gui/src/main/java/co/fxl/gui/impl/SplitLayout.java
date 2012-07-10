@@ -74,7 +74,7 @@ public class SplitLayout implements IResizeListener {
 	}
 
 	public static int mainPanelWidth() {
-		return Display.instance().width() - WIDTH_SIDE_PANEL - 3 * 10;
+		return StatusDisplay.instance().width() - WIDTH_SIDE_PANEL - 3 * 10;
 	}
 
 	@Override
