@@ -122,18 +122,19 @@ class GWTTextArea extends GWTTextAreaTemplate<TextArea, ITextArea> implements
 
 	@Override
 	public ITextArea maxLength(final int maxLength) {
+		container.widget.getElement().setAttribute("maxlength",
+				String.valueOf(maxLength));
 		addUpdateListener(new IUpdateListener<String>() {
-
 			@Override
 			public void onUpdate(final String value) {
 				if (value.length() > maxLength)
 					display().invokeLater(new Runnable() {
 						public void run() {
-							int c = container.widget.getCursorPos();
+							int c = cursorPosition();
 							container.widget.setText(value.substring(0,
 									maxLength));
 							if (c < container.widget.getText().length())
-								container.widget.setCursorPos(c);
+								cursorPosition(c);
 						}
 					});
 			}
