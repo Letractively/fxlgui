@@ -184,6 +184,11 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 		public int width() {
 			throw new UnsupportedOperationException();
 		}
+
+		@Override
+		public IGridCell size(int width, int height) {
+			return width(width).height(height);
+		}
 	}
 
 	private GridCellContainer<GridCell> cells = new GridCellContainer<GridCell>();

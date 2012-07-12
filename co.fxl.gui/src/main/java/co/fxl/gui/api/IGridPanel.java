@@ -51,6 +51,8 @@ public interface IGridPanel extends IPanel<IGridPanel> {
 
 		IGridCell height(int height);
 
+		IGridCell size(int width, int height);
+
 		int height();
 
 		int width();
