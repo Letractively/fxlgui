@@ -40,6 +40,7 @@ import javax.swing.JPanel;
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.impl.GridCellContainer;
 import co.fxl.gui.impl.KeyTemplate;
 
@@ -252,6 +253,11 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 			SwingGridPanel.this.container.component.remove(panel);
 			SwingGridPanel.this.cells.removeCell(constraints.gridx,
 					constraints.gridy);
+		}
+
+		@Override
+		public IGridCell size(int width, int height) {
+			return width(width).height(height);
 		}
 	}
 
