@@ -118,19 +118,27 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 			offsetX = active.buttonPanel.offsetX() + 1;
 			IPanel<?> leftPartBorder = indentBorder.panel().horizontal()
 					.size(offsetX, 1);
+			addDummyIE(leftPartBorder);
 			leftPartBorder.color().gray();
 			IGridCell activeBorder = separatorBorder.cell(c++, 0);
 			width = active.buttonPanel.width() - 2;
 			IPanel<?> middlePartBorder = activeBorder.panel().horizontal()
 					.size(width, 1);
+			addDummyIE(middlePartBorder);
 			activeBackground(middlePartBorder);
 		}
 		IPanel<?> rightPartBorder = separatorBorder.cell(c, 0).panel()
 				.horizontal()
 				.size(StatusDisplay.instance().width() - width - offsetX, 1);
+		addDummyIE(rightPartBorder);
 		if (hasActiveItem)
 			separatorBorder.column(2).expand();
 		rightPartBorder.color().gray();
+	}
+
+	private void addDummyIE(IPanel<?> leftPartBorder) {
+		if (Env.is(Env.IE))
+			leftPartBorder.add().image().size(1, 1).resource("empty_1x1.png");
 	}
 
 	IHorizontalPanel createPanel(ILayout l) {
@@ -188,10 +196,12 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 						IGridPanel p02 = panel.add().panel().grid();
 						IAbsolutePanel a0 = p02.cell(0, 0).panel().absolute()
 								.height(1);
+						addDummyIE(a0);
 						a0.color().gray();
 						p02.column(0).expand();
 						IAbsolutePanel a1 = p02.cell(1, 0).panel().absolute()
 								.size(moreItem.buttonPanel.width(), 1);
+						addDummyIE(a1);
 						a1.color().white();
 						a1.border().style().right().color().gray();
 					}
