@@ -56,7 +56,6 @@ import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.KeyAdapter;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.impl.WidgetTitle;
-import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableCell;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
@@ -828,10 +827,10 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		}
 		int h1 = heightMinusTopPanel - 2;
 		int h2 = grid.tableHeight();
-		if (h2 == 0)
-			Log.instance().error(
-					"Scroll-Table-Widget: grid-heights are 0: " + h1 + " vs. "
-							+ h2 + ", " + vpanel.visible());
+		// if (h2 == 0)
+		// Log.instance().error(
+		// "Scroll-Table-Widget: grid-heights are 0: " + h1 + " vs. "
+		// + h2 + ", " + vpanel.visible());
 		if (updateListener != null)
 			addCellUpdateListener();
 		return h1 < h2;
