@@ -97,4 +97,8 @@ public class UserPanel {
 	public static UserPanel instance() {
 		return INSTANCE;
 	}
+
+	public void clear() {
+		decorators.clear();
+	}
 }
