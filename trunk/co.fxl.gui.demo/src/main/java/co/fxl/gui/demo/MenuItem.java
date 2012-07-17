@@ -19,6 +19,7 @@
 package co.fxl.gui.demo;
 
 import co.fxl.gui.api.ICallback;
+import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.navigation.impl.TabDecoratorTemplate;
 import co.fxl.gui.navigation.menu.api.IMenuItem;
 import co.fxl.gui.navigation.menu.api.IMenuWidget;
@@ -58,6 +59,6 @@ class MenuItem {
 	}
 
 	void active() {
-		parent.active(true);
+		parent.active(true, DummyCallback.voidInstance());
 	}
 }

@@ -44,9 +44,9 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	}
 
 	@Override
-	public IMenuItem active(boolean active) {
+	public IMenuItem active(boolean active, ICallback<Void> cb) {
 		assert active;
-		register.top();
+		register.top(cb);
 		return this;
 	}
 

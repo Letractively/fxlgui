@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.navigation.menu.impl;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.navigation.api.ITabGroup;
@@ -52,8 +53,9 @@ class MenuWidgetImpl implements IMenuWidget, ITabGroup<IMenuItem> {
 	}
 
 	@Override
-	public ITabWidget<ITabGroup<IMenuItem>, IMenuItem> visible(boolean visible) {
-		registerWidget.visible(true);
+	public ITabWidget<ITabGroup<IMenuItem>, IMenuItem> visible(boolean visible,
+			ICallback<Void> cb) {
+		registerWidget.visible(true, cb);
 		return this;
 	}
 

@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.navigation.group.api;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.navigation.api.ITabWidget;
 
 public interface INavigationWidget extends
@@ -31,7 +32,7 @@ public interface INavigationWidget extends
 
 	INavigationWidget addNavigationListener(INavigationListener l);
 
-	INavigationWidget refresh();
+	INavigationWidget refresh(ICallback<Void> cb);
 
 	INavigationItem activeItem();
 
