@@ -22,6 +22,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.navigation.menu.api.IMenuWidget;
 import co.fxl.gui.navigation.menu.impl.MenuWidgetImplProvider;
 import co.fxl.gui.table.filter.impl.FilterTableWidgetImplProvider;
@@ -88,7 +89,8 @@ public class GUIDemo {
 
 	private void addElements(IMenuWidget widget) {
 		MenuItem item = new MenuItem(widget, decorator, "Elements");
-		item.nest("Label", new LabelDemo()).active(true);
+		item.nest("Label", new LabelDemo()).active(true,
+				DummyCallback.voidInstance());
 		item.nest("Button", new ButtonDemo());
 		item.nest("Checkbox", new CheckboxDemo());
 		item.nest("Combobox", new ComboboxDemo());
@@ -101,7 +103,8 @@ public class GUIDemo {
 
 	private void addPanels(IMenuWidget widget) {
 		MenuItem item = new MenuItem(widget, decorator, "Panels");
-		item.nest("Horizontal", new HorizontalPanelDemo()).active(true);
+		item.nest("Horizontal", new HorizontalPanelDemo()).active(true,
+				DummyCallback.voidInstance());
 		item.nest("Vertical", new VerticalPanelDemo());
 		item.nest("Grid", new GridPanelDemo());
 		item.nest("Dock", new DockPanelDemo());

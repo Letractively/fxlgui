@@ -50,7 +50,7 @@ public interface IRegister {
 
 	IRegister listener(IRegisterListener listener);
 
-	IRegister top();
+	IRegister top(ICallback<Void> cb);
 
 	IRegister visible(boolean visible);
 

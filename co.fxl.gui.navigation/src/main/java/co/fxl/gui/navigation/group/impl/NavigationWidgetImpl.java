@@ -40,6 +40,7 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.IServerListener;
 import co.fxl.gui.impl.ServerListener;
@@ -179,8 +180,10 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 	// }
 
 	@Override
-	public ITabWidget<INavigationGroup, INavigationItem> visible(boolean visible) {
+	public ITabWidget<INavigationGroup, INavigationItem> visible(
+			boolean visible, ICallback<Void> cb) {
 		setUpDynamicResize();
+		cb.onSuccess(null);
 		return this;
 	}
 
@@ -359,9 +362,11 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 	// }
 
 	@Override
-	public INavigationWidget refresh() {
+	public INavigationWidget refresh(ICallback<Void> cb) {
 		if (active != null)
-			active.active(true);
+			active.active(true, cb);
+		else
+			cb.onSuccess(null);
 		return this;
 	}
 
@@ -415,7 +420,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 				@Override
 				public void onClick() {
 					moreItem.popUp.visible(false);
-					g.items.get(0).active(true);
+					g.items.get(0).active(true, DummyCallback.voidInstance());
 				}
 			});
 			IVerticalPanel v = gp.cell(1, r).panel().vertical();
@@ -428,7 +433,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 					@Override
 					public void onClick() {
 						moreItem.popUp.visible(false);
-						i.active(true);
+						i.active(true, DummyCallback.voidInstance());
 					}
 				});
 				v.addSpace(2);

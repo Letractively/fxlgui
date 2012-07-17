@@ -22,6 +22,9 @@ import co.fxl.gui.api.ICallback;
 
 public class DummyCallback<T> implements ICallback<T> {
 
+	private static final DummyCallback<Boolean> DUMMY_CALLBACK_BOOLEAN = new DummyCallback<Boolean>();
+	private static final DummyCallback<Void> DUMMY_CALLBACK_VOID = new DummyCallback<Void>();
+
 	@Override
 	public void onSuccess(T result) {
 	}
@@ -32,11 +35,11 @@ public class DummyCallback<T> implements ICallback<T> {
 	}
 
 	public static ICallback<Void> voidInstance() {
-		return new DummyCallback<Void>();
+		return DUMMY_CALLBACK_VOID;
 	}
 
 	public static ICallback<Boolean> booleanInstance() {
-		return new DummyCallback<Boolean>();
+		return DUMMY_CALLBACK_BOOLEAN;
 	}
 
 }

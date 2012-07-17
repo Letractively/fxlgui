@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IDockPanel;
@@ -83,9 +84,9 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 	}
 
 	@Override
-	public RegisterWidgetImpl visible(boolean visible) {
+	public RegisterWidgetImpl visible(boolean visible, ICallback<Void> cb) {
 		if (visible) {
-			show();
+			show(cb);
 		} else {
 			throw new UnsupportedOperationException();
 		}
@@ -98,10 +99,12 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 		return this;
 	}
 
-	private void show() {
+	private void show(ICallback<Void> cb) {
 		mainBorders.visible(true);
 		if (selection != -1)
-			registers.get(selection).top();
+			registers.get(selection).top(cb);
+		else
+			cb.onSuccess(null);
 	}
 
 	void top(RegisterImpl registerImpl) {

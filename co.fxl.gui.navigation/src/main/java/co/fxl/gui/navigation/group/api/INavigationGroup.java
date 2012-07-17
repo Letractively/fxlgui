@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.navigation.group.api;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.navigation.api.ITabGroup;
 
 public interface INavigationGroup extends ITabGroup<INavigationItem> {
@@ -28,5 +29,5 @@ public interface INavigationGroup extends ITabGroup<INavigationItem> {
 
 	boolean visible();
 
-	INavigationGroup active();
+	INavigationGroup active(ICallback<Void> cb);
 }

@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.register.api;
 
+import co.fxl.gui.api.ICallback;
+
 public interface IRegisterWidget {
 
 	interface IRegisterListener {
@@ -29,7 +31,7 @@ public interface IRegisterWidget {
 
 	IRegisterWidget outerSpacing(int outerSpacing);
 
-	IRegisterWidget visible(boolean visible);
+	IRegisterWidget visible(boolean visible, ICallback<Void> cb);
 
 	IRegisterWidget addRegisterListener(IRegisterListener l);
 }

@@ -19,6 +19,7 @@
 package co.fxl.gui.navigation.group.impl;
 
 import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -30,6 +31,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.IContentPage;
 import co.fxl.gui.impl.LazyClickListener;
@@ -207,35 +209,35 @@ public class NavigationItemImpl extends LazyClickListener implements
 						});
 			}
 		} else
-			setActive(true);
+			setActive(true, DummyCallback.voidInstance());
 	}
 
 	@Override
-	public NavigationItemImpl active(boolean active) {
+	public NavigationItemImpl active(boolean active, ICallback<Void> cb) {
 		if (!displayed()) {
 			displayed(true);
 			widget.active = this;
 			widget.update();
 		}
 		assert active;
-		return updateActive();
+		return updateActive(cb);
 	}
 
-	public NavigationItemImpl updateActive() {
-		return setActive(false);
+	public NavigationItemImpl updateActive(ICallback<Void> cb) {
+		return setActive(false, cb);
 	}
 
-	NavigationItemImpl setActive(boolean viaClick) {
+	NavigationItemImpl setActive(boolean viaClick, final ICallback<Void> cb0) {
 		if (!Env.is(Env.SWING))
 			startLoading();
-		forkLabelAsActive(viaClick, new CallbackTemplate<Void>() {
+		forkLabelAsActive(viaClick, new CallbackTemplate<Void>(cb0) {
 
 			@Override
 			public void onSuccess(Void result) {
 				if (Env.is(Env.SWING))
 					startLoading();
 				widget.flipPage().active(flipPage);
-				CallbackTemplate<Void> cb = new CallbackTemplate<Void>() {
+				CallbackTemplate<Void> cb = new CallbackTemplate<Void>(cb0) {
 
 					private void removeRegistrations() {
 						if (USE_TEMP_FLIP) {
@@ -251,6 +253,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 						removeRegistrations();
 						flipRegister(true);
 						widget.update();
+						cb0.onSuccess(result);
 					}
 
 					@Override

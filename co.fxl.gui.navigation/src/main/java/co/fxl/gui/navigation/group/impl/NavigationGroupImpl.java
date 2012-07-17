@@ -21,6 +21,7 @@ package co.fxl.gui.navigation.group.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
@@ -97,10 +98,10 @@ class NavigationGroupImpl implements INavigationGroup {
 	}
 
 	@Override
-	public INavigationGroup active() {
+	public INavigationGroup active(ICallback<Void> cb) {
 		for (NavigationItemImpl item : items) {
 			if (item.visible()) {
-				item.active(true);
+				item.active(true, cb);
 				return this;
 			}
 		}

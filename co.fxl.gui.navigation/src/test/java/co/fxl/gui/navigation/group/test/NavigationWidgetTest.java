@@ -60,7 +60,7 @@ public class NavigationWidgetTest {
 			}
 		}
 		display.visible(true);
-		n.visible(true);
+		n.visible(true, null);
 	}
 
 }

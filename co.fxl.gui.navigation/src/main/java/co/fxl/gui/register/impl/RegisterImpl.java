@@ -145,30 +145,31 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 	}
 
 	@Override
-	public RegisterImpl top() {
+	public RegisterImpl top(ICallback<Void> cb) {
 		// if (widget.isActive(this))
 		// return this;
 		if (disabled)
 			enabled(true);
-		return updateActive();
+		return updateActive(cb);
 	}
 
-	public RegisterImpl updateActive() {
+	public RegisterImpl updateActive(ICallback<Void> cb) {
 		Iterator<RegisterImpl> rit = widget.registers.iterator();
-		recurse(this, rit);
+		recurse(this, rit, cb);
 		return this;
 	}
 
 	private void recurse(final RegisterImpl active,
-			final Iterator<RegisterImpl> rit) {
-		if (!rit.hasNext())
+			final Iterator<RegisterImpl> rit, final ICallback<Void> cb) {
+		if (!rit.hasNext()) {
+			cb.onSuccess(null);
 			return;
-		else {
+		} else {
 			RegisterImpl reg = rit.next();
-			reg.notifyVisible(reg == active, new CallbackTemplate<Void>() {
+			reg.notifyVisible(reg == active, new CallbackTemplate<Void>(cb) {
 				@Override
 				public void onSuccess(Void result) {
-					recurse(active, rit);
+					recurse(active, rit, cb);
 				}
 			});
 		}
@@ -218,7 +219,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 
 	@Override
 	public void onAllowedClick() {
-		top();
+		top(DummyCallback.voidInstance());
 	}
 
 	@Override
@@ -301,13 +302,13 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 	public IVerticalPanel newContentPanel() {
 		content.remove();
 		newCardPanel();
-//		toggleLoading(true);
+		// toggleLoading(true);
 		return content;
 	}
 
 	@Override
 	public void showNewContentPanel() {
-//		toggleLoading(false);
+		// toggleLoading(false);
 		widget.cardPanel.show(content);
 	}
 }
