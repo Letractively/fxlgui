@@ -32,7 +32,7 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class StatusDisplay implements IResizeListener, Runnable {
 
-	public static boolean SINGLE_RESIZE_LISTENER = false;
+	public static boolean SINGLE_RESIZE_LISTENER = true;
 	private static StatusDisplay instance = new StatusDisplay();
 	private IDisplay display = Display.instance();
 	private IVerticalPanel panel;
@@ -82,11 +82,15 @@ public class StatusDisplay implements IResizeListener, Runnable {
 			IResizeListener resizeListener, boolean fire) {
 		if (SINGLE_RESIZE_LISTENER) {
 			if (fire) {
-				DisplayResizeAdapter.fire(resizeListener);
+				fire(resizeListener);
 			}
 			return newDummyResizeConfiguration();
 		}
 		return DisplayResizeAdapter.addResizeListener(resizeListener, fire);
+	}
+
+	public void fire(IResizeListener resizeListener) {
+		resizeListener.onResize(width(), height());
 	}
 
 	public void autoResize(final IElement<?> e) {
@@ -116,7 +120,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
-				DisplayResizeAdapter.fire(listener);
+				fire(listener);
 			}
 		};
 		if (b) {
