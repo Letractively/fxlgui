@@ -60,4 +60,9 @@ public class ServerCallCache {
 		return remove;
 	}
 
+	@Override
+	public String toString() {
+		return cache.keySet().toString();
+	}
+
 }
