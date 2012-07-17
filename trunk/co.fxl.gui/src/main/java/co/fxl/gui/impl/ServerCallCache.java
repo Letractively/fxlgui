@@ -75,4 +75,8 @@ public class ServerCallCache {
 		return this;
 	}
 
+	public boolean contains(Object pCommand) {
+		return cache.containsKey(pCommand);
+	}
+
 }
