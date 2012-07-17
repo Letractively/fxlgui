@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.form.api;
 
-import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.api.ICallback;
 
 public interface ILoginWidget {
 
@@ -36,7 +36,7 @@ public interface ILoginWidget {
 
 		void authorize(String iD, String password, Callback callback);
 
-		void logout();
+		void logout(ICallback<Void> cb);
 	}
 
 	ILoginWidget listener(IAuthorizationListener listener);
