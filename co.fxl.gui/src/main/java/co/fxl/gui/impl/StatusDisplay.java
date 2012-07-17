@@ -32,6 +32,7 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class StatusDisplay implements IResizeListener, Runnable {
 
+	public static boolean SINGLE_RESIZE_LISTENER = false;
 	private static StatusDisplay instance = new StatusDisplay();
 	private IDisplay display = Display.instance();
 	private IVerticalPanel panel;
