@@ -26,6 +26,7 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IVerticalPanel;
 
@@ -36,6 +37,8 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	private IVerticalPanel panel;
 	private IScrollPane scrollPane;
 	private IVerticalPanel p0;
+	private boolean allowResizeListeners = true;
+	private boolean addedResizeListener;
 
 	private StatusDisplay() {
 		Display.instance().addResizeListener(this);
@@ -45,12 +48,43 @@ public class StatusDisplay implements IResizeListener, Runnable {
 		return instance;
 	}
 
+	public IResizeConfiguration singleResizeListener(
+			IResizeListener resizeListener) {
+		assert !addedResizeListener;
+		IResizeConfiguration adp = addResizeListener(resizeListener, false);
+		allowResizeListeners = false;
+		return adp;
+	}
+
 	public IResizeConfiguration addResizeListener(IResizeListener resizeListener) {
+		if (!allowResizeListeners)
+			return newDummyResizeConfiguration();
 		return addResizeListener(resizeListener, false);
+	}
+
+	private IResizeConfiguration newDummyResizeConfiguration() {
+		return new IResizeConfiguration() {
+
+			@Override
+			public IResizeConfiguration singleton() {
+				return this;
+			}
+
+			@Override
+			public IResizeConfiguration linkLifecycle(IElement<?> element) {
+				return this;
+			}
+
+			@Override
+			public IResizeConfiguration linkLifecycle(IPopUp dialog) {
+				return this;
+			}
+		};
 	}
 
 	public IResizeConfiguration addResizeListener(
 			IResizeListener resizeListener, boolean b) {
+		addedResizeListener = true;
 		return DisplayResizeAdapter.addResizeListener(resizeListener, b);
 	}
 
@@ -63,6 +97,9 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	public void autoResize(final IElement<?> e, final int dec, boolean b) {
+		if (!allowResizeListeners)
+			return;
+		addedResizeListener = true;
 		final IResizeListener listener = new IResizeListener() {
 			@Override
 			public boolean onResize(int width, int height) {
