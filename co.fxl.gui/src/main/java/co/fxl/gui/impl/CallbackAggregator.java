@@ -40,6 +40,10 @@ public class CallbackAggregator<T> {
 		fixedNumber = counter > 0;
 	}
 
+	public CallbackAggregator(int counter) {
+		this(null, counter);
+	}
+
 	public ICallback<T> derive() {
 		if (!fixedNumber)
 			counter++;
