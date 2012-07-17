@@ -38,8 +38,6 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	private IVerticalPanel panel;
 	private IScrollPane scrollPane;
 	private IVerticalPanel p0;
-	private boolean allowResizeListeners = true;
-	private boolean addedResizeListener;
 
 	private StatusDisplay() {
 		Display.instance().addResizeListener(this);
@@ -51,15 +49,12 @@ public class StatusDisplay implements IResizeListener, Runnable {
 
 	public IResizeConfiguration singleResizeListener(
 			IResizeListener resizeListener) {
-		assert !addedResizeListener;
-		IResizeConfiguration adp = addResizeListener(resizeListener, false);
-		allowResizeListeners = false;
+		IResizeConfiguration adp = DisplayResizeAdapter.addResizeListener(
+				resizeListener, false);
 		return adp;
 	}
 
 	public IResizeConfiguration addResizeListener(IResizeListener resizeListener) {
-		if (!allowResizeListeners)
-			return newDummyResizeConfiguration();
 		return addResizeListener(resizeListener, false);
 	}
 
@@ -84,9 +79,14 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	public IResizeConfiguration addResizeListener(
-			IResizeListener resizeListener, boolean b) {
-		addedResizeListener = true;
-		return DisplayResizeAdapter.addResizeListener(resizeListener, b);
+			IResizeListener resizeListener, boolean fire) {
+		if (SINGLE_RESIZE_LISTENER) {
+			if (fire) {
+				DisplayResizeAdapter.fire(resizeListener);
+			}
+			return newDummyResizeConfiguration();
+		}
+		return DisplayResizeAdapter.addResizeListener(resizeListener, fire);
 	}
 
 	public void autoResize(final IElement<?> e) {
@@ -98,9 +98,6 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	public void autoResize(final IElement<?> e, final int dec, boolean b) {
-		if (!allowResizeListeners)
-			return;
-		addedResizeListener = true;
 		final IResizeListener listener = new IResizeListener() {
 			@Override
 			public boolean onResize(int width, int height) {
@@ -114,7 +111,8 @@ public class StatusDisplay implements IResizeListener, Runnable {
 				return e.visible();
 			}
 		};
-		Display.instance().addResizeListener(listener);
+		if (!SINGLE_RESIZE_LISTENER)
+			Display.instance().addResizeListener(listener);
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
