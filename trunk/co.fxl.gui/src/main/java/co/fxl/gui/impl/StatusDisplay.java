@@ -165,11 +165,15 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	public int width() {
-		return display.width();
+		return hasHSB() ? 1024 : display.width();
+	}
+
+	private boolean hasHSB() {
+		return display.width() < 1024;
 	}
 
 	public int height() {
-		return display.height();
+		return display.height() - (hasHSB() ? Env.HEIGHT_SCROLLBAR : 0);
 	}
 
 	public StatusDisplay reset() {
@@ -192,6 +196,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	@Override
 	public void run() {
 		panel.size(width(), height());
+		scrollPane.size(display.width(), display.height());
 	}
 
 	@Override

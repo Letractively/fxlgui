@@ -54,11 +54,6 @@ class AndroidScrollPane implements IScrollPane, Parent {
 	}
 
 	@Override
-	public Object nativeElement() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public int offsetX() {
 		throw new UnsupportedOperationException();
 	}
@@ -203,17 +198,25 @@ class AndroidScrollPane implements IScrollPane, Parent {
 		throw new UnsupportedOperationException();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public IScrollPane width(double width) {
 		// TODO ... throw new UnsupportedOperationException();
 		return this;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public IScrollPane height(double height) {
 		// TODO ... throw new UnsupportedOperationException();
 		return this;
+	}
+
+	@Override
+	public <N> N nativeElement() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IScrollPane bidirectional() {
+		throw new UnsupportedOperationException();
 	}
 }

@@ -153,22 +153,22 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 		return this;
 	}
 
-//	@Override
-//	public void onUp(int turns) {
-//		onScrollTurns(-turns);
-//	}
-//
-//	private void onScrollTurns(int i) {
-//		int newOffset = scrollOffset() + i * BLOCK_INCREMENT;
-//		if (newOffset < 0)
-//			newOffset = 0;
-//		scrollTo(newOffset);
-//	}
-//
-//	@Override
-//	public void onDown(int turns) {
-//		onScrollTurns(turns);
-//	}
+	// @Override
+	// public void onUp(int turns) {
+	// onScrollTurns(-turns);
+	// }
+	//
+	// private void onScrollTurns(int i) {
+	// int newOffset = scrollOffset() + i * BLOCK_INCREMENT;
+	// if (newOffset < 0)
+	// newOffset = 0;
+	// scrollTo(newOffset);
+	// }
+	//
+	// @Override
+	// public void onDown(int turns) {
+	// onScrollTurns(turns);
+	// }
 
 	@Override
 	public IScrollPane showScrollbarsAlways(boolean showScrollbarsAlways) {
@@ -180,6 +180,15 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 			container.component
 					.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		}
+		return this;
+	}
+
+	@Override
+	public IScrollPane bidirectional() {
+		container.component
+				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		container.component
+				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		return this;
 	}
 }
