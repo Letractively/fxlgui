@@ -35,6 +35,7 @@ import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.IContentPage;
 import co.fxl.gui.impl.LazyClickListener;
+import co.fxl.gui.impl.ServerCallCache;
 import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.navigation.api.ITabDecorator;
 import co.fxl.gui.navigation.group.api.INavigationItem;
@@ -228,6 +229,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	NavigationItemImpl setActive(boolean viaClick, final ICallback<Void> cb0) {
+		ServerCallCache.instance().record(true);
 		if (!Env.is(Env.SWING))
 			startLoading();
 		forkLabelAsActive(viaClick, new CallbackTemplate<Void>(cb0) {

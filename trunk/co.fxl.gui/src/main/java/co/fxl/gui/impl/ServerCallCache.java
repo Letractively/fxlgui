@@ -22,6 +22,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.fxl.gui.log.impl.Log;
+
 public class ServerCallCache {
 
 	private static ServerCallCache instance = new ServerCallCache();
@@ -34,7 +36,8 @@ public class ServerCallCache {
 	}
 
 	public ServerCallCache record(boolean record) {
-		assert !replay;
+		if (replay)
+			return this;
 		if (record)
 			reset();
 		this.record = record;
@@ -46,7 +49,7 @@ public class ServerCallCache {
 		return this;
 	}
 
-	public ServerCallCache reset() {
+	private ServerCallCache reset() {
 		cache.clear();
 		return this;
 	}
@@ -63,6 +66,13 @@ public class ServerCallCache {
 	@Override
 	public String toString() {
 		return cache.keySet().toString();
+	}
+
+	public ServerCallCache trace() {
+		Log.instance().debug("Cached calls:");
+		for (Object o : cache.keySet())
+			Log.instance().debug(o.toString());
+		return this;
 	}
 
 }
