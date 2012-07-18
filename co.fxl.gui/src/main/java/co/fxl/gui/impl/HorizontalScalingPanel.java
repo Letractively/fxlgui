@@ -41,7 +41,7 @@ public class HorizontalScalingPanel implements IClickListener {
 		panel = basic.add().panel().horizontal();
 		morePanel = basic.add().panel().horizontal().visible(false);
 		morePanel.addClickListener(this);
-		morePanel.add().label().text("More").addClickListener(this);
+		morePanel.addSpace(8).add().label().text("More").addClickListener(this);
 		// morePanel.add().image().resource("more.png").addClickListener(this);
 	}
 
