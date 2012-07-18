@@ -1356,6 +1356,9 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 										update();
 								}
 							});
+				else {
+					update();
+				}
 			} else {
 				if (sortColumn != -1) {
 					sortNegator = sortColumn == columnImpl.index ? sortNegator
