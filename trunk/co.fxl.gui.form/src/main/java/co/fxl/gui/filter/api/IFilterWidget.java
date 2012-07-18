@@ -96,4 +96,6 @@ public interface IFilterWidget {
 	IFilterConstraints constraints();
 
 	IFilterWidget firstConfiguration(String firstConfiguration);
+
+	IFilterWidget noDiscardChangesDialog(boolean noDiscardChangesDialog);
 }

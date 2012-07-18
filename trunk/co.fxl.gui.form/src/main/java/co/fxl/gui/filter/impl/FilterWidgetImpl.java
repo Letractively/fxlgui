@@ -26,9 +26,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ITextField;
@@ -52,6 +52,10 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			.asList(new Object[] { 50, 100, 500, 1000, 5000 });
 
 	private class ClearClickListener extends LazyClickListener {
+
+		private ClearClickListener() {
+			super(noDiscardChangesDialog);
+		}
 
 		@Override
 		public void onAllowedClick() {
@@ -85,6 +89,10 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 
 	private class ApplyClickListener extends LazyClickListener {
 
+		private ApplyClickListener() {
+			super(noDiscardChangesDialog);
+		}
+
 		@Override
 		public void onAllowedClick() {
 			onApplyClick();
@@ -112,6 +120,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	private ClearClickListener clearClickListener;
 	private FilterPanel title;
 	private boolean hyperlinksAdded;
+	private boolean noDiscardChangesDialog;
 
 	FilterWidgetImpl(IContainer panel) {
 		title = newFilterPanel(panel);
@@ -130,9 +139,9 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			return;
 		if (filterList.get(configuration) != null)
 			update();
-//		else
-//			throw new UnsupportedOperationException("filter configuration "
-//					+ value + " has not been set up");
+		// else
+		// throw new UnsupportedOperationException("filter configuration "
+		// + value + " has not been set up");
 	}
 
 	@Override
@@ -450,6 +459,12 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	public IFilterWidget firstConfiguration(String firstConfiguration) {
 		this.firstConfiguration = firstConfiguration;
 		configuration = firstConfiguration;
+		return this;
+	}
+
+	@Override
+	public IFilterWidget noDiscardChangesDialog(boolean noDiscardChangesDialog) {
+		this.noDiscardChangesDialog = noDiscardChangesDialog;
 		return this;
 	}
 }
