@@ -79,4 +79,8 @@ public class HorizontalScalingPanel implements IClickListener {
 		p.visible(true);
 	}
 
+	public void addSpace(int i) {
+		basic.addSpace(i);
+	}
+
 }
