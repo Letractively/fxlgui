@@ -119,4 +119,14 @@ class NavigationGroupImpl implements INavigationGroup {
 	void displayed(boolean displayed) {
 		this.displayed = displayed;
 	}
+
+	public boolean active(String preset, ICallback<Void> cb) {
+		for (NavigationItemImpl item : items) {
+			if (item.visible() && item.name().equals(preset)) {
+				item.active(true, cb);
+				return true;
+			}
+		}
+		return false;
+	}
 }
