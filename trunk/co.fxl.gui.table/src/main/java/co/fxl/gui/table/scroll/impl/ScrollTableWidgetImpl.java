@@ -840,7 +840,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		// if (ALLOW_RESIZE)
 		// new ResizableColumnSelection(this);
 		// else
-		new ColumnSelection(this);
+		new ScalingColumnSelection(this);
 	}
 
 	void addCellUpdateListener() {
