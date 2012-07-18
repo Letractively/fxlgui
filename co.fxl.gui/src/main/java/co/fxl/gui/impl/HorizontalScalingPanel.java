@@ -26,4 +26,8 @@ public class HorizontalScalingPanel {
 		// TODO ...
 	}
 
+	public IContainer add() {
+		throw new UnsupportedOperationException();
+	}
+
 }
