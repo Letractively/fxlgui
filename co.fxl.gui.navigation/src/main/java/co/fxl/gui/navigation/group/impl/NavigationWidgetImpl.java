@@ -480,4 +480,14 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 			addSeparatorBorder();
 		}
 	}
+
+	@Override
+	public boolean active(String preset, ICallback<Void> cb) {
+		for (NavigationGroupImpl g : groups) {
+			if (g.active(preset, cb)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

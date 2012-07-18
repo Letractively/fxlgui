@@ -39,4 +39,6 @@ public interface INavigationWidget extends
 	boolean update(boolean alwaysAdjust);
 
 	INavigationWidget holdUpdate(boolean b);
+
+	boolean active(String preset, ICallback<Void> cb);
 }
