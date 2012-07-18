@@ -21,19 +21,25 @@ package co.fxl.gui.api.test;
 import java.lang.reflect.InvocationTargetException;
 
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.HorizontalScalingPanel;
 
 public class HorizontalScalingPanelTest {
 
 	public void run(IDisplay display) {
-		IVerticalPanel panel = display.container().panel().vertical()
-				.size(500, 500).spacing(10);
-		HorizontalScalingPanel hsp = new HorizontalScalingPanel(panel.add());
-		for (int i = 0; i < 10; i++)
-			hsp.add().panel().horizontal().spacing(10).add().label()
-					.text("I" + i);
+		IVerticalPanel panel = display.container().scrollPane().viewPort()
+				.panel().vertical().size(500, 500).spacing(10);
 		display.visible(true);
+		HorizontalScalingPanel hsp = new HorizontalScalingPanel(panel.add());
+		for (int i = 0; i < 10; i++) {
+			IHorizontalPanel spacing = hsp.add().panel().horizontal()
+					.spacing(10);
+			spacing.color().lightgray();
+			spacing.border();
+			spacing.add().label().text("I" + i);
+		}
+		hsp.width(200);
 	}
 
 	public static void main(String[] args) throws InstantiationException,

@@ -34,7 +34,6 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
 import co.fxl.gui.api.IButton;
-import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
@@ -108,7 +107,8 @@ public class SwingContainer<T extends JComponent> implements IContainer {
 
 	@Override
 	public IElement<?> element(IElement<?> element) {
-		return element;
+		setComponent((T) element.nativeElement());
+		return element();
 	}
 
 	@Override
@@ -249,8 +249,8 @@ public class SwingContainer<T extends JComponent> implements IContainer {
 		return new SwingHyperlink(this);
 	}
 
-//	@Override
-//	public <T> void widget(Class<T> interfaceClass, ICallback<T> widget) {
-//		throw new UnsupportedOperationException();
-//	}
+	// @Override
+	// public <T> void widget(Class<T> interfaceClass, ICallback<T> widget) {
+	// throw new UnsupportedOperationException();
+	// }
 }
