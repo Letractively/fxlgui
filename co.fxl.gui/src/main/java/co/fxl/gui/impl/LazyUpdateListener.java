@@ -28,6 +28,7 @@ public abstract class LazyUpdateListener<T> extends CallbackTemplate<Boolean>
 	private IComboBox cb;
 	private boolean active = true;
 	private T allowedValue;
+	private boolean noDiscardChangesDialog;
 
 	public LazyUpdateListener() {
 	}
@@ -36,11 +37,16 @@ public abstract class LazyUpdateListener<T> extends CallbackTemplate<Boolean>
 		this(cb.comboBox());
 	}
 
-	@SuppressWarnings("unchecked")
 	public LazyUpdateListener(IComboBox cb) {
+		this(cb, false);
+	}
+
+	@SuppressWarnings("unchecked")
+	public LazyUpdateListener(IComboBox cb, boolean noDiscardChangesDialog) {
 		this.cb = cb;
 		if (cb != null)
 			allowedValue = (T) cb.text();
+		this.noDiscardChangesDialog = noDiscardChangesDialog;
 	}
 
 	@Override
@@ -48,7 +54,10 @@ public abstract class LazyUpdateListener<T> extends CallbackTemplate<Boolean>
 		if (!active)
 			return;
 		this.value = value;
-		DiscardChangesDialog.show(this);
+		if (noDiscardChangesDialog) {
+			onSuccess(true);
+		} else
+			DiscardChangesDialog.show(this);
 	}
 
 	@Override

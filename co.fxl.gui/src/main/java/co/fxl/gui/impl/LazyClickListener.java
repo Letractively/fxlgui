@@ -23,9 +23,22 @@ import co.fxl.gui.api.IClickable.IClickListener;
 public abstract class LazyClickListener extends CallbackTemplate<Boolean>
 		implements IClickListener {
 
+	private boolean noDiscardChangesDialog;
+
+	public LazyClickListener() {
+		this(false);
+	}
+
+	public LazyClickListener(boolean noDiscardChangesDialog) {
+		this.noDiscardChangesDialog = noDiscardChangesDialog;
+	}
+
 	@Override
 	public void onClick() {
-		DiscardChangesDialog.show(this);
+		if (noDiscardChangesDialog)
+			onAllowedClick();
+		else
+			DiscardChangesDialog.show(this);
 	}
 
 	@Override

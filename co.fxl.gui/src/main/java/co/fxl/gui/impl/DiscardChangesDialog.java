@@ -38,7 +38,12 @@ public class DiscardChangesDialog {
 	public static DiscardChangesListener listener;
 
 	public static void show(final ICallback<Boolean> callback) {
-		if (!active)
+		show(false, callback);
+	}
+
+	public static void show(boolean noDiscardChangesDialog,
+			final ICallback<Boolean> callback) {
+		if (!active || noDiscardChangesDialog)
 			callback.onSuccess(true);
 		else {
 			IDialog dl = display.showDialog().confirm()
