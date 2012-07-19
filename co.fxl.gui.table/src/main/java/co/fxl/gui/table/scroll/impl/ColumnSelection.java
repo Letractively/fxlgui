@@ -28,6 +28,7 @@ import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.impl.Env;
 
 public class ColumnSelection {
 
@@ -44,7 +45,7 @@ public class ColumnSelection {
 	// sum(characters of column-headers) > m
 	// then dynamically resize font size of column selection labels
 
-	public ColumnSelection(final TableWidgetAdp widget) {
+	private ColumnSelection(final TableWidgetAdp widget) {
 		this.widget = widget;
 		dummy = new ScrollTableColumnImpl(widget, -1);
 		dummy.name("");
@@ -182,5 +183,12 @@ public class ColumnSelection {
 
 	void addTitle(@SuppressWarnings("rawtypes") ILinearPanel p) {
 		p.add().label().text("SHOW COLUMNS:").font().pixel(10).weight().bold();
+	}
+
+	public static void newInstance(TableWidgetAdp tableWidgetAdp) {
+		if (Env.is(Env.SWING) || Env.is(Env.IE))
+			new ColumnSelection(tableWidgetAdp);
+		else
+			new ScalingColumnSelection(tableWidgetAdp);
 	}
 }

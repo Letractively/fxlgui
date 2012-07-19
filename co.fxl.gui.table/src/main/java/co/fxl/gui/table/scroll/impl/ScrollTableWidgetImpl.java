@@ -52,7 +52,6 @@ import co.fxl.gui.impl.ColorTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DummyCallback;
-import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.KeyAdapter;
 import co.fxl.gui.impl.ToolbarImpl;
@@ -840,13 +839,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	private void addColumnSelection() {
-		// if (ALLOW_RESIZE)
-		// new ResizableColumnSelection(this);
-		// else
-		if (Env.is(Env.SWING) || Env.is(Env.IE))
-			new ColumnSelection(this);
-		else
-			new ScalingColumnSelection(this);
+		ColumnSelection.newInstance(this);
 	}
 
 	void addCellUpdateListener() {
