@@ -23,6 +23,7 @@ import java.util.List;
 
 import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IGridPanel;
@@ -106,7 +107,8 @@ public class HorizontalScalingPanel implements IClickListener {
 			return;
 		}
 		morePanel.color().white();
-		morePanel.border().style().bottom().style().left().style().right();
+		color(morePanel.border().style().bottom().style().left().style()
+				.right().color());
 		morePanel.spacing(0).spacing().bottom(SPACING_POPUP - 1)
 				.left(SPACING_POPUP - 1).right(SPACING_POPUP - 1)
 				.top(SPACING_POPUP);
@@ -131,8 +133,8 @@ public class HorizontalScalingPanel implements IClickListener {
 		}
 		base.size(maxWidth, sumHeight);
 		if (maxWidth > morePanel.width()) {
-			popUp.border().remove().style().left().style().top().style()
-					.right().style();
+			color(popUp.border().remove().style().left().style().top().style()
+					.right().color());
 			IGridPanel p02 = base.add().panel().grid().spacing(0).width(1.0);
 			IAbsolutePanel a0 = p02.cell(0, 0).panel().absolute()
 					.size(morePanel.width() - 2, 1);
@@ -140,9 +142,9 @@ public class HorizontalScalingPanel implements IClickListener {
 			IAbsolutePanel a1 = p02.cell(1, 0).panel().absolute()
 					.size(maxWidth - morePanel.width() + 2, 1);
 			addDummyIE(a1);
-			a1.color().black();
+			color(a1.color());
 		} else {
-			popUp.border().remove().color().black();
+			color(popUp.border().remove().color());
 		}
 		popUp.offset(morePanel.offsetX(), morePanel.offsetY() - sumHeight);
 		// popUp.size(maxWidth, sumHeight);
@@ -165,6 +167,9 @@ public class HorizontalScalingPanel implements IClickListener {
 				}
 			}
 		});
+	}
+
+	private void color(IColor color) {
 	}
 
 	public static void addDummyIE(IPanel<?> leftPartBorder) {
