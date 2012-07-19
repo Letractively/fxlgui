@@ -49,14 +49,11 @@ public class HorizontalScalingPanel implements IClickListener {
 	private IPopUp popUp;
 
 	public HorizontalScalingPanel(IContainer c) {
-		basic = c.panel().horizontal().align().begin().add().panel()
-				.horizontal().align().begin();
-		panel = basic.add().panel().horizontal().align().begin();
-		morePanel = basic.add().panel().horizontal().spacing(SPACING_POPUP)
-				.align().begin().visible(false);
-		morePanel.addClickListener(this);
-		IHorizontalPanel horizontal = morePanel.add().panel().horizontal()
-				.align().begin();
+		basic = c.panel().horizontal().add().panel().horizontal();
+		panel = basic.add().panel().horizontal();
+		morePanel = basic.addSpace(4).add().panel().horizontal()
+				.spacing(SPACING_POPUP).visible(false);
+		IHorizontalPanel horizontal = morePanel.add().panel().horizontal();
 		text = horizontal.add().label().text("More");
 		horizontal.add().image().resource("less_black.png");
 		// .addClickListener(this);
@@ -70,7 +67,6 @@ public class HorizontalScalingPanel implements IClickListener {
 	}
 
 	public HorizontalScalingPanel hspace(int hspace) {
-		this.hspace = hspace;
 		return this;
 	}
 
@@ -107,10 +103,13 @@ public class HorizontalScalingPanel implements IClickListener {
 	public void onClick() {
 		if (popUp != null) {
 			popUp.visible(false);
+			return;
 		}
 		morePanel.color().white();
 		morePanel.border().style().bottom().style().left().style().right();
-		morePanel.spacing(SPACING_POPUP - 1);
+		morePanel.spacing(0).spacing().bottom(SPACING_POPUP - 1)
+				.left(SPACING_POPUP - 1).right(SPACING_POPUP - 1)
+				.top(SPACING_POPUP);
 		morePanel.clickable(false);
 		popUp = Display.instance().showPopUp().autoHide(true);
 		IVerticalPanel base = popUp.container().panel().vertical();
@@ -118,18 +117,23 @@ public class HorizontalScalingPanel implements IClickListener {
 				.spacing(SPACING_POPUP);
 		int sumHeight = SPACING_POPUP;
 		int maxWidth = morePanel.width();
+		int innerWidth = 0;
 		for (IContainer c : relocated) {
 			pn.add().element(c.element());
 			int height = heights.get(containers.indexOf(c));
 			sumHeight += SPACING_POPUP + height;
-			maxWidth = Math.max(maxWidth, widths.get(containers.indexOf(c)) + 2
-					* SPACING_POPUP);
+			innerWidth = Math
+					.max(widths.get(containers.indexOf(c)), innerWidth);
+			maxWidth = Math.max(maxWidth, innerWidth + 2 * SPACING_POPUP);
+		}
+		for (IContainer c : relocated) {
+			c.element().width(innerWidth);
 		}
 		base.size(maxWidth, sumHeight);
 		if (maxWidth > morePanel.width()) {
 			popUp.border().remove().style().left().style().top().style()
 					.right().style();
-			IGridPanel p02 = base.add().panel().grid().spacing(0);
+			IGridPanel p02 = base.add().panel().grid().spacing(0).width(1.0);
 			IAbsolutePanel a0 = p02.cell(0, 0).panel().absolute()
 					.size(morePanel.width() - 2, 1);
 			addDummyIE(a0);
@@ -147,11 +151,17 @@ public class HorizontalScalingPanel implements IClickListener {
 			@Override
 			public void onUpdate(Boolean value) {
 				if (!value) {
-					morePanel.color().remove();
-					morePanel.border().remove();
-					morePanel.spacing(SPACING_POPUP);
-					morePanel.clickable(true);
-					popUp = null;
+					Display.instance().invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							morePanel.color().remove();
+							morePanel.border().remove();
+							morePanel.spacing(SPACING_POPUP).spacing()
+									.bottom(0).left(0).right(0).top(0);
+							morePanel.clickable(true);
+							popUp = null;
+						}
+					}, 100);
 				}
 			}
 		});

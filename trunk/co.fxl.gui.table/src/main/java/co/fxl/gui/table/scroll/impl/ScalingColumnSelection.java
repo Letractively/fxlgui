@@ -57,7 +57,7 @@ public class ScalingColumnSelection {
 		IVerticalPanel vertical = getContainer().panel().vertical();
 		IContainer clear = vertical.add();
 		int width = vertical.width();
-		HorizontalScalingPanel p = new HorizontalScalingPanel(clear);
+		final HorizontalScalingPanel p = new HorizontalScalingPanel(clear);
 		p.hspace(4).font().pixel(11).weight().bold();
 		IClickListener clickListener = new IClickListener() {
 			@Override
@@ -67,6 +67,15 @@ public class ScalingColumnSelection {
 		};
 		addToPanel(p, clickListener);
 		p.width(width);
+		// if (widget.nextTimeShowPopUp()) {
+		// widget.nextTimeShowPopUp(false);
+		// Display.instance().invokeLater(new Runnable() {
+		// @Override
+		// public void run() {
+		// p.onClick();
+		// }
+		// });
+		// }
 	}
 
 	protected IContainer getContainer() {
@@ -82,11 +91,12 @@ public class ScalingColumnSelection {
 	void addToPanel(final HorizontalScalingPanel p,
 			final IClickListener clickListener) {
 		addTitle(p);
+		p.addSpace(4);
 		for (final ScrollTableColumnImpl c : widget.columnList()) {
-			p.addSpace(4);
 			IFocusPanel fp = p.add().panel().focus();
-			IHorizontalPanel b = fp.add().panel().horizontal().spacing(4);
-			decoratePanel(p, clickListener, c, fp, b);
+			IHorizontalPanel h0 = fp.add().panel().horizontal().width(1.0)
+					.spacing(4);
+			decoratePanel(p, clickListener, c, fp, h0);
 		}
 		// p.addSpace(4);
 		// dummyFocusPanel = p.add().panel().focus();
@@ -153,6 +163,7 @@ public class ScalingColumnSelection {
 			b.addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {
+					// widget.nextTimeShowPopUp(true);
 					p.popUpVisible(false);
 					c.visible = !c.visible;
 					boolean allInvisible = true;
@@ -193,6 +204,9 @@ public class ScalingColumnSelection {
 	}
 
 	void addTitle(HorizontalScalingPanel p) {
-		p.add().label().text("SHOW COLUMNS:").font().pixel(10).weight().bold();
+		IHorizontalPanel horizontal = p.add().panel().horizontal();
+		horizontal.add().label().text("SHOW COLUMNS:").font().pixel(10)
+				.weight().bold();
+		horizontal.addSpace(4);
 	}
 }

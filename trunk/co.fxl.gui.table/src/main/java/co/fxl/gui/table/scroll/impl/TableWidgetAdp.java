@@ -19,4 +19,8 @@ public interface TableWidgetAdp {
 
 	IContainer getContainer();
 
+//	void nextTimeShowPopUp(boolean b);
+//
+//	boolean nextTimeShowPopUp();
+
 }
