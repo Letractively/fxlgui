@@ -58,7 +58,7 @@ public class Heights {
 		label.color().rgb(249, 249, 249);
 	}
 
-	private IBorder styleInputBorder(IBordered bordered) {
+	public IBorder styleInputBorder(IBordered bordered) {
 		// Styles.instance().style(bordered, Style.Element.INPUT,
 		// Style.Element.BORDER);
 		IBorder border = bordered.border();
@@ -76,8 +76,9 @@ public class Heights {
 		styleColor(textField);
 	}
 
-	public void decorate(ITextArea textField) {
+	public Heights decorate(ITextArea textField) {
 		styleColor(textField);
+		return this;
 	}
 
 	public void decorateHeight(ITextInput<?> textField) {
