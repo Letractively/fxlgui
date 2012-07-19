@@ -843,7 +843,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		// if (ALLOW_RESIZE)
 		// new ResizableColumnSelection(this);
 		// else
-		if (Env.is(Env.SWING))
+		if (Env.is(Env.SWING) || Env.is(Env.IE))
 			new ColumnSelection(this);
 		else
 			new ScalingColumnSelection(this);
