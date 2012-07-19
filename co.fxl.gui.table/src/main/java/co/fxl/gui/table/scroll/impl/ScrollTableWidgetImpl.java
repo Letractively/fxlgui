@@ -52,6 +52,7 @@ import co.fxl.gui.impl.ColorTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DummyCallback;
+import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.KeyAdapter;
 import co.fxl.gui.impl.ToolbarImpl;
@@ -226,6 +227,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IVerticalPanel topPanelContainer;
 	private INoEntitiesFoundDecorator noEntitiesFoundDecorator;
 	private String filterQueryLabel;
+
+	// private boolean nextTimeShowPopUp;
 
 	@Override
 	public IScrollTableWidget<Object> filterQueryLabel(String filterQueryLabel) {
@@ -840,7 +843,10 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		// if (ALLOW_RESIZE)
 		// new ResizableColumnSelection(this);
 		// else
-		new ScalingColumnSelection(this);
+		if (Env.is(Env.SWING))
+			new ColumnSelection(this);
+		else
+			new ScalingColumnSelection(this);
 	}
 
 	void addCellUpdateListener() {
@@ -1466,4 +1472,14 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	ScrollTableColumnImpl sortColumn() {
 		return columns.get(sortColumn);
 	}
+	//
+	// @Override
+	// public void nextTimeShowPopUp(boolean b) {
+	// nextTimeShowPopUp = b;
+	// }
+	//
+	// @Override
+	// public boolean nextTimeShowPopUp() {
+	// return nextTimeShowPopUp;
+	// }
 }

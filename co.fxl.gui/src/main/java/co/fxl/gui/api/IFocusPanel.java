@@ -18,8 +18,11 @@
  */
 package co.fxl.gui.api;
 
+import co.fxl.gui.api.ISpaced.ISpacing;
+
 public interface IFocusPanel extends IPanel<IFocusPanel>,
 		IDraggable<IFocusPanel>, IDropTarget<IFocusPanel>,
 		IKeyRecipient<IFocusPanel>, IFocusable<IFocusPanel> {
 
+	ISpacing spacing();
 }
