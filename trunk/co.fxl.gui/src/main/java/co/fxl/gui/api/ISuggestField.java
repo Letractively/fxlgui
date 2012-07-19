@@ -43,6 +43,4 @@ public interface ISuggestField extends ITextInput<ISuggestField>,
 
 	ISuggestField autoSelect(boolean autoSelect);
 
-	// ISuggestField addText(String... texts);
-
 }
