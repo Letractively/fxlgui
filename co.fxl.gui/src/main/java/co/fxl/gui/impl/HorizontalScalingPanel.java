@@ -137,10 +137,10 @@ public class HorizontalScalingPanel implements IClickListener {
 			IGridPanel p02 = base.add().panel().grid().spacing(0).width(1.0);
 			IAbsolutePanel a0 = p02.cell(0, 0).panel().absolute()
 					.size(morePanel.width() - 2, 1);
-			addDummyIE(a0);
+			addDummy(a0);
 			IAbsolutePanel a1 = p02.cell(1, 0).panel().absolute()
 					.size(maxWidth - morePanel.width() + 2, 1);
-			addDummyIE(a1);
+			addDummy(a1);
 			color(a1.color());
 		} else {
 			color(popUp.border().remove().color());
@@ -169,11 +169,16 @@ public class HorizontalScalingPanel implements IClickListener {
 	}
 
 	private void color(IColor color) {
+		color.black();
 	}
 
 	public static void addDummyIE(IPanel<?> leftPartBorder) {
 		if (Env.is(Env.IE))
-			leftPartBorder.add().image().size(1, 1).resource("empty_1x1.png");
+			addDummy(leftPartBorder);
+	}
+
+	public static void addDummy(IPanel<?> leftPartBorder) {
+		leftPartBorder.add().image().size(1, 1).resource("empty_1x1.png");
 	}
 
 	public void addSpace(int i) {
