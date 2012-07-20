@@ -32,7 +32,8 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class StatusDisplay implements IResizeListener, Runnable {
 
-	public static boolean SINGLE_RESIZE_LISTENER = Env.is(Env.CHROME);
+//	private static final int _250 = 250;
+	public static boolean SINGLE_RESIZE_LISTENER = true; // Env.is(Env.CHROME);
 	private static StatusDisplay instance = new StatusDisplay();
 	private IDisplay display = Display.instance();
 	private IVerticalPanel panel;
@@ -48,11 +49,48 @@ public class StatusDisplay implements IResizeListener, Runnable {
 		return instance;
 	}
 
+//	private Long lastResize = null;
+//	protected IPopUp popUp;
+
 	public IResizeConfiguration singleResizeListener(
-			IResizeListener resizeListener) {
+			final IResizeListener resizeListener) {
 		IResizeConfiguration adp = DisplayResizeAdapter.addResizeListener(
-				resizeListener, false);
+				wrap(resizeListener), false);
 		return adp;
+	}
+
+	private IResizeListener wrap(final IResizeListener resizeListener) {
+		return resizeListener;
+		// return new IResizeListener() {
+		//
+		// @Override
+		// public boolean onResize(int width, int height) {
+		// lastResize = System.currentTimeMillis();
+		// if (popUp == null) {
+		// popUp = StatusPanel.showPopUp(
+		// StatusPanel.pleaseWait("Recalibrating UI"), 0,
+		// StatusPanel.BACKGROUND, StatusPanel.FOREGROUND,
+		// false, true);
+		// forkResize();
+		// }
+		// return true;
+		// }
+		//
+		// private void forkResize() {
+		// Display.instance().invokeLater(new Runnable() {
+		// @Override
+		// public void run() {
+		// if (System.currentTimeMillis() - lastResize > _250) {
+		// popUp.visible(false);
+		// popUp = null;
+		// resizeListener.onResize(width(), height());
+		// } else {
+		// forkResize();
+		// }
+		// }
+		// }, _250);
+		// }
+		// };
 	}
 
 	public IResizeConfiguration addResizeListener(IResizeListener resizeListener) {
