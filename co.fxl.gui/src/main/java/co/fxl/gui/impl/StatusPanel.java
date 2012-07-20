@@ -27,8 +27,8 @@ import co.fxl.gui.log.impl.Log;
 
 public class StatusPanel {
 
-	private static final ColorMemento FOREGROUND = new ColorMemento();
-	private static final ColorMemento BACKGROUND = new ColorMemento(249, 237,
+	static final ColorMemento FOREGROUND = new ColorMemento();
+	static final ColorMemento BACKGROUND = new ColorMemento(249, 237,
 			190);
 	private static final String LOADING = "Loading ";
 	public static final double FADE_IN_MS = 1000;
@@ -36,8 +36,8 @@ public class StatusPanel {
 	private static boolean BEFORE = Constants.get("StatusPanel.BEFORE", true);
 	private IPopUp lastPopUp;
 	private static StatusPanel instance;
-	private ColorMemento color = BACKGROUND;
-	private ColorMemento fontColor = FOREGROUND;
+	ColorMemento color = BACKGROUND;
+	ColorMemento fontColor = FOREGROUND;
 	private String text;
 
 	// private boolean bold;
@@ -92,10 +92,15 @@ public class StatusPanel {
 		return "Please wait - " + info + "...";
 	}
 
-	private static IPopUp showPopUp(String info, int y, ColorMemento m,
+	static IPopUp showPopUp(String info, int y, ColorMemento m,
 			ColorMemento fm, boolean bold) {
+		return showPopUp(info, y, m, fm, bold, false);
+	}
+
+	static IPopUp showPopUp(String info, int y, ColorMemento m,
+			ColorMemento fm, boolean bold, boolean glass) {
 		final IPopUp dialog = Display.instance().showPopUp().modal(true)
-				.glass(false);
+				.glass(glass);
 		dialog.border().remove().style().shadow(2).color().rgb(240, 195, 109);
 		IHorizontalPanel spacing = dialog.container().panel().horizontal()
 				.spacing(5);
