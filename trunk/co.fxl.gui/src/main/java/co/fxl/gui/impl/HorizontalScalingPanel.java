@@ -25,7 +25,6 @@ import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
@@ -52,19 +51,19 @@ public class HorizontalScalingPanel implements IClickListener {
 	public HorizontalScalingPanel(IContainer c) {
 		basic = c.panel().horizontal().add().panel().horizontal();
 		panel = basic.add().panel().horizontal();
-		morePanel = basic.addSpace(4).add().panel().horizontal()
-				.spacing(SPACING_POPUP).visible(false);
-		IHorizontalPanel horizontal = morePanel.add().panel().horizontal();
-		text = horizontal.add().label().text("More");
-		horizontal.add().image().resource("less_black.png");
-		// .addClickListener(this);
-		morePanel.addClickListener(this);
 		// horizontal.addClickListener(this);
 		// text.addClickListener(this);
 	}
 
-	public IFont font() {
-		return text.font();
+	void addMorePanel() {
+		morePanel = basic.addSpace(4).add().panel().horizontal()
+				.spacing(SPACING_POPUP);
+		IHorizontalPanel horizontal = morePanel.add().panel().horizontal();
+		text = horizontal.add().label().text("More");
+		text.font().pixel(11).weight().bold();
+		horizontal.add().image().resource("less_black.png");
+		// .addClickListener(this);
+		morePanel.addClickListener(this);
 	}
 
 	public HorizontalScalingPanel hspace(int hspace) {
@@ -78,7 +77,7 @@ public class HorizontalScalingPanel implements IClickListener {
 			widths.add(containers.get(i).element().width());
 		}
 		if (isTooLarge()) {
-			morePanel.visible(true);
+			addMorePanel();
 			for (int i = containers.size() - 1; i >= 0 && isTooLarge(); i--) {
 				IContainer c = containers.get(i);
 				relocated.add(0, c);
