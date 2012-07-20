@@ -28,6 +28,8 @@ import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.Env;
+import co.fxl.gui.impl.HorizontalScalingPanel;
 import co.fxl.gui.table.scroll.impl.ScrollTableWidgetImpl;
 import co.fxl.gui.table.util.api.IDragDropListener;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
@@ -206,7 +208,10 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		scrollPane = ctr.scrollPane();
 		scrollPane.size(widthScrollPanel, height);
 		scrollContentPanel = scrollPane.viewPort().panel().vertical();
-		scrollContentPanel.add().label().text("&#160;");
+		if (Env.is(Env.IE))
+			HorizontalScalingPanel.addDummyIE(scrollContentPanel);
+		else
+			scrollContentPanel.add().label().text("&#160;");
 		((IGridPanel) treeDockPanel).column(0).expand();
 		updateScrollPanelHeight();
 		final int firstIndex = size - rows2Paint;
