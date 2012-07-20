@@ -58,7 +58,7 @@ public class ScalingColumnSelection {
 		IContainer clear = vertical.add();
 		int width = vertical.width();
 		final HorizontalScalingPanel p = new HorizontalScalingPanel(clear);
-		p.hspace(4).font().pixel(11).weight().bold();
+		p.hspace(4);
 		IClickListener clickListener = new IClickListener() {
 			@Override
 			public void onClick() {
@@ -95,7 +95,7 @@ public class ScalingColumnSelection {
 		for (final ScrollTableColumnImpl c : widget.columnList()) {
 			IFocusPanel fp = p.add().panel().focus();
 			IHorizontalPanel h0 = fp.add().panel().horizontal().width(1.0)
-					.spacing(4);
+					.spacing(3);
 			decoratePanel(p, clickListener, c, fp, h0);
 		}
 		// p.addSpace(4);
