@@ -182,7 +182,7 @@ public class HorizontalScalingPanel implements IClickListener {
 
 	public void popUpVisible(boolean b) {
 		if (b) {
-			if (morePanel.visible() && popUp == null)
+			if (morePanel != null && morePanel.visible() && popUp == null)
 				onClick();
 		} else if (popUp != null) {
 			popUp.visible(false);
