@@ -42,7 +42,7 @@ public class FlipPage implements IContentPage, IColored {
 	@Override
 	public IContainer next() {
 		if (active == null)
-			return page1.add();
+			return page1.clear().add();
 		nextCalled = true;
 		if (active == page2) {
 			return page1.clear().add();
