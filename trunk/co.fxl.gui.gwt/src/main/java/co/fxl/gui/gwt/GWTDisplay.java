@@ -472,7 +472,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		return this;
 	}
 
-	void notifyDragEnd() {
+	void resetScrollPanelTop() {
 		if (isChrome() && !scrolling && Window.getScrollTop() != 0) {
 			Window.scrollTo(Window.getScrollLeft(), 0);
 		}

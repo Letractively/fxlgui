@@ -215,6 +215,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 
 	public void updateHeight() {
 		panel.height(height());
+//		display.height(display.height());
 	}
 
 }
