@@ -1294,8 +1294,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	private void resetStatusPanel() {
 		bottom.clear();
-		bottom.addSpace(2);
-		statusPanel = bottom.add().panel().grid().resize(3, 1);
+		// bottom.addSpace(2);
+		statusPanel = bottom.add().panel().grid().height(32).resize(3, 1);
 		statusPanel.spacing(4);
 	}
 
