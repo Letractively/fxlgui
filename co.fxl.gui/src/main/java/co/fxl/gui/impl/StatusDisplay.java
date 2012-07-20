@@ -40,7 +40,8 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	private IVerticalPanel p0;
 
 	private StatusDisplay() {
-		Display.instance().addResizeListener(this);
+		if (!SINGLE_RESIZE_LISTENER)
+			Display.instance().addResizeListener(this);
 	}
 
 	public static StatusDisplay instance() {
@@ -179,6 +180,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	public StatusDisplay reset() {
 		scrollPane = display.clear().container().scrollPane().horizontal();
 		panel = scrollPane.viewPort().panel().vertical();
+		run();
 		stylePanel(panel);
 		p0 = panel.add().panel().vertical().add().panel().vertical();
 		return this;
@@ -215,7 +217,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 
 	public void updateHeight() {
 		panel.height(height());
-//		display.height(display.height());
+		// display.height(display.height());
 	}
 
 }
