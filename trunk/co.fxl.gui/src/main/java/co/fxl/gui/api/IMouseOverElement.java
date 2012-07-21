@@ -1,6 +1,6 @@
 package co.fxl.gui.api;
 
-public interface IMouseOverElement<T> {
+public interface IMouseOverElement<T> extends IElement<T> {
 
 	public interface IMouseOverListener {
 
