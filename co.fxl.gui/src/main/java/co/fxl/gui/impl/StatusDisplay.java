@@ -33,7 +33,7 @@ import co.fxl.gui.api.IVerticalPanel;
 public class StatusDisplay implements IResizeListener, Runnable {
 
 	// private static final int _250 = 250;
-	public static boolean SINGLE_RESIZE_LISTENER = Env.is(Env.CHROME);
+	public static boolean SINGLE_RESIZE_LISTENER = true;//Env.is(Env.CHROME);
 	private static StatusDisplay instance = new StatusDisplay();
 	private IDisplay display = Display.instance();
 	private IVerticalPanel panel;
