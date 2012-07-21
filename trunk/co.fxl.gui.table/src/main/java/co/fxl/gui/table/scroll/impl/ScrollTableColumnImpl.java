@@ -380,7 +380,10 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 	@Override
 	public IColumn<Object> width(double width) {
-		this.widthDouble = width;
+		if (width == 0) {
+			visible(false);
+		} else
+			widthDouble = width;
 		return this;
 	}
 
