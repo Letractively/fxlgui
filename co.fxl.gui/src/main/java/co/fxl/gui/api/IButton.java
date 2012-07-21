@@ -19,6 +19,6 @@
 package co.fxl.gui.api;
 
 public interface IButton extends IClickable<IButton>, ITextElement<IButton>,
-		IFocusable<IButton> {
+		IFocusable<IButton>, IMouseOverElement<IButton> {
 
 }

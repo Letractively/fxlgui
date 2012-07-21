@@ -50,4 +50,10 @@ class AndroidButton extends AndroidElement<TextView, IButton> implements
 	public IFont font() {
 		return new AndroidFont(view);
 	}
+
+	@Override
+	public IButton addMouseOverListener(
+			co.fxl.gui.api.IMouseOverElement.IMouseOverListener l) {
+		throw new UnsupportedOperationException();
+	}
 }

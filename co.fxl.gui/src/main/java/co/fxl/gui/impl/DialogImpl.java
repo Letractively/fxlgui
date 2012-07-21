@@ -27,6 +27,7 @@ import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IVerticalPanel;
 
@@ -128,6 +129,9 @@ public class DialogImpl implements IDialog {
 	protected int width = -1;
 	private int height = -1;
 	private boolean atLastClick = false;
+	private int x = -1;
+	private int y = -1;
+	private boolean isHtml;
 
 	public DialogImpl(IDisplay display) {
 		this.display = display;
@@ -149,6 +153,17 @@ public class DialogImpl implements IDialog {
 	@Override
 	public IType message(String message) {
 		this.message = message;
+		return type();
+	}
+
+	@Override
+	public IType html(String message) {
+		this.message = message;
+		isHtml = true;
+		return type();
+	}
+
+	private IType type() {
 		return new IType() {
 
 			private IDialog type(String string) {
@@ -201,8 +216,10 @@ public class DialogImpl implements IDialog {
 				popUp.height(height);
 			if (atLastClick)
 				popUp.atLastClick(0, 0);
-			else
+			else if (x == -1)
 				popUp.center();
+			else
+				popUp.offset(x, y);
 			IVerticalPanel panel = popUp.container().panel().vertical();
 			WidgetTitle.decorateBorder(panel.spacing(1).border().color());
 			WidgetTitle t = new WidgetTitle(panel.add().panel())
@@ -261,7 +278,12 @@ public class DialogImpl implements IDialog {
 		IGridCell c = grid.cell(1, 0);
 		if (width != -1)
 			c.width(width - 3 * 10 - 16);
-		c.label().text(message).autoWrap(true);
+		ILabel l = c.label();
+		if (isHtml)
+			l.html(message);
+		else
+			l.text(message);
+		l.autoWrap(true);
 	}
 
 	protected void decorate(IPopUp popUp, IVerticalPanel panel) {
@@ -321,6 +343,13 @@ public class DialogImpl implements IDialog {
 	@Override
 	public IDialog atLastClick() {
 		atLastClick = true;
+		return this;
+	}
+
+	@Override
+	public IDialog offset(int x, int y) {
+		this.x = x;
+		this.y = y;
 		return this;
 	}
 }
