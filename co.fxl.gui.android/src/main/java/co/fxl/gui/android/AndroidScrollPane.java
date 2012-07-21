@@ -219,4 +219,9 @@ class AndroidScrollPane implements IScrollPane, Parent {
 	public IScrollPane bidirectional() {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public IScrollPane iD(String iD) {
+		throw new UnsupportedOperationException();
+	}
 }

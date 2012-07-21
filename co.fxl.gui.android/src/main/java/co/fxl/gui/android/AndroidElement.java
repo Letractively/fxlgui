@@ -250,4 +250,10 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 		// TODO ... throw new UnsupportedOperationException();
 		return (T) this;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public T iD(String iD) {
+		return (T) this;
+	}
 }
