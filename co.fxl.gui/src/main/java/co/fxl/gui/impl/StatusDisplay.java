@@ -77,7 +77,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 				if (popUp == null) {
 					popUp = StatusPanel.showPopUp("Resizing...", 0,
 							StatusPanel.BACKGROUND, StatusPanel.FOREGROUND,
-							false, true);
+							false, false);
 					forkResize();
 				}
 				return true;
