@@ -75,8 +75,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 			public boolean onResize(int width, int height) {
 				lastResize = System.currentTimeMillis();
 				if (popUp == null) {
-					popUp = StatusPanel.showPopUp(
-							"Resizing and recalibrating...", 0,
+					popUp = StatusPanel.showPopUp("Resizing...", 0,
 							StatusPanel.BACKGROUND, StatusPanel.FOREGROUND,
 							false, true);
 					forkResize();
