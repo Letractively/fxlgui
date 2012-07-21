@@ -480,4 +480,8 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		forceSort = true;
 		return this;
 	}
+
+	public void decorateUndefined(Object object, IBulkTableCell cell) {
+		cell.image("undefined.png");
+	}
 }
