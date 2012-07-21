@@ -32,7 +32,7 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class StatusDisplay implements IResizeListener, Runnable {
 
-//	private static final int _250 = 250;
+	// private static final int _250 = 250;
 	public static boolean SINGLE_RESIZE_LISTENER = Env.is(Env.CHROME);
 	private static StatusDisplay instance = new StatusDisplay();
 	private IDisplay display = Display.instance();
@@ -49,8 +49,8 @@ public class StatusDisplay implements IResizeListener, Runnable {
 		return instance;
 	}
 
-//	private Long lastResize = null;
-//	protected IPopUp popUp;
+	// private Long lastResize = null;
+	// protected IPopUp popUp;
 
 	public IResizeConfiguration singleResizeListener(
 			final IResizeListener resizeListener) {
@@ -204,15 +204,11 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	public int width() {
-		return hasHSB() ? 1024 : display.width();
-	}
-
-	private boolean hasHSB() {
-		return display.width() < 1024;
+		return display.width();
 	}
 
 	public int height() {
-		return display.height() - (hasHSB() ? Env.HEIGHT_SCROLLBAR : 0);
+		return display.height();
 	}
 
 	public StatusDisplay reset() {
