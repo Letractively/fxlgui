@@ -20,6 +20,12 @@ package co.fxl.gui.api;
 
 public interface IScrollPane extends IElement<IScrollPane>, IBordered, IColored {
 
+	public interface IScrollbar {
+
+		IScrollPane always();
+
+	}
+
 	public interface IScrollListener {
 
 		void onScroll(int maxOffset);
@@ -40,4 +46,6 @@ public interface IScrollPane extends IElement<IScrollPane>, IBordered, IColored 
 	int scrollOffset();
 
 	IScrollPane bidirectional();
+
+//	IScrollbar scrollbar();
 }
