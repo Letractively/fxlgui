@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.impl;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDisplay.IResizeConfiguration;
@@ -32,7 +33,12 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class StatusDisplay implements IResizeListener, Runnable {
 
-	// private static final int _250 = 250;
+	public interface RefreshListener {
+
+		public void refresh(ICallback<Void> cb);
+	}
+
+	private static final int RESIZE_INTERVALL_MS = 250;
 	public static boolean SINGLE_RESIZE_LISTENER = true; // Env.is(Env.CHROME)
 															// ||
 															// Env.is(Env.FIREFOX);
@@ -51,48 +57,53 @@ public class StatusDisplay implements IResizeListener, Runnable {
 		return instance;
 	}
 
-	// private Long lastResize = null;
-	// protected IPopUp popUp;
+	private Long lastResize = null;
+	protected IPopUp popUp;
 
 	public IResizeConfiguration singleResizeListener(
-			final IResizeListener resizeListener) {
+			RefreshListener resizeListener) {
 		IResizeConfiguration adp = DisplayResizeAdapter.addResizeListener(
 				wrap(resizeListener), false);
 		return adp;
 	}
 
-	private IResizeListener wrap(final IResizeListener resizeListener) {
-		return resizeListener;
-		// return new IResizeListener() {
-		//
-		// @Override
-		// public boolean onResize(int width, int height) {
-		// lastResize = System.currentTimeMillis();
-		// if (popUp == null) {
-		// popUp = StatusPanel.showPopUp(
-		// StatusPanel.pleaseWait("Recalibrating UI"), 0,
-		// StatusPanel.BACKGROUND, StatusPanel.FOREGROUND,
-		// false, true);
-		// forkResize();
-		// }
-		// return true;
-		// }
-		//
-		// private void forkResize() {
-		// Display.instance().invokeLater(new Runnable() {
-		// @Override
-		// public void run() {
-		// if (System.currentTimeMillis() - lastResize > _250) {
-		// popUp.visible(false);
-		// popUp = null;
-		// resizeListener.onResize(width(), height());
-		// } else {
-		// forkResize();
-		// }
-		// }
-		// }, _250);
-		// }
-		// };
+	private IResizeListener wrap(final RefreshListener resizeListener) {
+		// return resizeListener;
+		return new IResizeListener() {
+
+			@Override
+			public boolean onResize(int width, int height) {
+				lastResize = System.currentTimeMillis();
+				if (popUp == null) {
+					popUp = StatusPanel.showPopUp(
+							"Resizing and recalibrating...", 0,
+							StatusPanel.BACKGROUND, StatusPanel.FOREGROUND,
+							false, true);
+					forkResize();
+				}
+				return true;
+			}
+
+			private void forkResize() {
+				Display.instance().invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						if (System.currentTimeMillis() - lastResize > RESIZE_INTERVALL_MS) {
+							resizeListener
+									.refresh(new CallbackTemplate<Void>() {
+										@Override
+										public void onSuccess(Void result) {
+											popUp.visible(false);
+											popUp = null;
+										}
+									});
+						} else {
+							forkResize();
+						}
+					}
+				}, RESIZE_INTERVALL_MS);
+			}
+		};
 	}
 
 	public IResizeConfiguration addResizeListener(IResizeListener resizeListener) {
