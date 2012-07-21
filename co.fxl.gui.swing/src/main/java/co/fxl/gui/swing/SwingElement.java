@@ -510,4 +510,10 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 		return (R) this;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public R iD(String iD) {
+		return (R) this;
+	}
+
 }
