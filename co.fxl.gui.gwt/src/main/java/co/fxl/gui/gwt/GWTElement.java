@@ -755,6 +755,13 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		return (R) this;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public R iD(String iD) {
+		container.widget.getElement().setId(iD);
+		return (R) this;
+	}
+
 	// @Override
 	// public <N> R nativeElement(N nativeElement) {
 	// throw new UnsupportedOperationException();
