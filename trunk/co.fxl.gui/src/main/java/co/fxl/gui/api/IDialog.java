@@ -21,8 +21,9 @@ package co.fxl.gui.api;
 import co.fxl.gui.api.IClickable.IClickListener;
 
 public interface IDialog {
-	
-	// TODO Dialog sollte widget sein, kein extra ui component (aber standardmäßig drin in GWTImpl und SwingImpl)
+
+	// TODO Dialog sollte widget sein, kein extra ui component (aber
+	// standardmäßig drin in GWTImpl und SwingImpl)
 
 	public interface IDialogButton {
 
@@ -75,6 +76,10 @@ public interface IDialog {
 	IDialog width(int width);
 
 	IDialog height(int height);
-	
+
 	IDialog atLastClick();
+
+	IDialog offset(int x, int y);
+
+	IType html(String html);
 }

@@ -194,4 +194,14 @@ class AndroidDialog implements IDialog {
 	public IDialog atLastClick() {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public IDialog offset(int x, int y) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IType html(String html) {
+		throw new UnsupportedOperationException();
+	}
 }
