@@ -204,11 +204,16 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	public int width() {
-		return display.width();
+		return hasHorizontalScrollbar() ? 1024 : display.width();
+	}
+
+	private boolean hasHorizontalScrollbar() {
+		return display.width() < 1024;
 	}
 
 	public int height() {
-		return display.height();
+		return display.height()
+				- (hasHorizontalScrollbar() ? Env.HEIGHT_SCROLLBAR : 0);
 	}
 
 	public StatusDisplay reset() {
