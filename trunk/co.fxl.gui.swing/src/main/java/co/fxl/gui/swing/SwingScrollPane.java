@@ -191,4 +191,23 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		return this;
 	}
+
+//	@Override
+//	public IScrollbar scrollbar() {
+//		return new IScrollbar() {
+//
+//			@Override
+//			public IScrollPane always() {
+//				if (container.component.getVerticalScrollBarPolicy() == JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED) {
+//					container.component
+//							.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//				}
+//				if (container.component.getHorizontalScrollBarPolicy() == JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED) {
+//					container.component
+//							.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+//				}
+//				return SwingScrollPane.this;
+//			}
+//		};
+//	}
 }

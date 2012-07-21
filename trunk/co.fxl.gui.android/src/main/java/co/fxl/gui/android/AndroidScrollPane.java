@@ -224,4 +224,9 @@ class AndroidScrollPane implements IScrollPane, Parent {
 	public IScrollPane iD(String iD) {
 		throw new UnsupportedOperationException();
 	}
+
+//	@Override
+//	public IScrollbar scrollbar() {
+//		throw new UnsupportedOperationException();
+//	}
 }

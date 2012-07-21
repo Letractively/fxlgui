@@ -33,6 +33,9 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 
 	private int initialScrollPosition = -1;
 
+	// private boolean vertical = true;
+	// private boolean horizontal = false;
+
 	GWTScrollPane(GWTContainer<ScrollPanel> container) {
 		super(container);
 		widget().setWidth("100%");
@@ -119,6 +122,8 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 
 	@Override
 	public IScrollPane horizontal() {
+		// vertical = false;
+		// horizontal = true;
 		container.widget.getElement().getStyle()
 				.setProperty("overflowX", "auto");
 		container.widget.getElement().getStyle()
@@ -128,6 +133,8 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 
 	@Override
 	public IScrollPane bidirectional() {
+		// vertical = true;
+		// horizontal = true;
 		container.widget.getElement().getStyle()
 				.setProperty("overflowX", "auto");
 		container.widget.getElement().getStyle()
@@ -157,4 +164,23 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 		container.widget.setAlwaysShowScrollBars(showScrollbarsAlways);
 		return this;
 	}
+	//
+	// @Override
+	// public IScrollbar scrollbar() {
+	// return new IScrollbar() {
+	//
+	// @Override
+	// public IScrollPane always() {
+	// if (horizontal) {
+	// container.widget.getElement().getStyle()
+	// .setOverflowX(Overflow.SCROLL);
+	// }
+	// if (vertical) {
+	// container.widget.getElement().getStyle()
+	// .setOverflowY(Overflow.SCROLL);
+	// }
+	// return GWTScrollPane.this;
+	// }
+	// };
+	// }
 }
