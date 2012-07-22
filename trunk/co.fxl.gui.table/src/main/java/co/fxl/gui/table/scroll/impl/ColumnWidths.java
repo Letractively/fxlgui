@@ -24,14 +24,30 @@ import java.util.Map;
 
 public class ColumnWidths {
 
-//	private static final boolean USE_MAX_TOKENS = false;
+	// private static final boolean USE_MAX_TOKENS = false;
 	private Map<ScrollTableColumnImpl, Integer> intWidths = new HashMap<ScrollTableColumnImpl, Integer>();
 	private Map<ScrollTableColumnImpl, Double> doubleWidths = new HashMap<ScrollTableColumnImpl, Double>();
 
 	public ColumnWidths(boolean useMaxTokens,
 			List<ScrollTableColumnImpl> columns) {
-		double sum = 0;
+		
+		// TODO FilterQueryDisplayData-Computation-Unit verwenden
+		
 		// int widthMin = 0;
+		int num = 0;
+		double sumD = 0;
+		for (int c = 0; c < columns.size(); c++) {
+			if (!columns.get(c).visible)
+				continue;
+			ScrollTableColumnImpl columnImpl = columns.get(c);
+			Double w = columnImpl.widthDouble;
+			if (w != null && w > 0) {
+				num++;
+				sumD += w;
+			}
+		}
+		double avg = num > 0 ? sumD / num : -1;
+		double sum = 0;
 		for (int c = 0; c < columns.size(); c++) {
 			if (!columns.get(c).visible)
 				continue;
@@ -49,8 +65,10 @@ public class ColumnWidths {
 				// widthMin += intWidths.get(columnImpl);
 				continue;
 			}
-			double d = columnImpl.widthDouble != -1 ? columnImpl.widthDouble
-					: columnImpl.decorator().defaultWeight();
+			double d = columnImpl.decorator().defaultWeight();
+			if (avg != -1) {
+				d = columnImpl.widthDouble == -1 ? avg : columnImpl.widthDouble;
+			}
 			doubleWidths.put(columnImpl, d);
 			sum += d;
 			// widthMin += 100;
