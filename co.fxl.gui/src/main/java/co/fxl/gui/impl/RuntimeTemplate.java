@@ -41,8 +41,12 @@ public class RuntimeTemplate implements IRuntime {
 	}
 
 	@Override
-	public boolean is(String name) {
-		return this.name.equals(name);
+	public boolean is(String... names) {
+		for (String name : names) {
+			if (this.name.equals(name))
+				return true;
+		}
+		return false;
 	}
 
 	@Override
