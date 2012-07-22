@@ -132,6 +132,7 @@ public class DialogImpl implements IDialog {
 	private int x = -1;
 	private int y = -1;
 	private boolean isHtml;
+	private boolean autoHide;
 
 	public DialogImpl(IDisplay display) {
 		this.display = display;
@@ -206,7 +207,7 @@ public class DialogImpl implements IDialog {
 
 	IPopUp getPopUp() {
 		if (popUp == null) {
-			popUp = display.showPopUp().modal(modal).autoHide(false);
+			popUp = display.showPopUp().modal(modal).autoHide(autoHide);
 			decorateBorder();
 			if (width != -1 && height != -1) {
 				popUp.size(width, height);
@@ -351,5 +352,16 @@ public class DialogImpl implements IDialog {
 		this.x = x;
 		this.y = y;
 		return this;
+	}
+
+	@Override
+	public IDialog autoHide(boolean autoHide) {
+		this.autoHide = autoHide;
+		return this;
+	}
+
+	@Override
+	public boolean visible() {
+		return popUp != null && popUp.visible();
 	}
 }
