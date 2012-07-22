@@ -24,7 +24,7 @@ public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
 		String name();
 
-		boolean is(String name);
+		boolean is(String... name);
 
 		double version();
 

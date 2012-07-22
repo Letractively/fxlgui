@@ -35,7 +35,7 @@ public class Env {
 		return Display.instance().runtime();
 	}
 
-	public static boolean is(String name) {
-		return runtime().is(name);
+	public static boolean is(String... names) {
+		return runtime().is(names);
 	}
 }
