@@ -204,4 +204,14 @@ class AndroidDialog implements IDialog {
 	public IType html(String html) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public IDialog autoHide(boolean autoHide) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean visible() {
+		throw new UnsupportedOperationException();
+	}
 }

@@ -82,4 +82,8 @@ public interface IDialog {
 	IDialog offset(int x, int y);
 
 	IType html(String html);
+
+	IDialog autoHide(boolean autoHide);
+
+	boolean visible();
 }
