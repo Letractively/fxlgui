@@ -43,6 +43,7 @@ import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
+import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DisplayTemplate;
 import co.fxl.gui.impl.RuntimeTemplate;
@@ -95,7 +96,18 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 		// TODO AOPC: Aspect Log.instance(new SwingLog());
 		// TODO SWING-FXL: IMPL: remove hack
 		ToolbarImpl.ADJUST_HEIGHTS = true;
+		declareConstants();
 		SwingFormat.setUp();
+	}
+
+	private void declareConstants() {
+
+		// TODO replace with Env.is(...) declarations in the respective widgets
+
+		Constants.put("TableViewTemplate.CORRECT_HEIGHT", false);
+		Constants.put("StatusPanel.BEFORE", false);
+		Constants.put("StatusPanel.RESIZE", false);
+		Constants.put("DragAndDropGridAdapter.ALLOW_DRAG_AND_DROP", false);
 	}
 
 	private void resize() {

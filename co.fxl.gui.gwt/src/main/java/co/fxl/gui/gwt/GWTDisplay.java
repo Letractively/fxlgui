@@ -21,6 +21,7 @@ package co.fxl.gui.gwt;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.data.format.gwt.GWTFormat;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
@@ -32,9 +33,11 @@ import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
 import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.DialogImpl;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DisplayTemplate;
+import co.fxl.gui.impl.ImagePathResolver;
 import co.fxl.gui.impl.RuntimeTemplate;
 import co.fxl.gui.impl.ToolbarImpl;
 
@@ -48,6 +51,7 @@ import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
+import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
@@ -122,6 +126,48 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 			}
 		});
 		runtime = new RuntimeTemplate(getBrowserName(), getBrowserVersion());
+		declareConstants();
+		GWTFormat.setUp();
+	}
+
+	private void declareConstants() {
+
+		// TODO replace with Env.is(...) declarations in the respective widgets
+
+		Constants.put("TableViewTemplate.CORRECT_HEIGHT",
+				!GWTDisplay.isInternetExplorer());
+		if (GWTDisplay.isInternetExplorer()) {
+			Constants.put("DashboardPagePage.HEIGHT_DECREMENT", 3);
+			Constants.put("DashboardPagePage.HEIGHT_CONTENT_DECREMENT", 30);
+		}
+		if (GWTDisplay.isFirefox()) {
+			Constants.put("ScrollTableWidgetImpl.ADD_TOP_PANEL_TOP_PADDING",
+					true);
+			if (GWTDisplay.isFirefox3()) {
+				Constants.put("FormWidgetImpl.FIXED_WIDTH", true);
+				Constants.put("NavigationItemImpl.USE_TEMP_FLIP", false);
+			}
+		}
+		if (GWTDisplay.isOpera())
+			Constants.put("ScrollTableWidgetImpl.ADD_TOP_PANEL_SPACING", true);
+		if (GWTDisplay.isFirefox() || GWTDisplay.isOpera()) {
+			Constants.put("MiniFilterPanel.MODIFIED_TITLE_ADD", true);
+		}
+		final boolean isChrome15Plus = GWTDisplay.isChrome()
+				&& GWTDisplay.getBrowserVersion() >= 15;
+		final String imagePath = Constants.get("GWTLazyTreeWidget.IMAGE_PATH",
+				(isChrome15Plus ? "" : GWT.getModuleBaseURL()) + "images/");
+		Constants.put("ImagePathResolver", new ImagePathResolver() {
+			@Override
+			public String resolve(String resource) {
+				if (isChrome15Plus) {
+					ImageResource ir = GWTImage.resolve(resource);
+					if (ir != null)
+						return ir.getSafeUri().asString();
+				}
+				return imagePath + resource;
+			}
+		});
 	}
 
 	private String getBrowserName() {
