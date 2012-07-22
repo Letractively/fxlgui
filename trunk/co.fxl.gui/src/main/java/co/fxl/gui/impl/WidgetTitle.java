@@ -68,6 +68,7 @@ public class WidgetTitle implements IClickListener {
 	private IImage more;
 	private boolean addBorder;
 	private boolean plainContent = false;
+	private boolean center;
 	private static Map<String, Boolean> foldStatus = new HashMap<String, Boolean>();
 
 	public WidgetTitle() {
@@ -367,10 +368,17 @@ public class WidgetTitle implements IClickListener {
 		label.font().color().gray();
 	}
 
+	public WidgetTitle center() {
+		center = true;
+		return this;
+	}
+
 	public IContainer content() {
 		if (contentContainer != null)
 			return contentContainer;
 		IVerticalPanel vertical = bPanel.cell(0, 0).panel().vertical();
+		if (center)
+			vertical.align().center();
 		IVerticalPanel v = vertical;
 		if (space() == 0 && spaceBottom() == 0)
 			return contentContainer = v.add();
