@@ -160,4 +160,20 @@ public class RegistryImpl<T> implements IRegistry<T> {
 		return (T) this;
 	}
 
+	@Override
+	public final <N> T registerService(final Class<N> clazz, final N service) {
+		return register(new IServiceProvider<N>() {
+
+			@Override
+			public Class<N> serviceType() {
+				return clazz;
+			}
+
+			@Override
+			public N getService() {
+				return service;
+			}
+		});
+	}
+
 }

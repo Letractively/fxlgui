@@ -29,6 +29,7 @@ public class Display {
 	}
 
 	public static IDisplay instance() {
+		assert instance != null;
 		return instance;
 	}
 }
