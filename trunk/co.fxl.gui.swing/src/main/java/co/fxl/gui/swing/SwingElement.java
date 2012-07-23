@@ -240,11 +240,11 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 	public final R focus(boolean focus) {
 		if (focus) {
 			container.component.requestFocus();
-			notifyFocusListeners(true);
 		} else {
 			container.component.setFocusable(false);
 			container.component.setFocusable(true);
 		}
+		notifyFocusListeners(focus);
 		return (R) this;
 	}
 

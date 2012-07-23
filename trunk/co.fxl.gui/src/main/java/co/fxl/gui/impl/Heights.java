@@ -72,12 +72,17 @@ public class Heights {
 	}
 
 	public void decorate(ITextInput<?> textField) {
-		decorateHeight(textField);
-		styleColor(textField);
+		if (textField instanceof ITextArea) {
+			decorate((ITextArea) textField);
+		} else {
+			decorateHeight(textField);
+			styleColor(textField);
+		}
 	}
 
 	public Heights decorate(ITextArea textField) {
 		styleColor(textField);
+		styleInputBorder((IBordered) textField);
 		return this;
 	}
 
