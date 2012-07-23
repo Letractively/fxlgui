@@ -19,8 +19,10 @@
 package co.fxl.gui.input.impl;
 
 import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.ITextInput;
 import co.fxl.gui.api.IUpdateable;
+import co.fxl.gui.impl.Heights;
 
 public class TooltipTextInput implements IUpdateable<String> {
 
@@ -48,6 +50,8 @@ public class TooltipTextInput implements IUpdateable<String> {
 				}
 			}
 		});
+		Heights.INSTANCE.decorate(ti);
+		Heights.INSTANCE.styleInputBorder(ti);
 	}
 
 	@Override
@@ -57,10 +61,19 @@ public class TooltipTextInput implements IUpdateable<String> {
 			@Override
 			public void onUpdate(String value) {
 				if (!isTooltipActive)
-					listener.onUpdate(value);
+					listener.onUpdate(text());
+				else
+					listener.onUpdate("");
 			}
 		});
 		return this;
+	}
+
+	public String text() {
+		if (isTooltipActive)
+			return "";
+		else
+			return ti.text();
 	}
 
 	public TooltipTextInput clear() {
@@ -77,6 +90,15 @@ public class TooltipTextInput implements IUpdateable<String> {
 		} else {
 			color.black();
 		}
+	}
+
+	public IFont font() {
+		return ti.font();
+	}
+
+	public TooltipTextInput focus(boolean b) {
+		ti.focus(b);
+		return this;
 	}
 
 }

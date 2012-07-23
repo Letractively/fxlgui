@@ -57,6 +57,8 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 	private boolean clickListenerAdded = false;
 	private Boolean disabled;
 	private SwingBorder swingBorder;
+	private boolean focusListenerSet;
+	private List<IUpdateListener<Boolean>> focusListeners = new LinkedList<IUpdateListener<Boolean>>();
 
 	SwingElement(SwingContainer<T> container) {
 		this.container = container;
@@ -236,13 +238,19 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 
 	@SuppressWarnings("unchecked")
 	public final R focus(boolean focus) {
-		if (focus)
+		if (focus) {
 			container.component.requestFocus();
-		else {
+			notifyFocusListeners(true);
+		} else {
 			container.component.setFocusable(false);
 			container.component.setFocusable(true);
 		}
 		return (R) this;
+	}
+
+	private void notifyFocusListeners(boolean b) {
+		for (IUpdateListener<Boolean> l : focusListeners)
+			l.onUpdate(b);
 	}
 
 	public boolean focus() {
@@ -251,17 +259,20 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 
 	@SuppressWarnings("unchecked")
 	public R addFocusListener(final IUpdateListener<Boolean> l) {
-		container.component.addFocusListener(new FocusListener() {
-			@Override
-			public void focusGained(FocusEvent arg0) {
-				l.onUpdate(true);
-			}
+		if (!focusListenerSet) {
+			container.component.addFocusListener(new FocusListener() {
+				@Override
+				public void focusGained(FocusEvent arg0) {
+					notifyFocusListeners(true);
+				}
 
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				l.onUpdate(false);
-			}
-		});
+				@Override
+				public void focusLost(FocusEvent arg0) {
+					notifyFocusListeners(false);
+				}
+			});
+		}
+		focusListeners.add(l);
 		return (R) this;
 	}
 
