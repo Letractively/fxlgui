@@ -25,8 +25,6 @@ import co.fxl.gui.impl.WidgetTitle;
 
 public class FilterPanelImpl implements FilterPanel {
 
-	public static boolean ACTIVE_SET_WIDTH_COLUMN_1 = false;
-
 	private WidgetTitle title;
 	private IVerticalPanel mainPanel;
 	private IContainer gridContainer;

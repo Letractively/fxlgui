@@ -42,6 +42,8 @@ public interface IRegistry<R> {
 
 	R register(IAsyncServiceProvider<?>... serviceProvider);
 
+	<N> R registerService(Class<N> clazz, N service);
+
 	R register(IServiceProvider<?>... service);
 
 	boolean supports(Class<?> widgetClass);

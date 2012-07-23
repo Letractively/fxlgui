@@ -78,7 +78,7 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 	}
 
 	@Override
-	public IResizeConfiguration addResizeListener(final IResizeListener listener) {
+	public final IResizeConfiguration addResizeListener(final IResizeListener listener) {
 		List<ResizeConfiguration> toRemove = new LinkedList<ResizeConfiguration>();
 		for (ResizeConfiguration cfg : resizeListeners) {
 			if (isInvisible(cfg)) {
@@ -106,7 +106,7 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 	}
 
 	@Override
-	public IDisplay removeResizeListener(IResizeListener listener) {
+	public final IDisplay removeResizeListener(IResizeListener listener) {
 		ResizeConfiguration toRemove = null;
 		for (ResizeConfiguration cfg : resizeListeners) {
 			if (cfg.listener == listener) {
@@ -121,7 +121,7 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 	}
 
 	@Override
-	public IDisplay notifyResizeListeners() {
+	public final IDisplay notifyResizeListeners() {
 		for (ResizeConfiguration rc : new LinkedList<ResizeConfiguration>(
 				resizeListeners)) {
 			rc.fire();
@@ -130,7 +130,7 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 	}
 
 	@Override
-	public IDisplay notifyResizeListener(IResizeListener listener) {
+	public final IDisplay notifyResizeListener(IResizeListener listener) {
 		for (ResizeConfiguration rc : new LinkedList<ResizeConfiguration>(
 				resizeListeners)) {
 			if (rc.listener == listener)

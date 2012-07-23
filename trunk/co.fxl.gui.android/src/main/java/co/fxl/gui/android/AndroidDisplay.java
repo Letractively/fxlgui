@@ -18,30 +18,23 @@
  */
 package co.fxl.gui.android;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Activity;
 import android.view.View;
-import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.api.IPanelProvider;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.api.IWidgetProvider.IAsyncWidgetProvider;
-import co.fxl.gui.api.WidgetProviderNotFoundException;
+import co.fxl.gui.impl.DisplayTemplate;
 import co.fxl.gui.impl.RuntimeTemplate;
 
-public class AndroidDisplay implements IDisplay, Parent {
+public class AndroidDisplay extends DisplayTemplate implements Parent {
 
 	private static AndroidDisplay instance;
 	public Activity activity;
 	private AndroidContainer container = new AndroidContainer(this);
-	private Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
 
 	private AndroidDisplay(Activity activity) {
 		this.activity = activity;
@@ -50,11 +43,6 @@ public class AndroidDisplay implements IDisplay, Parent {
 
 	@Override
 	public IDisplay addExceptionHandler(IExceptionHandler handler) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public IResizeConfiguration addResizeListener(IResizeListener listener) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -81,14 +69,6 @@ public class AndroidDisplay implements IDisplay, Parent {
 	@Override
 	public int height() {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public IDisplay register(IWidgetProvider<?>... widgetProviders) {
-		for (IWidgetProvider<?> widgetProvider : widgetProviders)
-			this.widgetProviders.put(widgetProvider.widgetType(),
-					widgetProvider);
-		return this;
 	}
 
 	@Override
@@ -142,14 +122,6 @@ public class AndroidDisplay implements IDisplay, Parent {
 		throw new UnsupportedOperationException();
 	}
 
-	IWidgetProvider<?> widgetProvider(Class<?> interfaceClass) {
-		IWidgetProvider<?> iWidgetProvider = widgetProviders
-				.get(interfaceClass);
-		if (iWidgetProvider == null)
-			throw new WidgetProviderNotFoundException(interfaceClass);
-		return iWidgetProvider;
-	}
-
 	public Activity activity() {
 		return activity;
 	}
@@ -160,17 +132,7 @@ public class AndroidDisplay implements IDisplay, Parent {
 	}
 
 	@Override
-	public boolean supports(Class<?> widgetClass) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public IPopUp showPopUp() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public IDisplay removeResizeListener(IResizeListener listener) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -209,11 +171,6 @@ public class AndroidDisplay implements IDisplay, Parent {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public IDisplay register(IPanelProvider<?>... layoutProvider) {
-		throw new UnsupportedOperationException();
-	}
-
 	public static AndroidDisplay instance() {
 		return instance;
 	}
@@ -224,49 +181,17 @@ public class AndroidDisplay implements IDisplay, Parent {
 	}
 
 	@Override
-	public IDisplay register(IAsyncWidgetProvider<?>... runnable) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public IDisplay ensure(ICallback<Void> callback, Class<?>... widgetClass) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public IDisplay register(IAsyncServiceProvider<?>... serviceProvider) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public <T> T service(Class<T> clazz) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public IDisplay register(
-			co.fxl.gui.api.IRegistry.IServiceProvider<?>... service) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public IDisplay scrolling(boolean scrolling) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public IDisplay notifyResizeListeners() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public IDisplay notifyResizeListener(IResizeListener listener) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public IRuntime runtime() {
 		return new RuntimeTemplate("Android", 1.0);
+	}
+
+	IWidgetProvider<?> widgetProvider(Class<?> clazz) {
+		return widgetProviders.get(clazz);
 	}
 }
