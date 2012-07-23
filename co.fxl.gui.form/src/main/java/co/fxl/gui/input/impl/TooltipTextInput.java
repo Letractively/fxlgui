@@ -51,7 +51,6 @@ public class TooltipTextInput implements IUpdateable<String> {
 			}
 		});
 		Heights.INSTANCE.decorate(ti);
-		Heights.INSTANCE.styleInputBorder(ti);
 	}
 
 	@Override

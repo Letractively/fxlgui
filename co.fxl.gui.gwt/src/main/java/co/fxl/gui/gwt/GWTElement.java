@@ -222,6 +222,8 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	private HandlerRegistration dummyDragListener;
 	public Injector injector;
 	private Style style;
+	private boolean focusListenerSet;
+	private List<IUpdateListener<Boolean>> focusListeners = new LinkedList<IUpdateListener<Boolean>>();
 
 	public GWTElement() {
 	}
@@ -484,22 +486,31 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	@SuppressWarnings("unchecked")
 	public R focus(final boolean focus) {
 		((Focusable) container.widget).setFocus(focus);
+		notifyFocusListeners(focus);
 		return (R) this;
+	}
+
+	private void notifyFocusListeners(boolean b) {
+		for (IUpdateListener<Boolean> l : focusListeners)
+			l.onUpdate(b);
 	}
 
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	public R addFocusListener(final IUpdateListener<Boolean> l) {
-		((HasFocus) container.widget).addFocusListener(new FocusListener() {
-			@Override
-			public void onFocus(Widget sender) {
-				l.onUpdate(true);
-			}
+		if (!focusListenerSet) {
+			((HasFocus) container.widget).addFocusListener(new FocusListener() {
+				@Override
+				public void onFocus(Widget sender) {
+					notifyFocusListeners(true);
+				}
 
-			@Override
-			public void onLostFocus(Widget sender) {
-				l.onUpdate(false);
-			}
-		});
+				@Override
+				public void onLostFocus(Widget sender) {
+					notifyFocusListeners(false);
+				}
+			});
+		}
+		focusListeners.add(l);
 		return (R) this;
 	}
 
