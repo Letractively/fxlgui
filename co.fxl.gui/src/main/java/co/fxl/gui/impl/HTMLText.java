@@ -107,7 +107,7 @@ public class HTMLText {
 				+ (width == -1 ? "100%;" : width + "px;")
 				+ (align != null ? "text-align:" + align : "")
 				+ "\" type=\"text\" value=\""
-				+ text.replace("<", "&#060;")
+				+ (text != null ? text.replace("<", "&#060;") : "")
 				+ "\" readonly/>";
 	}
 }
