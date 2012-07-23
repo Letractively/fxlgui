@@ -74,8 +74,9 @@ public class TooltipTextInput implements IUpdateable<String> {
 		IColor color = ti.font().color();
 		if (isTooltipActive) {
 			color.gray();
-		} else
+		} else {
 			color.black();
+		}
 	}
 
 }
