@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.layout.api;
 
-
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
