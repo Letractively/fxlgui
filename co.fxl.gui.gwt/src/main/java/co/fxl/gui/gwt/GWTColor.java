@@ -20,6 +20,7 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IColored.IGradient;
+import co.fxl.gui.impl.ColorTemplate;
 
 public abstract class GWTColor implements IColor {
 
@@ -140,19 +141,8 @@ public abstract class GWTColor implements IColor {
 
 	@Override
 	public IColor rgb(int r, int g, int b) {
-		setColorInternal(getHexColor(r, g, b));
+		setColorInternal(ColorTemplate.getHexColor(r, g, b));
 		return this;
-	}
-
-	public static String getHexColor(int r, int g, int b) {
-		return "#" + hex(r) + hex(g) + hex(b);
-	}
-
-	private static String hex(int r) {
-		String hexString = Integer.toHexString(r);
-		while (hexString.length() <= 1)
-			hexString = "0" + hexString;
-		return hexString;
 	}
 
 	@Override

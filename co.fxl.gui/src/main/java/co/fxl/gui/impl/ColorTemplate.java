@@ -147,4 +147,15 @@ public abstract class ColorTemplate implements IColor {
 	public IGradient gradient() {
 		return gradient = new Gradient(this);
 	}
+
+	public static String getHexColor(int r, int g, int b) {
+		return "#" + hex(r) + hex(g) + hex(b);
+	}
+
+	private static String hex(int r) {
+		String hexString = Integer.toHexString(r);
+		while (hexString.length() <= 1)
+			hexString = "0" + hexString;
+		return hexString;
+	}
 }
