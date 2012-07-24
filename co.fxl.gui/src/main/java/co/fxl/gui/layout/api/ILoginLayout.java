@@ -26,7 +26,7 @@ import co.fxl.gui.api.ITextField;
 
 public interface ILoginLayout {
 
-	ILoginLayout id(ITextField id);
+	ILoginLayout uid(ITextField id);
 
 	ILoginLayout password(IPasswordField password);
 

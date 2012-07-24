@@ -127,7 +127,7 @@ class HandheldLogin implements ILoginLayout, IClickListener, IUpdateListener<Str
 	}
 
 	@Override
-	public ILoginLayout id(ITextField id) {
+	public ILoginLayout uid(ITextField id) {
 		this.idField = id;
 		return this;
 	}
