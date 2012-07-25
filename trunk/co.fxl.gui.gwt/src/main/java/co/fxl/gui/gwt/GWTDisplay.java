@@ -105,15 +105,14 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	}
 
 	private GWTDisplay() {
+		Display.instance(this);
 		container = new GWTContainer<Widget>(this) {
-
 			public void setComponent(Widget component) {
 				widget = component;
 				widget.setWidth("100%");
 				RootPanel.get().add(component, 0, 0);
 			}
 		};
-		Display.instance(this);
 		// TODO AOPC: Aspect Log.instance(new GWTLog());
 		ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL = !(isChrome() && getBrowserVersion() <= 13);
 		Window.addResizeHandler(new ResizeHandler() {
@@ -135,25 +134,25 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		// TODO replace with Env.is(...) declarations in the respective widgets
 
 		Constants.put("TableViewTemplate.CORRECT_HEIGHT",
-				!GWTDisplay.isInternetExplorer());
-		if (GWTDisplay.isInternetExplorer()) {
+				!isInternetExplorer());
+		if (isInternetExplorer()) {
 			Constants.put("DashboardPagePage.HEIGHT_DECREMENT", 3);
 			Constants.put("DashboardPagePage.HEIGHT_CONTENT_DECREMENT", 30);
 		}
-		if (GWTDisplay.isFirefox()) {
+		if (isFirefox()) {
 			Constants.put("ScrollTableWidgetImpl.ADD_TOP_PANEL_TOP_PADDING",
 					true);
-			if (GWTDisplay.isFirefox3()) {
+			if (isFirefox3()) {
 				Constants.put("FormWidgetImpl.FIXED_WIDTH", true);
 				Constants.put("NavigationItemImpl.USE_TEMP_FLIP", false);
 			}
 		}
-		if (GWTDisplay.isOpera())
+		if (isOpera())
 			Constants.put("ScrollTableWidgetImpl.ADD_TOP_PANEL_SPACING", true);
-		if (GWTDisplay.isFirefox() || GWTDisplay.isOpera()) {
+		if (isFirefox() || isOpera()) {
 			Constants.put("MiniFilterPanel.MODIFIED_TITLE_ADD", true);
 		}
-		final boolean isChrome15Plus = GWTDisplay.isChrome()
+		final boolean isChrome15Plus = isChrome()
 				&& GWTDisplay.getBrowserVersion() >= 15;
 		final String imagePath = Constants.get("GWTLazyTreeWidget.IMAGE_PATH",
 				(isChrome15Plus ? "" : GWT.getModuleBaseURL()) + "images/");
