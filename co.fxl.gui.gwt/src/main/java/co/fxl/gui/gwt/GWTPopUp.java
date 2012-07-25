@@ -5,7 +5,6 @@ import co.fxl.gui.api.IColored.IGradient;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
-import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.impl.Display;
 
 import com.google.gwt.dom.client.Style.Unit;
@@ -77,16 +76,6 @@ class GWTPopUp implements IPopUp, WidgetParent {
 	@Override
 	public void remove(Widget widget) {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public GWTDisplay lookupDisplay() {
-		return display;
-	}
-
-	@Override
-	public IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
-		return display.lookupWidgetProvider(interfaceClass);
 	}
 
 	@Override

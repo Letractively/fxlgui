@@ -209,18 +209,12 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 	}
 
 	@Override
-	public SwingDisplay lookupSwingDisplay() {
-		return this;
-	}
-
-	@Override
 	public void remove(JComponent component) {
 		frame.removeAll();
 	}
 
-	@Override
-	public IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
-		return widgetProviders.get(interfaceClass);
+	static IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
+		return instance.widgetProviders.get(interfaceClass);
 	}
 
 	@Override

@@ -24,9 +24,7 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.ISpaced.ISpacing;
-import co.fxl.gui.api.IWidgetProvider;
 
-import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -64,9 +62,9 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 	public R height(int height) {
 		if (isUndefined())
 			return (R) this;
-//		if (height >= 1)
-//			container.widget.getElement().getStyle()
-//					.setOverflow(Overflow.HIDDEN);
+		// if (height >= 1)
+		// container.widget.getElement().getStyle()
+		// .setOverflow(Overflow.HIDDEN);
 		return super.height(height);
 	}
 
@@ -130,17 +128,7 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 
 	@Override
 	public IDisplay display() {
-		return container.lookupDisplay();
-	}
-
-	@Override
-	public GWTDisplay lookupDisplay() {
-		return container.lookupDisplay();
-	}
-
-	@Override
-	public IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
-		return container.lookupWidgetProvider(interfaceClass);
+		return GWTDisplay.instance;
 	}
 
 	public co.fxl.gui.api.ILinearPanel.ISpacing spacing() {

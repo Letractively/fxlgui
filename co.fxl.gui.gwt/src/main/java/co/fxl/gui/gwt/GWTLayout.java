@@ -50,7 +50,7 @@ class GWTLayout implements ILayout {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T plugIn(Class<T> clazz) {
-		IPanelProvider<?> provider = panel.parent.lookupDisplay().panelProviders
+		IPanelProvider<?> provider = GWTDisplay.instance.panelProviders
 				.get(clazz);
 		if (provider == null)
 			throw new UnsupportedOperationException(clazz.getName());

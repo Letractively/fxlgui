@@ -32,7 +32,6 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.ISpaced.ISpacing;
-import co.fxl.gui.api.IWidgetProvider;
 
 public class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
 		IPanel<R>, ComponentParent {
@@ -109,22 +108,12 @@ public class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
 	}
 
 	JFrame frame() {
-		return container.lookupSwingDisplay().frame;
+		return SwingDisplay.instance.frame;
 	}
 
 	@Override
 	public IDisplay display() {
-		return container.lookupSwingDisplay();
-	}
-
-	@Override
-	public SwingDisplay lookupSwingDisplay() {
-		return container.lookupSwingDisplay();
-	}
-
-	@Override
-	public IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
-		return container.lookupWidgetProvider(interfaceClass);
+		return SwingDisplay.instance;
 	}
 
 	@Override

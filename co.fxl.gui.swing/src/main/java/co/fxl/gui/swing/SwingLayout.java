@@ -40,8 +40,8 @@ class SwingLayout implements ILayout {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T plugIn(Class<T> clazz) {
-		IPanelProvider<?> provider = panel.container.parent
-				.lookupSwingDisplay().panelProviders.get(clazz);
+		IPanelProvider<?> provider = SwingDisplay.instance.panelProviders
+				.get(clazz);
 		if (provider == null)
 			throw new UnsupportedOperationException(clazz.getName());
 		return (T) provider.createPanel(panel.container);

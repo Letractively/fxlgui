@@ -227,9 +227,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
-		IWidgetProvider<?> iWidgetProvider = widgetProviders
+	static IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
+		IWidgetProvider<?> iWidgetProvider = instance.widgetProviders
 				.get(interfaceClass);
 		if (iWidgetProvider == null)
 			throw new WidgetProviderNotFoundException(interfaceClass);
@@ -316,10 +315,10 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public GWTDisplay lookupDisplay() {
-		return this;
-	}
+	// @Override
+	// public GWTDisplay lookupDisplay() {
+	// return this;
+	// }
 
 	@Override
 	public void remove(Widget widget) {
