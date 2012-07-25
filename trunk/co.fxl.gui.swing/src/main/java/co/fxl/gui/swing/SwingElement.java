@@ -220,7 +220,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 
 	private Point point() {
 		Point pt = SwingUtilities.convertPoint(container.component, new Point(
-				0, 0), container.lookupSwingDisplay().container.component);
+				0, 0), SwingDisplay.instance.container.component);
 		return pt;
 	}
 

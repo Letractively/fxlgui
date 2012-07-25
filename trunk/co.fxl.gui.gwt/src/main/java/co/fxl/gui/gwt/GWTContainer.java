@@ -39,7 +39,6 @@ import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IToggleButton;
 import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.api.WidgetProviderNotFoundException;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -158,7 +157,7 @@ public class GWTContainer<T extends Widget> implements IContainer {
 		setComponent((T) new SuggestBox(suggestOracle));
 		GWTSuggestField gsf = new GWTSuggestField(
 				(GWTContainer<SuggestBox>) this);
-		suggestOracle.element=gsf;
+		suggestOracle.element = gsf;
 		element = gsf;
 		return (ISuggestField) element;
 	}
@@ -208,19 +207,18 @@ public class GWTContainer<T extends Widget> implements IContainer {
 	@SuppressWarnings("hiding")
 	@Override
 	public <T> T widget(Class<T> clazz) {
-		IWidgetProvider<?> widgetProvider = lookupWidgetProvider(clazz);
-		if (widgetProvider == null)
-			throw new WidgetProviderNotFoundException(clazz);
+		IWidgetProvider<?> widgetProvider = GWTDisplay
+				.lookupWidgetProvider(clazz);
 		return (T) widgetProvider.createWidget(this);
 	}
 
-	GWTDisplay lookupDisplay() {
-		return parent.lookupDisplay();
-	}
+	// GWTDisplay lookupDisplay() {
+	// return parent.lookupDisplay();
+	// }
 
-	IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
-		return parent.lookupWidgetProvider(interfaceClass);
-	}
+	// IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
+	// return parent.lookupWidgetProvider(interfaceClass);
+	// }
 
 	@Override
 	public IElement<?> element() {
@@ -236,7 +234,7 @@ public class GWTContainer<T extends Widget> implements IContainer {
 
 	@Override
 	public IDisplay display() {
-		return parent.lookupDisplay();
+		return GWTDisplay.instance;
 	}
 
 	@Override

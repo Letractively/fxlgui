@@ -209,19 +209,21 @@ public class SwingContainer<T extends JComponent> implements IContainer {
 	@SuppressWarnings("hiding")
 	@Override
 	public <T> T widget(Class<T> clazz) {
-		IWidgetProvider<?> widgetProvider = lookupWidgetProvider(clazz);
+		IWidgetProvider<?> widgetProvider = SwingDisplay
+				.lookupWidgetProvider(clazz);
 		if (widgetProvider == null)
 			throw new WidgetProviderNotFoundException(clazz);
 		return (T) widgetProvider.createWidget(this);
 	}
 
-	IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
-		return parent.lookupWidgetProvider(interfaceClass);
-	}
-
-	SwingDisplay lookupSwingDisplay() {
-		return parent.lookupSwingDisplay();
-	}
+	//
+	// IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass) {
+	// return parent.lookupWidgetProvider(interfaceClass);
+	// }
+	//
+	// SwingDisplay lookupSwingDisplay() {
+	// return parent.lookupSwingDisplay();
+	// }
 
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -241,7 +243,7 @@ public class SwingContainer<T extends JComponent> implements IContainer {
 
 	@Override
 	public IDisplay display() {
-		return lookupSwingDisplay();
+		return SwingDisplay.instance;
 	}
 
 	@Override

@@ -32,7 +32,6 @@ import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
-import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.impl.Display;
 
 class SwingPopUp implements IPopUp {
@@ -85,17 +84,6 @@ class SwingPopUp implements IPopUp {
 			@Override
 			public JComponent getComponent() {
 				return SwingPopUp.this.component;
-			}
-
-			@Override
-			public IWidgetProvider<?> lookupWidgetProvider(
-					Class<?> interfaceClass) {
-				return panel.lookupWidgetProvider(interfaceClass);
-			}
-
-			@Override
-			public SwingDisplay lookupSwingDisplay() {
-				return panel;
 			}
 		});
 	}
