@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.gwt;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.impl.Constants;
 
@@ -28,29 +31,21 @@ import com.google.gwt.user.client.ui.Image;
 public class GWTImage extends GWTElement<Image, IImage> implements IImage {
 
 	private static final String IMAGES = "images/";
-	private static ImageResourceProvider imageResourceProvider;
 	public static boolean IS_CHROME_15_PLUS = GWTDisplay.isChrome()
 			&& GWTDisplay.getBrowserVersion() >= 15;
 	public static String IMAGE_PATH = Constants.get(
 			"GWTLazyTreeWidget.IMAGE_PATH",
 			(IS_CHROME_15_PLUS ? "" : GWT.getModuleBaseURL()) + "images/");
-
-	public interface ImageResourceProvider {
-
-		ImageResource resolve(String resource);
-	}
-
-	public static void abstractImagePrototypeProvider(
-			ImageResourceProvider imageResourceProvider) {
-		GWTImage.imageResourceProvider = imageResourceProvider;
-	}
+	private static Map<String, ImageResource> map = new HashMap<String, ImageResource>();
 
 	public static ImageResource resolve(String resource) {
-		if (imageResourceProvider != null)
-			return imageResourceProvider.resolve(resource);
-		return null;
+		return map.get(resource);
 	}
-	
+
+	public static void register(String name, ImageResource resource) {
+		map.put(name, resource);
+	}
+
 	public static String getImageURL(String path, String treeIcon) {
 		if (IS_CHROME_15_PLUS) {
 			ImageResource ir = GWTImage.resolve(treeIcon);
