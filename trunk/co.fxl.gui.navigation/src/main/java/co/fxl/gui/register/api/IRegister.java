@@ -37,6 +37,8 @@ public interface IRegister {
 		IBorder border();
 
 		boolean isEmpty();
+
+		boolean isClickable();
 	}
 
 	public interface IRegisterListener {
@@ -69,4 +71,6 @@ public interface IRegister {
 	IVerticalPanel newContentPanel();
 
 	void showNewContentPanel();
+
+	IRegister clickable(boolean b);
 }

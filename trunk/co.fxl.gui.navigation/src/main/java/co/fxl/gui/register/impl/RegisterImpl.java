@@ -68,6 +68,11 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 		public boolean isEmpty() {
 			return empty;
 		}
+
+		@Override
+		public boolean isClickable() {
+			return allowClick;
+		}
 	}
 
 	RegisterWidgetImpl widget;
@@ -82,6 +87,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 	boolean disabled = false;
 	private IVerticalPanel verticalContainer;
 	private boolean empty = false;
+	private boolean allowClick = true;
 
 	// private String imageResource = "document.png";
 
@@ -194,9 +200,9 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 					if (visible)
 						widget.top(RegisterImpl.this);
 					if (visible) {
-						buttonPanel.clickable(false);
+						updateButtonPanel(false);
 					} else {
-						buttonPanel.clickable(true);
+						updateButtonPanel(true);
 					}
 				}
 
@@ -243,18 +249,22 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 	@Override
 	public RegisterImpl enabled(boolean enabled) {
 		if (!enabled) {
-			buttonLabel.font().color().white();
-			buttonPanel.clickable(true);
+			setButtonLabelWhite();
+			updateButtonPanel(true);
 			verticalContainer.visible(false);
 			disabled = true;
 		} else {
 			if (disabled) {
-				buttonLabel.font().color().white();
+				setButtonLabelWhite();
 				verticalContainer.visible(true);
 				disabled = false;
 			}
 		}
 		return this;
+	}
+
+	void setButtonLabelWhite() {
+		buttonLabel.font().color().white();
 	}
 
 	@Override
@@ -310,5 +320,20 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 	public void showNewContentPanel() {
 		// toggleLoading(false);
 		widget.cardPanel.show(content);
+	}
+
+	@Override
+	public IRegister clickable(boolean b) {
+		allowClick = b;
+		// if (allowClick || isActive()) {
+		// buttonLabel.font().color().black();
+		// } else
+		// buttonLabel.font().color().gray();
+		updateButtonPanel(b);
+		return this;
+	}
+
+	private void updateButtonPanel(boolean b) {
+		buttonPanel.clickable(b && allowClick);
 	}
 }

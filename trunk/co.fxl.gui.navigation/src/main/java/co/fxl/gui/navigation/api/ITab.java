@@ -45,4 +45,6 @@ public interface ITab<T extends ITab<T>> {
 
 	void showNewContentPanel();
 
+	T clickable(boolean b);
+
 }

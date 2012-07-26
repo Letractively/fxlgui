@@ -39,9 +39,11 @@ public class RootRegisterStyle extends RegisterStyle {
 		title.color().rgb(112, 112, 112).gradient().vertical().rgb(63, 63, 63);
 		title.border().color().rgb(87, 87, 87);
 		IFont f = title.font().underline(false).weight().plain();
-		if (title.isEmpty())
+		if (!title.isClickable()) {
+			f.color().gray();
+		} else if (title.isEmpty()) {
 			f.color().lightgray();
-		else
+		} else
 			f.color().white();// .color().black();
 	}
 
