@@ -139,11 +139,13 @@ public class NavigationItemImpl extends LazyClickListener implements
 		applyGradient(buttonPanel.color(), colorInactive, colorInactiveGradient);
 	}
 
-	void clickable(boolean b) {
+	@Override
+	public NavigationItemImpl clickable(boolean b) {
 		buttonPanel.clickable(b);
 		// button.clickable(b);
 		// refresh.clickable(b);
 		// refresh.opacity(1);
+		return this;
 	}
 
 	void showBackgroundNeutral() {

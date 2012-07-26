@@ -160,4 +160,10 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	public void showNewContentPanel() {
 		register.showNewContentPanel();
 	}
+
+	@Override
+	public IMenuItem clickable(boolean b) {
+		register.clickable(b);
+		return this;
+	}
 }
