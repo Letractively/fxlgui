@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.table.util.impl;
 
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IFocusPanel;
@@ -27,6 +28,7 @@ import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.HorizontalScalingPanel;
@@ -175,6 +177,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	private void draw() {
 		hasScrollbar = true;
 		v = container.panel().focus();
+		ContextMenu.instance().decorate((IClickable<?>) v);
 		v.color().white();
 		if (dragDropListener != null)
 			new DragAndDrop(this, v);

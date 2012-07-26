@@ -30,6 +30,11 @@ public class GWTFocusPanel extends GWTPanel<FocusPanel, IFocusPanel> implements
 		this(container, true);
 	}
 
+	@Override
+	GWTClickHandler<IFocusPanel> newGWTClickHandler(IClickListener clickListener) {
+		return new GWTClickHandler<IFocusPanel>(this, clickListener);
+	}
+
 	@SuppressWarnings("unchecked")
 	public GWTFocusPanel(GWTContainer<?> container, boolean decorate) {
 		super((GWTContainer<FocusPanel>) container);
