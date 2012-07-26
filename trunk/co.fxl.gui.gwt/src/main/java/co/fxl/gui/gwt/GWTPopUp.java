@@ -15,7 +15,6 @@ import com.google.gwt.user.client.ui.Widget;
 
 class GWTPopUp implements IPopUp, WidgetParent {
 
-	private GWTDisplay display;
 	private PopupPanel popUp;
 	private boolean center;
 	private int w;
@@ -24,9 +23,9 @@ class GWTPopUp implements IPopUp, WidgetParent {
 	private int x = -1;
 	private int y = -1;
 
-	GWTPopUp(GWTDisplay display) {
-		this.display = display;
+	GWTPopUp() {
 		popUp = new PopupPanel(false, false);
+		// TODO popUp.getElement().setDraggable(Element.DRAGGABLE_TRUE);
 		popUp.getElement().getStyle().setPadding(0, Unit.PX);
 	}
 

@@ -133,8 +133,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 		// TODO replace with Env.is(...) declarations in the respective widgets
 
-		Constants.put("TableViewTemplate.CORRECT_HEIGHT",
-				!isInternetExplorer());
+		Constants
+				.put("TableViewTemplate.CORRECT_HEIGHT", !isInternetExplorer());
 		if (isInternetExplorer()) {
 			Constants.put("DashboardPagePage.HEIGHT_DECREMENT", 3);
 			Constants.put("DashboardPagePage.HEIGHT_CONTENT_DECREMENT", 30);
@@ -429,7 +429,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	@Override
 	public IPopUp showPopUp() {
-		return new GWTPopUp(this);
+		return new GWTPopUp();
 	}
 
 	@Override
