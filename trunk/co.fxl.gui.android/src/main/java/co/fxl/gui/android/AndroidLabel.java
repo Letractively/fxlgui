@@ -112,4 +112,9 @@ class AndroidLabel extends AndroidElement<TextView, ILabel> implements ILabel {
 	public ILabel html(String html) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public ILabel breakWord(boolean breakWord) {
+		throw new UnsupportedOperationException();
+	}
 }
