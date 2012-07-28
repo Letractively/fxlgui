@@ -135,6 +135,15 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 	}
 
 	@Override
+	public ILabel breakWord(boolean breakWord) {
+		if(!breakWord)
+		style().clearProperty("wordWrap");
+		else
+		container.widget.getElement().getStyle().setProperty("wordWrap", "break-word");
+		return this;
+	}
+
+	@Override
 	public ILabel addMouseOverListener(final IMouseOverListener l) {
 		container.widget.addMouseOverHandler(new MouseOverHandler() {
 			@Override
