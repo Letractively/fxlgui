@@ -30,17 +30,20 @@ public class TooltipTextInput implements IUpdateable<String> {
 	private String tooltip;
 	private boolean isTooltipActive;
 
-	public TooltipTextInput(final ITextInput<?> ti, String tooltip) {
+	public TooltipTextInput(final ITextInput<?> ti, final String tooltip) {
 		this.ti = ti;
 		this.tooltip = tooltip;
 		clear();
 		ti.addFocusListener(new IUpdateListener<Boolean>() {
 			@Override
 			public void onUpdate(Boolean value) {
+				if(tooltip==null)
+					return;
 				if (value) {
 					if (isTooltipActive) {
 						ti.text("");
 						setTooltipActive(false);
+						TooltipTextInput.this.tooltip=null;
 					}
 				} else {
 					if (ti.text().equals("")) {
