@@ -189,6 +189,12 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 			String userAgent = getUserAgent();
 			return getBrowserVersionChrome(userAgent);
 		}
+		if (isInternetExplorer()) {
+			if (isInternetExplorer8OrBelow())
+				return 8;
+			else
+				return 9;
+		}
 		return -1;
 	}
 
