@@ -56,7 +56,7 @@ public class RuntimeTemplate implements IRuntime {
 
 	@Override
 	public boolean leq(double version) {
-		return this.version >= version;
+		return this.version <= version;
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class RuntimeTemplate implements IRuntime {
 
 	@Override
 	public boolean geq(double version) {
-		return this.version <= version;
+		return this.version >= version;
 	}
 
 }
