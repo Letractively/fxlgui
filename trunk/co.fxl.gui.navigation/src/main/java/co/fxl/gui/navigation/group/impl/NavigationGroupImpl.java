@@ -129,4 +129,13 @@ class NavigationGroupImpl implements INavigationGroup {
 		}
 		return false;
 	}
+
+	INavigationItem findByName(String name) {
+		for (NavigationItemImpl item : items) {
+			if (item.name().equals(name)) {
+				return item;
+			}
+		}
+		return null;
+	}
 }

@@ -82,6 +82,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 	private IVerticalPanel borderTop;
 	private boolean listeningOnServerCalls;
 	private boolean holdUpdate;
+	private INavigationGroup defaultGroup;
 	public static NavigationWidgetImpl instance;
 
 	public NavigationWidgetImpl(IContainer layout) {
@@ -370,7 +371,9 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 
 	@Override
 	public INavigationGroup defaultGroup() {
-		return addGroup();
+		if (defaultGroup == null)
+			defaultGroup = addGroup();
+		return defaultGroup;
 	}
 
 	@Override
@@ -485,5 +488,15 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public INavigationItem findByName(String name) {
+		for (NavigationGroupImpl g : groups) {
+			if (g.findByName(name) != null) {
+				return g.findByName(name);
+			}
+		}
+		return null;
 	}
 }
