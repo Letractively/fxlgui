@@ -30,6 +30,7 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.log.impl.Log;
 
 public class StatusDisplay implements IResizeListener, Runnable {
 
@@ -181,7 +182,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	public int offsetY(IElement<?> e, int min) {
-		return Math.max(e.offsetY(), DisplayResizeAdapter.withDecrement(min));
+		return offsetY(e.offsetY(), min);
 	}
 
 	public void warning(String warning) {
@@ -212,7 +213,16 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	public int offsetY(int offsetY, int min) {
-		return Math.max(offsetY, DisplayResizeAdapter.withDecrement(min));
+		if (offsetY == 0) {
+			Log.instance().error("Vertical offset is 0");
+			return DisplayResizeAdapter.withDecrement(min);
+		}
+		if (offsetY != min) {
+			Log.instance().error(
+					"Vertical offset is different than anticipated " + offsetY
+							+ "!=" + min);
+		}
+		return offsetY;
 	}
 
 	public int width() {
