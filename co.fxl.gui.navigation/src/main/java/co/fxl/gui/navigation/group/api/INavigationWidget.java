@@ -41,4 +41,6 @@ public interface INavigationWidget extends
 	INavigationWidget holdUpdate(boolean b);
 
 	boolean active(String preset, ICallback<Void> cb);
+
+	INavigationItem findByName(String name);
 }
