@@ -214,13 +214,13 @@ public class StatusDisplay implements IResizeListener, Runnable {
 
 	public int offsetY(int offsetY, int min) {
 		if (offsetY == 0) {
-			Log.instance().error("Vertical offset is 0");
+//			Log.instance().error("Vertical offset is 0");
 			return DisplayResizeAdapter.withDecrement(min);
 		}
 		if (offsetY != min) {
-			Log.instance().error(
-					"Vertical offset is different than anticipated " + offsetY
-							+ "!=" + min);
+//			Log.instance().error(
+//					"Vertical offset is different than anticipated " + offsetY
+//							+ "!=" + min);
 		}
 		return offsetY;
 	}
