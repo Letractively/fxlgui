@@ -254,6 +254,16 @@ public class WidgetTitle implements IClickListener {
 		return headerLabel;
 	}
 
+	public void addSubTitles(String subTitle1, String subTitle2) {
+		initHeader();
+		IVerticalPanel begin = titlePanel.add().panel().vertical().align()
+				.begin();
+		begin.add().label().text(subTitle1).font().weight().bold().pixel(9)
+				.color().white();
+		begin.add().label().text(subTitle2).font().weight().bold().pixel(9)
+				.color().lightgray();
+	}
+
 	private void addMoreIcon(String r) {
 		more = titlePanel.add().image();
 		more.resource(r);
