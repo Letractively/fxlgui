@@ -20,10 +20,10 @@ package co.fxl.gui.form.api;
 
 import java.util.Date;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;

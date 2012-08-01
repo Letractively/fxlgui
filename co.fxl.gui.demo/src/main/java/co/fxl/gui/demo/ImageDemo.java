@@ -18,10 +18,10 @@
  */
 package co.fxl.gui.demo;
 
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.IClickable.IClickListener;
 
 class ImageDemo extends DemoTemplate implements Decorator {
 

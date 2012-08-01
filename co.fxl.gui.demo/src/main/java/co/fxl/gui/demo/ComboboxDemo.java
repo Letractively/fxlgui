@@ -20,8 +20,8 @@ package co.fxl.gui.demo;
 
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.api.IVerticalPanel;
 
 public class ComboboxDemo extends DemoTemplate implements Decorator {
 

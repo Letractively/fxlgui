@@ -22,11 +22,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.ICardPanel;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.wizard.api.IWizardStep;
 import co.fxl.gui.wizard.api.IWizardStepCard;

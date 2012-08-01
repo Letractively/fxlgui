@@ -18,10 +18,10 @@
  */
 package co.fxl.gui.demo;
 
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.IColored.IColor;
 
 class DockPanelDemo extends DemoTemplate implements Decorator {
 

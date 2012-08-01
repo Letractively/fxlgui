@@ -20,9 +20,9 @@ package co.fxl.gui.filter.impl;
 
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IDockPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.filter.impl.FilterPanel.ICell;
 
 class CellImpl implements ICell {
