@@ -263,8 +263,9 @@ public class WidgetTitle implements IClickListener {
 			subTitlePanel.clear();
 		subTitlePanel.add().label().text(subTitle1).font().weight().bold()
 				.pixel(9).color().white();
-		subTitlePanel.add().label().text(subTitle2).font().weight().bold()
-				.pixel(9).color().lightgray();
+		if (subTitle2 != null)
+			subTitlePanel.add().label().text(subTitle2).font().weight().bold()
+					.pixel(9).color().lightgray();
 	}
 
 	private void addMoreIcon(String r) {
