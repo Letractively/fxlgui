@@ -40,7 +40,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	private static final int RESIZE_INTERVALL_MS = 250;
-	private static final boolean LOG_ILLEGAL_SIZES = true;
+	private static final boolean LOG_ILLEGAL_SIZES = false;
 	public static boolean SINGLE_RESIZE_LISTENER = true;
 	private static StatusDisplay instance = new StatusDisplay();
 	private IDisplay display = Display.instance();
