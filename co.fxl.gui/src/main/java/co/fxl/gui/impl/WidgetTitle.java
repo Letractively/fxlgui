@@ -70,6 +70,7 @@ public class WidgetTitle implements IClickListener {
 	private boolean plainContent = false;
 	private boolean center;
 	private static Map<String, Boolean> foldStatus = new HashMap<String, Boolean>();
+	private IVerticalPanel subTitlePanel;
 
 	public WidgetTitle() {
 	}
@@ -256,12 +257,14 @@ public class WidgetTitle implements IClickListener {
 
 	public void addSubTitles(String subTitle1, String subTitle2) {
 		initHeader();
-		IVerticalPanel begin = titlePanel.add().panel().vertical().align()
-				.begin();
-		begin.add().label().text(subTitle1).font().weight().bold().pixel(9)
-				.color().white();
-		begin.add().label().text(subTitle2).font().weight().bold().pixel(9)
-				.color().lightgray();
+		if (subTitlePanel == null)
+			subTitlePanel = titlePanel.add().panel().vertical().align().begin();
+		else
+			subTitlePanel.clear();
+		subTitlePanel.add().label().text(subTitle1).font().weight().bold()
+				.pixel(9).color().white();
+		subTitlePanel.add().label().text(subTitle2).font().weight().bold()
+				.pixel(9).color().lightgray();
 	}
 
 	private void addMoreIcon(String r) {
