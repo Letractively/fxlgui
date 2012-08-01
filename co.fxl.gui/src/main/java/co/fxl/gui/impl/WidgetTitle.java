@@ -45,6 +45,7 @@ public class WidgetTitle implements IClickListener {
 	private static final int MAX_LENGTH_SUBTITLE = 30;
 	public static final int LARGE_FONT = 18;
 	private static final String FOLDABLE = "Click to minimize/maximize";
+	private static final boolean IGNORE_SUBTITLES = false;
 	public IGridPanel panel;
 	private IHorizontalPanel titlePanel;
 	private IHorizontalPanel commandPanel;
@@ -257,7 +258,7 @@ public class WidgetTitle implements IClickListener {
 	}
 
 	public void addSubTitles(String subTitle1, String subTitle2) {
-		if (subTitle1 == null)
+		if (IGNORE_SUBTITLES || subTitle1 == null)
 			return;
 		initHeader();
 		if (subTitlePanel == null)
