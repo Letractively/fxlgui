@@ -216,5 +216,7 @@ public interface IScrollTableWidget<T> {
 
 	IScrollTableWidget<T> filterQueryLabel(String filterQueryLabel);
 
+	IScrollTableWidget<T> subTitle(String subTitle1, String subTitle2);
+
 	// IVerticalPanel editPanel();
 }

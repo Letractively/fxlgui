@@ -256,6 +256,8 @@ public class WidgetTitle implements IClickListener {
 	}
 
 	public void addSubTitles(String subTitle1, String subTitle2) {
+		if (subTitle1 == null)
+			return;
 		initHeader();
 		if (subTitlePanel == null)
 			subTitlePanel = titlePanel.add().panel().vertical().align().begin();

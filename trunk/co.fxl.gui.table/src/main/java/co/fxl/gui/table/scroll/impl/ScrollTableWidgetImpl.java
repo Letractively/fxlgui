@@ -189,6 +189,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		if (widgetTitle == null) {
 			widgetTitle = new WidgetTitle(c0.panel(), addBorders, plainContent)
 					.foldable(false);
+			widgetTitle.addSubTitles(subTitle1, subTitle2);
 			widgetTitle.addToContextMenu(true);
 			widgetTitle.commandsOnTop();
 			widgetTitle.hyperlinkVisible(false);
@@ -226,6 +227,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IVerticalPanel topPanelContainer;
 	private INoEntitiesFoundDecorator noEntitiesFoundDecorator;
 	private String filterQueryLabel;
+	private String subTitle1;
+	private String subTitle2;
 
 	// private boolean nextTimeShowPopUp;
 
@@ -1465,6 +1468,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	ScrollTableColumnImpl sortColumn() {
 		return columns.get(sortColumn);
 	}
+
 	//
 	// @Override
 	// public void nextTimeShowPopUp(boolean b) {
@@ -1475,4 +1479,12 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	// public boolean nextTimeShowPopUp() {
 	// return nextTimeShowPopUp;
 	// }
+
+	@Override
+	public IScrollTableWidget<Object> subTitle(String subTitle1,
+			String subTitle2) {
+		this.subTitle1 = subTitle1;
+		this.subTitle2 = subTitle2;
+		return this;
+	}
 }
