@@ -40,9 +40,8 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	private static final int RESIZE_INTERVALL_MS = 250;
-	public static boolean SINGLE_RESIZE_LISTENER = true; // Env.is(Env.CHROME)
-															// ||
-															// Env.is(Env.FIREFOX);
+	private static final boolean LOG_ILLEGAL_SIZES = true;
+	public static boolean SINGLE_RESIZE_LISTENER = true;
 	private static StatusDisplay instance = new StatusDisplay();
 	private IDisplay display = Display.instance();
 	private IVerticalPanel panel;
@@ -214,13 +213,14 @@ public class StatusDisplay implements IResizeListener, Runnable {
 
 	public int offsetY(int offsetY, int min) {
 		if (offsetY == 0) {
-//			Log.instance().error("Vertical offset is 0");
+			if (LOG_ILLEGAL_SIZES)
+				Log.instance().error("Vertical offset is 0");
 			return DisplayResizeAdapter.withDecrement(min);
 		}
-		if (offsetY != min) {
-//			Log.instance().error(
-//					"Vertical offset is different than anticipated " + offsetY
-//							+ "!=" + min);
+		if (offsetY != min && LOG_ILLEGAL_SIZES) {
+			Log.instance().error(
+					"Vertical offset is different than anticipated " + offsetY
+							+ "!=" + min);
 		}
 		return offsetY;
 	}
