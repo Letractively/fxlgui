@@ -25,7 +25,6 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.ISplitPane.ISplitPaneResizeListener;
 import co.fxl.gui.impl.Display;
-import co.fxl.gui.impl.SplitLayout;
 
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.user.client.DOM;

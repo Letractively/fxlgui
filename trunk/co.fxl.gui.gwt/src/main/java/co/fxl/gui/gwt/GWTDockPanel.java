@@ -24,7 +24,6 @@ import java.util.List;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
-import co.fxl.gui.api.IElement;
 
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.DockPanel.DockLayoutConstant;

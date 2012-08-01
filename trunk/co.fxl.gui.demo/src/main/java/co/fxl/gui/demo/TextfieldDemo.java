@@ -20,8 +20,8 @@ package co.fxl.gui.demo;
 
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.api.IVerticalPanel;
 
 class TextfieldDemo extends DemoTemplate implements Decorator {
 

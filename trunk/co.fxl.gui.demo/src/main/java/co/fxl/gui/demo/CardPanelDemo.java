@@ -20,10 +20,10 @@ package co.fxl.gui.demo;
 
 import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.ICardPanel;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.IClickable.IClickListener;
 
 public class CardPanelDemo extends DemoTemplate implements Decorator {
 

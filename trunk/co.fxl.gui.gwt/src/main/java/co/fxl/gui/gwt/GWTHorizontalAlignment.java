@@ -21,8 +21,8 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.api.IAlignment;
 
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 
 class GWTHorizontalAlignment<T> implements IAlignment<T> {
 

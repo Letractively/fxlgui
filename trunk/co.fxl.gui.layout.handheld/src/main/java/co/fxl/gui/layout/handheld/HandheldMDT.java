@@ -10,8 +10,8 @@ import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
-import co.fxl.gui.layout.api.IMDTLayoutDecorator;
 import co.fxl.gui.layout.api.IMDTLayout;
+import co.fxl.gui.layout.api.IMDTLayoutDecorator;
 
 class HandheldMDT implements IMDTLayout {
 

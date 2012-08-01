@@ -22,7 +22,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
