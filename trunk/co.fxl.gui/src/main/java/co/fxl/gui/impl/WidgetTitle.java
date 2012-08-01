@@ -42,6 +42,7 @@ import co.fxl.gui.impl.ContextMenu.Group;
 
 public class WidgetTitle implements IClickListener {
 
+	private static final int MAX_LENGTH_SUBTITLE = 30;
 	public static final int LARGE_FONT = 18;
 	private static final String FOLDABLE = "Click to minimize/maximize";
 	public IGridPanel panel;
@@ -260,14 +261,23 @@ public class WidgetTitle implements IClickListener {
 			return;
 		initHeader();
 		if (subTitlePanel == null)
-			subTitlePanel = titlePanel.add().panel().vertical().align().begin();
+			subTitlePanel = titlePanel.addSpace(8).add().panel().vertical()
+					.align().begin();
 		else
 			subTitlePanel.clear();
-		subTitlePanel.add().label().text(subTitle1).font().weight().bold()
-				.pixel(9).color().white();
-		if (subTitle2 != null)
-			subTitlePanel.add().label().text(subTitle2).font().weight().bold()
-					.pixel(9).color().lightgray();
+		if (!title.equals(subTitle1))
+			subTitlePanel.add().label().text(cutOff(subTitle1)).font().weight()
+					.bold().pixel(10).color().white();
+		if (subTitle2 != null && !subTitle2.equals(subTitle1)
+				&& !title.equals(subTitle1))
+			subTitlePanel.add().label().text(cutOff(subTitle2)).font().weight()
+					.bold().pixel(10).color().lightgray();
+	}
+
+	private String cutOff(String t) {
+		if (t.length() >= MAX_LENGTH_SUBTITLE)
+			return t.substring(0, MAX_LENGTH_SUBTITLE - 3) + "...";
+		return t;
 	}
 
 	private void addMoreIcon(String r) {
