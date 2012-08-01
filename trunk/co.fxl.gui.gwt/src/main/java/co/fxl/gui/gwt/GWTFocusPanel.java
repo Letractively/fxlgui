@@ -63,4 +63,18 @@ public class GWTFocusPanel extends GWTPanel<FocusPanel, IFocusPanel> implements
 			p.addStyleName("nooutline");
 		}
 	}
+
+	@Override
+	public IFocusPanel outline(boolean outline) {
+		if (outline) {
+			if (GWTDisplay.isInternetExplorer()) {
+				container.widget.removeStyleName("nooutlineIE");
+			} else {
+				container.widget.removeStyleName("nooutline");
+			}
+		} else {
+			removeOutline(container.widget);
+		}
+		return this;
+	}
 }

@@ -25,4 +25,6 @@ public interface IFocusPanel extends IPanel<IFocusPanel>,
 		IKeyRecipient<IFocusPanel>, IFocusable<IFocusPanel> {
 
 	ISpacing spacing();
+
+	IFocusPanel outline(boolean outline);
 }

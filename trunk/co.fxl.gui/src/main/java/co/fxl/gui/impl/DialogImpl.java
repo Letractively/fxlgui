@@ -234,12 +234,21 @@ public class DialogImpl implements IDialog {
 					}
 				});
 			}
+			boolean hasDefault = false;
+			for (DialogButtonImpl b : buttons) {
+				if (b.standard) {
+					hasDefault = true;
+				}
+			}
+			if (!hasDefault && buttons.size() >= 1)
+				buttons.get(0).defaultButton();
 			for (DialogButtonImpl b : buttons) {
 				CommandLink l = t.addHyperlink(b.imageResource, b.text);
 				for (IClickListener cl : b.listeners)
 					l.addClickListener(cl);
-				if (b.standard)
+				if (b.standard) {
 					l.acceptEnter();
+				}
 				b.link(l);
 			}
 			IContainer content = t.content();

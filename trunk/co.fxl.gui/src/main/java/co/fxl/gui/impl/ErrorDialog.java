@@ -108,7 +108,7 @@ public class ErrorDialog {
 					public void onClick() {
 						onClose();
 					}
-				});
+				}).defaultButton();
 		dialog.visible(true);
 	}
 

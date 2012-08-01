@@ -57,4 +57,12 @@ class SwingFocusPanel extends SwingPanel<IFocusPanel> implements IFocusPanel {
 		return new KeyTemplate<IFocusPanel>(this, clickListener);
 	}
 
+	@Override
+	public IFocusPanel outline(boolean outline) {
+
+		// TODO ...
+
+		return this;
+	}
+
 }

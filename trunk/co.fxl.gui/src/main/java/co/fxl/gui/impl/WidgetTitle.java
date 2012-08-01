@@ -29,6 +29,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
+import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -313,8 +314,8 @@ public class WidgetTitle implements IClickListener {
 			labels.add(label);
 		}
 		hasCommands = true;
-		IHorizontalPanel iPanel0 = cp.add().panel().horizontal();
-		IHorizontalPanel iPanel = iPanel0;
+		IFocusPanel iPanel0 = cp.add().panel().focus();
+		IHorizontalPanel iPanel = iPanel0.add().panel().horizontal();
 		if (commandsOnTop) {
 			styleWindowHeaderButton(iPanel);
 			iPanel.spacing(4);
@@ -327,17 +328,17 @@ public class WidgetTitle implements IClickListener {
 		}
 		if (text == null) {
 			ILabel label = iPanel.add().label().visible(false);
-			return createCommandLink(iPanel0, image, label);
+			return createCommandLink(iPanel0, iPanel, image, label);
 		} else {
 			ILabel label = addHyperlinkLabel(text, iPanel);
-			return createCommandLink(iPanel0, image, label);
+			return createCommandLink(iPanel0, iPanel, image, label);
 		}
 	}
 
-	private CommandLink createCommandLink(IHorizontalPanel iPanel0,
-			IImage image, ILabel label) {
+	private CommandLink createCommandLink(IFocusPanel fp,
+			IHorizontalPanel iPanel0, IImage image, ILabel label) {
 		labels.add(label);
-		CommandLink cl = new CommandLink(this, iPanel0, image, label);
+		CommandLink cl = new CommandLink(this, fp, iPanel0, image, label);
 		cl.clickable(hyperlinkVisible);
 		if (addToContextMenu)
 			cl.addToContextMenu(title);
