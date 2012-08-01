@@ -9,6 +9,7 @@ import java.util.Map;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
@@ -117,22 +118,14 @@ class LogImpl implements ILog, IClickListener {
 	public void onClick() {
 		final IDisplay d = Display.instance();
 		final IPopUp popUp = d.showPopUp().modal(true).offset(SPACING, SPACING);
-		resize(d, popUp);
-		// TODO d.addResizeListener(new IResizeListener() {
-		// @Override
-		// public boolean onResize(int width, int height) {
-		// resize(d, popUp);
-		// return popUp.visible();
-		// }
-		// }).linkLifecycle(popUp);
 		popUp.border().remove().style().shadow().color().black();
 		WidgetTitle panel = new WidgetTitle(popUp.container()).spacing(0)
 				.sideWidget(true).commandsOnTop().spacing(0);
 		panel.addTitle("Log Trace");
-		final IScrollPane scrollPane = panel.content().scrollPane()
-				.size(d.width() - SPACING * 2, d.height() - SPACING * 2 - 33);
+		final IScrollPane scrollPane = panel.content().scrollPane();
 		final IVerticalPanel content = scrollPane.viewPort().panel().vertical()
 				.spacing(10).add().panel().vertical();
+		resize(d, popUp, scrollPane);
 		cancel = panel.addHyperlink("cancel.png", "Clear");
 		cancel.addClickListener(new IClickListener() {
 			@Override
@@ -141,6 +134,13 @@ class LogImpl implements ILog, IClickListener {
 				content.clear();
 			}
 		});
+		d.addResizeListener(new IResizeListener() {
+			@Override
+			public boolean onResize(int width, int height) {
+				resize(d, popUp, scrollPane);
+				return popUp.visible();
+			}
+		}).linkLifecycle(popUp);
 		panel.addHyperlink("back.png", "Close").addClickListener(
 				new IClickListener() {
 					@Override
@@ -157,8 +157,9 @@ class LogImpl implements ILog, IClickListener {
 		popUp.visible(true);
 	}
 
-	public void resize(IDisplay d, final IPopUp popUp) {
+	public void resize(IDisplay d, final IPopUp popUp, IScrollPane scrollPane) {
 		popUp.size(d.width() - SPACING * 2, d.height() - SPACING * 2);
+		scrollPane.size(d.width() - SPACING * 2, d.height() - SPACING * 2 - 33);
 	}
 
 	private void showLog(final IScrollPane scrollPane,
