@@ -1483,6 +1483,9 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> subTitle(String subTitle1,
 			String subTitle2) {
+		if (widgetTitle != null) {
+			widgetTitle.addSubTitles(subTitle1, subTitle2);
+		}
 		this.subTitle1 = subTitle1;
 		this.subTitle2 = subTitle2;
 		return this;
