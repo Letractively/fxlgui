@@ -135,10 +135,10 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 		Constants
 				.put("TableViewTemplate.CORRECT_HEIGHT", !isInternetExplorer());
-		if (isInternetExplorer()) {
-			Constants.put("DashboardPagePage.HEIGHT_DECREMENT", 3);
-			Constants.put("DashboardPagePage.HEIGHT_CONTENT_DECREMENT", 30);
-		}
+		// if (isInternetExplorer()) {
+		// Constants.put("DashboardPagePage.HEIGHT_DECREMENT", 3);
+		// Constants.put("DashboardPagePage.HEIGHT_CONTENT_DECREMENT", 30);
+		// }
 		if (isFirefox()) {
 			Constants.put("ScrollTableWidgetImpl.ADD_TOP_PANEL_TOP_PADDING",
 					true);
