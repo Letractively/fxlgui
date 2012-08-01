@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
@@ -40,9 +41,11 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	private Entry contextMenuEntry;
 	private String text;
 	private char ctrlKey;
+	private IFocusPanel fp;
 
-	public CommandLink(WidgetTitle widgetTitle, IHorizontalPanel iPanel,
-			IImage image, ILabel headerLabel) {
+	public CommandLink(WidgetTitle widgetTitle, IFocusPanel fp,
+			IHorizontalPanel iPanel, IImage image, ILabel headerLabel) {
+		this.fp = fp;
 		this.widgetTitle = widgetTitle;
 		this.iPanel = iPanel;
 		noDoubleClicks(iPanel);
@@ -138,14 +141,18 @@ public class CommandLink implements IClickable<IClickable<?>> {
 			String resource = image.resource();
 			contextMenuEntry.imageResource(resource);
 		}
-		contextMenuEntry.addClickListener(new IClickListener() {
+		contextMenuEntry.addClickListener(getFire());
+		return this;
+	}
+
+	co.fxl.gui.api.IClickable.IClickListener getFire() {
+		return new IClickListener() {
 			@Override
 			public void onClick() {
 				for (IClickListener l : clickListeners)
 					l.onClick();
 			}
-		});
-		return this;
+		};
 	}
 
 	public void text(String string) {
@@ -172,7 +179,6 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	}
 
 	public void acceptEnter() {
-		// TODO image.focus(true).addKeyListener(..).enter();
-		throw new UnsupportedOperationException();
+		fp.addKeyListener(getFire()).enter().focus(true);
 	}
 }
