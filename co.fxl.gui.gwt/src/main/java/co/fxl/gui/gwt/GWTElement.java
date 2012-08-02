@@ -770,6 +770,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	@Override
 	public R iD(String iD) {
 		container.widget.getElement().setId(iD);
+		GWTDisplay.instance.notifyElement(this);
 		return (R) this;
 	}
 
