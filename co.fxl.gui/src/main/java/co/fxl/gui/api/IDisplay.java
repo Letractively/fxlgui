@@ -20,6 +20,11 @@ package co.fxl.gui.api;
 
 public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
+	public interface IElementListener {
+
+		void notifyElement(IElement<?> e);
+	}
+
 	public interface IRuntime {
 
 		String name();
@@ -106,4 +111,6 @@ public interface IDisplay extends IColored, IRegistry<IDisplay> {
 	String title();
 
 	IDisplay clear();
+
+	IDisplay addElementListener(IElementListener elementListener);
 }
