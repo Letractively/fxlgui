@@ -44,6 +44,11 @@ public class CallbackAggregator<T> {
 		this(null, counter);
 	}
 
+	public void cancel(T result) {
+		cb.onSuccess(result);
+		cb = null;
+	}
+
 	public ICallback<T> derive() {
 		if (!fixedNumber)
 			counter++;
