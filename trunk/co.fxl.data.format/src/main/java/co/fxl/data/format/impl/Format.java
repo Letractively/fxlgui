@@ -18,6 +18,7 @@
  */
 package co.fxl.data.format.impl;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -90,13 +91,21 @@ public class Format {
 	}
 
 	public static String format(Object object) {
+		if (object == null)
+			return null;
 		Class<? extends Object> clazz = object.getClass();
 		return format(clazz, object);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static String format(Class<? extends Object> clazz, Object object) {
+		if (clazz.equals(String.class))
+			return (String) object;
+		if (clazz.equals(Timestamp.class))
+			return dateTime().format((Date) object);
 		IFormat format = get(clazz);
+		if (format == null)
+			return String.valueOf(object);
 		return format.format(object);
 	}
 
