@@ -535,6 +535,15 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	@Override
 	public IDisplay addElementListener(IElementListener elementListener) {
+
+		// TODO ...
+
 		throw new UnsupportedOperationException();
+	}
+
+	void notifyElement(GWTElement<?, ?> e) {
+
+		// TODO ...
+
 	}
 }
