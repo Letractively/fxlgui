@@ -229,6 +229,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private String filterQueryLabel;
 	private String subTitle1;
 	private String subTitle2;
+	private int presetRowIndex = 0;
 
 	// private boolean nextTimeShowPopUp;
 
@@ -367,6 +368,10 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 							sp.rowIndex(this.rowIndex);
 							this.rowIndex = -1;
 						}
+					}
+					if (presetRowIndex > 0) {
+						sp.rowIndex(presetRowIndex);
+						presetRowIndex = 0;
 					}
 					sp.height(heightCenterPanel());
 					sp.decorator(new ILazyScrollPane.IDecorator() {
@@ -1428,6 +1433,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	@Override
 	public void refreshTable() {
+		if (sp != null)
+			presetRowIndex = sp.rowIndex();
 		refresh();
 	}
 
