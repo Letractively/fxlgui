@@ -172,47 +172,51 @@ public class NavigationItemImpl extends LazyClickListener implements
 	@Override
 	public void onAllowedClick() {
 		if (isMoreTab) {
-			if (popUp == null) {
-				popUp = Display.instance().showPopUp().autoHide(true);
-				popUp.border().remove();
-				// popUp.border().color().gray();// .mix().white().lightgray();
-				popUp.border().style().shadow();
-				popUp.width(280);
-				popUp.addVisibleListener(new IUpdateListener<Boolean>() {
-					@Override
-					public void onUpdate(Boolean value) {
-						if (!value) {
-							hidePopUp();
-						}
-					}
-				});
-				IVerticalPanel panel = popUp.container().panel().vertical();
-				panel.width(POPUP_WIDTH);
-				panel.color().white();
-				decorator.decorate(new BufferedPanelImpl(panel),
-						new CallbackTemplate<Void>() {
-							@Override
-							public void onSuccess(Void result) {
-								border.color().gray();
-								// border.style().shadow();
-								buttonPanel.color().remove();
-								buttonPanel.color().white();
-								button.font().color().black();
-								refreshResource("more_black.png");
-								// refresh.resource("more_black.png");
-								int x = basicPanel.offsetX()
-										- getLeftPartPopUpWidth();
-								if (x < 10)
-									x = 10;
-								popUp.offset(x, basicPanel.offsetY()
-										+ basicPanel.height());
-								popUp.visible(true);
-								clickable(false);
-							}
-						});
-			}
+			setUpMoreTab();
 		} else
 			setActive(true, DummyCallback.voidInstance());
+	}
+
+	private void setUpMoreTab() {
+		if (popUp == null) {
+			popUp = Display.instance().showPopUp().autoHide(true);
+			popUp.border().remove();
+			// popUp.border().color().gray();// .mix().white().lightgray();
+			popUp.border().style().shadow();
+			popUp.width(280);
+			popUp.addVisibleListener(new IUpdateListener<Boolean>() {
+				@Override
+				public void onUpdate(Boolean value) {
+					if (!value) {
+						hidePopUp();
+					}
+				}
+			});
+			IVerticalPanel panel = popUp.container().panel().vertical();
+			panel.width(POPUP_WIDTH);
+			panel.color().white();
+			decorator.decorate(new BufferedPanelImpl(panel),
+					new CallbackTemplate<Void>() {
+						@Override
+						public void onSuccess(Void result) {
+							border.color().gray();
+							// border.style().shadow();
+							buttonPanel.color().remove();
+							buttonPanel.color().white();
+							button.font().color().black();
+							refreshResource("more_black.png");
+							// refresh.resource("more_black.png");
+							int x = basicPanel.offsetX()
+									- getLeftPartPopUpWidth();
+							if (x < 10)
+								x = 10;
+							popUp.offset(x, basicPanel.offsetY()
+									+ basicPanel.height());
+							popUp.visible(true);
+							clickable(false);
+						}
+					});
+		}
 	}
 
 	@Override
