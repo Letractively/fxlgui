@@ -39,9 +39,16 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.ContextMenu.Group;
 
-//import co.fxl.style.impl.Style;
-
 public class WidgetTitle implements IClickListener {
+
+	// TODO Usability: Buttons (Copy / Paste / New …). eventuell so viele,
+	// dass der linke Screenbereich zu groß wird und der rechte nach außen
+	// scrollt. Langfristig könnte man das evtl. so wie bei den MDTs lösen, d.h.
+	// wenn es
+	// zu viele sind, dann ein More anzeigen (evtl HorizontalScalingPanel
+	// verwenden / einfacher: wenn Display.width()<X oder
+	// ButtonPanel.widt()<cell.width() :
+	// nur Icons anzeigen)
 
 	private static final int MAX_LENGTH_SUBTITLE = 30;
 	public static final int LARGE_FONT = 18;
