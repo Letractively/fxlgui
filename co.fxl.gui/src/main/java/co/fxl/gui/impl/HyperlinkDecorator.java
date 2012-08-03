@@ -27,7 +27,7 @@ public class HyperlinkDecorator extends HyperlinkMouseOverListener {
 		styleHyperlinkActive(label);
 	}
 
-	private void styleHyperlinkActive(ILabel label) {
+	public static void styleHyperlinkActive(ILabel label) {
 		label.font().color().rgb(0, 87, 141);
 	}
 
