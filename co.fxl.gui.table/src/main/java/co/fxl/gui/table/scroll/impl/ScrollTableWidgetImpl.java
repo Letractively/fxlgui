@@ -83,6 +83,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	// not
 	// enough
 
+	// TODO SWING-FXL: Usability: Spaltenbreiten werden unter Swing nicht berücksichtigt
+
 	class State {
 
 		private String imageResource;
