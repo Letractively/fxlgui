@@ -50,6 +50,8 @@ public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
 		IResizeConfiguration linkLifecycle(IPopUp dialog);
 
+		void remove();
+
 	}
 
 	public interface IResizeListener {

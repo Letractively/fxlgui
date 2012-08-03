@@ -9,6 +9,7 @@ import java.util.Map;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IDisplay.IResizeConfiguration;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -16,6 +17,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ITextArea;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.CommandLink;
@@ -117,7 +119,8 @@ class LogImpl implements ILog, IClickListener {
 	@Override
 	public void onClick() {
 		final IDisplay d = Display.instance();
-		final IPopUp popUp = d.showPopUp().modal(true).offset(SPACING, SPACING);
+		final IPopUp popUp = d.showPopUp().modal(true).offset(SPACING, SPACING)
+				.autoHide(true);
 		popUp.border().remove().style().shadow().color().black();
 		WidgetTitle panel = new WidgetTitle(popUp.container()).spacing(0)
 				.sideWidget(true).commandsOnTop().spacing(0);
@@ -134,13 +137,21 @@ class LogImpl implements ILog, IClickListener {
 				content.clear();
 			}
 		});
-		d.addResizeListener(new IResizeListener() {
+		final IResizeConfiguration cfg = d.addResizeListener(
+				new IResizeListener() {
+					@Override
+					public boolean onResize(int width, int height) {
+						resize(d, popUp, scrollPane);
+						return popUp.visible();
+					}
+				}).linkLifecycle(popUp);
+		popUp.addVisibleListener(new IUpdateListener<Boolean>() {
 			@Override
-			public boolean onResize(int width, int height) {
-				resize(d, popUp, scrollPane);
-				return popUp.visible();
+			public void onUpdate(Boolean value) {
+				if (!value)
+					cfg.remove();
 			}
-		}).linkLifecycle(popUp);
+		});
 		panel.addHyperlink("back.png", "Close").addClickListener(
 				new IClickListener() {
 					@Override

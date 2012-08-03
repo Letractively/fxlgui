@@ -25,6 +25,7 @@ import java.util.List;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.log.impl.LogWidgetProvider;
 
 public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
@@ -69,6 +70,11 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 				removeResizeListener(listener);
 			}
 		}
+
+		@Override
+		public void remove() {
+			DisplayTemplate.this.remove(this);
+		}
 	}
 
 	private List<ResizeConfiguration> resizeListeners = new LinkedList<ResizeConfiguration>();
@@ -78,7 +84,8 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 	}
 
 	@Override
-	public final IResizeConfiguration addResizeListener(final IResizeListener listener) {
+	public final IResizeConfiguration addResizeListener(
+			final IResizeListener listener) {
 		List<ResizeConfiguration> toRemove = new LinkedList<ResizeConfiguration>();
 		for (ResizeConfiguration cfg : resizeListeners) {
 			if (isInvisible(cfg)) {
@@ -101,8 +108,8 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 		return !((IPopUp) cfg.lifecycleLink).visible();
 	}
 
-	protected void remove(ResizeConfiguration toRemove) {
-		resizeListeners.remove(toRemove);
+	protected void remove(ResizeConfiguration cfg) {
+		resizeListeners.remove(cfg);
 	}
 
 	@Override
