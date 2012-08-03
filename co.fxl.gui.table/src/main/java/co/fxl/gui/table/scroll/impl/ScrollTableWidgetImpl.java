@@ -83,7 +83,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	// not
 	// enough
 
-	// TODO SWING-FXL: Usability: Spaltenbreiten werden unter Swing nicht berücksichtigt
+	// TODO SWING-FXL: Usability: Spaltenbreiten werden unter Swing nicht
+	// berücksichtigt
 
 	class State {
 
@@ -979,17 +980,19 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 				}
 			});
 		}
-		int rt = rowOffset + paintedRows;
-		if (rt > rows.size())
-			rt = rows.size();
-		int firstRow = constraints != null ? constraints.rowIterator()
-				.firstRow() : 0;
-		String status = +(firstRow + rowOffset + 1) + " - " + (firstRow + rt);
+		int px = paintedRows;
+		String status = getStatusRange(px);
 		String in = "DISPLAYING ROWS";
 		label = p.add().label();
 		label.text(in);
 		label.font().pixel(10);
-		addStatus(p, status);
+		final ILabel ls = addStatus(p, status);
+		Display.instance().invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				ls.text(getStatusRange(paintedRows()));
+			}
+		});
 		if (hasNext) {
 			p.addSpace(4);
 			l = p.add().label().text(">>");
@@ -1011,9 +1014,31 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		p.addSpace(4);
 	}
 
-	void addStatus(IHorizontalPanel p, String status) {
-		p.addSpace(4).add().label().text(status).font().weight().bold()
-				.pixel(10);
+	private String getStatusRange(int px) {
+		int rt = rowOffset + px;
+		if (rt > rows.size())
+			rt = rows.size();
+		int firstRow = constraints != null ? constraints.rowIterator()
+				.firstRow() : 0;
+		String status = +(firstRow + rowOffset + 1) + " - " + (firstRow + rt);
+		return status;
+	}
+
+	private int paintedRows() {
+		int c = 0;
+		int h = grid.rowHeight(0);
+		for (c = 0; c < paintedRows; c++) {
+			if (h >= grid.height())
+				return c;
+			h += grid.rowHeight(c + 1);
+		}
+		return c;
+	}
+
+	ILabel addStatus(IHorizontalPanel p, String status) {
+		ILabel l = p.addSpace(4).add().label().text(status);
+		l.font().weight().bold().pixel(10);
+		return l;
 	}
 
 	private int computeRowsToPaint() {
