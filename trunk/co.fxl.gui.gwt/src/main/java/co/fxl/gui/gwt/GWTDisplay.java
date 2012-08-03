@@ -60,6 +60,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		WidgetParent {
+	
+	// TODO Look: Quirk: GWT: IE9: Höhe von ComboBox stimmt nicht (eventuell in
+	// Grid einbetten)
+	// TODO Look: Quirk: GWT: Safari: Höhe von ComboBox stimmt nicht (eventuell
+	// in Grid einbetten)
 
 	private static final String FIREFOX = "Firefox/";
 	/**
