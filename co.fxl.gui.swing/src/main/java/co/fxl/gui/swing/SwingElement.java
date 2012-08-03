@@ -184,10 +184,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 			container.component.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseReleased(MouseEvent e) {
-					if (container.component.isEnabled())
-						for (ClickListenerMouseAdapter<R> adapter : adapters) {
-							adapter.adapter.mouseReleased(e);
-						}
+					fireClickListeners(e);
 				}
 			});
 			clickListenerAdded = true;
@@ -525,6 +522,13 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 	@Override
 	public R iD(String iD) {
 		return (R) this;
+	}
+
+	void fireClickListeners(MouseEvent e) {
+		if (container.component.isEnabled())
+			for (ClickListenerMouseAdapter<R> adapter : adapters) {
+				adapter.adapter.mouseReleased(e);
+			}
 	}
 
 }
