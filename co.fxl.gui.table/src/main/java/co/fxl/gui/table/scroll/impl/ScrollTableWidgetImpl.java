@@ -774,7 +774,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		grid.marginTop(plainContent ? 0 : 6);
 		grid.addToContextMenu(addToContextMenu);
 		final int heightMinusTopPanel = heightCenterPanel();
-		grid.height(heightMinusTopPanel - 2);
+		grid.height(heightMinusTopPanel - 6);
 		for (IRowIndexListener rowIndexL : scrollListeners)
 			rowIndexL.onScroll(rowOffset);
 		updateHeaderRow(grid);
