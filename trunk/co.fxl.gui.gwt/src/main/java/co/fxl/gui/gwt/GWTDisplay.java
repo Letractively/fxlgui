@@ -23,6 +23,7 @@ import java.util.List;
 
 import co.fxl.data.format.gwt.GWTFormat;
 import co.fxl.gui.api.ICallback;
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
@@ -60,7 +61,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		WidgetParent {
-	
+
 	// TODO Look: Quirk: GWT: IE9: Höhe von ComboBox stimmt nicht (eventuell in
 	// Grid einbetten)
 	// TODO Look: Quirk: GWT: Safari: Höhe von ComboBox stimmt nicht (eventuell
@@ -550,5 +551,10 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 		// TODO ...
 
+	}
+
+	@Override
+	public void click(IClickable<?> clickable) {
+		throw new UnsupportedOperationException();
 	}
 }

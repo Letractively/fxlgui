@@ -36,6 +36,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 import co.fxl.data.format.swing.SwingFormat;
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
@@ -350,6 +351,11 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 
 	@Override
 	public IDisplay addElementListener(IElementListener elementListener) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void click(IClickable<?> clickable) {
 		throw new UnsupportedOperationException();
 	}
 }
