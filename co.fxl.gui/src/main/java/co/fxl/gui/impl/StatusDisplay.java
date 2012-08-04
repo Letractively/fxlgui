@@ -62,7 +62,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	private Long lastResize = null;
 	protected IPopUp popUp;
 	private IGridCell sidePanelContainer;
-	private IScrollPane sidePanel;
+	private IGridPanel grid;
 
 	public IResizeConfiguration singleResizeListener(
 			RefreshListener resizeListener) {
@@ -235,7 +235,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 
 	public int width() {
 		int w = hasHorizontalScrollbar() ? 1024 : display.width();
-		if (sidePanel != null)
+		if (sidePanelContainer != null)
 			w -= sidePanelContainer.width();
 		return w;
 	}
@@ -251,9 +251,8 @@ public class StatusDisplay implements IResizeListener, Runnable {
 
 	public StatusDisplay reset() {
 		scrollPane = display.clear().container().scrollPane().horizontal();
-		IGridPanel grid = scrollPane.viewPort().panel().grid();
+		grid = scrollPane.viewPort().panel().grid();
 		panel = grid.cell(0, 0).panel().vertical();
-		sidePanelContainer = grid.cell(1, 0);
 		run();
 		stylePanel(panel);
 		p0 = panel.add().panel().vertical().add().panel().vertical();
@@ -295,7 +294,8 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	public IContainer showSidePanel(final int width) {
-		sidePanel = sidePanelContainer.width(width).scrollPane()
+		sidePanelContainer = grid.cell(1, 0);
+		IScrollPane sidePanel = sidePanelContainer.width(width).scrollPane()
 				.size(width, display.height());
 		IContainer c = sidePanel.viewPort();
 		sidePanel.border().style().left();
@@ -309,7 +309,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 
 	public StatusDisplay hideSidePanel() {
 		sidePanelContainer.clear().width(0);
-		sidePanel = null;
+		sidePanelContainer = null;
 		notifyResizeListeners();
 		return this;
 	}
