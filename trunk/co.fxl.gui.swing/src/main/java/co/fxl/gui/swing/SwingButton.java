@@ -19,6 +19,10 @@
 package co.fxl.gui.swing;
 
 import java.awt.Cursor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JButton;
 
@@ -26,10 +30,18 @@ import co.fxl.gui.api.IButton;
 
 class SwingButton extends SwingTextElement<JButton, IButton> implements IButton {
 
+	private List<ClickListenerMouseAdapter<IButton>> listeners = new LinkedList<ClickListenerMouseAdapter<IButton>>();
+
 	SwingButton(SwingContainer<JButton> container) {
 		super(container);
 		html.center = true;
 		container.component.setHorizontalAlignment(JButton.CENTER);
+		container.component.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				fireClickListeners(arg0);
+			}
+		});
 	}
 
 	@Override
@@ -48,8 +60,7 @@ class SwingButton extends SwingTextElement<JButton, IButton> implements IButton 
 		container.component.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		ClickListenerMouseAdapter<IButton> clickListenerMouseAdapter = new ClickListenerMouseAdapter<IButton>(
 				this, listener);
-		container.component
-				.addActionListener(clickListenerMouseAdapter.adapter);
+		listeners.add(clickListenerMouseAdapter);
 		return clickListenerMouseAdapter;
 	}
 
@@ -67,5 +78,10 @@ class SwingButton extends SwingTextElement<JButton, IButton> implements IButton 
 	private void setButtonText(String text) {
 		setText(text);
 		update();
+	}
+
+	void fireClickListeners(ActionEvent arg0) {
+		for (ClickListenerMouseAdapter<IButton> c : listeners)
+			c.adapter.actionPerformed(arg0);
 	}
 }
