@@ -298,7 +298,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 		IScrollPane sidePanel = sidePanelContainer.width(width).scrollPane()
 				.size(width, display.height());
 		IContainer c = sidePanel.viewPort();
-		sidePanel.border().style().left();
+		sidePanel.border().style().left().color().gray();
 		notifyResizeListeners();
 		return c;
 	}
