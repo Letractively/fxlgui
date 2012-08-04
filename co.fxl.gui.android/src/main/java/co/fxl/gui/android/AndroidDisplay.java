@@ -20,6 +20,7 @@ package co.fxl.gui.android;
 
 import android.app.Activity;
 import android.view.View;
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
@@ -197,6 +198,11 @@ public class AndroidDisplay extends DisplayTemplate implements Parent {
 
 	@Override
 	public IDisplay addElementListener(IElementListener elementListener) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void click(IClickable<?> clickable) {
 		throw new UnsupportedOperationException();
 	}
 }
