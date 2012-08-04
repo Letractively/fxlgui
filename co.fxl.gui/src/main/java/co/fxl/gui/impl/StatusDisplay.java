@@ -290,4 +290,8 @@ public class StatusDisplay implements IResizeListener, Runnable {
 		throw new UnsupportedOperationException();
 	}
 
+	public StatusDisplay hideSidePanel() {
+		throw new UnsupportedOperationException();
+	}
+
 }
