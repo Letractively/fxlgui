@@ -20,6 +20,7 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDisplay.IResizeConfiguration;
 import co.fxl.gui.api.IDisplay.IResizeListener;
@@ -283,6 +284,10 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	public void updateHeight() {
 		panel.height(height());
 		// display.height(display.height());
+	}
+
+	public IContainer showSidePanel(int width) {
+		throw new UnsupportedOperationException();
 	}
 
 }
