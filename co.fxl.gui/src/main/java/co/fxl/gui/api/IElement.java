@@ -46,4 +46,6 @@ public interface IElement<T> extends ILocated<T> {
 
 	T iD(String iD);
 
+	String iD();
+
 }

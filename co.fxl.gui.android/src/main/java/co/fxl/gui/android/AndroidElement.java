@@ -256,4 +256,9 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 	public T iD(String iD) {
 		return (T) this;
 	}
+
+	@Override
+	public String iD() {
+		throw new UnsupportedOperationException();
+	}
 }

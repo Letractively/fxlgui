@@ -786,6 +786,11 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		}
 	}
 
+	@Override
+	public String iD() {
+		return container.widget.getElement().getId();
+	}
+
 	// @Override
 	// public <N> R nativeElement(N nativeElement) {
 	// throw new UnsupportedOperationException();
