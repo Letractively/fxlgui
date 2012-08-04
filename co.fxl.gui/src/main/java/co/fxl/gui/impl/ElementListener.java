@@ -26,7 +26,7 @@ public class ElementListener {
 
 		void notifyNew(IElement<?> e);
 
-		void notifyClick(IElement<?> e);
+		boolean notifyClick(IElement<?> e);
 
 		void notifyValueChange(IElement<?> e);
 	}
