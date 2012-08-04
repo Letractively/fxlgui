@@ -15,11 +15,13 @@ public aspect SwingElementAutomation {
 	}
 
 	@SuppressWarnings("rawtypes")
-	before(SwingElement e) :
+	void around(SwingElement e) :
 	execution(void SwingElement.fireClickListeners(MouseEvent))
 	&& this(e)
 	&& if(ElementListener.active) {
-		ElementListener.instance().notifyClick(e);
+		boolean execute = ElementListener.instance().notifyClick(e);
+		if (execute)
+			proceed(e);
 	}
 
 }
