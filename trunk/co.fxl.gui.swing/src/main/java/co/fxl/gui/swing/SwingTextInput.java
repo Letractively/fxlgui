@@ -94,7 +94,6 @@ public class SwingTextInput<T extends JTextComponent, R> extends
 	@SuppressWarnings("unchecked")
 	public R maxLength(final int maxLength) {
 		addStringUpdateListener(new IUpdateListener<String>() {
-
 			@Override
 			public void onUpdate(final String value) {
 				if (value.length() > maxLength)
