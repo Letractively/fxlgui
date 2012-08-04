@@ -26,6 +26,7 @@ import co.fxl.gui.api.IDisplay.IResizeConfiguration;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPopUp;
@@ -60,6 +61,8 @@ public class StatusDisplay implements IResizeListener, Runnable {
 
 	private Long lastResize = null;
 	protected IPopUp popUp;
+	private IGridCell sidePanelContainer;
+	private IScrollPane sidePanel;
 
 	public IResizeConfiguration singleResizeListener(
 			RefreshListener resizeListener) {
@@ -231,7 +234,10 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	public int width() {
-		return hasHorizontalScrollbar() ? 1024 : display.width();
+		int w = hasHorizontalScrollbar() ? 1024 : display.width();
+		if (sidePanel != null)
+			w -= sidePanelContainer.width();
+		return w;
 	}
 
 	private boolean hasHorizontalScrollbar() {
@@ -245,7 +251,9 @@ public class StatusDisplay implements IResizeListener, Runnable {
 
 	public StatusDisplay reset() {
 		scrollPane = display.clear().container().scrollPane().horizontal();
-		panel = scrollPane.viewPort().panel().vertical();
+		IGridPanel grid = scrollPane.viewPort().panel().grid();
+		panel = grid.cell(0, 0).panel().vertical();
+		sidePanelContainer = grid.cell(1, 0);
 		run();
 		stylePanel(panel);
 		p0 = panel.add().panel().vertical().add().panel().vertical();
@@ -286,12 +294,24 @@ public class StatusDisplay implements IResizeListener, Runnable {
 		// display.height(display.height());
 	}
 
-	public IContainer showSidePanel(int width) {
-		throw new UnsupportedOperationException();
+	public IContainer showSidePanel(final int width) {
+		sidePanel = sidePanelContainer.width(width).scrollPane()
+				.size(width, display.height());
+		IContainer c = sidePanel.viewPort();
+		sidePanel.border().style().left();
+		notifyResizeListeners();
+		return c;
+	}
+
+	private void notifyResizeListeners() {
+		((DisplayTemplate) Display.instance()).notifyResizeListeners();
 	}
 
 	public StatusDisplay hideSidePanel() {
-		throw new UnsupportedOperationException();
+		sidePanelContainer.clear().width(0);
+		sidePanel = null;
+		notifyResizeListeners();
+		return this;
 	}
 
 }

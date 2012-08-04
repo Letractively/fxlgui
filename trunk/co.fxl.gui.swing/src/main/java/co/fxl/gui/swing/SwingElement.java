@@ -521,6 +521,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 	@SuppressWarnings("unchecked")
 	@Override
 	public R iD(String iD) {
+		container.component.setName(iD);
 		return (R) this;
 	}
 
@@ -529,6 +530,11 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 			for (ClickListenerMouseAdapter<R> adapter : adapters) {
 				adapter.adapter.mouseReleased(e);
 			}
+	}
+
+	@Override
+	public String iD() {
+		return container.component.getName();
 	}
 
 }
