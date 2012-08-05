@@ -103,6 +103,7 @@ public class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
 
 	@Override
 	public void remove(JComponent component) {
+		container.component.requestFocus();
 		container.component.remove(component);
 		frame().validate();
 	}
