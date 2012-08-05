@@ -18,26 +18,16 @@
  */
 package co.fxl.gui.swing;
 
-import java.awt.event.MouseEvent;
-
 import co.fxl.gui.impl.ElementListener;
 
-aspect SwingElementAutomation {
+privileged aspect SwingComboBoxAutomation {
 
-	@SuppressWarnings("rawtypes")
-	after(SwingElement e) :
-	execution(SwingElement.new(SwingContainer))
+	before(SwingComboBox e) :
+	execution(void SwingComboBox.fireUpdateListeners(String))
 	&& this(e)
 	&& if(ElementListener.active) {
-		ElementListener.instance().notifyNew(e);
-	}
-
-	@SuppressWarnings("rawtypes")
-	before(SwingElement e) :
-	execution(void SwingElement.fireClickListeners(MouseEvent))
-	&& this(e)
-	&& if(ElementListener.active) {
-		ElementListener.instance().notifyClick(e);
+		if (!e.programmaticSet)
+			ElementListener.instance().notifyValueChange(e);
 	}
 
 }

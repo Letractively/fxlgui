@@ -22,15 +22,13 @@ import java.awt.event.ActionEvent;
 
 import co.fxl.gui.impl.ElementListener;
 
-public aspect SwingButtonAutomation {
+aspect SwingButtonAutomation {
 
-	void around(SwingButton e) :
+	before(SwingButton e) :
 	execution(void SwingButton.fireClickListeners(ActionEvent))
 	&& this(e)
 	&& if(ElementListener.active) {
-		boolean execute = ElementListener.instance().notifyClick(e);
-		if (execute)
-			proceed(e);
+		ElementListener.instance().notifyClick(e);
 	}
 
 }

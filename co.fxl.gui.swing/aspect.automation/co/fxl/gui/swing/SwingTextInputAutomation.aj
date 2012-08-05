@@ -23,7 +23,7 @@ import java.awt.event.KeyEvent;
 
 import co.fxl.gui.impl.ElementListener;
 
-public aspect SwingTextInputAutomation {
+aspect SwingTextInputAutomation {
 
 	@SuppressWarnings("rawtypes")
 	after(final SwingTextInput e) :

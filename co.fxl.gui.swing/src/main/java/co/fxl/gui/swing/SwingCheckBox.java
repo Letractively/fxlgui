@@ -20,6 +20,8 @@ package co.fxl.gui.swing;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JCheckBox;
 
@@ -28,9 +30,22 @@ import co.fxl.gui.api.ICheckBox;
 class SwingCheckBox extends SwingTextElement<JCheckBox, ICheckBox> implements
 		ICheckBox {
 
+	private List<IUpdateListener<Boolean>> listeners = new LinkedList<IUpdateListener<Boolean>>();
+
 	SwingCheckBox(SwingContainer<JCheckBox> container) {
 		super(container);
 		container.component.setOpaque(false);
+		container.component.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				fireUpdateListeners();
+			}
+		});
+	}
+
+	void fireUpdateListeners() {
+		for (IUpdateListener<Boolean> listener : listeners)
+			listener.onUpdate(container.component.isSelected());
 	}
 
 	@Override
@@ -47,13 +62,7 @@ class SwingCheckBox extends SwingTextElement<JCheckBox, ICheckBox> implements
 
 	@Override
 	public ICheckBox addUpdateListener(final IUpdateListener<Boolean> listener) {
-		container.component.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				listener.onUpdate(container.component.isSelected());
-			}
-		});
+		listeners.add(listener);
 		return this;
 	}
 

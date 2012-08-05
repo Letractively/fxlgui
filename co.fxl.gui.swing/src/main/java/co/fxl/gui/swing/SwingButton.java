@@ -27,6 +27,7 @@ import java.util.List;
 import javax.swing.JButton;
 
 import co.fxl.gui.api.IButton;
+import co.fxl.gui.impl.HTMLText;
 
 class SwingButton extends SwingTextElement<JButton, IButton> implements IButton {
 
@@ -66,7 +67,7 @@ class SwingButton extends SwingTextElement<JButton, IButton> implements IButton 
 
 	@Override
 	public String text() {
-		return container.component.getText();
+		return HTMLText.removeHTML(container.component.getText());
 	}
 
 	@Override

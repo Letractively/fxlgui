@@ -115,7 +115,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 		}
 	}
 
-	private IGridPanel grid;
+	IGridPanel grid;
 	private int rowOffset = 0;
 	private IVerticalPanel mainPanel;
 	private int numRows = 0;
