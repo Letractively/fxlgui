@@ -19,6 +19,7 @@
 package co.fxl.gui.swing;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -32,6 +33,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
@@ -41,12 +43,14 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DisplayTemplate;
+import co.fxl.gui.impl.HTMLText;
 import co.fxl.gui.impl.RuntimeTemplate;
 import co.fxl.gui.impl.ToolbarImpl;
 
@@ -357,5 +361,22 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 	@Override
 	public void click(IClickable<?> clickable) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String findLabel(IPanel<?> panel) {
+		PanelComponent p = panel.nativeElement();
+		return findLabel(p);
+	}
+
+	private String findLabel(PanelComponent p) {
+		for (Component c : p.getComponents()) {
+			if (c instanceof PanelComponent) {
+				return findLabel((PanelComponent) c);
+			} else if (c instanceof JLabel) {
+				return HTMLText.removeHTML(((JLabel) c).getText());
+			}
+		}
+		return null;
 	}
 }

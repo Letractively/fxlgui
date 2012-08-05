@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.swing;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
@@ -27,35 +30,38 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 public class SwingTextInput<T extends JTextComponent, R> extends
 		SwingTextElement<T, R> {
 
-	// TODO SWING-FXL: Usability: when focus is set on textfield, the cursor should
+	// TODO SWING-FXL: Usability: when focus is set on textfield, the cursor
+	// should
 	// be positioned at the end, not the beginning.
 	// Probably valid also for textarea
 
-	private final class UpdateListener implements DocumentListener {
-		private final IUpdateListener<String> updateListener;
+	private List<IUpdateListener<String>> listeners = new LinkedList<IUpdateListener<String>>();
 
-		private UpdateListener(IUpdateListener<String> updateListener) {
-			this.updateListener = updateListener;
-		}
+	SwingTextInput(SwingContainer<T> container) {
+		super(container);
+		container.component.getDocument().addDocumentListener(
+				new DocumentListener() {
 
-		@Override
-		public void changedUpdate(DocumentEvent arg0) {
-			updateListener.onUpdate(text());
-		}
+					@Override
+					public void changedUpdate(DocumentEvent arg0) {
+						fireUpdateListeners();
+					}
 
-		@Override
-		public void insertUpdate(DocumentEvent arg0) {
-			updateListener.onUpdate(text());
-		}
+					@Override
+					public void insertUpdate(DocumentEvent arg0) {
+						fireUpdateListeners();
+					}
 
-		@Override
-		public void removeUpdate(DocumentEvent arg0) {
-			updateListener.onUpdate(text());
-		}
+					@Override
+					public void removeUpdate(DocumentEvent arg0) {
+						fireUpdateListeners();
+					}
+				});
 	}
 
-	protected SwingTextInput(SwingContainer<T> container) {
-		super(container);
+	void fireUpdateListeners() {
+		for (IUpdateListener<String> l : listeners)
+			l.onUpdate(text());
 	}
 
 	public R editable(boolean editable) {
@@ -84,8 +90,7 @@ public class SwingTextInput<T extends JTextComponent, R> extends
 
 	public R addStringUpdateListener(
 			final IUpdateListener<String> updateListener) {
-		container.component.getDocument().addDocumentListener(
-				new UpdateListener(updateListener));
+		listeners.add(updateListener);
 		@SuppressWarnings("unchecked")
 		R ret = (R) this;
 		return ret;

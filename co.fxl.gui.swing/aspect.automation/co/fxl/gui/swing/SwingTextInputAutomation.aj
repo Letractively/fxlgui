@@ -16,15 +16,34 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.impl;
+package co.fxl.gui.swing;
 
-import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.IPanel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-public interface IElementAdapter {
+import co.fxl.gui.impl.ElementListener;
 
-	void click(IClickable<?> clickable);
+public aspect SwingTextInputAutomation {
 
-	String findLabel(IPanel<?> panel);
+	@SuppressWarnings("rawtypes")
+	after(final SwingTextInput e) :
+	execution(SwingTextInput.new(SwingContainer))
+	&& this(e) {
+		e.container.component.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if (ElementListener.active)
+					ElementListener.instance().notifyValueChange(e);
+			}
+		});
+	}
+
+	// @SuppressWarnings("rawtypes")
+	// after(SwingTextInput e) :
+	// execution(void SwingTextInput.fireUpdateListeners())
+	// && this(e)
+	// && if(ElementListener.active) {
+	// ElementListener.instance().notifyValueChange(e);
+	// }
 
 }
