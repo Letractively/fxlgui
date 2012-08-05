@@ -29,6 +29,7 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IRegistry.IServiceProvider;
+import co.fxl.gui.impl.ElementListener.Key;
 import co.fxl.gui.impl.HTMLText;
 import co.fxl.gui.impl.IElementAdapter;
 
@@ -54,22 +55,42 @@ public class SwingElementAdapter implements IElementAdapter,
 			ActionEvent ae = new ActionEvent(el, 0, null);
 			b.fireClickListeners(ae);
 		} else {
-			MouseEvent evt = getMouseEvent(el);
+			MouseEvent evt = getMouseEvent(el, null);
 			e.fireClickListeners(evt);
 		}
 	}
 
-	MouseEvent getMouseEvent(Object el) {
+	MouseEvent getMouseEvent(Object el, Key key) {
 		MouseEvent evt = new MouseEvent((Component) el,
-				MouseEvent.MOUSE_PRESSED, 0, MouseEvent.BUTTON1_MASK, 0, 0, 0,
-				false);
+				MouseEvent.MOUSE_PRESSED, 0, MouseEvent.BUTTON1_MASK
+						+ getMask(key), 0, 0, getClickCount(key), false);
+		if (getMask(key) == MouseEvent.CTRL_MASK)
+			assert evt.isControlDown();
 		return evt;
 	}
 
+	private int getClickCount(Key key) {
+		if (key != null && key.equals(Key.DOUBLE))
+			return 2;
+		return 1;
+	}
+
+	private int getMask(Key key) {
+		if (key == null)
+			return 0;
+		switch (key) {
+		case CTRL:
+			return MouseEvent.CTRL_MASK;
+		case SHIFT:
+			return MouseEvent.SHIFT_MASK;
+		}
+		return 0;
+	}
+
 	@Override
-	public void click(IGridPanel g, int x, int y) {
+	public void click(IGridPanel g, int x, int y, Key key) {
 		SwingGridPanel gp = (SwingGridPanel) g;
-		gp.fireClickListeners(getMouseEvent(g.nativeElement()), x, y);
+		gp.fireClickListeners(getMouseEvent(g.nativeElement(), key), x, y);
 	}
 
 	@Override

@@ -22,12 +22,13 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.impl.ElementListener.Key;
 
 public interface IElementAdapter {
 
 	void click(IElement<?> clickable);
 
-	void click(IGridPanel g, int x, int y);
+	void click(IGridPanel g, int x, int y, Key key);
 
 	ILabel findLabel(IPanel<?> panel);
 

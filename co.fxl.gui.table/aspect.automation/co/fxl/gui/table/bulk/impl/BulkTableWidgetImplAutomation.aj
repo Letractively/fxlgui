@@ -19,8 +19,7 @@
 package co.fxl.gui.table.bulk.impl;
 
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IGridPanel.IGridClickListener;
-import co.fxl.gui.impl.ElementListener;
+import co.fxl.gui.impl.ElementListener.Key;
 
 privileged aspect BulkTableWidgetImplAutomation {
 
@@ -28,13 +27,12 @@ privileged aspect BulkTableWidgetImplAutomation {
 	execution(protected BulkTableWidgetImpl.new(IContainer))
 	&& this(e) {
 		e.grid.iD("Main-Grid");
-		e.grid.addGridClickListener(new IGridClickListener() {
-			@Override
-			public void onClick(int column, int row) {
-				if (ElementListener.active) {
-					ElementListener.instance().notifyClick(e.grid, column, row);
-				}
-			}
-		});
+		e.grid.addGridClickListener(new AutomationGridClickListener(e, null));
+		e.grid.addGridClickListener(
+				new AutomationGridClickListener(e, Key.CTRL)).ctrlPressed();
+		e.grid.addGridClickListener(
+				new AutomationGridClickListener(e, Key.SHIFT)).shiftPressed();
+		e.grid.addGridClickListener(
+				new AutomationGridClickListener(e, Key.DOUBLE)).doubleClick();
 	}
 }
