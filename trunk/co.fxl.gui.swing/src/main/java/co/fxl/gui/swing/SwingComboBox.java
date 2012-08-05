@@ -33,6 +33,7 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 	private boolean hasNull = false;
 	private List<IUpdateListener<String>> listeners = new LinkedList<IUpdateListener<String>>();
 	private String value;
+	boolean programmaticSet;
 
 	public SwingComboBox(SwingContainer<JComboBox> container) {
 		super(container);
@@ -52,8 +53,7 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 					ignore = false;
 				} else {
 					value = text();
-					for (IUpdateListener<String> l : listeners)
-						l.onUpdate(text);
+					fireUpdateListeners(text);
 				}
 			}
 		});
@@ -71,6 +71,7 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 
 	@Override
 	public IComboBox text(String choice) {
+		programmaticSet = true;
 		String token = choice;
 		if (choice == null) {
 			if (!hasNull) {
@@ -91,6 +92,7 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 			if (container.component.getItemAt(i).equals(token))
 				container.component.setSelectedIndex(i);
 		value = text();
+		programmaticSet = false;
 		return this;
 	}
 
@@ -101,6 +103,7 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 
 	@Override
 	public IComboBox addText(String... texts) {
+		programmaticSet = true;
 		for (String choice : texts) {
 			if (choice == null) {
 				hasNull = true;
@@ -110,6 +113,7 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 				value = choice;
 			container.component.addItem(choice);
 		}
+		programmaticSet = false;
 		return this;
 	}
 
@@ -151,5 +155,10 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 	@Override
 	public boolean editable() {
 		return container.component.isEnabled();
+	}
+
+	void fireUpdateListeners(String text) {
+		for (IUpdateListener<String> l : listeners)
+			l.onUpdate(text);
 	}
 }

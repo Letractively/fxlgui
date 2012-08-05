@@ -21,6 +21,8 @@ package co.fxl.gui.swing;
 import java.awt.Color;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.BoundedRangeModel;
 import javax.swing.JComponent;
@@ -45,13 +47,44 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 			viewport.add(component);
 		}
 	};
+	private List<IScrollListener> listeners = new LinkedList<IScrollListener>();
+	boolean programmaticSet;
 
-	SwingScrollPane(SwingContainer<JScrollPane> container) {
+	SwingScrollPane(final SwingContainer<JScrollPane> container) {
 		super(container);
 		container.component.setAlignmentY(JScrollPane.TOP_ALIGNMENT);
 		container.component.setOpaque(false);
 		container.component.setBackground(null);
 		container.component.setBorder(null);
+		container.component.getVerticalScrollBar().addAdjustmentListener(
+				new AdjustmentListener() {
+
+					private int index = 0;
+
+					@Override
+					public void adjustmentValueChanged(AdjustmentEvent evt) {
+						if (viewPort == null || viewPort.component == null)
+							return;
+						BoundedRangeModel model = container.component
+								.getVerticalScrollBar().getModel();
+						int max = model.getMaximum();
+						int componentHeight = viewPort.component
+								.getPreferredSize().height;
+						if (componentHeight > max)
+							return;
+						int y = container.component.getVerticalScrollBar()
+								.getValue();
+						if (y != index) {
+							index = y;
+							fireScrollListeners(y);
+						}
+					}
+				});
+	}
+
+	void fireScrollListeners(int y) {
+		for (IScrollListener l : listeners)
+			l.onScroll(y);
 	}
 
 	@Override
@@ -73,52 +106,13 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 
 	@Override
 	public IScrollPane addScrollListener(final IScrollListener listener) {
-		container.component.getVerticalScrollBar().addAdjustmentListener(
-				new AdjustmentListener() {
-
-					private int index = -1;
-
-					@Override
-					public void adjustmentValueChanged(AdjustmentEvent evt) {
-						BoundedRangeModel model = container.component
-								.getVerticalScrollBar().getModel();
-						int max = model.getMaximum();
-						int componentHeight = viewPort.component
-								.getPreferredSize().height;
-						if (componentHeight > max)
-							return;
-						// if (evt.getValueIsAdjusting()) {
-						// return;
-						// }
-						int y = container.component.getVerticalScrollBar()
-								.getValue();
-						if (y != index) {
-							index = y;
-							listener.onScroll(y);
-						}
-						// int type = evt.getAdjustmentType();
-						// int value = evt.getValue();
-						// switch (type) {
-						// case AdjustmentEvent.UNIT_INCREMENT:
-						// listener.onScroll(value);
-						// break;
-						// case AdjustmentEvent.UNIT_DECREMENT:
-						// break;
-						// case AdjustmentEvent.BLOCK_INCREMENT:
-						// listener.onScroll(value);
-						// break;
-						// case AdjustmentEvent.BLOCK_DECREMENT:
-						// break;
-						// case AdjustmentEvent.TRACK:
-						// break;
-						// }
-					}
-				});
+		listeners.add(listener);
 		return this;
 	}
 
 	@Override
 	public IScrollPane scrollTo(int pos) {
+		programmaticSet = true;
 		BoundedRangeModel model = container.component.getVerticalScrollBar()
 				.getModel();
 		int max = model.getMaximum();
@@ -128,14 +122,17 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 			model.setExtent(container.component.getHeight());
 		}
 		container.component.getVerticalScrollBar().setValue(pos);
+		programmaticSet = false;
 		return this;
 	}
 
 	@Override
 	public IScrollPane scrollIntoView(IElement<?> element) {
+		programmaticSet = true;
 		JComponent c = (JComponent) element.nativeElement();
 		viewPort.component.scrollRectToVisible(c.getBounds(null));
 		container.component.repaint();
+		programmaticSet = false;
 		return this;
 	}
 
@@ -192,22 +189,24 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 		return this;
 	}
 
-//	@Override
-//	public IScrollbar scrollbar() {
-//		return new IScrollbar() {
-//
-//			@Override
-//			public IScrollPane always() {
-//				if (container.component.getVerticalScrollBarPolicy() == JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED) {
-//					container.component
-//							.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//				}
-//				if (container.component.getHorizontalScrollBarPolicy() == JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED) {
-//					container.component
-//							.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-//				}
-//				return SwingScrollPane.this;
-//			}
-//		};
-//	}
+	// @Override
+	// public IScrollbar scrollbar() {
+	// return new IScrollbar() {
+	//
+	// @Override
+	// public IScrollPane always() {
+	// if (container.component.getVerticalScrollBarPolicy() ==
+	// JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED) {
+	// container.component
+	// .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	// }
+	// if (container.component.getHorizontalScrollBarPolicy() ==
+	// JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED) {
+	// container.component
+	// .setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	// }
+	// return SwingScrollPane.this;
+	// }
+	// };
+	// }
 }

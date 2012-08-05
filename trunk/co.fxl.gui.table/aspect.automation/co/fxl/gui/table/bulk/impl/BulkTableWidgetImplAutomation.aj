@@ -16,28 +16,25 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.swing;
+package co.fxl.gui.table.bulk.impl;
 
-import java.awt.event.MouseEvent;
-
+import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IGridPanel.IGridClickListener;
 import co.fxl.gui.impl.ElementListener;
 
-aspect SwingElementAutomation {
+privileged aspect BulkTableWidgetImplAutomation {
 
-	@SuppressWarnings("rawtypes")
-	after(SwingElement e) :
-	execution(SwingElement.new(SwingContainer))
-	&& this(e)
-	&& if(ElementListener.active) {
-		ElementListener.instance().notifyNew(e);
+	after(final BulkTableWidgetImpl e) :
+	execution(protected BulkTableWidgetImpl.new(IContainer))
+	&& this(e) {
+		e.grid.addGridClickListener(new IGridClickListener() {
+			@Override
+			public void onClick(int column, int row) {
+				if (ElementListener.active) {
+					ElementListener.instance().notifyClick(e.grid, column, row,
+							null);
+				}
+			}
+		});
 	}
-
-	@SuppressWarnings("rawtypes")
-	before(SwingElement e) :
-	execution(void SwingElement.fireClickListeners(MouseEvent))
-	&& this(e)
-	&& if(ElementListener.active) {
-		ElementListener.instance().notifyClick(e);
-	}
-
 }

@@ -19,14 +19,22 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IGridPanel;
 
 public class ElementListener {
+
+	public enum Key {
+
+		CTRL, SHIFT, DOUBLE, RIGHT;
+	}
 
 	public interface IElementListener {
 
 		void notifyNew(IElement<?> e);
 
-		boolean notifyClick(IElement<?> e);
+		void notifyClick(IElement<?> e, Key... key);
+
+		void notifyClick(IGridPanel g, int x, int y, Key... key);
 
 		void notifyValueChange(IElement<?> e);
 	}
