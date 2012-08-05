@@ -311,9 +311,7 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 				GridBagConstraints gbc = layout.getConstraints(c);
 				int column = gbc.gridx;
 				int row = gbc.gridy;
-				for (GridClickListenerAdapter cl : gridClickListeners) {
-					cl.onClick(e, column, row);
-				}
+				fireClickListeners(e, column, row);
 			}
 		});
 	}
@@ -454,5 +452,11 @@ class SwingGridPanel extends SwingPanel<IGridPanel> implements IGridPanel {
 				return this;
 			}
 		};
+	}
+
+	void fireClickListeners(MouseEvent e, int column, int row) {
+		for (GridClickListenerAdapter cl : gridClickListeners) {
+			cl.onClick(e, column, row);
+		}
 	}
 }

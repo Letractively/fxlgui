@@ -19,12 +19,15 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 
 public interface IElementAdapter {
 
 	void click(IElement<?> clickable);
+
+	void click(IGridPanel g, int x, int y);
 
 	ILabel findLabel(IPanel<?> panel);
 

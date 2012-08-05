@@ -27,12 +27,12 @@ privileged aspect BulkTableWidgetImplAutomation {
 	after(final BulkTableWidgetImpl e) :
 	execution(protected BulkTableWidgetImpl.new(IContainer))
 	&& this(e) {
+		e.grid.iD("Main-Grid");
 		e.grid.addGridClickListener(new IGridClickListener() {
 			@Override
 			public void onClick(int column, int row) {
 				if (ElementListener.active) {
-					ElementListener.instance().notifyClick(e.grid, column, row,
-							null);
+					ElementListener.instance().notifyClick(e.grid, column, row);
 				}
 			}
 		});

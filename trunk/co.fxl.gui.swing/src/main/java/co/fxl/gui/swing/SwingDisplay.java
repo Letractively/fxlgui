@@ -44,6 +44,7 @@ import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPopUp;
@@ -369,10 +370,22 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 			ActionEvent ae = new ActionEvent(el, heightPixel, null);
 			b.fireClickListeners(ae);
 		} else {
-			MouseEvent evt = new MouseEvent(el, MouseEvent.MOUSE_PRESSED, 0,
-					MouseEvent.BUTTON1_MASK, 0, 0, 0, false);
+			MouseEvent evt = getMouseEvent(el);
 			e.fireClickListeners(evt);
 		}
+	}
+
+	MouseEvent getMouseEvent(Object el) {
+		MouseEvent evt = new MouseEvent((Component) el,
+				MouseEvent.MOUSE_PRESSED, 0, MouseEvent.BUTTON1_MASK, 0, 0, 0,
+				false);
+		return evt;
+	}
+
+	@Override
+	public void click(IGridPanel g, int x, int y) {
+		SwingGridPanel gp = (SwingGridPanel) g;
+		gp.fireClickListeners(getMouseEvent(g.nativeElement()), x, y);
 	}
 
 	@Override
