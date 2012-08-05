@@ -24,10 +24,6 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.api.IElement;
-import co.fxl.gui.api.IGridPanel;
-import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
@@ -201,21 +197,6 @@ public class AndroidDisplay extends DisplayTemplate implements Parent {
 
 	@Override
 	public IDisplay addElementListener(IElementListener elementListener) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void click(IElement<?> clickable) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public ILabel findLabel(IPanel<?> panel) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void click(IGridPanel g, int x, int y) {
 		throw new UnsupportedOperationException();
 	}
 }
