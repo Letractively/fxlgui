@@ -25,5 +25,4 @@ privileged aspect SwingDisplayAutomation {
 	&& this(d) {
 		d.register(new SwingElementAdapter());
 	}
-
 }
