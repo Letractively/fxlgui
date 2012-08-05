@@ -38,12 +38,4 @@ aspect SwingTextInputAutomation {
 		});
 	}
 
-	// @SuppressWarnings("rawtypes")
-	// after(SwingTextInput e) :
-	// execution(void SwingTextInput.fireUpdateListeners())
-	// && this(e)
-	// && if(ElementListener.active) {
-	// ElementListener.instance().notifyValueChange(e);
-	// }
-
 }
