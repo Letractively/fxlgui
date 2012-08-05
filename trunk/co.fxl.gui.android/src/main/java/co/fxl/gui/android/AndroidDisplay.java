@@ -195,8 +195,4 @@ public class AndroidDisplay extends DisplayTemplate implements Parent {
 		return widgetProviders.get(clazz);
 	}
 
-	@Override
-	public IDisplay addElementListener(IElementListener elementListener) {
-		throw new UnsupportedOperationException();
-	}
 }

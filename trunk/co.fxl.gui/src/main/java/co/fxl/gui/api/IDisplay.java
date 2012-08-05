@@ -18,12 +18,13 @@
  */
 package co.fxl.gui.api;
 
+
 public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
-	public interface IElementListener {
-
-		void notifyElement(IElement<?> e);
-	}
+	// public interface IElementListener {
+	//
+	// void notifyElement(IElement<?> e);
+	// }
 
 	public interface IRuntime {
 
@@ -114,5 +115,5 @@ public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
 	IDisplay clear();
 
-	IDisplay addElementListener(IElementListener elementListener);
+	//	IDisplay addElementListener(IElementListener elementListener);
 }
