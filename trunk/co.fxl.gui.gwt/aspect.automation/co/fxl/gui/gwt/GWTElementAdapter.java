@@ -22,6 +22,7 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.impl.ElementListener.Key;
 import co.fxl.gui.impl.IElementAdapter;
 
 import com.google.gwt.user.client.ui.HTML;
@@ -59,7 +60,7 @@ class GWTElementAdapter implements IElementAdapter {
 	}
 
 	@Override
-	public void click(IGridPanel g, int x, int y) {
+	public void click(IGridPanel g, int x, int y, Key key) {
 		throw new UnsupportedOperationException();
 	}
 
