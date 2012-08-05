@@ -37,11 +37,16 @@ public abstract class SwingTextElement<T extends JComponent, R> extends
 		}
 	}
 
-	SwingFont font = new SwingFont(this);
+	SwingFont font;
 	HTMLText html = new HTMLText();
 
 	SwingTextElement(SwingContainer<T> container) {
+		this(container, true);
+	}
+
+	SwingTextElement(SwingContainer<T> container, boolean decorate) {
 		super(container);
+		font = new SwingFont(this, decorate);
 	}
 
 	public IFont font() {

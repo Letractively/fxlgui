@@ -109,11 +109,12 @@ class SwingFont implements IFont {
 	private int size = 10;
 	private int weight = Font.PLAIN;
 
-	SwingFont(SwingTextElement<?, ?> swingTextElement) {
+	SwingFont(SwingTextElement<?, ?> swingTextElement, boolean decorate) {
 		this.swingTextElement = swingTextElement;
 		family = swingTextElement.getFontFamily();
 		size = swingTextElement.getFontSize();
-		updateFont();
+		if (decorate)
+			updateFont();
 	}
 
 	@Override

@@ -31,9 +31,17 @@ public class SwingLabel extends SwingTextElement<JLabel, ILabel> implements
 	private HyperlinkDecorator hyperlinkDecorator;
 
 	SwingLabel(SwingContainer<JLabel> container) {
-		super(container);
+		this(container, true);
 		container.component.setVerticalAlignment(SwingConstants.TOP);
 		font().pixel(12);
+	}
+
+	SwingLabel(SwingContainer<JLabel> container, boolean decorate) {
+		super(container, decorate);
+		if (decorate) {
+			container.component.setVerticalAlignment(SwingConstants.TOP);
+			font().pixel(12);
+		}
 	}
 
 	@Override
