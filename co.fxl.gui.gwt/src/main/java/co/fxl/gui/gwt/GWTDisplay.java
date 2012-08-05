@@ -34,6 +34,7 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
+import co.fxl.gui.api.IWidgetProvider.IAsyncWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
@@ -583,5 +584,10 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	private boolean isClickableLabel(Widget c) {
 		return c instanceof HTML;
+	}
+
+	@Override
+	public void click(IGridPanel g, int x, int y) {
+		throw new UnsupportedOperationException();
 	}
 }
