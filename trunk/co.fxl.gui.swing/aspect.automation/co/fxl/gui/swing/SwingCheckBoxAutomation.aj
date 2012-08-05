@@ -28,5 +28,4 @@ aspect SwingCheckBoxAutomation {
 	&& if(ElementListener.active) {
 		ElementListener.instance().notifyValueChange(e);
 	}
-
 }

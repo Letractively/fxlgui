@@ -29,5 +29,4 @@ privileged aspect SwingComboBoxAutomation {
 		if (!e.programmaticSet)
 			ElementListener.instance().notifyValueChange(e);
 	}
-
 }
