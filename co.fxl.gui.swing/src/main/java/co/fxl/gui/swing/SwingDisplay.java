@@ -19,14 +19,12 @@
 package co.fxl.gui.swing;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
@@ -34,7 +32,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
@@ -43,17 +40,12 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.api.IElement;
-import co.fxl.gui.api.IGridPanel;
-import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DisplayTemplate;
-import co.fxl.gui.impl.HTMLText;
 import co.fxl.gui.impl.RuntimeTemplate;
 import co.fxl.gui.impl.ToolbarImpl;
 
@@ -359,60 +351,5 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 	@Override
 	public IDisplay addElementListener(IElementListener elementListener) {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void click(IElement<?> clickable) {
-		SwingElement<?, ?> e = (SwingElement<?, ?>) clickable;
-		Component el = (Component) clickable.nativeElement();
-		if (e instanceof SwingButton) {
-			SwingButton b = (SwingButton) e;
-			ActionEvent ae = new ActionEvent(el, heightPixel, null);
-			b.fireClickListeners(ae);
-		} else {
-			MouseEvent evt = getMouseEvent(el);
-			e.fireClickListeners(evt);
-		}
-	}
-
-	MouseEvent getMouseEvent(Object el) {
-		MouseEvent evt = new MouseEvent((Component) el,
-				MouseEvent.MOUSE_PRESSED, 0, MouseEvent.BUTTON1_MASK, 0, 0, 0,
-				false);
-		return evt;
-	}
-
-	@Override
-	public void click(IGridPanel g, int x, int y) {
-		SwingGridPanel gp = (SwingGridPanel) g;
-		gp.fireClickListeners(getMouseEvent(g.nativeElement()), x, y);
-	}
-
-	@Override
-	public ILabel findLabel(IPanel<?> panel) {
-		PanelComponent p = panel.nativeElement();
-		return findLabel(p);
-	}
-
-	private ILabel findLabel(PanelComponent p) {
-		for (Component c : p.getComponents()) {
-			if (c instanceof PanelComponent) {
-				return findLabel((PanelComponent) c);
-			} else if (isClickableLabel(c)) {
-				SwingContainer<JLabel> ct = new SwingContainer<JLabel>(null);
-				JLabel lbl = (JLabel) c;
-				ct.setComponent(lbl);
-				SwingLabel l = new SwingLabel(ct, false);
-				l.html.setText(HTMLText.removeHTML(lbl.getText()));
-				return l;
-			}
-		}
-		return null;
-	}
-
-	private boolean isClickableLabel(Component c) {
-		if (!(c instanceof JLabel))
-			return false;
-		return c.isEnabled() && c.getMouseListeners().length > 0;
 	}
 }

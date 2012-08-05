@@ -28,7 +28,7 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.log.impl.LogWidgetProvider;
 
 public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
-		IDisplay, IElementAdapter {
+		IDisplay {
 
 	public final class ResizeConfiguration implements IResizeConfiguration {
 
@@ -80,18 +80,6 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 
 	protected DisplayTemplate() {
 		register(new LogWidgetProvider());
-		register(new IServiceProvider<IElementAdapter>() {
-
-			@Override
-			public Class<IElementAdapter> serviceType() {
-				return IElementAdapter.class;
-			}
-
-			@Override
-			public IElementAdapter getService() {
-				return DisplayTemplate.this;
-			}
-		});
 	}
 
 	@Override
