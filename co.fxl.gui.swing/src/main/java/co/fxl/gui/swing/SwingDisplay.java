@@ -348,8 +348,4 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 		return runtime;
 	}
 
-	@Override
-	public IDisplay addElementListener(IElementListener elementListener) {
-		throw new UnsupportedOperationException();
-	}
 }
