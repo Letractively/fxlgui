@@ -26,6 +26,7 @@ import java.awt.Frame;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
@@ -38,11 +39,12 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 import co.fxl.data.format.swing.SwingFormat;
-import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
@@ -359,24 +361,45 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 	}
 
 	@Override
-	public void click(IClickable<?> clickable) {
-		throw new UnsupportedOperationException();
+	public void click(IElement<?> clickable) {
+		SwingElement<?, ?> e = (SwingElement<?, ?>) clickable;
+		Component el = (Component) clickable.nativeElement();
+		if (e instanceof SwingButton) {
+			SwingButton b = (SwingButton) e;
+			ActionEvent ae = new ActionEvent(el, heightPixel, null);
+			b.fireClickListeners(ae);
+		} else {
+			MouseEvent evt = new MouseEvent(el, MouseEvent.MOUSE_PRESSED, 0,
+					MouseEvent.BUTTON1_MASK, 0, 0, 0, false);
+			e.fireClickListeners(evt);
+		}
 	}
 
 	@Override
-	public String findLabel(IPanel<?> panel) {
+	public ILabel findLabel(IPanel<?> panel) {
 		PanelComponent p = panel.nativeElement();
 		return findLabel(p);
 	}
 
-	private String findLabel(PanelComponent p) {
+	private ILabel findLabel(PanelComponent p) {
 		for (Component c : p.getComponents()) {
 			if (c instanceof PanelComponent) {
 				return findLabel((PanelComponent) c);
-			} else if (c instanceof JLabel) {
-				return HTMLText.removeHTML(((JLabel) c).getText());
+			} else if (isClickableLabel(c)) {
+				SwingContainer<JLabel> ct = new SwingContainer<JLabel>(null);
+				JLabel lbl = (JLabel) c;
+				ct.setComponent(lbl);
+				SwingLabel l = new SwingLabel(ct, false);
+				l.html.setText(HTMLText.removeHTML(lbl.getText()));
+				return l;
 			}
 		}
 		return null;
+	}
+
+	private boolean isClickableLabel(Component c) {
+		if (!(c instanceof JLabel))
+			return false;
+		return c.isEnabled() && c.getMouseListeners().length > 0;
 	}
 }

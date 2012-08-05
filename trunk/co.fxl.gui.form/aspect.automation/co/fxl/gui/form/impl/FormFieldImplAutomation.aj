@@ -16,16 +16,20 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.impl;
+package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.IElement;
-import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.IPanel;
+import co.fxl.gui.impl.ElementListener;
 
-public interface IElementAdapter {
+privileged aspect FormFieldImplAutomation {
 
-	void click(IElement<?> clickable);
-
-	ILabel findLabel(IPanel<?> panel);
+	after(@SuppressWarnings("rawtypes") FormFieldImpl e) :
+	execution(public FormFieldImpl.new(FormWidgetImpl, int, String))
+	&& this(e)
+	&& if(ElementListener.active) {
+		if (e.valueElement() instanceof IElement<?>) {
+			((IElement<?>) e.valueElement()).iD(e.name);
+		}
+	}
 
 }

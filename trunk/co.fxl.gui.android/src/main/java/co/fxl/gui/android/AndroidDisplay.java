@@ -20,11 +20,12 @@ package co.fxl.gui.android;
 
 import android.app.Activity;
 import android.view.View;
-import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
@@ -203,12 +204,12 @@ public class AndroidDisplay extends DisplayTemplate implements Parent {
 	}
 
 	@Override
-	public void click(IClickable<?> clickable) {
+	public void click(IElement<?> clickable) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public String findLabel(IPanel<?> panel) {
+	public ILabel findLabel(IPanel<?> panel) {
 		throw new UnsupportedOperationException();
 	}
 }

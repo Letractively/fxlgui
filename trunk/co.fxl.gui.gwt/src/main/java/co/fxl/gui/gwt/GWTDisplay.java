@@ -23,12 +23,13 @@ import java.util.List;
 
 import co.fxl.data.format.gwt.GWTFormat;
 import co.fxl.gui.api.ICallback;
-import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
@@ -57,7 +58,7 @@ import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -557,24 +558,30 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	}
 
 	@Override
-	public void click(IClickable<?> clickable) {
+	public void click(IElement<?> clickable) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public String findLabel(IPanel<?> panel) {
+	public ILabel findLabel(IPanel<?> panel) {
 		Panel p = panel.nativeElement();
 		return findLabel(p);
 	}
 
-	private String findLabel(Panel p) {
+	private ILabel findLabel(Panel p) {
 		for (Widget c : p) {
 			if (c instanceof Panel) {
 				return findLabel((Panel) c);
-			} else if (c instanceof Label) {
-				return ((Label) c).getText();
+			} else if (isClickableLabel(c)) {
+				GWTContainer<HTML> ct = new GWTContainer<HTML>(null);
+				ct.setComponent((HTML) c);
+				return new GWTLabel(ct);
 			}
 		}
 		return null;
+	}
+
+	private boolean isClickableLabel(Widget c) {
+		return c instanceof HTML;
 	}
 }
