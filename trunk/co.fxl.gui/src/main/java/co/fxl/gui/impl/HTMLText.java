@@ -110,4 +110,24 @@ public class HTMLText {
 				+ (text != null ? text.replace("<", "&#060;") : "")
 				+ "\" readonly/>";
 	}
+
+	public static String removeHTML(String text) {
+		StringBuilder b = new StringBuilder();
+		boolean open = false;
+		for (int i = 0; i < text.length(); i++) {
+			char c = text.charAt(i);
+			switch (c) {
+			case '<':
+				open = true;
+				break;
+			case '>':
+				open = false;
+				break;
+			default:
+				if (!open)
+					b.append(c);
+			}
+		}
+		return b.toString();
+	}
 }
