@@ -22,6 +22,7 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.IRegistry.IServiceProvider;
 import co.fxl.gui.automation.api.IAutomationAdapter;
 import co.fxl.gui.automation.api.IAutomationListener.Key;
 
@@ -29,7 +30,18 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 
-class GWTElementAdapter implements IAutomationAdapter {
+class GWTElementAdapter implements IAutomationAdapter,
+		IServiceProvider<IAutomationAdapter> {
+
+	@Override
+	public Class<IAutomationAdapter> serviceType() {
+		return IAutomationAdapter.class;
+	}
+
+	@Override
+	public IAutomationAdapter getService() {
+		return this;
+	}
 
 	@Override
 	public ILabel findLabel(IPanel<?> panel) {
