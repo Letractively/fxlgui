@@ -182,7 +182,7 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 
 		@Override
 		public int width() {
-			throw new UnsupportedOperationException();
+			return element.width();
 		}
 
 		@Override
