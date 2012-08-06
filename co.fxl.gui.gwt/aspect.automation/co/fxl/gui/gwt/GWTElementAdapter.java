@@ -73,6 +73,7 @@ class GWTElementAdapter implements IAutomationAdapter,
 
 	@Override
 	public void click(IGridPanel g, int x, int y, Key key) {
+		GWTGridPanel gg = (GWTGridPanel) g;
 		throw new UnsupportedOperationException();
 	}
 
