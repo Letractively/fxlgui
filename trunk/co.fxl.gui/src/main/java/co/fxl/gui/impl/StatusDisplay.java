@@ -43,7 +43,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 
 	private static final int RESIZE_INTERVALL_MS = 250;
 	private static final boolean LOG_ILLEGAL_SIZES = false;
-	public static boolean SINGLE_RESIZE_LISTENER = false;
+	// public static boolean SINGLE_RESIZE_LISTENER = false;
 	private static StatusDisplay instance = new StatusDisplay();
 	private IDisplay display = Display.instance();
 	private IVerticalPanel panel;
@@ -51,8 +51,8 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	private IVerticalPanel p0;
 
 	private StatusDisplay() {
-		if (!SINGLE_RESIZE_LISTENER)
-			Display.instance().addResizeListener(this);
+		// if (!SINGLE_RESIZE_LISTENER)
+		Display.instance().addResizeListener(this);
 	}
 
 	public static StatusDisplay instance() {
@@ -64,50 +64,50 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	private IGridCell sidePanelContainer;
 	private IGridPanel grid;
 
-	public IResizeConfiguration singleResizeListener(
-			RefreshListener resizeListener) {
-		IResizeConfiguration adp = DisplayResizeAdapter.addResizeListener(
-				wrap(resizeListener), false);
-		return adp;
-	}
-
-	private IResizeListener wrap(final RefreshListener resizeListener) {
-		// return resizeListener;
-		return new IResizeListener() {
-
-			@Override
-			public boolean onResize(int width, int height) {
-				lastResize = System.currentTimeMillis();
-				if (popUp == null) {
-					popUp = StatusPanel.showPopUp("Resizing...", 0,
-							StatusPanel.BACKGROUND, StatusPanel.FOREGROUND,
-							false, false);
-					forkResize();
-				}
-				return true;
-			}
-
-			private void forkResize() {
-				Display.instance().invokeLater(new Runnable() {
-					@Override
-					public void run() {
-						if (System.currentTimeMillis() - lastResize > RESIZE_INTERVALL_MS) {
-							resizeListener
-									.refresh(new CallbackTemplate<Void>() {
-										@Override
-										public void onSuccess(Void result) {
-											popUp.visible(false);
-											popUp = null;
-										}
-									});
-						} else {
-							forkResize();
-						}
-					}
-				}, RESIZE_INTERVALL_MS);
-			}
-		};
-	}
+	// public IResizeConfiguration singleResizeListener(
+	// RefreshListener resizeListener) {
+	// IResizeConfiguration adp = DisplayResizeAdapter.addResizeListener(
+	// wrap(resizeListener), false);
+	// return adp;
+	// }
+	//
+	// private IResizeListener wrap(final RefreshListener resizeListener) {
+	// // return resizeListener;
+	// return new IResizeListener() {
+	//
+	// @Override
+	// public boolean onResize(int width, int height) {
+	// lastResize = System.currentTimeMillis();
+	// if (popUp == null) {
+	// popUp = StatusPanel.showPopUp("Resizing...", 0,
+	// StatusPanel.BACKGROUND, StatusPanel.FOREGROUND,
+	// false, false);
+	// forkResize();
+	// }
+	// return true;
+	// }
+	//
+	// private void forkResize() {
+	// Display.instance().invokeLater(new Runnable() {
+	// @Override
+	// public void run() {
+	// if (System.currentTimeMillis() - lastResize > RESIZE_INTERVALL_MS) {
+	// resizeListener
+	// .refresh(new CallbackTemplate<Void>() {
+	// @Override
+	// public void onSuccess(Void result) {
+	// popUp.visible(false);
+	// popUp = null;
+	// }
+	// });
+	// } else {
+	// forkResize();
+	// }
+	// }
+	// }, RESIZE_INTERVALL_MS);
+	// }
+	// };
+	// }
 
 	public IResizeConfiguration addResizeListener(IResizeListener resizeListener) {
 		return addResizeListener(resizeListener, false);
@@ -139,12 +139,12 @@ public class StatusDisplay implements IResizeListener, Runnable {
 
 	public IResizeConfiguration addResizeListener(
 			IResizeListener resizeListener, boolean fire) {
-		if (SINGLE_RESIZE_LISTENER) {
-			if (fire) {
-				fire(resizeListener);
-			}
-			return newDummyResizeConfiguration();
-		}
+		// if (SINGLE_RESIZE_LISTENER) {
+		// if (fire) {
+		// fire(resizeListener);
+		// }
+		// return newDummyResizeConfiguration();
+		// }
 		return DisplayResizeAdapter.addResizeListener(resizeListener, fire);
 	}
 
@@ -174,8 +174,8 @@ public class StatusDisplay implements IResizeListener, Runnable {
 				return e.visible();
 			}
 		};
-		if (!SINGLE_RESIZE_LISTENER)
-			Display.instance().addResizeListener(listener);
+		// if (!SINGLE_RESIZE_LISTENER)
+		// Display.instance().addResizeListener(listener);
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
