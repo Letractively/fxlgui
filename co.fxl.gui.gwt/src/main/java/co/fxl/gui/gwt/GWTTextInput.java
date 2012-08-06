@@ -18,39 +18,16 @@
  */
 package co.fxl.gui.gwt;
 
-import co.fxl.gui.api.IBordered.IBorder;
-import co.fxl.gui.api.IColored.IColor;
-import co.fxl.gui.api.IElement;
-import co.fxl.gui.api.IFontElement.IFont;
-
 import com.google.gwt.user.client.ui.Widget;
 
-class GWTTextAreaTemplate<T extends Widget, R extends IElement<R>> extends
-		GWTTextInput<T, R> {
+public class GWTTextInput<T extends Widget, R> extends GWTElement<T, R> {
 
-	GWTTextAreaTemplate(GWTContainer<T> container) {
+	public GWTTextInput() {
+		super();
+	}
+
+	public GWTTextInput(GWTContainer<T> container) {
 		super(container);
 	}
 
-	@Override
-	public final IBorder border() {
-		return new GWTWidgetBorder(container.widget);
-	}
-
-	@Override
-	public final IColor color() {
-		GWTWidgetStyle style = new GWTWidgetStyle("background-color-",
-				container.widget);
-		return new GWTStyleColor(style) {
-			@Override
-			void setColor(String color, com.google.gwt.dom.client.Style stylable) {
-				stylable.setBackgroundColor(color);
-			}
-		};
-	}
-
-	@Override
-	public final IFont font() {
-		return new GWTFont(container.widget);
-	}
 }

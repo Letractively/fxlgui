@@ -26,6 +26,7 @@ import co.fxl.gui.api.IRegistry.IServiceProvider;
 import co.fxl.gui.automation.api.IAutomationAdapter;
 import co.fxl.gui.automation.api.IAutomationListener.Key;
 
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
@@ -68,7 +69,18 @@ class GWTElementAdapter implements IAutomationAdapter,
 
 	@Override
 	public void click(IElement<?> clickable) {
-		throw new UnsupportedOperationException();
+		GWTElement<?, ?> e = (GWTElement<?, ?>) clickable;
+		Widget el = (Widget) clickable.nativeElement();
+		if (e instanceof GWTButton) {
+			GWTButton b = (GWTButton) e;
+			// ClickEvent ae = new ClickEvent();
+			b.fireClickListeners((ClickEvent) null);
+			throw new UnsupportedOperationException();
+		} else {
+			// MouseEvent evt = getMouseEvent(el, null);
+			// e.fireClickListeners(evt);
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	@Override

@@ -42,8 +42,7 @@ public class GWTCheckBox extends GWTElement<CheckBox, ICheckBox> implements
 			@Override
 			public void onClick(ClickEvent event) {
 				boolean c = checked();
-				for (IUpdateListener<Boolean> listener : listeners)
-					listener.onUpdate(c);
+				fireUpdateListeners(c);
 			}
 		});
 	}
@@ -94,5 +93,10 @@ public class GWTCheckBox extends GWTElement<CheckBox, ICheckBox> implements
 	@Override
 	public boolean editable() {
 		return container.widget.isEnabled();
+	}
+
+	void fireUpdateListeners(boolean c) {
+		for (IUpdateListener<Boolean> listener : listeners)
+			listener.onUpdate(c);
 	}
 }

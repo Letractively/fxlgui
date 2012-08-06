@@ -31,7 +31,7 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.ui.TextBox;
 
-class GWTTextField extends GWTElement<TextBox, ITextField> implements
+class GWTTextField extends GWTTextInput<TextBox, ITextField> implements
 		ITextField, ChangeHandler, DropHandler, KeyUpHandler {
 
 	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();
