@@ -23,16 +23,16 @@ import co.fxl.gui.automation.api.IAutomationListener.Key;
 
 privileged aspect BulkTableWidgetImplAutomation {
 
-	after(final BulkTableWidgetImpl e) :
+	after(final BulkTableWidgetImpl element) :
 	execution(protected BulkTableWidgetImpl.new(IContainer))
-	&& this(e) {
-		e.grid.iD("Main-Grid");
-		e.grid.addGridClickListener(new AutomationGridClickListener(e, null));
-		e.grid.addGridClickListener(
-				new AutomationGridClickListener(e, Key.CTRL)).ctrlPressed();
-		e.grid.addGridClickListener(
-				new AutomationGridClickListener(e, Key.SHIFT)).shiftPressed();
-		e.grid.addGridClickListener(
-				new AutomationGridClickListener(e, Key.DOUBLE)).doubleClick();
+	&& this(element) {
+		element.grid.iD("Main-Grid");
+		element.grid.addGridClickListener(new AutomationGridClickListener(element, null));
+		element.grid.addGridClickListener(
+				new AutomationGridClickListener(element, Key.CTRL)).ctrlPressed();
+		element.grid.addGridClickListener(
+				new AutomationGridClickListener(element, Key.SHIFT)).shiftPressed();
+		element.grid.addGridClickListener(
+				new AutomationGridClickListener(element, Key.DOUBLE)).doubleClick();
 	}
 }
