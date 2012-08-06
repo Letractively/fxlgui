@@ -19,17 +19,96 @@
 package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.gwt.GWTClickHandler.DomEventAdp.NativeEventAdp;
 import co.fxl.gui.impl.KeyTemplate;
 
-import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ContextMenuEvent;
 import com.google.gwt.event.dom.client.ContextMenuHandler;
-import com.google.gwt.event.dom.client.DoubleClickEvent;
-import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.user.client.ui.Widget;
 
 class GWTClickHandler<T> extends KeyTemplate<T> {
+
+	static class DoubleClickEventAdp extends DomEventAdp {
+
+		DoubleClickEventAdp(DomEvent<?> original) {
+			super(original);
+		}
+
+	}
+
+	static class ClickEventAdp extends DomEventAdp {
+
+		ClickEventAdp(DomEvent<?> original) {
+			super(original);
+		}
+
+	}
+
+	static class KeyPressAdp extends DomEventAdp {
+
+		KeyPressAdp(DomEvent<?> original) {
+			super(original);
+		}
+
+	}
+
+	static class DomEventAdp {
+
+		static class NativeEventAdp {
+
+			private boolean shift;
+			private boolean ctrl;
+			private boolean alt;
+
+			private NativeEventAdp(DomEvent<?> original) {
+				if (original == null)
+					return;
+				shift = original.getNativeEvent().getShiftKey();
+				ctrl = original.getNativeEvent().getCtrlKey();
+				alt = original.getNativeEvent().getAltKey();
+			}
+
+			boolean getShiftKey() {
+				return shift;
+			}
+
+			boolean getCtrlKey() {
+				return ctrl;
+			}
+
+			boolean getAltKey() {
+				return alt;
+			}
+
+		}
+
+		private NativeEventAdp nativeEvent;
+		private DomEvent<?> original;
+
+		DomEventAdp(DomEvent<?> original) {
+			this.original = original;
+		}
+
+		DomEvent<?> original() {
+			return original;
+		}
+
+		NativeEventAdp getNativeEvent() {
+			if (nativeEvent == null)
+				nativeEvent = new NativeEventAdp(original);
+			return nativeEvent;
+		}
+
+		void preventDefault() {
+			original.preventDefault();
+		}
+
+		void stopPropagation() {
+			original.preventDefault();
+		}
+
+	}
 
 	private IClickListener clickListener;
 	private boolean stopPropagation = true;
@@ -49,21 +128,20 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 	@Override
 	public T mouseRight() {
 		Widget widget = ((GWTElement) element).container.widget;
-		widget.addDomHandler(
-				new ContextMenuHandler() {
-					@Override
-					public void onContextMenu(ContextMenuEvent event) {
-						if (GWTDisplay.waiting)
-							return;
-						GWTDisplay.notifyEvent(event);
-						clickListener.onClick();
-						event.preventDefault();
-					}
-				}, ContextMenuEvent.getType());
+		widget.addDomHandler(new ContextMenuHandler() {
+			@Override
+			public void onContextMenu(ContextMenuEvent event) {
+				if (GWTDisplay.waiting)
+					return;
+				GWTDisplay.notifyEvent(event);
+				clickListener.onClick();
+				event.preventDefault();
+			}
+		}, ContextMenuEvent.getType());
 		return (T) super.mouseRight();
 	}
 
-	public void onClick(ClickEvent event) {
+	public void onClick(ClickEventAdp event) {
 		for (KeyType pressedKey : pressedKeys.keySet()) {
 			Boolean check = pressedKeys.get(pressedKey);
 			if (keyMatches(pressedKey, event.getNativeEvent()) != check)
@@ -79,11 +157,11 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 		}
 		if (GWTDisplay.waiting)
 			return;
-		GWTDisplay.notifyEvent(event);
+		GWTDisplay.notifyEvent(event.original());
 		clickListener.onClick();
 	}
 
-	public void onClick(KeyPressEvent event) {
+	public void onClick(KeyPressAdp event) {
 		event.preventDefault();
 		event.stopPropagation();
 		if (GWTDisplay.waiting)
@@ -91,7 +169,7 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 		clickListener.onClick();
 	}
 
-	public void onDoubleClick(DoubleClickEvent event) {
+	public void onDoubleClick(DoubleClickEventAdp event) {
 		for (KeyType pressedKey : pressedKeys.keySet()) {
 			Boolean check = pressedKeys.get(pressedKey);
 			if (keyMatches(pressedKey, event.getNativeEvent()) != check)
@@ -108,21 +186,21 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 		clickListener.onClick();
 	}
 
-	private boolean buttonMatches(ClickEvent event) {
+	private boolean buttonMatches(ClickEventAdp event) {
 		if (buttonType == ButtonType.LEFT)
 			return true;
 		else
 			return false;
 	}
 
-	private boolean buttonMatches(DoubleClickEvent event) {
+	private boolean buttonMatches(DoubleClickEventAdp event) {
 		if (buttonType == ButtonType.LEFT)
 			return true;
 		else
 			return false;
 	}
 
-	boolean keyMatches(KeyType key, NativeEvent nativeEvent) {
+	boolean keyMatches(KeyType key, NativeEventAdp nativeEvent) {
 		switch (key) {
 		case SHIFT_KEY:
 			return nativeEvent.getShiftKey();

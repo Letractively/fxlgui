@@ -38,6 +38,9 @@ import co.fxl.gui.api.IMargin;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPadding;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.gwt.GWTClickHandler.ClickEventAdp;
+import co.fxl.gui.gwt.GWTClickHandler.DoubleClickEventAdp;
+import co.fxl.gui.gwt.GWTClickHandler.KeyPressAdp;
 import co.fxl.gui.log.impl.Log;
 
 import com.google.gwt.dom.client.Element;
@@ -769,20 +772,35 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	}
 
 	void fireClickListenersDoubleClick(DoubleClickEvent event) {
+		DoubleClickEventAdp adp = new DoubleClickEventAdp(event);
+		fireClickListenersDoubleClick(adp);
+	}
+
+	void fireClickListenersDoubleClick(DoubleClickEventAdp adp) {
 		for (GWTClickHandler<R> handler : handlers) {
-			handler.onDoubleClick(event);
+			handler.onDoubleClick(adp);
 		}
 	}
 
 	void fireClickListenersKeyPress(KeyPressEvent event) {
+		KeyPressAdp adp = new KeyPressAdp(event);
+		fireClickListenersKeyPress(adp);
+	}
+
+	void fireClickListenersKeyPress(KeyPressAdp adp) {
 		for (GWTClickHandler<R> handler : handlers) {
-			handler.onClick(event);
+			handler.onClick(adp);
 		}
 	}
 
 	void fireClickListenersSingleClick(ClickEvent event) {
+		ClickEventAdp adp = new ClickEventAdp(event);
+		fireClickListenersSingleClick(adp);
+	}
+
+	void fireClickListenersSingleClick(ClickEventAdp adp) {
 		for (GWTClickHandler<R> handler : handlers) {
-			handler.onClick(event);
+			handler.onClick(adp);
 		}
 	}
 

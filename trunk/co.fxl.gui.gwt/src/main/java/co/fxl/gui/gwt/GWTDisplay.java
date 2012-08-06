@@ -100,8 +100,10 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	private boolean scrolling = true;
 
 	public static void notifyEvent(DomEvent<?> event) {
-		final NativeEvent nativeEvent = event.getNativeEvent();
-		notifyEvent(nativeEvent);
+		if (event != null) {
+			final NativeEvent nativeEvent = event.getNativeEvent();
+			notifyEvent(nativeEvent);
+		}
 	}
 
 	public static void notifyEvent(NativeEvent nativeEvent) {
