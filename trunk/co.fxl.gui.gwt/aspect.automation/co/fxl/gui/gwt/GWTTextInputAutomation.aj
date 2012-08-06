@@ -18,17 +18,11 @@
  */
 package co.fxl.gui.gwt;
 
-import com.google.gwt.event.dom.client.HasKeyPressHandlers;
-import com.google.gwt.user.client.ui.Widget;
-
 aspect GWTTextInputAutomation {
 
 	after(@SuppressWarnings("rawtypes") GWTTextInput element) :
 	execution(GWTTextInput.new(GWTContainer))
 	&& this(element) {
-		GWTTextInputKeyPressHandler handler = new GWTTextInputKeyPressHandler(
-				element);
-		Widget widget = element.container.widget;
-		((HasKeyPressHandlers) widget).addKeyPressHandler(handler);
+		GWTTextInputKeyPressHandler.create(element);
 	}
 }

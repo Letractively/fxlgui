@@ -21,6 +21,7 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.automation.impl.Automation;
 import co.fxl.gui.impl.Display;
 
+import com.google.gwt.event.dom.client.HasKeyPressHandlers;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 
@@ -43,5 +44,12 @@ public class GWTTextInputKeyPressHandler implements KeyPressHandler {
 				}
 			});
 		}
+	}
+
+	static void create(GWTTextInput element) {
+		GWTTextInputKeyPressHandler handler = new GWTTextInputKeyPressHandler(
+				element);
+		((HasKeyPressHandlers) element.container.widget)
+				.addKeyPressHandler(handler);
 	}
 }
