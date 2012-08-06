@@ -29,20 +29,20 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IRegistry.IServiceProvider;
-import co.fxl.gui.impl.ElementListener.Key;
+import co.fxl.gui.automation.api.IAutomationAdapter;
+import co.fxl.gui.automation.api.IAutomationListener.Key;
 import co.fxl.gui.impl.HTMLText;
-import co.fxl.gui.impl.IElementAdapter;
 
-public class SwingElementAdapter implements IElementAdapter,
-		IServiceProvider<IElementAdapter> {
+public class SwingElementAdapter implements IAutomationAdapter,
+		IServiceProvider<IAutomationAdapter> {
 
 	@Override
-	public Class<IElementAdapter> serviceType() {
-		return IElementAdapter.class;
+	public Class<IAutomationAdapter> serviceType() {
+		return IAutomationAdapter.class;
 	}
 
 	@Override
-	public IElementAdapter getService() {
+	public IAutomationAdapter getService() {
 		return this;
 	}
 

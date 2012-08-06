@@ -11,4 +11,6 @@
 	<source path="i18n/api" />
 	<source path="i18n/impl" />
 	<source path="i18n/german" />
+	<source path="automation/api" />
+	<source path="automation/impl" />
 </module>

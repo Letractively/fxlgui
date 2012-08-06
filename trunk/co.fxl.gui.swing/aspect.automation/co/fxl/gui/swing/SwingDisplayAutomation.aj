@@ -18,11 +18,14 @@
  */
 package co.fxl.gui.swing;
 
+import co.fxl.gui.automation.impl.Automation;
+
 privileged aspect SwingDisplayAutomation {
 
 	after(final SwingDisplay d) : 
 	execution(private SwingDisplay.new()) 
-	&& this(d) {
+	&& this(d) 
+	&& if(Automation.ENABLED) {
 		d.register(new SwingElementAdapter());
 	}
 }

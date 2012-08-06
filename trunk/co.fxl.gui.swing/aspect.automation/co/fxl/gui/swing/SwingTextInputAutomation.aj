@@ -21,8 +21,8 @@ package co.fxl.gui.swing;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import co.fxl.gui.automation.impl.Automation;
 import co.fxl.gui.impl.Display;
-import co.fxl.gui.impl.ElementListener;
 
 aspect SwingTextInputAutomation {
 
@@ -33,11 +33,11 @@ aspect SwingTextInputAutomation {
 		e.container.component.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
-				if (ElementListener.active) {
+				if (Automation.ENABLED) {
 					Display.instance().invokeLater(new Runnable() {
 						@Override
 						public void run() {
-							ElementListener.instance().notifyValueChange(e);
+							Automation.listener().notifyValueChange(e);
 						}
 					});
 				}

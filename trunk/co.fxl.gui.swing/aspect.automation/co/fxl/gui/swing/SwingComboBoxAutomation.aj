@@ -18,15 +18,15 @@
  */
 package co.fxl.gui.swing;
 
-import co.fxl.gui.impl.ElementListener;
+import co.fxl.gui.automation.impl.Automation;
 
 privileged aspect SwingComboBoxAutomation {
 
 	before(SwingComboBox e) :
 	execution(void SwingComboBox.fireUpdateListeners(String))
 	&& this(e)
-	&& if(ElementListener.active) {
+	&& if(Automation.ENABLED) {
 		if (!e.programmaticSet)
-			ElementListener.instance().notifyValueChange(e);
+			Automation.listener().notifyValueChange(e);
 	}
 }

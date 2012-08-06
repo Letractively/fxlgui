@@ -22,14 +22,14 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
-import co.fxl.gui.impl.ElementListener.Key;
-import co.fxl.gui.impl.IElementAdapter;
+import co.fxl.gui.automation.api.IAutomationAdapter;
+import co.fxl.gui.automation.api.IAutomationListener.Key;
 
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 
-class GWTElementAdapter implements IElementAdapter {
+class GWTElementAdapter implements IAutomationAdapter {
 
 	@Override
 	public ILabel findLabel(IPanel<?> panel) {

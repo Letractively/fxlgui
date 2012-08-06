@@ -768,19 +768,19 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		return (R) this;
 	}
 
-	private void fireClickListeners(DoubleClickEvent event) {
+	void fireClickListeners(DoubleClickEvent event) {
 		for (GWTClickHandler<R> handler : handlers) {
 			handler.onDoubleClick(event);
 		}
 	}
 
-	private void fireClickListeners(KeyPressEvent event) {
+	void fireClickListeners(KeyPressEvent event) {
 		for (GWTClickHandler<R> handler : handlers) {
 			handler.onClick(event);
 		}
 	}
 
-	private void fireClickListeners(ClickEvent event) {
+	void fireClickListeners(ClickEvent event) {
 		for (GWTClickHandler<R> handler : handlers) {
 			handler.onClick(event);
 		}
