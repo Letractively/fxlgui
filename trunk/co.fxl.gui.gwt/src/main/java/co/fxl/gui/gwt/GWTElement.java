@@ -429,7 +429,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 				.addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
-						fireClickListeners(event);
+						fireClickListenersSingleClick(event);
 					}
 				});
 		if (container.widget instanceof HasDoubleClickHandlers)
@@ -437,7 +437,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 					.addDoubleClickHandler(new DoubleClickHandler() {
 						@Override
 						public void onDoubleClick(DoubleClickEvent event) {
-							fireClickListeners(event);
+							fireClickListenersDoubleClick(event);
 						}
 					});
 		if (container.widget instanceof HasKeyPressHandlers)
@@ -446,7 +446,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 						@Override
 						public void onKeyPress(KeyPressEvent event) {
-							fireClickListeners(event);
+							fireClickListenersKeyPress(event);
 						}
 					});
 	}
@@ -768,19 +768,19 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		return (R) this;
 	}
 
-	void fireClickListeners(DoubleClickEvent event) {
+	void fireClickListenersDoubleClick(DoubleClickEvent event) {
 		for (GWTClickHandler<R> handler : handlers) {
 			handler.onDoubleClick(event);
 		}
 	}
 
-	void fireClickListeners(KeyPressEvent event) {
+	void fireClickListenersKeyPress(KeyPressEvent event) {
 		for (GWTClickHandler<R> handler : handlers) {
 			handler.onClick(event);
 		}
 	}
 
-	void fireClickListeners(ClickEvent event) {
+	void fireClickListenersSingleClick(ClickEvent event) {
 		for (GWTClickHandler<R> handler : handlers) {
 			handler.onClick(event);
 		}

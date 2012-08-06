@@ -37,7 +37,7 @@ aspect GWTElementAutomation {
 
 	@SuppressWarnings("rawtypes")
 	before(GWTElement element) :
-	execution(void GWTElement.fireClickListeners(DoubleClickEvent))
+	execution(void GWTElement.fireClickListenersDoubleClick(DoubleClickEvent))
 	&& this(element)
 	&& if(Automation.ENABLED) {
 		Automation.listener().notifyClick(element, Key.DOUBLE);
@@ -45,7 +45,7 @@ aspect GWTElementAutomation {
 
 	@SuppressWarnings("rawtypes")
 	before(GWTElement element) :
-	execution(void GWTElement.fireClickListeners(KeyPressEvent))
+	execution(void GWTElement.fireClickListenersKeyPress(KeyPressEvent))
 	&& this(element)
 	&& if(Automation.ENABLED) {
 		Automation.listener().notifyClick(element);
@@ -53,7 +53,7 @@ aspect GWTElementAutomation {
 
 	@SuppressWarnings("rawtypes")
 	before(GWTElement element) :
-	execution(void GWTElement.fireClickListeners(ClickEvent))
+	execution(void GWTElement.fireClickListenersSingleClick(ClickEvent))
 	&& this(element)
 	&& if(Automation.ENABLED) {
 		Automation.listener().notifyClick(element);
