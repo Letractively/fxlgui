@@ -22,10 +22,10 @@ import co.fxl.gui.automation.impl.Automation;
 
 privileged aspect SwingDisplayAutomation {
 
-	after(GWTDisplay d) : 
+	after(GWTDisplay element) : 
 	execution(private GWTDisplay.new()) 
-	&& this(d) 
+	&& this(element) 
 	&& if(Automation.ENABLED) {
-		d.register(new GWTElementAdapter());
+		element.register(new GWTElementAdapter());
 	}
 }
