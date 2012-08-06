@@ -41,7 +41,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 		public void refresh(ICallback<Void> cb);
 	}
 
-	private static final int RESIZE_INTERVALL_MS = 250;
+//	private static final int RESIZE_INTERVALL_MS = 250;
 	private static final boolean LOG_ILLEGAL_SIZES = false;
 	// public static boolean SINGLE_RESIZE_LISTENER = false;
 	private static StatusDisplay instance = new StatusDisplay();
