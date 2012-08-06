@@ -18,14 +18,30 @@
  */
 package co.fxl.gui.swing;
 
-aspect SwingTextInputAutomation {
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-	@SuppressWarnings("rawtypes")
-	after(final SwingTextInput element) :
-	execution(SwingTextInput.new(SwingContainer))
-	&& this(element) {
-		element.container.component
-				.addKeyListener(new SwingTextInputKeyListener(element));
+import co.fxl.gui.automation.impl.Automation;
+import co.fxl.gui.impl.Display;
+
+@SuppressWarnings("rawtypes")
+public class SwingTextInputKeyListener extends KeyAdapter {
+
+	private SwingTextInput element;
+
+	SwingTextInputKeyListener(SwingTextInput element) {
+		this.element = element;
 	}
 
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (Automation.ENABLED) {
+			Display.instance().invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					Automation.listener().notifyValueChange(element);
+				}
+			});
+		}
+	}
 }
