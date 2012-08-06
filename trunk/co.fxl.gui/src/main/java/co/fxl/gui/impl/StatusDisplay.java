@@ -20,7 +20,6 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDisplay.IResizeConfiguration;
 import co.fxl.gui.api.IDisplay.IResizeListener;
@@ -41,7 +40,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 		public void refresh(ICallback<Void> cb);
 	}
 
-//	private static final int RESIZE_INTERVALL_MS = 250;
+	// private static final int RESIZE_INTERVALL_MS = 250;
 	private static final boolean LOG_ILLEGAL_SIZES = false;
 	// public static boolean SINGLE_RESIZE_LISTENER = false;
 	private static StatusDisplay instance = new StatusDisplay();
@@ -293,14 +292,13 @@ public class StatusDisplay implements IResizeListener, Runnable {
 		// display.height(display.height());
 	}
 
-	public IContainer showSidePanel(final int width) {
+	public IScrollPane showSidePanel(final int width) {
 		sidePanelContainer = grid.cell(1, 0);
 		IScrollPane sidePanel = sidePanelContainer.width(width).scrollPane()
 				.size(width, display.height());
-		IContainer c = sidePanel.viewPort();
 		sidePanel.border().style().left().color().gray();
 		notifyResizeListeners();
-		return c;
+		return sidePanel;
 	}
 
 	private void notifyResizeListeners() {
