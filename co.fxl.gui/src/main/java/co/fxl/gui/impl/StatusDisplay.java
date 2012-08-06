@@ -59,7 +59,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 		return instance;
 	}
 
-	private Long lastResize = null;
+	// private Long lastResize = null;
 	protected IPopUp popUp;
 	private IGridCell sidePanelContainer;
 	private IGridPanel grid;
