@@ -175,7 +175,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 			}
 		};
 		// if (!SINGLE_RESIZE_LISTENER)
-		// Display.instance().addResizeListener(listener);
+		Display.instance().addResizeListener(listener);
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
