@@ -22,10 +22,10 @@ import co.fxl.gui.automation.impl.Automation;
 
 aspect SwingCheckBoxAutomation {
 
-	before(SwingCheckBox e) :
+	before(SwingCheckBox element) :
 	execution(void SwingCheckBox.fireUpdateListeners())
-	&& this(e)
+	&& this(element)
 	&& if(Automation.ENABLED) {
-		Automation.listener().notifyValueChange(e);
+		Automation.listener().notifyValueChange(element);
 	}
 }

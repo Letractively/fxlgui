@@ -22,12 +22,12 @@ import co.fxl.gui.automation.impl.Automation;
 
 aspect SwingScrollPaneAutomation {
 
-	before(SwingScrollPane e) :
+	before(SwingScrollPane element) :
 	execution(void SwingScrollPane.fireScrollListeners(int))
-	&& this(e)
+	&& this(element)
 	&& if(Automation.ENABLED) {
-		if (!e.programmaticSet)
-			Automation.listener().notifyValueChange(e);
+		if (!element.programmaticSet)
+			Automation.listener().notifyValueChange(element);
 	}
 
 }

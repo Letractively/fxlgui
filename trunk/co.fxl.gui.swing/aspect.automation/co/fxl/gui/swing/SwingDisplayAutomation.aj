@@ -22,10 +22,10 @@ import co.fxl.gui.automation.impl.Automation;
 
 privileged aspect SwingDisplayAutomation {
 
-	after(final SwingDisplay d) : 
+	after(final SwingDisplay element) : 
 	execution(private SwingDisplay.new()) 
-	&& this(d) 
+	&& this(element) 
 	&& if(Automation.ENABLED) {
-		d.register(new SwingElementAdapter());
+		element.register(new SwingElementAdapter());
 	}
 }

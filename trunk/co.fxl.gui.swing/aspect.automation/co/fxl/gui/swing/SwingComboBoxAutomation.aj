@@ -22,11 +22,11 @@ import co.fxl.gui.automation.impl.Automation;
 
 privileged aspect SwingComboBoxAutomation {
 
-	before(SwingComboBox e) :
+	before(SwingComboBox element) :
 	execution(void SwingComboBox.fireUpdateListeners(String))
-	&& this(e)
+	&& this(element)
 	&& if(Automation.ENABLED) {
-		if (!e.programmaticSet)
-			Automation.listener().notifyValueChange(e);
+		if (!element.programmaticSet)
+			Automation.listener().notifyValueChange(element);
 	}
 }

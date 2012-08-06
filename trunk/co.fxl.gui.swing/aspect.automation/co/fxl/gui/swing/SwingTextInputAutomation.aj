@@ -27,17 +27,17 @@ import co.fxl.gui.impl.Display;
 aspect SwingTextInputAutomation {
 
 	@SuppressWarnings("rawtypes")
-	after(final SwingTextInput e) :
+	after(final SwingTextInput element) :
 	execution(SwingTextInput.new(SwingContainer))
-	&& this(e) {
-		e.container.component.addKeyListener(new KeyAdapter() {
+	&& this(element) {
+		element.container.component.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
 				if (Automation.ENABLED) {
 					Display.instance().invokeLater(new Runnable() {
 						@Override
 						public void run() {
-							Automation.listener().notifyValueChange(e);
+							Automation.listener().notifyValueChange(element);
 						}
 					});
 				}
