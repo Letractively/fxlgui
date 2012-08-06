@@ -113,29 +113,29 @@ public class StatusDisplay implements IResizeListener, Runnable {
 		return addResizeListener(resizeListener, false);
 	}
 
-	private IResizeConfiguration newDummyResizeConfiguration() {
-		return new IResizeConfiguration() {
-
-			@Override
-			public IResizeConfiguration singleton() {
-				return this;
-			}
-
-			@Override
-			public IResizeConfiguration linkLifecycle(IElement<?> element) {
-				return this;
-			}
-
-			@Override
-			public IResizeConfiguration linkLifecycle(IPopUp dialog) {
-				return this;
-			}
-
-			@Override
-			public void remove() {
-			}
-		};
-	}
+	// private IResizeConfiguration newDummyResizeConfiguration() {
+	// return new IResizeConfiguration() {
+	//
+	// @Override
+	// public IResizeConfiguration singleton() {
+	// return this;
+	// }
+	//
+	// @Override
+	// public IResizeConfiguration linkLifecycle(IElement<?> element) {
+	// return this;
+	// }
+	//
+	// @Override
+	// public IResizeConfiguration linkLifecycle(IPopUp dialog) {
+	// return this;
+	// }
+	//
+	// @Override
+	// public void remove() {
+	// }
+	// };
+	// }
 
 	public IResizeConfiguration addResizeListener(
 			IResizeListener resizeListener, boolean fire) {
