@@ -25,12 +25,13 @@ import co.fxl.gui.form.impl.FormWidgetImpl;
 
 privileged aspect FormFieldImplAutomation {
 
-	after(@SuppressWarnings("rawtypes") FormFieldImpl e) :
+	@SuppressWarnings("rawtypes")
+	after(FormFieldImpl e) :
 	execution(public FormFieldImpl.new(FormWidgetImpl, int, String))
 	&& this(e)
 	&& if(Automation.ENABLED) {
-		if (e.valueElement() instanceof IElement<?>) {
-			((IElement<?>) e.valueElement()).iD(e.name);
+		if (e.valueElement() instanceof IElement) {
+			((IElement) e.valueElement()).iD(e.name);
 		}
 	}
 
