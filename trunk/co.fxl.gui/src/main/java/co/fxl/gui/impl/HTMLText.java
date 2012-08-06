@@ -83,7 +83,7 @@ public class HTMLText {
 
 	@Override
 	public String toString() {
-		String toString = allowHTML ? text : text.replace("<", "&#060;");
+		String toString = allowHTML ? text : text.replace("<", "&#060;").replace(">", "&#062;");
 		toString = toString.replace("\n", "<br>");
 		if (center)
 			toString = center(toString);
