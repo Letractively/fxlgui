@@ -22,6 +22,43 @@ import co.fxl.gui.api.IDisplay.IRuntime;
 
 public class Env {
 
+	private static final class DummyRuntime implements IRuntime {
+		@Override
+		public String name() {
+			return "Dummy";
+		}
+
+		@Override
+		public boolean is(String... name) {
+			return false;
+		}
+
+		@Override
+		public double version() {
+			return -1;
+		}
+
+		@Override
+		public boolean leq(String name, double version) {
+			return false;
+		}
+
+		@Override
+		public boolean geq(String name, double version) {
+			return false;
+		}
+
+		@Override
+		public boolean leq(double version) {
+			return false;
+		}
+
+		@Override
+		public boolean geq(double version) {
+			return false;
+		}
+	}
+
 	public static String SWING = "Swing";
 	public static String ANDROID = "Android";
 	public static String FIREFOX = "Firefox";
@@ -32,6 +69,8 @@ public class Env {
 	public static final int HEIGHT_SCROLLBAR = 17;
 
 	public static IRuntime runtime() {
+		if (Display.instance() == null)
+			return new DummyRuntime();
 		return Display.instance().runtime();
 	}
 
