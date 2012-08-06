@@ -25,19 +25,19 @@ import co.fxl.gui.automation.impl.Automation;
 aspect SwingElementAutomation {
 
 	@SuppressWarnings("rawtypes")
-	after(SwingElement e) :
+	after(SwingElement element) :
 	execution(SwingElement.new(SwingContainer))
-	&& this(e)
+	&& this(element)
 	&& if(Automation.ENABLED) {
-		Automation.listener().notifyNew(e);
+		Automation.listener().notifyNew(element);
 	}
 
 	@SuppressWarnings("rawtypes")
-	before(SwingElement e) :
+	before(SwingElement element) :
 	execution(void SwingElement.fireClickListeners(MouseEvent))
-	&& this(e)
+	&& this(element)
 	&& if(Automation.ENABLED) {
-		Automation.listener().notifyClick(e);
+		Automation.listener().notifyClick(element);
 	}
 
 }

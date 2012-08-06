@@ -24,11 +24,11 @@ import co.fxl.gui.automation.impl.Automation;
 
 aspect SwingButtonAutomation {
 
-	before(SwingButton e) :
+	before(SwingButton element) :
 	execution(void SwingButton.fireClickListeners(ActionEvent))
-	&& this(e)
+	&& this(element)
 	&& if(Automation.ENABLED) {
-		Automation.listener().notifyClick(e);
+		Automation.listener().notifyClick(element);
 	}
 
 }
