@@ -26,6 +26,12 @@ import co.fxl.gui.impl.Display;
 
 aspect SwingTextInputAutomation {
 
+	declare parents : SwingTextInput implements Runnable;
+
+	public void SwingTextInput.run() {
+		Automation.listener().notifyValueChange(this);
+	}
+
 	@SuppressWarnings("rawtypes")
 	after(final SwingTextInput element) :
 	execution(SwingTextInput.new(SwingContainer))
@@ -34,12 +40,7 @@ aspect SwingTextInputAutomation {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
 				if (Automation.ENABLED) {
-					Display.instance().invokeLater(new Runnable() {
-						@Override
-						public void run() {
-							Automation.listener().notifyValueChange(element);
-						}
-					});
+					Display.instance().invokeLater(element);
 				}
 			}
 		});
