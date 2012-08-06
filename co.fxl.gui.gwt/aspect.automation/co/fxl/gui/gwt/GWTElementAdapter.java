@@ -74,7 +74,7 @@ class GWTElementAdapter implements IAutomationAdapter,
 		if (e instanceof GWTButton) {
 			GWTButton b = (GWTButton) e;
 			// ClickEvent ae = new ClickEvent();
-			b.fireClickListeners((ClickEvent) null);
+			b.fireClickListenersSingleClick((ClickEvent) null);
 			throw new UnsupportedOperationException();
 		} else {
 			// MouseEvent evt = getMouseEvent(el, null);
