@@ -20,7 +20,7 @@ package co.fxl.gui.swing;
 
 import java.awt.event.MouseEvent;
 
-import co.fxl.gui.impl.ElementListener;
+import co.fxl.gui.automation.impl.Automation;
 
 aspect SwingElementAutomation {
 
@@ -28,16 +28,16 @@ aspect SwingElementAutomation {
 	after(SwingElement e) :
 	execution(SwingElement.new(SwingContainer))
 	&& this(e)
-	&& if(ElementListener.active) {
-		ElementListener.instance().notifyNew(e);
+	&& if(Automation.ENABLED) {
+		Automation.listener().notifyNew(e);
 	}
 
 	@SuppressWarnings("rawtypes")
 	before(SwingElement e) :
 	execution(void SwingElement.fireClickListeners(MouseEvent))
 	&& this(e)
-	&& if(ElementListener.active) {
-		ElementListener.instance().notifyClick(e);
+	&& if(Automation.ENABLED) {
+		Automation.listener().notifyClick(e);
 	}
 
 }

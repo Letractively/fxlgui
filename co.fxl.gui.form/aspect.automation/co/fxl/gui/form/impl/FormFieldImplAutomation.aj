@@ -19,14 +19,16 @@
 package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.IElement;
-import co.fxl.gui.impl.ElementListener;
+import co.fxl.gui.automation.impl.Automation;
+import co.fxl.gui.form.impl.FormFieldImpl;
+import co.fxl.gui.form.impl.FormWidgetImpl;
 
 privileged aspect FormFieldImplAutomation {
 
 	after(@SuppressWarnings("rawtypes") FormFieldImpl e) :
 	execution(public FormFieldImpl.new(FormWidgetImpl, int, String))
 	&& this(e)
-	&& if(ElementListener.active) {
+	&& if(Automation.ENABLED) {
 		if (e.valueElement() instanceof IElement<?>) {
 			((IElement<?>) e.valueElement()).iD(e.name);
 		}

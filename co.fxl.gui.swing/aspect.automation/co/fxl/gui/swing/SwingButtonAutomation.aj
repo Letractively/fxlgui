@@ -20,15 +20,15 @@ package co.fxl.gui.swing;
 
 import java.awt.event.ActionEvent;
 
-import co.fxl.gui.impl.ElementListener;
+import co.fxl.gui.automation.impl.Automation;
 
 aspect SwingButtonAutomation {
 
 	before(SwingButton e) :
 	execution(void SwingButton.fireClickListeners(ActionEvent))
 	&& this(e)
-	&& if(ElementListener.active) {
-		ElementListener.instance().notifyClick(e);
+	&& if(Automation.ENABLED) {
+		Automation.listener().notifyClick(e);
 	}
 
 }

@@ -19,7 +19,7 @@
 package co.fxl.gui.table.bulk.impl;
 
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.impl.ElementListener.Key;
+import co.fxl.gui.automation.api.IAutomationListener.Key;
 
 privileged aspect BulkTableWidgetImplAutomation {
 

@@ -18,16 +18,16 @@
  */
 package co.fxl.gui.swing;
 
-import co.fxl.gui.impl.ElementListener;
+import co.fxl.gui.automation.impl.Automation;
 
 aspect SwingScrollPaneAutomation {
 
 	before(SwingScrollPane e) :
 	execution(void SwingScrollPane.fireScrollListeners(int))
 	&& this(e)
-	&& if(ElementListener.active) {
+	&& if(Automation.ENABLED) {
 		if (!e.programmaticSet)
-			ElementListener.instance().notifyValueChange(e);
+			Automation.listener().notifyValueChange(e);
 	}
 
 }

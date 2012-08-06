@@ -1,8 +1,8 @@
 package co.fxl.gui.table.bulk.impl;
 
 import co.fxl.gui.api.IGridPanel.IGridClickListener;
-import co.fxl.gui.impl.ElementListener;
-import co.fxl.gui.impl.ElementListener.Key;
+import co.fxl.gui.automation.api.IAutomationListener.Key;
+import co.fxl.gui.automation.impl.Automation;
 
 class AutomationGridClickListener implements IGridClickListener {
 
@@ -16,8 +16,8 @@ class AutomationGridClickListener implements IGridClickListener {
 
 	@Override
 	public void onClick(int column, int row) {
-		if (ElementListener.active) {
-			ElementListener.instance().notifyClick(e.grid, column, row, key);
+		if (Automation.ENABLED) {
+			Automation.listener().notifyClick(e.grid, column, row, key);
 		}
 	}
 

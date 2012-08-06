@@ -25,11 +25,11 @@ import co.fxl.gui.api.IClickable.IKey;
 
 public abstract class KeyTemplate<T> implements IKey<T> {
 
-	protected enum ButtonType {
+	public enum ButtonType {
 		LEFT, RIGHT;
 	}
 
-	protected enum KeyType {
+	public enum KeyType {
 		CTRL_KEY, ALT_KEY, SHIFT_KEY;
 	}
 

@@ -18,14 +18,14 @@
  */
 package co.fxl.gui.swing;
 
-import co.fxl.gui.impl.ElementListener;
+import co.fxl.gui.automation.impl.Automation;
 
 aspect SwingCheckBoxAutomation {
 
 	before(SwingCheckBox e) :
 	execution(void SwingCheckBox.fireUpdateListeners())
 	&& this(e)
-	&& if(ElementListener.active) {
-		ElementListener.instance().notifyValueChange(e);
+	&& if(Automation.ENABLED) {
+		Automation.listener().notifyValueChange(e);
 	}
 }
