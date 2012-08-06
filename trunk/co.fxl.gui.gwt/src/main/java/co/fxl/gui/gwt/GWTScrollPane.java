@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.gwt;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IScrollPane;
@@ -32,15 +35,30 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 		IScrollPane {
 
 	private int initialScrollPosition = -1;
+	boolean programmaticSet;
+	private List<IScrollListener> listeners = new LinkedList<IScrollListener>();
 
 	// private boolean vertical = true;
 	// private boolean horizontal = false;
 
-	GWTScrollPane(GWTContainer<ScrollPanel> container) {
+	GWTScrollPane(final GWTContainer<ScrollPanel> container) {
 		super(container);
 		widget().setWidth("100%");
 		widget().setAlwaysShowScrollBars(false);
 		widget().getElement().getStyle().setProperty("overflowX", "hidden");
+		container.widget.addScrollHandler(new ScrollHandler() {
+			@Override
+			public void onScroll(ScrollEvent event) {
+				final int scrollPosition = container.widget.getScrollPosition();
+				if (initialScrollPosition != -1
+						&& scrollPosition != initialScrollPosition) {
+					int lp = initialScrollPosition;
+					initialScrollPosition = -1;
+					container.widget.setScrollPosition(lp);
+				} else
+					fireScrollListeners(scrollPosition);
+			}
+		});
 	}
 
 	@Override
@@ -72,25 +90,14 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 	}
 
 	@Override
-	public IScrollPane addScrollListener(final IScrollListener listener) {
-		container.widget.addScrollHandler(new ScrollHandler() {
-			@Override
-			public void onScroll(ScrollEvent event) {
-				final int scrollPosition = container.widget.getScrollPosition();
-				if (initialScrollPosition != -1
-						&& scrollPosition != initialScrollPosition) {
-					int lp = initialScrollPosition;
-					initialScrollPosition = -1;
-					container.widget.setScrollPosition(lp);
-				} else
-					listener.onScroll(scrollPosition);
-			}
-		});
+	public IScrollPane addScrollListener(IScrollListener listener) {
+		listeners.add(listener);
 		return this;
 	}
 
 	@Override
 	public IScrollPane scrollTo(int pos) {
+		programmaticSet = true;
 		// if (container.widget.getWidget() instanceof AbsolutePanel) {
 		// AbsolutePanel ap = (AbsolutePanel) container.widget.getWidget();
 		// ap.getElement().getStyle().setOverflow(Overflow.AUTO);
@@ -104,14 +111,17 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 		container.widget.setScrollPosition(pos);
 		// else
 		initialScrollPosition = pos;
+		programmaticSet = false;
 		return this;
 	}
 
 	@Override
 	public IScrollPane scrollIntoView(IElement<?> element) {
+		programmaticSet = true;
 		Widget w = (Widget) element.nativeElement();
 		Element e = w.getElement();
 		e.scrollIntoView();
+		programmaticSet = false;
 		return this;
 	}
 
@@ -164,6 +174,7 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 		container.widget.setAlwaysShowScrollBars(showScrollbarsAlways);
 		return this;
 	}
+
 	//
 	// @Override
 	// public IScrollbar scrollbar() {
@@ -183,4 +194,9 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 	// }
 	// };
 	// }
+
+	void fireScrollListeners(int scrollPosition) {
+		for (IScrollListener listener : listeners)
+			listener.onScroll(scrollPosition);
+	}
 }

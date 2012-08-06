@@ -36,6 +36,7 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 	private List<IUpdateListener<String>> listeners = new LinkedList<IUpdateListener<String>>();
 	private boolean hasBeenSet = false;
 	private String value;
+	boolean programmaticSet;
 
 	GWTComboBox(GWTContainer<ListBox> container) {
 		super(container);
@@ -75,6 +76,7 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 
 	@Override
 	public IComboBox addText(String... texts) {
+		programmaticSet = true;
 		for (String choice : texts) {
 			if (choice == null) {
 				hasNull = true;
@@ -87,6 +89,7 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 			container.widget.setSelectedIndex(0);
 		}
 		value = text();
+		programmaticSet = false;
 		return this;
 	}
 
@@ -98,6 +101,7 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 
 	@Override
 	public IComboBox text(String choice) {
+		programmaticSet = true;
 		String before = text();
 		String token = choice;
 		if (choice == null) {
@@ -112,9 +116,9 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 		value = text();
 		if (!hasBeenSet || !equals(before, token)) {
 			hasBeenSet = true;
-			for (IUpdateListener<String> l : listeners)
-				l.onUpdate(text());
+			fireUpdateListeners(text());
 		}
+		programmaticSet = false;
 		return this;
 	}
 
@@ -181,9 +185,13 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 			if (value != null && value.equals(text))
 				return;
 			value = text;
-			for (IUpdateListener<String> l : listeners)
-				l.onUpdate(text);
+			fireUpdateListeners(text);
 		}
+	}
+
+	void fireUpdateListeners(String text) {
+		for (IUpdateListener<String> l : listeners)
+			l.onUpdate(text);
 	}
 
 	@Override
