@@ -117,7 +117,7 @@ public class StatusPanel {
 				public boolean onResize(int width, int height) {
 					if (!dialog.visible())
 						return false;
-					resize(width, dialog);
+					resize(StatusDisplay.instance().width(), dialog);
 					return dialog.visible();
 				}
 			}).linkLifecycle(dialog);
