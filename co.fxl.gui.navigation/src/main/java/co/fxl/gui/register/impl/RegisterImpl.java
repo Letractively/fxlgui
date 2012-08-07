@@ -54,8 +54,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 
 		@Override
 		public ITitle text(String title) {
-			buttonLabel.text(title);
-			toggleLoading(false);
+			setText(title);
 			return this;
 		}
 
@@ -108,6 +107,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 				.visible(false);
 		buttonLabel = subPanel.add().label();
 		buttonPanel.addClickListener(this);
+		buttonLabel.addClickListener(this);
 		buttonPanel.addSpace(3);
 		newCardPanel();
 		notifyVisible(false, DummyCallback.voidInstance());
@@ -335,5 +335,10 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 
 	private void updateButtonPanel(boolean b) {
 		buttonPanel.clickable(b && allowClick);
+	}
+
+	void setText(String title) {
+		buttonLabel.text(title);
+		toggleLoading(false);
 	}
 }
