@@ -25,9 +25,8 @@ import co.fxl.gui.filter.api.IFilterConstraints.IRange;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.filter.impl.FilterPanel.ICell;
 
-abstract class RangeFilter<T> extends FilterTemplate<T> {
+abstract class RangeFilter<T> extends FilterTemplate<ITextField, T> {
 
-	ITextField lowerBoundTextField;
 	ITextField upperBoundTextField;
 	String lowerBoundText = "";
 	String upperBoundText = "";
@@ -40,7 +39,7 @@ abstract class RangeFilter<T> extends FilterTemplate<T> {
 		ICell cell = parent.cell(filterIndex);
 		// cell.width(WIDTH_RANGE_CELL);// , HEIGHT);
 		panel = cell.horizontal().add().panel().horizontal();
-		lowerBoundTextField = addTextField(0);
+		input = addTextField(0);
 		// lowerBoundTextField.height(HEIGHT);
 		panel.addSpace(4);
 		panel.add().label().text("-");
@@ -57,7 +56,7 @@ abstract class RangeFilter<T> extends FilterTemplate<T> {
 	}
 
 	public boolean update() {
-		lowerBoundText = lowerBoundTextField.text();
+		lowerBoundText = input.text();
 		upperBoundText = upperBoundTextField.text();
 		return true;
 	}
@@ -72,7 +71,7 @@ abstract class RangeFilter<T> extends FilterTemplate<T> {
 	void setLowerBound(String text) {
 		if (text.endsWith(".0"))
 			text = text.substring(0, text.length() - 2);
-		lowerBoundTextField.text(text);
+		input.text(text);
 		lowerBoundText = text;
 	}
 
@@ -88,11 +87,11 @@ abstract class RangeFilter<T> extends FilterTemplate<T> {
 
 			@Override
 			public void onUpdate(String value) {
-				l.onActive(!lowerBoundTextField.text().trim().equals("")
+				l.onActive(!input.text().trim().equals("")
 						|| !upperBoundTextField.text().trim().equals(""));
 			}
 		};
-		lowerBoundTextField.addUpdateListener(listener);
+		input.addUpdateListener(listener);
 		upperBoundTextField.addUpdateListener(listener);
 	}
 

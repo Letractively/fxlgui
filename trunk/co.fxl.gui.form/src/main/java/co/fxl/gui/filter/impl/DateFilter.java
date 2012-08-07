@@ -78,7 +78,7 @@ class DateFilter extends RangeFilter<Date> {
 
 	@Override
 	public void validate(Validation validation) {
-		validation.validateDate(lowerBoundTextField);
+		validation.validateDate(input);
 		validation.validateDate(upperBoundTextField);
 	}
 

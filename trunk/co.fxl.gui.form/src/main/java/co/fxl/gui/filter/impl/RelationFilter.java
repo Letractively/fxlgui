@@ -53,8 +53,8 @@ class RelationFilter extends StringFilter {
 		super(grid, name, filterIndex);
 		this.widget = widget;
 		this.adapter = adapter;
-		textField.text(toString(preset)).editable(false);
-		textField.font().weight().bold().color().gray();
+		input.text(toString(preset)).editable(false);
+		input.font().weight().bold().color().gray();
 		this.cl = cl;
 		remove.addClickListener(clear);
 		this.preset = preset;
@@ -63,7 +63,7 @@ class RelationFilter extends StringFilter {
 	private void clear(boolean notifyListeners) {
 		values = null;
 		RelationFilter.super.clear();
-		textField.editable(true).width(RelationFilter.super.width()).font()
+		input.editable(true).width(RelationFilter.super.width()).font()
 				.weight().plain().color().black();
 		if (!notifyListeners)
 			return;
@@ -149,7 +149,7 @@ class RelationFilter extends StringFilter {
 
 	@Override
 	public void validate(Validation validation) {
-		validation.linkInput(textField);
+		validation.linkInput(input);
 	}
 
 }

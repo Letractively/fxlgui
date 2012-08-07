@@ -45,7 +45,7 @@ class BooleanFilter extends ComboBoxStringFilter {
 	boolean fromConstraint(IFilterConstraints constraints) {
 		if (constraints.isAttributeConstrained(name)) {
 			Boolean b = constraints.booleanValue(name);
-			comboBox.text(b ? TRUE : FALSE);
+			input.text(b ? TRUE : FALSE);
 			return true;
 		} else
 			return false;

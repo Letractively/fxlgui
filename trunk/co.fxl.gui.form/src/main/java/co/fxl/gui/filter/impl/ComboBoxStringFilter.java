@@ -27,27 +27,26 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.form.impl.Validation;
 
-class ComboBoxStringFilter extends FilterTemplate<String> {
+class ComboBoxStringFilter extends FilterTemplate<IComboBox, String> {
 
-//	class StringConstraint implements IStringPrefixConstraint {
-//
-//		@Override
-//		public String column() {
-//			return name;
-//		}
-//
-//		@Override
-//		public String prefix() {
-//			return text;
-//		}
-//
-//		@Override
-//		public String toString() {
-//			return text;
-//		}
-//	}
+	// class StringConstraint implements IStringPrefixConstraint {
+	//
+	// @Override
+	// public String column() {
+	// return name;
+	// }
+	//
+	// @Override
+	// public String prefix() {
+	// return text;
+	// }
+	//
+	// @Override
+	// public String toString() {
+	// return text;
+	// }
+	// }
 
-	IComboBox comboBox;
 	private String text;
 	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();
 	private boolean updateListeningActive = true;
@@ -55,13 +54,13 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 	ComboBoxStringFilter(FilterGrid panel, String name, List<Object> values,
 			int filterIndex) {
 		super(panel, name, filterIndex);
-		comboBox = panel.cell(filterIndex)// .width(WIDTH_SINGLE_CELL)
+		input = panel.cell(filterIndex)// .width(WIDTH_SINGLE_CELL)
 				.comboBox().width(WIDTH_COMBOBOX_CELL);
-		panel.heights().decorate(comboBox);
+		panel.heights().decorate(input);
 		for (Object object : values) {
-			comboBox.addText(string(object));
+			input.addText(string(object));
 		}
-		comboBox.addUpdateListener(new IUpdateListener<String>() {
+		input.addUpdateListener(new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(String value) {
 				if (updateListeningActive)
@@ -79,7 +78,7 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 
 	@Override
 	public boolean update() {
-		text = comboBox.text().trim();
+		text = input.text().trim();
 		if (text.equals(""))
 			text = null;
 		return text != null;
@@ -88,7 +87,7 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 	@Override
 	public void clear() {
 		updateListeningActive = false;
-		comboBox.text("");
+		input.text("");
 		updateListeningActive = true;
 		text = null;
 	}
@@ -104,7 +103,7 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 
 			@Override
 			public void onUpdate(String value) {
-				l.onActive(!comboBox.text().trim().equals(""));
+				l.onActive(!input.text().trim().equals(""));
 			}
 		});
 	}
@@ -112,19 +111,19 @@ class ComboBoxStringFilter extends FilterTemplate<String> {
 	@Override
 	public IFilterConstraint asConstraint() {
 		update();
-		return new StringPrefixConstraint(name,text);
+		return new StringPrefixConstraint(name, text);
 	}
 
 	@Override
 	public void validate(Validation validation) {
-		validation.linkInput(comboBox);
+		validation.linkInput(input);
 	}
 
 	@Override
 	boolean fromConstraint(IFilterConstraints constraints) {
 		if (constraints.isAttributeConstrained(name)) {
 			String prefix = constraints.stringValue(name);
-			comboBox.text(prefix);
+			input.text(prefix);
 			return true;
 		} else
 			return false;
