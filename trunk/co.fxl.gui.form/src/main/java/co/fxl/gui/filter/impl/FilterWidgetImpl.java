@@ -207,11 +207,11 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		update();
 	}
 
-	private FilterPart<?> addFilter(Class<?> contentType, final String name,
-			List<Object> values, List<Object> preset,
+	FilterTemplate<?, ?> addFilter(Class<?> contentType,
+			final String name, List<Object> values, List<Object> preset,
 			IAdapter<Object, Object> adapter) {
 		assert name != null : contentType.getName();
-		FilterPart<?> filter;
+		FilterTemplate<?, ?> filter;
 		if (preset != null) {
 			filter = new RelationFilter(this, grid, name,
 					guiFilterElements.size(), preset, adapter,
