@@ -48,15 +48,17 @@ aspect GWTElementAutomation {
 	execution(void GWTElement.fireClickListenersKeyPress(KeyPressEvent))
 	&& this(element)
 	&& if(Automation.ENABLED) {
-		Automation.listener().notifyClick(element);
+		Automation.listener().notifyClick(element, Key.LEFT);
 	}
 
 	@SuppressWarnings("rawtypes")
-	before(GWTElement element) :
+	before(GWTElement element, ClickEvent event) :
 	execution(void GWTElement.fireClickListenersSingleClick(ClickEvent))
 	&& this(element)
+	&& args(event)
 	&& if(Automation.ENABLED) {
-		Automation.listener().notifyClick(element);
+		Key key = event.isAltKeyDown() ? Key.ALT : Key.LEFT;
+		Automation.listener().notifyClick(element, key);
 	}
 
 }

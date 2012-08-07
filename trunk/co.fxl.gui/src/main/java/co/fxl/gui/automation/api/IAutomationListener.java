@@ -25,14 +25,14 @@ public interface IAutomationListener {
 
 	public enum Key {
 
-		CTRL, SHIFT, DOUBLE, RIGHT;
+		LEFT, RIGHT, ALT, CTRL, SHIFT, DOUBLE;
 	}
 
 	void notifyNew(IElement<?> e);
 
-	void notifyClick(IElement<?> e, Key... key);
+	void notifyClick(IElement<?> e, Key key);
 
-	void notifyClick(IGridPanel g, int x, int y, Key... key);
+	void notifyClick(IGridPanel g, int x, int y, Key key);
 
 	void notifyValueChange(IElement<?> e);
 }

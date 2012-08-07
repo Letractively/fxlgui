@@ -55,7 +55,7 @@ public class SwingElementAdapter implements IAutomationAdapter,
 			ActionEvent ae = new ActionEvent(el, 0, null);
 			b.fireClickListeners(ae);
 		} else {
-			MouseEvent evt = getMouseEvent(el, null);
+			MouseEvent evt = getMouseEvent(el, Key.LEFT);
 			e.fireClickListeners(evt);
 		}
 	}
@@ -70,14 +70,12 @@ public class SwingElementAdapter implements IAutomationAdapter,
 	}
 
 	private int getClickCount(Key key) {
-		if (key != null && key.equals(Key.DOUBLE))
+		if (key.equals(Key.DOUBLE))
 			return 2;
 		return 1;
 	}
 
 	private int getMask(Key key) {
-		if (key == null)
-			return 0;
 		switch (key) {
 		case CTRL:
 			return MouseEvent.CTRL_MASK;

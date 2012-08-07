@@ -20,6 +20,7 @@ package co.fxl.gui.swing;
 
 import java.awt.event.MouseEvent;
 
+import co.fxl.gui.automation.api.IAutomationListener.Key;
 import co.fxl.gui.automation.impl.Automation;
 
 aspect SwingElementAutomation {
@@ -33,11 +34,13 @@ aspect SwingElementAutomation {
 	}
 
 	@SuppressWarnings("rawtypes")
-	before(SwingElement element) :
+	before(SwingElement element, MouseEvent event) :
 	execution(void SwingElement.fireClickListeners(MouseEvent))
 	&& this(element)
+	&& args(event)
 	&& if(Automation.ENABLED) {
-		Automation.listener().notifyClick(element);
+		Key key = event.isAltDown() ? Key.ALT : Key.LEFT;
+		Automation.listener().notifyClick(element, key);
 	}
 
 }

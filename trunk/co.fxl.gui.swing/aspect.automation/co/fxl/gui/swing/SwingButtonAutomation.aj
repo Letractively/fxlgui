@@ -20,6 +20,7 @@ package co.fxl.gui.swing;
 
 import java.awt.event.ActionEvent;
 
+import co.fxl.gui.automation.api.IAutomationListener.Key;
 import co.fxl.gui.automation.impl.Automation;
 
 aspect SwingButtonAutomation {
@@ -28,7 +29,7 @@ aspect SwingButtonAutomation {
 	execution(void SwingButton.fireClickListeners(ActionEvent))
 	&& this(element)
 	&& if(Automation.ENABLED) {
-		Automation.listener().notifyClick(element);
+		Automation.listener().notifyClick(element, Key.LEFT);
 	}
 
 }
