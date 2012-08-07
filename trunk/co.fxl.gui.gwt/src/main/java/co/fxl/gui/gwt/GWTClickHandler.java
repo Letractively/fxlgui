@@ -19,7 +19,6 @@
 package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.gwt.GWTClickHandler.DomEventAdp.NativeEventAdp;
 import co.fxl.gui.impl.KeyTemplate;
 
 import com.google.gwt.event.dom.client.ContextMenuEvent;
@@ -28,7 +27,7 @@ import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.user.client.ui.Widget;
 
 class GWTClickHandler<T> extends KeyTemplate<T> {
-	
+
 	static class DoubleClickEventAdp extends DomEventAdp {
 
 		DoubleClickEventAdp(DomEvent<?> original) {
@@ -53,35 +52,35 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 
 	}
 
-	static class DomEventAdp {
+	static class NativeEventAdp {
 
-		static class NativeEventAdp {
+		private boolean shift;
+		private boolean ctrl;
+		private boolean alt;
 
-			private boolean shift;
-			private boolean ctrl;
-			private boolean alt;
-
-			private NativeEventAdp(DomEvent<?> original) {
-				if (original == null)
-					return;
-				shift = original.getNativeEvent().getShiftKey();
-				ctrl = original.getNativeEvent().getCtrlKey();
-				alt = original.getNativeEvent().getAltKey();
-			}
-
-			boolean getShiftKey() {
-				return shift;
-			}
-
-			boolean getCtrlKey() {
-				return ctrl;
-			}
-
-			boolean getAltKey() {
-				return alt;
-			}
-
+		private NativeEventAdp(DomEvent<?> original) {
+			if (original == null)
+				return;
+			shift = original.getNativeEvent().getShiftKey();
+			ctrl = original.getNativeEvent().getCtrlKey();
+			alt = original.getNativeEvent().getAltKey();
 		}
+
+		boolean getShiftKey() {
+			return shift;
+		}
+
+		boolean getCtrlKey() {
+			return ctrl;
+		}
+
+		boolean getAltKey() {
+			return alt;
+		}
+
+	}
+
+	static class DomEventAdp {
 
 		private NativeEventAdp nativeEvent;
 		private DomEvent<?> original;
