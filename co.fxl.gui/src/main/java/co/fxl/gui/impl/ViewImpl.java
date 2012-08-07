@@ -79,7 +79,7 @@ public class ViewImpl extends LazyClickListener {
 	protected void decorate(boolean isNew) {
 		if (imageResource != null) {
 			image = labelPanel.addSpace(0).add().image()
-					.resource(imageResource);
+					.resource(imageResource).size(16, 16);
 			image.addClickListener(this);
 			labelPanel.addSpace(2);
 		} else
