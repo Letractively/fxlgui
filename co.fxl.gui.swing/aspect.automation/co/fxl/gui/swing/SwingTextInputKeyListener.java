@@ -20,7 +20,10 @@ package co.fxl.gui.swing;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import co.fxl.gui.automation.api.IAutomationListener.Key;
 import co.fxl.gui.automation.impl.Automation;
 import co.fxl.gui.impl.Display;
 
@@ -35,7 +38,7 @@ public class SwingTextInputKeyListener extends KeyAdapter {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (Automation.ENABLED) {
+		if (Automation.ENABLED && !e.isAltDown()) {
 			Display.instance().invokeLater(new Runnable() {
 				@Override
 				public void run() {
@@ -43,5 +46,18 @@ public class SwingTextInputKeyListener extends KeyAdapter {
 				}
 			});
 		}
+	}
+
+	static void create(final SwingTextInput element) {
+		element.container.component
+				.addKeyListener(new SwingTextInputKeyListener(element));
+		element.container.component.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if (e.isAltDown()) {
+					Automation.listener().notifyClick(element, Key.ALT);
+				}
+			}
+		});
 	}
 }

@@ -24,8 +24,7 @@ aspect SwingTextInputAutomation {
 	after(final SwingTextInput element) :
 	execution(SwingTextInput.new(SwingContainer))
 	&& this(element) {
-		element.container.component
-				.addKeyListener(new SwingTextInputKeyListener(element));
+		SwingTextInputKeyListener.create(element);
 	}
 
 }
