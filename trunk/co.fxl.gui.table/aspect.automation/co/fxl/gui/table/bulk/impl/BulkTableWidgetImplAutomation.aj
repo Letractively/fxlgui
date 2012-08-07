@@ -27,7 +27,7 @@ privileged aspect BulkTableWidgetImplAutomation {
 	execution(protected BulkTableWidgetImpl.new(IContainer))
 	&& this(element) {
 		element.grid.iD("Main-Grid");
-		element.grid.addGridClickListener(new AutomationGridClickListener(element, null));
+		element.grid.addGridClickListener(new AutomationGridClickListener(element, Key.LEFT));
 		element.grid.addGridClickListener(
 				new AutomationGridClickListener(element, Key.CTRL)).ctrlPressed();
 		element.grid.addGridClickListener(

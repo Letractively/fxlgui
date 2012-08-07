@@ -18,15 +18,21 @@
  */
 package co.fxl.gui.gwt;
 
+import co.fxl.gui.automation.api.IAutomationListener.Key;
 import co.fxl.gui.automation.impl.Automation;
 import co.fxl.gui.impl.Display;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.dom.client.HasKeyPressHandlers;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.user.client.ui.Widget;
 
 @SuppressWarnings("rawtypes")
-public class GWTTextInputKeyPressHandler implements KeyPressHandler {
+public class GWTTextInputKeyPressHandler implements KeyPressHandler,
+		ClickHandler {
 
 	private GWTElement element;
 
@@ -36,7 +42,7 @@ public class GWTTextInputKeyPressHandler implements KeyPressHandler {
 
 	@Override
 	public void onKeyPress(KeyPressEvent arg0) {
-		if (Automation.ENABLED) {
+		if (Automation.ENABLED && !arg0.isAltKeyDown()) {
 			Display.instance().invokeLater(new Runnable() {
 				@Override
 				public void run() {
@@ -46,10 +52,17 @@ public class GWTTextInputKeyPressHandler implements KeyPressHandler {
 		}
 	}
 
+	@Override
+	public void onClick(ClickEvent arg0) {
+		if (arg0.isAltKeyDown())
+			Automation.listener().notifyClick(element, Key.ALT);
+	}
+
 	static void create(GWTTextInput element) {
 		GWTTextInputKeyPressHandler handler = new GWTTextInputKeyPressHandler(
 				element);
-		((HasKeyPressHandlers) element.container.widget)
-				.addKeyPressHandler(handler);
+		Widget widget = element.container.widget;
+		((HasKeyPressHandlers) widget).addKeyPressHandler(handler);
+		((HasClickHandlers) widget).addClickHandler(handler);
 	}
 }
