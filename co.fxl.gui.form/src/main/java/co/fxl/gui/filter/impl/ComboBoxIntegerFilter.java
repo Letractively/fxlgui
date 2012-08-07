@@ -25,9 +25,8 @@ import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.form.impl.Validation;
 
-class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
+class ComboBoxIntegerFilter extends FilterTemplate<IComboBox, Integer> {
 
-	IComboBox comboBox;
 	Integer text;
 	private Integer defaultValue;
 
@@ -35,11 +34,11 @@ class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
 			int filterIndex) {
 		super(panel, name, filterIndex);
 		this.defaultValue = (Integer) values.get(0);
-		comboBox = panel.cell(filterIndex)// .width(WIDTH_SINGLE_CELL)
+		input = panel.cell(filterIndex)// .width(WIDTH_SINGLE_CELL)
 				.comboBox().width(WIDTH_COMBOBOX_CELL);
-		panel.heights().decorate(comboBox);
+		panel.heights().decorate(input);
 		for (Object object : values) {
-			comboBox.addText(string(object));
+			input.addText(string(object));
 		}
 	}
 
@@ -51,7 +50,7 @@ class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
 
 	@Override
 	public boolean update() {
-		String trim = comboBox.text().trim();
+		String trim = input.text().trim();
 		if (trim.equals(""))
 			text = defaultValue;
 		else
@@ -61,7 +60,7 @@ class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
 
 	@Override
 	public void clear() {
-		comboBox.text(String.valueOf(defaultValue));
+		input.text(String.valueOf(defaultValue));
 		text = defaultValue;
 	}
 
@@ -72,11 +71,11 @@ class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
 
 	@Override
 	public void addUpdateListener(final FilterListener l) {
-		comboBox.addUpdateListener(new IUpdateListener<String>() {
+		input.addUpdateListener(new IUpdateListener<String>() {
 
 			@Override
 			public void onUpdate(String value) {
-				l.onActive(!comboBox.text().trim().equals(""));
+				l.onActive(!input.text().trim().equals(""));
 			}
 		});
 	}
@@ -89,11 +88,11 @@ class ComboBoxIntegerFilter extends FilterTemplate<Integer> {
 
 	@Override
 	public void validate(Validation validation) {
-		validation.linkInput(comboBox);
+		validation.linkInput(input);
 	}
 
 	void set(int size) {
-		comboBox.text(String.valueOf(size));
+		input.text(String.valueOf(size));
 	}
 
 	@Override

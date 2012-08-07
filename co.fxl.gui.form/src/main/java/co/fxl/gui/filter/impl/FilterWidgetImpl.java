@@ -167,13 +167,13 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	@SuppressWarnings("unchecked")
 	@Override
 	public IFilterConstraints constraints() {
-		List<FilterTemplate<Object>> activeFilters = new LinkedList<FilterTemplate<Object>>();
+		List<FilterTemplate<?, Object>> activeFilters = new LinkedList<FilterTemplate<?, Object>>();
 		for (FilterPart<?> filter : guiFilterElements) {
 			boolean active = filter.update();
 			if (guiFilterElements.indexOf(filter) == 0 && showConfiguration)
 				active = false;
 			if (active)
-				activeFilters.add((FilterTemplate<Object>) filter);
+				activeFilters.add((FilterTemplate<?, Object>) filter);
 		}
 		FilterConstraintsImpl constraints = new FilterConstraintsImpl(
 				configuration);
@@ -184,7 +184,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		if (this.constraints != null && this.constraints.rowIterator() != null) {
 			constraints.rowIterator(this.constraints.rowIterator());
 		}
-		for (FilterTemplate<Object> filter : activeFilters) {
+		for (FilterTemplate<?, Object> filter : activeFilters) {
 			constraints.add(filter.asConstraint());
 		}
 		if (sizeFilter != null)
@@ -317,7 +317,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		FilterPart<?> firstConstraint = null;
 		if (constraints != null) {
 			for (FilterPart<?> f : guiFilterElements) {
-				FilterTemplate<?> ft = (FilterTemplate<?>) f;
+				FilterTemplate<?, ?> ft = (FilterTemplate<?, ?>) f;
 				boolean c = ft.fromConstraint((IFilterConstraints) constraints);
 				constrained = constrained | c;
 				if (f instanceof RelationFilter)
@@ -379,7 +379,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 				FilterPart<?> fp = addFilter(filter.type.clazz, filter.name,
 						list, preset, adapter);
 				if (filter.text != null) {
-					((ComboBoxStringFilter) fp).comboBox.text(filter.text);
+					((ComboBoxStringFilter) fp).input.text(filter.text);
 				}
 				if (filter.updateListener != null)
 					fp.addUpdateListener(filter.updateListener);

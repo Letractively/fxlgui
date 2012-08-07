@@ -82,7 +82,7 @@ class NumberFilter extends RangeFilter<Number> {
 
 	@Override
 	public void validate(Validation validation) {
-		validation.linkInput(lowerBoundTextField);
+		validation.linkInput(input);
 		validation.linkInput(upperBoundTextField);
 	}
 

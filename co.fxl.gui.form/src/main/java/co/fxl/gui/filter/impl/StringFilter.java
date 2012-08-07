@@ -25,17 +25,16 @@ import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.filter.impl.FilterPanel.ICell;
 import co.fxl.gui.form.impl.Validation;
 
-class StringFilter extends FilterTemplate<String> {
+class StringFilter extends FilterTemplate<ITextField, String> {
 
-	ITextField textField;
 	String text;
 
 	StringFilter(FilterGrid panel, String name, int filterIndex) {
 		super(panel, name, filterIndex);
 		ICell width = panel.cell(filterIndex);
-		textField = textField(width, filterIndex).width(width());
-		panel.heights().decorate(textField);
-		panel.register(textField);
+		input = textField(width, filterIndex).width(width());
+		panel.heights().decorate(input);
+		panel.register(input);
 	}
 
 	ITextField textField(ICell c, int filterIndex) {
@@ -48,7 +47,7 @@ class StringFilter extends FilterTemplate<String> {
 
 	@Override
 	public boolean update() {
-		text = textField.text().trim();
+		text = input.text().trim();
 		if (text.equals(""))
 			text = null;
 		return text != null;
@@ -56,7 +55,7 @@ class StringFilter extends FilterTemplate<String> {
 
 	@Override
 	public void clear() {
-		textField.text("");
+		input.text("");
 		text = null;
 	}
 
@@ -67,11 +66,11 @@ class StringFilter extends FilterTemplate<String> {
 
 	@Override
 	public void addUpdateListener(final FilterListener l) {
-		textField.addUpdateListener(new IUpdateListener<String>() {
+		input.addUpdateListener(new IUpdateListener<String>() {
 
 			@Override
 			public void onUpdate(String value) {
-				l.onActive(!textField.text().trim().equals(""));
+				l.onActive(!input.text().trim().equals(""));
 			}
 		});
 	}
@@ -84,14 +83,14 @@ class StringFilter extends FilterTemplate<String> {
 
 	@Override
 	public void validate(Validation validation) {
-		validation.linkInput(textField);
+		validation.linkInput(input);
 	}
 
 	@Override
 	boolean fromConstraint(IFilterConstraints constraints) {
 		if (constraints.isAttributeConstrained(name)) {
 			String prefix = constraints.stringValue(name);
-			textField.text(prefix);
+			input.text(prefix);
 			return true;
 		} else
 			return false;
