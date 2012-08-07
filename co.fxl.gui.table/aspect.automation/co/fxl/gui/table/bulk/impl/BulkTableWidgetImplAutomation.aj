@@ -33,7 +33,7 @@ privileged aspect BulkTableWidgetImplAutomation {
 		Display.instance().registerService(IBulkTableWidgetAdapter.class,
 				new IBulkTableWidgetAdapter() {
 					@Override
-					public void fireClick(IBulkTableWidget tree, int column,
+					public void click(IBulkTableWidget tree, int column,
 							int row, int px, int py, Key key) {
 						BulkTableWidgetImpl w = (BulkTableWidgetImpl) tree;
 						IAutomationAdapter adp = Display.instance().service(
@@ -47,6 +47,7 @@ privileged aspect BulkTableWidgetImplAutomation {
 	execution(protected BulkTableWidgetImpl.new(IContainer))
 	&& this(element)
 	&& if(Automation.ENABLED) {
+		BulkTableWidgetListener.instance().notifyNew(element);
 		AutomationTableClickListener.attach(element);
 	}
 }

@@ -39,6 +39,7 @@ import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IMouseWheelListener;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.AlignmentMemento;
@@ -492,5 +493,10 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	@Override
 	public IBulkTableWidget noLineBreak(boolean noLineBreak) {
 		return this;
+	}
+
+	@Override
+	public IPanel<?> basePanel() {
+		return mainPanel;
 	}
 }
