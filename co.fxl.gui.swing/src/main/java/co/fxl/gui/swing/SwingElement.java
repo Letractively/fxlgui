@@ -525,10 +525,10 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 		return (R) this;
 	}
 
-	void fireClickListeners(MouseEvent e) {
+	void fireClickListeners(MouseEvent event) {
 		if (container.component.isEnabled())
 			for (ClickListenerMouseAdapter<R> adapter : adapters) {
-				adapter.adapter.mouseReleased(e);
+				adapter.adapter.mouseReleased(event);
 			}
 	}
 
