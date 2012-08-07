@@ -24,6 +24,7 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IMouseWheelListener;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPoint;
 
 public interface IBulkTableWidget extends IKeyRecipient<Object> {
@@ -127,4 +128,6 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 	IBulkTableWidget rowHeight(int index, int rowHeight);
 
 	IBulkTableWidget noLineBreak(boolean noLineBreak);
+
+	IPanel<?> basePanel();
 }

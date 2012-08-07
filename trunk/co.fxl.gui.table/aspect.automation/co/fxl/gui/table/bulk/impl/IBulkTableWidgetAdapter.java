@@ -23,7 +23,7 @@ import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 
 public interface IBulkTableWidgetAdapter {
 
-	void fireClick(IBulkTableWidget tree, int column, int row, int px, int py,
+	void click(IBulkTableWidget tree, int column, int row, int px, int py,
 			Key key);
 
 }

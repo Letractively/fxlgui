@@ -38,7 +38,8 @@ public class AutomationTableClickListener implements ITableClickListener {
 	public void onClick(int column, int row, IPoint point) {
 		if (Automation.ENABLED) {
 			BulkTableWidgetListener.instance().notifyClick(e, column, row,
-					point.offsetX(), point.offsetY(), key);
+					point == null ? 0 : point.offsetX(),
+					point == null ? 0 : point.offsetY(), key);
 		}
 	}
 

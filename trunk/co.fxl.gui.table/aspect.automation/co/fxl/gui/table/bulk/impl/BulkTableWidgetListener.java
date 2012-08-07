@@ -25,7 +25,10 @@ public class BulkTableWidgetListener {
 
 	public interface IBulkTableWidgetListener {
 
-		void notifyClick(IBulkTableWidget tree, int column, int row, int px, int py, Key... key);
+		void notifyNew(IBulkTableWidget tree);
+
+		void notifyClick(IBulkTableWidget tree, int column, int row, int px,
+				int py, Key key);
 
 	}
 
