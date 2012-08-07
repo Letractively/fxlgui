@@ -28,7 +28,7 @@ import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.user.client.ui.Widget;
 
 class GWTClickHandler<T> extends KeyTemplate<T> {
-
+	
 	static class DoubleClickEventAdp extends DomEventAdp {
 
 		DoubleClickEventAdp(DomEvent<?> original) {
