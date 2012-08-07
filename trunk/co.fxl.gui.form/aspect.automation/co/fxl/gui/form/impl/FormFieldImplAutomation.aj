@@ -20,8 +20,6 @@ package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.automation.impl.Automation;
-import co.fxl.gui.form.impl.FormFieldImpl;
-import co.fxl.gui.form.impl.FormWidgetImpl;
 
 privileged aspect FormFieldImplAutomation {
 
