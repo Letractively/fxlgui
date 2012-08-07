@@ -1026,7 +1026,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	private int paintedRows() {
 		int c = 0;
-		int h = grid.rowHeight(0);
+		int h = grid.rowCount() > 0 ? grid.rowHeight(0) : 0;
 		for (c = 0; c < paintedRows; c++) {
 			if (h >= grid.height())
 				return c;
