@@ -251,4 +251,8 @@ public class ContextMenu {
 			}
 		}
 	}
+
+	public boolean active() {
+		return active;
+	}
 }
