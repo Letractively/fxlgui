@@ -78,6 +78,11 @@ class GWTElementAdapter implements IAutomationAdapter,
 	public void click(IGridPanel g, int x, int y, Key key) {
 		GWTGridPanel gg = (GWTGridPanel) g;
 		throw new UnsupportedOperationException();
+		// NativeAutomationEvent automationEvent = new
+		// NativeAutomationEvent(key,
+		// x, y);
+		// ClickEvent c = new ClickAutomationEvent(automationEvent);
+		// gg.container.widget.fireEvent(c);
 	}
 
 }
