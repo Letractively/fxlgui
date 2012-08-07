@@ -19,20 +19,34 @@
 package co.fxl.gui.table.bulk.impl;
 
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.automation.api.IAutomationAdapter;
 import co.fxl.gui.automation.api.IAutomationListener.Key;
+import co.fxl.gui.automation.impl.Automation;
+import co.fxl.gui.impl.Display;
+import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 
 privileged aspect BulkTableWidgetImplAutomation {
 
+	after() :
+	 execution(public BulkTableWidgetImplProvider.new())
+	 && if(Automation.ENABLED) {
+		Display.instance().registerService(IBulkTableWidgetAdapter.class,
+				new IBulkTableWidgetAdapter() {
+					@Override
+					public void fireClick(IBulkTableWidget tree, int column,
+							int row, int px, int py, Key key) {
+						BulkTableWidgetImpl w = (BulkTableWidgetImpl) tree;
+						IAutomationAdapter adp = Display.instance().service(
+								IAutomationAdapter.class);
+						adp.click(w.grid, column, row, key);
+					}
+				});
+	}
+
 	after(final BulkTableWidgetImpl element) :
 	execution(protected BulkTableWidgetImpl.new(IContainer))
-	&& this(element) {
-		element.grid.iD("Main-Grid");
-		element.grid.addGridClickListener(new AutomationGridClickListener(element, Key.LEFT));
-		element.grid.addGridClickListener(
-				new AutomationGridClickListener(element, Key.CTRL)).ctrlPressed();
-		element.grid.addGridClickListener(
-				new AutomationGridClickListener(element, Key.SHIFT)).shiftPressed();
-		element.grid.addGridClickListener(
-				new AutomationGridClickListener(element, Key.DOUBLE)).doubleClick();
+	&& this(element)
+	&& if(Automation.ENABLED) {
+		AutomationTableClickListener.attach(element);
 	}
 }
