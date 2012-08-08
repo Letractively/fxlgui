@@ -46,7 +46,8 @@ public interface IScrollTableWidget<T> {
 
 		void notifyColumnSelectionChange();
 
-		void startPrepare(int width);
+		void startPrepare(int width, IRows<?> rows,
+				IScrollTableColumn<?> sortColumn);
 
 	}
 
@@ -230,6 +231,8 @@ public interface IScrollTableWidget<T> {
 	IScrollTableWidget<T> filterQueryLabel(String filterQueryLabel);
 
 	IScrollTableWidget<T> subTitle(String subTitle1, String subTitle2);
+
+	IScrollTableWidget<T> width(int width);
 
 	// IVerticalPanel editPanel();
 }

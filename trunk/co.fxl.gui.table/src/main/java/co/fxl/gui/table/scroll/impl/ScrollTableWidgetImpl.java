@@ -181,7 +181,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IVerticalPanel contentPanel0;
 	private boolean reduceHeightIfEmpty = false;
 	private boolean showConfiguration = true;
-	private IColumnWidthInjector columnWidths = ColumnWidths.newInstance();
+	private IColumnWidthInjector columnWidths = ColumnWidths.newInstance(true);
 
 	// private IVerticalPanel editPanel;
 
@@ -234,6 +234,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private String subTitle1;
 	private String subTitle2;
 	private int presetRowIndex = 0;
+	private int width;
 
 	// private boolean nextTimeShowPopUp;
 
@@ -921,7 +922,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private void updateHeaderRow(IBulkTableWidget grid) {
 		columnWidths.columns((List) columns);
 		int current = 0;
-		columnWidths.startPrepare(contentPanel.width());
+		columnWidths.startPrepare(width, rows, sortColumn());
 		for (int c = 0; c < columns.size(); c++) {
 			if (!columns.get(c).visible)
 				continue;
@@ -1508,6 +1509,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	ScrollTableColumnImpl sortColumn() {
+		if (sortColumn == -1)
+			return null;
 		return columns.get(sortColumn);
 	}
 
@@ -1530,6 +1533,12 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		}
 		this.subTitle1 = subTitle1;
 		this.subTitle2 = subTitle2;
+		return this;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> width(int width) {
+		this.width = width;
 		return this;
 	}
 }
