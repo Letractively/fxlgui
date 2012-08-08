@@ -54,6 +54,7 @@ import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.KeyAdapter;
+import co.fxl.gui.impl.StatusDisplay;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.table.api.ISelection;
@@ -234,7 +235,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private String subTitle1;
 	private String subTitle2;
 	private int presetRowIndex = 0;
-	private int width;
+	private int widthDelta;
 
 	// private boolean nextTimeShowPopUp;
 
@@ -922,7 +923,9 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private void updateHeaderRow(IBulkTableWidget grid) {
 		columnWidths.columns((List) columns);
 		int current = 0;
-		columnWidths.startPrepare(width, rows, sortColumn());
+		columnWidths.startPrepare(
+				StatusDisplay.instance().width() - widthDelta, rows,
+				sortColumn());
 		for (int c = 0; c < columns.size(); c++) {
 			if (!columns.get(c).visible)
 				continue;
@@ -1538,7 +1541,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	@Override
 	public IScrollTableWidget<Object> width(int width) {
-		this.width = width;
+		this.widthDelta = StatusDisplay.instance().width() - width;
 		return this;
 	}
 }
