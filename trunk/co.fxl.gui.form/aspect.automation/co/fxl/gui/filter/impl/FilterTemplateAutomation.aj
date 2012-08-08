@@ -20,15 +20,17 @@ package co.fxl.gui.filter.impl;
 
 import co.fxl.gui.automation.impl.Automation;
 
-privileged aspect FilterWidgetImplAutomation {
+privileged aspect FilterTemplateAutomation {
 
 	@SuppressWarnings("rawtypes")
-	after() returning(FilterTemplate filter) :
-	execution(FilterTemplate FilterWidgetImpl.addFilter(..)) 
+	after(FilterTemplate filterTemplate) :
+	execution(void FilterTemplate.notifyCreate())
+	&& this(filterTemplate)
 	&& if(Automation.ENABLED) {
-		filter.input.iD(filter.name);
-		if (filter instanceof RangeFilter) {
-			((RangeFilter) filter).upperBoundTextField.iD("to:" + filter.name);
+		filterTemplate.input.iD(filterTemplate.name);
+		if (filterTemplate instanceof RangeFilter) {
+			((RangeFilter) filterTemplate).upperBoundTextField.iD("to:"
+					+ filterTemplate.name);
 		}
 	}
 }
