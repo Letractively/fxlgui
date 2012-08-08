@@ -59,6 +59,7 @@ abstract class FilterTemplate<R extends IElement<R>, T> implements
 		return name;
 	}
 
-	void notifyCreate() {
+	@Override
+	public void notifyCreate() {
 	}
 }
