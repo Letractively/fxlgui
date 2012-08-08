@@ -46,7 +46,7 @@ public interface IScrollTableWidget<T> {
 
 		void notifyColumnSelectionChange();
 
-		void startPrepare();
+		void startPrepare(int width);
 
 	}
 

@@ -105,6 +105,6 @@ public class ColumnWidths implements IColumnWidths {
 	}
 
 	@Override
-	public void startPrepare() {
+	public void startPrepare(int width) {
 	}
 }
