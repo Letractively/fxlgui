@@ -130,4 +130,6 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 	IBulkTableWidget noLineBreak(boolean noLineBreak);
 
 	IPanel<?> basePanel();
+
+	IBulkTableWidget updateWidths();
 }
