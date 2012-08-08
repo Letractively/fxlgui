@@ -484,4 +484,24 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	public void decorateUndefined(Object object, IBulkTableCell cell) {
 		cell.image("undefined.png");
 	}
+
+	@Override
+	public Double widthDouble() {
+		return widthDouble;
+	}
+
+	@Override
+	public Integer widthInt() {
+		return widthInt;
+	}
+
+	@Override
+	public boolean isAlignmentSpecified() {
+		return alignment.isSpecified();
+	}
+
+	@Override
+	public void forwardAlignment(IAlignment<?> align) {
+		alignment.forward(align);
+	}
 }

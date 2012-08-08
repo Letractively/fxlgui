@@ -181,6 +181,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IVerticalPanel contentPanel0;
 	private boolean reduceHeightIfEmpty = false;
 	private boolean showConfiguration = true;
+	private IColumnWidths columnWidths = new ColumnWidths();
 
 	// private IVerticalPanel editPanel;
 
@@ -750,6 +751,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	@Override
 	public boolean updateTable() {
+		columnWidths.notifyColumnSelectionChange();
 		visible(true);
 		return true;
 	}
@@ -915,9 +917,11 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			}
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void updateHeaderRow(IBulkTableWidget grid) {
-		ColumnWidths cw = new ColumnWidths(true, columns);
+		columnWidths.columns((List) columns);
 		int current = 0;
+		columnWidths.startPrepare();
 		for (int c = 0; c < columns.size(); c++) {
 			if (!columns.get(c).visible)
 				continue;
@@ -934,11 +938,11 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			}
 			IColumn column = grid.column(current++);
 			column.title(name, sortUp);
-			prepare(cw, columnImpl, column);
+			prepare(columnWidths, columnImpl, column);
 		}
 	}
 
-	public static void prepare(ColumnWidths cw,
+	public static void prepare(IColumnWidths cw,
 			ScrollTableColumnImpl columnImpl, IColumn column) {
 		columnImpl.decorator().prepare(column);
 		if (cw != null)
@@ -1522,6 +1526,13 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		}
 		this.subTitle1 = subTitle1;
 		this.subTitle2 = subTitle2;
+		return this;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> columnWidths(
+			co.fxl.gui.table.scroll.api.IScrollTableWidget.IColumnWidths columnWidths) {
+		this.columnWidths = columnWidths;
 		return this;
 	}
 }

@@ -33,9 +33,22 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.table.api.ISelection;
+import co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn;
 import co.fxl.gui.table.util.api.IDragDropListener;
 
 public interface IScrollTableWidget<T> {
+
+	public interface IColumnWidths {
+
+		IColumnWidths columns(List<IScrollTableColumn<?>> columns);
+
+		void prepare(IScrollTableColumn<?> stc, IColumn btc);
+
+		void notifyColumnSelectionChange();
+
+		void startPrepare();
+
+	}
 
 	public interface INoEntitiesFoundDecorator {
 
@@ -217,6 +230,8 @@ public interface IScrollTableWidget<T> {
 	IScrollTableWidget<T> filterQueryLabel(String filterQueryLabel);
 
 	IScrollTableWidget<T> subTitle(String subTitle1, String subTitle2);
+
+	IScrollTableWidget<T> columnWidths(IColumnWidths columnWidths);
 
 	// IVerticalPanel editPanel();
 }

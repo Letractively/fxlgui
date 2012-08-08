@@ -50,4 +50,13 @@ public interface IScrollTableColumn<T> extends IColumn<T> {
 	String name();
 
 	IScrollTableColumn<T> forceSort();
+
+	Double widthDouble();
+
+	Integer widthInt();
+
+	boolean isAlignmentSpecified();
+
+	void forwardAlignment(IAlignment<?> align);
+
 }
