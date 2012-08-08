@@ -24,7 +24,6 @@ import java.util.Map;
 
 public class ColumnWidths {
 
-	// private static final boolean USE_MAX_TOKENS = false;
 	private Map<ScrollTableColumnImpl, Integer> intWidths = new HashMap<ScrollTableColumnImpl, Integer>();
 	private Map<ScrollTableColumnImpl, Double> doubleWidths = new HashMap<ScrollTableColumnImpl, Double>();
 
@@ -33,7 +32,6 @@ public class ColumnWidths {
 		
 		// TODO FilterQueryDisplayData-Computation-Unit verwenden
 		
-		// int widthMin = 0;
 		int num = 0;
 		double sumD = 0;
 		for (int c = 0; c < columns.size(); c++) {
@@ -53,16 +51,7 @@ public class ColumnWidths {
 				continue;
 			ScrollTableColumnImpl columnImpl = columns.get(c);
 			intWidths.put(columnImpl, columnImpl.widthInt);
-			// if (USE_MAX_TOKENS && useMaxTokens) {
-			// int maxTokens = columnImpl.decorator().maxTokens();
-			// if (columnImpl.widthInt == -1 && maxTokens != -1) {
-			// int width = Math.min(200,
-			// Math.max(100, (maxTokens + 4) * 7));
-			// intWidths.put(columnImpl, width);
-			// }
-			// }
 			if (intWidths.get(columnImpl) != -1) {
-				// widthMin += intWidths.get(columnImpl);
 				continue;
 			}
 			double d = columnImpl.decorator().defaultWeight();
@@ -71,20 +60,7 @@ public class ColumnWidths {
 			}
 			doubleWidths.put(columnImpl, d);
 			sum += d;
-			// widthMin += 100;
 		}
-		// int mainPanelWidth = SplitLayout.mainPanelWidth();
-		// if (USE_MAX_TOKENS && widthMin > mainPanelWidth) {
-		// intWidths.clear();
-		// for (int c = 0; c < columns.size(); c++) {
-		// if (!columns.get(c).visible)
-		// continue;
-		// ScrollTableColumnImpl columnImpl = columns.get(c);
-		// double d = columnImpl.widthDouble != -1 ? columnImpl.widthDouble
-		// : columnImpl.decorator().defaultWeight();
-		// doubleWidths.put(columnImpl, d);
-		// }
-		// }
 		for (int c = 0; c < columns.size(); c++) {
 			ScrollTableColumnImpl columnImpl = columns.get(c);
 			if (!columnImpl.visible)
