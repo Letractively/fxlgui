@@ -27,10 +27,24 @@ import co.fxl.gui.table.scroll.api.IScrollTableWidget.IColumnWidthInjector;
 
 public class ColumnWidths implements IColumnWidthInjector {
 
+	public interface IColumnWidthInjectorFactory {
+
+		IColumnWidthInjector newColumnWidths();
+	}
+
 	// TODO FilterQueryDisplayData-Computation-Unit verwenden
 
+	public static IColumnWidthInjectorFactory factory = new IColumnWidthInjectorFactory() {
+		@Override
+		public IColumnWidthInjector newColumnWidths() {
+			return new ColumnWidths();
+		}
+	};
 	private Map<IScrollTableColumn<?>, Integer> intWidths = new HashMap<IScrollTableColumn<?>, Integer>();
 	private Map<IScrollTableColumn<?>, Double> doubleWidths = new HashMap<IScrollTableColumn<?>, Double>();
+
+	private ColumnWidths() {
+	}
 
 	@Override
 	public IColumnWidthInjector columns(List<IScrollTableColumn<?>> columns) {
@@ -95,9 +109,6 @@ public class ColumnWidths implements IColumnWidthInjector {
 			if (d != null)
 				btc.width(d);
 		}
-		if (stc.isAlignmentSpecified()) {
-			stc.forwardAlignment(btc.align());
-		}
 	}
 
 	@Override
@@ -106,5 +117,9 @@ public class ColumnWidths implements IColumnWidthInjector {
 
 	@Override
 	public void startPrepare(int width) {
+	}
+
+	public static IColumnWidthInjector newInstance() {
+		return factory.newColumnWidths();
 	}
 }

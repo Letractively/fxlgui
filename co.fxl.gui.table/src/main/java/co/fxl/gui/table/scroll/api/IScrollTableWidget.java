@@ -231,7 +231,5 @@ public interface IScrollTableWidget<T> {
 
 	IScrollTableWidget<T> subTitle(String subTitle1, String subTitle2);
 
-	IScrollTableWidget<T> columnWidths(IColumnWidthInjector columnWidths);
-
 	// IVerticalPanel editPanel();
 }

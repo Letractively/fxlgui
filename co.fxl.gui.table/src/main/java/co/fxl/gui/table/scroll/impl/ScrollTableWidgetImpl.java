@@ -181,7 +181,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private IVerticalPanel contentPanel0;
 	private boolean reduceHeightIfEmpty = false;
 	private boolean showConfiguration = true;
-	private IColumnWidthInjector columnWidths = new ColumnWidths();
+	private IColumnWidthInjector columnWidths = ColumnWidths.newInstance();
 
 	// private IVerticalPanel editPanel;
 
@@ -945,8 +945,12 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public static void prepare(IColumnWidthInjector cw,
 			ScrollTableColumnImpl columnImpl, IColumn column) {
 		columnImpl.decorator().prepare(column);
-		if (cw != null)
+		if (cw != null) {
 			cw.prepare(columnImpl, column);
+			if (columnImpl.isAlignmentSpecified()) {
+				columnImpl.forwardAlignment(column.align());
+			}
+		}
 		if (columnImpl.alignment.isSpecified()) {
 			columnImpl.alignment.forward(column.align());
 		}
@@ -1526,13 +1530,6 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		}
 		this.subTitle1 = subTitle1;
 		this.subTitle2 = subTitle2;
-		return this;
-	}
-
-	@Override
-	public IScrollTableWidget<Object> columnWidths(
-			co.fxl.gui.table.scroll.api.IScrollTableWidget.IColumnWidthInjector columnWidths) {
-		this.columnWidths = columnWidths;
 		return this;
 	}
 }
