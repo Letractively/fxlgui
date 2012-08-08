@@ -23,9 +23,9 @@ import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
-import co.fxl.gui.table.scroll.api.IScrollTableWidget.IColumnWidths;
+import co.fxl.gui.table.scroll.api.IScrollTableWidget.IColumnWidthInjector;
 
-public class ColumnWidths implements IColumnWidths {
+public class ColumnWidths implements IColumnWidthInjector {
 
 	// TODO FilterQueryDisplayData-Computation-Unit verwenden
 
@@ -33,7 +33,7 @@ public class ColumnWidths implements IColumnWidths {
 	private Map<IScrollTableColumn<?>, Double> doubleWidths = new HashMap<IScrollTableColumn<?>, Double>();
 
 	@Override
-	public IColumnWidths columns(List<IScrollTableColumn<?>> columns) {
+	public IColumnWidthInjector columns(List<IScrollTableColumn<?>> columns) {
 		intWidths.clear();
 		doubleWidths.clear();
 		int num = 0;

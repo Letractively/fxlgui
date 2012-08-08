@@ -38,9 +38,9 @@ import co.fxl.gui.table.util.api.IDragDropListener;
 
 public interface IScrollTableWidget<T> {
 
-	public interface IColumnWidths {
+	public interface IColumnWidthInjector {
 
-		IColumnWidths columns(List<IScrollTableColumn<?>> columns);
+		IColumnWidthInjector columns(List<IScrollTableColumn<?>> columns);
 
 		void prepare(IScrollTableColumn<?> stc, IColumn btc);
 
@@ -231,7 +231,7 @@ public interface IScrollTableWidget<T> {
 
 	IScrollTableWidget<T> subTitle(String subTitle1, String subTitle2);
 
-	IScrollTableWidget<T> columnWidths(IColumnWidths columnWidths);
+	IScrollTableWidget<T> columnWidths(IColumnWidthInjector columnWidths);
 
 	// IVerticalPanel editPanel();
 }
