@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableColumn;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IColumnWidthInjector;
 
@@ -116,10 +117,14 @@ public class ColumnWidths implements IColumnWidthInjector {
 	}
 
 	@Override
-	public void startPrepare(int width) {
+	public void startPrepare(int width, IRows<?> rows,
+			IScrollTableColumn<?> sortColumn) {
 	}
 
-	public static IColumnWidthInjector newInstance() {
-		return factory.newColumnWidths();
+	public static IColumnWidthInjector newInstance(boolean useFactory) {
+		if (useFactory)
+			return factory.newColumnWidths();
+		else
+			return new ColumnWidths();
 	}
 }
