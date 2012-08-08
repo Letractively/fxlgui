@@ -58,4 +58,7 @@ abstract class FilterTemplate<R extends IElement<R>, T> implements
 	public String name() {
 		return name;
 	}
+
+	void notifyCreate() {
+	}
 }

@@ -207,8 +207,8 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		update();
 	}
 
-	FilterTemplate<?, ?> addFilter(Class<?> contentType,
-			final String name, List<Object> values, List<Object> preset,
+	FilterTemplate<?, ?> addFilter(Class<?> contentType, final String name,
+			List<Object> values, List<Object> preset,
 			IAdapter<Object, Object> adapter) {
 		assert name != null : contentType.getName();
 		FilterTemplate<?, ?> filter;
@@ -249,6 +249,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		activeFlags.add(false);
 		filter.validate(validation);
 		guiFilterElements.add(filter);
+		filter.notifyCreate();
 		return filter;
 	}
 
