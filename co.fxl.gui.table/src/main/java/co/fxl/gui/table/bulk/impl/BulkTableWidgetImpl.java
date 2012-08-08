@@ -499,4 +499,9 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	public IPanel<?> basePanel() {
 		return mainPanel;
 	}
+
+	@Override
+	public IBulkTableWidget updateWidths() {
+		return this;
+	}
 }
