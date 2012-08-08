@@ -22,23 +22,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ColumnWidths {
+import co.fxl.gui.table.scroll.api.IScrollTableColumn;
+import co.fxl.gui.table.scroll.api.IScrollTableWidget.IColumnWidths;
 
-	private Map<ScrollTableColumnImpl, Integer> intWidths = new HashMap<ScrollTableColumnImpl, Integer>();
-	private Map<ScrollTableColumnImpl, Double> doubleWidths = new HashMap<ScrollTableColumnImpl, Double>();
+public class ColumnWidths implements IColumnWidths {
 
-	public ColumnWidths(boolean useMaxTokens,
-			List<ScrollTableColumnImpl> columns) {
-		
-		// TODO FilterQueryDisplayData-Computation-Unit verwenden
-		
+	// TODO FilterQueryDisplayData-Computation-Unit verwenden
+
+	private Map<IScrollTableColumn<?>, Integer> intWidths = new HashMap<IScrollTableColumn<?>, Integer>();
+	private Map<IScrollTableColumn<?>, Double> doubleWidths = new HashMap<IScrollTableColumn<?>, Double>();
+
+	@Override
+	public IColumnWidths columns(List<IScrollTableColumn<?>> columns) {
+		intWidths.clear();
+		doubleWidths.clear();
 		int num = 0;
 		double sumD = 0;
 		for (int c = 0; c < columns.size(); c++) {
-			if (!columns.get(c).visible)
+			if (!columns.get(c).visible())
 				continue;
-			ScrollTableColumnImpl columnImpl = columns.get(c);
-			Double w = columnImpl.widthDouble;
+			IScrollTableColumn<?> columnImpl = columns.get(c);
+			Double w = columnImpl.widthDouble();
 			if (w != null && w > 0) {
 				num++;
 				sumD += w;
@@ -47,38 +51,42 @@ public class ColumnWidths {
 		double avg = num > 0 ? sumD / num : -1;
 		double sum = 0;
 		for (int c = 0; c < columns.size(); c++) {
-			if (!columns.get(c).visible)
+			if (!columns.get(c).visible())
 				continue;
-			ScrollTableColumnImpl columnImpl = columns.get(c);
-			intWidths.put(columnImpl, columnImpl.widthInt);
+			IScrollTableColumn<?> columnImpl = columns.get(c);
+			intWidths.put(columnImpl, columnImpl.widthInt());
 			if (intWidths.get(columnImpl) != -1) {
 				continue;
 			}
-			double d = columnImpl.decorator().defaultWeight();
+			double d = ((ScrollTableColumnImpl) columnImpl).decorator()
+					.defaultWeight();
 			if (avg != -1) {
-				d = columnImpl.widthDouble == -1 ? avg : columnImpl.widthDouble;
+				d = columnImpl.widthDouble() == -1 ? avg : columnImpl
+						.widthDouble();
 			}
 			doubleWidths.put(columnImpl, d);
 			sum += d;
 		}
 		for (int c = 0; c < columns.size(); c++) {
-			ScrollTableColumnImpl columnImpl = columns.get(c);
-			if (!columnImpl.visible)
+			IScrollTableColumn<?> columnImpl = columns.get(c);
+			if (!columnImpl.visible())
 				continue;
 			Double w = doubleWidths.get(columnImpl);
 			if (w != null && w != -1)
 				doubleWidths.put(columnImpl, w / sum);
 		}
 		for (int c = 0; c < columns.size(); c++) {
-			ScrollTableColumnImpl columnImpl = columns.get(c);
-			if (!columnImpl.visible)
+			IScrollTableColumn<?> columnImpl = columns.get(c);
+			if (!columnImpl.visible())
 				continue;
 		}
+		return this;
 	}
 
-	public void prepare(ScrollTableColumnImpl stc,
+	@Override
+	public void prepare(IScrollTableColumn<?> stc,
 			co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn btc) {
-		stc.decorator().prepare(btc);
+		((ScrollTableColumnImpl) stc).decorator().prepare(btc);
 		Integer i = intWidths.get(stc);
 		if (i != null && i != -1)
 			btc.width((int) i);
@@ -87,8 +95,16 @@ public class ColumnWidths {
 			if (d != null)
 				btc.width(d);
 		}
-		if (stc.alignment.isSpecified()) {
-			stc.alignment.forward(btc.align());
+		if (stc.isAlignmentSpecified()) {
+			stc.forwardAlignment(btc.align());
 		}
+	}
+
+	@Override
+	public void notifyColumnSelectionChange() {
+	}
+
+	@Override
+	public void startPrepare() {
 	}
 }
