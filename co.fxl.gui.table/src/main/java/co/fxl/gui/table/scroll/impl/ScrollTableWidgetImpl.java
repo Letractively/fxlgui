@@ -31,6 +31,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
@@ -199,8 +200,15 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			widgetTitle.commandsOnTop();
 			widgetTitle.hyperlinkVisible(false);
 			widgetTitle.spacing(0);
-			this.container = widgetTitle.content().panel().vertical();
+			container = widgetTitle.content().panel().vertical();
 			// editPanel = container.add().panel().vertical().visible(false);
+			StatusDisplay.instance().addResizeListener(new IResizeListener() {
+				@Override
+				public boolean onResize(int width, int height) {
+					updateTable();
+					return container.visible();
+				}
+			}).linkLifecycle(container);
 		}
 		return widgetTitle;
 	}
