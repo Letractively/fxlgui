@@ -35,4 +35,6 @@ interface FilterPart<T> extends IUpdateable<String> {
 	void validate(Validation validation);
 
 	String name();
+
+	void notifyCreate();
 }
