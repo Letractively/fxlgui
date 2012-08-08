@@ -921,7 +921,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private void updateHeaderRow(IBulkTableWidget grid) {
 		columnWidths.columns((List) columns);
 		int current = 0;
-		columnWidths.startPrepare();
+		columnWidths.startPrepare(contentPanel.width());
 		for (int c = 0; c < columns.size(); c++) {
 			if (!columns.get(c).visible)
 				continue;
