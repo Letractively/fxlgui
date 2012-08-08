@@ -18,10 +18,11 @@
  */
 package co.fxl.gui.gwt;
 
+@SuppressWarnings("rawtypes")
 aspect GWTTextInputAutomation {
 
-	after(@SuppressWarnings("rawtypes") GWTTextInput element) :
-	execution(GWTTextInput.new(GWTContainer))
+	after(GWTTextInput element) :
+	execution(GWTTextInput.new(..))
 	&& this(element) {
 		GWTTextInputKeyPressHandler.create(element);
 	}
