@@ -504,4 +504,9 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	public void forwardAlignment(IAlignment<?> align) {
 		alignment.forward(align);
 	}
+
+	@Override
+	public int index() {
+		return index;
+	}
 }

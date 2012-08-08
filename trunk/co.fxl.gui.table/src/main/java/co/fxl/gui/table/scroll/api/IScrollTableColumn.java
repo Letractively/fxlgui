@@ -59,4 +59,6 @@ public interface IScrollTableColumn<T> extends IColumn<T> {
 
 	void forwardAlignment(IAlignment<?> align);
 
+	int index();
+
 }
