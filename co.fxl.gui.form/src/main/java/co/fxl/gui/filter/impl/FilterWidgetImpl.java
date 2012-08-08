@@ -164,16 +164,16 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		listeners.get(0).onApply(constraints, cb);
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "rawtypes" })
 	@Override
 	public IFilterConstraints constraints() {
-		List<FilterTemplate<?, Object>> activeFilters = new LinkedList<FilterTemplate<?, Object>>();
+		List<FilterTemplate> activeFilters = new LinkedList<FilterTemplate>();
 		for (FilterPart<?> filter : guiFilterElements) {
 			boolean active = filter.update();
 			if (guiFilterElements.indexOf(filter) == 0 && showConfiguration)
 				active = false;
 			if (active)
-				activeFilters.add((FilterTemplate<?, Object>) filter);
+				activeFilters.add((FilterTemplate) filter);
 		}
 		FilterConstraintsImpl constraints = new FilterConstraintsImpl(
 				configuration);
@@ -184,7 +184,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		if (this.constraints != null && this.constraints.rowIterator() != null) {
 			constraints.rowIterator(this.constraints.rowIterator());
 		}
-		for (FilterTemplate<?, Object> filter : activeFilters) {
+		for (FilterTemplate filter : activeFilters) {
 			constraints.add(filter.asConstraint());
 		}
 		if (sizeFilter != null)
@@ -207,11 +207,11 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		update();
 	}
 
-	FilterPart<?> addFilter(Class<?> contentType, final String name,
-			List<Object> values, List<Object> preset,
-			IAdapter<Object, Object> adapter) {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	FilterPart addFilter(Class contentType, final String name, List values,
+			List preset, IAdapter adapter) {
 		assert name != null : contentType.getName();
-		FilterPart<?> filter;
+		FilterPart filter;
 		if (preset != null) {
 			filter = new RelationFilter(this, grid, name,
 					guiFilterElements.size(), preset, adapter,
@@ -301,6 +301,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		return update();
 	}
 
+	@SuppressWarnings("rawtypes")
 	private IFilterWidget update() {
 		grid = mainPanel.filterGrid();
 		addHyperlinks();
@@ -318,7 +319,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		FilterPart<?> firstConstraint = null;
 		if (constraints != null) {
 			for (FilterPart<?> f : guiFilterElements) {
-				FilterTemplate<?, ?> ft = (FilterTemplate<?, ?>) f;
+				FilterTemplate ft = (FilterTemplate) f;
 				boolean c = ft.fromConstraint((IFilterConstraints) constraints);
 				constrained = constrained | c;
 				if (f instanceof RelationFilter)
