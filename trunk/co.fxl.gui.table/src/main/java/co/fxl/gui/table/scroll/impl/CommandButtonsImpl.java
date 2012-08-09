@@ -30,7 +30,6 @@ import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.table.api.ISelection.IMultiSelection.IChangeListener;
-import co.fxl.gui.table.api.ISelection.ISingleSelection.ISelectionListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 import co.fxl.gui.table.scroll.api.IRows;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IButtonPanelDecorator;
@@ -44,40 +43,40 @@ import co.fxl.gui.table.scroll.api.IScrollTableWidget.IScrollTableClickListener;
 public class CommandButtonsImpl implements ICommandButtons<Object>,
 		IButtonPanelDecorator, IChangeListener<Object> {
 
-	class Edit {
-
-		private int previousEdit = -1;
-
-		Edit() {
-			edit = clickable(panel.add(), "Edit", true);
-			edit.addClickListener(new IClickListener() {
-
-				@Override
-				public void onClick() {
-					if (previousEdit != -1) {
-						// TODO save
-						widget.editable(previousEdit, false);
-					}
-					previousEdit = selectionIndex();
-					widget.editable(previousEdit, true);
-					clickable(edit, "Save");
-					// TODO validation
-				}
-			});
-			edit.clickable(!widget.preselectedList.isEmpty());
-			widget.selection().single()
-					.addSelectionListener(new ISelectionListener<Object>() {
-
-						@Override
-						public void onSelection(int index, Object selection) {
-							if (previousEdit != -1) {
-								widget.editable(previousEdit, false);
-								clickable(edit, "Edit");
-							}
-						}
-					});
-		}
-	}
+	// class Edit {
+	//
+	// private int previousEdit = -1;
+	//
+	// Edit() {
+	// edit = clickable(panel.add(), "Edit", true);
+	// edit.addClickListener(new IClickListener() {
+	//
+	// @Override
+	// public void onClick() {
+	// if (previousEdit != -1) {
+	// // TODO save
+	// widget.editable(previousEdit, false);
+	// }
+	// previousEdit = selectionIndex();
+	// widget.editable(previousEdit, true);
+	// clickable(edit, "Save");
+	// // TODO validation
+	// }
+	// });
+	// edit.clickable(!widget.preselectedList.isEmpty());
+	// widget.selection().single()
+	// .addSelectionListener(new ISelectionListener<Object>() {
+	//
+	// @Override
+	// public void onSelection(int index, Object selection) {
+	// if (previousEdit != -1) {
+	// widget.editable(previousEdit, false);
+	// clickable(edit, "Edit");
+	// }
+	// }
+	// });
+	// }
+	// }
 
 	private int selectionIndex() {
 		if (selectionList.isEmpty())
@@ -187,12 +186,12 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		return link;
 	}
 
-	private static IClickable<?> clickable(IClickable<?> c, String string) {
-		Link l = (Link) c;
-		l.image.resource(string.toLowerCase() + ".png");
-		l.label.text(string);
-		return l;
-	}
+	// private static IClickable<?> clickable(IClickable<?> c, String string) {
+	// Link l = (Link) c;
+	// l.image.resource(string.toLowerCase() + ".png");
+	// l.label.text(string);
+	// return l;
+	// }
 
 	private final IDecorator DEFAULT_DECORATOR = new IDecorator() {
 		@Override
