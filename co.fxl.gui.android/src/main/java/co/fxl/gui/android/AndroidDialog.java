@@ -24,6 +24,7 @@ import android.content.DialogInterface.OnClickListener;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 class AndroidDialog implements IDialog {
 
@@ -212,6 +213,11 @@ class AndroidDialog implements IDialog {
 
 	@Override
 	public boolean visible() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IDialog addVisibleListener(IUpdateListener<Boolean> l) {
 		throw new UnsupportedOperationException();
 	}
 }

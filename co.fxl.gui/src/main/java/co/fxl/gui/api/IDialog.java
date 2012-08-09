@@ -19,6 +19,7 @@
 package co.fxl.gui.api;
 
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 public interface IDialog {
 
@@ -86,4 +87,6 @@ public interface IDialog {
 	IDialog autoHide(boolean autoHide);
 
 	boolean visible();
+
+	IDialog addVisibleListener(IUpdateListener<Boolean> l);
 }
