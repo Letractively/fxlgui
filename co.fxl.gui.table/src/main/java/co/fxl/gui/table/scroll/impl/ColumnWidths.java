@@ -127,4 +127,8 @@ public class ColumnWidths implements IColumnWidthInjector {
 		else
 			return new ColumnWidths();
 	}
+
+	@Override
+	public void notifyVisible(IScrollTableColumn<?> c) {
+	}
 }

@@ -172,6 +172,7 @@ public class ScalingColumnSelection {
 					if (allInvisible)
 						c.visible = true;
 					else {
+						widget.notifyVisible(c);
 						clickListener.onClick();
 					}
 				}
