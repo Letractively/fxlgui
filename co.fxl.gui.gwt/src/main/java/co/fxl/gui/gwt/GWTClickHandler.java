@@ -104,7 +104,7 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 		}
 
 		void stopPropagation() {
-			original.preventDefault();
+			original.stopPropagation();
 		}
 
 	}
