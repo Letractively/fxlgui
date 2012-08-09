@@ -230,4 +230,10 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	public String text() {
 		return textField.text();
 	}
+
+	@Override
+	public IMultiComboBoxWidget validate(Validation validation) {
+		validation.linkInput(textField, false);
+		return this;
+	}
 }

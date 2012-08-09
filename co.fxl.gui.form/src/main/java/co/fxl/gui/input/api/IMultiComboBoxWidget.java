@@ -24,4 +24,6 @@ public interface IMultiComboBoxWidget extends IUpdateable<String[]> {
 	IUpdateable<String[]> addTextUpdateListener(IUpdateListener<String> listener);
 
 	IMultiComboBoxWidget editable(boolean editable);
+
+	IMultiComboBoxWidget validate(Validation validation);
 }
