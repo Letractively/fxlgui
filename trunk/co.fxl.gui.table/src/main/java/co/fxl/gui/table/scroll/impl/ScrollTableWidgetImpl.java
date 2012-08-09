@@ -1583,4 +1583,11 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public void notifyVisible(ScrollTableColumnImpl c) {
 		columnWidths.notifyVisible(c);
 	}
+
+	@Override
+	public IScrollTableWidget<Object> initialAutoComputeWidths(
+			boolean autoComputeInitialWidths) {
+		columnWidths.notifyColumnSelectionChange();
+		return this;
+	}
 }
