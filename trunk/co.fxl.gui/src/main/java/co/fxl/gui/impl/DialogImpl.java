@@ -29,6 +29,7 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 
 public class DialogImpl implements IDialog {
@@ -372,5 +373,11 @@ public class DialogImpl implements IDialog {
 	@Override
 	public boolean visible() {
 		return popUp != null && popUp.visible();
+	}
+
+	@Override
+	public IDialog addVisibleListener(IUpdateListener<Boolean> l) {
+		popUp.addVisibleListener(l);
+		return this;
 	}
 }
