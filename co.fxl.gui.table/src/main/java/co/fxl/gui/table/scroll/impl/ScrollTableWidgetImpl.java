@@ -1590,4 +1590,10 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		columnWidths.notifyColumnSelectionChange();
 		return this;
 	}
+
+	@Override
+	public IScrollTableWidget<Object> noAutoAdjustmentOfColumnWidths() {
+		columnWidths = ColumnWidths.newInstance(false);
+		return this;
+	}
 }
