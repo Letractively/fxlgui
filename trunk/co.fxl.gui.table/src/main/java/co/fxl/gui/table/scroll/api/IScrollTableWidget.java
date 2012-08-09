@@ -47,6 +47,8 @@ public interface IScrollTableWidget<T> {
 
 		void notifyColumnSelectionChange();
 
+		void notifyVisible(IScrollTableColumn<?> c);
+
 		void startPrepare(int width, IRows<?> rows,
 				IScrollTableColumn<?> sortColumn);
 

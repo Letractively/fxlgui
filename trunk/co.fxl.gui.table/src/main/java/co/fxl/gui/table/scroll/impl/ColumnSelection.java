@@ -152,6 +152,7 @@ public class ColumnSelection {
 					if (allInvisible)
 						c.visible = true;
 					else {
+						widget.notifyVisible(c);
 						clickListener.onClick();
 					}
 				}

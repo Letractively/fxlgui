@@ -19,6 +19,8 @@ public interface TableWidgetAdp {
 
 	IContainer getContainer();
 
+	void notifyVisible(ScrollTableColumnImpl c);
+
 //	void nextTimeShowPopUp(boolean b);
 //
 //	boolean nextTimeShowPopUp();
