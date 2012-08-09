@@ -239,7 +239,10 @@ public interface IScrollTableWidget<T> {
 
 	IScrollTableWidget<T> orderColumns(Map<String, Integer> columnOrder);
 
-	IScrollTableWidget<T> initialAutoComputeWidths(boolean autoComputeInitialWidths);
+	IScrollTableWidget<T> initialAutoComputeWidths(
+			boolean autoComputeInitialWidths);
+
+	IScrollTableWidget<T> noAutoAdjustmentOfColumnWidths();
 
 	// IVerticalPanel editPanel();
 }
