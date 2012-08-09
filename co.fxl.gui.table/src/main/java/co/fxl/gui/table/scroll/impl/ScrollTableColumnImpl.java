@@ -506,7 +506,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	}
 
 	@Override
-	public int index() {
+	public int contentIndex() {
 		return index;
 	}
 }

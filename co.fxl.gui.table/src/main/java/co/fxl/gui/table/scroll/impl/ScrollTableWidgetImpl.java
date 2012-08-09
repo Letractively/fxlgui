@@ -19,6 +19,8 @@
 package co.fxl.gui.table.scroll.impl;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,7 +61,6 @@ import co.fxl.gui.impl.StatusDisplay;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.table.api.ISelection;
-import co.fxl.gui.table.bulk.api.IBulkTableCell;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ILabelMouseListener;
@@ -1298,21 +1299,21 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		return cell;
 	}
 
-	void editable(int gridRowIndex, boolean editable) {
-		for (ScrollTableColumnImpl c : columns) {
-			if (c.editable) {
-				IBulkTableCell cell = grid.cell(c.index, gridRowIndex);
-				IContainer container = cell.container().clear();
-				if (editable) {
-					container.textField().text("edit");
-				} else {
-					int dataRow = convert2TableRow(gridRowIndex);
-					c.decorate(rows.identifier(dataRow), cell,
-							rows.row(dataRow)[c.index]);
-				}
-			}
-		}
-	}
+	// void editable(int gridRowIndex, boolean editable) {
+	// for (ScrollTableColumnImpl c : columns) {
+	// if (c.editable) {
+	// IBulkTableCell cell = grid.cell(c.index, gridRowIndex);
+	// IContainer container = cell.container().clear();
+	// if (editable) {
+	// container.textField().text("edit");
+	// } else {
+	// int dataRow = convert2TableRow(gridRowIndex);
+	// c.decorate(rows.identifier(dataRow), cell,
+	// rows.row(dataRow)[c.index]);
+	// }
+	// }
+	// }
+	// }
 
 	@Override
 	public co.fxl.gui.table.scroll.api.IScrollTableWidget.ICommandButtons<Object> commandButtons() {
@@ -1446,11 +1447,10 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		return this;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<IScrollTableColumn<Object>> columns() {
-		List<IScrollTableColumn<Object>> columns = new LinkedList<IScrollTableColumn<Object>>();
-		columns.addAll(this.columns);
-		return columns;
+		return (List) columns;
 	}
 
 	@Override
@@ -1550,6 +1550,31 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> width(int width) {
 		this.widthDelta = StatusDisplay.instance().width() - width;
+		return this;
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public IScrollTableWidget<Object> orderColumns(
+			final Map<String, Integer> columnOrder) {
+		if (!columnOrder.isEmpty()) {
+			final List<ScrollTableColumnImpl> backup = new LinkedList<ScrollTableColumnImpl>(
+					columns);
+			Collections.sort(columns, new Comparator<ScrollTableColumnImpl>() {
+				@Override
+				public int compare(ScrollTableColumnImpl o1,
+						ScrollTableColumnImpl o2) {
+					Integer i1 = columnOrder.get(o1.name());
+					if (i1 == null)
+						i1 = backup.indexOf(o1);
+					Integer i2 = columnOrder.get(o2.name());
+					if (i2 == null)
+						i2 = backup.indexOf(o2);
+					return i1 - i2;
+				}
+			});
+			columnWidths.columns((List) columns);
+		}
 		return this;
 	}
 }

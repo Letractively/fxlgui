@@ -19,6 +19,7 @@
 package co.fxl.gui.table.scroll.api;
 
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable;
@@ -233,6 +234,8 @@ public interface IScrollTableWidget<T> {
 	IScrollTableWidget<T> subTitle(String subTitle1, String subTitle2);
 
 	IScrollTableWidget<T> width(int width);
+
+	IScrollTableWidget<T> orderColumns(Map<String, Integer> columnOrder);
 
 	// IVerticalPanel editPanel();
 }
