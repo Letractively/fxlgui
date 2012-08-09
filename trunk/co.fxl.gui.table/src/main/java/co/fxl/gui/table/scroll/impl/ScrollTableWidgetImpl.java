@@ -1356,6 +1356,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	void visible(IRows<Object> result) {
+		columnWidths.notifyColumnSelectionChange();
 		if (result != null)
 			rows(result);
 		visible(true);
