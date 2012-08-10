@@ -81,6 +81,8 @@ public class CommandLink implements IClickable<IClickable<?>> {
 			label.clickable(clickable);
 		if (image != null)
 			image.clickable(clickable);
+		if (fp != null)
+			fp.clickable(clickable);
 		iPanel.clickable(clickable);
 		String tooltip = clickable ? toolTipClickable : toolTipNotClickable;
 		if (tooltip != null) {
@@ -120,6 +122,8 @@ public class CommandLink implements IClickable<IClickable<?>> {
 		label.addClickListener(clickListener);
 		if (image != null)
 			image.addClickListener(clickListener);
+		if (fp != null)
+			fp.addClickListener(clickListener);
 		iPanel.addClickListener(clickListener);
 		clickListeners.add(clickListener);
 		return null;
