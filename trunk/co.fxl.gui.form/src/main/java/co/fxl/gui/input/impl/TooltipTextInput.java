@@ -80,6 +80,10 @@ public class TooltipTextInput implements IUpdateable<String> {
 	}
 
 	public TooltipTextInput clear() {
+		if (TooltipTextInput.this.tooltip == null) {
+			ti.text("");
+			return this;
+		}
 		setTooltipActive(true);
 		ti.text(tooltip);
 		return this;

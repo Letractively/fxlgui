@@ -155,7 +155,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 		autoResize(e, 0);
 	}
 
-	public void autoResize(final IElement<?> e, final int dec) {
+	private void autoResize(final IElement<?> e, final int dec) {
 		autoResize(e, dec, false);
 	}
 
