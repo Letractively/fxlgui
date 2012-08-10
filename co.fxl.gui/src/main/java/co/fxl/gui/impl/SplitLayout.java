@@ -82,7 +82,7 @@ public class SplitLayout implements IResizeListener {
 		if (!panel.visible())
 			return false;
 		resizeSidePanel(StatusDisplay.instance().height());
-		cell0.width(StatusDisplay.instance().width() - WIDTH_SIDE_PANEL);
+		cell0.width(mainPanelWidth());
 		return true;
 	}
 
