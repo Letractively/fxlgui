@@ -27,10 +27,6 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class SplitLayout implements IResizeListener {
 
-	// TODO Code Quality Fine-Tuning: nice-2-have: SplitLayout consists of 3
-	// cells, coupled to height of
-	// display
-
 	// TODO SWING-FXL: minimize doesn't work
 
 	public static final int DECREMENT = 40 - 17;
