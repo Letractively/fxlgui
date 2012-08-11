@@ -18,12 +18,31 @@
  */
 package co.fxl.gui.automation.impl;
 
+import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.automation.api.IAutomationListener;
 
 public class Automation {
 
 	public final static boolean ENABLED = true;
-	private static IAutomationListener instance;
+	private static IAutomationListener instance = new IAutomationListener() {
+
+		@Override
+		public void notifyNew(IElement<?> e) {
+		}
+
+		@Override
+		public void notifyClick(IElement<?> e, Key key) {
+		}
+
+		@Override
+		public void notifyClick(IGridPanel g, int x, int y, Key key) {
+		}
+
+		@Override
+		public void notifyValueChange(IElement<?> e) {
+		}
+	};
 
 	public static IAutomationListener listener() {
 		return instance;
