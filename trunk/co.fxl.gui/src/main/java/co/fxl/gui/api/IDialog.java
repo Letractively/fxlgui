@@ -89,4 +89,12 @@ public interface IDialog {
 	boolean visible();
 
 	IDialog addVisibleListener(IUpdateListener<Boolean> l);
+
+	int height();
+
+	int offsetY();
+
+	int offsetX();
+
+	int width();
 }

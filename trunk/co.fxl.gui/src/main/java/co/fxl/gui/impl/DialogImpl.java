@@ -380,4 +380,24 @@ public class DialogImpl implements IDialog {
 		popUp.addVisibleListener(l);
 		return this;
 	}
+
+	@Override
+	public int height() {
+		return popUp.height();
+	}
+
+	@Override
+	public int offsetY() {
+		return popUp.offsetY();
+	}
+
+	@Override
+	public int offsetX() {
+		return popUp.offsetX();
+	}
+
+	@Override
+	public int width() {
+		return popUp.width();
+	}
 }
