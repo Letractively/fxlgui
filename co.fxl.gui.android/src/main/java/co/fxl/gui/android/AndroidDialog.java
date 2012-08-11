@@ -220,4 +220,24 @@ class AndroidDialog implements IDialog {
 	public IDialog addVisibleListener(IUpdateListener<Boolean> l) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public int height() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public int offsetY() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public int offsetX() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public int width() {
+		throw new UnsupportedOperationException();
+	}
 }
