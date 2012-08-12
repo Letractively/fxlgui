@@ -191,7 +191,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 				if (text != null) {
 					String color = colorAdapter.color(identifier, value);
 					String fontColor = "white";
-					if (color.equals("white") || color.equals("#FFFFFF"))
+					if (color.equals("") || color.equals("#FFFFFF"))
 						fontColor = "black";
 					String html = "<div class=\"gwt-HTML gwt-Label-FXL\" style=\"font-weight:bold; display: inline-block; color:"
 							+ fontColor
