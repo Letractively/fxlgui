@@ -129,7 +129,11 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		@Override
 		public void decorate(Object identifier, IBulkTableCell cell, Date value) {
 			String text = value == null ? null : format.format(value);
-			cell.text(text);
+			if (text == null || !STYLE_NUMBERS_AND_DATES)
+				cell.text(text);
+			else
+				cell.html("<div style='font-weight: bold; font-size: 11px; color: gray'>"
+						+ text + "</div>");
 		}
 
 		@Override
@@ -149,7 +153,11 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		public void decorate(Object identifier, IBulkTableCell cell,
 				Number value) {
 			String text = value == null ? null : String.valueOf(value);
-			cell.text(text);
+			if (text == null || !STYLE_NUMBERS_AND_DATES)
+				cell.text(text);
+			else
+				cell.html("<div style='font-weight: bold; font-size: 11px'>"
+						+ text + "</div>");
 		}
 
 		@Override
@@ -169,8 +177,9 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		int maxTokens();
 	}
 
-	public static final boolean SHOW_CUSTOM_LISTS_STYLED = true;
-	public static final String BORDER_RADIUS_ATTRIBUTE = Env.is(Env.FIREFOX) ? "-moz-border-radius"
+	private static final boolean STYLE_NUMBERS_AND_DATES = false;
+	private static final boolean STYLE_CUSTOM_LISTS = true;
+	private static final String BORDER_RADIUS_ATTRIBUTE = Env.is(Env.FIREFOX) ? "-moz-border-radius"
 			: "border-radius";
 
 	public class StringDecorator extends DefaultDecorator<String> {
@@ -190,7 +199,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		public void decorate(final Object identifier, IBulkTableCell cell,
 				String value) {
 			String text = (String) value;
-			if (SHOW_CUSTOM_LISTS_STYLED && isShort && colorAdapter != null) {
+			if (STYLE_CUSTOM_LISTS && isShort && colorAdapter != null) {
 				if (text != null) {
 					String color = colorAdapter.color(identifier, value);
 					String fontColor = "white";
