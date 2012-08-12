@@ -31,6 +31,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.AlignmentMemento;
 import co.fxl.gui.impl.AlignmentMemento.Type;
+import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.table.api.IColumn;
@@ -169,6 +170,8 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	}
 
 	public static final boolean SHOW_CUSTOM_LISTS_STYLED = true;
+	public static final String BORDER_RADIUS_ATTRIBUTE = Env.is(Env.FIREFOX) ? "-moz-border-radius"
+			: "border-radius";
 
 	public class StringDecorator extends DefaultDecorator<String> {
 
@@ -191,14 +194,20 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 				if (text != null) {
 					String color = colorAdapter.color(identifier, value);
 					String fontColor = "white";
-					if (color.equals("") || color.equals("#FFFFFF"))
+					if (color == null) {
+						color = "";
 						fontColor = "black";
+					} else {
+						color = "background-color: " + color;
+					}
 					String html = "<div class=\"gwt-HTML gwt-Label-FXL\" style=\"font-weight:bold; display: inline-block; color:"
 							+ fontColor
-							+ "; border-radius: 3px; background-color: "
+							+ "; "
+							+ BORDER_RADIUS_ATTRIBUTE
+							+ ": 3px; "
 							+ color
 							+ "; padding: 1px 5px 2px 5px; font-size: 10px; \">"
-							+ text.toUpperCase() + "</div>";
+							+ text + "</div>";
 					cell.html(html);
 				} else
 					cell.text(null);
