@@ -168,6 +168,8 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		int maxTokens();
 	}
 
+	public static final boolean SHOW_CUSTOM_LISTS_STYLED = true;
+
 	public class StringDecorator extends DefaultDecorator<String> {
 
 		private double weight = WEIGHT_TEXT;
@@ -185,8 +187,25 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		public void decorate(final Object identifier, IBulkTableCell cell,
 				String value) {
 			String text = (String) value;
-			injectColor(identifier, cell, text);
-			cell.text(text);
+			if (SHOW_CUSTOM_LISTS_STYLED && isShort && colorAdapter != null) {
+				if (text != null) {
+					String color = colorAdapter.color(identifier, value);
+					String fontColor = "white";
+					if (color.equals("white") || color.equals("#FFFFFF"))
+						fontColor = "black";
+					String html = "<div class=\"gwt-HTML gwt-Label-FXL\" style=\"font-weight:bold; display: inline-block; color:"
+							+ fontColor
+							+ "; border-radius: 3px; background-color: "
+							+ color
+							+ "; padding: 1px 5px 2px 5px; font-size: 10px; \">"
+							+ text.toUpperCase() + "</div>";
+					cell.html(html);
+				} else
+					cell.text(null);
+			} else {
+				injectColor(identifier, cell, text);
+				cell.text(text);
+			}
 			if (updateListener != null && updateListener.isEditable(identifier)) {
 				cell.updateListener(new IUpdateListener<String>() {
 
