@@ -38,7 +38,9 @@ privileged aspect BulkTableWidgetImplAutomation {
 						BulkTableWidgetImpl w = (BulkTableWidgetImpl) tree;
 						IAutomationAdapter adp = Display.instance().service(
 								IAutomationAdapter.class);
-						adp.click(w.grid, column, row, key);
+						if (column < w.columnCount())
+							adp.click(w.grid, column, row, key);
+						// TODO report error
 					}
 				});
 	}
