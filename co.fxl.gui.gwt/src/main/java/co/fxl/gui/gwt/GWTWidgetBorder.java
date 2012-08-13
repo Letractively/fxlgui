@@ -49,7 +49,8 @@ public class GWTWidgetBorder extends GWTBorder {
 			if (GWTDisplay.isInternetExplorer8OrBelow()) {
 				width(1);
 			} else
-				widget.addStyleName(pixel==4 ? "shadowblur":"shadowblurLight");
+				widget.addStyleName(pixel == 4 ? "shadowblur"
+						: "shadowblurLight");
 		}
 	}
 
@@ -57,7 +58,7 @@ public class GWTWidgetBorder extends GWTBorder {
 	public IBorder remove() {
 		if (lastBorderType != null) {
 			if (!lastBorderType.equals(borderType))
-				DOM.setStyleAttribute(element, lastBorderType, "none");
+				element.getStyle().clearProperty(lastBorderType);
 			else if (lastBorderType.equals(GWTBorder.BORDER_BOTTOM_LESS)) {
 				DOM.setStyleAttribute(element, "borderTop", "none");
 				DOM.setStyleAttribute(element, "borderLeft", "none");
@@ -72,18 +73,20 @@ public class GWTWidgetBorder extends GWTBorder {
 	@Override
 	protected void update() {
 		remove();
-		if (top)
-			DOM.setStyleAttribute(element, "borderTop", width + "px " + color
-					+ " " + style);
-		if (left)
-			DOM.setStyleAttribute(element, "borderLeft", width + "px " + color
-					+ " " + style);
-		if (right)
-			DOM.setStyleAttribute(element, "borderRight", width + "px " + color
-					+ " " + style);
-		if (bottom)
-			DOM.setStyleAttribute(element, "borderBottom", width + "px "
-					+ color + " " + style);
+		if (!top || !left || !right || !bottom) {
+			if (top)
+				DOM.setStyleAttribute(element, "borderTop", width + "px "
+						+ color + " " + style);
+			if (left)
+				DOM.setStyleAttribute(element, "borderLeft", width + "px "
+						+ color + " " + style);
+			if (right)
+				DOM.setStyleAttribute(element, "borderRight", width + "px "
+						+ color + " " + style);
+			if (bottom)
+				DOM.setStyleAttribute(element, "borderBottom", width + "px "
+						+ color + " " + style);
+		}
 		if (borderType.equals(GWTBorder.BORDER_BOTTOM_LESS)) {
 			DOM.setStyleAttribute(element, "borderTop", width + "px " + color
 					+ " " + style);
