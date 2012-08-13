@@ -89,23 +89,21 @@ public class FormWidgetImpl implements IFormWidget {
 	private IGridPanel bottomPanel;
 
 	protected FormWidgetImpl(IContainer panel) {
-		widgetTitle = new WidgetTitle(panel.panel(), false)// .grayBackground()
-				.commandsOnTop().spacing(0);
+		widgetTitle = new WidgetTitle(panel.panel(), false).commandsOnTop()
+				.spacing(0);
 		widgetTitle.foldable(false);
 	}
 
 	FormEntryLabel addFormEntryLabel(String name, int gridIndex) {
 		IGridPanel grid = grid();
 		int column = 0;
-		IGridCell cell = grid.cell(column, gridIndex);
-		cell.align().end();// .height(HEIGHT_CELL);
+		IGridCell cell = grid.cell(column, gridIndex).align().end();
 		if (fixLabelWidth != -1)
 			cell.width(fixLabelWidth);
-		ILabel formEntryLabel = cell.label();
-		formEntryLabel.autoWrap(FIXED_WIDTH);
-		formEntryLabel.text(name);
-		formEntryLabel.font().pixel(11);
-		return new FormEntryLabel(cell, formEntryLabel);
+		ILabel l = cell.label().autoWrap(FIXED_WIDTH).text(name);
+		l.font().pixel(11);
+		l.margin().right(4);
+		return new FormEntryLabel(cell, l);
 	}
 
 	private IContainer container(int gridIndex) {
