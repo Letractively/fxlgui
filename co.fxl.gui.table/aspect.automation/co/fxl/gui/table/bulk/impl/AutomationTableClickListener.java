@@ -25,6 +25,10 @@ import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableClickListener;
 
 public class AutomationTableClickListener implements ITableClickListener {
+	
+//	public interface ITableWidgetAdp {
+//		
+//	}
 
 	private IBulkTableWidget e;
 	private Key key;
