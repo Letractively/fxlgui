@@ -104,7 +104,7 @@ public class FormWidgetImpl implements IFormWidget {
 		ILabel formEntryLabel = cell.label();
 		formEntryLabel.autoWrap(FIXED_WIDTH);
 		formEntryLabel.text(name);
-		formEntryLabel.font().pixel(12);
+		formEntryLabel.font().pixel(11);
 		return new FormEntryLabel(cell, formEntryLabel);
 	}
 

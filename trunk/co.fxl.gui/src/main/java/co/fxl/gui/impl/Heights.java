@@ -24,6 +24,7 @@ import co.fxl.gui.api.IButton;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IComboBox;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
@@ -50,6 +51,7 @@ public class Heights {
 	public void decorate(IComboBox textField) {
 		decorateHeight(textField);
 		styleColor(textField);
+		decoratePadding(textField);
 	}
 
 	public void styleColor(IColored label) {
@@ -63,6 +65,7 @@ public class Heights {
 		// Style.Element.BORDER);
 		IBorder border = bordered.border();
 		border.color().rgb(211, 211, 211);
+//		border.style().rounded();
 		return border;
 	}
 
@@ -77,12 +80,18 @@ public class Heights {
 		} else {
 			decorateHeight(textField);
 			styleColor(textField);
+			decoratePadding(textField);
 		}
+	}
+
+	private void decoratePadding(IElement<?> e) {
+//		e.padding().top(0).right(0).bottom(0).left(3);
 	}
 
 	public Heights decorate(ITextArea textField) {
 		styleColor(textField);
 		styleInputBorder((IBordered) textField);
+		decoratePadding(textField);
 		return this;
 	}
 
@@ -94,6 +103,7 @@ public class Heights {
 	public void decorate(IPasswordField textField) {
 		decorateHeight(textField);
 		styleColor(textField);
+		decoratePadding(textField);
 	}
 
 	public void decorateHeight(IPasswordField textField) {
@@ -128,6 +138,7 @@ public class Heights {
 
 	public void decorate(ICheckBox c) {
 		c.height(inc + COMBOBOX_HEIGHT);
+		decoratePadding(c);
 	}
 
 	public IBorder decorateBorder(IBordered border) {
