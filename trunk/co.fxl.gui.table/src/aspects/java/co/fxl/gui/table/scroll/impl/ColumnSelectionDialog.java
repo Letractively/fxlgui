@@ -50,7 +50,7 @@ public class ColumnSelectionDialog implements IClickListener {
 			@Override
 			public void onClick() {
 				dialog.visible(false);
-				cs.widget.update();
+				// TODO ... cs.widget.update();
 			}
 		});
 		ILinearPanel<?> p = dialog.container().panel().vertical().spacing(6)
