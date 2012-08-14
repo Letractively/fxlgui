@@ -21,7 +21,9 @@ package co.fxl.gui.table.bulk.impl;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.automation.api.IAutomationAdapter;
 import co.fxl.gui.automation.api.IAutomationListener.Key;
+import co.fxl.gui.automation.api.IBulkTableWidgetAdapter;
 import co.fxl.gui.automation.impl.Automation;
+import co.fxl.gui.automation.impl.BulkTableWidgetListener;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 
@@ -31,7 +33,7 @@ privileged aspect BulkTableWidgetImplAutomation {
 	 execution(public BulkTableWidgetImplProvider.new())
 	 && if(Automation.ENABLED) {
 		Display.instance().registerService(IBulkTableWidgetAdapter.class,
-				new IBulkTableWidgetAdapter() {
+				new IBulkTableWidgetAdapter<IBulkTableWidget>() {
 					@Override
 					public void click(IBulkTableWidget tree, int column,
 							int row, int px, int py, Key key) {
