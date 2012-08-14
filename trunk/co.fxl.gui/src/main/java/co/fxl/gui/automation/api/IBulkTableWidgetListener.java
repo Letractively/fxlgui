@@ -16,14 +16,14 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.table.bulk.impl;
+package co.fxl.gui.automation.api;
 
 import co.fxl.gui.automation.api.IAutomationListener.Key;
-import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 
-public interface IBulkTableWidgetAdapter {
+public interface IBulkTableWidgetListener<T> {
 
-	void click(IBulkTableWidget tree, int column, int row, int px, int py,
-			Key key);
+	void notifyNew(T tree);
+
+	void notifyClick(T tree, int column, int row, int px, int py, Key key);
 
 }

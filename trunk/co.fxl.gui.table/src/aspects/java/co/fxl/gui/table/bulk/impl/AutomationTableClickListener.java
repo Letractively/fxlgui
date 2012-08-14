@@ -21,6 +21,7 @@ package co.fxl.gui.table.bulk.impl;
 import co.fxl.gui.api.IPoint;
 import co.fxl.gui.automation.api.IAutomationListener.Key;
 import co.fxl.gui.automation.impl.Automation;
+import co.fxl.gui.automation.impl.BulkTableWidgetListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableClickListener;
 

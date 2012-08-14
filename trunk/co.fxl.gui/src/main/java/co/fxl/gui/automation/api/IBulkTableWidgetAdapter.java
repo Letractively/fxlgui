@@ -16,31 +16,12 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.table.bulk.impl;
+package co.fxl.gui.automation.api;
 
 import co.fxl.gui.automation.api.IAutomationListener.Key;
-import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 
-public class BulkTableWidgetListener {
+public interface IBulkTableWidgetAdapter<T> {
 
-	public interface IBulkTableWidgetListener {
-
-		void notifyNew(IBulkTableWidget tree);
-
-		void notifyClick(IBulkTableWidget tree, int column, int row, int px,
-				int py, Key key);
-
-	}
-
-	public static boolean active = false;
-	private static IBulkTableWidgetListener instance;
-
-	public static IBulkTableWidgetListener instance() {
-		return instance;
-	}
-
-	public static void instance(IBulkTableWidgetListener l) {
-		instance = l;
-	}
+	void click(T tree, int column, int row, int px, int py, Key key);
 
 }
