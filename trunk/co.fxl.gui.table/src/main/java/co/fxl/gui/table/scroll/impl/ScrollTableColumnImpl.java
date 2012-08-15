@@ -178,7 +178,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	}
 
 	private static final boolean STYLE_NUMBERS_AND_DATES = false;
-	private static final boolean STYLE_CUSTOM_LISTS = true;
+	private static final boolean STYLE_CUSTOM_LISTS = !Env.is(Env.IE);
 	private static final String BORDER_RADIUS_ATTRIBUTE = Env.is(Env.FIREFOX) ? "-moz-border-radius"
 			: "border-radius";
 
@@ -552,5 +552,10 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	@Override
 	public int contentIndex() {
 		return index;
+	}
+
+	@Override
+	public String toString() {
+		return name();
 	}
 }

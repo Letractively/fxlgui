@@ -60,6 +60,8 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 		IColumn width(int width);
 
 		IAlignment<IColumn> align();
+
+		double width();
 	}
 
 	public interface IRow {

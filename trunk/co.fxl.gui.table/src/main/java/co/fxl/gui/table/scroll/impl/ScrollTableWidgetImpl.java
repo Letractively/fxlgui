@@ -934,7 +934,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		int current = 0;
 		columnWidths.startPrepare(
 				StatusDisplay.instance().width() - widthDelta, rows,
-				sortColumn());
+				sortColumn(), false);
 		for (int c = 0; c < columns.size(); c++) {
 			if (!columns.get(c).visible)
 				continue;

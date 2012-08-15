@@ -118,7 +118,7 @@ public class ColumnWidths implements IColumnWidthInjector {
 
 	@Override
 	public void startPrepare(int width, IRows<?> rows,
-			IScrollTableColumn<?> sortColumn) {
+			IScrollTableColumn<?> sortColumn, boolean ign) {
 	}
 
 	public static IColumnWidthInjector newInstance(boolean useFactory) {
