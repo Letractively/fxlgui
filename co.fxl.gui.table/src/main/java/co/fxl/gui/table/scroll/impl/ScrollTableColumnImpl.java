@@ -238,6 +238,13 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		@Override
 		public void prepare(
 				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
+			if (alignment.isSpecified()) {
+				alignment.forward(column.align());
+				return;
+			}
+			if (isShort) {
+				column.align().center();
+			}
 		}
 
 		@Override
