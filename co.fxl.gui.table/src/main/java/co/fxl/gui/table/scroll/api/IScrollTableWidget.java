@@ -50,7 +50,7 @@ public interface IScrollTableWidget<T> {
 		void notifyVisible(IScrollTableColumn<?> c);
 
 		void startPrepare(int width, IRows<?> rows,
-				IScrollTableColumn<?> sortColumn);
+				IScrollTableColumn<?> sortColumn, boolean ignoreIndices);
 
 	}
 

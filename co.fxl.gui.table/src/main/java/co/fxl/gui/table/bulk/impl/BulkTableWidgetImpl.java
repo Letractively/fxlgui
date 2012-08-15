@@ -114,6 +114,11 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 		public IAlignment<IColumn> align() {
 			return align;
 		}
+
+		@Override
+		public double width() {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	IGridPanel grid;
