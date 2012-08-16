@@ -38,25 +38,39 @@ public class DateField extends TextFieldAdp {
 
 	private class PopUp implements IClickListener {
 
-		@Override
-		public void onClick() {
-			final IPopUp popUp = button.display().showPopUp().autoHide(true);
-			popUp.border().style().shadow();
-			int height = button.height();
-			popUp.offset(button.offsetX(), button.offsetY() + height);
-			final ICalendarWidget calendar = (ICalendarWidget) popUp
-					.container().widget(ICalendarWidget.class);
-			calendar.addUpdateListener(new IUpdateListener<Date>() {
-				@Override
-				public void onUpdate(Date value) {
-					element.text(format.format(value));
-					popUp.visible(false);
-				}
-			});
+		private boolean isUpdating;
+		private ICalendarWidget calendar;
+		private IPopUp popUp;
+
+		private PopUp() {
 			element.addUpdateListener(new IUpdateListener<String>() {
 				@Override
 				public void onUpdate(String value) {
-					calendar.date(format.parse(value));
+					if (!isUpdating && calendar != null && popUp != null
+							&& popUp.visible()) {
+						Date parse = format.parse(value);
+						calendar.date(parse);
+					}
+				}
+			});
+		}
+
+		@Override
+		public void onClick() {
+			popUp = button.display().showPopUp().autoHide(true);
+			popUp.border().style().shadow();
+			int height = button.height();
+			popUp.offset(button.offsetX(), button.offsetY() + height);
+			calendar = (ICalendarWidget) popUp.container().widget(
+					ICalendarWidget.class);
+			calendar.addUpdateListener(new IUpdateListener<Date>() {
+				@Override
+				public void onUpdate(Date value) {
+					isUpdating = true;
+					String f = format.format(value);
+					element.text(f);
+					popUp.visible(false);
+					isUpdating = false;
 				}
 			});
 
@@ -71,6 +85,7 @@ public class DateField extends TextFieldAdp {
 
 	private IImage button;
 	private IFormat<Date> format = Format.date();
+	private PopUp popUp;
 
 	public DateField(IContainer c) {
 		IGridPanel g = c.panel().grid();
@@ -85,7 +100,10 @@ public class DateField extends TextFieldAdp {
 		border.color().rgb(211, 211, 211);
 		border.style().bottom().style().top().style().right();
 		IContainer c1 = spacing.add();
-		setUp(tf, c1);
+		element = tf;
+		button = c1.image().resource(Icons.CALENDAR).size(16, 16);
+		popUp = new PopUp();
+		button.addClickListener(popUp);
 		decorate(g);
 	}
 
@@ -93,13 +111,9 @@ public class DateField extends TextFieldAdp {
 	}
 
 	public DateField(ITextField tf, IContainer c) {
-		setUp(tf, c);
-	}
-
-	private void setUp(ITextField tf, IContainer c) {
 		element = tf;
 		button = c.image().resource(Icons.CALENDAR).size(16, 16);
-		button.addClickListener(new PopUp());
+		button.addClickListener(popUp);
 	}
 
 	public DateField clickable(boolean clickable) {
