@@ -18,14 +18,18 @@
  */
 package co.fxl.gui.form.impl;
 
+import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.impl.FormWidgetImpl.FormEntryLabel;
+import co.fxl.gui.impl.ClickableMultiplexer;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.ITooltipResolver;
@@ -86,29 +90,39 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	// widget.looseFocus(valueElement());
 	// }
 
-	@Override
-	public ILabel addButton(String title) {
-		ILabel l = addContainer().label().hyperlink().text(title);
-		l.font().pixel(11);
-		return l;
-	}
+	// @Override
+	// public ILabel addButton(String title) {
+	// ILabel l = addContainer().label().hyperlink().text(title);
+	// l.font().pixel(11);
+	// return l;
+	// }
 
 	@Override
-	public IImage addImage(String resource) {
-		IImage l = addContainer().image().resource(resource);
-		return l;
+	public IClickable<?> addImage(String resource) {
+		Object[] cp = addContainerInPanel();
+		IImage l = ((IContainer) cp[1]).image().resource(resource);
+		return new ClickableMultiplexer((IClickable<?>) cp[0], l);
 	}
 
 	@Override
 	public IContainer addContainer() {
+		return (IContainer) addContainerInPanel()[1];
+	}
+
+	private Object[] addContainerInPanel() {
 		IGridPanel g = widget.internalPanels.get(row).width(1d);
 		g.column(0).expand();
-		IGridCell cell2 = g.cell(1, 0).align().end().valign().center();
-		g.column(1).width(20);
+		IGridCell cell2 = g.cell(1, 0).align().center().valign().center();
+		g.column(1).width(24);
 		widget.heights.decorate(cell2);
-		IContainer c = cell2.panel().horizontal().addSpace(4).add();
+		IHorizontalPanel spacing = cell2.panel().horizontal().spacing(4);
+		widget.heights.styleColor(spacing);
+		IBorder border = spacing.border();
+		border.color().rgb(211, 211, 211);
+		border.style().bottom().style().top().style().right();
+		IContainer c = spacing.add();
 		widget.prepareButtonColumn(g, column);
-		return c;
+		return new Object[] { spacing, c };
 	}
 
 	@Override

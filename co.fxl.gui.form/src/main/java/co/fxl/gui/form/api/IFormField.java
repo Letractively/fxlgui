@@ -18,9 +18,9 @@
  */
 package co.fxl.gui.form.api;
 
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel.IGridCell;
-import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.impl.IFieldType;
@@ -40,9 +40,9 @@ public interface IFormField<T, R> extends IUpdateable<R> {
 
 	IFieldType type();
 
-	ILabel addButton(String title);
+//	ILabel addButton(String title);
 
-	IImage addImage(String resource);
+	IClickable<?> addImage(String resource);
 
 	IContainer addContainer();
 
