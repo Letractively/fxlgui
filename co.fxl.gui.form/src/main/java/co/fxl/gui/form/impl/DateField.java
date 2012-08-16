@@ -100,20 +100,22 @@ public class DateField extends TextFieldAdp {
 		border.color().rgb(211, 211, 211);
 		border.style().bottom().style().top().style().right();
 		IContainer c1 = spacing.add();
+		setUp(tf, c1);
+		decorate(g);
+	}
+
+	void setUp(ITextField tf, IContainer c1) {
 		element = tf;
 		button = c1.image().resource(Icons.CALENDAR).size(16, 16);
 		popUp = new PopUp();
 		button.addClickListener(popUp);
-		decorate(g);
 	}
 
 	protected void decorate(IGridPanel g) {
 	}
 
 	public DateField(ITextField tf, IContainer c) {
-		element = tf;
-		button = c.image().resource(Icons.CALENDAR).size(16, 16);
-		button.addClickListener(popUp);
+		setUp(tf, c);
 	}
 
 	public DateField clickable(boolean clickable) {
