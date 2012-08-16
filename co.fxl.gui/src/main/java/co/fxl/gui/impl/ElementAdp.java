@@ -23,11 +23,11 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IMargin;
 import co.fxl.gui.api.IPadding;
 
-public class ElementDecorator<T> implements IElement<T> {
+public class ElementAdp<T> implements IElement<T> {
 
 	private IElement<T> element;
 
-	ElementDecorator(IElement<T> element) {
+	ElementAdp(IElement<T> element) {
 		this.element = element;
 	}
 
@@ -51,14 +51,18 @@ public class ElementDecorator<T> implements IElement<T> {
 		return element.height();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T offset(int x, int y) {
-		return element.offset(x, y);
+		element.offset(x, y);
+		return (T) this;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T width(int width) {
-		return element.width(width);
+		 element.width(width);
+			return (T) this;
 	}
 
 	@Override
@@ -66,14 +70,18 @@ public class ElementDecorator<T> implements IElement<T> {
 		return element.height(height);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T size(int width, int height) {
-		return element.size(width, height);
+		element.size(width, height);
+		return (T) this;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T visible(boolean visible) {
-		return element.visible(visible);
+		element.visible(visible);
+		return (T) this;
 	}
 
 	@Override
@@ -83,12 +91,14 @@ public class ElementDecorator<T> implements IElement<T> {
 
 	@Override
 	public void remove() {
-		remove();
+		element.remove();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T tooltip(String tooltip) {
-		return element.tooltip(tooltip);
+		element.tooltip(tooltip);
+		return (T) this;
 	}
 
 	@Override
@@ -104,27 +114,33 @@ public class ElementDecorator<T> implements IElement<T> {
 
 	@Override
 	public IPadding padding() {
-		throw new UnsupportedOperationException();
+		return element.padding();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T padding(int padding) {
-		throw new UnsupportedOperationException();
+		element.padding(padding);
+		return (T) this;
 	}
 
 	@Override
 	public IMargin margin() {
-		throw new UnsupportedOperationException();
+		return element.margin();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T margin(int margin) {
-		throw new UnsupportedOperationException();
+		element.margin(margin);
+		return (T) this;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T opacity(double opacity) {
-		throw new UnsupportedOperationException();
+		element.opacity(opacity);
+		return (T) this;
 	}
 
 	@Override
