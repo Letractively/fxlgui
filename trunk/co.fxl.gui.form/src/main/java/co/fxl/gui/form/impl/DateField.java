@@ -25,13 +25,16 @@ import co.fxl.data.format.impl.Format;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.impl.Heights;
+import co.fxl.gui.impl.TextFieldAdp;
 import co.fxl.gui.input.api.ICalendarWidget;
 
-public class DateField {
+public class DateField extends TextFieldAdp {
 
 	private class PopUp implements IClickListener {
 
@@ -46,11 +49,11 @@ public class DateField {
 			calendar.addUpdateListener(new IUpdateListener<Date>() {
 				@Override
 				public void onUpdate(Date value) {
-					tf.text(format.format(value));
+					element.text(format.format(value));
 					popUp.visible(false);
 				}
 			});
-			tf.addUpdateListener(new IUpdateListener<String>() {
+			element.addUpdateListener(new IUpdateListener<String>() {
 				@Override
 				public void onUpdate(String value) {
 					calendar.date(format.parse(value));
@@ -60,13 +63,12 @@ public class DateField {
 			// TODO testen: Usability: GWT: this seems to not work (shows always
 			// the
 			// current date):
-			calendar.date(format.parse(tf.text()));
+			calendar.date(format.parse(element.text()));
 
 			popUp.visible(true);
 		}
 	}
 
-	private ITextField tf;
 	private IImage button;
 	private IFormat<Date> format = Format.date();
 
@@ -74,9 +76,20 @@ public class DateField {
 		IGridPanel g = c.panel().grid();
 		ITextField tf = g.cell(0, 0).textField();
 		g.column(0).expand();
-		IContainer c1 = g.cell(1, 0);
+		IGridCell cell2 = g.cell(1, 0).align().center().valign().center();
+		g.column(1).width(24);
+		// Heights.INSTANCE.decorate(cell2);
+		IHorizontalPanel spacing = cell2.panel().horizontal().spacing(2);
+		Heights.INSTANCE.styleColor(spacing);
+		IBorder border = spacing.border();
+		border.color().rgb(211, 211, 211);
+		border.style().bottom().style().top().style().right();
+		IContainer c1 = spacing.add();
 		setUp(tf, c1);
-		button.margin(4);
+		decorate(g);
+	}
+
+	protected void decorate(IGridPanel g) {
 	}
 
 	public DateField(ITextField tf, IContainer c) {
@@ -84,7 +97,7 @@ public class DateField {
 	}
 
 	private void setUp(ITextField tf, IContainer c) {
-		this.tf = tf;
+		element = tf;
 		button = c.image().resource(Icons.CALENDAR).size(16, 16);
 		button.addClickListener(new PopUp());
 	}
@@ -97,5 +110,11 @@ public class DateField {
 	public DateField format(IFormat<Date> format) {
 		this.format = format;
 		return this;
+	}
+
+	@Override
+	public DateField editable(boolean editable) {
+		button.clickable(editable);
+		return (DateField) super.editable(editable);
 	}
 }

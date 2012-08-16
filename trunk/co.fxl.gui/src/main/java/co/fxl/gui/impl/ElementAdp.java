@@ -18,16 +18,25 @@
  */
 package co.fxl.gui.impl;
 
+import co.fxl.gui.api.IBordered;
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IEditable;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IFocusable;
 import co.fxl.gui.api.IMargin;
 import co.fxl.gui.api.IPadding;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
-public class ElementAdp<T> implements IElement<T> {
+public class ElementAdp<T extends IElement<T>> implements IElement<T>,
+		IColored, IBordered, IFocusable<T>, IEditable<T> {
 
-	private IElement<T> element;
+	protected T element;
 
-	ElementAdp(IElement<T> element) {
+	ElementAdp() {
+	}
+
+	ElementAdp(T element) {
 		this.element = element;
 	}
 
@@ -61,8 +70,8 @@ public class ElementAdp<T> implements IElement<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public T width(int width) {
-		 element.width(width);
-			return (T) this;
+		element.width(width);
+		return (T) this;
 	}
 
 	@Override
@@ -143,29 +152,74 @@ public class ElementAdp<T> implements IElement<T> {
 		return (T) this;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <N> T nativeElement(N nativeElement) {
-		throw new UnsupportedOperationException();
+		element.nativeElement(nativeElement);
+		return (T) this;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T width(double width) {
-		throw new UnsupportedOperationException();
+		element.width(width);
+		return (T) this;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T height(double height) {
-		throw new UnsupportedOperationException();
+		element.height(height);
+		return (T) this;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T iD(String iD) {
-		throw new UnsupportedOperationException();
+		element.iD(iD);
+		return (T) this;
 	}
 
 	@Override
 	public String iD() {
-		throw new UnsupportedOperationException();
+		return element.iD();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public T editable(boolean editable) {
+		((IEditable<T>) element).editable(editable);
+		return (T) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean editable() {
+		return ((IEditable<T>) element).editable();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public T focus(boolean focus) {
+		((IFocusable<T>) element).focus(focus);
+		return (T) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public T addFocusListener(IUpdateListener<Boolean> hasFocus) {
+		((IFocusable<T>) element).addFocusListener(hasFocus);
+		return (T) this;
+	}
+
+	@Override
+	public IBorder border() {
+		return ((IBordered) element).border();
+	}
+
+	@Override
+	public IColor color() {
+		return ((IColored) element).color();
 	}
 
 }
