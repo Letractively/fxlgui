@@ -79,7 +79,7 @@ public class FormWidgetImpl implements IFormWidget {
 	private ILabel requiredAttributeLabel;
 	private boolean validate = true;
 	Validation validation;
-	private Heights heights = new Heights(2);
+	Heights heights = new Heights(2);
 	private boolean isNew;
 	private boolean alwaysAllowCancel = false;
 	private IButton saveButton;
@@ -87,6 +87,7 @@ public class FormWidgetImpl implements IFormWidget {
 	private int spacing = 0;
 	private IClickListener saveClickListener;
 	private IGridPanel bottomPanel;
+	List<IGridPanel> internalPanels = new LinkedList<IGridPanel>();
 
 	protected FormWidgetImpl(IContainer panel) {
 		widgetTitle = new WidgetTitle(panel.panel(), false).commandsOnTop()
@@ -113,8 +114,12 @@ public class FormWidgetImpl implements IFormWidget {
 		if (fixValueWidth != -column)
 			cell.width(fixValueWidth);
 		heights.decorate(cell);
+		IGridPanel subGrid = cell.panel().grid();
+		internalPanels.add(subGrid);
 		// gridIndex++;
-		return cell;
+		IGridCell c = subGrid.cell(0, 0);
+		heights.decorate(c);
+		return c;
 	}
 
 	protected void decorateCell(IGridCell cell) {
