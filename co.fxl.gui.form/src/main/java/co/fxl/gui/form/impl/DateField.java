@@ -104,7 +104,7 @@ public class DateField extends TextFieldAdp {
 		decorate(g);
 	}
 
-	void setUp(ITextField tf, IContainer c1) {
+	private void setUp(ITextField tf, IContainer c1) {
 		element = tf;
 		button = c1.image().resource(Icons.CALENDAR).size(16, 16);
 		popUp = new PopUp();
