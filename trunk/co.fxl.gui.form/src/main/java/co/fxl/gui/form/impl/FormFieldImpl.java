@@ -77,14 +77,14 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 			label.font().color().black();
 		else
 			label.font().color().gray();
-//		checkFocus(editable);
+		// checkFocus(editable);
 		return this;
 	}
 
-//	void checkFocus(boolean editable) {
-//		if (!editable)
-//			widget.looseFocus(valueElement());
-//	}
+	// void checkFocus(boolean editable) {
+	// if (!editable)
+	// widget.looseFocus(valueElement());
+	// }
 
 	@Override
 	public ILabel addButton(String title) {
@@ -101,12 +101,13 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 
 	@Override
 	public IContainer addContainer() {
-		IGridPanel grid = widget.grid();
-		int gridIndex = row;
-		IGridCell cell2 = grid.cell(column, gridIndex);
-		IContainer c = cell2.panel().horizontal().addSpace(1)
-				.add();
-		widget.prepareButtonColumn(grid, column);
+		IGridPanel g = widget.internalPanels.get(row).width(1d);
+		g.column(0).expand();
+		IGridCell cell2 = g.cell(1, 0).align().end().valign().center();
+		g.column(1).width(20);
+		widget.heights.decorate(cell2);
+		IContainer c = cell2.panel().horizontal().addSpace(4).add();
+		widget.prepareButtonColumn(g, column);
 		return c;
 	}
 
