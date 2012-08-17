@@ -348,10 +348,12 @@ public class WidgetTitle implements IClickListener {
 		IHorizontalPanel pss = cell.panel().horizontal().valign().center()
 				.align().end().add().panel().horizontal().valign().center()
 				.align().end().align().center();
-		IImage image = pss.add().image().resource("configure_20x20.png")
-				.size(20, 20);
-		image.margin().top(2).right(3);
-		return new ClickableMultiplexer(pss, image);
+		// IImage l= pss.add().image().resource("configure_20x20.png")
+		// .size(20, 20);
+		ILabel l = pss.add().label().text("Configure");
+		l.font().pixel(10).underline(true).color().white();
+		l.margin().right(6);
+		return new ClickableMultiplexer(pss, l);
 	}
 
 	private CommandLink createCommandLink(IFocusPanel fp,
