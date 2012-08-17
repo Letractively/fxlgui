@@ -342,6 +342,18 @@ public class WidgetTitle implements IClickListener {
 		}
 	}
 
+	public IClickable<?> addConfigureIcon() {
+		IContainer cell = headerPanel.cell(1, 0).align().end().valign()
+				.center();
+		IHorizontalPanel pss = cell.panel().horizontal().valign().center()
+				.align().end().add().panel().horizontal().valign().center()
+				.align().end().align().center();
+		IImage image = pss.add().image().resource("configure_20x20.png")
+				.size(20, 20);
+		image.margin().top(2).right(3);
+		return new ClickableMultiplexer(pss, image);
+	}
+
 	private CommandLink createCommandLink(IFocusPanel fp,
 			IHorizontalPanel iPanel0, IImage image, ILabel label) {
 		labels.add(label);
@@ -359,7 +371,7 @@ public class WidgetTitle implements IClickListener {
 
 	// @Style(window = Window.SIDE, outline = Outline.HEADER, element =
 	// Element.BUTTON)
-	public void styleWindowHeaderButton(IHorizontalPanel iPanel) {
+	public void styleWindowHeaderButton(IPanel<?> iPanel) {
 		iPanel.color().rgb(248, 248, 248).gradient().vertical()
 				.rgb(216, 216, 216);
 		IBorder b = iPanel.border();
