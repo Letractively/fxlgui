@@ -140,7 +140,11 @@ public class ViewList {
 		return widgetTitle.addHyperlink(imageResource, text);
 	}
 
-	public IClickable<?> addConfigureIcon() {
-		return widgetTitle.addConfigureIcon();
+	public IClickable<?> addConfigureIcon(String text) {
+		return widgetTitle.addConfigureIcon(text);
+	}
+
+	public void addConfigureSuffix(String text) {
+		widgetTitle.addConfigureSuffix(text);
 	}
 }

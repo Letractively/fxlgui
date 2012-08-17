@@ -35,6 +35,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.ContextMenu.Group;
@@ -81,6 +82,8 @@ public class WidgetTitle implements IClickListener {
 	private boolean center;
 	private static Map<String, Boolean> foldStatus = new HashMap<String, Boolean>();
 	private IVerticalPanel subTitlePanel;
+	private IHorizontalPanel configurePanel;
+	private IFocusPanel headerFocusPanel;
 
 	public WidgetTitle() {
 	}
@@ -98,7 +101,8 @@ public class WidgetTitle implements IClickListener {
 	}
 
 	public WidgetTitle(ILayout layout, boolean addBorder, boolean plainContent) {
-		panel = layout.grid();
+		headerFocusPanel = layout.focus();
+		panel = headerFocusPanel.add().panel().grid();
 		panel.color().white();
 		this.addBorder = addBorder;
 		this.plainContent = plainContent;
@@ -342,18 +346,45 @@ public class WidgetTitle implements IClickListener {
 		}
 	}
 
-	public IClickable<?> addConfigureIcon() {
-		IContainer cell = headerPanel.cell(1, 0).align().end().valign()
-				.center();
-		IHorizontalPanel pss = cell.panel().horizontal().valign().center()
-				.align().end().add().panel().horizontal().valign().center()
-				.align().end().align().center();
-		// IImage l= pss.add().image().resource("configure_20x20.png")
-		// .size(20, 20);
-		ILabel l = pss.add().label().text("Configure");
-		l.font().pixel(10).underline(true).color().white();
-		l.margin().right(6);
-		return new ClickableMultiplexer(pss, l);
+	public IClickable<?> addConfigureIcon(String text) {
+		if (configurePanel != null) {
+			addLabel("|", false);
+		}
+		return addLabel(text, true);
+	}
+
+	public void addConfigureSuffix(String text) {
+		addLabel(text, false);
+	}
+
+	ILabel addLabel(String text, boolean underline) {
+		ILabel l = configurePanel().add().label().text(text);
+		l.font().pixel(10).underline(underline).color().white();
+		return l;
+	}
+
+	IHorizontalPanel configurePanel() {
+		if (configurePanel == null) {
+			headerFocusPanel.addMouseOverListener(new IMouseOverListener() {
+
+				@Override
+				public void onMouseOver() {
+					configurePanel.visible(true);
+				}
+
+				@Override
+				public void onMouseOut() {
+					configurePanel.visible(false);
+				}
+			});
+			IContainer cell = headerPanel.cell(1, 0).align().end().valign()
+					.center();
+			configurePanel = cell.panel().horizontal().valign().center()
+					.align().end().add().panel().horizontal().valign().center()
+					.align().end().spacing(2).align().center().visible(false);
+			configurePanel.margin().right(2);
+		}
+		return configurePanel;
 	}
 
 	private CommandLink createCommandLink(IFocusPanel fp,

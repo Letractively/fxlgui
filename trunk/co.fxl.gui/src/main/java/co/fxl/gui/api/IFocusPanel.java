@@ -22,7 +22,8 @@ import co.fxl.gui.api.ISpaced.ISpacing;
 
 public interface IFocusPanel extends IPanel<IFocusPanel>,
 		IDraggable<IFocusPanel>, IDropTarget<IFocusPanel>,
-		IKeyRecipient<IFocusPanel>, IFocusable<IFocusPanel> {
+		IKeyRecipient<IFocusPanel>, IFocusable<IFocusPanel>,
+		IMouseOverElement<IFocusPanel> {
 
 	ISpacing spacing();
 
