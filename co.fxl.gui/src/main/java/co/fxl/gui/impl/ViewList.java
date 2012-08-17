@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.ICallback;
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
@@ -137,5 +138,9 @@ public class ViewList {
 
 	public CommandLink addHyperlink(String imageResource, String text) {
 		return widgetTitle.addHyperlink(imageResource, text);
+	}
+
+	public IClickable<?> addConfigureIcon() {
+		return widgetTitle.addConfigureIcon();
 	}
 }
