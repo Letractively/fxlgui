@@ -33,15 +33,6 @@ class GWTRectangle extends RectangleImpl implements Drawable {
 		context = canvas.context;
 	}
 
-	// Line:
-	// back.beginPath();
-	// back.setStrokeStyle(penColor);
-	// back.setLineWidth(penWidth);
-	// back.moveTo(lastX, lastY);
-	// back.lineTo(tx, ty);
-	// back.closePath();
-	// back.stroke();
-
 	@Override
 	public void draw() {
 		context.setFillStyle(getColor());
