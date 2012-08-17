@@ -215,7 +215,13 @@ public class FieldTypeImpl implements IFieldType {
 
 	@Override
 	public IFieldType defaultConstraint(Object value) {
-		this.defaultConstraint=value;
+		this.defaultConstraint = value;
+		return this;
+	}
+
+	@Override
+	public IFieldType dateRange() {
+		clazz = Date[].class;
 		return this;
 	}
 }

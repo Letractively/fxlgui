@@ -24,6 +24,8 @@ public interface IFieldType {
 
 	IFieldType date();
 
+	IFieldType dateRange();
+
 	IFieldType dateTime();
 
 	IFieldType time();
