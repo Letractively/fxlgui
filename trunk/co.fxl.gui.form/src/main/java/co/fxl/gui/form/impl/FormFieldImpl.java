@@ -30,6 +30,7 @@ import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.impl.FormWidgetImpl.FormEntryLabel;
 import co.fxl.gui.impl.ClickableMultiplexer;
+import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.ITooltipResolver;
@@ -115,7 +116,8 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 		IGridCell cell2 = g.cell(1, 0).align().center().valign().center();
 		g.column(1).width(24);
 		widget.heights.decorate(cell2);
-		IHorizontalPanel spacing = cell2.panel().horizontal().spacing(4);
+		IHorizontalPanel spacing = cell2.panel().horizontal()
+				.spacing(Env.is(Env.IE) ? 2 : 4);
 		widget.heights.styleColor(spacing);
 		IBorder border = spacing.border();
 		border.color().rgb(211, 211, 211);
