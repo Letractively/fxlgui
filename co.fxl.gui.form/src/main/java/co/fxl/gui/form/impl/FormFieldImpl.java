@@ -114,7 +114,9 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 		IGridPanel g = widget.internalPanels.get(row).width(1d);
 		g.column(0).expand();
 		IGridCell cell2 = g.cell(1, 0).align().center().valign().center();
-		g.column(1).width(24);
+		if (Env.is(Env.SWING))
+			cell2.align().begin();
+		g.column(1).width(24);// - (Env.is(Env.IE) ? 4 : 0));
 		widget.heights.decorate(cell2);
 		IHorizontalPanel spacing = cell2.panel().horizontal()
 				.spacing(Env.is(Env.IE) ? 2 : 4);
