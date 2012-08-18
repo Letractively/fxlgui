@@ -24,22 +24,23 @@ import co.fxl.gui.api.IUpdateable;
 public class ToggleImageButton implements IUpdateable<Boolean> {
 
 	private CommandLink c;
-	private String img;
-	private String text;
-	private String tImg;
-	private String tText;
+	// private String img;
+	// private String text;
+	// private String tImg;
+	// private String tText;
 	private boolean toggled = false;
 
 	public ToggleImageButton(CommandLink c, String img, String text) {
 		this.c = c;
-		this.img = img;
-		this.text = text;
+		// this.img = img;
+		// this.text = text;
 		c.clickable(true);
+		update();
 	}
 
 	public ToggleImageButton toggleImageText(String img, String text) {
-		this.tImg = img;
-		this.tText = text;
+		// this.tImg = img;
+		// this.tText = text;
 		return this;
 	}
 
@@ -65,7 +66,7 @@ public class ToggleImageButton implements IUpdateable<Boolean> {
 	}
 
 	void update() {
-		c.text(!toggled ? text : tText);
-		c.image(!toggled ? img : tImg);
+		// c.text(!toggled ? text : tText);
+		c.image(!toggled ? "checkbox_unchecked.gif" : "checkbox_checked.gif");
 	}
 }
