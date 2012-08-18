@@ -32,6 +32,7 @@ public class RectangleImpl extends LocatedImpl<IRectangle> implements
 
 	@Override
 	public IColor color() {
+		color.active = true;
 		return color;
 	}
 

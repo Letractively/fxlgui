@@ -35,12 +35,14 @@ class GWTRectangle extends RectangleImpl implements Drawable {
 
 	@Override
 	public void draw() {
-		context.setFillStyle(getColor());
 		double x = canvas.offsetX(this);
 		double y = canvas.offsetY(this);
 		double w = canvas.width(this);
 		double h = canvas.height(this);
-		context.fillRect(x, y, w, h);
+		if (color.active) {
+			context.setFillStyle(getColor());
+			context.fillRect(x, y, w, h);
+		}
 		if (border.active) {
 			context.beginPath();
 			context.setStrokeStyle(canvas.getColor(border.color.rgb, 1.0));
