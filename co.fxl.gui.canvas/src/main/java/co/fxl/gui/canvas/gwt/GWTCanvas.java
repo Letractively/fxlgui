@@ -121,4 +121,8 @@ class GWTCanvas extends GWTElement<Canvas, ICanvas> implements ICanvas {
 				+ opacity + ")";
 		return CssColor.make(cssColor);
 	}
+
+	CssColor getGray(int i) {
+		return getColor(new int[] { i, i, i }, 1.0);
+	}
 }
