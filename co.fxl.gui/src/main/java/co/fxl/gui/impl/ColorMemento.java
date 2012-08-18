@@ -22,6 +22,8 @@ import co.fxl.gui.api.IColored.IColor;
 
 public class ColorMemento extends ColorTemplate {
 
+	public boolean active = false;
+
 	public ColorMemento() {
 	}
 
