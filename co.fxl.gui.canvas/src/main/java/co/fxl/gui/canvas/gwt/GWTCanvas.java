@@ -21,9 +21,11 @@ package co.fxl.gui.canvas.gwt;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.canvas.api.ICanvas;
 import co.fxl.gui.canvas.api.IRectangle;
+import co.fxl.gui.canvas.api.IText;
 import co.fxl.gui.canvas.impl.LocatedImpl;
 import co.fxl.gui.gwt.GWTContainer;
 import co.fxl.gui.gwt.GWTElement;
+import co.fxl.gui.gwt.GWTFocusPanel;
 
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -36,6 +38,7 @@ class GWTCanvas extends GWTElement<Canvas, ICanvas> implements ICanvas {
 
 	private GWTCanvas(GWTContainer<Canvas> c) {
 		super(c);
+		GWTFocusPanel.removeOutline(container.widget);
 		context = container.widget.getContext2d();
 	}
 
@@ -102,5 +105,10 @@ class GWTCanvas extends GWTElement<Canvas, ICanvas> implements ICanvas {
 		CssColor color = CssColor.make("rgba(0,0,255,1.0)");
 		context.setStrokeStyle(color);
 		context.rect(100, 100, 100, 100);
+	}
+
+	@Override
+	public IText addText() {
+		return nextDrawable(new GWTText(this));
 	}
 }

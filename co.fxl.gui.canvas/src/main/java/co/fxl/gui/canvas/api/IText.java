@@ -18,13 +18,10 @@
  */
 package co.fxl.gui.canvas.api;
 
-import co.fxl.gui.api.IBordered;
-import co.fxl.gui.api.IElement;
+public interface IText {
 
-public interface ICanvas extends IElement<ICanvas>, IBordered {
+	IText offset(int x, int y);
 
-	IRectangle addRectangle();
-
-	IText addText();
+	IText text(String text);
 
 }

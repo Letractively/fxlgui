@@ -16,15 +16,26 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.canvas.api;
+package co.fxl.gui.canvas.gwt;
 
-import co.fxl.gui.api.IBordered;
-import co.fxl.gui.api.IElement;
+import co.fxl.gui.canvas.api.IText;
 
-public interface ICanvas extends IElement<ICanvas>, IBordered {
+class GWTText implements IText {
 
-	IRectangle addRectangle();
+	private GWTCanvas canvas;
 
-	IText addText();
+	GWTText(GWTCanvas canvas) {
+		this.canvas = canvas;
+	}
+
+	@Override
+	public IText offset(int x, int y) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IText text(String text) {
+		throw new UnsupportedOperationException();
+	}
 
 }

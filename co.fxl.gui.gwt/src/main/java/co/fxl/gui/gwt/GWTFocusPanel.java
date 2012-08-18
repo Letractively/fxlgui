@@ -56,7 +56,7 @@ public class GWTFocusPanel extends GWTPanel<FocusPanel, IFocusPanel> implements
 		return p;
 	}
 
-	private static void removeOutline(FocusPanel p) {
+	public static void removeOutline(Widget p) {
 		if (GWTDisplay.isInternetExplorer()) {
 			p.addStyleName("nooutlineIE");
 		} else {
