@@ -97,11 +97,12 @@ public class BorderMemento implements IBorder {
 	}
 
 	public BorderStyleMemento style = new BorderStyleMemento();
+	public ColorMemento color = new ColorMemento();
 	public boolean active = false;
 
 	@Override
 	public IColor color() {
-		throw new UnsupportedOperationException();
+		return color;
 	}
 
 	@Override

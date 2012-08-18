@@ -42,7 +42,8 @@ class GWTRectangle extends RectangleImpl implements Drawable {
 		double h = canvas.height(this);
 		context.fillRect(x, y, w, h);
 		if (border.active) {
-			startLine();
+			context.beginPath();
+			context.setStrokeStyle(getColor(border.color.rgb, 1.0));
 			if (border.style.isPartial) {
 				if (border.style.top)
 					drawLine(x, y, w, 1d);
@@ -53,26 +54,20 @@ class GWTRectangle extends RectangleImpl implements Drawable {
 				if (border.style.right)
 					drawLine(x + w, y, 1d, h);
 			} else {
-				context.rect(x - 0.5, y - 0.5, w, h);
+				context.rect(x + mod(1), y + mod(1), w, h);
 			}
-			endLine();
+			context.closePath();
+			context.stroke();
 		}
 	}
 
 	private void drawLine(double x, double y, double w, double h) {
-		context.moveTo(x - (w == 1 ? 0.5 : 0), y - (h == 1 ? 0.5 : 0));
-		context.lineTo(x + w - 1 - (w == 1 ? 0.5 : 0), y + h - 1
-				- (h == 1 ? 0.5 : 0));
+		context.moveTo(x + mod(w), y + mod(h));
+		context.lineTo(x + w - 1 + mod(w), y + h - 1 + mod(h));
 	}
 
-	void endLine() {
-		context.closePath();
-		context.stroke();
-	}
-
-	void startLine() {
-		context.beginPath();
-		context.setStrokeStyle(getColor(new int[] { 0, 0, 0 }, 1.0));
+	double mod(double w) {
+		return w == 1 ? 0.5 : 0;
 	}
 
 	private CssColor getColor() {
