@@ -22,7 +22,7 @@
   		<artifactId>fxl-data-format</artifactId>
   		<version>${project.version}</version>
   	</dependency>	
-  			<dependency>
+	<dependency>
   		<groupId>${project.groupId}</groupId>
   		<artifactId>fxl-data-format-gwt</artifactId>
   		<version>${project.version}</version>
