@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.canvas.gwt;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.canvas.api.ICanvas;
 import co.fxl.gui.canvas.api.IRectangle;
@@ -30,16 +33,82 @@ import co.fxl.gui.gwt.GWTFocusPanel;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.dom.client.MouseEvent;
+import com.google.gwt.event.dom.client.MouseMoveEvent;
+import com.google.gwt.event.dom.client.MouseMoveHandler;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
 
 class GWTCanvas extends GWTElement<Canvas, ICanvas> implements ICanvas {
 
+	private class GWTMouseAdapter implements IMouseEventType {
+
+		private MouseEventType type = MouseEventType.DOWN;
+		private IMouseListener listener;
+
+		GWTMouseAdapter(IMouseListener l) {
+			listener = l;
+		}
+
+		@Override
+		public ICanvas down() {
+			type = MouseEventType.DOWN;
+			return GWTCanvas.this;
+		}
+
+		@Override
+		public ICanvas move() {
+			type = MouseEventType.MOVE;
+			return GWTCanvas.this;
+		}
+
+		@Override
+		public ICanvas up() {
+			type = MouseEventType.UP;
+			return GWTCanvas.this;
+		}
+
+	}
+
+	private enum MouseEventType {
+
+		DOWN, UP, MOVE;
+	}
+
 	private Drawable drawable = null;
 	Context2d context;
+	private List<GWTMouseAdapter> adapters = new LinkedList<GWTMouseAdapter>();
 
 	private GWTCanvas(GWTContainer<Canvas> c) {
 		super(c);
 		GWTFocusPanel.removeOutline(container.widget);
 		context = container.widget.getContext2d();
+		container.widget.addMouseDownHandler(new MouseDownHandler() {
+			@Override
+			public void onMouseDown(MouseDownEvent event) {
+				notifyEvent(event, MouseEventType.DOWN);
+			}
+		});
+		container.widget.addMouseUpHandler(new MouseUpHandler() {
+			@Override
+			public void onMouseUp(MouseUpEvent event) {
+				notifyEvent(event, MouseEventType.UP);
+			}
+		});
+		container.widget.addMouseMoveHandler(new MouseMoveHandler() {
+			@Override
+			public void onMouseMove(MouseMoveEvent event) {
+				notifyEvent(event, MouseEventType.MOVE);
+			}
+		});
+	}
+
+	private void notifyEvent(MouseEvent<?> event, MouseEventType type) {
+		for (GWTMouseAdapter m : adapters)
+			if (m.type.equals(type))
+				m.listener.onEvent(x(event), y(event));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -96,15 +165,14 @@ class GWTCanvas extends GWTElement<Canvas, ICanvas> implements ICanvas {
 
 	@Override
 	public ICanvas visible(boolean visible) {
-		nextDrawable(null);
-		test();
+		update();
 		return super.visible(visible);
 	}
 
-	private void test() {
-		CssColor color = CssColor.make("rgba(0,0,255,1.0)");
-		context.setStrokeStyle(color);
-		context.rect(100, 100, 100, 100);
+	@Override
+	public ICanvas update() {
+		nextDrawable(null);
+		return this;
 	}
 
 	@Override
@@ -124,5 +192,26 @@ class GWTCanvas extends GWTElement<Canvas, ICanvas> implements ICanvas {
 
 	CssColor getGray(int i) {
 		return getColor(new int[] { i, i, i }, 1.0);
+	}
+
+	@Override
+	public IMouseEventType addMouseListener(final IMouseListener l) {
+		GWTMouseAdapter adp = new GWTMouseAdapter(l);
+		adapters.add(adp);
+		return adp;
+	}
+
+	private int x(MouseEvent<?> event) {
+		return event.getRelativeX(container.widget.getElement());
+	}
+
+	private int y(MouseEvent<?> event) {
+		return event.getRelativeY(container.widget.getElement());
+	}
+
+	@Override
+	public ICanvas clear() {
+		context.clearRect(0, 0, width(), height());
+		return this;
 	}
 }

@@ -23,8 +23,28 @@ import co.fxl.gui.api.IElement;
 
 public interface ICanvas extends IElement<ICanvas>, IBordered {
 
+	public interface IMouseEventType {
+
+		ICanvas down();
+
+		ICanvas move();
+
+		ICanvas up();
+	}
+
+	public interface IMouseListener {
+
+		void onEvent(int x, int y);
+	}
+
 	IRectangle addRectangle();
 
 	IText addText();
+
+	IMouseEventType addMouseListener(IMouseListener l);
+
+	ICanvas clear();
+
+	ICanvas update();
 
 }
