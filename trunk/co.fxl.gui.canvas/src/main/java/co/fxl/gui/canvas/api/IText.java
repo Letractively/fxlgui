@@ -18,9 +18,9 @@
  */
 package co.fxl.gui.canvas.api;
 
-public interface IText {
+import co.fxl.gui.api.ILocated;
 
-	IText offset(int x, int y);
+public interface IText extends ILocated<IText> {
 
 	IText text(String text);
 
