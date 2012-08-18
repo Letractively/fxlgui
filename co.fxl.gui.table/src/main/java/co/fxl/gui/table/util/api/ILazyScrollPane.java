@@ -19,6 +19,7 @@
 package co.fxl.gui.table.util.api;
 
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IMouseWheelListener;
 import co.fxl.gui.filter.api.IFilterConstraints;
@@ -38,6 +39,8 @@ public interface ILazyScrollPane extends IMouseWheelListener {
 		int rowHeight(int rowIndex);
 
 		IDragArea dragArea(int index);
+
+		IFocusPanel getFocusPanel();
 	}
 
 	ILazyScrollPane size(int size);
@@ -50,7 +53,8 @@ public interface ILazyScrollPane extends IMouseWheelListener {
 
 	ILazyScrollPane hasHeader(boolean hasHeader);
 
-	ILazyScrollPane constraints(IFilterConstraints constraints, String filterQueryLabel);
+	ILazyScrollPane constraints(IFilterConstraints constraints,
+			String filterQueryLabel);
 
 	ILazyScrollPane dragDropListener(boolean allowInsertUnder,
 			IDragDropListener l);
@@ -78,4 +82,6 @@ public interface ILazyScrollPane extends IMouseWheelListener {
 	ILazyScrollPane upDownIndex(IUpDownIndex index);
 
 	boolean hasScrollbar();
+
+	ILazyScrollPane useDecoratorReturnForDND(boolean useDecoratorReturnForDND);
 }
