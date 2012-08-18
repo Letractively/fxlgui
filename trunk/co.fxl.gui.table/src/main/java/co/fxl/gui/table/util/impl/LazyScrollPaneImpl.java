@@ -179,7 +179,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		v = container.panel().focus();
 		ContextMenu.instance().decorate((IClickable<?>) v);
 		v.color().white();
-		if (dragDropListener != null)
+		if (dragDropListener != null && !useDecoratorReturnForDND)
 			new DragAndDrop(this, v);
 		// if (size > 0 && size <= 50) {
 		// IScrollPane sp = v.add().scrollPane().height(height);
@@ -316,6 +316,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	private boolean hasScrollbar = true;
 	protected IFilterConstraints constraints;
 	protected String filterQueryLabel;
+	private boolean useDecoratorReturnForDND;
 
 	public void addKeyListeners(final IKeyRecipient<?> v) {
 		if (v == null)
@@ -391,6 +392,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 				isCalibration);
 		if (!isCalibration)
 			addKeyListeners(e);
+		if (dragDropListener != null && useDecoratorReturnForDND)
+			new DragAndDrop(this, decorator.getFocusPanel());
 	}
 
 	@Override
@@ -581,6 +584,13 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 			String filterQueryLabel) {
 		this.constraints = constraints;
 		this.filterQueryLabel = filterQueryLabel;
+		return this;
+	}
+
+	@Override
+	public ILazyScrollPane useDecoratorReturnForDND(
+			boolean useDecoratorReturnForDND) {
+		this.useDecoratorReturnForDND = useDecoratorReturnForDND;
 		return this;
 	}
 }

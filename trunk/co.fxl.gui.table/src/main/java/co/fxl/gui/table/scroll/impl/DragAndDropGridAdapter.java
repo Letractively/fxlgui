@@ -21,6 +21,7 @@ package co.fxl.gui.table.scroll.impl;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.impl.ColorTemplate;
 import co.fxl.gui.impl.Constants;
@@ -99,6 +100,11 @@ class DragAndDropGridAdapter implements DragAndDropAdapter {
 						return widget.grid.elementAt(0, index);
 					}
 				};
+			}
+
+			@Override
+			public IFocusPanel getFocusPanel() {
+				throw new UnsupportedOperationException();
 			}
 
 		};
