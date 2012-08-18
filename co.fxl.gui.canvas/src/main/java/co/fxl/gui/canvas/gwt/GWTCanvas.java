@@ -111,4 +111,14 @@ class GWTCanvas extends GWTElement<Canvas, ICanvas> implements ICanvas {
 	public IText addText() {
 		return nextDrawable(new GWTText(this));
 	}
+
+	CssColor getBlack() {
+		return getColor(new int[] { 0, 0, 0 }, 1.0);
+	}
+
+	CssColor getColor(int[] rgb, double opacity) {
+		String cssColor = "rgba(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ","
+				+ opacity + ")";
+		return CssColor.make(cssColor);
+	}
 }

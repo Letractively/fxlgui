@@ -43,7 +43,7 @@ class GWTRectangle extends RectangleImpl implements Drawable {
 		context.fillRect(x, y, w, h);
 		if (border.active) {
 			context.beginPath();
-			context.setStrokeStyle(getColor(border.color.rgb, 1.0));
+			context.setStrokeStyle(canvas.getColor(border.color.rgb, 1.0));
 			if (border.style.isPartial) {
 				if (border.style.top)
 					drawLine(x, y, w, 1d);
@@ -73,12 +73,6 @@ class GWTRectangle extends RectangleImpl implements Drawable {
 	private CssColor getColor() {
 		int[] rgb = color.rgb;
 		double opacity = this.opacity;
-		return getColor(rgb, opacity);
-	}
-
-	CssColor getColor(int[] rgb, double opacity) {
-		String cssColor = "rgba(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ","
-				+ opacity + ")";
-		return CssColor.make(cssColor);
+		return canvas.getColor(rgb, opacity);
 	}
 }

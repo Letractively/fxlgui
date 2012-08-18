@@ -19,23 +19,32 @@
 package co.fxl.gui.canvas.gwt;
 
 import co.fxl.gui.canvas.api.IText;
+import co.fxl.gui.canvas.impl.LocatedImpl;
 
-class GWTText implements IText {
+class GWTText extends LocatedImpl<IText> implements IText, Drawable {
 
 	private GWTCanvas canvas;
+	private String text;
+	private double fontSize = 12;
 
 	GWTText(GWTCanvas canvas) {
 		this.canvas = canvas;
 	}
 
 	@Override
-	public IText offset(int x, int y) {
-		throw new UnsupportedOperationException();
+	public IText text(String text) {
+		this.text = text;
+		return this;
 	}
 
 	@Override
-	public IText text(String text) {
-		throw new UnsupportedOperationException();
+	public void draw() {
+		double x = canvas.offsetX(this) + 0.5;
+		double y = canvas.offsetY(this) + 0.5;
+		canvas.context.setTextBaseline("top");
+		canvas.context.setStrokeStyle(canvas.getBlack());
+		canvas.context.setFillStyle(canvas.getBlack());
+		canvas.context.setFont(fontSize + "px Arial");
+		canvas.context.fillText(text, x, y);
 	}
-
 }
