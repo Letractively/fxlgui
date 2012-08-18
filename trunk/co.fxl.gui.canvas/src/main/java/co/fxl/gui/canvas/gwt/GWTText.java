@@ -25,7 +25,7 @@ class GWTText extends LocatedImpl<IText> implements IText, Drawable {
 
 	private GWTCanvas canvas;
 	private String text;
-	private double fontSize = 12;
+	private double fontSize = 11;
 
 	GWTText(GWTCanvas canvas) {
 		this.canvas = canvas;
@@ -43,8 +43,8 @@ class GWTText extends LocatedImpl<IText> implements IText, Drawable {
 		double y = canvas.offsetY(this) + 0.5;
 		canvas.context.setTextBaseline("top");
 		canvas.context.setStrokeStyle(canvas.getBlack());
-		canvas.context.setFillStyle(canvas.getBlack());
-		canvas.context.setFont(fontSize + "px Arial");
+		canvas.context.setFillStyle(canvas.getGray(32));
+		canvas.context.setFont("bold " + fontSize + "px Arial");
 		canvas.context.fillText(text, x, y);
 	}
 }
