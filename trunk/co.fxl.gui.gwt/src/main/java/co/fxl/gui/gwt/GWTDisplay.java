@@ -18,9 +18,6 @@
  */
 package co.fxl.gui.gwt;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import co.fxl.data.format.gwt.GWTFormat;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IContainer;
@@ -67,29 +64,10 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	// in Grid einbetten)
 
 	private static final String FIREFOX = "Firefox/";
-	/**
-	 * .scrollbar-container { position: absolute; top: 0; bottom: 0; left: 0;
-	 * right: 0; margin: 20px; border: 2px solid rgba(0, 0, 0, 0.2); overflow:
-	 * auto; background-color: whiteSmoke; } .scrollbar-container .inner {
-	 * height: 2011px; width: 1985px; padding: 1em; background-color: white;
-	 * font-family: sans-serif; } ::-webkit-scrollbar { background: transparent;
-	 * } ::-webkit-scrollbar-corner { background: transparent; }
-	 * ::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.2); border:
-	 * solid whiteSmoke 2px; } ::-webkit-scrollbar-thumb:hover {
-	 * background-color: rgba(0, 0, 0, 0.3); }
-	 */
-
 	private static final String CHROME = "Chrome/";
 	public static final String BROWSER_WARNING_IE8 = "You are using an outdated browser with a slow javascript engine! If possible: Update to Internet Explorer 9+ or switch to another browser like Firefox or Chrome. This will significantly improve application response time.";
 	public static final String BROWSER_WARNING_FIREFOX36 = "You are using an outdated browser! If possible: Update to Firefox 12+ or switch to another browser like Chrome. This will significantly improve application response time.";
-
-	public interface BlockListener {
-
-		void onBlock(boolean block);
-	}
-
 	static GWTDisplay instance;
-	private List<BlockListener> blockListeners = new LinkedList<BlockListener>();
 	private GWTContainer<Widget> container;
 	private GWTUncaughtExceptionHandler uncaughtExceptionHandler;
 	public static boolean waiting = false;
@@ -407,13 +385,6 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		GWTDisplay.waiting = waiting;
 		DOM.setStyleAttribute(RootPanel.get().getElement(), "cursor",
 				waiting ? "wait" : "default");
-		for (BlockListener l : blockListeners)
-			l.onBlock(waiting);
-		return this;
-	}
-
-	public GWTDisplay addBlockListener(BlockListener l) {
-		blockListeners.add(l);
 		return this;
 	}
 
