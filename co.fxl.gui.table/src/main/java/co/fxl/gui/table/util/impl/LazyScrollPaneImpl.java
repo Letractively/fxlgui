@@ -390,10 +390,11 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	private void decorate(int rowIndex, boolean isCalibration, IContainer c) {
 		IKeyRecipient<Object> e = decorator.decorate(c, rowIndex, lastIndex,
 				isCalibration);
-		if (!isCalibration)
+		if (!isCalibration) {
 			addKeyListeners(e);
-		if (dragDropListener != null && useDecoratorReturnForDND)
-			new DragAndDrop(this, decorator.getFocusPanel());
+			if (dragDropListener != null && useDecoratorReturnForDND)
+				new DragAndDrop(this, decorator.getFocusPanel());
+		}
 	}
 
 	@Override

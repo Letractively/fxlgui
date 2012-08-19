@@ -809,6 +809,13 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		return container.widget.getElement().getId();
 	}
 
+	// void log(DragDropEventBase<?> event) {
+	// Log.instance().debug(
+	// "event " + event.getClass().getName() + ": "
+	// + event.getNativeEvent().getClientX() + " | "
+	// + event.getNativeEvent().getClientY());
+	// }
+
 	// @Override
 	// public <N> R nativeElement(N nativeElement) {
 	// throw new UnsupportedOperationException();
