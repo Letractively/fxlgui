@@ -19,6 +19,7 @@
 package co.fxl.gui.navigation.group.api;
 
 import co.fxl.gui.api.ICallback;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.navigation.api.ITabWidget;
 
 public interface INavigationWidget extends
@@ -43,4 +44,8 @@ public interface INavigationWidget extends
 	boolean active(String preset, ICallback<Void> cb);
 
 	INavigationItem findByName(String name);
+
+	INavigationWidget configureListener(IClickListener l);
+
+	INavigationWidget showConfigure(boolean b);
 }
