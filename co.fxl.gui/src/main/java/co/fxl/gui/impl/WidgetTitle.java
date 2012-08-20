@@ -55,7 +55,7 @@ public class WidgetTitle implements IClickListener {
 	public static final int LARGE_FONT = 18;
 	private static final String FOLDABLE = "Click to minimize/maximize";
 	private static final boolean IGNORE_SUBTITLES = true;
-	private static final boolean USE_CONFIGURE_IMAGE = true;
+	private static final boolean USE_CONFIGURE_IMAGE = false;
 	public IGridPanel panel;
 	private IHorizontalPanel titlePanel;
 	private IHorizontalPanel commandPanel;
