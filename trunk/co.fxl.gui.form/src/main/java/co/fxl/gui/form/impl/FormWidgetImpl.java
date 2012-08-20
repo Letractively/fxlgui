@@ -562,4 +562,9 @@ public class FormWidgetImpl implements IFormWidget {
 			}
 		return this;
 	}
+
+	@Override
+	public WidgetTitle widgetTitle() {
+		return widgetTitle;
+	}
 }
