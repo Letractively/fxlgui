@@ -42,6 +42,7 @@ import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.Icons;
 import co.fxl.gui.impl.LazyClickListener;
+import co.fxl.gui.impl.WidgetTitle;
 
 public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 
@@ -468,5 +469,10 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	public IFilterWidget noDiscardChangesDialog(boolean noDiscardChangesDialog) {
 		this.noDiscardChangesDialog = noDiscardChangesDialog;
 		return this;
+	}
+
+	@Override
+	public WidgetTitle widgetTitle() {
+		return title.widgetTitle();
 	}
 }

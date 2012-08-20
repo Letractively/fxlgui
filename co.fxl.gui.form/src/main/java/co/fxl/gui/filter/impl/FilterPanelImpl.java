@@ -71,4 +71,9 @@ public class FilterPanelImpl implements FilterPanel {
 	public void visible() {
 	}
 
+	@Override
+	public WidgetTitle widgetTitle() {
+		return title;
+	}
+
 }

@@ -24,6 +24,7 @@ import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.IFieldType;
+import co.fxl.gui.impl.WidgetTitle;
 
 public interface IFilterWidget {
 
@@ -98,4 +99,6 @@ public interface IFilterWidget {
 	IFilterWidget firstConfiguration(String firstConfiguration);
 
 	IFilterWidget noDiscardChangesDialog(boolean noDiscardChangesDialog);
+
+	WidgetTitle widgetTitle();
 }

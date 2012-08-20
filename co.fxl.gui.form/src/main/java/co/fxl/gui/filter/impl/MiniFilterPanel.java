@@ -33,6 +33,7 @@ import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
+import co.fxl.gui.impl.WidgetTitle;
 
 class MiniFilterPanel implements FilterPanel {
 
@@ -243,6 +244,11 @@ class MiniFilterPanel implements FilterPanel {
 		grid.rowInc = 1;
 		grid.title(-1, "View");
 		return new ViewComboBoxImpl(grid.cell(-1).comboBox());
+	}
+
+	@Override
+	public WidgetTitle widgetTitle() {
+		throw new UnsupportedOperationException();
 	}
 
 }

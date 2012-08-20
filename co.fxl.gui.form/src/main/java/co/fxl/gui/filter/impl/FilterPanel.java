@@ -24,6 +24,7 @@ import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.impl.Heights;
+import co.fxl.gui.impl.WidgetTitle;
 
 interface FilterPanel {
 
@@ -64,4 +65,6 @@ interface FilterPanel {
 	FilterGrid filterGrid();
 
 	void visible();
+
+	WidgetTitle widgetTitle();
 }
