@@ -32,12 +32,12 @@
   			<module>co.fxl.gui.swing</module>
   			<module>co.fxl.gui.gwt</module>
   			<module>co.fxl.gui.form</module>
-  			<module>co.fxl.gui.canvas</module>
   			<module>co.fxl.gui.layout.handheld</module>
   			<module>co.fxl.gui.style.gplus</module>
   			<module>co.fxl.gui.navigation</module>
   			<module>co.fxl.gui.table</module>
   			<module>co.fxl.gui.table.swing</module>
+  			<module>co.fxl.gui.canvas</module>
   		</modules>
 		</profile>  			
 	</profiles>  
