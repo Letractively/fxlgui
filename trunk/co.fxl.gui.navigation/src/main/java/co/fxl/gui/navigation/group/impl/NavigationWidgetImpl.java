@@ -30,9 +30,11 @@ import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IDockPanel;
+import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
@@ -83,11 +85,13 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 	private boolean listeningOnServerCalls;
 	private boolean holdUpdate;
 	private INavigationGroup defaultGroup;
+	private IFocusPanel focus;
 	public static NavigationWidgetImpl instance;
 
 	public NavigationWidgetImpl(IContainer layout) {
 		mainPanel = layout.panel().dock();
-		IVerticalPanel top = mainPanel.top().panel().vertical();
+		focus = mainPanel.top().panel().focus();
+		top = focus.add().panel().vertical();
 		hPanel = top.add().panel().grid();
 		borderTop = top.add().panel().vertical();
 		addSeparatorBorder();
@@ -95,7 +99,8 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 				.vertical().rgb(211, 211, 211);
 		ILayout l = hPanel.cell(0, 0).panel();
 		masterPanel = createPanel(l);
-		navigationPanel = createPanel(masterPanel.add().panel());
+		ILayout v = masterPanel.add().panel();
+		navigationPanel = createPanel(v);
 		navigationPanel.addSpace(10);
 		history = mainPanel.center().panel().card();
 		panel0 = history.add().panel().vertical();
@@ -433,6 +438,8 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 	}
 
 	private int serverCallCounter = 0;
+	private IVerticalPanel top;
+	private IImage configureIcon;
 
 	@Override
 	public void notifyServerCallStart() {
@@ -498,5 +505,33 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public INavigationWidget configureListener(IClickListener l) {
+		configureIcon = navigationPanel.add().image().resource("configure.png")
+				.clickable(true);
+		configureIcon.margin().left(8);
+		focus.addMouseOverListener(new IMouseOverListener() {
+
+			@Override
+			public void onMouseOver() {
+				configureIcon.resource("configure.png").clickable(true);
+			}
+
+			@Override
+			public void onMouseOut() {
+				configureIcon.resource("empty_16x16.png").clickable(false);
+			}
+		});
+		configureIcon.addClickListener(l);
+		return this;
+	}
+
+	@Override
+	public INavigationWidget showConfigure(boolean b) {
+		if (configureIcon != null)
+			configureIcon.visible(b);
+		return this;
 	}
 }
