@@ -29,20 +29,20 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class ViewList {
 
-	public interface NewListener {
-
-		void onNew(ViewImpl view, ICallback<Void> cb);
-
-		boolean isRemovable(ViewImpl view);
-
-		void onRemove(ViewImpl view, ICallback<Boolean> remove);
-	}
+	// public interface NewListener {
+	//
+	// void onNew(ViewImpl view, ICallback<Void> cb);
+	//
+	// boolean isRemovable(ViewImpl view);
+	//
+	// void onRemove(ViewImpl view, ICallback<Boolean> remove);
+	// }
 
 	MetaViewList widget;
 	WidgetTitle widgetTitle;
 	IVerticalPanel panel;
 	List<ViewImpl> views = new LinkedList<ViewImpl>();
-	NewListener newListener = null;
+	// NewListener newListener = null;
 	boolean hasLinks;
 
 	public ViewList(MetaViewList widget, ILayout layout) {
@@ -75,19 +75,20 @@ public class ViewList {
 		return view;
 	}
 
-	public ViewList modifiable(String icon, final String typeIcon, String name,
-			NewListener listener) {
-		newListener = listener;
-		widgetTitle
-				.addHyperlink(icon, "New" + (name == null ? "" : " " + name))
-				.addClickListener(new LazyClickListener() {
-					@Override
-					public void onAllowedClick() {
-						addView(typeIcon, true);
-					}
-				});
-		return this;
-	}
+	// public ViewList modifiable(String icon, final String typeIcon, String
+	// name,
+	// NewListener listener) {
+	// newListener = listener;
+	// widgetTitle
+	// .addHyperlink(icon, "New" + (name == null ? "" : " " + name))
+	// .addClickListener(new LazyClickListener() {
+	// @Override
+	// public void onAllowedClick() {
+	// addView(typeIcon, true);
+	// }
+	// });
+	// return this;
+	// }
 
 	public ViewList title(String title) {
 		widgetTitle.addTitle(title);
@@ -99,20 +100,20 @@ public class ViewList {
 		return this;
 	}
 
-	protected void remove(final IGridPanel grid, final ViewImpl view,
-			final ICallback<Boolean> remove) {
-		if (view.title() != null)
-			newListener.onRemove(view, new CallbackTemplate<Boolean>() {
-				@Override
-				public void onSuccess(Boolean result) {
-					if (result)
-						removeView(grid, view);
-					remove.onSuccess(result);
-				}
-			});
-		else
-			removeView(grid, view);
-	}
+	// protected void remove(final IGridPanel grid, final ViewImpl view,
+	// final ICallback<Boolean> remove) {
+	// if (view.title() != null)
+	// newListener.onRemove(view, new CallbackTemplate<Boolean>() {
+	// @Override
+	// public void onSuccess(Boolean result) {
+	// if (result)
+	// removeView(grid, view);
+	// remove.onSuccess(result);
+	// }
+	// });
+	// else
+	// removeView(grid, view);
+	// }
 
 	protected void removeView(IGridPanel grid, ViewImpl view) {
 		grid.remove();

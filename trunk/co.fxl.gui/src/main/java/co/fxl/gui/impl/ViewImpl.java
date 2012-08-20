@@ -20,14 +20,11 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICallback;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 
 public class ViewImpl extends LazyClickListener {
@@ -91,72 +88,73 @@ public class ViewImpl extends LazyClickListener {
 			labelPanel.addSpace(4);
 			content = this.viewList.widget.contentPanel();
 			sideContent = this.viewList.widget.sideContentPanel();
-			if (this.viewList.newListener != null) {
-				removeImage = grid.cell(1, 0).width(30).align().end().panel()
-						.horizontal().addSpace(4).add().image();
-				removeImage.resource(Icons.CANCEL).addClickListener(
-						new LazyClickListener() {
-							@Override
-							public void onAllowedClick() {
-								ViewImpl.this.viewList.remove(grid,
-										ViewImpl.this,
-										new CallbackTemplate<Boolean>() {
-											@Override
-											public void onSuccess(Boolean result) {
-											}
-										});
-							}
-						});
-				removeImage.visible(false);
-			}
-		} else {
-			final ITextField tf = labelPanel.add().textField();
-			tf.focus(true);
-			new Heights(0).decorate(tf);
-			tf.width(199);
-			final IClickListener acceptListener = new IClickListener() {
-				@Override
-				public void onClick() {
-					labelPanel.clear();
-					decorate(false);
-					title(tf.text().trim());
-					ViewImpl.this.viewList.newListener.onNew(ViewImpl.this,
-							new CallbackTemplate<Void>() {
-
-								@Override
-								public void onSuccess(Void result) {
-									onAllowedClick();
-								}
-							});
-				}
-			};
-			final IImage accept = labelPanel.addSpace(4).add().image()
-					.resource(Icons.ACCEPT).addClickListener(acceptListener)
-					.mouseLeft();
-			tf.addKeyListener(new IClickListener() {
-				@Override
-				public void onClick() {
-					if (accept.clickable())
-						acceptListener.onClick();
-				}
-			}).enter();
-			accept.clickable(false);
-			tf.addUpdateListener(new IUpdateListener<String>() {
-
-				@Override
-				public void onUpdate(String value) {
-					accept.clickable(check(value));
-				}
-			});
-			labelPanel.addSpace(4).add().image().resource(Icons.CANCEL)
-					.addClickListener(new IClickListener() {
-						@Override
-						public void onClick() {
-							ViewImpl.this.viewList.remove(grid, ViewImpl.this,
-									null);
-						}
-					}).mouseLeft();
+			// if (this.viewList.newListener != null) {
+			// removeImage = grid.cell(1, 0).width(30).align().end().panel()
+			// .horizontal().addSpace(4).add().image();
+			// removeImage.resource(Icons.CANCEL).addClickListener(
+			// new LazyClickListener() {
+			// @Override
+			// public void onAllowedClick() {
+			// ViewImpl.this.viewList.remove(grid,
+			// ViewImpl.this,
+			// new CallbackTemplate<Boolean>() {
+			// @Override
+			// public void onSuccess(Boolean result) {
+			// }
+			// });
+			// }
+			// });
+			// removeImage.visible(false);
+			// }
 		}
+		// else {
+		// final ITextField tf = labelPanel.add().textField();
+		// tf.focus(true);
+		// new Heights(0).decorate(tf);
+		// tf.width(199);
+		// final IClickListener acceptListener = new IClickListener() {
+		// @Override
+		// public void onClick() {
+		// labelPanel.clear();
+		// decorate(false);
+		// title(tf.text().trim());
+		// ViewImpl.this.viewList.newListener.onNew(ViewImpl.this,
+		// new CallbackTemplate<Void>() {
+		//
+		// @Override
+		// public void onSuccess(Void result) {
+		// onAllowedClick();
+		// }
+		// });
+		// }
+		// };
+		// final IImage accept = labelPanel.addSpace(4).add().image()
+		// .resource(Icons.ACCEPT).addClickListener(acceptListener)
+		// .mouseLeft();
+		// tf.addKeyListener(new IClickListener() {
+		// @Override
+		// public void onClick() {
+		// if (accept.clickable())
+		// acceptListener.onClick();
+		// }
+		// }).enter();
+		// accept.clickable(false);
+		// tf.addUpdateListener(new IUpdateListener<String>() {
+		//
+		// @Override
+		// public void onUpdate(String value) {
+		// accept.clickable(check(value));
+		// }
+		// });
+		// labelPanel.addSpace(4).add().image().resource(Icons.CANCEL)
+		// .addClickListener(new IClickListener() {
+		// @Override
+		// public void onClick() {
+		// ViewImpl.this.viewList.remove(grid, ViewImpl.this,
+		// null);
+		// }
+		// }).mouseLeft();
+		// }
 	}
 
 	private boolean check(String value) {
@@ -262,9 +260,10 @@ public class ViewImpl extends LazyClickListener {
 	public void notClickable() {
 		// grid.color().rgb(0xD0, 0xE4, 0xF6);
 		styleViewlistEntryActive(label);
-		if (removeImage != null && this.viewList.newListener.isRemovable(this)) {
-			removeImage.visible(true);
-		}
+		// if (removeImage != null &&
+		// this.viewList.newListener.isRemovable(this)) {
+		// removeImage.visible(true);
+		// }
 	}
 
 	public void styleViewlistEntryActive(ILabel label) {
