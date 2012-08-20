@@ -198,7 +198,7 @@ public class WidgetTitle implements IClickListener {
 		if (commandsOnTop) {
 			if (commandPanelTop != null)
 				return;
-			IContainer cell = headerPanel.cell(1, 0).align().end().valign()
+			IContainer cell = headerPanel.cell(2, 0).align().end().valign()
 					.center();
 			commandPanelTop = cell.panel().horizontal().align().end().add()
 					.panel().horizontal().align().end().spacing(4);
@@ -377,8 +377,9 @@ public class WidgetTitle implements IClickListener {
 					configurePanel.visible(false);
 				}
 			});
-			IContainer cell = headerPanel.cell(1, 0).align().end().valign()
+			IContainer cell = headerPanel.cell(1, 0).align().begin().valign()
 					.center();
+			headerPanel.column(1).expand();
 			configurePanel = cell.panel().horizontal().valign().center()
 					.align().end().add().panel().horizontal().valign().center()
 					.align().end().spacing(2).align().center().visible(false);

@@ -193,7 +193,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		c0 = container;
 	}
 
-	private WidgetTitle widgetTitle() {
+	@Override
+	public WidgetTitle widgetTitle() {
 		if (widgetTitle == null) {
 			widgetTitle = new WidgetTitle(c0.panel(), addBorders, plainContent)
 					.foldable(false);
