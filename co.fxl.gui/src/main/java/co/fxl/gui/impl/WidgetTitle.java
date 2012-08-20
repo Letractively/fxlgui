@@ -358,9 +358,9 @@ public class WidgetTitle implements IClickListener {
 	}
 
 	IClickable<?> addLabel(String text, boolean underline) {
-		IImage l = configurePanel().add().image().resource("configure.png");
-		// .label().text(text);
-		// l.font().pixel(10).underline(underline).color().white();
+		ILabel l = configurePanel().add()// .image().resource("configure.png");
+				.label().text(text);
+		l.font().pixel(10).underline(underline).color().white();
 		return l;
 	}
 
