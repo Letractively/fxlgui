@@ -50,6 +50,10 @@ public class ViewList {
 		widgetTitle = new WidgetTitle(layout, true).sideWidget(true).spacing(2);// .grayBackground();
 	}
 
+	public WidgetTitle widgetTitle() {
+		return widgetTitle;
+	}
+
 	public ViewImpl addView() {
 		return addView(null);
 	}
