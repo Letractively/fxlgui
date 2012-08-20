@@ -29,6 +29,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
+import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.rtf.api.IRTFWidget;
 
 public interface IFormWidget {
@@ -118,5 +119,7 @@ public interface IFormWidget {
 	IFormField<IRTFWidget, String> addRichTextArea(String name);
 
 	IFormWidget focus();
+
+	WidgetTitle widgetTitle();
 
 }
