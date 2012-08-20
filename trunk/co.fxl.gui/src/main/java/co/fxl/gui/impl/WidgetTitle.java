@@ -55,6 +55,7 @@ public class WidgetTitle implements IClickListener {
 	public static final int LARGE_FONT = 18;
 	private static final String FOLDABLE = "Click to minimize/maximize";
 	private static final boolean IGNORE_SUBTITLES = true;
+	private static final boolean USE_CONFIGURE_IMAGE = true;
 	public IGridPanel panel;
 	private IHorizontalPanel titlePanel;
 	private IHorizontalPanel commandPanel;
@@ -358,8 +359,9 @@ public class WidgetTitle implements IClickListener {
 	}
 
 	IClickable<?> addLabel(String text, boolean underline) {
-		ILabel l = configurePanel().add()// .image().resource("configure.png");
-				.label().text(text);
+		if (USE_CONFIGURE_IMAGE)
+			return configurePanel().add().image().resource("configure.png");
+		ILabel l = configurePanel().add().label().text(text);
 		l.font().pixel(10).underline(underline).color().white();
 		return l;
 	}
