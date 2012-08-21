@@ -83,9 +83,8 @@ public class ColorField {
 
 	public ColorField(ITextField tf, IContainer c) {
 		this.tf = tf;
-		button = c.panel().vertical().spacing(2).add().panel().vertical()
-				.size(16, 16);
-		button.add().label().text("&#160;");
+		button = c.panel().vertical().add().panel().vertical().size(16, 16);
+		button.add().image().resource("empty_1x1.png");
 		button.border().width(1);
 		button.addClickListener(new PopUp());
 		tf.addUpdateListener(new IUpdateListener<String>() {
