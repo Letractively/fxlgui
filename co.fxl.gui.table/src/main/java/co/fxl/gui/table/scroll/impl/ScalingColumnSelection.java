@@ -36,6 +36,7 @@ public class ScalingColumnSelection {
 	private static final String COLUMN_SELECTION = "Column Selection";
 	TableWidgetAdp widget;
 	private ScrollTableColumnImpl dragged;
+	private boolean allowsEmptySelection;
 
 	// private ScrollTableColumnImpl dummy;
 	// private IFocusPanel dummyFocusPanel;
@@ -46,11 +47,13 @@ public class ScalingColumnSelection {
 	// sum(characters of column-headers) > m
 	// then dynamically resize font size of column selection labels
 
-	public ScalingColumnSelection(final TableWidgetAdp widget) {
+	public ScalingColumnSelection(final TableWidgetAdp widget,
+			boolean allowsEmptySelection) {
 		this.widget = widget;
 		// dummy = new ScrollTableColumnImpl(widget, -1);
 		// dummy.name("");
 		draw();
+		this.allowsEmptySelection = allowsEmptySelection;
 	}
 
 	public void draw() {
@@ -166,7 +169,7 @@ public class ScalingColumnSelection {
 					// widget.nextTimeShowPopUp(true);
 					p.popUpVisible(false);
 					c.visible = !c.visible;
-					boolean allInvisible = true;
+					boolean allInvisible = !allowsEmptySelection;
 					for (ScrollTableColumnImpl c1 : widget.columnList())
 						allInvisible &= !c1.visible;
 					if (allInvisible)
