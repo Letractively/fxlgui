@@ -79,7 +79,6 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 	public IChangePasswordWidget visible(boolean visible) {
 		IFormField<IPasswordField, String> pw = widget
 				.addPasswordField("Current");
-		pw.addContainer().label();
 		currentPassword = pw.valueElement();
 		if (!requiresCurrent) {
 			currentPassword.text(currentPasswordText);
