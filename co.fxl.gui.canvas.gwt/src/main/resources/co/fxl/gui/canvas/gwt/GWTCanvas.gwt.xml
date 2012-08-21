@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<inherits name='com.google.gwt.user.User' />
+	<inherits name='co.fxl.gui.IDisplay' />
+	<inherits name='co.fxl.gui.gwt.GWTDisplay' />
+	<inherits name='co.fxl.data.format.gwt.GWTFormat' />
+	<source path='api' />
+	<source path='gwt' />
+	<source path='impl' />
+</module>
