@@ -870,7 +870,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	private void addColumnSelection() {
-		ColumnSelection.newInstance(this);
+		ColumnSelection.newInstance(this, false);
 	}
 
 	void addCellUpdateListener() {

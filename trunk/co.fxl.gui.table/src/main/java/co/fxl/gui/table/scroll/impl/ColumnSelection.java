@@ -39,17 +39,20 @@ public class ColumnSelection {
 	private ScrollTableColumnImpl dummy;
 	private IFocusPanel dummyFocusPanel;
 	private ILabel dummyLabel;
+	private boolean allowsEmptySelection;
 
 	// TODO FEATURE: MINOR: : Option: Look: Column-Selection: if > n
 	// Columns or
 	// sum(characters of column-headers) > m
 	// then dynamically resize font size of column selection labels
 
-	private ColumnSelection(final TableWidgetAdp widget) {
+	private ColumnSelection(final TableWidgetAdp widget,
+			boolean allowsEmptySelection) {
 		this.widget = widget;
 		dummy = new ScrollTableColumnImpl(widget, -1);
 		dummy.name("");
 		draw();
+		this.allowsEmptySelection = allowsEmptySelection;
 	}
 
 	public void draw() {
@@ -146,7 +149,7 @@ public class ColumnSelection {
 				@Override
 				public void onClick() {
 					c.visible = !c.visible;
-					boolean allInvisible = true;
+					boolean allInvisible = !allowsEmptySelection;
 					for (ScrollTableColumnImpl c1 : widget.columnList())
 						allInvisible &= !c1.visible;
 					if (allInvisible)
@@ -186,10 +189,11 @@ public class ColumnSelection {
 		p.add().label().text("SHOW COLUMNS:").font().pixel(10).weight().bold();
 	}
 
-	public static void newInstance(TableWidgetAdp tableWidgetAdp) {
+	public static void newInstance(TableWidgetAdp tableWidgetAdp,
+			boolean allowsEmptySelection) {
 		if (Env.is(Env.SWING) || Env.is(Env.IE))
-			new ColumnSelection(tableWidgetAdp);
+			new ColumnSelection(tableWidgetAdp, allowsEmptySelection);
 		else
-			new ScalingColumnSelection(tableWidgetAdp);
+			new ScalingColumnSelection(tableWidgetAdp, allowsEmptySelection);
 	}
 }
