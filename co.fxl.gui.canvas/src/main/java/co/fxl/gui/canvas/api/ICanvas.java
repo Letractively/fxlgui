@@ -20,8 +20,10 @@ package co.fxl.gui.canvas.api;
 
 import co.fxl.gui.api.IBordered;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IMouseOverElement;
 
-public interface ICanvas extends IElement<ICanvas>, IBordered {
+public interface ICanvas extends IElement<ICanvas>, IBordered,
+		IMouseOverElement<ICanvas> {
 
 	public interface IMouseEventType {
 

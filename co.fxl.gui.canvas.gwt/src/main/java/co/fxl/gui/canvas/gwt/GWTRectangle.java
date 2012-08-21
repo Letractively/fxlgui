@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.canvas.gwt;
 
+import co.fxl.gui.canvas.api.IRectangle;
 import co.fxl.gui.canvas.impl.RectangleImpl;
 
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -35,8 +36,8 @@ class GWTRectangle extends RectangleImpl implements Drawable {
 
 	@Override
 	public void draw() {
-		double x = canvas.offsetX(this);
-		double y = canvas.offsetY(this);
+		double x = canvas.offsetX(this) + mod(1);
+		double y = canvas.offsetY(this) + mod(1);
 		double w = canvas.width(this);
 		double h = canvas.height(this);
 		if (color.active) {
@@ -56,7 +57,7 @@ class GWTRectangle extends RectangleImpl implements Drawable {
 				if (border.style.right)
 					drawLine(x + w, y, 1d, h);
 			} else {
-				context.rect(x + mod(1), y + mod(1), w, h);
+				context.rect(x, y, w, h);
 			}
 			context.closePath();
 			context.stroke();
@@ -76,5 +77,15 @@ class GWTRectangle extends RectangleImpl implements Drawable {
 		int[] rgb = color.rgb;
 		double opacity = this.opacity;
 		return canvas.getColor(rgb, opacity);
+	}
+
+	@Override
+	public IRectangle clear() {
+		double x = canvas.offsetX(this);
+		double y = canvas.offsetY(this);
+		double w = canvas.width(this);
+		double h = canvas.height(this);
+		context.clearRect(x, y, w, h);
+		return this;
 	}
 }

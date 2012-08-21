@@ -23,7 +23,7 @@ import co.fxl.gui.canvas.api.IRectangle;
 import co.fxl.gui.impl.BorderMemento;
 import co.fxl.gui.impl.ColorMemento;
 
-public class RectangleImpl extends LocatedImpl<IRectangle> implements
+public abstract class RectangleImpl extends LocatedImpl<IRectangle> implements
 		IRectangle {
 
 	protected ColorMemento color = new ColorMemento();
