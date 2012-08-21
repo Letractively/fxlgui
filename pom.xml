@@ -38,6 +38,7 @@
   			<module>co.fxl.gui.table</module>
   			<module>co.fxl.gui.table.swing</module>
   			<module>co.fxl.gui.canvas</module>
+  			<module>co.fxl.gui.canvas.gwt</module>
   		</modules>
 		</profile>  			
 	</profiles>  
