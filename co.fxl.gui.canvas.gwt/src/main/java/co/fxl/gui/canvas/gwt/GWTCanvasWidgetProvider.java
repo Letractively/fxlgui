@@ -21,8 +21,14 @@ package co.fxl.gui.canvas.gwt;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.canvas.api.ICanvas;
+import co.fxl.gui.impl.Display;
+
+import com.google.gwt.canvas.client.Canvas;
 
 public class GWTCanvasWidgetProvider implements IWidgetProvider<ICanvas> {
+
+	private GWTCanvasWidgetProvider() {
+	}
 
 	@Override
 	public Class<ICanvas> widgetType() {
@@ -32,6 +38,11 @@ public class GWTCanvasWidgetProvider implements IWidgetProvider<ICanvas> {
 	@Override
 	public ICanvas createWidget(IContainer container) {
 		return GWTCanvas.create(container);
+	}
+
+	public static void setUp() {
+		if (Canvas.isSupported())
+			Display.instance().register(new GWTCanvasWidgetProvider());
 	}
 
 }
