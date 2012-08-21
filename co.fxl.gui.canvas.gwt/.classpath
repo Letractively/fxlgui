@@ -7,5 +7,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/fxl-data-format-gwt"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/fxl-gui"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/fxl-gui-gwt"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
