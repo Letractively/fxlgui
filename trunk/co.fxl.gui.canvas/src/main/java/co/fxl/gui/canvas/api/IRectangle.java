@@ -27,4 +27,6 @@ public interface IRectangle extends ILocated<IRectangle>, IBordered {
 	IColor color();
 
 	IRectangle opacity(double opacity);
+
+	IRectangle clear();
 }

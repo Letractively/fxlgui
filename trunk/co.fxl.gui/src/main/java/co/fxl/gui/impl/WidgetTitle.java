@@ -29,6 +29,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -363,32 +364,62 @@ public class WidgetTitle implements IClickListener {
 			return configurePanel().add().image().resource("configure.png");
 		ILabel l = configurePanel().add().label().text(text);
 		l.font().pixel(10).underline(underline).color().white();
+		addFadeInOutEffect(l);
 		return l;
 	}
 
 	IHorizontalPanel configurePanel() {
 		if (configurePanel == null) {
-			headerFocusPanel.addMouseOverListener(new IMouseOverListener() {
-
-				@Override
-				public void onMouseOver() {
-					configurePanel.visible(true);
-				}
-
-				@Override
-				public void onMouseOut() {
-					configurePanel.visible(false);
-				}
-			});
 			IContainer cell = headerPanel.cell(1, 0).align().begin().valign()
 					.center();
 			headerPanel.column(1).expand();
 			configurePanel = cell.panel().horizontal().valign().center()
 					.align().end().add().panel().horizontal().valign().center()
-					.align().end().spacing(2).align().center().visible(false);
+					.align().end().spacing(2).align().center();
 			configurePanel.margin().right(2);
 		}
 		return configurePanel;
+	}
+
+	private void addFadeInOutEffect(final IElement<?> e) {
+		e.opacity(0);
+		headerFocusPanel.addMouseOverListener(new IMouseOverListener() {
+
+			private double opacity = 0;
+			private double targetOpacity = 1;
+			private boolean scheduled;
+
+			@Override
+			public void onMouseOver() {
+				schedule(1);
+			}
+
+			private void schedule() {
+				if (targetOpacity != opacity) {
+					scheduled = true;
+					Display.instance().invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							opacity += opacity > targetOpacity ? -0.25 : 0.25;
+							e.opacity(opacity);
+							schedule();
+						}
+					}, 75);
+				} else
+					scheduled = false;
+			}
+
+			@Override
+			public void onMouseOut() {
+				schedule(0);
+			}
+
+			private void schedule(int target) {
+				targetOpacity = target;
+				if (!scheduled)
+					schedule();
+			}
+		});
 	}
 
 	private CommandLink createCommandLink(IFocusPanel fp,
