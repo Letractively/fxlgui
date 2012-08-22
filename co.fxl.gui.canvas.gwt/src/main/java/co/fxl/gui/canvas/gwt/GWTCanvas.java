@@ -48,7 +48,7 @@ class GWTCanvas extends GWTElement<Canvas, ICanvas> implements ICanvas {
 
 		private MouseEventType type = MouseEventType.DOWN;
 		private IMouseListener listener;
-		private boolean shift;
+		private Boolean shift = null;
 
 		GWTMouseAdapter(IMouseListener l) {
 			listener = l;
@@ -73,6 +73,8 @@ class GWTCanvas extends GWTElement<Canvas, ICanvas> implements ICanvas {
 		}
 
 		boolean matchesKeys(MouseEvent<?> event) {
+			if (shift == null)
+				return true;
 			return shift == event.isShiftKeyDown();
 		}
 
