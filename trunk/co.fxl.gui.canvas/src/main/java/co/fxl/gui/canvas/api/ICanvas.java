@@ -27,11 +27,13 @@ public interface ICanvas extends IElement<ICanvas>, IBordered,
 
 	public interface IMouseEventType {
 
-		ICanvas down();
+		IMouseEventType down();
 
-		ICanvas move();
+		IMouseEventType move();
 
-		ICanvas up();
+		IMouseEventType up();
+		
+		IMouseEventType shift();
 	}
 
 	public interface IMouseListener {
