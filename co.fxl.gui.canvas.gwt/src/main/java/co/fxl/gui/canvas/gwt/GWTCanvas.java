@@ -48,27 +48,38 @@ class GWTCanvas extends GWTElement<Canvas, ICanvas> implements ICanvas {
 
 		private MouseEventType type = MouseEventType.DOWN;
 		private IMouseListener listener;
+		private boolean shift;
 
 		GWTMouseAdapter(IMouseListener l) {
 			listener = l;
 		}
 
 		@Override
-		public ICanvas down() {
+		public IMouseEventType down() {
 			type = MouseEventType.DOWN;
-			return GWTCanvas.this;
+			return this;
 		}
 
 		@Override
-		public ICanvas move() {
+		public IMouseEventType move() {
 			type = MouseEventType.MOVE;
-			return GWTCanvas.this;
+			return this;
 		}
 
 		@Override
-		public ICanvas up() {
+		public IMouseEventType up() {
 			type = MouseEventType.UP;
-			return GWTCanvas.this;
+			return this;
+		}
+
+		boolean matchesKeys(MouseEvent<?> event) {
+			return shift == event.isShiftKeyDown();
+		}
+
+		@Override
+		public IMouseEventType shift() {
+			shift = true;
+			return this;
 		}
 
 	}
@@ -109,7 +120,7 @@ class GWTCanvas extends GWTElement<Canvas, ICanvas> implements ICanvas {
 	private void notifyEvent(MouseEvent<?> event, MouseEventType type) {
 		if (!GWTDisplay.waiting)
 			for (GWTMouseAdapter m : adapters)
-				if (m.type.equals(type))
+				if (m.type.equals(type) && m.matchesKeys(event))
 					m.listener.onEvent(x(event), y(event));
 	}
 
