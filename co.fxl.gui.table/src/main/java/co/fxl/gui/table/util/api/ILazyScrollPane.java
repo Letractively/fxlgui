@@ -41,6 +41,8 @@ public interface ILazyScrollPane extends IMouseWheelListener {
 		IDragArea dragArea(int index);
 
 		IFocusPanel getFocusPanel();
+
+		void contentWidth(int width);
 	}
 
 	ILazyScrollPane size(int size);

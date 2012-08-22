@@ -29,7 +29,7 @@ public class SplitLayout implements IResizeListener {
 
 	// TODO SWING-FXL: minimize doesn't work
 
-	public static final int DECREMENT = 40 - 17;
+	public static final int DECREMENT = 23;
 	public static int SCROLLBAR_WIDTH = 20;
 	public static int WIDTH_SIDE_PANEL = 320 - DECREMENT;
 	private ILayout layout;
