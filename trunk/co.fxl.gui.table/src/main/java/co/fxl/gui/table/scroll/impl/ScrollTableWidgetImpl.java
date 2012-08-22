@@ -468,6 +468,10 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						public IFocusPanel getFocusPanel() {
 							throw new UnsupportedOperationException();
 						}
+
+						@Override
+						public void contentWidth(int width) {
+						}
 					});
 					sp.size(rows.size());
 					sp.visible(true);

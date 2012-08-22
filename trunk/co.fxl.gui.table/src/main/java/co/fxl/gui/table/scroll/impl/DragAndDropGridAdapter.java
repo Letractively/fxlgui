@@ -107,6 +107,10 @@ class DragAndDropGridAdapter implements DragAndDropAdapter {
 				throw new UnsupportedOperationException();
 			}
 
+			@Override
+			public void contentWidth(int width) {
+			}
+
 		};
 	}
 

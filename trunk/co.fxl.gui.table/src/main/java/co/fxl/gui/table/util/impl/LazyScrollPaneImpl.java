@@ -388,6 +388,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	}
 
 	private void decorate(int rowIndex, boolean isCalibration, IContainer c) {
+//		decorator.contentWidth(width - widthScrollPanel);
 		IKeyRecipient<Object> e = decorator.decorate(c, rowIndex, lastIndex,
 				isCalibration);
 		if (!isCalibration) {
@@ -404,6 +405,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 			treeDockPanel.width(width);
 			treeScrollPanelContainer.width(width - widthScrollPanel);
 			treeScrollPanel.width(width - widthScrollPanel);
+			decorator.contentWidth(width - widthScrollPanel);
 		}
 		return this;
 	}
