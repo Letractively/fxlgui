@@ -383,7 +383,17 @@ public class WidgetTitle implements IClickListener {
 
 	private void addFadeInOutEffect(final IElement<?> e) {
 		e.opacity(0);
-		headerFocusPanel.addMouseOverListener(new IMouseOverListener() {
+		IFocusPanel h = headerFocusPanel;
+		addFadeEffect(e, h);
+	}
+
+	private static void addFadeEffect(final IElement<?> e, IFocusPanel h) {
+		addFadeEffect(e, h, 300, 4);
+	}
+
+	public static void addFadeEffect(final IElement<?> e, IFocusPanel h,
+			final int l, final int steps) {
+		h.addMouseOverListener(new IMouseOverListener() {
 
 			private double opacity = 0;
 			private double targetOpacity = 1;
@@ -400,11 +410,12 @@ public class WidgetTitle implements IClickListener {
 					Display.instance().invokeLater(new Runnable() {
 						@Override
 						public void run() {
-							opacity += opacity > targetOpacity ? -0.25 : 0.25;
+							opacity += opacity > targetOpacity ? -(1d / steps)
+									: (1d / steps);
 							e.opacity(opacity);
 							schedule();
 						}
-					}, 75);
+					}, l / steps);
 				} else
 					scheduled = false;
 			}
