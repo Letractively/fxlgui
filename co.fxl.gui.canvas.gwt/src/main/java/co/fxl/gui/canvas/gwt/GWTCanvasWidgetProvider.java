@@ -45,7 +45,7 @@ public class GWTCanvasWidgetProvider implements IWidgetProvider<ICanvas> {
 		if (Canvas.isSupported())
 			Display.instance().register(new GWTCanvasWidgetProvider());
 		else
-			Log.instance().warn("Browser doesn't support Canvas");
+			Log.instance().warn("Browser doesn't support canvas element");
 	}
 
 }
