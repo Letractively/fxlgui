@@ -22,6 +22,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.canvas.api.ICanvas;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.log.impl.Log;
 
 import com.google.gwt.canvas.client.Canvas;
 
@@ -43,6 +44,8 @@ public class GWTCanvasWidgetProvider implements IWidgetProvider<ICanvas> {
 	public static void setUp() {
 		if (Canvas.isSupported())
 			Display.instance().register(new GWTCanvasWidgetProvider());
+		else
+			Log.instance().warn("Browser doesn't support Canvas");
 	}
 
 }
