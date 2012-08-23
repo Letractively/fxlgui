@@ -27,7 +27,6 @@ import co.fxl.gui.automation.api.IAutomationAdapter;
 import co.fxl.gui.automation.api.IAutomationListener.Key;
 import co.fxl.gui.gwt.GWTClickHandler.ClickEventAdp;
 
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -57,8 +56,8 @@ class GWTElementAdapter implements IAutomationAdapter,
 				if (findLabel != null)
 					return findLabel;
 			} else if (isClickableLabel(c)) {
-				GWTContainer<HTML> ct = new GWTContainer<HTML>(null);
-				ct.setComponent((HTML) c);
+				GWTContainer<FXLHTML> ct = new GWTContainer<FXLHTML>(null);
+				ct.setComponent((FXLHTML) c);
 				return new GWTLabel(ct);
 			}
 		}
@@ -66,7 +65,7 @@ class GWTElementAdapter implements IAutomationAdapter,
 	}
 
 	private boolean isClickableLabel(Widget c) {
-		return c instanceof HTML;
+		return c instanceof FXLHTML;
 	}
 
 	@Override
