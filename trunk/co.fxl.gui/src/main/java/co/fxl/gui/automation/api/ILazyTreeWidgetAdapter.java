@@ -16,7 +16,7 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.automation.impl;
+package co.fxl.gui.automation.api;
 
 import co.fxl.gui.automation.api.IAutomationListener.Key;
 
