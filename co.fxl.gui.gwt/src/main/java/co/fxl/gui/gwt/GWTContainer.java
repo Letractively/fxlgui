@@ -114,8 +114,8 @@ public class GWTContainer<T extends Widget> implements IContainer {
 
 	@Override
 	public ILabel label() {
-		setComponent((T) new HTML());
-		return (ILabel) (element = new GWTLabel((GWTContainer<HTML>) this));
+		setComponent((T) new FXLHTML());
+		return (ILabel) (element = new GWTLabel((GWTContainer<FXLHTML>) this));
 	}
 
 	@Override
