@@ -35,7 +35,7 @@ public abstract class KeyTemplate<T> implements IKey<T> {
 
 	protected final T element;
 	protected ButtonType buttonType = ButtonType.LEFT;
-	protected Map<KeyType, Boolean> pressedKeys = new HashMap<KeyType, Boolean>();
+	protected final Map<KeyType, Boolean> pressedKeys = new HashMap<KeyType, Boolean>();
 	protected boolean isDoubleClick = false;
 
 	protected KeyTemplate(T element) {
