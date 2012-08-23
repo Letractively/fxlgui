@@ -20,7 +20,7 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.automation.impl.Automation;
 
-privileged aspect SwingDisplayAutomation {
+privileged aspect GWTDisplayAutomation {
 
 	after(GWTDisplay element) : 
 	execution(private GWTDisplay.new()) 
