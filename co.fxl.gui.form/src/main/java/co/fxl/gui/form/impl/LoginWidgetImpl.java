@@ -124,7 +124,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 	}
 
 	private void addLogout(IPanel<?> panel) {
-		ILabel loggedInAs = panel.add().label().text("Logged in as").autoWrap(false);
+		ILabel loggedInAs = panel.add().label().text("Logged in as");
 		decorate(loggedInAs);
 		ILabel loggedInHead = panel
 				.add()
