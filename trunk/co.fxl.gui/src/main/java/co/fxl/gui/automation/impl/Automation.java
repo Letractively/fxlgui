@@ -20,7 +20,9 @@ package co.fxl.gui.automation.impl;
 
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.automation.api.IAutomationAdapter;
 import co.fxl.gui.automation.api.IAutomationListener;
+import co.fxl.gui.impl.Display;
 
 public class Automation {
 
@@ -50,6 +52,10 @@ public class Automation {
 
 	public static void listener(IAutomationListener l) {
 		instance = l;
+	}
+
+	public static boolean isEnabled() {
+		return ENABLED && Display.instance().supports(IAutomationAdapter.class);
 	}
 
 }
