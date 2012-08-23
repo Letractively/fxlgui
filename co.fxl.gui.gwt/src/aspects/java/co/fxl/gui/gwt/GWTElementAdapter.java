@@ -53,7 +53,9 @@ class GWTElementAdapter implements IAutomationAdapter,
 	private ILabel findLabel(Panel p) {
 		for (Widget c : p) {
 			if (c instanceof Panel) {
-				return findLabel((Panel) c);
+				ILabel findLabel = findLabel((Panel) c);
+				if (findLabel != null)
+					return findLabel;
 			} else if (isClickableLabel(c)) {
 				GWTContainer<HTML> ct = new GWTContainer<HTML>(null);
 				ct.setComponent((HTML) c);
