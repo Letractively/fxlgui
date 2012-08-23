@@ -100,11 +100,13 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 		}
 
 		void preventDefault() {
-			original.preventDefault();
+			if (original != null)
+				original.preventDefault();
 		}
 
 		void stopPropagation() {
-			original.stopPropagation();
+			if (original != null)
+				original.stopPropagation();
 		}
 
 	}
