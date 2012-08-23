@@ -100,7 +100,9 @@ public class SwingElementAdapter implements IAutomationAdapter,
 	private ILabel findLabel(PanelComponent p) {
 		for (Component c : p.getComponents()) {
 			if (c instanceof PanelComponent) {
-				return findLabel((PanelComponent) c);
+				ILabel findLabel = findLabel((PanelComponent) c);
+				if (findLabel != null)
+					return findLabel;
 			} else if (isClickableLabel(c)) {
 				SwingContainer<JLabel> ct = new SwingContainer<JLabel>(null);
 				JLabel lbl = (JLabel) c;
