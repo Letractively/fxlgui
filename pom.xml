@@ -51,36 +51,45 @@
   			<srcDir>${basedir}/target/generated-sources</srcDir>
   		</properties>	
   		<build>
-  			<plugins>	 
-		     	<plugin>
-        		<groupId>org.codehaus.mojo</groupId>
-		        <artifactId>exec-maven-plugin</artifactId>
-		        <version>1.2.1</version>
-		        <executions>
-    		      <execution>
-									<phase>generate-sources</phase>
+  			<plugins>	  				
+					<plugin>
+        		<artifactId>maven-antrun-plugin</artifactId>
+		        <version>1.7</version>
+        		<executions>
+          		<execution>
+            		<phase>generate-sources</phase>
+            		<configuration>
+              		<target>
+              			<property name="maven.project.classpath" refid="maven.compile.classpath"/>
+              			<property name="temp.classes.dir" value="${basedir}/target/tempClasses"/>
+              			<property name="launch.classpath" value="${temp.classes.dir};${maven.project.classpath};${aspectPreProcessor}\bin;${aspectPreProcessor}\aopc_lib\junit.jar;${aspectPreProcessor}\aopc_lib\org.hamcrest.core_1.1.0.v20090501071000.jar;${aspectPreProcessor}\aopc_lib\jaxen-core.jar;${aspectPreProcessor}\aopc_lib\jaxen-jdom.jar;${aspectPreProcessor}\aopc_lib\jdom.jar;${aspectPreProcessor}\aopc_lib\saxpath.jar;${aspectPreProcessor}\aopc_lib\javassist.jar;${aspectPreProcessor}\aopc_lib\ant.jar;${aspectPreProcessor}\aopc_lib\bcel.jar;${aspectPreProcessor}\aopc_lib\importscrubber.jar;${aspectPreProcessor}\aopc_lib\optional.jar;${aspectPreProcessor}\aopc_lib\spoon-core-1.4-jar-with-dependencies.jar;${aspectPreProcessor}\aopc_lib\spoon-core-1.4-sources.jar;${aspectPreProcessor}\aopc_lib\jalopy.jar;${aspectPreProcessor}\aopc_lib\log4j.jar;${aspectPreProcessor}\aopc_lib\aspectjtools.jar;${aspectPreProcessor}\aopc_lib\aspectjtools1.6.4-src.jar;${aspectPreProcessor}\aopc_lib\gwt-user.jar;${aspectPreProcessor}\aopc_lib\gwt-dev.jar;${aspectPreProcessor}\aopc_lib\validation-api-1.0.0.GA-sources.jar;${aspectPreProcessor}\aopc_lib\validation-api-1.0.0.GA.jar;${aspectPreProcessor}\aopc.jar;"/>
+              			<property name="project.src.dir" value="${basedir}/src/main/java"/>
+              																							
+										<mkdir dir="${temp.classes.dir}"/>
+										<!-- workaround: javac needs valid source directory -->
+										<mkdir dir="${project.src.dir}"/>
+   									<javac failonerror="true" includeAntRuntime="false" 
+											srcdir="${project.src.dir}" classpath="${maven.project.classpath}"
+         							destdir="${temp.classes.dir}" fork="true"
+											source="${java_compliance_source_level}" target="${java_compliance_target_level}">
+										</javac>
+										<java failonerror="true" classname="launch.InjectAspects" classpath="${launch.classpath}" fork="true">
+											<arg value="${basedir}"/>
+											<sysproperty key="features" value="aspectj.maven"/>
+											<sysproperty key="aspects" value="${aspects}"/>
+											<sysproperty key="target" value="${basedir}/target/generated-sources"/>
+											<sysproperty key="plugins" value="co.fxl.aopc.metaprog.gen.api.IBytecode=co.fxl.aopc.metaprog.gen.javassist.JavassistBytecodePlugIn;co.fxl.aopc.metaprog.reflection.api.ISourcecode=co.fxl.aopc.metaprog.gen.javassist.JavassistBytecodePlugIn;co.fxl.aopc.metaprog.gen.transform.api.ITransformations=co.fxl.aopc.metaprog.gen.transform.spoon.SpoonProcessingPlugIn;co.fxl.aopc.metaprog.prettyprint.api.IPrettyPrinter=co.fxl.aopc.metaprog.prettyprint.jalopy.JalopyPrettyPrinterPlugIn;co.fxl.aopc.metaprog.reflection.aspectj.api.ISourcecode=co.fxl.aopc.metaprog.reflection.aspectj.ajc.AjcSourcecodePlugIn;co.fxl.platform.IActivity=co.fxl.aopc.preprocessor.impl.MavenPreprocessorActivity;co.fxl.aopc.preprocessor.api.IPreprocessors=co.fxl.aopc.preprocessor.aspectj.AspectJPreprocessorsPlugIn;co.fxl.platform.bundle.api.IBundles=co.fxl.platform.bundle.osgi.OSGiBundlesPlugIn;co.fxl.platform.file.api.IFiles=co.fxl.platform.file.impl.FilesPlugIn;co.fxl.platform.log.api.ILog=co.fxl.platform.log.console.ConsoleLogPlugIn;co.fxl.platform.fsm.api.IFSM=co.fxl.platform.fsm.impl.FSMPlugIn;co.fxl.platform.thread.api.IThreadGroups=co.fxl.platform.thread.jdk.JDKThreadGroupsPlugIn;co.fxl.platform.xml.api.INodes=co.fxl.platform.xml.jdom.JDOMNodesPlugIn"/>
+										</java>	
+										<delete dir="${temp.classes.dir}"/>
+          	    	</target>
+            		</configuration>
             		<goals>
-              		<goal>exec</goal>
+             			<goal>run</goal>
             		</goals>
           		</execution>
         		</executions>
-        		<configuration>
-          		<executable>java</executable>
-							<classpathScope>compile</classpathScope>
-          		<arguments>
-          			<argument>-Xmx2048M</argument>
-          			<argument>-Dfeatures=aspectj.maven</argument>
-            		<argument>-Daspects=${aspects}</argument>
-            		<argument>-Dtarget=${basedir}/target/generated-sources</argument> 
-            		<argument>-Dplugins=co.fxl.aopc.metaprog.gen.api.IBytecode=co.fxl.aopc.metaprog.gen.javassist.JavassistBytecodePlugIn;co.fxl.aopc.metaprog.reflection.api.ISourcecode=co.fxl.aopc.metaprog.gen.javassist.JavassistBytecodePlugIn;co.fxl.aopc.metaprog.gen.transform.api.ITransformations=co.fxl.aopc.metaprog.gen.transform.spoon.SpoonProcessingPlugIn;co.fxl.aopc.metaprog.prettyprint.api.IPrettyPrinter=co.fxl.aopc.metaprog.prettyprint.jalopy.JalopyPrettyPrinterPlugIn;co.fxl.aopc.metaprog.reflection.aspectj.api.ISourcecode=co.fxl.aopc.metaprog.reflection.aspectj.ajc.AjcSourcecodePlugIn;co.fxl.platform.IActivity=co.fxl.aopc.preprocessor.impl.MavenPreprocessorActivity;co.fxl.aopc.preprocessor.api.IPreprocessors=co.fxl.aopc.preprocessor.aspectj.AspectJPreprocessorsPlugIn;co.fxl.platform.bundle.api.IBundles=co.fxl.platform.bundle.osgi.OSGiBundlesPlugIn;co.fxl.platform.file.api.IFiles=co.fxl.platform.file.impl.FilesPlugIn;co.fxl.platform.log.api.ILog=co.fxl.platform.log.console.ConsoleLogPlugIn;co.fxl.platform.fsm.api.IFSM=co.fxl.platform.fsm.impl.FSMPlugIn;co.fxl.platform.thread.api.IThreadGroups=co.fxl.platform.thread.jdk.JDKThreadGroupsPlugIn;co.fxl.platform.xml.api.INodes=co.fxl.platform.xml.jdom.JDOMNodesPlugIn</argument>
-            		<argument>-classpath</argument>
-            		<argument>${classpath};D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\bin;D:\Projects\ControlCenter\Fxl\trunk\co.fxl.data.format\bin;D:\Projects\ControlCenter\Fxl\trunk\co.fxl.data.format.gwt\bin;C:\Users\orm\.m2\repository\javax\validation\validation-api\1.0.0.GA\validation-api-1.0.0.GA.jar;C:\Users\orm\.m2\repository\javax\validation\validation-api\1.0.0.GA\validation-api-1.0.0.GA-sources.jar;C:\Users\orm\.m2\repository\com\google\gwt\gwt-user\2.4.0\gwt-user-2.4.0.jar;D:\Projects\ControlCenter\Fxl\trunk\co.fxl.data.format.swing\bin;D:\Projects\ControlCenter\Fxl\trunk\co.fxl.gui\bin;D:\Projects\ControlCenter\Fxl\trunk\co.fxl.gui.form\bin;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.form.gwt\bin;D:\Projects\ControlCenter\Fxl\trunk\co.fxl.gui.gwt\bin;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.mdt\bin;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.tree\bin;D:\Projects\ControlCenter\Fxl\trunk\co.fxl.gui.navigation\bin;D:\Projects\ControlCenter\Fxl\trunk\co.fxl.gui.table\bin;C:\Users\orm\.m2\repository\junit\junit\4.0\junit-4.0.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.fwk.gantt\bin;D:\Projects\ControlCenter\Fxl\trunk\co.fxl.gui.canvas\bin;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.tree.impl\bin;D:\Projects\ControlCenter\Fxl\trunk\co.fxl.gui.style.gplus\bin;D:\Projects\ControlCenter\Fxl\trunk\co.fxl.gui.swing\bin;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.table.gwt\bin;C:\Users\orm\.m2\repository\com\google\gwt\gwt-incubator\20101117-r1766\gwt-incubator-20101117-r1766.jar;D:\Projects\ControlCenter\Fxl\trunk\co.fxl.gui.table.swing\bin;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.tree.gwt\bin;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\junit.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\org.hamcrest.core_1.1.0.v20090501071000.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\jaxen-core.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\jaxen-jdom.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\jdom.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\saxpath.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\javassist.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\ant.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\bcel.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\importscrubber.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\optional.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\spoon-core-1.4-jar-with-dependencies.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\spoon-core-1.4-sources.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\jalopy.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\log4j.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\aspectjtools.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\aspectjtools1.6.4-src.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\gwt-user.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\gwt-dev.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\validation-api-1.0.0.GA-sources.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc_lib\validation-api-1.0.0.GA.jar;D:\Projects\ControlCenter\Framework\trunk\co.fxl.gui.preprocess\aopc.jar</argument>
-            		<argument>launch.InjectAspects</argument>
-								<argument>${basedir}</argument>
-          		</arguments>           		
-        		</configuration>
-      		</plugin>
-			</plugins>             
+      		</plugin>      		
+				</plugins>             			
 			</build>			
 		</profile> 			
 	</profiles>  
