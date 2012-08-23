@@ -27,15 +27,14 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.user.client.ui.HTML;
 
-class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
+class GWTLabel extends GWTElement<FXLHTML, ILabel> implements ILabel {
 
 	private HTMLText html = new HTMLText();
 	// private boolean selectionDisabled = false;
 	private HyperlinkDecorator hyperlinkDecorator;
 
-	GWTLabel(GWTContainer<HTML> container) {
+	GWTLabel(GWTContainer<FXLHTML> container) {
 		super(container);
 		container.widget.addStyleName("gwt-Label-FXL");
 		// container.widget.setWordWrap(false);
@@ -136,10 +135,11 @@ class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 
 	@Override
 	public ILabel breakWord(boolean breakWord) {
-		if(!breakWord)
-		style().clearProperty("wordWrap");
+		if (!breakWord)
+			style().clearProperty("wordWrap");
 		else
-		container.widget.getElement().getStyle().setProperty("wordWrap", "break-word");
+			container.widget.getElement().getStyle()
+					.setProperty("wordWrap", "break-word");
 		return this;
 	}
 
