@@ -62,7 +62,6 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	protected IPopUp popUp;
 	private IGridCell sidePanelContainer;
 	private IGridPanel grid;
-	private IScrollPane sidePanel;
 
 	// public IResizeConfiguration singleResizeListener(
 	// RefreshListener resizeListener) {
@@ -295,7 +294,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 
 	public IScrollPane showSidePanel(final int width) {
 		sidePanelContainer = grid.cell(1, 0);
-		sidePanel = sidePanelContainer.width(width).scrollPane()
+		IScrollPane sidePanel = sidePanelContainer.width(width).scrollPane()
 				.size(width, display.height());
 		sidePanel.border().style().left().color().gray();
 		notifyResizeListeners();
@@ -307,7 +306,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	public StatusDisplay hideSidePanel() {
-		sidePanel.remove();
+		// sidePanel.remove();
 		sidePanelContainer.clear().width(0);
 		sidePanelContainer = null;
 		notifyResizeListeners();
