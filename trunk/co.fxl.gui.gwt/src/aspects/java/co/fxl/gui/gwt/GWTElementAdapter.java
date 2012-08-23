@@ -65,7 +65,7 @@ class GWTElementAdapter implements IAutomationAdapter,
 	}
 
 	private boolean isClickableLabel(Widget c) {
-		return c instanceof FXLHTML;
+		return c instanceof FXLHTML && ((FXLHTML) c).hasClickHandlers();
 	}
 
 	@Override
