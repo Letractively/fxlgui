@@ -58,7 +58,7 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 		@Override
 		public IGridCell clear() {
 			gridCell = this;
-			GWTGridPanel.this.container.widget.remove(container.widget);
+			GWTGridPanel.this.container.widget.remove(widget);
 			return this;
 		}
 
