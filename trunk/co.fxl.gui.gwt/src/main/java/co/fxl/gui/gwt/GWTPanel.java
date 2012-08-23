@@ -51,9 +51,7 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 		registration = container.widget.addHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				for (GWTClickHandler<R> handler : handlers) {
-					handler.onClick(new ClickEventAdp(event));
-				}
+			    fireClickListenersSingleClick(event) ;
 			}
 		}, ClickEvent.getType());
 	}
