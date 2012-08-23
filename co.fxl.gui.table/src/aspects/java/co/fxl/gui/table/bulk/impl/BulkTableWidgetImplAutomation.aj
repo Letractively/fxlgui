@@ -28,7 +28,7 @@ privileged aspect BulkTableWidgetImplAutomation {
 	execution(protected BulkTableWidgetImpl.new(IContainer))
 	&& this(element)
 	&& if(Automation.ENABLED) {
-		BulkTableWidgetListener.instance().notifyNew(element);
+		BulkTableWidgetListener.instance().notifyNewTable(element);
 		AutomationTableClickListener.attach(element);
 	}
 }

@@ -22,7 +22,7 @@ import co.fxl.gui.automation.api.IAutomationListener.Key;
 
 public interface IBulkTableWidgetListener<T> {
 
-	void notifyNew(T tree);
+	void notifyNewTable(T tree);
 
 	void notifyClick(T tree, int column, int row, int px, int py, Key key);
 
