@@ -1,20 +1,20 @@
 /**
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  *  
- * This file is part of FXL GUI API.
+ * This file is part of  GUI API.
  *  
- * FXL GUI API is free software: you can redistribute it and/or modify
+ *  GUI API is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *  
- * FXL GUI API is distributed in the hope that it will be useful,
+ *  GUI API is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *  
  * You should have received a copy of the GNU General Public License
- * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
+ * along with  GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
 package co.fxl.gui.gwt;
 
@@ -23,8 +23,8 @@ import co.fxl.gui.api.IFocusPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class GWTFocusPanel extends GWTPanel<FXLFocusPanel, IFocusPanel>
-		implements IFocusPanel {
+public class GWTFocusPanel extends GWTPanel<FocusPanel, IFocusPanel> implements
+		IFocusPanel {
 
 	public GWTFocusPanel(GWTContainer<?> container) {
 		this(container, true);
@@ -37,10 +37,10 @@ public class GWTFocusPanel extends GWTPanel<FXLFocusPanel, IFocusPanel>
 
 	@SuppressWarnings("unchecked")
 	public GWTFocusPanel(GWTContainer<?> container, boolean decorate) {
-		super((GWTContainer<FXLFocusPanel>) container);
+		super((GWTContainer<FocusPanel>) container);
 		if (decorate) {
 			container.widget.setWidth("100%");
-			removeOutline((FXLFocusPanel) container.widget);
+			removeOutline((FocusPanel) container.widget);
 		}
 	}
 

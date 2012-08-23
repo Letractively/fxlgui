@@ -33,6 +33,7 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -113,7 +114,7 @@ class GWTLayout implements ILayout {
 
 	@Override
 	public IFocusPanel focus() {
-		setComponent(new FXLFocusPanel());
+		setComponent(new FocusPanel());
 		return (IFocusPanel) (panel.element = new GWTFocusPanel(panel));
 	}
 }
