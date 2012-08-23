@@ -18,25 +18,19 @@
  */
 package co.fxl.gui.automation.impl;
 
-import co.fxl.gui.automation.api.IAutomationListener.Key;
+import co.fxl.gui.automation.api.ILazyTreeWidgetListener;
 
 public class LazyTreeWidgetListener<T> {
 
-	public interface ITreeListener<T> {
-
-		void notifyClick(T tree, int row, int px, Key... key);
-
-	}
-
 	public static boolean active = false;
-	private static ITreeListener<?> instance;
+	private static ILazyTreeWidgetListener<?> instance;
 
 	@SuppressWarnings("unchecked")
-	public static <T> ITreeListener<T> instance() {
-		return (ITreeListener<T>) instance;
+	public static <T> ILazyTreeWidgetListener<T> instance() {
+		return (ILazyTreeWidgetListener<T>) instance;
 	}
 
-	public static void instance(ITreeListener<?> l) {
+	public static void instance(ILazyTreeWidgetListener<?> l) {
 		instance = l;
 	}
 
