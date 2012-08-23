@@ -23,8 +23,8 @@ import co.fxl.gui.api.IFocusPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class GWTFocusPanel extends GWTPanel<FocusPanel, IFocusPanel> implements
-		IFocusPanel {
+public class GWTFocusPanel extends GWTPanel<FXLFocusPanel, IFocusPanel>
+		implements IFocusPanel {
 
 	public GWTFocusPanel(GWTContainer<?> container) {
 		this(container, true);
@@ -37,10 +37,10 @@ public class GWTFocusPanel extends GWTPanel<FocusPanel, IFocusPanel> implements
 
 	@SuppressWarnings("unchecked")
 	public GWTFocusPanel(GWTContainer<?> container, boolean decorate) {
-		super((GWTContainer<FocusPanel>) container);
+		super((GWTContainer<FXLFocusPanel>) container);
 		if (decorate) {
 			container.widget.setWidth("100%");
-			removeOutline((FocusPanel) container.widget);
+			removeOutline((FXLFocusPanel) container.widget);
 		}
 	}
 
