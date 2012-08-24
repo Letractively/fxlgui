@@ -36,6 +36,7 @@ import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn;
+import co.fxl.gui.table.bulk.api.IBulkTableWidget.IGrouping;
 import co.fxl.gui.table.util.api.IDragDropListener;
 
 public interface IScrollTableWidget<T> {
@@ -223,6 +224,8 @@ public interface IScrollTableWidget<T> {
 	int width();
 
 	IScrollTableWidget<T> alwaysShowFilter();
+
+	IScrollTableWidget<T> grouping(IGrouping grouping);
 
 	IStateToggleButton addToggleButton();
 

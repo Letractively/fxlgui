@@ -32,6 +32,14 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 	public String ARROW_UP = "\u2191";
 	public String ARROW_DOWN = "\u2193";
 
+	public interface IGrouping {
+
+		boolean hasGroupHeader(int index);
+
+		String groupHeaderHTML(int index);
+
+	}
+
 	public interface IUpdateAdapter<T> {
 
 		boolean isEditable();
@@ -124,6 +132,8 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 	int columnCount();
 
 	IBulkTableWidget editable(boolean editable);
+
+	IBulkTableWidget grouping(IGrouping grouping);
 
 	IBulkTableWidget clearFixWordWrap();
 

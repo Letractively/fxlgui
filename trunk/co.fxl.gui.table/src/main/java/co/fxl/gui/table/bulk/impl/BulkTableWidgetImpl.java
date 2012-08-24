@@ -509,4 +509,9 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	public IBulkTableWidget updateWidths() {
 		return this;
 	}
+
+	@Override
+	public IBulkTableWidget grouping(IGrouping grouping) {
+		return this;
+	}
 }
