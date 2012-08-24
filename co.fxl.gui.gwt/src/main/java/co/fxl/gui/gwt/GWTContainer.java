@@ -63,6 +63,9 @@ public class GWTContainer<T extends Widget> implements IContainer {
 	protected GWTElement<?, ?> element;
 	int index = -1;
 
+	public GWTContainer() {
+	}
+
 	public GWTContainer(WidgetParent parent) {
 		this.parent = parent;
 	}

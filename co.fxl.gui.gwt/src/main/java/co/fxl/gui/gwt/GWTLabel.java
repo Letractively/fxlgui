@@ -29,11 +29,16 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.ui.HTML;
 
-class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
+public class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 
 	private HTMLText html = new HTMLText();
 	// private boolean selectionDisabled = false;
 	private HyperlinkDecorator hyperlinkDecorator;
+
+	public GWTLabel(HTML html) {
+		super(new GWTContainer<HTML>());
+		container.setComponent(html);
+	}
 
 	GWTLabel(GWTContainer<HTML> container) {
 		super(container);

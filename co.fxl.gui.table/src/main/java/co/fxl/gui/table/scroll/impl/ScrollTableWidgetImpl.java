@@ -64,6 +64,7 @@ import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn;
+import co.fxl.gui.table.bulk.api.IBulkTableWidget.IGrouping;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ILabelMouseListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IRow;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableClickListener;
@@ -247,6 +248,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private String subTitle2;
 	private int presetRowIndex = 0;
 	private int widthDelta;
+	private IGrouping grouping;
 
 	// private boolean nextTimeShowPopUp;
 
@@ -803,6 +805,20 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 		for (IRowIndexListener rowIndexL : scrollListeners)
 			rowIndexL.onScroll(rowOffset);
 		updateHeaderRow(grid);
+		if (grouping != null)
+			grid.grouping(new IGrouping() {
+
+				@Override
+				public boolean hasGroupHeader(int index) {
+					return grouping.hasGroupHeader(rowOffset + index);
+				}
+
+				@Override
+				public String groupHeaderHTML(int index) {
+					return grouping.groupHeaderHTML(rowOffset + index);
+				}
+
+			});
 		for (int r = 0; r < paintedRows; r++) {
 			int index = r + rowOffset;
 			updateSingleContentRow(grid, r, index);
@@ -1605,6 +1621,12 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> noAutoAdjustmentOfColumnWidths() {
 		columnWidths = ColumnWidths.newInstance(false);
+		return this;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> grouping(IGrouping grouping) {
+		this.grouping = grouping;
 		return this;
 	}
 }
