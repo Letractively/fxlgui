@@ -163,19 +163,15 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	public void autoResize(final IElement<?> e, final int dec, boolean b) {
 		final IResizeListener listener = new IResizeListener() {
 			@Override
-			public boolean onResize(int width, int height) {
-				if (!e.visible()) {
-					return false;
-				}
+			public void onResize(int width, int height) {
 				int offsetY = offsetY(e, 100);
 				int h = height - offsetY - 10 - dec;
 				if (h > 0)
 					e.height(h);
-				return e.visible();
 			}
 		};
 		// if (!SINGLE_RESIZE_LISTENER)
-		Display.instance().addResizeListener(listener);
+		Display.instance().addResizeListener(listener).linkLifecycle(e);
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
@@ -278,9 +274,8 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	@Override
-	public boolean onResize(int width, int height) {
+	public void onResize(int width, int height) {
 		resetPanelDimensions();
-		return true;
 	}
 
 	public void stylePanel(IPanel<?> panel) {

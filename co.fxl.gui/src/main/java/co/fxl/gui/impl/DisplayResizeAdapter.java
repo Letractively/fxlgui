@@ -52,8 +52,8 @@ class DisplayResizeAdapter {
 
 	static IResizeConfiguration addResizeListener(
 			final IResizeListener listener, boolean call) {
-		IResizeConfiguration singleton = Display.instance()
-				.addResizeListener(listener).singleton();
+		IResizeConfiguration singleton = Display.instance().addResizeListener(
+				listener);// .singleton();
 		if (call)
 			fire(listener);
 		return singleton;

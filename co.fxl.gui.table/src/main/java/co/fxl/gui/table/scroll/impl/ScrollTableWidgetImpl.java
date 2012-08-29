@@ -42,6 +42,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMouseWheelListener;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPoint;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
@@ -208,9 +209,8 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			// editPanel = container.add().panel().vertical().visible(false);
 			StatusDisplay.instance().addResizeListener(new IResizeListener() {
 				@Override
-				public boolean onResize(int width, int height) {
+				public void onResize(int width, int height) {
 					updateTable();
-					return container.visible();
 				}
 			}).linkLifecycle(container);
 		}
@@ -1628,5 +1628,10 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	public IScrollTableWidget<Object> grouping(IGrouping grouping) {
 		this.grouping = grouping;
 		return this;
+	}
+
+	@Override
+	public IPanel<?> mainPanel() {
+		return container();
 	}
 }
