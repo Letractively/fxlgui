@@ -23,10 +23,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IBordered.IBorder;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
@@ -36,29 +34,14 @@ public class RTFWidgetImpl implements IRTFWidget {
 
 	private IVerticalPanel panel;
 	private ITextArea textArea;
-	private IHorizontalPanel buttonPanel;
 	protected List<Object> tokens = new LinkedList<Object>();
 
 	protected RTFWidgetImpl() {
 	}
-	
+
 	protected RTFWidgetImpl(IContainer container) {
 		panel = container.panel().vertical();
 		textArea = panel.add().textArea();
-		buttonPanel = panel.addSpace(6).add().panel().horizontal().spacing(4);
-	}
-
-	@Override
-	public IRTFWidget addToken(String label, String token) {
-		tokens.add(new String[] { label, token });
-		return this;
-	}
-
-	@Override
-	public IComposite addComposite() {
-		IComposite c = new CompositeImpl();
-		tokens.add(c);
-		return c;
 	}
 
 	public String toString() {
@@ -85,53 +68,42 @@ public class RTFWidgetImpl implements IRTFWidget {
 
 	@Override
 	public IRTFWidget visible(boolean visible) {
-		for (Object o : tokens) {
-			if (o instanceof String[]) {
-				String[] t = (String[]) o;
-				buttonPanel.add().button().text(t[0])
-						.addClickListener(new IClickListener() {
-							@Override
-							public void onClick() {
-								throw new UnsupportedOperationException();
-							}
-						});
-				throw new UnsupportedOperationException();
-			} else {
-				CompositeImpl c = (CompositeImpl) o;
-				throw new UnsupportedOperationException();
-			}
-		}
+		textArea.visible(visible);
 		return this;
 	}
 
 	@Override
 	public IRTFWidget height(int height) {
-		throw new UnsupportedOperationException();
+		textArea.height(height);
+		return this;
 	}
 
 	@Override
 	public IRTFWidget editable(boolean editable) {
-		throw new UnsupportedOperationException();
+		textArea.editable(editable);
+		return this;
 	}
 
 	@Override
 	public IBorder border() {
-		throw new UnsupportedOperationException();
+		return textArea.border();
 	}
 
 	@Override
 	public IColor color() {
-		throw new UnsupportedOperationException();
+		return textArea.color();
 	}
 
 	@Override
 	public IRTFWidget focus(boolean focus) {
-		throw new UnsupportedOperationException();
+		textArea.focus(focus);
+		return this;
 	}
 
 	@Override
 	public IRTFWidget addFocusListener(IUpdateListener<Boolean> hasFocus) {
-		throw new UnsupportedOperationException();
+		textArea.addFocusListener(hasFocus);
+		return this;
 	}
 
 }

@@ -22,7 +22,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.rtf.api.IRTFWidget;
-import co.fxl.gui.rtf.api.IRTFWidget.IComposite;
 import co.fxl.gui.rtf.impl.RTFWidgetImplProvider;
 
 public class RTFWidgetTest {
@@ -31,15 +30,15 @@ public class RTFWidgetTest {
 		display.register(new RTFWidgetImplProvider());
 		IRTFWidget w = (IRTFWidget) display.container()
 				.widget(IRTFWidget.class);
-		w.addToken("#", "{#}");
-		w.addToken("name", "{name}");
-		IComposite c = w.addComposite();
-		IComposite rc = c.addComposite("ReleaseCycle");
-		rc.addComposite("id").token("ReleaseCycle.id");
-		rc.addComposite("version").token("ReleaseCycle.version");
-		IComposite rf = c.addComposite("ReleaseFolder");
-		rf.addComposite("id").token("ReleaseFolder.id");
-		rf.addComposite("version").token("ReleaseFolder.version");
+		// w.addToken("#", "{#}");
+		// w.addToken("name", "{name}");
+		// IComposite c = w.addComposite();
+		// IComposite rc = c.addComposite("ReleaseCycle");
+		// rc.addComposite("id").token("ReleaseCycle.id");
+		// rc.addComposite("version").token("ReleaseCycle.version");
+		// IComposite rf = c.addComposite("ReleaseFolder");
+		// rf.addComposite("id").token("ReleaseFolder.id");
+		// rf.addComposite("version").token("ReleaseFolder.version");
 		w.visible(true);
 		display.visible(true);
 	}
