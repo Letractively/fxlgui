@@ -36,9 +36,9 @@ public interface IRTFWidget extends IFocusable<IRTFWidget> {
 
 	IRTFWidget html(String html);
 
-	IRTFWidget addToken(String label, String token);
-
-	IComposite addComposite();
+	// IRTFWidget addToken(String label, String token);
+	//
+	// IComposite addComposite();
 
 	IRTFWidget visible(boolean visible);
 
