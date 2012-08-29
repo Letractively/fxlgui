@@ -18,19 +18,28 @@
  */
 package co.fxl.gui.rtf.impl;
 
-import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IWidgetProvider;
-import co.fxl.gui.rtf.api.IRTFWidget;
+import co.fxl.gui.api.ITextArea;
+import co.fxl.gui.impl.TextAreaAdp;
+import co.fxl.gui.rtf.api.IHTMLArea;
 
-public class RTFWidgetImplProvider implements IWidgetProvider<IRTFWidget> {
+public class HTMLAreaAdp extends TextAreaAdp implements IHTMLArea {
 
-	@Override
-	public Class<IRTFWidget> widgetType() {
-		return IRTFWidget.class;
+	public HTMLAreaAdp() {
+		super();
+	}
+
+	public HTMLAreaAdp(ITextArea element) {
+		super(element);
 	}
 
 	@Override
-	public IRTFWidget createWidget(IContainer container) {
-		return new RTFWidgetImpl(container);
+	public String html() {
+		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public IHTMLArea html(String html) {
+		throw new UnsupportedOperationException();
+	}
+
 }

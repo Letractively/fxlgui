@@ -30,7 +30,7 @@ import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.impl.WidgetTitle;
-import co.fxl.gui.rtf.api.IRTFWidget;
+import co.fxl.gui.rtf.api.IHTMLArea;
 
 public interface IFormWidget {
 
@@ -116,7 +116,7 @@ public interface IFormWidget {
 
 	IFormWidget alwaysAllowCancel();
 
-	IFormField<IRTFWidget, String> addRichTextArea(String name);
+	IFormField<IHTMLArea, String> addRichTextArea(String name);
 
 	IFormWidget focus();
 

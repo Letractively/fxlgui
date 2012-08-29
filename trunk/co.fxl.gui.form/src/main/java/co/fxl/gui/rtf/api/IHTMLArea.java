@@ -18,35 +18,12 @@
  */
 package co.fxl.gui.rtf.api;
 
-import co.fxl.gui.api.IBordered.IBorder;
-import co.fxl.gui.api.IColored.IColor;
-import co.fxl.gui.api.IFocusable;
+import co.fxl.gui.api.ITextArea;
 
-public interface IRTFWidget extends IFocusable<IRTFWidget> {
-
-	public interface IComposite {
-
-		IComposite addComposite(String label);
-
-		void token(String token);
-
-	}
+public interface IHTMLArea extends ITextArea {
 
 	String html();
 
-	IRTFWidget html(String html);
+	IHTMLArea html(String html);
 
-	// IRTFWidget addToken(String label, String token);
-	//
-	// IComposite addComposite();
-
-	IRTFWidget visible(boolean visible);
-
-	IRTFWidget height(int height);
-
-	IRTFWidget editable(boolean editable);
-
-	IBorder border();
-
-	IColor color();
 }
