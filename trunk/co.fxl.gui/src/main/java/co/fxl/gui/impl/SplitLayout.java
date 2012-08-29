@@ -66,7 +66,8 @@ public class SplitLayout implements IResizeListener {
 		sideScrollPanel = sideBasePanel.addSpace(10).add().scrollPane();
 		sidePanel = sideScrollPanel.viewPort().panel().vertical();
 		sidePanel.spacing().right(10).inner(10);
-		StatusDisplay.instance().addResizeListener(this, true);
+		StatusDisplay.instance().addResizeListener(this, true)
+				.linkLifecycle(panel);
 	}
 
 	public static int mainPanelWidth() {
@@ -74,12 +75,9 @@ public class SplitLayout implements IResizeListener {
 	}
 
 	@Override
-	public boolean onResize(int width, int height) {
-		if (!panel.visible())
-			return false;
+	public void onResize(int width, int height) {
 		resizeSidePanel(StatusDisplay.instance().height());
 		cell0.width(mainPanelWidth());
-		return true;
 	}
 
 	public void detachSidePanel() {

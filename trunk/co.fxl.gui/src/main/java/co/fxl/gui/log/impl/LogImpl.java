@@ -140,9 +140,8 @@ class LogImpl implements ILog, IClickListener {
 		final IResizeConfiguration cfg = d.addResizeListener(
 				new IResizeListener() {
 					@Override
-					public boolean onResize(int width, int height) {
+					public void onResize(int width, int height) {
 						resize(d, popUp, scrollPane);
-						return popUp.visible();
 					}
 				}).linkLifecycle(popUp);
 		popUp.addVisibleListener(new IUpdateListener<Boolean>() {

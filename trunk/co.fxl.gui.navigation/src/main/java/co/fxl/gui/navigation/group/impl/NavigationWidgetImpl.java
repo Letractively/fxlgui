@@ -223,9 +223,8 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 			update();
 			StatusDisplay.instance().addResizeListener(new IResizeListener() {
 				@Override
-				public boolean onResize(int width, int height) {
+				public void onResize(int width, int height) {
 					updateBorderAfterResize();
-					return true;
 				}
 			}).linkLifecycle(mainPanel);
 		}

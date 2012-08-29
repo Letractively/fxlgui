@@ -18,13 +18,13 @@
  */
 package co.fxl.gui.impl;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.log.impl.LogWidgetProvider;
 
 public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
@@ -39,17 +39,17 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 			this.listener = listener;
 		}
 
-		@Override
-		public IResizeConfiguration singleton() {
-			Iterator<ResizeConfiguration> it = resizeListeners.iterator();
-			while (it.hasNext()) {
-				ResizeConfiguration next = it.next();
-				if (next != this
-						&& next.listener.getClass().equals(listener.getClass()))
-					it.remove();
-			}
-			return this;
-		}
+		// @Override
+		// public IResizeConfiguration singleton() {
+		// Iterator<ResizeConfiguration> it = resizeListeners.iterator();
+		// while (it.hasNext()) {
+		// ResizeConfiguration next = it.next();
+		// if (next != this
+		// && next.listener.getClass().equals(listener.getClass()))
+		// it.remove();
+		// }
+		// return this;
+		// }
 
 		@Override
 		public IResizeConfiguration linkLifecycle(IElement<?> element) {
@@ -64,10 +64,7 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 		}
 
 		private void fire() {
-			boolean active = listener.onResize(width(), height());
-			if (!active) {
-				removeResizeListener(listener);
-			}
+			listener.onResize(width(), height());
 		}
 
 		@Override
@@ -95,6 +92,8 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 			remove(cfg);
 		ResizeConfiguration resizeHandler = new ResizeConfiguration(listener);
 		resizeListeners.add(resizeHandler);
+		if (resizeListeners.size() > 20)
+			throw new RuntimeException("Warning: Too many resize listeners");
 		return resizeHandler;
 	}
 

@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.api;
 
-
 public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
 	// public interface IElementListener {
@@ -45,7 +44,7 @@ public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
 	public interface IResizeConfiguration {
 
-		IResizeConfiguration singleton();
+		// IResizeConfiguration singleton();
 
 		IResizeConfiguration linkLifecycle(IElement<?> element);
 
@@ -57,7 +56,7 @@ public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
 	public interface IResizeListener {
 
-		boolean onResize(int width, int height);
+		void onResize(int width, int height);
 	}
 
 	public interface IExceptionHandler {
@@ -115,5 +114,5 @@ public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
 	IDisplay clear();
 
-	//	IDisplay addElementListener(IElementListener elementListener);
+	// IDisplay addElementListener(IElementListener elementListener);
 }

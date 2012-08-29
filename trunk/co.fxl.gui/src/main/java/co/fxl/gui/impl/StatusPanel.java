@@ -28,8 +28,7 @@ import co.fxl.gui.log.impl.Log;
 public class StatusPanel {
 
 	static final ColorMemento FOREGROUND = new ColorMemento();
-	static final ColorMemento BACKGROUND = new ColorMemento(249, 237,
-			190);
+	static final ColorMemento BACKGROUND = new ColorMemento(249, 237, 190);
 	private static final String LOADING = "Loading ";
 	public static final double FADE_IN_MS = 1000;
 	private static boolean RESIZE = Constants.get("StatusPanel.RESIZE", true);
@@ -114,11 +113,8 @@ public class StatusPanel {
 		if (RESIZE)
 			Display.instance().addResizeListener(new IResizeListener() {
 				@Override
-				public boolean onResize(int width, int height) {
-					if (!dialog.visible())
-						return false;
+				public void onResize(int width, int height) {
 					resize(StatusDisplay.instance().width(), dialog);
-					return dialog.visible();
 				}
 			}).linkLifecycle(dialog);
 		return dialog;
