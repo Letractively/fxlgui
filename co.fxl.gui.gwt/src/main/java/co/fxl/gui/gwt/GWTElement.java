@@ -480,11 +480,9 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		};
 	}
 
-	@SuppressWarnings("unchecked")
 	public R focus(final boolean focus) {
-		((Focusable) container.widget).setFocus(focus);
-		notifyFocusListeners(focus);
-		return (R) this;
+		T widget = container.widget;
+		return focus(focus, widget);
 	}
 
 	private void notifyFocusListeners(boolean b) {
@@ -492,10 +490,22 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 			l.onUpdate(b);
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
 	public R addFocusListener(final IUpdateListener<Boolean> l) {
+		T widget = container.widget;
+		return addFocusListener(l, widget);
+	}
+
+	@SuppressWarnings("unchecked")
+	protected R focus(final boolean focus, Widget widget) {
+		((Focusable) widget).setFocus(focus);
+		notifyFocusListeners(focus);
+		return (R) this;
+	}
+
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	protected R addFocusListener(final IUpdateListener<Boolean> l, Widget widget) {
 		if (!focusListenerSet) {
-			((HasFocus) container.widget).addFocusListener(new FocusListener() {
+			((HasFocus) widget).addFocusListener(new FocusListener() {
 				@Override
 				public void onFocus(Widget sender) {
 					notifyFocusListeners(true);
