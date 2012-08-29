@@ -24,206 +24,66 @@ import java.util.List;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.ISplitPane.ISplitPaneResizeListener;
-import co.fxl.gui.impl.Display;
 
 import com.google.gwt.dom.client.Style.Overflow;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.EventListener;
-import com.google.gwt.user.client.ui.HorizontalSplitPanel;
+import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
-		ISplitPane, ISplitPaneResizeListener {
-
-	private static final class SplitPaneAdp implements ISplitPanelAdp {
-		private static final int SPLITTER_WIDTH = 7;
-		private boolean isScheduled = false;
-		private boolean rightSet;
-		private String lazySplitPosition;
-		private boolean leftSet;
-		private ISplitPaneResizeListener lazyListener;
-		private int px;
-
-		@Override
-		public void setLeftWidget(Widget p, Widget component) {
-			leftSet = true;
-			((HorizontalSplitPanel) p).setLeftWidget(component);
-			updateSplitPosition(p);
-		}
-
-		@Override
-		public void setRightWidget(Widget p, Widget component) {
-			rightSet = true;
-			((HorizontalSplitPanel) p).setRightWidget(component);
-			updateSplitPosition(p);
-		}
-
-		@Override
-		public void addListener(final Widget widget,
-				final ISplitPaneResizeListener listener) {
-			if (lazyListener != null)
-				throw new UnsupportedOperationException(
-						"split pane listener already set");
-			lazyListener = listener;
-			updateSplitPosition(widget);
-		}
-
-		@Override
-		public void setSplitPosition(Widget p, int string) {
-			px = string;
-			lazySplitPosition = string + "px";
-			updateSplitPosition(p);
-		}
-
-		protected void updateSplitPosition(final Widget p) {
-			if (!leftSet || !rightSet)
-				return;
-			if (lazySplitPosition != null) {
-				HorizontalSplitPanel h = (HorizontalSplitPanel) p;
-				h.setSplitPosition(lazySplitPosition);
-//				h.getRightWidget().setWidth(
-//						(SplitLayout.mainPanelWidth() - px - SPLITTER_WIDTH) + "px");
-				lazySplitPosition = null;
-			}
-			if (lazyListener != null) {
-				final ISplitPaneResizeListener ll = lazyListener;
-				Element rootElement = p.getElement();
-				final EventListener oldListener = DOM
-						.getEventListener(rootElement);
-				if (oldListener == null) {
-					throw new RuntimeException("Event-Listener on element "
-							+ rootElement + " not set");
-				}
-				DOM.setEventListener(rootElement, new EventListener() {
-					public void onBrowserEvent(Event event) {
-						final HorizontalSplitPanel horizontalSplitPanel = (HorizontalSplitPanel) p;
-						boolean fire = false;
-						if ((event.getTypeInt() == Event.ONMOUSEUP || event
-								.getTypeInt() == Event.ONMOUSEMOVE)
-								&& horizontalSplitPanel.isResizing()) {
-							fire = true;
-						}
-						if (oldListener != null)
-							oldListener.onBrowserEvent(event);
-						if (fire && !isScheduled) {
-							isScheduled = true;
-							Runnable r = new Runnable() {
-								@Override
-								public void run() {
-									ll.onResize(p.getOffsetWidth()
-											- horizontalSplitPanel
-													.getRightWidget()
-													.getOffsetWidth() - 2);
-									isScheduled = false;
-								}
-							};
-							if (GWTDisplay.isInternetExplorer())
-								Display.instance().invokeLater(r);
-							else
-								r.run();
-						}
-					}
-				});
-				lazyListener = null;
-			}
-		}
-
-		@Override
-		public Widget newSplitPanel() {
-			return new HorizontalSplitPanel();
-		}
-
-		@Override
-		public boolean supportsListeners() {
-			return true;
-		}
-	}
-
-	private static final int INC = 5;
-	public static ISplitPanelAdpFactory factory = new ISplitPanelAdpFactory() {
-
-		@Override
-		public ISplitPanelAdp create() {
-			return new SplitPaneAdp();
-		}
-
-	};
-	public ISplitPanelAdp adapter = factory.create();
-
-	public interface ISplitPanelAdpFactory {
-
-		ISplitPanelAdp create();
-	}
-
-	public interface ISplitPanelAdp {
-
-		void setLeftWidget(Widget p, Widget component);
-
-		void setRightWidget(Widget p, Widget component);
-
-		void addListener(Widget widget, ISplitPaneResizeListener listener);
-
-		boolean supportsListeners();
-
-		void setSplitPosition(Widget p, int px);
-
-		Widget newSplitPanel();
-
-	}
+class GWTSplitPane extends GWTElement<ObservableSplitLayoutPanel, ISplitPane>
+		implements ISplitPane, ISplitPaneResizeListener {
 
 	private final class LeftSideContainer extends GWTContainer<Widget> {
-		private final Widget p;
 
-		private LeftSideContainer(WidgetParent parent, Widget p) {
+		private LeftSideContainer(WidgetParent parent) {
 			super(parent);
-			this.p = p;
 		}
 
 		@Override
 		public void setComponent(Widget component) {
 			widget = component;
 			prepare(component);
-			adapter.setLeftWidget(p, component);
+			container.widget.addWest(component, splitPosition);
 			hideOverflow(component);
 		}
 	}
 
 	private final class RightSideContainer extends GWTContainer<Widget> {
-		private final Widget p;
 
-		private RightSideContainer(WidgetParent parent, Widget p) {
+		private RightSideContainer(WidgetParent parent) {
 			super(parent);
-			this.p = p;
 		}
 
 		@Override
 		public void setComponent(Widget component) {
 			widget = component;
 			prepare(component);
-			adapter.setRightWidget(p, component);
+			container.widget.add(component);
 		}
 	}
 
 	private List<ISplitPaneResizeListener> listeners = new LinkedList<ISplitPaneResizeListener>();
 	private GWTContainer<Widget> leftContainer;
 	private GWTContainer<Widget> rightContainer;
-	private int splitPosition;
+	int splitPosition;
 	private boolean holdNotify;
 
-	GWTSplitPane(GWTContainer<Widget> container) {
+	GWTSplitPane(GWTContainer<ObservableSplitLayoutPanel> container) {
 		super(container);
 		widget().setHeight("600px");
-		setUpContainers(container);
-		splitPosition(300 + INC);
-		adapter.addListener(widget(), this);
+		leftContainer = new LeftSideContainer(container.parent);
+		rightContainer = new RightSideContainer(container.parent);
+		splitPosition(300);
+		container.widget.owner = this;
 	}
 
-	public void setUpContainers(final GWTContainer<Widget> container) {
-		final Widget p = (Widget) container.widget;
-		leftContainer = new LeftSideContainer(container.parent, p);
-		rightContainer = new RightSideContainer(container.parent, p);
+	@Override
+	public void onResize(int splitPosition) {
+		this.splitPosition = splitPosition;
+		notifyListeners();
+	}
+
+	static SplitLayoutPanel newSplitPanel() {
+		return new ObservableSplitLayoutPanel();
 	}
 
 	@Override
@@ -246,9 +106,8 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 		if (pixel < 1)
 			pixel = 300;
 		splitPosition = pixel;
-		Widget p = (Widget) container.widget;
 		holdNotify = true;
-		adapter.setSplitPosition(p, pixel - INC);
+		container.widget.updatePosition();
 		holdNotify = false;
 		notifyListeners();
 		return this;
@@ -268,8 +127,6 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 
 	@Override
 	public ISplitPane addResizeListener(final ISplitPaneResizeListener l) {
-		if (!adapter.supportsListeners())
-			throw new UnsupportedOperationException();
 		listeners.add(l);
 		return this;
 	}
@@ -287,11 +144,5 @@ public class GWTSplitPane extends GWTElement<Widget, ISplitPane> implements
 	public void hideOverflow(Widget widget) {
 		widget.getElement().getParentElement().getStyle()
 				.setOverflow(Overflow.HIDDEN);
-	}
-
-	@Override
-	public void onResize(int splitPosition) {
-		this.splitPosition = splitPosition;
-		notifyListeners();
 	}
 }
