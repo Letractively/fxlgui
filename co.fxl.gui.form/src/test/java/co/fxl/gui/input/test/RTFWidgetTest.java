@@ -21,15 +21,14 @@ package co.fxl.gui.input.test;
 import java.lang.reflect.InvocationTargetException;
 
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.rtf.api.IRTFWidget;
-import co.fxl.gui.rtf.impl.RTFWidgetImplProvider;
+import co.fxl.gui.rtf.impl.HTMLAreaProvider;
 
 public class RTFWidgetTest {
 
 	public void run(IDisplay display) {
-		display.register(new RTFWidgetImplProvider());
-		IRTFWidget w = (IRTFWidget) display.container()
-				.widget(IRTFWidget.class);
+		display.register(new HTMLAreaProvider());
+		// IHTMLTextArea w = (IHTMLTextArea) display.container()
+		// .widget(IHTMLTextArea.class);
 		// w.addToken("#", "{#}");
 		// w.addToken("name", "{name}");
 		// IComposite c = w.addComposite();
@@ -39,7 +38,7 @@ public class RTFWidgetTest {
 		// IComposite rf = c.addComposite("ReleaseFolder");
 		// rf.addComposite("id").token("ReleaseFolder.id");
 		// rf.addComposite("version").token("ReleaseFolder.version");
-		w.visible(true);
+		// w.visible(true);
 		display.visible(true);
 	}
 

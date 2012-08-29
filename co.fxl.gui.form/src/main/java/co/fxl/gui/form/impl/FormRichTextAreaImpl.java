@@ -19,11 +19,11 @@
 package co.fxl.gui.form.impl;
 
 import co.fxl.gui.form.api.IFormField;
-import co.fxl.gui.rtf.api.IRTFWidget;
+import co.fxl.gui.rtf.api.IHTMLArea;
 
-public class FormRichTextAreaImpl extends FormFieldImpl<IRTFWidget, String> {
+public class FormRichTextAreaImpl extends FormFieldImpl<IHTMLArea, String> {
 
-	private IRTFWidget textArea;
+	private IHTMLArea textArea;
 
 	FormRichTextAreaImpl(FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
@@ -39,13 +39,13 @@ public class FormRichTextAreaImpl extends FormFieldImpl<IRTFWidget, String> {
 	}
 
 	@Override
-	public IFormField<IRTFWidget, String> editable(boolean editable) {
+	public IFormField<IHTMLArea, String> editable(boolean editable) {
 		valueElement().editable(editable);
 		return super.editable(editable);
 	}
 
 	@Override
-	public IRTFWidget valueElement() {
+	public IHTMLArea valueElement() {
 		return textArea;
 	}
 }
