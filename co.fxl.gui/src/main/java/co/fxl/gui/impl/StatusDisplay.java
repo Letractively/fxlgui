@@ -246,7 +246,8 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	public StatusDisplay reset() {
-		scrollPane = display.clear().container().scrollPane().horizontal();
+		scrollPane = display.clear().container().scrollPane().iD("base")
+				.horizontal();
 		grid = scrollPane.viewPort().panel().grid();
 		panel = grid.cell(0, 0).panel().vertical().align().begin();
 		run();
