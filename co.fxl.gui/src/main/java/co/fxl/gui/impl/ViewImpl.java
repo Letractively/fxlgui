@@ -193,7 +193,7 @@ public class ViewImpl extends LazyClickListener {
 		label.font().underline(false);
 		IContainer next = content.next();
 		final String resource = image.resource();
-		image.resource("loading_black.gif");
+		image.resource("loading_black.gif").size(16, 16);
 		IVerticalPanel vertical = sideContent.next().panel().vertical();
 		if (FLIP_BEFORE) {
 			content.flip();
@@ -203,7 +203,7 @@ public class ViewImpl extends LazyClickListener {
 				oneTimeCallback) {
 			@Override
 			public void onSuccess(Void result) {
-				image.resource(resource);
+				image.resource(resource).size(16, 16);
 				for (ViewList viewList : ViewImpl.this.viewList.widget.viewLists) {
 					for (ViewImpl view : viewList.views) {
 						view.clickable(view != ViewImpl.this);
