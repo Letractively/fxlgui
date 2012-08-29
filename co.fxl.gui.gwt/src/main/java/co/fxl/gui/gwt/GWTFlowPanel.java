@@ -34,6 +34,16 @@ public class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 	private int margin = 0;
 	private String floatValue = "left";
 
+	public GWTFlowPanel() {
+		super(newContainer());
+	}
+
+	private static GWTContainer<FlowPanel> newContainer() {
+		GWTContainer<FlowPanel> c = new GWTContainer<FlowPanel>();
+		c.setComponent(new FlowPanel());
+		return c;
+	}
+
 	@SuppressWarnings("unchecked")
 	GWTFlowPanel(GWTContainer<?> container) {
 		super((GWTContainer<FlowPanel>) container);
