@@ -73,6 +73,7 @@ public class RichTextToolbarImpl {
 
 	public RichTextToolbarImpl(IContainer c, IHTMLArea htmlArea) {
 		panel = c.panel().flow().spacing(3);
+		panel.border().style().noBottom().color().gray(211);
 		this.htmlArea = htmlArea;
 		for (Formatting f : IHTMLArea.Formatting.values()) {
 			ToggleButton b = new ToggleButton(f);
