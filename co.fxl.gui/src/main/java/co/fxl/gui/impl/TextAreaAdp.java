@@ -41,4 +41,20 @@ public class TextAreaAdp extends TextInputAdp<ITextArea> implements ITextArea {
 		return this;
 	}
 
+	@Override
+	public ITextArea clickable(boolean clickable) {
+		return element.clickable(clickable);
+	}
+
+	@Override
+	public boolean clickable() {
+		return element.clickable();
+	}
+
+	@Override
+	public co.fxl.gui.api.IClickable.IKey<ITextArea> addClickListener(
+			co.fxl.gui.api.IClickable.IClickListener clickListener) {
+		return element.addClickListener(clickListener);
+	}
+
 }

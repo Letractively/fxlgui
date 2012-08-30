@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.swing;
 
+import java.awt.Cursor;
+
 import javax.swing.JTextArea;
 
 import co.fxl.gui.api.ITextArea;
@@ -66,5 +68,9 @@ class SwingTextArea extends SwingTextInput<JTextArea, ITextArea> implements
 	public IUpdateable<String> addUpdateListener(
 			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
 		return super.addStringUpdateListener(listener);
+	}
+
+	@Override
+	void setCursor(boolean clickable) {
 	}
 }

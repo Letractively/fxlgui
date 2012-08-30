@@ -21,12 +21,12 @@ package co.fxl.gui.input.test;
 import java.lang.reflect.InvocationTargetException;
 
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.rtf.impl.HTMLAreaProvider;
+import co.fxl.gui.rtf.impl.HTMLAreaImplProvider;
 
 public class RTFWidgetTest {
 
 	public void run(IDisplay display) {
-		display.register(new HTMLAreaProvider());
+		display.register(new HTMLAreaImplProvider());
 		// IHTMLTextArea w = (IHTMLTextArea) display.container()
 		// .widget(IHTMLTextArea.class);
 		// w.addToken("#", "{#}");

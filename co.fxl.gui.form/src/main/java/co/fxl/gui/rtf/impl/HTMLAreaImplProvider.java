@@ -18,28 +18,19 @@
  */
 package co.fxl.gui.rtf.impl;
 
-import co.fxl.gui.api.ITextArea;
-import co.fxl.gui.impl.TextAreaAdp;
+import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.rtf.api.IHTMLArea;
 
-public class HTMLAreaAdp extends TextAreaAdp implements IHTMLArea {
+public class HTMLAreaImplProvider implements IWidgetProvider<IHTMLArea> {
 
-	public HTMLAreaAdp() {
-		super();
-	}
-
-	public HTMLAreaAdp(ITextArea element) {
-		super(element);
+	@Override
+	public Class<IHTMLArea> widgetType() {
+		return IHTMLArea.class;
 	}
 
 	@Override
-	public String html() {
-		throw new UnsupportedOperationException();
+	public IHTMLArea createWidget(IContainer container) {
+		return new HTMLAreaImpl(container);
 	}
-
-	@Override
-	public IHTMLArea html(String html) {
-		throw new UnsupportedOperationException();
-	}
-
 }

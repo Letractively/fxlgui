@@ -22,6 +22,17 @@ import co.fxl.gui.api.ITextArea;
 
 public interface IHTMLArea extends ITextArea {
 
+	public enum Formatting {
+
+		BOLD, ITALIC
+	}
+
+	void toggle(Formatting f);
+
+	boolean is(Formatting f);
+
+	boolean supports(Formatting f);
+
 	String html();
 
 	IHTMLArea html(String html);
