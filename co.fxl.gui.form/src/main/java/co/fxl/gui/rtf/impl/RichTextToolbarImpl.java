@@ -52,6 +52,7 @@ public class RichTextToolbarImpl {
 					htmlArea.toggle(f);
 				}
 			});
+			image.border().color().white();
 		}
 
 		@Override
