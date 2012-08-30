@@ -140,4 +140,8 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 		}
 	}
 
+	@Override
+	public void notifyChange() {
+	}
+
 }

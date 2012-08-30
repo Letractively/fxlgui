@@ -43,4 +43,6 @@ public interface IHTMLArea extends ITextArea {
 
 	IHTMLArea html(String html);
 
+	void notifyChange();
+
 }
