@@ -45,4 +45,6 @@ public interface IHTMLArea extends ITextArea {
 
 	void notifyChange();
 
+	IHTMLArea closeListener(IClickListener l);
+
 }
