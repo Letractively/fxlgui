@@ -100,9 +100,9 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 
 	private String token(Formatting f) {
 		switch (f) {
-		case BOLD:
+		case TOGGLE_BOLD:
 			return "b";
-		case ITALIC:
+		case TOGGLE_ITALIC:
 			return "i";
 		default:
 			throw new UnsupportedOperationException();
@@ -116,8 +116,8 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 	@Override
 	public boolean supports(Formatting f) {
 		switch (f) {
-		case BOLD:
-		case ITALIC:
+		case TOGGLE_BOLD:
+		case TOGGLE_ITALIC:
 			return true;
 		default:
 			return false;

@@ -24,6 +24,7 @@ import java.util.List;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IImage;
+import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.rtf.api.IHTMLArea;
@@ -49,11 +50,23 @@ public class RichTextToolbarImpl {
 			image.addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {
-					updateImage();
 					htmlArea.toggle(f);
+					updateImage();
 				}
 			});
 			image.border().color().white();
+			image.addMouseOverListener(new IMouseOverListener() {
+
+				@Override
+				public void onMouseOver() {
+					image.border().color().rgb(219, 180, 104);
+				}
+
+				@Override
+				public void onMouseOut() {
+					updateImage();
+				}
+			});
 		}
 
 		@Override

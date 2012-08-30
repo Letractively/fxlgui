@@ -24,7 +24,7 @@ public interface IHTMLArea extends ITextArea {
 
 	public enum Formatting {
 
-		BOLD, ITALIC
+		TOGGLE_BOLD, TOGGLE_ITALIC, TOGGLE_STRIKETHROUGH, TOGGLE_SUBSCRIPT, TOGGLE_SUPERSCRIPT, TOGGLE_UNDERLINE
 	}
 
 	void toggle(Formatting f);
@@ -36,5 +36,5 @@ public interface IHTMLArea extends ITextArea {
 	String html();
 
 	IHTMLArea html(String html);
-
+	
 }
