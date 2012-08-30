@@ -41,4 +41,6 @@ public interface IToolbar {
 
 	IBorder border();
 
+	IToolbar height(int height);
+
 }

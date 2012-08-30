@@ -45,6 +45,7 @@ public class ToolbarImpl implements IToolbar {
 	private boolean hasContent = false;
 	private int spacing = SPACING;
 	public static boolean ALLOW_ALIGN_END_FOR_FLOW_PANEL = true;
+	private int height = 40;
 
 	public ToolbarImpl(IContainer container) {
 		panel = container.panel().flow();
@@ -58,6 +59,12 @@ public class ToolbarImpl implements IToolbar {
 
 	private ToolbarImpl(ToolbarImpl parent) {
 		this.parent = parent;
+	}
+
+	@Override
+	public ToolbarImpl height(int height) {
+		this.height = height;
+		return this;
 	}
 
 	@Override
@@ -77,7 +84,7 @@ public class ToolbarImpl implements IToolbar {
 			return childPanel.add();
 		} else {
 			IHorizontalPanel childPanel = root.panel.add().panel().horizontal()
-					.height(40).align().center();
+					.height(height).align().center();
 			childPanel.spacing().left(root.hasContent ? 0 : spacing)
 					.top(spacing).bottom(spacing).right(spacing);
 			childPanel = childPanel.add().panel().horizontal().align().center();
