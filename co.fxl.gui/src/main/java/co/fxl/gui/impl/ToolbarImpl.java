@@ -192,4 +192,10 @@ public class ToolbarImpl implements IToolbar {
 		return panel.border();
 	}
 
+	@Override
+	public IToolbar spacing(int i) {
+		spacing = i;
+		return this;
+	}
+
 }
