@@ -43,4 +43,6 @@ public interface IToolbar {
 
 	IToolbar height(int height);
 
+	IToolbar spacing(int i);
+
 }
