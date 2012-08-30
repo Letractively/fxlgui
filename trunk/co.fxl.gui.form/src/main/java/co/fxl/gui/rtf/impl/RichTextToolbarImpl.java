@@ -65,7 +65,7 @@ public class RichTextToolbarImpl {
 			this.f = f;
 			image = panel.add().image().resource(imageName(f) + ".gif");
 			image.addClickListener(new IClickListener() {
-				
+
 				@Override
 				public void onClick() {
 					handleClick();
@@ -100,6 +100,8 @@ public class RichTextToolbarImpl {
 
 	private class ToggleButton extends ToolbarButton {
 
+		private boolean active;
+
 		private ToggleButton(final Formatting f) {
 			super(f);
 		}
@@ -112,17 +114,19 @@ public class RichTextToolbarImpl {
 
 		@Override
 		void handleClick() {
+			active = !active;
 			htmlArea.toggle(f);
 		}
 
 		@Override
 		void updateStatus() {
+			active = htmlArea.is(f);
 			updateImage();
 		}
 
 		@Override
 		void updateImage() {
-			if (htmlArea.is(f))
+			if (active)
 				image.border().color().gray();
 			else
 				image.border().color().white();
