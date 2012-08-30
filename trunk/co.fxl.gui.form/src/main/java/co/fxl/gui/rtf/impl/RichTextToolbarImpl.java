@@ -23,8 +23,12 @@ import java.util.List;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IDisplay.IResizeListener;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
+import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.rtf.api.IHTMLArea;
@@ -43,10 +47,6 @@ public class RichTextToolbarImpl {
 			htmlArea.apply(f);
 		}
 
-		void updateImage() {
-			image.border().color().white();
-		}
-
 	}
 
 	private abstract class ToolbarElement {
@@ -61,9 +61,17 @@ public class RichTextToolbarImpl {
 		IImage image;
 		Formatting f;
 
+		private ToolbarButton() {
+		}
+
 		private ToolbarButton(final Formatting f) {
 			this.f = f;
-			image = panel.add().image().resource(imageName(f) + ".gif");
+			String resource = imageName(f);
+			setImage(panel, resource);
+		}
+
+		void setImage(IToolbar panel, String resource) {
+			image = panel.add().image().resource(resource);
 			image.addClickListener(new IClickListener() {
 
 				@Override
@@ -89,12 +97,13 @@ public class RichTextToolbarImpl {
 		}
 
 		String imageName(final Formatting f) {
-			return f.name().toLowerCase().replaceAll("_", "");
+			return f.name().toLowerCase().replaceAll("_", "") + ".gif";
 		}
 
 		abstract void handleClick();
 
 		void updateImage() {
+			image.border().color().white();
 		}
 	}
 
@@ -109,7 +118,8 @@ public class RichTextToolbarImpl {
 		@Override
 		String imageName(final Formatting f) {
 			return f.name().substring(IHTMLArea.TOGGLE_PREFIX.length())
-					.toLowerCase();
+					.toLowerCase()
+					+ ".gif";
 		}
 
 		@Override
@@ -129,18 +139,27 @@ public class RichTextToolbarImpl {
 			if (active)
 				image.border().color().gray();
 			else
-				image.border().color().white();
+				super.updateImage();
 		}
 	}
+
+	protected static final int SPACING = 200;
 
 	private IToolbar panel;
 	private List<ToolbarElement> buttons = new LinkedList<ToolbarElement>();
 	private IHTMLArea htmlArea;
 
-	public RichTextToolbarImpl(IContainer c, IHTMLArea htmlArea) {
-		panel = new ToolbarImpl(c).height(28).spacing(2);
-		panel.color().white();
-		panel.border().style().noBottom().color().gray(211);
+	private ToolbarButton zoomButton;
+
+	private IClickListener closeListener;
+
+	private IGridPanel grid;
+
+	public RichTextToolbarImpl(IContainer c, final IHTMLArea htmlArea) {
+		grid = c.panel().grid();
+		panel = new ToolbarImpl(grid.cell(0, 0)).height(28).spacing(2);
+		grid.color().white();
+		grid.border().style().noBottom().color().gray(211);
 		this.htmlArea = htmlArea;
 		for (Formatting f : IHTMLArea.Formatting.values()) {
 			if (htmlArea.supports(f)) {
@@ -153,11 +172,60 @@ public class RichTextToolbarImpl {
 				}
 			}
 		}
+		grid.column(0).expand();
+		IToolbar panelRight = new ToolbarImpl(grid.cell(1, 0).align().end())
+				.height(28).spacing(2);
+		zoomButton = new ToolbarButton() {
+			@Override
+			void handleClick() {
+				if (closeListener != null) {
+					closeListener.onClick();
+					return;
+				}
+				final IPopUp p = Display.instance().showPopUp();
+				p.border().remove();
+				p.border().style().shadow();
+				final IHTMLArea ha = p.container().widget(IHTMLArea.class);
+				ha.html(htmlArea.html());
+				ha.closeListener(new IClickListener() {
+					@Override
+					public void onClick() {
+						p.visible(false);
+						htmlArea.html(ha.html());
+					}
+				});
+				adjust(p, ha);
+				p.visible(true);
+				Display.instance().addResizeListener(new IResizeListener() {
+					@Override
+					public void onResize(int width, int height) {
+						adjust(p, ha);
+					}
+				}).linkLifecycle(p);
+			}
+
+			private void adjust(IPopUp p, IHTMLArea ha) {
+				p.offset(SPACING / 2, SPACING / 2).size(
+						Display.instance().width() - SPACING,
+						Display.instance().height() - SPACING);
+				ha.height(Display.instance().height() - SPACING);
+			}
+		};
+		zoomButton.setImage(panelRight, "zoom_in.png");
 	}
 
 	public void updateStatus() {
 		for (ToolbarElement e : buttons)
 			e.updateStatus();
+	}
+
+	public void closeListener(IClickListener l) {
+		zoomButton.image.resource("zoom_out.png");
+		closeListener = l;
+	}
+
+	public int height() {
+		return grid.height();
 	}
 
 }

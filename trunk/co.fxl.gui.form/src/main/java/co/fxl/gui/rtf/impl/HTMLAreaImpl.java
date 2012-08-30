@@ -60,6 +60,13 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 	}
 
 	@Override
+	public IHTMLArea height(int height) {
+		panel.height(height);
+		super.height(height - toolbar.height());
+		return this;
+	}
+
+	@Override
 	public void toggle(Formatting f) {
 		String insert = is(f) ? close(f) : open(f);
 		insert(insert);
@@ -142,6 +149,12 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 
 	@Override
 	public void notifyChange() {
+	}
+
+	@Override
+	public IHTMLArea closeListener(IClickListener l) {
+		toolbar.closeListener(l);
+		return this;
 	}
 
 }
