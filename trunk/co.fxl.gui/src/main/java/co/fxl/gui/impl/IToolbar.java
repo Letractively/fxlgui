@@ -19,6 +19,8 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IAlignment;
+import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 
 public interface IToolbar {
@@ -34,5 +36,9 @@ public interface IToolbar {
 	IToolbar adjustHeights();
 
 	IAlignment<IToolbar> align();
+
+	IColor color();
+
+	IBorder border();
 
 }

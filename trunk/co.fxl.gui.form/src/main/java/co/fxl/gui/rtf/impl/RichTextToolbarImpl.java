@@ -23,8 +23,9 @@ import java.util.List;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.api.IImage;
+import co.fxl.gui.impl.IToolbar;
+import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.rtf.api.IHTMLArea;
 import co.fxl.gui.rtf.api.IHTMLArea.Formatting;
 
@@ -68,12 +69,12 @@ public class RichTextToolbarImpl {
 		}
 	}
 
-	private IFlowPanel panel;
+	private IToolbar panel;
 	private List<ToolbarElement> buttons = new LinkedList<ToolbarElement>();
 	private IHTMLArea htmlArea;
 
 	public RichTextToolbarImpl(IContainer c, IHTMLArea htmlArea) {
-		panel = c.panel().flow().spacing(3);
+		panel = new ToolbarImpl(c);
 		panel.color().white();
 		panel.border().style().noBottom().color().gray(211);
 		this.htmlArea = htmlArea;
