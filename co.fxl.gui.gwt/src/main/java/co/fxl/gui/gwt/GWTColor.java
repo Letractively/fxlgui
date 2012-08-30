@@ -154,4 +154,14 @@ public abstract class GWTColor implements IColor {
 	public IColor mix() {
 		return new MixColor();
 	}
+
+	@Override
+	public IGradient gradient() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IColor remove() {
+		throw new UnsupportedOperationException();
+	}
 }
