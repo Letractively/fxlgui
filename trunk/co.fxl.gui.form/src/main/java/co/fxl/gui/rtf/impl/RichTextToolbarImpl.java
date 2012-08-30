@@ -32,25 +32,43 @@ import co.fxl.gui.rtf.api.IHTMLArea.Formatting;
 
 public class RichTextToolbarImpl {
 
-	private abstract class ToolbarElement {
+	private class PushButton extends ToolbarButton {
 
-		abstract void updateStatus();
+		private PushButton(Formatting f) {
+			super(f);
+		}
+
+		@Override
+		void handleClick() {
+			htmlArea.apply(f);
+		}
+
+		void updateImage() {
+			image.border().color().white();
+		}
 
 	}
 
-	private class ToggleButton extends ToolbarElement {
+	private abstract class ToolbarElement {
 
-		private IImage image;
-		private Formatting f;
+		void updateStatus() {
+		}
 
-		private ToggleButton(final Formatting f) {
+	}
+
+	private abstract class ToolbarButton extends ToolbarElement {
+
+		IImage image;
+		Formatting f;
+
+		private ToolbarButton(final Formatting f) {
 			this.f = f;
-			image = panel.add().image()
-					.resource(f.name().toLowerCase() + ".gif");
+			image = panel.add().image().resource(imageName(f) + ".gif");
 			image.addClickListener(new IClickListener() {
+				
 				@Override
 				public void onClick() {
-					htmlArea.toggle(f);
+					handleClick();
 					updateImage();
 				}
 			});
@@ -69,12 +87,40 @@ public class RichTextToolbarImpl {
 			});
 		}
 
+		String imageName(final Formatting f) {
+			return f.name().toLowerCase().replaceAll("_", "");
+		}
+
+		abstract void handleClick();
+
+		void updateImage() {
+		}
+	}
+
+	private class ToggleButton extends ToolbarButton {
+
+		private ToggleButton(final Formatting f) {
+			super(f);
+		}
+
+		@Override
+		String imageName(final Formatting f) {
+			return f.name().substring(IHTMLArea.TOGGLE_PREFIX.length())
+					.toLowerCase();
+		}
+
+		@Override
+		void handleClick() {
+			htmlArea.toggle(f);
+		}
+
 		@Override
 		void updateStatus() {
 			updateImage();
 		}
 
-		private void updateImage() {
+		@Override
+		void updateImage() {
 			if (htmlArea.is(f))
 				image.border().color().gray();
 			else
@@ -92,8 +138,15 @@ public class RichTextToolbarImpl {
 		panel.border().style().noBottom().color().gray(211);
 		this.htmlArea = htmlArea;
 		for (Formatting f : IHTMLArea.Formatting.values()) {
-			ToggleButton b = new ToggleButton(f);
-			buttons.add(b);
+			if (htmlArea.supports(f)) {
+				if (f.name().startsWith(IHTMLArea.TOGGLE_PREFIX)) {
+					ToggleButton b = new ToggleButton(f);
+					buttons.add(b);
+				} else {
+					PushButton b = new PushButton(f);
+					buttons.add(b);
+				}
+			}
 		}
 	}
 

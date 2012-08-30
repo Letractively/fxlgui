@@ -61,13 +61,17 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 
 	@Override
 	public void toggle(Formatting f) {
-		StringBuilder text = new StringBuilder(element.text());
-		int cursorPosition = element.cursorPosition();
 		String insert = is(f) ? close(f) : open(f);
+		insert(insert);
+		toolbar.updateStatus();
+	}
+
+	protected void insert(String insert) {
+		int cursorPosition = element.cursorPosition();
+		StringBuilder text = new StringBuilder(element.text());
 		text.insert(cursorPosition, insert);
 		element.text(text.toString());
 		element.cursorPosition(cursorPosition + insert.length());
-		toolbar.updateStatus();
 	}
 
 	@Override
@@ -105,7 +109,7 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 		case TOGGLE_ITALIC:
 			return "i";
 		default:
-			throw new UnsupportedOperationException();
+			throw new UnsupportedOperationException(f.name());
 		}
 	}
 
@@ -118,9 +122,21 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 		switch (f) {
 		case TOGGLE_BOLD:
 		case TOGGLE_ITALIC:
+		case INSERT_HORIZONTAL_RULE:
 			return true;
 		default:
 			return false;
+		}
+	}
+
+	@Override
+	public void apply(Formatting f) {
+		switch (f) {
+		case INSERT_HORIZONTAL_RULE:
+			insert("<hr/>");
+			return;
+		default:
+			throw new UnsupportedOperationException(f.name());
 		}
 	}
 

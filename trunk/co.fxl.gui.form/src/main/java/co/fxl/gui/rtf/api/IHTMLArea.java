@@ -22,19 +22,25 @@ import co.fxl.gui.api.ITextArea;
 
 public interface IHTMLArea extends ITextArea {
 
+	public final String TOGGLE_PREFIX = "TOGGLE_";
+
 	public enum Formatting {
 
-		TOGGLE_BOLD, TOGGLE_ITALIC, TOGGLE_STRIKETHROUGH, TOGGLE_SUBSCRIPT, TOGGLE_SUPERSCRIPT, TOGGLE_UNDERLINE
+		TOGGLE_BOLD, TOGGLE_ITALIC, TOGGLE_STRIKETHROUGH, TOGGLE_SUBSCRIPT, TOGGLE_SUPERSCRIPT, TOGGLE_UNDERLINE, JUSTIFY_LEFT, JUSTIFY_CENTER, JUSTIFY_RIGHT, INDENT_RIGHT, INDENT_LEFT, INSERT_HORIZONTAL_RULE, INSERT_ORDERED_LIST, INSERT_UNORDERED_LIST,
+		// INSERT_IMAGE, CREATE_LINK, REMOVE_LINK,
+		REMOVE_FORMATTING
 	}
 
 	void toggle(Formatting f);
 
 	boolean is(Formatting f);
 
+	void apply(Formatting f);
+
 	boolean supports(Formatting f);
 
 	String html();
 
 	IHTMLArea html(String html);
-	
+
 }
