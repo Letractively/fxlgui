@@ -70,6 +70,7 @@ public class RichTextToolbarImpl {
 				public void onClick() {
 					handleClick();
 					updateImage();
+					htmlArea.notifyChange();
 				}
 			});
 			image.border().color().white();
