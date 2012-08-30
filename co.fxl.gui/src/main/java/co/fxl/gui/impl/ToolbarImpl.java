@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.api.IAlignment;
+import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -171,6 +173,16 @@ public class ToolbarImpl implements IToolbar {
 			}
 
 		};
+	}
+
+	@Override
+	public IColor color() {
+		return panel.color();
+	}
+
+	@Override
+	public IBorder border() {
+		return panel.border();
 	}
 
 }
