@@ -139,6 +139,11 @@ public abstract class ColorTemplate implements IColor {
 	}
 
 	@Override
+	public IColor gray(int rgb) {
+		return rgb(rgb, rgb, rgb);
+	}
+
+	@Override
 	public IColor mix() {
 		return new MixColor();
 	}

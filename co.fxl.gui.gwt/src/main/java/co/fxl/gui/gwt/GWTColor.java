@@ -135,6 +135,11 @@ public abstract class GWTColor implements IColor {
 	}
 
 	@Override
+	public IColor gray(int rgb) {
+		return rgb(rgb, rgb, rgb);
+	}
+
+	@Override
 	public IColor yellow() {
 		return setColor("yellow");
 	}

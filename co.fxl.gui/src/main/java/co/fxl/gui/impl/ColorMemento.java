@@ -49,4 +49,5 @@ public class ColorMemento extends ColorTemplate {
 			color.rgb(rgb[0], rgb[1], rgb[2]);
 	}
 
+
 }

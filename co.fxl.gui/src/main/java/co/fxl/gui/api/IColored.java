@@ -52,6 +52,8 @@ public interface IColored {
 		IGradient gradient();
 
 		IColor remove();
+
+		IColor gray(int rgb);
 	}
 
 	IColor color();
