@@ -210,16 +210,6 @@ class GWTPopUp implements IPopUp, WidgetParent {
 		return new GWTColor() {
 
 			@Override
-			public IGradient gradient() {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
-			public IColor remove() {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
 			protected IColor setColorInternal(String string) {
 				popUp.getElement().getStyle().setBackgroundColor(string);
 				return this;
