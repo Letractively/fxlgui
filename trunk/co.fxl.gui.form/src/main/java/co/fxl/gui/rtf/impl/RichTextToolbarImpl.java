@@ -187,17 +187,15 @@ public class RichTextToolbarImpl {
 				p.border().remove();
 				p.border().style().shadow();
 				final IHTMLArea ha = p.container().widget(IHTMLArea.class);
-				ha.html(htmlArea.html());
+				copy(htmlArea, ha);
 				Heights.INSTANCE.decorate(ha);
 				ha.closeListener(new IClickListener() {
 					@Override
 					public void onClick() {
 						p.visible(false);
-						htmlArea.cursorPosition(ha.cursorPosition());
-						htmlArea.html(ha.html());
+						copy(ha, htmlArea);
 					}
 				});
-				ha.cursorPosition(htmlArea.cursorPosition());
 				adjust(p, ha);
 				p.visible(true);
 				Display.instance().addResizeListener(new IResizeListener() {
@@ -206,6 +204,11 @@ public class RichTextToolbarImpl {
 						adjust(p, ha);
 					}
 				}).linkLifecycle(p);
+			}
+
+			private void copy(final IHTMLArea htmlArea, final IHTMLArea ha) {
+				ha.html(htmlArea.html());
+				ha.cursorPosition(htmlArea.cursorPosition());
 			}
 
 			private void adjust(IPopUp p, IHTMLArea ha) {
