@@ -29,6 +29,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.rtf.api.IHTMLArea;
@@ -187,13 +188,16 @@ public class RichTextToolbarImpl {
 				p.border().style().shadow();
 				final IHTMLArea ha = p.container().widget(IHTMLArea.class);
 				ha.html(htmlArea.html());
+				Heights.INSTANCE.decorate(ha);
 				ha.closeListener(new IClickListener() {
 					@Override
 					public void onClick() {
 						p.visible(false);
+						htmlArea.cursorPosition(ha.cursorPosition());
 						htmlArea.html(ha.html());
 					}
 				});
+				ha.cursorPosition(htmlArea.cursorPosition());
 				adjust(p, ha);
 				p.visible(true);
 				Display.instance().addResizeListener(new IResizeListener() {
