@@ -208,7 +208,7 @@ public class RichTextToolbarImpl {
 
 			private void copy(final IHTMLArea htmlArea, final IHTMLArea ha) {
 				ha.html(htmlArea.html());
-				ha.cursorPosition(htmlArea.cursorPosition());
+				// ha.cursorPosition(htmlArea.cursorPosition());
 			}
 
 			private void adjust(IPopUp p, IHTMLArea ha) {
