@@ -40,11 +40,11 @@ public interface IFormField<T, R> extends IUpdateable<R> {
 
 	IFieldType type();
 
-//	ILabel addButton(String title);
+	// ILabel addButton(String title);
 
 	IClickable<?> addImage(String resource);
 
-	IContainer addContainer();
+	IContainer addContainer(boolean decorate);
 
 	IFormField<T, R> editable(boolean editable);
 
@@ -59,4 +59,6 @@ public interface IFormField<T, R> extends IUpdateable<R> {
 	IFormField<T, R> tooltip(ITooltipResolver tooltip);
 
 	IFormField<T, R> validate(boolean validate);
+
+	IContainer addContainer();
 }

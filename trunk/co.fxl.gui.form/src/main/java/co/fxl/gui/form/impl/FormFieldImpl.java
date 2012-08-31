@@ -100,30 +100,39 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 
 	@Override
 	public IClickable<?> addImage(String resource) {
-		Object[] cp = addContainerInPanel();
+		Object[] cp = addContainerInPanel(true);
 		IImage l = ((IContainer) cp[1]).image().resource(resource);
 		return new ClickableMultiplexer((IClickable<?>) cp[0], l);
 	}
 
 	@Override
-	public IContainer addContainer() {
-		return (IContainer) addContainerInPanel()[1];
+	public IContainer addContainer(boolean decorate) {
+		return (IContainer) addContainerInPanel(decorate)[1];
 	}
 
-	private Object[] addContainerInPanel() {
+	@Override
+	public IContainer addContainer() {
+		return addContainer(true);
+	}
+
+	private Object[] addContainerInPanel(boolean decorate) {
 		IGridPanel g = widget.internalPanels.get(row).width(1d);
 		g.column(0).expand();
 		IGridCell cell2 = g.cell(1, 0).align().center().valign().center();
 		if (Env.is(Env.SWING))
 			cell2.align().begin();
-		g.column(1).width(24);// - (Env.is(Env.IE) ? 4 : 0));
-		widget.heights.decorate(cell2);
-		IHorizontalPanel spacing = cell2.panel().horizontal()
-				.spacing(Env.is(Env.IE) ? 2 : 4);
-		widget.heights.styleColor(spacing);
-		IBorder border = spacing.border();
-		border.color().rgb(211, 211, 211);
-		border.style().bottom().style().top().style().right();
+		if (decorate) {
+			g.column(1).width(24);// - (Env.is(Env.IE) ? 4 : 0));
+			widget.heights.decorate(cell2);
+		}
+		IHorizontalPanel spacing = cell2.panel().horizontal();
+		if (decorate) {
+			spacing.spacing(Env.is(Env.IE) ? 2 : 4);
+			widget.heights.styleColor(spacing);
+			IBorder border = spacing.border();
+			border.color().rgb(211, 211, 211);
+			border.style().bottom().style().top().style().right();
+		}
 		IContainer c = spacing.add();
 		widget.prepareButtonColumn(g, column);
 		return new Object[] { spacing, c };
