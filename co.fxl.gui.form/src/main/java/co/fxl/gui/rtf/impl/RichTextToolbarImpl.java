@@ -28,6 +28,7 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.IToolbar;
@@ -183,7 +184,7 @@ public class RichTextToolbarImpl {
 					closeListener.onClick();
 					return;
 				}
-				final IPopUp p = Display.instance().showPopUp();
+				final IPopUp p = Display.instance().showPopUp().autoHide(true);
 				p.border().remove();
 				p.border().style().shadow();
 				final IHTMLArea ha = p.container().widget(IHTMLArea.class);
@@ -193,7 +194,14 @@ public class RichTextToolbarImpl {
 					@Override
 					public void onClick() {
 						p.visible(false);
-						copy(ha, htmlArea);
+					}
+				});
+				p.addVisibleListener(new IUpdateListener<Boolean>() {
+					@Override
+					public void onUpdate(Boolean value) {
+						if (!value) {
+							copy(ha, htmlArea);
+						}
 					}
 				});
 				adjust(p, ha);
