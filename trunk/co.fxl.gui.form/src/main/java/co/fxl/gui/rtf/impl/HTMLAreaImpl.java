@@ -18,10 +18,6 @@
  */
 package co.fxl.gui.rtf.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
-
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.TextAreaAdp;
@@ -29,10 +25,9 @@ import co.fxl.gui.rtf.api.IHTMLArea;
 
 public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 
-	private static final String SPAN_PREFIX = "<span class='";
-	private static final String SPAN_CLOSE = "</span>";
 	private IVerticalPanel panel;
 	private RichTextToolbarImpl toolbar;
+	private boolean ignore;
 
 	public HTMLAreaImpl(IContainer element) {
 		panel = element.panel().vertical();
@@ -41,7 +36,8 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 		super.element.addUpdateListener(new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(String value) {
-				toolbar.updateStatus();
+				if (!ignore)
+					toolbar.updateStatus();
 			}
 		});
 		super.element.addClickListener(new IClickListener() {
@@ -80,11 +76,13 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 	}
 
 	protected void insert(String insert) {
+		ignore = true;
 		int cursorPosition = element.cursorPosition();
 		StringBuilder text = new StringBuilder(element.text());
 		text.insert(cursorPosition, insert);
 		element.text(text.toString());
 		element.cursorPosition(cursorPosition + insert.length());
+		ignore = false;
 	}
 
 	@Override
@@ -103,6 +101,11 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 	}
 
 	@Override
+	public boolean is(String f) {
+		return parse(new String[] { f })[0];
+	}
+
+	@Override
 	public boolean[] parse(String[] css) {
 		return parse(this, css);
 	}
@@ -110,40 +113,7 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 	public static boolean[] parse(IHTMLArea html, String[] css) {
 		String body = html.html();
 		int htmlCursorPosition = html.htmlCursorPosition();
-		return parse(css, body, htmlCursorPosition);
-	}
-
-	private static boolean[] parse(String[] css, String body,
-			int htmlCursorPosition) {
-		String[] open = new String[css.length];
-		for (int i = 0; i < css.length; i++) {
-			open[i] = SPAN_PREFIX + css[i] + "'>";
-		}
-		Stack<String> stack = new Stack<String>();
-		Map<String, Integer> count = new HashMap<String, Integer>();
-		for (int i = 0; i < htmlCursorPosition; i++) {
-			if (containsTokenAt(SPAN_PREFIX, i, body)) {
-				int indexOf = body.indexOf("'>", i);
-				if (indexOf == -1)
-					break;
-				i += SPAN_PREFIX.length();
-				String last = body.substring(i, indexOf);
-				stack.push(last);
-				Integer integer = count.get(last);
-				if (integer == null)
-					integer = 0;
-				count.put(last, integer + 1);
-			} else if (containsTokenAt(SPAN_CLOSE, i, body)) {
-				String last = stack.pop();
-				count.put(last, count.get(last) - 1);
-				i += SPAN_CLOSE.length();
-			}
-		}
-		boolean[] result = new boolean[css.length];
-		for (int i = 0; i < result.length; i++) {
-			result[i] = count.containsKey(css[i]) && count.get(css[i]) > 0;
-		}
-		return result;
+		return RichTextToolbarImpl.parse(css, body, htmlCursorPosition);
 	}
 
 	// public static void main(String[] args) {
@@ -165,15 +135,7 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 
 	private boolean containsTokenAt(String open, int i) {
 		String text = element.text();
-		return containsTokenAt(open, i, text);
-	}
-
-	private static boolean containsTokenAt(String open, int i, String text) {
-		for (int j = 0; j < open.length() && i + j < text.length(); j++) {
-			if (text.charAt(i + j) != open.charAt(j))
-				return false;
-		}
-		return true;
+		return RichTextToolbarImpl.containsTokenAt(open, i, text);
 	}
 
 	private String close(Formatting f) {
@@ -234,8 +196,9 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 	}
 
 	@Override
-	public int cursorPosition() {
-		throw new UnsupportedOperationException();
+	public IHTMLArea insertHTML(String html) {
+		insert(html);
+		return this;
 	}
 
 }
