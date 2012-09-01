@@ -32,7 +32,9 @@ public interface IHTMLArea extends ITextArea {
 	void toggle(Formatting f);
 
 	boolean is(Formatting f);
-	
+
+	boolean is(String tag);
+
 	boolean[] parse(String[] css);
 
 	void apply(Formatting f);
@@ -48,5 +50,7 @@ public interface IHTMLArea extends ITextArea {
 	IHTMLArea closeListener(IClickListener l);
 
 	int htmlCursorPosition();
+
+	IHTMLArea insertHTML(String html);
 
 }

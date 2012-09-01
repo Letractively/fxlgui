@@ -18,8 +18,11 @@
  */
 package co.fxl.gui.rtf.impl;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Stack;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
@@ -145,16 +148,49 @@ public class RichTextToolbarImpl {
 		}
 	}
 
-	protected static final int SPACING = 200;
+	private class TagButton extends ToolbarButton {
 
+		private boolean active;
+		private String tag;
+
+		private TagButton(String tag) {
+			this.tag = tag;
+			setImage(panel, "tag_" + tag.toLowerCase() + ".png");
+		}
+
+		@Override
+		void handleClick() {
+			active = !active;
+			if (active)
+				htmlArea.insertHTML("<span class='" + tag + "'>");
+			else
+				htmlArea.insertHTML("</span>");
+		}
+
+		@Override
+		void updateStatus() {
+			active = htmlArea.is(tag);
+			updateImage();
+		}
+
+		@Override
+		void updateImage() {
+			if (active)
+				image.border().color().gray();
+			else
+				super.updateImage();
+		}
+	}
+
+	static final String SPAN_PREFIX = "<span class='";
+	static final String SPAN_CLOSE = "</span>";
+	private static String[] TAGS = new String[] { "section" };
+	private static final int SPACING = 200;
 	private IToolbar panel;
 	private List<ToolbarElement> buttons = new LinkedList<ToolbarElement>();
 	private IHTMLArea htmlArea;
-
 	private ToolbarButton zoomButton;
-
 	private IClickListener closeListener;
-
 	private IGridPanel grid;
 
 	public RichTextToolbarImpl(IContainer c, final IHTMLArea htmlArea) {
@@ -174,7 +210,15 @@ public class RichTextToolbarImpl {
 				}
 			}
 		}
+		for (String tag : TAGS) {
+			TagButton b = new TagButton(tag);
+			buttons.add(b);
+		}
 		grid.column(0).expand();
+		addZoomButton(htmlArea);
+	}
+
+	private void addZoomButton(final IHTMLArea htmlArea) {
 		IToolbar panelRight = new ToolbarImpl(grid.cell(1, 0).align().end())
 				.height(28).spacing(2);
 		zoomButton = new ToolbarButton() {
@@ -241,6 +285,46 @@ public class RichTextToolbarImpl {
 
 	public int height() {
 		return grid.height();
+	}
+
+	static boolean[] parse(String[] css, String body, int htmlCursorPosition) {
+		String[] open = new String[css.length];
+		for (int i = 0; i < css.length; i++) {
+			open[i] = RichTextToolbarImpl.SPAN_PREFIX + css[i] + "'>";
+		}
+		Stack<String> stack = new Stack<String>();
+		Map<String, Integer> count = new HashMap<String, Integer>();
+		for (int i = 0; i < htmlCursorPosition; i++) {
+			if (containsTokenAt(RichTextToolbarImpl.SPAN_PREFIX, i, body)) {
+				int indexOf = body.indexOf("'>", i);
+				if (indexOf == -1)
+					break;
+				i += RichTextToolbarImpl.SPAN_PREFIX.length();
+				String last = body.substring(i, indexOf);
+				stack.push(last);
+				Integer integer = count.get(last);
+				if (integer == null)
+					integer = 0;
+				count.put(last, integer + 1);
+			} else if (containsTokenAt(RichTextToolbarImpl.SPAN_CLOSE, i, body)) {
+				String last = stack.pop();
+				count.put(last, count.get(last) - 1);
+				i += RichTextToolbarImpl.SPAN_CLOSE.length() - 1;
+			}
+		}
+		boolean[] result = new boolean[css.length];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = count.containsKey(css[i]) && count.get(css[i]) > 0;
+		}
+		return result;
+	}
+
+	static boolean containsTokenAt(String open, int i, String text) {
+		for (int j = 0; j < open.length() && i + j < text.length(); j++) {
+			if (text.charAt(i + j) != open.charAt(j))
+				return false;
+		}
+		return true;
 	}
 
 }
