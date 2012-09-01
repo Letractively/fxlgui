@@ -161,11 +161,9 @@ public class RichTextToolbarImpl {
 		void handleClick() {
 			active = !active;
 			if (active)
-				htmlArea.insertHTML("&nbsp;" + SPAN_PREFIX + tag + SPAN_SUFFIX
-						+ "&nbsp;");
+				htmlArea.insertHTML(SPAN_PREFIX + tag + SPAN_SUFFIX);
 			else
-				htmlArea.insertHTML("&nbsp;" + SPAN_CLOSE + tag + SPAN_SUFFIX
-						+ "&nbsp;");
+				htmlArea.insertHTML(SPAN_CLOSE + tag + SPAN_SUFFIX);
 		}
 
 		@Override
@@ -186,7 +184,7 @@ public class RichTextToolbarImpl {
 	static final String SPAN_PREFIX = "&lt;";
 	static final String SPAN_CLOSE = "&lt;/";
 	static final String SPAN_SUFFIX = "&gt;";
-	private static String[] TAGS = new String[] { "section" };
+	private static String[] TAGS = new String[] {};
 	private static final int SPACING = 200;
 	private IToolbar panel;
 	private List<ToolbarElement> buttons = new LinkedList<ToolbarElement>();
