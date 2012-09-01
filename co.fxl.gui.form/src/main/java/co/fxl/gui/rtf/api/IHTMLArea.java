@@ -47,4 +47,6 @@ public interface IHTMLArea extends ITextArea {
 
 	IHTMLArea closeListener(IClickListener l);
 
+	int htmlCursorPosition();
+
 }
