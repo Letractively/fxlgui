@@ -98,6 +98,11 @@ public class RichTextToolbarImpl {
 					updateImage();
 				}
 			});
+			image.tooltip(tooltip());
+		}
+
+		String tooltip() {
+			return format(f.name());
 		}
 
 		String imageName(final Formatting f) {
@@ -108,6 +113,23 @@ public class RichTextToolbarImpl {
 
 		void updateImage() {
 			image.border().color().white();
+		}
+
+		String format(String n) {
+			StringBuilder b = new StringBuilder();
+			boolean first = true;
+			for (int i = 0; i < n.length(); i++) {
+				if (first) {
+					b.append(n.charAt(i));
+					first = false;
+				} else if (n.charAt(i) == '_') {
+					b.append(" ");
+					first = true;
+				} else {
+					b.append(Character.toLowerCase(n.charAt(i)));
+				}
+			}
+			return b.toString();
 		}
 	}
 
@@ -178,6 +200,11 @@ public class RichTextToolbarImpl {
 				image.border().color().gray();
 			else
 				super.updateImage();
+		}
+
+		@Override
+		String tooltip() {
+			return "Toggle  " + format(tag);
 		}
 	}
 
@@ -269,6 +296,11 @@ public class RichTextToolbarImpl {
 						Display.instance().height() - SPACING);
 				ha.height(Display.instance().height() - SPACING);
 			}
+
+			@Override
+			String tooltip() {
+				return "Zoom In";
+			}
 		};
 		zoomButton.setImage(panelRight, "zoom_in.png");
 	}
@@ -280,6 +312,7 @@ public class RichTextToolbarImpl {
 
 	public void closeListener(IClickListener l) {
 		zoomButton.image.resource("zoom_out.png");
+		zoomButton.image.tooltip("Zoom Out");
 		closeListener = l;
 	}
 
