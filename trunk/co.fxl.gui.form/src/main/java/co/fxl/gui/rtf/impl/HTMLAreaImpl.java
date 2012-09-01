@@ -157,4 +157,14 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 		return this;
 	}
 
+	@Override
+	public int htmlCursorPosition() {
+		return cursorPosition();
+	}
+
+	@Override
+	public int cursorPosition() {
+		throw new UnsupportedOperationException();
+	}
+
 }
