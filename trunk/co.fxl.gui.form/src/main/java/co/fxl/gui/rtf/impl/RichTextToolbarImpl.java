@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
@@ -162,9 +161,11 @@ public class RichTextToolbarImpl {
 		void handleClick() {
 			active = !active;
 			if (active)
-				htmlArea.insertHTML(SPAN_PREFIX + tag + SPAN_SUFFIX);
+				htmlArea.insertHTML("&nbsp;" + SPAN_PREFIX + tag + SPAN_SUFFIX
+						+ "&nbsp;");
 			else
-				htmlArea.insertHTML(SPAN_CLOSE);
+				htmlArea.insertHTML("&nbsp;" + SPAN_CLOSE + tag + SPAN_SUFFIX
+						+ "&nbsp;");
 		}
 
 		@Override
@@ -182,11 +183,10 @@ public class RichTextToolbarImpl {
 		}
 	}
 
-	static final String SPAN_PREFIX = "<span class='";
-	static final String SPAN_SUFFIX = "'>";
-	static final String SPAN_CLOSE = "</span>";
-	public static final String SPAN_OPEN = "<span>";
-	private static String[] TAGS = new String[] {};
+	static final String SPAN_PREFIX = "&lt;";
+	static final String SPAN_CLOSE = "&lt;/";
+	static final String SPAN_SUFFIX = "&gt;";
+	private static String[] TAGS = new String[] { "section" };
 	private static final int SPACING = 200;
 	private IToolbar panel;
 	private List<ToolbarElement> buttons = new LinkedList<ToolbarElement>();
@@ -294,7 +294,7 @@ public class RichTextToolbarImpl {
 		for (int i = 0; i < css.length; i++) {
 			open[i] = RichTextToolbarImpl.SPAN_PREFIX + css[i] + SPAN_SUFFIX;
 		}
-		Stack<String> stack = new Stack<String>();
+		List<String> stack = new LinkedList<String>();
 		Map<String, Integer> count = new HashMap<String, Integer>();
 		for (int i = 0; i < htmlCursorPosition; i++) {
 			if (containsTokenAt(RichTextToolbarImpl.SPAN_PREFIX, i, body)) {
@@ -303,15 +303,24 @@ public class RichTextToolbarImpl {
 					break;
 				i += RichTextToolbarImpl.SPAN_PREFIX.length();
 				String last = body.substring(i, indexOf);
-				stack.push(last);
+				stack.add(last);
 				Integer integer = count.get(last);
 				if (integer == null)
 					integer = 0;
 				count.put(last, integer + 1);
 			} else if (containsTokenAt(RichTextToolbarImpl.SPAN_CLOSE, i, body)) {
-				String last = stack.pop();
-				count.put(last, count.get(last) - 1);
-				i += RichTextToolbarImpl.SPAN_CLOSE.length() - 1;
+				int indexOf = body.indexOf(SPAN_SUFFIX, i);
+				if (indexOf == -1)
+					break;
+				i += RichTextToolbarImpl.SPAN_SUFFIX.length();
+				String last = body.substring(i, indexOf);
+				for (int k = stack.size() - 1; k >= 0; k--) {
+					if (stack.get(k).equals(last)) {
+						stack.remove(k);
+						count.put(last, count.get(last) - 1);
+						i += RichTextToolbarImpl.SPAN_CLOSE.length() - 1;
+					}
+				}
 			}
 		}
 		boolean[] result = new boolean[css.length];
