@@ -162,9 +162,9 @@ public class RichTextToolbarImpl {
 		void handleClick() {
 			active = !active;
 			if (active)
-				htmlArea.insertHTML("<span class='" + tag + "'>");
+				htmlArea.insertHTML(SPAN_PREFIX + tag + SPAN_SUFFIX);
 			else
-				htmlArea.insertHTML("</span>");
+				htmlArea.insertHTML(SPAN_CLOSE);
 		}
 
 		@Override
@@ -183,8 +183,10 @@ public class RichTextToolbarImpl {
 	}
 
 	static final String SPAN_PREFIX = "<span class='";
+	static final String SPAN_SUFFIX = "'>";
 	static final String SPAN_CLOSE = "</span>";
-	private static String[] TAGS = new String[] { };
+	public static final String SPAN_OPEN = "<span>";
+	private static String[] TAGS = new String[] {};
 	private static final int SPACING = 200;
 	private IToolbar panel;
 	private List<ToolbarElement> buttons = new LinkedList<ToolbarElement>();
@@ -290,13 +292,13 @@ public class RichTextToolbarImpl {
 	static boolean[] parse(String[] css, String body, int htmlCursorPosition) {
 		String[] open = new String[css.length];
 		for (int i = 0; i < css.length; i++) {
-			open[i] = RichTextToolbarImpl.SPAN_PREFIX + css[i] + "'>";
+			open[i] = RichTextToolbarImpl.SPAN_PREFIX + css[i] + SPAN_SUFFIX;
 		}
 		Stack<String> stack = new Stack<String>();
 		Map<String, Integer> count = new HashMap<String, Integer>();
 		for (int i = 0; i < htmlCursorPosition; i++) {
 			if (containsTokenAt(RichTextToolbarImpl.SPAN_PREFIX, i, body)) {
-				int indexOf = body.indexOf("'>", i);
+				int indexOf = body.indexOf(SPAN_SUFFIX, i);
 				if (indexOf == -1)
 					break;
 				i += RichTextToolbarImpl.SPAN_PREFIX.length();
