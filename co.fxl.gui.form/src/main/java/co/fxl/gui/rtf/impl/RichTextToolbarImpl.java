@@ -184,7 +184,7 @@ public class RichTextToolbarImpl {
 
 	static final String SPAN_PREFIX = "<span class='";
 	static final String SPAN_CLOSE = "</span>";
-	private static String[] TAGS = new String[] { "section" };
+	private static String[] TAGS = new String[] { };
 	private static final int SPACING = 200;
 	private IToolbar panel;
 	private List<ToolbarElement> buttons = new LinkedList<ToolbarElement>();
