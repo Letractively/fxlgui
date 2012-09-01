@@ -18,6 +18,10 @@
  */
 package co.fxl.gui.rtf.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
+
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.TextAreaAdp;
@@ -25,6 +29,8 @@ import co.fxl.gui.rtf.api.IHTMLArea;
 
 public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 
+	private static final String SPAN_PREFIX = "<span class='";
+	private static final String SPAN_CLOSE = "</span>";
 	private IVerticalPanel panel;
 	private RichTextToolbarImpl toolbar;
 
@@ -96,8 +102,73 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 		return count > 0;
 	}
 
+	@Override
+	public boolean[] parse(String[] css) {
+		return parse(this, css);
+	}
+
+	public static boolean[] parse(IHTMLArea html, String[] css) {
+		String body = html.html();
+		int htmlCursorPosition = html.htmlCursorPosition();
+		return parse(css, body, htmlCursorPosition);
+	}
+
+	private static boolean[] parse(String[] css, String body,
+			int htmlCursorPosition) {
+		String[] open = new String[css.length];
+		for (int i = 0; i < css.length; i++) {
+			open[i] = SPAN_PREFIX + css[i] + "'>";
+		}
+		Stack<String> stack = new Stack<String>();
+		Map<String, Integer> count = new HashMap<String, Integer>();
+		for (int i = 0; i < htmlCursorPosition; i++) {
+			if (containsTokenAt(SPAN_PREFIX, i, body)) {
+				int indexOf = body.indexOf("'>", i);
+				if (indexOf == -1)
+					break;
+				i += SPAN_PREFIX.length();
+				String last = body.substring(i, indexOf);
+				stack.push(last);
+				Integer integer = count.get(last);
+				if (integer == null)
+					integer = 0;
+				count.put(last, integer + 1);
+			} else if (containsTokenAt(SPAN_CLOSE, i, body)) {
+				String last = stack.pop();
+				count.put(last, count.get(last) - 1);
+				i += SPAN_CLOSE.length();
+			}
+		}
+		boolean[] result = new boolean[css.length];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = count.containsKey(css[i]) && count.get(css[i]) > 0;
+		}
+		return result;
+	}
+
+	// public static void main(String[] args) {
+	// String string =
+	// "<span class='section'><span class='section-title'>TITLE</span>BODY</span>";
+	// int count = 0;
+	// for (int i = 0; i < string.length(); i++) {
+	// if (string.charAt(i) == '<')
+	// count++;
+	// else if (string.charAt(i) == '>')
+	// count--;
+	// else if (count == 0) {
+	// System.out.println(string.substring(i) + ": ");
+	// System.out.println(Arrays.toString(parse(new String[] {
+	// "section", "section-title" }, string, i)));
+	// }
+	// }
+	// }
+
 	private boolean containsTokenAt(String open, int i) {
 		String text = element.text();
+		return containsTokenAt(open, i, text);
+	}
+
+	private static boolean containsTokenAt(String open, int i, String text) {
 		for (int j = 0; j < open.length() && i + j < text.length(); j++) {
 			if (text.charAt(i + j) != open.charAt(j))
 				return false;
