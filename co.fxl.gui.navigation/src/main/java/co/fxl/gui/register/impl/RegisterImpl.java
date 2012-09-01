@@ -335,6 +335,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 
 	private void updateButtonPanel(boolean b) {
 		buttonPanel.clickable(b && allowClick);
+		buttonLabel.clickable(b && allowClick);
 	}
 
 	void setText(String title) {
