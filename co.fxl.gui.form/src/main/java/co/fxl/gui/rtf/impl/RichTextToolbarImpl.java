@@ -176,16 +176,7 @@ public class RichTextToolbarImpl {
 
 		private TagButton(String tag) {
 			this.tag = tag;
-			setImage(panel, "tag_" + tag.toLowerCase() + ".png");
-		}
-
-		@Override
-		void handleClick() {
-			active = !active;
-			if (active)
-				htmlArea.insertHTML(SPAN_OPEN + tag + SPAN_SUFFIX);
-			else
-				htmlArea.insertHTML(SPAN_CLOSE + tag + SPAN_SUFFIX);
+			setImage(panel, "tag_" + tag.toLowerCase() + IMAGE_SUFFIX);
 		}
 
 		@Override
@@ -205,14 +196,25 @@ public class RichTextToolbarImpl {
 
 		@Override
 		String tooltip() {
-			return (active ? "Start  " : "End ") + format(tag);
+			return (!active ? "Start  " : "End ") + format(tag);
+		}
+
+		@Override
+		void handleClick() {
+			active = !active;
+			if (active)
+				htmlArea.insertImage(OPEN_IMAGE_PREFIX + tag.toLowerCase()
+						+ IMAGE_SUFFIX);
+			else
+				htmlArea.insertImage(CLOSE_IMAGE_PREFIX + tag.toLowerCase()
+						+ IMAGE_SUFFIX);
 		}
 	}
 
-	static final String SPAN_OPEN = "&lt;";
-	static final String SPAN_CLOSE = "&lt;/";
-	static final String SPAN_SUFFIX = "&gt;";
-	private static String[] TAGS = new String[] {"section"};
+	private static final String IMAGE_SUFFIX = ".png";
+	private static final String CLOSE_IMAGE_PREFIX = "tag_close_";
+	private static final String OPEN_IMAGE_PREFIX = "tag_open_";
+	private static String[] TAGS = new String[] { "Section", "Title" };
 	private static final int SPACING = 200;
 	private IToolbar panel;
 	private List<ToolbarElement> buttons = new LinkedList<ToolbarElement>();
@@ -321,36 +323,36 @@ public class RichTextToolbarImpl {
 		return grid.height();
 	}
 
-	static boolean[] parse(String[] css, String body, int htmlCursorPosition) {
-		String[] open = new String[css.length];
-		for (int i = 0; i < css.length; i++) {
-			open[i] = SPAN_OPEN + css[i] + SPAN_SUFFIX;
-		}
+	public static boolean[] parse(String[] css, String body,
+			int htmlCursorPosition, String imagePath) {
+		String openPrefix = "<img src=\"" + imagePath + OPEN_IMAGE_PREFIX;
+		String closePrefix = "<img src=\"" + imagePath + CLOSE_IMAGE_PREFIX;
+		String suffix = IMAGE_SUFFIX + "\">";
 		List<String> stack = new LinkedList<String>();
 		Map<String, Integer> count = new HashMap<String, Integer>();
 		for (int i = 0; i < htmlCursorPosition; i++) {
-			if (containsTokenAt(SPAN_OPEN, i, body)) {
-				int indexOf = body.indexOf(SPAN_SUFFIX, i);
+			if (containsTokenAt(openPrefix, i, body)) {
+				int indexOf = body.indexOf(suffix, i);
 				if (indexOf == -1)
 					break;
-				i += SPAN_OPEN.length();
+				i += openPrefix.length();
 				String last = body.substring(i, indexOf);
 				stack.add(last);
 				Integer integer = count.get(last);
 				if (integer == null)
 					integer = 0;
 				count.put(last, integer + 1);
-			} else if (containsTokenAt(SPAN_CLOSE, i, body)) {
-				int indexOf = body.indexOf(SPAN_SUFFIX, i);
+			} else if (containsTokenAt(closePrefix, i, body)) {
+				int indexOf = body.indexOf(suffix, i);
 				if (indexOf == -1)
 					break;
-				i += SPAN_SUFFIX.length();
+				i += closePrefix.length();
 				String last = body.substring(i, indexOf);
 				for (int k = stack.size() - 1; k >= 0; k--) {
 					if (stack.get(k).equals(last)) {
 						stack.remove(k);
 						count.put(last, count.get(last) - 1);
-						i += SPAN_CLOSE.length() - 1;
+						i += closePrefix.length() - 1;
 					}
 				}
 			}

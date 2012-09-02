@@ -53,4 +53,6 @@ public interface IHTMLArea extends ITextArea {
 
 	IHTMLArea insertHTML(String html);
 
+	IHTMLArea insertImage(String image);
+
 }
