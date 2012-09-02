@@ -183,7 +183,7 @@ public class RichTextToolbarImpl {
 		void handleClick() {
 			active = !active;
 			if (active)
-				htmlArea.insertHTML(SPAN_PREFIX + tag + SPAN_SUFFIX);
+				htmlArea.insertHTML(SPAN_OPEN + tag + SPAN_SUFFIX);
 			else
 				htmlArea.insertHTML(SPAN_CLOSE + tag + SPAN_SUFFIX);
 		}
@@ -209,7 +209,7 @@ public class RichTextToolbarImpl {
 		}
 	}
 
-	static final String SPAN_PREFIX = "&lt;";
+	static final String SPAN_OPEN = "&lt;";
 	static final String SPAN_CLOSE = "&lt;/";
 	static final String SPAN_SUFFIX = "&gt;";
 	private static String[] TAGS = new String[] {"section"};
@@ -324,16 +324,16 @@ public class RichTextToolbarImpl {
 	static boolean[] parse(String[] css, String body, int htmlCursorPosition) {
 		String[] open = new String[css.length];
 		for (int i = 0; i < css.length; i++) {
-			open[i] = SPAN_PREFIX + css[i] + SPAN_SUFFIX;
+			open[i] = SPAN_OPEN + css[i] + SPAN_SUFFIX;
 		}
 		List<String> stack = new LinkedList<String>();
 		Map<String, Integer> count = new HashMap<String, Integer>();
 		for (int i = 0; i < htmlCursorPosition; i++) {
-			if (containsTokenAt(SPAN_PREFIX, i, body)) {
+			if (containsTokenAt(SPAN_OPEN, i, body)) {
 				int indexOf = body.indexOf(SPAN_SUFFIX, i);
 				if (indexOf == -1)
 					break;
-				i += SPAN_PREFIX.length();
+				i += SPAN_OPEN.length();
 				String last = body.substring(i, indexOf);
 				stack.add(last);
 				Integer integer = count.get(last);
