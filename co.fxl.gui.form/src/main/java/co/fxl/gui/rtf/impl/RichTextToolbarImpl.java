@@ -200,11 +200,12 @@ public class RichTextToolbarImpl {
 				image.border().color().gray();
 			else
 				super.updateImage();
+			image.tooltip(tooltip());
 		}
 
 		@Override
 		String tooltip() {
-			return "Toggle  " + format(tag);
+			return (active ? "Start  " : "End ") + format(tag);
 		}
 	}
 
