@@ -110,10 +110,10 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 		return parse(this, css);
 	}
 
-	public static boolean[] parse(IHTMLArea html, String[] css) {
+	private static boolean[] parse(IHTMLArea html, String[] css) {
 		String body = html.html();
 		int htmlCursorPosition = html.htmlCursorPosition();
-		return RichTextToolbarImpl.parse(css, body, htmlCursorPosition);
+		return RichTextToolbarImpl.parse(css, body, htmlCursorPosition, "");
 	}
 
 	// public static void main(String[] args) {
@@ -198,6 +198,12 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 	@Override
 	public IHTMLArea insertHTML(String html) {
 		insert(html);
+		return this;
+	}
+
+	@Override
+	public IHTMLArea insertImage(String string) {
+		insert("<img src='" + string + "'/>");
 		return this;
 	}
 

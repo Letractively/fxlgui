@@ -55,6 +55,10 @@ public class GWTImage extends GWTElement<Image, IImage> implements IImage {
 		return path + treeIcon;
 	}
 
+	public static String getAbsoluteImageURL(String icon) {
+		return GWT.getModuleBaseURL() + IMAGES + icon;
+	}
+
 	public static String getImageURL(String string) {
 		return getImageURL(IMAGE_PATH, string);
 	}
@@ -130,5 +134,9 @@ public class GWTImage extends GWTElement<Image, IImage> implements IImage {
 	@Override
 	public String resource() {
 		return resource;
+	}
+
+	public static String getImagePath() {
+		return GWT.getModuleBaseURL() + IMAGES;
 	}
 }
