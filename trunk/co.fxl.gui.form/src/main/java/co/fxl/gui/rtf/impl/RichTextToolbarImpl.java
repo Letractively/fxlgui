@@ -212,7 +212,7 @@ public class RichTextToolbarImpl {
 	static final String SPAN_PREFIX = "&lt;";
 	static final String SPAN_CLOSE = "&lt;/";
 	static final String SPAN_SUFFIX = "&gt;";
-	private static String[] TAGS = new String[] {};
+	private static String[] TAGS = new String[] {"section"};
 	private static final int SPACING = 200;
 	private IToolbar panel;
 	private List<ToolbarElement> buttons = new LinkedList<ToolbarElement>();
@@ -324,33 +324,33 @@ public class RichTextToolbarImpl {
 	static boolean[] parse(String[] css, String body, int htmlCursorPosition) {
 		String[] open = new String[css.length];
 		for (int i = 0; i < css.length; i++) {
-			open[i] = RichTextToolbarImpl.SPAN_PREFIX + css[i] + SPAN_SUFFIX;
+			open[i] = SPAN_PREFIX + css[i] + SPAN_SUFFIX;
 		}
 		List<String> stack = new LinkedList<String>();
 		Map<String, Integer> count = new HashMap<String, Integer>();
 		for (int i = 0; i < htmlCursorPosition; i++) {
-			if (containsTokenAt(RichTextToolbarImpl.SPAN_PREFIX, i, body)) {
+			if (containsTokenAt(SPAN_PREFIX, i, body)) {
 				int indexOf = body.indexOf(SPAN_SUFFIX, i);
 				if (indexOf == -1)
 					break;
-				i += RichTextToolbarImpl.SPAN_PREFIX.length();
+				i += SPAN_PREFIX.length();
 				String last = body.substring(i, indexOf);
 				stack.add(last);
 				Integer integer = count.get(last);
 				if (integer == null)
 					integer = 0;
 				count.put(last, integer + 1);
-			} else if (containsTokenAt(RichTextToolbarImpl.SPAN_CLOSE, i, body)) {
+			} else if (containsTokenAt(SPAN_CLOSE, i, body)) {
 				int indexOf = body.indexOf(SPAN_SUFFIX, i);
 				if (indexOf == -1)
 					break;
-				i += RichTextToolbarImpl.SPAN_SUFFIX.length();
+				i += SPAN_SUFFIX.length();
 				String last = body.substring(i, indexOf);
 				for (int k = stack.size() - 1; k >= 0; k--) {
 					if (stack.get(k).equals(last)) {
 						stack.remove(k);
 						count.put(last, count.get(last) - 1);
-						i += RichTextToolbarImpl.SPAN_CLOSE.length() - 1;
+						i += SPAN_CLOSE.length() - 1;
 					}
 				}
 			}
