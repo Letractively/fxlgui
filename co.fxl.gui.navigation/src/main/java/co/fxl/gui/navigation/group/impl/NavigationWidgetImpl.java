@@ -124,8 +124,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 		if (hasActiveItem) {
 			IGridCell indentBorder = separatorBorder.cell(c++, 0);
 			int scrollOffset = StatusDisplay.instance().scrollOffset();
-			offsetX = scrollOffset
-					+ active.buttonPanel.offsetX() + 1;
+			offsetX = scrollOffset + active.buttonPanel.offsetX() + 1;
 			IPanel<?> leftPartBorder = indentBorder.panel().horizontal()
 					.size(offsetX, 1);
 			HorizontalScalingPanel.addDummyIE(leftPartBorder);
@@ -533,6 +532,18 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 	public INavigationWidget showConfigure(boolean b) {
 		if (configureIcon != null)
 			configureIcon.visible(b);
+		return this;
+	}
+
+	@Override
+	public INavigationWidget active(ICallback<Void> c) {
+		for (NavigationGroupImpl g : groups)
+			if (g.visible())
+				for (NavigationItemImpl i : g.items)
+					if (i.visible()) {
+						i.active(true, c);
+						return this;
+					}
 		return this;
 	}
 }

@@ -48,4 +48,6 @@ public interface INavigationWidget extends
 	INavigationWidget configureListener(IClickListener l);
 
 	INavigationWidget showConfigure(boolean b);
+
+	INavigationWidget active(ICallback<Void> c);
 }
