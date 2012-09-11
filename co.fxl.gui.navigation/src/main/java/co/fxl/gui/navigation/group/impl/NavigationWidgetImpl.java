@@ -123,7 +123,9 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 		int width = 0;
 		if (hasActiveItem) {
 			IGridCell indentBorder = separatorBorder.cell(c++, 0);
-			offsetX = active.buttonPanel.offsetX() + 1;
+			int scrollOffset = StatusDisplay.instance().scrollOffset();
+			offsetX = scrollOffset
+					+ active.buttonPanel.offsetX() + 1;
 			IPanel<?> leftPartBorder = indentBorder.panel().horizontal()
 					.size(offsetX, 1);
 			HorizontalScalingPanel.addDummyIE(leftPartBorder);
