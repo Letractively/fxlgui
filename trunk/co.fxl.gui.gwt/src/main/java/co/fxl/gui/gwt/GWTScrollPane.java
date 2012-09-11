@@ -37,9 +37,8 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 	private int initialScrollPosition = -1;
 	boolean programmaticSet;
 	private List<IScrollListener> listeners = new LinkedList<IScrollListener>();
-
-	// private boolean vertical = true;
-	// private boolean horizontal = false;
+	private boolean vertical = true;
+	private boolean horizontal = false;
 
 	GWTScrollPane(final GWTContainer<ScrollPanel> container) {
 		super(container);
@@ -49,12 +48,12 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 		container.widget.addScrollHandler(new ScrollHandler() {
 			@Override
 			public void onScroll(ScrollEvent event) {
-				final int scrollPosition = container.widget.getScrollPosition();
+				final int scrollPosition = scrollOffset();
 				if (initialScrollPosition != -1
 						&& scrollPosition != initialScrollPosition) {
 					int lp = initialScrollPosition;
 					initialScrollPosition = -1;
-					container.widget.setScrollPosition(lp);
+					setScrollPosition(lp);
 				} else
 					fireScrollListeners(scrollPosition);
 			}
@@ -108,11 +107,18 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 		// ap.remove(p);
 		// } else
 		// if (container.widget.isVisible())
-		container.widget.setScrollPosition(pos);
+		setScrollPosition(pos);
 		// else
 		initialScrollPosition = pos;
 		programmaticSet = false;
 		return this;
+	}
+
+	private void setScrollPosition(int pos) {
+		if (horizontal)
+			container.widget.setHorizontalScrollPosition(pos);
+		else
+			container.widget.setVerticalScrollPosition(pos);
 	}
 
 	@Override
@@ -127,13 +133,16 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 
 	@Override
 	public int scrollOffset() {
-		return container.widget.getScrollPosition();
+		if (horizontal)
+			return container.widget.getHorizontalScrollPosition();
+		else
+			return container.widget.getVerticalScrollPosition();
 	}
 
 	@Override
 	public IScrollPane horizontal() {
-		// vertical = false;
-		// horizontal = true;
+		vertical = false;
+		horizontal = true;
 		container.widget.getElement().getStyle()
 				.setProperty("overflowX", "auto");
 		container.widget.getElement().getStyle()
@@ -143,8 +152,8 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 
 	@Override
 	public IScrollPane bidirectional() {
-		// vertical = true;
-		// horizontal = true;
+		vertical = true;
+		horizontal = true;
 		container.widget.getElement().getStyle()
 				.setProperty("overflowX", "auto");
 		container.widget.getElement().getStyle()

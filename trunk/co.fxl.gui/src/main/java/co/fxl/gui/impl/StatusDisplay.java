@@ -301,6 +301,10 @@ public class StatusDisplay implements IResizeListener, Runnable {
 		return sidePanel;
 	}
 
+	public int scrollOffset() {
+		return scrollPane != null ? scrollPane.scrollOffset() : 0;
+	}
+
 	private void notifyResizeListeners() {
 		((DisplayTemplate) Display.instance()).notifyResizeListeners();
 	}
