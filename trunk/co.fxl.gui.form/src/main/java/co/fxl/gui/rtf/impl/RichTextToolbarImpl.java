@@ -214,7 +214,7 @@ public class RichTextToolbarImpl {
 	private static final String IMAGE_SUFFIX = ".png";
 	private static final String CLOSE_IMAGE_PREFIX = "tag_close_";
 	private static final String OPEN_IMAGE_PREFIX = "tag_open_";
-	private static String[] TAGS = new String[] { "Section", "Title" };
+	private static String[] TAGS = new String[] { };//"Section", "Title" };
 	private static final int SPACING = 200;
 	private IToolbar panel;
 	private List<ToolbarElement> buttons = new LinkedList<ToolbarElement>();
