@@ -23,19 +23,21 @@ import java.lang.reflect.InvocationTargetException;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.table.util.api.ICompositeScrollPane;
-import co.fxl.gui.table.util.impl.LazyScrollPanelImplWidgetProvider;
+import co.fxl.gui.table.util.impl.CompositeScrollPaneImplWidgetProvider;
 
 class LazyScrollPaneTest {
 
 	void run(IDisplay display) {
-		display.register(new LazyScrollPanelImplWidgetProvider());
+		display.register(new CompositeScrollPaneImplWidgetProvider());
 		ICompositeScrollPane widget = display.container().panel().vertical()
-				.add().widget(ICompositeScrollPane.class);
+				.size(600, 600).add().widget(ICompositeScrollPane.class);
+		widget.size(600, 600);
 		IVerticalPanel v = widget.viewPort().panel().vertical();
 		add(v, 100);
 		IVerticalPanel v2 = widget.right(200).panel().vertical();
 		add(v2, 50);
 		display.visible(true);
+		widget.visible(true);
 	}
 
 	private void add(IVerticalPanel v, int m) {

@@ -4,6 +4,7 @@
 	<classpathentry excluding="co/fxl/gui/table/bulk/impl/BulkTableWidgetImplAutomation.aj|co/fxl/gui/table/bulk/impl/BulkTableWidgetImplProviderAutomation.aj|co/fxl/gui/table/scroll/impl/ColumnSelectionI18N.aj|co/fxl/gui/table/scroll/impl/ColumnSelectionLayout.aj|co/fxl/gui/table/scroll/impl/ColumnSelectionStyle.aj|co/fxl/gui/table/scroll/impl/ScrollTableWidgetImplI18N.aj|co/fxl/gui/table/scroll/impl/ScrollTableWidgetImplLayout.aj|co/fxl/gui/table/scroll/impl/ScrollTableWidgetImplStyle.aj|co/fxl/gui/table/scroll/impl/SelectionImplI18N.aj" kind="src" path="src/aspects/java"/>
 	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
 	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
+	<classpathentry kind="src" path="src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="/fxl-gui"/>
 	<classpathentry kind="src" path="/fxl-gui-form"/>
