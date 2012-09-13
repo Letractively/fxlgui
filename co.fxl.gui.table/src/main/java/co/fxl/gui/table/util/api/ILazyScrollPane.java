@@ -86,4 +86,6 @@ public interface ILazyScrollPane extends IMouseWheelListener {
 	boolean hasScrollbar();
 
 	ILazyScrollPane useDecoratorReturnForDND(boolean useDecoratorReturnForDND);
+
+	ILazyScrollPane plainContent(boolean plainContent);
 }
