@@ -24,6 +24,7 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.ScrollPaneAdp;
 import co.fxl.gui.table.util.api.ICompositeScrollPane;
@@ -38,7 +39,6 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 	private IContainer centerContainer;
 	private IVerticalPanel dummy;
 	private IAbsolutePanel panel;
-	private int rightWidth;
 
 	public CompositeScrollPaneImpl(IContainer c) {
 		panel = c.panel().absolute().width(1.0).height(1.0);
@@ -85,16 +85,20 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 
 	@Override
 	public IContainer right(int width) {
-		rightWidth = width;
-		return rightContainer = right.width(rightWidth).viewPort();
+		grid.column(1).width(width);
+		grid.cell(1, 0).width(width);
+		return rightContainer = right.width(width).viewPort();
 	}
 
 	@Override
 	public ICompositeScrollPane visible(boolean visible) {
-		grid.column(1).width(rightWidth);
-		grid.cell(1, 0).width(rightWidth);
-		dummy.height(Math.max(centerContainer.element().height(),
-				rightContainer.element().height()));
+		Display.instance().invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				dummy.height(Math.max(centerContainer.element().height(),
+						rightContainer.element().height()));
+			}
+		});
 		return (ICompositeScrollPane) super.visible(visible);
 	}
 
