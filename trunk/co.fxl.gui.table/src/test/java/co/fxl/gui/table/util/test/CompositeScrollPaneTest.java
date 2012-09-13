@@ -21,6 +21,7 @@ package co.fxl.gui.table.util.test;
 import java.lang.reflect.InvocationTargetException;
 
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.table.util.api.ICompositeScrollPane;
 import co.fxl.gui.table.util.impl.LazyScrollPanelImplWidgetProvider;
 
@@ -30,10 +31,16 @@ class LazyScrollPaneTest {
 		display.register(new LazyScrollPanelImplWidgetProvider());
 		ICompositeScrollPane widget = display.container().panel().vertical()
 				.add().widget(ICompositeScrollPane.class);
-
-		// TODO ...
-
+		IVerticalPanel v = widget.viewPort().panel().vertical();
+		add(v, 100);
+		IVerticalPanel v2 = widget.right(200).panel().vertical();
+		add(v2, 50);
 		display.visible(true);
+	}
+
+	private void add(IVerticalPanel v, int m) {
+		for (int i = 0; i < m; i++)
+			v.add().label().text("T" + i);
 	}
 
 	public static void main(String[] args) throws InstantiationException,

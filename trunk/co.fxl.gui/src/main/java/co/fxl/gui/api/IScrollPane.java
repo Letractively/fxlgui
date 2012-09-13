@@ -20,6 +20,14 @@ package co.fxl.gui.api;
 
 public interface IScrollPane extends IElement<IScrollPane>, IBordered, IColored {
 
+	public interface IScrollBars {
+
+		IScrollPane always();
+
+		IScrollPane never();
+
+	}
+
 	public interface IScrollbar {
 
 		IScrollPane always();
@@ -37,7 +45,7 @@ public interface IScrollPane extends IElement<IScrollPane>, IBordered, IColored 
 
 	IScrollPane addScrollListener(IScrollListener listener);
 
-	IScrollPane showScrollbarsAlways(boolean showScrollbarsAlways);
+	IScrollBars scrollBars();
 
 	IScrollPane scrollTo(int pos);
 
@@ -47,5 +55,5 @@ public interface IScrollPane extends IElement<IScrollPane>, IBordered, IColored 
 
 	IScrollPane bidirectional();
 
-//	IScrollbar scrollbar();
+	// IScrollbar scrollbar();
 }
