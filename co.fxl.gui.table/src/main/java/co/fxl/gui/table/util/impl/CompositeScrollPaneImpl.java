@@ -38,16 +38,18 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 	private IContainer centerContainer;
 	private IVerticalPanel dummy;
 	private IAbsolutePanel panel;
+	private int rightWidth;
 
 	public CompositeScrollPaneImpl(IContainer c) {
 		panel = c.panel().absolute().width(1.0).height(1.0);
+		grid = panel.add().panel().grid().width(1.0).height(1.0).resize(3, 1);
 		element = panel.add().scrollPane().width(1.0).height(1.0);
 		addDummyImage(dummy = element.viewPort().panel().vertical());
-		grid = panel.add().panel().grid().width(1.0).height(1.0).resize(3, 1);
-		grid.column(2).width(Env.HEIGHT_SCROLLBAR);
 		center = grid.cell(0, 0).scrollPane().scrollBars().never();
 		right = grid.cell(1, 0).scrollPane().scrollBars().never();
-		addDummyImage(grid.cell(2, 0).panel().vertical());
+		addDummyImage(grid.cell(2, 0).width(Env.HEIGHT_SCROLLBAR).panel()
+				.vertical().width(Env.HEIGHT_SCROLLBAR));
+		grid.column(2).width(Env.HEIGHT_SCROLLBAR);
 		grid.column(0).expand();
 		addScrollListener(this);
 	}
@@ -83,12 +85,14 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 
 	@Override
 	public IContainer right(int width) {
-		grid.column(1).width(width);
-		return rightContainer = right.viewPort();
+		rightWidth = width;
+		return rightContainer = right.width(rightWidth).viewPort();
 	}
 
 	@Override
 	public ICompositeScrollPane visible(boolean visible) {
+		grid.column(1).width(rightWidth);
+		grid.cell(1, 0).width(rightWidth);
 		dummy.height(Math.max(centerContainer.element().height(),
 				rightContainer.element().height()));
 		return (ICompositeScrollPane) super.visible(visible);
