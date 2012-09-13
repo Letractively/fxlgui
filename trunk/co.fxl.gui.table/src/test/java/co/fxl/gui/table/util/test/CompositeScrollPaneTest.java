@@ -25,7 +25,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.table.util.api.ICompositeScrollPane;
 import co.fxl.gui.table.util.impl.CompositeScrollPaneImplWidgetProvider;
 
-class LazyScrollPaneTest {
+public class CompositeScrollPaneTest {
 
 	void run(IDisplay display) {
 		display.register(new CompositeScrollPaneImplWidgetProvider());
@@ -52,6 +52,6 @@ class LazyScrollPaneTest {
 		Class<?> clazz = Class.forName("co.fxl.gui.swing.SwingDisplay");
 		IDisplay display = (IDisplay) clazz.getMethod("instance",
 				new Class<?>[0]).invoke(null, new Object[0]);
-		new LazyScrollPaneTest().run(display);
+		new CompositeScrollPaneTest().run(display);
 	}
 }
