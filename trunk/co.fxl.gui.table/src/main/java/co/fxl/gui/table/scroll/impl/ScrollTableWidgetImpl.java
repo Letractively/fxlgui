@@ -476,6 +476,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						}
 					});
 					sp.size(rows.size());
+					sp.plainContent(plainContent);
 					sp.visible(true);
 				}
 			}
