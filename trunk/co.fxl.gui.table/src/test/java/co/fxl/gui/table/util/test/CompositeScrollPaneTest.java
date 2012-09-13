@@ -34,7 +34,7 @@ class LazyScrollPaneTest {
 		widget.size(600, 600);
 		IVerticalPanel v = widget.viewPort().panel().vertical();
 		add(v, 100);
-		IVerticalPanel v2 = widget.right(200).panel().vertical();
+		IVerticalPanel v2 = widget.right(200).panel().vertical().width(200);
 		add(v2, 50);
 		display.visible(true);
 		widget.visible(true);
