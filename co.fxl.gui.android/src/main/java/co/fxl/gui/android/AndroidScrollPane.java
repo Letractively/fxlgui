@@ -164,11 +164,6 @@ class AndroidScrollPane implements IScrollPane, Parent {
 	}
 
 	@Override
-	public IScrollPane showScrollbarsAlways(boolean showScrollbarsAlways) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public IPadding padding() {
 		throw new UnsupportedOperationException();
 	}
@@ -230,8 +225,13 @@ class AndroidScrollPane implements IScrollPane, Parent {
 		throw new UnsupportedOperationException();
 	}
 
-//	@Override
-//	public IScrollbar scrollbar() {
-//		throw new UnsupportedOperationException();
-//	}
+	@Override
+	public IScrollBars scrollBars() {
+		throw new UnsupportedOperationException();
+	}
+
+	// @Override
+	// public IScrollbar scrollbar() {
+	// throw new UnsupportedOperationException();
+	// }
 }

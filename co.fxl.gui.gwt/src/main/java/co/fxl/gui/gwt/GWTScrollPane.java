@@ -178,12 +178,6 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 	// onScrollTurns(turns);
 	// }
 
-	@Override
-	public IScrollPane showScrollbarsAlways(boolean showScrollbarsAlways) {
-		container.widget.setAlwaysShowScrollBars(showScrollbarsAlways);
-		return this;
-	}
-
 	//
 	// @Override
 	// public IScrollbar scrollbar() {
@@ -207,5 +201,29 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 	void fireScrollListeners(int scrollPosition) {
 		for (IScrollListener listener : listeners)
 			listener.onScroll(scrollPosition);
+	}
+
+	@Override
+	public IScrollBars scrollBars() {
+		return new IScrollBars() {
+
+			@Override
+			public IScrollPane always() {
+				container.widget.setAlwaysShowScrollBars(true);
+				return GWTScrollPane.this;
+			}
+
+			@Override
+			public IScrollPane never() {
+				if (horizontal)
+					container.widget.getElement().getStyle()
+							.setProperty("overflowX", "auto");
+				if (vertical)
+					container.widget.getElement().getStyle()
+							.setProperty("overflowY", "hidden");
+				return GWTScrollPane.this;
+			}
+
+		};
 	}
 }

@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.table.util.impl;
 
+import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.impl.ScrollPaneAdp;
 import co.fxl.gui.table.util.api.ICompositeScrollPane;
@@ -26,7 +27,8 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 		ICompositeScrollPane {
 
 	public CompositeScrollPaneImpl(IContainer c) {
-		super(c.scrollPane());
+		IAbsolutePanel panel = c.panel().absolute();
+		element = panel.add().scrollPane();
 	}
 
 	@Override

@@ -25,6 +25,9 @@ import co.fxl.gui.api.IScrollPane;
 public class ScrollPaneAdp extends ElementAdp<IScrollPane> implements
 		IScrollPane {
 
+	public ScrollPaneAdp() {
+	}
+
 	public ScrollPaneAdp(IScrollPane pane) {
 		super(pane);
 	}
@@ -43,12 +46,6 @@ public class ScrollPaneAdp extends ElementAdp<IScrollPane> implements
 	@Override
 	public IScrollPane addScrollListener(IScrollListener listener) {
 		element.addScrollListener(listener);
-		return this;
-	}
-
-	@Override
-	public IScrollPane showScrollbarsAlways(boolean showScrollbarsAlways) {
-		element.showScrollbarsAlways(showScrollbarsAlways);
 		return this;
 	}
 
@@ -73,6 +70,25 @@ public class ScrollPaneAdp extends ElementAdp<IScrollPane> implements
 	public IScrollPane bidirectional() {
 		element.bidirectional();
 		return this;
+	}
+
+	@Override
+	public IScrollBars scrollBars() {
+		return new IScrollBars() {
+
+			@Override
+			public IScrollPane always() {
+				element.scrollBars().always();
+				return ScrollPaneAdp.this;
+			}
+
+			@Override
+			public IScrollPane never() {
+				element.scrollBars().never();
+				return ScrollPaneAdp.this;
+			}
+
+		};
 	}
 
 }
