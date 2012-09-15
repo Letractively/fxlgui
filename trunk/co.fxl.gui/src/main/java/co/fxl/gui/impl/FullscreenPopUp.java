@@ -34,25 +34,33 @@ public class FullscreenPopUp {
 	private String title;
 	private final int spacingTop = SPACING;
 	private int spacingLeft = SPACING;
+	private IVerticalPanel content;
+	private IDisplay d;
+	private IPopUp popUp;
+	private IScrollPane scrollPane;
+	private WidgetTitle panel;
 
 	public FullscreenPopUp(String title) {
 		this.title = title;
 		if (FIXED_WIDTH != -1)
 			spacingLeft = (Display.instance().width() - FIXED_WIDTH) / 2;
+		d = Display.instance();
+		popUp = d.showPopUp().modal(true).offset(spacingLeft, spacingTop)
+				.autoHide(true);
+		popUp.border().remove().style().shadow().color().black();
+		panel = new WidgetTitle(popUp.container()).spacing(0).sideWidget(true)
+				.commandsOnTop().spacing(0);
+		panel.addTitle(title);
+		scrollPane = panel.content().scrollPane();
+		content = scrollPane.viewPort().panel().vertical().width(FIXED_WIDTH)
+				.spacing(10).add().panel().vertical().width(FIXED_WIDTH - 20);
+	}
+
+	public CommandLink addHyperlink(String imageResource, String text) {
+		return panel.addHyperlink(imageResource, text);
 	}
 
 	public IVerticalPanel content() {
-		final IDisplay d = Display.instance();
-		final IPopUp popUp = d.showPopUp().modal(true)
-				.offset(spacingLeft, spacingTop).autoHide(true);
-		popUp.border().remove().style().shadow().color().black();
-		WidgetTitle panel = new WidgetTitle(popUp.container()).spacing(0)
-				.sideWidget(true).commandsOnTop().spacing(0);
-		panel.addTitle(title);
-		final IScrollPane scrollPane = panel.content().scrollPane();
-		IVerticalPanel content = scrollPane.viewPort().panel().vertical()
-				.width(FIXED_WIDTH).spacing(10).add().panel().vertical()
-				.width(FIXED_WIDTH - 20);
 		resize(d, popUp, scrollPane);
 		final IResizeConfiguration cfg = d.addResizeListener(
 				new IResizeListener() {
