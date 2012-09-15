@@ -29,17 +29,22 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class FullscreenPopUp {
 
+	private static final int FIXED_WIDTH = 800;
 	private static final int SPACING = 20;
 	private String title;
+	private final int spacingTop = SPACING;
+	private int spacingLeft = SPACING;
 
 	public FullscreenPopUp(String title) {
 		this.title = title;
+		if (FIXED_WIDTH != -1)
+			spacingLeft = (Display.instance().width() - FIXED_WIDTH) / 2;
 	}
 
 	public IVerticalPanel content() {
 		final IDisplay d = Display.instance();
-		final IPopUp popUp = d.showPopUp().modal(true).offset(SPACING, SPACING)
-				.autoHide(true);
+		final IPopUp popUp = d.showPopUp().modal(true)
+				.offset(spacingLeft, spacingTop).autoHide(true);
 		popUp.border().remove().style().shadow().color().black();
 		WidgetTitle panel = new WidgetTitle(popUp.container()).spacing(0)
 				.sideWidget(true).commandsOnTop().spacing(0);
@@ -74,8 +79,9 @@ public class FullscreenPopUp {
 	}
 
 	public void resize(IDisplay d, final IPopUp popUp, IScrollPane scrollPane) {
-		popUp.size(d.width() - SPACING * 2, d.height() - SPACING * 2);
-		scrollPane.size(d.width() - SPACING * 2, d.height() - SPACING * 2 - 33);
+		popUp.size(d.width() - spacingLeft * 2, d.height() - spacingTop * 2);
+		scrollPane.size(d.width() - spacingLeft * 2, d.height() - spacingTop
+				* 2 - 33);
 	}
 
 }
