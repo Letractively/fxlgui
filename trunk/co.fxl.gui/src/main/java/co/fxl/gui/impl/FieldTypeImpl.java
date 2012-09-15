@@ -224,4 +224,9 @@ public class FieldTypeImpl implements IFieldType {
 		clazz = Date[].class;
 		return this;
 	}
+
+	@Override
+	public boolean isHTML() {
+		return isHTML;
+	}
 }

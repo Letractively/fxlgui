@@ -69,4 +69,6 @@ public interface IFieldType {
 	boolean isRelation();
 
 	boolean isText();
+
+	boolean isHTML();
 }
