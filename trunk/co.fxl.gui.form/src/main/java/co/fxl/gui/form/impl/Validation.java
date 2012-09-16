@@ -39,6 +39,7 @@ import co.fxl.gui.api.ITextInput;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.FieldTypeImpl;
+import co.fxl.gui.rtf.api.IHTMLArea;
 
 public class Validation {
 
@@ -384,6 +385,23 @@ public class Validation {
 		return this;
 	}
 
+	public Validation linkInput(final IHTMLArea textField, boolean required,
+			final int maxLength) {
+		final Field field = new Field(textField, required);
+		textField.addUpdateListener(new IUpdateListener<String>() {
+			@Override
+			public void onUpdate(String value) {
+				field.isError = false;
+				if (value.length() > maxLength) {
+					field.isError = true;
+				}
+				field.onUpdate(value);
+				errorColor(textField, field.isError);
+			}
+		});
+		return this;
+	}
+
 	public Validation linkInput(IRichTextArea textField, boolean required) {
 		Field field = new Field(textField, required);
 		textField.addUpdateListener(field);
@@ -529,8 +547,10 @@ public class Validation {
 	}
 
 	public void validate(Object valueElement, boolean required,
-			FieldTypeImpl type) {
-		if (valueElement instanceof ITextArea) {
+			FieldTypeImpl type, int maxLength) {
+		if (valueElement instanceof IHTMLArea) {
+			linkInput((IHTMLArea) valueElement, required, maxLength);
+		} else if (valueElement instanceof ITextArea) {
 			linkInput((ITextArea) valueElement, required);
 		} else if (valueElement instanceof ITextField) {
 			if (type.clazz.equals(Date.class)) {

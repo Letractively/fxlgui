@@ -61,4 +61,6 @@ public interface IFormField<T, R> extends IUpdateable<R> {
 	IFormField<T, R> validate(boolean validate);
 
 	IContainer addContainer();
+
+	void maxLength(int maxLength);
 }

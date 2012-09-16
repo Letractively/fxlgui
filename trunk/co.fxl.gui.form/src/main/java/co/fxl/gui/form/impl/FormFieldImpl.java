@@ -47,6 +47,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	private boolean visible = true;
 	private String name;
 	boolean validate = true;
+	int maxLength = -1;
 
 	public FormFieldImpl(FormWidgetImpl widget, int index, String name) {
 		this.widget = widget;
@@ -231,5 +232,10 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	@Override
 	public IFormField<T, R> tooltip(ITooltipResolver tooltip) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void maxLength(int maxLength) {
+		this.maxLength = maxLength;
 	}
 }
