@@ -396,8 +396,9 @@ public class FormWidgetImpl implements IFormWidget {
 			if (!alwaysAllowCancel)
 				validation.linkReset(clickable1);
 			for (final FormFieldImpl<?, ?> formField : fields) {
-				if (formField.validate)
+				if (formField.validate) {
 					linkInput(formField);
+				}
 			}
 			if (isNew) {
 				validation.isNew();
@@ -421,8 +422,7 @@ public class FormWidgetImpl implements IFormWidget {
 		Object valueElement = formField.valueElement();
 		boolean required = formField.required;
 		FieldTypeImpl type = formField.type;
-		// if (!(formField instanceof FormPasswordFieldImpl))
-		validation.validate(valueElement, required, type);
+		validation.validate(valueElement, required, type, formField.maxLength);
 	}
 
 	IGridPanel grid() {
