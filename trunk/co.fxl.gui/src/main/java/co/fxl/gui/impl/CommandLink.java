@@ -179,6 +179,8 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	}
 
 	public void visible(boolean b) {
+		if (fp != null)
+			fp.visible(b);
 		iPanel.visible(b);
 	}
 
