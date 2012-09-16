@@ -20,4 +20,5 @@ package co.fxl.gui.api;
 
 public interface IRichTextArea extends ITextInput<IRichTextArea> {
 
+	// TODO remove, replace with IHTMLArea
 }
