@@ -22,11 +22,14 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.FullscreenPopUp;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.log.api.ILog;
 
 class LogImpl implements ILog, IClickListener {
+	
+	// TODO FullscreenPopUp verwenden
 
 	private class Entry {
 
@@ -169,7 +172,7 @@ class LogImpl implements ILog, IClickListener {
 
 	public void resize(IDisplay d, final IPopUp popUp, IScrollPane scrollPane) {
 		popUp.size(d.width() - SPACING * 2, d.height() - SPACING * 2);
-		scrollPane.size(d.width() - SPACING * 2, d.height() - SPACING * 2 - 33);
+		scrollPane.size(d.width() - SPACING * 2, d.height() - SPACING * 2 - FullscreenPopUp.HEIGHT_TOP);
 	}
 
 	private void showLog(final IScrollPane scrollPane,
