@@ -420,7 +420,7 @@ public class Validation {
 
 	private void errorColor(ITextArea textField, boolean hasError) {
 		if (hasError) {
-			textField.color().mix().red().white().white();
+			textField.color().rgb(255, 170, 170);
 		} else {
 			textField.color().rgb(249, 249, 249);
 		}
