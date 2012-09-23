@@ -362,37 +362,30 @@ public class WidgetTitle implements IClickListener {
 	}
 
 	IClickable<?> addLabel(String text, boolean underline) {
-		if (USE_CONFIGURE_IMAGE)
-			return configurePanel().add().image().resource("configure_small.png");
-		final ILabel l = configurePanel().add().label().text(text);
-		l.font().pixel(10).color().white();
-		addFadeInOutEffect(l);
-		// headerFocusPanel.addMouseOverListener(new IMouseOverListener() {
-		//
-		// @Override
-		// public void onMouseOver() {
-		// l.visible(true);
-		// }
-		//
-		// @Override
-		// public void onMouseOut() {
-		// l.visible(false);
-		// }
-		// });
-		if (underline)
-			l.addMouseOverListener(new IMouseOverListener() {
+		if (USE_CONFIGURE_IMAGE) {
+			IImage e = configurePanel().add().image()
+					.resource("configure_small.png");
+			addFadeInOutEffect(e);
+			return e;
+		} else {
+			final ILabel l = configurePanel().add().label().text(text);
+			l.font().pixel(10).color().white();
+			if (underline)
+				l.addMouseOverListener(new IMouseOverListener() {
 
-				@Override
-				public void onMouseOver() {
-					l.font().underline(true);
-				}
+					@Override
+					public void onMouseOver() {
+						l.font().underline(true);
+					}
 
-				@Override
-				public void onMouseOut() {
-					l.font().underline(false);
-				}
-			});
-		return l;
+					@Override
+					public void onMouseOut() {
+						l.font().underline(false);
+					}
+				});
+			addFadeInOutEffect(l);
+			return l;
+		}
 	}
 
 	private void addFadeInOutEffect(final IElement<?> e) {
