@@ -67,6 +67,7 @@ public class Env {
 	public static String OPERA = "Opera";
 	public static String OTHER_BROWSER = "Other Browser";
 	public static final int HEIGHT_SCROLLBAR = 17;
+	public static final int BLOCK_INCREMENT_MOUSE_WHEEL = 22;
 
 	public static IRuntime runtime() {
 		if (Display.instance() == null)

@@ -40,7 +40,7 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 	private IVerticalPanel dummy;
 
 	public CompositeScrollPaneImpl(IContainer c) {
-		panel = c.panel().grid().width(1.0).height(1.0);
+		panel = decorate(c).panel().grid().width(1.0).height(1.0);
 		grid = panel.cell(0, 0).valign().begin().panel().grid().width(1.0)
 				.height(1.0).resize(3, 1);
 		panel.column(0).expand();
@@ -57,6 +57,10 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 		// grid.column(2).width(Env.HEIGHT_SCROLLBAR);
 		grid.column(0).expand();
 		addScrollListener(this);
+	}
+
+	protected IContainer decorate(IContainer c) {
+		return c;
 	}
 
 	private void addDummyImage(IVerticalPanel dummy) {

@@ -96,6 +96,12 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 
 	@Override
 	public IScrollPane scrollTo(int pos) {
+		pos = Math
+				.min(Math.max(0, pos),
+						vertical ? container.widget
+								.getMaximumVerticalScrollPosition()
+								: container.widget
+										.getMaximumHorizontalScrollPosition());
 		programmaticSet = true;
 		// if (container.widget.getWidget() instanceof AbsolutePanel) {
 		// AbsolutePanel ap = (AbsolutePanel) container.widget.getWidget();
@@ -115,9 +121,9 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 	}
 
 	private void setScrollPosition(int pos) {
-		if (horizontal)
+		if (horizontal) {
 			container.widget.setHorizontalScrollPosition(pos);
-		else
+		} else
 			container.widget.setVerticalScrollPosition(pos);
 	}
 
