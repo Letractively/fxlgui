@@ -16,15 +16,22 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.table.util.api;
+package co.fxl.gui.table.util.impl;
 
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IScrollPane;
+import co.fxl.gui.api.IWidgetProvider;
+import co.fxl.gui.table.util.api.ICompositeScrollPane;
 
-public interface ICompositeScrollPane extends IScrollPane {
+public class DummyCompositeScrollPaneImplWidgetProvider implements
+		IWidgetProvider<ICompositeScrollPane> {
 
-	IContainer right(int width);
+	@Override
+	public Class<ICompositeScrollPane> widgetType() {
+		return ICompositeScrollPane.class;
+	}
 
-	ICompositeScrollPane update();
-
+	@Override
+	public ICompositeScrollPane createWidget(IContainer container) {
+		return new DummyCompositeScrollPaneImpl(container);
+	}
 }

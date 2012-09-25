@@ -24,7 +24,6 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.ISpaced.ISpacing;
-import co.fxl.gui.gwt.GWTClickHandler.ClickEventAdp;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -51,7 +50,7 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 		registration = container.widget.addHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-			    fireClickListenersSingleClick(event) ;
+				fireClickListenersSingleClick(event);
 			}
 		}, ClickEvent.getType());
 	}
@@ -167,5 +166,10 @@ public abstract class GWTPanel<T extends Panel, R> extends GWTElement<T, R>
 				return this;
 			}
 		};
+	}
+
+	@Override
+	public R addResizeListener(co.fxl.gui.api.IPanel.IResizeListener listener) {
+		throw new UnsupportedOperationException();
 	}
 }

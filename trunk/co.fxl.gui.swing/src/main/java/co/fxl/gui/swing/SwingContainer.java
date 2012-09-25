@@ -66,6 +66,7 @@ public class SwingContainer<T extends JComponent> implements IContainer {
 	SwingElement element;
 	private static long nextID = 0;
 	private String uID;
+	private Class<JScrollPane> clazz;
 
 	SwingContainer(ComponentParent parent) {
 		this.parent = parent;
@@ -79,6 +80,7 @@ public class SwingContainer<T extends JComponent> implements IContainer {
 	}
 
 	void setComponent(T component) {
+		assert clazz == null || component.getClass().equals(clazz);
 		this.component = component;
 		if (parent != null)
 			parent.add(component);
@@ -187,6 +189,7 @@ public class SwingContainer<T extends JComponent> implements IContainer {
 
 	@Override
 	public IScrollPane scrollPane() {
+		clazz = JScrollPane.class;
 		setComponent((T) new JScrollPane());
 		return (IScrollPane) (element = new SwingScrollPane(
 				(SwingContainer<JScrollPane>) this));

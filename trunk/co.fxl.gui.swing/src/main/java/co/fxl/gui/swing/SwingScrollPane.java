@@ -65,15 +65,15 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 					public void adjustmentValueChanged(AdjustmentEvent evt) {
 						if (viewPort == null || viewPort.component == null)
 							return;
-						BoundedRangeModel model = container.component
+						JScrollPane component = container.component;
+						BoundedRangeModel model = component
 								.getVerticalScrollBar().getModel();
 						int max = model.getMaximum();
 						int componentHeight = viewPort.component
 								.getPreferredSize().height;
 						if (componentHeight > max)
 							return;
-						int y = container.component.getVerticalScrollBar()
-								.getValue();
+						int y = component.getVerticalScrollBar().getValue();
 						if (y != index) {
 							index = y;
 							fireScrollListeners(y);
@@ -113,8 +113,7 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 	@Override
 	public IScrollPane scrollTo(int pos) {
 		programmaticSet = true;
-		BoundedRangeModel model = component().getVerticalScrollBar()
-				.getModel();
+		BoundedRangeModel model = component().getVerticalScrollBar().getModel();
 		int max = model.getMaximum();
 		int componentHeight = viewPort.component.getPreferredSize().height;
 		if (componentHeight > max) {
@@ -143,10 +142,10 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 
 	@Override
 	public IScrollPane horizontal() {
-		component()
-				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-		component()
-				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		component().setVerticalScrollBarPolicy(
+				JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		component().setHorizontalScrollBarPolicy(
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		return this;
 	}
 
@@ -169,10 +168,10 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 
 	@Override
 	public IScrollPane bidirectional() {
-		component()
-				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		component()
-				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		component().setVerticalScrollBarPolicy(
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		component().setHorizontalScrollBarPolicy(
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		return this;
 	}
 
@@ -183,12 +182,12 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 			@Override
 			public IScrollPane always() {
 				if (component().getVerticalScrollBarPolicy() == JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED) {
-					component()
-							.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+					component().setVerticalScrollBarPolicy(
+							JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 				}
 				if (component().getHorizontalScrollBarPolicy() == JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED) {
-					component()
-							.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+					component().setHorizontalScrollBarPolicy(
+							JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 				}
 				return SwingScrollPane.this;
 			}
@@ -196,12 +195,12 @@ class SwingScrollPane extends SwingElement<JScrollPane, IScrollPane> implements
 			@Override
 			public IScrollPane never() {
 				if (component().getVerticalScrollBarPolicy() == JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED) {
-					component()
-							.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+					component().setVerticalScrollBarPolicy(
+							JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 				}
 				if (component().getHorizontalScrollBarPolicy() == JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED) {
-					component()
-							.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+					component().setHorizontalScrollBarPolicy(
+							JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 				}
 				return SwingScrollPane.this;
 			}
