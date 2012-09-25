@@ -57,7 +57,6 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 
 	public static int WIDTH_SCROLL_PANEL = 35;
 	public static final int HEIGHT_SCROLL_BAR = 17;
-	private static final int BLOCK_INCREMENT = 22;
 	private static final int HEIGHT_CORRECTION = 7;
 	private int widthScrollPanel = WIDTH_SCROLL_PANEL;
 	IDecorator decorator;
@@ -453,7 +452,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	}
 
 	private void onMouseWheel(int turns) {
-		int newOffset = scrollPane.scrollOffset() + turns * BLOCK_INCREMENT;
+		int newOffset = scrollPane.scrollOffset() + turns
+				* Env.BLOCK_INCREMENT_MOUSE_WHEEL;
 		newOffset = Math.max(0, newOffset);
 		newOffset = Math.min(newOffset,
 				convertRowIndex2ScrollOffset(maxRowIndex));
