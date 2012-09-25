@@ -22,6 +22,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Insets;
 import java.awt.LayoutManager;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -170,5 +172,18 @@ public class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
 
 	Insets insets() {
 		throw new UnsupportedOperationException();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R addResizeListener(
+			final co.fxl.gui.api.IPanel.IResizeListener listener) {
+		container.component.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				listener.onResize(width(), height());
+			}
+		});
+		return (R) this;
 	}
 }

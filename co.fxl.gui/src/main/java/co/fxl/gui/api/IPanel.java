@@ -29,4 +29,11 @@ public interface IPanel<T> extends IElement<T>, IBordered, IColored,
 
 	T clear();
 
+	public interface IResizeListener {
+
+		void onResize(int width, int height);
+	}
+
+	T addResizeListener(IResizeListener listener);
+
 }

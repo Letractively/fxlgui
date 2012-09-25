@@ -87,4 +87,9 @@ class AndroidPanel<R extends ViewGroup, T extends IElement<T>> extends
 	public T add(IElement<?> element) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public T addResizeListener(co.fxl.gui.api.IPanel.IResizeListener listener) {
+		throw new UnsupportedOperationException();
+	}
 }

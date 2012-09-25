@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.table.util.impl;
 
-import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IScrollPane;
@@ -30,26 +29,30 @@ import co.fxl.gui.impl.ScrollPaneAdp;
 import co.fxl.gui.table.util.api.ICompositeScrollPane;
 
 public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
-		ICompositeScrollPane, IScrollListener {
+		ICompositeScrollPane, IScrollListener, Runnable {
 
+	private IGridPanel panel;
 	private IGridPanel grid;
 	private IScrollPane center;
 	private IScrollPane right;
 	private IContainer rightContainer;
 	private IContainer centerContainer;
 	private IVerticalPanel dummy;
-	private IAbsolutePanel panel;
 
 	public CompositeScrollPaneImpl(IContainer c) {
-		panel = c.panel().absolute().width(1.0).height(1.0);
-		grid = panel.add().panel().grid().width(1.0).height(1.0).resize(3, 1);
-		element = panel.add().scrollPane().width(1.0).height(1.0);
+		panel = c.panel().grid().width(1.0).height(1.0);
+		grid = panel.cell(0, 0).panel().grid().width(1.0).height(1.0)
+				.resize(3, 1);
+		panel.column(0).expand();
+		element = panel.cell(1, 0).scrollPane().width(Env.HEIGHT_SCROLLBAR)
+				.height(1.0);
+		grid.margin().right(Env.HEIGHT_SCROLLBAR);
 		addDummyImage(dummy = element.viewPort().panel().vertical());
 		center = grid.cell(0, 0).scrollPane().scrollBars().never();
 		right = grid.cell(1, 0).scrollPane().scrollBars().never();
-		addDummyImage(grid.cell(2, 0).width(Env.HEIGHT_SCROLLBAR).panel()
-				.vertical().width(Env.HEIGHT_SCROLLBAR));
-		grid.column(2).width(Env.HEIGHT_SCROLLBAR);
+		// addDummyImage(grid.cell(2, 0).width(Env.HEIGHT_SCROLLBAR).panel()
+		// .vertical().width(Env.HEIGHT_SCROLLBAR));
+		// grid.column(2).width(Env.HEIGHT_SCROLLBAR);
 		grid.column(0).expand();
 		addScrollListener(this);
 	}
@@ -60,11 +63,28 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 
 	@Override
 	public ICompositeScrollPane size(int width, int height) {
-		panel.size(width, height);
-		grid.size(width, height);
+		width(width);
+		height(height);
+		return this;
+	}
+
+	@Override
+	public ICompositeScrollPane width(int width) {
+		if (width != -1) {
+			panel.width(width);
+			grid.width(width - Env.HEIGHT_SCROLLBAR);
+		}
+		return this;
+	}
+
+	@Override
+	public ICompositeScrollPane height(int height) {
+		panel.height(height);
+		grid.height(height);
 		center.height(height);
 		right.height(height);
-		return (ICompositeScrollPane) super.size(width, height);
+		super.height(height);
+		return this;
 	}
 
 	@Override
@@ -92,19 +112,25 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 
 	@Override
 	public ICompositeScrollPane visible(boolean visible) {
-		Display.instance().invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				dummy.height(Math.max(centerContainer.element().height(),
-						rightContainer.element().height()));
-			}
-		});
+		Display.instance().invokeLater(this);
 		return (ICompositeScrollPane) super.visible(visible);
+	}
+
+	@Override
+	public void run() {
+		dummy.height(Math.max(centerContainer.element().height(),
+				rightContainer != null ? rightContainer.element().height() : 1));
 	}
 
 	@Override
 	public IContainer viewPort() {
 		return centerContainer = center.viewPort();
+	}
+
+	@Override
+	public ICompositeScrollPane update() {
+		run();
+		return this;
 	}
 
 }
