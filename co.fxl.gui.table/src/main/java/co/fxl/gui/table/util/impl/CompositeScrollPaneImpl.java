@@ -41,15 +41,17 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 
 	public CompositeScrollPaneImpl(IContainer c) {
 		panel = c.panel().grid().width(1.0).height(1.0);
-		grid = panel.cell(0, 0).panel().grid().width(1.0).height(1.0)
-				.resize(3, 1);
+		grid = panel.cell(0, 0).valign().begin().panel().grid().width(1.0)
+				.height(1.0).resize(3, 1);
 		panel.column(0).expand();
-		element = panel.cell(1, 0).scrollPane().width(Env.HEIGHT_SCROLLBAR)
-				.height(1.0);
+		element = panel.cell(1, 0).valign().begin().scrollPane()
+				.width(Env.HEIGHT_SCROLLBAR).height(1.0);
 		grid.margin().right(Env.HEIGHT_SCROLLBAR);
 		addDummyImage(dummy = element.viewPort().panel().vertical());
-		center = grid.cell(0, 0).scrollPane().scrollBars().never();
-		right = grid.cell(1, 0).scrollPane().scrollBars().never();
+		center = grid.cell(0, 0).valign().begin().scrollPane().scrollBars()
+				.never();
+		right = grid.cell(1, 0).valign().begin().scrollPane().scrollBars()
+				.never();
 		// addDummyImage(grid.cell(2, 0).width(Env.HEIGHT_SCROLLBAR).panel()
 		// .vertical().width(Env.HEIGHT_SCROLLBAR));
 		// grid.column(2).width(Env.HEIGHT_SCROLLBAR);
@@ -106,7 +108,7 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 	@Override
 	public IContainer right(int width) {
 		grid.column(1).width(width);
-		grid.cell(1, 0).width(width);
+		grid.cell(1, 0).valign().begin().width(width);
 		return rightContainer = right.width(width).viewPort();
 	}
 
