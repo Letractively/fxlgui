@@ -120,8 +120,9 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 
 	@Override
 	public void run() {
-		dummy.height(Math.max(centerContainer.element().height(),
-				rightContainer != null ? rightContainer.element().height() : 1));
+		int rh = rightContainer != null ? rightContainer.element().height() : 1;
+		int lh = centerContainer.element().height();
+		dummy.height(Math.max(lh, rh));
 	}
 
 	@Override
