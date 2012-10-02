@@ -100,6 +100,8 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 	}
 
 	private void adjust(IScrollPane s, IContainer c, int o) {
+		if (c == null || s == null)
+			return;
 		int h = c.element().height();
 		if (h == dummy.height()) {
 			s.scrollTo(o);
