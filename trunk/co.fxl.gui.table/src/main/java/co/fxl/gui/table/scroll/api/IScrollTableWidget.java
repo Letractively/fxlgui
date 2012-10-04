@@ -253,5 +253,7 @@ public interface IScrollTableWidget<T> {
 
 	IPanel<?> mainPanel();
 
+	IScrollTableWidget<Object> configureListener(IClickListener cl);
+
 	// IVerticalPanel editPanel();
 }

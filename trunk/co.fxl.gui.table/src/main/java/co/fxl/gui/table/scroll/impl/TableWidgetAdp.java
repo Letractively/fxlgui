@@ -2,6 +2,7 @@ package co.fxl.gui.table.scroll.impl;
 
 import java.util.List;
 
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 
@@ -20,6 +21,8 @@ public interface TableWidgetAdp {
 	IContainer getContainer();
 
 	void notifyVisible(ScrollTableColumnImpl c);
+	
+	IClickListener configureListener();
 
 //	void nextTimeShowPopUp(boolean b);
 //
