@@ -352,29 +352,10 @@ public class FormWidgetImpl implements IFormWidget {
 		IGridCell cell = grid.cell(column, gridIndex);
 		cell.clear();
 		IHorizontalPanel panel = cell.panel().horizontal().spacing(2);
-		saveButton = panel.add().button();
-		final IButton clickable1 = panel.add().button();
-		if (!saveListener.allowsCancel())
-			clickable1.visible(false);
-		saveClickListener = new IClickListener() {
-			@Override
-			public void onClick() {
-				saveListener.save(new CallbackTemplate<Boolean>() {
-
-					@Override
-					public void onSuccess(Boolean result) {
-						if (!result)
-							return;
-						validation.update();
-						saveButton.clickable(false);
-						if (!alwaysAllowCancel)
-							clickable1.clickable(false);
-					}
-				});
-			}
-		};
-		saveButton.text(saveTitle).addClickListener(saveClickListener);
-		clickable1.text("Cancel").addClickListener(new LazyClickListener() {
+		final IHorizontalPanel subPanel = panel.add().panel().horizontal();
+		final IButton cancelButton = panel.add().button();
+		addSaveButton(subPanel, cancelButton);
+		cancelButton.text("Cancel").addClickListener(new LazyClickListener() {
 			@Override
 			public void onAllowedClick() {
 				saveListener.cancel(new CallbackTemplate<Boolean>() {
@@ -384,7 +365,7 @@ public class FormWidgetImpl implements IFormWidget {
 						validation.reset();
 						saveButton.clickable(false);
 						if (!alwaysAllowCancel)
-							clickable1.clickable(false);
+							cancelButton.clickable(false);
 					}
 				});
 			}
@@ -394,7 +375,7 @@ public class FormWidgetImpl implements IFormWidget {
 			validation.showDiscardChanges();
 			validation.linkClickable(saveButton);
 			if (!alwaysAllowCancel)
-				validation.linkReset(clickable1);
+				validation.linkReset(cancelButton);
 			for (final FormFieldImpl<?, ?> formField : fields) {
 				if (formField.validate) {
 					linkInput(formField);
@@ -409,6 +390,45 @@ public class FormWidgetImpl implements IFormWidget {
 				}
 			});
 		}
+	}
+
+	private void addSaveButton(final IHorizontalPanel subPanel,
+			final IButton cancelButton) {
+		saveButton = subPanel.add().button();
+		if (!saveListener.allowsCancel())
+			cancelButton.visible(false);
+		saveClickListener = new IClickListener() {
+			@Override
+			public void onClick() {
+				// final boolean clickable = saveButton.clickable();
+				saveButton.remove();
+				subPanel.add().label().text("Saving...").font().pixel(10).color().gray();
+				saveListener.save(new CallbackTemplate<Boolean>() {
+
+					@Override
+					public void onSuccess(Boolean result) {
+						resetButton();
+						if (!result)
+							return;
+						validation.update();
+						saveButton.clickable(false);
+						if (!alwaysAllowCancel)
+							cancelButton.clickable(false);
+					}
+
+					private void resetButton() {
+						addSaveButton(subPanel.clear(), cancelButton);
+					}
+
+					@Override
+					public void onFail(Throwable throwable) {
+						resetButton();
+						super.onFail(throwable);
+					}
+				});
+			}
+		};
+		saveButton.text(saveTitle).addClickListener(saveClickListener);
 	}
 
 	void removeInput(final FormFieldImpl<?, ?> formField) {
