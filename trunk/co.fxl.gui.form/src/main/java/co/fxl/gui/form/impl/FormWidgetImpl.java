@@ -406,8 +406,8 @@ public class FormWidgetImpl implements IFormWidget {
 				// text.font().pixel(10);
 				int h = (saveButton.height() - 11) / 2;
 				int v = (saveButton.width() - 16) / 2;
-				subPanel.add().image().resource("saving.gif")
-						.margin().left(v).right(v).top(h).bottom(h);
+				subPanel.add().image().resource("saving.gif").margin().left(v)
+						.right(v + (saveButton.width() % 2)).top(h).bottom(h);
 				saveButton.remove();
 				saveListener.save(new CallbackTemplate<Boolean>() {
 
