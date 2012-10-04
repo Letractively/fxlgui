@@ -214,7 +214,7 @@ public class ColumnSelection {
 					.addClickListener(widget.configureListener());
 			addText(horizontal, ":");
 		} else
-			addText(horizontal, "SHOW COLUMNS");
+			addText(horizontal, "SHOW COLUMNS:");
 		horizontal.addSpace(4);
 	}
 
