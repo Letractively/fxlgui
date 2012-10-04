@@ -220,7 +220,7 @@ public class ColumnSelection {
 
 	static ILabel addText(IHorizontalPanel horizontal, String text) {
 		ILabel l = horizontal.add().label().text(text);
-		l.font().pixel(10).weight().bold();
+		l.font().pixel(SelectionImpl.PIXEL);
 		return l;
 	}
 
