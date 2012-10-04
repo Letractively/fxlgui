@@ -25,6 +25,7 @@ import java.util.Map;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
+import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPoint;
@@ -252,23 +253,30 @@ class SelectionImpl implements ISelection<Object> {
 		private void setUp() {
 			if (!widget.selectionIsSetup) {
 				IHorizontalPanel p = widget.statusPanel().cell(0, 0).valign()
-						.center().//width(120).
-						panel().horizontal().add().panel()
-						.horizontal().spacing(5);
-				p.add().label().text("SELECT").font().pixel(PIXEL);
+						.center()
+						.// width(120).
+						panel().horizontal().add().panel().horizontal()
+						.spacing(5);
+				decorate(p.add().label().text("SELECT"));
 				selectAll = p.add().label();
-				selectAll.text("ALL").font().pixel(PIXEL);
+				decorate(selectAll.text("ALL"));
 				selectAll.hyperlink().addClickListener(
 						new SelectAllClickListener());
-				p.add().label().text("|").font().pixel(PIXEL).color().gray();
+				decorate(p.add().label().text("|")).color().gray();
 				removeSelection = p.add().label();
-				removeSelection.text("NONE").font().pixel(PIXEL);
+				decorate(removeSelection.text("NONE"));
 				removeSelection.hyperlink().addClickListener(
 						new RemoveSelectionClickListener());
 				removeSelection.clickable(!widget.rows.selectedIdentifiers()
 						.isEmpty());
 				widget.selectionIsSetup = true;
 			}
+		}
+
+		private IFont decorate(ILabel text) {
+			if (USE_BOLD)
+				text.font().weight().bold();
+			return text.font().pixel(PIXEL);
 		}
 
 		ISelection<Object> add(Object object) {
@@ -295,7 +303,8 @@ class SelectionImpl implements ISelection<Object> {
 		}
 	}
 
-	static final int PIXEL = 11;
+	static final int PIXEL = 10;
+	static final boolean USE_BOLD = true;
 	private ScrollTableWidgetImpl widget;
 	private SingleSelectionImpl single;
 	private MultiSelectionImpl multi;

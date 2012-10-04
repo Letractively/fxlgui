@@ -221,6 +221,8 @@ public class ColumnSelection {
 	static ILabel addText(IHorizontalPanel horizontal, String text) {
 		ILabel l = horizontal.add().label().text(text);
 		l.font().pixel(SelectionImpl.PIXEL);
+		if (SelectionImpl.USE_BOLD)
+			l.font().weight().bold();
 		return l;
 	}
 

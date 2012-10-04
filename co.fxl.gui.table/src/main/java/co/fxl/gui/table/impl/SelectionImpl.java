@@ -94,8 +94,6 @@ class SelectionImpl implements ISelection<Object> {
 
 	class MultiSelection implements IMultiSelection<Object>, RowListener {
 
-		private static final int PIXEL = 12;
-
 		private class SelectAllClickListener implements IClickListener {
 
 			@Override
@@ -122,6 +120,7 @@ class SelectionImpl implements ISelection<Object> {
 			}
 		}
 
+		static final int PIXEL = 11;
 		private List<IChangeListener<Object>> listeners = new LinkedList<IChangeListener<Object>>();
 		private ILabel selectAll;
 		private ILabel removeSelection;
