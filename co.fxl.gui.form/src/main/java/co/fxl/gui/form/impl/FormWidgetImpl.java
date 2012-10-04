@@ -401,12 +401,14 @@ public class FormWidgetImpl implements IFormWidget {
 			@Override
 			public void onClick() {
 				// final boolean clickable = saveButton.clickable();
+				// ILabel text = subPanel.add().label().text("Saving");
+				// text.margin().right(8);
+				// text.font().pixel(10);
+				int h = (saveButton.height() - 11) / 2;
+				int v = (saveButton.width() - 16) / 2;
+				subPanel.add().image().resource("saving.gif")
+						.margin().left(v).right(v).top(h).bottom(h);
 				saveButton.remove();
-				ILabel text = subPanel.add().label()
-						.text("Saving");
-				text.margin().right(8);
-				text.font().pixel(10);
-				subPanel.addSpace(4).add().image().resource("saving.gif");
 				saveListener.save(new CallbackTemplate<Boolean>() {
 
 					@Override
