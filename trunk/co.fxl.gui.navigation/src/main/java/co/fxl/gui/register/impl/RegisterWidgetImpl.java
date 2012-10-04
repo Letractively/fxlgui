@@ -53,6 +53,7 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 	public IVerticalPanel backgroundPanel;
 	int outerSpacing = 4;
 	private boolean setUp = false;
+	boolean loading;
 
 	public RegisterWidgetImpl(ILayout panel) {
 		mainBorders = panel.dock();

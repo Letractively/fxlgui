@@ -119,6 +119,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 
 	@Override
 	public IRegister toggleLoading(boolean loading) {
+		widget.loading = loading;
 		int width = buttonPanel.width();
 		int w = subPanel.width();
 		if (w != 0)
@@ -225,7 +226,8 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 
 	@Override
 	public void onAllowedClick() {
-		top(DummyCallback.voidInstance());
+		if (!widget.loading)
+			top(DummyCallback.voidInstance());
 	}
 
 	@Override
