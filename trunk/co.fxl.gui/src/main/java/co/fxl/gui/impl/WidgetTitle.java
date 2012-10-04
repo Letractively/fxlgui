@@ -365,7 +365,7 @@ public class WidgetTitle implements IClickListener {
 		if (USE_CONFIGURE_IMAGE) {
 			IImage e = configurePanel().add().image()
 					.resource("configure_small.png");
-			addFadeInOutEffect(e);
+//			addFadeInOutEffect(e);
 			return e;
 		} else {
 			final ILabel l = configurePanel().add().label().text(text);
