@@ -29,7 +29,6 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -365,7 +364,7 @@ public class WidgetTitle implements IClickListener {
 		if (USE_CONFIGURE_IMAGE) {
 			IImage e = configurePanel().add().image()
 					.resource("configure_small.png");
-//			addFadeInOutEffect(e);
+			// addFadeInOutEffect(e);
 			return e;
 		} else {
 			final ILabel l = configurePanel().add().label().text(text);
@@ -383,16 +382,16 @@ public class WidgetTitle implements IClickListener {
 						l.font().underline(false);
 					}
 				});
-			addFadeInOutEffect(l);
+			// addFadeInOutEffect(l);
 			return l;
 		}
 	}
 
-	private void addFadeInOutEffect(final IElement<?> e) {
-		e.opacity(0);
-		IFocusPanel h = headerFocusPanel;
-		addFadeEffect(e, h);
-	}
+	// private void addFadeInOutEffect(final IElement<?> e) {
+	// e.opacity(0);
+	// IFocusPanel h = headerFocusPanel;
+	// addFadeEffect(e, h);
+	// }
 
 	IHorizontalPanel configurePanel() {
 		if (configurePanel == null) {
@@ -403,56 +402,56 @@ public class WidgetTitle implements IClickListener {
 					.align().end().add().panel().horizontal().valign().center()
 					.align().end().spacing(2).align().center();
 			configurePanel.margin().right(2);
-			addFadeEffect(configurePanel, headerFocusPanel);
+			// addFadeEffect(configurePanel, headerFocusPanel);
 		}
 		return configurePanel;
 	}
 
-	private static void addFadeEffect(final IElement<?> e, IFocusPanel h) {
-		addFadeEffect(e, h, 300, 4);
-	}
+	// private static void addFadeEffect(final IElement<?> e, IFocusPanel h) {
+	// addFadeEffect(e, h, 300, 4);
+	// }
 
-	public static void addFadeEffect(final IElement<?> e, IFocusPanel h,
-			final int l, final int steps) {
-		h.addMouseOverListener(new IMouseOverListener() {
-
-			private double opacity = 0;
-			private double targetOpacity = 1;
-			private boolean scheduled;
-
-			@Override
-			public void onMouseOver() {
-				schedule(1);
-			}
-
-			private void schedule() {
-				if (targetOpacity != opacity) {
-					scheduled = true;
-					Display.instance().invokeLater(new Runnable() {
-						@Override
-						public void run() {
-							opacity += opacity > targetOpacity ? -(1d / steps)
-									: (1d / steps);
-							e.opacity(opacity);
-							schedule();
-						}
-					}, l / steps);
-				} else
-					scheduled = false;
-			}
-
-			@Override
-			public void onMouseOut() {
-				schedule(0);
-			}
-
-			private void schedule(int target) {
-				targetOpacity = target;
-				if (!scheduled)
-					schedule();
-			}
-		});
-	}
+	// public static void addFadeEffect(final IElement<?> e, IFocusPanel h,
+	// final int l, final int steps) {
+	// h.addMouseOverListener(new IMouseOverListener() {
+	//
+	// private double opacity = 0;
+	// private double targetOpacity = 1;
+	// private boolean scheduled;
+	//
+	// @Override
+	// public void onMouseOver() {
+	// schedule(1);
+	// }
+	//
+	// private void schedule() {
+	// if (targetOpacity != opacity) {
+	// scheduled = true;
+	// Display.instance().invokeLater(new Runnable() {
+	// @Override
+	// public void run() {
+	// opacity += opacity > targetOpacity ? -(1d / steps)
+	// : (1d / steps);
+	// e.opacity(opacity);
+	// schedule();
+	// }
+	// }, l / steps);
+	// } else
+	// scheduled = false;
+	// }
+	//
+	// @Override
+	// public void onMouseOut() {
+	// schedule(0);
+	// }
+	//
+	// private void schedule(int target) {
+	// targetOpacity = target;
+	// if (!scheduled)
+	// schedule();
+	// }
+	// });
+	// }
 
 	private CommandLink createCommandLink(IFocusPanel fp,
 			IHorizontalPanel iPanel0, IImage image, ILabel label) {
