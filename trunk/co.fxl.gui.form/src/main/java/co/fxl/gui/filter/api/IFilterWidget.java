@@ -64,6 +64,8 @@ public interface IFilterWidget {
 		IRelationFilter<S, R> adapter(IAdapter<S, R> adapter);
 	}
 
+	String WILDCARD_TOOLTIP = "Use * and ? as wildcards. Use \\ to escape wildcard tokens.";
+
 	IFilterWidget addConfiguration(String config);
 
 	IFilterWidget addConfigurationListener(IUpdateListener<String> l);
