@@ -128,7 +128,6 @@ class SelectionImpl implements ISelection<Object> {
 			}
 		}
 
-		private static final int PIXEL = 11;
 		private static final boolean USE_CTRL_CLICK_FOR_MULTI_SELECTION = true;
 		private static final boolean ALLOW_RANGE_SELECTION = true;
 		private List<IChangeListener<Object>> listeners = new LinkedList<IChangeListener<Object>>();
@@ -296,6 +295,7 @@ class SelectionImpl implements ISelection<Object> {
 		}
 	}
 
+	static final int PIXEL = 11;
 	private ScrollTableWidgetImpl widget;
 	private SingleSelectionImpl single;
 	private MultiSelectionImpl multi;
