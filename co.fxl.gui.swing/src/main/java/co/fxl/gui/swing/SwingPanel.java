@@ -19,7 +19,6 @@
 package co.fxl.gui.swing;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.event.ComponentAdapter;
@@ -91,10 +90,11 @@ public class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public R clear() {
-		for (Component child : container.component.getComponents()) {
-			child.setVisible(false);
-			container.component.remove(child);
-		}
+		container.component.removeAll();
+		// for (Component child : container.component.getComponents()) {
+		// // child.setVisible(false);
+		// container.component.remove(child);
+		// }
 		return (R) this;
 	}
 
