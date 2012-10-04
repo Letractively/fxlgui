@@ -249,6 +249,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	private int presetRowIndex = 0;
 	private int widthDelta;
 	private IGrouping grouping;
+	private IClickListener configureListener;
 
 	// private boolean nextTimeShowPopUp;
 
@@ -1634,5 +1635,16 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IPanel<?> mainPanel() {
 		return container();
+	}
+
+	@Override
+	public IScrollTableWidget<Object> configureListener(IClickListener cl) {
+		configureListener = cl;
+		return this;
+	}
+
+	@Override
+	public IClickListener configureListener() {
+		return configureListener;
 	}
 }

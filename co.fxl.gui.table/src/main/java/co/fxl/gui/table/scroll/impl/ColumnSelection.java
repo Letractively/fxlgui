@@ -28,7 +28,9 @@ import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.impl.Env;
+import co.fxl.gui.impl.HyperlinkDecorator;
 
 public class ColumnSelection {
 
@@ -185,8 +187,41 @@ public class ColumnSelection {
 			l.font().color().rgb(102, 102, 102);
 	}
 
-	void addTitle(@SuppressWarnings("rawtypes") ILinearPanel p) {
-		p.add().label().text("SHOW COLUMNS:").font().pixel(10).weight().bold();
+	void addTitle(ILinearPanel<?> p) {
+		addTitle(widget, p.add());
+	}
+
+	static void addTitle(TableWidgetAdp widget, IContainer c) {
+		IHorizontalPanel horizontal = c.panel().horizontal();
+		if (widget.configureListener() != null) {
+			final ILabel l = addText(horizontal, "SHOW COLUMNS")
+					.addClickListener(widget.configureListener()).mouseLeft();
+			l.addMouseOverListener(new IMouseOverListener() {
+
+				@Override
+				public void onMouseOver() {
+					HyperlinkDecorator.styleHyperlinkActive(l);
+					l.font().underline(true);
+				}
+
+				@Override
+				public void onMouseOut() {
+					l.font().underline(false).color().black();
+				}
+			});
+			horizontal.addSpace(4).add().image()
+					.resource("configure_small.png")
+					.addClickListener(widget.configureListener());
+			addText(horizontal, ":");
+		} else
+			addText(horizontal, "SHOW COLUMNS");
+		horizontal.addSpace(4);
+	}
+
+	static ILabel addText(IHorizontalPanel horizontal, String text) {
+		ILabel l = horizontal.add().label().text(text);
+		l.font().pixel(10).weight().bold();
+		return l;
 	}
 
 	public static void newInstance(TableWidgetAdp tableWidgetAdp,

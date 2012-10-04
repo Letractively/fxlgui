@@ -93,7 +93,7 @@ public class ScalingColumnSelection {
 
 	void addToPanel(final HorizontalScalingPanel p,
 			final IClickListener clickListener) {
-		addTitle(p);
+		ColumnSelection.addTitle(widget, p.add());
 		p.addSpace(4);
 		for (final ScrollTableColumnImpl c : widget.columnList()) {
 			IFocusPanel fp = p.add().panel().focus();
@@ -207,10 +207,4 @@ public class ScalingColumnSelection {
 			l.font().color().rgb(102, 102, 102);
 	}
 
-	void addTitle(HorizontalScalingPanel p) {
-		IHorizontalPanel horizontal = p.add().panel().horizontal();
-		horizontal.add().label().text("SHOW COLUMNS:").font().pixel(10)
-				.weight().bold();
-		horizontal.addSpace(4);
-	}
 }
