@@ -60,8 +60,9 @@ public class FullscreenPopUp {
 
 	public IVerticalPanel content() {
 		IVerticalPanel content = scrollPane.viewPort().panel().vertical()
-				.width(FIXED_WIDTH).spacing(10).add().panel().vertical()
-				.width(FIXED_WIDTH - 30);
+				.width(FIXED_WIDTH - 20 - Env.HEIGHT_SCROLLBAR).spacing(10)
+				.add().panel().vertical()
+				.width(FIXED_WIDTH - 20 - Env.HEIGHT_SCROLLBAR);
 		setUp();
 		return content;
 	}
