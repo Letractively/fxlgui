@@ -46,6 +46,7 @@ import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IImageField;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
+import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.LazyClickListener;
@@ -53,6 +54,8 @@ import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.rtf.api.IHTMLArea;
 
 public class FormWidgetImpl implements IFormWidget {
+
+	private static final boolean USE_BUTTON_PANEL = !Env.is(Env.SWING);
 
 	class FormEntryLabel {
 
@@ -292,6 +295,7 @@ public class FormWidgetImpl implements IFormWidget {
 	}
 
 	private boolean bottomPanelIsSetUp;
+	private IVerticalPanel buttonPanel;
 
 	void setUpBottomPanel() {
 		if (bottomPanelIsSetUp)
@@ -347,12 +351,9 @@ public class FormWidgetImpl implements IFormWidget {
 	}
 
 	private void addSaveCancelButtons(IGridPanel grid) {
-		int column = 0;
-		int gridIndex = 0;
-		IGridCell cell = grid.cell(column, gridIndex);
-		cell.clear();
-		IHorizontalPanel panel = cell.panel().horizontal().spacing(2);
-		final IHorizontalPanel subPanel = panel.add().panel().horizontal();
+		IHorizontalPanel panel = getButtonPanel(grid);
+		final IHorizontalPanel subPanel = panel.add().panel().horizontal()
+				.align().begin();
 		final IButton cancelButton = panel.add().button();
 		addSaveButton(subPanel, cancelButton);
 		cancelButton.text("Cancel").addClickListener(new LazyClickListener() {
@@ -392,6 +393,20 @@ public class FormWidgetImpl implements IFormWidget {
 		}
 	}
 
+	private IHorizontalPanel getButtonPanel(IGridPanel grid) {
+		if (buttonPanel != null && USE_BUTTON_PANEL) {
+			return buttonPanel.clear().add().panel().horizontal().width(1.0)
+					.spacing(4).align().begin().add().panel().horizontal()
+					.align().begin();
+		}
+		int column = 0;
+		int gridIndex = 0;
+		IGridCell cell = grid.cell(column, gridIndex);
+		cell.clear();
+		IHorizontalPanel panel = cell.panel().horizontal().spacing(2);
+		return panel;
+	}
+
 	private void addSaveButton(final IHorizontalPanel subPanel,
 			final IButton cancelButton) {
 		saveButton = subPanel.add().button();
@@ -406,8 +421,11 @@ public class FormWidgetImpl implements IFormWidget {
 				// text.font().pixel(10);
 				int h = (saveButton.height() - 11) / 2;
 				int v = (saveButton.width() - 16) / 2;
-				subPanel.add().image().resource("saving.gif").margin().left(v)
-						.right(v + (saveButton.width() % 2)).top(h).bottom(h);
+				subPanel.color().white();
+				subPanel.border().color().lightgray();
+				subPanel.add().image().resource("saving.gif").margin()
+						.left(v - 1).right(v + (saveButton.width() % 2) - 1)
+						.top(h - 1).bottom(h - 1);
 				saveButton.remove();
 				saveListener.save(new CallbackTemplate<Boolean>() {
 
@@ -423,6 +441,8 @@ public class FormWidgetImpl implements IFormWidget {
 					}
 
 					private void resetButton() {
+						subPanel.color().remove();
+						subPanel.border().remove();
 						addSaveButton(subPanel.clear(), cancelButton);
 					}
 
@@ -592,5 +612,12 @@ public class FormWidgetImpl implements IFormWidget {
 	@Override
 	public WidgetTitle widgetTitle() {
 		return widgetTitle;
+	}
+
+	@Override
+	public IFormWidget buttonPanel(IVerticalPanel bottom) {
+		if (bottom != null)
+			buttonPanel = bottom.align().center();
+		return this;
 	}
 }
