@@ -24,6 +24,7 @@ import co.fxl.gui.api.IDisplay.IResizeConfiguration;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IScrollPane;
+import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 
@@ -34,11 +35,11 @@ public class FullscreenPopUp {
 	private static final int SPACING = 20;
 	private final int spacingTop = SPACING;
 	private int spacingLeft = SPACING;
-	private IVerticalPanel content;
 	private IDisplay d;
 	private IPopUp popUp;
 	private IScrollPane scrollPane;
 	private WidgetTitle panel;
+	private ITextArea ta;
 
 	public FullscreenPopUp(String title) {
 		if (FIXED_WIDTH != -1)
@@ -51,8 +52,6 @@ public class FullscreenPopUp {
 				.commandsOnTop().spacing(0);
 		panel.addTitle(title);
 		scrollPane = panel.content().scrollPane();
-		content = scrollPane.viewPort().panel().vertical().width(FIXED_WIDTH)
-				.spacing(10).add().panel().vertical().width(FIXED_WIDTH - 20);
 	}
 
 	public CommandLink addHyperlink(String imageResource, String text) {
@@ -60,6 +59,21 @@ public class FullscreenPopUp {
 	}
 
 	public IVerticalPanel content() {
+		IVerticalPanel content = scrollPane.viewPort().panel().vertical()
+				.width(FIXED_WIDTH).spacing(10).add().panel().vertical()
+				.width(FIXED_WIDTH - 30);
+		setUp();
+		return content;
+	}
+
+	public ITextArea textArea() {
+		ta = scrollPane.viewPort().textArea().width(FIXED_WIDTH - 20);
+		ta.margin().left(10).top(10);
+		setUp();
+		return ta;
+	}
+
+	private void setUp() {
 		resize(d, popUp, scrollPane);
 		final IResizeConfiguration cfg = d.addResizeListener(
 				new IResizeListener() {
@@ -83,13 +97,15 @@ public class FullscreenPopUp {
 					}
 				});
 		popUp.visible(true);
-		return content;
 	}
 
 	public void resize(IDisplay d, final IPopUp popUp, IScrollPane scrollPane) {
 		popUp.size(d.width() - spacingLeft * 2, d.height() - spacingTop * 2);
 		scrollPane.size(d.width() - spacingLeft * 2, d.height() - spacingTop
 				* 2 - HEIGHT_TOP);
+		if (ta != null) {
+			ta.height(d.height() - spacingTop * 2 - HEIGHT_TOP - 15);
+		}
 	}
 
 }
