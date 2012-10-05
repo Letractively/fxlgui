@@ -75,7 +75,7 @@ public class RichTextToolbarImpl {
 		}
 
 		void setImage(IToolbar panel, String resource) {
-			image = panel.add().image().resource(resource);
+			image = panel.add().image().resource(resource).size(20, 20);
 			image.addClickListener(new IClickListener() {
 
 				@Override
@@ -314,8 +314,7 @@ public class RichTextToolbarImpl {
 	}
 
 	public void closeListener(IClickListener l) {
-		zoomButton.image.resource("zoom_out.png");
-		zoomButton.image.tooltip("Zoom Out");
+		zoomButton.image.resource("zoom_out.png").size(20, 20).tooltip("Zoom Out");
 		closeListener = l;
 	}
 
