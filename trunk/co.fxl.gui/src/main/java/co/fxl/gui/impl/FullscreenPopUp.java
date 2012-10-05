@@ -42,8 +42,7 @@ public class FullscreenPopUp {
 	private ITextArea ta;
 
 	public FullscreenPopUp(String title) {
-		if (FIXED_WIDTH != -1)
-			spacingLeft = (Display.instance().width() - FIXED_WIDTH) / 2;
+		updateSpacingLeft();
 		d = Display.instance();
 		popUp = d.showPopUp().modal(true).offset(spacingLeft, spacingTop)
 				.autoHide(true);
@@ -52,6 +51,11 @@ public class FullscreenPopUp {
 				.commandsOnTop().spacing(0);
 		panel.addTitle(title);
 		scrollPane = panel.content().scrollPane();
+	}
+
+	private void updateSpacingLeft() {
+		if (FIXED_WIDTH != -1)
+			spacingLeft = (Display.instance().width() - FIXED_WIDTH) / 2;
 	}
 
 	public CommandLink addHyperlink(String imageResource, String text) {
@@ -101,6 +105,7 @@ public class FullscreenPopUp {
 	}
 
 	public void resize(IDisplay d, final IPopUp popUp, IScrollPane scrollPane) {
+		updateSpacingLeft();
 		popUp.size(d.width() - spacingLeft * 2, d.height() - spacingTop * 2);
 		scrollPane.size(d.width() - spacingLeft * 2, d.height() - spacingTop
 				* 2 - HEIGHT_TOP);
