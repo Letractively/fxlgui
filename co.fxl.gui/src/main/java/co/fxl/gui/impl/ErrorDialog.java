@@ -87,8 +87,10 @@ public class ErrorDialog {
 							ILabel label = panel.add().label()
 									.text("Stacktrace:");
 							styleDialogError(label);
+							String trace = pStacktrace.trim().equals("") ? pMessage
+									: pStacktrace;
 							ITextArea textArea = panel.add().textArea()
-									.size(400, 100).text(pStacktrace);
+									.size(400, 100).text(trace);
 							styleInputBorder(textArea);
 							detailDialog.visible(true);
 						}
