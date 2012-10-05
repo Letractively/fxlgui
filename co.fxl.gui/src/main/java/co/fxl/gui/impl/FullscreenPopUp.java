@@ -106,6 +106,7 @@ public class FullscreenPopUp {
 
 	public void resize(IDisplay d, final IPopUp popUp, IScrollPane scrollPane) {
 		updateSpacingLeft();
+		popUp.offset(spacingLeft, spacingTop);
 		popUp.size(d.width() - spacingLeft * 2, d.height() - spacingTop * 2);
 		scrollPane.size(d.width() - spacingLeft * 2, d.height() - spacingTop
 				* 2 - HEIGHT_TOP);
