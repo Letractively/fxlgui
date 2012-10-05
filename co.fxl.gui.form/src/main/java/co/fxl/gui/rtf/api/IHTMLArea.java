@@ -27,7 +27,7 @@ public interface IHTMLArea extends ITextArea {
 	public enum Formatting {
 
 		// bold.gif, italic.gif, strikethrough.gif, subscript.gif, superscript.gif, underline.gif, justifyleft.gif, justifyright.gif, indentleft.gif, 
-		// indentright.gif, inserthorizontalrule.gif, insertorderedlist.gif, insertunorderedlist.gif, removeformatting.gif 
+		// indentright.gif, inserthorizontalrule.gif, insertorderedlist.gif, insertunorderedlist.gif, insertimage.gif, removeformatting.gif 
 
 		TOGGLE_BOLD, TOGGLE_ITALIC, TOGGLE_STRIKETHROUGH, TOGGLE_SUBSCRIPT, TOGGLE_SUPERSCRIPT, TOGGLE_UNDERLINE, JUSTIFY_LEFT, JUSTIFY_CENTER, JUSTIFY_RIGHT, INDENT_RIGHT, INDENT_LEFT, INSERT_HORIZONTAL_RULE, INSERT_ORDERED_LIST, INSERT_UNORDERED_LIST, INSERT_IMAGE, REMOVE_FORMATTING
 	}
