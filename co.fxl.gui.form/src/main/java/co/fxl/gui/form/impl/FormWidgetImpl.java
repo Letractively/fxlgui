@@ -421,8 +421,8 @@ public class FormWidgetImpl implements IFormWidget {
 				// text.font().pixel(10);
 				int h = (saveButton.height() - 11) / 2;
 				int v = (saveButton.width() - 16) / 2;
-				subPanel.color().white();
-				subPanel.border().color().lightgray();
+				// subPanel.color().white();
+				// subPanel.border().color().lightgray();
 				subPanel.add().image().resource("saving.gif").margin()
 						.left(v - 1).right(v + (saveButton.width() % 2) - 1)
 						.top(h - 1).bottom(h - 1);
@@ -441,8 +441,8 @@ public class FormWidgetImpl implements IFormWidget {
 					}
 
 					private void resetButton() {
-						subPanel.color().remove();
-						subPanel.border().remove();
+						// subPanel.color().remove();
+						// subPanel.border().remove();
 						addSaveButton(subPanel.clear(), cancelButton);
 					}
 
