@@ -27,9 +27,11 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Heights;
@@ -49,6 +51,46 @@ public class RichTextToolbarImpl {
 		@Override
 		void handleClick() {
 			htmlArea.apply(f);
+		}
+
+	}
+
+	private class InsertImageButton extends ToolbarButton {
+
+		private InsertImageButton(Formatting f) {
+			super(f);
+		}
+
+		@Override
+		void handleClick() {
+			final IPopUp p = Display.instance().showPopUp().center()
+					.autoHide(true).atLastClick();
+			p.border().remove().style().shadow().color().gray();
+			IHorizontalPanel h = p.container().panel().horizontal().spacing(4);
+			final ITextField tf = h.add().textField().width(300).focus(true);
+			Heights.INSTANCE.decorate(tf);
+			final IImage accept = h.add().image().resource("accept.png")
+					.addClickListener(new IClickListener() {
+						@Override
+						public void onClick() {
+							p.visible(false);
+							htmlArea.insertImage(tf.text());
+						}
+					}).mouseLeft().clickable(false);
+			h.add().image().resource("cancel.png")
+					.addClickListener(new IClickListener() {
+						@Override
+						public void onClick() {
+							p.visible(false);
+						}
+					}).mouseLeft();
+			tf.addUpdateListener(new IUpdateListener<String>() {
+				@Override
+				public void onUpdate(String value) {
+					accept.clickable(value.trim().length() > 0);
+				}
+			});
+			p.visible();
 		}
 
 	}
@@ -214,7 +256,7 @@ public class RichTextToolbarImpl {
 	private static final String IMAGE_SUFFIX = ".png";
 	private static final String CLOSE_IMAGE_PREFIX = "tag_close_";
 	private static final String OPEN_IMAGE_PREFIX = "tag_open_";
-	private static String[] TAGS = new String[] { };//"Section", "Title" };
+	private static String[] TAGS = new String[] {};// "Section", "Title" };
 	private static final int SPACING = 200;
 	private IToolbar panel;
 	private List<ToolbarElement> buttons = new LinkedList<ToolbarElement>();
@@ -231,13 +273,15 @@ public class RichTextToolbarImpl {
 		this.htmlArea = htmlArea;
 		for (Formatting f : IHTMLArea.Formatting.values()) {
 			if (htmlArea.supports(f)) {
+				ToolbarElement b;
 				if (f.name().startsWith(IHTMLArea.TOGGLE_PREFIX)) {
-					ToggleButton b = new ToggleButton(f);
-					buttons.add(b);
+					b = new ToggleButton(f);
+				} else if (f.equals(IHTMLArea.Formatting.INSERT_IMAGE)) {
+					b = new InsertImageButton(f);
 				} else {
-					PushButton b = new PushButton(f);
-					buttons.add(b);
+					b = new PushButton(f);
 				}
+				buttons.add(b);
 			}
 		}
 		for (String tag : TAGS) {
@@ -314,7 +358,8 @@ public class RichTextToolbarImpl {
 	}
 
 	public void closeListener(IClickListener l) {
-		zoomButton.image.resource("zoom_out.png").size(20, 20).tooltip("Zoom Out");
+		zoomButton.image.resource("zoom_out.png").size(20, 20)
+				.tooltip("Zoom Out");
 		closeListener = l;
 	}
 

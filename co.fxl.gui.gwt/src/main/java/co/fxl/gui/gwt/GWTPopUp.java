@@ -1,7 +1,6 @@
 package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IColored.IColor;
-import co.fxl.gui.api.IColored.IGradient;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
@@ -215,5 +214,10 @@ class GWTPopUp implements IPopUp, WidgetParent {
 				return this;
 			}
 		};
+	}
+
+	@Override
+	public IPopUp atLastClick() {
+		return atLastClick(0, 0);
 	}
 }

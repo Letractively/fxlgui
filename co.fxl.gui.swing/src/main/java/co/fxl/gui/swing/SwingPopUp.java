@@ -272,4 +272,9 @@ class SwingPopUp implements IPopUp {
 			}
 		};
 	}
+
+	@Override
+	public IPopUp atLastClick() {
+		return atLastClick(0, 0);
+	}
 }
