@@ -296,6 +296,8 @@ public class FormWidgetImpl implements IFormWidget {
 
 	private boolean bottomPanelIsSetUp;
 	private IVerticalPanel buttonPanel;
+	private int buttonPanelIndent;
+	private IHorizontalPanel buttonPanelWithIndent;
 
 	void setUpBottomPanel() {
 		if (bottomPanelIsSetUp)
@@ -395,9 +397,12 @@ public class FormWidgetImpl implements IFormWidget {
 
 	private IHorizontalPanel getButtonPanel(IGridPanel grid) {
 		if (buttonPanel != null && USE_BUTTON_PANEL) {
-			return buttonPanel.clear().add().panel().horizontal().width(1.0)
-					.spacing(4).align().begin().add().panel().horizontal()
-					.align().begin();
+			IHorizontalPanel begin = buttonPanel.clear().add().panel()
+					.horizontal().width(1.0).spacing(4).align().begin();
+			buttonPanelWithIndent = begin.add().panel().horizontal().align()
+					.begin();
+			buttonPanelWithIndent.margin().left(buttonPanelIndent);
+			return buttonPanelWithIndent;
 		}
 		int column = 0;
 		int gridIndex = 0;
@@ -617,6 +622,14 @@ public class FormWidgetImpl implements IFormWidget {
 	public IFormWidget buttonPanel(IVerticalPanel bottom) {
 		if (bottom != null)
 			buttonPanel = bottom.align().center();
+		return this;
+	}
+
+	@Override
+	public IFormWidget buttonPanelIndent(int buttonPanelIndent) {
+		this.buttonPanelIndent = buttonPanelIndent;
+		if (buttonPanelWithIndent != null)
+			buttonPanelWithIndent.margin().left(buttonPanelIndent);
 		return this;
 	}
 }

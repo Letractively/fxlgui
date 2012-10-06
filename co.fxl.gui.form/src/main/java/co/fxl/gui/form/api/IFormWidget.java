@@ -125,4 +125,6 @@ public interface IFormWidget {
 
 	IFormWidget buttonPanel(IVerticalPanel bottom);
 
+	IFormWidget buttonPanelIndent(int buttonPanelIndent);
+
 }
