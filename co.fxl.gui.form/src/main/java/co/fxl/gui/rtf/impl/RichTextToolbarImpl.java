@@ -69,14 +69,19 @@ public class RichTextToolbarImpl {
 			IHorizontalPanel h = p.container().panel().horizontal().spacing(4);
 			final ITextField tf = h.add().textField().width(300).focus(true);
 			Heights.INSTANCE.decorate(tf);
+			IClickListener clickListener = new IClickListener() {
+				@Override
+				public void onClick() {
+					if (tf.text().trim().isEmpty())
+						return;
+					p.visible(false);
+					htmlArea.insertImage(tf.text());
+				}
+			};
+			tf.addKeyListener(clickListener).enter();
 			final IImage accept = h.add().image().resource("accept.png")
-					.addClickListener(new IClickListener() {
-						@Override
-						public void onClick() {
-							p.visible(false);
-							htmlArea.insertImage(tf.text());
-						}
-					}).mouseLeft().clickable(false);
+					.addClickListener(clickListener).mouseLeft()
+					.clickable(false);
 			h.add().image().resource("cancel.png")
 					.addClickListener(new IClickListener() {
 						@Override
