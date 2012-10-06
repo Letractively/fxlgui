@@ -36,8 +36,7 @@ public class DummyCompositeScrollPaneImpl extends ScrollPaneAdp implements
 	@Override
 	public ICompositeScrollPane height(int height) {
 		grid.height(height);
-		super.height(height);
-		return this;
+		return (ICompositeScrollPane) super.height(height);
 	}
 
 	@Override

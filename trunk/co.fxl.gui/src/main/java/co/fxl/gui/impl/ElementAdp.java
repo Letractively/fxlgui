@@ -74,9 +74,11 @@ public class ElementAdp<T extends IElement<T>> implements IElement<T>,
 		return (T) this;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T height(int height) {
-		return element.height(height);
+		element.height(height);
+		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")

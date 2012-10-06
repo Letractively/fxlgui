@@ -28,7 +28,6 @@ public class TooltipTextInput implements IUpdateable<String> {
 
 	private ITextInput<?> ti;
 	private String tooltip;
-	private boolean isTooltipActive = true;
 
 	public TooltipTextInput(final ITextInput<?> ti, final String tooltip) {
 		this.ti = ti;
@@ -40,20 +39,22 @@ public class TooltipTextInput implements IUpdateable<String> {
 				if (tooltip == null)
 					return;
 				if (value) {
-					if (isTooltipActive) {
+					if (isTooltipActive()) {
 						ti.text("");
-						setTooltipActive(false);
-						TooltipTextInput.this.tooltip = null;
 					}
 				} else {
 					if (ti.text().equals("")) {
-						clear();
-					} else
-						setTooltipActive(false);
+						setTooltip();
+					}
 				}
+				updateColor();
 			}
 		});
 		Heights.INSTANCE.decorate(ti);
+	}
+
+	protected boolean isTooltipActive() {
+		return ti.text().equals(tooltip);
 	}
 
 	@Override
@@ -62,8 +63,7 @@ public class TooltipTextInput implements IUpdateable<String> {
 		ti.addUpdateListener(new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(String value) {
-				isTooltipActive = ti.text().equals(tooltip);
-				if (!isTooltipActive)
+				if (!isTooltipActive())
 					listener.onUpdate(text());
 				else
 					listener.onUpdate("");
@@ -73,7 +73,7 @@ public class TooltipTextInput implements IUpdateable<String> {
 	}
 
 	public String text() {
-		if (isTooltipActive)
+		if (isTooltipActive())
 			return "";
 		else
 			return ti.text();
@@ -84,15 +84,18 @@ public class TooltipTextInput implements IUpdateable<String> {
 			ti.text("");
 			return this;
 		}
-		setTooltipActive(true);
-		ti.text(tooltip);
+		setTooltip();
 		return this;
 	}
 
-	void setTooltipActive(Boolean value) {
-		isTooltipActive = value;
+	private void setTooltip() {
+		ti.text(tooltip);
+		updateColor();
+	}
+
+	void updateColor() {
 		IColor color = ti.font().color();
-		if (isTooltipActive) {
+		if (isTooltipActive()) {
 			color.gray();
 		} else {
 			color.black();
