@@ -128,7 +128,10 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 	public final IDisplay notifyResizeListeners() {
 		for (ResizeConfiguration rc : new LinkedList<ResizeConfiguration>(
 				resizeListeners)) {
-			rc.fire();
+			if (!isInvisible(rc))
+				rc.fire();
+			else
+				remove(rc);
 		}
 		return this;
 	}
@@ -137,7 +140,7 @@ public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements
 	public final IDisplay notifyResizeListener(IResizeListener listener) {
 		for (ResizeConfiguration rc : new LinkedList<ResizeConfiguration>(
 				resizeListeners)) {
-			if (rc.listener == listener)
+			if (rc.listener == listener && !isInvisible(rc))
 				rc.fire();
 		}
 		return this;
