@@ -476,4 +476,12 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	public WidgetTitle widgetTitle() {
 		return title.widgetTitle();
 	}
+
+	@Override
+	public IFilterWidget clearRowIndex() {
+		if (constraints != null) {
+			constraints.clearRowIndex();
+		}
+		return this;
+	}
 }

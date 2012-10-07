@@ -342,4 +342,10 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public IFilterConstraints clearRowIndex() {
+		it = null;
+		return this;
+	}
+
 }
