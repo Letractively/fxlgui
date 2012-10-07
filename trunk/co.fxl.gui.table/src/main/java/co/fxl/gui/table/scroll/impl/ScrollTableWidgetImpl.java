@@ -131,7 +131,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			"ScrollTableWidgetImpl.ADD_TOP_PANEL_TOP_PADDING", false);
 	private static final boolean ADD_TOP_PANEL_SPACING = Constants.get(
 			"ScrollTableWidgetImpl.ADD_TOP_PANEL_SPACING", false);
-	public static int MAX_SORT_SIZE = 100;
+	public static int MAX_CLIENT_SORT_SIZE = 49;
 	IVerticalPanel container;
 	private int height = 400;
 	private WidgetTitle widgetTitle;
@@ -1429,7 +1429,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 
 	void sortBy(ScrollTableColumnImpl columnImpl, final boolean update) {
 		if (columnImpl.sortable) {
-			if (rows.size() < MAX_SORT_SIZE || sortListener == null) {
+			if (rows.size() <= MAX_CLIENT_SORT_SIZE || sortListener == null) {
 				sortColumn = columnImpl.index;
 				sortNegator = rows.sort(columnImpl);
 				if (sortListener != null)
