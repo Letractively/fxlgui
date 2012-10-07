@@ -315,180 +315,181 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	@Override
 	public IScrollTableWidget<Object> visible(boolean visible) {
 		if (visible) {
-			boolean updateSelection = false;
-			if (sp != null)
-				sp.visible(false);
 			rows = new RowAdapter(this, actualRows);
-			for (ScrollTableColumnImpl c : columns)
-				if (c.forceSort) {
-					sortBy(c, false);
-				}
-			if (commandButtons != null)
-				commandButtons.reset();
-			if (!preselectedList.isEmpty()) {
-				// if (preselectedIndex != -1) {
-				// preselectedIndex = rows.find(preselectedList.get(0));
-				// if (preselectedIndex == -1) {
-				// preselectedList.clear();
-				// } else {
-				// rows.selected(preselectedIndex, preselectedList.get(0));
-				// if (commandButtons != null) {
-				// commandButtons.selection = preselectedList.get(0);
-				// commandButtons.selectionIndex = preselectedIndex;
-				// }
-				// }
-				// } else {
-				rows.selected(preselectedList);
-				if (commandButtons != null) {
-					commandButtons.selectionList(preselectedList);
-				}
-				// }
-				updateSelection = true;
-			}
-			this.visible = true;
-			if (!externalStatusPanel)
-				statusPanel = null;
-			else
-				resetStatusPanel();
-			topPanel = null;
-			buttonColumn = 1;
-			selectionIsSetup = false;
-			container().clear();
-			topPanel();
-			viewInc = 0;
-			if (columns.size() == 0
-					|| (rows.size() == 0 && (constraints == null
-							|| !constraints.isConstraintSpecified() || !hasFilter()))) {
-				showNoRowsFound();
-			} else if (rows.size() == 0
-					&& (constraints != null
-							&& constraints.isConstraintSpecified() && hasFilter())) {
-				showNoRowsFound();
-			} else {
-				addFilter();
-				setUpTopPanel();
-				contentPanel0 = container.add().panel().vertical();
-				contentPanel0.height(heightCenterPanel());
-				contentPanel = contentPanel0.add().panel().vertical();
-				addDragAndDropDirectly = true;
-				boolean tooLarge = update();
-				addDragAndDropDirectly = false;
-				if (tooLarge || paintedRows != rows.size()) {
-					contentPanel0.clear();
-					sp = (ILazyScrollPane) contentPanel0.add().widget(
-							ILazyScrollPane.class);
-					if (dragDropListener != null)
-						sp.dragDropListener(allowInsertUnder, dragDropListener);
-					sp.minRowHeight(getRowHeight());
-					if (!preselectedList.isEmpty()) {
-						int rowIndex = rows.find(preselectedList);
-						if (rowIndex != -1)
-							sp.rowIndex(rowIndex);
-						if (this.rowIndex != -1) {
-							sp.rowIndex(this.rowIndex);
-							this.rowIndex = -1;
-						}
-					}
-					if (presetRowIndex > 0) {
-						sp.rowIndex(presetRowIndex);
-						presetRowIndex = 0;
-					}
-					sp.height(heightCenterPanel());
-					sp.decorator(new ILazyScrollPane.IDecorator() {
-
-						@Override
-						public IKeyRecipient<Object> decorate(
-								IContainer container, int firstRow,
-								int lastRow, boolean isCalibration) {
-							rowOffset = firstRow;
-							paintedRows = lastRow - firstRow + 1;
-							contentPanel = container.panel().vertical();
-							updateWithPaintedRowsSet(isCalibration);
-							return grid;
-						}
-
-						@Override
-						public boolean checkIndex(int rowIndex) {
-							int visibleRowIndex = convert2GridRow(rowIndex);
-							if (visibleRowIndex >= grid.rowCount()
-									|| visibleRowIndex < 0)
-								return false;
-							return true;
-						}
-
-						@Override
-						public int rowHeight(int rowIndex) {
-							int visibleRowIndex = convert2GridRow(rowIndex);
-							return grid.rowHeight(visibleRowIndex + 1);
-						}
-
-						private IElement<?>[] elementsAt(int index) {
-							IElement<?>[] elements = new IElement<?>[grid
-									.columnCount()];
-							for (int i = 0; i < grid.columnCount(); i++) {
-								elements[i] = grid.elementAt(i, index);
-							}
-							return elements;
-						}
-
-						@Override
-						public int headerHeight() {
-							return grid.rowHeight(0);
-						}
-
-						@Override
-						public IDragArea dragArea(final int index) {
-							return new IDragArea() {
-
-								@Override
-								public IColor color() {
-									return new ColorTemplate() {
-
-										@Override
-										public IColor remove() {
-											grid.row(index).removeBackground();
-											return this;
-										}
-
-										@Override
-										protected IColor setRGB(int r, int g,
-												int b) {
-											grid.row(index).background(r, g, b);
-											return this;
-										}
-									};
-								}
-
-								@Override
-								public IElement<?> imageElement() {
-									return elementsAt(0)[0];
-								}
-
-							};
-						}
-
-						@Override
-						public IFocusPanel getFocusPanel() {
-							throw new UnsupportedOperationException();
-						}
-
-						@Override
-						public void contentWidth(int width) {
-						}
-					});
-					sp.size(rows.size());
-					sp.plainContent(plainContent);
-					sp.visible(true);
-				}
-			}
-			preselectedList.clear();
-			if (updateSelection)
-				selection.updateButtons();
+			drawAll();
 		} else {
 			this.visible = false;
 			throw new UnsupportedOperationException();
 		}
 		return this;
+	}
+
+	private void drawAll() {
+		boolean updateSelection = false;
+		if (sp != null)
+			sp.visible(false);
+		for (ScrollTableColumnImpl c : columns)
+			if (c.forceSort) {
+				sortBy(c, false);
+			}
+		if (commandButtons != null)
+			commandButtons.reset();
+		if (!preselectedList.isEmpty()) {
+			// if (preselectedIndex != -1) {
+			// preselectedIndex = rows.find(preselectedList.get(0));
+			// if (preselectedIndex == -1) {
+			// preselectedList.clear();
+			// } else {
+			// rows.selected(preselectedIndex, preselectedList.get(0));
+			// if (commandButtons != null) {
+			// commandButtons.selection = preselectedList.get(0);
+			// commandButtons.selectionIndex = preselectedIndex;
+			// }
+			// }
+			// } else {
+			rows.selected(preselectedList);
+			if (commandButtons != null) {
+				commandButtons.selectionList(preselectedList);
+			}
+			// }
+			updateSelection = true;
+		}
+		this.visible = true;
+		if (!externalStatusPanel)
+			statusPanel = null;
+		else
+			resetStatusPanel();
+		topPanel = null;
+		buttonColumn = 1;
+		selectionIsSetup = false;
+		container().clear();
+		topPanel();
+		viewInc = 0;
+		if (columns.size() == 0
+				|| (rows.size() == 0 && (constraints == null
+						|| !constraints.isConstraintSpecified() || !hasFilter()))) {
+			showNoRowsFound();
+		} else if (rows.size() == 0
+				&& (constraints != null && constraints.isConstraintSpecified() && hasFilter())) {
+			showNoRowsFound();
+		} else {
+			addFilter();
+			setUpTopPanel();
+			contentPanel0 = container.add().panel().vertical();
+			contentPanel0.height(heightCenterPanel());
+			contentPanel = contentPanel0.add().panel().vertical();
+			addDragAndDropDirectly = true;
+			boolean tooLarge = update();
+			addDragAndDropDirectly = false;
+			if (tooLarge || paintedRows != rows.size()) {
+				contentPanel0.clear();
+				sp = (ILazyScrollPane) contentPanel0.add().widget(
+						ILazyScrollPane.class);
+				if (dragDropListener != null)
+					sp.dragDropListener(allowInsertUnder, dragDropListener);
+				sp.minRowHeight(getRowHeight());
+				if (!preselectedList.isEmpty()) {
+					int rowIndex = rows.find(preselectedList);
+					if (rowIndex != -1)
+						sp.rowIndex(rowIndex);
+					if (this.rowIndex != -1) {
+						sp.rowIndex(this.rowIndex);
+						this.rowIndex = -1;
+					}
+				}
+				if (presetRowIndex > 0) {
+					sp.rowIndex(presetRowIndex);
+					presetRowIndex = 0;
+				}
+				sp.height(heightCenterPanel());
+				sp.decorator(new ILazyScrollPane.IDecorator() {
+
+					@Override
+					public IKeyRecipient<Object> decorate(IContainer container,
+							int firstRow, int lastRow, boolean isCalibration) {
+						rowOffset = firstRow;
+						paintedRows = lastRow - firstRow + 1;
+						contentPanel = container.panel().vertical();
+						updateWithPaintedRowsSet(isCalibration);
+						return grid;
+					}
+
+					@Override
+					public boolean checkIndex(int rowIndex) {
+						int visibleRowIndex = convert2GridRow(rowIndex);
+						if (visibleRowIndex >= grid.rowCount()
+								|| visibleRowIndex < 0)
+							return false;
+						return true;
+					}
+
+					@Override
+					public int rowHeight(int rowIndex) {
+						int visibleRowIndex = convert2GridRow(rowIndex);
+						return grid.rowHeight(visibleRowIndex + 1);
+					}
+
+					private IElement<?>[] elementsAt(int index) {
+						IElement<?>[] elements = new IElement<?>[grid
+								.columnCount()];
+						for (int i = 0; i < grid.columnCount(); i++) {
+							elements[i] = grid.elementAt(i, index);
+						}
+						return elements;
+					}
+
+					@Override
+					public int headerHeight() {
+						return grid.rowHeight(0);
+					}
+
+					@Override
+					public IDragArea dragArea(final int index) {
+						return new IDragArea() {
+
+							@Override
+							public IColor color() {
+								return new ColorTemplate() {
+
+									@Override
+									public IColor remove() {
+										grid.row(index).removeBackground();
+										return this;
+									}
+
+									@Override
+									protected IColor setRGB(int r, int g, int b) {
+										grid.row(index).background(r, g, b);
+										return this;
+									}
+								};
+							}
+
+							@Override
+							public IElement<?> imageElement() {
+								return elementsAt(0)[0];
+							}
+
+						};
+					}
+
+					@Override
+					public IFocusPanel getFocusPanel() {
+						throw new UnsupportedOperationException();
+					}
+
+					@Override
+					public void contentWidth(int width) {
+					}
+				});
+				sp.size(rows.size());
+				sp.plainContent(plainContent);
+				sp.visible(true);
+			}
+		}
+		preselectedList.clear();
+		if (updateSelection)
+			selection.updateButtons();
 	}
 
 	private void showNoRowsFound() {
@@ -1457,7 +1458,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 	}
 
 	private void updateAfterSort() {
-		update();
+		drawAll();
 	}
 
 	@Override
