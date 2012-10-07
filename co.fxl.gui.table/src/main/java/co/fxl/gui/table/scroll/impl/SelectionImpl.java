@@ -221,8 +221,9 @@ class SelectionImpl implements ISelection<Object> {
 							for (int i = r0; i <= r1; i++) {
 								widget.rows.selected(i, true);
 								int visibleRow = widget.convert2GridRow(i);
+								int rowCount = widget.grid.rowCount();
 								if (visibleRow >= 0
-										&& visibleRow <= widget.grid.rowCount()) {
+										&& visibleRow < rowCount - 1) {
 									IRow r = widget.grid.row(visibleRow);
 									if (!r.isHighlight()) {
 										r.highlight(true);
@@ -232,8 +233,7 @@ class SelectionImpl implements ISelection<Object> {
 							}
 							notifyListeners();
 						}
-					})
-					: null;// .ctrlPressed();
+					}) : null;// .ctrlPressed();
 			decorateKeys(exclusiveSelection, incrementalSelection,
 					rangeSelection);
 			setUp();
