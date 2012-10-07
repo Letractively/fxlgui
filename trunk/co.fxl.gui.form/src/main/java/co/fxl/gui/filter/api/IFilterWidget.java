@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.filter.api;
 
+import java.util.Arrays;
 import java.util.List;
 
 import co.fxl.gui.api.ICallback;
@@ -65,6 +66,10 @@ public interface IFilterWidget {
 	}
 
 	String WILDCARD_TOOLTIP = "Use * and ? as wildcards. Use \\ to escape wildcard tokens.";
+	public static final Integer MIN_FILTER_SIZE = 50;
+	public static final Integer DEFAULT_FILTER_SIZE = MIN_FILTER_SIZE;
+	public static final List<Object> DEFAULT_SIZES = Arrays
+			.asList(new Object[] { DEFAULT_FILTER_SIZE, 100, 500, 1000, 5000 });
 
 	IFilterWidget addConfiguration(String config);
 

@@ -49,9 +49,6 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	// TODO SWING-FXL: Look: cells are too small
 
 	static String MAX_ROWS = "Max Rows";
-	static final Integer DEFAULT_FILTER_SIZE = 50;
-	public static final List<Object> DEFAULT_SIZES = Arrays
-			.asList(new Object[] { DEFAULT_FILTER_SIZE, 100, 500, 1000, 5000 });
 
 	private class ClearClickListener extends LazyClickListener {
 
