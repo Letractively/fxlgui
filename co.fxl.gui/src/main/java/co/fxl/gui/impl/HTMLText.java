@@ -108,8 +108,12 @@ public class HTMLText {
 				+ (width == -1 ? "100%;" : width + "px;")
 				+ (align != null ? "text-align:" + align : "")
 				+ "\" type=\"text\" value=\""
-				+ (text != null ? text.replace("<", "&#060;") : "")
+				+ (text != null ? escape(text) : "")
 				+ "\" readonly/>";
+	}
+
+	public static String escape(String text) {
+		return text.replace("<", "&#060;");
 	}
 
 	public static String removeHTML(String text) {
