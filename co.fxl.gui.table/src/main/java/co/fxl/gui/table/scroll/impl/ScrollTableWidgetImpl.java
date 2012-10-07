@@ -1438,11 +1438,11 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 								@Override
 								public void onSuccess(Void result) {
 									if (update)
-										update();
+										updateAfterSort();
 								}
 							});
 				else {
-					update();
+					updateAfterSort();
 				}
 			} else {
 				if (sortColumn != -1) {
@@ -1454,6 +1454,10 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 						DummyCallback.voidInstance());
 			}
 		}
+	}
+
+	private void updateAfterSort() {
+		update();
 	}
 
 	@Override
