@@ -131,7 +131,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			"ScrollTableWidgetImpl.ADD_TOP_PANEL_TOP_PADDING", false);
 	private static final boolean ADD_TOP_PANEL_SPACING = Constants.get(
 			"ScrollTableWidgetImpl.ADD_TOP_PANEL_SPACING", false);
-	public static int MAX_CLIENT_SORT_SIZE = 49;
+	public static int MAX_CLIENT_SORT_SIZE = IFilterWidget.MIN_FILTER_SIZE - 1;
 	IVerticalPanel container;
 	private int height = 400;
 	private WidgetTitle widgetTitle;
