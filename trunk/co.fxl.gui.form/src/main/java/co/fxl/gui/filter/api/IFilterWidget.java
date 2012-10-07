@@ -103,4 +103,6 @@ public interface IFilterWidget {
 	IFilterWidget noDiscardChangesDialog(boolean noDiscardChangesDialog);
 
 	WidgetTitle widgetTitle();
+
+	IFilterWidget clearRowIndex();
 }

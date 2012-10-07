@@ -109,4 +109,6 @@ public interface IFilterConstraints {
 
 	IRelationFilter<Object, Object> addRelationFilter();
 
+	IFilterConstraints clearRowIndex();
+
 }
