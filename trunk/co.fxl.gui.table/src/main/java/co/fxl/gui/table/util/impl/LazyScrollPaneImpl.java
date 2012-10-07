@@ -222,13 +222,12 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		if (adjustHeights) {
 			update(firstIndex, true);
 			v.height(height + HEIGHT_CORRECTION);
-			run(firstIndex);
 		} else {
 			lastIndex = size - 1;
 			if (lastIndex < 0)
 				lastIndex = 0;
-			run(firstIndex);
 		}
+		run(firstIndex);
 	}
 
 	private void run(int firstIndex) {
