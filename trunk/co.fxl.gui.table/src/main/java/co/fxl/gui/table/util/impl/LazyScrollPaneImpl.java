@@ -219,89 +219,87 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		updateScrollPanelHeight();
 		final int firstIndex = size - rows2Paint;
 		assert firstIndex >= 0;
-		Runnable runnable = new Runnable() {
-			@Override
-			public void run() {
-				if (!v.visible())
-					return;
-				assert firstIndex >= 0;
-				if (adjustHeights && !decorator.checkIndex(lastIndex)) {
-					if (allowRepaint) {
-						allowRepaint = false;
-						draw();
-					}
-					return;
-				}
-				treeDockPanel.visible(true);
-				int h = hasHeader ? decorator.headerHeight() : 0;
-				h += adjustHeights ? rowHeight(lastIndex) : minRowHeight;
-				assert lastIndex >= 0;
-				maxRowIndex = lastIndex;
-				for (int i = lastIndex - 1; i >= firstIndex && h < height; i--) {
-					if (adjustHeights && !decorator.checkIndex(lastIndex)) {
-						if (allowRepaint) {
-							allowRepaint = false;
-							draw();
-						}
-						return;
-					}
-					int rowHeight = Math.max(minRowHeight,
-							adjustHeights ? rowHeight(i) : minRowHeight);
-					h += rowHeight;
-					if (h < height) {
-						maxRowIndex = i;
-					}
-				}
-				treeDockPanel.visible(false);
-				assert maxRowIndex >= 0;
-				if (maxRowIndex == 0) {
-					scrollPane.remove();
-					hasScrollbar = false;
-					widthScrollPanel = 0;
-				}
-				if (rowIndex > maxRowIndex)
-					rowIndex = maxRowIndex;
-				if (adjustHeights) {
-					scrollPane.addScrollListener(LazyScrollPaneImpl.this);
-					v.height(height);
-					updateScrollPanelHeight();
-					forkScrollToRowIndex();
-					update(false);
-					treeDockPanel.visible(true);
-				} else {
-					forkScrollToRowIndex();
-					scrollPane.addScrollListener(LazyScrollPaneImpl.this);
-					update(false);
-					treeDockPanel.visible(true);
-				}
-				allowRepaint = false;
-			}
-
-			private void forkScrollToRowIndex() {
-				if (rowIndex > 0) {
-					Display.instance().invokeLater(new Runnable() {
-						@Override
-						public void run() {
-							holdScroll = true;
-							int y = convertRowIndex2ScrollOffset(rowIndex);
-							scrollPane.scrollTo(y);
-							// TODO style="overflow:auto" on body element
-							// FocusPanel around Widget to scroll into view
-							holdScroll = false;
-						}
-					});
-				}
-			}
-		};
 		if (adjustHeights) {
 			update(firstIndex, true);
 			v.height(height + HEIGHT_CORRECTION);
-			runnable.run();
+			run(firstIndex);
 		} else {
 			lastIndex = size - 1;
 			if (lastIndex < 0)
 				lastIndex = 0;
-			runnable.run();
+			run(firstIndex);
+		}
+	}
+
+	private void run(int firstIndex) {
+		if (!v.visible())
+			return;
+		assert firstIndex >= 0;
+		if (adjustHeights && !decorator.checkIndex(lastIndex)) {
+			if (allowRepaint) {
+				allowRepaint = false;
+				draw();
+			}
+			return;
+		}
+		treeDockPanel.visible(true);
+		int h = hasHeader ? decorator.headerHeight() : 0;
+		h += adjustHeights ? rowHeight(lastIndex) : minRowHeight;
+		assert lastIndex >= 0;
+		maxRowIndex = lastIndex;
+		for (int i = lastIndex - 1; i >= firstIndex && h < height; i--) {
+			if (adjustHeights && !decorator.checkIndex(lastIndex)) {
+				if (allowRepaint) {
+					allowRepaint = false;
+					draw();
+				}
+				return;
+			}
+			int rowHeight = Math.max(minRowHeight, adjustHeights ? rowHeight(i)
+					: minRowHeight);
+			h += rowHeight;
+			if (h < height) {
+				maxRowIndex = i;
+			}
+		}
+		treeDockPanel.visible(false);
+		assert maxRowIndex >= 0;
+		if (maxRowIndex == 0) {
+			scrollPane.remove();
+			hasScrollbar = false;
+			widthScrollPanel = 0;
+		}
+		if (rowIndex > maxRowIndex)
+			rowIndex = maxRowIndex;
+		if (adjustHeights) {
+			scrollPane.addScrollListener(LazyScrollPaneImpl.this);
+			v.height(height);
+			updateScrollPanelHeight();
+			forkScrollToRowIndex();
+			update(false);
+			treeDockPanel.visible(true);
+		} else {
+			forkScrollToRowIndex();
+			scrollPane.addScrollListener(LazyScrollPaneImpl.this);
+			update(false);
+			treeDockPanel.visible(true);
+		}
+		allowRepaint = false;
+	}
+
+	private void forkScrollToRowIndex() {
+		if (rowIndex > 0) {
+			Display.instance().invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					holdScroll = true;
+					int y = convertRowIndex2ScrollOffset(rowIndex);
+					scrollPane.scrollTo(y);
+					// TODO style="overflow:auto" on body element
+					// FocusPanel around Widget to scroll into view
+					holdScroll = false;
+				}
+			});
 		}
 	}
 
