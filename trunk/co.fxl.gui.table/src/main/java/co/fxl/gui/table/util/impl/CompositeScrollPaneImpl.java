@@ -85,11 +85,13 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 
 	@Override
 	public ICompositeScrollPane height(int height) {
-		panel.height(height);
-		grid.height(height);
-		center.height(height);
-		right.height(height);
-		super.height(height);
+		if (height != 0) {
+			panel.height(height);
+			grid.height(height);
+			center.height(height);
+			right.height(height);
+			super.height(height);
+		}
 		return this;
 	}
 
