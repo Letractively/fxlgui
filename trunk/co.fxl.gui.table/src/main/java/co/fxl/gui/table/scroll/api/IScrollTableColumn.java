@@ -45,6 +45,10 @@ public interface IScrollTableColumn<T> extends IColumn<T> {
 
 	IScrollTableColumn<T> visible(boolean visible);
 
+	IScrollTableColumn<T> required(boolean required);
+
+	boolean required();
+
 	boolean visible();
 
 	String name();

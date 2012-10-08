@@ -341,6 +341,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	boolean editable = false;
 	private IColorAdapter<Object, Object> colorAdapter;
 	boolean forceSort = false;
+	private boolean required;
 
 	public ScrollTableColumnImpl(int index) {
 		this(null, index);
@@ -557,5 +558,16 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	@Override
 	public String toString() {
 		return name();
+	}
+
+	@Override
+	public IScrollTableColumn<Object> required(boolean required) {
+		this.required = required;
+		return this;
+	}
+
+	@Override
+	public boolean required() {
+		return required;
 	}
 }

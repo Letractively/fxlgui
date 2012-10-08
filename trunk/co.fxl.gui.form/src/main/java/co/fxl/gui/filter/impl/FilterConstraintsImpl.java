@@ -281,8 +281,9 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 
 	@Override
 	public void clear() {
-		constraints.clear();
-		size = (Integer) FilterWidgetImpl.DEFAULT_SIZES.get(0);
+		if (constraints != null)
+			constraints.clear();
+		size = FilterWidgetImpl.DEFAULT_FILTER_SIZE;
 	}
 
 	@Override
