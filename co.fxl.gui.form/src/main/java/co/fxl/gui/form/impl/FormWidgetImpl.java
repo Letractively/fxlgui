@@ -400,7 +400,7 @@ public class FormWidgetImpl implements IFormWidget {
 			IHorizontalPanel begin = buttonPanel.clear().add().panel()
 					.horizontal().width(1.0).spacing(4).align().begin();
 			buttonPanelWithIndent = begin.add().panel().horizontal().align()
-					.begin();
+					.begin().addSpace(10);
 			buttonPanelWithIndent.margin().left(buttonPanelIndent);
 			return buttonPanelWithIndent;
 		}
