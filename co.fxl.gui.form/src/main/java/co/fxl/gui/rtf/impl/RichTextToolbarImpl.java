@@ -55,11 +55,40 @@ public class RichTextToolbarImpl {
 
 	}
 
-	private class InsertImageButton extends ToolbarButton {
+	private class InsertImageButton extends InsertButton {
 
 		private InsertImageButton(Formatting f) {
 			super(f);
 		}
+
+		void execute(final String tf) {
+			htmlArea.insertImage(tf);
+		}
+	}
+
+	private class CreateLinkButton extends InsertButton {
+
+		private CreateLinkButton(Formatting f) {
+			super(f);
+		}
+
+		@Override
+		void decorate(ITextField tf) {
+			tf.text("http://");
+		}
+
+		void execute(final String tf) {
+			htmlArea.insertHyperlink(tf);
+		}
+	}
+
+	private abstract class InsertButton extends ToolbarButton {
+
+		private InsertButton(Formatting f) {
+			super(f);
+		}
+
+		abstract void execute(final String tf);
 
 		@Override
 		void handleClick() {
@@ -68,6 +97,7 @@ public class RichTextToolbarImpl {
 			p.border().remove().style().shadow().color().gray();
 			IHorizontalPanel h = p.container().panel().horizontal().spacing(4);
 			final ITextField tf = h.add().textField().width(300).focus(true);
+			decorate(tf);
 			Heights.INSTANCE.decorate(tf);
 			IClickListener clickListener = new IClickListener() {
 				@Override
@@ -75,7 +105,7 @@ public class RichTextToolbarImpl {
 					if (tf.text().trim().isEmpty())
 						return;
 					p.visible(false);
-					htmlArea.insertImage(tf.text());
+					execute(tf.text());
 				}
 			};
 			tf.addKeyListener(clickListener).enter();
@@ -96,6 +126,9 @@ public class RichTextToolbarImpl {
 				}
 			});
 			p.visible();
+		}
+
+		void decorate(ITextField tf) {
 		}
 
 	}
@@ -283,6 +316,8 @@ public class RichTextToolbarImpl {
 					b = new ToggleButton(f);
 				} else if (f.equals(IHTMLArea.Formatting.INSERT_IMAGE)) {
 					b = new InsertImageButton(f);
+				} else if (f.equals(IHTMLArea.Formatting.CREATE_LINK)) {
+					b = new CreateLinkButton(f);
 				} else {
 					b = new PushButton(f);
 				}

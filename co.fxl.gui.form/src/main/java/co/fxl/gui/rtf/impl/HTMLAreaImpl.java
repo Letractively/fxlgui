@@ -207,4 +207,9 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 		return this;
 	}
 
+	@Override
+	public IHTMLArea insertHyperlink(String link) {
+		throw new UnsupportedOperationException();
+	}
+
 }
