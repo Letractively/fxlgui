@@ -57,4 +57,11 @@ public class TextAreaAdp extends TextInputAdp<ITextArea> implements ITextArea {
 		return element.addClickListener(clickListener);
 	}
 
+	@Override
+	public ITextArea addResizeListener(
+			co.fxl.gui.api.IResizable.IResizeListener listener) {
+		element.addResizeListener(listener);
+		return this;
+	}
+
 }

@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.filter.impl;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;

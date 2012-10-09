@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.api;
 
+import co.fxl.gui.api.IResizable.IResizeListener;
+
 public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
 	// public interface IElementListener {
@@ -52,11 +54,6 @@ public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
 		void remove();
 
-	}
-
-	public interface IResizeListener {
-
-		void onResize(int width, int height);
 	}
 
 	public interface IExceptionHandler {

@@ -27,13 +27,14 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
+import co.fxl.gui.api.IResizable;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.rtf.api.IHTMLArea;
 
-public interface IFormWidget {
+public interface IFormWidget extends IResizable<IFormWidget> {
 
 	public interface IFormContainer {
 

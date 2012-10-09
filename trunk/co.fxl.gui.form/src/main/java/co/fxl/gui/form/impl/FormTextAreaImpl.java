@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.form.impl;
 
+import co.fxl.gui.api.IResizable.IResizeListener;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.form.api.IFormField;
 
@@ -33,6 +34,8 @@ class FormTextAreaImpl extends FormFieldImpl<ITextArea, String> {
 	void createContentColumn(int index) {
 		textArea = widget.addFormValueTextArea(index);
 		format(textArea, 100);
+		for (IResizeListener l : widget.resizeListeners)
+			textArea.addResizeListener(l);
 		editable(widget.saveListener != null);
 	}
 

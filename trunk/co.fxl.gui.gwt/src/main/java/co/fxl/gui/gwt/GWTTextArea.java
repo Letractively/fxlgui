@@ -29,6 +29,10 @@ import com.google.gwt.event.dom.client.DropEvent;
 import com.google.gwt.event.dom.client.DropHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.event.dom.client.MouseMoveEvent;
+import com.google.gwt.event.dom.client.MouseMoveHandler;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.user.client.ui.TextArea;
 
 class GWTTextArea extends GWTTextAreaTemplate<TextArea, ITextArea> implements
@@ -36,6 +40,8 @@ class GWTTextArea extends GWTTextAreaTemplate<TextArea, ITextArea> implements
 
 	private List<IUpdateListener<String>> changeListeners = new LinkedList<IUpdateListener<String>>();
 	private String lastNotifiedValue = null;
+	private int lastHeight = 100;
+	private List<IResizeListener> resizeListeners = new LinkedList<IResizeListener>();
 
 	GWTTextArea(GWTContainer<TextArea> container) {
 		super(container);
@@ -60,6 +66,28 @@ class GWTTextArea extends GWTTextAreaTemplate<TextArea, ITextArea> implements
 				notifyChange();
 			}
 		});
+		container.widget.addMouseUpHandler(new MouseUpHandler() {
+			@Override
+			public void onMouseUp(MouseUpEvent event) {
+				checkResize();
+			}
+		});
+		container.widget.addMouseMoveHandler(new MouseMoveHandler() {
+			@Override
+			public void onMouseMove(MouseMoveEvent event) {
+				checkResize();
+			}
+		});
+		lastHeight = height();
+	}
+
+	private void checkResize() {
+		if (lastHeight != height()) {
+			lastHeight = height();
+			for (IResizeListener l : resizeListeners) {
+				l.onResize(width(), height());
+			}
+		}
 	}
 
 	protected void notifyChange() {
@@ -145,5 +173,12 @@ class GWTTextArea extends GWTTextAreaTemplate<TextArea, ITextArea> implements
 	@Override
 	public boolean editable() {
 		return !container.widget.isReadOnly();
+	}
+
+	@Override
+	public ITextArea addResizeListener(
+			co.fxl.gui.api.IResizable.IResizeListener listener) {
+		resizeListeners.add(listener);
+		return this;
 	}
 }

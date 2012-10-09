@@ -24,6 +24,7 @@ import java.util.List;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IResizable.IResizeListener;
 import co.fxl.gui.log.impl.LogWidgetProvider;
 
 public abstract class DisplayTemplate extends RegistryImpl<IDisplay> implements

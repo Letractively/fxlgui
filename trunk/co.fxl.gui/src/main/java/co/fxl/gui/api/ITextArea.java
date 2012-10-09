@@ -19,6 +19,6 @@
 package co.fxl.gui.api;
 
 public interface ITextArea extends ITextInput<ITextArea>,
-		IHasCursor<ITextArea>, IClickable<ITextArea> {
+		IHasCursor<ITextArea>, IClickable<ITextArea>, IResizable<ITextArea> {
 
 }

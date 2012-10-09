@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import co.fxl.gui.api.IDisplay.IResizeConfiguration;
-import co.fxl.gui.api.IDisplay.IResizeListener;
+import co.fxl.gui.api.IResizable.IResizeListener;
 
 class DisplayResizeAdapter {
 
