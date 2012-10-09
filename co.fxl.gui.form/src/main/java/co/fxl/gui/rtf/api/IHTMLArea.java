@@ -18,9 +18,20 @@
  */
 package co.fxl.gui.rtf.api;
 
+import co.fxl.gui.api.ISuggestField.ISource;
 import co.fxl.gui.api.ITextArea;
 
 public interface IHTMLArea extends ITextArea {
+
+	public interface IHTMLAreaButton {
+
+		IHTMLAreaButton title(String title);
+
+		IHTMLAreaButton imageResource(String resource);
+
+		IHTMLAreaButton suggestSource(ISource source);
+
+	}
 
 	public final String TOGGLE_PREFIX = "TOGGLE_";
 
@@ -30,7 +41,8 @@ public interface IHTMLArea extends ITextArea {
 		// superscript.gif, underline.gif, justifyleft.gif, justifyright.gif,
 		// indentleft.gif,
 		// indentright.gif, inserthorizontalrule.gif, insertorderedlist.gif,
-		// insertunorderedlist.gif, insertimage.gif, createlink.gif, removeformatting.gif
+		// insertunorderedlist.gif, insertimage.gif, createlink.gif,
+		// removeformatting.gif
 
 		TOGGLE_BOLD, TOGGLE_ITALIC, TOGGLE_STRIKETHROUGH, TOGGLE_SUBSCRIPT, TOGGLE_SUPERSCRIPT, TOGGLE_UNDERLINE, JUSTIFY_LEFT, JUSTIFY_CENTER, JUSTIFY_RIGHT, INDENT_RIGHT, INDENT_LEFT, INSERT_HORIZONTAL_RULE, INSERT_ORDERED_LIST, INSERT_UNORDERED_LIST, INSERT_IMAGE, CREATE_LINK, REMOVE_FORMATTING
 	}
@@ -62,5 +74,7 @@ public interface IHTMLArea extends ITextArea {
 	IHTMLArea insertImage(String image);
 
 	IHTMLArea insertHyperlink(String link);
+
+	IHTMLAreaButton addButton();
 
 }

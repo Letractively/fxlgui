@@ -212,4 +212,9 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public IHTMLAreaButton addButton() {
+		return toolbar.addButton();
+	}
+
 }
