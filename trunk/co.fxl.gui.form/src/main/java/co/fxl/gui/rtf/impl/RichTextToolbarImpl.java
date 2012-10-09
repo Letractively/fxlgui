@@ -25,13 +25,16 @@ import java.util.Map;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IFocusable;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
+import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IResizable.IResizeListener;
-import co.fxl.gui.api.ITextField;
+import co.fxl.gui.api.ISuggestField.ISource;
+import co.fxl.gui.api.ITextInput;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Heights;
@@ -39,6 +42,7 @@ import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.rtf.api.IHTMLArea;
 import co.fxl.gui.rtf.api.IHTMLArea.Formatting;
+import co.fxl.gui.rtf.api.IHTMLArea.IHTMLAreaButton;
 
 public class RichTextToolbarImpl {
 
@@ -53,6 +57,48 @@ public class RichTextToolbarImpl {
 			htmlArea.apply(f);
 		}
 
+	}
+
+	private class HTMLAreaButtonImpl extends InsertButton implements
+			IHTMLAreaButton {
+
+		private String title;
+		private ISource source;
+
+		private HTMLAreaButtonImpl() {
+			super();
+		}
+
+		void execute(final String tf) {
+			htmlArea.insertImage(tf);
+		}
+
+		@Override
+		public IHTMLAreaButton title(String title) {
+			this.title = title;
+			return this;
+		}
+
+		@Override
+		public IHTMLAreaButton imageResource(String resource) {
+			setImage(panel, resource);
+			return this;
+		}
+
+		@Override
+		String tooltip() {
+			return title;
+		}
+
+		ITextInput<?> addTextField(IHorizontalPanel h) {
+			return h.add().suggestField().source(source);
+		}
+
+		@Override
+		public IHTMLAreaButton suggestSource(ISource source) {
+			this.source = source;
+			return this;
+		}
 	}
 
 	private class InsertImageButton extends InsertButton {
@@ -72,17 +118,16 @@ public class RichTextToolbarImpl {
 			super(f);
 		}
 
-		@Override
-		void decorate(ITextField tf) {
-			tf.text("http://");
-		}
-
 		void execute(final String tf) {
 			htmlArea.insertHyperlink(tf);
 		}
 	}
 
 	private abstract class InsertButton extends ToolbarButton {
+
+		private InsertButton() {
+			super();
+		}
 
 		private InsertButton(Formatting f) {
 			super(f);
@@ -96,8 +141,9 @@ public class RichTextToolbarImpl {
 					.autoHide(true).atLastClick();
 			p.border().remove().style().shadow().color().gray();
 			IHorizontalPanel h = p.container().panel().horizontal().spacing(4);
-			final ITextField tf = h.add().textField().width(300).focus(true);
-			decorate(tf);
+			final ITextInput<?> tf = addTextField(h);
+			tf.width(300);
+			((IFocusable<?>) tf).focus(true);
 			Heights.INSTANCE.decorate(tf);
 			IClickListener clickListener = new IClickListener() {
 				@Override
@@ -108,7 +154,7 @@ public class RichTextToolbarImpl {
 					execute(tf.text());
 				}
 			};
-			tf.addKeyListener(clickListener).enter();
+			((IKeyRecipient<?>) tf).addKeyListener(clickListener).enter();
 			final IImage accept = h.add().image().resource("accept.png")
 					.addClickListener(clickListener).mouseLeft()
 					.clickable(false);
@@ -128,7 +174,8 @@ public class RichTextToolbarImpl {
 			p.visible();
 		}
 
-		void decorate(ITextField tf) {
+		ITextInput<?> addTextField(IHorizontalPanel h) {
+			return h.add().textField();
 		}
 
 	}
@@ -330,6 +377,12 @@ public class RichTextToolbarImpl {
 		}
 		grid.column(0).expand();
 		addZoomButton(htmlArea);
+	}
+
+	public IHTMLAreaButton addButton() {
+		HTMLAreaButtonImpl b = new HTMLAreaButtonImpl();
+		buttons.add(b);
+		return b;
 	}
 
 	private void addZoomButton(final IHTMLArea htmlArea) {
