@@ -32,10 +32,27 @@ class FormTextAreaImpl extends FormFieldImpl<ITextArea, String> {
 	@Override
 	void createContentColumn(int index) {
 		textArea = widget.addFormValueTextArea(index);
-		textArea.height(100);
+		format(textArea, 100);
+		editable(widget.saveListener != null);
+	}
+
+	static void format(final ITextArea textArea, final int height) {
+		textArea.height(height);
 		textArea.border().color().rgb(211, 211, 211);
 		textArea.color().rgb(249, 249, 249);
-		editable(widget.saveListener != null);
+		// textArea.addFocusListener(new IUpdateListener<Boolean>() {
+		//
+		// @Override
+		// public void onUpdate(Boolean value) {
+		// if (value) {
+		// int target = height * 2;
+		// if (target > height)
+		// textArea.height(target);
+		// } else {
+		// textArea.height(height);
+		// }
+		// }
+		// });
 	}
 
 	@Override
