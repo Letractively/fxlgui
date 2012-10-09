@@ -104,9 +104,15 @@ public class HTMLText {
 	}
 
 	public static String textInput(String text, int width, String align) {
+		return textInput(text, width, align, "");
+	}
+
+	public static String textInput(String text, int width, String align,
+			String style) {
 		return "<input class=\"gwt-TextBox\" style=\"margin-top:-2px;margin-bottom:-2px;background-color:transparent;border:none;height:23px;width:"
 				+ (width == -1 ? "100%;" : width + "px;")
 				+ (align != null ? "text-align:" + align : "")
+				+ style
 				+ "\" type=\"text\" value=\""
 				+ (text != null ? escape(text) : "") + "\" readonly/>";
 	}
