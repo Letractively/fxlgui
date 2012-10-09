@@ -298,6 +298,7 @@ public class FormWidgetImpl implements IFormWidget {
 	private IVerticalPanel buttonPanel;
 	private int buttonPanelIndent;
 	private IHorizontalPanel buttonPanelWithIndent;
+	List<IResizeListener> resizeListeners = new LinkedList<IResizeListener>();
 
 	void setUpBottomPanel() {
 		if (bottomPanelIsSetUp)
@@ -630,6 +631,13 @@ public class FormWidgetImpl implements IFormWidget {
 		this.buttonPanelIndent = buttonPanelIndent;
 		if (buttonPanelWithIndent != null)
 			buttonPanelWithIndent.margin().left(buttonPanelIndent);
+		return this;
+	}
+
+	@Override
+	public IFormWidget addResizeListener(
+			co.fxl.gui.api.IResizable.IResizeListener listener) {
+		resizeListeners.add(listener);
 		return this;
 	}
 }

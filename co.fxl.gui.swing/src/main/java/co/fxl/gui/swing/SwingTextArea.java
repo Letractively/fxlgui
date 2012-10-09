@@ -18,8 +18,6 @@
  */
 package co.fxl.gui.swing;
 
-import java.awt.Cursor;
-
 import javax.swing.JTextArea;
 
 import co.fxl.gui.api.ITextArea;
@@ -72,5 +70,11 @@ class SwingTextArea extends SwingTextInput<JTextArea, ITextArea> implements
 
 	@Override
 	void setCursor(boolean clickable) {
+	}
+
+	@Override
+	public ITextArea addResizeListener(
+			co.fxl.gui.api.IResizable.IResizeListener listener) {
+		return this;
 	}
 }

@@ -19,10 +19,10 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IColored.IColor;
-import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IResizable.IResizeListener;
 import co.fxl.gui.log.impl.Log;
 
 public class StatusPanel {

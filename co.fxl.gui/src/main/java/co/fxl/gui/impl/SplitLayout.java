@@ -18,10 +18,10 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.api.IDisplay.IResizeListener;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IResizable.IResizeListener;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IVerticalPanel;
 
