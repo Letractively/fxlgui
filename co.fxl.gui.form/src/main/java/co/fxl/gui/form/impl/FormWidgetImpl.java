@@ -416,6 +416,8 @@ public class FormWidgetImpl implements IFormWidget {
 	private void addSaveButton(final IHorizontalPanel subPanel,
 			final IButton cancelButton) {
 		saveButton = subPanel.add().button();
+		if (validation != null)
+			validation.setClickable(saveButton);
 		if (!saveListener.allowsCancel())
 			cancelButton.visible(false);
 		saveClickListener = new IClickListener() {

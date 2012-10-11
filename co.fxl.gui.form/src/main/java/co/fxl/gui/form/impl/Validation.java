@@ -290,6 +290,11 @@ public class Validation {
 		return this;
 	}
 
+	public Validation setClickable(IClickable<?> clickable) {
+		clickables.add(clickable);
+		return this;
+	}
+
 	public Validation linkReset(IClickable<?> clickable) {
 		reset.add(clickable);
 		return this;
