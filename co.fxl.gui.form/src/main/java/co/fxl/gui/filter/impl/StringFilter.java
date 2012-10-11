@@ -21,7 +21,6 @@ package co.fxl.gui.filter.impl;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.filter.api.IFilterConstraints;
-import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.filter.impl.FilterPanel.ICell;
 import co.fxl.gui.form.impl.Validation;
@@ -34,7 +33,7 @@ class StringFilter extends FilterTemplate<ITextField, String> {
 		super(panel, name, filterIndex);
 		ICell width = panel.cell(filterIndex);
 		input = textField(width, filterIndex).width(width());
-		input.tooltip(IFilterWidget.WILDCARD_TOOLTIP);
+		// input.tooltip(IFilterWidget.WILDCARD_TOOLTIP);
 		panel.heights().decorate(input);
 		panel.register(input);
 	}
