@@ -43,16 +43,50 @@ class SwingHyperlink implements IHyperlink {
 
 	@Override
 	public IHyperlink clickable(boolean clickable) {
-		throw new UnsupportedOperationException();
+		// TODO ... throw new UnsupportedOperationException();
+		return this;
 	}
 
 	@Override
 	public boolean clickable() {
-		throw new UnsupportedOperationException();
+		// TODO ... throw new UnsupportedOperationException();
+		return false;
 	}
 
 	@Override
 	public IKey<IHyperlink> addClickListener(IClickListener clickListener) {
-		throw new UnsupportedOperationException();
+		// TODO ... throw new UnsupportedOperationException();
+		return new IKey<IHyperlink>() {
+
+			@Override
+			public IHyperlink mouseLeft() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public IHyperlink mouseRight() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public IHyperlink shiftPressed() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public IHyperlink altPressed() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public IHyperlink ctrlPressed() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public IHyperlink doubleClick() {
+				throw new UnsupportedOperationException();
+			}
+		};
 	}
 }
