@@ -26,6 +26,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.form.api.IChangePasswordWidget;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
@@ -71,7 +72,7 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 
 	@Override
 	public IChangePasswordWidget current(String currentPassword) {
-		currentPasswordText = currentPassword!=null ? currentPassword :"";
+		currentPasswordText = currentPassword != null ? currentPassword : "";
 		return this;
 	}
 
@@ -94,14 +95,13 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 
 	@Override
 	public void onClick() {
-		if (newPassword.text().equals("")
-				&& confirmPassword.text().equals(""))
+		if (newPassword.text().equals("") && confirmPassword.text().equals(""))
 			return;
 		boolean oK = true;
-//		if (currentPassword.text().equals("")) {
-//			showDialog("Field 'Current Password' is empty.");
-//			oK = false;
-//		}
+		// if (currentPassword.text().equals("")) {
+		// showDialog("Field 'Current Password' is empty.");
+		// oK = false;
+		// }
 		if (oK && !currentPassword.text().equals(currentPasswordText)) {
 			showDialog("Field 'Current Password' is incorrectly specified.");
 			oK = false;
@@ -129,14 +129,23 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 
 	private void showDialog(String string) {
 		display.display().showDialog().title("Change Password Error")
-				.message(string).error();
+				.message(string).error().visible(true)
+				.addVisibleListener(new IUpdateListener<Boolean>() {
+					@Override
+					public void onUpdate(Boolean value) {
+						if (!value) {
+							clear();
+							widget.notifyUpdate();
+						}
+					}
+				});
 	}
 
-//	private void clear() {
-//		currentPassword.text("");
-//		newPassword.text("");
-//		confirmPassword.text("");
-//	}
+	private void clear() {
+		currentPassword.text("");
+		newPassword.text("");
+		confirmPassword.text("");
+	}
 
 	public void visible() {
 		widget.visible(true);
