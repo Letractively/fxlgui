@@ -36,6 +36,7 @@ public class FieldTypeImpl implements IFieldType {
 	public boolean isColor = false;
 	public boolean isHTML = false;
 	public Object defaultConstraint;
+	public int rows = 1;
 
 	public boolean equals(Object o) {
 		FieldTypeImpl t = (FieldTypeImpl) o;
@@ -67,6 +68,12 @@ public class FieldTypeImpl implements IFieldType {
 	@Override
 	public IFieldType type(Class<?> clazz) {
 		this.clazz = clazz;
+		return this;
+	}
+
+	@Override
+	public IFieldType rows(int rows) {
+		this.rows = rows;
 		return this;
 	}
 

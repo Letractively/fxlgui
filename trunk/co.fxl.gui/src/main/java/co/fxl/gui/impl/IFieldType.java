@@ -71,4 +71,6 @@ public interface IFieldType {
 	boolean isText();
 
 	boolean isHTML();
+
+	IFieldType rows(int rows);
 }
