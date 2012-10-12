@@ -38,7 +38,7 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 	private IPasswordField currentPassword;
 	private IPasswordField newPassword;
 	private IPasswordField confirmPassword;
-	private String currentPasswordText;
+	// private String currentPasswordText;
 	private List<IPasswordListener> listeners = new LinkedList<IPasswordListener>();
 	private IContainer display;
 	private boolean requiresCurrent = true;
@@ -70,23 +70,23 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 		widget.isNew(false);
 	}
 
-	@Override
-	public IChangePasswordWidget current(String currentPassword) {
-		currentPasswordText = currentPassword != null ? currentPassword : "";
-		return this;
-	}
+	// @Override
+	// public IChangePasswordWidget current(String currentPassword) {
+	// currentPasswordText = currentPassword != null ? currentPassword : "";
+	// return this;
+	// }
 
 	@Override
 	public IChangePasswordWidget visible(boolean visible) {
-		IFormField<IPasswordField, String> pw = widget
-				.addPasswordField("Current");
-		currentPassword = pw.valueElement();
-		if (!requiresCurrent) {
-			currentPassword.text(currentPasswordText);
-			currentPassword.editable(false);
-		} else
+		if (requiresCurrent) {
+			IFormField<IPasswordField, String> pw = widget
+					.addPasswordField("Current");
+			currentPassword = pw.valueElement();
 			pw.required();
-		newPassword = widget.addPasswordField("New").required().valueElement();
+		}
+		newPassword = widget
+				.addPasswordField(requiresCurrent ? "New" : "New Password")
+				.required().valueElement();
 		confirmPassword = widget.addPasswordField("Confirm").required()
 				.valueElement();
 		widget.visible(true);
@@ -102,10 +102,10 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 		// showDialog("Field 'Current Password' is empty.");
 		// oK = false;
 		// }
-		if (oK && !currentPassword.text().equals(currentPasswordText)) {
-			showDialog("Field 'Current Password' is incorrectly specified.");
-			oK = false;
-		}
+		// if (oK && !currentPassword.text().equals(currentPasswordText)) {
+		// showDialog("Field 'Current Password' is incorrectly specified.");
+		// oK = false;
+		// }
 		String newPasswordText = newPassword.text();
 		if (oK && newPasswordText.equals("")) {
 			showDialog("Field 'New Password' is empty.");
@@ -123,8 +123,9 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 			return;
 		// clear();
 		for (IPasswordListener l : listeners)
-			l.onChange(newPasswordText);
-		current(newPasswordText);
+			l.onChange(currentPassword != null ? currentPassword.text() : null,
+					newPasswordText);
+		// current(newPasswordText);
 	}
 
 	private void showDialog(String string) {
