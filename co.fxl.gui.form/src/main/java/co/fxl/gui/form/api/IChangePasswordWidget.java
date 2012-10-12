@@ -26,12 +26,12 @@ public interface IChangePasswordWidget {
 
 		void onCancel();
 
-		void onChange(String password);
+		void onChange(String current, String password);
 	}
 
 	ILabel addTitle(String title);
 
-	IChangePasswordWidget current(String currentPassword);
+//	IChangePasswordWidget current(String currentPassword);
 
 	IChangePasswordWidget requiresCurrent(boolean requiresCurrent);
 
