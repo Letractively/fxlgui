@@ -65,7 +65,7 @@ public class Heights {
 		// Style.Element.BORDER);
 		IBorder border = bordered.border();
 		border.color().rgb(211, 211, 211);
-//		border.style().rounded();
+		// border.style().rounded();
 		return border;
 	}
 
@@ -85,7 +85,7 @@ public class Heights {
 	}
 
 	private void decoratePadding(IElement<?> e) {
-//		e.padding().top(0).right(0).bottom(0).left(3);
+		// e.padding().top(0).right(0).bottom(0).left(3);
 	}
 
 	public Heights decorate(ITextArea textField) {
@@ -147,5 +147,11 @@ public class Heights {
 
 	public void decorateHeight(IButton b) {
 		b.height(inc + COMBOBOX_HEIGHT);
+	}
+
+	public void setRows(ITextArea textArea, int rows) {
+		if (rows > 0) {
+			textArea.height(Math.max(inc + TEXTFIELD_HEIGHT, rows * 16));
+		}
 	}
 }
