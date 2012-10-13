@@ -86,6 +86,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 	private boolean holdUpdate;
 	private INavigationGroup defaultGroup;
 	private IFocusPanel focus;
+//	private boolean loading;
 	public static NavigationWidgetImpl instance;
 
 	public NavigationWidgetImpl(IContainer layout) {
@@ -115,6 +116,13 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 	void addSeparatorBorder() {
 		if (!ADD_SEPARATORBORDER)
 			return;
+//		if (loading) {
+//			IVerticalPanel separatorBorder = borderTop.clear().add().panel()
+//					.vertical().width(1.0).height(1);
+//			separatorBorder.add().image().resource("empty_1x1.png");
+//			separatorBorder.color().gray();
+//			return;
+//		}
 		IGridPanel separatorBorder = borderTop.clear().add().panel().grid()
 				.spacing(0).height(1);
 		int c = 0;
@@ -546,4 +554,9 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 					}
 		return this;
 	}
+
+//	void loading(boolean b) {
+//		loading = b;
+//		addSeparatorBorder();
+//	}
 }
