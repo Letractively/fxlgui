@@ -252,7 +252,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 							widget.listeningOnServerCalls(false);
 							widget.flipPage().back();
 						}
-						Log.instance().stop("Showing tab " + button.text());
+						stopLoading();
 						isFirst = false;
 					}
 
@@ -303,6 +303,12 @@ public class NavigationItemImpl extends LazyClickListener implements
 		int height = buttonPanel.height();
 		buttonPanel.size(width, height);
 		showLoading();
+//		widget.loading(true);
+	}
+
+	void stopLoading() {
+		Log.instance().stop("Showing tab " + button.text());
+//		widget.loading(false);
 	}
 
 	private void forkLabelAsActive(boolean viaClick,
