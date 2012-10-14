@@ -212,6 +212,21 @@ class SelectionImpl implements ISelection<Object> {
 							row--;
 							int tableRow = widget.convert2TableRow(row);
 							int r0 = lastIndex;
+							if (r0 == 0
+									&& widget.rows.selectedIdentifiers().size() >= 1) {
+								boolean ok = false;
+								for (int i : widget.rows.selectedIndices()) {
+									if (i == 0) {
+										ok = true;
+									}
+								}
+								if (!ok) {
+									r0 = widget.rows.selectedIndices().get(
+											widget.rows.selectedIndices()
+													.size() - 1);
+									lastIndex = r0;
+								}
+							}
 							int r1 = tableRow;
 							if (r0 > r1) {
 								int tmp = r0;
