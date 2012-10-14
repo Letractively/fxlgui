@@ -108,7 +108,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 							public void onAuthorization(
 									Authorization authorization) {
 								if (authorization == Authorization.FAILED) {
-									dialog("Unknown user or password");
+									dialog("Unknown user or password or account has been deactivated.");
 								} else {
 									userText = loginID.text();
 									// passwordText = password.text();
