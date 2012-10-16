@@ -83,4 +83,9 @@ class FilterGridImpl implements FilterGrid {
 	public FilterGrid rowInc(int rowInc) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public boolean addTooltips() {
+		return true;
+	}
 }

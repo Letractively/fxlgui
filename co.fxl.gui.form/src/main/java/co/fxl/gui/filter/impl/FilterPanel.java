@@ -54,6 +54,8 @@ interface FilterPanel {
 		void resize(int size);
 
 		void show(FilterPart<?> firstConstraint);
+
+		boolean addTooltips();
 	}
 
 	void addTitle(String string);
