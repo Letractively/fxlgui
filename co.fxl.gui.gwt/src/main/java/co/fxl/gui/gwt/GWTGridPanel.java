@@ -326,6 +326,8 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 
 	@Override
 	public IGridColumn column(final int column) {
+		if (columns() < column + 1)
+			resize(column + 1, rows());
 		return new IGridColumn() {
 
 			@Override
