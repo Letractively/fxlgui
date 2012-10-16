@@ -188,6 +188,11 @@ class MiniFilterPanel implements FilterPanel {
 		public FilterGrid rowInc(int rowInc) {
 			this.rowInc = rowInc;
 			return this;
+		}
+
+		@Override
+		public boolean addTooltips() {
+			return false;
 		};
 	}
 
