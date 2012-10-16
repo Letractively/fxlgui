@@ -30,6 +30,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.Constants;
+import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
@@ -68,6 +69,7 @@ class MiniFilterPanel implements FilterPanel {
 		class CellImpl implements ICell {
 
 			private IContainer container;
+			private boolean isPanel;
 
 			CellImpl() {
 				container = cardPanel.add();
@@ -80,6 +82,7 @@ class MiniFilterPanel implements FilterPanel {
 
 			@Override
 			public IHorizontalPanel horizontal() {
+				isPanel = true;
 				return container.panel().horizontal();
 			}
 
@@ -94,6 +97,7 @@ class MiniFilterPanel implements FilterPanel {
 			}
 		}
 
+		private boolean FIREFOX_TEMP_HACK_ACTIVE = Env.is(Env.FIREFOX);
 		private IComboBox comboBox;
 		private ICardPanel cardPanel;
 		private Map<String, Integer> name2index = new HashMap<String, Integer>();
@@ -121,6 +125,16 @@ class MiniFilterPanel implements FilterPanel {
 		}
 
 		void visible() {
+			if (FIREFOX_TEMP_HACK_ACTIVE)
+				for (Integer i : index2cell.keySet()) {
+					if (index2cell.get(i).isPanel) {
+						for (String name : name2index.keySet()) {
+							if (name2index.get(name).equals(i)) {
+								comboBox.removeText(name);
+							}
+						}
+					}
+				}
 			cardPanel.show(index2cell.get(0).container.element());
 			if (index2cell.size() == 1)
 				comboBox.editable(false);

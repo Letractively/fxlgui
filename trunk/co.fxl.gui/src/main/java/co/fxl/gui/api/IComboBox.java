@@ -27,4 +27,6 @@ public interface IComboBox extends ITextElement<IComboBox>,
 	IComboBox addNull();
 
 	IComboBox addText(String... texts);
+
+	IComboBox removeText(String... texts);
 }

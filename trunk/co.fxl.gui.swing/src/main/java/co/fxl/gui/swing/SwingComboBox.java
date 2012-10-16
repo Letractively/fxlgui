@@ -118,6 +118,21 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 	}
 
 	@Override
+	public IComboBox removeText(String... texts) {
+		programmaticSet = true;
+		for (String choice : texts) {
+			if (choice == null) {
+				hasNull = false;
+			}
+			if (value.equals(choice))
+				value = null;
+			container.component.removeItem(choice);
+		}
+		programmaticSet = false;
+		return this;
+	}
+
+	@Override
 	public String text() {
 		String selectedItem = (String) container.component.getSelectedItem();
 		if (selectedItem == null) {
