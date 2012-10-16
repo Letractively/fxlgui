@@ -122,4 +122,9 @@ class AndroidComboBox extends AndroidElement<Spinner, IComboBox> implements
 	public boolean editable() {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public IComboBox removeText(String... texts) {
+		throw new UnsupportedOperationException();
+	}
 }

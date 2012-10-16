@@ -94,6 +94,25 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 	}
 
 	@Override
+	public IComboBox removeText(String... texts) {
+		programmaticSet = true;
+		for (String choice : texts) {
+			if (choice == null) {
+				hasNull = true;
+			}
+			constraints.remove(choice);
+			for (int i = container.widget.getItemCount() - 1; i >= 0; i--) {
+				if (container.widget.getItemText(i).equals(choice)) {
+					container.widget.removeItem(i);
+				}
+			}
+		}
+		value = text();
+		programmaticSet = false;
+		return this;
+	}
+
+	@Override
 	public IComboBox addUpdateListener(final IUpdateListener<String> listener) {
 		listeners.add(listener);
 		return this;
