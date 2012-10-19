@@ -74,6 +74,7 @@ class MiniFilterPanel implements FilterPanel {
 
 			private final class CombinedRangeField implements RangeField {
 				private final ITextField tf;
+				private String separator = "-";
 
 				private CombinedRangeField(IContainer c) {
 					this.tf = c.textField().width(
@@ -88,7 +89,7 @@ class MiniFilterPanel implements FilterPanel {
 				}
 
 				private String[] texts() {
-					String[] s = tf.text().trim().split(Format.dateRangeSeparator());
+					String[] s = tf.text().trim().split(separator);
 					if (s.length == 1)
 						return new String[] { s[0], s[0] };
 					String low = s[0].trim();
@@ -102,7 +103,7 @@ class MiniFilterPanel implements FilterPanel {
 						b.append(strings[0].trim());
 					}
 					if (!isNull(strings[0]) || !isNull(strings[1]))
-						b.append(Format.dateRangeSeparator());
+						b.append(separator);
 					if (!isNull(strings[1])) {
 						b.append(strings[1].trim());
 					}
@@ -159,6 +160,7 @@ class MiniFilterPanel implements FilterPanel {
 								+ Format.dateRangeSeparator()
 								+ Format.date().format(new Date(30, 0, 1))
 								+ "\"");
+						separator = Format.dateRangeSeparator();
 					} else if (type.equals(Long.class)) {
 						tf.tooltip("Ranges can be declared as \"" + 1 + "-"
 								+ 100 + "\"");
