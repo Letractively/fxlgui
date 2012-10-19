@@ -88,7 +88,7 @@ class MiniFilterPanel implements FilterPanel {
 				}
 
 				private String[] texts() {
-					String[] s = tf.text().trim().split(" ");
+					String[] s = tf.text().trim().split(Format.dateRangeSeparator());
 					if (s.length == 1)
 						return new String[] { s[0], s[0] };
 					String low = s[0].trim();
@@ -102,7 +102,7 @@ class MiniFilterPanel implements FilterPanel {
 						b.append(strings[0].trim());
 					}
 					if (!isNull(strings[0]) || !isNull(strings[1]))
-						b.append(" ");
+						b.append(Format.dateRangeSeparator());
 					if (!isNull(strings[1])) {
 						b.append(strings[1].trim());
 					}
@@ -156,11 +156,11 @@ class MiniFilterPanel implements FilterPanel {
 					if (type.equals(Date.class)) {
 						tf.tooltip("Ranges can be declared as \""
 								+ Format.date().format(new Date(10, 0, 1))
-								+ " "
+								+ Format.dateRangeSeparator()
 								+ Format.date().format(new Date(30, 0, 1))
 								+ "\"");
 					} else if (type.equals(Long.class)) {
-						tf.tooltip("Ranges can be declared as \"" + 1 + " "
+						tf.tooltip("Ranges can be declared as \"" + 1 + "-"
 								+ 100 + "\"");
 					}
 				}
