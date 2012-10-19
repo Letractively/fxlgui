@@ -29,6 +29,8 @@ import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.filter.impl.CellImpl.ExpliciteRangeField;
+import co.fxl.gui.form.impl.Validation;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.Heights;
@@ -68,8 +70,78 @@ class MiniFilterPanel implements FilterPanel {
 
 		class CellImpl implements ICell {
 
+			private final class CombinedRangeField implements RangeField {
+				private final ITextField tf;
+
+				private CombinedRangeField(IContainer c) {
+					this.tf = c.textField().width(
+							FilterTemplate.WIDTH_SINGLE_CELL);
+					Heights.INSTANCE.decorate(tf);
+					widget.register(tf);
+				}
+
+				@Override
+				public String text() {
+					return texts()[0];
+				}
+
+				private String[] texts() {
+					String[] s = tf.text().split("-");
+					if (s.length == 1)
+						return new String[] { s[0], s[0] };
+					String low = s[0].trim();
+					String high = s[1].trim();
+					return new String[] { low, high };
+				}
+
+				private void texts(String[] strings) {
+					tf.text(strings[0] + "-" + strings[1]);
+				}
+
+				@Override
+				public String upperBoundText() {
+					return texts()[1];
+				}
+
+				@Override
+				public void upperBoundText(String text) {
+					texts(new String[] { texts()[0], text });
+				}
+
+				@Override
+				public void addUpdateListener(
+						final IUpdateListener<String> listener) {
+					tf.addUpdateListener(new IUpdateListener<String>() {
+						@Override
+						public void onUpdate(String value) {
+							listener.onUpdate(texts()[0]);
+						}
+					});
+				}
+
+				@Override
+				public void upperBoundAddUpdateListener(
+						final IUpdateListener<String> listener) {
+					tf.addUpdateListener(new IUpdateListener<String>() {
+						@Override
+						public void onUpdate(String value) {
+							listener.onUpdate(texts()[1]);
+						}
+					});
+				}
+
+				@Override
+				public void text(String text) {
+					texts(new String[] { text, texts()[1] });
+				}
+
+				@Override
+				public void validation(Validation validation, Class<?> type) {
+					validation.linkInput(tf);
+				}
+			}
+
 			private IContainer container;
-			private boolean isPanel;
 
 			CellImpl() {
 				container = cardPanel.add();
@@ -81,9 +153,11 @@ class MiniFilterPanel implements FilterPanel {
 			}
 
 			@Override
-			public IHorizontalPanel horizontal() {
-				isPanel = true;
-				return container.panel().horizontal();
+			public RangeField horizontal() {
+				if (Env.is(Env.SWING))
+					return new CombinedRangeField(container);
+				else
+					return new ExpliciteRangeField(widget, container);
 			}
 
 			@Override
@@ -97,7 +171,6 @@ class MiniFilterPanel implements FilterPanel {
 			}
 		}
 
-		private boolean FIREFOX_TEMP_HACK_ACTIVE = Env.is(Env.FIREFOX);
 		private IComboBox comboBox;
 		private ICardPanel cardPanel;
 		private Map<String, Integer> name2index = new HashMap<String, Integer>();
@@ -125,16 +198,6 @@ class MiniFilterPanel implements FilterPanel {
 		}
 
 		void visible() {
-			if (FIREFOX_TEMP_HACK_ACTIVE)
-				for (Integer i : index2cell.keySet()) {
-					if (index2cell.get(i).isPanel) {
-						for (String name : name2index.keySet()) {
-							if (name2index.get(name).equals(i)) {
-								comboBox.removeText(name);
-							}
-						}
-					}
-				}
 			cardPanel.show(index2cell.get(0).container.element());
 			if (index2cell.size() == 1)
 				comboBox.editable(false);
