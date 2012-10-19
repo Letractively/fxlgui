@@ -32,8 +32,13 @@ public class Format {
 	private static Map<String, IFormat<?>> formats = new HashMap<String, IFormat<?>>();
 	private static IFormat<Date> dateTimeFormat;
 	private static IFormat<Date> timeFormat;
+	private static String locale;
 	static {
 		setUp();
+	}
+
+	public static String dateRangeSeparator() {
+		return locale.equals(LOCALE_DE) ? "-" : " ";
 	}
 
 	public static void register(Class<?> clazz, IFormat<?> format) {
@@ -154,6 +159,7 @@ public class Format {
 	}
 
 	public static void setLocale(String locale) {
+		Format.locale = locale;
 		for (IFormat<?> f : formats.values())
 			f.setLocale(locale);
 	}
