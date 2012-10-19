@@ -34,6 +34,7 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.filter.impl.CellImpl.ExpliciteRangeField;
 import co.fxl.gui.form.impl.Validation;
 import co.fxl.gui.impl.Constants;
+import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
@@ -178,7 +179,7 @@ class MiniFilterPanel implements FilterPanel {
 
 			@Override
 			public RangeField horizontal() {
-				if (true)// Env.is(Env.FIREFOX))
+				if (Env.is(Env.FIREFOX))
 					return new CombinedRangeField(container);
 				else
 					return new ExpliciteRangeField(widget, container);
