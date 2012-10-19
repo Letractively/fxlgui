@@ -95,7 +95,20 @@ class MiniFilterPanel implements FilterPanel {
 				}
 
 				private void texts(String[] strings) {
-					tf.text(strings[0] + "-" + strings[1]);
+					StringBuilder b = new StringBuilder();
+					if (!isNull(strings[0])) {
+						b.append(strings[0]);
+					}
+					if (!isNull(strings[0]) || !isNull(strings[1]))
+						b.append("-");
+					if (!isNull(strings[1])) {
+						b.append(strings[1]);
+					}
+					tf.text(b.toString());
+				}
+
+				private boolean isNull(String string) {
+					return string == null || string.trim().isEmpty();
 				}
 
 				@Override
@@ -154,7 +167,7 @@ class MiniFilterPanel implements FilterPanel {
 
 			@Override
 			public RangeField horizontal() {
-				if (Env.is(Env.FIREFOX))
+				if (true)//Env.is(Env.FIREFOX))
 					return new CombinedRangeField(container);
 				else
 					return new ExpliciteRangeField(widget, container);
