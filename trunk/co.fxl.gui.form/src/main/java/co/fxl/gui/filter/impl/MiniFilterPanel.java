@@ -18,9 +18,11 @@
  */
 package co.fxl.gui.filter.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.fxl.data.format.impl.Format;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IComboBox;
@@ -32,7 +34,6 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.filter.impl.CellImpl.ExpliciteRangeField;
 import co.fxl.gui.form.impl.Validation;
 import co.fxl.gui.impl.Constants;
-import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
@@ -86,7 +87,7 @@ class MiniFilterPanel implements FilterPanel {
 				}
 
 				private String[] texts() {
-					String[] s = tf.text().split("-");
+					String[] s = tf.text().trim().split(" ");
 					if (s.length == 1)
 						return new String[] { s[0], s[0] };
 					String low = s[0].trim();
@@ -97,12 +98,12 @@ class MiniFilterPanel implements FilterPanel {
 				private void texts(String[] strings) {
 					StringBuilder b = new StringBuilder();
 					if (!isNull(strings[0])) {
-						b.append(strings[0]);
+						b.append(strings[0].trim());
 					}
 					if (!isNull(strings[0]) || !isNull(strings[1]))
-						b.append("-");
+						b.append(" ");
 					if (!isNull(strings[1])) {
-						b.append(strings[1]);
+						b.append(strings[1].trim());
 					}
 					tf.text(b.toString());
 				}
@@ -151,6 +152,16 @@ class MiniFilterPanel implements FilterPanel {
 				@Override
 				public void validation(Validation validation, Class<?> type) {
 					validation.linkInput(tf);
+					if (type.equals(Date.class)) {
+						tf.tooltip("Ranges can be declared as \""
+								+ Format.date().format(new Date(10, 0, 1))
+								+ " "
+								+ Format.date().format(new Date(30, 0, 1))
+								+ "\"");
+					} else if (type.equals(Long.class)) {
+						tf.tooltip("Ranges can be declared as \"" + 1 + " "
+								+ 100 + "\"");
+					}
 				}
 			}
 
@@ -167,7 +178,7 @@ class MiniFilterPanel implements FilterPanel {
 
 			@Override
 			public RangeField horizontal() {
-				if (true)//Env.is(Env.FIREFOX))
+				if (true)// Env.is(Env.FIREFOX))
 					return new CombinedRangeField(container);
 				else
 					return new ExpliciteRangeField(widget, container);
