@@ -32,7 +32,7 @@ interface FilterPanel {
 
 		IComboBox comboBox();
 
-		IHorizontalPanel horizontal();
+		RangeField horizontal();
 
 		ITextField textField();
 

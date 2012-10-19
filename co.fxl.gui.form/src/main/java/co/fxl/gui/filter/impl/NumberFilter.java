@@ -81,14 +81,13 @@ class NumberFilter extends RangeFilter<Number> {
 	}
 
 	@Override
-	public void validate(Validation validation) {
-		validation.linkInput(input);
-		validation.linkInput(upperBoundTextField);
-	}
-
-	@Override
 	public IUpdateable<String> addUpdateListener(
 			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	Class<?> type() {
+		return Long.class;
 	}
 }

@@ -77,12 +77,6 @@ class DateFilter extends RangeFilter<Date> {
 	}
 
 	@Override
-	public void validate(Validation validation) {
-		validation.validateDate(input);
-		validation.validateDate(upperBoundTextField);
-	}
-
-	@Override
 	boolean fromConstraint(IFilterConstraints constraints) {
 		if (constraints.isAttributeConstrained(name)) {
 			IRange<Date> range = constraints.dateRange(name);
@@ -99,5 +93,10 @@ class DateFilter extends RangeFilter<Date> {
 	public IUpdateable<String> addUpdateListener(
 			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	Class<?> type() {
+		return Date.class;
 	}
 }

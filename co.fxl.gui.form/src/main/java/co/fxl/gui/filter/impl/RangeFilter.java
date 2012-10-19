@@ -18,60 +18,54 @@
  */
 package co.fxl.gui.filter.impl;
 
-import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterConstraints.IRange;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.filter.impl.FilterPanel.ICell;
+import co.fxl.gui.form.impl.Validation;
 
 abstract class RangeFilter<T> extends FilterTemplate<ITextField, T> {
 
-	ITextField upperBoundTextField;
 	String lowerBoundText = "";
 	String upperBoundText = "";
-	private IHorizontalPanel panel;
-	private FilterGrid parent;
+	protected RangeField panel;
+
+	// private FilterGrid parent;
 
 	RangeFilter(FilterGrid parent, String name, int filterIndex) {
 		super(parent, name, filterIndex);
-		this.parent = parent;
+		// this.parent = parent;
 		ICell cell = parent.cell(filterIndex);
 		// cell.width(WIDTH_RANGE_CELL);// , HEIGHT);
-		panel = cell.horizontal().add().panel().horizontal();
-		input = addTextField(0);
-		// lowerBoundTextField.height(HEIGHT);
-		panel.addSpace(4);
-		panel.add().label().text("-");
-		panel.addSpace(4);
-		upperBoundTextField = addTextField(2);
-		// upperBoundTextField.height(HEIGHT);
+		panel = cell.horizontal();
+		// input = addTextField(0);
 	}
 
-	private ITextField addTextField(int column) {
-		ITextField textField = panel.add().textField().width(WIDTH_RANGE_CELL);
-		parent.heights().decorate(textField);
-		parent.register(textField);
-		return textField;
-	}
+	// private ITextField addTextField(int column) {
+	// ITextField textField = panel.add().textField().width(WIDTH_RANGE_CELL);
+	// parent.heights().decorate(textField);
+	// parent.register(textField);
+	// return textField;
+	// }
 
 	public boolean update() {
-		lowerBoundText = input.text();
-		upperBoundText = upperBoundTextField.text();
+		lowerBoundText = panel.text();
+		upperBoundText = panel.upperBoundText();
 		return true;
 	}
 
 	void setUpperBound(String text) {
 		if (text.endsWith(".0"))
 			text = text.substring(0, text.length() - 2);
-		upperBoundTextField.text(text);
+		panel.upperBoundText(text);
 		upperBoundText = text;
 	}
 
 	void setLowerBound(String text) {
 		if (text.endsWith(".0"))
 			text = text.substring(0, text.length() - 2);
-		input.text(text);
+		panel.text(text);
 		lowerBoundText = text;
 	}
 
@@ -87,13 +81,20 @@ abstract class RangeFilter<T> extends FilterTemplate<ITextField, T> {
 
 			@Override
 			public void onUpdate(String value) {
-				l.onActive(!input.text().trim().equals("")
-						|| !upperBoundTextField.text().trim().equals(""));
+				l.onActive(!panel.text().trim().equals("")
+						|| !panel.upperBoundText().trim().equals(""));
 			}
 		};
-		input.addUpdateListener(listener);
-		upperBoundTextField.addUpdateListener(listener);
+		panel.addUpdateListener(listener);
+		panel.upperBoundAddUpdateListener(listener);
 	}
+
+	@Override
+	public void validate(Validation validation) {
+		panel.validation(validation, type());
+	}
+
+	abstract Class<?> type();
 
 	boolean fromConstraint(IFilterConstraints constraints) {
 		if (constraints.isAttributeConstrained(name)) {
