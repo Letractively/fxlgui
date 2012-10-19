@@ -32,7 +32,7 @@ public class Format {
 	private static Map<String, IFormat<?>> formats = new HashMap<String, IFormat<?>>();
 	private static IFormat<Date> dateTimeFormat;
 	private static IFormat<Date> timeFormat;
-	private static String locale;
+	private static String locale = LOCALE_EN;
 	static {
 		setUp();
 	}
