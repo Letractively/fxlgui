@@ -154,7 +154,7 @@ class MiniFilterPanel implements FilterPanel {
 
 			@Override
 			public RangeField horizontal() {
-				if (Env.is(Env.SWING))
+				if (Env.is(Env.FIREFOX))
 					return new CombinedRangeField(container);
 				else
 					return new ExpliciteRangeField(widget, container);
