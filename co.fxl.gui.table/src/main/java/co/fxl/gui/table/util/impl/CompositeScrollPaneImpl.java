@@ -130,7 +130,8 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 	public void run() {
 		int rh = rightContainer != null ? rightContainer.element().height() : 1;
 		int lh = centerContainer.element().height();
-		dummy.height(Math.max(lh, rh));
+		int max = Math.max(lh, rh);
+		if(max>0)dummy.height(max);
 	}
 
 	@Override
