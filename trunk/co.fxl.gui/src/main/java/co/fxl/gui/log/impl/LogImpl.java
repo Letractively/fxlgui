@@ -213,7 +213,7 @@ class LogImpl implements ILog, IClickListener {
 	}
 
 	private void addMessage(Entry l, ILabel lm) {
-		lm.text(l.message).font().pixel(12).family().courier();
+		lm.autoWrap(true).text(l.message).font().pixel(12).family().courier();
 	}
 
 	private void addLevel(Entry l, ILabel ll) {
