@@ -233,7 +233,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 			StatusDisplay.instance().addResizeListener(new IResizeListener() {
 				@Override
 				public void onResize(int width, int height) {
-					updateBorderAfterResize();
+					updateAfterResize();
 				}
 			}).linkLifecycle(mainPanel);
 		}
@@ -363,7 +363,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 
 	@Override
 	public INavigationWidget refresh(ICallback<Void> cb) {
-		updateBorderAfterResize();
+		updateAfterResize();
 		if (active != null)
 			active.active(true, cb);
 		else
@@ -481,7 +481,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 		listeningOnServerCalls = b;
 	}
 
-	public void updateBorderAfterResize() {
+	public void updateAfterResize() {
 		if (FIX_SEPARATOR_BORDER) {
 			update(true);
 			Display.instance().invokeLater(new Runnable() {
@@ -493,6 +493,8 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 		} else if (!update(true)) {
 			addSeparatorBorder();
 		}
+		for(NavigationGroupImpl g:groups)
+			g.notifyResize();
 	}
 
 	@Override
