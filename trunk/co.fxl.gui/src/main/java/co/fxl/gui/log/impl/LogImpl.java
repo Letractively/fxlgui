@@ -28,7 +28,7 @@ import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.log.api.ILog;
 
 class LogImpl implements ILog, IClickListener {
-	
+
 	// TODO FullscreenPopUp verwenden
 
 	private class Entry {
@@ -93,11 +93,23 @@ class LogImpl implements ILog, IClickListener {
 	}
 
 	@Override
+	public ILog debug(String message, long duration) {
+		return addEntry(new Entry("DEBUG", message, duration));
+	}
+
+	@Override
 	public ILog debug(String message, long duration,
 			Throwable clientStacktrace, Throwable serverStacktrace) {
-		ensureSize();
-		addLine(new Entry("DEBUG", message, duration, clientStacktrace,
+		return addEntry(new Entry("DEBUG", message, duration, clientStacktrace,
 				serverStacktrace));
+	}
+
+	private ILog addEntry(Entry e) {
+		ensureSize();
+		addLine(e);
+		for (String key : timestamps.keySet()) {
+			timestamps.put(key, timestamps.get(key) + e.duration);
+		}
 		return this;
 	}
 
@@ -172,7 +184,8 @@ class LogImpl implements ILog, IClickListener {
 
 	public void resize(IDisplay d, final IPopUp popUp, IScrollPane scrollPane) {
 		popUp.size(d.width() - SPACING * 2, d.height() - SPACING * 2);
-		scrollPane.size(d.width() - SPACING * 2, d.height() - SPACING * 2 - FullscreenPopUp.HEIGHT_TOP);
+		scrollPane.size(d.width() - SPACING * 2, d.height() - SPACING * 2
+				- FullscreenPopUp.HEIGHT_TOP);
 	}
 
 	private void showLog(final IScrollPane scrollPane,
@@ -299,13 +312,6 @@ class LogImpl implements ILog, IClickListener {
 		if (timestamps.containsKey(message))
 			debug(message,
 					(System.currentTimeMillis() - timestamps.remove(message)));
-		return this;
-	}
-
-	@Override
-	public ILog debug(String message, long duration) {
-		ensureSize();
-		addLine(new Entry("DEBUG", message, duration));
 		return this;
 	}
 
