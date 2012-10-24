@@ -60,6 +60,8 @@ public interface IDialog {
 
 	IDialog modal(boolean modal);
 
+	IDialog glass(boolean glass);
+
 	IDialog title(String title);
 
 	IType message(String message);
