@@ -298,7 +298,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	public void startLoading() {
-		Log.instance().start("Showing tab " + button.text());
+		Log.instance().start(getMessage());
 		int width = buttonPanel.width();
 		int height = buttonPanel.height();
 		buttonPanel.size(width, height);
@@ -306,8 +306,12 @@ public class NavigationItemImpl extends LazyClickListener implements
 //		widget.loading(true);
 	}
 
+	String getMessage() {
+		return "Drawing tab " + button.text();
+	}
+
 	void stopLoading() {
-		Log.instance().stop("Showing tab " + button.text());
+		Log.instance().stop(getMessage());
 //		widget.loading(false);
 	}
 
