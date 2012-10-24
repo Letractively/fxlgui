@@ -45,6 +45,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 		INavigationItem {
 
 	static final int POPUP_WIDTH = 280;
+	protected static final boolean ALLOW_CACHING = true;
 	public static int SPACING_LOADING = Constants.get(
 			"NavigationItemImpl.SPACING_LOADING", 5);
 	// TODO when row height computation in scrolltablewidgetimpl is working for
@@ -71,6 +72,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	private int[] colorInactiveGradient;
 	private IContentPage flipPage;
 	private boolean isFirst = true;
+	private IVerticalPanel cached;
 
 	NavigationItemImpl(NavigationGroupImpl group) {
 		this.group = group;
@@ -210,8 +212,8 @@ public class NavigationItemImpl extends LazyClickListener implements
 									- getLeftPartPopUpWidth();
 							if (x < 10)
 								x = 10;
-							popUp.offset(x, basicPanel.offsetY()
-									+ basicPanel.height());
+							popUp.offset(x,
+									basicPanel.offsetY() + basicPanel.height());
 							popUp.visible(true);
 							clickable(false);
 						}
@@ -273,13 +275,18 @@ public class NavigationItemImpl extends LazyClickListener implements
 				};
 				try {
 					if (isFirst || !widget.flipPage().supportsRefresh()) {
-						IVerticalPanel vertical = flipPage.next().panel()
-								.vertical();
-						if (USE_TEMP_FLIP) {
-							widget.flipPage().preview();
-							widget.listeningOnServerCalls(true);
+						if (cached != null && ALLOW_CACHING) {
+							flipPage.next().element(cached);
+							cb.onSuccess(null);
+						} else {
+							cached = flipPage.next().panel().vertical();
+							if (USE_TEMP_FLIP) {
+								widget.flipPage().preview();
+								widget.listeningOnServerCalls(true);
+							}
+							decorator.decorate(new BufferedPanelImpl(cached),
+									cb);
 						}
-						decorator.decorate(new BufferedPanelImpl(vertical), cb);
 					} else {
 						decorator.refresh(cb);
 					}
@@ -303,7 +310,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 		int height = buttonPanel.height();
 		buttonPanel.size(width, height);
 		showLoading();
-//		widget.loading(true);
+		// widget.loading(true);
 	}
 
 	String getMessage() {
@@ -312,7 +319,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 
 	void stopLoading() {
 		Log.instance().stop(getMessage());
-//		widget.loading(false);
+		// widget.loading(false);
 	}
 
 	private void forkLabelAsActive(boolean viaClick,
@@ -535,5 +542,9 @@ public class NavigationItemImpl extends LazyClickListener implements
 	@Override
 	public void showNewContentPanel() {
 		throw new UnsupportedOperationException();
+	}
+
+	void notifyResize() {
+		cached = null;
 	}
 }

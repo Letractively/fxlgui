@@ -138,4 +138,9 @@ class NavigationGroupImpl implements INavigationGroup {
 		}
 		return null;
 	}
+
+	void notifyResize() {
+		for(NavigationItemImpl i:items)
+			i.notifyResize();
+	}
 }
