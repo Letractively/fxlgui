@@ -240,4 +240,9 @@ class AndroidDialog implements IDialog {
 	public int width() {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public IDialog glass(boolean glass) {
+		throw new UnsupportedOperationException();
+	}
 }
