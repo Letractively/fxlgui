@@ -277,7 +277,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 					if (isFirst || !widget.flipPage().supportsRefresh()) {
 						if (cached != null && ALLOW_CACHING) {
 							flipPage.next().element(cached);
-							cb.onSuccess(null);
+							decorator.refresh(cb);
 						} else {
 							cached = flipPage.next().panel().vertical();
 							if (USE_TEMP_FLIP) {
@@ -286,6 +286,8 @@ public class NavigationItemImpl extends LazyClickListener implements
 							}
 							decorator.decorate(new BufferedPanelImpl(cached),
 									cb);
+							if (!ALLOW_CACHING)
+								cached = null;
 						}
 					} else {
 						decorator.refresh(cb);
@@ -544,7 +546,9 @@ public class NavigationItemImpl extends LazyClickListener implements
 		throw new UnsupportedOperationException();
 	}
 
-	void notifyResize() {
+	@Override
+	public INavigationItem clearCache() {
 		cached = null;
+		return this;
 	}
 }

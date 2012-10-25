@@ -240,6 +240,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 	}
 
 	boolean update() {
+		clearCache();
 		return update(false);
 	}
 
@@ -493,8 +494,12 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 		} else if (!update(true)) {
 			addSeparatorBorder();
 		}
+		clearCache();
+	}
+
+	private void clearCache() {
 		for(NavigationGroupImpl g:groups)
-			g.notifyResize();
+			g.clearCache();
 	}
 
 	@Override
