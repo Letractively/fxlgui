@@ -50,4 +50,6 @@ public interface INavigationWidget extends
 	INavigationWidget showConfigure(boolean b);
 
 	INavigationWidget active(ICallback<Void> c);
+
+	INavigationWidget clearCache();
 }
