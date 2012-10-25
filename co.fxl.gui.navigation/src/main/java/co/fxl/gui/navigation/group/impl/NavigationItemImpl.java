@@ -277,6 +277,10 @@ public class NavigationItemImpl extends LazyClickListener implements
 					if (isFirst || !widget.flipPage().supportsRefresh()) {
 						if (cached != null && ALLOW_CACHING) {
 							flipPage.next().element(cached);
+							if (USE_TEMP_FLIP) {
+								widget.flipPage().preview();
+								widget.listeningOnServerCalls(true);
+							}
 							decorator.refresh(cb);
 						} else {
 							cached = flipPage.next().panel().vertical();
