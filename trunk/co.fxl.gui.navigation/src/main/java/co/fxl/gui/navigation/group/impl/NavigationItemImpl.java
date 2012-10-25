@@ -277,17 +277,11 @@ public class NavigationItemImpl extends LazyClickListener implements
 					if (isFirst || !widget.flipPage().supportsRefresh()) {
 						if (cached != null && ALLOW_CACHING) {
 							flipPage.next().element(cached);
-							if (USE_TEMP_FLIP) {
-								widget.flipPage().preview();
-								widget.listeningOnServerCalls(true);
-							}
+							preview();
 							decorator.refresh(cb);
 						} else {
 							cached = flipPage.next().panel().vertical();
-							if (USE_TEMP_FLIP) {
-								widget.flipPage().preview();
-								widget.listeningOnServerCalls(true);
-							}
+							preview();
 							decorator.decorate(new BufferedPanelImpl(cached),
 									cb);
 							if (!ALLOW_CACHING)
@@ -298,6 +292,13 @@ public class NavigationItemImpl extends LazyClickListener implements
 					}
 				} catch (Exception e) {
 					onFail(e);
+				}
+			}
+
+			private void preview() {
+				if (USE_TEMP_FLIP) {
+					widget.flipPage().preview();
+					widget.listeningOnServerCalls(true);
 				}
 			}
 
