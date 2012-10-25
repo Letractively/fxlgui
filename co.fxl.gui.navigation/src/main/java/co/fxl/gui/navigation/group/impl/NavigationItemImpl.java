@@ -237,6 +237,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	NavigationItemImpl setActive(boolean viaClick, final ICallback<Void> cb0) {
+		final boolean wasActive = isActive();
 		ServerCallCache.instance().record(true);
 		if (!Env.is(Env.SWING))
 			startLoading();
@@ -276,8 +277,10 @@ public class NavigationItemImpl extends LazyClickListener implements
 				try {
 					if (isFirst || !widget.flipPage().supportsRefresh()) {
 						if (cached != null && ALLOW_CACHING) {
-							flipPage.next().element(cached);
-							preview();
+							if (!wasActive) {
+								flipPage.next().element(cached);
+								preview();
+							}
 							decorator.refresh(cb);
 						} else {
 							cached = flipPage.next().panel().vertical();
