@@ -37,4 +37,6 @@ public interface INavigationItem extends ITab<INavigationItem> {
 	boolean visible();
 
 	INavigationItem moreTab();
+
+	INavigationItem clearCache();
 }
