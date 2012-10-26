@@ -18,8 +18,12 @@
  */
 package co.fxl.gui.impl;
 
-public interface IResizableWidget {
+import co.fxl.gui.api.IResizable.IResizeListener;
+
+public interface IResizableWidget extends IResizeListener {
 
 	void register();
-	
+
+	IResizableWidget addChild(IResizableWidget widget);
+
 }

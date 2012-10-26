@@ -18,6 +18,35 @@
  */
 package co.fxl.gui.impl;
 
-public class ResizableWidgetTemplate implements IResizableWidget {
+import java.util.LinkedList;
+import java.util.List;
 
+import co.fxl.gui.api.IResizable.IResizeListener;
+
+public abstract class ResizableWidgetTemplate implements IResizableWidget {
+
+	private List<ResizableWidgetTemplate> children = new LinkedList<ResizableWidgetTemplate>();
+
+	@Override
+	public void register() {
+		StatusDisplay.instance().addResizeListener(new IResizeListener() {
+			@Override
+			public void onResize(int width, int height) {
+				recursiveResize(width, height);
+			}
+		});
+	}
+
+	@Override
+	public IResizableWidget addChild(IResizableWidget widget) {
+		children.add((ResizableWidgetTemplate) widget);
+		return this;
+	}
+
+	private void recursiveResize(int width, int height) {
+		ResizableWidgetTemplate.this.onResize(width, height);
+		for (ResizableWidgetTemplate child : children) {
+			child.recursiveResize(width, height);
+		}
+	}
 }
