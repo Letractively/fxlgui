@@ -223,7 +223,7 @@ public class ContextMenu {
 		return false;
 	}
 
-	public static ContextMenu reset() {
+	public static ContextMenu newInstance() {
 		instance = new ContextMenu();
 		return instance;
 	}
