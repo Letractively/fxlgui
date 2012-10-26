@@ -75,10 +75,13 @@ public class ResizeRegistryImpl<T> implements IResizeRegistry<T> {
 	}
 
 	private List<ResizeConfiguration> resizeListeners = new LinkedList<ResizeConfiguration>();
-	private T owner;
+	protected T owner;
 
-	protected ResizeRegistryImpl(T owner) {
+	ResizeRegistryImpl(T owner) {
 		this.owner = owner;
+	}
+
+	ResizeRegistryImpl() {
 	}
 
 	@Override

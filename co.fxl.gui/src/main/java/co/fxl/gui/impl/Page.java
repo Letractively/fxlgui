@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.api.IDisplay.IResizeConfiguration;
 import co.fxl.gui.api.IResizable.IResizeListener;
 
 public class Page extends ResizeRegistryImpl<Page> implements IResizeListener {
@@ -26,7 +25,7 @@ public class Page extends ResizeRegistryImpl<Page> implements IResizeListener {
 	private static Page active = null;
 
 	private Page() {
-		super(this);
+		owner = this;
 		activate();
 	}
 
@@ -44,12 +43,8 @@ public class Page extends ResizeRegistryImpl<Page> implements IResizeListener {
 		StatusDisplay.instance().addResizeListener(this).singleton();
 	}
 
-	public IResizeConfiguration addResizeListener(IResizeListener listener) {
-		throw new UnsupportedOperationException();
-	}
-
 	@Override
 	public void onResize(int width, int height) {
-		throw new UnsupportedOperationException();
+		notifyResizeListeners();
 	}
 }
