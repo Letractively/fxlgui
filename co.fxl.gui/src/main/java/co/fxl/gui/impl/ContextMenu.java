@@ -225,12 +225,12 @@ public class ContextMenu {
 		return false;
 	}
 
-	public static ContextMenu newInstance() {
+	static ContextMenu newInstance() {
 		instance = new ContextMenu();
 		return instance;
 	}
 
-	public static ContextMenu instance() {
+	static ContextMenu instance() {
 		return instance;
 	}
 
@@ -256,5 +256,9 @@ public class ContextMenu {
 
 	public boolean active() {
 		return active;
+	}
+
+	void activate() {
+		instance = this;
 	}
 }

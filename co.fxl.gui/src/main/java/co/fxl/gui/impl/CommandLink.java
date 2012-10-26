@@ -137,7 +137,7 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	}
 
 	public CommandLink addToContextMenu(String group) {
-		Group g = ContextMenu.instance().group(group);
+		Group g = co.fxl.gui.impl.Page.instance().contextMenu().group(group);
 		contextMenuEntry = g.addEntry(text);
 		if (ctrlKey != 0)
 			contextMenuEntry.ctrlKey(ctrlKey);

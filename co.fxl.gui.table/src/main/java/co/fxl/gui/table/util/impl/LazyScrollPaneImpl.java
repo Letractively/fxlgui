@@ -177,7 +177,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		hasScrollbar = true;
 		v = container.panel().focus();
 		if (!plainContent)
-			ContextMenu.instance().decorate((IClickable<?>) v);
+			co.fxl.gui.impl.Page.instance().contextMenu().decorate((IClickable<?>) v);
 		v.color().white();
 		if (dragDropListener != null && !useDecoratorReturnForDND)
 			new DragAndDrop(this, v);

@@ -264,7 +264,7 @@ public class WidgetTitle implements IClickListener {
 		}
 		this.title = title;
 		if (addToContextMenu) {
-			ContextMenu instance = ContextMenu.instance();
+			ContextMenu instance = co.fxl.gui.impl.Page.instance().contextMenu();
 			Group group = instance.group(title);
 			group.clear();
 		}
