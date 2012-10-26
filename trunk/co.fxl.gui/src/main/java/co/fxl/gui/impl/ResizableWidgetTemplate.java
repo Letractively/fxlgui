@@ -23,18 +23,19 @@ import java.util.List;
 
 import co.fxl.gui.api.IResizable.IResizeListener;
 
-public abstract class ResizableWidgetTemplate implements IResizableWidget {
+public class ResizableWidgetTemplate implements IResizableWidget {
 
 	private List<ResizableWidgetTemplate> children = new LinkedList<ResizableWidgetTemplate>();
 
 	@Override
-	public void register() {
+	public IResizableWidget register() {
 		StatusDisplay.instance().addResizeListener(new IResizeListener() {
 			@Override
 			public void onResize(int width, int height) {
 				recursiveResize(width, height);
 			}
 		});
+		return this;
 	}
 
 	@Override
@@ -43,10 +44,20 @@ public abstract class ResizableWidgetTemplate implements IResizableWidget {
 		return this;
 	}
 
+	@Override
+	public IResizableWidget setChild(IResizableWidget widget) {
+		children.clear();
+		return addChild(widget);
+	}
+
 	private void recursiveResize(int width, int height) {
 		ResizableWidgetTemplate.this.onResize(width, height);
 		for (ResizableWidgetTemplate child : children) {
 			child.recursiveResize(width, height);
 		}
+	}
+
+	@Override
+	public void onResize(int width, int height) {
 	}
 }
