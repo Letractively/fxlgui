@@ -201,7 +201,7 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			widgetTitle = new WidgetTitle(c0.panel(), addBorders, plainContent)
 					.foldable(false);
 			widgetTitle.addSubTitles(subTitle1, subTitle2);
-			widgetTitle.addToContextMenu(true);
+			widgetTitle.addToContextMenu(addToContextMenu);
 			widgetTitle.commandsOnTop();
 			widgetTitle.hyperlinkVisible(false);
 			widgetTitle.spacing(0);
