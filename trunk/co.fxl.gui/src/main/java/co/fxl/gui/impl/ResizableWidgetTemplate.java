@@ -28,7 +28,7 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 	private List<ResizableWidgetTemplate> children = new LinkedList<ResizableWidgetTemplate>();
 
 	@Override
-	public IResizableWidget register() {
+	public IResizableWidget addResizableWidgetToDisplay() {
 		StatusDisplay.instance().addResizeListener(new IResizeListener() {
 			@Override
 			public void onResize(int width, int height) {
@@ -39,15 +39,15 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 	}
 
 	@Override
-	public IResizableWidget addChild(IResizableWidget widget) {
+	public IResizableWidget addResizableWidget(IResizableWidget widget) {
 		children.add((ResizableWidgetTemplate) widget);
 		return this;
 	}
 
 	@Override
-	public IResizableWidget setChild(IResizableWidget widget) {
+	public IResizableWidget setResizableWidget(IResizableWidget widget) {
 		children.clear();
-		return addChild(widget);
+		return addResizableWidget(widget);
 	}
 
 	private void recursiveResize(int width, int height) {
