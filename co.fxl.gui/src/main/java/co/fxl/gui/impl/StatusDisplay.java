@@ -109,7 +109,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	// };
 	// }
 
-	public IResizeConfiguration addResizeListener(IResizeListener resizeListener) {
+	IResizeConfiguration addResizeListener(IResizeListener resizeListener) {
 		return addResizeListener(resizeListener, false);
 	}
 
@@ -137,7 +137,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	// };
 	// }
 
-	public IResizeConfiguration addResizeListener(
+	IResizeConfiguration addResizeListener(
 			IResizeListener resizeListener, boolean fire) {
 		// if (SINGLE_RESIZE_LISTENER) {
 		// if (fire) {
@@ -160,7 +160,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 		autoResize(e, dec, false);
 	}
 
-	public void autoResize(final IElement<?> e, final int dec, boolean b) {
+	private void autoResize(final IElement<?> e, final int dec, boolean b) {
 		final IResizeListener listener = new IResizeListener() {
 			@Override
 			public void onResize(int width, int height) {

@@ -20,10 +20,12 @@ package co.fxl.gui.navigation.impl;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.ResizableWidgetTemplate;
 import co.fxl.gui.navigation.api.IBufferedPanel;
 import co.fxl.gui.navigation.api.ITabDecorator;
 
-public abstract class TabDecoratorTemplate implements ITabDecorator {
+public abstract class TabDecoratorTemplate extends ResizableWidgetTemplate
+		implements ITabDecorator {
 
 	protected IVerticalPanel panel;
 
