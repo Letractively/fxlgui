@@ -157,6 +157,8 @@ public class ContextMenu {
 	public void showAlways() {
 		if (popUp != null && popUp.visible())
 			return;
+		if (groups.isEmpty())
+			return;
 		popUp = display.showPopUp().autoHide(true)// .width(320)
 				.atLastClick();
 		new Heights(0).decorateBorder(popUp).style().shadow();
