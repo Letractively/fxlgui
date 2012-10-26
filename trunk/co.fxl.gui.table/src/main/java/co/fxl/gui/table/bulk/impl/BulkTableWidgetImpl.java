@@ -139,7 +139,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 			@Override
 			public void onClick(int column, int row) {
 				if (addToContextMenu)
-					ContextMenu.instance().show();
+					co.fxl.gui.impl.Page.instance().contextMenu().show();
 			}
 		}).mouseRight();
 	}

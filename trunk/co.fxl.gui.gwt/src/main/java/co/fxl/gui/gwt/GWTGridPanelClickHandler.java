@@ -59,7 +59,7 @@ public class GWTGridPanelClickHandler extends KeyTemplate<IGridPanel> implements
 						if (isWaiting())
 							return;
 						GWTDisplay.notifyEvent(event);
-						ContextMenu.instance().show();
+						co.fxl.gui.impl.Page.instance().contextMenu().show();
 						event.preventDefault();
 					}
 				}, ContextMenuEvent.getType());

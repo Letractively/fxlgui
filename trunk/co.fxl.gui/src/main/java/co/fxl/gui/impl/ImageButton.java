@@ -67,7 +67,7 @@ public class ImageButton implements IClickable<Object>,
 		label.text(text);
 		if (addToContextMenu != null)
 			if (entry == null) {
-				entry = ContextMenu.instance().group(addToContextMenu)
+				entry = co.fxl.gui.impl.Page.instance().contextMenu().group(addToContextMenu)
 						.addEntry(text);
 				entry.addClickListener(this);
 				if (image != null) {
