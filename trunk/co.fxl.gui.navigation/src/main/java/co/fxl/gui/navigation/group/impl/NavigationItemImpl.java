@@ -20,6 +20,7 @@ package co.fxl.gui.navigation.group.impl;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICallback;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -35,14 +36,16 @@ import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.IContentPage;
 import co.fxl.gui.impl.LazyClickListener;
+import co.fxl.gui.impl.ResizableWidgetTemplate;
 import co.fxl.gui.impl.ServerCallCache;
+import co.fxl.gui.impl.StatusDisplay;
 import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.navigation.api.ITabDecorator;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.impl.BufferedPanelImpl;
 
-public class NavigationItemImpl extends LazyClickListener implements
-		INavigationItem {
+public class NavigationItemImpl extends ResizableWidgetTemplate implements
+		INavigationItem, IClickListener {
 
 	static final int POPUP_WIDTH = 280;
 	protected static final boolean ALLOW_CACHING = true;
@@ -71,8 +74,10 @@ public class NavigationItemImpl extends LazyClickListener implements
 	int[] colorInactive;
 	private int[] colorInactiveGradient;
 	private IContentPage flipPage;
-	private boolean isFirst = true;
+	// private boolean isFirst = true;
 	private IVerticalPanel cached;
+	private int lastWidth = StatusDisplay.instance().width();
+	private int lastHeight = StatusDisplay.instance().height();
 
 	NavigationItemImpl(NavigationGroupImpl group) {
 		this.group = group;
@@ -94,12 +99,18 @@ public class NavigationItemImpl extends LazyClickListener implements
 			IHorizontalPanel subPanel = buttonPanel.add().panel().horizontal();
 			button = subPanel.add().label();
 			button.font().pixel(14).weight().bold().color().white();
-			button.addClickListener(this);
+			LazyClickListener clickListener = new LazyClickListener() {
+				@Override
+				protected void onAllowedClick() {
+					NavigationItemImpl.this.onClick();
+				}
+			};
+			button.addClickListener(clickListener);
 			refresh = subPanel.add().image().visible(false).size(16, 16);
 			refreshResource("loading_white.gif");
-			refresh.addClickListener(this);
+			refresh.addClickListener(clickListener);
 			buttonPanel.addSpace(3);
-			buttonPanel.addClickListener(this);
+			buttonPanel.addClickListener(clickListener);
 			showLabelAsInactive();
 			flipPage = widget.flipPage().newPage();
 		}
@@ -165,6 +176,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	@Override
 	public INavigationItem decorator(ITabDecorator decorator) {
 		this.decorator = decorator;
+		setResizableWidget(decorator);
 		return this;
 	}
 
@@ -172,7 +184,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	private boolean visible = true;
 
 	@Override
-	public void onAllowedClick() {
+	public void onClick() {
 		if (isMoreTab) {
 			setUpMoreTab();
 		} else
@@ -237,6 +249,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 	}
 
 	NavigationItemImpl setActive(boolean viaClick, final ICallback<Void> cb0) {
+		widget.setResizableWidget(this);
 		final boolean wasActive = isActive();
 		ServerCallCache.instance().record(true);
 		if (!Env.is(Env.SWING))
@@ -248,7 +261,9 @@ public class NavigationItemImpl extends LazyClickListener implements
 				if (Env.is(Env.SWING))
 					startLoading();
 				widget.flipPage().active(flipPage);
-				CallbackTemplate<Void> cb = new CallbackTemplate<Void>(cb0) {
+				final boolean cachingActive = cached != null && ALLOW_CACHING;
+				final CallbackTemplate<Void> cb = new CallbackTemplate<Void>(
+						cb0) {
 
 					private void removeRegistrations() {
 						if (USE_TEMP_FLIP) {
@@ -256,7 +271,7 @@ public class NavigationItemImpl extends LazyClickListener implements
 							widget.flipPage().back();
 						}
 						stopLoading();
-						isFirst = false;
+						// isFirst = false;
 					}
 
 					@Override
@@ -264,35 +279,47 @@ public class NavigationItemImpl extends LazyClickListener implements
 						removeRegistrations();
 						flipRegister(true);
 						widget.update();
+						checkResize();
 						cb0.onSuccess(result);
+					}
+
+					private void checkResize() {
+						int newWidth = StatusDisplay.instance().width();
+						int newHeight = StatusDisplay.instance().height();
+						if (cachingActive
+								&& (lastWidth != newWidth || lastHeight != newHeight)) {
+							widget.recursiveResize(newWidth, newHeight);
+						}
+						lastWidth = newWidth;
+						lastHeight = newHeight;
 					}
 
 					@Override
 					public void onFail(Throwable t) {
 						removeRegistrations();
 						resetLabel();
+						checkResize();
 						super.onFail(t);
 					}
 				};
 				try {
-					if (isFirst || !widget.flipPage().supportsRefresh()) {
-						if (cached != null && ALLOW_CACHING) {
-							if (!wasActive) {
-								flipPage.next().element(cached);
-								preview();
-							}
-							decorator.refresh(cb);
-						} else {
-							cached = flipPage.next().panel().vertical();
+					// if (isFirst || !widget.flipPage().supportsRefresh()) {
+					if (cachingActive) {
+						if (!wasActive) {
+							flipPage.next().element(cached);
 							preview();
-							decorator.decorate(new BufferedPanelImpl(cached),
-									cb);
-							if (!ALLOW_CACHING)
-								cached = null;
 						}
-					} else {
 						decorator.refresh(cb);
+					} else {
+						cached = flipPage.next().panel().vertical();
+						preview();
+						decorator.decorate(new BufferedPanelImpl(cached), cb);
+						if (!ALLOW_CACHING)
+							cached = null;
 					}
+					// } else {
+					// decorator.refresh(cb);
+					// }
 				} catch (Exception e) {
 					onFail(e);
 				}

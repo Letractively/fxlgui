@@ -19,10 +19,12 @@
 package co.fxl.gui.navigation.api;
 
 import co.fxl.gui.api.ICallback;
+import co.fxl.gui.impl.IResizableWidget;
 
-public interface ITabDecorator {
+public interface ITabDecorator extends IResizableWidget {
 
 	void decorate(IBufferedPanel panel, ICallback<Void> cb);
 
 	void refresh(ICallback<Void> cb);
+
 }

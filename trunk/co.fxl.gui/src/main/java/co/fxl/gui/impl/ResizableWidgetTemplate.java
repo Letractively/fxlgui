@@ -21,6 +21,7 @@ package co.fxl.gui.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IResizable.IResizeListener;
 
 public class ResizableWidgetTemplate implements IResizableWidget {
@@ -50,7 +51,7 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 		return addResizableWidget(widget);
 	}
 
-	private void recursiveResize(int width, int height) {
+	public void recursiveResize(int width, int height) {
 		ResizableWidgetTemplate.this.onResize(width, height);
 		for (ResizableWidgetTemplate child : children) {
 			child.recursiveResize(width, height);
@@ -59,5 +60,42 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 
 	@Override
 	public void onResize(int width, int height) {
+	}
+
+	public void autoResize(final IElement<?> e) {
+		autoResize(e, 0);
+	}
+
+	private void autoResize(final IElement<?> e, final int dec) {
+		autoResize(e, dec, false);
+	}
+
+	public void autoResize(final IElement<?> e, final int dec, boolean b) {
+		final IResizeListener listener = new IResizeListener() {
+			@Override
+			public void onResize(int width, int height) {
+				int offsetY = StatusDisplay.instance().offsetY(e, 100);
+				int h = height - offsetY - 10 - dec;
+				if (h > 0)
+					e.height(h);
+			}
+		};
+		// if (!SINGLE_RESIZE_LISTENER)
+		addResizableWidget(new ResizableWidgetTemplate() {
+			@Override
+			public void onResize(int width, int height) {
+				listener.onResize(width, height);
+			}
+		});
+		Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+				StatusDisplay.instance().fire(listener);
+			}
+		};
+		if (b) {
+			Display.instance().invokeLater(runnable);
+		} else
+			runnable.run();
 	}
 }

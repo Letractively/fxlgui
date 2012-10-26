@@ -38,7 +38,6 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPanel;
-import co.fxl.gui.api.IResizable.IResizeListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Display;
@@ -46,6 +45,7 @@ import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.HorizontalScalingPanel;
 import co.fxl.gui.impl.IServerListener;
+import co.fxl.gui.impl.ResizableWidgetTemplate;
 import co.fxl.gui.impl.ServerListener;
 import co.fxl.gui.impl.StatusDisplay;
 import co.fxl.gui.log.impl.Log;
@@ -55,7 +55,8 @@ import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.group.api.INavigationWidget;
 import co.fxl.gui.navigation.impl.TabDecoratorTemplate;
 
-public class NavigationWidgetImpl implements INavigationWidget, IServerListener {
+public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
+		INavigationWidget, IServerListener {
 
 	private static final boolean DYNAMIC_RESIZE = true;
 	protected static final boolean DRAW_MORE_TOP = !Env.is(Env.IE);
@@ -111,6 +112,7 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 		history.show(panel0);
 		instance = this;
 		ServerListener.instance = this;
+		addResizableWidgetToDisplay();
 	}
 
 	void addSeparatorBorder() {
@@ -230,13 +232,13 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 				}
 			});
 			update();
-			StatusDisplay.instance().addResizeListener(new IResizeListener() {
-				@Override
-				public void onResize(int width, int height) {
-					updateAfterResize();
-				}
-			}).linkLifecycle(mainPanel);
+			addResizableWidgetToDisplay();
 		}
+	}
+
+	@Override
+	public void onResize(int w, int h) {
+		updateAfterResize();
 	}
 
 	boolean update() {
@@ -493,7 +495,6 @@ public class NavigationWidgetImpl implements INavigationWidget, IServerListener 
 		} else if (!update(true)) {
 			addSeparatorBorder();
 		}
-		clearCache();
 	}
 
 	@Override

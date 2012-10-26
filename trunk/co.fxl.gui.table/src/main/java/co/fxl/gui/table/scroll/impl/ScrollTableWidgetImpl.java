@@ -43,7 +43,6 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMouseWheelListener;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPoint;
-import co.fxl.gui.api.IResizable.IResizeListener;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
@@ -59,6 +58,7 @@ import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.KeyAdapter;
+import co.fxl.gui.impl.ResizableWidgetTemplate;
 import co.fxl.gui.impl.StatusDisplay;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.impl.WidgetTitle;
@@ -78,8 +78,8 @@ import co.fxl.gui.table.util.api.IDragDropListener;
 import co.fxl.gui.table.util.api.IDragDropListener.IDragArea;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 
-public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
-		ILabelMouseListener, TableWidgetAdp {
+public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
+		IScrollTableWidget<Object>, ILabelMouseListener, TableWidgetAdp {
 
 	// TODO Usability: editable table: if illegal value has been inserted (e.g.
 	// 25.13.2002), then ignore input, reset to original and show fading error
@@ -207,14 +207,13 @@ public class ScrollTableWidgetImpl implements IScrollTableWidget<Object>,
 			widgetTitle.spacing(0);
 			container = widgetTitle.content().panel().vertical();
 			// editPanel = container.add().panel().vertical().visible(false);
-			StatusDisplay.instance().addResizeListener(new IResizeListener() {
-				@Override
-				public void onResize(int width, int height) {
-					updateTable();
-				}
-			}).linkLifecycle(container);
 		}
 		return widgetTitle;
+	}
+
+	@Override
+	public void onResize(int width, int height) {
+		updateTable();
 	}
 
 	private IVerticalPanel container() {
