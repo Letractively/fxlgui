@@ -22,8 +22,10 @@ import co.fxl.gui.api.IResizable.IResizeListener;
 
 public interface IResizableWidget extends IResizeListener {
 
-	void register();
+	IResizableWidget register();
 
 	IResizableWidget addChild(IResizableWidget widget);
+
+	IResizableWidget setChild(IResizableWidget widget);
 
 }
