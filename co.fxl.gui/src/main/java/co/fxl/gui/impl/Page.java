@@ -18,38 +18,38 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IDisplay.IResizeConfiguration;
 import co.fxl.gui.api.IResizable.IResizeListener;
-import co.fxl.gui.log.impl.LogWidgetProvider;
 
-public abstract class DisplayTemplate extends ServiceRegistryImpl<IDisplay>
-		implements IDisplay {
+public class Page extends ResizeRegistryImpl<Page> implements IResizeListener {
 
-	private ResizeRegistryImpl<IDisplay> resizeRegistry = new ResizeRegistryImpl<IDisplay>(
-			this);
+	private static Page active = null;
 
-	protected DisplayTemplate() {
-		register(new LogWidgetProvider());
+	private Page() {
+		super(this);
+		activate();
+	}
+
+	public static Page instance() {
+		assert active != null;
+		return active;
+	}
+
+	public static Page newInstance() {
+		return new Page();
+	}
+
+	public void activate() {
+		active = this;
+		StatusDisplay.instance().addResizeListener(this).singleton();
+	}
+
+	public IResizeConfiguration addResizeListener(IResizeListener listener) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public final IResizeConfiguration addResizeListener(
-			final IResizeListener listener) {
-		return resizeRegistry.addResizeListener(listener);
-	}
-
-	@Override
-	public final IDisplay removeResizeListener(IResizeListener listener) {
-		return resizeRegistry.removeResizeListener(listener);
-	}
-
-	@Override
-	public final IDisplay notifyResizeListeners() {
-		return resizeRegistry.notifyResizeListeners();
-	}
-
-	@Override
-	public final IDisplay notifyResizeListener(IResizeListener listener) {
-		return resizeRegistry.notifyResizeListener(listener);
+	public void onResize(int width, int height) {
+		throw new UnsupportedOperationException();
 	}
 }

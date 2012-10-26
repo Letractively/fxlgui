@@ -22,7 +22,7 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
-import co.fxl.gui.api.IRegistry.IServiceProvider;
+import co.fxl.gui.api.IServiceRegistry.IServiceProvider;
 import co.fxl.gui.automation.api.IAutomationAdapter;
 import co.fxl.gui.automation.api.IAutomationListener.Key;
 import co.fxl.gui.gwt.GWTClickHandler.ClickEventAdp;

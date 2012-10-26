@@ -26,12 +26,12 @@ import java.util.Map;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IPanelProvider;
-import co.fxl.gui.api.IRegistry;
+import co.fxl.gui.api.IServiceRegistry;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.IWidgetProvider.IAsyncWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
 
-public class RegistryImpl<T> implements IRegistry<T> {
+public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 
 	public Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
 	public Map<Class<?>, IAsyncWidgetProvider<?>> asyncWidgetProviders = new HashMap<Class<?>, IAsyncWidgetProvider<?>>();
@@ -127,7 +127,7 @@ public class RegistryImpl<T> implements IRegistry<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public final T register(
-			@SuppressWarnings("rawtypes") co.fxl.gui.api.IRegistry.IServiceProvider... services) {
+			@SuppressWarnings("rawtypes") co.fxl.gui.api.IServiceRegistry.IServiceProvider... services) {
 		for (IServiceProvider<?> service : services)
 			this.services.put(service.serviceType(), service.getService());
 		return (T) this;

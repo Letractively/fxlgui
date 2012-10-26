@@ -18,9 +18,8 @@
  */
 package co.fxl.gui.api;
 
-import co.fxl.gui.api.IResizable.IResizeListener;
-
-public interface IDisplay extends IColored, IRegistry<IDisplay> {
+public interface IDisplay extends IColored, IServiceRegistry<IDisplay>,
+		IResizeRegistry<IDisplay> {
 
 	// public interface IElementListener {
 	//
@@ -46,7 +45,7 @@ public interface IDisplay extends IColored, IRegistry<IDisplay> {
 
 	public interface IResizeConfiguration {
 
-		// IResizeConfiguration singleton();
+		IResizeConfiguration singleton();
 
 		IResizeConfiguration linkLifecycle(IElement<?> element);
 
@@ -84,14 +83,6 @@ public interface IDisplay extends IColored, IRegistry<IDisplay> {
 	IPopUp showPopUp();
 
 	IDisplay addExceptionHandler(IExceptionHandler handler);
-
-	IResizeConfiguration addResizeListener(IResizeListener listener);
-
-	IDisplay removeResizeListener(IResizeListener listener);
-
-	IDisplay notifyResizeListeners();
-
-	IDisplay notifyResizeListener(IResizeListener listener);
 
 	int width();
 

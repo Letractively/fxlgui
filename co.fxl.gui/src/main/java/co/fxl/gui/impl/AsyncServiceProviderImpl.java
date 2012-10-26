@@ -19,8 +19,8 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.ICallback;
-import co.fxl.gui.api.IRegistry.IAsyncServiceProvider;
-import co.fxl.gui.api.IRegistry.IServiceProvider;
+import co.fxl.gui.api.IServiceRegistry.IAsyncServiceProvider;
+import co.fxl.gui.api.IServiceRegistry.IServiceProvider;
 
 public abstract class AsyncServiceProviderImpl<T> implements
 		IAsyncServiceProvider<T> {

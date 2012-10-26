@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.api;
 
-public interface IRegistry<R> {
+public interface IServiceRegistry<R> {
 
 	public interface IAsyncServiceProvider<T> {
 
