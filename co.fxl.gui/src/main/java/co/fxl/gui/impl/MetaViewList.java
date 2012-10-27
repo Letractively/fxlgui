@@ -30,8 +30,8 @@ public class MetaViewList {
 	private FlipPage card;
 	private FlipPage sideCard;
 
-	public MetaViewList(ILayout layout) {
-		this.layout = new SplitLayout(layout);
+	public MetaViewList(ILayout layout, ResizableWidgetTemplate widget) {
+		this.layout = new SplitLayout(layout, widget);
 	}
 
 	FlipPage contentPanel() {

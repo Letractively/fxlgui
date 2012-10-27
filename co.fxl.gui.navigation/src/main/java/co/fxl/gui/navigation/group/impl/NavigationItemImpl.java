@@ -176,7 +176,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	@Override
 	public INavigationItem decorator(ITabDecorator decorator) {
 		this.decorator = decorator;
-		setResizableWidget(decorator);
+		setResizableWidget(decorator, "decorator");
 		return this;
 	}
 
@@ -249,7 +249,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	}
 
 	NavigationItemImpl setActive(boolean viaClick, final ICallback<Void> cb0) {
-		widget.setResizableWidget(this);
+		widget.setResizableWidget(this, "activeItem");
 		final boolean wasActive = isActive();
 		ServerCallCache.instance().record(true);
 		if (!Env.is(Env.SWING))

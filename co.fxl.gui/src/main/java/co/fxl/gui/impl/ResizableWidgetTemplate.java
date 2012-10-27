@@ -18,24 +18,36 @@
  */
 package co.fxl.gui.impl;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import co.fxl.gui.api.IDisplay.IResizeConfiguration;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IResizable.IResizeListener;
 
 public class ResizableWidgetTemplate implements IResizableWidget {
 
 	private List<ResizableWidgetTemplate> children = new LinkedList<ResizableWidgetTemplate>();
+	private Map<String, ResizableWidgetTemplate> qualifiedChildren = new HashMap<String, ResizableWidgetTemplate>();
 
 	@Override
 	public IResizableWidget addResizableWidgetToDisplay() {
-		StatusDisplay.instance().addResizeListener(new IResizeListener() {
-			@Override
-			public void onResize(int width, int height) {
-				recursiveResize(width, height);
-			}
-		});
+		return addResizableWidgetToDisplay(null);
+	}
+
+	@Override
+	public IResizableWidget addResizableWidgetToDisplay(IElement<?> link) {
+		IResizeConfiguration cfg = StatusDisplay.instance().addResizeListener(
+				new IResizeListener() {
+					@Override
+					public void onResize(int width, int height) {
+						recursiveResize(width, height);
+					}
+				});
+		if (link != null)
+			cfg.linkLifecycle(link);
 		return this;
 	}
 
@@ -46,14 +58,18 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 	}
 
 	@Override
-	public IResizableWidget setResizableWidget(IResizableWidget widget) {
-		children.clear();
-		return addResizableWidget(widget);
+	public IResizableWidget setResizableWidget(IResizableWidget widget,
+			String id) {
+		qualifiedChildren.put(id, (ResizableWidgetTemplate) widget);
+		return this;
 	}
 
 	public void recursiveResize(int width, int height) {
 		ResizableWidgetTemplate.this.onResize(width, height);
 		for (ResizableWidgetTemplate child : children) {
+			child.recursiveResize(width, height);
+		}
+		for (ResizableWidgetTemplate child : qualifiedChildren.values()) {
 			child.recursiveResize(width, height);
 		}
 	}

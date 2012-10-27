@@ -18,15 +18,12 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.api.IResizable.IResizeListener;
-
-public class Page extends ResizeRegistryImpl<Page> implements IResizeListener {
+public class Page {
 
 	private static Page active = null;
 	private ContextMenu contextMenu;
 
 	private Page() {
-		owner = this;
 		activate();
 	}
 
@@ -43,12 +40,6 @@ public class Page extends ResizeRegistryImpl<Page> implements IResizeListener {
 		active = this;
 		if (contextMenu != null)
 			contextMenu.activate();
-		StatusDisplay.instance().addResizeListener(this).singleton();
-	}
-
-	@Override
-	public void onResize(int width, int height) {
-		notifyResizeListeners();
 	}
 
 	public ContextMenu contextMenu() {

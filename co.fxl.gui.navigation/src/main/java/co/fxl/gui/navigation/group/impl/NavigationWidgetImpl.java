@@ -112,7 +112,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		history.show(panel0);
 		instance = this;
 		ServerListener.instance = this;
-		addResizableWidgetToDisplay();
+		addResizableWidgetToDisplay(mainPanel);
 	}
 
 	void addSeparatorBorder() {

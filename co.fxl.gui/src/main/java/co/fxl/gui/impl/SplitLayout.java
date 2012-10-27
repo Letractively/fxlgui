@@ -25,7 +25,8 @@ import co.fxl.gui.api.IResizable.IResizeListener;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IVerticalPanel;
 
-public class SplitLayout implements IResizeListener {
+public class SplitLayout extends ResizableWidgetTemplate implements
+		IResizeListener {
 
 	// TODO SWING-FXL: minimize doesn't work
 
@@ -43,14 +44,17 @@ public class SplitLayout implements IResizeListener {
 	private boolean resizeMainPanel;
 	private IVerticalPanel sideBasePanel;
 	private boolean isDetached;
+	private ResizableWidgetTemplate widget;
 
-	public SplitLayout(ILayout layout) {
-		this(layout, false);
+	public SplitLayout(ILayout layout, ResizableWidgetTemplate widget) {
+		this(layout, false, widget);
 	}
 
-	public SplitLayout(ILayout layout, boolean resizeMainPanel) {
+	public SplitLayout(ILayout layout, boolean resizeMainPanel,
+			ResizableWidgetTemplate widget) {
 		this.layout = layout;
 		this.resizeMainPanel = resizeMainPanel;
+		this.widget = widget;
 		init();
 	}
 
@@ -66,8 +70,7 @@ public class SplitLayout implements IResizeListener {
 		sideScrollPanel = sideBasePanel.addSpace(10).add().scrollPane();
 		sidePanel = sideScrollPanel.viewPort().panel().vertical();
 		sidePanel.spacing().right(10).inner(10);
-		StatusDisplay.instance().addResizeListener(this, true)
-				.linkLifecycle(panel);
+		widget.addResizableWidget(this);
 	}
 
 	public static int mainPanelWidth() {
