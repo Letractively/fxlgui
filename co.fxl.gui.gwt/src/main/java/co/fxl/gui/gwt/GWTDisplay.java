@@ -69,6 +69,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	private static final String CHROME = "Chrome/";
 	public static final String BROWSER_WARNING_IE8 = "You are using an outdated browser with a slow javascript engine! If possible: Update to Internet Explorer 9+ or switch to another browser like Firefox or Chrome. This will significantly improve application response time.";
 	public static final String BROWSER_WARNING_FIREFOX36 = "You are using an outdated browser! If possible: Update to Firefox 12+ or switch to another browser like Chrome. This will significantly improve application response time.";
+	public static final String BROWSER_WARNING_ZOOM_CHROME = "You are using an active zoom level. This is currently not supported: please switch to zoom level 100%, e.g. by clicking Ctrl+0.";
 	static GWTDisplay instance;
 	private GWTContainer<Widget> container;
 	private GWTUncaughtExceptionHandler uncaughtExceptionHandler;
@@ -121,7 +122,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	public static boolean isChromeZoomActive() {
 		return Env.is(Env.CHROME)
-				&& Display.instance().width() < getOuterWidth();
+				&& Display.instance().width() != getOuterWidth();
 	}
 
 	private void declareConstants() {
