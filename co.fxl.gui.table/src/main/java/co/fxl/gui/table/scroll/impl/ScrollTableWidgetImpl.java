@@ -969,13 +969,13 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 				continue;
 			ScrollTableColumnImpl columnImpl = columns.get(c);
 			if (columnImpl.tagSortOrder != null) {
-				sortColumn = columnImpl.index;
+				sortColumn = columns.indexOf(columnImpl);
 				sortNegator = columnImpl.tagSortOrder ? -1 : 1;
 				columnImpl.tagSortOrder = null;
 			}
 			String name = columnImpl.name;
 			Boolean sortUp = null;
-			if (sortColumn == columns.get(c).index) {
+			if (sortColumn == c) {
 				sortUp = sortNegator == 1;
 			}
 			IColumn column = grid.column(current++);
@@ -1430,7 +1430,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	void sortBy(ScrollTableColumnImpl columnImpl, final boolean update) {
 		if (columnImpl.sortable) {
 			if (rows.size() <= MAX_CLIENT_SORT_SIZE || sortListener == null) {
-				sortColumn = columnImpl.index;
+				sortColumn = columns.indexOf(columnImpl);
 				sortNegator = rows.sort(columnImpl);
 				if (sortListener != null)
 					sortListener.onSort(columnImpl.name, sortNegator == 1,
