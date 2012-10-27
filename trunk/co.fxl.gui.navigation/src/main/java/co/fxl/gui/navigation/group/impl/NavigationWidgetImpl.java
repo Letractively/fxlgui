@@ -374,7 +374,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	}
 
 	@Override
-	public INavigationItem activeItem() {
+	public NavigationItemImpl activeItem() {
 		return active;
 	}
 
