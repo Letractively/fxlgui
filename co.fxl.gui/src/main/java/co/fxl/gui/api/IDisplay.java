@@ -45,7 +45,7 @@ public interface IDisplay extends IColored, IServiceRegistry<IDisplay>,
 
 	public interface IResizeConfiguration {
 
-		IResizeConfiguration singleton();
+//		IResizeConfiguration singleton();
 
 		IResizeConfiguration linkLifecycle(IElement<?> element);
 

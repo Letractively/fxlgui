@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.impl;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -39,17 +38,17 @@ public class ResizeRegistryImpl<T> implements IResizeRegistry<T> {
 			this.listener = listener;
 		}
 
-		@Override
-		public IResizeConfiguration singleton() {
-			Iterator<ResizeConfiguration> it = resizeListeners.iterator();
-			while (it.hasNext()) {
-				ResizeConfiguration next = it.next();
-				if (next != this
-						&& next.listener.getClass().equals(listener.getClass()))
-					it.remove();
-			}
-			return this;
-		}
+//		@Override
+//		public IResizeConfiguration singleton() {
+//			Iterator<ResizeConfiguration> it = resizeListeners.iterator();
+//			while (it.hasNext()) {
+//				ResizeConfiguration next = it.next();
+//				if (next != this
+//						&& next.listener.getClass().equals(listener.getClass()))
+//					it.remove();
+//			}
+//			return this;
+//		}
 
 		@Override
 		public IResizeConfiguration linkLifecycle(IElement<?> element) {

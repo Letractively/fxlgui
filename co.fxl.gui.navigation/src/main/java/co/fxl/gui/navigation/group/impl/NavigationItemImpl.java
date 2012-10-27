@@ -249,6 +249,9 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	}
 
 	NavigationItemImpl setActive(boolean viaClick, final ICallback<Void> cb0) {
+		if (widget.activeItem() != null) {
+			widget.activeItem().updateDisplaySize();
+		}
 		widget.setResizableWidget(this, "activeItem");
 		final boolean wasActive = isActive();
 		ServerCallCache.instance().record(true);
@@ -284,14 +287,14 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 					}
 
 					private void checkResize() {
-						int newWidth = StatusDisplay.instance().width();
-						int newHeight = StatusDisplay.instance().height();
 						if (cachingActive
-								&& (lastWidth != newWidth || lastHeight != newHeight)) {
-							widget.recursiveResize(newWidth, newHeight);
+								&& (lastWidth != StatusDisplay.instance()
+										.width() || lastHeight != StatusDisplay
+										.instance().height())) {
+							widget.recursiveResize(StatusDisplay.instance()
+									.width(), StatusDisplay.instance().height());
 						}
-						lastWidth = newWidth;
-						lastHeight = newHeight;
+						updateDisplaySize();
 					}
 
 					@Override
@@ -585,5 +588,10 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	public INavigationItem clearCache() {
 		cached = null;
 		return this;
+	}
+
+	private void updateDisplaySize() {
+		lastWidth = StatusDisplay.instance().width();
+		lastHeight = StatusDisplay.instance().height();
 	}
 }
