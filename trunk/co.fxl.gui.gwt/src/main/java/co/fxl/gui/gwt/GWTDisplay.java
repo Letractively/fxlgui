@@ -114,9 +114,14 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		runtime = new RuntimeTemplate(getBrowserName(), getBrowserVersion());
 		declareConstants();
 		GWTFormat.setUp();
-		if (Env.is(Env.CHROME) && width() < getOuterWidth()) {
+		if (isChromeZoomActive()) {
 			Log.instance().debug("Zoom is active in Google Chrome");
 		}
+	}
+
+	public static boolean isChromeZoomActive() {
+		return Env.is(Env.CHROME)
+				&& Display.instance().width() < getOuterWidth();
 	}
 
 	private void declareConstants() {
