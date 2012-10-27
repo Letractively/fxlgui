@@ -25,7 +25,7 @@ public interface IResizableWidget extends IResizeListener {
 
 	IResizableWidget addResizableWidgetToDisplay();
 
-	IResizableWidget addResizableWidget(IResizableWidget widget);
+	// IResizableWidget addResizableWidget(IResizableWidget widget);
 
 	IResizableWidget setResizableWidget(IResizableWidget widget, String id);
 

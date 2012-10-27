@@ -19,8 +19,6 @@
 package co.fxl.gui.impl;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.api.IDisplay.IResizeConfiguration;
@@ -29,7 +27,8 @@ import co.fxl.gui.api.IResizable.IResizeListener;
 
 public class ResizableWidgetTemplate implements IResizableWidget {
 
-	private List<ResizableWidgetTemplate> children = new LinkedList<ResizableWidgetTemplate>();
+	// private List<ResizableWidgetTemplate> children = new
+	// LinkedList<ResizableWidgetTemplate>();
 	private Map<String, ResizableWidgetTemplate> qualifiedChildren = new HashMap<String, ResizableWidgetTemplate>();
 
 	@Override
@@ -51,11 +50,11 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 		return this;
 	}
 
-	@Override
-	public IResizableWidget addResizableWidget(IResizableWidget widget) {
-		children.add((ResizableWidgetTemplate) widget);
-		return this;
-	}
+	// @Override
+	// public IResizableWidget addResizableWidget(IResizableWidget widget) {
+	// children.add((ResizableWidgetTemplate) widget);
+	// return this;
+	// }
 
 	@Override
 	public IResizableWidget setResizableWidget(IResizableWidget widget,
@@ -66,9 +65,9 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 
 	public void recursiveResize(int width, int height) {
 		ResizableWidgetTemplate.this.onResize(width, height);
-		for (ResizableWidgetTemplate child : children) {
-			child.recursiveResize(width, height);
-		}
+		// for (ResizableWidgetTemplate child : children) {
+		// child.recursiveResize(width, height);
+		// }
 		for (ResizableWidgetTemplate child : qualifiedChildren.values()) {
 			child.recursiveResize(width, height);
 		}
@@ -78,15 +77,16 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 	public void onResize(int width, int height) {
 	}
 
-	public void autoResize(final IElement<?> e) {
-		autoResize(e, 0);
+	public void autoResize(final IElement<?> e, String id) {
+		autoResize(e, 0, id);
 	}
 
-	private void autoResize(final IElement<?> e, final int dec) {
-		autoResize(e, dec, false);
+	private void autoResize(final IElement<?> e, final int dec, String id) {
+		autoResize(e, dec, false, id);
 	}
 
-	public void autoResize(final IElement<?> e, final int dec, boolean b) {
+	public void autoResize(final IElement<?> e, final int dec, boolean b,
+			String id) {
 		final IResizeListener listener = new IResizeListener() {
 			@Override
 			public void onResize(int width, int height) {
@@ -97,12 +97,12 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 			}
 		};
 		// if (!SINGLE_RESIZE_LISTENER)
-		addResizableWidget(new ResizableWidgetTemplate() {
+		setResizableWidget(new ResizableWidgetTemplate() {
 			@Override
 			public void onResize(int width, int height) {
 				listener.onResize(width, height);
 			}
-		});
+		}, id);
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
