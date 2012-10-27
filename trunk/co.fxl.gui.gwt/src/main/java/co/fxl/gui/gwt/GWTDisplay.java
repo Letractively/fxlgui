@@ -37,6 +37,7 @@ import co.fxl.gui.impl.DisplayTemplate;
 import co.fxl.gui.impl.ImagePathResolver;
 import co.fxl.gui.impl.RuntimeTemplate;
 import co.fxl.gui.impl.ToolbarImpl;
+import co.fxl.gui.log.impl.Log;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -112,6 +113,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		runtime = new RuntimeTemplate(getBrowserName(), getBrowserVersion());
 		declareConstants();
 		GWTFormat.setUp();
+		Log.instance().debug("Browser inner-width=" + width()
+				+ " & outer-width=" + getOuterWidth());
 	}
 
 	private void declareConstants() {
@@ -347,6 +350,9 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	// public static native String getUserAgent()
 	/*-{ return navigator.userAgent; }-*/;
+
+	public static native int getOuterWidth()
+	/*-{ return window.outerWidth; }-*/;
 
 	public static String getUserAgent() {
 		String userAgent = Window.Navigator.getUserAgent();
