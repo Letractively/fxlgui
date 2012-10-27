@@ -137,7 +137,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	// };
 	// }
 
-	IResizeConfiguration addResizeListener(
+	private IResizeConfiguration addResizeListener(
 			IResizeListener resizeListener, boolean fire) {
 		// if (SINGLE_RESIZE_LISTENER) {
 		// if (fire) {
@@ -152,37 +152,37 @@ public class StatusDisplay implements IResizeListener, Runnable {
 		resizeListener.onResize(width(), height());
 	}
 
-	public void autoResize(final IElement<?> e) {
-		autoResize(e, 0);
-	}
-
-	private void autoResize(final IElement<?> e, final int dec) {
-		autoResize(e, dec, false);
-	}
-
-	private void autoResize(final IElement<?> e, final int dec, boolean b) {
-		final IResizeListener listener = new IResizeListener() {
-			@Override
-			public void onResize(int width, int height) {
-				int offsetY = offsetY(e, 100);
-				int h = height - offsetY - 10 - dec;
-				if (h > 0)
-					e.height(h);
-			}
-		};
-		// if (!SINGLE_RESIZE_LISTENER)
-		Display.instance().addResizeListener(listener).linkLifecycle(e);
-		Runnable runnable = new Runnable() {
-			@Override
-			public void run() {
-				fire(listener);
-			}
-		};
-		if (b) {
-			Display.instance().invokeLater(runnable);
-		} else
-			runnable.run();
-	}
+	// private void autoResize(final IElement<?> e) {
+	// autoResize(e, 0);
+	// }
+	//
+	// private void autoResize(final IElement<?> e, final int dec) {
+	// autoResize(e, dec, false);
+	// }
+	//
+	// private void autoResize(final IElement<?> e, final int dec, boolean b) {
+	// final IResizeListener listener = new IResizeListener() {
+	// @Override
+	// public void onResize(int width, int height) {
+	// int offsetY = offsetY(e, 100);
+	// int h = height - offsetY - 10 - dec;
+	// if (h > 0)
+	// e.height(h);
+	// }
+	// };
+	// // if (!SINGLE_RESIZE_LISTENER)
+	// Display.instance().addResizeListener(listener).linkLifecycle(e);
+	// Runnable runnable = new Runnable() {
+	// @Override
+	// public void run() {
+	// fire(listener);
+	// }
+	// };
+	// if (b) {
+	// Display.instance().invokeLater(runnable);
+	// } else
+	// runnable.run();
+	// }
 
 	public int offsetY(IElement<?> e, int min) {
 		return offsetY(e.offsetY(), min);
