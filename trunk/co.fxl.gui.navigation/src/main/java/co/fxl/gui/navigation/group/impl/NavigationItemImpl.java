@@ -264,7 +264,14 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 				if (Env.is(Env.SWING))
 					startLoading();
 				widget.flipPage().active(flipPage);
-				final boolean cachingActive = cached != null && ALLOW_CACHING;
+				boolean cachingActiveTemp = cached != null && ALLOW_CACHING;
+				final boolean requiresResize = cachingActiveTemp
+						&& (lastWidth != StatusDisplay.instance().width() || lastHeight != StatusDisplay
+								.instance().height());
+				if (requiresResize && Env.is(Env.IE)) {
+					cachingActiveTemp = false;
+				}
+				final boolean cachingActive = cachingActiveTemp;
 				final CallbackTemplate<Void> cb = new CallbackTemplate<Void>(
 						cb0) {
 
@@ -287,10 +294,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 					}
 
 					private void checkResize() {
-						if (cachingActive
-								&& (lastWidth != StatusDisplay.instance()
-										.width() || lastHeight != StatusDisplay
-										.instance().height())) {
+						if (requiresResize) {
 							widget.recursiveResize(StatusDisplay.instance()
 									.width(), StatusDisplay.instance().height());
 						}
