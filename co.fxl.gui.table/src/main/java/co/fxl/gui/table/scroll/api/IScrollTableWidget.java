@@ -255,6 +255,6 @@ public interface IScrollTableWidget<T> extends IResizableWidget {
 	IPanel<?> mainPanel();
 
 	IScrollTableWidget<Object> configureListener(IClickListener cl);
-
+	
 	// IVerticalPanel editPanel();
 }
