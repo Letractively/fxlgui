@@ -255,23 +255,23 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 		widget.setResizableWidget(this, "activeItem");
 		final boolean wasActive = isActive();
 		ServerCallCache.instance().record(true);
+		boolean cachingActiveTemp = cached != null && ALLOW_CACHING;
+		final boolean requiresResize = cachingActiveTemp
+				&& (lastWidth != StatusDisplay.instance().width() || lastHeight != StatusDisplay
+						.instance().height());
+		if (requiresResize && Env.is(Env.IE)) {
+			cachingActiveTemp = false;
+		}
+		final boolean cachingActive = cachingActiveTemp;
 		if (!Env.is(Env.SWING))
-			startLoading();
+			startLoading(cachingActive);
 		forkLabelAsActive(viaClick, new CallbackTemplate<Void>(cb0) {
 
 			@Override
 			public void onSuccess(Void result) {
 				if (Env.is(Env.SWING))
-					startLoading();
+					startLoading(cachingActive);
 				widget.flipPage().active(flipPage);
-				boolean cachingActiveTemp = cached != null && ALLOW_CACHING;
-				final boolean requiresResize = cachingActiveTemp
-						&& (lastWidth != StatusDisplay.instance().width() || lastHeight != StatusDisplay
-								.instance().height());
-				if (requiresResize && Env.is(Env.IE)) {
-					cachingActiveTemp = false;
-				}
-				final boolean cachingActive = cachingActiveTemp;
 				final CallbackTemplate<Void> cb = new CallbackTemplate<Void>(
 						cb0) {
 
@@ -280,7 +280,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 							widget.listeningOnServerCalls(false);
 							widget.flipPage().back();
 						}
-						stopLoading();
+						stopLoading(cachingActive);
 						// isFirst = false;
 					}
 
@@ -348,8 +348,8 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 		return this;
 	}
 
-	public void startLoading() {
-		Log.instance().start(getMessage());
+	public void startLoading(boolean cached) {
+		Log.instance().start(getMessage(cached));
 		int width = buttonPanel.width();
 		int height = buttonPanel.height();
 		buttonPanel.size(width, height);
@@ -357,12 +357,12 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 		// widget.loading(true);
 	}
 
-	String getMessage() {
-		return "Drawing tab " + button.text();
+	String getMessage(boolean cached) {
+		return (cached ? "Updating" : "Drawing") + " tab " + button.text();
 	}
 
-	void stopLoading() {
-		Log.instance().stop(getMessage());
+	void stopLoading(boolean cached) {
+		Log.instance().stop(getMessage(cached));
 		// widget.loading(false);
 	}
 
