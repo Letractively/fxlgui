@@ -122,7 +122,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	public static boolean isChromeZoomActive() {
 		return Env.is(Env.CHROME)
-				&& Display.instance().width() != getOuterWidth();
+				&& Display.instance().width() < (getOuterWidth() / 1.05);
 	}
 
 	private void declareConstants() {
