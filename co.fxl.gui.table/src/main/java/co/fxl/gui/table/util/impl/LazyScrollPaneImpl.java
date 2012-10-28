@@ -28,7 +28,6 @@ import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.filter.api.IFilterConstraints;
-import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.HorizontalScalingPanel;
@@ -177,7 +176,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		hasScrollbar = true;
 		v = container.panel().focus();
 		if (!plainContent)
-			co.fxl.gui.impl.Page.instance().contextMenu().decorate((IClickable<?>) v);
+			co.fxl.gui.impl.Page.instance().contextMenu()
+					.decorate((IClickable<?>) v);
 		v.color().white();
 		if (dragDropListener != null && !useDecoratorReturnForDND)
 			new DragAndDrop(this, v);
@@ -246,7 +246,10 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		h += adjustHeights ? rowHeight(lastIndex) : minRowHeight;
 		assert lastIndex >= 0;
 		maxRowIndex = lastIndex;
-		for (int i = lastIndex - 1; i >= firstIndex && h < height; i--) {
+		int maxHeight = height
+				- (horizontalScrollPane ? Env.HEIGHT_SCROLLBAR
+						: 0);
+		for (int i = lastIndex - 1; i >= firstIndex && h < maxHeight; i--) {
 			if (adjustHeights && !decorator.checkIndex(lastIndex)) {
 				if (allowRepaint) {
 					allowRepaint = false;
@@ -257,7 +260,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 			int rowHeight = Math.max(minRowHeight, adjustHeights ? rowHeight(i)
 					: minRowHeight);
 			h += rowHeight;
-			if (h < height) {
+			if (h < maxHeight) {
 				maxRowIndex = i;
 			}
 		}
