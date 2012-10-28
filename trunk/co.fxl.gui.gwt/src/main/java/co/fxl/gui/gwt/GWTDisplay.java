@@ -116,7 +116,10 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		declareConstants();
 		GWTFormat.setUp();
 		if (isChromeZoomActive()) {
-			Log.instance().debug("Zoom is active in Google Chrome");
+			Log.instance().debug(
+					"Zoom is active in Google Chrome: "
+							+ Display.instance().width() + " inner-width vs "
+							+ getOuterWidth() + " outer-width");
 		}
 	}
 
