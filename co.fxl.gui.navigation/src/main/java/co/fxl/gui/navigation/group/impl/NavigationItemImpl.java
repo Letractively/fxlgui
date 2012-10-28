@@ -280,7 +280,6 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 							widget.listeningOnServerCalls(false);
 							widget.flipPage().back();
 						}
-						stopLoading(cachingActive);
 						// isFirst = false;
 					}
 
@@ -289,14 +288,18 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 						removeRegistrations();
 						flipRegister(true);
 						widget.update();
+						stopLoading(cachingActive);
 						checkResize();
 						cb0.onSuccess(result);
 					}
 
 					private void checkResize() {
 						if (requiresResize) {
+							String msg = "Resizing tab " + name();
+							Log.instance().start(msg);
 							widget.recursiveResize(StatusDisplay.instance()
 									.width(), StatusDisplay.instance().height());
+							Log.instance().stop(msg);
 						}
 						updateDisplaySize();
 					}
@@ -305,6 +308,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 					public void onFail(Throwable t) {
 						removeRegistrations();
 						resetLabel();
+						stopLoading(cachingActive);
 						checkResize();
 						super.onFail(t);
 					}
