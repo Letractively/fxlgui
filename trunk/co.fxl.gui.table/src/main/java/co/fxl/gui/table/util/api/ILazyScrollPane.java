@@ -88,4 +88,6 @@ public interface ILazyScrollPane extends IMouseWheelListener {
 	ILazyScrollPane useDecoratorReturnForDND(boolean useDecoratorReturnForDND);
 
 	ILazyScrollPane plainContent(boolean plainContent);
+
+	ILazyScrollPane correctMaxRowIndex(boolean correctMaxRowIndex);
 }

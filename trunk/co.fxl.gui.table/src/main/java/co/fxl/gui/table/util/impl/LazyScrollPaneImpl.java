@@ -247,7 +247,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		assert lastIndex >= 0;
 		maxRowIndex = lastIndex;
 		int maxHeight = height
-				- (horizontalScrollPane ? Env.HEIGHT_SCROLLBAR
+				- (horizontalScrollPane && correctMaxRowIndex ? Env.HEIGHT_SCROLLBAR
 						: 0);
 		for (int i = lastIndex - 1; i >= firstIndex && h < maxHeight; i--) {
 			if (adjustHeights && !decorator.checkIndex(lastIndex)) {
@@ -318,6 +318,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	protected String filterQueryLabel;
 	private boolean useDecoratorReturnForDND;
 	private boolean plainContent;
+	private boolean correctMaxRowIndex = true;
 
 	public void addKeyListeners(final IKeyRecipient<?> v) {
 		if (v == null)
@@ -602,6 +603,12 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	@Override
 	public ILazyScrollPane plainContent(boolean plainContent) {
 		this.plainContent = plainContent;
+		return this;
+	}
+
+	@Override
+	public ILazyScrollPane correctMaxRowIndex(boolean correctMaxRowIndex) {
+		this.correctMaxRowIndex = correctMaxRowIndex;
 		return this;
 	}
 }
