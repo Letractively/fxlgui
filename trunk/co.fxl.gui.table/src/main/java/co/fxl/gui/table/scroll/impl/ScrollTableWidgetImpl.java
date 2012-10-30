@@ -56,6 +56,7 @@ import co.fxl.gui.impl.ColorTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DummyCallback;
+import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.KeyAdapter;
 import co.fxl.gui.impl.ResizableWidgetTemplate;
@@ -898,7 +899,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	}
 
 	private void addColumnSelection() {
-		if (hasColumnSelection)
+		if (hasColumnSelection && !Env.is(Env.SWING))
 			return;
 		ColumnSelection.newInstance(this, false);
 		hasColumnSelection = true;
@@ -1010,7 +1011,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private void addDisplayingNote() {
 		if (!showDisplayedRange)
 			return;
-		if (statusRangeLabel == null) {
+		if (statusRangeLabel == null || Env.is(Env.SWING)) {
 			IGridPanel.IGridCell clear = statusPanel().cell(2, 0).clear()
 					.valign().center();
 			clear.align().end();
