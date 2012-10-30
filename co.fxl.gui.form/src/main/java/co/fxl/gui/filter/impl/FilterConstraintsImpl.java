@@ -345,7 +345,7 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 
 	@Override
 	public IFilterConstraints clearRowIndex() {
-		it = null;
+		it = new RowIterator();
 		return this;
 	}
 
