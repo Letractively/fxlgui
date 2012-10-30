@@ -249,6 +249,10 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private int widthDelta;
 	private IGrouping grouping;
 	private IClickListener configureListener;
+	private boolean hasColumnSelection;
+	private ILabel rightPaging;
+	private ILabel statusRangeLabel;
+	private ILabel leftPaging;
 
 	// private boolean nextTimeShowPopUp;
 
@@ -313,6 +317,8 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 
 	@Override
 	public IScrollTableWidget<Object> visible(boolean visible) {
+		statusRangeLabel = null;
+		hasColumnSelection = false;
 		if (visible) {
 			rows = new RowAdapter(this, actualRows);
 			drawAll();
@@ -892,7 +898,10 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	}
 
 	private void addColumnSelection() {
+		if (hasColumnSelection)
+			return;
 		ColumnSelection.newInstance(this, false);
+		hasColumnSelection = true;
 	}
 
 	void addCellUpdateListener() {
@@ -1001,25 +1010,17 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private void addDisplayingNote() {
 		if (!showDisplayedRange)
 			return;
-		IGridPanel.IGridCell clear = statusPanel().cell(2, 0).clear().valign()
-				.center();
-		clear.align().end();
-		IHorizontalPanel p = clear.panel().horizontal().align().end().add()
-				.panel().horizontal().align().end();
-		ILabel label = p.add().label();
-		boolean hasPrevious = constraints != null
-				&& constraints.rowIterator().hasPrevious();
-		boolean hasNext = constraints != null
-				&& constraints.rowIterator().hasNext();
-		ILabel l = null;
-		if (hasPrevious) {
-			l = label.text("<<").hyperlink().clickable(false);
-			p.addSpace(4);
-		}
-		if (hasPrevious) {
-			l.clickable(true);
-			l.hyperlink().font().pixel(10);
-			l.addClickListener(new IClickListener() {
+		if (statusRangeLabel == null) {
+			IGridPanel.IGridCell clear = statusPanel().cell(2, 0).clear()
+					.valign().center();
+			clear.align().end();
+			IHorizontalPanel p = clear.panel().horizontal().align().end().add()
+					.panel().horizontal().align().end();
+			leftPaging = p.add().label().text("<<");
+			leftPaging.margin().right(4);
+			leftPaging.clickable(true);
+			leftPaging.hyperlink().font().pixel(10);
+			leftPaging.addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {
 					int nextPreviousRow = constraints.rowIterator()
@@ -1029,29 +1030,18 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 							DummyCallback.voidInstance());
 				}
 			});
-		}
-		int px = paintedRows;
-		String status = getStatusRange(px);
-		String in = "DISPLAYING ROWS";
-		label = p.add().label();
-		label.text(in);
-		label.font().pixel(10);
-		final ILabel ls = addStatus(p, status);
-		Display.instance().invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				ls.text(getStatusRange(paintedRows()));
-			}
-		});
-		if (hasNext) {
-			p.addSpace(4);
-			l = p.add().label().text(">>");
-			l.hyperlink().clickable(false);
-		}
-		if (hasNext) {
-			l.clickable(true);
-			l.hyperlink().font().pixel(10);
-			l.addClickListener(new IClickListener() {
+			String in = "DISPLAYING ROWS";
+			ILabel label = p.add().label();
+			label.text(in);
+			label.font().pixel(10);
+			statusRangeLabel = p.addSpace(4).add().label().text(getStatusRange(paintedRows()));
+			statusRangeLabel.font().weight().bold().pixel(10);
+			rightPaging = p.add().label().text(">>");
+			rightPaging.margin().left(4);
+			rightPaging.hyperlink();
+			rightPaging.clickable(true);
+			rightPaging.hyperlink().font().pixel(10);
+			rightPaging.addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {
 					constraints.rowIterator().firstRow(
@@ -1060,8 +1050,18 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 							DummyCallback.voidInstance());
 				}
 			});
+			p.addSpace(4);
 		}
-		p.addSpace(4);
+		leftPaging.visible(constraints != null
+				&& constraints.rowIterator().hasPrevious());
+		rightPaging.visible(constraints != null
+				&& constraints.rowIterator().hasNext());
+		Display.instance().invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				statusRangeLabel.text(getStatusRange(paintedRows()));
+			}
+		});
 	}
 
 	private String getStatusRange(int px) {
@@ -1083,12 +1083,6 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			h += grid.rowHeight(c + 1);
 		}
 		return c;
-	}
-
-	ILabel addStatus(IHorizontalPanel p, String status) {
-		ILabel l = p.addSpace(4).add().label().text(status);
-		l.font().weight().bold().pixel(10);
-		return l;
 	}
 
 	private int computeRowsToPaint() {
