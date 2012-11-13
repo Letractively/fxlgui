@@ -21,6 +21,7 @@ package co.fxl.gui.swing;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -421,7 +422,11 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 	@SuppressWarnings("unchecked")
 	@Override
 	public R margin(int margin) {
-		// TODO SWING-FXL: IMPL: ...
+		Insets insets = container.component.getInsets();
+		insets.bottom = margin;
+		insets.top = margin;
+		insets.left = margin;
+		insets.right = margin;
 		return (R) this;
 	}
 
@@ -462,25 +467,25 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 
 			@Override
 			public IMargin left(int pixel) {
-				// TODO SWING-FXL: IMPL: ...
+				container.component.getInsets().left = pixel;
 				return this;
 			}
 
 			@Override
 			public IMargin right(int pixel) {
-				// TODO SWING-FXL: IMPL: ...
+				container.component.getInsets().right = pixel;
 				return this;
 			}
 
 			@Override
 			public IMargin top(int pixel) {
-				// TODO SWING-FXL: IMPL: ...
+				container.component.getInsets().top = pixel;
 				return this;
 			}
 
 			@Override
 			public IMargin bottom(int pixel) {
-				// TODO SWING-FXL: IMPL: ...
+				container.component.getInsets().bottom = pixel;
 				return this;
 			}
 

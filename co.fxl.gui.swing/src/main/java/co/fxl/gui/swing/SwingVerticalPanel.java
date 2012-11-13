@@ -30,7 +30,7 @@ import co.fxl.gui.api.IVerticalPanel;
 class SwingVerticalPanel extends SwingPanel<IVerticalPanel> implements
 		IVerticalPanel {
 
-	private VerticalLayoutManager layoutManager;
+	VerticalLayoutManager layoutManager;
 
 	SwingVerticalPanel(SwingContainer<PanelComponent> container) {
 		super(container);

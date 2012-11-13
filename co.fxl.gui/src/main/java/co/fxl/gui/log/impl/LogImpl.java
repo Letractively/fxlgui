@@ -330,9 +330,13 @@ class LogImpl implements ILog, IClickListener {
 
 	@Override
 	public ILog warn(String message) {
+		return warn(message, new RuntimeException());
+	}
+
+	@Override
+	public ILog warn(String message, Exception e) {
 		ensureSize();
-		addLine(new Entry("WARNING", message, null, new RuntimeException(),
-				null));
+		addLine(new Entry("WARNING", message, null, e, null));
 		return this;
 	}
 }
