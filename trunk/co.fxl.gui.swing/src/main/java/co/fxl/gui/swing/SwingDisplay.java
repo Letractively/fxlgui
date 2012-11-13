@@ -47,6 +47,7 @@ import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DisplayTemplate;
 import co.fxl.gui.impl.RuntimeTemplate;
+import co.fxl.gui.impl.SimplePanelImplWidgetProvider;
 import co.fxl.gui.impl.ToolbarImpl;
 
 public class SwingDisplay extends DisplayTemplate implements IDisplay,
@@ -98,6 +99,7 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 		ToolbarImpl.ADJUST_HEIGHTS = true;
 		declareConstants();
 		SwingFormat.setUp();
+		register(new SimplePanelImplWidgetProvider());
 	}
 
 	private void declareConstants() {
