@@ -132,8 +132,9 @@ class SwingBorder implements IBorder {
 	}
 
 	private void updateBorder() {
-		if (element.getBorder() instanceof EmptyBorder)
-			throw new UnsupportedOperationException();
+		if (element.getBorder() instanceof EmptyBorder) {
+			// TODO ...
+		}
 		if (borderStyle == SOLID)
 			element.setBorder(new LineBorder(borderColor, borderThickness));
 		else if (borderStyle == ETCHED)
