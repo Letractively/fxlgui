@@ -37,7 +37,6 @@ import co.fxl.gui.impl.DisplayTemplate;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.ImagePathResolver;
 import co.fxl.gui.impl.RuntimeTemplate;
-import co.fxl.gui.impl.SimplePanelImplWidgetProvider;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.log.impl.Log;
 
@@ -122,7 +121,6 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 							+ Display.instance().width() + " inner-width vs "
 							+ getOuterWidth() + " outer-width");
 		}
-		register(new SimplePanelImplWidgetProvider());
 	}
 
 	public static boolean isChromeZoomActive() {
