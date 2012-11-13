@@ -37,6 +37,7 @@ import co.fxl.gui.impl.DisplayTemplate;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.ImagePathResolver;
 import co.fxl.gui.impl.RuntimeTemplate;
+import co.fxl.gui.impl.SimplePanelImplWidgetProvider;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.log.impl.Log;
 
@@ -60,9 +61,9 @@ import com.google.gwt.user.client.ui.Widget;
 public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		WidgetParent {
 
-	// TODO Look: Quirk: GWT: IE9: Höhe von ComboBox stimmt nicht (eventuell in
+	// TODO Look: Quirk: GWT: IE9: Hï¿½he von ComboBox stimmt nicht (eventuell in
 	// Grid einbetten)
-	// TODO Look: Quirk: GWT: Safari: Höhe von ComboBox stimmt nicht (eventuell
+	// TODO Look: Quirk: GWT: Safari: Hï¿½he von ComboBox stimmt nicht (eventuell
 	// in Grid einbetten)
 
 	private static final String FIREFOX = "Firefox/";
@@ -121,6 +122,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 							+ Display.instance().width() + " inner-width vs "
 							+ getOuterWidth() + " outer-width");
 		}
+		register(new SimplePanelImplWidgetProvider());
 	}
 
 	public static boolean isChromeZoomActive() {

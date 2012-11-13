@@ -18,23 +18,19 @@
  */
 package co.fxl.gui.swing;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.log.impl.Log;
 
 class LinearPanelOptimization {
-	
-	// TODO replace all one-child-panel calls 
+
+	// TODO replace all one-child-panel calls
 	// add().panel().vertical()
 	// with:
 	// add().widget(ISimplePanel.class).vertical()
-	
+
 	// for Swing: dummy
 	// for GWT: optimized, no actual panels but decorations
 
@@ -73,18 +69,19 @@ class LinearPanelOptimization {
 					Log.instance().debug(
 							"All linear panels: " + allLinearPanels
 									+ ", single-child: " + singleChild);
-					List<String> s = new LinkedList<String>(history.keySet());
-					Collections.sort(s, new Comparator<String>() {
-						@Override
-						public int compare(String o1, String o2) {
-							return history.get(o2) - history.get(o1);
-						}
-					});
-					for (int i = 0; i < s.size() && i < 20; i++) {
-						Log.instance().debug(
-								"Top-" + (i + 1) + "-Single-Child: " + s.get(i)
-										+ " (" + history.get(s.get(i)) + ")");
-					}
+					// List<String> s = new
+					// LinkedList<String>(history.keySet());
+					// Collections.sort(s, new Comparator<String>() {
+					// @Override
+					// public int compare(String o1, String o2) {
+					// return history.get(o2) - history.get(o1);
+					// }
+					// });
+					// for (int i = 0; i < s.size() && i < 20; i++) {
+					// Log.instance().debug(
+					// "Top-" + (i + 1) + "-Single-Child: " + s.get(i)
+					// + " (" + history.get(s.get(i)) + ")");
+					// }
 					queue.clear();
 				}
 
