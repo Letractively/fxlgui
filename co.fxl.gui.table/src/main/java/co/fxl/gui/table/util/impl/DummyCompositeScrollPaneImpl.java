@@ -30,7 +30,7 @@ public class DummyCompositeScrollPaneImpl extends ScrollPaneAdp implements
 
 	public DummyCompositeScrollPaneImpl(IContainer c) {
 		super(c.scrollPane().height(1.0));
-		grid = element.viewPort().panel().grid().resize(2, 1);
+		grid = element().viewPort().panel().grid().resize(2, 1);
 	}
 
 	@Override

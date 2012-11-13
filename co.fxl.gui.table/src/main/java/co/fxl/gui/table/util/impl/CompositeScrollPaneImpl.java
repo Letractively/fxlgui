@@ -44,10 +44,10 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 		grid = panel.cell(0, 0).valign().begin().panel().grid().width(1.0)
 				.height(1.0).resize(3, 1);
 		panel.column(0).expand();
-		element = panel.cell(1, 0).valign().begin().scrollPane()
-				.width(Env.HEIGHT_SCROLLBAR).height(1.0);
+		element(panel.cell(1, 0).valign().begin().scrollPane()
+				.width(Env.HEIGHT_SCROLLBAR).height(1.0));
 		grid.margin().right(Env.HEIGHT_SCROLLBAR);
-		addDummyImage(dummy = element.viewPort().panel().vertical());
+		addDummyImage(dummy = element().viewPort().panel().vertical());
 		center = grid.cell(0, 0).valign().begin().scrollPane().scrollBars()
 				.never();
 		right = grid.cell(1, 0).valign().begin().scrollPane().scrollBars()

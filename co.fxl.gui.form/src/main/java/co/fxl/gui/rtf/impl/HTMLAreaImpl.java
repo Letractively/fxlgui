@@ -32,15 +32,15 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 	public HTMLAreaImpl(IContainer element) {
 		panel = element.panel().vertical();
 		toolbar = new RichTextToolbarImpl(panel.add(), this);
-		super.element = panel.add().textArea();
-		super.element.addUpdateListener(new IUpdateListener<String>() {
+		element(panel.add().textArea());
+		element().addUpdateListener(new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(String value) {
 				if (!ignore)
 					toolbar.updateStatus();
 			}
 		});
-		super.element.addClickListener(new IClickListener() {
+		element().addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
 				toolbar.updateStatus();
@@ -51,12 +51,12 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 
 	@Override
 	public String html() {
-		return element.text();
+		return element().text();
 	}
 
 	@Override
 	public IHTMLArea html(String html) {
-		element.text(html);
+		element().text(html);
 		toolbar.updateStatus();
 		return this;
 	}
@@ -77,11 +77,11 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 
 	protected void insert(String insert) {
 		ignore = true;
-		int cursorPosition = element.cursorPosition();
-		StringBuilder text = new StringBuilder(element.text());
+		int cursorPosition = element().cursorPosition();
+		StringBuilder text = new StringBuilder(element().text());
 		text.insert(cursorPosition, insert);
-		element.text(text.toString());
-		element.cursorPosition(cursorPosition + insert.length());
+		element().text(text.toString());
+		element().cursorPosition(cursorPosition + insert.length());
 		ignore = false;
 	}
 
@@ -90,7 +90,7 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 		String open = open(f);
 		String close = close(f);
 		int count = 0;
-		for (int i = 0; i < element.cursorPosition(); i++) {
+		for (int i = 0; i < element().cursorPosition(); i++) {
 			if (containsTokenAt(open, i)) {
 				count++;
 			} else if (containsTokenAt(close, i)) {
@@ -134,7 +134,7 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 	// }
 
 	private boolean containsTokenAt(String open, int i) {
-		String text = element.text();
+		String text = element().text();
 		return RichTextToolbarImpl.containsTokenAt(open, i, text);
 	}
 

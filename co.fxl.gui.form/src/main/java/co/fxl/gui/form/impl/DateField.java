@@ -43,7 +43,7 @@ public class DateField extends TextFieldAdp {
 		private IPopUp popUp;
 
 		private PopUp() {
-			element.addUpdateListener(new IUpdateListener<String>() {
+			element().addUpdateListener(new IUpdateListener<String>() {
 				@Override
 				public void onUpdate(String value) {
 					if (!isUpdating && calendar != null && popUp != null
@@ -68,7 +68,7 @@ public class DateField extends TextFieldAdp {
 				public void onUpdate(Date value) {
 					isUpdating = true;
 					String f = format.format(value);
-					element.text(f);
+					element().text(f);
 					popUp.visible(false);
 					isUpdating = false;
 				}
@@ -77,7 +77,7 @@ public class DateField extends TextFieldAdp {
 			// TODO testen: Usability: GWT: this seems to not work (shows always
 			// the
 			// current date):
-			calendar.date(format.parse(element.text()));
+			calendar.date(format.parse(element().text()));
 
 			popUp.visible(true);
 		}
@@ -105,7 +105,7 @@ public class DateField extends TextFieldAdp {
 	}
 
 	private void setUp(ITextField tf, IContainer c1) {
-		element = tf;
+		element(tf);
 		button = c1.image().resource(Icons.CALENDAR).size(16, 16);
 		popUp = new PopUp();
 		button.addClickListener(popUp);
