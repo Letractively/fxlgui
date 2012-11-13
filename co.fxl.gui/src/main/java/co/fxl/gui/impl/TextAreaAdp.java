@@ -32,35 +32,35 @@ public class TextAreaAdp extends TextInputAdp<ITextArea> implements ITextArea {
 
 	@Override
 	public int cursorPosition() {
-		return element.cursorPosition();
+		return element().cursorPosition();
 	}
 
 	@Override
 	public ITextArea cursorPosition(int position) {
-		element.cursorPosition(position);
+		element().cursorPosition(position);
 		return this;
 	}
 
 	@Override
 	public ITextArea clickable(boolean clickable) {
-		return element.clickable(clickable);
+		return element().clickable(clickable);
 	}
 
 	@Override
 	public boolean clickable() {
-		return element.clickable();
+		return element().clickable();
 	}
 
 	@Override
 	public co.fxl.gui.api.IClickable.IKey<ITextArea> addClickListener(
 			co.fxl.gui.api.IClickable.IClickListener clickListener) {
-		return element.addClickListener(clickListener);
+		return element().addClickListener(clickListener);
 	}
 
 	@Override
 	public ITextArea addResizeListener(
 			co.fxl.gui.api.IResizable.IResizeListener listener) {
-		element.addResizeListener(listener);
+		element().addResizeListener(listener);
 		return this;
 	}
 

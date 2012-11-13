@@ -38,8 +38,9 @@ class LinearPanelOptimization {
 	private static LinearPanelOptimization instance = new LinearPanelOptimization();
 	private Map<SwingPanel<?>, Exception> queue = new HashMap<SwingPanel<?>, Exception>();
 	private Map<String, Integer> history = new HashMap<String, Integer>();
-	private int allLinearPanels = 0;
-	private int singleChild = 0;
+
+	// private int allLinearPanels = 0;
+	// private int singleChild = 0;
 
 	private LinearPanelOptimization() {
 	}
@@ -50,10 +51,13 @@ class LinearPanelOptimization {
 				@Override
 				public void run() {
 					for (SwingPanel<?> p : queue.keySet()) {
-						allLinearPanels++;
+						// allLinearPanels++;
 						if (p.container.component.getComponentCount() == 1) {
 							Exception exception = queue.get(p);
 							String identifier = identifier(exception);
+							if (identifier
+									.startsWith("co.fxl.gui.impl.SimplePanelImpl"))
+								continue;
 							if (!history.containsKey(identifier)) {
 								Log.instance().warn(
 										"1-Child-Panel: " + identifier,
@@ -63,12 +67,12 @@ class LinearPanelOptimization {
 								history.put(identifier,
 										history.get(identifier) + 1);
 							}
-							singleChild++;
+							// singleChild++;
 						}
 					}
-					Log.instance().debug(
-							"All linear panels: " + allLinearPanels
-									+ ", single-child: " + singleChild);
+					// Log.instance().debug(
+					// "All linear panels: " + allLinearPanels
+					// + ", single-child: " + singleChild);
 					// List<String> s = new
 					// LinkedList<String>(history.keySet());
 					// Collections.sort(s, new Comparator<String>() {

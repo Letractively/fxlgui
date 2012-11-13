@@ -24,6 +24,7 @@ import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.FullscreenPopUp;
 import co.fxl.gui.impl.Heights;
+import co.fxl.gui.impl.ISimplePanel;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.log.api.ILog;
 
@@ -141,7 +142,7 @@ class LogImpl implements ILog, IClickListener {
 				.sideWidget(true).commandsOnTop().spacing(0);
 		panel.addTitle("Log Trace");
 		final IScrollPane scrollPane = panel.content().scrollPane();
-		final IVerticalPanel content = scrollPane.viewPort().panel().vertical()
+		final IVerticalPanel content = scrollPane.viewPort().widget(ISimplePanel.class).vertical()
 				.spacing(10).add().panel().vertical();
 		resize(d, popUp, scrollPane);
 		cancel = panel.addHyperlink("cancel.png", "Clear");

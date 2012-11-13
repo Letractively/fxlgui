@@ -33,19 +33,19 @@ public class TextElementAdp<T extends ITextElement<T>> extends ElementAdp<T>
 
 	@Override
 	public IFont font() {
-		return element.font();
+		return element().font();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T text(String text) {
-		element.text(text);
+		element().text(text);
 		return (T) this;
 	}
 
 	@Override
 	public String text() {
-		return element.text();
+		return element().text();
 	}
 
 }

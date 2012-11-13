@@ -31,7 +31,7 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 public class ElementAdp<T extends IElement<T>> implements IElement<T>,
 		IColored, IBordered, IFocusable<T>, IEditable<T> {
 
-	protected T element;
+	private T element;
 
 	ElementAdp() {
 	}
@@ -40,188 +40,196 @@ public class ElementAdp<T extends IElement<T>> implements IElement<T>,
 		this.element = element;
 	}
 
+	protected T element() {
+		return element;
+	}
+
+	protected void element(T tf) {
+		element = tf;
+	}
+
 	@Override
 	public int offsetX() {
-		return element.offsetX();
+		return element().offsetX();
 	}
 
 	@Override
 	public int offsetY() {
-		return element.offsetY();
+		return element().offsetY();
 	}
 
 	@Override
 	public int width() {
-		return element.width();
+		return element().width();
 	}
 
 	@Override
 	public int height() {
-		return element.height();
+		return element().height();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T offset(int x, int y) {
-		element.offset(x, y);
+		element().offset(x, y);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T width(int width) {
-		element.width(width);
+		element().width(width);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T height(int height) {
-		element.height(height);
+		element().height(height);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T size(int width, int height) {
-		element.size(width, height);
+		element().size(width, height);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T visible(boolean visible) {
-		element.visible(visible);
+		element().visible(visible);
 		return (T) this;
 	}
 
 	@Override
 	public boolean visible() {
-		return element.visible();
+		return element().visible();
 	}
 
 	@Override
 	public void remove() {
-		element.remove();
+		element().remove();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T tooltip(String tooltip) {
-		element.tooltip(tooltip);
+		element().tooltip(tooltip);
 		return (T) this;
 	}
 
 	@Override
 	public IDisplay display() {
-		return element.display();
+		return element().display();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public <N> N nativeElement() {
-		return (N) element.nativeElement();
+		return (N) element().nativeElement();
 	}
 
 	@Override
 	public IPadding padding() {
-		return element.padding();
+		return element().padding();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T padding(int padding) {
-		element.padding(padding);
+		element().padding(padding);
 		return (T) this;
 	}
 
 	@Override
 	public IMargin margin() {
-		return element.margin();
+		return element().margin();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T margin(int margin) {
-		element.margin(margin);
+		element().margin(margin);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T opacity(double opacity) {
-		element.opacity(opacity);
+		element().opacity(opacity);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public <N> T nativeElement(N nativeElement) {
-		element.nativeElement(nativeElement);
+		element().nativeElement(nativeElement);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T width(double width) {
-		element.width(width);
+		element().width(width);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T height(double height) {
-		element.height(height);
+		element().height(height);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T iD(String iD) {
-		element.iD(iD);
+		element().iD(iD);
 		return (T) this;
 	}
 
 	@Override
 	public String iD() {
-		return element.iD();
+		return element().iD();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T editable(boolean editable) {
-		((IEditable<T>) element).editable(editable);
+		((IEditable<T>) element()).editable(editable);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean editable() {
-		return ((IEditable<T>) element).editable();
+		return ((IEditable<T>) element()).editable();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T focus(boolean focus) {
-		((IFocusable<T>) element).focus(focus);
+		((IFocusable<T>) element()).focus(focus);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T addFocusListener(IUpdateListener<Boolean> hasFocus) {
-		((IFocusable<T>) element).addFocusListener(hasFocus);
+		((IFocusable<T>) element()).addFocusListener(hasFocus);
 		return (T) this;
 	}
 
 	@Override
 	public IBorder border() {
-		return ((IBordered) element).border();
+		return ((IBordered) element()).border();
 	}
 
 	@Override
 	public IColor color() {
-		return ((IColored) element).color();
+		return ((IColored) element()).color();
 	}
 
 }
