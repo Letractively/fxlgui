@@ -29,6 +29,14 @@ import co.fxl.gui.impl.Display;
 import co.fxl.gui.log.impl.Log;
 
 class LinearPanelOptimization {
+	
+	// TODO replace all one-child-panel calls 
+	// add().panel().vertical()
+	// with:
+	// add().widget(ISimplePanel.class).vertical()
+	
+	// for Swing: dummy
+	// for GWT: optimized, no actual panels but decorations
 
 	static final boolean ENABLED = true;
 	private static LinearPanelOptimization instance = new LinearPanelOptimization();
@@ -72,7 +80,7 @@ class LinearPanelOptimization {
 							return history.get(o2) - history.get(o1);
 						}
 					});
-					for (int i = 0; i < s.size() && i < 5; i++) {
+					for (int i = 0; i < s.size() && i < 20; i++) {
 						Log.instance().debug(
 								"Top-" + (i + 1) + "-Single-Child: " + s.get(i)
 										+ " (" + history.get(s.get(i)) + ")");
