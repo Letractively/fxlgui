@@ -37,6 +37,7 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.border.EmptyBorder;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -415,6 +416,13 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 	@SuppressWarnings("unchecked")
 	@Override
 	public R padding(int padding) {
+		if (container.component instanceof JPanel) {
+			
+			// TODO don't remove old border (e.g. for Top-Button WidgetTitle)
+			
+			container.component.setBorder(new EmptyBorder(padding, padding,
+					padding, padding));
+		}
 		// TODO SWING-FXL: IMPL: ...
 		return (R) this;
 	}
@@ -423,10 +431,10 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 	@Override
 	public R margin(int margin) {
 		Insets insets = container.component.getInsets();
-		insets.bottom = margin;
-		insets.top = margin;
-		insets.left = margin;
-		insets.right = margin;
+		insets.bottom += margin;
+		insets.top += margin;
+		insets.left += margin;
+		insets.right += margin;
 		return (R) this;
 	}
 
