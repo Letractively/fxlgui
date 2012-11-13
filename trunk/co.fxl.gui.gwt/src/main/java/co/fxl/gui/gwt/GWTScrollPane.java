@@ -139,10 +139,10 @@ class GWTScrollPane extends GWTElement<ScrollPanel, IScrollPane> implements
 
 	@Override
 	public int scrollOffset() {
-		if (horizontal)
-			return container.widget.getHorizontalScrollPosition();
-		else
-			return container.widget.getVerticalScrollPosition();
+		int scrollOffset = horizontal ? container.widget
+				.getHorizontalScrollPosition() : container.widget
+				.getVerticalScrollPosition();
+		return scrollOffset;
 	}
 
 	@Override

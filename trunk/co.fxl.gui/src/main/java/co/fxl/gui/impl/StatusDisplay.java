@@ -30,10 +30,12 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IResizable.IResizeListener;
 import co.fxl.gui.api.IScrollPane;
+import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.log.impl.Log;
 
-public class StatusDisplay implements IResizeListener, Runnable {
+public class StatusDisplay implements IResizeListener, Runnable,
+		IScrollListener {
 
 	public interface RefreshListener {
 
@@ -63,6 +65,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	private IGridCell sidePanelContainer;
 	private IGridPanel grid;
 	private IScrollPane sidePanel;
+	private int scrollOffset;
 
 	// public IResizeConfiguration singleResizeListener(
 	// RefreshListener resizeListener) {
@@ -248,6 +251,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	public StatusDisplay reset() {
 		scrollPane = display.clear().container().scrollPane().iD("base")
 				.horizontal();
+		scrollPane.addScrollListener(this);
 		grid = scrollPane.viewPort().panel().grid();
 		panel = grid.cell(0, 0).panel().vertical().align().begin();
 		run();
@@ -302,7 +306,7 @@ public class StatusDisplay implements IResizeListener, Runnable {
 	}
 
 	public int scrollOffset() {
-		return scrollPane != null ? scrollPane.scrollOffset() : 0;
+		return scrollPane != null ? scrollOffset : 0;
 	}
 
 	private void notifyResizeListeners() {
@@ -316,6 +320,11 @@ public class StatusDisplay implements IResizeListener, Runnable {
 		sidePanel = null;
 		notifyResizeListeners();
 		return this;
+	}
+
+	@Override
+	public void onScroll(int maxOffset) {
+		scrollOffset = maxOffset;
 	}
 
 }

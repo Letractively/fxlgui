@@ -214,7 +214,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		}
 	}
 
-	private static final boolean LOG_ILLEGAL_SIZES = true;
+	private static final boolean LOG_ILLEGAL_SIZES = false;
 	public GWTContainer<T> container;
 	protected HandlerRegistration registration;
 	protected HandlerRegistration registration2;
