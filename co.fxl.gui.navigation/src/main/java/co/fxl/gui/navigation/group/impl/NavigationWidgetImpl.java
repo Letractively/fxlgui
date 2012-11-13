@@ -45,6 +45,7 @@ import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.HorizontalScalingPanel;
 import co.fxl.gui.impl.IServerListener;
+import co.fxl.gui.impl.Profiler;
 import co.fxl.gui.impl.ResizableWidgetTemplate;
 import co.fxl.gui.impl.ServerListener;
 import co.fxl.gui.impl.StatusDisplay;
@@ -118,40 +119,41 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	void addSeparatorBorder() {
 		if (!ADD_SEPARATORBORDER)
 			return;
-		// if (loading) {
-		// IVerticalPanel separatorBorder = borderTop.clear().add().panel()
-		// .vertical().width(1.0).height(1);
-		// separatorBorder.add().image().resource("empty_1x1.png");
-		// separatorBorder.color().gray();
-		// return;
-		// }
-		IGridPanel separatorBorder = borderTop.clear().add().panel().grid()
-				.spacing(0).height(1);
-		int c = 0;
+		setUpSeparatorBorder();
 		boolean hasActiveItem = active != null && active.buttonPanel != null;
 		int offsetX = 0;
 		int width = 0;
+		leftPartBorder.visible(hasActiveItem);
+		middlePartBorder.visible(hasActiveItem);
 		if (hasActiveItem) {
-			IGridCell indentBorder = separatorBorder.cell(c++, 0);
 			int scrollOffset = StatusDisplay.instance().scrollOffset();
 			offsetX = scrollOffset + active.buttonPanel.offsetX() + 1;
-			IPanel<?> leftPartBorder = indentBorder.panel().horizontal()
-					.size(offsetX, 1);
-			HorizontalScalingPanel.addDummyIE(leftPartBorder);
-			leftPartBorder.color().gray();
-			IGridCell activeBorder = separatorBorder.cell(c++, 0);
+			leftPartBorder.size(offsetX, 1);
 			width = active.buttonPanel.width() - 2;
-			IPanel<?> middlePartBorder = activeBorder.panel().horizontal()
-					.size(width, 1);
-			HorizontalScalingPanel.addDummyIE(middlePartBorder);
-			activeBackground(middlePartBorder);
+			middlePartBorder.size(width, 1);
 		}
-		IPanel<?> rightPartBorder = separatorBorder.cell(c, 0).panel()
-				.horizontal()
-				.size(StatusDisplay.instance().width() - width - offsetX, 1);
+		rightPartBorder.size(
+				StatusDisplay.instance().width() - width - offsetX, 1);
+	}
+
+	void setUpSeparatorBorder() {
+		if (separatorBorder != null)
+			return;
+		separatorBorder = borderTop.clear().add().panel().grid().spacing(0)
+				.height(1);
+		int c = 0;
+		IGridCell indentBorder = separatorBorder.cell(c++, 0);
+		leftPartBorder = indentBorder.panel().horizontal().visible(false);
+		HorizontalScalingPanel.addDummyIE(leftPartBorder);
+		leftPartBorder.color().gray();
+		IGridCell activeBorder = separatorBorder.cell(c++, 0);
+		middlePartBorder = activeBorder.panel().horizontal().visible(false);
+		HorizontalScalingPanel.addDummyIE(middlePartBorder);
+		activeBackground(middlePartBorder);
+		rightPartBorder = separatorBorder.cell(c, 0).panel().horizontal()
+				.size(StatusDisplay.instance().width(), 1);
 		HorizontalScalingPanel.addDummyIE(rightPartBorder);
-		if (hasActiveItem)
-			separatorBorder.column(2).expand();
+		separatorBorder.column(2).expand();
 		rightPartBorder.color().gray();
 	}
 
@@ -450,6 +452,10 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	private int serverCallCounter = 0;
 	private IVerticalPanel top;
 	private IImage configureIcon;
+	private IGridPanel separatorBorder;
+	private IPanel<?> leftPartBorder;
+	private IPanel<?> middlePartBorder;
+	private IPanel<?> rightPartBorder;
 
 	@Override
 	public void notifyServerCallStart() {
