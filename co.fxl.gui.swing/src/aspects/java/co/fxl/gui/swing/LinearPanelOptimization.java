@@ -18,10 +18,12 @@
  */
 package co.fxl.gui.swing;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.log.impl.Log;
@@ -31,7 +33,9 @@ class LinearPanelOptimization {
 	static final boolean ENABLED = true;
 	private static LinearPanelOptimization instance = new LinearPanelOptimization();
 	private Map<SwingPanel<?>, Exception> queue = new HashMap<SwingPanel<?>, Exception>();
-	private Set<String> history = new HashSet<String>();
+	private Map<String, Integer> history = new HashMap<String, Integer>();
+	private int allLinearPanels = 0;
+	private int singleChild = 0;
 
 	private LinearPanelOptimization() {
 	}
@@ -42,16 +46,36 @@ class LinearPanelOptimization {
 				@Override
 				public void run() {
 					for (SwingPanel<?> p : queue.keySet()) {
+						allLinearPanels++;
 						if (p.container.component.getComponentCount() == 1) {
 							Exception exception = queue.get(p);
 							String identifier = identifier(exception);
-							if (!history.contains(identifier)) {
+							if (!history.containsKey(identifier)) {
 								Log.instance().warn(
-										"1-Child-Panel: "
-												+ identifier, queue.get(p));
-								history.add(identifier);
+										"1-Child-Panel: " + identifier,
+										queue.get(p));
+								history.put(identifier, 1);
+							} else {
+								history.put(identifier,
+										history.get(identifier) + 1);
 							}
+							singleChild++;
 						}
+					}
+					Log.instance().debug(
+							"All linear panels: " + allLinearPanels
+									+ ", single-child: " + singleChild);
+					List<String> s = new LinkedList<String>(history.keySet());
+					Collections.sort(s, new Comparator<String>() {
+						@Override
+						public int compare(String o1, String o2) {
+							return history.get(o2) - history.get(o1);
+						}
+					});
+					for (int i = 0; i < s.size() && i < 5; i++) {
+						Log.instance().debug(
+								"Top-" + (i + 1) + "-Single-Child: " + s.get(i)
+										+ " (" + history.get(s.get(i)) + ")");
 					}
 					queue.clear();
 				}
