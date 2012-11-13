@@ -34,7 +34,7 @@ class LinearPanelOptimization {
 	// for Swing: dummy
 	// for GWT: optimized, no actual panels but decorations
 
-	static final boolean ENABLED = true;
+	static final boolean ENABLED = false;
 	private static LinearPanelOptimization instance = new LinearPanelOptimization();
 	private Map<SwingPanel<?>, Exception> queue = new HashMap<SwingPanel<?>, Exception>();
 	private Map<String, Integer> history = new HashMap<String, Integer>();
