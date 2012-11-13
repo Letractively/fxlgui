@@ -36,8 +36,7 @@ public class Profiler {
 
 	public static void next(String name) {
 		long duration = System.currentTimeMillis() - timeStamp;
-		Log.instance().debug("Profiling node " + node, duration,
-				new RuntimeException(), null);
+		Log.instance().debug(name, duration, new RuntimeException(), null);
 		timeStamp = System.currentTimeMillis();
 	}
 }
