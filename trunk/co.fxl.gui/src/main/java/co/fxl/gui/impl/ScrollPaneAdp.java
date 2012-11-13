@@ -34,41 +34,41 @@ public class ScrollPaneAdp extends ElementAdp<IScrollPane> implements
 
 	@Override
 	public IScrollPane horizontal() {
-		element.horizontal();
+		element().horizontal();
 		return this;
 	}
 
 	@Override
 	public IContainer viewPort() {
-		return element.viewPort();
+		return element().viewPort();
 	}
 
 	@Override
 	public IScrollPane addScrollListener(IScrollListener listener) {
-		element.addScrollListener(listener);
+		element().addScrollListener(listener);
 		return this;
 	}
 
 	@Override
 	public IScrollPane scrollTo(int pos) {
-		element.scrollTo(pos);
+		element().scrollTo(pos);
 		return this;
 	}
 
 	@Override
 	public IScrollPane scrollIntoView(IElement<?> element) {
-		super.element.scrollIntoView(element);
+		element().scrollIntoView(element);
 		return this;
 	}
 
 	@Override
 	public int scrollOffset() {
-		return element.scrollOffset();
+		return element().scrollOffset();
 	}
 
 	@Override
 	public IScrollPane bidirectional() {
-		element.bidirectional();
+		element().bidirectional();
 		return this;
 	}
 
@@ -78,13 +78,13 @@ public class ScrollPaneAdp extends ElementAdp<IScrollPane> implements
 
 			@Override
 			public IScrollPane always() {
-				element.scrollBars().always();
+				element().scrollBars().always();
 				return ScrollPaneAdp.this;
 			}
 
 			@Override
 			public IScrollPane never() {
-				element.scrollBars().never();
+				element().scrollBars().never();
 				return ScrollPaneAdp.this;
 			}
 

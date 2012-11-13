@@ -35,14 +35,14 @@ public class TextInputAdp<T extends ITextInput<T>> extends TextElementAdp<T>
 	@Override
 	public IUpdateable<String> addUpdateListener(
 			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
-		element.addUpdateListener(listener);
+		element().addUpdateListener(listener);
 		return this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T maxLength(int maxLength) {
-		element.maxLength(maxLength);
+		element().maxLength(maxLength);
 		return (T) this;
 	}
 

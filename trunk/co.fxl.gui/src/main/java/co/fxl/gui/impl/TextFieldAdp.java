@@ -35,17 +35,17 @@ public class TextFieldAdp extends TextInputAdp<ITextField> implements
 	@Override
 	public co.fxl.gui.api.IKeyRecipient.IKey<ITextField> addKeyListener(
 			IClickListener listener) {
-		return element.addKeyListener(listener);
+		return element().addKeyListener(listener);
 	}
 
 	@Override
 	public int cursorPosition() {
-		return element.cursorPosition();
+		return element().cursorPosition();
 	}
 
 	@Override
 	public ITextField cursorPosition(int position) {
-		element.cursorPosition(position);
+		element().cursorPosition(position);
 		return this;
 	}
 
