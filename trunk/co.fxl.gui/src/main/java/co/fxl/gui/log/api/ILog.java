@@ -7,8 +7,6 @@ public interface ILog {
 
 	public interface IDeobfuscator {
 
-//		boolean isDeobfuscated(Throwable t);
-
 		void deobfuscate(Throwable t, ICallback<String> deobfuscated);
 	}
 
@@ -32,5 +30,7 @@ public interface ILog {
 	ILog error(String string);
 
 	ILog warn(String string);
+
+	ILog warn(String string, Exception exception);
 
 }
