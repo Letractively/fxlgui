@@ -26,7 +26,7 @@ import co.fxl.gui.impl.Display;
 
 public class Automation {
 
-	public final static boolean ENABLED = true;
+	public final static boolean ENABLED = false;
 	private static IAutomationListener instance = new IAutomationListener() {
 
 		@Override
