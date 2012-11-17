@@ -91,7 +91,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	// enough
 
 	// TODO SWING-FXL: Usability: Spaltenbreiten werden unter Swing nicht
-	// berücksichtigt
+	// berï¿½cksichtigt
 
 	class State {
 
@@ -1424,6 +1424,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 
 	void sortBy(ScrollTableColumnImpl columnImpl, final boolean update) {
 		if (columnImpl.sortable) {
+			hasColumnSelection = false;
 			if (rows.size() <= MAX_CLIENT_SORT_SIZE || sortListener == null) {
 				sortColumn = columns.indexOf(columnImpl);
 				sortNegator = rows.sort(columnImpl);
