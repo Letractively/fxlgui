@@ -19,11 +19,11 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.ICallback;
-import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.impl.StatusPopUp.Status;
 
 public abstract class LongRunningCallback<T> extends CallbackTemplate<T> {
 
-	private IPopUp dialog;
+	private Status dialog;
 
 	public LongRunningCallback(String info) {
 		set(info);
@@ -35,12 +35,13 @@ public abstract class LongRunningCallback<T> extends CallbackTemplate<T> {
 	}
 
 	private void set(String info) {
-		dialog = StatusPanel.showPopUp(info, Display.instance().height() / 2 - 40);
+		dialog = StatusPopUp.instance().show("Please wait - " + info + "...",
+				false);
 	}
 
 	@Override
 	public final void onSuccess(T pResult) {
-		dialog.visible(false);
+		dialog.hide(false);
 		onInternalSuccess(pResult);
 	}
 
@@ -48,7 +49,7 @@ public abstract class LongRunningCallback<T> extends CallbackTemplate<T> {
 
 	@Override
 	public void onFail(Throwable throwable) {
-		dialog.visible(false);
+		dialog.hide(false);
 		super.onFail(throwable);
 	}
 }
