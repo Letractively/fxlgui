@@ -101,19 +101,7 @@ public class StatusPopUp implements IResizeListener, Runnable {
 	private ILabel label;
 
 	private StatusPopUp() {
-		popUp = Display.instance().showPopUp().modal(true).glass(false);
-		popUp.border().remove().style().shadow(2).color().rgb(240, 195, 109);
-		IHorizontalPanel spacing = popUp.container().panel().horizontal()
-				.spacing(5);
-		spacing.color().rgb(249, 237, 190);
-		label = spacing.addSpace(4).add().label();
-		label.font().pixel(11);
-		spacing.addSpace(4);
 		Display.instance().addResizeListener(this);
-	}
-
-	void updateSize() {
-		onResize(Display.instance().width(), -1);
 	}
 
 	private StatusImpl active() {
@@ -132,11 +120,32 @@ public class StatusPopUp implements IResizeListener, Runnable {
 	}
 
 	private void setStatus(StatusImpl active) {
-		popUp.visible(active != null);
 		if (active != null) {
+			ensurePopUp();
 			label.text(active.message);
+			if (!Env.is(Env.SWING))
+				popUp.visible(true);
 			updateSize();
+			popUp.visible(true);
+		} else if (popUp != null) {
+			popUp.visible(false);
+			popUp = null;
 		}
+	}
+
+	private IPopUp ensurePopUp() {
+		if (popUp == null) {
+			popUp = Display.instance().showPopUp().modal(true).glass(false);
+			popUp.border().remove().style().shadow(2).color()
+					.rgb(240, 195, 109);
+			IHorizontalPanel spacing = popUp.container().panel().horizontal()
+					.spacing(5);
+			spacing.color().rgb(249, 237, 190);
+			label = spacing.addSpace(4).add().label();
+			label.font().pixel(11);
+			spacing.addSpace(4);
+		}
+		return popUp;
 	}
 
 	private void hideExpired() {
@@ -154,9 +163,13 @@ public class StatusPopUp implements IResizeListener, Runnable {
 		Display.instance().invokeLater(this, showAt);
 	}
 
+	void updateSize() {
+		onResize(Display.instance().width(), -1);
+	}
+
 	@Override
 	public void onResize(int width, int height) {
-		if (!popUp.visible())
+		if (popUp == null)
 			return;
 		int x = (width - popUp.width()) / 2;
 		popUp.offset(x, DisplayResizeAdapter.decrement() + 4);
