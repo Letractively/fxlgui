@@ -105,8 +105,6 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 		// TODO replace with Env.is(...) declarations in the respective widgets
 
 		Constants.put("TableViewTemplate.CORRECT_HEIGHT", false);
-		Constants.put("StatusPanel.BEFORE", false);
-		Constants.put("StatusPanel.RESIZE", false);
 		Constants.put("DragAndDropGridAdapter.ALLOW_DRAG_AND_DROP", false);
 	}
 

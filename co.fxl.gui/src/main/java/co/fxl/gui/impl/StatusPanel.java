@@ -32,8 +32,8 @@ public class StatusPanel {
 	static final ColorMemento BACKGROUND = new ColorMemento(249, 237, 190);
 	private static final String LOADING = "Loading ";
 	public static final double FADE_IN_MS = 1000;
-	private static boolean RESIZE = Constants.get("StatusPanel.RESIZE", true);
-	private static boolean BEFORE = Constants.get("StatusPanel.BEFORE", true);
+	private static boolean RESIZE = !Env.is(Env.SWING);
+	private static boolean BEFORE = !Env.is(Env.SWING);
 	private IPopUp lastPopUp;
 	private static StatusPanel instance;
 	ColorMemento color = BACKGROUND;
