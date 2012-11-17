@@ -1,0 +1,175 @@
+/**
+ * This file is part of FXL GUI API.
+ *  
+ * FXL GUI API is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *  
+ * FXL GUI API is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *  
+ * You should have received a copy of the GNU General Public License
+ * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
+ */
+package co.fxl.gui.impl;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IResizable.IResizeListener;
+
+public class StatusPopUp implements IResizeListener, Runnable {
+
+	public interface Status {
+
+		void hide(boolean lazy);
+	}
+
+	private static class StatusImpl implements Status {
+
+		private Long id = StatusPopUp.CURRENT_ID++;
+		private Long showAt = null;
+		private Long hideAt = null;
+		private String message;
+
+		private StatusImpl(String message) {
+			this.message = message;
+		}
+
+		private void show(boolean lazy) {
+			if (!lazy) {
+				StatusPopUp.instance.run();
+			} else {
+				showAt = System.currentTimeMillis() + SHOW_LAZY;
+				StatusPopUp.instance.schedule(SHOW_LAZY);
+			}
+		}
+
+		@Override
+		public void hide(boolean lazy) {
+			if (!lazy) {
+				hide();
+			} else {
+				hideAt = System.currentTimeMillis() + HIDE_LAZY;
+				StatusPopUp.instance.schedule(HIDE_LAZY);
+			}
+		}
+
+		private void hide() {
+			boolean active = active();
+			queue().remove(this);
+			if (active)
+				StatusPopUp.instance.run();
+		}
+
+		private boolean active() {
+			return StatusPopUp.instance.active() == this;
+		}
+
+		List<StatusImpl> queue() {
+			return StatusPopUp.instance.queue;
+		}
+
+		@Override
+		public int hashCode() {
+			return id.intValue();
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			return ((StatusImpl) o).id.equals(id);
+		}
+
+	}
+
+	private static StatusPopUp instance = new StatusPopUp();
+	private static final long SHOW_LAZY = 500;
+	private static final long HIDE_LAZY = 200;
+	private static Long CURRENT_ID = 0l;
+	private IPopUp popUp;
+	private List<StatusImpl> queue = new LinkedList<StatusImpl>();
+
+	private ILabel label;
+
+	private StatusPopUp() {
+		popUp = Display.instance().showPopUp().modal(true).glass(false);
+		popUp.border().remove().style().shadow(2).color().rgb(240, 195, 109);
+		IHorizontalPanel spacing = popUp.container().panel().horizontal()
+				.spacing(5);
+		spacing.color().rgb(249, 237, 190);
+		label = spacing.addSpace(4).add().label();
+		label.font().pixel(11);
+		spacing.addSpace(4);
+		Display.instance().addResizeListener(this);
+	}
+
+	void updateSize() {
+		onResize(Display.instance().width(), -1);
+	}
+
+	private StatusImpl active() {
+		for (int i = queue.size() - 1; i >= 0; i--) {
+			StatusImpl status = queue.get(i);
+			if (status.showAt == null)
+				return status;
+		}
+		return null;
+	}
+
+	@Override
+	public void run() {
+		hideExpired();
+		setStatus(active());
+	}
+
+	private void setStatus(StatusImpl active) {
+		popUp.visible(active != null);
+		if (active != null) {
+			label.text(active.message);
+			updateSize();
+		}
+	}
+
+	private void hideExpired() {
+		Iterator<StatusImpl> it = queue.iterator();
+		while (it.hasNext()) {
+			StatusImpl status = it.next();
+			if (status.hideAt != null
+					&& System.currentTimeMillis() > status.hideAt) {
+				it.remove();
+			}
+		}
+	}
+
+	private void schedule(long showAt) {
+		Display.instance().invokeLater(this, showAt);
+	}
+
+	@Override
+	public void onResize(int width, int height) {
+		if (!popUp.visible())
+			return;
+		int x = (width - popUp.width()) / 2;
+		popUp.offset(x, DisplayResizeAdapter.decrement() + 4);
+	}
+
+	public Status show(String message, boolean lazy) {
+		StatusImpl status = new StatusImpl(message);
+		queue.add(status);
+		status.show(lazy);
+		return status;
+	}
+
+	public static StatusPopUp instance() {
+		return instance;
+	}
+}

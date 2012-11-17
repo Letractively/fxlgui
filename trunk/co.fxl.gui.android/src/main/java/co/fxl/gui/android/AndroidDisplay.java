@@ -176,7 +176,7 @@ public class AndroidDisplay extends DisplayTemplate implements Parent {
 	}
 
 	@Override
-	public IDisplay invokeLater(Runnable runnable, int ms) {
+	public IDisplay invokeLater(Runnable runnable, long ms) {
 		throw new UnsupportedOperationException();
 	}
 

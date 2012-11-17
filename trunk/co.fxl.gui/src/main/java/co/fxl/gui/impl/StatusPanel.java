@@ -26,6 +26,8 @@ import co.fxl.gui.api.IResizable.IResizeListener;
 
 public class StatusPanel {
 
+	// TODO replace with StatusPopUp
+
 	static final ColorMemento FOREGROUND = new ColorMemento();
 	static final ColorMemento BACKGROUND = new ColorMemento(249, 237, 190);
 	private static final String LOADING = "Loading ";

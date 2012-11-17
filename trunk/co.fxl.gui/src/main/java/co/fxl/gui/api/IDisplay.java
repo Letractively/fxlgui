@@ -96,7 +96,7 @@ public interface IDisplay extends IColored, IServiceRegistry<IDisplay>,
 
 	IDisplay invokeLater(Runnable runnable);
 
-	IDisplay invokeLater(Runnable runnable, int ms);
+	IDisplay invokeLater(Runnable runnable, long ms);
 
 	String title();
 
