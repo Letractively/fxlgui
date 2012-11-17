@@ -321,7 +321,7 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 	}
 
 	@Override
-	public IDisplay invokeLater(final Runnable runnable, final int ms) {
+	public IDisplay invokeLater(final Runnable runnable, final long ms) {
 		new Thread() {
 			@Override
 			public void run() {

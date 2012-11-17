@@ -417,14 +417,14 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	}
 
 	@Override
-	public IDisplay invokeLater(final Runnable runnable, int ms) {
+	public IDisplay invokeLater(final Runnable runnable, long ms) {
 		scheduler.scheduleFixedDelay(new RepeatingCommand() {
 			@Override
 			public boolean execute() {
 				runnable.run();
 				return false;
 			}
-		}, ms);
+		}, (int) ms);
 		return this;
 	}
 
