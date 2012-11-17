@@ -39,8 +39,6 @@ public class StatusPanel {
 	ColorMemento fontColor = FOREGROUND;
 	private String text;
 
-	// private boolean bold;
-
 	private StatusPanel() {
 		if (instance != null) {
 			instance.hide();
@@ -120,12 +118,6 @@ public class StatusPanel {
 		return dialog;
 	}
 
-	// public static StatusPanel instance() {
-	// if (instance == null)
-	// instance = new StatusPanel();
-	// return instance;
-	// }
-
 	public static StatusPanel newInstance() {
 		return new StatusPanel();
 	}
@@ -137,9 +129,4 @@ public class StatusPanel {
 		dialog.offset(x, DisplayResizeAdapter.decrement() + 4);
 		dialog.visible(true);
 	}
-
-	// StatusPanel bold(boolean b) {
-	// bold = b;
-	// return this;
-	// }
 }
