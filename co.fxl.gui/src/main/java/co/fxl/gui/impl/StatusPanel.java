@@ -63,7 +63,8 @@ public class StatusPanel {
 	}
 
 	void hide() {
-		lastPopUp.visible(false);
+		if (lastPopUp != null)
+			lastPopUp.visible(false);
 		lastPopUp = null;
 		instance = null;
 	}
