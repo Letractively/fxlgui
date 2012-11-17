@@ -59,6 +59,7 @@ import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.KeyAdapter;
+import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.ResizableWidgetTemplate;
 import co.fxl.gui.impl.StatusDisplay;
 import co.fxl.gui.impl.ToolbarImpl;
@@ -1035,7 +1036,8 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			ILabel label = p.add().label();
 			label.text(in);
 			label.font().pixel(10);
-			statusRangeLabel = p.addSpace(4).add().label().text(getStatusRange(paintedRows()));
+			statusRangeLabel = p.addSpace(4).add().label()
+					.text(getStatusRange(paintedRows()));
 			statusRangeLabel.font().weight().bold().pixel(10);
 			rightPaging = p.add().label().text(">>");
 			rightPaging.margin().left(4);
@@ -1645,6 +1647,12 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 
 	@Override
 	public IClickListener configureListener() {
-		return configureListener;
+		return new LazyClickListener() {
+			@Override
+			public void onAllowedClick() {
+				hasColumnSelection = false;
+				configureListener.onClick();
+			}
+		};
 	}
 }
