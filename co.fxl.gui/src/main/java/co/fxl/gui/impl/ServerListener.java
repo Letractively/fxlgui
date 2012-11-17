@@ -20,9 +20,9 @@ package co.fxl.gui.impl;
 
 public class ServerListener {
 
-	private static final int TOLERANCE = 500;
+	private static final int TOLERANCE = 50;
 	private static final int FADE_OUT = 200;
-	private static final boolean SHOW_LOADING_LAZY = true;
+	private static final boolean SHOW_LOADING_LAZY = false;
 
 	public enum Type {
 
@@ -50,7 +50,7 @@ public class ServerListener {
 				if (!scheduled)
 					return;
 				scheduled = false;
-				if (StatusPanel.instance() == null) {
+				if (StatusPanel.instance() == null && currentActivity != null) {
 					currentStatusPanel = StatusPanel.newInstance().startAction(
 							textStatusPanel());
 				}
