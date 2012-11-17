@@ -40,15 +40,6 @@ public abstract class CallbackTemplate<T> implements ICallback<T> {
 			cb.onFail(throwable);
 	}
 
-	// public static ICallback<Void> runnable(final Runnable runnable) {
-	// return new CallbackTemplate<Void>() {
-	// @Override
-	// public void onSuccess(Void result) {
-	// runnable.run();
-	// }
-	// };
-	// }
-
 	public static ICallback<Boolean> adapterVoid(final ICallback<Void> cb2) {
 		return new CallbackTemplate<Boolean>(cb2) {
 			@Override
