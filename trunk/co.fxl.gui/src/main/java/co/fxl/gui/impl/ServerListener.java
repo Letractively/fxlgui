@@ -20,16 +20,82 @@ package co.fxl.gui.impl;
 
 public class ServerListener {
 
-	public static IServerListener instance = null;
+	private static final int TOLERANCE = 500;
+	private static final int FADE_OUT = 200;
+	private static final boolean SHOW_LOADING_LAZY = true;
 
-	public static void notifyCall() {
+	public enum Type {
+
+		SAVING, LOADING
+	}
+
+	public static IServerListener instance = null;
+	public static Type currentActivity;
+	public static int callStack = 0;
+	public static StatusPanel currentStatusPanel;
+	public static boolean scheduled = false;
+
+	public static void notifyCall(Type type) {
 		if (instance != null)
 			instance.notifyServerCallStart();
+		if (!SHOW_LOADING_LAZY)
+			return;
+		callStack++;
+		if (type.equals(currentActivity))
+			return;
+		currentActivity = type;
+		Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+				if (!scheduled)
+					return;
+				scheduled = false;
+				if (StatusPanel.instance() == null) {
+					currentStatusPanel = StatusPanel.newInstance().startAction(
+							textStatusPanel());
+				}
+			}
+		};
+		if (currentStatusPanel != null) {
+			currentStatusPanel.hide();
+			runnable.run();
+			return;
+		}
+		if (!scheduled) {
+			scheduled = true;
+			Display.instance().invokeLater(runnable, TOLERANCE);
+		}
 	}
 
 	public static void notifyReturn() {
 		if (instance != null)
 			instance.notifyServerCallReturn();
+		if (!SHOW_LOADING_LAZY)
+			return;
+		callStack--;
+		if (callStack == 0) {
+			scheduled = false;
+			if (currentStatusPanel != null) {
+				if (currentStatusPanel == StatusPanel.instance())
+					Display.instance().invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							if (currentStatusPanel != null)
+								currentStatusPanel.hide();
+							currentStatusPanel = null;
+						}
+					}, FADE_OUT);
+				else {
+					currentStatusPanel = null;
+					currentActivity = null;
+				}
+			}
+			currentActivity = null;
+		}
+	}
+
+	private static String textStatusPanel() {
+		return currentActivity.equals(Type.LOADING) ? "Loading" : "Saving";
 	}
 
 }
