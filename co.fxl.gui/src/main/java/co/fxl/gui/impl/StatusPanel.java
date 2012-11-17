@@ -23,6 +23,7 @@ import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IResizable.IResizeListener;
+import co.fxl.gui.impl.ServerListener.Type;
 import co.fxl.gui.log.impl.Log;
 
 public class StatusPanel {
@@ -47,15 +48,21 @@ public class StatusPanel {
 	}
 
 	public StatusPanel start(String status) {
-		ServerListener.notifyCall();
-		text = LOADING + status;
+		ServerListener.notifyCall(Type.LOADING);
+		String text = LOADING + status;
 		if (Log.ENABLED)
 			Log.instance().start(text);
+		startAction(text);
+		return this;
+	}
+
+	StatusPanel startAction(String text) {
+		this.text = text;
 		lastPopUp = showLoadingPopUp(text, 0, color, fontColor, false);// bold);
 		return this;
 	}
 
-	private void hide() {
+	void hide() {
 		lastPopUp.visible(false);
 		lastPopUp = null;
 		instance = null;
@@ -118,6 +125,10 @@ public class StatusPanel {
 		return dialog;
 	}
 
+	public static StatusPanel instance() {
+		return instance;
+	}
+
 	public static StatusPanel newInstance() {
 		return new StatusPanel();
 	}
@@ -128,5 +139,9 @@ public class StatusPanel {
 		int x = (width - dialog.width()) / 2;
 		dialog.offset(x, DisplayResizeAdapter.decrement() + 4);
 		dialog.visible(true);
+	}
+
+	void text(String textStatusPanel) {
+		throw new UnsupportedOperationException();
 	}
 }
