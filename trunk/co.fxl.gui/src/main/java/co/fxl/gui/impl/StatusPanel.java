@@ -23,8 +23,6 @@ import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IResizable.IResizeListener;
-import co.fxl.gui.impl.ServerListener.Type;
-import co.fxl.gui.log.impl.Log;
 
 public class StatusPanel {
 
@@ -47,34 +45,34 @@ public class StatusPanel {
 		instance = this;
 	}
 
-	public StatusPanel start(String status) {
-		ServerListener.notifyCall(Type.LOADING);
-		String text = LOADING + status;
-		if (Log.ENABLED)
-			Log.instance().start(text);
-		startAction(text);
-		return this;
-	}
+	// public StatusPanel start(String status) {
+	// ServerListener.notifyCall(Type.LOADING);
+	// String text = LOADING + status;
+	// if (Log.ENABLED)
+	// Log.instance().start(text);
+	// startAction(text);
+	// return this;
+	// }
+	//
+	// StatusPanel startAction(String text) {
+	// this.text = text;
+	// lastPopUp = showLoadingPopUp(text, 0, color, fontColor, false);// bold);
+	// return this;
+	// }
 
-	StatusPanel startAction(String text) {
-		this.text = text;
-		lastPopUp = showLoadingPopUp(text, 0, color, fontColor, false);// bold);
-		return this;
-	}
-
-	void hide() {
+	private void hide() {
 		if (lastPopUp != null)
 			lastPopUp.visible(false);
 		lastPopUp = null;
 		instance = null;
 	}
 
-	public void stop() {
-		ServerListener.notifyReturn();
-		if (Log.ENABLED)
-			Log.instance().stop(text);
-		hide();
-	}
+	// public void stop() {
+	// ServerListener.notifyReturn();
+	// if (Log.ENABLED)
+	// Log.instance().stop(text);
+	// hide();
+	// }
 
 	public IColor color() {
 		return color;
