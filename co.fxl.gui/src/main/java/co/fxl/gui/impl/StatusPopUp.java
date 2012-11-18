@@ -31,6 +31,8 @@ public class StatusPopUp implements IResizeListener, Runnable {
 	public interface Status {
 
 		void hide(boolean lazy);
+
+		void hide(long ms);
 	}
 
 	private static class StatusImpl implements Status {
@@ -71,6 +73,12 @@ public class StatusPopUp implements IResizeListener, Runnable {
 				hideAt = currentTimeMillis + remaining;
 				StatusPopUp.instance.schedule(remaining);
 			}
+		}
+
+		@Override
+		public void hide(long ms) {
+			hideAt = System.currentTimeMillis() + ms;
+			StatusPopUp.instance.schedule(ms);
 		}
 
 		private void hide() {
