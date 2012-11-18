@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.impl;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,17 +39,19 @@ public class StatusPopUp implements IResizeListener, Runnable {
 		private Long showAt = null;
 		private Long hideAt = null;
 		private String message;
+		private boolean lazy;
 
 		private StatusImpl(String message) {
 			this.message = message;
 		}
 
 		private void show(boolean lazy) {
+			this.lazy = lazy;
 			if (!lazy) {
 				StatusPopUp.instance.run();
 			} else {
-				showAt = System.currentTimeMillis() + SHOW_LAZY;
-				StatusPopUp.instance.schedule(SHOW_LAZY);
+				showAt = System.currentTimeMillis() + SHOW_LAZY_TOLERANCE;
+				StatusPopUp.instance.schedule(SHOW_LAZY_TOLERANCE);
 			}
 		}
 
@@ -59,8 +60,16 @@ public class StatusPopUp implements IResizeListener, Runnable {
 			if (!lazy) {
 				hide();
 			} else {
-				hideAt = System.currentTimeMillis() + HIDE_LAZY;
-				StatusPopUp.instance.schedule(HIDE_LAZY);
+				if (showAt != null) {
+					queue().remove(this);
+					return;
+				}
+				long currentTimeMillis = System.currentTimeMillis();
+				long remaining = showAt != null ? LAZY_POPUP_TIME_MINIMUM
+						- (currentTimeMillis - showAt)
+						: LAZY_POPUP_TIME_MINIMUM;
+				hideAt = currentTimeMillis + remaining;
+				StatusPopUp.instance.schedule(remaining);
 			}
 		}
 
@@ -92,8 +101,8 @@ public class StatusPopUp implements IResizeListener, Runnable {
 	}
 
 	private static StatusPopUp instance = new StatusPopUp();
-	private static final long SHOW_LAZY = 500;
-	private static final long HIDE_LAZY = 200;
+	private static final long SHOW_LAZY_TOLERANCE = 1000;
+	private static final long LAZY_POPUP_TIME_MINIMUM = 500;
 	private static Long CURRENT_ID = 0l;
 	private IPopUp popUp;
 	private List<StatusImpl> queue = new LinkedList<StatusImpl>();
@@ -107,6 +116,11 @@ public class StatusPopUp implements IResizeListener, Runnable {
 	private StatusImpl active() {
 		for (int i = queue.size() - 1; i >= 0; i--) {
 			StatusImpl status = queue.get(i);
+			if (status.showAt == null && !status.lazy)
+				return status;
+		}
+		for (int i = queue.size() - 1; i >= 0; i--) {
+			StatusImpl status = queue.get(i);
 			if (status.showAt == null)
 				return status;
 		}
@@ -115,7 +129,7 @@ public class StatusPopUp implements IResizeListener, Runnable {
 
 	@Override
 	public void run() {
-		hideExpired();
+		updateStatus();
 		setStatus(active());
 	}
 
@@ -148,19 +162,21 @@ public class StatusPopUp implements IResizeListener, Runnable {
 		return popUp;
 	}
 
-	private void hideExpired() {
-		Iterator<StatusImpl> it = queue.iterator();
-		while (it.hasNext()) {
-			StatusImpl status = it.next();
+	private void updateStatus() {
+		for (int i = queue.size() - 1; i >= 0; i--) {
+			StatusImpl status = queue.get(i);
 			if (status.hideAt != null
 					&& System.currentTimeMillis() > status.hideAt) {
-				it.remove();
+				queue.remove(status);
+			} else if (status.showAt != null
+					&& System.currentTimeMillis() > status.showAt) {
+				status.showAt = null;
 			}
 		}
 	}
 
 	private void schedule(long showAt) {
-		Display.instance().invokeLater(this, showAt);
+		Display.instance().invokeLater(this, showAt + 100);
 	}
 
 	void updateSize() {
