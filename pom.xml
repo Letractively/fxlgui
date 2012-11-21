@@ -218,6 +218,10 @@
         	<groupId>org.codehaus.mojo</groupId>
         	<artifactId>gwt-maven-plugin</artifactId>
         	<version>2.5.0</version>
+        	<configuration>	
+        		<logLevel>WARN</logLevel>	
+        		<gwtVersion>${gwtVersion}</gwtVersion>        		
+					</configuration>
         	<executions>
           	<execution>
             	<goals>
@@ -225,7 +229,24 @@
               	<goal>compile</goal>
             	</goals>
           	</execution>
-        	</executions>
+        	</executions>        	
+					<dependencies>
+          	<dependency>
+	            <groupId>com.google.gwt</groupId>
+            	<artifactId>gwt-user</artifactId>
+            	<version>${gwtVersion}</version>
+          	</dependency>
+          	<dependency>
+	            <groupId>com.google.gwt</groupId>
+            	<artifactId>gwt-dev</artifactId>
+            	<version>${gwtVersion}</version>
+          	</dependency>
+          	<dependency>
+	            <groupId>com.google.gwt</groupId>
+            	<artifactId>gwt-codeserver</artifactId>
+            	<version>${gwtVersion}</version>
+          	</dependency>
+        </dependencies>
       	</plugin>         
   		</plugins>	
   	</pluginManagement>		
