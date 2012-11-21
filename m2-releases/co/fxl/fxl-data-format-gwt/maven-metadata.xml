@@ -3,11 +3,12 @@
   <groupId>co.fxl</groupId>
   <artifactId>fxl-data-format-gwt</artifactId>
   <versioning>
-    <release>1.1.1</release>
+    <release>1.1.2</release>
     <versions>
       <version>1.1.0</version>
       <version>1.1.1</version>
+      <version>1.1.2</version>
     </versions>
-    <lastUpdated>20120607123156</lastUpdated>
+    <lastUpdated>20121121201918</lastUpdated>
   </versioning>
 </metadata>
