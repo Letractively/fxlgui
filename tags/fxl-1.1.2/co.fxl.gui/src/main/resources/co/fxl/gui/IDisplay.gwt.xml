@@ -1,0 +1,16 @@
+<module>
+	<inherits name="com.google.gwt.user.User" />
+	<source path="api" />
+	<source path="impl" />
+	<source path="log/api" />
+	<source path="log/impl" />
+	<source path="layout/api" />
+	<source path="layout/impl" />
+	<source path="style/api" />
+	<source path="style/impl" />
+	<source path="i18n/api" />
+	<source path="i18n/impl" />
+	<source path="i18n/german" />
+	<source path="automation/api" />
+	<source path="automation/impl" />
+</module>

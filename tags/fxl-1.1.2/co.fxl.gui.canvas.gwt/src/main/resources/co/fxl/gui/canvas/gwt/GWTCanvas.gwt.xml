@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <inherits name="co.fxl.gui.gwt.GWTDisplay" />
+   <inherits name="co.fxl.gui.canvas.impl.CanvasImpl" />
+    <source path="" />
+</module>
