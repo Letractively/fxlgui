@@ -10,6 +10,7 @@
   	<java_compliance_source_level>1.6</java_compliance_source_level>		
   	<java_compliance_target_level>1.6</java_compliance_target_level>		
   	<gwtVersion>2.5.0</gwtVersion>
+  	<gwtMvnPluginVersion>${gwtVersion}</gwtMvnPluginVersion>
   	<androidVersion>2.1.2</androidVersion>
   	<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
   	<project.reporting.outputEncoding>ISO-8859-1</project.reporting.outputEncoding>
@@ -91,7 +92,7 @@
       		</plugin>      		
 				</plugins>             			
 			</build>			
-		</profile> 			
+		</profile> 
 	</profiles>  
 	<dependencyManagement>	
   	<dependencies>
@@ -107,11 +108,12 @@
   			<version>${gwtVersion}</version>
   			<scope>provided</scope>
   		</dependency> 
-  		<dependency>		
-	  	  <groupId>com.google.gwt</groupId>
-		  	<artifactId>gwt-dev</artifactId>
-  			<version>${gwtVersion}</version>
-  		</dependency>
+  		<dependency>
+      	<groupId>com.google.gwt</groupId>
+    	  <artifactId>gwt-dev</artifactId>
+  	    <version>${gwtVersion}</version>	      
+      	<scope>provided</scope>
+    	</dependency>
 			<dependency>
 				<groupId>com.google.android</groupId>
 				<artifactId>android</artifactId>
@@ -217,36 +219,29 @@
   			<plugin>
         	<groupId>org.codehaus.mojo</groupId>
         	<artifactId>gwt-maven-plugin</artifactId>
-        	<version>2.5.0</version>
+        	<version>${gwtMvnPluginVersion}</version>
         	<configuration>	
+        		<extraJvmArgs>-Xmx1268m</extraJvmArgs>
         		<logLevel>WARN</logLevel>	
         		<gwtVersion>${gwtVersion}</gwtVersion>        		
 					</configuration>
         	<executions>
           	<execution>
+          		<id>compile</id>
+          		<phase>compile</phase>
             	<goals>
-              	<goal>resources</goal>
+<!--           	<goal>resources</goal> -->
               	<goal>compile</goal>
             	</goals>
           	</execution>
-        	</executions>        	
-					<dependencies>
-          	<dependency>
-	            <groupId>com.google.gwt</groupId>
-            	<artifactId>gwt-user</artifactId>
-            	<version>${gwtVersion}</version>
-          	</dependency>
-          	<dependency>
-	            <groupId>com.google.gwt</groupId>
-            	<artifactId>gwt-dev</artifactId>
-            	<version>${gwtVersion}</version>
-          	</dependency>
-          	<dependency>
-	            <groupId>com.google.gwt</groupId>
-            	<artifactId>gwt-codeserver</artifactId>
-            	<version>${gwtVersion}</version>
-          	</dependency>
-        </dependencies>
+          	<execution>
+     					<id>clean</id>
+       				<phase>clean</phase>
+		       		<goals>
+	         			<goal>clean</goal>
+       				</goals>
+     				</execution>	
+        	</executions>        						
       	</plugin>         
   		</plugins>	
   	</pluginManagement>		
