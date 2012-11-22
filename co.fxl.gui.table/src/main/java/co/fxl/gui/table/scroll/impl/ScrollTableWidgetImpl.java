@@ -92,7 +92,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	// enough
 
 	// TODO SWING-FXL: Usability: Spaltenbreiten werden unter Swing nicht
-	// ber�cksichtigt
+	// beruecksichtigt
 
 	class State {
 
@@ -320,7 +320,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	@Override
 	public IScrollTableWidget<Object> visible(boolean visible) {
 		statusRangeLabel = null;
-		hasColumnSelection = false;
+		resetHasBottomInfos();
 		if (visible) {
 			rows = new RowAdapter(this, actualRows);
 			drawAll();
@@ -1426,7 +1426,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 
 	void sortBy(ScrollTableColumnImpl columnImpl, final boolean update) {
 		if (columnImpl.sortable) {
-			hasColumnSelection = false;
+			resetHasBottomInfos();
 			if (rows.size() <= MAX_CLIENT_SORT_SIZE || sortListener == null) {
 				sortColumn = columns.indexOf(columnImpl);
 				sortNegator = rows.sort(columnImpl);
@@ -1645,12 +1645,17 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		return this;
 	}
 
+	private void resetHasBottomInfos() {
+		hasColumnSelection = false;
+		statusRangeLabel = null;
+	}
+
 	@Override
 	public IClickListener configureListener() {
 		return new LazyClickListener() {
 			@Override
 			public void onAllowedClick() {
-				hasColumnSelection = false;
+				resetHasBottomInfos();
 				configureListener.onClick();
 			}
 		};
