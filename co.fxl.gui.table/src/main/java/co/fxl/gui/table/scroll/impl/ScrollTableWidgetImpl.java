@@ -85,7 +85,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 
 	// TODO Usability: editable table: if illegal value has been inserted (e.g.
 	// 25.13.2002), then ignore input, reset to original and show fading error
-	// message (a la google docs saving...) that doesnt requrire click on accept
+	// message (a la google docs saving...) that doesnt require click on accept
 
 	// TODO SWING-FXL: Scroll Panel block increment for single click on arrow is
 	// not
