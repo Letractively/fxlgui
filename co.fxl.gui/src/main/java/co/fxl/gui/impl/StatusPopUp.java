@@ -157,7 +157,8 @@ public class StatusPopUp implements IResizeListener, Runnable {
 
 	private IPopUp ensurePopUp() {
 		if (popUp == null) {
-			popUp = Display.instance().showPopUp().modal(true).glass(false);
+			popUp = Display.instance().showPopUp().modal(false).autoHide(false)
+					.glass(false);
 			popUp.border().remove().style().shadow(2).color()
 					.rgb(240, 195, 109);
 			IHorizontalPanel spacing = popUp.container().panel().horizontal()
