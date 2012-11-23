@@ -44,7 +44,8 @@ public abstract class CallbackTemplate<T> implements ICallback<T> {
 		return new CallbackTemplate<Boolean>(cb2) {
 			@Override
 			public void onSuccess(Boolean result) {
-				cb2.onSuccess(null);
+				if (cb2 != null)
+					cb2.onSuccess(null);
 			}
 		};
 	}
