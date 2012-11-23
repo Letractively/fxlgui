@@ -42,9 +42,11 @@ public class StatusPopUp implements IResizeListener, Runnable {
 		private Long hideAt = null;
 		private String message;
 		private boolean lazy;
+		private String tooltip;
 
-		private StatusImpl(String message) {
+		private StatusImpl(String message, String tooltip) {
 			this.message = message;
+			this.tooltip = tooltip != null ? tooltip : message;
 		}
 
 		private void show(boolean lazy) {
@@ -114,8 +116,8 @@ public class StatusPopUp implements IResizeListener, Runnable {
 	private static Long CURRENT_ID = 0l;
 	private IPopUp popUp;
 	private List<StatusImpl> queue = new LinkedList<StatusImpl>();
-
 	private ILabel label;
+	private IHorizontalPanel panel;
 
 	private StatusPopUp() {
 		Display.instance().addResizeListener(this);
@@ -145,6 +147,8 @@ public class StatusPopUp implements IResizeListener, Runnable {
 		if (active != null) {
 			ensurePopUp();
 			label.text(active.message);
+			panel.tooltip(active.tooltip);
+			label.tooltip(active.tooltip);
 			if (!Env.is(Env.SWING))
 				popUp.visible(true);
 			updateSize();
@@ -161,12 +165,11 @@ public class StatusPopUp implements IResizeListener, Runnable {
 					.glass(false);
 			popUp.border().remove().style().shadow(2).color()
 					.rgb(240, 195, 109);
-			IHorizontalPanel spacing = popUp.container().panel().horizontal()
-					.spacing(5);
-			spacing.color().rgb(249, 237, 190);
-			label = spacing.addSpace(4).add().label();
+			panel = popUp.container().panel().horizontal().spacing(5);
+			panel.color().rgb(249, 237, 190);
+			label = panel.addSpace(4).add().label();
 			label.font().pixel(11);
-			spacing.addSpace(4);
+			panel.addSpace(4);
 		}
 		return popUp;
 	}
@@ -200,8 +203,8 @@ public class StatusPopUp implements IResizeListener, Runnable {
 		popUp.offset(x, DisplayResizeAdapter.decrement() + 4);
 	}
 
-	public Status show(String message, boolean lazy) {
-		StatusImpl status = new StatusImpl(message);
+	public Status show(String message, String tooltip, boolean lazy) {
+		StatusImpl status = new StatusImpl(message, tooltip);
 		queue.add(status);
 		status.show(lazy);
 		return status;
