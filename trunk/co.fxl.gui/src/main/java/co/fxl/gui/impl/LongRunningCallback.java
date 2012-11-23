@@ -36,7 +36,7 @@ public abstract class LongRunningCallback<T> extends CallbackTemplate<T> {
 
 	private void set(String info) {
 		dialog = StatusPopUp.instance().show("Please wait - " + info + "...",
-				false);
+				null, false);
 	}
 
 	@Override
