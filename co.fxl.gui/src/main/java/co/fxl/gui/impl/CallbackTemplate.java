@@ -34,7 +34,7 @@ public abstract class CallbackTemplate<T> implements ICallback<T> {
 	@Override
 	public void onFail(Throwable throwable) {
 		if (cb == null) {
-			throwable.printStackTrace();
+			// throwable.printStackTrace();
 			throw new RuntimeException(throwable);
 		} else
 			cb.onFail(throwable);
