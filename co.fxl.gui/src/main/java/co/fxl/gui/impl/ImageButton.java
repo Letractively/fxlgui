@@ -42,6 +42,7 @@ public class ImageButton implements IClickable<Object>,
 	private List<IClickListener> clickListeners = new LinkedList<IClickListener>();
 	private Entry entry;
 	private boolean hasElements = false;
+	private boolean hyperlink;
 
 	public ImageButton(IContainer c) {
 		this.panel = c.panel().horizontal();
@@ -67,8 +68,8 @@ public class ImageButton implements IClickable<Object>,
 		label.text(text);
 		if (addToContextMenu != null)
 			if (entry == null) {
-				entry = co.fxl.gui.impl.Page.instance().contextMenu().group(addToContextMenu)
-						.addEntry(text);
+				entry = co.fxl.gui.impl.Page.instance().contextMenu()
+						.group(addToContextMenu).addEntry(text);
 				entry.addClickListener(this);
 				if (image != null) {
 					entry.imageResource(image.resource());
@@ -107,8 +108,15 @@ public class ImageButton implements IClickable<Object>,
 		return this;
 	}
 
+	public ImageButton lazyHyperlink() {
+		hyperlink = true;
+		return this;
+	}
+
 	@Override
 	public IKey<Object> addClickListener(IClickListener clickListener) {
+		if (hyperlink)
+			label.hyperlink();
 		label.addClickListener(clickListener);
 		if (image != null)
 			image.addClickListener(clickListener);

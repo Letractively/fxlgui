@@ -112,14 +112,14 @@ public class NavigationView {
 		IImage image = addImage(panel, imageResource);
 		ILabel textLabel = addTextLabel(panel);
 		ImageButton imageButton = new ImageButton((IVerticalPanel) panels[0],
-				panel, image, textLabel);
+				panel, image, textLabel).lazyHyperlink();
 		if (addToContextMenu)
 			imageButton = imageButton.addToContextMenu(NAVIGATION);
 		return imageButton;
 	}
 
 	protected ILabel addTextLabel(IHorizontalPanel panel) {
-		final ILabel textLabel = panel.add().label().hyperlink();
+		final ILabel textLabel = panel.add().label();
 		return textLabel;
 	}
 
