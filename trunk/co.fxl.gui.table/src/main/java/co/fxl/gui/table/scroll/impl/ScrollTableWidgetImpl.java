@@ -1652,6 +1652,8 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 
 	@Override
 	public IClickListener configureListener() {
+		if (configureListener == null)
+			return null;
 		return new LazyClickListener() {
 			@Override
 			public void onAllowedClick() {
