@@ -31,6 +31,7 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.HorizontalScalingPanel;
+import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.table.scroll.impl.ScrollTableWidgetImpl;
 import co.fxl.gui.table.util.api.IDragDropListener;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
@@ -40,9 +41,9 @@ import co.fxl.gui.table.util.impl.DragAndDrop.DragAndDropAdapter;
 public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		DragAndDropAdapter {
 
-	// TODO Usability: Relation-Register-Easy-Add: Klick auf Add: untere Hälfte
-	// von Relation-Register via Split-Pane unterteilt, Filter oben gilt für
-	// beide Sichten, untere Sicht enthält alle nicht-assoziierten Objekte
+	// TODO Usability: Relation-Register-Easy-Add: Klick auf Add: untere Hï¿½lfte
+	// von Relation-Register via Split-Pane unterteilt, Filter oben gilt fï¿½r
+	// beide Sichten, untere Sicht enthï¿½lt alle nicht-assoziierten Objekte
 	// (Adapter.nonValueOf). Gibt Buttons dazwischen mit hoch/runter
 	// verschieben, geht aber auch mit drag und drop. eventuell lassen sich hier
 	// auch working-sets verwenden
