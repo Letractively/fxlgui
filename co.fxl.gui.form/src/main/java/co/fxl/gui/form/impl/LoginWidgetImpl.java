@@ -25,9 +25,9 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.form.api.ILoginWidget;
+import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
-import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.UserPanel;
@@ -140,8 +140,12 @@ public class LoginWidgetImpl implements ILoginWidget {
 			public void onAllowedClick() {
 				userText = null;
 				// passwordText = null;
-				listener.logout(DummyCallback.voidInstance());
-				UserPanel.instance().update();
+				listener.logout(new CallbackTemplate<Void>() {
+					@Override
+					public void onSuccess(Void result) {
+						UserPanel.instance().update();
+					}
+				});
 			}
 		}).mouseLeft();
 	}
