@@ -29,7 +29,7 @@ public class ServerCallCache {
 	private static ServerCallCache instance = new ServerCallCache();
 	public boolean record = false;
 	public boolean replay = false;
-	private Map<Object, Object> cache = new HashMap<Object, Object>();
+	private Map<Integer, Object> cache = new HashMap<Integer, Object>();
 
 	public static ServerCallCache instance() {
 		return instance;
@@ -54,11 +54,11 @@ public class ServerCallCache {
 		return this;
 	}
 
-	public void put(Object pCommand, Serializable result) {
+	public void put(Integer pCommand, Serializable result) {
 		cache.put(pCommand, result);
 	}
 
-	public Object get(Object pCommand) {
+	public Object get(Integer pCommand) {
 		Object remove = cache.get(pCommand);
 		return remove;
 	}
