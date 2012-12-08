@@ -20,7 +20,6 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridClickListener;
-import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.KeyTemplate;
 
 import com.google.gwt.dom.client.NativeEvent;
@@ -45,9 +44,9 @@ public class GWTGridPanelClickHandler extends KeyTemplate<IGridPanel> implements
 		grid.addStyleName("cursor-pointer");
 	}
 
-	boolean isWaiting() {
-		return GWTDisplay.waiting;
-	}
+	// GWTDisplay.waiting-delta boolean isWaiting() {
+	// return GWTDisplay.waiting;
+	// }
 
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -56,8 +55,8 @@ public class GWTGridPanelClickHandler extends KeyTemplate<IGridPanel> implements
 				new ContextMenuHandler() {
 					@Override
 					public void onContextMenu(ContextMenuEvent event) {
-						if (isWaiting())
-							return;
+						// GWTDisplay.waiting-delta if (isWaiting())
+						// return;
 						GWTDisplay.notifyEvent(event);
 						co.fxl.gui.impl.Page.instance().contextMenu().show();
 						event.preventDefault();
@@ -81,8 +80,8 @@ public class GWTGridPanelClickHandler extends KeyTemplate<IGridPanel> implements
 		@SuppressWarnings("unchecked")
 		Grid grid = (Grid) ((GWTElement<Grid, IGridPanel>) element).container.widget;
 		Cell cell = grid.getCellForEvent(event);
-		if (GWTDisplay.waiting)
-			return;
+		// GWTDisplay.waiting-delta if (GWTDisplay.waiting)
+		// return;
 		GWTDisplay.notifyEvent(event);
 		clickListener.onClick(cell.getCellIndex(), cell.getRowIndex());
 	}

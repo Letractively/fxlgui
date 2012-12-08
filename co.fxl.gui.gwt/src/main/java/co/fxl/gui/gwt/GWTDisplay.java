@@ -73,7 +73,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	static GWTDisplay instance;
 	private GWTContainer<Widget> container;
 	private GWTUncaughtExceptionHandler uncaughtExceptionHandler;
-	public static boolean waiting = false;
+	// GWTDisplay.waiting-delta public static boolean waiting = false;
 	static int lastClickX = 0;
 	static int lastClickY = 0;
 	private Scheduler scheduler = new SchedulerImpl();
@@ -399,7 +399,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	@Override
 	public IDisplay block(boolean waiting) {
-		GWTDisplay.waiting = waiting;
+		// GWTDisplay.waiting-delta GWTDisplay.waiting = waiting;
 		DOM.setStyleAttribute(RootPanel.get().getElement(), "cursor",
 				waiting ? "wait" : "default");
 		return this;

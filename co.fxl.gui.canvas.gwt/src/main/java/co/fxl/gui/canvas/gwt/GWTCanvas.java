@@ -27,7 +27,6 @@ import co.fxl.gui.canvas.api.IRectangle;
 import co.fxl.gui.canvas.api.IText;
 import co.fxl.gui.canvas.impl.LocatedImpl;
 import co.fxl.gui.gwt.GWTContainer;
-import co.fxl.gui.gwt.GWTDisplay;
 import co.fxl.gui.gwt.GWTElement;
 import co.fxl.gui.gwt.GWTFocusPanel;
 
@@ -120,10 +119,10 @@ class GWTCanvas extends GWTElement<Canvas, ICanvas> implements ICanvas {
 	}
 
 	private void notifyEvent(MouseEvent<?> event, MouseEventType type) {
-		if (!GWTDisplay.waiting)
-			for (GWTMouseAdapter m : adapters)
-				if (m.type.equals(type) && m.matchesKeys(event))
-					m.listener.onEvent(x(event), y(event));
+		// GWTDisplay.waiting-delta if (!GWTDisplay.waiting)
+		for (GWTMouseAdapter m : adapters)
+			if (m.type.equals(type) && m.matchesKeys(event))
+				m.listener.onEvent(x(event), y(event));
 	}
 
 	@SuppressWarnings("unchecked")

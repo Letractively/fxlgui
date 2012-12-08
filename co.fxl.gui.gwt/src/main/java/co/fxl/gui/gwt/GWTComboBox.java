@@ -196,16 +196,16 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 
 	public void notifyChange() {
 		String text = text();
-		if (GWTDisplay.waiting) {
-			setTextNoNotify(value);
-		} else {
-			if (value == null && text == null)
-				return;
-			if (value != null && value.equals(text))
-				return;
-			value = text;
-			fireUpdateListeners(text);
-		}
+		// GWTDisplay.waiting-delta if (GWTDisplay.waiting) {
+		// setTextNoNotify(value);
+		// } else {
+		if (value == null && text == null)
+			return;
+		if (value != null && value.equals(text))
+			return;
+		value = text;
+		fireUpdateListeners(text);
+		// }
 	}
 
 	void fireUpdateListeners(String text) {
