@@ -132,8 +132,8 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 		widget.addDomHandler(new ContextMenuHandler() {
 			@Override
 			public void onContextMenu(ContextMenuEvent event) {
-				if (GWTDisplay.waiting)
-					return;
+				// GWTDisplay.waiting-delta if (GWTDisplay.waiting)
+				// return;
 				GWTDisplay.notifyEvent(event);
 				clickListener.onClick();
 				event.preventDefault();
@@ -156,8 +156,8 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 			event.preventDefault();
 			event.stopPropagation();
 		}
-		if (GWTDisplay.waiting)
-			return;
+		// GWTDisplay.waiting-delta if (GWTDisplay.waiting)
+		// return;
 		GWTDisplay.notifyEvent(event.original());
 		clickListener.onClick();
 	}
@@ -165,8 +165,8 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 	public void onClick(KeyPressAdp event) {
 		event.preventDefault();
 		event.stopPropagation();
-		if (GWTDisplay.waiting)
-			return;
+		// GWTDisplay.waiting-delta if (GWTDisplay.waiting)
+		// return;
 		clickListener.onClick();
 	}
 
@@ -182,8 +182,8 @@ class GWTClickHandler<T> extends KeyTemplate<T> {
 			return;
 		event.preventDefault();
 		event.stopPropagation();
-		if (GWTDisplay.waiting)
-			return;
+		// GWTDisplay.waiting-delta if (GWTDisplay.waiting)
+		// return;
 		clickListener.onClick();
 	}
 

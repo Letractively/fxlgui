@@ -672,8 +672,8 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 			@Override
 			public void onDrop(DropEvent event) {
 				event.preventDefault();
-				if (GWTDisplay.waiting)
-					return;
+				// GWTDisplay.waiting-delta if (GWTDisplay.waiting)
+				// return;
 				l.onDropOn(new GWTPoint(event));
 			}
 		}, DropEvent.getType());
