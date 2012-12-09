@@ -109,7 +109,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 			refresh = subPanel.add().image().visible(false).size(16, 16);
 			refreshResource("loading_white.gif");
 			refresh.addClickListener(clickListener);
-			buttonPanel.addSpace(3);
+			buttonPanel.addSpace(1);
 			buttonPanel.addClickListener(clickListener);
 			showLabelAsInactive();
 			flipPage = widget.flipPage().newPage();
