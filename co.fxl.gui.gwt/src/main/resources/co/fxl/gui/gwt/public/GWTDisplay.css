@@ -160,7 +160,7 @@ background-color: rgba(0, 0, 0, 0.3); }
 .gwt-TextInputBox  { border-bottom:none;padding:3px;font-family:Arial,sans-serif;font-size:12px;margin-top:-2px;margin-bottom:-2px;background-color:transparent;border:none;height:23px;}
 .gwttreetable { border-spacing:0px;table-layout:fixed;margin:1px; }
 .gwttreecell { padding:0px;overflow:hidden;white-space:nowrap; }
-.gwtlazytreetable { border-spacing:0px;width:100%;cursor:pointer;background-color:white;border:1px solid white; }
+.gwtlazytreetable { border-spacing:0px;width:100%;cursor:pointer;background-color:white; }
 .gwtlazytreecell .td { text-align:left;vertical-align:middle; }
 .gwtlazytreediv { font-family:Arial,sans-serif;font-size:12px;white-space:nowrap;-moz-user-select:none;cursor:pointer;  }
 .gwtlazytreeblock { position:relative;overflow:hidden;width:2px;height:1px; }
