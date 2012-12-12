@@ -22,7 +22,7 @@ import java.util.List;
 
 import co.fxl.gui.api.ISuggestField.ISource.ISuggestion;
 
-public interface ISuggestField extends ITextInput<ISuggestField>,
+public interface ISuggestField extends ITextInputElement<ISuggestField>,
 		IKeyRecipient<ISuggestField> {
 
 	public interface ISource {

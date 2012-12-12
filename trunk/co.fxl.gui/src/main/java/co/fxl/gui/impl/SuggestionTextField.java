@@ -26,7 +26,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.ITextInput;
+import co.fxl.gui.api.ITextInputElement;
 import co.fxl.gui.api.IVerticalPanel;
 
 public class SuggestionTextField implements
@@ -93,7 +93,7 @@ public class SuggestionTextField implements
 		return this;
 	}
 
-	public ITextInput<?> textField() {
+	public ITextInputElement<?> textField() {
 		return textField;
 	}
 }

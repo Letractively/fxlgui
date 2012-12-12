@@ -18,7 +18,7 @@
  */
 package co.fxl.gui.api;
 
-public interface ITextInput<T> extends ITextElement<T>, IColored, IBordered,
+public interface ITextInputElement<T> extends ITextElement<T>, IColored, IBordered,
 		IUpdateable<String>, IFocusable<T>, IEditable<T> {
 
 	T maxLength(int maxLength);

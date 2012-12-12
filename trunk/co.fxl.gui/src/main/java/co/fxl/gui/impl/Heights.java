@@ -31,7 +31,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
-import co.fxl.gui.api.ITextInput;
+import co.fxl.gui.api.ITextInputElement;
 
 public class Heights {
 
@@ -74,7 +74,7 @@ public class Heights {
 		styleInputBorder((IBordered) textField);
 	}
 
-	public void decorate(ITextInput<?> textField) {
+	public void decorate(ITextInputElement<?> textField) {
 		if (textField instanceof ITextArea) {
 			decorate((ITextArea) textField);
 		} else {
@@ -95,7 +95,7 @@ public class Heights {
 		return this;
 	}
 
-	public void decorateHeight(ITextInput<?> textField) {
+	public void decorateHeight(ITextInputElement<?> textField) {
 		textField.height(inc + TEXTFIELD_HEIGHT);
 		styleInputBorder((IBordered) textField);
 	}

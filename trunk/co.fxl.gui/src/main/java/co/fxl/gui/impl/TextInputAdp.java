@@ -18,11 +18,11 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.api.ITextInput;
+import co.fxl.gui.api.ITextInputElement;
 import co.fxl.gui.api.IUpdateable;
 
-public class TextInputAdp<T extends ITextInput<T>> extends TextElementAdp<T>
-		implements ITextInput<T> {
+public class TextInputAdp<T extends ITextInputElement<T>> extends TextElementAdp<T>
+		implements ITextInputElement<T> {
 
 	protected TextInputAdp() {
 		super();

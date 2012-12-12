@@ -35,7 +35,7 @@ import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.ITextInput;
+import co.fxl.gui.api.ITextInputElement;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.FieldTypeImpl;
@@ -370,11 +370,11 @@ public class Validation {
 		return this;
 	}
 
-	public Validation linkInput(ITextInput<?> textField) {
+	public Validation linkInput(ITextInputElement<?> textField) {
 		return linkInput(textField, false);
 	}
 
-	public Validation linkInput(ITextInput<?> textField, boolean required) {
+	public Validation linkInput(ITextInputElement<?> textField, boolean required) {
 		Field field = new Field(textField, required);
 		textField.addUpdateListener(field);
 		return this;
