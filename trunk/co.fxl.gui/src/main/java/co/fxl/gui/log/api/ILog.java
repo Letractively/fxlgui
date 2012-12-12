@@ -31,6 +31,8 @@ public interface ILog {
 
 	ILog warn(String string);
 
-	ILog warn(String string, Exception exception);
+	ILog warn(String string, Throwable exception);
+
+	ILog error(String message, Throwable pThrowable);
 
 }

@@ -31,6 +31,9 @@ class LogImpl implements ILog, IClickListener {
 
 	// TODO FullscreenPopUp verwenden
 
+	private static final String WARNING = "WARNING";
+	private static final String ERROR = "ERROR";
+
 	private class Entry {
 
 		private Date date = new Date();
@@ -324,7 +327,7 @@ class LogImpl implements ILog, IClickListener {
 	@Override
 	public ILog error(String message) {
 		ensureSize();
-		addLine(new Entry("ERROR", message, null, new RuntimeException(), null));
+		addLine(new Entry(ERROR, message, null, new RuntimeException(), null));
 		return this;
 	}
 
@@ -334,9 +337,17 @@ class LogImpl implements ILog, IClickListener {
 	}
 
 	@Override
-	public ILog warn(String message, Exception e) {
+	public ILog warn(String message, Throwable e) {
 		ensureSize();
-		addLine(new Entry("WARNING", message, null, e, null));
+		addLine(new Entry(WARNING, message, null, e, null));
+		return this;
+	}
+
+	@Override
+	public ILog error(String message, Throwable e) {
+		ensureSize();
+		addLine(new Entry(ERROR, message, null, e, null));
+		e.printStackTrace();
 		return this;
 	}
 }
