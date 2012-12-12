@@ -34,7 +34,7 @@ import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IResizable.IResizeListener;
 import co.fxl.gui.api.ISuggestField.ISource;
-import co.fxl.gui.api.ITextInput;
+import co.fxl.gui.api.ITextInputElement;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Heights;
@@ -90,7 +90,7 @@ public class RichTextToolbarImpl {
 			return title;
 		}
 
-		ITextInput<?> addTextField(IHorizontalPanel h) {
+		ITextInputElement<?> addTextField(IHorizontalPanel h) {
 			return h.add().suggestField().source(source);
 		}
 
@@ -141,7 +141,7 @@ public class RichTextToolbarImpl {
 					.autoHide(true).atLastClick();
 			p.border().remove().style().shadow().color().gray();
 			IHorizontalPanel h = p.container().panel().horizontal().spacing(4);
-			final ITextInput<?> tf = addTextField(h);
+			final ITextInputElement<?> tf = addTextField(h);
 			tf.width(300);
 			((IFocusable<?>) tf).focus(true);
 			Heights.INSTANCE.decorate(tf);
@@ -174,7 +174,7 @@ public class RichTextToolbarImpl {
 			p.visible();
 		}
 
-		ITextInput<?> addTextField(IHorizontalPanel h) {
+		ITextInputElement<?> addTextField(IHorizontalPanel h) {
 			return h.add().textField();
 		}
 

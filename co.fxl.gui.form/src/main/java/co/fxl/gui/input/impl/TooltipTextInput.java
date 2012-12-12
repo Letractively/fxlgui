@@ -20,16 +20,16 @@ package co.fxl.gui.input.impl;
 
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IFontElement.IFont;
-import co.fxl.gui.api.ITextInput;
+import co.fxl.gui.api.ITextInputElement;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.impl.Heights;
 
 public class TooltipTextInput implements IUpdateable<String> {
 
-	private ITextInput<?> ti;
+	private ITextInputElement<?> ti;
 	private String tooltip;
 
-	public TooltipTextInput(final ITextInput<?> ti, final String tooltip) {
+	public TooltipTextInput(final ITextInputElement<?> ti, final String tooltip) {
 		this.ti = ti;
 		this.tooltip = tooltip;
 		clear();
