@@ -187,4 +187,22 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	public void acceptEnter() {
 		fp.addKeyListener(getFire()).enter().focus(true);
 	}
+
+	public CommandLink background(boolean b) {
+		if (!b) {
+			iPanel.color().remove();
+			if (fp != null)
+				fp.color().remove();
+		}
+		return this;
+	}
+
+	public String text() {
+		return label.text();
+	}
+
+	public void flip() {
+		image.remove();
+		iPanel.add(image);
+	}
 }

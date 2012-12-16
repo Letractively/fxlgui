@@ -67,7 +67,8 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 		cell1 = panel.cell(1, 0).width(WIDTH_SIDE_PANEL).valign().begin()
 				.align().end();
 		sideBasePanel = cell1.panel().vertical();
-		sideScrollPanel = sideBasePanel.addSpace(10).add().scrollPane();
+		sideScrollPanel = sideBasePanel.//addSpace(10).
+				add().scrollPane();
 		sidePanel = sideScrollPanel.viewPort().panel().vertical();
 		sidePanel.spacing().right(10).inner(10);
 		widget.setResizableWidget(this, "splitLayout");

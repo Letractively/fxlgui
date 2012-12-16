@@ -166,7 +166,8 @@ public class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public R add(IElement<?> element) {
-		add((IElement<?>) element.nativeElement());
+		JComponent nativeElement = (JComponent) element.nativeElement();
+		add(nativeElement);
 		return (R) this;
 	}
 

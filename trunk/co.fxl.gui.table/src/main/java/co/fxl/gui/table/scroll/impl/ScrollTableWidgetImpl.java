@@ -53,6 +53,7 @@ import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
 import co.fxl.gui.filter.api.IMiniFilterWidget;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.ColorTemplate;
+import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DummyCallback;
@@ -1156,7 +1157,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	}
 
 	@Override
-	public IClickable<?> addButton(String name, String imageResource) {
+	public CommandLink addButton(String name, String imageResource) {
 		return widgetTitle().addHyperlink(imageResource, name);
 	}
 

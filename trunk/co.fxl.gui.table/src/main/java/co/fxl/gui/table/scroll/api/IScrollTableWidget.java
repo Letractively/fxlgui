@@ -33,6 +33,8 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
+import co.fxl.gui.impl.CommandLink;
+import co.fxl.gui.impl.IHasButtons;
 import co.fxl.gui.impl.IResizableWidget;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.WidgetTitle;
@@ -41,7 +43,7 @@ import co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IGrouping;
 import co.fxl.gui.table.util.api.IDragDropListener;
 
-public interface IScrollTableWidget<T> extends IResizableWidget {
+public interface IScrollTableWidget<T> extends IResizableWidget, IHasButtons {
 
 	public interface IColumnWidthInjector {
 
@@ -152,7 +154,7 @@ public interface IScrollTableWidget<T> extends IResizableWidget {
 
 	IClickable<?> addButton(String name);
 
-	IClickable<?> addButton(String name, String imageResource);
+	CommandLink addButton(String name, String imageResource);
 
 	IClickable<?> addButton(String name, String imageResource,
 			String toolTipClickable, String toolTipNotClickable);
@@ -255,6 +257,6 @@ public interface IScrollTableWidget<T> extends IResizableWidget {
 	IPanel<?> mainPanel();
 
 	IScrollTableWidget<Object> configureListener(IClickListener cl);
-	
+
 	// IVerticalPanel editPanel();
 }
