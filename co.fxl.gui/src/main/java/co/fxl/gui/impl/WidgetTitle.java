@@ -23,7 +23,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IFocusPanel;
@@ -32,12 +35,9 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
+import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.api.IBordered.IBorder;
-import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IColored.IColor;
-import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.impl.ContextMenu.Group;
 
 public class WidgetTitle implements IClickListener {
@@ -130,8 +130,8 @@ public class WidgetTitle implements IClickListener {
 	private void setUp() {
 		headerFocusPanel = panel.cell(0, 0).panel().focus();
 		headerPanel = headerFocusPanel.add().panel().grid();
-		headerPanel.color().rgb(136, 136, 136).gradient().vertical().rgb(113,
-				113, 113);
+		headerPanel.color().rgb(136, 136, 136).gradient().vertical()
+				.rgb(113, 113, 113);
 		if (plainContent)
 			headerPanel.visible(false);
 		bPanel = panel.cell(0, 1).panel().grid();
@@ -219,8 +219,8 @@ public class WidgetTitle implements IClickListener {
 
 	// @Style(window = Window.SIDE, outline = Outline.FOOTER)
 	public void styleFooter(IPanel<?> vertical) {
-		vertical.color().rgb(249, 249, 249).gradient().vertical().rgb(216, 216,
-				216);
+		vertical.color().rgb(249, 249, 249).gradient().vertical()
+				.rgb(216, 216, 216);
 		IBorder border2 = vertical.border();
 		IColor c = border2.color();
 		decorateBorder(c);
@@ -264,7 +264,8 @@ public class WidgetTitle implements IClickListener {
 		}
 		this.title = title;
 		if (addToContextMenu) {
-			ContextMenu instance = co.fxl.gui.impl.Page.instance().contextMenu();
+			ContextMenu instance = co.fxl.gui.impl.Page.instance()
+					.contextMenu();
 			Group group = instance.group(title);
 			group.clear();
 		}
@@ -362,8 +363,8 @@ public class WidgetTitle implements IClickListener {
 
 	IClickable<?> addLabel(String text, boolean underline) {
 		if (USE_CONFIGURE_IMAGE) {
-			IImage e = configurePanel().add().image().resource(
-					"configure_small.png");
+			IImage e = configurePanel().add().image()
+					.resource("configure_small.png");
 			// addFadeInOutEffect(e);
 			return e;
 		} else {
@@ -425,8 +426,8 @@ public class WidgetTitle implements IClickListener {
 	// @Style(window = Window.SIDE, outline = Outline.HEADER, element =
 	// Element.BUTTON)
 	public void styleWindowHeaderButton(IPanel<?> iPanel) {
-		iPanel.color().rgb(248, 248, 248).gradient().vertical().rgb(216, 216,
-				216);
+		iPanel.color().rgb(248, 248, 248).gradient().vertical()
+				.rgb(216, 216, 216);
 		IBorder b = iPanel.border();
 		b.color().rgb(172, 197, 213);
 		b.style().rounded();
@@ -493,8 +494,8 @@ public class WidgetTitle implements IClickListener {
 		if (bottomContainer != null)
 			return bottomContainer;
 		int space = space();
-		return bottomContainer = space == 0 ? bPanel.cell(0, 1) : bPanel.cell(
-				0, 1).panel().vertical().addSpace(space).add();
+		return bottomContainer = space == 0 ? bPanel.cell(0, 1) : bPanel
+				.cell(0, 1).panel().vertical().addSpace(space).add();
 	}
 
 	public WidgetTitle clearHyperlinks() {
