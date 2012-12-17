@@ -31,7 +31,7 @@ import co.fxl.gui.impl.ContextMenu.Group;
 
 public class CommandLink implements IClickable<IClickable<?>> {
 
-	private static final boolean HIDE_NON_CLICKABLE = true;
+	static final boolean HIDE_NON_CLICKABLE = false;// !Env.is(Env.SWING);
 	final WidgetTitle widgetTitle;
 	private IHorizontalPanel iPanel;
 	private ILabel label;
@@ -80,23 +80,22 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	public IClickable<?> clickable(boolean clickable) {
 		if (HIDE_NON_CLICKABLE) {
 			visible(clickable);
-		} else {
-			if (label != null)
-				label.clickable(clickable);
-			if (image != null)
-				image.clickable(clickable);
-			if (fp != null)
-				fp.clickable(clickable);
-			iPanel.clickable(clickable);
-			String tooltip = clickable ? toolTipClickable : toolTipNotClickable;
-			if (tooltip != null) {
-				iPanel.tooltip(tooltip);
-				if (image != null)
-					image.tooltip(tooltip);
-				label.tooltip(tooltip);
-			}
-			styleDialogButton(label);
 		}
+		if (label != null)
+			label.clickable(clickable);
+		if (image != null)
+			image.clickable(clickable);
+		if (fp != null)
+			fp.clickable(clickable);
+		iPanel.clickable(clickable);
+		String tooltip = clickable ? toolTipClickable : toolTipNotClickable;
+		if (tooltip != null) {
+			iPanel.tooltip(tooltip);
+			if (image != null)
+				image.tooltip(tooltip);
+			label.tooltip(tooltip);
+		}
+		styleDialogButton(label);
 		if (contextMenuEntry != null)
 			contextMenuEntry.clickable(clickable);
 		return this;
@@ -206,8 +205,21 @@ public class CommandLink implements IClickable<IClickable<?>> {
 		return label.text();
 	}
 
-	public void flip() {
-		image.remove();
-		iPanel.add(image);
+	public void flip(boolean flip) {
+		if (flip) {
+			image.remove();
+			iPanel.add(image);
+		} else {
+			label.remove();
+			iPanel.add(label);
+		}
+	}
+
+	public int width() {
+		return fp.width();
+	}
+
+	public void width(int width) {
+		fp.width(width);
 	}
 }

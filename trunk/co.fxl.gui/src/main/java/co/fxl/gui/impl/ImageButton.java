@@ -81,6 +81,9 @@ public class ImageButton implements IClickable<Object>,
 	}
 
 	public ImageButton clickable(boolean clickable) {
+		if (CommandLink.HIDE_NON_CLICKABLE) {
+			p0.visible(clickable);
+		}
 		label.font().weight().plain();
 		if (image != null)
 			image.clickable(clickable);
