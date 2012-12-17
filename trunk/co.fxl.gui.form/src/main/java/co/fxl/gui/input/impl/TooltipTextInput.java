@@ -53,7 +53,7 @@ public class TooltipTextInput implements IUpdateable<String> {
 		Heights.INSTANCE.decorate(ti);
 	}
 
-	protected boolean isTooltipActive() {
+	public boolean isTooltipActive() {
 		return ti.text().equals(tooltip);
 	}
 
