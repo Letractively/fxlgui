@@ -203,8 +203,8 @@ public class WidgetTitle implements IClickListener {
 				return;
 			IContainer cell = headerPanel.cell(2, 0).align().end().valign()
 					.center();
-			commandPanelTop = cell.panel().horizontal().align().end().add()
-					.panel().horizontal().align().end().spacing(4);
+			commandPanelTop = cell.panel().horizontal().spacing(4).align().end().add()
+					.panel().horizontal().align().end();
 		} else {
 			if (commandPanel != null)
 				return;
@@ -330,7 +330,7 @@ public class WidgetTitle implements IClickListener {
 		}
 		hasCommands = true;
 		IFocusPanel iPanel0 = cp.add().panel().focus();
-		IHorizontalPanel iPanel = iPanel0.add().panel().horizontal();
+		IHorizontalPanel iPanel = iPanel0.add().panel().horizontal().addSpace(4).add().panel().horizontal();
 		if (commandsOnTop) {
 			styleWindowHeaderButton(iPanel);
 			iPanel.spacing(4);
