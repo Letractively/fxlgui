@@ -40,19 +40,24 @@ class NavigationGroupImpl implements INavigationGroup {
 	private boolean displayed = true;
 	int[] colorInactive;
 	int[] colorInactiveGradient = new int[] { 63, 63, 63 };
+	private IVerticalPanel headerPanel;
 
 	NavigationGroupImpl(NavigationWidgetImpl widget) {
 		this.widget = widget;
-		panel = widget.navigationPanel.add().panel().horizontal()
-				.addSpace(widget.groups.isEmpty() ? 0 : 5);
-		panel.addSpace(3);
-		IVerticalPanel headerPanel = panel.add().panel().vertical();
+		panel = widget.navigationPanel.add().panel().horizontal();
+		headerPanel = panel.add().panel().vertical();
+		headerPanel.margin().left(widget.groups.isEmpty() ? 3 : 8).right(1);
 		header = headerPanel.addSpace(2).add().label();
 		header.font().weight().bold().pixel(11);
-		panel.addSpace(1);
+//		panel.addSpace(1);
 		itemPanel = panel.add().panel().horizontal();
 		colorInactive = widget.colorInactive;
 		colorInactiveGradient = widget.colorInactiveGradient;
+		updateVisibilityLabel();
+	}
+
+	void updateVisibilityLabel() {
+		headerPanel.visible(widget.showGroupLabel);
 	}
 
 	@Override
@@ -140,7 +145,7 @@ class NavigationGroupImpl implements INavigationGroup {
 	}
 
 	void clearCache() {
-		for(NavigationItemImpl i:items)
+		for (NavigationItemImpl i : items)
 			i.clearCache();
 	}
 }

@@ -35,7 +35,6 @@ import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
-import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
@@ -45,7 +44,6 @@ import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.HorizontalScalingPanel;
 import co.fxl.gui.impl.IServerListener;
-import co.fxl.gui.impl.Profiler;
 import co.fxl.gui.impl.ResizableWidgetTemplate;
 import co.fxl.gui.impl.ServerListener;
 import co.fxl.gui.impl.StatusDisplay;
@@ -90,6 +88,14 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	private IFocusPanel focus;
 	// private boolean loading;
 	public static NavigationWidgetImpl instance;
+	private int serverCallCounter = 0;
+	private IVerticalPanel top;
+	private IImage configureIcon;
+	private IGridPanel separatorBorder;
+	private IPanel<?> leftPartBorder;
+	private IPanel<?> middlePartBorder;
+	private IPanel<?> rightPartBorder;
+	boolean showGroupLabel = false;
 
 	public NavigationWidgetImpl(IContainer layout) {
 		mainPanel = layout.panel().dock();
@@ -100,10 +106,8 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		addSeparatorBorder();
 		hPanel.color().rgb(235, 235, 235).gradient().fallback(235, 235, 235)
 				.vertical().rgb(211, 211, 211);
-		ILayout l = hPanel.cell(0, 0).panel();
-		masterPanel = createPanel(l);
-		ILayout v = masterPanel.add().panel();
-		navigationPanel = createPanel(v);
+		masterPanel = hPanel.cell(0, 0).panel().horizontal();
+		navigationPanel = masterPanel.add().panel().horizontal();
 		navigationPanel.addSpace(10);
 		history = mainPanel.center().panel().card();
 		panel0 = history.add().panel().vertical();
@@ -155,10 +159,6 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		HorizontalScalingPanel.addDummyIE(rightPartBorder);
 		separatorBorder.column(2).expand();
 		rightPartBorder.color().gray();
-	}
-
-	IHorizontalPanel createPanel(ILayout l) {
-		return l.horizontal();
 	}
 
 	IContentBuffer flipPage() {
@@ -449,13 +449,13 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		}
 	}
 
-	private int serverCallCounter = 0;
-	private IVerticalPanel top;
-	private IImage configureIcon;
-	private IGridPanel separatorBorder;
-	private IPanel<?> leftPartBorder;
-	private IPanel<?> middlePartBorder;
-	private IPanel<?> rightPartBorder;
+	@Override
+	public INavigationWidget showGroupLabel(boolean showGroupLabel) {
+		this.showGroupLabel = showGroupLabel;
+		for (NavigationGroupImpl g : groups)
+			g.updateVisibilityLabel();
+		return this;
+	}
 
 	@Override
 	public void notifyServerCallStart() {
