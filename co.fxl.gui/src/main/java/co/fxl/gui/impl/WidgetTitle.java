@@ -26,7 +26,7 @@ import java.util.Map;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IFocusPanel;
@@ -40,7 +40,7 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.ContextMenu.Group;
 
-public class WidgetTitle implements IClickListener {
+public class WidgetTitle implements IClickListener, IColored {
 
 	// TODO Usability: Buttons (Copy / Paste / New …). eventuell so viele,
 	// dass der linke Screenbereich zu groß wird und der rechte nach außen
@@ -203,8 +203,8 @@ public class WidgetTitle implements IClickListener {
 				return;
 			IContainer cell = headerPanel.cell(2, 0).align().end().valign()
 					.center();
-			commandPanelTop = cell.panel().horizontal().spacing(4).align().end().add()
-					.panel().horizontal().align().end();
+			commandPanelTop = cell.panel().horizontal().spacing(4).align()
+					.end().add().panel().horizontal().align().end();
 		} else {
 			if (commandPanel != null)
 				return;
@@ -330,7 +330,8 @@ public class WidgetTitle implements IClickListener {
 		}
 		hasCommands = true;
 		IFocusPanel iPanel0 = cp.add().panel().focus();
-		IHorizontalPanel iPanel = iPanel0.add().panel().horizontal().addSpace(4).add().panel().horizontal();
+		IHorizontalPanel iPanel = iPanel0.add().panel().horizontal()
+				.addSpace(4).add().panel().horizontal();
 		if (commandsOnTop) {
 			styleWindowHeaderButton(iPanel);
 			iPanel.spacing(4);
@@ -537,5 +538,10 @@ public class WidgetTitle implements IClickListener {
 
 	public IPanel<?> headerPanel() {
 		return headerPanel;
+	}
+
+	@Override
+	public IColor color() {
+		return panel.color();
 	}
 }

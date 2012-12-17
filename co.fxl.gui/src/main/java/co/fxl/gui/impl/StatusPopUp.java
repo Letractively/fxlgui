@@ -21,12 +21,17 @@ package co.fxl.gui.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IResizable.IResizeListener;
 
 public class StatusPopUp implements IResizeListener, Runnable {
+
+	static final int YELLOW_B = 190;
+	static final int YELLOW_G = 237;
+	static final int YELLOW_R = 249;
 
 	public interface Status {
 
@@ -166,12 +171,16 @@ public class StatusPopUp implements IResizeListener, Runnable {
 			popUp.border().remove().style().shadow(2).color()
 					.rgb(240, 195, 109);
 			panel = popUp.container().panel().horizontal().spacing(5);
-			panel.color().rgb(249, 237, 190);
+			yellow(panel);
 			label = panel.addSpace(4).add().label();
 			label.font().pixel(11);
 			panel.addSpace(4);
 		}
 		return popUp;
+	}
+
+	static void yellow(IColored panel) {
+		panel.color().rgb(YELLOW_R, YELLOW_G, YELLOW_B);
 	}
 
 	private void updateStatus() {

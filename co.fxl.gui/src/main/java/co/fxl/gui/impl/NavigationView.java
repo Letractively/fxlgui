@@ -20,6 +20,7 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -29,7 +30,7 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
 
-public class NavigationView {
+public class NavigationView implements IColored {
 
 	static String FORWARD = "Forward";
 	static String BACK = "Back";
@@ -203,5 +204,10 @@ public class NavigationView {
 	public NavigationView foldable(boolean b) {
 		widgetTitle.foldable(b);
 		return this;
+	}
+
+	@Override
+	public IColor color() {
+		return widgetTitle.color();
 	}
 }
