@@ -216,10 +216,10 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	}
 
 	public int width() {
-		return fp.width();
+		return iPanel.width();
 	}
 
 	public void width(int width) {
-		fp.width(width);
+		iPanel.width(width);
 	}
 }
