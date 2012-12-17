@@ -18,45 +18,33 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.api.IColored;
-import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.IElement;
 
-public class YellowFadeIn implements FadeIn {
+public class OpacityFadeIn implements FadeIn {
 
-	private static long INC = 100;
-	private static long DURATION = 1000;
-	private long d = 0;
-	private IColor color;
+	private static double INC = 50;
+	private static double DURATION = 500;
+	private double d = 250;
 	private boolean abort;
+	private IElement<?> element;
 
-	public YellowFadeIn(IColored colored) {
-		color = colored.color();
+	public OpacityFadeIn(IElement<?> element) {
+		this.element = element;
 		schedule();
-	}
-
-	private int c(long d, int rgb) {
-		double n = d;
-		n /= DURATION;
-		n *= (255 - rgb);
-		n += rgb;
-		return (int) n;
 	}
 
 	private void schedule() {
 		d += INC;
-		int r = c(d, StatusPopUp.YELLOW_R);
-		int g = c(d, StatusPopUp.YELLOW_G);
-		int b = c(d, StatusPopUp.YELLOW_B);
-		color.rgb(r, g, b);
+		element.opacity(d / DURATION);
 		if (d < DURATION && !abort)
 			Display.instance().invokeLater(new Runnable() {
 				@Override
 				public void run() {
 					schedule();
 				}
-			}, INC);
+			}, (long) INC);
 		else
-			color.white();
+			element.opacity(1);
 	}
 
 	@Override
