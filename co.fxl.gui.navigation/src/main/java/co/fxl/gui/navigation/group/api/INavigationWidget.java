@@ -52,4 +52,6 @@ public interface INavigationWidget extends
 	INavigationWidget active(ICallback<Void> c);
 
 	INavigationWidget clearCache();
+
+	INavigationWidget showGroupLabel(boolean showGroupLabel);
 }
