@@ -95,7 +95,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	private IPanel<?> leftPartBorder;
 	private IPanel<?> middlePartBorder;
 	private IPanel<?> rightPartBorder;
-	boolean showGroupLabel = false;
+	boolean showGroupLabel = true;
 
 	public NavigationWidgetImpl(IContainer layout) {
 		mainPanel = layout.panel().dock();
