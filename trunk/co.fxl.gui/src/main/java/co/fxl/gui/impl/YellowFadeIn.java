@@ -21,7 +21,7 @@ package co.fxl.gui.impl;
 import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IColored.IColor;
 
-public class YellowFade {
+public class YellowFadeIn {
 
 	private static long INC = 100;
 	private static long DURATION = 1000;
@@ -29,7 +29,7 @@ public class YellowFade {
 	private IColor color;
 	private boolean abort;
 
-	public YellowFade(IColored colored) {
+	public YellowFadeIn(IColored colored) {
 		color = colored.color();
 		schedule();
 	}
