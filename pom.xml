@@ -193,8 +193,8 @@
 					<configuration>
 						<archive>                   
             	<manifest>
-              	<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                <addDefaultSpecificationEntries>false</addDefaultSpecificationEntries>
+              	<addDefaultImplementationEntries>false</addDefaultImplementationEntries>
+                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
             	</manifest>
 		        </archive>
     			</configuration>
