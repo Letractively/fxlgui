@@ -259,21 +259,21 @@ public class WidgetTitle implements IClickListener, IColored {
 		headerLabel = label;
 		if (titleClickListener != null) {
 			headerLabel.tooltip("Click to refresh");
-			final IImage refresh = titlePanel.add().image()
-					.resource("refresh.png").visible(false);
-			refresh.margin().left(8);
+			// final IImage refresh = titlePanel.add().image()
+			// .resource("refresh.png").visible(false);
+			// refresh.margin().left(4);
 			headerLabel.addMouseOverListener(new IMouseOverListener() {
 
 				@Override
 				public void onMouseOver() {
 					headerLabel.font().underline(true);
-					refresh.visible(true);
+					// refresh.visible(true);
 				}
 
 				@Override
 				public void onMouseOut() {
 					headerLabel.font().underline(false);
-					refresh.visible(false);
+					// refresh.visible(false);
 				}
 			});
 			headerLabel.addClickListener(new IClickListener() {
@@ -281,7 +281,7 @@ public class WidgetTitle implements IClickListener, IColored {
 				@Override
 				public void onClick() {
 					headerLabel.font().underline(false);
-					refresh.visible(false);
+					// refresh.visible(false);
 					titleClickListener.onClick();
 				}
 			});
