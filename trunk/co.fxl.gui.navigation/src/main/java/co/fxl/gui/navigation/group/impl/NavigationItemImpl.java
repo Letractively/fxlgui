@@ -34,6 +34,7 @@ import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Env;
+import co.fxl.gui.impl.HyperlinkMouseOverListener;
 import co.fxl.gui.impl.IContentPage;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.ResizableWidgetTemplate;
@@ -98,6 +99,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 			border = buttonPanel.border().width(1).style().noBottom();
 			IHorizontalPanel subPanel = buttonPanel.add().panel().horizontal();
 			button = subPanel.add().label();
+			new HyperlinkMouseOverListener(button);
 			button.font().pixel(14).weight().bold().color().white();
 			LazyClickListener clickListener = new LazyClickListener() {
 				@Override
