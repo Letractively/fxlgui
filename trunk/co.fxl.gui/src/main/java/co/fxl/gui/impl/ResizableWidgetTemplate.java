@@ -30,6 +30,13 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 	// private List<ResizableWidgetTemplate> children = new
 	// LinkedList<ResizableWidgetTemplate>();
 	private Map<String, ResizableWidgetTemplate> qualifiedChildren = new HashMap<String, ResizableWidgetTemplate>();
+	private int heightDecrement = 0;
+
+	@Override
+	public IResizableWidget heightDecrement(int heightDecrement) {
+		this.heightDecrement = heightDecrement;
+		return this;
+	}
 
 	@Override
 	public IResizableWidget addResizableWidgetToDisplay() {
@@ -42,7 +49,7 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 				new IResizeListener() {
 					@Override
 					public void onResize(int width, int height) {
-						recursiveResize(width, height);
+						recursiveResize(width, height - heightDecrement);
 					}
 				});
 		if (link != null)
@@ -91,7 +98,7 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 			@Override
 			public void onResize(int width, int height) {
 				int offsetY = StatusDisplay.instance().offsetY(e, 100);
-				int h = height - offsetY - 10 - dec;
+				int h = height - offsetY - 10 - dec - heightDecrement;
 				if (h > 0)
 					e.height(h);
 			}
