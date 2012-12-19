@@ -31,4 +31,6 @@ public interface IResizableWidget extends IResizeListener {
 
 	IResizableWidget addResizableWidgetToDisplay(IElement<?> link);
 
+	IResizableWidget heightDecrement(int heightDecrement);
+
 }
