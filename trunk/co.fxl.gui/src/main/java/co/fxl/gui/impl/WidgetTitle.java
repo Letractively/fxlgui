@@ -51,10 +51,10 @@ public class WidgetTitle implements IClickListener, IColored {
 	// ButtonPanel.widt()<cell.width() :
 	// nur Icons anzeigen)
 
-	private static final int MAX_LENGTH_SUBTITLE = 30;
+	// private static final int MAX_LENGTH_SUBTITLE = 30;
 	public static final int LARGE_FONT = 18;
 	private static final String FOLDABLE = "Click to minimize/maximize";
-	private static final boolean IGNORE_SUBTITLES = true;
+	// private static final boolean IGNORE_SUBTITLES = true;
 	private static final boolean USE_CONFIGURE_IMAGE = true;
 	public IGridPanel panel;
 	private IHorizontalPanel titlePanel;
@@ -82,7 +82,7 @@ public class WidgetTitle implements IClickListener, IColored {
 	private boolean plainContent = false;
 	private boolean center;
 	private static Map<String, Boolean> foldStatus = new HashMap<String, Boolean>();
-	private IVerticalPanel subTitlePanel;
+	// private IVerticalPanel subTitlePanel;
 	private IHorizontalPanel configurePanel;
 	private IFocusPanel baseFocusPanel;
 	private IFocusPanel headerFocusPanel;
@@ -260,6 +260,7 @@ public class WidgetTitle implements IClickListener, IColored {
 		if (titleClickListener != null) {
 			headerLabel.tooltip("Click to refresh");
 			new HyperlinkMouseOverListener(headerLabel);
+			headerLabel.addClickListener(titleClickListener);
 		} else if (foldable) {
 			headerLabel.addClickListener(this);
 			headerLabel.tooltip(FOLDABLE);
