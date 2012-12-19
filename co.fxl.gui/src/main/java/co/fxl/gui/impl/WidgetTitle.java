@@ -86,6 +86,7 @@ public class WidgetTitle implements IClickListener, IColored {
 	private IHorizontalPanel configurePanel;
 	private IFocusPanel baseFocusPanel;
 	private IFocusPanel headerFocusPanel;
+	private IClickListener titleClickListener;
 
 	public WidgetTitle() {
 	}
@@ -256,7 +257,22 @@ public class WidgetTitle implements IClickListener, IColored {
 		addMoreIcon(r);
 		styleHeaderTitleSide(label);
 		headerLabel = label;
-		if (foldable) {
+		if (titleClickListener != null) {
+			headerLabel.addClickListener(titleClickListener);
+			headerLabel.tooltip("Click to refresh");
+			headerLabel.addMouseOverListener(new IMouseOverListener() {
+
+				@Override
+				public void onMouseOver() {
+					headerLabel.font().underline(true);
+				}
+
+				@Override
+				public void onMouseOut() {
+					headerLabel.font().underline(false);
+				}
+			});
+		} else if (foldable) {
 			headerLabel.addClickListener(this);
 			headerLabel.tooltip(FOLDABLE);
 			more.addClickListener(this);
@@ -274,28 +290,28 @@ public class WidgetTitle implements IClickListener, IColored {
 	}
 
 	public void addSubTitles(String subTitle1, String subTitle2) {
-		if (IGNORE_SUBTITLES || subTitle1 == null)
-			return;
-		initHeader();
-		if (subTitlePanel == null)
-			subTitlePanel = titlePanel.addSpace(8).add().panel().vertical()
-					.align().begin();
-		else
-			subTitlePanel.clear();
-		if (!title.equals(subTitle1))
-			subTitlePanel.add().label().text(cutOff(subTitle1)).font().weight()
-					.bold().pixel(10).color().white();
-		if (subTitle2 != null && !subTitle2.equals(subTitle1)
-				&& !title.equals(subTitle1))
-			subTitlePanel.add().label().text(cutOff(subTitle2)).font().weight()
-					.bold().pixel(10).color().lightgray();
+		// if (IGNORE_SUBTITLES || subTitle1 == null)
+		// return;
+		// initHeader();
+		// if (subTitlePanel == null)
+		// subTitlePanel = titlePanel.addSpace(8).add().panel().vertical()
+		// .align().begin();
+		// else
+		// subTitlePanel.clear();
+		// if (!title.equals(subTitle1))
+		// subTitlePanel.add().label().text(cutOff(subTitle1)).font().weight()
+		// .bold().pixel(10).color().white();
+		// if (subTitle2 != null && !subTitle2.equals(subTitle1)
+		// && !title.equals(subTitle1))
+		// subTitlePanel.add().label().text(cutOff(subTitle2)).font().weight()
+		// .bold().pixel(10).color().lightgray();
 	}
 
-	private String cutOff(String t) {
-		if (t.length() >= MAX_LENGTH_SUBTITLE)
-			return t.substring(0, MAX_LENGTH_SUBTITLE - 3) + "...";
-		return t;
-	}
+	// private String cutOff(String t) {
+	// if (t.length() >= MAX_LENGTH_SUBTITLE)
+	// return t.substring(0, MAX_LENGTH_SUBTITLE - 3) + "...";
+	// return t;
+	// }
 
 	private void addMoreIcon(String r) {
 		more = titlePanel.add().image();
@@ -544,4 +560,10 @@ public class WidgetTitle implements IClickListener, IColored {
 	public IColor color() {
 		return panel.color();
 	}
+
+	public WidgetTitle titleClickListener(IClickListener titleClickListener) {
+		this.titleClickListener = titleClickListener;
+		return this;
+	}
+
 }
