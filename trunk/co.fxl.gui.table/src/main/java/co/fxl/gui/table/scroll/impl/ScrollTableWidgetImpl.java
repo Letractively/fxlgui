@@ -203,6 +203,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		if (widgetTitle == null) {
 			widgetTitle = new WidgetTitle(c0.panel(), addBorders, plainContent)
 					.foldable(false);
+			widgetTitle.titleClickListener(titleClickListener);
 			widgetTitle.addSubTitles(subTitle1, subTitle2);
 			widgetTitle.addToContextMenu(addToContextMenu);
 			widgetTitle.commandsOnTop();
@@ -256,6 +257,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private ILabel rightPaging;
 	private ILabel statusRangeLabel;
 	private ILabel leftPaging;
+	private IClickListener titleClickListener;
 
 	// private boolean nextTimeShowPopUp;
 
@@ -1662,5 +1664,12 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 				configureListener.onClick();
 			}
 		};
+	}
+
+	@Override
+	public IScrollTableWidget<Object> titleClickListener(
+			IClickListener refreshListener) {
+		titleClickListener = refreshListener;
+		return this;
 	}
 }
