@@ -259,32 +259,7 @@ public class WidgetTitle implements IClickListener, IColored {
 		headerLabel = label;
 		if (titleClickListener != null) {
 			headerLabel.tooltip("Click to refresh");
-			// final IImage refresh = titlePanel.add().image()
-			// .resource("refresh.png").visible(false);
-			// refresh.margin().left(4);
-			headerLabel.addMouseOverListener(new IMouseOverListener() {
-
-				@Override
-				public void onMouseOver() {
-					headerLabel.font().underline(true);
-					// refresh.visible(true);
-				}
-
-				@Override
-				public void onMouseOut() {
-					headerLabel.font().underline(false);
-					// refresh.visible(false);
-				}
-			});
-			headerLabel.addClickListener(new IClickListener() {
-
-				@Override
-				public void onClick() {
-					headerLabel.font().underline(false);
-					// refresh.visible(false);
-					titleClickListener.onClick();
-				}
-			});
+			new HyperlinkMouseOverListener(headerLabel);
 		} else if (foldable) {
 			headerLabel.addClickListener(this);
 			headerLabel.tooltip(FOLDABLE);
