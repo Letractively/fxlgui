@@ -29,6 +29,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -370,8 +371,9 @@ public class WidgetTitle implements IClickListener, IColored {
 	IClickable<?> addLabel(String text, boolean underline) {
 		if (USE_CONFIGURE_IMAGE) {
 			IImage e = configurePanel().add().image()
-					.resource("configure_small.png");
-			// addFadeInOutEffect(e);
+					.resource("edit_white.png");
+			e.tooltip("Configure");
+			addFadeInOutEffect(e);
 			return e;
 		} else {
 			final ILabel l = configurePanel().add().label().text(text);
@@ -394,15 +396,16 @@ public class WidgetTitle implements IClickListener, IColored {
 		}
 	}
 
-	// private void addFadeInOutEffect(final IElement<?> e) {
-	// e.opacity(0);
-	// IFocusPanel h = headerFocusPanel;
-	// addFadeEffect(e, h);
-	// }
+	private void addFadeInOutEffect(final IElement<?> e) {
+		e.opacity(0);
+		IFocusPanel h = headerFocusPanel;
+		FadeEffect.addFadeEffect(e, h);
+//		addFadeEffect(e, h);
+	}
 
 	IHorizontalPanel configurePanel() {
 		if (configurePanel == null) {
-			IContainer cell = headerPanel.cell(1, 0).align().begin().valign()
+			IContainer cell = headerPanel.cell(1, 0).align().end().valign()
 					.center();
 			headerPanel.column(1).expand();
 			configurePanel = cell.panel().horizontal().valign().center()

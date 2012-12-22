@@ -18,53 +18,57 @@
  */
 package co.fxl.gui.impl;
 
+import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IFocusPanel;
+import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
+
 public class FadeEffect {
 
-	// public static void addFadeEffect(final IElement<?> e, IFocusPanel h) {
-	// addFadeEffect(e, h, 300, 4);
-	// }
+	public static void addFadeEffect(final IElement<?> e, IFocusPanel h) {
+		addFadeEffect(e, h, 200, 4);
+	}
 
-	// public static void addFadeEffect(final IElement<?> e, IFocusPanel h,
-	// final int l, final int steps) {
-	// e.opacity(0);
-	// h.addMouseOverListener(new IMouseOverListener() {
-	//
-	// private double opacity = 0;
-	// private double targetOpacity = 1;
-	// private boolean scheduled;
-	//
-	// @Override
-	// public void onMouseOver() {
-	// schedule(1);
-	// }
-	//
-	// private void schedule() {
-	// if (targetOpacity != opacity) {
-	// scheduled = true;
-	// Display.instance().invokeLater(new Runnable() {
-	// @Override
-	// public void run() {
-	// opacity += opacity > targetOpacity ? -(1d / steps)
-	// : (1d / steps);
-	// e.opacity(opacity);
-	// schedule();
-	// }
-	// }, l / steps);
-	// } else
-	// scheduled = false;
-	// }
-	//
-	// @Override
-	// public void onMouseOut() {
-	// schedule(0);
-	// }
-	//
-	// private void schedule(int target) {
-	// targetOpacity = target;
-	// if (!scheduled)
-	// schedule();
-	// }
-	// });
-	// }
+	public static void addFadeEffect(final IElement<?> e, IFocusPanel h,
+			final int l, final int steps) {
+		e.opacity(0);
+		h.addMouseOverListener(new IMouseOverListener() {
+
+			private double opacity = 0;
+			private double targetOpacity = 1;
+			private boolean scheduled;
+
+			@Override
+			public void onMouseOver() {
+				schedule(1);
+			}
+
+			private void schedule() {
+				if (targetOpacity != opacity) {
+					scheduled = true;
+					Display.instance().invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							opacity += opacity > targetOpacity ? -(1d / steps)
+									: (1d / steps);
+							e.opacity(opacity);
+							schedule();
+						}
+					}, l / steps);
+				} else
+					scheduled = false;
+			}
+
+			@Override
+			public void onMouseOut() {
+				schedule(0);
+			}
+
+			private void schedule(int target) {
+				targetOpacity = target;
+				if (!scheduled)
+					schedule();
+			}
+		});
+	}
 
 }
