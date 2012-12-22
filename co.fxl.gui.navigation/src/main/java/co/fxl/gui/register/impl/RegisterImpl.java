@@ -31,6 +31,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.DummyCallback;
+import co.fxl.gui.impl.HyperlinkMouseOverListener;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.register.api.IRegister;
 
@@ -106,6 +107,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 		buttonImage = subPanel.add().image().resource("loading_white.gif")
 				.visible(false);
 		buttonLabel = subPanel.add().label();
+		new HyperlinkMouseOverListener(buttonLabel);
 		buttonPanel.addClickListener(this);
 		buttonLabel.addClickListener(this);
 		buttonPanel.addSpace(3);

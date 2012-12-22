@@ -83,12 +83,12 @@ public class ToolbarImpl implements IToolbar {
 			content.add(childPanel);
 			return childPanel.add();
 		} else {
-			IHorizontalPanel childPanel = root.panel.add().panel().horizontal()
+			IHorizontalPanel childPanel0 = root.panel.add().panel().horizontal()
 					.height(height).align().center();
-			childPanel.spacing().left(root.hasContent ? 0 : spacing)
+			childPanel0.spacing().left(root.hasContent ? 0 : spacing)
 					.top(spacing).bottom(spacing).right(spacing);
-			childPanel = childPanel.add().panel().horizontal().align().center();
-			content.add(childPanel);
+			IHorizontalPanel childPanel = childPanel0.add().panel().horizontal().align().center();
+			content.add(childPanel0);
 			return childPanel.add();
 		}
 	}

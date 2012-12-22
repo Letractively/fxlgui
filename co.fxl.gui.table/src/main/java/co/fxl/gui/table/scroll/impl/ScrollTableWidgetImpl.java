@@ -258,6 +258,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private ILabel statusRangeLabel;
 	private ILabel leftPaging;
 	private IClickListener titleClickListener;
+	private boolean cellPadding;
 
 	// private boolean nextTimeShowPopUp;
 
@@ -811,6 +812,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		IBulkTableWidget lastGrid = grid;
 		IVerticalPanel vpanel = contentPanel.add().panel().vertical();
 		grid = (IBulkTableWidget) vpanel.add().widget(IBulkTableWidget.class);
+		grid.cellPadding(cellPadding);
 		grid.marginTop(plainContent ? 0 : 6);
 		grid.addToContextMenu(addToContextMenu);
 		final int heightMinusTopPanel = heightCenterPanel();
@@ -1670,6 +1672,12 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	public IScrollTableWidget<Object> titleClickListener(
 			IClickListener refreshListener) {
 		titleClickListener = refreshListener;
+		return this;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> cellPadding(boolean cellPadding) {
+		this.cellPadding = cellPadding;
 		return this;
 	}
 }

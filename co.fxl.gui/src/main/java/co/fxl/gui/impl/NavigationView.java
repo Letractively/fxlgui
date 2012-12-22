@@ -115,7 +115,7 @@ public class NavigationView implements IColored {
 		ImageButton imageButton = new ImageButton((IVerticalPanel) panels[0],
 				panel, image, textLabel).lazyHyperlink();
 		if (addToContextMenu)
-			imageButton = imageButton.addToContextMenu(NAVIGATION);
+			imageButton = imageButton.addToContextMenu(title);
 		return imageButton;
 	}
 

@@ -29,7 +29,7 @@ import co.fxl.gui.api.IResizable.IResizeListener;
 
 public class StatusPopUp implements IResizeListener, Runnable {
 
-	static final int YELLOW_B = 190;
+	static final int YELLOW_B = 190; // rgb(249,237,190)
 	static final int YELLOW_G = 237;
 	static final int YELLOW_R = 249;
 
