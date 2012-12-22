@@ -31,7 +31,7 @@ import co.fxl.gui.impl.ContextMenu.Group;
 
 public class CommandLink implements IClickable<IClickable<?>> {
 
-	static final boolean HIDE_NON_CLICKABLE = false;//!Env.is(Env.SWING);
+	static final boolean HIDE_NON_CLICKABLE = false;// !Env.is(Env.SWING);
 	final WidgetTitle widgetTitle;
 	private IHorizontalPanel iPanel;
 	private ILabel label;
@@ -151,6 +151,10 @@ public class CommandLink implements IClickable<IClickable<?>> {
 		}
 		contextMenuEntry.addClickListener(getFire());
 		return this;
+	}
+
+	public void removeFromContextMenu() {
+		contextMenuEntry.remove();
 	}
 
 	co.fxl.gui.api.IClickable.IClickListener getFire() {

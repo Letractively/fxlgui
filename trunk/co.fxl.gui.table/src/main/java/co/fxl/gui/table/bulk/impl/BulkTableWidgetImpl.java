@@ -514,4 +514,9 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	public IBulkTableWidget grouping(IGrouping grouping) {
 		return this;
 	}
+
+	@Override
+	public IBulkTableWidget cellPadding(boolean cellPadding) {
+		return this;
+	}
 }

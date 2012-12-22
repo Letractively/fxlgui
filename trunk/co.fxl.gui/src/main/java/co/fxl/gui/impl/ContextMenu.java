@@ -39,8 +39,10 @@ public class ContextMenu {
 		private List<IClickListener> clickListeners = new LinkedList<IClickListener>();
 		private String imageResource = null;
 		private char key;
+		private Group group;
 
-		private Entry(String text) {
+		private Entry(Group group, String text) {
+			this.group = group;
 			this.text = text;
 		}
 
@@ -81,6 +83,10 @@ public class ContextMenu {
 			for (IClickListener c : clickListeners)
 				c.onClick();
 		}
+
+		public void remove() {
+			group.list.remove(this);
+		}
 	}
 
 	public class Group {
@@ -100,7 +106,7 @@ public class ContextMenu {
 					return entry;
 				}
 			}
-			Entry entry = new Entry(text);
+			Entry entry = new Entry(this, text);
 			list.add(entry);
 			return entry;
 		}

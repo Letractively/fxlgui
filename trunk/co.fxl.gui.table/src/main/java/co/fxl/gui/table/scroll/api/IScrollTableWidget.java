@@ -260,5 +260,7 @@ public interface IScrollTableWidget<T> extends IResizableWidget, IHasButtons {
 
 	IScrollTableWidget<Object> titleClickListener(IClickListener refreshListener);
 
+	IScrollTableWidget<Object> cellPadding(boolean cellPadding);
+
 	// IVerticalPanel editPanel();
 }

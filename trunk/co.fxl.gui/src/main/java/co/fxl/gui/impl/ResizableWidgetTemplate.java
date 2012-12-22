@@ -30,7 +30,7 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 	// private List<ResizableWidgetTemplate> children = new
 	// LinkedList<ResizableWidgetTemplate>();
 	private Map<String, ResizableWidgetTemplate> qualifiedChildren = new HashMap<String, ResizableWidgetTemplate>();
-	private int heightDecrement = 0;
+	protected int heightDecrement = 0;
 
 	@Override
 	public IResizableWidget heightDecrement(int heightDecrement) {

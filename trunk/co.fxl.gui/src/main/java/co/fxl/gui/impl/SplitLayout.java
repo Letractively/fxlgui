@@ -45,6 +45,7 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 	private IVerticalPanel sideBasePanel;
 	private boolean isDetached;
 	private ResizableWidgetTemplate widget;
+	private int widthDecrement;
 
 	public SplitLayout(ILayout layout, ResizableWidgetTemplate widget) {
 		this(layout, false, widget);
@@ -52,25 +53,33 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 
 	public SplitLayout(ILayout layout, boolean resizeMainPanel,
 			ResizableWidgetTemplate widget) {
+		this(layout, resizeMainPanel, widget, 0, 0);
+	}
+
+	public SplitLayout(ILayout layout, boolean resizeMainPanel,
+			ResizableWidgetTemplate widget, int widthDecrement,
+			int heightDecrement) {
 		this.layout = layout;
 		this.resizeMainPanel = resizeMainPanel;
 		this.widget = widget;
+		this.widthDecrement = widthDecrement;
+		this.heightDecrement = heightDecrement;
 		init();
 	}
 
 	private void init() {
 		panel = layout.grid();
-		cell0 = panel.cell(0, 0).width(mainPanelWidth());
+		cell0 = panel.cell(0, 0).width(width());
 		IVerticalPanel vpanel = cell0.valign().begin().panel().vertical()
 				.spacing(10);
 		mainPanel = addMainPanel(vpanel);
 		cell1 = panel.cell(1, 0).width(WIDTH_SIDE_PANEL).valign().begin()
 				.align().end();
 		sideBasePanel = cell1.panel().vertical();
-		sideScrollPanel = sideBasePanel.//addSpace(10).
-				add().scrollPane();
+		sideBasePanel.padding().top(10);
+		sideScrollPanel = sideBasePanel.add().scrollPane();
 		sidePanel = sideScrollPanel.viewPort().panel().vertical();
-		sidePanel.spacing().right(10).inner(10);
+		sidePanel.spacing().right(10);
 		widget.setResizableWidget(this, "splitLayout");
 		StatusDisplay.instance().fire(this);
 	}
@@ -81,8 +90,12 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 
 	@Override
 	public void onResize(int width, int height) {
-		resizeSidePanel(StatusDisplay.instance().height());
-		cell0.width(mainPanelWidth());
+		resizeSidePanel(StatusDisplay.instance().height() - heightDecrement);
+		cell0.width(width());
+	}
+
+	int width() {
+		return mainPanelWidth() - widthDecrement;
 	}
 
 	public void detachSidePanel() {
