@@ -31,11 +31,13 @@ import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.HyperlinkDecorator;
+import co.fxl.gui.impl.HyperlinkMouseOverListener;
 
 public class ColumnSelection {
 
 	private static final String COLUMN = "Column";
 	private static final String COLUMN_SELECTION = "Column Selection";
+	static final String TOOLTIP = "Click on columns to toggle visibility. Drag & Drop to reorder.";
 	TableWidgetAdp widget;
 	private ScrollTableColumnImpl dragged;
 	private ScrollTableColumnImpl dummy;
@@ -99,6 +101,7 @@ public class ColumnSelection {
 	ILabel decoratePanel(final IClickListener clickListener,
 			final ScrollTableColumnImpl c, final IFocusPanel fp,
 			final IHorizontalPanel b) {
+		fp.tooltip(TOOLTIP);
 		fp.addDragStartListener(new IDragStartListener() {
 
 			@Override
@@ -142,6 +145,7 @@ public class ColumnSelection {
 				.text(c.name.equals("") ? COLUMN + " "
 						+ String.valueOf(widget.columnList().indexOf(c) + 1)
 						: c.name()).autoWrap(true);
+		new HyperlinkMouseOverListener(l);
 		l.font().pixel(11);
 		if (c.index == -1)
 			l.font().color().white();
@@ -209,8 +213,7 @@ public class ColumnSelection {
 					l.font().underline(false).color().black();
 				}
 			});
-			horizontal.addSpace(4).add().image()
-					.resource("configure_small.png")
+			horizontal.addSpace(4).add().image().resource("edit_gray.png")
 					.addClickListener(widget.configureListener());
 			addText(horizontal, ":");
 		} else

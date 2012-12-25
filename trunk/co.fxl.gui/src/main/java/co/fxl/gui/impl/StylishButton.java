@@ -20,21 +20,57 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 
-public class StylishButton {
+public class StylishButton extends ClickableMultiplexer {
 
-	public static IClickable<?> add(IHorizontalPanel p, String text) {
-		IHorizontalPanel buttonPanel = p.spacing(3);
-		buttonPanel.color().rgb(111, 111, 111).gradient().vertical()
-				.rgb(63, 63, 63);
+	private boolean changeBackground;
+	private IHorizontalPanel buttonPanel;
+	private ILabel button;
+
+	public StylishButton(IHorizontalPanel p, String text) {
+		this(p, text, true, 3);
+	}
+
+	public StylishButton(IHorizontalPanel p, String text,
+			boolean changeBackground, int spacing) {
+		this.changeBackground = changeBackground;
+		buttonPanel = p.spacing(spacing);
+		styleActive();
 		IBorder br = buttonPanel.border();
 		br.color().black();
 		br.style().rounded();
-		ILabel b = buttonPanel.addSpace(4).add().label().text(text);
-		b.font().weight().bold().color().white();
+		button = buttonPanel.addSpace(4).add().label().text(text);
+		button.font().weight().bold().color().white();
 		buttonPanel.addSpace(4);
-		return new ClickableMultiplexer(buttonPanel, b);
+		new HyperlinkMouseOverListener(button);
+		cs = new IClickable<?>[] { buttonPanel, button };
+	}
+
+	@Override
+	public Object clickable(boolean clickable) {
+		if (changeBackground) {
+			if (clickable)
+				styleActive();
+			else
+				buttonPanel.color().remove().rgb(140, 140, 140);
+		} else {
+			if (clickable)
+				button.font().color().white();
+			else
+				button.font().color().rgb(240, 240, 240);
+		}
+		return super.clickable(clickable);
+	}
+
+	private void styleActive() {
+		buttonPanel.color().remove().rgb(111, 111, 111).gradient().vertical()
+				.rgb(63, 63, 63);
+	}
+
+	public IElement<?> panel() {
+		return buttonPanel;
 	}
 }

@@ -66,7 +66,9 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 	@Override
 	public IResizableWidget setResizableWidget(IResizableWidget widget,
 			String id) {
-		qualifiedChildren.put(id, (ResizableWidgetTemplate) widget);
+		ResizableWidgetTemplate child = (ResizableWidgetTemplate) widget;
+		child.heightDecrement = heightDecrement;
+		qualifiedChildren.put(id, child);
 		return this;
 	}
 

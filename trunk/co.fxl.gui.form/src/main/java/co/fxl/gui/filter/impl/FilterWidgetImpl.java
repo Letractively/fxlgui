@@ -47,6 +47,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 
 	// TODO SWING-FXL: Look: cells are too small
 
+	private static final boolean DIRECT_COMBOBO_CHANGE = true;
 	static String MAX_ROWS = "Max Rows";
 
 	private class ClearClickListener extends LazyClickListener {
@@ -380,9 +381,11 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 				}
 				FilterPart<?> fp = addFilter(filter.type.clazz, filter.name,
 						list, preset, adapter);
+				holdFilterClicks = true;
 				if (filter.text != null) {
 					((ComboBoxStringFilter) fp).input.text(filter.text);
 				}
+				holdFilterClicks = false;
 				if (filter.updateListener != null)
 					fp.addUpdateListener(filter.updateListener);
 			}
@@ -481,5 +484,10 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			constraints.clearRowIndex();
 		}
 		return this;
+	}
+
+	void notifyComboBoxChange() {
+		if (apply.clickable() && DIRECT_COMBOBO_CHANGE)
+			onApplyClick();
 	}
 }

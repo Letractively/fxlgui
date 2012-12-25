@@ -372,7 +372,7 @@ public class WidgetTitle implements IClickListener, IColored {
 		if (USE_CONFIGURE_IMAGE) {
 			IImage e = configurePanel().add().image()
 					.resource("edit_white.png");
-			e.tooltip("Configure");
+			e.tooltip(text);
 			addFadeInOutEffect(e);
 			return e;
 		} else {

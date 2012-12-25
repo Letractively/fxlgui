@@ -283,6 +283,11 @@ class MiniFilterPanel implements FilterPanel {
 		@Override
 		public boolean addTooltips() {
 			return false;
+		}
+
+		@Override
+		public void notifyComboBoxChange() {
+			widget.notifyComboBoxChange();
 		};
 	}
 

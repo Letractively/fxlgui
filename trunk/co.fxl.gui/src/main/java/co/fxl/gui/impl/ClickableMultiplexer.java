@@ -25,7 +25,10 @@ import co.fxl.gui.api.IClickable;
 
 public class ClickableMultiplexer implements IClickable<Object> {
 
-	private IClickable<?>[] cs;
+	IClickable<?>[] cs;
+
+	public ClickableMultiplexer() {
+	}
 
 	public ClickableMultiplexer(IClickable<?>... cs) {
 		this.cs = cs;

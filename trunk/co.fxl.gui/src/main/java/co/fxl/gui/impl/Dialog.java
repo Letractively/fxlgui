@@ -18,29 +18,11 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IDialog;
 
-public class HyperlinkDecorator extends HyperlinkMouseOverListener {
+public class Dialog {
 
-	public HyperlinkDecorator(ILabel label) {
-		super(label);
-		styleHyperlinkActive(label);
-	}
-
-	public static void styleHyperlinkActive(ILabel label) {
-		label.font().color().rgb(0, 87, 141);
-	}
-
-	public static void styleHyperlinkInactive(ILabel label) {
-		label.font().color().gray();
-	}
-
-	public HyperlinkDecorator clickable(boolean enable) {
-		if (enable) {
-			styleHyperlinkActive(label);
-		} else {
-			styleHyperlinkInactive(label);
-		}
-		return this;
+	public static IDialog newInstance() {
+		return Display.instance().showDialog().modal(true).glass(true);
 	}
 }

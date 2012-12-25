@@ -51,7 +51,9 @@ public class StatusPopUp implements IResizeListener, Runnable {
 
 		private StatusImpl(String message, String tooltip) {
 			this.message = message;
-			this.tooltip = tooltip != null ? tooltip : message;
+			this.tooltip = // tooltip != null ?
+			tooltip // : message
+			;
 		}
 
 		private void show(boolean lazy) {

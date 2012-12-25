@@ -21,7 +21,6 @@ package co.fxl.gui.filter.impl;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IDockPanel;
-import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.WidgetTitle;
@@ -40,7 +39,7 @@ interface FilterPanel {
 	}
 
 	interface FilterGrid {
-		
+
 		FilterGrid rowInc(int rowInc);
 
 		Heights heights();
@@ -56,6 +55,8 @@ interface FilterPanel {
 		void show(FilterPart<?> firstConstraint);
 
 		boolean addTooltips();
+
+		void notifyComboBoxChange();
 	}
 
 	void addTitle(String string);
