@@ -37,7 +37,7 @@ public class ColumnSelection {
 
 	private static final String COLUMN = "Column";
 	private static final String COLUMN_SELECTION = "Column Selection";
-	static final String TOOLTIP = "Click on columns to toggle visibility. Drag & Drop to reorder.";
+	static final String TOOLTIP = "Click on Column to toggle visibility. Use Drag & Drop to reorder.";
 	TableWidgetAdp widget;
 	private ScrollTableColumnImpl dragged;
 	private ScrollTableColumnImpl dummy;
