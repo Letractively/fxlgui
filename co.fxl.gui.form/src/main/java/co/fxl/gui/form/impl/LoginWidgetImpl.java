@@ -26,7 +26,7 @@ import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.form.api.ILoginWidget;
 import co.fxl.gui.impl.Constants;
-import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.Dialog;
 import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.LazyClickListener;
@@ -49,7 +49,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 	}
 
 	void dialog(String string) {
-		IDialog dialog = Display.instance().showDialog();
+		IDialog dialog = Dialog.newInstance();
 		dialog.title("Login Failed");
 		dialog.message(string).error();
 		dialog.visible(true);

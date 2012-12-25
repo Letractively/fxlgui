@@ -25,7 +25,6 @@ import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterConstraints.IRange;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
-import co.fxl.gui.form.impl.Validation;
 
 class DateFilter extends RangeFilter<Date> {
 

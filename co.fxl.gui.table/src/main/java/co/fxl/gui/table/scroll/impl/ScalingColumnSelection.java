@@ -29,6 +29,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.HorizontalScalingPanel;
+import co.fxl.gui.impl.HyperlinkMouseOverListener;
 
 public class ScalingColumnSelection {
 
@@ -112,6 +113,7 @@ public class ScalingColumnSelection {
 	ILabel decoratePanel(final HorizontalScalingPanel p,
 			final IClickListener clickListener, final ScrollTableColumnImpl c,
 			final IFocusPanel fp, final IHorizontalPanel b) {
+		fp.tooltip(ColumnSelection.TOOLTIP);
 		fp.addDragStartListener(new IDragStartListener() {
 
 			@Override
@@ -159,6 +161,7 @@ public class ScalingColumnSelection {
 						+ String.valueOf(widget.columnList().indexOf(c) + 1)
 						: c.name()).autoWrap(true).autoWrap(false);
 		l.font().pixel(11);
+		new HyperlinkMouseOverListener(l);
 		if (c.index == -1)
 			l.font().color().white();
 		else {

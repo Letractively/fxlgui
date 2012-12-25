@@ -18,30 +18,48 @@
  */
 package co.fxl.gui.impl;
 
+import co.fxl.gui.api.IButton;
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IFontElement;
+import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IMouseOverElement;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 
 public class HyperlinkMouseOverListener implements IMouseOverListener,
 		IClickListener {
 
+	private IFont font;
+	private IClickable<?> clickable;
 	ILabel label;
 
 	public HyperlinkMouseOverListener(ILabel label) {
+		this(label, label, label);
 		this.label = label;
-		label.addMouseOverListener(this);
-		label.addClickListener(this);
+	}
+
+	public HyperlinkMouseOverListener(IButton button) {
+		this(button, button, button);
+	}
+
+	public HyperlinkMouseOverListener(IFontElement fontElement,
+			IMouseOverElement<?> e, IClickable<?> c) {
+		font = fontElement.font();
+		clickable = c;
+		e.addMouseOverListener(this);
+		c.addClickListener(this);
 	}
 
 	@Override
 	public void onMouseOver() {
-		if (label.clickable())
-			label.font().underline(true);
+		if (clickable.clickable())
+			font.underline(true);
 	}
 
 	@Override
 	public void onMouseOut() {
-		label.font().underline(false);
+		font.underline(false);
 	}
 
 	@Override

@@ -68,8 +68,7 @@ public class ErrorDialog {
 					.addClickListener(new IClickListener() {
 						@Override
 						public void onClick() {
-							IDialog detailDialog = Display.instance()
-									.showDialog();
+							IDialog detailDialog = Dialog.newInstance();
 							detailDialog.width(DEFAULT_WIDTH);
 							detailDialog.title("Error Details");
 							detailDialog.addButton().close()

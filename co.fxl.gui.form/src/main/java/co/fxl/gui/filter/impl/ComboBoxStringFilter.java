@@ -21,45 +21,18 @@ package co.fxl.gui.filter.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
-import co.fxl.gui.form.impl.Validation;
 
-class ComboBoxStringFilter extends FilterTemplate<IComboBox, String> {
-
-	// class StringConstraint implements IStringPrefixConstraint {
-	//
-	// @Override
-	// public String column() {
-	// return name;
-	// }
-	//
-	// @Override
-	// public String prefix() {
-	// return text;
-	// }
-	//
-	// @Override
-	// public String toString() {
-	// return text;
-	// }
-	// }
+class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 
 	private String text;
 	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();
-	private boolean updateListeningActive = true;
 
 	ComboBoxStringFilter(FilterGrid panel, String name, List<Object> values,
 			int filterIndex) {
-		super(panel, name, filterIndex);
-		input = panel.cell(filterIndex)// .width(WIDTH_SINGLE_CELL)
-				.comboBox().width(WIDTH_COMBOBOX_CELL);
-		panel.heights().decorate(input);
-		for (Object object : values) {
-			input.addText(string(object));
-		}
+		super(panel, name, values, filterIndex);
 		input.addUpdateListener(new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(String value) {
@@ -68,12 +41,6 @@ class ComboBoxStringFilter extends FilterTemplate<IComboBox, String> {
 						l.onUpdate(value);
 			}
 		});
-	}
-
-	private String string(Object object) {
-		if (object == null)
-			return "";
-		return String.valueOf(object);
 	}
 
 	@Override
@@ -86,9 +53,7 @@ class ComboBoxStringFilter extends FilterTemplate<IComboBox, String> {
 
 	@Override
 	public void clear() {
-		updateListeningActive = false;
-		input.text("");
-		updateListeningActive = true;
+		text("");
 		text = null;
 	}
 
@@ -98,32 +63,16 @@ class ComboBoxStringFilter extends FilterTemplate<IComboBox, String> {
 	}
 
 	@Override
-	public void addUpdateListener(final FilterListener l) {
-		updateListeners.add(new IUpdateListener<String>() {
-
-			@Override
-			public void onUpdate(String value) {
-				l.onActive(!input.text().trim().equals(""));
-			}
-		});
-	}
-
-	@Override
 	public IFilterConstraint asConstraint() {
 		update();
 		return new StringPrefixConstraint(name, text);
 	}
 
 	@Override
-	public void validate(Validation validation) {
-		validation.linkInput(input);
-	}
-
-	@Override
 	boolean fromConstraint(IFilterConstraints constraints) {
 		if (constraints.isAttributeConstrained(name)) {
 			String prefix = constraints.stringValue(name);
-			input.text(prefix);
+			text(prefix);
 			return true;
 		} else
 			return false;

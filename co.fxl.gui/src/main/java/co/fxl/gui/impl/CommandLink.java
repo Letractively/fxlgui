@@ -54,8 +54,10 @@ public class CommandLink implements IClickable<IClickable<?>> {
 		if (image != null)
 			noDoubleClicks(image);
 		this.label = headerLabel;
-		if (headerLabel != null)
+		if (headerLabel != null) {
 			text = headerLabel.text();
+			new HyperlinkMouseOverListener(headerLabel);
+		}
 		noDoubleClicks(label);
 	}
 

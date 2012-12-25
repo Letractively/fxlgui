@@ -63,9 +63,6 @@ public class FilterPanelImpl implements FilterPanel {
 	@Override
 	public ViewComboBox viewComboBox() {
 		throw new UnsupportedOperationException();
-		// IComboBox comboBox = mainPanel.add().comboBox();
-		// mainPanel.addSpace(4);
-		// return comboBox;
 	}
 
 	@Override

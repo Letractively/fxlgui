@@ -88,4 +88,9 @@ class FilterGridImpl implements FilterGrid {
 	public boolean addTooltips() {
 		return true;
 	}
+
+	@Override
+	public void notifyComboBoxChange() {
+		filterPanelImpl.widget.notifyComboBoxChange();
+	}
 }

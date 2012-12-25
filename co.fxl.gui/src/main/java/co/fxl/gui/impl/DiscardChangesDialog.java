@@ -21,7 +21,6 @@ package co.fxl.gui.impl;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDialog;
-import co.fxl.gui.api.IDisplay;
 
 public class DiscardChangesDialog {
 
@@ -34,7 +33,6 @@ public class DiscardChangesDialog {
 
 	public static final String DISCARD_CHANGES = "You have made changes that have not been saved!\nDiscard Changes?";
 	private static boolean active = false;
-	private static IDisplay display = Display.instance();
 	public static DiscardChangesListener listener;
 
 	public static void show(final ICallback<Boolean> callback) {
@@ -46,7 +44,7 @@ public class DiscardChangesDialog {
 		if (!active || noDiscardChangesDialog)
 			callback.onSuccess(true);
 		else {
-			IDialog dl = display.showDialog().confirm()
+			IDialog dl = Dialog.newInstance().confirm()
 					.message(DISCARD_CHANGES).warn();
 			dl.addButton().yes().addClickListener(new IClickListener() {
 				@Override
