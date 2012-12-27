@@ -273,7 +273,7 @@ public class FormWidgetImpl implements IFormWidget {
 
 	@Override
 	public IClickable<?> addCancelHyperlink() {
-		return addHyperlink("Cancel & Reset");
+		return addHyperlink("Cancel");
 	}
 
 	@Override
@@ -361,7 +361,7 @@ public class FormWidgetImpl implements IFormWidget {
 				.align().begin();
 		subPanel.margin().top(1);
 		// panel.addSpace(4).add().label().text("-").font().color().gray();
-		final ILabel cb = panel.addSpace(8).add().label().text("Cancel");
+		final ILabel cb = panel.addSpace(8).add().label().text("Cancel and reset");
 		// cb.margin().top(1);
 		cb.font().pixel(11);
 		HyperlinkDecorator.styleHyperlinkActive(cb);
