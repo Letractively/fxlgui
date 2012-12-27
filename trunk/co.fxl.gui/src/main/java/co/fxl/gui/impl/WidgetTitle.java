@@ -113,6 +113,10 @@ public class WidgetTitle implements IClickListener, IColored {
 		setUp();
 	}
 
+	public IColor background() {
+		return panel.color();
+	}
+
 	private int spaceBottom() {
 		return sideWidget && commandsOnTop ? 6 : 0;
 	}
@@ -210,11 +214,12 @@ public class WidgetTitle implements IClickListener, IColored {
 		} else {
 			if (commandPanel != null)
 				return;
-			footer = bottom().panel().dock();
+			footer = bottom().panel().dock().height(28);
 			footer.visible(!plainContent);
-			footer.center().panel().vertical();
+			footer.center().panel().vertical().height(28);
 			IContainer cell = footer.right();
 			commandPanel = cell.panel().horizontal().spacing(6);
+//			commandPanel.add().image().resource("empty_1x1.png");
 			styleFooter(footer);
 		}
 	}
@@ -338,6 +343,7 @@ public class WidgetTitle implements IClickListener, IColored {
 		IFocusPanel iPanel0 = cp.add().panel().focus();
 		IHorizontalPanel iPanel = iPanel0.add().panel().horizontal()
 				.addSpace(4).add().panel().horizontal();
+		IHorizontalPanel backgroundPanel = iPanel;
 		if (commandsOnTop) {
 			styleWindowHeaderButton(iPanel);
 			iPanel.spacing(4);
@@ -350,10 +356,12 @@ public class WidgetTitle implements IClickListener, IColored {
 		}
 		if (text == null) {
 			ILabel label = iPanel.add().label().visible(false);
-			return createCommandLink(iPanel0, iPanel, image, label);
+			return createCommandLink(iPanel0, backgroundPanel, iPanel, image,
+					label);
 		} else {
 			ILabel label = addHyperlinkLabel(text, iPanel);
-			return createCommandLink(iPanel0, iPanel, image, label);
+			return createCommandLink(iPanel0, backgroundPanel, iPanel, image,
+					label);
 		}
 	}
 
@@ -400,7 +408,7 @@ public class WidgetTitle implements IClickListener, IColored {
 		e.opacity(0);
 		IFocusPanel h = headerFocusPanel;
 		FadeEffect.addFadeEffect(e, h);
-//		addFadeEffect(e, h);
+		// addFadeEffect(e, h);
 	}
 
 	IHorizontalPanel configurePanel() {
@@ -418,9 +426,11 @@ public class WidgetTitle implements IClickListener, IColored {
 	}
 
 	private CommandLink createCommandLink(IFocusPanel fp,
-			IHorizontalPanel iPanel0, IImage image, ILabel label) {
+			IHorizontalPanel backgroundPanel, IHorizontalPanel iPanel0,
+			IImage image, ILabel label) {
 		labels.add(label);
-		CommandLink cl = new CommandLink(this, fp, iPanel0, image, label);
+		CommandLink cl = new CommandLink(this, fp, backgroundPanel, iPanel0,
+				image, label);
 		cl.clickable(hyperlinkVisible);
 		if (addToContextMenu && title != null)
 			cl.addToContextMenu(title);
@@ -442,7 +452,7 @@ public class WidgetTitle implements IClickListener, IColored {
 		b.style().rounded();
 	}
 
-	public IClickable<?> addHyperlink(String imageResource, String name,
+	public CommandLink addHyperlink(String imageResource, String name,
 			String toolTipClickable, String toolTipNotClickable) {
 		return addHyperlink(imageResource, name).tooltips(toolTipClickable,
 				toolTipNotClickable);

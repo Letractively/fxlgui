@@ -156,7 +156,7 @@ public interface IScrollTableWidget<T> extends IResizableWidget, IHasButtons {
 
 	CommandLink addButton(String name, String imageResource);
 
-	IClickable<?> addButton(String name, String imageResource,
+	CommandLink addButton(String name, String imageResource,
 			String toolTipClickable, String toolTipNotClickable);
 
 	ISelection<T> selection();

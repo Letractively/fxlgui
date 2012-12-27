@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.impl;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IColored;
@@ -46,6 +49,7 @@ public class NavigationView implements IColored {
 	private IClickable<?> forward;
 	private boolean addToContextMenu = false;
 	private String title;
+	private List<IVerticalPanel> parts = new LinkedList<IVerticalPanel>();
 
 	public NavigationView(ILayout layout) {
 		this(layout, true);
@@ -57,6 +61,7 @@ public class NavigationView implements IColored {
 
 	public NavigationView(ILayout layout, boolean addToContextMenu, String title) {
 		widgetTitle = new WidgetTitle(layout, true).sideWidget(true);
+		widgetTitle.background().gray(248);
 		this.addToContextMenu = addToContextMenu;
 		if (addToContextMenu)
 			widgetTitle.addToContextMenu(addToContextMenu);
@@ -69,7 +74,7 @@ public class NavigationView implements IColored {
 		if (panel != null)
 			return;
 		widgetTitle.addTitle(title);
-		panel = widgetTitle.content().panel().vertical().spacing(6);
+		panel = widgetTitle.content().panel().vertical();
 	}
 
 	public NavigationView navigationViewListener(final INavigationListener nl) {
@@ -187,18 +192,39 @@ public class NavigationView implements IColored {
 
 	protected IPanel<?>[] addPanel() {
 		IVerticalPanel p = panel.add().panel().vertical().spacing(2);
-		if (hasLinks) {
-			p.addSpace(3);
-		}
+		parts.add(p);
+		p.padding().left(6).right(6).top(6);
+		p.margin().bottom(6);
+		// if (hasLinks) {
+		// p.addSpace(3);
+		// }
 		IHorizontalPanel panel = p.add().panel().horizontal();
 		if (hasLinks) {
-			IBorder border = p.border();
-			border.color().rgb(172, 197, 213);
-			border.style().top();
+			addBorder(p);
 		}
 		hasLinks = true;
 		IPanel<?>[] panels = new IPanel<?>[] { p, panel };
 		return panels;
+	}
+
+	private void addBorder(IVerticalPanel p) {
+		IBorder border = p.border();
+		border.color().rgb(172, 197, 213);
+		border.style().top();
+	}
+
+	public void updateSeparatorBorders() {
+		boolean isFirst = true;
+		for (IVerticalPanel p : parts) {
+			if (p.visible()) {
+				if (isFirst) {
+					p.border().remove();
+				} else {
+					addBorder(p);
+				}
+				isFirst = false;
+			}
+		}
 	}
 
 	public NavigationView foldable(boolean b) {
