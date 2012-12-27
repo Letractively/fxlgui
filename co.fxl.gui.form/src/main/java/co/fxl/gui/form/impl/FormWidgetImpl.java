@@ -273,7 +273,7 @@ public class FormWidgetImpl implements IFormWidget {
 
 	@Override
 	public IClickable<?> addCancelHyperlink() {
-		return addHyperlink("Cancel");
+		return addHyperlink("Cancel & Reset");
 	}
 
 	@Override
