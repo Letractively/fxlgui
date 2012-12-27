@@ -1166,7 +1166,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	}
 
 	@Override
-	public IClickable<?> addButton(String name, String imageResource,
+	public CommandLink addButton(String name, String imageResource,
 			String toolTipClickable, String toolTipNotClickable) {
 		return widgetTitle().addHyperlink(imageResource, name,
 				toolTipClickable, toolTipNotClickable);

@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -31,7 +32,7 @@ import co.fxl.gui.impl.ContextMenu.Group;
 
 public class CommandLink implements IClickable<IClickable<?>> {
 
-	static final boolean HIDE_NON_CLICKABLE = false;// !Env.is(Env.SWING);
+	static final boolean HIDE_NON_CLICKABLE = true;// !Env.is(Env.SWING);
 	final WidgetTitle widgetTitle;
 	private IHorizontalPanel iPanel;
 	private ILabel label;
@@ -43,11 +44,14 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	private String text;
 	private char ctrlKey;
 	private IFocusPanel fp;
+	private IHorizontalPanel backgroundPanel;
 
 	public CommandLink(WidgetTitle widgetTitle, IFocusPanel fp,
-			IHorizontalPanel iPanel, IImage image, ILabel headerLabel) {
+			IHorizontalPanel backgroundPanel, IHorizontalPanel iPanel,
+			IImage image, ILabel headerLabel) {
 		this.fp = fp;
 		this.widgetTitle = widgetTitle;
+		this.backgroundPanel = backgroundPanel;
 		this.iPanel = iPanel;
 		noDoubleClicks(iPanel);
 		this.image = image;
@@ -57,6 +61,7 @@ public class CommandLink implements IClickable<IClickable<?>> {
 		if (headerLabel != null) {
 			text = headerLabel.text();
 			new HyperlinkMouseOverListener(headerLabel);
+			headerLabel.margin().right(2);
 		}
 		noDoubleClicks(label);
 	}
@@ -135,7 +140,7 @@ public class CommandLink implements IClickable<IClickable<?>> {
 		return null;
 	}
 
-	public IClickable<?> tooltips(String toolTipClickable,
+	public CommandLink tooltips(String toolTipClickable,
 			String toolTipNotClickable) {
 		this.toolTipClickable = toolTipClickable;
 		this.toolTipNotClickable = toolTipNotClickable;
@@ -205,6 +210,10 @@ public class CommandLink implements IClickable<IClickable<?>> {
 				fp.color().remove();
 		}
 		return this;
+	}
+
+	public IColor background() {
+		return backgroundPanel.color();
 	}
 
 	public String text() {

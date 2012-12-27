@@ -151,6 +151,11 @@ public abstract class GWTColor implements IColor {
 	}
 
 	@Override
+	public IColor rgb(int[] rgb) {
+		return rgb(rgb[0], rgb[1], rgb[2]);
+	}
+
+	@Override
 	public IColor mix() {
 		return new MixColor();
 	}

@@ -47,6 +47,8 @@ public interface IColored {
 
 		IColor rgb(int r, int g, int b);
 
+		IColor rgb(int[] rgb);
+
 		IColor mix();
 
 		IGradient gradient();

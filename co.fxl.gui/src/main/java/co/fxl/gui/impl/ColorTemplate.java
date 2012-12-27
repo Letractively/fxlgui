@@ -109,6 +109,11 @@ public abstract class ColorTemplate implements IColor {
 	}
 
 	@Override
+	public IColor rgb(int[] rgb) {
+		return rgb(rgb[0], rgb[1], rgb[2]);
+	}
+
+	@Override
 	public IColor blue() {
 		return rgb(0, 0, 255);
 	}
