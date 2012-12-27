@@ -218,8 +218,8 @@ public class WidgetTitle implements IClickListener, IColored {
 			footer.visible(!plainContent);
 			footer.center().panel().vertical().height(28);
 			IContainer cell = footer.right();
-			commandPanel = cell.panel().horizontal().spacing(6);
-//			commandPanel.add().image().resource("empty_1x1.png");
+			commandPanel = cell.panel().horizontal().padding(6);
+			// commandPanel.add().image().resource("empty_1x1.png");
 			styleFooter(footer);
 		}
 	}
@@ -339,8 +339,9 @@ public class WidgetTitle implements IClickListener, IColored {
 			ILabel label = addSeparator(cp);
 			labels.add(label);
 		}
-		hasCommands = true;
 		IFocusPanel iPanel0 = cp.add().panel().focus();
+		if (!commandsOnTop)
+			iPanel0.margin().left(6);
 		IHorizontalPanel iPanel = iPanel0.add().panel().horizontal()
 				.addSpace(4).add().panel().horizontal();
 		IHorizontalPanel backgroundPanel = iPanel;

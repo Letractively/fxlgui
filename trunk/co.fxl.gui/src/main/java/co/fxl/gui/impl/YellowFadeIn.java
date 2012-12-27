@@ -44,9 +44,9 @@ public class YellowFadeIn implements FadeIn {
 
 	private void schedule() {
 		d += INC;
-		int r = c(d, StatusPopUp.YELLOW_R);
-		int g = c(d, StatusPopUp.YELLOW_G);
-		int b = c(d, StatusPopUp.YELLOW_B);
+		int r = c(d, StatusPopUp.YELLOW[0]);
+		int g = c(d, StatusPopUp.YELLOW[1]);
+		int b = c(d, StatusPopUp.YELLOW[2]);
 		color.rgb(r, g, b);
 		if (d < DURATION && !abort)
 			Display.instance().invokeLater(new Runnable() {
