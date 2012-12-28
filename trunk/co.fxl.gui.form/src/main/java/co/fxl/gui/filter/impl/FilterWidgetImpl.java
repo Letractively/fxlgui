@@ -48,7 +48,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	// TODO SWING-FXL: Look: cells are too small
 
 	private static final boolean DIRECT_COMBOBO_CHANGE = true;
-	static String MAX_ROWS = "Max Rows";
+	static String MAX_ROWS = "Page size";
 
 	private class ClearClickListener extends LazyClickListener {
 
