@@ -88,6 +88,7 @@ public class WidgetTitle implements IClickListener, IColored {
 	private IFocusPanel baseFocusPanel;
 	private IFocusPanel headerFocusPanel;
 	private IClickListener titleClickListener;
+	private int spaceBottom;
 
 	public WidgetTitle() {
 	}
@@ -117,8 +118,13 @@ public class WidgetTitle implements IClickListener, IColored {
 		return panel.color();
 	}
 
+	public WidgetTitle spaceBottom(int spaceBottom) {
+		this.spaceBottom = spaceBottom;
+		return this;
+	}
+
 	private int spaceBottom() {
-		return sideWidget && commandsOnTop ? 6 : 0;
+		return sideWidget && commandsOnTop ? 6 : spaceBottom + 2;
 	}
 
 	public WidgetTitle plainContent(boolean plainContent) {
@@ -514,8 +520,11 @@ public class WidgetTitle implements IClickListener, IColored {
 		if (bottomContainer != null)
 			return bottomContainer;
 		int space = space();
-		return bottomContainer = space == 0 ? bPanel.cell(0, 1) : bPanel
-				.cell(0, 1).panel().vertical().addSpace(space).add();
+		if (space == 0)
+			return bottomContainer = bPanel.cell(0, 1);
+		else
+			return bottomContainer = bPanel.cell(0, 1).panel().vertical()
+					.addSpace(space).add();
 	}
 
 	public WidgetTitle clearHyperlinks() {
