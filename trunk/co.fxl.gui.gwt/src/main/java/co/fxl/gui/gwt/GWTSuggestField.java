@@ -73,6 +73,11 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 							}
 						});
 		}
+
+		@Override
+		public boolean isDisplayStringHTML() {
+			return true;
+		}
 	}
 
 	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();

@@ -141,8 +141,7 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=2, offY
 .gwt-SuggestBoxPopup-FXL {
     background-color: white;
     border: 1px darkblue solid;
-    padding-left: 2px;
-    padding-right: 2px;
+    padding: 2px;
 }
 .gwt-SuggestBoxPopup-FXL .item {
     font-size: 12px;
