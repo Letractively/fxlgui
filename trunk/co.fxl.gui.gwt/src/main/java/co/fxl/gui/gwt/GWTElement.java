@@ -37,10 +37,13 @@ import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IMargin;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPadding;
+import co.fxl.gui.api.IShell;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.gwt.GWTClickHandler.ClickEventAdp;
 import co.fxl.gui.gwt.GWTClickHandler.DoubleClickEventAdp;
 import co.fxl.gui.gwt.GWTClickHandler.KeyPressAdp;
+import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.StatusDisplay;
 import co.fxl.gui.log.impl.Log;
 
 import com.google.gwt.dom.client.Element;
@@ -80,6 +83,8 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HasFocus;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class GWTElement<T extends Widget, R> implements IElement<R> {
@@ -227,6 +232,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	private Style style;
 	private boolean focusListenerSet;
 	private List<IUpdateListener<Boolean>> focusListeners = new LinkedList<IUpdateListener<Boolean>>();
+	private IShell shell;
 
 	public GWTElement() {
 	}
@@ -833,4 +839,21 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	// throw new UnsupportedOperationException();
 	// }
 
+	@Override
+	public IShell shell() {
+		if (shell == null) {
+			shell = find(container.widget);
+		}
+		return shell;
+	}
+
+	private IShell find(Widget widget) {
+		if (widget instanceof PopupPanel)
+			return new GWTPopUp((PopupPanel) widget);
+		else if (widget instanceof RootPanel)
+			return StatusDisplay.instance();
+		else
+			return find(widget.getParent());
+
+	}
 }

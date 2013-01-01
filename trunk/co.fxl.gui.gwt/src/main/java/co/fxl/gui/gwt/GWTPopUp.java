@@ -24,8 +24,11 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	GWTPopUp() {
 		popUp = new PopupPanel(false, false);
-		// TODO popUp.getElement().setDraggable(Element.DRAGGABLE_TRUE);
 		popUp.getElement().getStyle().setPadding(0, Unit.PX);
+	}
+
+	GWTPopUp(PopupPanel popUp) {
+		this.popUp = popUp;
 	}
 
 	@Override

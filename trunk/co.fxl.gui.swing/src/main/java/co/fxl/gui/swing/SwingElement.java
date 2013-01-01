@@ -50,7 +50,9 @@ import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IMargin;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPadding;
+import co.fxl.gui.api.IShell;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.impl.StatusDisplay;
 
 class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 
@@ -61,6 +63,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 	private SwingBorder swingBorder;
 	private boolean focusListenerSet;
 	private List<IUpdateListener<Boolean>> focusListeners = new LinkedList<IUpdateListener<Boolean>>();
+	private IShell shell;
 
 	SwingElement(SwingContainer<T> container) {
 		this.container = container;
@@ -417,9 +420,9 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 	@Override
 	public R padding(int padding) {
 		if (container.component instanceof JPanel) {
-			
+
 			// TODO don't remove old border (e.g. for Top-Button WidgetTitle)
-			
+
 			container.component.setBorder(new EmptyBorder(padding, padding,
 					padding, padding));
 		}
@@ -548,6 +551,24 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 	@Override
 	public String iD() {
 		return container.component.getName();
+	}
+
+	@Override
+	public IShell shell() {
+		if (shell == null) {
+			shell = find(container.parent);
+		}
+		return shell;
+	}
+
+	private IShell find(ComponentParent parent) {
+		if (parent.getParent() == null) {
+			if (parent instanceof SwingDisplay)
+				return StatusDisplay.instance();
+			return (IShell) parent;
+		} else
+			return find(container.parent.getParent());
+
 	}
 
 }

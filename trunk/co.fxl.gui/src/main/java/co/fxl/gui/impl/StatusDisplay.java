@@ -31,11 +31,12 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IResizable.IResizeListener;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
+import co.fxl.gui.api.IShell;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.log.impl.Log;
 
 public class StatusDisplay implements IResizeListener, Runnable,
-		IScrollListener {
+		IScrollListener, IShell {
 
 	public interface RefreshListener {
 

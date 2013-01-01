@@ -187,4 +187,9 @@ public class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
 		});
 		return (R) this;
 	}
+
+	@Override
+	public ComponentParent getParent() {
+		return container.parent;
+	}
 }

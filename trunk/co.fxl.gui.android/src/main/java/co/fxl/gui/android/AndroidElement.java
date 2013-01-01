@@ -33,6 +33,7 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IMargin;
 import co.fxl.gui.api.IPadding;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IShell;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 class AndroidElement<R extends View, T> implements IElement<T> {
@@ -259,6 +260,11 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 
 	@Override
 	public String iD() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IShell shell() {
 		throw new UnsupportedOperationException();
 	}
 }

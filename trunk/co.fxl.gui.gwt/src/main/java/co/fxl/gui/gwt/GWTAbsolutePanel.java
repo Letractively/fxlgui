@@ -20,6 +20,7 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IShell;
 
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Widget;

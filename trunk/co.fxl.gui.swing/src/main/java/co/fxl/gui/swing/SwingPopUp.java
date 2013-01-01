@@ -34,7 +34,7 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.Display;
 
-class SwingPopUp implements IPopUp {
+class SwingPopUp implements IPopUp, ComponentParent {
 
 	private static final int _12 = 0;
 	private SwingDisplay panel;
@@ -56,8 +56,6 @@ class SwingPopUp implements IPopUp {
 		p = new JPanel();
 		p.getInsets().set(0, 0, 0, 0);
 		p.setBackground(Color.WHITE);
-		// border().remove();
-		// p.setBorder(new LineBorder(new Color(195, 217, 255), 3));
 	}
 
 	@Override
@@ -69,23 +67,27 @@ class SwingPopUp implements IPopUp {
 
 	@Override
 	public IContainer container() {
-		return new SwingContainer<JComponent>(new ComponentParent() {
+		return new SwingContainer<JComponent>(this);
+	}
 
-			@Override
-			public void add(JComponent component) {
-				SwingPopUp.this.component = component;
-			}
+	@Override
+	public void add(JComponent component) {
+		SwingPopUp.this.component = component;
+	}
 
-			@Override
-			public void remove(JComponent component) {
-				dialog.hide();
-			}
+	@Override
+	public void remove(JComponent component) {
+		dialog.hide();
+	}
 
-			@Override
-			public JComponent getComponent() {
-				return SwingPopUp.this.component;
-			}
-		});
+	@Override
+	public JComponent getComponent() {
+		return SwingPopUp.this.component;
+	}
+
+	@Override
+	public ComponentParent getParent() {
+		return null;
 	}
 
 	@Override
