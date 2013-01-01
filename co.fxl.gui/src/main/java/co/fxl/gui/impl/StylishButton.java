@@ -31,11 +31,15 @@ public class StylishButton extends ClickableMultiplexer {
 	private ILabel button;
 
 	public StylishButton(IHorizontalPanel p, String text) {
-		this(p, text, true, 3);
+		this(p, text, true);
+	}
+
+	public StylishButton(IHorizontalPanel p, String text, boolean bold) {
+		this(p, text, true, 3, bold);
 	}
 
 	public StylishButton(IHorizontalPanel p, String text,
-			boolean changeBackground, int spacing) {
+			boolean changeBackground, int spacing, boolean bold) {
 		this.changeBackground = changeBackground;
 		buttonPanel = p.spacing(spacing);
 		styleActive();
@@ -43,7 +47,9 @@ public class StylishButton extends ClickableMultiplexer {
 		br.color().black();
 		br.style().rounded();
 		button = buttonPanel.addSpace(4).add().label().text(text);
-		button.font().weight().bold().color().white();
+		if (bold)
+			button.font().weight().bold();
+		button.font().color().white();
 		buttonPanel.addSpace(4);
 		new HyperlinkMouseOverListener(button);
 		cs = new IClickable<?>[] { buttonPanel, button };

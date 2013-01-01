@@ -71,6 +71,8 @@ public class FlipPage implements IContentPage, IColored {
 
 	@Override
 	public void preview() {
+		if (Env.is(Env.OPERA))
+			return;
 		if (active == null)
 			return;
 		if (active == page2) {
@@ -81,6 +83,8 @@ public class FlipPage implements IContentPage, IColored {
 
 	@Override
 	public void back() {
+		if (Env.is(Env.OPERA))
+			return;
 		if (active == null)
 			return;
 		cardPanel.show(active);
