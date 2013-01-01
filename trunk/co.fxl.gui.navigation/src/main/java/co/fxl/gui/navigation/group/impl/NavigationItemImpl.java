@@ -236,14 +236,14 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	}
 
 	@Override
-	public NavigationItemImpl active(boolean active, ICallback<Void> cb) {
+	public void active(boolean active, ICallback<Void> cb) {
 		if (!displayed()) {
 			displayed(true);
 			widget.active = this;
 			widget.update();
 		}
 		assert active;
-		return updateActive(cb);
+		updateActive(cb);
 	}
 
 	public NavigationItemImpl updateActive(ICallback<Void> cb) {
@@ -595,9 +595,8 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	}
 
 	@Override
-	public INavigationItem clearCache() {
+	public void clearCache() {
 		cached = null;
-		return this;
 	}
 
 	private void updateDisplaySize() {
