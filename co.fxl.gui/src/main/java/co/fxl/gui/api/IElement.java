@@ -28,8 +28,6 @@ public interface IElement<T> extends ILocated<T> {
 
 	T tooltip(String tooltip);
 
-	IDisplay display();
-
 	IPadding padding();
 
 	T padding(int padding);
@@ -47,5 +45,9 @@ public interface IElement<T> extends ILocated<T> {
 	T iD(String iD);
 
 	String iD();
+
+	IDisplay display();
+
+	IShell shell();
 
 }

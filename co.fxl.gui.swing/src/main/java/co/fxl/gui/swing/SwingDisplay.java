@@ -346,4 +346,9 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 		return runtime;
 	}
 
+	@Override
+	public ComponentParent getParent() {
+		return null;
+	}
+
 }

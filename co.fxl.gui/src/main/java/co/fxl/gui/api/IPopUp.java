@@ -21,7 +21,7 @@ package co.fxl.gui.api;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
-public interface IPopUp extends IBordered, ILocated<IPopUp> {
+public interface IPopUp extends IBordered, ILocated<IPopUp>, IShell {
 
 	IPopUp modal(boolean modal);
 

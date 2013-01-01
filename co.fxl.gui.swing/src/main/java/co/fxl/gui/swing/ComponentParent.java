@@ -28,6 +28,8 @@ interface ComponentParent {
 
 	JComponent getComponent();
 
+	ComponentParent getParent();
+
 	// IWidgetProvider<?> lookupWidgetProvider(Class<?> interfaceClass);
 	//
 	// SwingDisplay lookupSwingDisplay();

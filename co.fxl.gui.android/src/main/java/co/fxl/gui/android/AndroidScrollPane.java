@@ -26,6 +26,7 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IMargin;
 import co.fxl.gui.api.IPadding;
 import co.fxl.gui.api.IScrollPane;
+import co.fxl.gui.api.IShell;
 
 class AndroidScrollPane implements IScrollPane, Parent {
 
@@ -227,6 +228,11 @@ class AndroidScrollPane implements IScrollPane, Parent {
 
 	@Override
 	public IScrollBars scrollBars() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IShell shell() {
 		throw new UnsupportedOperationException();
 	}
 

@@ -26,6 +26,7 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFocusable;
 import co.fxl.gui.api.IMargin;
 import co.fxl.gui.api.IPadding;
+import co.fxl.gui.api.IShell;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
 public class ElementAdp<T extends IElement<T>> implements IElement<T>,
@@ -230,6 +231,11 @@ public class ElementAdp<T extends IElement<T>> implements IElement<T>,
 	@Override
 	public IColor color() {
 		return ((IColored) element()).color();
+	}
+
+	@Override
+	public IShell shell() {
+		return ((IElement<?>) element).shell();
 	}
 
 }

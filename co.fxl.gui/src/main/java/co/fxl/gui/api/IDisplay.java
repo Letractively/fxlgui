@@ -19,7 +19,7 @@
 package co.fxl.gui.api;
 
 public interface IDisplay extends IColored, IServiceRegistry<IDisplay>,
-		IResizeRegistry<IDisplay> {
+		IResizeRegistry<IDisplay>, IShell {
 
 	// public interface IElementListener {
 	//
@@ -45,7 +45,7 @@ public interface IDisplay extends IColored, IServiceRegistry<IDisplay>,
 
 	public interface IResizeConfiguration {
 
-//		IResizeConfiguration singleton();
+		// IResizeConfiguration singleton();
 
 		IResizeConfiguration linkLifecycle(IElement<?> element);
 
