@@ -16,27 +16,14 @@
  *
  * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
  */
-package co.fxl.gui.navigation.group.api;
+package co.fxl.gui.navigation.api;
 
-import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.navigation.api.ITab;
-import co.fxl.gui.navigation.api.ITabDecorator;
+import co.fxl.gui.api.ICallback;
 
-public interface INavigationItem extends ITab<INavigationItem> {
+public interface IActivateable {
 
-	ITabDecorator decorator();
-
-	String name();
-
-	IVerticalPanel addExtraPanel();
-
-	INavigationItem closeExtraPanel();
-
-	INavigationItem colorInactive(int[] inactive, int[] inactiveGradient);
-
-	boolean visible();
-
-	INavigationItem moreTab();
+	void active(boolean active, ICallback<Void> cb);
 
 	void clearCache();
+
 }

@@ -450,7 +450,7 @@ public class FormWidgetImpl implements IFormWidget {
 			final IClickable<?> cancelButton,
 			final IElement<?> cancelButtonElement) {
 		saveButton = new StylishButton(subPanel.add().panel().horizontal(),
-				saveTitle, true, 3);
+				saveTitle, true, 3,false);
 		// new HyperlinkMouseOverListener(saveButton);
 		if (validation != null)
 			validation.setClickable(saveButton);

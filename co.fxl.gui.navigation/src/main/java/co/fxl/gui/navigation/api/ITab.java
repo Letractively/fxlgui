@@ -18,16 +18,13 @@
  */
 package co.fxl.gui.navigation.api;
 
-import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IVerticalPanel;
 
-public interface ITab<T extends ITab<T>> {
+public interface ITab<T extends ITab<T>> extends IActivateable {
 
 	T decorator(ITabDecorator listener);
 
 	T name(String text);
-
-	T active(boolean active, ICallback<Void> cb);
 
 	boolean isActive();
 

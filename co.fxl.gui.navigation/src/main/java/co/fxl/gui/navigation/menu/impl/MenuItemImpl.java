@@ -44,10 +44,9 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	}
 
 	@Override
-	public IMenuItem active(boolean active, ICallback<Void> cb) {
+	public void active(boolean active, ICallback<Void> cb) {
 		assert active;
 		register.top(cb);
-		return this;
 	}
 
 	@Override
@@ -165,5 +164,9 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	public IMenuItem clickable(boolean b) {
 		register.clickable(b);
 		return this;
+	}
+
+	@Override
+	public void clearCache() {
 	}
 }
