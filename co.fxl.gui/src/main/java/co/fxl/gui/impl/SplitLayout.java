@@ -59,7 +59,7 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 
 	private void init() {
 		panel = layout.grid();
-		cell0 = panel.cell(0, 0).width(rwidth());
+		cell0 = panel.cell(0, 0).width(width());
 		IVerticalPanel vpanel = cell0.valign().begin().panel().vertical()
 				.spacing(10);
 		mainPanel = addMainPanel(vpanel);
@@ -79,8 +79,12 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 
 	@Override
 	public void onResize(int width, int height) {
-		resizeSidePanel(rheight());
-		cell0.width(rwidth() - WIDTH_SIDE_PANEL - 3 * 10);
+		resizeSidePanel();
+		cell0.width(width());
+	}
+
+	private int width() {
+		return rwidth() - WIDTH_SIDE_PANEL - 3 * 10;
 	}
 
 	public void detachSidePanel() {
@@ -97,10 +101,15 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 		isDetached = false;
 	}
 
-	private void resizeSidePanel(int height) {
-		int offsetY = DisplayResizeAdapter.withDecrement(
-				sideScrollPanel.offsetY(), 68);
-		int maxFromDisplay = height - offsetY - 10 - size.heightDecrement;
+	private void resizeSidePanel() {
+		int maxFromDisplay;
+		if (!size.defined()) {
+			int offsetY = DisplayResizeAdapter.withDecrement(
+					sideScrollPanel.offsetY(), 68);
+			maxFromDisplay = StatusDisplay.instance().height() - offsetY - 10;
+		} else {
+			maxFromDisplay = rheight() - 10;
+		}
 		if (maxFromDisplay > 0) {
 			if (resizeMainPanel)
 				mainPanel.height(maxFromDisplay);

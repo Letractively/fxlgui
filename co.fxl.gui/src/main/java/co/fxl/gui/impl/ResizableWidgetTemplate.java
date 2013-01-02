@@ -99,7 +99,8 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 			@Override
 			public void onResize(int width, int height) {
 				int offsetY = StatusDisplay.instance().offsetY(e, 100);
-				int h = height - offsetY - 10 - dec - size.heightDecrement;
+				int h = rheight() - offsetY - 10 - dec - size.heightDecrement
+						/ 2;
 				if (h > 0)
 					e.height(h);
 			}
