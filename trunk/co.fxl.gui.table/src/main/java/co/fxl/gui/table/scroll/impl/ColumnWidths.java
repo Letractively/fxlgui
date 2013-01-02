@@ -43,6 +43,7 @@ public class ColumnWidths implements IColumnWidthInjector {
 	};
 	private Map<IScrollTableColumn<?>, Integer> intWidths = new HashMap<IScrollTableColumn<?>, Integer>();
 	private Map<IScrollTableColumn<?>, Double> doubleWidths = new HashMap<IScrollTableColumn<?>, Double>();
+	private boolean fixLayout = true;
 
 	private ColumnWidths() {
 	}
@@ -107,7 +108,7 @@ public class ColumnWidths implements IColumnWidthInjector {
 			btc.width((int) i);
 		else {
 			Double d = doubleWidths.get(stc);
-			if (d != null)
+			if (d != null && fixLayout)
 				btc.width(d);
 		}
 	}
@@ -130,5 +131,10 @@ public class ColumnWidths implements IColumnWidthInjector {
 
 	@Override
 	public void notifyVisible(IScrollTableColumn<?> c) {
+	}
+
+	@Override
+	public void fixLayout(boolean fixLayout) {
+		this.fixLayout = fixLayout;
 	}
 }
