@@ -98,9 +98,9 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 		final IResizeListener listener = new IResizeListener() {
 			@Override
 			public void onResize(int width, int height) {
-				int offsetY = StatusDisplay.instance().offsetY(e, 100);
-				int h = rheight() - offsetY - 10 - dec - size.heightDecrement
-						/ 2;
+				int offsetY = size.defined() ? 0 : StatusDisplay.instance()
+						.offsetY(e, 100);
+				int h = rheight() - offsetY - 10 - dec;
 				if (h > 0)
 					e.height(h);
 			}
