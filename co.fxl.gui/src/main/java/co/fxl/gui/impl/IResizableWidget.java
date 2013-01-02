@@ -23,14 +23,32 @@ import co.fxl.gui.api.IResizable.IResizeListener;
 
 public interface IResizableWidget extends IResizeListener {
 
-	IResizableWidget addResizableWidgetToDisplay();
+	public class Size {
 
-	// IResizableWidget addResizableWidget(IResizableWidget widget);
+		public int widthDecrement;
+		public int minWidth;
+		public int heightDecrement;
+		public int minHeight;
+
+		public Size() {
+			this(320, 240, 480, 360);
+		}
+
+		public Size(int widthDecrement, int heightDecrement, int minWidth,
+				int minHeight) {
+			this.widthDecrement = widthDecrement;
+			this.heightDecrement = heightDecrement;
+			this.minWidth = minWidth;
+			this.minHeight = minHeight;
+		}
+	}
+
+	IResizableWidget addResizableWidgetToDisplay();
 
 	IResizableWidget setResizableWidget(IResizableWidget widget, String id);
 
 	IResizableWidget addResizableWidgetToDisplay(IElement<?> link);
 
-	IResizableWidget heightDecrement(int heightDecrement);
+	IResizableWidget size(Size size);
 
 }

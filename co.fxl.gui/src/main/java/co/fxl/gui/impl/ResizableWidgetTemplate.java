@@ -27,14 +27,12 @@ import co.fxl.gui.api.IResizable.IResizeListener;
 
 public class ResizableWidgetTemplate implements IResizableWidget {
 
-	// private List<ResizableWidgetTemplate> children = new
-	// LinkedList<ResizableWidgetTemplate>();
-	private Map<String, ResizableWidgetTemplate> qualifiedChildren = new HashMap<String, ResizableWidgetTemplate>();
-	protected int heightDecrement = 0;
+	private Map<String, ResizableWidgetTemplate> children = new HashMap<String, ResizableWidgetTemplate>();
+	protected Size size = new Size(0, 0, 0, 0);
 
 	@Override
-	public IResizableWidget heightDecrement(int heightDecrement) {
-		this.heightDecrement = heightDecrement;
+	public IResizableWidget size(Size size) {
+		this.size = size;
 		return this;
 	}
 
@@ -49,7 +47,7 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 				new IResizeListener() {
 					@Override
 					public void onResize(int width, int height) {
-						recursiveResize(width, height - heightDecrement);
+						recursiveResize(rwidth(), rheight());
 					}
 				});
 		if (link != null)
@@ -57,27 +55,28 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 		return this;
 	}
 
-	// @Override
-	// public IResizableWidget addResizableWidget(IResizableWidget widget) {
-	// children.add((ResizableWidgetTemplate) widget);
-	// return this;
-	// }
+	protected final int rwidth() {
+		int w = StatusDisplay.instance().width() - size.widthDecrement;
+		return w < size.minWidth ? size.minWidth : w;
+	}
+
+	protected final int rheight() {
+		int h = StatusDisplay.instance().height() - size.heightDecrement;
+		return h < size.minHeight ? size.minHeight : h;
+	}
 
 	@Override
 	public IResizableWidget setResizableWidget(IResizableWidget widget,
 			String id) {
 		ResizableWidgetTemplate child = (ResizableWidgetTemplate) widget;
-		child.heightDecrement = heightDecrement;
-		qualifiedChildren.put(id, child);
+		child.size = size;
+		children.put(id, child);
 		return this;
 	}
 
 	public void recursiveResize(int width, int height) {
 		ResizableWidgetTemplate.this.onResize(width, height);
-		// for (ResizableWidgetTemplate child : children) {
-		// child.recursiveResize(width, height);
-		// }
-		for (ResizableWidgetTemplate child : qualifiedChildren.values()) {
+		for (ResizableWidgetTemplate child : children.values()) {
 			child.recursiveResize(width, height);
 		}
 	}
@@ -100,12 +99,11 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 			@Override
 			public void onResize(int width, int height) {
 				int offsetY = StatusDisplay.instance().offsetY(e, 100);
-				int h = height - offsetY - 10 - dec - heightDecrement;
+				int h = height - offsetY - 10 - dec - size.heightDecrement;
 				if (h > 0)
 					e.height(h);
 			}
 		};
-		// if (!SINGLE_RESIZE_LISTENER)
 		setResizableWidget(new ResizableWidgetTemplate() {
 			@Override
 			public void onResize(int width, int height) {
