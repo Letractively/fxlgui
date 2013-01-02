@@ -31,7 +31,7 @@ public interface IResizableWidget extends IResizeListener {
 		public int minHeight;
 
 		public Size() {
-			this(320, 240, 480, 360);
+			this(320, 240, 720, 360);
 		}
 
 		public Size(int widthDecrement, int heightDecrement, int minWidth,
@@ -41,6 +41,14 @@ public interface IResizableWidget extends IResizeListener {
 			this.minWidth = minWidth;
 			this.minHeight = minHeight;
 		}
+
+		public boolean defined() {
+			return heightDecrement != 0 || widthDecrement != 0;
+		}
+
+		// public boolean defined() {
+		// return widthDecrement != 0 || heightDecrement != 0;
+		// }
 	}
 
 	IResizableWidget addResizableWidgetToDisplay();
