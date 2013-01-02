@@ -43,7 +43,6 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.AlignmentMemento;
-import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.DummyKeyRecipientKeyTemplate;
 import co.fxl.gui.table.bulk.api.IBulkTableCell;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
@@ -518,5 +517,9 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	@Override
 	public IBulkTableWidget cellPadding(boolean cellPadding) {
 		return this;
+	}
+
+	@Override
+	public void fixLayout(boolean tableLayoutFixed) {
 	}
 }

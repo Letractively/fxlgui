@@ -47,6 +47,8 @@ public interface IScrollTableWidget<T> extends IResizableWidget, IHasButtons {
 
 	public interface IColumnWidthInjector {
 
+		void fixLayout(boolean fixLayout);
+
 		IColumnWidthInjector columns(List<IScrollTableColumn<?>> columns);
 
 		void prepare(IScrollTableColumn<?> stc, IColumn btc);
@@ -261,6 +263,8 @@ public interface IScrollTableWidget<T> extends IResizableWidget, IHasButtons {
 	IScrollTableWidget<Object> titleClickListener(IClickListener refreshListener);
 
 	IScrollTableWidget<Object> cellPadding(boolean cellPadding);
+
+	void fixLayout(boolean fixLayout);
 
 	// IVerticalPanel editPanel();
 }

@@ -146,4 +146,6 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 	IBulkTableWidget updateWidths();
 
 	IBulkTableWidget cellPadding(boolean cellPadding);
+
+	void fixLayout(boolean tableLayoutFixed);
 }

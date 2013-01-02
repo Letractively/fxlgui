@@ -61,7 +61,7 @@ public class NavigationView implements IColored {
 
 	public NavigationView(ILayout layout, boolean addToContextMenu, String title) {
 		widgetTitle = new WidgetTitle(layout, true).sideWidget(true);
-//		widgetTitle.background().gray(248);
+		// widgetTitle.background().gray(248);
 		this.addToContextMenu = addToContextMenu;
 		if (addToContextMenu)
 			widgetTitle.addToContextMenu(addToContextMenu);
@@ -213,7 +213,7 @@ public class NavigationView implements IColored {
 		border.style().top();
 	}
 
-	public void updateSeparatorBorders() {
+	public boolean updateSeparatorBorders() {
 		boolean isFirst = true;
 		for (IVerticalPanel p : parts) {
 			if (p.visible()) {
@@ -225,6 +225,7 @@ public class NavigationView implements IColored {
 				isFirst = false;
 			}
 		}
+		return !isFirst;
 	}
 
 	public NavigationView foldable(boolean b) {
