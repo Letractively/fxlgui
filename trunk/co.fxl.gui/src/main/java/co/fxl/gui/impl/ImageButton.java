@@ -43,6 +43,7 @@ public class ImageButton implements IClickable<Object>,
 	private Entry entry;
 	private boolean hasElements = false;
 	private boolean hyperlink;
+	private boolean showAlways;
 
 	public ImageButton(IContainer c) {
 		this.panel = c.panel().horizontal();
@@ -81,7 +82,7 @@ public class ImageButton implements IClickable<Object>,
 	}
 
 	public ImageButton clickable(boolean clickable) {
-		if (CommandLink.HIDE_NON_CLICKABLE) {
+		if (CommandLink.HIDE_NON_CLICKABLE && !showAlways) {
 			p0.visible(clickable);
 		}
 		label.font().weight().plain();
@@ -192,5 +193,9 @@ public class ImageButton implements IClickable<Object>,
 
 	public ILabel label() {
 		return label;
+	}
+
+	public void showAlways(boolean b) {
+		showAlways = b;
 	}
 }
