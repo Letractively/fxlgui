@@ -29,7 +29,6 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.HorizontalScalingPanel;
-import co.fxl.gui.impl.HyperlinkMouseOverListener;
 
 public class ScalingColumnSelection {
 

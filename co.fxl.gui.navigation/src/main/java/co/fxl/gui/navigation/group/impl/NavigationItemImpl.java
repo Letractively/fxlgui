@@ -39,7 +39,7 @@ import co.fxl.gui.impl.IContentPage;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.ResizableWidgetTemplate;
 import co.fxl.gui.impl.ServerCallCache;
-import co.fxl.gui.impl.StatusDisplay;
+import co.fxl.gui.impl.Shell;
 import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.navigation.api.ITabDecorator;
 import co.fxl.gui.navigation.group.api.INavigationItem;
@@ -77,8 +77,8 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	private IContentPage flipPage;
 	// private boolean isFirst = true;
 	private IVerticalPanel cached;
-	private int lastWidth = StatusDisplay.instance().width();
-	private int lastHeight = StatusDisplay.instance().height();
+	private int lastWidth = Shell.instance().width();
+	private int lastHeight = Shell.instance().height();
 
 	NavigationItemImpl(NavigationGroupImpl group) {
 		this.group = group;
@@ -259,7 +259,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 		ServerCallCache.instance().record(true);
 		boolean cachingActiveTemp = cached != null && ALLOW_CACHING;
 		final boolean requiresResize = cachingActiveTemp
-				&& (lastWidth != StatusDisplay.instance().width() || lastHeight != StatusDisplay
+				&& (lastWidth != Shell.instance().width() || lastHeight != Shell
 						.instance().height());
 		if (requiresResize && Env.is(Env.IE)) {
 			cachingActiveTemp = false;
@@ -299,8 +299,8 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 						if (requiresResize) {
 							String msg = "Resizing tab " + name();
 							Log.instance().start(msg);
-							widget.recursiveResize(StatusDisplay.instance()
-									.width(), StatusDisplay.instance().height());
+							widget.recursiveResize(Shell.instance().width(),
+									Shell.instance().height());
 							Log.instance().stop(msg);
 						}
 						updateDisplaySize();
@@ -600,7 +600,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	}
 
 	private void updateDisplaySize() {
-		lastWidth = StatusDisplay.instance().width();
-		lastHeight = StatusDisplay.instance().height();
+		lastWidth = Shell.instance().width();
+		lastHeight = Shell.instance().height();
 	}
 }

@@ -62,7 +62,7 @@ import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.KeyAdapter;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.ResizableWidgetTemplate;
-import co.fxl.gui.impl.StatusDisplay;
+import co.fxl.gui.impl.Shell;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.table.api.ISelection;
@@ -980,7 +980,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		columnWidths.columns((List) columns);
 		int current = 0;
 		columnWidths.startPrepare(
-				StatusDisplay.instance().width() - widthDelta, rows,
+				Shell.instance().width() - widthDelta, rows,
 				sortColumn(), false);
 		for (int c = 0; c < columns.size(); c++) {
 			if (!columns.get(c).visible)
@@ -1588,7 +1588,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 
 	@Override
 	public IScrollTableWidget<Object> width(int width) {
-		this.widthDelta = StatusDisplay.instance().width() - width;
+		this.widthDelta = Shell.instance().width() - width;
 		return this;
 	}
 

@@ -70,11 +70,11 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 		sideScrollPanel = sideBasePanel.add().scrollPane();
 		sidePanel = sideScrollPanel.viewPort().panel().vertical();
 		sidePanel.spacing().right(10);
-		StatusDisplay.instance().fire(this);
+		Shell.instance().fire(this);
 	}
 
 	public static int mainPanelWidth() {
-		return StatusDisplay.instance().width() - WIDTH_SIDE_PANEL - 3 * 10;
+		return Shell.instance().width() - WIDTH_SIDE_PANEL - 3 * 10;
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 		if (!size.defined()) {
 			int offsetY = DisplayResizeAdapter.withDecrement(
 					sideScrollPanel.offsetY(), 68);
-			maxFromDisplay = StatusDisplay.instance().height() - offsetY - 10;
+			maxFromDisplay = Shell.instance().height() - offsetY - 10;
 		} else {
 			maxFromDisplay = rheight() - 10;
 		}

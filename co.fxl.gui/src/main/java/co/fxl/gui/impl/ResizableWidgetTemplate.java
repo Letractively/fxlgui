@@ -43,7 +43,7 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 
 	@Override
 	public IResizableWidget addResizableWidgetToDisplay(IElement<?> link) {
-		IResizeConfiguration cfg = StatusDisplay.instance().addResizeListener(
+		IResizeConfiguration cfg = Shell.instance().addResizeListener(
 				new IResizeListener() {
 					@Override
 					public void onResize(int width, int height) {
@@ -56,12 +56,12 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 	}
 
 	protected final int rwidth() {
-		int w = StatusDisplay.instance().width() - size.widthDecrement;
+		int w = Shell.instance().width() - size.widthDecrement;
 		return w < size.minWidth ? size.minWidth : w;
 	}
 
 	protected final int rheight() {
-		int h = StatusDisplay.instance().height() - size.heightDecrement;
+		int h = Shell.instance().height() - size.heightDecrement;
 		return h < size.minHeight ? size.minHeight : h;
 	}
 
@@ -98,7 +98,7 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 		final IResizeListener listener = new IResizeListener() {
 			@Override
 			public void onResize(int width, int height) {
-				int offsetY = size.defined() ? 0 : StatusDisplay.instance()
+				int offsetY = size.defined() ? 0 : Shell.instance()
 						.offsetY(e, 100);
 				int h = rheight() - offsetY - 10 - dec;
 				if (h > 0)
@@ -114,7 +114,7 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
-				StatusDisplay.instance().fire(listener);
+				Shell.instance().fire(listener);
 			}
 		};
 		if (b) {
