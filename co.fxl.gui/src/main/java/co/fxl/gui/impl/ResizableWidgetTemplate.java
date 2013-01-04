@@ -32,6 +32,8 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 
 	@Override
 	public IResizableWidget size(Size size) {
+		if (size == null)
+			throw new RuntimeException();
 		this.size = size;
 		return this;
 	}
@@ -98,8 +100,8 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 		final IResizeListener listener = new IResizeListener() {
 			@Override
 			public void onResize(int width, int height) {
-				int offsetY = size.defined() ? 0 : Shell.instance()
-						.offsetY(e, 100);
+				int offsetY = size.defined() ? 0 : Shell.instance().offsetY(e,
+						100);
 				int h = rheight() - offsetY - 10 - dec;
 				if (h > 0)
 					e.height(h);
