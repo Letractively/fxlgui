@@ -22,9 +22,8 @@ import co.fxl.gui.api.IDisplay.IResizeConfiguration;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IResizable.IResizeListener;
 import co.fxl.gui.api.IScrollPane;
-import co.fxl.gui.api.IShell;
 
-public class Shell implements IShell {
+public class Shell {
 
 	private static StatusDisplay d = StatusDisplay.instance();
 	private static Shell shell = new Shell();
@@ -33,12 +32,10 @@ public class Shell implements IShell {
 		return shell;
 	}
 
-	@Override
 	public int width() {
 		return d.width();
 	}
 
-	@Override
 	public int height() {
 		return d.height();
 	}
