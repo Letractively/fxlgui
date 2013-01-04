@@ -58,12 +58,12 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 	}
 
 	protected final int rwidth() {
-		int w = Shell.instance().width() - size.widthDecrement;
+		int w = Shell.instance().dwidth() - size.widthDecrement;
 		return w < size.minWidth ? size.minWidth : w;
 	}
 
 	protected final int rheight() {
-		int h = Shell.instance().height() - size.heightDecrement;
+		int h = Shell.instance().dheight() - size.heightDecrement;
 		return h < size.minHeight ? size.minHeight : h;
 	}
 

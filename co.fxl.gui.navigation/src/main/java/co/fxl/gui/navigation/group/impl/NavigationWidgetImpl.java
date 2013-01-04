@@ -136,8 +136,8 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			width = active.buttonPanel.width() - 2;
 			middlePartBorder.size(width, 1);
 		}
-		rightPartBorder.size(
-				Shell.instance().width() - width - offsetX, 1);
+		rightPartBorder.size(Shell.instance().width(mainPanel) - width
+				- offsetX, 1);
 	}
 
 	void setUpSeparatorBorder() {
@@ -155,7 +155,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		HorizontalScalingPanel.addDummyIE(middlePartBorder);
 		activeBackground(middlePartBorder);
 		rightPartBorder = separatorBorder.cell(c, 0).panel().horizontal()
-				.size(Shell.instance().width(), 1);
+				.size(Shell.instance().width(mainPanel), 1);
 		HorizontalScalingPanel.addDummyIE(rightPartBorder);
 		separatorBorder.column(2).expand();
 		rightPartBorder.color().gray();
@@ -254,7 +254,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		if (holdUpdate)
 			return false;
 		if (!alwaysAdjust
-				&& Shell.instance().width() > navigationPanel.width())
+				&& Shell.instance().width(mainPanel) > navigationPanel.width())
 			return false;
 		for (NavigationGroupImpl g : groups)
 			for (NavigationItemImpl i : g.items)
@@ -263,10 +263,10 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		boolean hidden = false;
 		List<NavigationItemImpl> candidates = new LinkedList<NavigationItemImpl>();
 		for (int i = groups.size() - 1; i >= 0
-				&& Shell.instance().width() < navigationPanel.width(); i--) {
+				&& Shell.instance().width(mainPanel) < navigationPanel.width(); i--) {
 			NavigationGroupImpl g = groups.get(i);
 			for (int j = g.items.size() - 1; j >= 0
-					&& Shell.instance().width() < navigationPanel
+					&& Shell.instance().width(mainPanel) < navigationPanel
 							.width(); j--) {
 				NavigationItemImpl ni = g.items.get(j);
 				if (ni == active)
@@ -280,7 +280,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			}
 		}
 		for (int i = 0; i < candidates.size()
-				&& Shell.instance().width() < navigationPanel.width(); i++) {
+				&& Shell.instance().width(mainPanel) < navigationPanel.width(); i++) {
 			candidates.get(i).displayed(false);
 			hidden = true;
 		}
