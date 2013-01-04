@@ -33,11 +33,13 @@ public class Shell {
 	}
 
 	public int width(IElement<?> e) {
-		return d.width();
+		assert e != null;
+		return e.shell().width();
 	}
 
 	public int height(IElement<?> e) {
-		return d.height();
+		assert e != null;
+		return e.shell().height();
 	}
 
 	public int offsetY(IElement<?> e, int i) {

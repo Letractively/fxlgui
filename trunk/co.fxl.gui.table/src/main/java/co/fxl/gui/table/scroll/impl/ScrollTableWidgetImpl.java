@@ -250,7 +250,6 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private String subTitle1;
 	private String subTitle2;
 	private int presetRowIndex = 0;
-	private int widthDelta;
 	private IGrouping grouping;
 	private IClickListener configureListener;
 	private boolean hasColumnSelection;
@@ -260,6 +259,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private IClickListener titleClickListener;
 	private boolean cellPadding;
 	private boolean fixLayout = true;
+	private int width = -1;
 
 	// private boolean nextTimeShowPopUp;
 
@@ -979,8 +979,10 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private void updateHeaderRow(IBulkTableWidget grid) {
 		columnWidths.columns((List) columns);
 		int current = 0;
-		columnWidths.startPrepare(Shell.instance().width(container)
-				- widthDelta, rows, sortColumn(), false);
+		columnWidths.startPrepare(
+				Shell.instance().width(container)
+						- (width != -1 ? Shell.instance().width(container)
+								- width : 0), rows, sortColumn(), false);
 		for (int c = 0; c < columns.size(); c++) {
 			if (!columns.get(c).visible)
 				continue;
@@ -1587,7 +1589,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 
 	@Override
 	public IScrollTableWidget<Object> width(int width) {
-		this.widthDelta = Shell.instance().width(container) - width;
+		this.width = width;
 		return this;
 	}
 
