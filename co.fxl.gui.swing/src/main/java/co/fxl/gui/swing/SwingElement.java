@@ -566,8 +566,11 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 			if (parent instanceof SwingDisplay)
 				return StatusDisplay.instance();
 			return (IShell) parent;
-		} else
-			return find(container.parent.getParent());
+		} else {
+			ComponentParent p = parent.getParent();
+			assert p != parent;
+			return find(p);
+		}
 
 	}
 
