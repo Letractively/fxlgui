@@ -32,11 +32,11 @@ public class Shell {
 		return shell;
 	}
 
-	public int width() {
+	public int width(IElement<?> e) {
 		return d.width();
 	}
 
-	public int height() {
+	public int height(IElement<?> e) {
 		return d.height();
 	}
 
@@ -87,6 +87,14 @@ public class Shell {
 
 	public void warning(String warning) {
 		d.warning(warning);
+	}
+
+	public int dwidth() {
+		return d.width();
+	}
+
+	public int dheight() {
+		return d.height();
 	}
 
 }

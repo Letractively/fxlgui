@@ -979,9 +979,8 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private void updateHeaderRow(IBulkTableWidget grid) {
 		columnWidths.columns((List) columns);
 		int current = 0;
-		columnWidths.startPrepare(
-				Shell.instance().width() - widthDelta, rows,
-				sortColumn(), false);
+		columnWidths.startPrepare(Shell.instance().width(container)
+				- widthDelta, rows, sortColumn(), false);
 		for (int c = 0; c < columns.size(); c++) {
 			if (!columns.get(c).visible)
 				continue;
@@ -1588,7 +1587,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 
 	@Override
 	public IScrollTableWidget<Object> width(int width) {
-		this.widthDelta = Shell.instance().width() - width;
+		this.widthDelta = Shell.instance().width(container) - width;
 		return this;
 	}
 

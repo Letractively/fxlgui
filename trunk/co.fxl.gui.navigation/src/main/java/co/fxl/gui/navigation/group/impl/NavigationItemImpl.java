@@ -77,8 +77,8 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	private IContentPage flipPage;
 	// private boolean isFirst = true;
 	private IVerticalPanel cached;
-	private int lastWidth = Shell.instance().width();
-	private int lastHeight = Shell.instance().height();
+	private int lastWidth;
+	private int lastHeight;
 
 	NavigationItemImpl(NavigationGroupImpl group) {
 		this.group = group;
@@ -86,6 +86,8 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 		itemPanel = group.itemPanel;
 		colorInactive = group.colorInactive;
 		colorInactiveGradient = group.colorInactiveGradient;
+		lastWidth = Shell.instance().width(group.itemPanel);
+		lastHeight = Shell.instance().height(group.itemPanel);
 	}
 
 	void initButtonPanel() {
@@ -259,8 +261,8 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 		ServerCallCache.instance().record(true);
 		boolean cachingActiveTemp = cached != null && ALLOW_CACHING;
 		final boolean requiresResize = cachingActiveTemp
-				&& (lastWidth != Shell.instance().width() || lastHeight != Shell
-						.instance().height());
+				&& (lastWidth != Shell.instance().width(itemPanel) || lastHeight != Shell
+						.instance().height(itemPanel));
 		if (requiresResize && Env.is(Env.IE)) {
 			cachingActiveTemp = false;
 		}
@@ -299,8 +301,9 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 						if (requiresResize) {
 							String msg = "Resizing tab " + name();
 							Log.instance().start(msg);
-							widget.recursiveResize(Shell.instance().width(),
-									Shell.instance().height());
+							widget.recursiveResize(
+									Shell.instance().width(itemPanel), Shell
+											.instance().height(itemPanel));
 							Log.instance().stop(msg);
 						}
 						updateDisplaySize();
@@ -600,7 +603,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	}
 
 	private void updateDisplaySize() {
-		lastWidth = Shell.instance().width();
-		lastHeight = Shell.instance().height();
+		lastWidth = Shell.instance().width(itemPanel);
+		lastHeight = Shell.instance().height(itemPanel);
 	}
 }

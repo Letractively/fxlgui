@@ -113,7 +113,7 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 		if (!size.defined()) {
 			int offsetY = DisplayResizeAdapter.withDecrement(
 					sideScrollPanel.offsetY(), 68);
-			maxFromDisplay = Shell.instance().height() - offsetY - 10;
+			maxFromDisplay = Shell.instance().dheight() - offsetY - 10;
 		} else {
 			maxFromDisplay = rheight() - 10;
 		}
