@@ -46,15 +46,21 @@ public class Shell {
 	}
 
 	public int offsetY(IElement<?> e, int i) {
-		return d.offsetY(e, i);
+		int offsetY = d.offsetY(e, i);
+		return getOffsetY(e, offsetY);
 	}
 
 	public int offsetY(IElement<?> e, int offsetY, int i) {
+		int oY1 = d.offsetY(offsetY, i);
+		return getOffsetY(e, oY1);
+	}
+
+	int getOffsetY(IElement<?> e, int oY1) {
 		IShell shell = e.shell();
 		int oY = 0;
 		if (shell instanceof IPopUp)
 			oY = ((IPopUp) shell).offsetY();
-		return d.offsetY(offsetY, i) - oY;
+		return oY1 - oY;
 	}
 
 	public void fire(IResizeListener listener) {
