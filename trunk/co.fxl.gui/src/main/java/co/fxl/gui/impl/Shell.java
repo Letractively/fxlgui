@@ -18,26 +18,78 @@
  */
 package co.fxl.gui.impl;
 
+import co.fxl.gui.api.IDisplay.IResizeConfiguration;
+import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IResizable.IResizeListener;
+import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IShell;
 
-public class Shell {
+public class Shell implements IShell {
 
 	private static StatusDisplay d = StatusDisplay.instance();
-	private static IShell s = new IShell() {
+	private static Shell shell = new Shell();
 
-		@Override
-		public int width() {
-			return d.width();
-		}
+	public static Shell instance() {
+		return shell;
+	}
 
-		@Override
-		public int height() {
-			return d.height();
-		}
-	};
+	@Override
+	public int width() {
+		return d.width();
+	}
 
-	public static IShell instance() {
-		return s;
+	@Override
+	public int height() {
+		return d.height();
+	}
+
+	public int offsetY(IElement<?> e, int i) {
+		return d.offsetY(e, i);
+	}
+
+	public int offsetY(int offsetY, int i) {
+		return d.offsetY(offsetY, i);
+	}
+
+	public void fire(IResizeListener listener) {
+		d.fire(listener);
+	}
+
+	public IResizeConfiguration addResizeListener(
+			IResizeListener iResizeListener) {
+		return d.addResizeListener(iResizeListener);
+	}
+
+	public void hideSidePanel() {
+		d.hideSidePanel();
+	}
+
+	public StatusDisplay reset() {
+		return d.reset();
+	}
+
+	public void resetPanelDimensions() {
+		d.resetPanelDimensions();
+	}
+
+	public int scrollOffset() {
+		return d.scrollOffset();
+	}
+
+	public IScrollPane showSidePanel(int i) {
+		return d.showSidePanel(i);
+	}
+
+	public void updateHeight() {
+		d.updateHeight();
+	}
+
+	public void visible(boolean b) {
+		d.visible(b);
+	}
+
+	public void warning(String warning) {
+		d.warning(warning);
 	}
 
 }

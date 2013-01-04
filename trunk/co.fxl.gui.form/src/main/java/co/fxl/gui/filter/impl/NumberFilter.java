@@ -20,7 +20,6 @@ package co.fxl.gui.filter.impl;
 
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
-import co.fxl.gui.form.impl.Validation;
 
 class NumberFilter extends RangeFilter<Number> {
 

@@ -57,7 +57,7 @@ public class StatusDisplay implements IResizeListener, Runnable,
 		Display.instance().addResizeListener(this);
 	}
 
-	public static StatusDisplay instance() {
+	static StatusDisplay instance() {
 		return instance;
 	}
 

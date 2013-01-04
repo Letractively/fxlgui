@@ -42,8 +42,7 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.gwt.GWTClickHandler.ClickEventAdp;
 import co.fxl.gui.gwt.GWTClickHandler.DoubleClickEventAdp;
 import co.fxl.gui.gwt.GWTClickHandler.KeyPressAdp;
-import co.fxl.gui.impl.Display;
-import co.fxl.gui.impl.StatusDisplay;
+import co.fxl.gui.impl.Shell;
 import co.fxl.gui.log.impl.Log;
 
 import com.google.gwt.dom.client.Element;
@@ -851,7 +850,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		if (widget instanceof PopupPanel)
 			return new GWTPopUp((PopupPanel) widget);
 		else if (widget instanceof RootPanel)
-			return StatusDisplay.instance();
+			return Shell.instance();
 		else
 			return find(widget.getParent());
 

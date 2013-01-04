@@ -46,7 +46,7 @@ import co.fxl.gui.impl.HorizontalScalingPanel;
 import co.fxl.gui.impl.IServerListener;
 import co.fxl.gui.impl.ResizableWidgetTemplate;
 import co.fxl.gui.impl.ServerListener;
-import co.fxl.gui.impl.StatusDisplay;
+import co.fxl.gui.impl.Shell;
 import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.navigation.api.ITabWidget;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
@@ -130,14 +130,14 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		leftPartBorder.visible(hasActiveItem);
 		middlePartBorder.visible(hasActiveItem);
 		if (hasActiveItem) {
-			int scrollOffset = StatusDisplay.instance().scrollOffset();
+			int scrollOffset = Shell.instance().scrollOffset();
 			offsetX = scrollOffset + active.buttonPanel.offsetX() + 1;
 			leftPartBorder.size(offsetX, 1);
 			width = active.buttonPanel.width() - 2;
 			middlePartBorder.size(width, 1);
 		}
 		rightPartBorder.size(
-				StatusDisplay.instance().width() - width - offsetX, 1);
+				Shell.instance().width() - width - offsetX, 1);
 	}
 
 	void setUpSeparatorBorder() {
@@ -155,7 +155,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		HorizontalScalingPanel.addDummyIE(middlePartBorder);
 		activeBackground(middlePartBorder);
 		rightPartBorder = separatorBorder.cell(c, 0).panel().horizontal()
-				.size(StatusDisplay.instance().width(), 1);
+				.size(Shell.instance().width(), 1);
 		HorizontalScalingPanel.addDummyIE(rightPartBorder);
 		separatorBorder.column(2).expand();
 		rightPartBorder.color().gray();
@@ -254,7 +254,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		if (holdUpdate)
 			return false;
 		if (!alwaysAdjust
-				&& StatusDisplay.instance().width() > navigationPanel.width())
+				&& Shell.instance().width() > navigationPanel.width())
 			return false;
 		for (NavigationGroupImpl g : groups)
 			for (NavigationItemImpl i : g.items)
@@ -263,10 +263,10 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		boolean hidden = false;
 		List<NavigationItemImpl> candidates = new LinkedList<NavigationItemImpl>();
 		for (int i = groups.size() - 1; i >= 0
-				&& StatusDisplay.instance().width() < navigationPanel.width(); i--) {
+				&& Shell.instance().width() < navigationPanel.width(); i--) {
 			NavigationGroupImpl g = groups.get(i);
 			for (int j = g.items.size() - 1; j >= 0
-					&& StatusDisplay.instance().width() < navigationPanel
+					&& Shell.instance().width() < navigationPanel
 							.width(); j--) {
 				NavigationItemImpl ni = g.items.get(j);
 				if (ni == active)
@@ -280,7 +280,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			}
 		}
 		for (int i = 0; i < candidates.size()
-				&& StatusDisplay.instance().width() < navigationPanel.width(); i++) {
+				&& Shell.instance().width() < navigationPanel.width(); i++) {
 			candidates.get(i).displayed(false);
 			hidden = true;
 		}
