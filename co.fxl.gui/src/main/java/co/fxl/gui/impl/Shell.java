@@ -20,8 +20,10 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IDisplay.IResizeConfiguration;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IResizable.IResizeListener;
 import co.fxl.gui.api.IScrollPane;
+import co.fxl.gui.api.IShell;
 
 public class Shell {
 
@@ -39,15 +41,20 @@ public class Shell {
 
 	public int height(IElement<?> e) {
 		assert e != null;
-		return e.shell().height();
+		int height = e.shell().height();
+		return height;
 	}
 
 	public int offsetY(IElement<?> e, int i) {
 		return d.offsetY(e, i);
 	}
 
-	public int offsetY(int offsetY, int i) {
-		return d.offsetY(offsetY, i);
+	public int offsetY(IElement<?> e, int offsetY, int i) {
+		IShell shell = e.shell();
+		int oY = 0;
+		if (shell instanceof IPopUp)
+			oY = ((IPopUp) shell).offsetY();
+		return d.offsetY(offsetY, i) - oY;
 	}
 
 	public void fire(IResizeListener listener) {

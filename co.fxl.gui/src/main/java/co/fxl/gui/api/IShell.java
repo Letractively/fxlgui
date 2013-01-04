@@ -18,6 +18,6 @@
  */
 package co.fxl.gui.api;
 
-public interface IShell extends IHasSize{
+public interface IShell extends IHasSize {
 
 }

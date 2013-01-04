@@ -329,5 +329,4 @@ public class StatusDisplay implements IResizeListener, Runnable,
 	public void onScroll(int maxOffset) {
 		scrollOffset = maxOffset;
 	}
-
 }

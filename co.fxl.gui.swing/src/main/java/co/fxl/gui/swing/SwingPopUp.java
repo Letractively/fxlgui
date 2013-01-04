@@ -168,22 +168,24 @@ class SwingPopUp implements IPopUp, ComponentParent {
 
 	@Override
 	public int width() {
+		if (w != -1)
+			return w;
 		return component.getWidth();
 	}
 
 	@Override
 	public int height() {
+		if (h != -1)
+			return h;
 		return component.getHeight();
 	}
 
 	@Override
 	public IPopUp size(int w, int h) {
+		this.w = w;
+		this.h = h;
 		if (component != null)
 			component.setPreferredSize(new Dimension(w - _12, h));
-		else {
-			this.w = w;
-			this.h = h;
-		}
 		return this;
 	}
 

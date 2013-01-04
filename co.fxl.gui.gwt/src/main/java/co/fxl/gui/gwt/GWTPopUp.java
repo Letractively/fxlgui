@@ -14,21 +14,17 @@ import com.google.gwt.user.client.ui.Widget;
 
 class GWTPopUp implements IPopUp, WidgetParent {
 
-	private PopupPanel popUp;
+	private PopUpPanelWidget popUp;
 	private boolean center;
-	private int w;
-	private int h;
 	private boolean fitInScreen;
-	private int x = -1;
-	private int y = -1;
 
 	GWTPopUp() {
-		popUp = new PopupPanel(false, false);
+		popUp = new PopUpPanelWidget(false, false);
 		popUp.getElement().getStyle().setPadding(0, Unit.PX);
 	}
 
 	GWTPopUp(PopupPanel popUp) {
-		this.popUp = popUp;
+		this.popUp = (PopUpPanelWidget) popUp;
 	}
 
 	@Override
@@ -42,16 +38,16 @@ class GWTPopUp implements IPopUp, WidgetParent {
 		if (visible) {
 			if (center)
 				popUp.center();
-			if (fitInScreen && x != -1 && y != -1) {
+			if (fitInScreen && popUp.x != -1 && popUp.y != -1) {
 				popUp.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
 					public void setPosition(int offsetWidth, int offsetHeight) {
-						int left = x;
-						int top = y;
-						if (x + offsetWidth > Display.instance().width()) {
+						int left = popUp.x;
+						int top = popUp.y;
+						if (popUp.x + offsetWidth > Display.instance().width()) {
 							left = Display.instance().width() - 10
 									- offsetWidth;
 						}
-						if (y + offsetHeight > Display.instance().height()) {
+						if (popUp.y + offsetHeight > Display.instance().height()) {
 							top = Display.instance().height() - 10
 									- offsetHeight;
 						}
@@ -67,8 +63,8 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	@Override
 	public void add(Widget widget) {
-		if (w > 0)
-			widget.setWidth((w - 16) + "px");
+		if (popUp.w > 0)
+			widget.setWidth((popUp.w - 16) + "px");
 		// if (h > 0)
 		// widget.setHeight(h + "px");
 		popUp.setWidget(widget);
@@ -81,8 +77,8 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	@Override
 	public IPopUp offset(int x, int y) {
-		this.x = x;
-		this.y = y;
+		popUp.x = x;
+		popUp.y = y;
 		popUp.setPopupPosition(x, y);
 		return this;
 	}
@@ -110,30 +106,31 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	@Override
 	public int offsetX() {
-		return popUp.getPopupLeft();
+		return popUp.offsetX();
 	}
 
 	@Override
 	public int offsetY() {
-		return popUp.getPopupTop();
+		return popUp.offsetY();
 	}
 
 	@Override
 	public int width() {
+		if (popUp.w > 0)
+			return popUp.w;
 		return popUp.getOffsetWidth();
 	}
 
 	@Override
 	public int height() {
+		if (popUp.h > 0)
+			return popUp.h;
 		return popUp.getOffsetHeight();
 	}
 
 	@Override
 	public IPopUp size(int w, int h) {
-		this.w = w;
-		this.h = h;
-		popUp.setWidth(w + "px");
-		popUp.setHeight(h + "px");
+		popUp.size(w, h);
 		return this;
 	}
 
@@ -150,15 +147,13 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	@Override
 	public IPopUp width(int width) {
-		this.w = width;
-		popUp.setWidth(w + "px");
+		popUp.width(width);
 		return this;
 	}
 
 	@Override
 	public IPopUp height(int height) {
-		this.h = height;
-		popUp.setHeight(h + "px");
+		popUp.height(height);
 		return this;
 	}
 
