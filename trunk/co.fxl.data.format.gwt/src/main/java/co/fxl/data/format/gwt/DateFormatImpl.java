@@ -24,7 +24,7 @@ import co.fxl.data.format.api.IFormat;
 
 public abstract class DateFormatImpl implements IFormat<Date> {
 
-	int yearIncrement = 1900;
+	int yearIncrement = 1900; 
 	int monthIncrement = 1;
 	int dayIncrement = 1;
 
