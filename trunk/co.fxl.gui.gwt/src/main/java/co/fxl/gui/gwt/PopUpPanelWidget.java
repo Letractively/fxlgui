@@ -18,30 +18,44 @@
  */
 package co.fxl.gui.gwt;
 
-import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.user.client.ui.SplitLayoutPanel;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.PopupPanel;
 
-class ObservableSplitLayoutPanel extends SplitLayoutPanel {
+class PopUpPanelWidget extends PopupPanel {
 
-	GWTSplitPane owner;
+	int w;
+	int h;
+	int x = -1;
+	int y = -1;
 
-	@Override
-	public void onResize() {
-		super.onResize();
-		Widget left = getWidget(0);
-		owner.splitPosition = left.getElement().getParentElement()
-				.getOffsetWidth();
-		left.setWidth(owner.splitPosition + "px");
-		owner.onResize(owner.splitPosition);
+	PopUpPanelWidget(boolean b, boolean c) {
+		super(b, c);
 	}
 
-	void updatePosition() {
-		if (getWidgetCount() == 0)
-			return;
-		Widget left = getWidget(0);
-		left.getElement().getParentElement().getStyle()
-				.setWidth(owner.splitPosition, Unit.PX);
-		left.setWidth(owner.splitPosition + "px");
+	public void size(int w, int h) {
+		width(w);
+		height(h);
 	}
+
+	void height(int h) {
+		setHeight(h + "px");
+		this.h = h;
+	}
+
+	void width(int w) {
+		setWidth(w + "px");
+		this.w = w;
+	}
+
+	int offsetX() {
+		if (x != -1)
+			return x;
+		return getPopupLeft();
+	}
+
+	int offsetY() {
+		if (y != -1)
+			return y;
+		return getPopupTop();
+	}
+
 }
