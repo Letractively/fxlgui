@@ -851,8 +851,13 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 			return new GWTPopUp((PopupPanel) widget);
 		else if (widget instanceof RootPanel)
 			return StatusDisplay.instance();
-		else
-			return find(widget.getParent());
+		else {
+			Widget parent = widget.getParent();
+			if (parent == null)
+				throw new UnsupportedOperationException(widget.getClass()
+						.getName());
+			return find(parent);
+		}
 
 	}
 }
