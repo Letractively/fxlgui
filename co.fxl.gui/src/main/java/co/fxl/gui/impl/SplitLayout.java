@@ -73,8 +73,8 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 		Shell.instance().fire(this);
 	}
 
-	public static int mainPanelWidth() {
-		return Shell.instance().width() - WIDTH_SIDE_PANEL - 3 * 10;
+	public int mainPanelWidth() {
+		return width();
 	}
 
 	@Override
