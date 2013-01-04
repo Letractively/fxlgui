@@ -233,6 +233,7 @@ public class StatusDisplay implements IResizeListener, Runnable,
 		return offsetY;
 	}
 
+	@Override
 	public int width() {
 		int w = hasHorizontalScrollbar() ? 1024 : display.width();
 		if (sidePanelContainer != null)
@@ -244,6 +245,7 @@ public class StatusDisplay implements IResizeListener, Runnable,
 		return display.width() < 1024;
 	}
 
+	@Override
 	public int height() {
 		return display.height()
 				- (hasHorizontalScrollbar() ? Env.HEIGHT_SCROLLBAR : 0);
