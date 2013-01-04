@@ -52,7 +52,7 @@ import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPadding;
 import co.fxl.gui.api.IShell;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
-import co.fxl.gui.impl.Shell;
+import co.fxl.gui.impl.StatusDisplay;
 
 class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 
@@ -564,7 +564,7 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 	private IShell find(ComponentParent parent) {
 		if (parent.getParent() == null) {
 			if (parent instanceof SwingDisplay)
-				return Shell.instance();
+				return StatusDisplay.instance();
 			return (IShell) parent;
 		} else
 			return find(container.parent.getParent());
