@@ -854,10 +854,8 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		else {
 			Widget parent = widget.getParent();
 			if (parent == null)
-				throw new UnsupportedOperationException(widget.getClass()
-						.getName());
+				return StatusDisplay.instance();
 			return find(parent);
 		}
-
 	}
 }
