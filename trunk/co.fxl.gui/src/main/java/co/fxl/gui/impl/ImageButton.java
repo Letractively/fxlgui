@@ -195,7 +195,8 @@ public class ImageButton implements IClickable<Object>,
 		return label;
 	}
 
-	public void showAlways(boolean b) {
+	public ImageButton showAlways(boolean b) {
 		showAlways = b;
+		return this;
 	}
 }
