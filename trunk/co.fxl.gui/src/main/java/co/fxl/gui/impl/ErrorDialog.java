@@ -60,9 +60,8 @@ public class ErrorDialog {
 	public void show(String pTitle, final String pMessage,
 			final String pStacktrace) {
 		showing = true;
-		IDialog dialog = Display.instance().showDialog();
-		dialog.width(DEFAULT_WIDTH);
-		dialog.title(pTitle).message(pMessage).error();
+		IDialog dialog = Display.instance().showDialog().glass(true)
+				.width(DEFAULT_WIDTH).title(pTitle).message(pMessage).error();
 		if (pStacktrace != null) {
 			dialog.addButton().text("Details").imageResource(Icons.DETAIL)
 					.addClickListener(new IClickListener() {
