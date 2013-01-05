@@ -311,8 +311,8 @@ public class FormWidgetImpl implements IFormWidget {
 				return;
 			if ((saveListener != null || hasRequiredAttributes())
 					&& bottomPanel == null) {
-				contentPanel.addSpace(8);
 				bottomPanel = contentPanel.add().panel().grid();
+				bottomPanel.margin().top(8);
 			}
 			if (saveListener != null) {
 				addSaveCancelButtons(bottomPanel);
@@ -361,7 +361,8 @@ public class FormWidgetImpl implements IFormWidget {
 				.align().begin();
 		subPanel.margin().top(1);
 		// panel.addSpace(4).add().label().text("-").font().color().gray();
-		final ILabel cb = panel.addSpace(8).add().label().text("Cancel and reset");
+		final ILabel cb = panel.addSpace(8).add().label()
+				.text("Cancel and reset");
 		// cb.margin().top(1);
 		cb.font().pixel(11);
 		HyperlinkDecorator.styleHyperlinkActive(cb);
@@ -450,7 +451,7 @@ public class FormWidgetImpl implements IFormWidget {
 			final IClickable<?> cancelButton,
 			final IElement<?> cancelButtonElement) {
 		saveButton = new StylishButton(subPanel.add().panel().horizontal(),
-				saveTitle, true, 3,false);
+				saveTitle, true, 3, false);
 		// new HyperlinkMouseOverListener(saveButton);
 		if (validation != null)
 			validation.setClickable(saveButton);
@@ -519,7 +520,7 @@ public class FormWidgetImpl implements IFormWidget {
 	IGridPanel grid() {
 		if (grid == null) {
 			contentPanel = widgetTitle.content().panel().vertical()
-					.spacing(spacing).add().panel().vertical();
+					.spacing(spacing);
 			grid = contentPanel.add().panel().grid();
 			grid.indent(1);
 			grid.spacing(1);
