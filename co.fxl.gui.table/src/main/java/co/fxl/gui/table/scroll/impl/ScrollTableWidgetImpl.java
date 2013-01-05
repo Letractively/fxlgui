@@ -202,7 +202,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	public WidgetTitle widgetTitle() {
 		if (widgetTitle == null) {
 			widgetTitle = new WidgetTitle(c0.panel(), addBorders, plainContent)
-					.foldable(false);
+					.foldable(false).spaceBottom(-2);
 			widgetTitle.titleClickListener(titleClickListener);
 			widgetTitle.addSubTitles(subTitle1, subTitle2);
 			widgetTitle.addToContextMenu(addToContextMenu);
