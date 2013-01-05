@@ -100,8 +100,7 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 		final IResizeListener listener = new IResizeListener() {
 			@Override
 			public void onResize(int width, int height) {
-				int offsetY = size.defined() ? 0 : Shell.instance().offsetY(e,
-						100);
+				int offsetY = Shell.instance().offsetY(e, 100);
 				int h = rheight() - offsetY - 10 - dec;
 				if (h > 0)
 					e.height(h);
