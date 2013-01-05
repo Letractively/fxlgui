@@ -31,6 +31,8 @@ public interface ISpaced<T> {
 		ISpacing bottom(int pixel);
 
 		ISpacing inner(int pixel);
+
+		ISpacing outer(int pixel);
 	}
 
 	T spacing(int pixel);

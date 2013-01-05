@@ -156,6 +156,11 @@ public class SwingPanel<R> extends SwingElement<PanelComponent, R> implements
 				gap(pixel);
 				return this;
 			}
+
+			@Override
+			public ISpacing outer(int pixel) {
+				return left(pixel).right(pixel).top(pixel).bottom(pixel);
+			}
 		};
 	}
 
