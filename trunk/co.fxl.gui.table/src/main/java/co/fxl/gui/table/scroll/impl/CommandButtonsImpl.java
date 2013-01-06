@@ -307,7 +307,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	public ICommandButtons<Object> listenOnEdit(IRowListener<IRows<Object>> l) {
 		listenOnEdit = true;
 		listenOnEditListener = l;
-		doubleClickListener(l);
+//		doubleClickListener(l);
 		return this;
 	}
 
