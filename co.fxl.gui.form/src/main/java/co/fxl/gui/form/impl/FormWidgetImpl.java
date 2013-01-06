@@ -49,7 +49,6 @@ import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.Heights;
-import co.fxl.gui.impl.HyperlinkDecorator;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.StylishButton;
 import co.fxl.gui.impl.WidgetTitle;
@@ -361,38 +360,38 @@ public class FormWidgetImpl implements IFormWidget {
 				.align().begin();
 		subPanel.margin().top(1);
 		// panel.addSpace(4).add().label().text("-").font().color().gray();
-		final ILabel cancelButton = panel.addSpace(8).add().label()
+		final ILabel cb = panel.addSpace(8).add().label()
 				.text("Cancel and reset").hyperlink();
 		// cb.margin().top(1);
-		cancelButton.font().pixel(11);
-//		HyperlinkDecorator.styleHyperlinkActive(cb);
-//		@SuppressWarnings("rawtypes")
-//		final IClickable cancelButton = new IClickable() {
-//
-//			@Override
-//			public Object clickable(boolean clickable) {
-//				cb.clickable(clickable);
-//				if (clickable)
-//					HyperlinkDecorator.styleHyperlinkActive(cb);
-//				else
-//					HyperlinkDecorator.styleHyperlinkInactive(cb);
-//				cb.font().underline(clickable);
-//				return this;
-//			}
-//
-//			@Override
-//			public boolean clickable() {
-//				return cb.clickable();
-//			}
-//
-//			@Override
-//			public IKey addClickListener(IClickListener clickListener) {
-//				return cb.addClickListener(clickListener);
-//			}
-//
-//		};
+		cb.font().pixel(11);
+		// HyperlinkDecorator.styleHyperlinkActive(cb);
+		// @SuppressWarnings("rawtypes")
+		final IClickable<?> cancelButton = cb;// new IClickable() {
+		//
+		// @Override
+		// public Object clickable(boolean clickable) {
+		// cb.clickable(clickable);
+		// if (clickable)
+		// HyperlinkDecorator.styleHyperlinkActive(cb);
+		// else
+		// HyperlinkDecorator.styleHyperlinkInactive(cb);
+		// cb.font().underline(clickable);
+		// return this;
+		// }
+		//
+		// @Override
+		// public boolean clickable() {
+		// return cb.clickable();
+		// }
+		//
+		// @Override
+		// public IKey addClickListener(IClickListener clickListener) {
+		// return cb.addClickListener(clickListener);
+		// }
+		//
+		// };
 		// new HyperlinkMouseOverListener(cancelButton);
-		addSaveButton(subPanel, cancelButton, cancelButton);
+		addSaveButton(subPanel, cancelButton, cb);
 		cancelButton.addClickListener(new LazyClickListener() {
 			@Override
 			public void onAllowedClick() {
