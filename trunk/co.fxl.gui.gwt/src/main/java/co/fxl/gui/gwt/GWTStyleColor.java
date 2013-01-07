@@ -125,7 +125,6 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 
 	private Style style;
 	private String color;
-	int[] rgb;
 	private Widget widget;
 
 	public GWTStyleColor(Style style) {

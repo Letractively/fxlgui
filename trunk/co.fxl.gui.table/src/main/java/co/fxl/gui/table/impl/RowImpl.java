@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.table.impl;
 
+import java.util.Arrays;
+
 import co.fxl.gui.table.api.IRow;
 
 public class RowImpl implements IRow<Object> {
@@ -73,8 +75,7 @@ public class RowImpl implements IRow<Object> {
 	public void update() {
 		for (content.currentColumn = 0; content.currentColumn < content.values.length; content.currentColumn++) {
 			Object value = content.values[content.currentColumn];
-			Cell<Object> cell = (Cell<Object>) content.cells
-					[content.currentColumn];
+			Cell<Object> cell = (Cell<Object>) content.cells[content.currentColumn];
 			cell.update(value);
 			cell.highlight(rowIndex, content.selected);
 			ColumnImpl column = table.columns.get(content.currentColumn);
@@ -86,7 +87,7 @@ public class RowImpl implements IRow<Object> {
 
 	@Override
 	public String toString() {
-		return content.values.toString();
+		return Arrays.toString(content.values);
 	}
 
 	@Override

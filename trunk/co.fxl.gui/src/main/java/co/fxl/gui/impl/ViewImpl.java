@@ -37,7 +37,7 @@ public class ViewImpl extends LazyClickListener {
 	private ViewDecorator decorator;
 	private FlipPage content;
 	private Object bo;
-	private IImage removeImage;
+//	private IImage removeImage;
 	private IImage image;
 	private IHorizontalPanel labelPanel;
 	private String imageResource;
@@ -246,9 +246,9 @@ public class ViewImpl extends LazyClickListener {
 	public void clickable() {
 		// grid.color().remove();
 		styleViewlistEntryInactive(label);
-		if (removeImage != null) {
-			removeImage.visible(false);
-		}
+//		if (removeImage != null) {
+//			removeImage.visible(false);
+//		}
 	}
 
 	public void styleViewlistEntryInactive(ILabel label) {
