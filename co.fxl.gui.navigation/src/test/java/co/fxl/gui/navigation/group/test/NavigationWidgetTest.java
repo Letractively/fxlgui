@@ -22,6 +22,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.group.api.INavigationWidget;
@@ -60,7 +61,6 @@ public class NavigationWidgetTest {
 			}
 		}
 		display.visible(true);
-		n.visible(true, null);
+		n.visible(true, DummyCallback.voidInstance());
 	}
-
 }

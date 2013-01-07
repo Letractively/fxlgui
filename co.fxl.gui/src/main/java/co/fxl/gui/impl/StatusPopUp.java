@@ -110,6 +110,8 @@ public class StatusPopUp implements IResizeListener, Runnable {
 
 		@Override
 		public boolean equals(Object o) {
+			if (o == null)
+				return false;
 			return ((StatusImpl) o).id.equals(id);
 		}
 

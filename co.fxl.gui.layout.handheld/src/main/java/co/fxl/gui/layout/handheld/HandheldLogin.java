@@ -76,7 +76,7 @@ class HandheldLogin implements ILoginLayout, IClickListener, IUpdateListener<Str
 								.addClickListener(new IClickListener() {
 									@Override
 									public void onClick() {
-										onClick();
+										HandheldLogin.this.onClick();
 									}
 								});
 						ok.clickable(false);

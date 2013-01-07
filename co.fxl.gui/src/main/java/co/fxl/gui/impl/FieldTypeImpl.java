@@ -38,7 +38,10 @@ public class FieldTypeImpl implements IFieldType {
 	public Object defaultConstraint;
 	public int rows = 1;
 
+	@Override
 	public boolean equals(Object o) {
+		if (o == null)
+			return false;
 		FieldTypeImpl t = (FieldTypeImpl) o;
 		if (!(clazz.equals(t.clazz) && isLong == t.isLong
 				&& isRelation == t.isRelation && maxLength == t.maxLength
@@ -58,6 +61,11 @@ public class FieldTypeImpl implements IFieldType {
 				return false;
 		}
 		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		return clazz.hashCode();
 	}
 
 	@Override

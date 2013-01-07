@@ -76,7 +76,7 @@ public class ColumnWidths implements IColumnWidthInjector {
 			}
 			double d = ((ScrollTableColumnImpl) columnImpl).decorator()
 					.defaultWeight();
-			if (avg != -1) {
+			if (avg != -1d) {
 				d = columnImpl.widthDouble() == -1 ? avg : columnImpl
 						.widthDouble();
 			}

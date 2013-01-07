@@ -301,7 +301,7 @@ class MiniFilterPanel implements FilterPanel {
 	private FilterGridImpl grid;
 	// private boolean hasHyperlinks = false;
 	private MiniFilterWidgetImpl widget;
-	private ViewComboBox viewComboBox;
+//	private ViewComboBox viewComboBox;
 
 	MiniFilterPanel(MiniFilterWidgetImpl widget, IContainer c) {
 		this.widget = widget;
@@ -350,8 +350,8 @@ class MiniFilterPanel implements FilterPanel {
 
 	@Override
 	public ViewComboBox viewComboBox() {
-		if (viewComboBox != null)
-			return viewComboBox;
+//		if (viewComboBox != null)
+//			return viewComboBox;
 		if (grid == null) {
 			filterGrid();
 		}
