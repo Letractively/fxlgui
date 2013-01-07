@@ -146,7 +146,7 @@ public class NavigationView implements IColored {
 		label.font().color().black();
 		label.text(title);
 		IComboBox cb = addComboBox(text, panel, options);
-		cb.margin().top(-4).bottom(-4);
+		cb.height(20).margin().top(-2).bottom(-2);
 		return cb;
 	}
 
