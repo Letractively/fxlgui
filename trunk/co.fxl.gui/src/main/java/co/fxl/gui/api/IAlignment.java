@@ -25,4 +25,5 @@ public interface IAlignment<T> {
 	T center();
 
 	T end();
+
 }
