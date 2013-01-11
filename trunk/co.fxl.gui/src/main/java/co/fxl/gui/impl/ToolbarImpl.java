@@ -30,6 +30,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IMargin;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
 
@@ -66,6 +67,11 @@ public class ToolbarImpl implements IToolbar {
 	public ToolbarImpl height(int height) {
 		this.height = height;
 		return this;
+	}
+
+	@Override
+	public IMargin margin() {
+		return panel.margin();
 	}
 
 	@Override
