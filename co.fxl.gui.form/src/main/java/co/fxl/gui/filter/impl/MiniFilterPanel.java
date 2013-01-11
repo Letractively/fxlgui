@@ -33,7 +33,6 @@ import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.filter.impl.CellImpl.ExpliciteRangeField;
 import co.fxl.gui.form.impl.Validation;
-import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.IToolbar;
@@ -291,8 +290,10 @@ class MiniFilterPanel implements FilterPanel {
 		};
 	}
 
-	private static final boolean MODIFIED_TITLE_ADD = Constants.get(
-			"MiniFilterPanel.MODIFIED_TITLE_ADD", false);
+	private static final boolean MODIFIED_TITLE_ADD = Env.is(Env.FIREFOX,
+			Env.OPERA);
+	// Constants.get(
+	// "MiniFilterPanel.MODIFIED_TITLE_ADD", false);
 	private IToolbar panel;
 	private IToolbar titlePanel;
 	private IToolbar mainPanel;
@@ -301,7 +302,8 @@ class MiniFilterPanel implements FilterPanel {
 	private FilterGridImpl grid;
 	// private boolean hasHyperlinks = false;
 	private MiniFilterWidgetImpl widget;
-//	private ViewComboBox viewComboBox;
+
+	// private ViewComboBox viewComboBox;
 
 	MiniFilterPanel(MiniFilterWidgetImpl widget, IContainer c) {
 		this.widget = widget;
@@ -350,8 +352,8 @@ class MiniFilterPanel implements FilterPanel {
 
 	@Override
 	public ViewComboBox viewComboBox() {
-//		if (viewComboBox != null)
-//			return viewComboBox;
+		// if (viewComboBox != null)
+		// return viewComboBox;
 		if (grid == null) {
 			filterGrid();
 		}

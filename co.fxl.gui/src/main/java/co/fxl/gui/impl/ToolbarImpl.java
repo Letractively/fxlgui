@@ -27,6 +27,7 @@ import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IPanel;
@@ -69,28 +70,49 @@ public class ToolbarImpl implements IToolbar {
 
 	@Override
 	public IContainer add() {
+		return addElement().container();
+	}
+
+	@Override
+	public IToolbarElement addElement() {
 		ToolbarImpl root = root();
+		IPanel<?> rootPanel;
+		IPanel<?> childPanel;
 		if (ADJUST_HEIGHTS) {
 			IVerticalPanel childPanel0 = root.panel.add().panel().vertical();
-			// .align().center();
+			rootPanel = childPanel0;
 			blocker = childPanel0.add().panel().horizontal();
 			blocker.add().label().text("&#160;");
-			IPanel<?> childPanel = childPanel0.add().panel().horizontal()
+			childPanel = childPanel0.add().panel().horizontal()
 					.spacing(SPACING / 2).add().panel().horizontal().align()
 					.center();
 			blockers.put(childPanel, blocker);
 			mainPanels.put(childPanel, childPanel0);
 			content.add(childPanel);
-			return childPanel.add();
 		} else {
-			IHorizontalPanel childPanel0 = root.panel.add().panel().horizontal()
-					.height(height).align().center();
+			IHorizontalPanel childPanel0 = root.panel.add().panel()
+					.horizontal().height(height).align().center();
+			rootPanel = childPanel0;
 			childPanel0.spacing().left(root.hasContent ? 0 : spacing)
 					.top(spacing).bottom(spacing).right(spacing);
-			IHorizontalPanel childPanel = childPanel0.add().panel().horizontal().align().center();
+			childPanel = childPanel0.add().panel().horizontal().align()
+					.center();
 			content.add(childPanel0);
-			return childPanel.add();
 		}
+		final IPanel<?> p = rootPanel;
+		final IContainer c = childPanel.add();
+		return new IToolbarElement() {
+
+			@Override
+			public IElement<?> panel() {
+				return p;
+			}
+
+			@Override
+			public IContainer container() {
+				return c;
+			}
+		};
 	}
 
 	@Override

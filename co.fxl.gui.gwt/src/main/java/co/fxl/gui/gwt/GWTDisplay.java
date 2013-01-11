@@ -148,9 +148,9 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		}
 		if (isOpera())
 			Constants.put("ScrollTableWidgetImpl.ADD_TOP_PANEL_SPACING", true);
-		if (isFirefox() || isOpera()) {
-			Constants.put("MiniFilterPanel.MODIFIED_TITLE_ADD", true);
-		}
+//		if (isFirefox() || isOpera()) {
+//			Constants.put("MiniFilterPanel.MODIFIED_TITLE_ADD", true);
+//		}
 		final boolean isChrome15Plus = isChrome()
 				&& GWTDisplay.getBrowserVersion() >= 15;
 		final String imagePath = Constants.get("GWTLazyTreeWidget.IMAGE_PATH",

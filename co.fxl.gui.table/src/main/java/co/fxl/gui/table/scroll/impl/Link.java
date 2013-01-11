@@ -19,10 +19,10 @@
 package co.fxl.gui.table.scroll.impl;
 
 import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.impl.IToolbar.IToolbarElement;
 
 class Link implements IClickable<Link> {
 
@@ -30,18 +30,21 @@ class Link implements IClickable<Link> {
 	IImage image;
 	ILabel label;
 	private IHorizontalPanel p;
+	private IToolbarElement c;
 
-	Link() {
-	}
-
-	Link(IHorizontalPanel p, IImage image, ILabel label) {
+	Link(IToolbarElement c, IHorizontalPanel p, IImage image, ILabel label) {
+		this.c = c;
 		this.p = p;
 		this.image = image;
 		this.label = label;
 	}
 
+	Link() {
+	}
+
 	@Override
 	public Link clickable(boolean clickable) {
+		c.panel().visible(clickable);
 		p.clickable(clickable);
 		image.clickable(clickable);
 		label.clickable(clickable);
@@ -69,8 +72,8 @@ class Link implements IClickable<Link> {
 		return null;
 	}
 
-	private Link clickable(IContainer c, String string, boolean clickable) {
-		IHorizontalPanel p = c.panel().horizontal();
+	private Link clickable(IToolbarElement c, String string, boolean clickable) {
+		IHorizontalPanel p = c.container().panel().horizontal();
 		// p.spacing(4);
 		// p.color().gray();
 		// p.border().color().gray();
@@ -82,12 +85,12 @@ class Link implements IClickable<Link> {
 		IImage image = p.add().image().resource(imageR + ".png");
 		p.addSpace(SPACE);
 		ILabel label = p.add().label().text(string);
-		Link l = new Link(p, image, label);
+		Link l = new Link(c, p, image, label);
 		l.clickable(clickable);
 		return l;
 	}
 
-	public Link clickableLink(IContainer c, String string) {
+	public Link clickableLink(IToolbarElement c, String string) {
 		Link link = clickable(c, string, true);
 		return link;
 	}
