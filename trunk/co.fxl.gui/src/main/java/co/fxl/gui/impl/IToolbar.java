@@ -22,8 +22,16 @@ import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IElement;
 
 public interface IToolbar {
+
+	public interface IToolbarElement {
+
+		IElement<?> panel();
+
+		IContainer container();
+	}
 
 	IContainer add();
 
@@ -44,5 +52,7 @@ public interface IToolbar {
 	IToolbar height(int height);
 
 	IToolbar spacing(int i);
+
+	IToolbarElement addElement();
 
 }

@@ -23,11 +23,11 @@ import java.util.List;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.IToolbar;
+import co.fxl.gui.impl.IToolbar.IToolbarElement;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.table.api.ISelection.IMultiSelection.IChangeListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
@@ -180,7 +180,8 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		}
 	}
 
-	public static Link clickable(IContainer c, String string, boolean showLabel) {
+	public static Link clickable(IToolbarElement c, String string,
+			boolean showLabel) {
 		Link link = new Link();
 		link = link.clickableLink(c, string).showLabel(showLabel);
 		return link;
@@ -197,7 +198,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		@Override
 		public IClickable<?> decorate(IToolbar c) {
 			String string = "Add";
-			return clickable(c.add(), string, true);
+			return clickable(c.addElement(), string, true);
 		}
 	};
 	private static boolean ALIGN_END = Constants.get(
@@ -307,7 +308,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	public ICommandButtons<Object> listenOnEdit(IRowListener<IRows<Object>> l) {
 		listenOnEdit = true;
 		listenOnEditListener = l;
-//		doubleClickListener(l);
+		// doubleClickListener(l);
 		return this;
 	}
 
@@ -326,12 +327,12 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			addRemove();
 		}
 		if (listenOnShow) {
-			show = clickable(panel.add(), "Show", true);
+			show = clickable(panel.addElement(), "Show", true);
 			show.addClickListener(new Update(listenOnShowListener));
 			show.clickable(!widget.preselectedList.isEmpty());
 		}
 		if (listenOnEdit) {
-			edit = clickable(panel.add(), "Edit", true);
+			edit = clickable(panel.addElement(), "Edit", true);
 			final Update clickListener = new Update(listenOnEditListener);
 			edit.addClickListener(clickListener);
 			edit.clickable(!widget.preselectedList.isEmpty());
@@ -372,7 +373,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	void addRemove() {
 		if (listenOnRemove) {
 			// remove = panel.add().button().text("Remove");
-			remove = clickable(panel.add(), "Remove", true);
+			remove = clickable(panel.addElement(), "Remove", true);
 			remove.addClickListener(new Update(listenOnRemoveListener, true));
 			remove.clickable(false);
 		}
@@ -406,7 +407,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		if (resource.equals(IBulkTableWidget.ARROW_DOWN)
 				&& i == Integer.MAX_VALUE)
 			res = "Bottom";
-		IClickable<?> image = clickable(panel.add(), res, false);
+		IClickable<?> image = clickable(panel.addElement(), res, false);
 		// image.font().weight().bold();
 		image.addClickListener(new Move(listenOnMoveUpListener2, i));
 		boolean canClick = widget.preselectedList.size() == 1;
