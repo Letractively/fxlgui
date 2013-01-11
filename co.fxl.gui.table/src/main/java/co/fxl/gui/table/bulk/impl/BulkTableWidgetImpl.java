@@ -522,4 +522,9 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	@Override
 	public void fixLayout(boolean tableLayoutFixed) {
 	}
+
+	@Override
+	public IBulkTableWidget horizontalLines(boolean horizontalLines) {
+		return this;
+	}
 }
