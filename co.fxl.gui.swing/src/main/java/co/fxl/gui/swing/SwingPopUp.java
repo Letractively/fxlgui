@@ -92,6 +92,7 @@ class SwingPopUp implements IPopUp, ComponentParent {
 
 	@Override
 	public IPopUp visible(boolean visible) {
+		this.visible = visible;
 		if (autoHide) {
 			if (SwingDisplay.popUp() != null && SwingDisplay.popUp() != this) {
 				SwingDisplay.popUp().visible(false);
