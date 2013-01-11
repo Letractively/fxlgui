@@ -30,6 +30,7 @@ public class FlipPage implements IContentPage, IColored {
 	private IVerticalPanel page2;
 	private IVerticalPanel active;
 	private boolean nextCalled;
+	private boolean previewCalled;
 
 	public FlipPage(IContainer c) {
 		cardPanel = c.panel().card();
@@ -71,6 +72,7 @@ public class FlipPage implements IContentPage, IColored {
 
 	@Override
 	public void preview() {
+		previewCalled = true;
 		if (Env.is(Env.OPERA))
 			return;
 		if (active == null)
@@ -83,6 +85,8 @@ public class FlipPage implements IContentPage, IColored {
 
 	@Override
 	public void back() {
+		assert previewCalled;
+		previewCalled = false;
 		if (Env.is(Env.OPERA))
 			return;
 		if (active == null)

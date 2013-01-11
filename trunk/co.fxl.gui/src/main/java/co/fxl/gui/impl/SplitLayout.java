@@ -63,11 +63,11 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 	}
 
 	private void init() {
-		panel = layout.grid();
-		cell0 = panel.cell(0, 0).width(width());
-		IVerticalPanel vpanel = cell0.valign().begin().panel().vertical()
-				.spacing(10);
-		mainPanel = addMainPanel(vpanel);
+		panel = layout.grid().spacing(0);
+		int width = width();
+		cell0 = panel.cell(0, 0).width(width);
+		mainPanel = addMainPanel(cell0.valign().begin().panel().vertical()
+				.padding(10));
 		cell1 = panel.cell(1, 0).width(WIDTH_SIDE_PANEL).valign().begin()
 				.align().end();
 		sideBasePanel = cell1.panel().vertical();
@@ -124,9 +124,7 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 		}
 	}
 
-	protected IVerticalPanel addMainPanel(IVerticalPanel vpanel) {
-		mainPanel = vpanel.add().panel().vertical();
-		mainPanel.color().white();
+	protected IVerticalPanel addMainPanel(IVerticalPanel mainPanel) {
 		return mainPanel;
 	}
 
