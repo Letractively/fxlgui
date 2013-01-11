@@ -190,7 +190,8 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 			return;
 		}
 		if (listener != null) {
-			toggleLoading(true);
+			if (visible)
+				toggleLoading(true);
 			listener.onTop(visible, new CallbackTemplate<Void>(cb) {
 				@Override
 				public void onSuccess(Void result) {
@@ -199,10 +200,9 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 				}
 
 				void finish(final boolean visible) {
-					toggleLoading(false);
-					if (visible)
-						widget.top(RegisterImpl.this);
 					if (visible) {
+						toggleLoading(false);
+						widget.top(RegisterImpl.this);
 						updateButtonPanel(false);
 					} else {
 						updateButtonPanel(true);
