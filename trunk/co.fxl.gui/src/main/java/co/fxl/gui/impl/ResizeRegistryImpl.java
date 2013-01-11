@@ -96,7 +96,7 @@ public class ResizeRegistryImpl<T> implements IResizeRegistry<T> {
 			remove(cfg);
 		ResizeConfiguration resizeHandler = new ResizeConfiguration(listener);
 		resizeListeners.add(resizeHandler);
-		if (resizeListeners.size() > 20)
+		if (resizeListeners.size() > 10)
 			throw new RuntimeException("Warning: Too many resize listeners");
 		return resizeHandler;
 	}
