@@ -318,6 +318,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		// IHorizontalPanel ps = container.panel().horizontal().align().end()
 		// .add().panel().horizontal().align().end();
 		panel = new ToolbarImpl(container);
+		panel.margin().right(4);
 		if (ALIGN_END) {
 			panel.align().end();// ps.add());
 			addRemove();
