@@ -260,6 +260,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private boolean cellPadding;
 	private boolean fixLayout = true;
 	private int width = -1;
+	private boolean horizontalLines;
 
 	// private boolean nextTimeShowPopUp;
 
@@ -813,6 +814,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		IBulkTableWidget lastGrid = grid;
 		IVerticalPanel vpanel = contentPanel.add().panel().vertical();
 		grid = (IBulkTableWidget) vpanel.add().widget(IBulkTableWidget.class);
+		grid.horizontalLines(horizontalLines);
 		grid.fixLayout(fixLayout);
 		grid.cellPadding(cellPadding);
 		grid.marginTop(plainContent ? 0 : 6);
@@ -1688,5 +1690,11 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	public void fixLayout(boolean fixLayout) {
 		this.fixLayout = fixLayout;
 		columnWidths.fixLayout(fixLayout);
+	}
+
+	@Override
+	public IScrollTableWidget<Object> horizontalLines(boolean horizontalLines) {
+		this.horizontalLines = horizontalLines;
+		return this;
 	}
 }

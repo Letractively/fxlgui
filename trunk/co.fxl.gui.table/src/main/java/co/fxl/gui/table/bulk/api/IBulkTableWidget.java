@@ -26,6 +26,7 @@ import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.IMouseWheelListener;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPoint;
+import co.fxl.gui.table.scroll.api.IScrollTableWidget;
 
 public interface IBulkTableWidget extends IKeyRecipient<Object> {
 
@@ -148,4 +149,6 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 	IBulkTableWidget cellPadding(boolean cellPadding);
 
 	void fixLayout(boolean tableLayoutFixed);
+
+	IBulkTableWidget horizontalLines(boolean horizontalLines);
 }

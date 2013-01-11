@@ -282,7 +282,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 					private void removeRegistrations() {
 						if (USE_TEMP_FLIP) {
 							widget.listeningOnServerCalls(false);
-							widget.flipPage().back();
+//							widget.flipPage().back();
 						}
 						// isFirst = false;
 					}
