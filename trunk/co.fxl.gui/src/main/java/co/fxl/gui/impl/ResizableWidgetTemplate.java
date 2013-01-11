@@ -23,6 +23,7 @@ import java.util.Map;
 
 import co.fxl.gui.api.IDisplay.IResizeConfiguration;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IResizable.IResizeListener;
 
 public class ResizableWidgetTemplate implements IResizableWidget {
@@ -40,11 +41,26 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 
 	@Override
 	public IResizableWidget addResizableWidgetToDisplay() {
-		return addResizableWidgetToDisplay(null);
+		return addResizableWidgetToDisplay((IElement<?>)null);
 	}
 
 	@Override
 	public IResizableWidget addResizableWidgetToDisplay(IElement<?> link) {
+		IResizeConfiguration cfg = addResizeListener();
+		if (link != null)
+			cfg.linkLifecycle(link);
+		return this;
+	}
+
+	@Override
+	public IResizableWidget addResizableWidgetToDisplay(IPopUp link) {
+		IResizeConfiguration cfg = addResizeListener();
+		if (link != null)
+			cfg.linkLifecycle(link);
+		return this;
+	}
+
+	IResizeConfiguration addResizeListener() {
 		IResizeConfiguration cfg = Shell.instance().addResizeListener(
 				new IResizeListener() {
 					@Override
@@ -52,9 +68,7 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 						recursiveResize(rwidth(), rheight());
 					}
 				});
-		if (link != null)
-			cfg.linkLifecycle(link);
-		return this;
+		return cfg;
 	}
 
 	protected final int rwidth() {

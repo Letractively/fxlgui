@@ -19,6 +19,7 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IResizable.IResizeListener;
 
 public interface IResizableWidget extends IResizeListener {
@@ -56,6 +57,8 @@ public interface IResizableWidget extends IResizeListener {
 	IResizableWidget setResizableWidget(IResizableWidget widget, String id);
 
 	IResizableWidget addResizableWidgetToDisplay(IElement<?> link);
+
+	IResizableWidget addResizableWidgetToDisplay(IPopUp link);
 
 	IResizableWidget size(Size size);
 
