@@ -41,7 +41,7 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 
 	@Override
 	public IResizableWidget addResizableWidgetToDisplay() {
-		return addResizableWidgetToDisplay((IElement<?>)null);
+		return addResizableWidgetToDisplay((IElement<?>) null);
 	}
 
 	@Override
@@ -61,14 +61,12 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 	}
 
 	IResizeConfiguration addResizeListener() {
-		IResizeConfiguration cfg = Shell.instance().addResizeListener(
-				new IResizeListener() {
-					@Override
-					public void onResize(int width, int height) {
-						recursiveResize(rwidth(), rheight());
-					}
-				});
-		return cfg;
+		return Shell.instance().addResizeListener(new IResizeListener() {
+			@Override
+			public void onResize(int width, int height) {
+				recursiveResize(rwidth(), rheight());
+			}
+		});
 	}
 
 	protected final int rwidth() {
