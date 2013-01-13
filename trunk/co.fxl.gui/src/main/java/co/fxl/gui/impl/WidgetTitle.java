@@ -578,4 +578,10 @@ public class WidgetTitle implements IClickListener, IColored {
 		return this;
 	}
 
+	public ILabel addLargeTitle(String string) {
+		ILabel l = addTitle(string);
+		l.font().pixel(LARGE_FONT);
+		return l;
+	}
+
 }
