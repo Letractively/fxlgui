@@ -141,7 +141,7 @@ class LogImpl implements ILog, IClickListener {
 				.autoHide(true);
 		popUp.border().remove().style().shadow().color().black();
 		WidgetTitle panel = new WidgetTitle(popUp.container()).spacing(0)
-				.sideWidget(true).commandsOnTop().spacing(0);
+				.sideWidget(false).commandsOnTop().spacing(0);
 		panel.addLargeTitle("Log Trace");
 		final IScrollPane scrollPane = panel.content().scrollPane();
 		final IVerticalPanel content = scrollPane.viewPort().panel().vertical()

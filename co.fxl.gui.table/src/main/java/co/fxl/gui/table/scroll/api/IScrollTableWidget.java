@@ -258,15 +258,17 @@ public interface IScrollTableWidget<T> extends IResizableWidget, IHasButtons {
 
 	IPanel<?> mainPanel();
 
-	IScrollTableWidget<Object> configureListener(IClickListener cl);
+	IScrollTableWidget<T> configureListener(IClickListener cl);
 
-	IScrollTableWidget<Object> titleClickListener(IClickListener refreshListener);
+	IScrollTableWidget<T> titleClickListener(IClickListener refreshListener);
 
-	IScrollTableWidget<Object> cellPadding(boolean cellPadding);
+	IScrollTableWidget<T> cellPadding(boolean cellPadding);
 
-	IScrollTableWidget<Object> horizontalLines(boolean horizontalLines);
+	IScrollTableWidget<T> horizontalLines(boolean horizontalLines);
 
-	void fixLayout(boolean fixLayout);
+	IScrollTableWidget<T> fixLayout(boolean fixLayout);
+
+	IScrollTableWidget<T> addLargeTitle(String string);
 
 	// IVerticalPanel editPanel();
 }

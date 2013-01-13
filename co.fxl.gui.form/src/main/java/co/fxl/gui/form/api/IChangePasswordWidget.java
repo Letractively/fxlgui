@@ -31,7 +31,7 @@ public interface IChangePasswordWidget {
 
 	ILabel addTitle(String title);
 
-//	IChangePasswordWidget current(String currentPassword);
+	IChangePasswordWidget addLargeTitle(String string);
 
 	IChangePasswordWidget requiresCurrent(boolean requiresCurrent);
 

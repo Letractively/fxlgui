@@ -128,4 +128,6 @@ public interface IFormWidget extends IResizable<IFormWidget> {
 
 	IFormWidget buttonPanelIndent(int buttonPanelIndent);
 
+	IFormWidget addLargeTitle(String string);
+
 }

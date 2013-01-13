@@ -31,7 +31,6 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IFormWidget.ISaveListener;
-import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.upload.api.IUpload;
 import co.fxl.gui.upload.api.IUploadListener;
 import co.fxl.gui.upload.api.IUploadWidget;
@@ -95,7 +94,7 @@ public class UploadWidgetImpl implements IUploadWidget {
 				return false;
 			}
 		});
-		form.addTitle("Add Attachment").font().pixel(WidgetTitle.LARGE_FONT);
+		form.addLargeTitle("Add Attachment");
 		textField = form.addTextField("Name").required().valueElement();
 		uRLField = form.addTextField("URL").required();
 		url = uRLField.valueElement();

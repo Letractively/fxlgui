@@ -680,4 +680,10 @@ public class FormWidgetImpl implements IFormWidget {
 		resizeListeners.add(listener);
 		return this;
 	}
+
+	@Override
+	public IFormWidget addLargeTitle(String string) {
+		widgetTitle.addLargeTitle(string);
+		return this;
+	}
 }
