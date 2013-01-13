@@ -36,7 +36,7 @@ public class MetaViewList {
 
 	FlipPage contentPanel() {
 		if (card == null) {
-			card = new FlipPage(layout.mainPanel.add());
+			card = new FlipPage(layout.mainPanel.add().panel().vertical().add());
 		}
 		return card;
 	}
