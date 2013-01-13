@@ -1687,14 +1687,21 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	}
 
 	@Override
-	public void fixLayout(boolean fixLayout) {
+	public IScrollTableWidget<Object> fixLayout(boolean fixLayout) {
 		this.fixLayout = fixLayout;
 		columnWidths.fixLayout(fixLayout);
+		return this;
 	}
 
 	@Override
 	public IScrollTableWidget<Object> horizontalLines(boolean horizontalLines) {
 		this.horizontalLines = horizontalLines;
+		return this;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> addLargeTitle(String string) {
+		widgetTitle().addLargeTitle(string);
 		return this;
 	}
 }

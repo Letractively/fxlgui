@@ -169,4 +169,10 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 		this.requiresCurrent = requiresCurrent;
 		return this;
 	}
+
+	@Override
+	public IChangePasswordWidget addLargeTitle(String string) {
+		widget.addLargeTitle(string);
+		return this;
+	}
 }

@@ -53,7 +53,7 @@ public class WidgetTitle implements IClickListener, IColored {
 	// nur Icons anzeigen)
 
 	// private static final int MAX_LENGTH_SUBTITLE = 30;
-	public static final int LARGE_FONT = 18;
+	private static final int LARGE_FONT = 18;
 	private static final String FOLDABLE = "Click to minimize/maximize";
 	// private static final boolean IGNORE_SUBTITLES = true;
 	private static final boolean USE_CONFIGURE_IMAGE = true;
