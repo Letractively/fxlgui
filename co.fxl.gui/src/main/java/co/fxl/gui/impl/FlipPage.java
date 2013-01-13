@@ -42,38 +42,52 @@ public class FlipPage implements IContentPage, IColored {
 
 	@Override
 	public IContainer next() {
-		if (active == null)
-			return page1.clear().add();
 		nextCalled = true;
-		if (active == page2) {
-			return page1.clear().add();
+		IContainer container;
+		if (active == null)
+			container = page1.clear().add();
+		else if (active == page2) {
+			container = page1.clear().add();
 		} else {
-			return page2.clear().add();
+			container = page2.clear().add();
 		}
+		if (flipImmediatelyAfterNext())
+			flipNow();
+		return container;
+	}
+
+	private boolean flipImmediatelyAfterNext() {
+		return Env.is(Env.OPERA);
 	}
 
 	@Override
 	public void flip() {
-		if (active == null) {
-			active = page1;
-			return;
-		}
 		if (!nextCalled)
 			return;
-		IVerticalPanel inactive = active;
-		if (active == page2) {
-			active = page1;
-		} else
-			active = page2;
-		cardPanel.show(active);
-		inactive.clear();
 		nextCalled = false;
+		if (flipImmediatelyAfterNext())
+			return;
+		flipNow();
+	}
+
+	private void flipNow() {
+		if (active == null) {
+			active = page1;
+		} else {
+			IVerticalPanel inactive = active;
+			if (active == page2) {
+				active = page1;
+			} else
+				active = page2;
+			cardPanel.show(active);
+			inactive.clear();
+		}
 	}
 
 	@Override
 	public void preview() {
 		previewCalled = true;
-		if (Env.is(Env.OPERA))
+		if (flipImmediatelyAfterNext())
 			return;
 		if (active == null)
 			return;
@@ -87,7 +101,7 @@ public class FlipPage implements IContentPage, IColored {
 	public void back() {
 		assert previewCalled;
 		previewCalled = false;
-		if (Env.is(Env.OPERA))
+		if (flipImmediatelyAfterNext())
 			return;
 		if (active == null)
 			return;
