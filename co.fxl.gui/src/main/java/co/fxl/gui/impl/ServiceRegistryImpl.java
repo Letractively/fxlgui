@@ -33,6 +33,30 @@ import co.fxl.gui.api.WidgetProviderNotFoundException;
 
 public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 
+	private abstract class LoadAsyncCallbackTemplate<R> extends
+			CallbackTemplate<R> {
+
+		private LoadAsyncCallbackTemplate(ICallback<Void> callback) {
+			super(callback);
+			ServerListener.notifyCall();
+		}
+
+		@Override
+		public void onSuccess(R result) {
+			ServerListener.notifyReturn();
+			registerResult(result);
+			encapsulatedCallback.onSuccess(null);
+		}
+
+		abstract void registerResult(R result);
+
+		@Override
+		public void onFail(Throwable throwable) {
+			ServerListener.notifyReturn();
+			super.onFail(throwable);
+		}
+	}
+
 	public Map<Class<?>, IWidgetProvider<?>> widgetProviders = new HashMap<Class<?>, IWidgetProvider<?>>();
 	public Map<Class<?>, IAsyncWidgetProvider<?>> asyncWidgetProviders = new HashMap<Class<?>, IAsyncWidgetProvider<?>>();
 	public Map<Class<?>, IAsyncServiceProvider<?>> asyncServices = new HashMap<Class<?>, IAsyncServiceProvider<?>>();
@@ -54,21 +78,23 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 				|| services.containsKey(interfaceClass)) {
 			callback.onSuccess(null);
 		} else if (asyncWidgetProviders.containsKey(interfaceClass)) {
-			IAsyncWidgetProvider wp = asyncWidgetProviders.get(interfaceClass);
-			wp.loadAsync(new CallbackTemplate<IWidgetProvider>() {
+			IAsyncWidgetProvider wp = asyncWidgetProviders
+					.remove(interfaceClass);
+			wp.loadAsync(new LoadAsyncCallbackTemplate<IWidgetProvider>(
+					callback) {
 				@Override
-				public void onSuccess(IWidgetProvider result) {
+				void registerResult(IWidgetProvider result) {
 					register(result);
-					callback.onSuccess(null);
 				}
 			});
 		} else if (asyncServices.containsKey(interfaceClass)) {
-			final IAsyncServiceProvider wp = asyncServices.get(interfaceClass);
-			wp.loadAsync(new CallbackTemplate<IServiceProvider>() {
+			final IAsyncServiceProvider wp = asyncServices
+					.remove(interfaceClass);
+			wp.loadAsync(new LoadAsyncCallbackTemplate<IServiceProvider>(
+					callback) {
 				@Override
-				public void onSuccess(IServiceProvider result) {
+				void registerResult(IServiceProvider result) {
 					register(result);
-					callback.onSuccess(null);
 				}
 			});
 		} else {
