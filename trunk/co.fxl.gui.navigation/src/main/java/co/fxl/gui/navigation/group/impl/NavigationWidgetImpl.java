@@ -472,6 +472,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		if (listeningOnServerCalls) {
 			serverCallCounter--;
 			if (serverCallCounter <= 0) {
+				assert serverCallCounter == 0;
 				serverCallCounter = 0;
 				flipPage().preview();
 			}
