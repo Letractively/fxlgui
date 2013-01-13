@@ -22,22 +22,22 @@ import co.fxl.gui.api.ICallback;
 
 public abstract class CallbackTemplate<T> implements ICallback<T> {
 
-	private ICallback<?> cb;
+	protected ICallback<?> encapsulatedCallback;
 
 	public CallbackTemplate() {
 	}
 
 	public CallbackTemplate(ICallback<?> cb) {
-		this.cb = cb;
+		this.encapsulatedCallback = cb;
 	}
 
 	@Override
 	public void onFail(Throwable throwable) {
-		if (cb == null) {
+		if (encapsulatedCallback == null) {
 			// throwable.printStackTrace();
 			throw new RuntimeException(throwable);
 		} else
-			cb.onFail(throwable);
+			encapsulatedCallback.onFail(throwable);
 	}
 
 	public static ICallback<Boolean> adapterVoid(final ICallback<Void> cb2) {
