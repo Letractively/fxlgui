@@ -1701,6 +1701,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 
 	@Override
 	public IScrollTableWidget<Object> addLargeTitle(String string) {
+		addBorders = true;
 		widgetTitle().addLargeTitle(string);
 		return this;
 	}
