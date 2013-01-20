@@ -322,7 +322,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			return;
 		if (listeners2.size() > 1) {
 			listeners2.get(0).onBeforeNavigation(activeItem, viaClick,
-					new CallbackTemplate<Void>() {
+					new CallbackTemplate<Void>(cb) {
 						@Override
 						public void onSuccess(Void result) {
 							List<INavigationListener> listeners3 = listeners2
