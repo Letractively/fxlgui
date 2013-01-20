@@ -46,6 +46,7 @@ import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IImageField;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
+import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.Heights;
@@ -581,12 +582,7 @@ public class FormWidgetImpl implements IFormWidget {
 	@Override
 	public IFormWidget notifyUpdate() {
 		if (validation != null)
-			validation.notifyChange(new CallbackTemplate<Boolean>() {
-
-				@Override
-				public void onSuccess(Boolean result) {
-				}
-			});
+			validation.notifyChange(new DummyCallback<Boolean>());
 		return this;
 	}
 
