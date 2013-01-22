@@ -550,9 +550,13 @@ public class FormWidgetImpl implements IFormWidget {
 
 	@Override
 	public ILabel addTitle(String title) {
+		prepareAddTitle();
+		return widgetTitle.addTitle(title);
+	}
+
+	void prepareAddTitle() {
 		widgetTitle.spacing(0);
 		spacing = 8;
-		return widgetTitle.addTitle(title);
 	}
 
 	@Override
@@ -679,6 +683,7 @@ public class FormWidgetImpl implements IFormWidget {
 
 	@Override
 	public IFormWidget addLargeTitle(String string) {
+		prepareAddTitle();
 		widgetTitle.addLargeTitle(string);
 		return this;
 	}
