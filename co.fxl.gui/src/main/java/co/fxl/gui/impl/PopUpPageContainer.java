@@ -19,6 +19,7 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.IResizableWidget.Size;
 
@@ -29,6 +30,7 @@ public class PopUpPageContainer implements PageContainer {
 	private ResizableWidgetTemplate widget;
 	private Size popUpSize;
 	private boolean isModal;
+	private boolean added;
 
 	public PopUpPageContainer(ResizableWidgetTemplate widget, Size popUpSize,
 			boolean isModal) {
@@ -53,8 +55,10 @@ public class PopUpPageContainer implements PageContainer {
 	@Override
 	public void visible(boolean visible) {
 		popUp.visible(visible);
-		if (visible)
+		if (visible && !added) {
 			widget.addResizableWidgetToDisplay(popUp);
+			added = true;
+		}
 	}
 
 	@Override
@@ -66,5 +70,15 @@ public class PopUpPageContainer implements PageContainer {
 		panel.size(w, h);
 		popUp.size(w, h).offset((Shell.instance().dwidth() - w) / 2,
 				(Shell.instance().dheight() - h) / 2);
+	}
+
+	public void addCloseListener(final Runnable runnable) {
+		popUp.addVisibleListener(new IUpdateListener<Boolean>() {
+			@Override
+			public void onUpdate(Boolean value) {
+				if (!value)
+					runnable.run();
+			}
+		});
 	}
 }
