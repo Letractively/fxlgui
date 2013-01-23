@@ -385,6 +385,8 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 				if (filter.text != null) {
 					((ComboBoxStringFilter) fp).input.text(filter.text);
 				}
+				if (!filter.directApply)
+					((ComboBoxFilterTemplate) fp).directApply = false;
 				holdFilterClicks = false;
 				if (filter.updateListener != null)
 					fp.addUpdateListener(filter.updateListener);

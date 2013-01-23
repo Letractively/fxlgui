@@ -30,6 +30,7 @@ class FilterImpl implements IFilter {
 	IUpdateListener<String> updateListener;
 	boolean required = false;
 	String text;
+	boolean directApply = true;
 
 	@Override
 	public IFilter name(String name) {
@@ -64,6 +65,12 @@ class FilterImpl implements IFilter {
 	@Override
 	public IFilter text(String c) {
 		this.text = c;
+		return this;
+	}
+
+	@Override
+	public IFilter directApply(boolean directApply) {
+		this.directApply  = directApply;
 		return this;
 	}
 }

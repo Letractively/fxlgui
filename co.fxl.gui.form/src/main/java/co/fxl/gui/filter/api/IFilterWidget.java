@@ -47,6 +47,8 @@ public interface IFilterWidget {
 		IFilter updateListener(IUpdateListener<String> l);
 
 		IFilter text(String c);
+
+		IFilter directApply(boolean directApply);
 	}
 
 	public interface IRelationFilter<S, R> extends IFilter {

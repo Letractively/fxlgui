@@ -11,6 +11,7 @@ abstract class ComboBoxFilterTemplate<T> extends FilterTemplate<IComboBox, T> {
 
 	private FilterGrid panel;
 	boolean updateListeningActive = true;
+	boolean directApply = true;
 
 	ComboBoxFilterTemplate(FilterGrid panel, String name, List<Object> values,
 			int filterIndex) {
@@ -41,7 +42,7 @@ abstract class ComboBoxFilterTemplate<T> extends FilterTemplate<IComboBox, T> {
 		input.addUpdateListener(new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(String value) {
-				if (updateListeningActive)
+				if (updateListeningActive && directApply)
 					panel.notifyComboBoxChange();
 			}
 		});
