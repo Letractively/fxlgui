@@ -37,6 +37,7 @@ public class FieldTypeImpl implements IFieldType {
 	public boolean isHTML = false;
 	public Object defaultConstraint;
 	public int rows = 1;
+	public boolean enumType = false;
 
 	@Override
 	public boolean equals(Object o) {
@@ -243,5 +244,11 @@ public class FieldTypeImpl implements IFieldType {
 	@Override
 	public boolean isHTML() {
 		return isHTML;
+	}
+
+	@Override
+	public IFieldType enumType() {
+		enumType = true;
+		return this;
 	}
 }

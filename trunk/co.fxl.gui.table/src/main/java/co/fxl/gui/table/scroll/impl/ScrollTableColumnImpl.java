@@ -182,6 +182,28 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	private static final String BORDER_RADIUS_ATTRIBUTE = Env.is(Env.FIREFOX) ? "-moz-border-radius"
 			: "border-radius";
 
+	public class EnumDecorator extends DefaultDecorator<Object> {
+
+		@Override
+		public void decorate(Object identifier, IBulkTableCell cell,
+				Object value) {
+			String string = value != null ? String.valueOf(value) : null;
+			cell.text(string);
+		}
+
+		@Override
+		public double defaultWeight() {
+			return WEIGHT_CUSTOM_LIST_SELECTION;
+		}
+
+		@Override
+		public void prepare(
+				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
+			defaultPrepare(column, true);
+		}
+
+	}
+
 	public class StringDecorator extends DefaultDecorator<String> {
 
 		private double weight = WEIGHT_TEXT;
@@ -238,13 +260,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		@Override
 		public void prepare(
 				co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column) {
-			if (alignment.isSpecified()) {
-				alignment.forward(column.align());
-				return;
-			}
-			if (isShort) {
-				column.align().center();
-			}
+			defaultPrepare(column, isShort);
 		}
 
 		@Override
@@ -380,7 +396,10 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 			if (type.isHTML) {
 				decorator = new HTMLDecorator();
 			} else if (type.clazz.equals(String.class)) {
-				decorator = new StringDecorator(type.isShort, type.isLong);
+				if (type.enumType)
+					decorator = new EnumDecorator();
+				else
+					decorator = new StringDecorator(type.isShort, type.isLong);
 			} else if (type.clazz.equals(IImage.class)) {
 				decorator = new ImageDecorator();
 			} else if (type.clazz.equals(Long.class)
@@ -569,5 +588,17 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	@Override
 	public boolean required() {
 		return required;
+	}
+
+	void defaultPrepare(
+			co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn column,
+			boolean isShort) {
+		if (alignment.isSpecified()) {
+			alignment.forward(column.align());
+			return;
+		}
+		if (isShort) {
+			column.align().center();
+		}
 	}
 }

@@ -73,4 +73,6 @@ public interface IFieldType {
 	boolean isHTML();
 
 	IFieldType rows(int rows);
+
+	IFieldType enumType();
 }
