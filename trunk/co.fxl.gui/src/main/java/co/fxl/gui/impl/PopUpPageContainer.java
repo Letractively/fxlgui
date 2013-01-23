@@ -81,4 +81,8 @@ public class PopUpPageContainer implements PageContainer {
 			}
 		});
 	}
+
+	public boolean visible() {
+		return popUp.visible();
+	}
 }
