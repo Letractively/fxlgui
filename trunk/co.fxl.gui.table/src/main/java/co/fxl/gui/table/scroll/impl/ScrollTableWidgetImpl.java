@@ -646,7 +646,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	protected void setUpFilter() {
 		if (viewComboBoxText != null) {
 			createFilter();
-			IFilter vl = filter.addFilter().name("View").required();
+			IFilter vl = filter.addFilter().name("View").required().directApply(false);
 			IFieldType type = vl.type().text();
 			for (String s : viewComboBoxText) {
 				type.addConstraint(s);
