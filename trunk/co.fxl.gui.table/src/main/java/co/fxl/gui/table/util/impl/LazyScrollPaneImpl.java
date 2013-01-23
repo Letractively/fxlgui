@@ -40,7 +40,8 @@ import co.fxl.gui.table.util.impl.DragAndDrop.DragAndDropAdapter;
 public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		DragAndDropAdapter {
 
-	// TODO Usability: Relation-Register-Easy-Add: Klick auf Add: untere H�lfte
+	// TODO Usability: Relation-Register-Easy-Add: Klick auf Add: untere
+	// H�lfte
 	// von Relation-Register via Split-Pane unterteilt, Filter oben gilt f�r
 	// beide Sichten, untere Sicht enth�lt alle nicht-assoziierten Objekte
 	// (Adapter.nonValueOf). Gibt Buttons dazwischen mit hoch/runter
@@ -107,8 +108,9 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		rows2Paint = height / minRowHeight;
 		if (rows2Paint > size)
 			rows2Paint = size;
-//		assert rows2Paint > 0 || size == 0 : "Illegal value combination for lazy scroll pane: "
-//				+ height + " / " + minRowHeight + " / " + size;
+		// assert rows2Paint > 0 || size == 0 :
+		// "Illegal value combination for lazy scroll pane: "
+		// + height + " / " + minRowHeight + " / " + size;
 		return this;
 	}
 

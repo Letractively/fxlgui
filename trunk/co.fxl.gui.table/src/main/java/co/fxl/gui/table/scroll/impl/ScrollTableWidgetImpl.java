@@ -554,7 +554,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		IGridPanel nefg = dock.spacing(10).add().panel().grid();
 		IVerticalPanel nef = nefg.cell(0, 0).panel().vertical();
 		String text = columnsIsEmpty ? "No columns specified."
-				: "No entities found.";
+				: "No "+"entities found.";
 		nef.add().panel().vertical().spacing(4).add().label().text(text);// .font().weight().bold();//
 																			// .font().pixel(10).color().gray();
 		if (constraints == null)
