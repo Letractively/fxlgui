@@ -148,4 +148,10 @@ class NavigationGroupImpl implements INavigationGroup {
 		for (NavigationItemImpl i : items)
 			i.clearCache();
 	}
+
+	@Override
+	public void remove() {
+		panel.remove();
+		widget.groups.remove(this);
+	}
 }

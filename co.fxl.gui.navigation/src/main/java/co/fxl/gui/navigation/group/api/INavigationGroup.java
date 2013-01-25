@@ -30,4 +30,6 @@ public interface INavigationGroup extends ITabGroup<INavigationItem> {
 	boolean visible();
 
 	INavigationGroup active(ICallback<Void> cb);
+
+	void remove();
 }
