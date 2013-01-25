@@ -147,21 +147,21 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 	public boolean sortDirection = true;
 	public IRowIterator it = new RowIterator();
 
-	public FilterConstraintsImpl(FilterConstraintsImpl f) {
-		size = f.size;
-		constraints = new HashMap<String, INamedConstraint>(f.constraints);
-		cfg = f.cfg;
-		sortOrder = f.sortOrder;
-		sortDirection = f.sortDirection;
-		it = f.it;
-	}
-
 	public FilterConstraintsImpl() {
-		size = (Integer) FilterWidgetImpl.DEFAULT_SIZES.get(0);
 	}
 
 	public FilterConstraintsImpl(String configuration) {
+		this();
 		cfg = configuration;
+	}
+
+	public FilterConstraintsImpl(FilterConstraintsImpl f) {
+		this(f.cfg);
+		size = f.size;
+		constraints = new HashMap<String, INamedConstraint>(f.constraints);
+		sortOrder = f.sortOrder;
+		sortDirection = f.sortDirection;
+		it = f.it;
 	}
 
 	@SuppressWarnings("unchecked")
