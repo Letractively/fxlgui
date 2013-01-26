@@ -140,7 +140,7 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 
 	}
 
-	public int size = -1;//FilterWidgetImpl.DEFAULT_FILTER_SIZE;
+	public int size = FilterWidgetImpl.DEFAULT_FILTER_SIZE;
 	public Map<String, INamedConstraint> constraints = new HashMap<String, INamedConstraint>();
 	public String cfg;
 	public String sortOrder;
@@ -347,6 +347,10 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 	public IFilterConstraints clearRowIndex() {
 		it = new RowIterator();
 		return this;
+	}
+
+	void clearSizeFilter() {
+		size = -1;
 	}
 
 }
