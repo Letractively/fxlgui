@@ -169,4 +169,9 @@ class MenuItemImpl implements IMenuItem, IRegisterListener {
 	@Override
 	public void clearCache() {
 	}
+
+	@Override
+	public void notifyFailureLoad() {
+		register.toggleLoading(false);
+	}
 }

@@ -44,4 +44,6 @@ public interface ITab<T extends ITab<T>> extends IActivateable {
 
 	T clickable(boolean b);
 
+	void notifyFailureLoad();
+
 }

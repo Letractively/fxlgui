@@ -606,4 +606,8 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 		lastWidth = Shell.instance().width(itemPanel);
 		lastHeight = Shell.instance().height(itemPanel);
 	}
+
+	@Override
+	public void notifyFailureLoad() {
+	}
 }
