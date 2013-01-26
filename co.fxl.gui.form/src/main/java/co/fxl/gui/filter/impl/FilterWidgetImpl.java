@@ -188,6 +188,8 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		}
 		if (sizeFilter != null)
 			constraints.add(sizeFilter.asConstraint());
+		else
+			constraints.clearSizeFilter();
 		assert listeners.size() <= 1;
 		return constraints;
 	}
