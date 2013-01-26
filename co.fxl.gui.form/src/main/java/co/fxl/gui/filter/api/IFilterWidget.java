@@ -69,9 +69,10 @@ public interface IFilterWidget {
 
 	String WILDCARD_TOOLTIP = "Use * and ? as wildcards. Use \\ to escape wildcard tokens.";
 	public static final Integer MIN_FILTER_SIZE = 50;
+	public static final Integer MAX_FILTER_SIZE = 5000;
 	public static final Integer DEFAULT_FILTER_SIZE = MIN_FILTER_SIZE;
 	public static final List<Object> DEFAULT_SIZES = Arrays
-			.asList(new Object[] { DEFAULT_FILTER_SIZE, 100, 500, 1000, 5000 });
+			.asList(new Object[] { DEFAULT_FILTER_SIZE, 100, 500, 1000, MAX_FILTER_SIZE });
 
 	IFilterWidget addConfiguration(String config);
 
