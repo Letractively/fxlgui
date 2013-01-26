@@ -205,7 +205,8 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	void setUpDynamicResize() {
 		if (DYNAMIC_RESIZE && !setUpDynamicResize) {
 			setUpDynamicResize = true;
-			moreGroup = new NavigationGroupImpl(this).visible(false);
+			moreGroup = new NavigationGroupImpl(this, masterPanel)
+					.visible(false);
 			moreItem = (NavigationItemImpl) moreGroup.addTab().moreTab();
 			moreItem.decorator(new TabDecoratorTemplate() {
 				@Override
@@ -254,7 +255,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		if (holdUpdate)
 			return false;
 		if (!alwaysAdjust
-				&& Shell.instance().width(mainPanel) > navigationPanel.width())
+				&& Shell.instance().width(mainPanel) > masterPanel.width())
 			return false;
 		for (NavigationGroupImpl g : groups)
 			for (NavigationItemImpl i : g.items)
@@ -263,10 +264,10 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		boolean hidden = false;
 		List<NavigationItemImpl> candidates = new LinkedList<NavigationItemImpl>();
 		for (int i = groups.size() - 1; i >= 0
-				&& Shell.instance().width(mainPanel) < navigationPanel.width(); i--) {
+				&& Shell.instance().width(mainPanel) < masterPanel.width(); i--) {
 			NavigationGroupImpl g = groups.get(i);
 			for (int j = g.items.size() - 1; j >= 0
-					&& Shell.instance().width(mainPanel) < navigationPanel
+					&& Shell.instance().width(mainPanel) < masterPanel
 							.width(); j--) {
 				NavigationItemImpl ni = g.items.get(j);
 				if (ni == active)
@@ -280,7 +281,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			}
 		}
 		for (int i = 0; i < candidates.size()
-				&& Shell.instance().width(mainPanel) < navigationPanel.width(); i++) {
+				&& Shell.instance().width(mainPanel) < masterPanel.width(); i++) {
 			candidates.get(i).displayed(false);
 			hidden = true;
 		}

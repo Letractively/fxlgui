@@ -43,13 +43,18 @@ class NavigationGroupImpl implements INavigationGroup {
 	private IVerticalPanel headerPanel;
 
 	NavigationGroupImpl(NavigationWidgetImpl widget) {
+		this(widget, widget.navigationPanel);
+	}
+
+	NavigationGroupImpl(NavigationWidgetImpl widget,
+			IHorizontalPanel navigationPanel) {
 		this.widget = widget;
-		panel = widget.navigationPanel.add().panel().horizontal();
+		panel = navigationPanel.add().panel().horizontal();
 		headerPanel = panel.add().panel().vertical();
 		headerPanel.margin().left(widget.groups.isEmpty() ? 3 : 8).right(1);
 		header = headerPanel.addSpace(2).add().label();
 		header.font().weight().bold().pixel(11);
-//		panel.addSpace(1);
+		// panel.addSpace(1);
 		itemPanel = panel.add().panel().horizontal();
 		colorInactive = widget.colorInactive;
 		colorInactiveGradient = widget.colorInactiveGradient;
