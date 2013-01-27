@@ -161,7 +161,8 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	}
 
 	public void removeFromContextMenu() {
-		contextMenuEntry.remove();
+		if (contextMenuEntry != null)
+			contextMenuEntry.remove();
 	}
 
 	co.fxl.gui.api.IClickable.IClickListener getFire() {
