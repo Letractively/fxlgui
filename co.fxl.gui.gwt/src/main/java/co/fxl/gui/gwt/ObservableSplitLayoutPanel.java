@@ -36,10 +36,23 @@ class ObservableSplitLayoutPanel extends SplitLayoutPanel {
 		owner.onResize(owner.splitPosition);
 	}
 
+	private void setSplitPosition(Widget widgetBeforeTheSplitter, double size,
+			boolean animate) {
+		LayoutData layout = (LayoutData) widgetBeforeTheSplitter
+				.getLayoutData();
+		layout.oldSize = layout.size;
+		layout.size = size;
+		if (animate)
+			animate(500);
+		else
+			forceLayout();
+	}
+
 	void updatePosition() {
 		if (getWidgetCount() == 0)
 			return;
 		Widget left = getWidget(0);
+		setSplitPosition(left, owner.splitPosition, true);
 		left.getElement().getParentElement().getStyle()
 				.setWidth(owner.splitPosition, Unit.PX);
 		left.setWidth(owner.splitPosition + "px");
