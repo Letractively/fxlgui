@@ -70,6 +70,12 @@ public class FlipPage implements IContentPage, IColored {
 		flipNow();
 	}
 
+	@Override
+	public void revert() {
+		nextCalled = false;
+		cardPanel.show(active);
+	}
+
 	private void flipNow() {
 		if (active == null) {
 			active = page1;

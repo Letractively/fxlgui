@@ -63,6 +63,10 @@ class MultiContentBuffer implements IContentBuffer {
 			front();
 			flips++;
 		}
+
+		@Override
+		public void revert() {
+		}
 	}
 
 	private ICardPanel cards;
