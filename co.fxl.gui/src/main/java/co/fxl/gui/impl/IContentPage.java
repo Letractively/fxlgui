@@ -30,4 +30,6 @@ public interface IContentPage {
 
 	void flip();
 
+	void revert();
+
 }
