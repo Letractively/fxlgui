@@ -164,21 +164,36 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 
 	public RegisterImpl updateActive(ICallback<Void> cb) {
 		Iterator<RegisterImpl> rit = widget.registers.iterator();
-		recurse(this, rit, cb);
+		recurse(this, rit, new ExceptionHolder(), cb);
 		return this;
 	}
 
+	private class ExceptionHolder {
+		Throwable t;
+	}
+
 	private void recurse(final RegisterImpl active,
-			final Iterator<RegisterImpl> rit, final ICallback<Void> cb) {
+			final Iterator<RegisterImpl> rit, final ExceptionHolder h,
+			final ICallback<Void> cb) {
 		if (!rit.hasNext()) {
-			cb.onSuccess(null);
+			if (h.t != null)
+				cb.onFail(h.t);
+			else
+				cb.onSuccess(null);
 			return;
 		} else {
 			RegisterImpl reg = rit.next();
-			reg.notifyVisible(reg == active, new CallbackTemplate<Void>(cb) {
+			reg.notifyVisible(reg == active, new ICallback<Void>() {
+
 				@Override
 				public void onSuccess(Void result) {
-					recurse(active, rit, cb);
+					recurse(active, rit, h, cb);
+				}
+
+				@Override
+				public void onFail(Throwable t) {
+					h.t = t;
+					recurse(active, rit, h, cb);
 				}
 			});
 		}
