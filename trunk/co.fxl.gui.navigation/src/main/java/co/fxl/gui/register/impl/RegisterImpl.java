@@ -207,7 +207,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 		if (listener != null) {
 			if (visible)
 				toggleLoading(true);
-			listener.onTop(visible, new CallbackTemplate<Void>(cb) {
+			CallbackTemplate<Void> cb2 = new CallbackTemplate<Void>(cb) {
 				@Override
 				public void onSuccess(Void result) {
 					finish(visible);
@@ -231,7 +231,8 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 					showFailureLoadingRegister(panel);
 					super.onFail(throwable);
 				}
-			});
+			};
+			listener.onTop(visible, cb2);
 		} else
 			cb.onSuccess(null);
 	}
