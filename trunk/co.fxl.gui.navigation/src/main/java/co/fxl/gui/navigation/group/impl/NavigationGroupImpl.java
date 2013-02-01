@@ -67,7 +67,8 @@ class NavigationGroupImpl implements INavigationGroup {
 
 	@Override
 	public INavigationGroup name(String name) {
-		header.text(name + ":");
+		if (name != null)
+			header.text(name + ":");
 		return this;
 	}
 
