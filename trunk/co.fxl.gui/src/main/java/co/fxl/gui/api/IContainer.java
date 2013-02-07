@@ -36,7 +36,7 @@ public interface IContainer {
 
 	ITextArea textArea();
 
-	IRichTextArea richTextArea();
+	// IRichTextArea richTextArea();
 
 	ICheckBox checkBox();
 
@@ -62,7 +62,7 @@ public interface IContainer {
 
 	<T> T widget(Class<T> interfaceClass);
 
-//	<T> void widget(Class<T> interfaceClass, ICallback<T> callback);
+	// <T> void widget(Class<T> interfaceClass, ICallback<T> callback);
 
 	IContainer clear();
 

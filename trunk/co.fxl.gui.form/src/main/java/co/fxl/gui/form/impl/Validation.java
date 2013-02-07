@@ -30,7 +30,6 @@ import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IPasswordField;
-import co.fxl.gui.api.IRichTextArea;
 import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextElement;
@@ -407,11 +406,11 @@ public class Validation {
 		return this;
 	}
 
-	public Validation linkInput(IRichTextArea textField, boolean required) {
-		Field field = new Field(textField, required);
-		textField.addUpdateListener(field);
-		return this;
-	}
+	// public Validation linkInput(IRichTextArea textField, boolean required) {
+	// Field field = new Field(textField, required);
+	// textField.addUpdateListener(field);
+	// return this;
+	// }
 
 	public Validation linkInput(IComboBox comboBox) {
 		return linkInput(comboBox, false);
@@ -579,8 +578,8 @@ public class Validation {
 			linkInput((ICheckBox) valueElement);
 		} else if (valueElement instanceof IComboBox) {
 			linkInput((IComboBox) valueElement, required);
-		} else if (valueElement instanceof IRichTextArea) {
-			linkInput((IRichTextArea) valueElement, required);
+			// } else if (valueElement instanceof IRichTextArea) {
+			// linkInput((IRichTextArea) valueElement, required);
 		} else
 			throw new UnsupportedOperationException(valueElement.getClass()
 					.getName());

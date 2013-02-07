@@ -32,7 +32,6 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.IRadioButton;
-import co.fxl.gui.api.IRichTextArea;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISplitPane;
 import co.fxl.gui.api.ISuggestField;
@@ -163,10 +162,10 @@ public class AndroidContainer implements IContainer {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public IRichTextArea richTextArea() {
-		throw new UnsupportedOperationException();
-	}
+	// @Override
+	// public IRichTextArea richTextArea() {
+	// throw new UnsupportedOperationException();
+	// }
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -176,8 +175,8 @@ public class AndroidContainer implements IContainer {
 		return (T) provider.createWidget(this);
 	}
 
-//	@Override
-//	public <T> void widget(Class<T> interfaceClass, ICallback<T> widget) {
-//		throw new UnsupportedOperationException();
-//	}
+	// @Override
+	// public <T> void widget(Class<T> interfaceClass, ICallback<T> widget) {
+	// throw new UnsupportedOperationException();
+	// }
 }
