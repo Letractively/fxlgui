@@ -21,7 +21,6 @@ package co.fxl.gui.api.test;
 import java.lang.reflect.InvocationTargetException;
 
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.api.IRichTextArea;
 import co.fxl.gui.api.IVerticalPanel;
 
 public class RichTextToolbarTest {
@@ -29,9 +28,9 @@ public class RichTextToolbarTest {
 	public void run(IDisplay display) {
 		IVerticalPanel panel = display.container().panel().vertical()
 				.spacing(10);
-		IRichTextArea rta = panel.add().richTextArea();
-		rta.text("<b>test</b>");
-		rta.border();
+		// IRichTextArea rta = panel.add().richTextArea();
+		// rta.text("<b>test</b>");
+		// rta.border();
 		display.visible(true);
 	}
 
