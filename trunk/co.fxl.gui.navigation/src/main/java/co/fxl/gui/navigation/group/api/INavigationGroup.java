@@ -32,4 +32,6 @@ public interface INavigationGroup extends ITabGroup<INavigationItem> {
 	INavigationGroup active(ICallback<Void> cb);
 
 	void remove();
+
+	INavigationGroup showLabel(boolean showLabel);
 }

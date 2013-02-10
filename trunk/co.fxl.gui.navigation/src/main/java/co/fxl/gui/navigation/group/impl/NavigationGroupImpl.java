@@ -41,6 +41,7 @@ class NavigationGroupImpl implements INavigationGroup {
 	int[] colorInactive;
 	int[] colorInactiveGradient = new int[] { 63, 63, 63 };
 	private IVerticalPanel headerPanel;
+	private boolean showGroupLabel = true;
 
 	NavigationGroupImpl(NavigationWidgetImpl widget) {
 		this(widget, widget.navigationPanel);
@@ -62,7 +63,7 @@ class NavigationGroupImpl implements INavigationGroup {
 	}
 
 	void updateVisibilityLabel() {
-		headerPanel.visible(widget.showGroupLabel);
+		headerPanel.visible(widget.showGroupLabel && showGroupLabel);
 	}
 
 	@Override
@@ -87,6 +88,8 @@ class NavigationGroupImpl implements INavigationGroup {
 
 	@Override
 	public NavigationGroupImpl visible(boolean visible) {
+		if (this.visible == visible)
+			return this;
 		this.visible = visible;
 		updatePanelVisible();
 		return this;
@@ -161,5 +164,12 @@ class NavigationGroupImpl implements INavigationGroup {
 	public void remove() {
 		panel.remove();
 		widget.groups.remove(this);
+	}
+
+	@Override
+	public INavigationGroup showLabel(boolean showLabel) {
+		showGroupLabel = showLabel;
+		updateVisibilityLabel();
+		return this;
 	}
 }
