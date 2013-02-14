@@ -160,7 +160,7 @@ class SelectionImpl implements ISelection<Object> {
 			return result;
 		}
 
-		private int lastIndex = 0;
+		private Object lastSelection;
 
 		void update() {
 			IKey<?> exclusiveSelection = widget.grid
@@ -172,9 +172,9 @@ class SelectionImpl implements ISelection<Object> {
 								return;
 							row--;
 							clearSelection();
-							widget.rows.selected(
-									lastIndex = widget.convert2TableRow(row),
-									true);
+							int lastIndex = widget.convert2TableRow(row);
+							lastSelection = widget.rows.identifier(lastIndex);
+							widget.rows.selected(lastIndex, true);
 							IRow r = widget.grid.row(row);
 							r.highlight(true);
 							widget.highlighted.add(r);
@@ -189,8 +189,9 @@ class SelectionImpl implements ISelection<Object> {
 							if (row == 0)
 								return;
 							row--;
-							int tableRow = lastIndex = widget
-									.convert2TableRow(row);
+							int lastIndex = widget.convert2TableRow(row);
+							lastSelection = widget.rows.identifier(lastIndex);
+							int tableRow = lastIndex;
 							boolean selected = !widget.rows.selected(tableRow);
 							widget.rows.selected(tableRow, selected);
 							IRow r = widget.grid.row(row);
@@ -211,22 +212,26 @@ class SelectionImpl implements ISelection<Object> {
 								return;
 							row--;
 							int tableRow = widget.convert2TableRow(row);
-							int r0 = lastIndex;
-							if (r0 == 0
-									&& widget.rows.selectedIdentifiers().size() >= 1) {
-								boolean ok = false;
-								for (int i : widget.rows.selectedIndices()) {
-									if (i == 0) {
-										ok = true;
-									}
-								}
-								if (!ok) {
-									r0 = widget.rows.selectedIndices().get(
-											widget.rows.selectedIndices()
-													.size() - 1);
-									lastIndex = r0;
-								}
-							}
+							System.out.println(lastSelection);
+							int r0 = lastSelection == null ? 0 : widget.rows
+									.find(lastSelection);
+							System.out.println(r0);
+							// if (r0 == 0
+							// && widget.rows.selectedIdentifiers().size() >= 1)
+							// {
+							// boolean ok = false;
+							// for (int i : widget.rows.selectedIndices()) {
+							// if (i == 0) {
+							// ok = true;
+							// }
+							// }
+							// if (!ok) {
+							// r0 = widget.rows.selectedIndices().get(
+							// widget.rows.selectedIndices()
+							// .size() - 1);
+							// lastIndex = r0;
+							// }
+							// }
 							int r1 = tableRow;
 							if (r0 > r1) {
 								int tmp = r0;
@@ -296,6 +301,7 @@ class SelectionImpl implements ISelection<Object> {
 
 		ISelection<Object> add(Object object) {
 			widget.preselectedList.add(object);
+			lastSelection = object;
 			return SelectionImpl.this;
 		}
 
