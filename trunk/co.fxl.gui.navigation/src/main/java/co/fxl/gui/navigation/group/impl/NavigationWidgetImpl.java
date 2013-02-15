@@ -59,12 +59,10 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 
 	private class Action {
 
-		private String label;
 		private IClickListener listener;
 		private IConstraint c;
 
-		private Action(String label, IClickListener clickListener, IConstraint c) {
-			this.label = label;
+		private Action(IClickListener clickListener, IConstraint c) {
 			listener = clickListener;
 			this.c = c;
 		}
@@ -422,7 +420,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		for (Action action : actions) {
 			if (action.c != null && !action.c.satisfied(active))
 				continue;
-			ILabel li = p.add().label().text(action.label).hyperlink();
+			ILabel li = p.add().label().text(action.c.label()).hyperlink();
 			li.font().pixel(14).weight().bold();
 			li.addClickListener(action.listener);
 		}
@@ -612,9 +610,9 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	}
 
 	@Override
-	public INavigationWidget addConfigureAction(String label,
-			IClickListener clickListener, IConstraint c) {
-		Action action = new Action(label, clickListener, c);
+	public INavigationWidget addConfigureAction(IClickListener clickListener,
+			IConstraint c) {
+		Action action = new Action(clickListener, c);
 		actions.add(action);
 		return this;
 	}

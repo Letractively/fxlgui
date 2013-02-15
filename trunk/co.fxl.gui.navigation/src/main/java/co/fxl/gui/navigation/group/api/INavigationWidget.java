@@ -27,6 +27,8 @@ public interface INavigationWidget extends
 
 	public interface IConstraint {
 
+		String label();
+
 		boolean satisfied(INavigationItem activeItem);
 	}
 
@@ -60,8 +62,8 @@ public interface INavigationWidget extends
 
 	INavigationWidget showGroupLabel(boolean showGroupLabel);
 
-	INavigationWidget addConfigureAction(String label,
-			IClickListener clickListener, IConstraint constraint);
+	INavigationWidget addConfigureAction(IClickListener clickListener,
+			IConstraint constraint);
 
 	INavigationWidget clearConfigureActions();
 }
