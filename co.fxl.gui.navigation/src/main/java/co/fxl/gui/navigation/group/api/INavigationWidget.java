@@ -25,6 +25,11 @@ import co.fxl.gui.navigation.api.ITabWidget;
 public interface INavigationWidget extends
 		ITabWidget<INavigationGroup, INavigationItem> {
 
+	public interface IConstraint {
+
+		boolean satisfied(INavigationItem activeItem);
+	}
+
 	public interface INavigationListener {
 
 		void onBeforeNavigation(INavigationItem activeItem, boolean viaClick,
@@ -54,4 +59,9 @@ public interface INavigationWidget extends
 	INavigationWidget clearCache();
 
 	INavigationWidget showGroupLabel(boolean showGroupLabel);
+
+	INavigationWidget addConfigureAction(String label,
+			IClickListener clickListener, IConstraint constraint);
+
+	INavigationWidget clearConfigureActions();
 }

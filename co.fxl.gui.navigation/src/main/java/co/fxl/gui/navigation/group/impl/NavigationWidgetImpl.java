@@ -57,6 +57,19 @@ import co.fxl.gui.navigation.impl.TabDecoratorTemplate;
 public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		INavigationWidget, IServerListener {
 
+	private class Action {
+
+		private String label;
+		private IClickListener listener;
+		private IConstraint c;
+
+		private Action(String label, IClickListener clickListener, IConstraint c) {
+			this.label = label;
+			listener = clickListener;
+			this.c = c;
+		}
+	}
+
 	private static final boolean DYNAMIC_RESIZE = true;
 	protected static final boolean DRAW_MORE_TOP = !Env.is(Env.IE);
 	private static final boolean FIX_SEPARATOR_BORDER = Env.is(Env.IE);
@@ -96,6 +109,8 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	private IPanel<?> middlePartBorder;
 	private IPanel<?> rightPartBorder;
 	boolean showGroupLabel = true;
+	private List<Action> actions = new LinkedList<Action>();
+	private boolean showConfigure = true;
 
 	public NavigationWidgetImpl(IContainer layout) {
 		mainPanel = layout.panel().dock();
@@ -230,7 +245,8 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 							.color().gray();
 					IGridPanel gp = p.add().panel().horizontal().add().panel()
 							.grid().spacing(6);
-					addLabelsToGridPanel(gp);
+					boolean nonEmpty = addLabelsToGridPanel(gp);
+					addActionsToPanel(p, nonEmpty);
 					cb.onSuccess(null);
 				}
 			});
@@ -267,8 +283,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 				&& Shell.instance().width(mainPanel) < masterPanel.width(); i--) {
 			NavigationGroupImpl g = groups.get(i);
 			for (int j = g.items.size() - 1; j >= 0
-					&& Shell.instance().width(mainPanel) < masterPanel
-							.width(); j--) {
+					&& Shell.instance().width(mainPanel) < masterPanel.width(); j--) {
 				NavigationItemImpl ni = g.items.get(j);
 				if (ni == active)
 					continue;
@@ -285,7 +300,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			candidates.get(i).displayed(false);
 			hidden = true;
 		}
-		if (!hidden) {
+		if (!hidden && actions.isEmpty() && !showConfigure) {
 			moreGroup.visible(false);
 		}
 		if (moreItem.popUp != null)
@@ -399,8 +414,23 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		throw new UnsupportedOperationException();
 	}
 
-	void addLabelsToGridPanel(IGridPanel gp) {
+	void addActionsToPanel(IVerticalPanel p, boolean nonEmpty) {
+		if (!showConfigure)
+			return;
+		if (nonEmpty)
+			p.add().line();
+		for (Action action : actions) {
+			if (action.c != null && !action.c.satisfied(active))
+				continue;
+			ILabel li = p.add().label().text(action.label).hyperlink();
+			li.font().pixel(14).weight().bold();
+			li.addClickListener(action.listener);
+		}
+	}
+
+	boolean addLabelsToGridPanel(IGridPanel gp) {
 		int r = 0;
+		boolean added = false;
 		for (final NavigationGroupImpl g : groups) {
 			boolean show = false;
 			for (final NavigationItemImpl i : g.items) {
@@ -445,9 +475,11 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 					}
 				});
 				v.addSpace(2);
+				added = true;
 			}
 			r++;
 		}
+		return added;
 	}
 
 	@Override
@@ -555,6 +587,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 
 	@Override
 	public INavigationWidget showConfigure(boolean b) {
+		showConfigure = b;
 		if (configureIcon != null)
 			configureIcon.visible(b);
 		return this;
@@ -569,6 +602,20 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 						i.active(true, c);
 						return this;
 					}
+		return this;
+	}
+
+	@Override
+	public INavigationWidget clearConfigureActions() {
+		actions.clear();
+		return this;
+	}
+
+	@Override
+	public INavigationWidget addConfigureAction(String label,
+			IClickListener clickListener, IConstraint c) {
+		Action action = new Action(label, clickListener, c);
+		actions.add(action);
 		return this;
 	}
 
