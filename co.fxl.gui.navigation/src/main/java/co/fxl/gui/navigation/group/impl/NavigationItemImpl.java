@@ -239,15 +239,19 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 
 	@Override
 	public void active(final boolean active, final ICallback<Void> cb) {
-		if (!displayed()) {
+		final boolean b = !displayed();
+		NavigationItemImpl previous = widget.active;
+		if (b) {
 			displayed(true);
+			widget.active = NavigationItemImpl.this;
 			widget.update();
 		}
+		widget.active = previous;
 		assert active;
 		updateActive(new CallbackTemplate<Void>(cb) {
 			@Override
 			public void onSuccess(Void result) {
-				if (!displayed()) {
+				if (b) {
 					widget.active = NavigationItemImpl.this;
 				}
 				cb.onSuccess(null);
