@@ -241,9 +241,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 							.spacing(4);
 					p.border().style().left().style().right().style().bottom()
 							.color().gray();
-					IGridPanel gp = p.add().panel().horizontal().add().panel()
-							.grid().spacing(6);
-					boolean nonEmpty = addLabelsToGridPanel(gp);
+					boolean nonEmpty = addLabelsToGridPanel(p);
 					addActionsToPanel(p, nonEmpty);
 					cb.onSuccess(null);
 				}
@@ -417,16 +415,22 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			return;
 		if (nonEmpty)
 			p.add().line();
+		IVerticalPanel actionPanel = p.add().panel().vertical().spacing(6);
 		for (Action action : actions) {
 			if (action.c != null && !action.c.satisfied(active))
 				continue;
-			ILabel li = p.add().label().text(action.c.label()).hyperlink();
+			ILabel li = actionPanel.add().label().text(action.c.label())
+					.hyperlink();
 			li.font().pixel(14).weight().bold();
 			li.addClickListener(action.listener);
 		}
 	}
 
-	boolean addLabelsToGridPanel(IGridPanel gp) {
+	boolean addLabelsToGridPanel(IVerticalPanel p) {
+		if (!hasInvisibleItems())
+			return false;
+		IGridPanel gp = p.add().panel().horizontal().add().panel().grid()
+				.spacing(6);
 		int r = 0;
 		boolean added = false;
 		for (final NavigationGroupImpl g : groups) {
@@ -478,6 +482,16 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			r++;
 		}
 		return added;
+	}
+
+	private boolean hasInvisibleItems() {
+		for (final NavigationGroupImpl g : groups) {
+			for (final NavigationItemImpl i : g.items) {
+				if (!i.displayed() && i.visible())
+					return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
