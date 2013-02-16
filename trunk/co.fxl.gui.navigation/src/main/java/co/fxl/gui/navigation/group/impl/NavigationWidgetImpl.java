@@ -228,16 +228,13 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 				public void refresh(ICallback<Void> cb) {
 					if (DRAW_MORE_TOP) {
 						IGridPanel p02 = panel.add().panel().grid();
-						IAbsolutePanel a0 = p02.cell(0, 0).panel().absolute()
-								.height(1);
-						HorizontalScalingPanel.addDummyIE(a0);
-						a0.color().gray();
-						p02.column(0).expand();
-						IAbsolutePanel a1 = p02.cell(1, 0).panel().absolute()
-								.size(moreItem.buttonPanel.width(), 1);
-						HorizontalScalingPanel.addDummyIE(a1);
-						a1.color().white();
-						a1.border().style().right().color().gray();
+						if (moreItem.popUpMovedRight()) {
+							addBorder2(p02, 0);
+							addBorder1(p02, 1);
+						} else {
+							addBorder1(p02, 0);
+							addBorder2(p02, 1);
+						}
 					}
 					IVerticalPanel p = panel.add().panel().vertical()
 							.spacing(4);
@@ -246,6 +243,22 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 					boolean nonEmpty = addLabelsToGridPanel(p);
 					addActionsToPanel(p, nonEmpty);
 					cb.onSuccess(null);
+				}
+
+				void addBorder2(IGridPanel p02, int p) {
+					IAbsolutePanel a1 = p02.cell(p, 0).panel().absolute()
+							.size(moreItem.buttonPanel.width(), 1);
+					HorizontalScalingPanel.addDummyIE(a1);
+					a1.color().white();
+					a1.border().style().right().color().gray();
+				}
+
+				void addBorder1(IGridPanel p02, int p) {
+					IAbsolutePanel a0 = p02.cell(p, 0).panel().absolute()
+							.height(1);
+					HorizontalScalingPanel.addDummyIE(a0);
+					a0.color().gray();
+					p02.column(0).expand();
 				}
 			});
 			update();
