@@ -22,6 +22,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IAbsolutePanel;
+import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.api.IBordered.IBorder.IBorderStyle;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -229,11 +231,11 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 					if (DRAW_MORE_TOP) {
 						IGridPanel p02 = panel.add().panel().grid();
 						if (moreItem.popUpMovedRight()) {
-							addBorder2(p02, 0);
+							addBorder2(p02, 0, false);
 							addBorder1(p02, 1);
 						} else {
 							addBorder1(p02, 0);
-							addBorder2(p02, 1);
+							addBorder2(p02, 1, true);
 						}
 					}
 					IVerticalPanel p = panel.add().panel().vertical()
@@ -245,12 +247,18 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 					cb.onSuccess(null);
 				}
 
-				void addBorder2(IGridPanel p02, int p) {
+				void addBorder2(IGridPanel p02, int p, boolean right) {
 					IAbsolutePanel a1 = p02.cell(p, 0).panel().absolute()
 							.size(moreItem.buttonPanel.width(), 1);
 					HorizontalScalingPanel.addDummyIE(a1);
 					a1.color().white();
-					a1.border().style().right().color().gray();
+					IBorder border = a1.border();
+					IBorderStyle style = border.style();
+					if (right)
+						style.right();
+					else
+						style.left();
+					border.color().gray();
 				}
 
 				void addBorder1(IGridPanel p02, int p) {
@@ -258,7 +266,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 							.height(1);
 					HorizontalScalingPanel.addDummyIE(a0);
 					a0.color().gray();
-					p02.column(0).expand();
+					p02.column(p).expand();
 				}
 			});
 			update();
@@ -464,7 +472,8 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			if (!show)
 				continue;
 			final ILabel lg = gp.cell(0, r).valign().begin().panel().vertical()
-					.addSpace(1).add().label().text(g.name());
+					.addSpace(1).add().label()
+					.text(g.showGroupLabel ? "" : g.name());
 			lg.addMouseOverListener(new IMouseOverListener() {
 
 				@Override
