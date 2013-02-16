@@ -41,7 +41,7 @@ class NavigationGroupImpl implements INavigationGroup {
 	int[] colorInactive;
 	int[] colorInactiveGradient = new int[] { 63, 63, 63 };
 	private IVerticalPanel headerPanel;
-	private boolean showGroupLabel = true;
+	boolean showGroupLabel = true;
 
 	NavigationGroupImpl(NavigationWidgetImpl widget) {
 		this(widget, widget.navigationPanel);
