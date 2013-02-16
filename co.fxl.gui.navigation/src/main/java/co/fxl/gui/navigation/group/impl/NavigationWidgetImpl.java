@@ -37,6 +37,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Display;
@@ -44,6 +45,7 @@ import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.HorizontalScalingPanel;
 import co.fxl.gui.impl.IServerListener;
+import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.ResizableWidgetTemplate;
 import co.fxl.gui.impl.ServerListener;
 import co.fxl.gui.impl.Shell;
@@ -416,13 +418,20 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		if (nonEmpty)
 			p.add().line();
 		IVerticalPanel actionPanel = p.add().panel().vertical().spacing(6);
-		for (Action action : actions) {
+		for (final Action action : actions) {
 			if (action.c != null && !action.c.satisfied(active))
 				continue;
 			ILabel li = actionPanel.add().label().text(action.c.label())
 					.hyperlink();
 			li.font().pixel(14).weight().bold();
-			li.addClickListener(action.listener);
+			li.addClickListener(new LazyClickListener() {
+				@Override
+				protected void onAllowedClick() {
+					IPopUp pp = moreItem.popUp;
+					pp.visible(false);
+					action.listener.onClick();
+				}
+			});
 		}
 	}
 
