@@ -187,6 +187,11 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	IPopUp popUp;
 	private boolean visible = true;
 
+	boolean popUpMovedRight() {
+		int x = basicPanel.offsetX() - getLeftPartPopUpWidth();
+		return x < 10;
+	}
+
 	@Override
 	public void onClick() {
 		if (isMoreTab) {
@@ -215,6 +220,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 			panel.color().white();
 			decorator.decorate(new BufferedPanelImpl(panel),
 					new CallbackTemplate<Void>() {
+
 						@Override
 						public void onSuccess(Void result) {
 							border.color().gray();
@@ -226,8 +232,9 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 							// refresh.resource("more_black.png");
 							int x = basicPanel.offsetX()
 									- getLeftPartPopUpWidth();
-							if (x < 10)
-								x = 10;
+							if (x < 10) {
+								x = buttonPanel.offsetX();
+							}
 							popUp.offset(x,
 									basicPanel.offsetY() + basicPanel.height());
 							popUp.visible(true);
