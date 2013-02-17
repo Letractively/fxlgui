@@ -630,4 +630,5 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	@Override
 	public void notifyFailureLoad() {
 	}
+
 }
