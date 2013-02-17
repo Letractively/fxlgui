@@ -238,4 +238,10 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	public void width(int width) {
 		iPanel.width(width);
 	}
+
+	public void fireClick(String buttonLabel) {
+		if (label.text().equals(buttonLabel))
+			for (IClickListener l : clickListeners)
+				l.onClick();
+	}
 }

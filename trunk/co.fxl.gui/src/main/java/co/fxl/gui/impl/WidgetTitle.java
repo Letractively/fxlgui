@@ -89,6 +89,7 @@ public class WidgetTitle implements IClickListener, IColored {
 	private IFocusPanel headerFocusPanel;
 	private IClickListener titleClickListener;
 	private int spaceBottom;
+	private List<CommandLink> links = new LinkedList<CommandLink>();
 
 	public WidgetTitle() {
 	}
@@ -361,15 +362,18 @@ public class WidgetTitle implements IClickListener, IColored {
 			image = iPanel.add().image().resource(imageResource).size(16, 16);
 			images.add(image);
 		}
+		CommandLink cl;
 		if (text == null) {
 			ILabel label = iPanel.add().label().visible(false);
-			return createCommandLink(iPanel0, backgroundPanel, iPanel, image,
+			cl = createCommandLink(iPanel0, backgroundPanel, iPanel, image,
 					label);
 		} else {
 			ILabel label = addHyperlinkLabel(text, iPanel);
-			return createCommandLink(iPanel0, backgroundPanel, iPanel, image,
+			cl = createCommandLink(iPanel0, backgroundPanel, iPanel, image,
 					label);
 		}
+		links.add(cl);
+		return cl;
 	}
 
 	public IClickable<?> addConfigureIcon(String text) {
@@ -586,6 +590,11 @@ public class WidgetTitle implements IClickListener, IColored {
 
 	public void buttonsVisible(boolean b) {
 		commandPanel().visible(b);
+	}
+
+	public void fireClick(String buttonLabel) {
+		for (CommandLink l : links)
+			l.fireClick(buttonLabel);
 	}
 
 }
