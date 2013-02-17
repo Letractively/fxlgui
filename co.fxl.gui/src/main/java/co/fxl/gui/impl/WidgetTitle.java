@@ -584,4 +584,8 @@ public class WidgetTitle implements IClickListener, IColored {
 		return l;
 	}
 
+	public void buttonsVisible(boolean b) {
+		commandPanel().visible(b);
+	}
+
 }
