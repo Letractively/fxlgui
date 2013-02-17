@@ -473,7 +473,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 				continue;
 			final ILabel lg = gp.cell(0, r).valign().begin().panel().vertical()
 					.addSpace(1).add().label()
-					.text(g.showGroupLabel ? "" : g.name());
+					.text(!g.showGroupLabel ? "" : g.name());
 			lg.addMouseOverListener(new IMouseOverListener() {
 
 				@Override
