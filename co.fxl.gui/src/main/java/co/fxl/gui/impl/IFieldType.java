@@ -18,7 +18,14 @@
  */
 package co.fxl.gui.impl;
 
+import java.util.List;
+
 public interface IFieldType {
+
+	public interface IDynamicConstraints {
+
+		List<Object> values();
+	}
 
 	IFieldType integer();
 
@@ -45,6 +52,8 @@ public interface IFieldType {
 	IFieldType longType();
 
 	IFieldType addConstraint(Object... values);
+
+	IFieldType dynamicConstraints(IDynamicConstraints c);
 
 	IFieldType defaultConstraint(Object value);
 

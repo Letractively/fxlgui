@@ -38,6 +38,7 @@ public class FieldTypeImpl implements IFieldType {
 	public Object defaultConstraint;
 	public int rows = 1;
 	public boolean enumType = false;
+	private IDynamicConstraints dynamicConstraints;
 
 	@Override
 	public boolean equals(Object o) {
@@ -133,6 +134,8 @@ public class FieldTypeImpl implements IFieldType {
 	}
 
 	public List<Object> getConstraints() {
+		if (dynamicConstraints != null)
+			return dynamicConstraints.values();
 		if (values == null)
 			return new LinkedList<Object>();
 		return values;
@@ -249,6 +252,13 @@ public class FieldTypeImpl implements IFieldType {
 	@Override
 	public IFieldType enumType() {
 		enumType = true;
+		return this;
+	}
+
+	@Override
+	public IFieldType dynamicConstraints(IDynamicConstraints c) {
+		setHasConstraints();
+		dynamicConstraints = c;
 		return this;
 	}
 }
