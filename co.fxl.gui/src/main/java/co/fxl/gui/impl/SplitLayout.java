@@ -50,12 +50,12 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 		this.adHocWidth = adHocWidth;
 	}
 
-	public SplitLayout(ILayout layout, ResizableWidgetTemplate widget) {
+	public SplitLayout(ILayout layout, IResizableWidget widget) {
 		this(layout, false, widget);
 	}
 
 	public SplitLayout(ILayout layout, boolean resizeMainPanel,
-			ResizableWidgetTemplate widget) {
+			IResizableWidget widget) {
 		this.layout = layout;
 		this.resizeMainPanel = resizeMainPanel;
 		widget.setResizableWidget(this, "splitLayout");

@@ -645,6 +645,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 						i.active(true, c);
 						return this;
 					}
+		c.onSuccess(null);
 		return this;
 	}
 
