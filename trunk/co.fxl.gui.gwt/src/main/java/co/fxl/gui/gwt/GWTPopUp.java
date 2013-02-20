@@ -4,6 +4,8 @@ import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.Display;
 
 import com.google.gwt.dom.client.Style.Unit;
@@ -26,7 +28,14 @@ class GWTPopUp implements IPopUp, WidgetParent {
 				switch (key) {
 				case KeyCodes.KEY_ESCAPE:
 					if (!isModal()) {
-						hide();
+						DiscardChangesDialog
+								.show(new CallbackTemplate<Boolean>() {
+									@Override
+									public void onSuccess(Boolean result) {
+										if (result)
+											hide();
+									}
+								});
 						break;
 					}
 				}
