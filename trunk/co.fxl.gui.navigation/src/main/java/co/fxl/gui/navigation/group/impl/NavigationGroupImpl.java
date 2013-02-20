@@ -162,6 +162,10 @@ class NavigationGroupImpl implements INavigationGroup {
 
 	@Override
 	public void remove() {
+		for (NavigationItemImpl item : items) {
+			if (widget.active == item)
+				widget.active = null;
+		}
 		panel.remove();
 		widget.groups.remove(this);
 	}
