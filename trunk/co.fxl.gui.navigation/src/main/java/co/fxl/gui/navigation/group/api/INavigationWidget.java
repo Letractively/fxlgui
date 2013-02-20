@@ -20,10 +20,11 @@ package co.fxl.gui.navigation.group.api;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.impl.IResizableWidget;
 import co.fxl.gui.navigation.api.ITabWidget;
 
 public interface INavigationWidget extends
-		ITabWidget<INavigationGroup, INavigationItem> {
+		ITabWidget<INavigationGroup, INavigationItem>, IResizableWidget {
 
 	public interface IConstraint {
 
