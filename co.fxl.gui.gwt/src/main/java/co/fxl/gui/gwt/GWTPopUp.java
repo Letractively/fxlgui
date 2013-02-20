@@ -7,6 +7,7 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.Display;
 
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -19,7 +20,19 @@ class GWTPopUp implements IPopUp, WidgetParent {
 	private boolean fitInScreen;
 
 	GWTPopUp() {
-		popUp = new PopUpPanelWidget(false, false);
+		popUp = new PopUpPanelWidget(false, false) {
+			@Override
+			public boolean onKeyDownPreview(char key, int modifiers) {
+				switch (key) {
+				case KeyCodes.KEY_ESCAPE:
+					if (!isModal()) {
+						hide();
+						break;
+					}
+				}
+				return true;
+			}
+		};
 		popUp.getElement().getStyle().setPadding(0, Unit.PX);
 	}
 
@@ -47,7 +60,8 @@ class GWTPopUp implements IPopUp, WidgetParent {
 							left = Display.instance().width() - 10
 									- offsetWidth;
 						}
-						if (popUp.y + offsetHeight > Display.instance().height()) {
+						if (popUp.y + offsetHeight > Display.instance()
+								.height()) {
 							top = Display.instance().height() - 10
 									- offsetHeight;
 						}
