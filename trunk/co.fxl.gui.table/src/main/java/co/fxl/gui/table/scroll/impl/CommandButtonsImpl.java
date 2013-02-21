@@ -167,6 +167,10 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 							@Override
 							public void onSuccess(IRows<Object> result) {
 								assert result != null;
+								// if (result == null) {
+								// widget.refresh();
+								// return;
+								// }
 								widget.rows(result);
 								widget.update();
 							}
