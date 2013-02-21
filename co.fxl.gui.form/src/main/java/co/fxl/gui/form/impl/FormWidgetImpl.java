@@ -87,9 +87,9 @@ public class FormWidgetImpl implements IFormWidget {
 	Heights heights = new Heights(2);
 	private boolean isNew;
 	private boolean alwaysAllowCancel = false;
-	private StylishButton saveButton;
 	private List<IFocusable<?>> focusables = new LinkedList<IFocusable<?>>();
 	private int spacing = 0;
+	private StylishButton saveButton;
 	private IClickListener saveClickListener;
 	private IGridPanel bottomPanel;
 	List<IGridPanel> internalPanels = new LinkedList<IGridPanel>();
