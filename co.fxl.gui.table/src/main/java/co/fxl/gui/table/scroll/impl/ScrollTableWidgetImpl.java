@@ -260,7 +260,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private boolean cellPadding;
 	private boolean fixLayout = true;
 	private int width = -1;
-	private boolean horizontalLines;
+	private boolean horizontalLines = true;
 
 	// private boolean nextTimeShowPopUp;
 
@@ -553,8 +553,8 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			String filterQueryLabel) {
 		IGridPanel nefg = dock.spacing(10).add().panel().grid();
 		IVerticalPanel nef = nefg.cell(0, 0).panel().vertical();
-		String text = columnsIsEmpty ? "No columns specified."
-				: "No "+"entities found.";
+		String text = columnsIsEmpty ? "No columns specified." : "No "
+				+ "entities found.";
 		nef.add().panel().vertical().spacing(4).add().label().text(text);// .font().weight().bold();//
 																			// .font().pixel(10).color().gray();
 		if (constraints == null)
@@ -646,7 +646,8 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	protected void setUpFilter() {
 		if (viewComboBoxText != null) {
 			createFilter();
-			IFilter vl = filter.addFilter().name("View").required().directApply(false);
+			IFilter vl = filter.addFilter().name("View").required()
+					.directApply(false);
 			IFieldType type = vl.type().text();
 			for (String s : viewComboBoxText) {
 				type.addConstraint(s);
