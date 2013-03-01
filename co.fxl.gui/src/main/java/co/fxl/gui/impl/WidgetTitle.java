@@ -107,7 +107,7 @@ public class WidgetTitle implements IClickListener, IColored {
 	}
 
 	public WidgetTitle(ILayout layout, boolean addBorder, boolean plainContent) {
-		baseFocusPanel = layout.focus();
+		baseFocusPanel = layout.focus().width(-1);
 		panel = baseFocusPanel.add().panel().grid();
 		panel.color().white();
 		this.addBorder = addBorder;
