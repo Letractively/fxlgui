@@ -33,25 +33,30 @@ class SaveButtonPanel implements IClickable<Object> {
 		private final IClickable<?> cancelButton;
 		private final IHorizontalPanel subPanel;
 		private boolean isAndBack;
+		private StylishButton sButton;
 
 		private ClickListener(FormWidgetImpl widget,
 				IElement<?> cancelButtonElement, IClickable<?> cancelButton,
-				IHorizontalPanel subPanel, boolean isAndBack) {
+				IHorizontalPanel subPanel, boolean isAndBack,
+				StylishButton sButton) {
 			this.widget = widget;
 			this.cancelButtonElement = cancelButtonElement;
 			this.cancelButton = cancelButton;
 			this.subPanel = subPanel;
 			this.isAndBack = isAndBack;
+			this.sButton = sButton;
 		}
 
 		@Override
 		public void onClick() {
-			IElement<?> iElement = (IElement<?>) saveButton.panel();
+			IHorizontalPanel iElement = sButton.panel();
 			int h = (iElement.height() - 11) / 2;
 			int v = (iElement.width() - 16) / 2;
-			subPanel.add().image().resource("saving.gif").margin().left(v)
+			iElement.clear();
+			iElement.color().remove();
+			iElement.border().remove();
+			iElement.add().image().resource("saving.gif").margin().left(v)
 					.right(v + (iElement.width() % 2)).top(h).bottom(h);
-			iElement.remove();
 			widget.saveListener.save(isAndBack,
 					new CallbackTemplate<Boolean>() {
 
@@ -61,7 +66,7 @@ class SaveButtonPanel implements IClickable<Object> {
 							if (!result)
 								return;
 							widget.validation.update();
-							saveButton.clickable(false);
+							sButton.clickable(false);
 							if (!widget.alwaysAllowCancel)
 								cancelButton.clickable(false);
 						}
@@ -90,15 +95,17 @@ class SaveButtonPanel implements IClickable<Object> {
 			final IElement<?> cancelButtonElement) {
 		if (widget.saveListener.allowsSaveAndBack()) {
 			saveAndBackButton = new StylishButton(subPanel.add().panel()
-					.horizontal(), "Save & Back", true, 3, true);
+					.horizontal(), "Save & Back", true, 3, false);
 			saveAndBackClickListener = new ClickListener(widget,
-					cancelButtonElement, cancelButton, subPanel, false);
+					cancelButtonElement, cancelButton, subPanel, true,
+					saveAndBackButton);
 			saveAndBackButton.addClickListener(saveAndBackClickListener);
+			subPanel.addSpace(4);
 		}
 		saveButton = new StylishButton(subPanel.add().panel().horizontal(),
 				widget.saveTitle, true, 3, false);
 		saveClickListener = new ClickListener(widget, cancelButtonElement,
-				cancelButton, subPanel, false);
+				cancelButton, subPanel, false, saveButton);
 		saveButton.addClickListener(saveClickListener);
 	}
 
