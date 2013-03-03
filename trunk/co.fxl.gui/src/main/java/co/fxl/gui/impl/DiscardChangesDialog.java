@@ -90,4 +90,9 @@ public class DiscardChangesDialog {
 	public static void active(boolean active) {
 		DiscardChangesDialog.active = active;
 	}
+
+	public static void clear() {
+		active(false);
+		listener = null;
+	}
 }
