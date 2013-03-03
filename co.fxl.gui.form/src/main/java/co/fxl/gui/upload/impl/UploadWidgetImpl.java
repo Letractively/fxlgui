@@ -30,7 +30,7 @@ import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
-import co.fxl.gui.form.api.IFormWidget.ISaveListener;
+import co.fxl.gui.form.impl.SaveListenerTemplate;
 import co.fxl.gui.upload.api.IUpload;
 import co.fxl.gui.upload.api.IUploadListener;
 import co.fxl.gui.upload.api.IUploadWidget;
@@ -66,10 +66,10 @@ public class UploadWidgetImpl implements IUploadWidget {
 		final IFormWidget form = (IFormWidget) vertical.add().widget(
 				IFormWidget.class);
 		form.validate(true);
-		form.saveListener("Submit", new ISaveListener() {
+		form.saveListener("Submit", new SaveListenerTemplate() {
 
 			@Override
-			public void save(final ICallback<Boolean> cb) {
+			public void save(boolean b, final ICallback<Boolean> cb) {
 				final IUpload upload = getUpload();
 				if (upload.isFileUpload()) {
 					throw new UnsupportedOperationException();
@@ -82,16 +82,6 @@ public class UploadWidgetImpl implements IUploadWidget {
 							UploadWidgetImpl.this.uploadListeners,
 							UploadWidgetImpl.this.keyValues).visible(true);
 				}
-			}
-
-			@Override
-			public void cancel(ICallback<Boolean> cb) {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
-			public boolean allowsCancel() {
-				return false;
 			}
 		});
 		form.addLargeTitle("Add Attachment");

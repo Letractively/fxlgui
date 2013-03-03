@@ -30,7 +30,6 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.form.api.IChangePasswordWidget;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
-import co.fxl.gui.form.api.IFormWidget.ISaveListener;
 
 class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener {
 
@@ -46,10 +45,10 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 	public ChangePasswordWidgetImpl(IContainer display) {
 		this.display = display;
 		widget = (IFormWidget) display.widget(IFormWidget.class);
-		widget.saveListener("Submit", new ISaveListener() {
+		widget.saveListener("Submit", new SaveListenerTemplate() {
 
 			@Override
-			public void save(ICallback<Boolean> cb) {
+			public void save(boolean isAndBack, ICallback<Boolean> cb) {
 				onClick();
 				cb.onSuccess(true);
 			}

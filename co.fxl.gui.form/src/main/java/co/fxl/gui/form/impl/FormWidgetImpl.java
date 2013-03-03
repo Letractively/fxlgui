@@ -51,7 +51,6 @@ import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.LazyClickListener;
-import co.fxl.gui.impl.StylishButton;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.rtf.api.IHTMLArea;
 
@@ -78,7 +77,7 @@ public class FormWidgetImpl implements IFormWidget {
 	private IVerticalPanel contentPanel;
 	ISaveListener saveListener = null;
 	List<FormFieldImpl<?, ?>> fields = new LinkedList<FormFieldImpl<?, ?>>();
-	private String saveTitle;
+	String saveTitle;
 	private int fixLabelWidth = -1;
 	private int fixValueWidth = -1;
 	private ILabel requiredAttributeLabel;
@@ -86,11 +85,10 @@ public class FormWidgetImpl implements IFormWidget {
 	Validation validation;
 	Heights heights = new Heights(2);
 	private boolean isNew;
-	private boolean alwaysAllowCancel = false;
+	boolean alwaysAllowCancel = false;
 	private List<IFocusable<?>> focusables = new LinkedList<IFocusable<?>>();
 	private int spacing = 0;
-	private StylishButton saveButton;
-	private IClickListener saveClickListener;
+	private SaveButtonPanel saveButton;
 	private IGridPanel bottomPanel;
 	List<IGridPanel> internalPanels = new LinkedList<IGridPanel>();
 
@@ -152,8 +150,7 @@ public class FormWidgetImpl implements IFormWidget {
 		kr.addKeyListener(new IClickListener() {
 			@Override
 			public void onClick() {
-				if (saveClickListener != null && saveButton.clickable())
-					saveClickListener.onClick();
+				saveButton.onCR();
 			}
 		}).enter();
 	}
@@ -447,60 +444,16 @@ public class FormWidgetImpl implements IFormWidget {
 		return panel;
 	}
 
-	private void addSaveButton(final IHorizontalPanel subPanel,
+	void addSaveButton(final IHorizontalPanel subPanel,
 			final IClickable<?> cancelButton,
 			final IElement<?> cancelButtonElement) {
-		saveButton = new StylishButton(subPanel.add().panel().horizontal(),
-				saveTitle, true, 3, false);
+		saveButton = new SaveButtonPanel(this, subPanel, cancelButton,
+				cancelButtonElement);
 		// new HyperlinkMouseOverListener(saveButton);
 		if (validation != null)
 			validation.setClickable(saveButton);
 		if (!saveListener.allowsCancel())
 			cancelButtonElement.visible(false);
-		saveClickListener = new IClickListener() {
-			@Override
-			public void onClick() {
-				// final boolean clickable = saveButton.clickable();
-				// ILabel text = subPanel.add().label().text("Saving");
-				// text.margin().right(8);
-				// text.font().pixel(10);
-				IElement<?> iElement = (IElement<?>) saveButton.panel();
-				int h = (iElement.height() - 11) / 2;
-				int v = (iElement.width() - 16) / 2;
-				// subPanel.color().white();
-				// subPanel.border().color().lightgray();
-				subPanel.add().image().resource("saving.gif").margin().left(v)
-						.right(v + (iElement.width() % 2)).top(h).bottom(h);
-				iElement.remove();
-				saveListener.save(new CallbackTemplate<Boolean>() {
-
-					@Override
-					public void onSuccess(Boolean result) {
-						resetButton();
-						if (!result)
-							return;
-						validation.update();
-						saveButton.clickable(false);
-						if (!alwaysAllowCancel)
-							cancelButton.clickable(false);
-					}
-
-					private void resetButton() {
-						// subPanel.color().remove();
-						// subPanel.border().remove();
-						addSaveButton(subPanel.clear(), cancelButton,
-								cancelButtonElement);
-					}
-
-					@Override
-					public void onFail(Throwable throwable) {
-						resetButton();
-						super.onFail(throwable);
-					}
-				});
-			}
-		};
-		saveButton.addClickListener(saveClickListener);
 	}
 
 	void removeInput(final FormFieldImpl<?, ?> formField) {

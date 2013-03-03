@@ -57,7 +57,9 @@ public interface IFormWidget extends IResizable<IFormWidget> {
 
 	public interface ISaveListener {
 
-		void save(ICallback<Boolean> cb);
+		void save(boolean isAndBack, ICallback<Boolean> cb);
+
+		boolean allowsSaveAndBack();
 
 		boolean allowsCancel();
 
