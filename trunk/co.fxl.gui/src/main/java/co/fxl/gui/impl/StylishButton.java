@@ -28,6 +28,7 @@ public class StylishButton extends ClickableMultiplexer {
 	private boolean changeBackground;
 	private IHorizontalPanel buttonPanel;
 	private ILabel button;
+	private IHorizontalPanel backPanel;
 
 	public StylishButton(IHorizontalPanel p, String text) {
 		this(p, text, true);
@@ -40,7 +41,8 @@ public class StylishButton extends ClickableMultiplexer {
 	public StylishButton(IHorizontalPanel p, String text,
 			boolean changeBackground, int spacing, boolean bold) {
 		this.changeBackground = changeBackground;
-		buttonPanel = p.spacing(spacing);
+		backPanel = p;
+		buttonPanel = backPanel.add().panel().horizontal().spacing(spacing);
 		styleActive();
 		IBorder br = buttonPanel.border();
 		br.color().black();
@@ -76,6 +78,6 @@ public class StylishButton extends ClickableMultiplexer {
 	}
 
 	public IHorizontalPanel panel() {
-		return buttonPanel;
+		return backPanel;
 	}
 }

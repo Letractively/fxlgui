@@ -53,8 +53,6 @@ class SaveButtonPanel implements IClickable<Object> {
 			int h = (iElement.height() - 11) / 2;
 			int v = (iElement.width() - 16) / 2;
 			iElement.clear();
-			iElement.color().remove();
-			iElement.border().remove();
 			iElement.add().image().resource("saving.gif").margin().left(v)
 					.right(v + (iElement.width() % 2)).top(h).bottom(h);
 			widget.saveListener.save(isAndBack,
