@@ -20,7 +20,6 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 
@@ -76,7 +75,7 @@ public class StylishButton extends ClickableMultiplexer {
 				.rgb(63, 63, 63);
 	}
 
-	public IElement<?> panel() {
+	public IHorizontalPanel panel() {
 		return buttonPanel;
 	}
 }
