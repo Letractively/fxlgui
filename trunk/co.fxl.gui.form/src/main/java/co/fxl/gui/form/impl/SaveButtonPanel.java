@@ -82,12 +82,18 @@ class SaveButtonPanel implements IClickable<Object> {
 
 	private IClickListener saveClickListener;
 	private StylishButton saveButton;
+	private StylishButton saveAndBackButton;
+	private ClickListener saveAndBackClickListener;
 
 	SaveButtonPanel(final FormWidgetImpl widget,
 			final IHorizontalPanel subPanel, final IClickable<?> cancelButton,
 			final IElement<?> cancelButtonElement) {
 		if (widget.saveListener.allowsSaveAndBack()) {
-			// TODO ...
+			saveAndBackButton = new StylishButton(subPanel.add().panel()
+					.horizontal(), "Save & Back", true, 3, true);
+			saveAndBackClickListener = new ClickListener(widget,
+					cancelButtonElement, cancelButton, subPanel, false);
+			saveAndBackButton.addClickListener(saveAndBackClickListener);
 		}
 		saveButton = new StylishButton(subPanel.add().panel().horizontal(),
 				widget.saveTitle, true, 3, false);
@@ -99,6 +105,8 @@ class SaveButtonPanel implements IClickable<Object> {
 	@Override
 	public Object clickable(boolean clickable) {
 		saveButton.clickable(clickable);
+		if (saveAndBackButton != null)
+			saveAndBackButton.clickable(clickable);
 		return this;
 	}
 
@@ -110,11 +118,13 @@ class SaveButtonPanel implements IClickable<Object> {
 	@Override
 	public co.fxl.gui.api.IClickable.IKey<Object> addClickListener(
 			co.fxl.gui.api.IClickable.IClickListener clickListener) {
-		return saveButton.addClickListener(clickListener);
+		throw new UnsupportedOperationException();
 	}
 
 	void onCR() {
-		if (saveClickListener != null && saveButton.clickable())
+		if (saveAndBackClickListener != null && saveAndBackButton.clickable())
+			saveAndBackClickListener.onClick();
+		else if (saveClickListener != null && saveButton.clickable())
 			saveClickListener.onClick();
 	}
 }
