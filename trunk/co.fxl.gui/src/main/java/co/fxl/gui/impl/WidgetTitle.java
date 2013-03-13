@@ -90,6 +90,7 @@ public class WidgetTitle implements IClickListener, IColored {
 	private IClickListener titleClickListener;
 	private int spaceBottom;
 	private List<CommandLink> links = new LinkedList<CommandLink>();
+	private IGridPanel oneTimeRefresh;
 
 	public WidgetTitle() {
 	}
@@ -288,7 +289,28 @@ public class WidgetTitle implements IClickListener, IColored {
 			group.clear();
 		}
 		update();
+		if (titleClickListener != null) {
+			oneTimeRefresh = titlePanel.add().panel().grid().padding(4);
+			oneTimeRefresh.margin().left(8);
+			oneTimeRefresh.border().style().rounded();
+			oneTimeRefresh.color().rgb(StatusPopUp.YELLOW);
+			ILabel update = oneTimeRefresh.cell(0, 0).align().center().label()
+					.text("Show changes");
+			update.font().pixel(10);
+			oneTimeRefresh.visible(false);
+			oneTimeRefresh.addClickListener(new LazyClickListener() {
+				@Override
+				protected void onAllowedClick() {
+					oneTimeRefresh.visible(false);
+					titleClickListener.onClick();
+				}
+			});
+		}
 		return headerLabel;
+	}
+
+	public void showOneTimeRefresh() {
+		oneTimeRefresh.visible(true);
 	}
 
 	public void addSubTitles(String subTitle1, String subTitle2) {
