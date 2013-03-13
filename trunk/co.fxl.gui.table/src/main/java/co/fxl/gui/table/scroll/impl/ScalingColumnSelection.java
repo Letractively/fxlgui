@@ -158,7 +158,7 @@ public class ScalingColumnSelection {
 				.label()
 				.text(c.name.equals("") ? COLUMN + " "
 						+ String.valueOf(widget.columnList().indexOf(c) + 1)
-						: c.name()).autoWrap(true).autoWrap(false);
+						: c.name()).autoWrap(false).breakWord(false);
 		l.font().pixel(11);
 //		new HyperlinkMouseOverListener(l);
 		if (c.index == -1)
