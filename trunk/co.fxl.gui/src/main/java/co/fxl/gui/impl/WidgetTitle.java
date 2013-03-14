@@ -90,7 +90,7 @@ public class WidgetTitle implements IClickListener, IColored {
 	private IClickListener titleClickListener;
 	private int spaceBottom;
 	private List<CommandLink> links = new LinkedList<CommandLink>();
-	private IGridPanel oneTimeRefresh;
+	private IHorizontalPanel oneTimeRefresh;
 
 	public WidgetTitle() {
 	}
@@ -290,12 +290,11 @@ public class WidgetTitle implements IClickListener, IColored {
 		}
 		update();
 		if (titleClickListener != null) {
-			oneTimeRefresh = titlePanel.add().panel().grid().padding(4);
+			oneTimeRefresh = titlePanel.add().panel().horizontal().padding(4);
 			oneTimeRefresh.margin().left(8);
 			oneTimeRefresh.border().style().rounded();
 			oneTimeRefresh.color().rgb(StatusPopUp.YELLOW);
-			ILabel update = oneTimeRefresh.cell(0, 0).align().center().label()
-					.text("Show changes");
+			ILabel update = oneTimeRefresh.add().label().text("Show changes");
 			update.font().pixel(10);
 			oneTimeRefresh.visible(false);
 			oneTimeRefresh.addClickListener(new LazyClickListener() {
