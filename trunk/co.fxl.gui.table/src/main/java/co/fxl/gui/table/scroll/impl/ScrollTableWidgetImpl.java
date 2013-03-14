@@ -1441,6 +1441,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			if (rows.size() <= MAX_CLIENT_SORT_SIZE || sortListener == null) {
 				sortColumn = columns.indexOf(columnImpl);
 				sortNegator = rows.sort(columnImpl);
+				updateFilterConstraints(columnImpl, sortNegator);
 				if (sortListener != null)
 					sortListener.onSort(columnImpl.name, sortNegator == 1,
 							false, new CallbackTemplate<Void>() {
@@ -1459,9 +1460,17 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 							* -1 : 1;
 				}
 				sortColumn = columnImpl.index;
+				updateFilterConstraints(columnImpl, sortNegator);
 				sortListener.onSort(columnImpl.name, sortNegator == 1, true,
 						DummyCallback.voidInstance());
 			}
+		}
+	}
+
+	private void updateFilterConstraints(ScrollTableColumnImpl c, int d) {
+		if (constraints != null) {
+			constraints.sortDirection(d == 1);
+			constraints.sortOrder(c.name);
 		}
 	}
 
