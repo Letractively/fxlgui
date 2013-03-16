@@ -54,7 +54,7 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 			}
 
 			@Override
-			public void cancel(ICallback<Boolean> cb) {
+			public void cancel(boolean isAndBack, ICallback<Boolean> cb) {
 				for (IPasswordListener pl : listeners)
 					pl.onCancel();
 				cb.onSuccess(false);

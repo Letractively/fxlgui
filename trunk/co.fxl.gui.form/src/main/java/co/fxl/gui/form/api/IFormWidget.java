@@ -63,7 +63,7 @@ public interface IFormWidget extends IResizable<IFormWidget> {
 
 		boolean allowsCancel();
 
-		void cancel(ICallback<Boolean> cb);
+		void cancel(boolean isAndBack, ICallback<Boolean> cb);
 	}
 
 	IFormWidget fixLabelColumn(int width);

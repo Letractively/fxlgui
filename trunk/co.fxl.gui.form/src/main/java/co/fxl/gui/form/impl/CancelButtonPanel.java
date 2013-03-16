@@ -18,6 +18,70 @@
  */
 package co.fxl.gui.form.impl;
 
-class CancelButtonPanel {
+import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.ILabel;
+import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.LazyClickListener;
+
+class CancelButtonPanel implements IClickable<Object> {
+
+	private ILabel cb;
+	private ILabel cbAndBack;
+	private FormWidgetImpl widget;
+
+	CancelButtonPanel(FormWidgetImpl widget, IHorizontalPanel panel) {
+		this.widget = widget;
+		cb = addButton(panel, "Cancel & Reset", false);
+		if (widget.saveListener.allowsSaveAndBack())
+			cbAndBack = addButton(panel, "Cancel & Back", true);
+	}
+
+	private ILabel addButton(IHorizontalPanel panel, String text,
+			final boolean andBack) {
+		ILabel cb = panel.addSpace(8).add().label().text(text).hyperlink();
+		cb.font().pixel(11);
+		cb.addClickListener(new LazyClickListener() {
+			@Override
+			public void onAllowedClick() {
+				widget.saveListener.cancel(andBack,
+						new CallbackTemplate<Boolean>() {
+							@Override
+							public void onSuccess(Boolean result) {
+								widget.validation.reset();
+								widget.saveButton.clickable(false);
+								if (!widget.alwaysAllowCancel)
+									clickable(false);
+							}
+						});
+			}
+		});
+		return cb;
+	}
+
+	void visible(boolean visible) {
+		cb.visible(visible);
+		if (cbAndBack != null)
+			cbAndBack.visible(visible);
+	}
+
+	@Override
+	public Object clickable(boolean clickable) {
+		cb.clickable(clickable);
+		if (cbAndBack != null)
+			cbAndBack.clickable(clickable);
+		return this;
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public IKey addClickListener(IClickListener clickListener) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean clickable() {
+		return cb.clickable();
+	}
 
 }
