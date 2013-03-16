@@ -132,4 +132,6 @@ public interface IFormWidget extends IResizable<IFormWidget> {
 
 	IFormWidget addLargeTitle(String string);
 
+	IFormWidget width(int width);
+
 }

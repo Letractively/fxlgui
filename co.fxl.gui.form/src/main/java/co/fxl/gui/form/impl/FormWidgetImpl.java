@@ -357,38 +357,10 @@ public class FormWidgetImpl implements IFormWidget {
 		final IHorizontalPanel subPanel = panel.add().panel().horizontal()
 				.align().begin();
 		subPanel.margin().top(1);
-		// panel.addSpace(4).add().label().text("-").font().color().gray();
 		final ILabel cb = panel.addSpace(8).add().label()
 				.text("Cancel and reset").hyperlink();
-		// cb.margin().top(1);
 		cb.font().pixel(11);
-		// HyperlinkDecorator.styleHyperlinkActive(cb);
-		// @SuppressWarnings("rawtypes")
-		final IClickable<?> cancelButton = cb;// new IClickable() {
-		//
-		// @Override
-		// public Object clickable(boolean clickable) {
-		// cb.clickable(clickable);
-		// if (clickable)
-		// HyperlinkDecorator.styleHyperlinkActive(cb);
-		// else
-		// HyperlinkDecorator.styleHyperlinkInactive(cb);
-		// cb.font().underline(clickable);
-		// return this;
-		// }
-		//
-		// @Override
-		// public boolean clickable() {
-		// return cb.clickable();
-		// }
-		//
-		// @Override
-		// public IKey addClickListener(IClickListener clickListener) {
-		// return cb.addClickListener(clickListener);
-		// }
-		//
-		// };
-		// new HyperlinkMouseOverListener(cancelButton);
+		final IClickable<?> cancelButton = cb;
 		addSaveButton(subPanel, cancelButton, cb);
 		cancelButton.addClickListener(new LazyClickListener() {
 			@Override
@@ -638,6 +610,12 @@ public class FormWidgetImpl implements IFormWidget {
 	public IFormWidget addLargeTitle(String string) {
 		prepareAddTitle();
 		widgetTitle.addLargeTitle(string);
+		return this;
+	}
+
+	@Override
+	public IFormWidget width(int width) {
+		widgetTitle.baseFocusPanel.width(width);
 		return this;
 	}
 }

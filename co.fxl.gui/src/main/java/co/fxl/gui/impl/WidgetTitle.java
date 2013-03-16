@@ -85,7 +85,7 @@ public class WidgetTitle implements IClickListener, IColored {
 	private static Map<String, Boolean> foldStatus = new HashMap<String, Boolean>();
 	// private IVerticalPanel subTitlePanel;
 	private IHorizontalPanel configurePanel;
-	private IFocusPanel baseFocusPanel;
+	public IFocusPanel baseFocusPanel;
 	private IFocusPanel headerFocusPanel;
 	private IClickListener titleClickListener;
 	private int spaceBottom;
