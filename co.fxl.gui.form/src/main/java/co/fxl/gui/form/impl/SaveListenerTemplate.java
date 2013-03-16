@@ -43,7 +43,7 @@ public abstract class SaveListenerTemplate implements ISaveListener {
 	}
 
 	@Override
-	public void cancel(ICallback<Boolean> cb) {
+	public void cancel(boolean isAndBack, ICallback<Boolean> cb) {
 		throw new UnsupportedOperationException();
 	}
 }

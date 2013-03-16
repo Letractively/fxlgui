@@ -28,7 +28,6 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IEditable;
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFocusable;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
@@ -88,7 +87,7 @@ public class FormWidgetImpl implements IFormWidget {
 	boolean alwaysAllowCancel = false;
 	private List<IFocusable<?>> focusables = new LinkedList<IFocusable<?>>();
 	private int spacing = 0;
-	private SaveButtonPanel saveButton;
+	SaveButtonPanel saveButton;
 	private IGridPanel bottomPanel;
 	List<IGridPanel> internalPanels = new LinkedList<IGridPanel>();
 
@@ -357,32 +356,14 @@ public class FormWidgetImpl implements IFormWidget {
 		final IHorizontalPanel subPanel = panel.add().panel().horizontal()
 				.align().begin();
 		subPanel.margin().top(1);
-		final ILabel cb = panel.addSpace(8).add().label()
-				.text("Cancel and reset").hyperlink();
-		cb.font().pixel(11);
-		final IClickable<?> cancelButton = cb;
-		addSaveButton(subPanel, cancelButton, cb);
-		cancelButton.addClickListener(new LazyClickListener() {
-			@Override
-			public void onAllowedClick() {
-				saveListener.cancel(new CallbackTemplate<Boolean>() {
-
-					@Override
-					public void onSuccess(Boolean result) {
-						validation.reset();
-						saveButton.clickable(false);
-						if (!alwaysAllowCancel)
-							cancelButton.clickable(false);
-					}
-				});
-			}
-		});
+		final CancelButtonPanel cb = new CancelButtonPanel(this, panel);
+		addSaveButton(subPanel, cb);
 		if (validate) {
 			validation = new Validation();
 			validation.showDiscardChanges();
 			validation.linkClickable(saveButton);
 			if (!alwaysAllowCancel)
-				validation.linkReset(cancelButton);
+				validation.linkReset(cb);
 			for (final FormFieldImpl<?, ?> formField : fields) {
 				if (formField.validate) {
 					linkInput(formField);
@@ -417,10 +398,8 @@ public class FormWidgetImpl implements IFormWidget {
 	}
 
 	void addSaveButton(final IHorizontalPanel subPanel,
-			final IClickable<?> cancelButton,
-			final IElement<?> cancelButtonElement) {
-		saveButton = new SaveButtonPanel(this, subPanel, cancelButton,
-				cancelButtonElement);
+			CancelButtonPanel cancelButtonElement) {
+		saveButton = new SaveButtonPanel(this, subPanel, cancelButtonElement);
 		// new HyperlinkMouseOverListener(saveButton);
 		if (validation != null)
 			validation.setClickable(saveButton);
