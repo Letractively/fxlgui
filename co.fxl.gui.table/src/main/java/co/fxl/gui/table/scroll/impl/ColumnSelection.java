@@ -144,7 +144,7 @@ public class ColumnSelection {
 				.label()
 				.text(c.name.equals("") ? COLUMN + " "
 						+ String.valueOf(widget.columnList().indexOf(c) + 1)
-						: c.name()).autoWrap(true);
+						: c.name()).autoWrap(false).breakWord(false);
 		new HyperlinkMouseOverListener(l);
 		l.font().pixel(11);
 		if (c.index == -1)
