@@ -68,8 +68,8 @@ class CancelButtonPanel implements IClickable<Object> {
 	@Override
 	public Object clickable(boolean clickable) {
 		cb.clickable(clickable);
-		if (cbAndBack != null)
-			cbAndBack.clickable(clickable);
+		// if (cbAndBack != null)
+		// cbAndBack.clickable(clickable);
 		return this;
 	}
 
