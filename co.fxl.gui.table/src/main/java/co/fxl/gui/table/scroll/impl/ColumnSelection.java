@@ -151,7 +151,7 @@ public class ColumnSelection {
 			l.font().color().white();
 		else {
 			decorateLabel(c, l);
-			b.addClickListener(new IClickListener() {
+			IClickListener cl = new IClickListener() {
 				@Override
 				public void onClick() {
 					c.visible = !c.visible;
@@ -165,7 +165,9 @@ public class ColumnSelection {
 						clickListener.onClick();
 					}
 				}
-			});
+			};
+			b.addClickListener(cl);
+			l.addClickListener(cl);
 		}
 		return l;
 	}
