@@ -49,7 +49,6 @@ import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.Heights;
-import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.rtf.api.IHTMLArea;
 
@@ -83,7 +82,7 @@ public class FormWidgetImpl implements IFormWidget {
 	private boolean validate = true;
 	Validation validation;
 	Heights heights = new Heights(2);
-	private boolean isNew;
+	boolean isNew;
 	boolean alwaysAllowCancel = false;
 	private List<IFocusable<?>> focusables = new LinkedList<IFocusable<?>>();
 	private int spacing = 0;
@@ -362,8 +361,9 @@ public class FormWidgetImpl implements IFormWidget {
 			validation = new Validation();
 			validation.showDiscardChanges();
 			validation.linkClickable(saveButton);
-			if (!alwaysAllowCancel)
+			if (!alwaysAllowCancel) {
 				validation.linkReset(cb);
+			}
 			for (final FormFieldImpl<?, ?> formField : fields) {
 				if (formField.validate) {
 					linkInput(formField);

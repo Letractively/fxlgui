@@ -32,8 +32,9 @@ class CancelButtonPanel implements IClickable<Object> {
 
 	CancelButtonPanel(FormWidgetImpl widget, IHorizontalPanel panel) {
 		this.widget = widget;
-		cb = addButton(panel, "Cancel & Reset", false);
-		if (widget.saveListener.allowsSaveAndBack())
+		if (!widget.isNew)
+			cb = addButton(panel, "Cancel", false);
+		if (widget.saveListener.allowsSaveAndBack() || widget.isNew)
 			cbAndBack = addButton(panel, "Cancel & Back", true);
 	}
 
@@ -60,14 +61,16 @@ class CancelButtonPanel implements IClickable<Object> {
 	}
 
 	void visible(boolean visible) {
-		cb.visible(visible);
+		if (cb != null)
+			cb.visible(visible);
 		if (cbAndBack != null)
 			cbAndBack.visible(visible);
 	}
 
 	@Override
 	public Object clickable(boolean clickable) {
-		cb.clickable(clickable);
+		if (cb != null)
+			cb.clickable(clickable);
 		// if (cbAndBack != null)
 		// cbAndBack.clickable(clickable);
 		return this;
@@ -81,7 +84,7 @@ class CancelButtonPanel implements IClickable<Object> {
 
 	@Override
 	public boolean clickable() {
-		return cb.clickable();
+		return cb != null ? cb.clickable() : cbAndBack.clickable();
 	}
 
 }
