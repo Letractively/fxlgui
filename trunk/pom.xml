@@ -9,8 +9,9 @@
   <properties>
   	<java_compliance_source_level>1.6</java_compliance_source_level>		
   	<java_compliance_target_level>1.6</java_compliance_target_level>		
-  	<gwtVersion>2.4.0</gwtVersion>
-  	<gwtMvnPluginVersion>${gwtVersion}</gwtMvnPluginVersion>
+  	<gwtVersion>2.5.1-xn</gwtVersion>
+  	<gwtMvnPluginVersion>2.5.1</gwtMvnPluginVersion>
+<!--  	<gwtMvnPluginVersion>${gwtVersion}</gwtMvnPluginVersion> -->
   	<androidVersion>2.1.2</androidVersion>
   	<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
   	<project.reporting.outputEncoding>ISO-8859-1</project.reporting.outputEncoding>
