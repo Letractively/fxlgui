@@ -37,16 +37,18 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 	private abstract class LoadAsyncCallbackTemplate<R> extends
 			CallbackTemplate<R> {
 
+		private static final String LOADING_CODE_ASYNCHRONOUSLY = "Loading code asynchronously";
+
 		private LoadAsyncCallbackTemplate(ICallback<Void> callback) {
 			super(callback);
-			Log.instance().start("Loading code asynchronously");
+			Log.instance().start(LOADING_CODE_ASYNCHRONOUSLY);
 			ServerListener.notifyCall();
 		}
 
 		@Override
 		public void onSuccess(R result) {
 			ServerListener.notifyReturn();
-			Log.instance().stop("Loading code asynchronously");
+			Log.instance().stop(LOADING_CODE_ASYNCHRONOUSLY);
 			registerResult(result);
 			encapsulatedCallback.onSuccess(null);
 		}
@@ -56,7 +58,7 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 		@Override
 		public void onFail(Throwable throwable) {
 			ServerListener.notifyReturn();
-			Log.instance().stop("Loading code asynchronously");
+			Log.instance().stop(LOADING_CODE_ASYNCHRONOUSLY);
 			super.onFail(throwable);
 		}
 	}
