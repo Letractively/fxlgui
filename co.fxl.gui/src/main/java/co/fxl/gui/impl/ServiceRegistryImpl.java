@@ -30,6 +30,7 @@ import co.fxl.gui.api.IServiceRegistry;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.IWidgetProvider.IAsyncWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
+import co.fxl.gui.log.impl.Log;
 
 public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 
@@ -38,12 +39,14 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 
 		private LoadAsyncCallbackTemplate(ICallback<Void> callback) {
 			super(callback);
+			Log.instance().start("Loading code asynchronously");
 			ServerListener.notifyCall();
 		}
 
 		@Override
 		public void onSuccess(R result) {
 			ServerListener.notifyReturn();
+			Log.instance().stop("Loading code asynchronously");
 			registerResult(result);
 			encapsulatedCallback.onSuccess(null);
 		}
@@ -53,6 +56,7 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 		@Override
 		public void onFail(Throwable throwable) {
 			ServerListener.notifyReturn();
+			Log.instance().stop("Loading code asynchronously");
 			super.onFail(throwable);
 		}
 	}
