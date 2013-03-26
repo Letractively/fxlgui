@@ -8,5 +8,5 @@
   <classpathentry kind="src" path="/fxl-gui"/>
   <classpathentry kind="src" path="/fxl-data-format"/>
   <classpathentry kind="src" path="/fxl-data-format-gwt"/>
-  <classpathentry kind="var" path="M2_REPO/com/google/gwt/gwt-user/2.5.1-xn/gwt-user-2.5.1-xn.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/google/gwt/gwt-user/2.5.1-xn2/gwt-user-2.5.1-xn2.jar"/>
 </classpath>
