@@ -9,7 +9,7 @@
   <properties>
   	<java_compliance_source_level>1.6</java_compliance_source_level>		
   	<java_compliance_target_level>1.6</java_compliance_target_level>		
-  	<gwtVersion>2.5.1-xn</gwtVersion>
+  	<gwtVersion>2.5.1-xn2</gwtVersion>
   	<gwtMvnPluginVersion>2.5.1</gwtMvnPluginVersion>
 <!--  	<gwtMvnPluginVersion>${gwtVersion}</gwtMvnPluginVersion> -->
   	<androidVersion>2.1.2</androidVersion>

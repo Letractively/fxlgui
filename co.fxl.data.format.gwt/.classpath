@@ -5,5 +5,5 @@
   <classpathentry kind="output" path="bin"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
   <classpathentry kind="src" path="/fxl-data-format"/>
-  <classpathentry kind="var" path="M2_REPO/com/google/gwt/gwt-user/2.5.1-xn/gwt-user-2.5.1-xn.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/google/gwt/gwt-user/2.5.1-xn2/gwt-user-2.5.1-xn2.jar"/>
 </classpath>
