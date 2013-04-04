@@ -20,9 +20,11 @@ package co.fxl.gui.impl;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IPanelProvider;
@@ -77,32 +79,43 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 				|| asyncServices.containsKey(widgetClass);
 	}
 
+	private Set<Class<?>> queued = new HashSet<Class<?>>();
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public final T ensure(Class<?> interfaceClass,
+	public final T ensure(final Class<?> interfaceClass,
 			final ICallback<Void> callback) {
-		
-		// TODO queue already requested calls
-		
+		if (queued.contains(interfaceClass)) {
+			Display.instance().invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					ensure(interfaceClass, callback);
+				}
+			}, 50);
+		}
 		if (widgetProviders.containsKey(interfaceClass)
 				|| services.containsKey(interfaceClass)) {
 			callback.onSuccess(null);
 		} else if (asyncWidgetProviders.containsKey(interfaceClass)) {
 			IAsyncWidgetProvider wp = asyncWidgetProviders
 					.remove(interfaceClass);
+			queued.add(interfaceClass);
 			wp.loadAsync(new LoadAsyncCallbackTemplate<IWidgetProvider>(
 					callback) {
 				@Override
 				void registerResult(IWidgetProvider result) {
+					queued.remove(interfaceClass);
 					register(result);
 				}
 			});
 		} else if (asyncServices.containsKey(interfaceClass)) {
 			final IAsyncServiceProvider wp = asyncServices
 					.remove(interfaceClass);
+			queued.add(interfaceClass);
 			wp.loadAsync(new LoadAsyncCallbackTemplate<IServiceProvider>(
 					callback) {
 				@Override
 				void registerResult(IServiceProvider result) {
+					queued.remove(interfaceClass);
 					register(result);
 				}
 			});
