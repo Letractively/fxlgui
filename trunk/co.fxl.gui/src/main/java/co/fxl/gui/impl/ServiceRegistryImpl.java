@@ -85,6 +85,7 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 		if (widgetProviders.containsKey(interfaceClass)
 				|| services.containsKey(interfaceClass)) {
 			callback.onSuccess(null);
+			return (T) this;
 		} else if (asyncWidgetProviders.containsKey(interfaceClass)) {
 			IAsyncWidgetProvider wp = asyncWidgetProviders
 					.remove(interfaceClass);
@@ -95,6 +96,7 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 					register(result);
 				}
 			});
+			return (T) this;
 		} else if (asyncServices.containsKey(interfaceClass)) {
 			final IAsyncServiceProvider wp = asyncServices
 					.remove(interfaceClass);
@@ -105,10 +107,10 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 					register(result);
 				}
 			});
+			return (T) this;
 		} else {
-			throw new WidgetProviderNotFoundException(interfaceClass);
+			return lazyCall(interfaceClass, callback);
 		}
-		return lazyCall(interfaceClass, callback);
 	}
 
 	@SuppressWarnings("unchecked")
