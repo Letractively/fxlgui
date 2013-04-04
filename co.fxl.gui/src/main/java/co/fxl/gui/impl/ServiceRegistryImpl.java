@@ -79,49 +79,47 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 				|| asyncServices.containsKey(widgetClass);
 	}
 
-	private Set<Class<?>> queued = new HashSet<Class<?>>();
-
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public final T ensure(final Class<?> interfaceClass,
 			final ICallback<Void> callback) {
-		if (queued.contains(interfaceClass)) {
-			Display.instance().invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					ensure(interfaceClass, callback);
-				}
-			}, 100);
-		}
 		if (widgetProviders.containsKey(interfaceClass)
 				|| services.containsKey(interfaceClass)) {
 			callback.onSuccess(null);
 		} else if (asyncWidgetProviders.containsKey(interfaceClass)) {
 			IAsyncWidgetProvider wp = asyncWidgetProviders
 					.remove(interfaceClass);
-			queued.add(interfaceClass);
 			wp.loadAsync(new LoadAsyncCallbackTemplate<IWidgetProvider>(
 					callback) {
 				@Override
 				void registerResult(IWidgetProvider result) {
-					queued.remove(interfaceClass);
 					register(result);
 				}
 			});
 		} else if (asyncServices.containsKey(interfaceClass)) {
 			final IAsyncServiceProvider wp = asyncServices
 					.remove(interfaceClass);
-			queued.add(interfaceClass);
 			wp.loadAsync(new LoadAsyncCallbackTemplate<IServiceProvider>(
 					callback) {
 				@Override
 				void registerResult(IServiceProvider result) {
-					queued.remove(interfaceClass);
 					register(result);
 				}
 			});
 		} else {
 			throw new WidgetProviderNotFoundException(interfaceClass);
 		}
+		return lazyCall(interfaceClass, callback);
+	}
+
+	@SuppressWarnings("unchecked")
+	private T lazyCall(final Class<?> interfaceClass,
+			final ICallback<Void> callback) {
+		Display.instance().invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				ensure(interfaceClass, callback);
+			}
+		}, 100);
 		return (T) this;
 	}
 
