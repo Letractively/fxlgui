@@ -90,7 +90,7 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 				public void run() {
 					ensure(interfaceClass, callback);
 				}
-			}, 50);
+			}, 100);
 		}
 		if (widgetProviders.containsKey(interfaceClass)
 				|| services.containsKey(interfaceClass)) {
