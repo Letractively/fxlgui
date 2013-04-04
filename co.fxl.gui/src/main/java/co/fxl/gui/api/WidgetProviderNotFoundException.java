@@ -26,6 +26,7 @@ public class WidgetProviderNotFoundException extends RuntimeException {
 		super(clazz.getName());
 	}
 
+	@Override
 	public String getMessage() {
 		return "No widget provider found for widget class "
 				+ super.getMessage();
