@@ -78,8 +78,7 @@ class HandheldNavigation implements INavigationLayout, IClickListener {
 
 	@Override
 	public void onClick() {
-		final IDialog dialog = panel.display().showDialog()
-				.title("SELECT REGISTER");
+		final IDialog dialog = co.fxl.gui.impl.PopUp.showDialog().title("SELECT REGISTER");
 		dialog.addButton().cancel().addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {

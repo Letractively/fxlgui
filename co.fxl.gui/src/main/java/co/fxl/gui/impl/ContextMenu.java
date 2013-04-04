@@ -165,7 +165,7 @@ public class ContextMenu {
 			return;
 		if (groups.isEmpty())
 			return;
-		popUp = display.showPopUp().autoHide(true)// .width(320)
+		popUp = PopUp.showPopUp().autoHide(true)// .width(320)
 				.atLastClick();
 		new Heights(0).decorateBorder(popUp).style().shadow();
 		IVerticalPanel v = popUp.container().panel().vertical().spacing(8);

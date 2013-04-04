@@ -169,7 +169,7 @@ public class StatusPopUp implements IResizeListener, Runnable {
 
 	private IPopUp ensurePopUp() {
 		if (popUp == null) {
-			popUp = Display.instance().showPopUp().modal(false).autoHide(false)
+			popUp = PopUp.showPopUp().modal(false).autoHide(false)
 					.glass(false);
 			popUp.border().remove().style().shadow(2).color()
 					.rgb(240, 195, 109);

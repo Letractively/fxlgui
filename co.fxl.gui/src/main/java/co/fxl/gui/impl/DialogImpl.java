@@ -135,6 +135,7 @@ public class DialogImpl implements IDialog {
 	private boolean isHtml;
 	private boolean autoHide;
 	private boolean glass;
+	private List<IUpdateListener<Boolean>> visibleListeners = new LinkedList<IUpdateListener<Boolean>>();
 
 	public DialogImpl(IDisplay display) {
 		this.display = display;
@@ -199,7 +200,7 @@ public class DialogImpl implements IDialog {
 			if (title != null || !buttons.isEmpty())
 				getPopUp();
 			else {
-				popUp = display.showPopUp().modal(modal);
+				popUp = PopUp.showPopUp().modal(modal);
 				decorateBorder();
 				container = popUp.container();
 			}
@@ -209,8 +210,15 @@ public class DialogImpl implements IDialog {
 
 	IPopUp getPopUp() {
 		if (popUp == null) {
-			popUp = display.showPopUp().modal(modal).autoHide(autoHide)
+			popUp = PopUp.showPopUp().modal(modal).autoHide(autoHide)
 					.glass(glass);
+			popUp.addVisibleListener(new IUpdateListener<Boolean>() {
+				@Override
+				public void onUpdate(Boolean value) {
+					for (IUpdateListener<Boolean> l : visibleListeners)
+						l.onUpdate(value);
+				}
+			});
 			decorateBorder();
 			if (width != -1 && height != -1) {
 				popUp.size(width, height);
@@ -379,7 +387,7 @@ public class DialogImpl implements IDialog {
 
 	@Override
 	public IDialog addVisibleListener(IUpdateListener<Boolean> l) {
-		popUp.addVisibleListener(l);
+		visibleListeners.add(l);
 		return this;
 	}
 

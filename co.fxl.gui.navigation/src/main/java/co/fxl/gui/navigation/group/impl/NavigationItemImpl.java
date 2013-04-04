@@ -31,12 +31,12 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
-import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
 import co.fxl.gui.impl.IContentPage;
 import co.fxl.gui.impl.LazyClickListener;
+import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.ResizableWidgetTemplate;
 import co.fxl.gui.impl.ServerCallCache;
 import co.fxl.gui.impl.Shell;
@@ -202,7 +202,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 
 	private void setUpMoreTab() {
 		if (popUp == null) {
-			popUp = Display.instance().showPopUp().autoHide(true);
+			popUp = PopUp.showPopUp().autoHide(true);
 			popUp.border().remove();
 			// popUp.border().color().gray();// .mix().white().lightgray();
 			popUp.border().style().shadow();

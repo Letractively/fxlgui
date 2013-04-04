@@ -41,7 +41,7 @@ public class PopUpPageContainer implements PageContainer {
 
 	@Override
 	public IVerticalPanel panel() {
-		popUp = Display.instance().showPopUp().glass(true).autoHide(true);
+		popUp = PopUp.showPopUp().glass(true).autoHide(true);
 		if (isModal)
 			popUp.modal(true);
 		popUp.border().remove().style().shadow();

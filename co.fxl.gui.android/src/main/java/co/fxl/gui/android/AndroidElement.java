@@ -162,7 +162,7 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 		view.setOnLongClickListener(new OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View arg0) {
-				IPopUp popUp = display().showPopUp();
+				IPopUp popUp = AndroidDisplay.instance().showPopUp();
 				popUp.container().label().text(tooltip);
 				popUp.autoHide(true);
 				popUp.visible(true);
