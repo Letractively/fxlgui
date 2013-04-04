@@ -18,8 +18,9 @@
  */
 package co.fxl.gui.impl;
 
+import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
 
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
@@ -29,7 +30,7 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 public class PopUp {
 
 	private static IDisplay display = Display.instance();
-	private static List<IPopUp> visiblePopUps = new LinkedList<IPopUp>();
+	private static Set<IPopUp> visiblePopUps = new HashSet<IPopUp>();
 	private static boolean active = false;
 
 	public static void activate() {
@@ -50,7 +51,8 @@ public class PopUp {
 				public void onUpdate(Boolean value) {
 					if (!value) {
 						visiblePopUps.remove(popUp);
-					}
+					} else
+						visiblePopUps.add(popUp);
 				}
 			});
 		}
