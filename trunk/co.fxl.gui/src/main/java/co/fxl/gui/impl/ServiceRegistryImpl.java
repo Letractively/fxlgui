@@ -98,7 +98,7 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 			});
 			return (T) this;
 		} else if (asyncServices.containsKey(interfaceClass)) {
-			final IAsyncServiceProvider wp = asyncServices
+			IAsyncServiceProvider wp = asyncServices
 					.remove(interfaceClass);
 			wp.loadAsync(new LoadAsyncCallbackTemplate<IServiceProvider>(
 					callback) {
