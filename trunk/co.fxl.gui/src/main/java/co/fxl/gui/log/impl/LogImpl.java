@@ -24,6 +24,7 @@ import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.FullscreenPopUp;
 import co.fxl.gui.impl.Heights;
+import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.log.api.ILog;
 
@@ -136,9 +137,8 @@ class LogImpl implements ILog, IClickListener {
 
 	@Override
 	public void onClick() {
-		final IDisplay d = Display.instance();
-		final IPopUp popUp = d.showPopUp().modal(true).offset(SPACING, SPACING)
-				.autoHide(true);
+		final IPopUp popUp = PopUp.showPopUp().modal(true)
+				.offset(SPACING, SPACING).autoHide(true);
 		popUp.border().remove().style().shadow().color().black();
 		WidgetTitle panel = new WidgetTitle(popUp.container()).spacing(0)
 				.sideWidget(false).commandsOnTop().spacing(0);
@@ -146,7 +146,7 @@ class LogImpl implements ILog, IClickListener {
 		final IScrollPane scrollPane = panel.content().scrollPane();
 		final IVerticalPanel content = scrollPane.viewPort().panel().vertical()
 				.spacing(10).add().panel().vertical();
-		resize(d, popUp, scrollPane);
+		resize(Display.instance(), popUp, scrollPane);
 		cancel = panel.addHyperlink("cancel.png", "Clear");
 		cancel.addClickListener(new IClickListener() {
 			@Override
@@ -155,11 +155,11 @@ class LogImpl implements ILog, IClickListener {
 				content.clear();
 			}
 		});
-		final IResizeConfiguration cfg = d.addResizeListener(
-				new IResizeListener() {
+		final IResizeConfiguration cfg = Display.instance()
+				.addResizeListener(new IResizeListener() {
 					@Override
 					public void onResize(int width, int height) {
-						resize(d, popUp, scrollPane);
+						resize(Display.instance(), popUp, scrollPane);
 					}
 				}).linkLifecycle(popUp);
 		popUp.addVisibleListener(new IUpdateListener<Boolean>() {

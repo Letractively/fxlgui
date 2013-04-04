@@ -23,6 +23,6 @@ import co.fxl.gui.api.IDialog;
 public class Dialog {
 
 	public static IDialog newInstance() {
-		return Display.instance().showDialog().modal(true).glass(true);
+		return PopUp.showDialog().modal(true).glass(true);
 	}
 }

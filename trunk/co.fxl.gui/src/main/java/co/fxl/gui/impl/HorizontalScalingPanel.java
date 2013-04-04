@@ -112,7 +112,7 @@ public class HorizontalScalingPanel implements IClickListener {
 				.left(SPACING_POPUP - 1).right(SPACING_POPUP - 1)
 				.top(SPACING_POPUP);
 		morePanel.clickable(false);
-		popUp = Display.instance().showPopUp().autoHide(true);
+		popUp = PopUp.showPopUp().autoHide(true);
 		IVerticalPanel base = popUp.container().panel().vertical();
 		IVerticalPanel pn = base.add().panel().vertical()
 				.spacing(SPACING_POPUP);

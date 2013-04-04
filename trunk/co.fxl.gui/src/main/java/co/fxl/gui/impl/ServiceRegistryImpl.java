@@ -80,6 +80,9 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public final T ensure(Class<?> interfaceClass,
 			final ICallback<Void> callback) {
+		
+		// TODO queue already requested calls
+		
 		if (widgetProviders.containsKey(interfaceClass)
 				|| services.containsKey(interfaceClass)) {
 			callback.onSuccess(null);

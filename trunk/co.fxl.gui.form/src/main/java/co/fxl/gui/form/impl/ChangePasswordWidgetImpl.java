@@ -30,6 +30,7 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.form.api.IChangePasswordWidget;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
+import co.fxl.gui.impl.PopUp;
 
 class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener {
 
@@ -128,7 +129,7 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 	}
 
 	private void showDialog(String string) {
-		display.display().showDialog().title("Change Password Error")
+		PopUp.showDialog().title("Change Password Error")
 				.message(string).error().visible(true)
 				.addVisibleListener(new IUpdateListener<Boolean>() {
 					@Override

@@ -39,6 +39,7 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.IToolbar;
+import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.rtf.api.IHTMLArea;
 import co.fxl.gui.rtf.api.IHTMLArea.Formatting;
@@ -137,7 +138,7 @@ public class RichTextToolbarImpl {
 
 		@Override
 		void handleClick() {
-			final IPopUp p = Display.instance().showPopUp().center()
+			final IPopUp p = PopUp.showPopUp().center()
 					.autoHide(true).atLastClick();
 			p.border().remove().style().shadow().color().gray();
 			IHorizontalPanel h = p.container().panel().horizontal().spacing(4);
@@ -395,7 +396,7 @@ public class RichTextToolbarImpl {
 					closeListener.onClick();
 					return;
 				}
-				final IPopUp p = Display.instance().showPopUp().autoHide(true);
+				final IPopUp p = PopUp.showPopUp().autoHide(true);
 				p.border().remove();
 				p.border().style().shadow();
 				final IHTMLArea ha = p.container().widget(IHTMLArea.class);

@@ -40,8 +40,7 @@ public class ColorField {
 
 		@Override
 		public void onClick() {
-			final IPopUp popUp = button.display().showPopUp().autoHide(true)
-					.width(180);
+			final IPopUp popUp = co.fxl.gui.impl.PopUp.showPopUp().autoHide(true).width(180);
 			popUp.border().style().shadow();
 			int height = button.height();
 			popUp.offset(button.offsetX(), button.offsetY() + height + 4);

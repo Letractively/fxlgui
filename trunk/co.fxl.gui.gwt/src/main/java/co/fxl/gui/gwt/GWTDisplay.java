@@ -34,11 +34,9 @@ import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.DialogImpl;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DisplayTemplate;
-import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.ImagePathResolver;
 import co.fxl.gui.impl.RuntimeTemplate;
 import co.fxl.gui.impl.ToolbarImpl;
-import co.fxl.gui.log.impl.Log;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;

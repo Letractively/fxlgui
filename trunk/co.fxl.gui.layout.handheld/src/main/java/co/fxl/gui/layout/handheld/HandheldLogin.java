@@ -29,6 +29,7 @@ import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.form.impl.LoginWidgetImpl;
+import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.layout.api.ILoginLayout;
 
 class HandheldLogin implements ILoginLayout, IClickListener, IUpdateListener<String> {
@@ -71,7 +72,7 @@ class HandheldLogin implements ILoginLayout, IClickListener, IUpdateListener<Str
 				.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
-						dialog = liPanel.display().showDialog().title("LOGIN");
+						dialog = PopUp.showDialog().title("LOGIN");
 						ok = dialog.addButton().ok()
 								.addClickListener(new IClickListener() {
 									@Override

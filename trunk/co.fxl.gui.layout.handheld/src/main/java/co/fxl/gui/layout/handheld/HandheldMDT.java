@@ -7,8 +7,8 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.ILinearPanel;
-import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.IToolbar;
+import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.layout.api.IMDTLayout;
 import co.fxl.gui.layout.api.IMDTLayoutDecorator;
@@ -27,8 +27,8 @@ class HandheldMDT implements IMDTLayout {
 						.addClickListener(new IClickListener() {
 							@Override
 							public void onClick() {
-								final IDialog dialog = Display.instance()
-										.showDialog().title("ADD ENTITY");
+								final IDialog dialog = PopUp.showDialog()
+										.title("ADD ENTITY");
 								dialog.addButton().text("Back")
 										.imageResource("back.png")
 										.addClickListener(new IClickListener() {

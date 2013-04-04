@@ -68,7 +68,7 @@ public class ElementPopUp {
 	}
 
 	public IVerticalPanel create() {
-		popUp = element.display().showPopUp().autoHide(true);
+		popUp = co.fxl.gui.impl.PopUp.showPopUp().autoHide(true);
 		HEIGHTS.decorateBorder(popUp).style().shadow();
 		int w = Math.min(320, element.width());
 		int h = 0;
