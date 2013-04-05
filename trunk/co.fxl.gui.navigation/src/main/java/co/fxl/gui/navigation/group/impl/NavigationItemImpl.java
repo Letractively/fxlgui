@@ -194,6 +194,8 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 
 	@Override
 	public void onClick() {
+		if (widget.isLoading)
+			return;
 		if (isMoreTab) {
 			setUpMoreTab();
 		} else
@@ -383,16 +385,16 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 		int height = buttonPanel.height();
 		buttonPanel.size(width, height);
 		showLoading();
-		// widget.loading(true);
-	}
-
-	String getMessage(boolean cached) {
-		return (cached ? "Updating" : "Drawing") + " tab " + button.text();
+		widget.loading(true);
 	}
 
 	void stopLoading(boolean cached) {
 		Log.instance().stop(getMessage(cached));
-		// widget.loading(false);
+		widget.loading(false);
+	}
+
+	String getMessage(boolean cached) {
+		return (cached ? "Updating" : "Drawing") + " tab " + button.text();
 	}
 
 	private void forkLabelAsActive(boolean viaClick,
