@@ -109,20 +109,14 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 			});
 			return (T) this;
 		} else {
-			return lazyCall(interfaceClass, callback);
+			Display.instance().invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					ensure(interfaceClass, callback);
+				}
+			}, 100);
+			return (T) this;
 		}
-	}
-
-	@SuppressWarnings("unchecked")
-	private T lazyCall(final Class<?> interfaceClass,
-			final ICallback<Void> callback) {
-		Display.instance().invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				ensure(interfaceClass, callback);
-			}
-		}, 100);
-		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
