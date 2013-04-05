@@ -113,6 +113,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	boolean showGroupLabel = true;
 	private List<Action> actions = new LinkedList<Action>();
 	private boolean showConfigure = true;
+	boolean isLoading;
 
 	public NavigationWidgetImpl(IContainer layout) {
 		mainPanel = layout.panel().dock();
@@ -661,6 +662,10 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		Action action = new Action(clickListener, c);
 		actions.add(action);
 		return this;
+	}
+
+	void loading(boolean b) {
+		isLoading = b;
 	}
 
 	// void loading(boolean b) {
