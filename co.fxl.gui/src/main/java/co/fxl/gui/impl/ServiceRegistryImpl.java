@@ -20,18 +20,15 @@ package co.fxl.gui.impl;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IPanelProvider;
 import co.fxl.gui.api.IServiceRegistry;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.IWidgetProvider.IAsyncWidgetProvider;
-import co.fxl.gui.api.WidgetProviderNotFoundException;
 import co.fxl.gui.log.impl.Log;
 
 public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
@@ -70,6 +67,7 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 	public Map<Class<?>, IAsyncServiceProvider<?>> asyncServices = new HashMap<Class<?>, IAsyncServiceProvider<?>>();
 	public Map<Class<?>, Object> services = new HashMap<Class<?>, Object>();
 	public Map<Class<?>, IPanelProvider<?>> panelProviders = new HashMap<Class<?>, IPanelProvider<?>>();
+	private Map<Class<?>, ICallback<Void>> callbackQueue = new HashMap<Class<?>, ICallback<Void>>();
 
 	@Override
 	public final boolean supports(Class<?> widgetClass) {
@@ -98,8 +96,7 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 			});
 			return (T) this;
 		} else if (asyncServices.containsKey(interfaceClass)) {
-			IAsyncServiceProvider wp = asyncServices
-					.remove(interfaceClass);
+			IAsyncServiceProvider wp = asyncServices.remove(interfaceClass);
 			wp.loadAsync(new LoadAsyncCallbackTemplate<IServiceProvider>(
 					callback) {
 				@Override
@@ -109,12 +106,8 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 			});
 			return (T) this;
 		} else {
-			Display.instance().invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					ensure(interfaceClass, callback);
-				}
-			}, 100);
+			assert !callbackQueue.containsKey(interfaceClass);
+			callbackQueue.put(interfaceClass, callback);
 			return (T) this;
 		}
 	}
@@ -170,17 +163,34 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 	@Override
 	public final T register(
 			@SuppressWarnings("rawtypes") co.fxl.gui.api.IServiceRegistry.IServiceProvider... services) {
-		for (IServiceProvider<?> service : services)
-			this.services.put(service.serviceType(), service.getService());
+		for (IServiceProvider<?> service : services) {
+			Class<?> type = service.serviceType();
+			this.services.put(type, service.getService());
+			handlePendingCallbacks(type);
+		}
 		return (T) this;
+	}
+
+	private void handlePendingCallbacks(Class<?> type) {
+		final ICallback<Void> cb = callbackQueue.remove(type);
+		if (cb != null) {
+			Display.instance().invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					cb.onSuccess(null);
+				}
+			});
+		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public final T register(IWidgetProvider<?>... widgetProviders) {
-		for (IWidgetProvider<?> widgetProvider : widgetProviders)
-			this.widgetProviders.put(widgetProvider.widgetType(),
-					widgetProvider);
+		for (IWidgetProvider<?> widgetProvider : widgetProviders) {
+			Class<?> type = widgetProvider.widgetType();
+			this.widgetProviders.put(type, widgetProvider);
+			handlePendingCallbacks(type);
+		}
 		return (T) this;
 	}
 
