@@ -639,6 +639,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 
 	@Override
 	public INavigationWidget active(ICallback<Void> c) {
+		active = null;
 		for (NavigationGroupImpl g : groups)
 			if (g.visible())
 				for (NavigationItemImpl i : g.items)
