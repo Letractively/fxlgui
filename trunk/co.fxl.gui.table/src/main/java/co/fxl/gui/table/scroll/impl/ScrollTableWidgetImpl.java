@@ -1073,7 +1073,8 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		Display.instance().invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				statusRangeLabel.text(getStatusRange(paintedRows()));
+				if (statusRangeLabel != null)
+					statusRangeLabel.text(getStatusRange(paintedRows()));
 			}
 		});
 	}
