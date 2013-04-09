@@ -43,7 +43,7 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 		private LoadAsyncCallbackTemplate(ICallback<Void> callback) {
 			super(callback);
 			Log.instance().start(message());
-			ServerListener.notifyCall();
+			ServerListener.notifyCall(-index);
 		}
 
 		private String message() {
@@ -52,7 +52,7 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 
 		@Override
 		public void onSuccess(R result) {
-			ServerListener.notifyReturn();
+			ServerListener.notifyReturn(-index);
 			Log.instance().stop(message());
 			registerResult(result);
 			encapsulatedCallback.onSuccess(null);
@@ -62,7 +62,7 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 
 		@Override
 		public void onFail(Throwable throwable) {
-			ServerListener.notifyReturn();
+			ServerListener.notifyReturn(-index);
 			Log.instance().stop(message());
 			super.onFail(throwable);
 		}
