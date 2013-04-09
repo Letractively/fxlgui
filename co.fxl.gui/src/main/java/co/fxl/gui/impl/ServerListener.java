@@ -22,14 +22,14 @@ public class ServerListener {
 
 	public static IServerListener instance = null;
 
-	public static void notifyCall() {
+	public static void notifyCall(int id) {
 		if (instance != null)
-			instance.notifyServerCallStart();
+			instance.notifyServerCallStart(id);
 	}
 
-	public static void notifyReturn() {
+	public static void notifyReturn(int id) {
 		if (instance != null)
-			instance.notifyServerCallReturn();
+			instance.notifyServerCallReturn(id);
 	}
 
 }

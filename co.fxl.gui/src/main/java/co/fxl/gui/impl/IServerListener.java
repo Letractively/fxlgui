@@ -20,8 +20,8 @@ package co.fxl.gui.impl;
 
 public interface IServerListener {
 
-	void notifyServerCallStart();
+	void notifyServerCallStart(int id);
 
-	void notifyServerCallReturn();
+	void notifyServerCallReturn(int id);
 
 }

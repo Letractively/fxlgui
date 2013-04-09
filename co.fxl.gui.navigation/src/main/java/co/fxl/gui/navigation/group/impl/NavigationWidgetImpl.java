@@ -18,8 +18,10 @@
  */
 package co.fxl.gui.navigation.group.impl;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.IBordered.IBorder;
@@ -103,7 +105,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	private IFocusPanel focus;
 	// private boolean loading;
 	public static NavigationWidgetImpl instance;
-	private int serverCallCounter = 0;
+	private Set<Integer> serverCallCounter = new HashSet<Integer>();
 	private IVerticalPanel top;
 	private IImage configureIcon;
 	private IGridPanel separatorBorder;
@@ -535,23 +537,20 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	}
 
 	@Override
-	public void notifyServerCallStart() {
+	public void notifyServerCallStart(int id) {
 		if (listeningOnServerCalls) {
-			serverCallCounter++;
-			if (serverCallCounter == 1) {
+			serverCallCounter.add(id);
+			if (serverCallCounter.size() == 1) {
 				flipPage().back();
 			}
 		}
 	}
 
 	@Override
-	public void notifyServerCallReturn() {
+	public void notifyServerCallReturn(int id) {
 		if (listeningOnServerCalls) {
-			serverCallCounter--;
-			if (serverCallCounter <= 0) {
-				if (serverCallCounter < 0)
-					throw new RuntimeException();
-				serverCallCounter = 0;
+			serverCallCounter.remove(id);
+			if (serverCallCounter.isEmpty()) {
 				flipPage().preview();
 			}
 		}
@@ -564,7 +563,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	}
 
 	void listeningOnServerCalls(boolean b) {
-		serverCallCounter = 0;
+		serverCallCounter.clear();
 		listeningOnServerCalls = b;
 	}
 
