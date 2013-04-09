@@ -33,21 +33,27 @@ import co.fxl.gui.log.impl.Log;
 
 public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 
+	private static int counter = 1;
+
 	private abstract class LoadAsyncCallbackTemplate<R> extends
 			CallbackTemplate<R> {
 
-		private static final String LOADING_CODE_ASYNCHRONOUSLY = "Loading code asynchronously";
+		private int index = counter++;
 
 		private LoadAsyncCallbackTemplate(ICallback<Void> callback) {
 			super(callback);
-			Log.instance().start(LOADING_CODE_ASYNCHRONOUSLY);
+			Log.instance().start(message());
 			ServerListener.notifyCall();
+		}
+
+		private String message() {
+			return "Loading code asynchronously [" + index + "]";
 		}
 
 		@Override
 		public void onSuccess(R result) {
 			ServerListener.notifyReturn();
-			Log.instance().stop(LOADING_CODE_ASYNCHRONOUSLY);
+			Log.instance().stop(message());
 			registerResult(result);
 			encapsulatedCallback.onSuccess(null);
 		}
@@ -57,7 +63,7 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 		@Override
 		public void onFail(Throwable throwable) {
 			ServerListener.notifyReturn();
-			Log.instance().stop(LOADING_CODE_ASYNCHRONOUSLY);
+			Log.instance().stop(message());
 			super.onFail(throwable);
 		}
 	}
