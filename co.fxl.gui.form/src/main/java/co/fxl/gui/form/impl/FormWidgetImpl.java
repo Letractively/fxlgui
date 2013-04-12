@@ -28,6 +28,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IEditable;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFocusable;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
@@ -550,7 +551,8 @@ public class FormWidgetImpl implements IFormWidget {
 	public IFormWidget focus() {
 		for (IFocusable<?> f : focusables)
 			if (f instanceof IEditable) {
-				if (((IEditable<?>) f).editable()) {
+				if (((IEditable<?>) f).editable()
+						&& ((IElement<?>) f).visible()) {
 					f.focus(true);
 					break;
 				}
