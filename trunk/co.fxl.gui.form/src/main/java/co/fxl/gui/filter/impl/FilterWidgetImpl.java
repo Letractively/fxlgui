@@ -181,6 +181,8 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			constraints.sortDirection(this.constraints.sortDirection());
 		}
 		if (this.constraints != null && this.constraints.rowIterator() != null) {
+//			if (this.constraints.size() != constraints.size())
+//				this.constraints.clearRowIndex();
 			constraints.rowIterator(this.constraints.rowIterator());
 		}
 		for (FilterTemplate filter : activeFilters) {
