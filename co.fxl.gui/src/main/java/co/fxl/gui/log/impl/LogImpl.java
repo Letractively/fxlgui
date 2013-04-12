@@ -312,9 +312,16 @@ class LogImpl implements ILog, IClickListener {
 
 	@Override
 	public ILog stop(String message) {
-		if (timestamps.containsKey(message))
-			debug(message,
-					(System.currentTimeMillis() - timestamps.remove(message)));
+		if (timestamps.containsKey(message)) {
+			long duration = System.currentTimeMillis()
+					- timestamps.remove(message);
+
+			// TODO remove hack
+
+			if (duration < 1)
+				duration = 1;
+			debug(message, duration);
+		}
 		return this;
 	}
 
