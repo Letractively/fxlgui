@@ -502,8 +502,11 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 
 	@SuppressWarnings("unchecked")
 	protected R focus(final boolean focus, Widget widget) {
-		((Focusable) widget).setFocus(focus);
-		notifyFocusListeners(focus);
+		if (widget.isVisible() && widget.isAttached()) {
+			Focusable focusable = (Focusable) widget;
+			focusable.setFocus(focus);
+			notifyFocusListeners(focus);
+		}
 		return (R) this;
 	}
 
