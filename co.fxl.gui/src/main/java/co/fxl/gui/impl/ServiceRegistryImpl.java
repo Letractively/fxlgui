@@ -29,6 +29,7 @@ import co.fxl.gui.api.IPanelProvider;
 import co.fxl.gui.api.IServiceRegistry;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.IWidgetProvider.IAsyncWidgetProvider;
+import co.fxl.gui.log.api.ILog.IMeasurement;
 import co.fxl.gui.log.impl.Log;
 
 public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
@@ -39,10 +40,11 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 			CallbackTemplate<R> {
 
 		private int index = counter++;
+		private IMeasurement measurement;
 
 		private LoadAsyncCallbackTemplate(ICallback<Void> callback) {
 			super(callback);
-			Log.instance().start(message());
+			measurement = Log.instance().start(message());
 			ServerListener.notifyCall(-index);
 		}
 
@@ -52,8 +54,7 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 
 		@Override
 		public void onSuccess(R result) {
-			ServerListener.notifyReturn(-index);
-			Log.instance().stop(message());
+			close();
 			registerResult(result);
 			encapsulatedCallback.onSuccess(null);
 		}
@@ -62,9 +63,13 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 
 		@Override
 		public void onFail(Throwable throwable) {
-			ServerListener.notifyReturn(-index);
-			Log.instance().stop(message());
+			close();
 			super.onFail(throwable);
+		}
+
+		private void close() {
+			ServerListener.notifyReturn(-index);
+			measurement.stop();
 		}
 	}
 

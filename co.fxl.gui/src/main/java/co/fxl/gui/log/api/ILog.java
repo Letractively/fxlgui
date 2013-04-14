@@ -5,14 +5,17 @@ import co.fxl.gui.api.IContainer;
 
 public interface ILog {
 
+	public interface IMeasurement {
+
+		ILog stop();
+	}
+
 	public interface IDeobfuscator {
 
 		void deobfuscate(Throwable t, ICallback<String> deobfuscated);
 	}
 
-	ILog start(String message);
-
-	ILog stop(String message);
+	IMeasurement start(String message);
 
 	ILog debug(String message);
 

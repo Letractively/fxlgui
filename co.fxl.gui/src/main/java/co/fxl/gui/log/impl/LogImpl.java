@@ -32,6 +32,24 @@ class LogImpl implements ILog, IClickListener {
 
 	// TODO FullscreenPopUp verwenden
 
+	private class Measurement implements IMeasurement {
+
+		private long start = System.currentTimeMillis();
+		private String message;
+		private boolean stopped;
+
+		private Measurement(String message) {
+			this.message = message;
+		}
+
+		@Override
+		public ILog stop() {
+			assert !stopped;
+			stopped = true;
+			return debug(message, System.currentTimeMillis() - start);
+		}
+	}
+
 	private static final String WARNING = "WARNING";
 	private static final String ERROR = "ERROR";
 
@@ -77,10 +95,10 @@ class LogImpl implements ILog, IClickListener {
 	private static final int MAX_SIZE = 500;
 	private static final int SPACING = 20;
 	private List<Entry> lines = new LinkedList<Entry>();
-	private Map<String, Long> timestamps = new HashMap<String, Long>();
 	protected Entry details;
 	private CommandLink cancel;
 	private IDeobfuscator deobfuscator;
+	private Map<String, Long> timestamps = new HashMap<String, Long>();
 
 	@Override
 	public ILog container(IContainer c) {
@@ -305,24 +323,8 @@ class LogImpl implements ILog, IClickListener {
 	}
 
 	@Override
-	public ILog start(String message) {
-		timestamps.put(message, System.currentTimeMillis());
-		return this;
-	}
-
-	@Override
-	public ILog stop(String message) {
-		if (timestamps.containsKey(message)) {
-			long duration = System.currentTimeMillis()
-					- timestamps.remove(message);
-
-			// TODO remove hack
-
-			if (duration < 1)
-				duration = 1;
-			debug(message, duration);
-		}
-		return this;
+	public IMeasurement start(String message) {
+		return new Measurement(message);
 	}
 
 	@Override
