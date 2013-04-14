@@ -53,7 +53,6 @@ import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.ResizableWidgetTemplate;
 import co.fxl.gui.impl.ServerListener;
 import co.fxl.gui.impl.Shell;
-import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.navigation.api.ITabWidget;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
@@ -328,7 +327,6 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		if (moreItem.popUp != null)
 			moreItem.popUp.visible(false);
 		addSeparatorBorder();
-		Log.instance().stop("updating navigation widget");
 		return true;
 	}
 

@@ -40,6 +40,7 @@ import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.ResizableWidgetTemplate;
 import co.fxl.gui.impl.ServerCallCache;
 import co.fxl.gui.impl.Shell;
+import co.fxl.gui.log.api.ILog.IMeasurement;
 import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.navigation.api.ITabDecorator;
 import co.fxl.gui.navigation.group.api.INavigationItem;
@@ -186,6 +187,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 
 	IPopUp popUp;
 	private boolean visible = true;
+	private IMeasurement measurement;
 
 	boolean popUpMovedRight() {
 		int x = basicPanel.offsetX() - getLeftPartPopUpWidth();
@@ -320,11 +322,11 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 					private void checkResize() {
 						if (requiresResize) {
 							String msg = "Resizing tab " + name();
-							Log.instance().start(msg);
+							IMeasurement m = Log.instance().start(msg);
 							widget.recursiveResize(
 									Shell.instance().width(itemPanel), Shell
 											.instance().height(itemPanel));
-							Log.instance().stop(msg);
+							m.stop();
 						}
 						updateDisplaySize();
 					}
@@ -380,7 +382,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	}
 
 	public void startLoading(boolean cached) {
-		Log.instance().start(getMessage(cached));
+		measurement = Log.instance().start(getMessage(cached));
 		int width = buttonPanel.width();
 		int height = buttonPanel.height();
 		buttonPanel.size(width, height);
@@ -389,7 +391,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	}
 
 	void stopLoading(boolean cached) {
-		Log.instance().stop(getMessage(cached));
+		measurement.stop();
 		widget.loading(false);
 	}
 
