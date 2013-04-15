@@ -98,7 +98,7 @@ class LogImpl implements ILog, IClickListener {
 	protected Entry details;
 	private CommandLink cancel;
 	private IDeobfuscator deobfuscator;
-	private Map<String, Long> timestamps = new HashMap<String, Long>();
+//	private List<String, Long> timestamps = new HashMap<String, Long>();
 
 	@Override
 	public ILog container(IContainer c) {
@@ -129,9 +129,9 @@ class LogImpl implements ILog, IClickListener {
 	private ILog addEntry(Entry e) {
 		ensureSize();
 		addLine(e);
-		for (String key : timestamps.keySet()) {
-			timestamps.put(key, timestamps.get(key) + e.duration);
-		}
+//		for (String key : timestamps.keySet()) {
+//			timestamps.put(key, timestamps.get(key) + e.duration);
+//		}
 		return this;
 	}
 
