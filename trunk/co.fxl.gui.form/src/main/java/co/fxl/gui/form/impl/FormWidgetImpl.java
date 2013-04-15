@@ -197,7 +197,7 @@ public class FormWidgetImpl implements IFormWidget {
 		ICheckBox valuePanel = container(gridIndex).checkBox();
 		heights.valuePanel(valuePanel);
 		valuePanel.editable(saveListener != null);
-		setFocus(valuePanel);
+//		setFocus(valuePanel);
 		setCRListener(valuePanel);
 		return valuePanel;
 	}
