@@ -41,7 +41,12 @@ public abstract class LongRunningCallback<T> extends CallbackTemplate<T> {
 
 	@Override
 	public final void onSuccess(T pResult) {
-		dialog.hide(false);
+		Display.instance().invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				dialog.hide(false);
+			}
+		});
 		onInternalSuccess(pResult);
 	}
 
