@@ -29,6 +29,7 @@ import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.filter.impl.CellImpl.ExpliciteRangeField;
@@ -212,7 +213,7 @@ class MiniFilterPanel implements FilterPanel {
 		}
 
 		FilterGridImpl(IToolbar panel) {
-			comboBox = panel.add().comboBox();
+			comboBox = panel.add().comboBox().width(100);
 			styleInput(comboBox);
 			// panel.addSpace(4);
 			cardPanel = panel.add().panel().card();
@@ -338,7 +339,27 @@ class MiniFilterPanel implements FilterPanel {
 
 	@Override
 	public IClickable<?> addHyperlink(String imageResource, String string) {
-		return getContainer(hyperLinkPanel).image().resource(imageResource);
+		final IImage resource = getContainer(hyperLinkPanel).image().resource(
+				imageResource);
+		return new IClickable<IImage>() {
+
+			@Override
+			public IImage clickable(boolean clickable) {
+				resource.visible(clickable);
+				return resource;
+			}
+
+			@Override
+			public boolean clickable() {
+				return resource.visible();
+			}
+
+			@Override
+			public co.fxl.gui.api.IClickable.IKey<IImage> addClickListener(
+					co.fxl.gui.api.IClickable.IClickListener clickListener) {
+				return resource.addClickListener(clickListener);
+			}
+		};
 	}
 
 	@Override
