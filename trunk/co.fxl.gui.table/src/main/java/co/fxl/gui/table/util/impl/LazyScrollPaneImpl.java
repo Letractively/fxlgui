@@ -56,7 +56,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	// g-like-design, fallback (IE, etc.): alte implementierung
 
 	public static int WIDTH_SCROLL_PANEL = 35;
-	public static final int HEIGHT_SCROLL_BAR = 17;
+	public static final int HEIGHT_SCROLL_BAR = Env.is(Env.FIREFOX) ? 21 : 17;
 	private static final int HEIGHT_CORRECTION = 7;
 	private int widthScrollPanel = WIDTH_SCROLL_PANEL;
 	IDecorator decorator;
