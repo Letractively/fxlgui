@@ -57,6 +57,8 @@ interface FilterPanel {
 		boolean addTooltips();
 
 		void notifyComboBoxChange();
+
+		void clearRowIterator();
 	}
 
 	void addTitle(String string);
@@ -70,4 +72,6 @@ interface FilterPanel {
 	void visible();
 
 	WidgetTitle widgetTitle();
+	
+	void clearRowIterator();
 }
