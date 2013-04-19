@@ -21,6 +21,8 @@ package co.fxl.gui.impl;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.IWidgetProvider.IAsyncWidgetProvider;
+import co.fxl.gui.log.api.ILog.IMeasurement;
+import co.fxl.gui.log.impl.Log;
 
 public abstract class AsyncWidgetProviderImpl<T> implements
 		IAsyncWidgetProvider<T> {
@@ -38,10 +40,12 @@ public abstract class AsyncWidgetProviderImpl<T> implements
 
 	@Override
 	public void loadAsync(final ICallback<IWidgetProvider<T>> callback) {
+		final IMeasurement m = Log.instance().start("Installing widgets");
 		loadAsyncImpl(new LongRunningCallback<IWidgetProvider<T>>(
 				"Loading widgets", callback) {
 			@Override
 			public void onInternalSuccess(IWidgetProvider<T> result) {
+				m.stop();
 				callback.onSuccess(result);
 			}
 		});

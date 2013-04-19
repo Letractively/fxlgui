@@ -1,10 +1,8 @@
 package co.fxl.gui.log.impl;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
@@ -46,7 +44,8 @@ class LogImpl implements ILog, IClickListener {
 		public ILog stop() {
 			assert !stopped;
 			stopped = true;
-			return debug(message, System.currentTimeMillis() - start);
+			return debug(message + " executed", System.currentTimeMillis()
+					- start);
 		}
 	}
 
@@ -98,7 +97,6 @@ class LogImpl implements ILog, IClickListener {
 	protected Entry details;
 	private CommandLink cancel;
 	private IDeobfuscator deobfuscator;
-//	private List<String, Long> timestamps = new HashMap<String, Long>();
 
 	@Override
 	public ILog container(IContainer c) {
@@ -129,9 +127,9 @@ class LogImpl implements ILog, IClickListener {
 	private ILog addEntry(Entry e) {
 		ensureSize();
 		addLine(e);
-//		for (String key : timestamps.keySet()) {
-//			timestamps.put(key, timestamps.get(key) + e.duration);
-//		}
+		// for (String key : timestamps.keySet()) {
+		// timestamps.put(key, timestamps.get(key) + e.duration);
+		// }
 		return this;
 	}
 
@@ -324,6 +322,7 @@ class LogImpl implements ILog, IClickListener {
 
 	@Override
 	public IMeasurement start(String message) {
+		debug("Start " + message);
 		return new Measurement(message);
 	}
 
