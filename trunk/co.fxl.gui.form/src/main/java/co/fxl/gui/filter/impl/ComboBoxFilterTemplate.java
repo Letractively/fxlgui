@@ -9,7 +9,7 @@ import co.fxl.gui.form.impl.Validation;
 
 abstract class ComboBoxFilterTemplate<T> extends FilterTemplate<IComboBox, T> {
 
-	private FilterGrid panel;
+	FilterGrid panel;
 	boolean updateListeningActive = true;
 	boolean directApply = true;
 

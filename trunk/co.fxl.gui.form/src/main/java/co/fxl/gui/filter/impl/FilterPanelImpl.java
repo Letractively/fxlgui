@@ -34,7 +34,7 @@ public class FilterPanelImpl implements FilterPanel {
 		this.widget = widget;
 		title = new WidgetTitle(panel.panel().vertical().addSpace(10).add()
 				.panel(), true).sideWidget(true)// .grayBackground()
-				.spacing(2);//.spaceBottom(2);
+				.spacing(2);// .spaceBottom(2);
 		title.addToContextMenu(true);
 		mainPanel = title.content().panel().vertical().align().end()
 				.addSpace(2).add().panel().horizontal().align().end().add()
@@ -72,6 +72,11 @@ public class FilterPanelImpl implements FilterPanel {
 	@Override
 	public WidgetTitle widgetTitle() {
 		return title;
+	}
+
+	@Override
+	public void clearRowIterator() {
+		widget.clearRowIndex();
 	}
 
 }

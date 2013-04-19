@@ -56,7 +56,10 @@ class ComboBoxIntegerFilter extends ComboBoxFilterTemplate<Integer> {
 
 	@Override
 	public IFilterConstraint asConstraint() {
+		int before = text;
 		update();
+		if (text != before)
+			panel.clearRowIterator();
 		return new SizeConstraint(text);
 	}
 

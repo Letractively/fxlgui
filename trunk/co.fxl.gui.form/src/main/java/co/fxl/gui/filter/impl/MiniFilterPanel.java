@@ -288,6 +288,11 @@ class MiniFilterPanel implements FilterPanel {
 		@Override
 		public void notifyComboBoxChange() {
 			widget.notifyComboBoxChange();
+		}
+
+		@Override
+		public void clearRowIterator() {
+			MiniFilterPanel.this.clearRowIterator();
 		};
 	}
 
@@ -386,6 +391,11 @@ class MiniFilterPanel implements FilterPanel {
 	@Override
 	public WidgetTitle widgetTitle() {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void clearRowIterator() {
+		widget.clearRowIndex();
 	}
 
 }

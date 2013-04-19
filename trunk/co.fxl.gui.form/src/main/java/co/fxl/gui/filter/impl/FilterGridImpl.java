@@ -93,4 +93,9 @@ class FilterGridImpl implements FilterGrid {
 	public void notifyComboBoxChange() {
 		filterPanelImpl.widget.notifyComboBoxChange();
 	}
+
+	@Override
+	public void clearRowIterator() {
+		filterPanelImpl.clearRowIterator();
+	}
 }
