@@ -879,11 +879,11 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		}
 		if (!isCalibration)
 			addDisplayingNote();
+		addSorting();
+		selection.update();
 		if (allowColumnSelection) {
 			addColumnSelection();
 		}
-		addSorting();
-		selection.update();
 		for (ITableClickListener l : listeners.keySet()) {
 			KeyAdapter<Object> adp = listeners.get(l);
 			@SuppressWarnings("unchecked")
