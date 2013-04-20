@@ -540,6 +540,10 @@ public class WidgetTitle implements IClickListener, IColored {
 		return contentContainer;
 	}
 
+	public int contentOffsetY() {
+		return bPanel.offsetY() + space();
+	}
+
 	public IContainer bottom() {
 		content();
 		if (bottomContainer != null)
