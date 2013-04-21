@@ -23,6 +23,7 @@ import java.util.List;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -243,5 +244,9 @@ public class CommandLink implements IClickable<IClickable<?>> {
 		if (label.text().equals(buttonLabel))
 			for (IClickListener l : clickListeners)
 				l.onClick();
+	}
+
+	public IElement<?> panel() {
+		return fp;
 	}
 }
