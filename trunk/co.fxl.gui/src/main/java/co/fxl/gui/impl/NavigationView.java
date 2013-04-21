@@ -40,7 +40,7 @@ public class NavigationView implements IColored {
 	static String NAVIGATION = "Actions";
 	private static final boolean SHOW_NUMBERS = false;
 	private static final boolean SHOW_TRIANGLE = true;
-	private WidgetTitle widgetTitle;
+	public WidgetTitle widgetTitle;
 	private IVerticalPanel panel;
 	private int index = 1;
 	private boolean hasLinks;
