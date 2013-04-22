@@ -192,10 +192,9 @@ public class NavigationView implements IColored {
 	}
 
 	protected IPanel<?>[] addPanel() {
-		IVerticalPanel p = panel.add().panel().vertical().spacing(2);
+		IVerticalPanel p = panel.add().panel().vertical();
 		parts.add(p);
-		p.padding().left(6).right(6).top(6);
-		p.margin().bottom(6);
+		spacing(p, 2, 6);
 		// if (hasLinks) {
 		// p.addSpace(3);
 		// }
@@ -206,6 +205,17 @@ public class NavigationView implements IColored {
 		hasLinks = true;
 		IPanel<?>[] panels = new IPanel<?>[] { p, panel };
 		return panels;
+	}
+
+	public void spacing(int spacing, int padding) {
+		for (IVerticalPanel p : parts)
+			spacing(p, spacing, padding);
+	}
+
+	private void spacing(IVerticalPanel p, int spacing, int padding) {
+		p.spacing(spacing);
+		p.padding().left(padding).right(padding).top(padding);
+		p.margin().bottom(padding);
 	}
 
 	private void addBorder(IVerticalPanel p) {
