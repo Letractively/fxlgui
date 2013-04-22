@@ -18,10 +18,12 @@
  */
 package co.fxl.gui.impl;
 
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.IResizableWidget.Size;
+import co.fxl.gui.impl.PopUp.TransparentPopUp;
 
 public class PopUpPageContainer implements PageContainer {
 
@@ -34,19 +36,22 @@ public class PopUpPageContainer implements PageContainer {
 
 	public PopUpPageContainer(ResizableWidgetTemplate widget, Size popUpSize,
 			boolean isModal) {
-		this.widget = widget;
 		this.popUpSize = popUpSize;
 		this.isModal = isModal;
+		parent(widget);
+	}
+
+	public void parent(ResizableWidgetTemplate widget) {
+		this.widget = widget;
 	}
 
 	@Override
-	public IVerticalPanel panel() {
-		popUp = PopUp.showPopUp().glass(true).autoHide(true);
+	public IVerticalPanel panel(IClickListener cl) {
+		TransparentPopUp closablePopUp = PopUp.showClosablePopUp(true, cl);
+		popUp = closablePopUp.popUp().glass(true).autoHide(true);
 		if (isModal)
 			popUp.modal(true);
-		popUp.border().remove().style().shadow();
-		popUp.color().gray(245);
-		panel = popUp.container().panel().vertical();
+		panel = closablePopUp.panel();
 		resize();
 		popUp.visible(true);
 		return panel;
@@ -76,8 +81,9 @@ public class PopUpPageContainer implements PageContainer {
 		popUp.addVisibleListener(new IUpdateListener<Boolean>() {
 			@Override
 			public void onUpdate(Boolean value) {
-				if (!value)
+				if (!value) {
 					runnable.run();
+				}
 			}
 		});
 	}

@@ -85,6 +85,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	boolean allowInsertUnder;
 	IDragDropListener dragDropListener;
 	private IUpDownIndex upDownIndex;
+	private boolean addToContextMenu = true;
 
 	LazyScrollPaneImpl(IContainer container) {
 		this.container = container;
@@ -93,6 +94,12 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	@Override
 	public ILazyScrollPane decorator(IDecorator decorator) {
 		this.decorator = decorator;
+		return this;
+	}
+
+	@Override
+	public ILazyScrollPane addToContextMenu(boolean addToContextMenu) {
+		this.addToContextMenu = addToContextMenu;
 		return this;
 	}
 
@@ -177,7 +184,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	private void draw() {
 		hasScrollbar = true;
 		v = container.panel().focus();
-		if (!plainContent)
+		if (!plainContent && addToContextMenu)
 			co.fxl.gui.impl.Page.instance().contextMenu()
 					.decorate((IClickable<?>) v);
 		v.color().white();
