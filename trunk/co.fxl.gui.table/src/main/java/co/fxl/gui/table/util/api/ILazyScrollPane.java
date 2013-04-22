@@ -90,4 +90,6 @@ public interface ILazyScrollPane extends IMouseWheelListener {
 	ILazyScrollPane plainContent(boolean plainContent);
 
 	ILazyScrollPane correctMaxRowIndex(boolean correctMaxRowIndex);
+
+	ILazyScrollPane addToContextMenu(boolean addToContextMenu);
 }

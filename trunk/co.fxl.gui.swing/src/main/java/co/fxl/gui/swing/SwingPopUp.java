@@ -282,4 +282,9 @@ class SwingPopUp implements IPopUp, ComponentParent {
 	public IPopUp atLastClick() {
 		return atLastClick(0, 0);
 	}
+
+	@Override
+	public IPopUp transparent() {
+		return this;
+	}
 }

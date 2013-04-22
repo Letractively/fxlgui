@@ -55,6 +55,12 @@ class GWTPopUp implements IPopUp, WidgetParent {
 	}
 
 	@Override
+	public IPopUp transparent() {
+		popUp.getElement().getStyle().setProperty("background", "transparent");
+		return this;
+	}
+
+	@Override
 	public IPopUp visible(boolean visible) {
 		// Log.instance().warn("PopUp: " + visible);
 		if (visible) {

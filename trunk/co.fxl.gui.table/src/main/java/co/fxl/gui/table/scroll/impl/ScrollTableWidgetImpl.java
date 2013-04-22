@@ -398,6 +398,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 				contentPanel0.clear();
 				sp = (ILazyScrollPane) contentPanel0.add().widget(
 						ILazyScrollPane.class);
+				sp.addToContextMenu(addToContextMenu);
 				if (dragDropListener != null)
 					sp.dragDropListener(allowInsertUnder, dragDropListener);
 				sp.minRowHeight(getRowHeight());
