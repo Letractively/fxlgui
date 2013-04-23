@@ -107,7 +107,7 @@ public class PopUp {
 		final IGridPanel panel = popUp.container().panel().grid();
 		panel.color().remove();
 		// panel.addSpace(LABEL_DISTANCE);
-		final IVerticalPanel p = panel.cell(0, 1).panel().vertical();
+		final IVerticalPanel p = panel.cell(0, 0).panel().vertical();
 		p.border().remove().style().shadow();
 		p.color().gray(245);
 		panel.cell(1, 0).align().end().valign().begin().image()
@@ -120,7 +120,7 @@ public class PopUp {
 						else
 							popUp.visible(false);
 					}
-				}).mouseLeft().margin().left(-8).bottom(-16);// .font().underline(true).pixel(13).color().white();
+				}).mouseLeft().margin().top(-12).left(-12);// .font().underline(true).pixel(13).color().white();
 		return new TransparentPopUp() {
 			@Override
 			public IVerticalPanel panel() {
