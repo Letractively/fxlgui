@@ -30,6 +30,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.filter.impl.CellImpl.ExpliciteRangeField;
@@ -330,9 +331,10 @@ class MiniFilterPanel implements FilterPanel {
 
 	@Override
 	public void addTitle(String string) {
-		final IToolbar tb = titlePanel;
-		getContainer(tb).label().text(string.toUpperCase()).font().weight()
-				.bold();
+		IToolbar tb = titlePanel;
+		ILabel l = getContainer(tb).label().text(string.toUpperCase());
+		l.font().weight().bold();
+		// l.margin().top(-4);
 	}
 
 	public IContainer getContainer(final IToolbar tb) {
