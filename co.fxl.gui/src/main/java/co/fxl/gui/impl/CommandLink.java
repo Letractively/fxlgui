@@ -46,6 +46,7 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	private char ctrlKey;
 	private IFocusPanel fp;
 	private IHorizontalPanel backgroundPanel;
+	private boolean hide;
 
 	public CommandLink(WidgetTitle widgetTitle, IFocusPanel fp,
 			IHorizontalPanel backgroundPanel, IHorizontalPanel iPanel,
@@ -248,5 +249,19 @@ public class CommandLink implements IClickable<IClickable<?>> {
 
 	public IElement<?> panel() {
 		return fp;
+	}
+
+	private boolean beforeHide = true;
+
+	public void hide(boolean b) {
+		if (hide == b)
+			return;
+		if (b) {
+			beforeHide = iPanel.visible();
+			visible(false);
+		} else {
+			visible(beforeHide);
+		}
+		hide = b;
 	}
 }
