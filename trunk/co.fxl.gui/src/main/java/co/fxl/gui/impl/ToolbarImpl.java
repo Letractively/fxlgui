@@ -51,6 +51,7 @@ public class ToolbarImpl implements IToolbar {
 
 	public ToolbarImpl(IContainer container) {
 		panel = container.panel().flow();
+		panel.margin().bottom(-4);
 	}
 
 	ToolbarImpl root() {
@@ -98,9 +99,13 @@ public class ToolbarImpl implements IToolbar {
 		} else {
 			IHorizontalPanel childPanel0 = root.panel.add().panel()
 					.horizontal().height(height).align().center();
+			if (!Env.is(Env.FIREFOX))
+				childPanel0.margin().top(-4);
 			rootPanel = childPanel0;
 			childPanel0.spacing().left(root.hasContent ? 0 : spacing)
-					.top(spacing).bottom(spacing).right(spacing);
+					.top(spacing).right(spacing);
+			if (!Env.is(Env.CHROME))
+				childPanel0.spacing().bottom(spacing);
 			childPanel = childPanel0.add().panel().horizontal().align()
 					.center();
 			content.add(childPanel0);
