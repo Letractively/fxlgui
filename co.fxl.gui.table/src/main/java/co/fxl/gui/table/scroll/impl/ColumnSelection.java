@@ -233,7 +233,7 @@ public class ColumnSelection {
 
 	public static void newInstance(TableWidgetAdp tableWidgetAdp,
 			boolean allowsEmptySelection) {
-		if (Env.is(Env.SWING) || Env.is(Env.IE))
+		if (Env.is(Env.SWING))
 			new ColumnSelection(tableWidgetAdp, allowsEmptySelection);
 		else
 			new ScalingColumnSelection(tableWidgetAdp, allowsEmptySelection);
