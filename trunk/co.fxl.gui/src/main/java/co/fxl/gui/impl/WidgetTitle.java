@@ -617,6 +617,10 @@ public class WidgetTitle implements IClickListener, IColored {
 		commandPanel().visible(b);
 	}
 
+	public List<CommandLink> links() {
+		return links;
+	}
+
 	public void fireClick(String buttonLabel) {
 		for (CommandLink l : links)
 			l.fireClick(buttonLabel);
