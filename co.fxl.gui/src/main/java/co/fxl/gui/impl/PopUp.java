@@ -25,6 +25,7 @@ import java.util.Set;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
@@ -38,7 +39,7 @@ public class PopUp {
 		IVerticalPanel panel();
 	}
 
-	private static final boolean ALLOW_CLOSABLE_POPUP = false;
+	private static final boolean ALLOW_CLOSABLE_POPUP = true;
 	private static IDisplay display = Display.instance();
 	private static Set<IPopUp> visiblePopUps = new HashSet<IPopUp>();
 	private static boolean active = false;
@@ -102,10 +103,15 @@ public class PopUp {
 		}
 		// popUp.color().remove();
 		popUp.border().remove();
-		popUp.transparent();
-		final IVerticalPanel panel = popUp.container().panel().vertical();
+		popUp.transparent(true);
+		final IGridPanel panel = popUp.container().panel().grid();
 		panel.color().remove();
-		panel.align().end().add().label().text("Close")
+		// panel.addSpace(LABEL_DISTANCE);
+		final IVerticalPanel p = panel.cell(0, 1).panel().vertical();
+		p.border().remove().style().shadow();
+		p.color().gray(245);
+		panel.cell(1, 0).align().end().valign().begin().image()
+				.resource("close_24x24.png")// .label().text("Close")
 				.addClickListener(new LazyClickListener() {
 					@Override
 					protected void onAllowedClick() {
@@ -114,14 +120,10 @@ public class PopUp {
 						else
 							popUp.visible(false);
 					}
-				}).mouseLeft().font().underline(true).pixel(14).color().white();
-		panel.addSpace(4);
+				}).mouseLeft().margin().left(-8).bottom(-8);// .font().underline(true).pixel(13).color().white();
 		return new TransparentPopUp() {
 			@Override
 			public IVerticalPanel panel() {
-				IVerticalPanel p = panel.add().panel().vertical();
-				p.border().remove().style().shadow();
-				p.color().gray(245);
 				return p;
 			}
 

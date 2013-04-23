@@ -49,5 +49,7 @@ public interface IPopUp extends IBordered, ILocated<IPopUp>, IShell {
 
 	IColor color();
 
-	IPopUp transparent();
+	IPopUp transparent(boolean transparent);
+
+	boolean transparent();
 }

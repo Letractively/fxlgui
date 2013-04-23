@@ -21,11 +21,13 @@ public interface TableWidgetAdp {
 	IContainer getContainer();
 
 	void notifyVisible(ScrollTableColumnImpl c);
-	
+
 	IClickListener configureListener();
 
-//	void nextTimeShowPopUp(boolean b);
-//
-//	boolean nextTimeShowPopUp();
+	void notifySwap(ScrollTableColumnImpl c, ScrollTableColumnImpl dragged);
+
+	// void nextTimeShowPopUp(boolean b);widget.columnList()
+	//
+	// boolean nextTimeShowPopUp();
 
 }
