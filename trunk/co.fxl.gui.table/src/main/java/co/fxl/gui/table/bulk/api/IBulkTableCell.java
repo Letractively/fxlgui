@@ -41,4 +41,6 @@ public interface IBulkTableCell {
 	IContainer container();
 
 	Object nativeElement();
+
+	IBulkTableCell styledText(String text, String color);
 }

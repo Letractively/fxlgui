@@ -1717,4 +1717,15 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		widgetTitle().addLargeTitle(string);
 		return this;
 	}
+
+	@Override
+	public void notifySwap(ScrollTableColumnImpl c,
+			ScrollTableColumnImpl dragged) {
+		if (columns.indexOf(c) == sortColumn) {
+			sortColumn = columnList().indexOf(dragged);
+		} else if (columns.indexOf(dragged) == sortColumn) {
+			sortColumn = columnList().indexOf(c);
+		}
+	}
+
 }

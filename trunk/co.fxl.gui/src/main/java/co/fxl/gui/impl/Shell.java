@@ -58,8 +58,12 @@ public class Shell {
 	int getOffsetY(IElement<?> e, int oY1) {
 		IShell shell = e.shell();
 		int oY = 0;
-		if (shell instanceof IPopUp)
-			oY = ((IPopUp) shell).offsetY();
+		if (shell instanceof IPopUp) {
+			IPopUp p = (IPopUp) shell;
+			oY = p.offsetY();
+			if (p.transparent())
+				oY += 24;
+		}
 		return oY1 - oY;
 	}
 

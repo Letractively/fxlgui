@@ -160,7 +160,7 @@ public class ScalingColumnSelection {
 						+ String.valueOf(widget.columnList().indexOf(c) + 1)
 						: c.name()).autoWrap(false).breakWord(false);
 		l.font().pixel(11);
-//		new HyperlinkMouseOverListener(l);
+		// new HyperlinkMouseOverListener(l);
 		if (c.index == -1)
 			l.font().color().white();
 		else {
@@ -198,6 +198,7 @@ public class ScalingColumnSelection {
 			widget.columnList().add(dragged);
 		else
 			widget.columnList().add(target, dragged);
+		widget.notifySwap(c, dragged);
 		draw();
 		widget.updateTable();
 	}

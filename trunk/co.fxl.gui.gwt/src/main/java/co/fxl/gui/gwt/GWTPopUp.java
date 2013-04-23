@@ -8,6 +8,7 @@ import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.Display;
 
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.logical.shared.CloseEvent;
@@ -17,6 +18,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 class GWTPopUp implements IPopUp, WidgetParent {
 
+	private static final String TRANSPARENT = "transparent";
+	private static final String BACKGROUND = "backgroundColor";
 	private PopUpPanelWidget popUp;
 	private boolean center;
 	private boolean fitInScreen;
@@ -55,9 +58,22 @@ class GWTPopUp implements IPopUp, WidgetParent {
 	}
 
 	@Override
-	public IPopUp transparent() {
-		popUp.getElement().getStyle().setProperty("background", "transparent");
+	public boolean transparent() {
+		String backgroundColor = style().getBackgroundColor();
+		return backgroundColor != null && backgroundColor.equals(TRANSPARENT);
+	}
+
+	@Override
+	public IPopUp transparent(boolean transparent) {
+		if (transparent)
+			style().setBackgroundColor(TRANSPARENT);
+		else
+			style().clearBackgroundColor();
 		return this;
+	}
+
+	private Style style() {
+		return popUp.getElement().getStyle();
 	}
 
 	@Override
@@ -217,7 +233,7 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	@Override
 	public IPopUp opacity(double opacity) {
-		popUp.getElement().getStyle().setOpacity(opacity);
+		style().setOpacity(opacity);
 		return this;
 	}
 
@@ -237,7 +253,7 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 			@Override
 			protected IColor setColorInternal(String string) {
-				popUp.getElement().getStyle().setBackgroundColor(string);
+				style().setBackgroundColor(string);
 				return this;
 			}
 		};

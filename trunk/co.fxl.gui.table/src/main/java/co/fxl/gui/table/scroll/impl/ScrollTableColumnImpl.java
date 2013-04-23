@@ -178,9 +178,8 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	}
 
 	private static final boolean STYLE_NUMBERS_AND_DATES = false;
-	private static final boolean STYLE_CUSTOM_LISTS = !Env.runtime().leq(Env.IE, 8);
-	private static final String BORDER_RADIUS_ATTRIBUTE = Env.is(Env.FIREFOX) ? "-moz-border-radius"
-			: "border-radius";
+	private static final boolean STYLE_CUSTOM_LISTS = !Env.runtime().leq(
+			Env.IE, 8);
 
 	public class EnumDecorator extends DefaultDecorator<Object> {
 
@@ -224,22 +223,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 			if (STYLE_CUSTOM_LISTS && isShort && colorAdapter != null) {
 				if (text != null) {
 					String color = colorAdapter.color(identifier, value);
-					String fontColor = "white";
-					if (color == null) {
-						color = "";
-						fontColor = "black";
-					} else {
-						color = "background-color: " + color;
-					}
-					String html = "<div class=\"gwt-HTML gwt-Label-FXL\" style=\"font-weight:bold; display: inline-block; color:"
-							+ fontColor
-							+ "; "
-							+ BORDER_RADIUS_ATTRIBUTE
-							+ ": 3px; "
-							+ color
-							+ "; padding: 1px 5px 2px 5px; font-size: 10px; \">"
-							+ text + "</div>";
-					cell.html(html);
+					cell.styledText(text, color);
 				} else
 					cell.text(null);
 			} else {

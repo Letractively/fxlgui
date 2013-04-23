@@ -287,6 +287,26 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 			public Object nativeElement() {
 				throw new UnsupportedOperationException();
 			}
+
+			@Override
+			public IBulkTableCell styledText(String text, String color) {
+				String fontColor = "white";
+				if (color == null) {
+					color = "";
+					fontColor = "black";
+				} else {
+					color = "background-color: " + color;
+				}
+				String html = "<div class=\"gwt-HTML gwt-Label-FXL\" style=\"font-weight:bold; display: inline-block; color:"
+						+ fontColor
+						+ "; "
+						+ "border-radius"
+						+ ": 3px; "
+						+ color
+						+ "; padding: 1px 5px 2px 5px; font-size: 10px; \">"
+						+ text + "</div>";
+				return html(html);
+			}
 		};
 	}
 

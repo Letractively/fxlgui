@@ -50,6 +50,7 @@ class SwingPopUp implements IPopUp, ComponentParent {
 	private boolean fitInScreen;
 	private List<IUpdateListener<Boolean>> visibleListeners = new LinkedList<IUpdateListener<Boolean>>();
 	private boolean visible;
+	private boolean transparent;
 
 	SwingPopUp(SwingDisplay panel) {
 		this.panel = panel;
@@ -284,7 +285,13 @@ class SwingPopUp implements IPopUp, ComponentParent {
 	}
 
 	@Override
-	public IPopUp transparent() {
+	public IPopUp transparent(boolean b) {
+		transparent = b;
 		return this;
+	}
+
+	@Override
+	public boolean transparent() {
+		return transparent;
 	}
 }
