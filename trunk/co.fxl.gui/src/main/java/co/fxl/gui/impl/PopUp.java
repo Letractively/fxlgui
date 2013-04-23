@@ -120,7 +120,7 @@ public class PopUp {
 						else
 							popUp.visible(false);
 					}
-				}).mouseLeft().margin().top(-12).left(-12);// .font().underline(true).pixel(13).color().white();
+				}).mouseLeft().margin().top(Env.is(Env.IE) ? 0 : -12).left(-12);// .font().underline(true).pixel(13).color().white();
 		return new TransparentPopUp() {
 			@Override
 			public IVerticalPanel panel() {
