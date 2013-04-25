@@ -72,7 +72,7 @@ public class PopUp {
 
 	public static TransparentPopUp showClosablePopUp(boolean closable,
 			final IClickListener clickListener) {
-		final IPopUp popUp = display.showPopUp();
+		final IPopUp popUp = showPopUp();
 		if (!ALLOW_CLOSABLE_POPUP || !closable) {
 			popUp.border().remove().style().shadow();
 			popUp.color().gray(245);
@@ -88,18 +88,6 @@ public class PopUp {
 					return popUp.container().panel().vertical();
 				}
 			};
-		}
-		if (active) {
-			visiblePopUps.add(popUp);
-			popUp.addVisibleListener(new IUpdateListener<Boolean>() {
-				@Override
-				public void onUpdate(Boolean value) {
-					if (!value) {
-						visiblePopUps.remove(popUp);
-					} else
-						visiblePopUps.add(popUp);
-				}
-			});
 		}
 		// popUp.color().remove();
 		popUp.border().remove();
