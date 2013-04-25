@@ -264,4 +264,11 @@ public class CommandLink implements IClickable<IClickable<?>> {
 		}
 		hide = b;
 	}
+
+	public void tooltip(String string) {
+		iPanel.tooltip(string);
+		label.tooltip(string);
+		if (fp != null)
+			fp.tooltip(string);
+	}
 }
