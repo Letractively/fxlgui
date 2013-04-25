@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.impl;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
@@ -25,7 +28,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.IResizableWidget.Size;
 import co.fxl.gui.impl.PopUp.TransparentPopUp;
 
-public class PopUpPageContainer implements PageContainer {
+public class PopUpPageContainer implements PageContainer, IServerListener {
 
 	private IPopUp popUp;
 	private IVerticalPanel panel;
@@ -33,12 +36,32 @@ public class PopUpPageContainer implements PageContainer {
 	private Size popUpSize;
 	private boolean isModal;
 	private boolean added;
+	private IServerListener store;
+	private Set<Integer> open = new HashSet<Integer>();
+	private boolean ignore;
 
 	public PopUpPageContainer(ResizableWidgetTemplate widget, Size popUpSize,
 			boolean isModal) {
 		this.popUpSize = popUpSize;
 		this.isModal = isModal;
 		parent(widget);
+		store = ServerListener.instance;
+		ServerListener.instance = this;
+	}
+
+	@Override
+	public void notifyServerCallStart(int id) {
+		open.add(id);
+		ignore = true;
+		popUp.visible(false);
+		ignore = false;
+	}
+
+	@Override
+	public void notifyServerCallReturn(int id) {
+		open.remove(id);
+		if (open.isEmpty())
+			popUp.visible(true);
 	}
 
 	public void parent(ResizableWidgetTemplate widget) {
@@ -81,8 +104,11 @@ public class PopUpPageContainer implements PageContainer {
 		popUp.addVisibleListener(new IUpdateListener<Boolean>() {
 			@Override
 			public void onUpdate(Boolean value) {
+				if (ignore)
+					return;
 				if (!value) {
 					runnable.run();
+					ServerListener.instance = store;
 				}
 			}
 		});
