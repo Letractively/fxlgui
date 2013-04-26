@@ -95,11 +95,15 @@ public class PopUp {
 		final IGridPanel panel = popUp.container().panel().grid();
 		panel.color().remove();
 		// panel.addSpace(LABEL_DISTANCE);
-		final IVerticalPanel p = panel.cell(0, 0).panel().vertical();
+		final IVerticalPanel p = panel
+				.cell(0, Env.runtime().leq(Env.IE, 8) ? 1 : 0).panel()
+				.vertical();
 		p.border().remove().style().shadow();
 		p.color().gray(245);
-		panel.cell(1, 0).align().end().valign().begin().image()
-				.resource("close_24x24.png")// .label().text("Close")
+		panel.cell(1, 0).align().end().valign().begin()
+				.image()
+				.resource("close_24x24.png")
+				// .label().text("Close")
 				.addClickListener(new LazyClickListener() {
 					@Override
 					protected void onAllowedClick() {
@@ -108,7 +112,9 @@ public class PopUp {
 						else
 							popUp.visible(false);
 					}
-				}).mouseLeft().margin().top(Env.is(Env.IE) ? 0 : -12).left(-12);// .font().underline(true).pixel(13).color().white();
+				}).mouseLeft().margin()
+				.top(Env.runtime().leq(Env.IE, 8) ? 0 : -12)
+				.left(Env.runtime().leq(Env.IE, 8) ? 0 : -12);// .font().underline(true).pixel(13).color().white();
 		return new TransparentPopUp() {
 			@Override
 			public IVerticalPanel panel() {
