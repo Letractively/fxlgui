@@ -21,6 +21,7 @@ package co.fxl.gui.filter.impl;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.WidgetTitle;
 
@@ -45,8 +46,8 @@ public class FilterPanelImpl implements FilterPanel {
 	}
 
 	@Override
-	public void addTitle(String string) {
-		title.addTitle(string);
+	public ILabel addTitle(String string) {
+		return title.addTitle(string);
 	}
 
 	@Override
