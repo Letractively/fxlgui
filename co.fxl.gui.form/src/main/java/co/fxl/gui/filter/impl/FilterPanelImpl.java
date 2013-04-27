@@ -30,6 +30,7 @@ public class FilterPanelImpl implements FilterPanel {
 	private IVerticalPanel mainPanel;
 	private IContainer gridContainer;
 	FilterWidgetImpl widget;
+	private IVerticalPanel top;
 
 	FilterPanelImpl(FilterWidgetImpl widget, IContainer panel) {
 		this.widget = widget;
@@ -37,9 +38,10 @@ public class FilterPanelImpl implements FilterPanel {
 				.panel(), true).sideWidget(true)// .grayBackground()
 				.spacing(2);// .spaceBottom(2);
 		title.addToContextMenu(true);
-		mainPanel = title.content().panel().vertical().align().end()
-				.addSpace(2).add().panel().horizontal().align().end().add()
-				.panel().vertical();
+		IVerticalPanel vertical = title.content().panel().vertical();
+		top = vertical.add().panel().vertical().visible(false);
+		mainPanel = vertical.align().end().addSpace(2).add().panel()
+				.horizontal().align().end().add().panel().vertical();
 	}
 
 	@Override
@@ -82,8 +84,8 @@ public class FilterPanelImpl implements FilterPanel {
 
 	@Override
 	public IContainer top() {
-		IGridPanel grid = mainPanel.add().panel().grid();
-		grid.column(0).expand();
+		IGridPanel grid = top.visible(true).add().panel().grid();
+		// grid.column(0).expand();
 		grid.cell(1, 0).image().resource("empty_8x8.png");
 		return grid.cell(0, 0);
 	}
