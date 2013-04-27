@@ -400,4 +400,9 @@ class MiniFilterPanel implements FilterPanel {
 		widget.clearRowIndex();
 	}
 
+	@Override
+	public IContainer top() {
+		throw new UnsupportedOperationException();
+	}
+
 }

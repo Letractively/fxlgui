@@ -20,6 +20,7 @@ package co.fxl.gui.filter.impl;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.WidgetTitle;
 
@@ -77,6 +78,14 @@ public class FilterPanelImpl implements FilterPanel {
 	@Override
 	public void clearRowIterator() {
 		widget.clearRowIndex();
+	}
+
+	@Override
+	public IContainer top() {
+		IGridPanel grid = mainPanel.add().panel().grid();
+		grid.column(0).expand();
+		grid.cell(1, 0).image().resource("empty_8x8.png");
+		return grid.cell(0, 0);
 	}
 
 }
