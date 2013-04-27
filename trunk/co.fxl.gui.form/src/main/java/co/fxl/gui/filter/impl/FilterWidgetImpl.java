@@ -30,11 +30,14 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IImage;
+import co.fxl.gui.api.ISuggestField;
+import co.fxl.gui.api.ISuggestField.ISource.ISuggestion;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
+import co.fxl.gui.filter.api.ISuggestionAdp;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.form.impl.Validation;
 import co.fxl.gui.impl.DummyCallback;
@@ -42,6 +45,7 @@ import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.Icons;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.WidgetTitle;
+import co.fxl.gui.input.impl.TooltipTextInput;
 
 public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 
@@ -181,8 +185,8 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			constraints.sortDirection(this.constraints.sortDirection());
 		}
 		if (this.constraints != null && this.constraints.rowIterator() != null) {
-//			if (this.constraints.size() != constraints.size())
-//				this.constraints.clearRowIndex();
+			// if (this.constraints.size() != constraints.size())
+			// this.constraints.clearRowIndex();
 			constraints.rowIterator(this.constraints.rowIterator());
 		}
 		for (FilterTemplate filter : activeFilters) {
@@ -496,4 +500,27 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		if (apply.clickable() && DIRECT_COMBOBO_CHANGE)
 			onApplyClick();
 	}
+
+	@Override
+	public IFilterWidget suggestionAdp(final ISuggestionAdp suggestionAdp) {
+		if (suggestionAdp != null) {
+			ISuggestField sf = title.top().suggestField();
+			Heights.INSTANCE.decorate(sf);
+			final TooltipTextInput t = new TooltipTextInput(sf,
+					suggestionAdp.text());
+			sf.tooltip(IFilterWidget.WILDCARD_TOOLTIP);
+			sf.source(suggestionAdp);
+			sf.height(26);
+			sf.addSuggestionListener(new IUpdateListener<ISuggestion>() {
+				@Override
+				public void onUpdate(ISuggestion value) {
+					t.clear();
+					suggestionAdp.onUpdate(value);
+				}
+			});
+			sf.margin().top(4);// .right(-8);
+		}
+		return this;
+	}
+
 }

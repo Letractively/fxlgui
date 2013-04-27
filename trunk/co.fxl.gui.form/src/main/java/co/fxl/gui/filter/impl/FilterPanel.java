@@ -20,6 +20,7 @@ package co.fxl.gui.filter.impl;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IComboBox;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.impl.Heights;
@@ -67,11 +68,13 @@ interface FilterPanel {
 
 	ViewComboBox viewComboBox();
 
+	IContainer top();
+
 	FilterGrid filterGrid();
 
 	void visible();
 
 	WidgetTitle widgetTitle();
-	
+
 	void clearRowIterator();
 }

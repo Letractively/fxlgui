@@ -72,7 +72,8 @@ public interface IFilterWidget {
 	public static final Integer MAX_FILTER_SIZE = 5000;
 	public static final Integer DEFAULT_FILTER_SIZE = MIN_FILTER_SIZE;
 	public static final List<Object> DEFAULT_SIZES = Arrays
-			.asList(new Object[] { DEFAULT_FILTER_SIZE, 100, 500, 1000, MAX_FILTER_SIZE });
+			.asList(new Object[] { DEFAULT_FILTER_SIZE, 100, 500, 1000,
+					MAX_FILTER_SIZE });
 
 	IFilterWidget addConfiguration(String config);
 
@@ -113,4 +114,7 @@ public interface IFilterWidget {
 	WidgetTitle widgetTitle();
 
 	IFilterWidget clearRowIndex();
+
+	IFilterWidget suggestionAdp(ISuggestionAdp adp);
+
 }
