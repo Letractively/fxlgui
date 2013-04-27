@@ -518,7 +518,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 					suggestionAdp.onUpdate(value);
 				}
 			});
-			sf.margin().top(4);// .right(-8);
+			sf.margin().top(6).left(8).right(2).bottom(-2);// .right(-8);
 		}
 		return this;
 	}
