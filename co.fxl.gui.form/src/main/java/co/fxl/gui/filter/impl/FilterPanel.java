@@ -22,6 +22,7 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.WidgetTitle;
@@ -62,7 +63,7 @@ interface FilterPanel {
 		void clearRowIterator();
 	}
 
-	void addTitle(String string);
+	ILabel addTitle(String string);
 
 	IClickable<?> addHyperlink(String imageResource, String string);
 

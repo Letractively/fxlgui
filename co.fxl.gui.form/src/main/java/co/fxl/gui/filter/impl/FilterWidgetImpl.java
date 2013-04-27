@@ -30,6 +30,7 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IImage;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ISuggestField.ISource.ISuggestion;
 import co.fxl.gui.api.ITextField;
@@ -124,10 +125,11 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	private FilterPanel title;
 	private boolean hyperlinksAdded;
 	private boolean noDiscardChangesDialog;
+	private ILabel titleLabel;
 
 	FilterWidgetImpl(IContainer panel) {
 		title = newFilterPanel(panel);
-		title.addTitle("Filter");
+		titleLabel = title.addTitle("Filter");
 		mainPanel = title;
 	}
 
@@ -504,6 +506,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	@Override
 	public IFilterWidget suggestionAdp(final ISuggestionAdp suggestionAdp) {
 		if (suggestionAdp != null) {
+			titleLabel.text("Search & Filter");
 			ISuggestField sf = title.top().suggestField();
 			Heights.INSTANCE.decorate(sf);
 			final TooltipTextInput t = new TooltipTextInput(sf,
