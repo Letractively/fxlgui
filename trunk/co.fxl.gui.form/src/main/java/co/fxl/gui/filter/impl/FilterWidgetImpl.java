@@ -506,7 +506,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	@Override
 	public IFilterWidget suggestionAdp(final ISuggestionAdp suggestionAdp) {
 		if (suggestionAdp != null) {
-			titleLabel.text("Search & Filter");
+			titleLabel.text("SEARCH & FILTER");
 			ISuggestField sf = title.top().suggestField();
 			Heights.INSTANCE.decorate(sf);
 			final TooltipTextInput t = new TooltipTextInput(sf,
