@@ -21,13 +21,14 @@ package co.fxl.gui.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IColored.IColor;
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.impl.ContextMenu.Entry;
 import co.fxl.gui.impl.ContextMenu.Group;
 
@@ -47,6 +48,7 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	private IFocusPanel fp;
 	private IHorizontalPanel backgroundPanel;
 	private boolean hide;
+	private boolean flip;
 
 	public CommandLink(WidgetTitle widgetTitle, IFocusPanel fp,
 			IHorizontalPanel backgroundPanel, IHorizontalPanel iPanel,
@@ -187,6 +189,8 @@ public class CommandLink implements IClickable<IClickable<?>> {
 		image.resource(string);
 		if (contextMenuEntry != null)
 			contextMenuEntry.imageResource(string);
+		if (flip)
+			image.margin().left(-2);
 	}
 
 	public CommandLink ctrlKey(char c) {
@@ -224,9 +228,11 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	}
 
 	public void flip(boolean flip) {
+		this.flip = flip;
 		if (flip) {
 			image.remove();
 			iPanel.add(image);
+			image.margin().left(-2);
 		} else {
 			label.remove();
 			iPanel.add(label);
@@ -247,7 +253,7 @@ public class CommandLink implements IClickable<IClickable<?>> {
 				l.onClick();
 	}
 
-	public IElement<?> panel() {
+	public IPanel<?> panel() {
 		return fp;
 	}
 
@@ -270,5 +276,17 @@ public class CommandLink implements IClickable<IClickable<?>> {
 		label.tooltip(string);
 		if (fp != null)
 			fp.tooltip(string);
+	}
+
+	public IColor color() {
+		return backgroundPanel.color();
+	}
+
+	public ILabel label() {
+		return label;
+	}
+
+	public IBorder border() {
+		return backgroundPanel.border();
 	}
 }

@@ -106,6 +106,10 @@ public class GWTWidgetBorder extends GWTBorder {
 				DOM.setStyleAttribute(element, attr, "3px");
 			} catch (AssertionError e) {
 			}
+			if (!roundBottom) {
+				element.getStyle().clearProperty("borderBottomLeftRadius");
+				element.getStyle().clearProperty("borderBottomRightRadius");
+			}
 		} else {
 			DOM.setStyleAttribute(element, borderType, width + "px " + color
 					+ " " + style);
