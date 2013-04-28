@@ -32,7 +32,8 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.impl.ContextMenu.Entry;
 import co.fxl.gui.impl.ContextMenu.Group;
 
-public class CommandLink implements IClickable<IClickable<?>> {
+public class CommandLink implements IClickable<IClickable<?>>,
+		co.fxl.gui.api.IClickable.IClickListener {
 
 	static final boolean HIDE_NON_CLICKABLE = !Env.is(Env.SWING);
 	final WidgetTitle widgetTitle;
@@ -48,7 +49,7 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	private IFocusPanel fp;
 	private IHorizontalPanel backgroundPanel;
 	private boolean hide;
-	private boolean flip;
+	private boolean setup;
 
 	public CommandLink(WidgetTitle widgetTitle, IFocusPanel fp,
 			IHorizontalPanel backgroundPanel, IHorizontalPanel iPanel,
@@ -134,14 +135,21 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	@Override
 	public co.fxl.gui.api.IClickable.IKey<IClickable<?>> addClickListener(
 			co.fxl.gui.api.IClickable.IClickListener clickListener) {
-		label.addClickListener(clickListener);
-		if (image != null)
-			image.addClickListener(clickListener);
-		if (fp != null)
-			fp.addClickListener(clickListener);
-		iPanel.addClickListener(clickListener);
+		setUp();
 		clickListeners.add(clickListener);
 		return null;
+	}
+
+	void setUp() {
+		if (setup)
+			return;
+		setup = true;
+		label.addClickListener(this);
+		if (image != null)
+			image.addClickListener(this);
+		if (fp != null)
+			fp.addClickListener(this);
+		iPanel.addClickListener(this);
 	}
 
 	public CommandLink tooltips(String toolTipClickable,
@@ -189,8 +197,6 @@ public class CommandLink implements IClickable<IClickable<?>> {
 		image.resource(string);
 		if (contextMenuEntry != null)
 			contextMenuEntry.imageResource(string);
-		if (flip)
-			image.margin().left(-2);
 	}
 
 	public CommandLink ctrlKey(char c) {
@@ -228,11 +234,9 @@ public class CommandLink implements IClickable<IClickable<?>> {
 	}
 
 	public void flip(boolean flip) {
-		this.flip = flip;
 		if (flip) {
 			image.remove();
 			iPanel.add(image);
-			image.margin().left(-2);
 		} else {
 			label.remove();
 			iPanel.add(label);
@@ -288,5 +292,11 @@ public class CommandLink implements IClickable<IClickable<?>> {
 
 	public IBorder border() {
 		return backgroundPanel.border();
+	}
+
+	@Override
+	public void onClick() {
+		for (IClickListener c : clickListeners)
+			c.onClick();
 	}
 }
