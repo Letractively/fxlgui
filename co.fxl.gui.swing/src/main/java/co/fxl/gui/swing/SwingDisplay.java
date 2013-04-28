@@ -95,7 +95,6 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 		Display.instance(this);
 		// TODO AOPC: Aspect Log.instance(new SwingLog());
 		// TODO SWING-FXL: IMPL: remove hack
-		ToolbarImpl.ADJUST_HEIGHTS = true;
 		declareConstants();
 		SwingFormat.setUp();
 	}
