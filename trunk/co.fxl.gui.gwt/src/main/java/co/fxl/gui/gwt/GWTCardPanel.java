@@ -68,7 +68,8 @@ class GWTCardPanel extends GWTPanel<DeckPanel, ICardPanel> implements
 	@Override
 	public ICardPanel show(IElement<?> panel) {
 		this.topElement = (GWTElement<Widget, ?>) panel;
-		if (this.topElement.container.widget != null) {
+		if (this.topElement != null && this.topElement.container != null
+				&& this.topElement.container.widget != null) {
 			Integer index = widgets.indexOf(topElement.container.widget);
 			if (index == -1)
 				throw new RuntimeException(

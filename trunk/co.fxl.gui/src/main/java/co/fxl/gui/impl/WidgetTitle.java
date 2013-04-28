@@ -370,8 +370,8 @@ public class WidgetTitle implements IClickListener, IColored {
 		IFocusPanel iPanel0 = cp.add().panel().focus();
 		if (!commandsOnTop)
 			iPanel0.margin().left(6);
-		IHorizontalPanel iPanel = iPanel0.add().panel().horizontal()
-				.addSpace(4).add().panel().horizontal();
+		IHorizontalPanel iPanel = addSpace(iPanel0.add().panel().horizontal(),
+				4).add().panel().horizontal();
 		IHorizontalPanel backgroundPanel = iPanel;
 		if (commandsOnTop) {
 			styleWindowHeaderButton(iPanel);
@@ -395,6 +395,11 @@ public class WidgetTitle implements IClickListener, IColored {
 		}
 		links.add(cl);
 		return cl;
+	}
+
+	private IHorizontalPanel addSpace(IHorizontalPanel horizontal, int i) {
+		horizontal.padding().left(i);
+		return horizontal;
 	}
 
 	public IClickable<?> addConfigureIcon(String text) {
@@ -492,8 +497,9 @@ public class WidgetTitle implements IClickListener, IColored {
 
 	public static ILabel addHyperlinkLabel2Panel(String text,
 			IHorizontalPanel iPanel) {
-		ILabel l = iPanel.addSpace(4).add().label();
+		ILabel l = iPanel.add().label();
 		ILabel label = l.text(text);
+		label.margin().left(4);
 		label.font().pixel(12);
 		return label;
 	}
@@ -534,7 +540,9 @@ public class WidgetTitle implements IClickListener, IColored {
 		IVerticalPanel v = vertical;
 		if (space() == 0 && spaceBottom() == 0)
 			return contentContainer = v.add();
-		contentContainer = v.addSpace(space()).add().panel().vertical().add();
+		IVerticalPanel vertical2 = v.add().panel().vertical();
+		vertical2.margin().left(space());
+		contentContainer = vertical2.add();
 		if (spaceBottom() != 0)
 			vertical.addSpace(spaceBottom());
 		return contentContainer;
