@@ -149,7 +149,8 @@ public class CommandLink implements IClickable<IClickable<?>>,
 			image.addClickListener(this);
 		if (fp != null)
 			fp.addClickListener(this);
-		iPanel.addClickListener(this);
+		else
+			iPanel.addClickListener(this);
 	}
 
 	public CommandLink tooltips(String toolTipClickable,
