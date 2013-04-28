@@ -380,7 +380,7 @@ public class WidgetTitle implements IClickListener, IColored {
 		}
 		IImage image = null;
 		if (imageResource != null) {
-			image = iPanel.add().image().resource(imageResource).size(16, 16);
+			image = iPanel.add().image().resource(imageResource);//.size(16, 16);
 			images.add(image);
 		}
 		CommandLink cl;
