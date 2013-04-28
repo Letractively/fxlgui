@@ -46,7 +46,7 @@ public class BorderMemento implements IBorder {
 		}
 
 		@Override
-		public IBorder rounded() {
+		public IRoundBorder rounded() {
 			throw new UnsupportedOperationException();
 		}
 

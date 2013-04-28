@@ -81,20 +81,28 @@ public abstract class GWTBorder implements IBorder {
 		}
 
 		@Override
-		public IBorder rounded() {
+		public IRoundBorder rounded() {
 			borderType = BORDER_ROUNDED;
 			update();
-			return GWTBorder.this;
+			return new IRoundBorder() {
+
+				@Override
+				public IRoundBorder bottom(boolean bottom) {
+					roundBottom = false;
+					update();
+					return this;
+				}
+			};
 		}
 
 		@Override
 		public IBorder shadow() {
-			 return shadow(4);
+			return shadow(4);
 		}
 
 		@Override
 		public IBorder shadow(int pixel) {
-			if(pixel!=4 && pixel!=2)
+			if (pixel != 4 && pixel != 2)
 				throw new UnsupportedOperationException();
 			GWTBorder.this.shadow(pixel);
 			return GWTBorder.this;
@@ -113,6 +121,7 @@ public abstract class GWTBorder implements IBorder {
 	String color = "black";
 	String style = "solid";
 	String borderType = "border";
+	boolean roundBottom = true;
 	boolean top = false;
 	boolean bottom = false;
 	boolean left = false;

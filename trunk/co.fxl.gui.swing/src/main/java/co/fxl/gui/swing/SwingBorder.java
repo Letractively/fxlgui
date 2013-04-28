@@ -42,10 +42,17 @@ class SwingBorder implements IBorder {
 		}
 
 		@Override
-		public IBorder rounded() {
+		public IRoundBorder rounded() {
 			borderStyle = ROUNDED;
 			updateBorder();
-			return SwingBorder.this;
+			return new IRoundBorder() {
+
+				@Override
+				public IRoundBorder bottom(boolean bottom) {
+					return this;
+				}
+
+			};
 		}
 
 		@Override

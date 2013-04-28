@@ -24,13 +24,18 @@ public interface IBordered {
 
 		public interface IBorderStyle {
 
+			public interface IRoundBorder {
+
+				IRoundBorder bottom(boolean bottom);
+			}
+
 			IBorder shadow();
 
 			IBorder shadow(int pixel);
 
 			IBorder dotted();
 
-			IBorder rounded();
+			IRoundBorder rounded();
 
 			IBorder solid();
 
@@ -40,7 +45,8 @@ public interface IBordered {
 
 			IBorder bottom();
 
-			// TODO Code Quality Fine-Tuning: remove, replace calls with left().right().top()
+			// TODO Code Quality Fine-Tuning: remove, replace calls with
+			// left().right().top()
 			IBorder noBottom();
 
 			IBorder right();
