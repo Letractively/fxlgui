@@ -38,6 +38,7 @@ public class FilterPanelImpl implements FilterPanel {
 		title = new WidgetTitle(panel.panel().vertical().addSpace(10).add()
 				.panel(), true).sideWidget(true)// .grayBackground()
 				.spacing(2);// .spaceBottom(2);
+		title.commandsOnTop();
 		title.addToContextMenu(true);
 		IVerticalPanel vertical = title.content().panel().vertical();
 		top = vertical.add().panel().vertical().visible(false);
