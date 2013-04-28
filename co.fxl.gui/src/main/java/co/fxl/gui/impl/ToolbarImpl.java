@@ -36,7 +36,7 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class ToolbarImpl implements IToolbar {
 
-	private static final boolean ADJUST_HEIGHTS = Env.is(Env.SWING);
+	public static boolean ADJUST_HEIGHTS = false;
 	private static int SPACING = 4;
 	private IFlowPanel panel;
 	private ToolbarImpl parent;

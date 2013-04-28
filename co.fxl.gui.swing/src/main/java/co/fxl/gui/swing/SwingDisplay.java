@@ -92,6 +92,7 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 		// .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		// fullscreen();
 		// Style.setUp();
+		ToolbarImpl.ADJUST_HEIGHTS = true;
 		Display.instance(this);
 		// TODO AOPC: Aspect Log.instance(new SwingLog());
 		// TODO SWING-FXL: IMPL: remove hack
