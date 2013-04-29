@@ -380,7 +380,8 @@ public class WidgetTitle implements IClickListener, IColored {
 		}
 		IImage image = null;
 		if (imageResource != null) {
-			image = iPanel.add().image().resource(imageResource);//.size(16, 16);
+			image = iPanel.add().image().resource(imageResource);// .size(16,
+																	// 16);
 			images.add(image);
 		}
 		CommandLink cl;
@@ -541,7 +542,7 @@ public class WidgetTitle implements IClickListener, IColored {
 		if (space() == 0 && spaceBottom() == 0)
 			return contentContainer = v.add();
 		IVerticalPanel vertical2 = v.add().panel().vertical();
-		vertical2.margin().left(space());
+		vertical2.margin().top(space());
 		contentContainer = vertical2.add();
 		if (spaceBottom() != 0)
 			vertical.addSpace(spaceBottom());
