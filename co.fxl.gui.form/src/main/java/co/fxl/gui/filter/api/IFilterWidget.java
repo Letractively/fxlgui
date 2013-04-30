@@ -36,6 +36,12 @@ public interface IFilterWidget {
 
 	public interface IFilter {
 
+		public interface IGlobalValue {
+
+			String value();
+
+		}
+
 		IFilter required();
 
 		IFilter name(String name);
@@ -49,6 +55,8 @@ public interface IFilterWidget {
 		IFilter text(String c);
 
 		IFilter directApply(boolean directApply);
+
+		IFilter globalValue(IGlobalValue value);
 	}
 
 	public interface IRelationFilter<S, R> extends IFilter {
