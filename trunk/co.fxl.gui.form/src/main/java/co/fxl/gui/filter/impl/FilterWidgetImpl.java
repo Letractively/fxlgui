@@ -99,7 +99,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 
 		@Override
 		public void onAllowedClick() {
-			onApplyClick();
+			onApplyClick(true);
 		}
 	}
 
@@ -445,17 +445,19 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 
 			@Override
 			public void onClick() {
-				if (apply.clickable())
-					onApplyClick();
+				if (apply.clickable()) {
+					onApplyClick(true);
+				}
 			}
 		}).enter();
 	}
 
-	private void onApplyClick() {
+	private void onApplyClick(boolean clickableClear) {
 		if (holdFilterClicks)
 			return;
 		validation.update();
-		clear.clickable(true);
+		if (clickableClear)
+			clear.clickable(true);
 		notifyListeners(DummyCallback.voidInstance());
 	}
 
@@ -498,9 +500,9 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		return this;
 	}
 
-	void notifyComboBoxChange() {
+	void notifyComboBoxChange(boolean clickableClear) {
 		if (apply.clickable() && DIRECT_COMBOBO_CHANGE)
-			onApplyClick();
+			onApplyClick(clickableClear);
 	}
 
 	@Override

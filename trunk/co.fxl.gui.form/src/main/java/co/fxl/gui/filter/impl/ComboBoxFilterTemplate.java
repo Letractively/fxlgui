@@ -43,7 +43,7 @@ abstract class ComboBoxFilterTemplate<T> extends FilterTemplate<IComboBox, T> {
 			@Override
 			public void onUpdate(String value) {
 				if (updateListeningActive && directApply)
-					panel.notifyComboBoxChange();
+					panel.notifyComboBoxChange(clearClickable());
 			}
 		});
 	}
@@ -63,6 +63,10 @@ abstract class ComboBoxFilterTemplate<T> extends FilterTemplate<IComboBox, T> {
 	public IUpdateable<String> addUpdateListener(
 			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
 		throw new UnsupportedOperationException();
+	}
+
+	boolean clearClickable() {
+		return true;
 	}
 
 }
