@@ -112,7 +112,6 @@ public class ScalingColumnSelection {
 	ILabel decoratePanel(final HorizontalScalingPanel p,
 			final IClickListener clickListener, final ScrollTableColumnImpl c,
 			final IFocusPanel fp, final IHorizontalPanel b) {
-		fp.tooltip(ColumnSelection.TOOLTIP);
 		fp.addDragStartListener(new IDragStartListener() {
 
 			@Override
@@ -152,15 +151,17 @@ public class ScalingColumnSelection {
 		else if (c.visible)
 			b.color().gray();
 		else
-			b.color().white();
-		ILabel l = b
-				.add()
-				.label()
-				.text(c.name.equals("") ? COLUMN + " "
-						+ String.valueOf(widget.columnList().indexOf(c) + 1)
-						: c.name()).autoWrap(false).breakWord(false);
+			b.color().lightgray();
+		String label = c.name.equals("") ? COLUMN + " "
+				+ String.valueOf(widget.columnList().indexOf(c) + 1) : c.name();
+		ILabel l = b.add().label().text(label).autoWrap(false).breakWord(false);
 		l.font().pixel(11);
 		// new HyperlinkMouseOverListener(l);
+		fp.tooltip("Click to "
+				+ (c.visible ? "hide" : "show")
+				+ " column \""
+				+ label
+				+ "\". Drag and drop panel onto another column panel to reorder table columns.");
 		if (c.index == -1)
 			l.font().color().white();
 		else {
@@ -186,6 +187,13 @@ public class ScalingColumnSelection {
 		return l;
 	}
 
+	void decorateLabel(final ScrollTableColumnImpl c, ILabel l) {
+//		if (c.visible)
+			l.font().color().white();
+//		else
+//			l.font().color().rgb(192, 192, 192);
+	}
+
 	protected void dropOnTo(ScrollTableColumnImpl c) {
 		if (c == dragged)
 			return;
@@ -201,13 +209,6 @@ public class ScalingColumnSelection {
 		widget.notifySwap(c, dragged);
 		draw();
 		widget.updateTable();
-	}
-
-	void decorateLabel(final ScrollTableColumnImpl c, ILabel l) {
-		if (c.visible)
-			l.font().color().white();
-		else
-			l.font().color().rgb(102, 102, 102);
 	}
 
 }
