@@ -23,15 +23,17 @@ import java.util.List;
 
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.filter.api.IFilterConstraints;
+import co.fxl.gui.filter.api.IFilterWidget.IFilter.IGlobalValue;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 
 class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 
 	private String text;
 	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();
+	private IGlobalValue v;
 
 	ComboBoxStringFilter(FilterGrid panel, String name, List<Object> values,
-			int filterIndex) {
+			int filterIndex, IGlobalValue v) {
 		super(panel, name, values, filterIndex);
 		input.addUpdateListener(new IUpdateListener<String>() {
 			@Override
@@ -41,6 +43,7 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 						l.onUpdate(value);
 			}
 		});
+		this.v = v;
 	}
 
 	@Override
@@ -70,6 +73,10 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 
 	@Override
 	boolean fromConstraint(IFilterConstraints constraints) {
+		if (v != null) {
+			text(v.value());
+			return true;
+		}
 		if (constraints.isAttributeConstrained(name)) {
 			String prefix = constraints.stringValue(name);
 			text(prefix);

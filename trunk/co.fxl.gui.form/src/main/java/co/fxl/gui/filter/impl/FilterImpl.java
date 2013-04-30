@@ -31,6 +31,7 @@ class FilterImpl implements IFilter {
 	boolean required = false;
 	String text;
 	boolean directApply = true;
+	IGlobalValue value;
 
 	@Override
 	public IFilter name(String name) {
@@ -70,7 +71,13 @@ class FilterImpl implements IFilter {
 
 	@Override
 	public IFilter directApply(boolean directApply) {
-		this.directApply  = directApply;
+		this.directApply = directApply;
+		return this;
+	}
+
+	@Override
+	public IFilter globalValue(IGlobalValue value) {
+		this.value = value;
 		return this;
 	}
 }
