@@ -111,4 +111,9 @@ public class TooltipTextInput implements IUpdateable<String> {
 		return this;
 	}
 
+	public void text(String tempComment) {
+		ti.text(tempComment);
+		updateColor();
+	}
+
 }
