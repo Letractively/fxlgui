@@ -33,11 +33,13 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 	private IGlobalValue v;
 
 	ComboBoxStringFilter(FilterGrid panel, String name, List<Object> values,
-			int filterIndex, IGlobalValue v) {
+			int filterIndex, final IGlobalValue v) {
 		super(panel, name, values, filterIndex);
 		input.addUpdateListener(new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(String value) {
+				if (v != null)
+					v.value(value);
 				if (updateListeningActive)
 					for (IUpdateListener<String> l : updateListeners)
 						l.onUpdate(value);
@@ -45,7 +47,7 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 		});
 		this.v = v;
 		if (v != null)
-			input.text(v.value());
+			input.text(v.value() != null ? v.value() : "");
 	}
 
 	@Override
@@ -53,7 +55,7 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 		text = input.text().trim();
 		if (text.equals(""))
 			text = null;
-		return text != null;
+		return v == null && text != null;
 	}
 
 	@Override
@@ -76,8 +78,7 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 	@Override
 	boolean fromConstraint(IFilterConstraints constraints) {
 		if (v != null) {
-			text(v.value());
-			return true;
+			return false;
 		}
 		if (constraints.isAttributeConstrained(name)) {
 			String prefix = constraints.stringValue(name);

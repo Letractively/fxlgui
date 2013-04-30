@@ -40,6 +40,8 @@ public interface IFilterWidget {
 
 			String value();
 
+			void value(String value);
+
 		}
 
 		IFilter required();
