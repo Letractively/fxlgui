@@ -44,6 +44,8 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 			}
 		});
 		this.v = v;
+		if (v != null)
+			input.text(v.value());
 	}
 
 	@Override
