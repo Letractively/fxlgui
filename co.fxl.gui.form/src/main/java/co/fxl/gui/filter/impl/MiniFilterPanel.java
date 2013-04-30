@@ -349,7 +349,7 @@ class MiniFilterPanel implements FilterPanel {
 	public IClickable<?> addHyperlink(String imageResource, String string) {
 		final IImage resource = getContainer(hyperLinkPanel).image().resource(
 				imageResource);
-		return new IClickable<IImage>() {
+		return resource;/*new IClickable<IImage>() {
 
 			@Override
 			public IImage clickable(boolean clickable) {
@@ -367,7 +367,7 @@ class MiniFilterPanel implements FilterPanel {
 					co.fxl.gui.api.IClickable.IClickListener clickListener) {
 				return resource.addClickListener(clickListener);
 			}
-		};
+		};*/
 	}
 
 	@Override
