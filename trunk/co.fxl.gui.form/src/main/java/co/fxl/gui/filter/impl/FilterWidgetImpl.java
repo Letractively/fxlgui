@@ -522,7 +522,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 				}
 			});
 			sf.margin().top(6).left(8).right(2).bottom(-2);// .right(-8);
-			sf.color().white();
+//			sf.color().white();
 		}
 		return this;
 	}
