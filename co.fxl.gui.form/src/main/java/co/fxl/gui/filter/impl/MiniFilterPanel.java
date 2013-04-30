@@ -287,8 +287,8 @@ class MiniFilterPanel implements FilterPanel {
 		}
 
 		@Override
-		public void notifyComboBoxChange() {
-			widget.notifyComboBoxChange();
+		public void notifyComboBoxChange(boolean clickableClear) {
+			widget.notifyComboBoxChange(clickableClear);
 		}
 
 		@Override
@@ -349,25 +349,22 @@ class MiniFilterPanel implements FilterPanel {
 	public IClickable<?> addHyperlink(String imageResource, String string) {
 		final IImage resource = getContainer(hyperLinkPanel).image().resource(
 				imageResource);
-		return resource;/*new IClickable<IImage>() {
-
-			@Override
-			public IImage clickable(boolean clickable) {
-				resource.visible(clickable);
-				return resource;
-			}
-
-			@Override
-			public boolean clickable() {
-				return resource.visible();
-			}
-
-			@Override
-			public co.fxl.gui.api.IClickable.IKey<IImage> addClickListener(
-					co.fxl.gui.api.IClickable.IClickListener clickListener) {
-				return resource.addClickListener(clickListener);
-			}
-		};*/
+		return resource;/*
+						 * new IClickable<IImage>() {
+						 * 
+						 * @Override public IImage clickable(boolean clickable)
+						 * { resource.visible(clickable); return resource; }
+						 * 
+						 * @Override public boolean clickable() { return
+						 * resource.visible(); }
+						 * 
+						 * @Override public
+						 * co.fxl.gui.api.IClickable.IKey<IImage>
+						 * addClickListener(
+						 * co.fxl.gui.api.IClickable.IClickListener
+						 * clickListener) { return
+						 * resource.addClickListener(clickListener); } };
+						 */
 	}
 
 	@Override

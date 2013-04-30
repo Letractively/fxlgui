@@ -59,7 +59,14 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 	}
 
 	@Override
+	boolean clearClickable() {
+		return v == null;
+	}
+
+	@Override
 	public void clear() {
+		if (v != null)
+			return;
 		text("");
 		text = null;
 	}

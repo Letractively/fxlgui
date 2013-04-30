@@ -58,7 +58,7 @@ interface FilterPanel {
 
 		boolean addTooltips();
 
-		void notifyComboBoxChange();
+		void notifyComboBoxChange(boolean clickableClear);
 
 		void clearRowIterator();
 	}
