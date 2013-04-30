@@ -506,7 +506,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	@Override
 	public IFilterWidget suggestionAdp(final ISuggestionAdp suggestionAdp) {
 		if (suggestionAdp != null) {
-//			titleLabel.text("SEARCH & FILTER");
+			titleLabel.text("SEARCH FILTER");
 			ISuggestField sf = title.top().suggestField();
 			Heights.INSTANCE.decorate(sf);
 			final TooltipTextInput t = new TooltipTextInput(sf,
@@ -522,7 +522,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 				}
 			});
 			sf.margin().top(6).left(8).right(2).bottom(-2);// .right(-8);
-//			sf.color().white();
+			// sf.color().white();
 		}
 		return this;
 	}
