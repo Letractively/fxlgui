@@ -149,9 +149,9 @@ public class ScalingColumnSelection {
 		if (c.index == -1)
 			b.color().white();
 		else if (c.visible)
-			b.color().gray();
+			b.color().gray(120);
 		else
-			b.color().lightgray();
+			b.color().gray(200);
 		String label = c.name.equals("") ? COLUMN + " "
 				+ String.valueOf(widget.columnList().indexOf(c) + 1) : c.name();
 		ILabel l = b.add().label().text(label).autoWrap(false).breakWord(false);
@@ -188,10 +188,10 @@ public class ScalingColumnSelection {
 	}
 
 	void decorateLabel(final ScrollTableColumnImpl c, ILabel l) {
-//		if (c.visible)
-			l.font().color().white();
-//		else
-//			l.font().color().rgb(192, 192, 192);
+		// if (c.visible)
+		l.font().color().white();
+		// else
+		// l.font().color().rgb(192, 192, 192);
 	}
 
 	protected void dropOnTo(ScrollTableColumnImpl c) {
