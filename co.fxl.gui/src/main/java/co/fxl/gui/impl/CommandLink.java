@@ -50,6 +50,7 @@ public class CommandLink implements IClickable<IClickable<?>>,
 	private IHorizontalPanel backgroundPanel;
 	private boolean hide;
 	private boolean setup;
+	public boolean styleDialogButtom = true;
 
 	public CommandLink(WidgetTitle widgetTitle, IFocusPanel fp,
 			IHorizontalPanel backgroundPanel, IHorizontalPanel iPanel,
@@ -107,7 +108,8 @@ public class CommandLink implements IClickable<IClickable<?>>,
 				image.tooltip(tooltip);
 			label.tooltip(tooltip);
 		}
-		styleDialogButton(label);
+		if (styleDialogButtom)
+			styleDialogButton(label);
 		if (contextMenuEntry != null)
 			contextMenuEntry.clickable(clickable);
 		return this;
