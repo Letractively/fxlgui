@@ -23,7 +23,6 @@ import java.util.List;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.ILabel;
@@ -119,14 +118,9 @@ public class ContextMenu {
 
 	private static final boolean SHOW_INACTIVE = false;
 	private static ContextMenu instance = new ContextMenu();
-	private IDisplay display;
 	private List<Group> groups = new LinkedList<Group>();
 	private boolean active = true;
 	private IPopUp popUp;
-
-	public ContextMenu() {
-		this.display = Display.instance();
-	}
 
 	public Group group(String name) {
 		assert name != null;
