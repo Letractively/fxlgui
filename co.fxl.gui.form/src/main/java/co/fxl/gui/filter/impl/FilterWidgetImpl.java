@@ -217,8 +217,9 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	FilterPart addFilter(Class contentType, final String name, List values,
-			List preset, IAdapter adapter, FilterImpl f) {
+	FilterPart addFilter(Class contentType, final String name,
+			boolean hasConstraints, List values, List preset, IAdapter adapter,
+			FilterImpl f) {
 		assert name != null : contentType.getName();
 		FilterPart filter;
 		if (preset != null) {
@@ -230,7 +231,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 							remove(name);
 						}
 					});
-		} else if (!values.isEmpty()) {
+		} else if (hasConstraints) {
 			if (contentType.equals(String.class)) {
 				filter = new ComboBoxStringFilter(grid, name, values,
 						guiFilterElements.size(), f.value);
@@ -321,7 +322,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			addFilters4Configuration(configuration);
 		if (addSizeFilter) {
 			sizeFilter = (ComboBoxIntegerFilter) addFilter(Integer.class,
-					MAX_ROWS, DEFAULT_SIZES, null, null, null);
+					MAX_ROWS, true, DEFAULT_SIZES, null, null, null);
 			sizeFilter.validate(validation);
 		}
 		boolean constrained = false;
@@ -390,7 +391,8 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 					adapter = rf.adapter;
 				}
 				FilterPart<?> fp = addFilter(filter.type.clazz, filter.name,
-						list, preset, adapter, filter);
+						filter.type.hasConstraints(), list, preset, adapter,
+						filter);
 				holdFilterClicks = true;
 				if (filter.text != null) {
 					((ComboBoxStringFilter) fp).input.text(filter.text);
