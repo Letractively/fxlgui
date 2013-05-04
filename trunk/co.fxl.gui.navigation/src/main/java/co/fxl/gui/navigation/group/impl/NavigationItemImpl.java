@@ -31,6 +31,7 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
+import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
@@ -107,7 +108,8 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 			LazyClickListener clickListener = new LazyClickListener() {
 				@Override
 				protected void onAllowedClick() {
-					NavigationItemImpl.this.onClick();
+					if (buttonPanel.clickable())
+						NavigationItemImpl.this.onClick();
 				}
 			};
 			button.addClickListener(clickListener);
@@ -160,9 +162,9 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	@Override
 	public NavigationItemImpl clickable(boolean b) {
 		buttonPanel.clickable(b);
-		// button.clickable(b);
-		// refresh.clickable(b);
-		// refresh.opacity(1);
+		button.clickable(b);
+		refresh.clickable(b);
+		refresh.opacity(1);
 		return this;
 	}
 
@@ -206,6 +208,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 
 	private void setUpMoreTab() {
 		if (popUp == null) {
+			clickable(false);
 			popUp = PopUp.showPopUp().autoHide(true);
 			popUp.border().remove();
 			// popUp.border().color().gray();// .mix().white().lightgray();
@@ -584,7 +587,12 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	void hidePopUp() {
 		popUp = null;
 		showBackgroundNeutral();
-		clickable(true);
+		Display.instance().invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				clickable(true);
+			}
+		}, 300);
 		// refresh.resource("more.png");
 	}
 
