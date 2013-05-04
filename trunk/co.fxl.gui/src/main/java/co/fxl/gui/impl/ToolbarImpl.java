@@ -30,6 +30,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMargin;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
@@ -124,6 +125,17 @@ public class ToolbarImpl implements IToolbar {
 				return c;
 			}
 		};
+	}
+
+	@Override
+	public ILabel addLabel() {
+		ToolbarImpl root = root();
+		IHorizontalPanel childPanel0 = root.panel.add().panel().horizontal()
+				.height(height).align().center();
+		childPanel0.spacing().left(root.hasContent ? 0 : spacing).top(spacing)
+				.right(spacing);
+		content.add(childPanel0);
+		return childPanel0.add().label();
 	}
 
 	@Override
