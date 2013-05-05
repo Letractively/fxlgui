@@ -59,6 +59,6 @@ public interface IToolbar {
 
 	IMargin margin();
 
-	ILabel addLabel();
+//	ILabel addLabel();
 
 }

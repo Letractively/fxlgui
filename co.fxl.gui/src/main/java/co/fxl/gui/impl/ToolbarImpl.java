@@ -127,16 +127,16 @@ public class ToolbarImpl implements IToolbar {
 		};
 	}
 
-	@Override
-	public ILabel addLabel() {
-		ToolbarImpl root = root();
-		IHorizontalPanel childPanel0 = root.panel.add().panel().horizontal()
-				.height(height).align().center();
-		childPanel0.spacing().left(root.hasContent ? 0 : spacing).top(spacing)
-				.right(spacing);
-		content.add(childPanel0);
-		return childPanel0.add().label();
-	}
+//	@Override
+//	public ILabel addLabel() {
+//		ToolbarImpl root = root();
+//		IHorizontalPanel childPanel0 = root.panel.add().panel().horizontal()
+//				.height(height).align().center();
+//		childPanel0.spacing().left(root.hasContent ? 0 : spacing).top(spacing)
+//				.right(spacing);
+//		content.add(childPanel0);
+//		return childPanel0.add().label();
+//	}
 
 	@Override
 	public IToolbar addGroup() {
