@@ -76,7 +76,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 			public boolean isVisible() {
 				return true;
 			}
-		}).weight(-1);
+		}).weight(-100);
 		return this;
 	}
 
@@ -141,7 +141,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 				userText = null;
 				// passwordText = null;
 				listener.logout(DummyCallback.voidInstance());
-//				UserPanel.instance().update();
+				// UserPanel.instance().update();
 			}
 		}).mouseLeft();
 	}
