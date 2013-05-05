@@ -400,7 +400,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			group.addEntry(ADD).imageResource("add.png");
 		}
 		if (listenOnRemove) {
-			group.addEntry(REMOVE2).imageResource("remove.png");
+			group.addEntry(REMOVE2).imageResource("cancel.png");
 		}
 		if (listenOnShow) {
 			group.addEntry(SHOW2).imageResource("show.png");
