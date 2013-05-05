@@ -27,6 +27,7 @@ import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.ContextMenu;
+import co.fxl.gui.impl.ContextMenu.Entry;
 import co.fxl.gui.impl.ContextMenu.Group;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.IToolbar.IToolbarElement;
@@ -243,6 +244,14 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	private IClickable<?> imageDownMax;
 	private IClickable<?> show;
 	private ContextMenu contextMenu;
+	private Entry addContext;
+	private Entry removeContext;
+	private Entry showContext;
+	private Entry editContext;
+	private Entry topContext;
+	private Entry upContext;
+	private Entry downContext;
+	private Entry bottomContext;
 
 	CommandButtonsImpl(ScrollTableWidgetImpl widget) {
 		this.widget = widget;
@@ -413,39 +422,38 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			contextMenu = grid.contextMenu();
 			Group group = contextMenu.group(widget.title);
 			if (listenOnAdd) {
-				group.addEntry(ADD).imageResource("add.png")
-						.addClickListener(addListener());
+				addContext = group.addEntry(ADD).imageResource("add.png");
+				addContext.addClickListener(addListener());
 			}
 			if (listenOnRemove) {
-				group.addEntry(REMOVE2).imageResource("cancel.png")
-						.addClickListener(removeListener());
+				removeContext = group.addEntry(REMOVE2).imageResource(
+						"cancel.png");
+				removeContext.addClickListener(removeListener());
 			}
 			if (listenOnShow) {
-				group.addEntry(SHOW2).imageResource("details.png")
-						.addClickListener(showListener());
+				showContext = group.addEntry(SHOW2).imageResource("detail.png");
+				showContext.addClickListener(showListener());
 			}
 			if (listenOnEdit) {
-				group.addEntry(EDIT2).imageResource("details.png")
-						.addClickListener(editListener());
+				editContext = group.addEntry(EDIT2).imageResource("detail.png");
+				editContext.addClickListener(editListener());
 			}
 			if (listenOnMoveUp) {
-				group.addEntry(TOP)
-						.imageResource("top.png")
-						.addClickListener(
-								new Move(listenOnMoveUpListener,
-										Integer.MIN_VALUE));
-				group.addEntry(UP).imageResource("up.png")
+				topContext = group.addEntry(TOP).imageResource("top.png");
+				topContext.addClickListener(new Move(listenOnMoveUpListener,
+						Integer.MIN_VALUE));
+				upContext = group.addEntry(UP).imageResource("up.png");
+				upContext
 						.addClickListener(new Move(listenOnMoveUpListener, -1));
 			}
 			if (listenOnMoveDown) {
-				group.addEntry(DOWN)
-						.imageResource("down.png")
-						.addClickListener(new Move(listenOnMoveDownListener, 1));
-				group.addEntry(BOTTOM)
-						.imageResource("bottom.png")
-						.addClickListener(
-								new Move(listenOnMoveDownListener,
-										Integer.MAX_VALUE));
+				downContext = group.addEntry(DOWN).imageResource("down.png");
+				downContext.addClickListener(new Move(listenOnMoveDownListener,
+						1));
+				bottomContext = group.addEntry(BOTTOM).imageResource(
+						"bottom.png");
+				bottomContext.addClickListener(new Move(
+						listenOnMoveDownListener, Integer.MAX_VALUE));
 			}
 		} else {
 			grid.contextMenu(contextMenu);
@@ -517,12 +525,20 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			boolean up = index > 0 && selectionList.size() == 1;
 			imageUp.clickable(up);
 			imageUpMax.clickable(up);
+			if (upContext != null) {
+				upContext.clickable(up);
+				topContext.clickable(up);
+			}
 		}
 		if (imageDown != null) {
 			boolean c = index < widget.rows.size() - 1
 					&& selectionList.size() == 1;
 			imageDownMax.clickable(c);
 			imageDown.clickable(c);
+			if (downContext != null) {
+				downContext.clickable(c);
+				bottomContext.clickable(c);
+			}
 		}
 		if (remove != null) {
 			boolean c = selectionList.size() >= 1;
@@ -530,14 +546,23 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 				for (Object o : selectionList)
 					c &= widget.rows.deletable(widget.rows.find(o));
 			remove.clickable(c);
+			if (removeContext != null) {
+				removeContext.clickable(c);
+			}
 		}
 		if (show != null) {
 			boolean c = lastSelected() != null && selectionList.size() == 1;
 			show.clickable(c);
+			if (showContext != null) {
+				showContext.clickable(c);
+			}
 		}
 		if (edit != null) {
 			boolean c = lastSelected() != null && selectionList.size() == 1;
 			edit.clickable(c);
+			if (editContext != null) {
+				editContext.clickable(c);
+			}
 		}
 	}
 
