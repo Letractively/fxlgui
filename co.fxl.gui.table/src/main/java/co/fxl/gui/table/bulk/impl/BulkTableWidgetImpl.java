@@ -43,6 +43,7 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.AlignmentMemento;
+import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.DummyKeyRecipientKeyTemplate;
 import co.fxl.gui.table.bulk.api.IBulkTableCell;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
@@ -127,6 +128,7 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	private List<ColumnImpl> columns = new LinkedList<ColumnImpl>();
 	private Map<Integer, Boolean> highlighted = new HashMap<Integer, Boolean>();
 	private boolean addToContextMenu = true;
+	private ContextMenu contextMenu;
 
 	protected BulkTableWidgetImpl(IContainer container) {
 		mainPanel = container.panel().vertical();
@@ -546,5 +548,12 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	@Override
 	public IBulkTableWidget horizontalLines(boolean horizontalLines) {
 		return this;
+	}
+
+	@Override
+	public ContextMenu contextMenu() {
+		if (contextMenu == null)
+			contextMenu = new ContextMenu();
+		return contextMenu;
 	}
 }

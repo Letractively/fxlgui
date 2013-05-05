@@ -134,6 +134,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			"ScrollTableWidgetImpl.ADD_TOP_PANEL_TOP_PADDING", false);
 	private static final boolean ADD_TOP_PANEL_SPACING = Constants.get(
 			"ScrollTableWidgetImpl.ADD_TOP_PANEL_SPACING", false);
+	private static final boolean RELATION_REGISTER_CONTEXT_MENU = true;
 	public static int MAX_CLIENT_SORT_SIZE = IFilterWidget.MIN_FILTER_SIZE - 1;
 	IVerticalPanel container;
 	private int height = 400;
@@ -261,6 +262,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private boolean fixLayout = true;
 	private int width = -1;
 	private boolean horizontalLines = true;
+	String title;
 
 	// private boolean nextTimeShowPopUp;
 
@@ -274,6 +276,12 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	// public IScrollTableWidget<Object> height(final int height) {
 	// return height(height, DummyCallback.voidInstance());
 	// }
+
+	@Override
+	public IScrollTableWidget<Object> title(String title) {
+		this.title = title;
+		return this;
+	}
 
 	@Override
 	public IScrollTableWidget<Object> height(final int height) {
@@ -816,6 +824,9 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		IBulkTableWidget lastGrid = grid;
 		IVerticalPanel vpanel = contentPanel.add().panel().vertical();
 		grid = (IBulkTableWidget) vpanel.add().widget(IBulkTableWidget.class);
+		if (RELATION_REGISTER_CONTEXT_MENU && commandButtons != null) {
+			commandButtons.addContextMenu(grid.addToContextMenu(true));
+		}
 		grid.horizontalLines(horizontalLines);
 		grid.fixLayout(fixLayout);
 		grid.cellPadding(cellPadding);
