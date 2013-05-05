@@ -46,9 +46,9 @@ public class ColorField {
 			popUp.border().style().shadow();
 			int height = button.height();
 			int y = button.offsetY() + height + 4;
-			y = Math.max(y, Display.instance().height() - 190);
+			y = Math.min(y, Display.instance().height() - 190);
 			int x = button.offsetX();
-			x = Math.max(x, Display.instance().width() - 190);
+			x = Math.min(x, Display.instance().width() - 190);
 			popUp.offset(x, y);
 			IGridPanel grid = popUp.container().panel().grid().spacing(4)
 					.width(180);
