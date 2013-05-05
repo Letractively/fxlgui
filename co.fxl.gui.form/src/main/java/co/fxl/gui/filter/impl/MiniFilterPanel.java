@@ -297,8 +297,7 @@ class MiniFilterPanel implements FilterPanel {
 		};
 	}
 
-	private static final boolean MODIFIED_TITLE_ADD = Env.is(Env.FIREFOX,
-			Env.OPERA);
+	private static final boolean MODIFIED_TITLE_ADD = false;//Env.is(Env.FIREFOX, Env.OPERA);
 	// Constants.get(
 	// "MiniFilterPanel.MODIFIED_TITLE_ADD", false);
 	private IToolbar panel;
@@ -314,8 +313,7 @@ class MiniFilterPanel implements FilterPanel {
 
 	MiniFilterPanel(MiniFilterWidgetImpl widget, IContainer c) {
 		this.widget = widget;
-		IContainer add = c.panel().horizontal().add().panel().horizontal()
-				.align().begin().add().panel().horizontal().align().begin()
+		IContainer add = c.panel().horizontal().align().begin()
 				.add();
 		panel = new ToolbarImpl(add);
 		titlePanel = panel.addGroup();
