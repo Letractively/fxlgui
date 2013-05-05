@@ -79,6 +79,8 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	// }
 	// }
 
+	private static final String REMOVE2 = "Remove";
+	private static final String ADD = "Add";
 	private static final String BOTTOM = "Bottom";
 	private static final String DOWN = "Down";
 	private static final String UP = "Up";
@@ -209,7 +211,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	private final IDecorator DEFAULT_DECORATOR = new IDecorator() {
 		@Override
 		public IClickable<?> decorate(IToolbar c) {
-			String string = "Add";
+			String string = ADD;
 			return clickable(c.addElement(), string, true);
 		}
 	};
@@ -386,7 +388,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	void addRemove() {
 		if (listenOnRemove) {
 			// remove = panel.add().button().text("Remove");
-			remove = clickable(panel.addElement(), "Remove", true);
+			remove = clickable(panel.addElement(), REMOVE2, true);
 			remove.addClickListener(new Update(listenOnRemoveListener, true));
 			remove.clickable(false);
 		}
@@ -394,6 +396,12 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 
 	void addContextMenu(IBulkTableWidget grid) {
 		Group group = grid.contextMenu().group(widget.title);
+		if (listenOnAdd) {
+			group.addEntry(ADD).imageResource("add.png");
+		}
+		if (listenOnRemove) {
+			group.addEntry(REMOVE2).imageResource("remove.png");
+		}
 		if (listenOnShow) {
 			group.addEntry(SHOW2).imageResource("show.png");
 		}
