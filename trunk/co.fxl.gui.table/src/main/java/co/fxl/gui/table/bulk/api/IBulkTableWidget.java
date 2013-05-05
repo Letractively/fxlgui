@@ -153,4 +153,6 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 	IBulkTableWidget horizontalLines(boolean horizontalLines);
 
 	ContextMenu contextMenu();
+
+	IBulkTableWidget contextMenu(ContextMenu cm);
 }

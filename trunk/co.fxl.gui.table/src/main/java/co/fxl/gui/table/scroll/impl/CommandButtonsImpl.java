@@ -26,6 +26,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
+import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.ContextMenu.Group;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.IToolbar.IToolbarElement;
@@ -241,6 +242,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	private IClickable<?> imageUpMax;
 	private IClickable<?> imageDownMax;
 	private IClickable<?> show;
+	private ContextMenu contextMenu;
 
 	CommandButtonsImpl(ScrollTableWidgetImpl widget) {
 		this.widget = widget;
@@ -343,12 +345,12 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		}
 		if (listenOnShow) {
 			show = clickable(panel.addElement(), SHOW2, true);
-			show.addClickListener(new Update(listenOnShowListener));
+			show.addClickListener(showListener());
 			show.clickable(!widget.preselectedList.isEmpty());
 		}
 		if (listenOnEdit) {
 			edit = clickable(panel.addElement(), EDIT2, true);
-			final Update clickListener = new Update(listenOnEditListener);
+			final Update clickListener = editListener();
 			edit.addClickListener(clickListener);
 			edit.clickable(!widget.preselectedList.isEmpty());
 			widget.addTableClickListener(new IScrollTableClickListener() {
@@ -385,36 +387,68 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		panel.adjustHeights();
 	}
 
+	private Update showListener() {
+		return new Update(listenOnShowListener);
+	}
+
+	private Update editListener() {
+		return new Update(listenOnEditListener);
+	}
+
 	void addRemove() {
 		if (listenOnRemove) {
 			// remove = panel.add().button().text("Remove");
 			remove = clickable(panel.addElement(), REMOVE2, true);
-			remove.addClickListener(new Update(listenOnRemoveListener, true));
+			remove.addClickListener(removeListener());
 			remove.clickable(false);
 		}
 	}
 
+	private Update removeListener() {
+		return new Update(listenOnRemoveListener, true);
+	}
+
 	void addContextMenu(IBulkTableWidget grid) {
-		Group group = grid.contextMenu().group(widget.title);
-		if (listenOnAdd) {
-			group.addEntry(ADD).imageResource("add.png");
-		}
-		if (listenOnRemove) {
-			group.addEntry(REMOVE2).imageResource("cancel.png");
-		}
-		if (listenOnShow) {
-			group.addEntry(SHOW2).imageResource("show.png");
-		}
-		if (listenOnEdit) {
-			group.addEntry(EDIT2).imageResource("edit.png");
-		}
-		if (listenOnMoveUp) {
-			group.addEntry(TOP).imageResource("top.png");
-			group.addEntry(UP).imageResource("up.png");
-		}
-		if (listenOnMoveDown) {
-			group.addEntry(DOWN).imageResource("down.png");
-			group.addEntry(BOTTOM).imageResource("bottom.png");
+		if (contextMenu == null) {
+			contextMenu = grid.contextMenu();
+			Group group = contextMenu.group(widget.title);
+			if (listenOnAdd) {
+				group.addEntry(ADD).imageResource("add.png")
+						.addClickListener(addListener());
+			}
+			if (listenOnRemove) {
+				group.addEntry(REMOVE2).imageResource("cancel.png")
+						.addClickListener(removeListener());
+			}
+			if (listenOnShow) {
+				group.addEntry(SHOW2).imageResource("details.png")
+						.addClickListener(showListener());
+			}
+			if (listenOnEdit) {
+				group.addEntry(EDIT2).imageResource("details.png")
+						.addClickListener(editListener());
+			}
+			if (listenOnMoveUp) {
+				group.addEntry(TOP)
+						.imageResource("top.png")
+						.addClickListener(
+								new Move(listenOnMoveUpListener,
+										Integer.MIN_VALUE));
+				group.addEntry(UP).imageResource("up.png")
+						.addClickListener(new Move(listenOnMoveUpListener, -1));
+			}
+			if (listenOnMoveDown) {
+				group.addEntry(DOWN)
+						.imageResource("down.png")
+						.addClickListener(new Move(listenOnMoveDownListener, 1));
+				group.addEntry(BOTTOM)
+						.imageResource("bottom.png")
+						.addClickListener(
+								new Move(listenOnMoveDownListener,
+										Integer.MAX_VALUE));
+			}
+		} else {
+			grid.contextMenu(contextMenu);
 		}
 	}
 
@@ -426,8 +460,12 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	void addAdd() {
 		if (listenOnAdd) {
 			IClickable<?> image = listenOnAddListenerDecorator.decorate(panel);
-			image.addClickListener(new Update(listenOnAddListener));
+			image.addClickListener(addListener());
 		}
+	}
+
+	Update addListener() {
+		return new Update(listenOnAddListener);
 	}
 
 	private IClickable<?> addMoveImage(String resource,
