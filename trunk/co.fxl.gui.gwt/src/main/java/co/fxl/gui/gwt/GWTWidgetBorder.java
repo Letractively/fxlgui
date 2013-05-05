@@ -19,6 +19,7 @@
 package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IBordered.IBorder;
+import co.fxl.gui.impl.Env;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.DOM;
@@ -98,7 +99,7 @@ public class GWTWidgetBorder extends GWTBorder {
 			DOM.setStyleAttribute(element, borderType, width + "px " + color
 					+ " " + style);
 			String attr = "borderRadius";
-			if (GWTDisplay.isFirefox())
+			if (Env.runtime().leq(Env.FIREFOX,12))
 				attr = "-moz-border-radius";
 			// TODO Look: Firefox/IE/Opera: Rounded Corners in
 			// Firefox/Opera/Firefox dont work, use style
