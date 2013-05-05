@@ -458,8 +458,10 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		if (holdFilterClicks)
 			return;
 		validation.update();
-		if (clickableClear)
-			clear.clickable(true);
+		if (clickableClear) {
+			IFilterConstraints c = constraints();
+			clear.clickable(c != null && c.isSpecified());
+		}
 		notifyListeners(DummyCallback.voidInstance());
 	}
 
