@@ -26,6 +26,7 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.Display;
 
 public class ColorField {
 
@@ -40,10 +41,15 @@ public class ColorField {
 
 		@Override
 		public void onClick() {
-			final IPopUp popUp = co.fxl.gui.impl.PopUp.showPopUp().autoHide(true).width(180);
+			final IPopUp popUp = co.fxl.gui.impl.PopUp.showPopUp()
+					.autoHide(true).width(180);
 			popUp.border().style().shadow();
 			int height = button.height();
-			popUp.offset(button.offsetX(), button.offsetY() + height + 4);
+			int y = button.offsetY() + height + 4;
+			y = Math.max(y, Display.instance().height() - 190);
+			int x = button.offsetX();
+			x = Math.max(x, Display.instance().width() - 190);
+			popUp.offset(x, y);
 			IGridPanel grid = popUp.container().panel().grid().spacing(4)
 					.width(180);
 			grid.resize(4, 4);
