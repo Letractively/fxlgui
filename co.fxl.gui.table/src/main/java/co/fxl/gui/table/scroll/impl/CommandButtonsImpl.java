@@ -455,6 +455,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 				bottomContext.addClickListener(new Move(
 						listenOnMoveDownListener, Integer.MAX_VALUE));
 			}
+			updateButtons();
 		} else {
 			grid.contextMenu(contextMenu);
 		}
