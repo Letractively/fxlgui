@@ -26,6 +26,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
+import co.fxl.gui.impl.ContextMenu.Group;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.IToolbar.IToolbarElement;
 import co.fxl.gui.impl.ToolbarImpl;
@@ -77,6 +78,13 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	// });
 	// }
 	// }
+
+	private static final String BOTTOM = "Bottom";
+	private static final String DOWN = "Down";
+	private static final String UP = "Up";
+	private static final String TOP = "Top";
+	private static final String EDIT2 = "Edit";
+	private static final String SHOW2 = "Show";
 
 	private int selectionIndex() {
 		if (selectionList.isEmpty())
@@ -332,12 +340,12 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			addRemove();
 		}
 		if (listenOnShow) {
-			show = clickable(panel.addElement(), "Show", true);
+			show = clickable(panel.addElement(), SHOW2, true);
 			show.addClickListener(new Update(listenOnShowListener));
 			show.clickable(!widget.preselectedList.isEmpty());
 		}
 		if (listenOnEdit) {
-			edit = clickable(panel.addElement(), "Edit", true);
+			edit = clickable(panel.addElement(), EDIT2, true);
 			final Update clickListener = new Update(listenOnEditListener);
 			edit.addClickListener(clickListener);
 			edit.clickable(!widget.preselectedList.isEmpty());
@@ -384,6 +392,24 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		}
 	}
 
+	void addContextMenu(IBulkTableWidget grid) {
+		Group group = grid.contextMenu().group(widget.title);
+		if (listenOnShow) {
+			group.addEntry(SHOW2).imageResource("show.png");
+		}
+		if (listenOnEdit) {
+			group.addEntry(EDIT2).imageResource("edit.png");
+		}
+		if (listenOnMoveUp) {
+			group.addEntry(TOP).imageResource("top.png");
+			group.addEntry(UP).imageResource("up.png");
+		}
+		if (listenOnMoveDown) {
+			group.addEntry(DOWN).imageResource("down.png");
+			group.addEntry(BOTTOM).imageResource("bottom.png");
+		}
+	}
+
 	// private boolean showLabel() {
 	// // boolean b = !listenOnMoveDown && !listenOnMoveUp;
 	// return true;
@@ -404,14 +430,14 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		// : "");
 		if (resource.equals(IBulkTableWidget.ARROW_UP)
 				&& i == Integer.MIN_VALUE)
-			res = "Top";
+			res = TOP;
 		if (resource.equals(IBulkTableWidget.ARROW_UP) && i == -1)
-			res = "Up";
+			res = UP;
 		if (resource.equals(IBulkTableWidget.ARROW_DOWN) && i == 1)
-			res = "Down";
+			res = DOWN;
 		if (resource.equals(IBulkTableWidget.ARROW_DOWN)
 				&& i == Integer.MAX_VALUE)
-			res = "Bottom";
+			res = BOTTOM;
 		IClickable<?> image = clickable(panel.addElement(), res, false);
 		// image.font().weight().bold();
 		image.addClickListener(new Move(listenOnMoveUpListener2, i));

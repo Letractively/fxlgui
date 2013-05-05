@@ -270,5 +270,7 @@ public interface IScrollTableWidget<T> extends IResizableWidget, IHasButtons {
 
 	IScrollTableWidget<T> addLargeTitle(String string);
 
+	IScrollTableWidget<T> title(String title);
+
 	// IVerticalPanel editPanel();
 }

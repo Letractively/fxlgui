@@ -96,7 +96,7 @@ public class ContextMenu {
 		public Group(String name) {
 			this.name = name;
 		}
-
+		
 		public Entry addEntry(String text) {
 			for (Entry o : list) {
 				if (text.equals(o.text)) {
