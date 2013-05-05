@@ -556,4 +556,10 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 			contextMenu = new ContextMenu();
 		return contextMenu;
 	}
+
+	@Override
+	public IBulkTableWidget contextMenu(ContextMenu cm) {
+		contextMenu = cm;
+		return this;
+	}
 }
