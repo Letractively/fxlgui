@@ -37,4 +37,6 @@ interface FilterPart<T> extends IUpdateable<String> {
 	String name();
 
 	void notifyCreate();
+
+	void updateFilter();
 }

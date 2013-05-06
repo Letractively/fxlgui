@@ -130,7 +130,7 @@ public class FieldTypeImpl implements IFieldType {
 	}
 
 	public boolean hasConstraints() {
-		return values != null;
+		return values != null || dynamicConstraints != null;
 	}
 
 	public List<Object> getConstraints() {

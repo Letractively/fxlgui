@@ -25,35 +25,64 @@ import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter.IGlobalValue;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
+import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.FieldTypeImpl;
 
 class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 
 	private String text;
 	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();
 	private IGlobalValue v;
+	private FieldTypeImpl type;
 
-	ComboBoxStringFilter(FilterGrid panel, String name, List<Object> values,
-			int filterIndex, final IGlobalValue v) {
+	ComboBoxStringFilter(final FilterGrid panel, String name,
+			FieldTypeImpl type, List<Object> values, int filterIndex,
+			final IGlobalValue v) {
 		super(panel, name, values, filterIndex);
+		this.type = type;
+		this.v = v;
+		if (v != null)
+			input.text(v.value() != null ? v.value() : "");
 		input.addUpdateListener(new IUpdateListener<String>() {
 			@Override
-			public void onUpdate(String value) {
+			public void onUpdate(final String value) {
 				if (v != null)
-					v.value(value);
+					v.value(value, new CallbackTemplate<Void>() {
+						@Override
+						public void onSuccess(Void result) {
+							panel.updateFilters();
+							notifyListeners(value);
+						}
+					});
+				else
+					notifyListeners(value);
+			}
+
+			private void notifyListeners(String value) {
 				if (updateListeningActive)
 					for (IUpdateListener<String> l : updateListeners)
 						l.onUpdate(value);
 			}
 		});
-		this.v = v;
-		if (v != null)
-			input.text(v.value() != null ? v.value() : "");
+	}
+
+	@Override
+	public void updateFilter() {
+		if (v != null) {
+			input.clear();
+			input.addText("");
+			for (Object t : type.getConstraints()) {
+				input.addText((String) t);
+			}
+			input.text(v.value());
+		}
 	}
 
 	@Override
 	public boolean update() {
-		text = input.text().trim();
-		if (text.equals(""))
+		String t = input.text();
+		text = t != null ? t.trim() : null;
+		if (text != null && text.equals(""))
 			text = null;
 		return v == null && text != null;
 	}

@@ -40,7 +40,7 @@ public interface IFilterWidget {
 
 			String value();
 
-			void value(String value);
+			void value(String value, ICallback<Void> cb);
 
 		}
 

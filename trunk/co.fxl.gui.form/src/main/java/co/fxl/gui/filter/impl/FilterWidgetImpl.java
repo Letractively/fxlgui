@@ -42,6 +42,7 @@ import co.fxl.gui.filter.api.ISuggestionAdp;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.form.impl.Validation;
 import co.fxl.gui.impl.DummyCallback;
+import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.Icons;
 import co.fxl.gui.impl.LazyClickListener;
@@ -218,8 +219,8 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	FilterPart addFilter(Class contentType, final String name,
-			boolean hasConstraints, List values, List preset, IAdapter adapter,
-			FilterImpl f) {
+			boolean hasConstraints, FieldTypeImpl type, List values,
+			List preset, IAdapter adapter, FilterImpl f) {
 		assert name != null : contentType.getName();
 		FilterPart filter;
 		if (preset != null) {
@@ -233,13 +234,13 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 					});
 		} else if (hasConstraints) {
 			if (contentType.equals(String.class)) {
-				filter = new ComboBoxStringFilter(grid, name, values,
+				filter = new ComboBoxStringFilter(grid, name, type, values,
 						guiFilterElements.size(), f.value);
 			} else if (contentType.equals(Integer.class)) {
 				filter = new ComboBoxIntegerFilter(grid, name, values,
 						guiFilterElements.size());
 			} else if (contentType.equals(IImage.class)) {
-				filter = new ComboBoxStringFilter(grid, name, values,
+				filter = new ComboBoxStringFilter(grid, name, type, values,
 						guiFilterElements.size(), null);
 			} else if (contentType.equals(Date.class)) {
 				throw new UnsupportedOperationException(contentType.getName());
@@ -322,7 +323,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			addFilters4Configuration(configuration);
 		if (addSizeFilter) {
 			sizeFilter = (ComboBoxIntegerFilter) addFilter(Integer.class,
-					MAX_ROWS, true, DEFAULT_SIZES, null, null, null);
+					MAX_ROWS, true, null, DEFAULT_SIZES, null, null, null);
 			sizeFilter.validate(validation);
 		}
 		boolean constrained = false;
@@ -391,8 +392,8 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 					adapter = rf.adapter;
 				}
 				FilterPart<?> fp = addFilter(filter.type.clazz, filter.name,
-						filter.type.hasConstraints(), list, preset, adapter,
-						filter);
+						filter.type.hasConstraints(), filter.type, list,
+						preset, adapter, filter);
 				holdFilterClicks = true;
 				if (filter.text != null) {
 					((ComboBoxStringFilter) fp).input.text(filter.text);
@@ -531,6 +532,12 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			// sf.color().white();
 		}
 		return this;
+	}
+
+	void updateFilters() {
+		for (FilterPart<?> f : guiFilterElements) {
+			f.updateFilter();
+		}
 	}
 
 }

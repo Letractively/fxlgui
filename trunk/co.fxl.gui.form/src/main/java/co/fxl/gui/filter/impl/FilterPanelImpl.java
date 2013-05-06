@@ -38,7 +38,7 @@ public class FilterPanelImpl implements FilterPanel {
 		title = new WidgetTitle(panel.panel().vertical().addSpace(10).add()
 				.panel(), true).sideWidget(true)// .grayBackground()
 				.spacing(2);// .spaceBottom(2);
-//		title.commandsOnTop();
+		// title.commandsOnTop();
 		title.addToContextMenu(true);
 		IVerticalPanel vertical = title.content().panel().vertical();
 		top = vertical.add().panel().vertical().visible(false);
@@ -90,6 +90,10 @@ public class FilterPanelImpl implements FilterPanel {
 		// grid.column(0).expand();
 		grid.cell(1, 0).image().resource("empty_8x8.png");
 		return grid.cell(0, 0);
+	}
+
+	void updateFilters() {
+		widget.updateFilters();
 	}
 
 }

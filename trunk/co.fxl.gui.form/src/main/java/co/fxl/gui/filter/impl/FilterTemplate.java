@@ -62,4 +62,8 @@ abstract class FilterTemplate<R extends IElement<R>, T> implements
 	@Override
 	public void notifyCreate() {
 	}
+
+	@Override
+	public void updateFilter() {
+	}
 }
