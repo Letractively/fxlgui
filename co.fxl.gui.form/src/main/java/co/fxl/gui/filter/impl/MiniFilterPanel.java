@@ -35,7 +35,6 @@ import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.filter.impl.CellImpl.ExpliciteRangeField;
 import co.fxl.gui.form.impl.Validation;
-import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
@@ -182,10 +181,10 @@ class MiniFilterPanel implements FilterPanel {
 
 			@Override
 			public RangeField horizontal() {
-//				if (Env.is(Env.FIREFOX))
-//					return new CombinedRangeField(container);
-//				else
-					return new ExpliciteRangeField(widget, container);
+				// if (Env.is(Env.FIREFOX))
+				// return new CombinedRangeField(container);
+				// else
+				return new ExpliciteRangeField(widget, container);
 			}
 
 			@Override
@@ -294,10 +293,16 @@ class MiniFilterPanel implements FilterPanel {
 		@Override
 		public void clearRowIterator() {
 			MiniFilterPanel.this.clearRowIterator();
+		}
+
+		@Override
+		public void updateFilters() {
+			widget.updateFilters();
 		};
 	}
 
-	private static final boolean MODIFIED_TITLE_ADD = false;//Env.is(Env.FIREFOX, Env.OPERA);
+	private static final boolean MODIFIED_TITLE_ADD = false;// Env.is(Env.FIREFOX,
+															// Env.OPERA);
 	// Constants.get(
 	// "MiniFilterPanel.MODIFIED_TITLE_ADD", false);
 	private IToolbar panel;
@@ -313,8 +318,7 @@ class MiniFilterPanel implements FilterPanel {
 
 	MiniFilterPanel(MiniFilterWidgetImpl widget, IContainer c) {
 		this.widget = widget;
-		IContainer add = c.panel().horizontal().align().begin()
-				.add();
+		IContainer add = c.panel().horizontal().align().begin().add();
 		panel = new ToolbarImpl(add);
 		titlePanel = panel.addGroup();
 		mainPanel = panel.addGroup();
@@ -330,8 +334,7 @@ class MiniFilterPanel implements FilterPanel {
 	@Override
 	public ILabel addTitle(String string) {
 		IToolbar tb = titlePanel;
-		ILabel l = getContainer(tb).label()
-				.text(string.toUpperCase());
+		ILabel l = getContainer(tb).label().text(string.toUpperCase());
 		l.font().weight().bold();
 		return l;
 		// l.margin().top(-4);

@@ -61,6 +61,8 @@ interface FilterPanel {
 		void notifyComboBoxChange(boolean clickableClear);
 
 		void clearRowIterator();
+
+		void updateFilters();
 	}
 
 	ILabel addTitle(String string);

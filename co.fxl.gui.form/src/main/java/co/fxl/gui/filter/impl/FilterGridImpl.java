@@ -48,6 +48,11 @@ class FilterGridImpl implements FilterGrid {
 	}
 
 	@Override
+	public void updateFilters() {
+		filterPanelImpl.updateFilters();
+	};
+
+	@Override
 	public void title(int filterIndex, String name) {
 		IGridCell cell = grid.cell(0, filterIndex);// .width(50);
 		this.filterPanelImpl.widget.heights.decorate(cell);
