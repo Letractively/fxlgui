@@ -18,11 +18,9 @@
  */
 package co.fxl.gui.filter.impl;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import co.fxl.data.format.impl.Format;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IComboBox;
@@ -34,7 +32,6 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.filter.impl.CellImpl.ExpliciteRangeField;
-import co.fxl.gui.form.impl.Validation;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
@@ -72,101 +69,101 @@ class MiniFilterPanel implements FilterPanel {
 
 		class CellImpl implements ICell {
 
-			private final class CombinedRangeField implements RangeField {
-				private final ITextField tf;
-				private String separator = "-";
-
-				private CombinedRangeField(IContainer c) {
-					this.tf = c.textField().width(
-							FilterTemplate.WIDTH_SINGLE_CELL);
-					Heights.INSTANCE.decorate(tf);
-					widget.register(tf);
-				}
-
-				@Override
-				public String text() {
-					return texts()[0];
-				}
-
-				private String[] texts() {
-					String[] s = tf.text().trim().split(separator);
-					if (s.length == 1)
-						return new String[] { s[0], s[0] };
-					String low = s[0].trim();
-					String high = s[1].trim();
-					return new String[] { low, high };
-				}
-
-				private void texts(String[] strings) {
-					StringBuilder b = new StringBuilder();
-					if (!isNull(strings[0])) {
-						b.append(strings[0].trim());
-					}
-					if (!isNull(strings[0]) || !isNull(strings[1]))
-						b.append(separator);
-					if (!isNull(strings[1])) {
-						b.append(strings[1].trim());
-					}
-					tf.text(b.toString());
-				}
-
-				private boolean isNull(String string) {
-					return string == null || string.trim().isEmpty();
-				}
-
-				@Override
-				public String upperBoundText() {
-					return texts()[1];
-				}
-
-				@Override
-				public void upperBoundText(String text) {
-					texts(new String[] { texts()[0], text });
-				}
-
-				@Override
-				public void addUpdateListener(
-						final IUpdateListener<String> listener) {
-					tf.addUpdateListener(new IUpdateListener<String>() {
-						@Override
-						public void onUpdate(String value) {
-							listener.onUpdate(texts()[0]);
-						}
-					});
-				}
-
-				@Override
-				public void upperBoundAddUpdateListener(
-						final IUpdateListener<String> listener) {
-					tf.addUpdateListener(new IUpdateListener<String>() {
-						@Override
-						public void onUpdate(String value) {
-							listener.onUpdate(texts()[1]);
-						}
-					});
-				}
-
-				@Override
-				public void text(String text) {
-					texts(new String[] { text, texts()[1] });
-				}
-
-				@Override
-				public void validation(Validation validation, Class<?> type) {
-					validation.linkInput(tf);
-					if (type.equals(Date.class)) {
-						tf.tooltip("Ranges can be declared as \""
-								+ Format.date().format(new Date(10, 0, 1))
-								+ Format.dateRangeSeparator()
-								+ Format.date().format(new Date(30, 0, 1))
-								+ "\"");
-						separator = Format.dateRangeSeparator();
-					} else if (type.equals(Long.class)) {
-						tf.tooltip("Ranges can be declared as \"" + 1 + "-"
-								+ 100 + "\"");
-					}
-				}
-			}
+			// private final class CombinedRangeField implements RangeField {
+			// private final ITextField tf;
+			// private String separator = "-";
+			//
+			// private CombinedRangeField(IContainer c) {
+			// this.tf = c.textField().width(
+			// FilterTemplate.WIDTH_SINGLE_CELL);
+			// Heights.INSTANCE.decorate(tf);
+			// widget.register(tf);
+			// }
+			//
+			// @Override
+			// public String text() {
+			// return texts()[0];
+			// }
+			//
+			// private String[] texts() {
+			// String[] s = tf.text().trim().split(separator);
+			// if (s.length == 1)
+			// return new String[] { s[0], s[0] };
+			// String low = s[0].trim();
+			// String high = s[1].trim();
+			// return new String[] { low, high };
+			// }
+			//
+			// private void texts(String[] strings) {
+			// StringBuilder b = new StringBuilder();
+			// if (!isNull(strings[0])) {
+			// b.append(strings[0].trim());
+			// }
+			// if (!isNull(strings[0]) || !isNull(strings[1]))
+			// b.append(separator);
+			// if (!isNull(strings[1])) {
+			// b.append(strings[1].trim());
+			// }
+			// tf.text(b.toString());
+			// }
+			//
+			// private boolean isNull(String string) {
+			// return string == null || string.trim().isEmpty();
+			// }
+			//
+			// @Override
+			// public String upperBoundText() {
+			// return texts()[1];
+			// }
+			//
+			// @Override
+			// public void upperBoundText(String text) {
+			// texts(new String[] { texts()[0], text });
+			// }
+			//
+			// @Override
+			// public void addUpdateListener(
+			// final IUpdateListener<String> listener) {
+			// tf.addUpdateListener(new IUpdateListener<String>() {
+			// @Override
+			// public void onUpdate(String value) {
+			// listener.onUpdate(texts()[0]);
+			// }
+			// });
+			// }
+			//
+			// @Override
+			// public void upperBoundAddUpdateListener(
+			// final IUpdateListener<String> listener) {
+			// tf.addUpdateListener(new IUpdateListener<String>() {
+			// @Override
+			// public void onUpdate(String value) {
+			// listener.onUpdate(texts()[1]);
+			// }
+			// });
+			// }
+			//
+			// @Override
+			// public void text(String text) {
+			// texts(new String[] { text, texts()[1] });
+			// }
+			//
+			// @Override
+			// public void validation(Validation validation, Class<?> type) {
+			// validation.linkInput(tf);
+			// if (type.equals(Date.class)) {
+			// tf.tooltip("Ranges can be declared as \""
+			// + Format.date().format(new Date(10, 0, 1))
+			// + Format.dateRangeSeparator()
+			// + Format.date().format(new Date(30, 0, 1))
+			// + "\"");
+			// separator = Format.dateRangeSeparator();
+			// } else if (type.equals(Long.class)) {
+			// tf.tooltip("Ranges can be declared as \"" + 1 + "-"
+			// + 100 + "\"");
+			// }
+			// }
+			// }
 
 			private IContainer container;
 
@@ -367,6 +364,11 @@ class MiniFilterPanel implements FilterPanel {
 						 * clickListener) { return
 						 * resource.addClickListener(clickListener); } };
 						 */
+	}
+
+	@Override
+	public void linksVisible(boolean b) {
+		hyperLinkPanel.visible(b);
 	}
 
 	@Override

@@ -96,4 +96,8 @@ public class FilterPanelImpl implements FilterPanel {
 		widget.updateFilters();
 	}
 
+	@Override
+	public void linksVisible(boolean b) {
+	}
+
 }
