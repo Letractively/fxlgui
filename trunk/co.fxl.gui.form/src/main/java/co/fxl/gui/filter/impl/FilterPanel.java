@@ -80,4 +80,6 @@ interface FilterPanel {
 	WidgetTitle widgetTitle();
 
 	void clearRowIterator();
+
+	void linksVisible(boolean b);
 }

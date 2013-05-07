@@ -41,6 +41,7 @@ import co.fxl.gui.filter.api.IFilterWidget.IRelationFilter.IAdapter;
 import co.fxl.gui.filter.api.ISuggestionAdp;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.form.impl.Validation;
+import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.Heights;
@@ -66,6 +67,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		public void onAllowedClick() {
 			if (holdFilterClicks)
 				return;
+			title.linksVisible(false);
 			if (constraints != null)
 				constraints.clear();
 			for (List<FilterImpl> l : filterList.values()) {
@@ -88,7 +90,12 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			else
 				update();
 			validation.update();
-			notifyListeners(DummyCallback.voidInstance());
+			notifyListeners(new CallbackTemplate<Void>() {
+				@Override
+				public void onSuccess(Void result) {
+					title.linksVisible(true);
+				}
+			});
 		}
 	}
 
@@ -375,6 +382,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		}
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void addFilters4Configuration(String cfg) {
 		List<FilterImpl> l = filterList.get(cfg);
 		if (l != null) {
