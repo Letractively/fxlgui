@@ -32,7 +32,6 @@ public class ErrorDialog {
 	private Runnable runnable;
 
 	private ErrorDialog() {
-
 	}
 
 	public static void create(String pTitle, String pMessage,
@@ -60,8 +59,9 @@ public class ErrorDialog {
 	public void show(String pTitle, final String pMessage,
 			final String pStacktrace) {
 		showing = true;
-		IDialog dialog = PopUp.showDialog().glass(true)
-				.width(DEFAULT_WIDTH).title(pTitle).message(pMessage).error();
+		StatusPopUp.instance().close();
+		IDialog dialog = PopUp.showDialog().glass(true).width(DEFAULT_WIDTH)
+				.title(pTitle).message(pMessage).error();
 		if (pStacktrace != null) {
 			dialog.addButton().text("Details").imageResource(Icons.DETAIL)
 					.addClickListener(new IClickListener() {
