@@ -437,7 +437,13 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	void addActionsToPanel(IVerticalPanel p, boolean nonEmpty) {
 		if (!showConfigure)
 			return;
-		if (nonEmpty)
+		int c = 0;
+		for (final Action action : actions) {
+			if (action.c != null && !action.c.satisfied(active))
+				continue;
+			c++;
+		}
+		if (nonEmpty && c > 0)
 			p.add().line();
 		IVerticalPanel actionPanel = p.add().panel().vertical().spacing(6);
 		for (final Action action : actions) {
