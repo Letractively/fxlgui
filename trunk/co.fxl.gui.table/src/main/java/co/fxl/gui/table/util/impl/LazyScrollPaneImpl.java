@@ -390,8 +390,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		}
 		assert storeLastIndex == lastIndex : "last index changed concurrently: "
 				+ lastIndex + "!=" + storeLastIndex;
-		assert lastIndex >= rowIndex : "illegal range " + rowIndex + "-"
-				+ lastIndex;
+//		assert lastIndex >= rowIndex : "illegal range " + rowIndex + "-"
+//				+ lastIndex;
 		decorate(rowIndex, isCalibration, c);
 		// treeScrollPanelContainer.flip();
 		holdScroll = false;
