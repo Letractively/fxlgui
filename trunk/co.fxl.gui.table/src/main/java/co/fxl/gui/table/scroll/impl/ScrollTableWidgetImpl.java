@@ -734,6 +734,8 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			if (ADD_TOP_PANEL_TOP_PADDING) {
 				topPanelContainer = container().add().panel().vertical();
 				topPanelContainer.padding().top(5);
+				if (Env.is(Env.FIREFOX))
+					topPanelContainer.padding().bottom(4);
 				topPanelContainer.color().rgb(255, 255, 255).gradient()
 						.fallback(250, 250, 250).vertical().rgb(245, 245, 245);
 				topPanel = topPanelContainer.add().panel().grid();
