@@ -63,6 +63,8 @@ interface FilterPanel {
 		void clearRowIterator();
 
 		void updateFilters();
+
+		void refresh();
 	}
 
 	ILabel addTitle(String string);

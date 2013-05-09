@@ -4,6 +4,7 @@ import java.util.List;
 
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IUpdateable;
+import co.fxl.gui.filter.api.IFilterWidget.IFilter.IGlobalValue;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.form.impl.Validation;
 
@@ -12,10 +13,12 @@ abstract class ComboBoxFilterTemplate<T> extends FilterTemplate<IComboBox, T> {
 	FilterGrid panel;
 	boolean updateListeningActive = true;
 	boolean directApply = true;
+	private IGlobalValue v;
 
 	ComboBoxFilterTemplate(FilterGrid panel, String name, List<Object> values,
-			int filterIndex) {
+			int filterIndex, IGlobalValue v) {
 		super(panel, name, filterIndex);
+		this.v = v;
 		this.panel = panel;
 		input = panel.cell(filterIndex).comboBox().width(WIDTH_COMBOBOX_CELL);
 		panel.heights().decorate(input);
@@ -38,6 +41,8 @@ abstract class ComboBoxFilterTemplate<T> extends FilterTemplate<IComboBox, T> {
 
 	@Override
 	public final void validate(Validation validation) {
+		if (v != null)
+			return;
 		validation.linkInput(input);
 		input.addUpdateListener(new IUpdateListener<String>() {
 			@Override

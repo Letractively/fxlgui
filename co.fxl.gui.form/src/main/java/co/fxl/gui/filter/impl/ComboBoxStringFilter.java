@@ -39,7 +39,7 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 	ComboBoxStringFilter(final FilterGrid panel, String name,
 			FieldTypeImpl type, List<Object> values, int filterIndex,
 			final IGlobalValue v) {
-		super(panel, name, values, filterIndex);
+		super(panel, name, values, filterIndex, v);
 		this.type = type;
 		this.v = v;
 		if (v != null)
@@ -55,7 +55,7 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 							@Override
 							public void onSuccess(Void result) {
 								panel.updateFilters();
-								notifyListeners(value);
+								panel.refresh();
 							}
 						});
 				} else
