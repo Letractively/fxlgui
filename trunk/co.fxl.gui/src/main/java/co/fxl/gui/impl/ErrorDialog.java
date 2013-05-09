@@ -87,6 +87,8 @@ public class ErrorDialog {
 							styleDialogError(label);
 							String trace = pStacktrace.trim().equals("") ? pMessage
 									: pStacktrace;
+							if (trace.equals("null"))
+								trace = pMessage;
 							ITextArea textArea = panel.add().textArea()
 									.size(400, 100).text(trace);
 							styleInputBorder(textArea);
