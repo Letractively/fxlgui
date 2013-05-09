@@ -56,7 +56,7 @@ public class ErrorDialog {
 		showing = remember;
 	}
 
-	public void show(String pTitle, final String pMessage,
+	public void show(final String pTitle, final String pMessage,
 			final String pStacktrace) {
 		showing = true;
 		StatusPopUp.instance().close();
@@ -87,8 +87,10 @@ public class ErrorDialog {
 							styleDialogError(label);
 							String trace = pStacktrace.trim().equals("") ? pMessage
 									: pStacktrace;
-							if (trace.equals("null"))
+							if (trace.trim().equals("null"))
 								trace = pMessage;
+							if (trace.trim().equals("null"))
+								trace = pTitle;
 							ITextArea textArea = panel.add().textArea()
 									.size(400, 100).text(trace);
 							styleInputBorder(textArea);
