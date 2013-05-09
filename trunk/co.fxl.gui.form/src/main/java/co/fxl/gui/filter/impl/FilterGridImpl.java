@@ -100,6 +100,11 @@ class FilterGridImpl implements FilterGrid {
 	}
 
 	@Override
+	public void refresh() {
+		filterPanelImpl.widget.onApplyClick(false);
+	}
+
+	@Override
 	public void clearRowIterator() {
 		filterPanelImpl.clearRowIterator();
 	}

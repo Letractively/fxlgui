@@ -29,7 +29,7 @@ class ComboBoxIntegerFilter extends ComboBoxFilterTemplate<Integer> {
 
 	ComboBoxIntegerFilter(FilterGrid panel, String name, List<Object> values,
 			int filterIndex) {
-		super(panel, name, values, filterIndex);
+		super(panel, name, values, filterIndex,null);
 		this.defaultValue = (Integer) values.get(0);
 	}
 

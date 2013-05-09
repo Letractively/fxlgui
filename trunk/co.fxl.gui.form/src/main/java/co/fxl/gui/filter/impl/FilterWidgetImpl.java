@@ -463,7 +463,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		}).enter();
 	}
 
-	private void onApplyClick(boolean clickableClear) {
+	void onApplyClick(boolean clickableClear) {
 		if (holdFilterClicks)
 			return;
 		validation.update();

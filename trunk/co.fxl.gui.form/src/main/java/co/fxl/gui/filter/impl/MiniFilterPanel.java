@@ -295,6 +295,11 @@ class MiniFilterPanel implements FilterPanel {
 		@Override
 		public void updateFilters() {
 			widget.updateFilters();
+		}
+
+		@Override
+		public void refresh() {
+			widget.onApplyClick(false);
 		};
 	}
 
