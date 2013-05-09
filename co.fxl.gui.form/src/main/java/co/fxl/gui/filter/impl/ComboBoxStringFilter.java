@@ -34,6 +34,7 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();
 	private IGlobalValue v;
 	private FieldTypeImpl type;
+	private boolean ignore;
 
 	ComboBoxStringFilter(final FilterGrid panel, String name,
 			FieldTypeImpl type, List<Object> values, int filterIndex,
@@ -46,16 +47,25 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 		input.addUpdateListener(new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(final String value) {
-				if (v != null)
-					v.value(value, new CallbackTemplate<Void>() {
-						@Override
-						public void onSuccess(Void result) {
-							panel.updateFilters();
-							notifyListeners(value);
-						}
-					});
-				else
+				if (v != null) {
+					if (ignore)
+						return;
+					if (!equals(value, v.value()))
+						v.value(value, new CallbackTemplate<Void>() {
+							@Override
+							public void onSuccess(Void result) {
+								panel.updateFilters();
+								notifyListeners(value);
+							}
+						});
+				} else
 					notifyListeners(value);
+			}
+
+			private boolean equals(String value, String value2) {
+				if (value == null)
+					return value2 == null;
+				return value.equals(value2);
 			}
 
 			private void notifyListeners(String value) {
@@ -69,12 +79,15 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 	@Override
 	public void updateFilter() {
 		if (v != null) {
+			ignore = true;
 			input.clear();
 			input.addText("");
 			for (Object t : type.getConstraints()) {
 				input.addText((String) t);
 			}
-			input.text(v.value());
+			String value = v.value();
+			input.text(value);
+			ignore = false;
 		}
 	}
 

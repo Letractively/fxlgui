@@ -44,13 +44,15 @@ public class SwingComboBox extends SwingTextElement<JComboBox, IComboBox>
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (ignore) // || (value == null && !hasNull))
+				if (ignore)
 					return;
 				String text = text();
 				if (SwingDisplay.instance().waiting) {
-					ignore = true;
-					text(value);
-					ignore = false;
+					if (!programmaticSet) {
+						ignore = true;
+						text(value);
+						ignore = false;
+					}
 				} else {
 					value = text();
 					fireUpdateListeners(text);
