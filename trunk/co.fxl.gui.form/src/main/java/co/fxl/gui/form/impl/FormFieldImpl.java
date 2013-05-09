@@ -116,10 +116,13 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 		return addContainer(true);
 	}
 
+	private int containerInPanelIndex = 1;
+
 	private Object[] addContainerInPanel(boolean decorate) {
 		IGridPanel g = widget.internalPanels.get(row).width(1d);
 		g.column(0).expand();
-		IGridCell cell2 = g.cell(1, 0).align().center().valign().center();
+		IGridCell cell2 = g.cell(containerInPanelIndex++, 0).align().center()
+				.valign().center();
 		if (Env.is(Env.SWING))
 			cell2.align().begin();
 		if (decorate) {
