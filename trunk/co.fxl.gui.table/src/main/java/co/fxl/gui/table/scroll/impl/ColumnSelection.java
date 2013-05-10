@@ -35,6 +35,7 @@ import co.fxl.gui.impl.HyperlinkMouseOverListener;
 
 public class ColumnSelection {
 
+	private static final String SHOW_COLUMNS = "COLUMN SELECTIONS";
 	private static final String COLUMN = "Column";
 	private static final String COLUMN_SELECTION = "Column Selection";
 	static final String TOOLTIP = "Click on column to toggle visibility. Use drag & drop to reorder.";
@@ -200,7 +201,7 @@ public class ColumnSelection {
 	static void addTitle(TableWidgetAdp widget, IContainer c) {
 		IHorizontalPanel horizontal = c.panel().horizontal();
 		if (widget.configureListener() != null) {
-			final ILabel l = addText(horizontal, "SHOW COLUMNS")
+			final ILabel l = addText(horizontal, SHOW_COLUMNS)
 					.addClickListener(widget.configureListener()).mouseLeft();
 			l.addMouseOverListener(new IMouseOverListener() {
 
@@ -219,7 +220,7 @@ public class ColumnSelection {
 					.addClickListener(widget.configureListener());
 			addText(horizontal, ":");
 		} else
-			addText(horizontal, "SHOW COLUMNS:");
+			addText(horizontal, SHOW_COLUMNS + ":");
 		horizontal.addSpace(4);
 	}
 
