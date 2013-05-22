@@ -542,10 +542,12 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		return this;
 	}
 
-	void updateFilters() {
+	@Override
+	public IFilterWidget updateFilters() {
 		for (FilterPart<?> f : guiFilterElements) {
 			f.updateFilter();
 		}
+		return this;
 	}
 
 }
