@@ -127,4 +127,6 @@ public interface IFilterWidget {
 
 	IFilterWidget suggestionAdp(ISuggestionAdp adp);
 
+	IFilterWidget updateFilters();
+
 }
