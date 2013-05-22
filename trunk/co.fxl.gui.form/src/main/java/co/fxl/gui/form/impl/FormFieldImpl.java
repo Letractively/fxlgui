@@ -175,6 +175,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 			widget.setUpBottomPanel();
 			widget.updateRequiredStatus(this, required);
 		}
+		this.required = required;
 		return this;
 	}
 
