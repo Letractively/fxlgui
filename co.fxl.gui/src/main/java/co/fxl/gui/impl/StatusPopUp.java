@@ -196,9 +196,11 @@ public class StatusPopUp implements IResizeListener, Runnable {
 			if (status.hideAt != null
 					&& System.currentTimeMillis() > status.hideAt) {
 				queue.remove(status);
-			} else if (status.showAt != null
-					&& System.currentTimeMillis() > status.showAt) {
-				status.showAt = null;
+			} else {
+				Long showAt = status.showAt;
+				if (showAt != null && System.currentTimeMillis() > showAt) {
+					status.showAt = null;
+				}
 			}
 		}
 	}
