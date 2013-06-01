@@ -387,7 +387,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 					listenOnMoveDownListener, Integer.MAX_VALUE);
 		}
 		if (listenOnExpand != null) {
-			Link l = clickable(panel.addElement(), EDIT2, false);
+			Link l = clickable(panel.addElement(), "zoom_in", false);
 			l.addClickListener(new IClickListener() {
 				@Override
 				public void onClick() {
