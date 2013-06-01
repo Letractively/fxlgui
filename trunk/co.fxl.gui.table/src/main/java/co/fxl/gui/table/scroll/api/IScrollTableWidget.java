@@ -41,6 +41,7 @@ import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IGrouping;
+import co.fxl.gui.table.scroll.api.IScrollTableWidget.IRowListener;
 import co.fxl.gui.table.util.api.IDragDropListener;
 
 public interface IScrollTableWidget<T> extends IResizableWidget, IHasButtons {
@@ -127,6 +128,8 @@ public interface IScrollTableWidget<T> extends IResizableWidget, IHasButtons {
 		ICommandButtons<T> listenOnShow(IRowListener<IRows<T>> l);
 
 		ICommandButtons<T> listenOnEdit(IRowListener<IRows<T>> l);
+
+		ICommandButtons<T> listenOnExpand(IRowListener<IRows<Object>> iRowListener);
 	}
 
 	public interface IButtonPanelDecorator {

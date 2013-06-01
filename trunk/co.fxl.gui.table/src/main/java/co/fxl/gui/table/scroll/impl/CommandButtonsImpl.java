@@ -252,6 +252,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	private Entry upContext;
 	private Entry downContext;
 	private Entry bottomContext;
+	private IRowListener<IRows<Object>> listenOnExpand;
 
 	CommandButtonsImpl(ScrollTableWidgetImpl widget) {
 		this.widget = widget;
@@ -384,6 +385,22 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 					listenOnMoveDownListener, 1);
 			imageDownMax = addMoveImage(IBulkTableWidget.ARROW_DOWN,
 					listenOnMoveDownListener, Integer.MAX_VALUE);
+		}
+		if (listenOnExpand != null) {
+			Link l = clickable(panel.addElement(), EDIT2, false);
+			l.addClickListener(new IClickListener() {
+				@Override
+				public void onClick() {
+					listenOnExpand.onClick(selectionList.isEmpty() ? null
+							: selectionList.get(0), selectionIndex(),
+							new CallbackTemplate<IRows<Object>>() {
+								@Override
+								public void onSuccess(IRows<Object> result) {
+									throw new UnsupportedOperationException();
+								}
+							});
+				}
+			});
 		}
 		// boolean editable = false;
 		// for (ScrollTableColumnImpl c : widget.columns) {
@@ -584,5 +601,12 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 				if (widget.rows.find(o) != -1)
 					selectionList.add(o);
 		}
+	}
+
+	@Override
+	public ICommandButtons<Object> listenOnExpand(
+			IRowListener<IRows<Object>> iRowListener) {
+		listenOnExpand = iRowListener;
+		return this;
 	}
 }
