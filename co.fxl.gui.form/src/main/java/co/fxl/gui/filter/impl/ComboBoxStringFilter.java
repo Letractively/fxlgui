@@ -81,7 +81,7 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 		if (v != null) {
 			ignore = true;
 			input.clear();
-			input.addText("");
+			input.addText((String) null);
 			for (Object t : type.getConstraints()) {
 				input.addText((String) t);
 			}
