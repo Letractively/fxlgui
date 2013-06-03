@@ -165,9 +165,10 @@ public class HorizontalScalingPanel implements IClickListener {
 			int height = heights.get(containers.indexOf(c));
 			sumHeight += SPACING_POPUP + height;
 		}
-		for (IContainer c : relocated) {
-			c.element().width(innerWidth);
-		}
+		if (!scrollDown)
+			for (IContainer c : relocated) {
+				c.element().width(innerWidth);
+			}
 		base.size(maxWidth, sumHeight);
 		if (!scrollDown)
 			addBorder(base, maxWidth);
@@ -180,18 +181,17 @@ public class HorizontalScalingPanel implements IClickListener {
 			@Override
 			public void onUpdate(Boolean value) {
 				if (!value) {
+					morePanel.color().remove();
+					morePanel.border().remove();
+					if (!scrollDown)
+						morePanel.spacing(SPACING_POPUP).spacing().bottom(0)
+								.left(0).right(0).top(0);
+					else
+						morePanel.spacing(0).spacing().left(SPACING_POPUP)
+								.right(SPACING_POPUP);
 					Display.instance().invokeLater(new Runnable() {
 						@Override
 						public void run() {
-							morePanel.color().remove();
-							morePanel.border().remove();
-							if (!scrollDown)
-								morePanel.spacing(SPACING_POPUP).spacing()
-										.bottom(0).left(0).right(0).top(0);
-							else
-								morePanel.spacing(0).spacing()
-										.left(SPACING_POPUP)
-										.right(SPACING_POPUP);
 							morePanel.clickable(true);
 							popUp = null;
 						}
