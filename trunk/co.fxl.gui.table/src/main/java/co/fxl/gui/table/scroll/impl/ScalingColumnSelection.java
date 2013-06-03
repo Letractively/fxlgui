@@ -60,8 +60,9 @@ public class ScalingColumnSelection {
 		IVerticalPanel vertical = getContainer().panel().vertical();
 		IContainer clear = vertical.add();
 		int width = vertical.width();
-		final HorizontalScalingPanel p = new HorizontalScalingPanel(clear);
-//		p.hspace(4);
+		final HorizontalScalingPanel p = new HorizontalScalingPanel(clear,
+				false);
+		// p.hspace(4);
 		IClickListener clickListener = new IClickListener() {
 			@Override
 			public void onClick() {

@@ -31,7 +31,7 @@ public class HorizontalScalingPanelTest {
 		IVerticalPanel panel = display.container().scrollPane().viewPort()
 				.panel().vertical().size(500, 500).spacing(10);
 		display.visible(true);
-		HorizontalScalingPanel hsp = new HorizontalScalingPanel(panel.add());
+		HorizontalScalingPanel hsp = new HorizontalScalingPanel(panel.add(),false);
 		for (int i = 0; i < 10; i++) {
 			IHorizontalPanel spacing = hsp.add().panel().horizontal()
 					.spacing(10);

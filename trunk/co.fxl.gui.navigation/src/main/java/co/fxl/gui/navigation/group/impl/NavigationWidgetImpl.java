@@ -673,6 +673,10 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		isLoading = b;
 	}
 
+	@Override
+	public void updateWidth(int w) {
+	}
+
 	// void loading(boolean b) {
 	// loading = b;
 	// addSeparatorBorder();

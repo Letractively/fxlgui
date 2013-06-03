@@ -30,4 +30,6 @@ public interface ITabWidget<T extends ITabGroup<R>, R extends ITab<R>> {
 
 	int height();
 
+	void updateWidth(int w);
+
 }
