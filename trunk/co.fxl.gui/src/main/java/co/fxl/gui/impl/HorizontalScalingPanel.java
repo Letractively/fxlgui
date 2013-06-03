@@ -142,7 +142,7 @@ public class HorizontalScalingPanel implements IClickListener {
 		IColor color = right.color();
 		color(color);
 		morePanel.spacing(0).spacing()
-				.bottom(SPACING_POPUP - (scrollDown ? 2 : 1))
+				.bottom(SPACING_POPUP - (scrollDown ? 3 : 1))
 				.left(SPACING_POPUP - 1).right(SPACING_POPUP - 1)
 				.top(SPACING_POPUP - (scrollDown ? 3 : 0));
 		morePanel.clickable(false);

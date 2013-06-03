@@ -110,7 +110,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 		subPanel = buttonPanel.add().panel().horizontal().align().center();
 		buttonImage = subPanel.add().image().resource("loading_white.gif")
 				.visible(false);
-		buttonPanel.padding().left(3).right(3);
+		buttonPanel.padding().left(6).right(6);
 		buttonLabel = subPanel.add().label();
 		new HyperlinkMouseOverListener(buttonLabel);
 		buttonPanel.addClickListener(this);
