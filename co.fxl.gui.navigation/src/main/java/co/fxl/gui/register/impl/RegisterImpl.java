@@ -23,6 +23,7 @@ import java.util.Iterator;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -88,6 +89,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 	private IVerticalPanel verticalContainer;
 	private boolean empty = false;
 	private boolean allowClick = true;
+	private IContainer container;
 
 	// private String imageResource = "document.png";
 
@@ -97,20 +99,22 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 		if (index > 0 && widget.separators) {
 			addSeparator();
 		}
-		verticalContainer = widget.headerPanel.add().panel().vertical();
-		int spc = widget.outerSpacing / 2;
-		verticalContainer.spacing(spc);
+		container = widget.headerPanel.add();
+		verticalContainer = container.panel().vertical();
+		verticalContainer.margin().left(3);
+		// int spc = widget.outerSpacing / 2;
+		// verticalContainer.spacing(spc);
 		buttonPanel = verticalContainer.add().panel().horizontal();
-		buttonPanel.spacing(widget.spacing);// .align().center();
-		buttonPanel.addSpace(3);
+		// buttonPanel.margin().left(6).top(3).bottom(3).right(3);
+		// buttonPanel.spacing(widget.spacing);// .align().center();
 		subPanel = buttonPanel.add().panel().horizontal().align().center();
 		buttonImage = subPanel.add().image().resource("loading_white.gif")
 				.visible(false);
+		buttonPanel.padding().left(3).right(3);
 		buttonLabel = subPanel.add().label();
 		new HyperlinkMouseOverListener(buttonLabel);
 		buttonPanel.addClickListener(this);
 		buttonLabel.addClickListener(this);
-		buttonPanel.addSpace(3);
 		newCardPanel();
 		notifyVisible(false, DummyCallback.voidInstance());
 	}
@@ -157,12 +161,14 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 	public RegisterImpl top(ICallback<Void> cb) {
 		// if (widget.isActive(this))
 		// return this;
+		widget.active(container);
 		if (disabled)
 			enabled(true);
 		return updateActive(cb);
 	}
 
 	public RegisterImpl updateActive(ICallback<Void> cb) {
+		widget.headerPanel.popUpVisible(false);
 		Iterator<RegisterImpl> rit = widget.registers.iterator();
 		recurse(this, rit, new ExceptionHolder(), cb);
 		return this;

@@ -84,6 +84,11 @@ class MenuWidgetImpl implements IMenuWidget, ITabGroup<IMenuItem> {
 		return addNavigationItem();
 	}
 
+	@Override
+	public void updateWidth(int w) {
+		registerWidget.updateWidth(w);
+	}
+
 	// public IMenuWidget outerSpacing(int outerSpacing) {
 	// registerWidget.outerSpacing(outerSpacing);
 	// return this;

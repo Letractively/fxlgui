@@ -35,7 +35,7 @@ import co.fxl.gui.impl.HyperlinkMouseOverListener;
 
 public class ColumnSelection {
 
-	private static final String SHOW_COLUMNS = "COLUMN SELECTIONS";
+	private static final String SHOW_COLUMNS = "COLUMN SELECTION";
 	private static final String COLUMN = "Column";
 	private static final String COLUMN_SELECTION = "Column Selection";
 	static final String TOOLTIP = "Click on column to toggle visibility. Use drag & drop to reorder.";

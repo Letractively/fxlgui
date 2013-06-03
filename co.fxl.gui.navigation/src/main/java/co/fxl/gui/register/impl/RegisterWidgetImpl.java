@@ -25,10 +25,11 @@ import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
-import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.HorizontalScalingPanel;
 import co.fxl.gui.register.api.IRegister;
 import co.fxl.gui.register.api.IRegisterWidget;
 
@@ -39,7 +40,7 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 		void decorate(IColor color);
 	}
 
-	public IFlowPanel headerPanel;
+	public HorizontalScalingPanel headerPanel;
 	ICardPanel cardPanel;
 	List<RegisterImpl> registers = new LinkedList<RegisterImpl>();
 	int selection = -1;
@@ -54,6 +55,7 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 	int outerSpacing = 4;
 	private boolean setUp = false;
 	boolean loading;
+	private int lastWidth;
 
 	public RegisterWidgetImpl(ILayout panel) {
 		mainBorders = panel.dock();
@@ -63,10 +65,10 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 		if (setUp)
 			return;
 		setUp = true;
-		backgroundPanel = mainBorders.top().panel().vertical()
-				.spacing(outerSpacing / 2);
-		headerPanel = backgroundPanel.add().panel().vertical().add().panel()
-				.flow();
+		backgroundPanel = mainBorders.top().panel().vertical();// .spacing(outerSpacing
+																// / 2);
+		headerPanel = new HorizontalScalingPanel(backgroundPanel.add().panel()
+				.vertical().add(), true);
 		cardPanel = mainBorders.center().panel().card();
 	}
 
@@ -106,6 +108,11 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 			registers.get(selection).top(cb);
 		else
 			cb.onSuccess(null);
+	}
+
+	public void updateWidth(int w) {
+		lastWidth = w;
+		headerPanel.width(w);
 	}
 
 	void top(RegisterImpl registerImpl) {
@@ -158,5 +165,11 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 		backgroundPanel.visible(showRegisterPanel);
 		if (!showRegisterPanel)
 			backgroundPanel.spacing(0);
+	}
+
+	void active(IContainer container) {
+		headerPanel.active(container);
+		if (lastWidth != 0)
+			updateWidth(lastWidth);
 	}
 }
