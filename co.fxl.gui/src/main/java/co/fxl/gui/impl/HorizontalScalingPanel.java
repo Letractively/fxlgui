@@ -66,9 +66,9 @@ public class HorizontalScalingPanel implements IClickListener {
 		morePanel.addClickListener(this);
 	}
 
-	public HorizontalScalingPanel hspace(int hspace) {
-		return this;
-	}
+//	public HorizontalScalingPanel hspace(int hspace) {
+//		return this;
+//	}
 
 	public HorizontalScalingPanel width(int width) {
 		this.width = width;
