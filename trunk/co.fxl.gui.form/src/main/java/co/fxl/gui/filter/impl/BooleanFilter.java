@@ -30,7 +30,7 @@ class BooleanFilter extends ComboBoxStringFilter {
 	static final String TRUE = "yes";
 
 	BooleanFilter(FilterGrid panel, String name, int filterIndex) {
-		super(panel, name, null, values(), filterIndex, null);
+		super(panel, name, null, values(), filterIndex, null, false);
 	}
 
 	private static List<Object> values() {
