@@ -35,11 +35,13 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 	private IGlobalValue v;
 	private FieldTypeImpl type;
 	private boolean ignore;
+	private boolean required;
 
 	ComboBoxStringFilter(final FilterGrid panel, String name,
 			FieldTypeImpl type, List<Object> values, int filterIndex,
-			final IGlobalValue v) {
+			final IGlobalValue v, boolean required) {
 		super(panel, name, values, filterIndex, v);
+		this.required = required;
 		this.type = type;
 		this.v = v;
 		if (v != null)
@@ -81,7 +83,8 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 		if (v != null) {
 			ignore = true;
 			input.clear();
-			input.addText((String) null);
+			if (!required)
+				input.addText((String) null);
 			for (Object t : type.getConstraints()) {
 				input.addText((String) t);
 			}

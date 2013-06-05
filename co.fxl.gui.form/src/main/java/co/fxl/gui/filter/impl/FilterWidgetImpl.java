@@ -242,13 +242,13 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		} else if (hasConstraints) {
 			if (contentType.equals(String.class)) {
 				filter = new ComboBoxStringFilter(grid, name, type, values,
-						guiFilterElements.size(), f.value);
+						guiFilterElements.size(), f.value, f.required);
 			} else if (contentType.equals(Integer.class)) {
 				filter = new ComboBoxIntegerFilter(grid, name, values,
 						guiFilterElements.size());
 			} else if (contentType.equals(IImage.class)) {
 				filter = new ComboBoxStringFilter(grid, name, type, values,
-						guiFilterElements.size(), null);
+						guiFilterElements.size(), null, f.required);
 			} else if (contentType.equals(Date.class)) {
 				throw new UnsupportedOperationException(contentType.getName());
 			} else
