@@ -44,8 +44,10 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 		this.required = required;
 		this.type = type;
 		this.v = v;
-		if (v != null)
+		if (v != null) {
 			input.text(v.value() != null ? v.value() : "");
+			input.editable(v.isEditable());
+		}
 		input.addUpdateListener(new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(final String value) {
@@ -91,6 +93,7 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 			String value = v.value();
 			input.text(value);
 			ignore = false;
+			input.editable(v.isEditable());
 		}
 	}
 

@@ -38,6 +38,8 @@ public interface IFilterWidget {
 
 		public interface IGlobalValue {
 
+			boolean isEditable();
+
 			String value();
 
 			void value(String value, ICallback<Void> cb);
