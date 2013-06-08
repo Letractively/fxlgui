@@ -32,6 +32,11 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class PopUp {
 
+	public interface HistoryAdp {
+
+		void notifyPopUp(IClickListener l);
+	}
+
 	public interface TransparentPopUp {
 
 		IPopUp popUp();
@@ -43,6 +48,7 @@ public class PopUp {
 	private static IDisplay display = Display.instance();
 	private static Set<IPopUp> visiblePopUps = new HashSet<IPopUp>();
 	private static boolean active = false;
+	public static HistoryAdp adp = null;
 
 	public static void activate() {
 		active = true;
@@ -72,7 +78,10 @@ public class PopUp {
 
 	public static TransparentPopUp showClosablePopUp(boolean closable,
 			final IClickListener clickListener) {
-		final IPopUp popUp = showPopUp();
+		final IPopUp popUp = display.showPopUp();
+		if (adp != null) {
+			adp.notifyPopUp(clickListener);
+		}
 		if (!ALLOW_CLOSABLE_POPUP || !closable) {
 			popUp.border().remove().style().shadow();
 			popUp.color().gray(245);
