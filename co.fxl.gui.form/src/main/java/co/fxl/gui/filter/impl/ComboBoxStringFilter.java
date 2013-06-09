@@ -27,6 +27,7 @@ import co.fxl.gui.filter.api.IFilterWidget.IFilter.IGlobalValue;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.FieldTypeImpl;
+import co.fxl.gui.impl.LazyUpdateListener;
 
 class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 
@@ -48,34 +49,15 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 			input.text(v.value() != null ? v.value() : "");
 			input.editable(v.isEditable());
 		}
-		input.addUpdateListener(new IUpdateListener<String>() {
+		input.addUpdateListener(v != null ? new LazyUpdateListener<String>() {
+			@Override
+			public void onAllowedUpdate(final String value) {
+				notifyUpdate(panel, v, value);
+			}
+		} : new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(final String value) {
-				if (v != null) {
-					if (ignore)
-						return;
-					if (!equals(value, v.value()))
-						v.value(value, new CallbackTemplate<Void>() {
-							@Override
-							public void onSuccess(Void result) {
-								panel.updateFilters();
-								panel.refresh();
-							}
-						});
-				} else
-					notifyListeners(value);
-			}
-
-			private boolean equals(String value, String value2) {
-				if (value == null)
-					return value2 == null;
-				return value.equals(value2);
-			}
-
-			private void notifyListeners(String value) {
-				if (updateListeningActive)
-					for (IUpdateListener<String> l : updateListeners)
-						l.onUpdate(value);
+				notifyUpdate(panel, v, value);
 			}
 		});
 	}
@@ -148,5 +130,34 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
 		updateListeners.add(listener);
 		return this;
+	}
+
+	private boolean equals(String value, String value2) {
+		if (value == null)
+			return value2 == null;
+		return value.equals(value2);
+	}
+
+	private void notifyListeners(String value) {
+		if (updateListeningActive)
+			for (IUpdateListener<String> l : updateListeners)
+				l.onUpdate(value);
+	}
+
+	private void notifyUpdate(final FilterGrid panel, final IGlobalValue v,
+			final String value) {
+		if (v != null) {
+			if (ignore)
+				return;
+			if (!equals(value, v.value()))
+				v.value(value, new CallbackTemplate<Void>() {
+					@Override
+					public void onSuccess(Void result) {
+						panel.updateFilters();
+						panel.refresh();
+					}
+				});
+		} else
+			notifyListeners(value);
 	}
 }
