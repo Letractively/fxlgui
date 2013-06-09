@@ -80,7 +80,13 @@ public class PopUp {
 			final IClickListener clickListener) {
 		final IPopUp popUp = display.showPopUp();
 		if (adp != null) {
-			adp.notifyPopUp(clickListener);
+			adp.notifyPopUp(clickListener != null ? clickListener
+					: new IClickListener() {
+						@Override
+						public void onClick() {
+							popUp.visible(false);
+						}
+					});
 		}
 		if (!ALLOW_CLOSABLE_POPUP || !closable) {
 			popUp.border().remove().style().shadow();
