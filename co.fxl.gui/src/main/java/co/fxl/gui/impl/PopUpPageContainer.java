@@ -59,6 +59,14 @@ public class PopUpPageContainer implements PageContainer {
 
 	@Override
 	public void visible(boolean visible) {
+		if (visible) {
+			PopUp.adp.notifyPopUp(new IClickListener() {
+				@Override
+				public void onClick() {
+					popUp.visible(false);
+				}
+			});
+		}
 		popUp.visible(visible);
 		if (visible && !added) {
 			widget.addResizableWidgetToDisplay(popUp);
