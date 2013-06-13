@@ -26,6 +26,7 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter.IGlobalValue;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.LazyUpdateListener;
 
@@ -65,6 +66,7 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 	@Override
 	public void updateFilter() {
 		if (v != null) {
+			DiscardChangesDialog.active(false);
 			ignore = true;
 			input.clear();
 			if (!required)
