@@ -26,9 +26,9 @@ import co.fxl.gui.style.api.IStyle;
 public class Style {
 
 	public static boolean ENABLED = false;
-	private static IStyle instance;
+	private static IStyle instance = new StyleImpl();
 	private static Map<String, IStyle> styles = new HashMap<String, IStyle>();
-	private static String defaultStyle;
+	private static String defaultStyle = "DEFAULT";
 
 	public static void nameDefault(String name) {
 		defaultStyle = name;
