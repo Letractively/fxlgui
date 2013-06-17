@@ -118,7 +118,6 @@ class StyleImpl implements IStyle {
 		return new IApplicationPanel() {
 			@Override
 			public void background(IVerticalPanel background) {
-				background.s
 			}
 		};
 	}
