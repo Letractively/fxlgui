@@ -23,12 +23,15 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.IVerticalPanel;
 
 public interface IStyle {
 
 	public interface ITop {
 
 		String imageResource();
+
+		ITop applicationPanel(IVerticalPanel applicationPanel);
 
 		ITop panel(IPanel<?> panel);
 

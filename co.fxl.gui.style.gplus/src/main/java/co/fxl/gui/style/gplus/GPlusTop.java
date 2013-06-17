@@ -19,6 +19,7 @@
 package co.fxl.gui.style.gplus;
 
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.style.api.IStyle.ITop;
 
 class GPlusTop implements ITop {
@@ -39,6 +40,11 @@ class GPlusTop implements ITop {
 	@Override
 	public int spacing() {
 		return GPlusStyle.SPACING_TOP;
+	}
+
+	@Override
+	public ITop applicationPanel(IVerticalPanel applicationPanel) {
+		return this;
 	}
 
 }
