@@ -27,11 +27,14 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public interface IStyle {
 
+	public interface IApplicationPanel {
+
+		void background(IVerticalPanel background);
+	}
+
 	public interface ITop {
 
 		String imageResource();
-
-		ITop applicationPanel(IVerticalPanel applicationPanel);
 
 		ITop panel(IPanel<?> panel);
 
@@ -135,6 +138,8 @@ public interface IStyle {
 
 		INavigationGroup group();
 	}
+
+	IApplicationPanel applicationPanel();
 
 	ITop top();
 

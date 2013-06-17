@@ -36,11 +36,6 @@ class StyleImpl implements IStyle {
 			}
 
 			@Override
-			public ITop applicationPanel(IVerticalPanel applicationPanel) {
-				return this;
-			}
-
-			@Override
 			public ITop panel(IPanel<?> panel) {
 				return this;
 			}
@@ -116,6 +111,15 @@ class StyleImpl implements IStyle {
 	public IStyle activate(boolean activate) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public IApplicationPanel applicationPanel() {
+		return new IApplicationPanel() {
+			@Override
+			public void background(IVerticalPanel background) {
+			}
+		};
 	}
 
 }
