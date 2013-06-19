@@ -48,6 +48,11 @@ abstract class FormatImpl<T> implements IFormat<T> {
 	}
 
 	@Override
+	public T parse(String format, String style) {
+		return parse(format);
+	}
+
+	@Override
 	public IFormat<T> setLocale(String locale) {
 		return (IFormat<T>) this;
 	}

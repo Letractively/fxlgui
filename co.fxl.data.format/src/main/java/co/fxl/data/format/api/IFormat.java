@@ -22,9 +22,11 @@ public interface IFormat<T> {
 
 	String format(T object);
 
-	String format(T object, String pFormatStyle);
+	String format(T object, String formatStyle);
 
-	T parse(String format);
+	T parse(String text);
+
+	T parse(String text, String formatStyle);
 
 	IFormat<T> setLocale(String locale);
 }

@@ -42,6 +42,15 @@ class GWTDateFormat implements IFormat<Date> {
 	}
 
 	@Override
+	public Date parse(String object, String pFormatStyle) {
+		if (object == null) {
+			return null;
+		}
+		DateTimeFormat lDateTimeFormat = DateTimeFormat.getFormat(pFormatStyle);
+		return lDateTimeFormat.parse(object);
+	}
+
+	@Override
 	public Date parse(String format) {
 		if (format == null)
 			return null;

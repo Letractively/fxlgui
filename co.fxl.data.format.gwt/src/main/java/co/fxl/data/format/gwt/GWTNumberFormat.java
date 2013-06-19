@@ -53,6 +53,11 @@ abstract class GWTNumberFormat<T> implements IFormat<T> {
 		}
 	}
 
+	@Override
+	public T parse(String format, String style) {
+		return parse(format);
+	}
+
 	abstract T convert(Double d);
 
 	@Override

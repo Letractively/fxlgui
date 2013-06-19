@@ -55,6 +55,16 @@ class DateFormatImpl implements IFormat<Date> {
 	}
 
 	@Override
+	public Date parse(String format, String style) {
+		try {
+			SimpleDateFormat s = new SimpleDateFormat(style);
+			return s.parse(format);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
 	public IFormat<Date> setLocale(String locale) {
 		return this;
 	}
