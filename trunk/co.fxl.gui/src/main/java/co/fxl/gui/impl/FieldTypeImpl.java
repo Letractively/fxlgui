@@ -39,6 +39,7 @@ public class FieldTypeImpl implements IFieldType {
 	public int rows = 1;
 	public boolean enumType = false;
 	private IDynamicConstraints dynamicConstraints;
+	public String nullValue = null;
 
 	@Override
 	public boolean equals(Object o) {
@@ -259,6 +260,12 @@ public class FieldTypeImpl implements IFieldType {
 	public IFieldType dynamicConstraints(IDynamicConstraints c) {
 		setHasConstraints();
 		dynamicConstraints = c;
+		return this;
+	}
+
+	@Override
+	public IFieldType nullValue(String nullValue) {
+		this.nullValue = nullValue;
 		return this;
 	}
 }

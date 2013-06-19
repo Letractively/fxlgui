@@ -75,6 +75,8 @@ public interface IFieldType {
 
 	IFieldType doubleValue();
 
+	IFieldType nullValue(String nullValue);
+
 	boolean isRelation();
 
 	boolean isText();
