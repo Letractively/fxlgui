@@ -23,7 +23,9 @@ import java.util.List;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -32,8 +34,7 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.impl.ContextMenu.Entry;
 import co.fxl.gui.impl.ContextMenu.Group;
 
-public class CommandLink implements IClickable<IClickable<?>>,
-		co.fxl.gui.api.IClickable.IClickListener {
+public class CommandLink implements IClickListener, ButtonAdp {
 
 	static final boolean HIDE_NON_CLICKABLE = !Env.is(Env.SWING);
 	final WidgetTitle widgetTitle;
@@ -42,7 +43,7 @@ public class CommandLink implements IClickable<IClickable<?>>,
 	private IImage image;
 	private String toolTipClickable = null;
 	private String toolTipNotClickable = null;
-	private List<IClickListener> clickListeners = new LinkedList<IClickListener>();
+	private List<IClickable.IClickListener> clickListeners = new LinkedList<IClickable.IClickListener>();
 	private Entry contextMenuEntry;
 	private String text;
 	private char ctrlKey;
@@ -74,7 +75,7 @@ public class CommandLink implements IClickable<IClickable<?>>,
 
 	private void noDoubleClicks(IClickable<?> c) {
 		if (c != null)
-			c.addClickListener(new IClickListener() {
+			c.addClickListener(new IClickable.IClickListener() {
 
 				@Override
 				public void onClick() {
@@ -135,7 +136,7 @@ public class CommandLink implements IClickable<IClickable<?>>,
 	}
 
 	@Override
-	public co.fxl.gui.api.IClickable.IKey<IClickable<?>> addClickListener(
+	public co.fxl.gui.api.IClickable.IKey<Object> addClickListener(
 			co.fxl.gui.api.IClickable.IClickListener clickListener) {
 		setUp();
 		clickListeners.add(clickListener);
@@ -190,10 +191,11 @@ public class CommandLink implements IClickable<IClickable<?>>,
 		};
 	}
 
-	public void text(String string) {
+	public ButtonAdp text(String string) {
 		label.text(string);
 		if (contextMenuEntry != null)
 			contextMenuEntry.text(string);
+		return this;
 	}
 
 	public void image(String string) {
@@ -265,6 +267,7 @@ public class CommandLink implements IClickable<IClickable<?>>,
 	}
 
 	private boolean beforeHide = true;
+	private boolean showAlways;
 
 	public void hide(boolean b) {
 		if (hide == b)
@@ -301,5 +304,36 @@ public class CommandLink implements IClickable<IClickable<?>>,
 	public void onClick() {
 		for (IClickListener c : clickListeners)
 			c.onClick();
+	}
+
+	@Override
+	public ButtonAdp showAlways(boolean b) {
+		showAlways = b;
+		return this;
+	}
+
+	@Override
+	public ButtonAdp highlight(boolean highlight) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public ButtonAdp addSpace(int i) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IContainer addElement() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IContainer addElement(int i) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public ILabel addHyperlink(String string) {
+		throw new UnsupportedOperationException();
 	}
 }

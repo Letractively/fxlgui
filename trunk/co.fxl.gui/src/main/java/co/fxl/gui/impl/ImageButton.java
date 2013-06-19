@@ -21,7 +21,6 @@ package co.fxl.gui.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -29,7 +28,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.ContextMenu.Entry;
 
-public class ImageButton implements IClickable<Object>,
+public class ImageButton implements ButtonAdp,
 		co.fxl.gui.api.IClickable.IClickListener {
 
 	private static final int SPACE = 4;
@@ -65,7 +64,8 @@ public class ImageButton implements IClickable<Object>,
 		clickable(true);
 	}
 
-	public ImageButton text(String text) {
+	@Override
+	public ButtonAdp text(String text) {
 		label.text(text);
 		if (addToContextMenu != null)
 			if (entry == null) {
@@ -178,13 +178,14 @@ public class ImageButton implements IClickable<Object>,
 		return this;
 	}
 
-	public void highlight(boolean b) {
+	public ButtonAdp highlight(boolean b) {
 		if (label.clickable())
-			return;
+			return this;
 		if (b)
 			label.font().weight().bold().color().black();
 		else
 			label.font().weight().plain().color().gray();
+		return this;
 	}
 
 	public String text() {
@@ -195,7 +196,7 @@ public class ImageButton implements IClickable<Object>,
 		return label;
 	}
 
-	public ImageButton showAlways(boolean b) {
+	public ButtonAdp showAlways(boolean b) {
 		showAlways = b;
 		return this;
 	}
