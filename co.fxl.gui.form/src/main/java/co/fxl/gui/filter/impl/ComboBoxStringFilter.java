@@ -41,8 +41,8 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 
 	ComboBoxStringFilter(final FilterGrid panel, String name,
 			FieldTypeImpl type, List<Object> values, int filterIndex,
-			final IGlobalValue v, boolean required) {
-		super(panel, name, values, filterIndex, v);
+			final IGlobalValue v, boolean required, String nullValue) {
+		super(panel, name, values, filterIndex, v, nullValue);
 		this.required = required;
 		this.type = type;
 		this.v = v;

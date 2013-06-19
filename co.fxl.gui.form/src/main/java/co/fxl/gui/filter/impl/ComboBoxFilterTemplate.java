@@ -34,12 +34,14 @@ abstract class ComboBoxFilterTemplate<T> extends FilterTemplate<IComboBox, T> {
 	private IGlobalValue v;
 
 	ComboBoxFilterTemplate(FilterGrid panel, String name, List<Object> values,
-			int filterIndex, IGlobalValue v) {
+			int filterIndex, IGlobalValue v, String nullValue) {
 		super(panel, name, filterIndex);
 		this.v = v;
 		this.panel = panel;
-		input = new FilterComboBoxAdp(panel.cell(filterIndex).comboBox()
-				.width(WIDTH_COMBOBOX_CELL));
+		IComboBox width = panel.cell(filterIndex).comboBox()
+				.width(WIDTH_COMBOBOX_CELL);
+		input = nullValue != null ? new FilterComboBoxAdp(width, nullValue)
+				: width;
 		panel.heights().decorate(input);
 		for (Object object : values) {
 			input.addText(string(object));

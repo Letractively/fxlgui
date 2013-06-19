@@ -242,13 +242,14 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		} else if (hasConstraints) {
 			if (contentType.equals(String.class)) {
 				filter = new ComboBoxStringFilter(grid, name, type, values,
-						guiFilterElements.size(), f.value, f.required);
+						guiFilterElements.size(), f.value, f.required,
+						type.nullValue);
 			} else if (contentType.equals(Integer.class)) {
 				filter = new ComboBoxIntegerFilter(grid, name, values,
 						guiFilterElements.size());
 			} else if (contentType.equals(IImage.class)) {
 				filter = new ComboBoxStringFilter(grid, name, type, values,
-						guiFilterElements.size(), null, f.required);
+						guiFilterElements.size(), null, f.required, null);
 			} else if (contentType.equals(Date.class)) {
 				throw new UnsupportedOperationException(contentType.getName());
 			} else
@@ -514,8 +515,13 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	}
 
 	void notifyComboBoxChange(boolean clickableClear) {
-		if (apply.clickable() && DIRECT_COMBOBO_CHANGE)
+		if ((apply.clickable() || alwaysClickable()) && 
+				DIRECT_COMBOBO_CHANGE)
 			onApplyClick(clickableClear);
+	}
+
+	boolean alwaysClickable() {
+		return false;
 	}
 
 	@Override

@@ -32,6 +32,11 @@ class MiniFilterWidgetImpl extends FilterWidgetImpl implements
 	}
 
 	@Override
+	boolean alwaysClickable() {
+		return true;
+	}
+
+	@Override
 	FilterPanel newFilterPanel(IContainer panel) {
 		return new MiniFilterPanel(this, panel);
 	}
