@@ -33,6 +33,7 @@ public class PopUpPageContainer implements PageContainer {
 	private Size popUpSize;
 	private boolean isModal;
 	private boolean added;
+	private IClickListener cl;
 
 	public PopUpPageContainer(ResizableWidgetTemplate widget, Size popUpSize,
 			boolean isModal) {
@@ -47,6 +48,7 @@ public class PopUpPageContainer implements PageContainer {
 
 	@Override
 	public IVerticalPanel panel(IClickListener cl) {
+		this.cl = cl;
 		TransparentPopUp closablePopUp = PopUp.showClosablePopUp(true, cl);
 		popUp = closablePopUp.popUp().glass(true).autoHide(true);
 		if (isModal)
@@ -64,6 +66,8 @@ public class PopUpPageContainer implements PageContainer {
 				@Override
 				public void onClick() {
 					popUp.visible(false);
+					if (cl != null)
+						cl.onClick();
 				}
 			});
 		}
