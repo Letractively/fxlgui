@@ -47,6 +47,7 @@ import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Env;
+import co.fxl.gui.impl.ErrorDialog;
 import co.fxl.gui.impl.HorizontalScalingPanel;
 import co.fxl.gui.impl.IServerListener;
 import co.fxl.gui.impl.LazyClickListener;
@@ -137,6 +138,21 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		instance = this;
 		ServerListener.instance = this;
 		addResizableWidgetToDisplay(mainPanel);
+		ErrorDialog.exceptionListener = new Runnable() {
+			@Override
+			public void run() {
+				if (!isLoading)
+					return;
+				for (NavigationGroupImpl g : groups)
+					for (NavigationItemImpl i : g.items) {
+						i.toggleLoading(false);
+						i.clickable(true);
+					}
+				isLoading = false;
+				flipPage.back();
+				clearCache();
+			}
+		};
 	}
 
 	void addSeparatorBorder() {

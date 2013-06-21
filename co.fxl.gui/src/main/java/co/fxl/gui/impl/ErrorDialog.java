@@ -29,6 +29,7 @@ public class ErrorDialog {
 
 	private static final int DEFAULT_WIDTH = 420;
 	private static boolean showing = false;
+	public static Runnable exceptionListener = null;
 	private Runnable runnable;
 
 	private ErrorDialog() {
@@ -39,6 +40,8 @@ public class ErrorDialog {
 		if (showing) {
 			return;
 		}
+		if (exceptionListener != null)
+			exceptionListener.run();
 		ErrorDialog lErrorDialog = new ErrorDialog();
 		lErrorDialog.runnable = pRunnable;
 		lErrorDialog.show(pTitle, pMessage, pStacktrace);
