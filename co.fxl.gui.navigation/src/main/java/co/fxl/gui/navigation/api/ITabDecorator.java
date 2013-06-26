@@ -27,4 +27,6 @@ public interface ITabDecorator extends IResizableWidget {
 
 	void refresh(ICallback<Void> cb);
 
+	void finishDecorate();
+
 }

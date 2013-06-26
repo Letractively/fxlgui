@@ -286,6 +286,10 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 					a0.color().gray();
 					p02.column(p).expand();
 				}
+
+				@Override
+				public void finishDecorate() {
+				}
 			});
 			update();
 			addResizableWidgetToDisplay();
