@@ -317,6 +317,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 						removeRegistrations();
 						flipRegister(true);
 						widget.update();
+						decorator.finishDecorate();
 						stopLoading(cachingActive);
 						checkResize();
 						cb0.onSuccess(result);

@@ -30,6 +30,10 @@ public abstract class TabDecoratorTemplate extends ResizableWidgetTemplate
 	protected IVerticalPanel panel;
 
 	@Override
+	public void finishDecorate() {
+	}
+
+	@Override
 	public void decorate(IBufferedPanel panel, ICallback<Void> cb) {
 		this.panel = panel.panel();
 		refresh(cb);
