@@ -103,7 +103,6 @@ public class HorizontalScalingPanel implements IClickListener {
 				morePanel.visible(true);
 			else
 				addMorePanel();
-
 			for (int i = containers.size() - 1; i >= 0 && isTooLarge(); i--) {
 				IContainer c = containers.get(i);
 				if (c == active)
