@@ -83,8 +83,6 @@ public class HorizontalScalingPanel implements IClickListener {
 	// }
 
 	public HorizontalScalingPanel width(int width) {
-		if (this.width == width)
-			return this;
 		if (basic.width() == 0)
 			return this;
 		this.width = width;
