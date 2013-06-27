@@ -31,17 +31,7 @@ public class DummyCallback<T> implements ICallback<T> {
 
 	@Override
 	public void onFail(Throwable throwable) {
-		// Wenn möglich Exception weiterwerfen, da sonst der Stacktrace unnötig
-		// verschachtelt und unübersichtlich wird !!
-		if (throwable instanceof RuntimeException) {
-			RuntimeException runtimeException = (RuntimeException)throwable;
-			throw runtimeException;
-		} else if (throwable instanceof Error) {
-			Error error = (Error)throwable;
-			throw error;
-		} else {
-			throw new RuntimeException(throwable);
-		}
+		CallbackTemplate.rethrow(throwable);
 	}
 
 	public static ICallback<Void> voidInstance() {

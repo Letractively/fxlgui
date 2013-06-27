@@ -35,7 +35,7 @@ public abstract class CallbackTemplate<T> implements ICallback<T> {
 	public void onFail(Throwable throwable) {
 		if (encapsulatedCallback == null) {
 			// throwable.printStackTrace();
-			throw new RuntimeException(throwable);
+			rethrow(throwable);
 		} else
 			encapsulatedCallback.onFail(throwable);
 	}
@@ -67,5 +67,15 @@ public abstract class CallbackTemplate<T> implements ICallback<T> {
 				cb2.onSuccess(true);
 			}
 		};
+	}
+
+	public static void rethrow(Throwable pThrowable) {
+		if (pThrowable instanceof RuntimeException) {
+			throw (RuntimeException) pThrowable;
+		} else if (pThrowable instanceof Error) {
+			throw (Error) pThrowable;
+		} else {
+			throw new RuntimeException(pThrowable);
+		}
 	}
 }

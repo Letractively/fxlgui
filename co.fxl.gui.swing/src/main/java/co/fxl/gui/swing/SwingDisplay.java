@@ -43,6 +43,7 @@ import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
+import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DisplayTemplate;
@@ -328,7 +329,7 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 				try {
 					Thread.sleep(ms);
 				} catch (InterruptedException e) {
-					throw new RuntimeException(e);
+					CallbackTemplate.rethrow(e);
 				}
 				runnable.run();
 			}
