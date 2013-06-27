@@ -155,9 +155,15 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	@Override
 	public IFormField<T, R> required() {
 		required = true;
-		label.font().weight().bold();
-		label.text(name + " *");
+		if (showRequiredAsBold()) {
+			label.font().weight().bold();
+			label.text(name + " *");
+		}
 		return this;
+	}
+
+	boolean showRequiredAsBold() {
+		return true;
 	}
 
 	@Override
