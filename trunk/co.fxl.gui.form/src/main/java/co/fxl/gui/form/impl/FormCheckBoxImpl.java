@@ -36,6 +36,11 @@ class FormCheckBoxImpl extends FormFieldImpl<ICheckBox, Boolean> {
 	}
 
 	@Override
+	boolean showRequiredAsBold() {
+		return false;
+	}
+
+	@Override
 	public ICheckBox valueElement() {
 		return checkBox;
 	}
