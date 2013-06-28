@@ -90,6 +90,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 	private boolean empty = false;
 	private boolean allowClick = true;
 	private IContainer container;
+	private IVerticalPanel oldContent;
 
 	// private String imageResource = "document.png";
 
@@ -336,7 +337,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 
 	@Override
 	public IVerticalPanel newContentPanel() {
-		content.remove();
+		oldContent = content;
 		newCardPanel();
 		// toggleLoading(true);
 		return content;
@@ -344,6 +345,7 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 
 	@Override
 	public void showNewContentPanel() {
+		oldContent.remove();
 		// toggleLoading(false);
 		widget.cardPanel.show(content);
 	}
