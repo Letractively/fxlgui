@@ -55,6 +55,12 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 	}
 
 	@Override
+	public IHTMLArea editable(boolean editable) {
+		toolbar.editable(editable);
+		return (IHTMLArea) super.editable(editable);
+	}
+
+	@Override
 	public IHTMLArea html(String html) {
 		element().text(html);
 		toolbar.updateStatus();

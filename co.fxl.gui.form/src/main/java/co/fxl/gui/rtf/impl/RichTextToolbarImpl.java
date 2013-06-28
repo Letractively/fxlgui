@@ -138,8 +138,8 @@ public class RichTextToolbarImpl {
 
 		@Override
 		void handleClick() {
-			final IPopUp p = PopUp.showPopUp().center()
-					.autoHide(true).atLastClick();
+			final IPopUp p = PopUp.showPopUp().center().autoHide(true)
+					.atLastClick();
 			p.border().remove().style().shadow().color().gray();
 			IHorizontalPanel h = p.container().panel().horizontal().spacing(4);
 			final ITextInputElement<?> tf = addTextField(h);
@@ -186,12 +186,15 @@ public class RichTextToolbarImpl {
 		void updateStatus() {
 		}
 
+		abstract void editable(boolean editable);
+
 	}
 
 	private abstract class ToolbarButton extends ToolbarElement {
 
 		IImage image;
 		Formatting f;
+		private boolean editable = true;
 
 		private ToolbarButton() {
 		}
@@ -200,6 +203,12 @@ public class RichTextToolbarImpl {
 			this.f = f;
 			String resource = imageName(f);
 			setImage(panel, resource);
+		}
+
+		@Override
+		void editable(boolean editable) {
+			this.editable = editable;
+			image.clickable(editable);
 		}
 
 		void setImage(IToolbar panel, String resource) {
@@ -218,7 +227,8 @@ public class RichTextToolbarImpl {
 
 				@Override
 				public void onMouseOver() {
-					image.border().color().rgb(219, 180, 104);
+					if (editable)
+						image.border().color().rgb(219, 180, 104);
 				}
 
 				@Override
@@ -337,6 +347,7 @@ public class RichTextToolbarImpl {
 				htmlArea.insertImage(CLOSE_IMAGE_PREFIX + tag.toLowerCase()
 						+ IMAGE_SUFFIX);
 		}
+
 	}
 
 	private static final String IMAGE_SUFFIX = ".png";
@@ -428,6 +439,7 @@ public class RichTextToolbarImpl {
 
 			private void copy(final IHTMLArea htmlArea, final IHTMLArea ha) {
 				ha.html(htmlArea.html());
+				ha.editable(htmlArea.editable());
 				// ha.cursorPosition(htmlArea.cursorPosition());
 			}
 
@@ -508,6 +520,11 @@ public class RichTextToolbarImpl {
 				return false;
 		}
 		return true;
+	}
+
+	public void editable(boolean editable) {
+		for (ToolbarElement e : buttons)
+			e.editable(editable);
 	}
 
 }
