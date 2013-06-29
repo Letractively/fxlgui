@@ -197,7 +197,7 @@ public class FormWidgetImpl implements IFormWidget {
 		ICheckBox valuePanel = container(gridIndex).checkBox();
 		heights.valuePanel(valuePanel);
 		valuePanel.editable(saveListener != null);
-//		setFocus(valuePanel);
+		// setFocus(valuePanel);
 		setCRListener(valuePanel);
 		return valuePanel;
 	}
@@ -229,8 +229,9 @@ public class FormWidgetImpl implements IFormWidget {
 	}
 
 	@Override
-	public IFormField<ITextField, Date> addDateField(String name) {
-		return new FormDateFieldImpl(this, nextGridIndex(), name);
+	public IFormField<ITextField, Date> addDateField(String name,
+			boolean addCalendar) {
+		return new FormDateFieldImpl(this, nextGridIndex(), name, addCalendar);
 	}
 
 	@Override
