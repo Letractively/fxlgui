@@ -80,7 +80,7 @@ public interface IFormWidget extends IResizable<IFormWidget> {
 
 	IFormField<ITextField, String> addTextField(String name);
 
-	IFormField<ITextField, Date> addDateField(String name);
+	IFormField<ITextField, Date> addDateField(String name, boolean addCalendar);
 
 	IFormField<ITextField, String> addColorField(String name);
 

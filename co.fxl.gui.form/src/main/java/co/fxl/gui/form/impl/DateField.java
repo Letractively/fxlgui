@@ -88,24 +88,33 @@ public class DateField extends TextFieldAdp {
 	private PopUp popUp;
 
 	public DateField(IContainer c) {
+		this(c, true);
+	}
+
+	public DateField(IContainer c, boolean addC) {
 		IGridPanel g = c.panel().grid();
 		ITextField tf = g.cell(0, 0).textField();
 		g.column(0).expand();
-		IGridCell cell2 = g.cell(1, 0).align().center().valign().center();
-		g.column(1).width(24);
-		// Heights.INSTANCE.decorate(cell2);
-		IHorizontalPanel spacing = cell2.panel().horizontal().spacing(2);
-		Heights.INSTANCE.styleColor(spacing);
-		IBorder border = spacing.border();
-		border.color().rgb(211, 211, 211);
-		border.style().bottom().style().top().style().right();
-		IContainer c1 = spacing.add();
-		setUp(tf, c1);
+		IContainer c1 = null;
+		if (addC) {
+			IGridCell cell2 = g.cell(1, 0).align().center().valign().center();
+			g.column(1).width(24);
+			// Heights.INSTANCE.decorate(cell2);
+			IHorizontalPanel spacing = cell2.panel().horizontal().spacing(2);
+			Heights.INSTANCE.styleColor(spacing);
+			IBorder border = spacing.border();
+			border.color().rgb(211, 211, 211);
+			border.style().bottom().style().top().style().right();
+			c1 = spacing.add();
+		}
+		setUp(tf, c1, addC);
 		decorate(g);
 	}
 
-	private void setUp(ITextField tf, IContainer c1) {
+	private void setUp(ITextField tf, IContainer c1, boolean addCalendar) {
 		element(tf);
+		if (!addCalendar)
+			return;
 		button = c1.image().resource(Icons.CALENDAR).size(16, 16);
 		popUp = new PopUp();
 		button.addClickListener(popUp);
@@ -115,11 +124,16 @@ public class DateField extends TextFieldAdp {
 	}
 
 	public DateField(ITextField tf, IContainer c) {
-		setUp(tf, c);
+		setUp(tf, c, true);
+	}
+
+	public DateField(ITextField tf, IContainer c, boolean addCalendar) {
+		setUp(tf, c, addCalendar);
 	}
 
 	public DateField clickable(boolean clickable) {
-		button.clickable(clickable);
+		if (button != null)
+			button.clickable(clickable);
 		return this;
 	}
 
@@ -130,7 +144,8 @@ public class DateField extends TextFieldAdp {
 
 	@Override
 	public DateField editable(boolean editable) {
-		button.clickable(editable);
+		if (button != null)
+			button.clickable(editable);
 		return (DateField) super.editable(editable);
 	}
 }
