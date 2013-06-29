@@ -31,7 +31,7 @@ public class GWTFormat {
 				PredefinedFormat.DATE_TIME_MEDIUM));
 		Format.register(Date.class, new GWTDateFormat(
 				PredefinedFormat.DATE_SHORT));
-		Format.registerTime(new GWTDateFormat(PredefinedFormat.TIME_LONG));
+		Format.registerTime(new GWTDateFormat(PredefinedFormat.TIME_MEDIUM));
 		Format.register(Long.class, new GWTNumberFormat<Long>() {
 			@Override
 			Long convert(Double d) {
