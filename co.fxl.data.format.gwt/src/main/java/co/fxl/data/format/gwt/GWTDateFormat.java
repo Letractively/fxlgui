@@ -56,7 +56,7 @@ class GWTDateFormat implements IFormat<Date> {
 			return null;
 		try {
 			if (locale.equals(Format.LOCALE_DE)) {
-				if (predef.equals(PredefinedFormat.TIME_LONG))
+				if (predef.equals(PredefinedFormat.TIME_MEDIUM))
 					return getTime(new Date(), format);
 				if (predef.equals(PredefinedFormat.DATE_TIME_MEDIUM))
 					return getTime(getDate(format), format);
