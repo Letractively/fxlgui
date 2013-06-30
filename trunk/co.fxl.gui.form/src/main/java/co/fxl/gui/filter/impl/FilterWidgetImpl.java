@@ -190,6 +190,8 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		}
 		FilterConstraintsImpl constraints = new FilterConstraintsImpl(
 				configuration);
+		if (!addSizeFilter)
+			constraints.clearSizeFilter();
 		if (this.constraints != null && this.constraints.sortOrder() != null) {
 			constraints.sortOrder(this.constraints.sortOrder());
 			constraints.sortDirection(this.constraints.sortDirection());
@@ -515,8 +517,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	}
 
 	void notifyComboBoxChange(boolean clickableClear) {
-		if ((apply.clickable() || alwaysClickable()) && 
-				DIRECT_COMBOBO_CHANGE)
+		if ((apply.clickable() || alwaysClickable()) && DIRECT_COMBOBO_CHANGE)
 			onApplyClick(clickableClear);
 	}
 
