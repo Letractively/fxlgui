@@ -18,7 +18,6 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
@@ -33,7 +32,7 @@ public class PopUpPageContainer implements PageContainer {
 	private Size popUpSize;
 	private boolean isModal;
 	private boolean added;
-	private IClickListener cl;
+	private Runnable cl;
 
 	public PopUpPageContainer(ResizableWidgetTemplate widget, Size popUpSize,
 			boolean isModal) {
@@ -47,7 +46,7 @@ public class PopUpPageContainer implements PageContainer {
 	}
 
 	@Override
-	public IVerticalPanel panel(IClickListener cl) {
+	public IVerticalPanel panel(Runnable cl) {
 		this.cl = cl;
 		TransparentPopUp closablePopUp = PopUp.showClosablePopUp(true, cl);
 		popUp = closablePopUp.popUp().glass(true).autoHide(true);
@@ -62,12 +61,12 @@ public class PopUpPageContainer implements PageContainer {
 	@Override
 	public void visible(boolean visible) {
 		if (visible) {
-			PopUp.adp.notifyPopUp(new IClickListener() {
+			PopUp.adp.notifyShowPopUp(new Runnable() {
 				@Override
-				public void onClick() {
+				public void run() {
 					popUp.visible(false);
 					if (cl != null)
-						cl.onClick();
+						cl.run();
 				}
 			});
 		}

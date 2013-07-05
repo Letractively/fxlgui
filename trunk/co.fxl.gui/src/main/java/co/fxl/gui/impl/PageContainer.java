@@ -18,12 +18,11 @@
  */
 package co.fxl.gui.impl;
 
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IVerticalPanel;
 
 public interface PageContainer {
 
-	IVerticalPanel panel(IClickListener cl);
+	IVerticalPanel panel(Runnable cl);
 
 	void visible(boolean visible);
 

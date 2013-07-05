@@ -22,7 +22,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IGridPanel;
@@ -34,7 +33,7 @@ public class PopUp {
 
 	public interface HistoryAdp {
 
-		void notifyPopUp(IClickListener l);
+		void notifyShowPopUp(Runnable l);
 	}
 
 	public interface TransparentPopUp {
@@ -77,13 +76,13 @@ public class PopUp {
 	}
 
 	public static TransparentPopUp showClosablePopUp(boolean closable,
-			final IClickListener clickListener) {
+			final Runnable closeListener) {
 		final IPopUp popUp = display.showPopUp();
 		if (adp != null) {
-			adp.notifyPopUp(clickListener != null ? clickListener
-					: new IClickListener() {
+			adp.notifyShowPopUp(closeListener != null ? closeListener
+					: new Runnable() {
 						@Override
-						public void onClick() {
+						public void run() {
 							popUp.visible(false);
 						}
 					});
@@ -122,8 +121,8 @@ public class PopUp {
 				.addClickListener(new LazyClickListener() {
 					@Override
 					protected void onAllowedClick() {
-						if (clickListener != null)
-							clickListener.onClick();
+						if (closeListener != null)
+							closeListener.run();
 						else
 							popUp.visible(false);
 					}
