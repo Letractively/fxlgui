@@ -34,6 +34,8 @@ public class PopUp {
 	public interface HistoryAdp {
 
 		void notifyShowPopUp(Runnable l);
+
+		void notifyClosePopUp();
 	}
 
 	public interface TransparentPopUp {
@@ -121,10 +123,13 @@ public class PopUp {
 				.addClickListener(new LazyClickListener() {
 					@Override
 					protected void onAllowedClick() {
-						if (closeListener != null)
-							closeListener.run();
-						else
-							popUp.visible(false);
+						popUp.visible(false);
+						if (adp != null) {
+							adp.notifyClosePopUp();
+						}
+						// if (closeListener != null)
+						// closeListener.run();
+						// else
 					}
 				}).mouseLeft().margin()
 				.top(Env.runtime().leq(Env.IE, 8) ? 0 : -12)
