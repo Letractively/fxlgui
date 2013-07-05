@@ -60,6 +60,8 @@ public class PopUpPageContainer implements PageContainer {
 
 	@Override
 	public void visible(boolean visible) {
+		if (popUp.visible() == visible)
+			return;
 		if (visible) {
 			PopUp.adp.notifyShowPopUp(new Runnable() {
 				@Override
