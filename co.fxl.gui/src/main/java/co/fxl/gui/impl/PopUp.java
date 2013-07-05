@@ -77,6 +77,8 @@ public class PopUp {
 		return popUp;
 	}
 
+	private static boolean ignoreNotify = false;
+
 	public static TransparentPopUp showClosablePopUp(boolean closable,
 			final Runnable closeListener) {
 		final IPopUp popUp = display.showPopUp();
@@ -88,6 +90,17 @@ public class PopUp {
 							popUp.visible(false);
 						}
 					});
+		}
+		if (closeListener == null) {
+			popUp.addVisibleListener(new IUpdateListener<Boolean>() {
+
+				@Override
+				public void onUpdate(Boolean value) {
+					if (!value && !ignoreNotify) {
+						adp.notifyClosePopUp();
+					}
+				}
+			});
 		}
 		if (!ALLOW_CLOSABLE_POPUP || !closable) {
 			popUp.border().remove().style().shadow();
@@ -123,7 +136,9 @@ public class PopUp {
 				.addClickListener(new LazyClickListener() {
 					@Override
 					protected void onAllowedClick() {
+						ignoreNotify = true;
 						popUp.visible(false);
+						ignoreNotify = false;
 						if (adp != null) {
 							adp.notifyClosePopUp();
 						}
