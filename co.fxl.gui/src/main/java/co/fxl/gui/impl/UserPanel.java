@@ -25,6 +25,7 @@ import java.util.List;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.style.impl.Style;
 
 public class UserPanel {
 
@@ -81,8 +82,12 @@ public class UserPanel {
 		for (DecoratorAdp d : decorators) {
 			if (!d.decorator.isVisible())
 				continue;
-			if (!first)
-				panel.add().label().text("|").font().color().gray();
+			if (!first) {
+				if (Style.ENABLED && !Style.instance().login().addSeparators())
+					panel.addSpace(4);
+				else
+					panel.add().label().text("|").font().color().gray();
+			}
 			first = false;
 			d.decorator.decorate(panel);
 		}

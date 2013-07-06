@@ -35,6 +35,7 @@ import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Dialog;
 import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Heights;
+import co.fxl.gui.impl.HyperlinkMouseOverListener;
 import co.fxl.gui.impl.ImageButton;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.PopUp;
@@ -149,6 +150,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 		loggedInHead.font().weight().bold();
 		decorate(loggedInHead);
 		if (Style.ENABLED && Style.instance().login().useMore()) {
+			new HyperlinkMouseOverListener(loggedInHead);
 			final IImage image = panel.add().image()
 					.resource(Style.instance().login().moreImage());
 			image.margin().right(10);
@@ -156,7 +158,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 
 				@Override
 				public void onClick() {
-					IPopUp popUp = PopUp.showPopUp(true).width(140)
+					final IPopUp popUp = PopUp.showPopUp(true).width(140)
 							.autoHide(true);
 					popUp.offset(image.offsetX() - 140 + 12,
 							image.offsetY() + 22);
@@ -171,8 +173,9 @@ public class LoginWidgetImpl implements ILoginWidget {
 					}
 					if (addLine)
 						p.add().line();
-					new ImageButton(p.add()).imageResource("logout.png")
-							.text("Logout").addClickListener(logoutListener());
+					ImageButton ib = new ImageButton(p.add());
+					ib.imageResource("logout.png").text("Logout")
+							.addClickListener(logoutListener());
 					popUp.visible(true);
 				}
 			};

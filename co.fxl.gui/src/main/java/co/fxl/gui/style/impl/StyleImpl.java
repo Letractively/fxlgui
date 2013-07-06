@@ -106,6 +106,11 @@ class StyleImpl implements IStyle {
 				return true;
 			}
 
+			@Override
+			public boolean addSeparators() {
+				return false;
+			}
+
 		};
 	}
 

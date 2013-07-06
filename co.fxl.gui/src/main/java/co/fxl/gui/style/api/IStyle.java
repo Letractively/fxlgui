@@ -96,6 +96,8 @@ public interface IStyle {
 
 		boolean useMore();
 
+		boolean addSeparators();
+
 	}
 
 	public interface IWindow {
