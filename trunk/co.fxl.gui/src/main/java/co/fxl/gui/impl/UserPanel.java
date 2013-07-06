@@ -87,7 +87,7 @@ public class UserPanel {
 				continue;
 			if (!first) {
 				if (Style.ENABLED && !Style.instance().login().addSeparators())
-					panel.addSpace(4);
+					panel.addSpace(10);
 				else
 					panel.add().label().text("|").font().color().gray();
 			}
