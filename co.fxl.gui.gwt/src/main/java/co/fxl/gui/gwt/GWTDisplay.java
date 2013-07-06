@@ -107,16 +107,19 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		return "Arial, sans-serif";
 	}
 
+	private static String getFontDefinition() {
+		return "font-family: " + getFontFamily() + " !important; font-size: "
+				+ getFontSize() + "px;";
+	}
+
 	private GWTDisplay() {
 		// GWTDisplayClientBundle.INSTANCE.css().ensureInjected();
 		Display.instance(this);
-		addStyle("body, table td, select, input { font-family: "
-				+ getFontFamily() + " !important; font-size: " + getFontSize()
-				+ "px;}");
-		addStyle(".gwt-TextArea-FXL { height: 100px; padding: 3px; font-family: "
-				+ getFontFamily() + " !important}");
-		addStyle(".gwt-TextBox-FXL { padding: 3px; font-family: "
-				+ getFontFamily() + " !important}");
+		addStyle("body, table td, select, input { " + getFontDefinition() + "}");
+		addStyle(".gwt-TextArea-FXL { height: 100px; padding: 3px; "
+				+ getFontDefinition() + "}");
+		addStyle(".gwt-TextBox-FXL { padding: 3px; " + getFontDefinition()
+				+ "}");
 		container = new GWTContainer<Widget>(this) {
 			public void setComponent(Widget component) {
 				widget = component;
