@@ -1,12 +1,4 @@
 html {overflow-y: hidden; overflow: -moz-scrollbars-none; overflow-x: hidden; }
-body, table td, select, input {
-  font-family: 'Open Sans', Arial, sans-serif !important;
-  font-size: 12px;
-}
-.gwt-TextArea-FXL { height: 100px; padding: 3px;
-  font-family: 'Open Sans', Arial, sans-serif !important}
-.gwt-TextBox-FXL { padding: 3px; 
-  font-family: 'Open Sans', Arial, sans-serif !important}
 html, body {
 	height:100%; 
 	width:100%;

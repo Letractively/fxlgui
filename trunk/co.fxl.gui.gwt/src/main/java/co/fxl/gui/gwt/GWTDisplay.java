@@ -93,9 +93,30 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		lastClickY = nativeEvent.getClientY();
 	}
 
+	public static int getFontSize() {
+		if (co.fxl.gui.style.impl.Style.ENABLED) {
+			return co.fxl.gui.style.impl.Style.instance().fontSize();
+		}
+		return 12;
+	}
+
+	public static String getFontFamily() {
+		if (co.fxl.gui.style.impl.Style.ENABLED) {
+			return co.fxl.gui.style.impl.Style.instance().fontFamily();
+		}
+		return "Arial, sans-serif";
+	}
+
 	private GWTDisplay() {
-//		GWTDisplayClientBundle.INSTANCE.css().ensureInjected();
+		// GWTDisplayClientBundle.INSTANCE.css().ensureInjected();
 		Display.instance(this);
+		addStyle("body, table td, select, input { font-family: "
+				+ getFontFamily() + " !important; font-size: " + getFontSize()
+				+ "px;}");
+		addStyle(".gwt-TextArea-FXL { height: 100px; padding: 3px; font-family: "
+				+ getFontFamily() + " !important}");
+		addStyle(".gwt-TextBox-FXL { padding: 3px; font-family: "
+				+ getFontFamily() + " !important}");
 		container = new GWTContainer<Widget>(this) {
 			public void setComponent(Widget component) {
 				widget = component;
@@ -123,6 +144,13 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		// + Display.instance().width() + " inner-width vs "
 		// + getOuterWidth() + " outer-width");
 		// }
+	}
+
+	void addStyle(String text) {
+		Element bodyElement = RootPanel.getBodyElement();
+		Element newChild = DOM.createElement("style");
+		newChild.setInnerText(text);
+		bodyElement.getParentElement().insertBefore(newChild, bodyElement);
 	}
 
 	// public static boolean isChromeZoomActive() {
