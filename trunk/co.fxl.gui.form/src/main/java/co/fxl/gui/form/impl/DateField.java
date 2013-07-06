@@ -57,8 +57,7 @@ public class DateField extends TextFieldAdp {
 
 		@Override
 		public void onClick() {
-			popUp = co.fxl.gui.impl.PopUp.showPopUp().autoHide(true);
-			popUp.border().style().shadow();
+			popUp = co.fxl.gui.impl.PopUp.showPopUp(true).autoHide(true);
 			int height = button.height();
 			popUp.offset(button.offsetX(), button.offsetY() + height);
 			calendar = (ICalendarWidget) popUp.container().widget(

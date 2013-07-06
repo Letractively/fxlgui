@@ -22,9 +22,11 @@ import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.FullscreenPopUp;
 import co.fxl.gui.impl.Heights;
+import co.fxl.gui.impl.ImageButton;
 import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.log.api.ILog;
+import co.fxl.gui.style.impl.Style;
 
 class LogImpl implements ILog, IClickListener {
 
@@ -100,7 +102,11 @@ class LogImpl implements ILog, IClickListener {
 
 	@Override
 	public ILog container(IContainer c) {
-		c.label().text("Trace").hyperlink().addClickListener(this);
+		if (Style.ENABLED && Style.instance().login().useMore()) {
+			new ImageButton(c).imageResource("trace.png").text("Trace")
+					.addClickListener(this);
+		} else
+			c.label().text("Trace").hyperlink().addClickListener(this);
 		return this;
 	}
 

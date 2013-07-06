@@ -27,13 +27,17 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPasswordField;
+import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.ITextField;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.form.api.ILoginWidget;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Dialog;
 import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Heights;
+import co.fxl.gui.impl.ImageButton;
 import co.fxl.gui.impl.LazyClickListener;
+import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.UserPanel;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.style.impl.Style;
@@ -46,6 +50,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 			"LoginWidgetImpl.HEIGHT_DECREMENT", 0);
 	private IAuthorizationListener listener;
 	private String userText;
+	private Decorator[] decorators;
 
 	// private String passwordText;
 
@@ -81,6 +86,11 @@ public class LoginWidgetImpl implements ILoginWidget {
 			public boolean isVisible() {
 				return true;
 			}
+
+			// @Override
+			// public void onClick() {
+			// throw new UnsupportedOperationException();
+			// }
 		}).weight(-100);
 		return this;
 	}
@@ -139,12 +149,30 @@ public class LoginWidgetImpl implements ILoginWidget {
 		loggedInHead.font().weight().bold();
 		decorate(loggedInHead);
 		if (Style.ENABLED && Style.instance().login().useMore()) {
-			IImage image = panel.add().image()
+			final IImage image = panel.add().image()
 					.resource(Style.instance().login().moreImage());
 			IClickListener clickListener = new IClickListener() {
+
 				@Override
 				public void onClick() {
-					throw new UnsupportedOperationException();
+					IPopUp popUp = PopUp.showPopUp(true).width(140)
+							.autoHide(true);
+					popUp.offset(image.offsetX() - 140 + 12,
+							image.offsetY() + 22);
+					IVerticalPanel p = popUp.container().panel().vertical()
+							.spacing(8);
+					boolean addLine = false;
+					for (Decorator d : decorators) {
+						if (d.isVisible()) {
+							d.decorate(p.add().panel().horizontal());
+							addLine = true;
+						}
+					}
+					if (addLine)
+						p.add().line();
+					new ImageButton(p.add()).imageResource("logout.png")
+							.text("Logout").addClickListener(logoutListener());
+					popUp.visible(true);
 				}
 			};
 			prefix.addClickListener(clickListener);
@@ -154,7 +182,11 @@ public class LoginWidgetImpl implements ILoginWidget {
 		}
 		ILabel text = panel.add().label().text("Logout");
 		hyperlink(text);
-		text.addClickListener(new LazyClickListener() {
+		text.addClickListener(logoutListener()).mouseLeft();
+	}
+
+	LazyClickListener logoutListener() {
+		return new LazyClickListener() {
 			@Override
 			public void onAllowedClick() {
 				userText = null;
@@ -162,7 +194,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 				listener.logout(DummyCallback.voidInstance());
 				// UserPanel.instance().update();
 			}
-		}).mouseLeft();
+		};
 	}
 
 	IClickable<?> addLogInPrefix(ILinearPanel<?> panel) {
@@ -211,6 +243,12 @@ public class LoginWidgetImpl implements ILoginWidget {
 	public ILoginWidget preset(String user, String pwd) {
 		this.userText = user;
 		// passwordText = pwd;
+		return this;
+	}
+
+	@Override
+	public ILoginWidget decorators(Decorator[] ds) {
+		decorators = ds;
 		return this;
 	}
 }

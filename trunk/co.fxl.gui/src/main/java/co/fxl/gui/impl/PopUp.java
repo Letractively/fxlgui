@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IGridPanel;
@@ -61,6 +62,10 @@ public class PopUp {
 	}
 
 	public static IPopUp showPopUp() {
+		return showPopUp(false);
+	}
+
+	public static IPopUp showPopUp(boolean withBorder) {
 		final IPopUp popUp = display.showPopUp();
 		if (active) {
 			visiblePopUps.add(popUp);
@@ -73,6 +78,11 @@ public class PopUp {
 						visiblePopUps.add(popUp);
 				}
 			});
+		}
+		if (withBorder) {
+			IBorder border = popUp.border();
+			border.remove().style().shadow();
+			border.color().black();
 		}
 		return popUp;
 	}
