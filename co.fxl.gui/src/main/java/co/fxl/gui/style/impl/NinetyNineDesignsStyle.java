@@ -139,7 +139,8 @@ class NinetyNineDesignsStyle implements IStyle {
 		return new IApplicationPanel() {
 			@Override
 			public void background(IPanel<?> background) {
-				background.color().rgb(45, 45, 45);
+				background.color().rgb(29, 59, 89).gradient().vertical()
+						.rgb(57, 84, 110);
 				background.border().style().bottom();
 			}
 
