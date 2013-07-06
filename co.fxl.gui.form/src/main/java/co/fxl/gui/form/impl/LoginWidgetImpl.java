@@ -150,7 +150,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 		loggedInHead.font().weight().bold();
 		decorate(loggedInHead);
 		if (Style.ENABLED && Style.instance().login().useMore()) {
-			loggedInHead.font().pixel(11);
+			loggedInHead.font().pixel(12);
 			new HyperlinkMouseOverListener(loggedInHead);
 			final IImage image = panel.add().image()
 					.resource(Style.instance().login().moreImage());
