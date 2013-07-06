@@ -19,6 +19,7 @@
 package co.fxl.gui.form.api;
 
 import co.fxl.gui.api.ICallback;
+import co.fxl.gui.impl.UserPanel.Decorator;
 
 public interface ILoginWidget {
 
@@ -46,4 +47,6 @@ public interface ILoginWidget {
 	ILoginWidget visible(boolean visible);
 
 	ILoginWidget preset(String user, String pwd);
+
+	ILoginWidget decorators(Decorator[] ds);
 }
