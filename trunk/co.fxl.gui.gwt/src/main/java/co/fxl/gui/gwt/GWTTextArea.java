@@ -45,6 +45,7 @@ class GWTTextArea extends GWTTextAreaTemplate<TextArea, ITextArea> implements
 
 	GWTTextArea(GWTContainer<TextArea> container) {
 		super(container);
+		font().family().arial();
 		container.widget.addChangeHandler(new ChangeHandler() {
 
 			@Override
