@@ -1,4 +1,5 @@
 <module>
+    <inherits name="com.google.gwt.resources.Resources" />
     <inherits name="com.google.gwt.user.User" />
     <inherits name="co.fxl.gui.IDisplay" />
     <inherits name="com.google.gwt.user.theme.standard.Standard" />
