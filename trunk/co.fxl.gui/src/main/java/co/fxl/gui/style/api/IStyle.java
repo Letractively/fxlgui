@@ -23,13 +23,14 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
-import co.fxl.gui.api.IVerticalPanel;
 
 public interface IStyle {
 
 	public interface IApplicationPanel {
 
-		void background(IVerticalPanel background);
+		void background(IPanel<?> background);
+
+		boolean containsUserPanel();
 	}
 
 	public interface ITop {
