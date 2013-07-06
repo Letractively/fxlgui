@@ -21,7 +21,6 @@ package co.fxl.gui.style.impl;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
-import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.style.api.IStyle;
 
 class StyleImpl implements IStyle {
@@ -117,7 +116,14 @@ class StyleImpl implements IStyle {
 	public IApplicationPanel applicationPanel() {
 		return new IApplicationPanel() {
 			@Override
-			public void background(IVerticalPanel background) {
+			public void background(IPanel<?> background) {
+				background.color().rgb(45, 45, 45);
+				background.border().style().bottom();
+			}
+
+			@Override
+			public boolean containsUserPanel() {
+				return true;
 			}
 		};
 	}
