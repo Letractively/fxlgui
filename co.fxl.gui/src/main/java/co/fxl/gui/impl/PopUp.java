@@ -49,7 +49,7 @@ public class PopUp {
 	private static final boolean ALLOW_CLOSABLE_POPUP = true;
 	private static IDisplay display = Display.instance();
 	private static Set<IPopUp> visiblePopUps = new HashSet<IPopUp>();
-	private static boolean active = false;
+	private static boolean active = true;
 	public static HistoryAdp adp = null;
 
 	public static void activate() {
