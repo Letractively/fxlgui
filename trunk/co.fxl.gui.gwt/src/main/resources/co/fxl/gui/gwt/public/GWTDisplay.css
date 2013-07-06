@@ -1,3 +1,11 @@
+body {
+	font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	-webkit-font-smoothing: subpixel-antialiased !important;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility:    hidden;
+	-ms-backface-visibility:     hidden;
+}
 html {overflow-y: hidden; overflow: -moz-scrollbars-none; overflow-x: hidden; }
 html, body {height:100%; width:100%;}
 ::selection {
@@ -128,40 +136,33 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=2, offY
 .wordWrapBreakAll { word-wrap: break-all; }
 .nooutline { outline:none; }
 .nooutlineIE { outline:expression(this.onFocus=this.blur()); }
-.gwt-TextBox  { padding: 3px; font-family: Arial, sans-serif; font-size: 12px; }
-.gwt-PasswordTextBox { padding: 3px; font-family: Arial, sans-serif; font-size: 12px; }
-.gwt-Checkbox { font-family: Arial, sans-serif; font-size: 12px; color: black }
-.gwt-Combobox-FXL { height: 24px; font-family: Arial, sans-serif; font-size: 12px; }
-.gwt-TextArea { height: 100px; padding: 3px; font-family: Arial, sans-serif; font-size: 12px; }
-.gwt-RichTextArea { font-family: Arial, sans-serif; font-size: 12px; }
-.gwt-Label-FXL { white-space: nowrap; font-family: Arial, sans-serif; font-size: 12px; }
-.gwt-ToggleButton { font-family: Arial, sans-serif; font-size: 12px; }
-.gwt-Button-FXL { font-family: Arial, sans-serif; font-size: 12px; }
-.gwt-RadioButton { font-family: Arial, sans-serif; font-size: 12px; }
+.gwt-TextBox  { padding: 3px; }
+.gwt-PasswordTextBox { padding: 3px; }
+.gwt-Checkbox { color: black }
+.gwt-Combobox-FXL { height: 24px; }
+.gwt-TextArea { height: 100px; padding: 3px; }
+.gwt-RichTextArea { }
+.gwt-Label-FXL { white-space: nowrap; }
 .gwt-SuggestBoxPopup-FXL {
     background-color: white;
     border: 1px darkblue solid;
     padding: 2px;
-}
-.gwt-SuggestBoxPopup-FXL .item {
-    font-size: 12px;
-    font-family: Arial, sans-serif;
 }
 .gwt-SplitLayoutPanel-HDragger { background-color: lightgray }
 .scrollbar-container { position: absolute; top: 0; bottom: 0; left: 0;
 right: 0; margin: 20px; border: 2px solid rgba(0, 0, 0, 0.2); overflow:
 auto; background-color: whiteSmoke; } .scrollbar-container .inner {
 height: 2011px; width: 1985px; padding: 1em; background-color: white;
-font-family: sans-serif; } ::-webkit-scrollbar { background: transparent;
+ } ::-webkit-scrollbar { background: transparent;
 } ::-webkit-scrollbar-corner { background: transparent; }
 ::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.2); border:
 solid whiteSmoke 2px; } ::-webkit-scrollbar-thumb:hover {
 background-color: rgba(0, 0, 0, 0.3); }
-.gwt-TextInputBox  { border-bottom:none;padding:3px;font-family:Arial,sans-serif;font-size:12px;margin-top:-2px;margin-bottom:-2px;background-color:transparent;border:none;height:23px;}
+.gwt-TextInputBox  { border-bottom:none;padding:3px;margin-top:-2px;margin-bottom:-2px;background-color:transparent;border:none;height:23px;}
 .gwttreetable { border-spacing:0px;table-layout:fixed;margin:1px; }
 .gwttreecell { padding:0px;overflow:hidden;white-space:nowrap; }
 .gwtlazytreetable { border-spacing:0px;width:100%;cursor:pointer;background-color:white; }
 .gwtlazytreecell .td { text-align:left;vertical-align:middle; }
-.gwtlazytreediv { font-family:Arial,sans-serif;font-size:12px;white-space:nowrap;-moz-user-select:none;cursor:pointer;  }
+.gwtlazytreediv { white-space:nowrap;-moz-user-select:none;cursor:pointer;  }
 .gwtlazytreeblock { position:relative;overflow:hidden;width:2px;height:1px; }
 .gwtlazytreeindent { position:relative;overflow:hidden;height:1px; }
