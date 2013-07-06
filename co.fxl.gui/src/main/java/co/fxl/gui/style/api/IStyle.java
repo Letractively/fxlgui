@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.style.api;
 
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
@@ -89,7 +90,11 @@ public interface IStyle {
 
 		void hyperlink(ILabel text);
 
-		void addDecoration(ILinearPanel<?> panel);
+		IClickable<?> addDecoration(ILinearPanel<?> panel);
+
+		String moreImage();
+
+		boolean useMore();
 
 	}
 

@@ -18,8 +18,11 @@
  */
 package co.fxl.gui.form.impl;
 
+import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
@@ -126,7 +129,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 	}
 
 	private void addLogout(ILinearPanel<?> panel) {
-		addLogInPrefix(panel);
+		IClickable<?> prefix = addLogInPrefix(panel);
 		ILabel loggedInHead = panel
 				.add()
 				.label()
@@ -135,6 +138,20 @@ public class LoginWidgetImpl implements ILoginWidget {
 								+ "...");
 		loggedInHead.font().weight().bold();
 		decorate(loggedInHead);
+		if (Style.ENABLED && Style.instance().login().useMore()) {
+			IImage image = panel.add().image()
+					.resource(Style.instance().login().moreImage());
+			IClickListener clickListener = new IClickListener() {
+				@Override
+				public void onClick() {
+					throw new UnsupportedOperationException();
+				}
+			};
+			prefix.addClickListener(clickListener);
+			loggedInHead.addClickListener(clickListener);
+			image.addClickListener(clickListener);
+			return;
+		}
 		ILabel text = panel.add().label().text("Logout");
 		hyperlink(text);
 		text.addClickListener(new LazyClickListener() {
@@ -148,13 +165,13 @@ public class LoginWidgetImpl implements ILoginWidget {
 		}).mouseLeft();
 	}
 
-	void addLogInPrefix(ILinearPanel<?> panel) {
+	IClickable<?> addLogInPrefix(ILinearPanel<?> panel) {
 		if (Style.ENABLED) {
-			Style.instance().login().addDecoration(panel);
-			return;
+			return Style.instance().login().addDecoration(panel);
 		}
 		ILabel loggedInAs = panel.add().label().text("Logged in as");
 		decorate(loggedInAs);
+		return loggedInAs;
 	}
 
 	void hyperlink(ILabel text) {

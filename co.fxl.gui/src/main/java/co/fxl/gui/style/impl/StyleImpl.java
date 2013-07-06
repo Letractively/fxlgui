@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.style.impl;
 
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
@@ -91,9 +92,18 @@ class StyleImpl implements IStyle {
 			}
 
 			@Override
-			public void addDecoration(ILinearPanel<?> panel) {
-				panel.add().image().resource("user_white.png");
-//				panel.addSpace(2);
+			public IClickable<?> addDecoration(ILinearPanel<?> panel) {
+				return panel.add().image().resource("user_white.png");
+			}
+
+			@Override
+			public String moreImage() {
+				return "more_white_10x16.png";
+			}
+
+			@Override
+			public boolean useMore() {
+				return true;
 			}
 
 		};
