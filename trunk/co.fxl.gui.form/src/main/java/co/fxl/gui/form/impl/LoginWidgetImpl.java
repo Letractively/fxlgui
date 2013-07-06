@@ -177,6 +177,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 					ImageButton ib = new ImageButton(p.add());
 					ib.imageResource("logout.png").text("Logout")
 							.addClickListener(logoutListener());
+					ib.label().hyperlink();
 					popUp.visible(true);
 				}
 			};
