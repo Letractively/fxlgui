@@ -58,16 +58,19 @@ import com.google.gwt.user.client.ui.Widget;
 public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		WidgetParent {
 
-	// TODO Look: Quirk: GWT: IE9: H�he von ComboBox stimmt nicht (eventuell in
+	// TODO Look: Quirk: GWT: IE9: H�he von ComboBox stimmt nicht (eventuell
+	// in
 	// Grid einbetten)
-	// TODO Look: Quirk: GWT: Safari: H�he von ComboBox stimmt nicht (eventuell
+	// TODO Look: Quirk: GWT: Safari: H�he von ComboBox stimmt nicht
+	// (eventuell
 	// in Grid einbetten)
 
 	private static final String FIREFOX = "Firefox/";
 	private static final String CHROME = "Chrome/";
 	public static final String BROWSER_WARNING_IE8 = "You are using an outdated browser with a slow javascript engine! If possible: Update to Internet Explorer 9+ or switch to another browser like Firefox or Chrome. This will significantly improve application response time.";
 	public static final String BROWSER_WARNING_FIREFOX36 = "You are using an outdated browser! If possible: Update to Firefox 12+ or switch to another browser like Chrome. This will significantly improve application response time.";
-//	public static final String BROWSER_WARNING_ZOOM_CHROME = "You are using a zoom level other than 100%. Please switch to zoom level 100%, for example by clicking Ctrl+0, to avoid unexpected behaviour.";
+	// public static final String BROWSER_WARNING_ZOOM_CHROME =
+	// "You are using a zoom level other than 100%. Please switch to zoom level 100%, for example by clicking Ctrl+0, to avoid unexpected behaviour.";
 	static GWTDisplay instance;
 	private GWTContainer<Widget> container;
 	private GWTUncaughtExceptionHandler uncaughtExceptionHandler;
@@ -91,6 +94,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	}
 
 	private GWTDisplay() {
+//		GWTDisplayClientBundle.INSTANCE.css().ensureInjected();
 		Display.instance(this);
 		container = new GWTContainer<Widget>(this) {
 			public void setComponent(Widget component) {
@@ -113,18 +117,18 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		runtime = new RuntimeTemplate(getBrowserName(), getBrowserVersion());
 		declareConstants();
 		GWTFormat.setUp();
-//		if (isChromeZoomActive()) {
-//			Log.instance().debug(
-//					"Zoom is active in Google Chrome: "
-//							+ Display.instance().width() + " inner-width vs "
-//							+ getOuterWidth() + " outer-width");
-//		}
+		// if (isChromeZoomActive()) {
+		// Log.instance().debug(
+		// "Zoom is active in Google Chrome: "
+		// + Display.instance().width() + " inner-width vs "
+		// + getOuterWidth() + " outer-width");
+		// }
 	}
 
-//	public static boolean isChromeZoomActive() {
-//		return Env.is(Env.CHROME)
-//				&& Display.instance().width() < (getOuterWidth() / 1.05);
-//	}
+	// public static boolean isChromeZoomActive() {
+	// return Env.is(Env.CHROME)
+	// && Display.instance().width() < (getOuterWidth() / 1.05);
+	// }
 
 	private void declareConstants() {
 
@@ -146,9 +150,9 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		}
 		if (isOpera())
 			Constants.put("ScrollTableWidgetImpl.ADD_TOP_PANEL_SPACING", true);
-//		if (isFirefox() || isOpera()) {
-//			Constants.put("MiniFilterPanel.MODIFIED_TITLE_ADD", true);
-//		}
+		// if (isFirefox() || isOpera()) {
+		// Constants.put("MiniFilterPanel.MODIFIED_TITLE_ADD", true);
+		// }
 		final boolean isChrome15Plus = isChrome()
 				&& GWTDisplay.getBrowserVersion() >= 15;
 		final String imagePath = Constants.get("GWTLazyTreeWidget.IMAGE_PATH",
