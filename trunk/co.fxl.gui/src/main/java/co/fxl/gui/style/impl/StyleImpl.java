@@ -48,68 +48,75 @@ class StyleImpl implements IStyle {
 
 	@Override
 	public IOptionMenu optionMenu() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public ITable table() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public ITree tree() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public INavigation navigation() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IRegister register() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IWindow window() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public ILogin login() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ILogin() {
+
+			@Override
+			public void label(ILabel text) {
+				text.font().color().white();
+			}
+
+			@Override
+			public void hyperlink(ILabel text) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void addDecoration(ILinearPanel<?> panel) {
+				panel.add().image().resource("user_white.png");
+//				panel.addSpace(2);
+			}
+
+		};
 	}
 
 	@Override
 	public IStyle background(IPanel<?> panel) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IStyle hyperlink(ILabel label) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IStyle side(ILinearPanel<?> panel) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IStyle activate(boolean activate) {
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 	@Override

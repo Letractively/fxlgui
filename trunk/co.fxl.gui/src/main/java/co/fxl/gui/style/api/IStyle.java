@@ -85,9 +85,11 @@ public interface IStyle {
 
 	public interface ILogin {
 
-		ILogin label(ILabel text);
+		void label(ILabel text);
 
-		ILogin hyperlink(ILabel text);
+		void hyperlink(ILabel text);
+
+		void addDecoration(ILinearPanel<?> panel);
 
 	}
 

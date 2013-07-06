@@ -21,6 +21,7 @@ package co.fxl.gui.form.impl;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextField;
@@ -32,6 +33,7 @@ import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.UserPanel;
 import co.fxl.gui.impl.UserPanel.Decorator;
+import co.fxl.gui.style.impl.Style;
 
 public class LoginWidgetImpl implements ILoginWidget {
 
@@ -69,7 +71,7 @@ public class LoginWidgetImpl implements ILoginWidget {
 				if (userText == null)
 					addLogin(panel);
 				else
-					addLogout(panel);
+					addLogout((ILinearPanel<?>) panel);
 			}
 
 			@Override
@@ -123,16 +125,16 @@ public class LoginWidgetImpl implements ILoginWidget {
 		loginID.addKeyListener(loginListener).enter().focus(true);
 	}
 
-	private void addLogout(IPanel<?> panel) {
-		ILabel loggedInAs = panel.add().label().text("Logged in as");
-		decorate(loggedInAs);
+	private void addLogout(ILinearPanel<?> panel) {
+		addLogInPrefix(panel);
 		ILabel loggedInHead = panel
 				.add()
 				.label()
 				.text(userText.length() < MAX_LENGTH_USER_NAME ? userText
 						: userText.substring(0, MAX_LENGTH_USER_NAME - 3)
 								+ "...");
-		decorate(loggedInHead).font().weight().bold();
+		loggedInHead.font().weight().bold();
+		decorate(loggedInHead);
 		ILabel text = panel.add().label().text("Logout");
 		hyperlink(text);
 		text.addClickListener(new LazyClickListener() {
@@ -146,13 +148,25 @@ public class LoginWidgetImpl implements ILoginWidget {
 		}).mouseLeft();
 	}
 
+	void addLogInPrefix(ILinearPanel<?> panel) {
+		if (Style.ENABLED) {
+			Style.instance().login().addDecoration(panel);
+			return;
+		}
+		ILabel loggedInAs = panel.add().label().text("Logged in as");
+		decorate(loggedInAs);
+	}
+
 	void hyperlink(ILabel text) {
 		text.hyperlink();
 	}
 
-	public static ILabel decorate(ILabel label) {
+	public static void decorate(ILabel label) {
+		if (Style.ENABLED) {
+			Style.instance().login().label(label);
+			return;
+		}
 		label.font().color().mix().gray().black();
-		return label;
 	}
 
 	public static void decorate(ITextField formField) {
