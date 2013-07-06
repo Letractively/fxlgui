@@ -103,7 +103,7 @@ class LogImpl implements ILog, IClickListener {
 	@Override
 	public ILog container(IContainer c) {
 		if (Style.ENABLED && Style.instance().login().useMore()) {
-			new ImageButton(c).imageResource("trace.png").text("Trace")
+			new ImageButton(c).imageResource("trace.png").text("Show Trace")
 					.addClickListener(this);
 		} else
 			c.label().text("Trace").hyperlink().addClickListener(this);
