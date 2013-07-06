@@ -151,13 +151,14 @@ public class LoginWidgetImpl implements ILoginWidget {
 		if (Style.ENABLED && Style.instance().login().useMore()) {
 			final IImage image = panel.add().image()
 					.resource(Style.instance().login().moreImage());
+			image.margin().right(10);
 			IClickListener clickListener = new IClickListener() {
 
 				@Override
 				public void onClick() {
 					IPopUp popUp = PopUp.showPopUp(true).width(140)
 							.autoHide(true);
-					popUp.offset(image.offsetX() - 140 + 12,
+					popUp.offset(image.offsetX() - 140 + 2,
 							image.offsetY() + 22);
 					IVerticalPanel p = popUp.container().panel().vertical()
 							.spacing(8);
