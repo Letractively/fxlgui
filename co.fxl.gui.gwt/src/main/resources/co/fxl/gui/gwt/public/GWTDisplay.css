@@ -1,8 +1,12 @@
 html {overflow-y: hidden; overflow: -moz-scrollbars-none; overflow-x: hidden; }
-body, table td, select {
-  font-family: Arial, Helvetica, sans-serif;
+body, table td, select, input {
+  font-family: 'Open Sans', Arial, sans-serif !important;
   font-size: 12px;
 }
+.gwt-TextArea-FXL { height: 100px; padding: 3px;
+  font-family: 'Open Sans', Arial, sans-serif !important}
+.gwt-TextBox-FXL { padding: 3px; 
+  font-family: 'Open Sans', Arial, sans-serif !important}
 html, body {
 	height:100%; 
 	width:100%;
@@ -47,6 +51,7 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=2, offY
 .font-family-courier { font-family: courier }
 .font-family-helvetica { font-family: helvetica }
 .font-family-lucinda { font-family: 'Lucinda Sans' }
+.font-family-openSans { font-family: 'Open Sans' }
 .font-underline { text-decoration: underline } 
 .color-white { color: white }
 .color-blue { color: blue }
@@ -113,7 +118,6 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=2, offY
 .gwt-PasswordTextBox { padding: 3px; }
 .gwt-Checkbox { color: black }
 .gwt-Combobox-FXL { height: 24px; }
-.gwt-TextArea-FXL { height: 100px; padding: 3px; }
 .gwt-RichTextArea { }
 .gwt-Label-FXL { white-space: nowrap; }
 .gwt-SuggestBoxPopup-FXL {

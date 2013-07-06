@@ -175,4 +175,8 @@ public interface IStyle {
 
 	IStyle activate(boolean activate);
 
+	int fontSize();
+
+	String fontFamily();
+
 }

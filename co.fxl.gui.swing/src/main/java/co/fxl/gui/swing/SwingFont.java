@@ -57,6 +57,11 @@ class SwingFont implements IFont {
 		}
 
 		@Override
+		public IFont openSans() {
+			return name("Open Sans");
+		}
+
+		@Override
 		public IFont timesNewRoman() {
 			return name("Times New Roman");
 		}

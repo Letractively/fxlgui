@@ -22,7 +22,7 @@ import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IFontElement.IFont.IFamily;
 
 class GWTFamily extends GWTWidgetStyle implements IFamily {
-	
+
 	// TODO Optimization: use font.style.setFontFamily(...)
 
 	private GWTFont font;
@@ -35,6 +35,12 @@ class GWTFamily extends GWTWidgetStyle implements IFamily {
 	@Override
 	public IFont arial() {
 		addStyleName("arial");
+		return font;
+	}
+
+	@Override
+	public IFont openSans() {
+		addStyleName("openSans");
 		return font;
 	}
 

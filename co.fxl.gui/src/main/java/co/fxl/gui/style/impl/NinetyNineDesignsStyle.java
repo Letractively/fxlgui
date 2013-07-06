@@ -151,4 +151,14 @@ class NinetyNineDesignsStyle implements IStyle {
 		};
 	}
 
+	@Override
+	public int fontSize() {
+		return 12;
+	}
+
+	@Override
+	public String fontFamily() {
+		return "'Open Sans', Arial, sans-serif";
+	}
+
 }

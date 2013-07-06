@@ -43,6 +43,8 @@ public interface IFontElement {
 			IFont garamond();
 
 			IFont calibri();
+
+			IFont openSans();
 		}
 
 		public interface IWeight {
