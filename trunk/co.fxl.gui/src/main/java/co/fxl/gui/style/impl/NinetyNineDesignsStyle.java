@@ -24,7 +24,7 @@ import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.style.api.IStyle;
 
-class StyleImpl implements IStyle {
+class NinetyNineDesignsStyle implements IStyle {
 
 	@Override
 	public ITop top() {
