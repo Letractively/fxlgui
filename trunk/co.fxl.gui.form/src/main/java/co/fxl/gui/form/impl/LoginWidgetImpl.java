@@ -158,10 +158,10 @@ public class LoginWidgetImpl implements ILoginWidget {
 				public void onClick() {
 					IPopUp popUp = PopUp.showPopUp(true).width(140)
 							.autoHide(true);
-					popUp.offset(image.offsetX() - 140 + 2,
+					popUp.offset(image.offsetX() - 140 + 12,
 							image.offsetY() + 22);
 					IVerticalPanel p = popUp.container().panel().vertical()
-							.spacing(8);
+							.spacing(8).addSpace(2);
 					boolean addLine = false;
 					for (Decorator d : decorators) {
 						if (d.isVisible()) {
