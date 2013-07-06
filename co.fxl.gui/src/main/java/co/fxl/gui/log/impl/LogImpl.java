@@ -44,7 +44,6 @@ class LogImpl implements ILog, IClickListener {
 
 		@Override
 		public ILog stop() {
-			assert !stopped;
 			stopped = true;
 			return debug(message + " executed", System.currentTimeMillis()
 					- start);
