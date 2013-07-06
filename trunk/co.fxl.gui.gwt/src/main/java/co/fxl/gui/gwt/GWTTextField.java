@@ -43,6 +43,7 @@ class GWTTextField extends GWTTextInput<TextBox, ITextField> implements
 		container.widget.addChangeHandler(this);
 		container.widget.addDropHandler(this);
 		container.widget.addKeyUpHandler(this);
+		container.widget.addStyleName("gwt-TextArea-FXL");
 	}
 
 	protected void notifyChange() {
