@@ -19,20 +19,23 @@
 package co.fxl.gui.style.gplus;
 
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.style.api.IStyle.ILogin;
 
 public class GPlusLogin implements ILogin {
 
 	@Override
-	public ILogin label(ILabel label) {
+	public void label(ILabel label) {
 		label.font().color().mix().gray().lightgray();
-		return this;
 	}
 
 	@Override
-	public ILogin hyperlink(ILabel label) {
+	public void hyperlink(ILabel label) {
 		label.font().weight().bold().color().white();
-		return this;
+	}
+
+	@Override
+	public void addDecoration(ILinearPanel<?> panel) {
 	}
 
 }
