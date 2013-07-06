@@ -70,6 +70,9 @@ public class UserPanel {
 
 	public UserPanel container(IContainer container) {
 		panel = container.panel().horizontal().spacing(4).align().end();
+		if (Style.ENABLED
+				&& Style.instance().applicationPanel().containsUserPanel())
+			panel.margin().right(10);
 		return this;
 	}
 
