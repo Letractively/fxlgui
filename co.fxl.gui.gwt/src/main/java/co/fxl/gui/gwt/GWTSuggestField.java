@@ -88,7 +88,6 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 		// assert container != null : "GWTTextField.new: container is null";
 		DefaultSuggestionDisplay sd = (DefaultSuggestionDisplay) container.widget
 				.getSuggestionDisplay();
-		sd.setPopupStyleName("gwt-SuggestBoxPopup-FXL");
 		container.widget.getTextBox().setStyleName("gwt-TextBox");
 		// defaultFont();
 		// oracle = (MultiWordSuggestOracle) ((SuggestBox) container.widget)

@@ -26,8 +26,8 @@ class GWTButton extends GWTElement<Button, IButton> implements IButton {
 
 	GWTButton(GWTContainer<Button> container) {
 		super(container);
-		addStyleName("gwt-Button-FXL");
-		font().pixel(12);
+//		addStyleName("gwt-Button-FXL");
+//		font().pixel(12);
 	}
 
 	@Override
