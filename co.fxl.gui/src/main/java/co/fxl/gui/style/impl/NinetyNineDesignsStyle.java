@@ -158,7 +158,7 @@ class NinetyNineDesignsStyle implements IStyle {
 
 	@Override
 	public String fontFamily() {
-		return "'Open Sans', Arial, sans-serif";
+		return "'Open Sans', Arial, Helvetica, sans-serif";
 	}
 
 }

@@ -104,7 +104,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		if (co.fxl.gui.style.impl.Style.ENABLED) {
 			return co.fxl.gui.style.impl.Style.instance().fontFamily();
 		}
-		return "Arial, sans-serif";
+		return "Arial, Helvetica, sans-serif";
 	}
 
 	private static String getFontDefinition() {
