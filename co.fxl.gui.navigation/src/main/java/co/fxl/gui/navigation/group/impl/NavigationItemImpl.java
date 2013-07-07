@@ -413,16 +413,12 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	private void showLabelAsActive() {
 		labelAsActive = true;
 		button.font().color().black();
+		border.color().gray();
+		widget.activeBackground(buttonPanel);
 		clickable(false);
-		showBackgroundActive();
 		button.visible(true);
 		refresh.visible(false);
 		widget.addSeparatorBorder();
-	}
-
-	void showBackgroundActive() {
-		border.color().gray();
-		widget.activeBackground(buttonPanel);
 	}
 
 	private void applyGradient(IColor color, int[] rgb, int[] rgb2) {

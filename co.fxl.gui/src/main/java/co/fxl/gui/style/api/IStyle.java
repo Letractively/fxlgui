@@ -64,10 +64,10 @@ public interface IStyle {
 
 	ILogin login();
 
+	IUserPanel userPanel();
+
 	int fontSize();
 
 	String fontFamily();
-
-	IUserPanel userPanel();
 
 }
