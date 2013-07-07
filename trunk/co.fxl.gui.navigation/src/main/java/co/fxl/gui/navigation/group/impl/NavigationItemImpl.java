@@ -117,13 +117,11 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	}
 
 	private String refreshInactive() {
-		return Style.instance().navigation().isActiveBackgroundDark() ? "loading_black.gif"
-				: "loading_white.gif";
+		return Style.instance().navigation().inactiveRefreshImage();
 	}
 
 	private String refreshActive() {
-		return !Style.instance().navigation().isActiveBackgroundDark() ? "loading_black.gif"
-				: "loading_white.gif";
+		return Style.instance().navigation().activeRefreshImage();
 	}
 
 	@Override
