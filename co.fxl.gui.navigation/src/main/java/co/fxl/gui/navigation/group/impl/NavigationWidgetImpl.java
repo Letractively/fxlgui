@@ -30,7 +30,6 @@ import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored;
-import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IFocusPanel;
@@ -59,6 +58,7 @@ import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.group.api.INavigationWidget;
 import co.fxl.gui.navigation.impl.TabDecoratorTemplate;
+import co.fxl.gui.style.impl.Style;
 
 public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		INavigationWidget, IServerListener {
@@ -83,10 +83,6 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	private ICardPanel history;
 	NavigationItemImpl active;
 	// private boolean first = true;
-	int[] colorActive = new int[] { 245, 245, 245 };
-	int[] colorBackground = new int[] { 199, 224, 241 };
-	int[] colorInactive = new int[] { 111, 111, 111 };
-	int[] colorInactiveGradient = new int[] { 63, 63, 63 };
 	private IVerticalPanel panel0;
 	private IVerticalPanel panel1;
 	private List<INavigationListener> listeners = new LinkedList<INavigationListener>();
@@ -363,9 +359,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	}
 
 	void activeBackground(IColored panel0) {
-		IColor color = panel0.color();
-		color.remove();
-		color.rgb(colorActive[0], colorActive[1], colorActive[2]);
+		Style.instance().navigation().activeBackground(panel0);
 	}
 
 	private void notifyListeners(final NavigationItemImpl activeItem,

@@ -26,13 +26,13 @@ import co.fxl.gui.style.api.IStyle;
 
 public class Style {
 
-	private static IStyle instance = new NinetyNineDesignsStyle();
+	private static IStyle instance;
 	private static Map<String, IStyle> styles = new HashMap<String, IStyle>();
 
 	static {
 		register(NinetyNineDesignsStyle.NAME, new NinetyNineDesignsStyle());
 		register(GrayScaleStyle.NAME, new GrayScaleStyle());
-		activate(NinetyNineDesignsStyle.NAME);
+		activate(GrayScaleStyle.NAME);
 	}
 
 	public static void register(String name, IStyle instance) {

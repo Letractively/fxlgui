@@ -20,13 +20,27 @@ package co.fxl.gui.style.api;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.impl.UserPanel.Decorator;
 
 public interface IStyle {
+
+	public interface INavigation {
+
+		void activeBackground(IColored panel);
+
+		void inactiveBackground(IHorizontalPanel buttonPanel);
+
+		void inactiveLabel(ILabel button);
+
+		void activeLabel(ILabel button);
+
+	}
 
 	public interface IUserPanel {
 
@@ -69,5 +83,7 @@ public interface IStyle {
 	int fontSize();
 
 	String fontFamily();
+
+	INavigation navigation();
 
 }

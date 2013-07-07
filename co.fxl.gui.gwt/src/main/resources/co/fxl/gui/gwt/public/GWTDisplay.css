@@ -2,10 +2,6 @@ html {overflow-y: hidden; overflow: -moz-scrollbars-none; overflow-x: hidden; }
 html, body {
 	height:100%; 
 	width:100%;
-	-webkit-font-smoothing: subpixel-antialiased !important;
-	-webkit-backface-visibility: hidden;
-	-moz-backface-visibility:    hidden;
-	-ms-backface-visibility:     hidden;
 }
 ::selection {
     background-color: transparent;

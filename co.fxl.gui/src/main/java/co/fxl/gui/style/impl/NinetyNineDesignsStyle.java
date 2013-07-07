@@ -20,6 +20,7 @@ package co.fxl.gui.style.impl;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -180,6 +181,40 @@ class NinetyNineDesignsStyle implements IStyle {
 	@Override
 	public String fontFamily() {
 		return "'Open Sans', Arial, Helvetica, sans-serif";
+	}
+
+	@Override
+	public INavigation navigation() {
+		return new INavigation() {
+
+			@Override
+			public void activeBackground(IColored panel) {
+
+				// TODO ...
+
+			}
+
+			@Override
+			public void inactiveBackground(IHorizontalPanel buttonPanel) {
+
+				// TODO ...
+
+			}
+
+			@Override
+			public void inactiveLabel(ILabel button) {
+
+				// TODO ...
+
+			}
+
+			@Override
+			public void activeLabel(ILabel button) {
+
+				// TODO ...
+
+			}
+		};
 	}
 
 }
