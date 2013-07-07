@@ -19,162 +19,55 @@
 package co.fxl.gui.style.api;
 
 import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.impl.UserPanel.Decorator;
 
 public interface IStyle {
 
-	public interface IApplicationPanel {
+	public interface IUserPanel {
 
-		void background(IPanel<?> background);
+		void background(IHorizontalPanel panel);
 
-		boolean containsUserPanel();
+		IClickable<?> profileButton(IPanel<?> panel);
+
+		IClickable<?> enterAdminButton(IPanel<?> panel);
+
+		IClickable<?> exitAdminButton(IPanel<?> panel);
+
+		IClickable<?> traceButton(IContainer c);
+
 	}
 
-	// public interface ITop {
-	//
-	// String imageResource();
-	//
-	// ITop panel(IPanel<?> panel);
-	//
-	// int spacing();
-	// }
+	public interface IApplicationPanel {
 
-	// public interface IOptionMenu {
-	//
-	// ILabel addCommand(IPanel<?> panel, String text);
-	//
-	// IOptionMenu label(ILabel label);
-	//
-	// IOptionMenu searchButton(IHorizontalPanel buttonPanel);
-	//
-	// }
+		ILinearPanel<?>[] create(IContainer c);
 
-	// public interface ITree {
-	//
-	// ITree panel(IPanel<?> panel);
-	//
-	// }
-
-	// public interface ITable {
-	//
-	// public interface IColumnSelection {
-	//
-	// IColumnSelection panel(IPanel<?> panel, boolean visible);
-	//
-	// IColumnSelection label(ILabel label, boolean visible);
-	// }
-	//
-	// ITable statusPanel(IPanel<?> panel);
-	//
-	// IColumnSelection columnSelection();
-	//
-	// ITable topPanel(IPanel<?> topPanel);
-	//
-	// }
-
-	// public interface IRegister {
-	//
-	// IRegister cardPanel(IPanel<?> panel);
-	//
-	// IRegister topPanel(IPanel<?> panel);
-	//
-	// }
+		void itemPanel(IHorizontalPanel p);
+	}
 
 	public interface ILogin {
 
-		void label(ILabel text);
+		boolean useMoreButton();
 
-		// void hyperlink(ILabel text);
+		void addSeparator(ILinearPanel<?> panel);
 
-		IClickable<?> addDecoration(ILinearPanel<?> panel);
-
-		String moreImage();
-
-		boolean useMore();
-
-		boolean addSeparators();
+		void logout(ILinearPanel<?> panel, String userName,
+				Decorator[] decorators, IClickListener listener);
 
 	}
 
-	// public interface IWindow {
-	//
-	// IWindow main(IPanel<?> panel, boolean addBorder, boolean plainContent);
-	//
-	// IWindow header(IPanel<?> panel, boolean isSide, boolean plainContent);
-	//
-	// IWindow footer(IPanel<?> panel);
-	//
-	// IWindow title(ILabel label, String title, boolean isSideWidget);
-	//
-	// IWindow navigationEntry(ILinearPanel<?> panel);
-	//
-	// IWindow viewEntry(ILinearPanel<?> panel, boolean first);
-	//
-	// IWindow button(IPanel<?> panel, boolean isSideWidget);
-	//
-	// ILabel addCommandLabel(ILinearPanel<?> panel, String text,
-	// boolean isSideWidget);
-	//
-	// boolean commandsOnTop();
-	//
-	// String moreImage();
-	// }
-
-	// public interface INavigation {
-	//
-	// public interface INavigationGroup {
-	//
-	// public interface INavigationItem {
-	//
-	// INavigation active(ILinearPanel<?> panel, ILabel label);
-	//
-	// INavigation inactive(ILinearPanel<?> panel, ILabel label);
-	//
-	// String image(String resource);
-	// }
-	//
-	// INavigation groupPanel(ILinearPanel<?> panel);
-	//
-	// INavigationItem item();
-	//
-	// INavigation mainPanel(IPanel<?> panel);
-	// }
-	//
-	// INavigation background(IColored color);
-	//
-	// INavigationGroup group();
-	// }
-
 	IApplicationPanel applicationPanel();
 
-	// ITop top();
-	//
-	// IOptionMenu optionMenu();
-	//
-	// ITable table();
-	//
-	// ITree tree();
-	//
-	// INavigation navigation();
-	//
-	// IRegister register();
-	//
-	// IWindow window();
-
 	ILogin login();
-
-	// IStyle background(IPanel<?> panel);
-
-	// IStyle hyperlink(ILabel label);
-
-	// IStyle side(ILinearPanel<?> panel);
-
-	IStyle activate(boolean activate);
 
 	int fontSize();
 
 	String fontFamily();
+
+	IUserPanel userPanel();
 
 }

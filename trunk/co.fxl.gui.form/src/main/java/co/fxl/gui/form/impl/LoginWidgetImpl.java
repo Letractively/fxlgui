@@ -18,27 +18,19 @@
  */
 package co.fxl.gui.form.impl;
 
-import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
-import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPasswordField;
-import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.form.api.ILoginWidget;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Dialog;
 import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Heights;
-import co.fxl.gui.impl.HyperlinkMouseOverListener;
-import co.fxl.gui.impl.ImageButton;
 import co.fxl.gui.impl.LazyClickListener;
-import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.UserPanel;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.style.impl.Style;
@@ -140,55 +132,10 @@ public class LoginWidgetImpl implements ILoginWidget {
 	}
 
 	private void addLogout(ILinearPanel<?> panel) {
-		IClickable<?> prefix = addLogInPrefix(panel);
-		ILabel loggedInHead = panel
-				.add()
-				.label()
-				.text(userText.length() < MAX_LENGTH_USER_NAME ? userText
-						: userText.substring(0, MAX_LENGTH_USER_NAME - 3)
-								+ "...");
-		loggedInHead.font().weight().bold();
-		decorate(loggedInHead);
-		if (Style.ENABLED && Style.instance().login().useMore()) {
-			loggedInHead.font().pixel(12);
-			new HyperlinkMouseOverListener(loggedInHead);
-			final IImage image = panel.add().image()
-					.resource(Style.instance().login().moreImage());
-			IClickListener clickListener = new IClickListener() {
-
-				@Override
-				public void onClick() {
-					final IPopUp popUp = PopUp.showPopUp(true).width(140)
-							.autoHide(true);
-					popUp.offset(image.offsetX() - 140 + 12,
-							image.offsetY() + 25);
-					IVerticalPanel p = popUp.container().panel().vertical()
-							.spacing(8);// .addSpace(2);
-					p.margin().top(2);
-					boolean addLine = false;
-					for (Decorator d : decorators) {
-						if (d.isVisible()) {
-							d.decorate(p.add().panel().horizontal());
-							addLine = true;
-						}
-					}
-					if (addLine)
-						p.add().line();
-					ImageButton ib = new ImageButton(p.add());
-					ib.imageResource("logout.png").text("Logout")
-							.addClickListener(logoutListener());
-					ib.label().hyperlink();
-					popUp.visible(true);
-				}
-			};
-			prefix.addClickListener(clickListener);
-			loggedInHead.addClickListener(clickListener);
-			image.addClickListener(clickListener);
-			return;
-		}
-		ILabel text = panel.add().label().text("Logout");
-		hyperlink(text);
-		text.addClickListener(logoutListener()).mouseLeft();
+		String userName = userText.length() < MAX_LENGTH_USER_NAME ? userText
+				: userText.substring(0, MAX_LENGTH_USER_NAME - 3) + "...";
+		Style.instance().login()
+				.logout(panel, userName, decorators, logoutListener());
 	}
 
 	LazyClickListener logoutListener() {
@@ -203,24 +150,11 @@ public class LoginWidgetImpl implements ILoginWidget {
 		};
 	}
 
-	IClickable<?> addLogInPrefix(ILinearPanel<?> panel) {
-		if (Style.ENABLED) {
-			return Style.instance().login().addDecoration(panel);
-		}
-		ILabel loggedInAs = panel.add().label().text("Logged in as");
-		decorate(loggedInAs);
-		return loggedInAs;
-	}
-
 	void hyperlink(ILabel text) {
 		text.hyperlink();
 	}
 
 	public static void decorate(ILabel label) {
-		if (Style.ENABLED) {
-			Style.instance().login().label(label);
-			return;
-		}
 		label.font().color().mix().gray().black();
 	}
 

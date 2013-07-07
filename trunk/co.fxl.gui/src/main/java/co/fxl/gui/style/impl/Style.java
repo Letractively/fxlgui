@@ -21,21 +21,17 @@ package co.fxl.gui.style.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.fxl.gui.impl.Display;
 import co.fxl.gui.style.api.IStyle;
 
 public class Style {
 
-	public static boolean ENABLED = true;
-	private static IStyle instance = new NinetyNineDesignsStyle();
+	private static IStyle instance = new GrayScaleStyle();
 	private static Map<String, IStyle> styles = new HashMap<String, IStyle>();
-	private static String defaultStyle = "DEFAULT";
 
-	public static void nameDefault(String name) {
-		defaultStyle = name;
-	}
-
-	public static boolean isDefined(String name) {
-		return styles.containsKey(name);
+	static {
+		register(NinetyNineDesignsStyle.NAME, new NinetyNineDesignsStyle());
+		register(GrayScaleStyle.NAME, new GrayScaleStyle());
 	}
 
 	public static void register(String name, IStyle instance) {
@@ -43,16 +39,8 @@ public class Style {
 	}
 
 	public static void activate(String name) {
-		if (instance != null)
-			instance.activate(false);
-		if (name == null || name.equals(defaultStyle)) {
-			ENABLED = false;
-			instance = null;
-		} else {
-			ENABLED = true;
-			instance = styles.get(name);
-			instance.activate(true);
-		}
+		instance = styles.get(name);
+		Display.instance().font(instance.fontFamily(), instance.fontSize());
 	}
 
 	public static IStyle instance() {

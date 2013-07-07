@@ -93,33 +93,9 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		lastClickY = nativeEvent.getClientY();
 	}
 
-	public static int getFontSize() {
-		if (co.fxl.gui.style.impl.Style.ENABLED) {
-			return co.fxl.gui.style.impl.Style.instance().fontSize();
-		}
-		return 12;
-	}
-
-	public static String getFontFamily() {
-		if (co.fxl.gui.style.impl.Style.ENABLED) {
-			return co.fxl.gui.style.impl.Style.instance().fontFamily();
-		}
-		return "Arial, Helvetica, sans-serif";
-	}
-
-	private static String getFontDefinition() {
-		return "font-family: " + getFontFamily() + " !important; font-size: "
-				+ getFontSize() + "px;";
-	}
-
 	private GWTDisplay() {
 		// GWTDisplayClientBundle.INSTANCE.css().ensureInjected();
 		Display.instance(this);
-		addStyle("body, table td, select, input { " + getFontDefinition() + "}");
-		addStyle(".gwt-TextArea-FXL { height: 100px; padding: 3px; "
-				+ getFontDefinition() + "}");
-		addStyle(".gwt-TextBox-FXL { padding: 3px; " + getFontDefinition()
-				+ "}");
 		container = new GWTContainer<Widget>(this) {
 			public void setComponent(Widget component) {
 				widget = component;
@@ -565,5 +541,16 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 		// TODO ...
 
+	}
+
+	@Override
+	public IDisplay font(String fontFamily, int fontSize) {
+		String font = "font-family: " + fontFamily + " !important; font-size: "
+				+ fontSize + "px;";
+		addStyle("body, table td, select, input { " + font + "}");
+		addStyle(".gwt-TextArea-FXL { height: 100px; padding: 3px; " + font
+				+ "}");
+		addStyle(".gwt-TextBox-FXL { padding: 3px; " + font + "}");
+		return this;
 	}
 }
