@@ -20,6 +20,8 @@ package co.fxl.gui.style.impl;
 
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IColored;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
@@ -118,6 +120,57 @@ public class GrayScaleStyle implements IStyle {
 			@Override
 			public IClickable<?> traceButton(IContainer c) {
 				return c.label().text("Trace").hyperlink();
+			}
+		};
+	}
+
+	private static int[] colorActive = new int[] { 245, 245, 245 };
+	// private static int[] colorBackground = new int[] { 199, 224, 241 };
+	private static int[] colorInactive = new int[] { 111, 111, 111 };
+	private static int[] colorInactiveGradient = new int[] { 63, 63, 63 };
+
+	@Override
+	public INavigation navigation() {
+		return new INavigation() {
+
+			@Override
+			public void activeBackground(IColored panel) {
+				IColor color = panel.color();
+				color.remove();
+				color.rgb(colorActive[0], colorActive[1], colorActive[2]);
+
+			}
+
+			@Override
+			public void inactiveBackground(IHorizontalPanel buttonPanel) {
+				buttonPanel
+						.border()
+						.color()
+						.mix()
+						.rgb(colorInactive[0], colorInactive[1],
+								colorInactive[2])
+						.rgb(colorInactiveGradient[0],
+								colorInactiveGradient[1],
+								colorInactiveGradient[2]);
+				buttonPanel
+						.color()
+						.rgb(colorInactive[0], colorInactive[1],
+								colorInactive[2])
+						.gradient()
+						.vertical()
+						.rgb(colorInactiveGradient[0],
+								colorInactiveGradient[1],
+								colorInactiveGradient[2]);
+			}
+
+			@Override
+			public void inactiveLabel(ILabel button) {
+				button.font().color().white();
+			}
+
+			@Override
+			public void activeLabel(ILabel button) {
+				button.font().color().black();
 			}
 		};
 	}

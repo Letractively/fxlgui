@@ -18,10 +18,8 @@
  */
 package co.fxl.gui.navigation.group.impl;
 
-import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable.IClickListener;
-import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -46,6 +44,7 @@ import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.navigation.api.ITabDecorator;
 import co.fxl.gui.navigation.group.api.INavigationItem;
 import co.fxl.gui.navigation.impl.BufferedPanelImpl;
+import co.fxl.gui.style.impl.Style;
 
 public class NavigationItemImpl extends ResizableWidgetTemplate implements
 		INavigationItem, IClickListener {
@@ -69,13 +68,10 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	// private List<INavigationListener> listeners = new
 	// LinkedList<INavigationListener>();
 	private IImage refresh;
-	private IBorder border;
 	private boolean enabled = true;
 	private boolean labelAsActive;
 	private boolean isMoreTab;
 	IFocusPanel focusPanel;
-	int[] colorInactive;
-	private int[] colorInactiveGradient;
 	private IContentPage flipPage;
 	// private boolean isFirst = true;
 	private IVerticalPanel cached;
@@ -86,8 +82,6 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 		this.group = group;
 		widget = group.widget;
 		itemPanel = group.itemPanel;
-		colorInactive = group.colorInactive;
-		colorInactiveGradient = group.colorInactiveGradient;
 		lastWidth = Shell.instance().width(group.itemPanel);
 		lastHeight = Shell.instance().height(group.itemPanel);
 	}
@@ -100,11 +94,10 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 			buttonPanel = basicPanel.add().panel().horizontal();
 			buttonPanel.spacing(5).align().center();
 			buttonPanel.addSpace(2);
-			border = buttonPanel.border().width(1).style().noBottom();
 			IHorizontalPanel subPanel = buttonPanel.add().panel().horizontal();
 			button = subPanel.add().label();
 			new HyperlinkMouseOverListener(button);
-			button.font().pixel(14).weight().bold().color().white();
+			button.font().pixel(14).weight().bold();
 			LazyClickListener clickListener = new LazyClickListener() {
 				@Override
 				protected void onAllowedClick() {
@@ -142,7 +135,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 		button.visible(true);
 		buttonPanel.spacing(5);
 		refresh.visible(false);
-		button.font().color().white();
+		Style.instance().navigation().inactiveLabel(button);
 		showBackgroundInactive();
 		// if (notify)
 		// for (INavigationListener l : listeners)
@@ -151,12 +144,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 
 	void showBackgroundInactive() {
 		clickable(true);
-		border.color()
-				.mix()
-				.rgb(colorInactive[0], colorInactive[1], colorInactive[2])
-				.rgb(colorInactiveGradient[0], colorInactiveGradient[1],
-						colorInactiveGradient[2]);
-		applyGradient(buttonPanel.color(), colorInactive, colorInactiveGradient);
+		Style.instance().navigation().inactiveBackground(buttonPanel);
 	}
 
 	@Override
@@ -169,7 +157,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	}
 
 	void showBackgroundNeutral() {
-		border.remove();
+		buttonPanel.border().remove();
 		buttonPanel.color().remove();
 		refreshResource("more_black.png");
 	}
@@ -211,7 +199,6 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 			clickable(false);
 			popUp = PopUp.showPopUp().autoHide(true);
 			popUp.border().remove();
-			// popUp.border().color().gray();// .mix().white().lightgray();
 			popUp.border().style().shadow();
 			popUp.width(280);
 			popUp.addVisibleListener(new IUpdateListener<Boolean>() {
@@ -230,7 +217,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 
 						@Override
 						public void onSuccess(Void result) {
-							border.color().gray();
+							buttonPanel.border().color().gray();
 							// border.style().shadow();
 							buttonPanel.color().remove();
 							buttonPanel.color().white();
@@ -412,18 +399,13 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 
 	private void showLabelAsActive() {
 		labelAsActive = true;
-		button.font().color().black();
-		border.color().gray();
+		Style.instance().navigation().activeLabel(button);
+		buttonPanel.border().color().gray();
 		widget.activeBackground(buttonPanel);
 		clickable(false);
 		button.visible(true);
 		refresh.visible(false);
 		widget.addSeparatorBorder();
-	}
-
-	private void applyGradient(IColor color, int[] rgb, int[] rgb2) {
-		color.rgb(rgb[0], rgb[1], rgb[2]).gradient().vertical()
-				.rgb(rgb2[0], rgb2[1], rgb2[2]);
 	}
 
 	@Override
@@ -607,13 +589,6 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 
 	@Override
 	public void showTitleAsEmpty(boolean empty) {
-	}
-
-	@Override
-	public INavigationItem colorInactive(int[] inactive, int[] inactiveGradient) {
-		colorInactive = inactive;
-		colorInactiveGradient = inactiveGradient;
-		return this;
 	}
 
 	@Override

@@ -564,6 +564,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		addStyle(".gwt-TextArea-FXL { height: 100px; padding: 3px; " + font
 				+ "}");
 		addStyle(".gwt-TextBox-FXL { padding: 3px; " + font + "}");
+		if (fontFamily.contains("'Open Sans'"))
+			addStyle("html, body { -webkit-font-smoothing: subpixel-antialiased !important; -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -ms-backface-visibility:     hidden; }");
 		return this;
 	}
 }
