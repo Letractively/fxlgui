@@ -42,7 +42,11 @@ public interface IStyle {
 
 		void activeLabel(ILabel button);
 
-		boolean isActiveBackgroundDark();
+		String activeRefreshImage();
+
+		String inactiveRefreshImage();
+
+		boolean hasSegmentedBorder();
 
 	}
 

@@ -182,8 +182,18 @@ public class GrayScaleStyle implements IStyle {
 			}
 
 			@Override
-			public boolean isActiveBackgroundDark() {
-				return false;
+			public boolean hasSegmentedBorder() {
+				return true;
+			}
+
+			@Override
+			public String activeRefreshImage() {
+				return "loading_black.gif";
+			}
+
+			@Override
+			public String inactiveRefreshImage() {
+				return "loading_white.gif";
 			}
 		};
 	}

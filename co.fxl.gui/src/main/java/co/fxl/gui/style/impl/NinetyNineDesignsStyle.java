@@ -216,8 +216,13 @@ class NinetyNineDesignsStyle implements IStyle {
 			}
 
 			@Override
-			public boolean isActiveBackgroundDark() {
-				return true;
+			public String activeRefreshImage() {
+				return "loading_white.gif";
+			}
+
+			@Override
+			public String inactiveRefreshImage() {
+				return "loading_black.gif";
 			}
 
 			@Override
@@ -225,6 +230,11 @@ class NinetyNineDesignsStyle implements IStyle {
 
 				// TODO ...
 
+			}
+
+			@Override
+			public boolean hasSegmentedBorder() {
+				return false;
 			}
 		};
 	}

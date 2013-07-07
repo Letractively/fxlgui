@@ -160,7 +160,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		int width = 0;
 		leftPartBorder.visible(hasActiveItem);
 		middlePartBorder.visible(hasActiveItem);
-		if (hasActiveItem) {
+		if (hasActiveItem && Style.instance().navigation().hasSegmentedBorder()) {
 			int scrollOffset = Shell.instance().scrollOffset();
 			offsetX = scrollOffset + active.buttonPanel.offsetX() + 1;
 			leftPartBorder.size(offsetX, 1);
