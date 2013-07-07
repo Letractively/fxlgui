@@ -99,4 +99,6 @@ public interface IStyle {
 
 	INavigation navigation();
 
+	String logo();
+
 }

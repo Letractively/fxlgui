@@ -104,7 +104,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	private Set<Integer> serverCallCounter = new HashSet<Integer>();
 	private IVerticalPanel top;
 	private IImage configureIcon;
-	private IGridPanel separatorBorder;
+	private IPanel<?> separatorBorder;
 	private IPanel<?> leftPartBorder;
 	private IPanel<?> middlePartBorder;
 	private IPanel<?> rightPartBorder;
@@ -154,45 +154,45 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	void addSeparatorBorder() {
 		if (!ADD_SEPARATORBORDER)
 			return;
+		if (!Style.instance().navigation().hasSegmentedBorder()) {
+			borderTop.border().style().bottom().color().gray();
+			return;
+		}
 		setUpSeparatorBorder();
 		boolean hasActiveItem = active != null && active.buttonPanel != null;
 		int offsetX = 0;
 		int width = 0;
-		boolean hasSegments = hasActiveItem
-				&& Style.instance().navigation().hasSegmentedBorder();
-		leftPartBorder.visible(hasSegments);
-		middlePartBorder.visible(hasSegments);
-		int w = Shell.instance().width(mainPanel) - width - offsetX;
-		if (hasSegments) {
+		leftPartBorder.visible(hasActiveItem);
+		middlePartBorder.visible(hasActiveItem);
+		if (hasActiveItem) {
 			int scrollOffset = Shell.instance().scrollOffset();
 			offsetX = scrollOffset + active.buttonPanel.offsetX() + 1;
 			leftPartBorder.size(offsetX, 1);
 			width = active.buttonPanel.width() - 2;
 			middlePartBorder.size(width, 1);
-			hasSegments = true;
-		} else
-			w--;
-		rightPartBorder.size(w, 1);
+		}
+		rightPartBorder.size(Shell.instance().width(mainPanel) - width
+				- offsetX - (hasActiveItem ? 0 : 1), 1);
 	}
 
-	void setUpSeparatorBorder() {
+	private void setUpSeparatorBorder() {
 		if (separatorBorder != null)
 			return;
 		separatorBorder = borderTop.clear().add().panel().grid().spacing(0)
 				.height(1);
 		int c = 0;
-		IGridCell indentBorder = separatorBorder.cell(c++, 0);
+		IGridCell indentBorder = ((IGridPanel) separatorBorder).cell(c++, 0);
 		leftPartBorder = indentBorder.panel().horizontal().visible(false);
 		HorizontalScalingPanel.addDummyIE(leftPartBorder);
 		leftPartBorder.color().gray();
-		IGridCell activeBorder = separatorBorder.cell(c++, 0);
+		IGridCell activeBorder = ((IGridPanel) separatorBorder).cell(c++, 0);
 		middlePartBorder = activeBorder.panel().horizontal().visible(false);
 		HorizontalScalingPanel.addDummyIE(middlePartBorder);
 		activeBackground(middlePartBorder);
-		rightPartBorder = separatorBorder.cell(c, 0).panel().horizontal()
-				.size(Shell.instance().width(mainPanel), 1);
+		rightPartBorder = ((IGridPanel) separatorBorder).cell(c, 0).panel()
+				.horizontal().size(Shell.instance().width(mainPanel), 1);
 		HorizontalScalingPanel.addDummyIE(rightPartBorder);
-		separatorBorder.column(2).expand();
+		((IGridPanel) separatorBorder).column(2).expand();
 		rightPartBorder.color().gray();
 	}
 

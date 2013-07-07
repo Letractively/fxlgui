@@ -248,4 +248,9 @@ class NinetyNineDesignsStyle implements IStyle {
 		};
 	}
 
+	@Override
+	public String logo() {
+		return "xoricon.png";
+	}
+
 }
