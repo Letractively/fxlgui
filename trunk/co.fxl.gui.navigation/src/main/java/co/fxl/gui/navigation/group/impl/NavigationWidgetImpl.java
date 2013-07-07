@@ -112,20 +112,29 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	private List<Action> actions = new LinkedList<Action>();
 	private boolean showConfigure = true;
 	boolean isLoading;
+	private IContainer layout;
+	private int externalTopPanelIndent;
 
 	public NavigationWidgetImpl(IContainer layout) {
+		this.layout = layout;
+	}
+
+	@Override
+	public INavigationWidget topPanel(IHorizontalPanel panel) {
+		if (panel != null)
+			externalTopPanelIndent = Style.instance().navigation().offsetX();
 		mainPanel = layout.panel().dock();
-		focus = mainPanel.top().panel().focus();
+		focus = (panel == null ? mainPanel.top() : panel.add()).panel().focus();
 		top = focus.add().panel().vertical();
 		hPanel = top.add().panel().grid();
 		borderTop = top.add().panel().vertical();
 		addSeparatorBorder();
-		hPanel.color().rgb(235, 235, 235).gradient().fallback(235, 235, 235)
-				.vertical().rgb(211, 211, 211);
+		Style.instance().navigation().backgroundRegisters(hPanel);
 		masterPanel = hPanel.cell(0, 0).panel().horizontal();
 		navigationPanel = masterPanel.add().panel().horizontal();
 		navigationPanel.addSpace(10);
 		history = mainPanel.center().panel().card();
+		Style.instance().navigation().backgroundCards(history);
 		panel0 = history.add().panel().vertical();
 		flipPage = new DoubleContentBuffer(panel0.add());
 		activeBackground(flipPage);
@@ -149,13 +158,13 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 				clearCache();
 			}
 		};
+		return this;
 	}
 
 	void addSeparatorBorder() {
 		if (!ADD_SEPARATORBORDER)
 			return;
 		if (!Style.instance().navigation().hasSegmentedBorder()) {
-			borderTop.border().style().bottom().color().gray();
 			return;
 		}
 		setUpSeparatorBorder();
@@ -171,8 +180,8 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			width = active.buttonPanel.width() - 2;
 			middlePartBorder.size(width, 1);
 		}
-		rightPartBorder.size(Shell.instance().width(mainPanel) - width
-				- offsetX - (hasActiveItem ? 0 : 1), 1);
+		rightPartBorder.size(width() - width - offsetX
+				- (hasActiveItem ? 0 : 1), 1);
 	}
 
 	private void setUpSeparatorBorder() {
@@ -190,7 +199,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		HorizontalScalingPanel.addDummyIE(middlePartBorder);
 		activeBackground(middlePartBorder);
 		rightPartBorder = ((IGridPanel) separatorBorder).cell(c, 0).panel()
-				.horizontal().size(Shell.instance().width(mainPanel), 1);
+				.horizontal().size(width(), 1);
 		HorizontalScalingPanel.addDummyIE(rightPartBorder);
 		((IGridPanel) separatorBorder).column(2).expand();
 		rightPartBorder.color().gray();
@@ -316,8 +325,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			return false;
 		if (holdUpdate)
 			return false;
-		if (!alwaysAdjust
-				&& Shell.instance().width(mainPanel) > masterPanel.width())
+		if (!alwaysAdjust && width() > masterPanel.width())
 			return false;
 		for (NavigationGroupImpl g : groups)
 			for (NavigationItemImpl i : g.items)
@@ -325,11 +333,10 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		moreGroup.visible(true);
 		boolean hidden = false;
 		List<NavigationItemImpl> candidates = new LinkedList<NavigationItemImpl>();
-		for (int i = groups.size() - 1; i >= 0
-				&& Shell.instance().width(mainPanel) < masterPanel.width(); i--) {
+		for (int i = groups.size() - 1; i >= 0 && width() < masterPanel.width(); i--) {
 			NavigationGroupImpl g = groups.get(i);
 			for (int j = g.items.size() - 1; j >= 0
-					&& Shell.instance().width(mainPanel) < masterPanel.width(); j--) {
+					&& width() < masterPanel.width(); j--) {
 				NavigationItemImpl ni = g.items.get(j);
 				if (ni == active)
 					continue;
@@ -341,8 +348,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 				hidden = true;
 			}
 		}
-		for (int i = 0; i < candidates.size()
-				&& Shell.instance().width(mainPanel) < masterPanel.width(); i++) {
+		for (int i = 0; i < candidates.size() && width() < masterPanel.width(); i++) {
 			candidates.get(i).displayed(false);
 			hidden = true;
 		}
@@ -353,6 +359,11 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			moreItem.popUp.visible(false);
 		addSeparatorBorder();
 		return true;
+	}
+
+	int width() {
+		int width = Shell.instance().width(mainPanel);
+		return width - externalTopPanelIndent;
 	}
 
 	void active(NavigationItemImpl item, boolean viaClick,

@@ -20,6 +20,7 @@ package co.fxl.gui.navigation.group.api;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.impl.IResizableWidget;
 import co.fxl.gui.navigation.api.ITabWidget;
 
@@ -67,4 +68,6 @@ public interface INavigationWidget extends
 			IConstraint constraint);
 
 	INavigationWidget clearConfigureActions();
+
+	INavigationWidget topPanel(IHorizontalPanel panel);
 }

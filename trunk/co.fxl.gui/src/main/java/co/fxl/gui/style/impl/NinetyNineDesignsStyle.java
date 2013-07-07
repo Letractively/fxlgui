@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.style.impl;
 
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored;
@@ -117,6 +118,11 @@ class NinetyNineDesignsStyle implements IStyle {
 						.end().panel().horizontal().align().end();
 				end.padding().top(1);
 				return new ILinearPanel<?>[] { v, end };
+			}
+
+			@Override
+			public int marginLeft() {
+				return -4;
 			}
 
 			@Override
@@ -245,12 +251,46 @@ class NinetyNineDesignsStyle implements IStyle {
 			public void group(ILabel header) {
 				header.font().color().gray();
 			}
+
+			@Override
+			public void backgroundRegisters(IPanel<?> panel) {
+				panel.margin().top(30).bottom(30);
+			}
+
+			@Override
+			public void backgroundCards(IPanel<?> history) {
+				IBorder b = history.border();
+				b.style().top();
+				b.color().lightgray();
+			}
+
+			@Override
+			public int offsetX() {
+				return 257;
+			}
 		};
 	}
 
 	@Override
-	public String logo() {
-		return "xoricon.png";
+	public ILogoPanel logoPanel() {
+		return new ILogoPanel() {
+
+			@Override
+			public String resource() {
+				return "xoricon_requirements.png";
+			}
+
+			@Override
+			public void background(IPanel<?> panel) {
+				panel.color().rgb(253, 254, 254).gradient()
+						.fallback(242, 246, 249).vertical().rgb(247, 250, 251);
+			}
+
+			@Override
+			public int marginLeft() {
+				return 6;
+			}
+		};
 	}
 
 }

@@ -53,6 +53,11 @@ public class GrayScaleStyle implements IStyle {
 				p.border().style().left().style().right().color()
 						.rgb(45, 45, 45);
 			}
+
+			@Override
+			public int marginLeft() {
+				return 6;
+			}
 		};
 	}
 
@@ -211,12 +216,45 @@ public class GrayScaleStyle implements IStyle {
 			public boolean isActiveMoreDark() {
 				return false;
 			}
+
+			@Override
+			public void backgroundRegisters(IPanel<?> panel) {
+				panel.color().rgb(235, 235, 235).gradient()
+						.fallback(235, 235, 235).vertical().rgb(211, 211, 211);
+
+			}
+
+			@Override
+			public void backgroundCards(IPanel<?> history) {
+			}
+
+			@Override
+			public int offsetX() {
+				return 0;
+			}
 		};
 	}
 
 	@Override
-	public String logo() {
-		return "logo_xoricon.png";
+	public ILogoPanel logoPanel() {
+		return new ILogoPanel() {
+
+			@Override
+			public String resource() {
+				return "logo_xoricon.png";
+			}
+
+			@Override
+			public void background(IPanel<?> panel) {
+				panel.color().rgb(249, 249, 249).gradient()
+						.fallback(235, 235, 235).vertical().rgb(235, 235, 235);
+			}
+
+			@Override
+			public int marginLeft() {
+				return 0;
+			}
+		};
 	}
 
 }
