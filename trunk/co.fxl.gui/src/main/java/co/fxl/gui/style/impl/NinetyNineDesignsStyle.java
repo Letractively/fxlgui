@@ -26,56 +26,56 @@ import co.fxl.gui.style.api.IStyle;
 
 class NinetyNineDesignsStyle implements IStyle {
 
-	@Override
-	public ITop top() {
-		return new ITop() {
+	// @Override
+	// public ITop top() {
+	// return new ITop() {
+	//
+	// @Override
+	// public String imageResource() {
+	// return null;
+	// }
+	//
+	// @Override
+	// public ITop panel(IPanel<?> panel) {
+	// return this;
+	// }
+	//
+	// @Override
+	// public int spacing() {
+	// return 0;
+	// }
+	// };
+	// }
 
-			@Override
-			public String imageResource() {
-				return null;
-			}
-
-			@Override
-			public ITop panel(IPanel<?> panel) {
-				return this;
-			}
-
-			@Override
-			public int spacing() {
-				return 0;
-			}
-		};
-	}
-
-	@Override
-	public IOptionMenu optionMenu() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public ITable table() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public ITree tree() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public INavigation navigation() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public IRegister register() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public IWindow window() {
-		throw new UnsupportedOperationException();
-	}
+	// @Override
+	// public IOptionMenu optionMenu() {
+	// throw new UnsupportedOperationException();
+	// }
+	//
+	// @Override
+	// public ITable table() {
+	// throw new UnsupportedOperationException();
+	// }
+	//
+	// @Override
+	// public ITree tree() {
+	// throw new UnsupportedOperationException();
+	// }
+	//
+	// @Override
+	// public INavigation navigation() {
+	// throw new UnsupportedOperationException();
+	// }
+	//
+	// @Override
+	// public IRegister register() {
+	// throw new UnsupportedOperationException();
+	// }
+	//
+	// @Override
+	// public IWindow window() {
+	// throw new UnsupportedOperationException();
+	// }
 
 	@Override
 	public ILogin login() {
@@ -86,10 +86,10 @@ class NinetyNineDesignsStyle implements IStyle {
 				text.font().color().white();
 			}
 
-			@Override
-			public void hyperlink(ILabel text) {
-				throw new UnsupportedOperationException();
-			}
+			// @Override
+			// public void hyperlink(ILabel text) {
+			// throw new UnsupportedOperationException();
+			// }
 
 			@Override
 			public IClickable<?> addDecoration(ILinearPanel<?> panel) {
@@ -110,24 +110,23 @@ class NinetyNineDesignsStyle implements IStyle {
 			public boolean addSeparators() {
 				return false;
 			}
-
 		};
 	}
 
-	@Override
-	public IStyle background(IPanel<?> panel) {
-		throw new UnsupportedOperationException();
-	}
+	// @Override
+	// public IStyle background(IPanel<?> panel) {
+	// throw new UnsupportedOperationException();
+	// }
 
-	@Override
-	public IStyle hyperlink(ILabel label) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public IStyle side(ILinearPanel<?> panel) {
-		throw new UnsupportedOperationException();
-	}
+	// @Override
+	// public IStyle hyperlink(ILabel label) {
+	// throw new UnsupportedOperationException();
+	// }
+	//
+	// @Override
+	// public IStyle side(ILinearPanel<?> panel) {
+	// throw new UnsupportedOperationException();
+	// }
 
 	@Override
 	public IStyle activate(boolean activate) {

@@ -19,8 +19,6 @@
 package co.fxl.gui.style.api;
 
 import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.IColored;
-import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
@@ -34,61 +32,61 @@ public interface IStyle {
 		boolean containsUserPanel();
 	}
 
-	public interface ITop {
+	// public interface ITop {
+	//
+	// String imageResource();
+	//
+	// ITop panel(IPanel<?> panel);
+	//
+	// int spacing();
+	// }
 
-		String imageResource();
+	// public interface IOptionMenu {
+	//
+	// ILabel addCommand(IPanel<?> panel, String text);
+	//
+	// IOptionMenu label(ILabel label);
+	//
+	// IOptionMenu searchButton(IHorizontalPanel buttonPanel);
+	//
+	// }
 
-		ITop panel(IPanel<?> panel);
+	// public interface ITree {
+	//
+	// ITree panel(IPanel<?> panel);
+	//
+	// }
 
-		int spacing();
-	}
+	// public interface ITable {
+	//
+	// public interface IColumnSelection {
+	//
+	// IColumnSelection panel(IPanel<?> panel, boolean visible);
+	//
+	// IColumnSelection label(ILabel label, boolean visible);
+	// }
+	//
+	// ITable statusPanel(IPanel<?> panel);
+	//
+	// IColumnSelection columnSelection();
+	//
+	// ITable topPanel(IPanel<?> topPanel);
+	//
+	// }
 
-	public interface IOptionMenu {
-
-		ILabel addCommand(IPanel<?> panel, String text);
-
-		IOptionMenu label(ILabel label);
-
-		IOptionMenu searchButton(IHorizontalPanel buttonPanel);
-
-	}
-
-	public interface ITree {
-
-		ITree panel(IPanel<?> panel);
-
-	}
-
-	public interface ITable {
-
-		public interface IColumnSelection {
-
-			IColumnSelection panel(IPanel<?> panel, boolean visible);
-
-			IColumnSelection label(ILabel label, boolean visible);
-		}
-
-		ITable statusPanel(IPanel<?> panel);
-
-		IColumnSelection columnSelection();
-
-		ITable topPanel(IPanel<?> topPanel);
-
-	}
-
-	public interface IRegister {
-
-		IRegister cardPanel(IPanel<?> panel);
-
-		IRegister topPanel(IPanel<?> panel);
-
-	}
+	// public interface IRegister {
+	//
+	// IRegister cardPanel(IPanel<?> panel);
+	//
+	// IRegister topPanel(IPanel<?> panel);
+	//
+	// }
 
 	public interface ILogin {
 
 		void label(ILabel text);
 
-		void hyperlink(ILabel text);
+		// void hyperlink(ILabel text);
 
 		IClickable<?> addDecoration(ILinearPanel<?> panel);
 
@@ -100,78 +98,78 @@ public interface IStyle {
 
 	}
 
-	public interface IWindow {
+	// public interface IWindow {
+	//
+	// IWindow main(IPanel<?> panel, boolean addBorder, boolean plainContent);
+	//
+	// IWindow header(IPanel<?> panel, boolean isSide, boolean plainContent);
+	//
+	// IWindow footer(IPanel<?> panel);
+	//
+	// IWindow title(ILabel label, String title, boolean isSideWidget);
+	//
+	// IWindow navigationEntry(ILinearPanel<?> panel);
+	//
+	// IWindow viewEntry(ILinearPanel<?> panel, boolean first);
+	//
+	// IWindow button(IPanel<?> panel, boolean isSideWidget);
+	//
+	// ILabel addCommandLabel(ILinearPanel<?> panel, String text,
+	// boolean isSideWidget);
+	//
+	// boolean commandsOnTop();
+	//
+	// String moreImage();
+	// }
 
-		IWindow main(IPanel<?> panel, boolean addBorder, boolean plainContent);
-
-		IWindow header(IPanel<?> panel, boolean isSide, boolean plainContent);
-
-		IWindow footer(IPanel<?> panel);
-
-		IWindow title(ILabel label, String title, boolean isSideWidget);
-
-		IWindow navigationEntry(ILinearPanel<?> panel);
-
-		IWindow viewEntry(ILinearPanel<?> panel, boolean first);
-
-		IWindow button(IPanel<?> panel, boolean isSideWidget);
-
-		ILabel addCommandLabel(ILinearPanel<?> panel, String text,
-				boolean isSideWidget);
-
-		boolean commandsOnTop();
-
-		String moreImage();
-	}
-
-	public interface INavigation {
-
-		public interface INavigationGroup {
-
-			public interface INavigationItem {
-
-				INavigation active(ILinearPanel<?> panel, ILabel label);
-
-				INavigation inactive(ILinearPanel<?> panel, ILabel label);
-
-				String image(String resource);
-			}
-
-			INavigation groupPanel(ILinearPanel<?> panel);
-
-			INavigationItem item();
-
-			INavigation mainPanel(IPanel<?> panel);
-		}
-
-		INavigation background(IColored color);
-
-		INavigationGroup group();
-	}
+	// public interface INavigation {
+	//
+	// public interface INavigationGroup {
+	//
+	// public interface INavigationItem {
+	//
+	// INavigation active(ILinearPanel<?> panel, ILabel label);
+	//
+	// INavigation inactive(ILinearPanel<?> panel, ILabel label);
+	//
+	// String image(String resource);
+	// }
+	//
+	// INavigation groupPanel(ILinearPanel<?> panel);
+	//
+	// INavigationItem item();
+	//
+	// INavigation mainPanel(IPanel<?> panel);
+	// }
+	//
+	// INavigation background(IColored color);
+	//
+	// INavigationGroup group();
+	// }
 
 	IApplicationPanel applicationPanel();
 
-	ITop top();
-
-	IOptionMenu optionMenu();
-
-	ITable table();
-
-	ITree tree();
-
-	INavigation navigation();
-
-	IRegister register();
-
-	IWindow window();
+	// ITop top();
+	//
+	// IOptionMenu optionMenu();
+	//
+	// ITable table();
+	//
+	// ITree tree();
+	//
+	// INavigation navigation();
+	//
+	// IRegister register();
+	//
+	// IWindow window();
 
 	ILogin login();
 
-	IStyle background(IPanel<?> panel);
+	// IStyle background(IPanel<?> panel);
 
-	IStyle hyperlink(ILabel label);
+	// IStyle hyperlink(ILabel label);
 
-	IStyle side(ILinearPanel<?> panel);
+	// IStyle side(ILinearPanel<?> panel);
 
 	IStyle activate(boolean activate);
 
