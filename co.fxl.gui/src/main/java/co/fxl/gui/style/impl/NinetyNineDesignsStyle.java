@@ -192,6 +192,11 @@ class NinetyNineDesignsStyle implements IStyle {
 			}
 
 			@Override
+			public boolean isActiveMoreDark() {
+				return true;
+			}
+
+			@Override
 			public void active(IHorizontalPanel buttonPanel, ILabel button) {
 				buttonPanel.color().rgb(28, 59, 89);
 				button.font().color().white();
@@ -203,6 +208,15 @@ class NinetyNineDesignsStyle implements IStyle {
 				buttonPanel.color().remove();
 				button.font().color().rgb(28, 59, 89);
 				buttonPanel.border().remove().style().rounded().width(6);
+			}
+
+			@Override
+			public void activeMore(IHorizontalPanel buttonPanel, ILabel button,
+					IImage refresh) {
+				buttonPanel.color().rgb(28, 59, 89);
+				button.font().color().white();
+				buttonPanel.border().style().rounded().width(6).bottom(false);
+				refresh.resource("more_white.png");
 			}
 
 			@Override

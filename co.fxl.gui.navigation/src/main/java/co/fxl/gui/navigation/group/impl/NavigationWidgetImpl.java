@@ -246,7 +246,9 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			moreItem.decorator(new TabDecoratorTemplate() {
 				@Override
 				public void refresh(ICallback<Void> cb) {
-					if (DRAW_MORE_TOP) {
+					if (DRAW_MORE_TOP
+							&& !Style.instance().navigation()
+									.isActiveMoreDark()) {
 						IGridPanel p02 = panel.add().panel().grid();
 						if (moreItem.popUpMovedRight()) {
 							addBorder2(p02, 0, false);
@@ -258,8 +260,11 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 					}
 					IVerticalPanel p = panel.add().panel().vertical()
 							.spacing(4);
-					p.border().style().left().style().right().style().bottom()
-							.color().gray();
+					if (!Style.instance().navigation().isActiveMoreDark())
+						p.border().style().left().style().right().style()
+								.bottom().color().gray();
+					else
+						p.border().color().gray();
 					boolean nonEmpty = addLabelsToGridPanel(p);
 					addActionsToPanel(p, nonEmpty);
 					cb.onSuccess(null);

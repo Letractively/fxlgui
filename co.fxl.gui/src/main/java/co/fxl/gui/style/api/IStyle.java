@@ -23,6 +23,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
@@ -47,6 +48,10 @@ public interface IStyle {
 		boolean hasSegmentedBorder();
 
 		void group(ILabel header);
+
+		void activeMore(IHorizontalPanel buttonPanel, ILabel button, IImage refresh);
+
+		boolean isActiveMoreDark();
 
 	}
 
