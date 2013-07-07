@@ -22,7 +22,6 @@ import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.FullscreenPopUp;
 import co.fxl.gui.impl.Heights;
-import co.fxl.gui.impl.ImageButton;
 import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.log.api.ILog;
@@ -101,12 +100,7 @@ class LogImpl implements ILog, IClickListener {
 
 	@Override
 	public ILog container(IContainer c) {
-		if (Style.ENABLED && Style.instance().login().useMore()) {
-			ImageButton ib = new ImageButton(c).imageResource("trace.png");
-			ib.text("Show Trace").addClickListener(this);
-			ib.label().hyperlink();
-		} else
-			c.label().text("Trace").hyperlink().addClickListener(this);
+		Style.instance().userPanel().traceButton(c).addClickListener(this);
 		return this;
 	}
 

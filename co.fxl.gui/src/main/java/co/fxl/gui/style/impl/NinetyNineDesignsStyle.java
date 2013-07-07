@@ -19,133 +19,155 @@
 package co.fxl.gui.style.impl;
 
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.HyperlinkMouseOverListener;
+import co.fxl.gui.impl.ImageButton;
+import co.fxl.gui.impl.PopUp;
+import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.style.api.IStyle;
 
 class NinetyNineDesignsStyle implements IStyle {
 
-	// @Override
-	// public ITop top() {
-	// return new ITop() {
-	//
-	// @Override
-	// public String imageResource() {
-	// return null;
-	// }
-	//
-	// @Override
-	// public ITop panel(IPanel<?> panel) {
-	// return this;
-	// }
-	//
-	// @Override
-	// public int spacing() {
-	// return 0;
-	// }
-	// };
-	// }
-
-	// @Override
-	// public IOptionMenu optionMenu() {
-	// throw new UnsupportedOperationException();
-	// }
-	//
-	// @Override
-	// public ITable table() {
-	// throw new UnsupportedOperationException();
-	// }
-	//
-	// @Override
-	// public ITree tree() {
-	// throw new UnsupportedOperationException();
-	// }
-	//
-	// @Override
-	// public INavigation navigation() {
-	// throw new UnsupportedOperationException();
-	// }
-	//
-	// @Override
-	// public IRegister register() {
-	// throw new UnsupportedOperationException();
-	// }
-	//
-	// @Override
-	// public IWindow window() {
-	// throw new UnsupportedOperationException();
-	// }
+	public static final String NAME = "99designs";
 
 	@Override
 	public ILogin login() {
 		return new ILogin() {
 
 			@Override
-			public void label(ILabel text) {
-				text.font().color().white();
-			}
-
-			// @Override
-			// public void hyperlink(ILabel text) {
-			// throw new UnsupportedOperationException();
-			// }
-
-			@Override
-			public IClickable<?> addDecoration(ILinearPanel<?> panel) {
-				return panel.add().image().resource("user_white.png");
-			}
-
-			@Override
-			public String moreImage() {
-				return "more_white_10x16.png";
-			}
-
-			@Override
-			public boolean useMore() {
+			public boolean useMoreButton() {
 				return true;
 			}
 
 			@Override
-			public boolean addSeparators() {
-				return false;
+			public void addSeparator(ILinearPanel<?> panel) {
+				panel.addSpace(10);
+
+			}
+
+			@Override
+			public void logout(ILinearPanel<?> panel, String userName,
+					final Decorator[] decorators, final IClickListener listener) {
+				IClickable<?> prefix = panel.add().image()
+						.resource("user_white.png");
+				ILabel loggedInHead = panel.add().label().text(userName);
+				loggedInHead.font().pixel(fontSize()).weight().bold().color()
+						.white();
+				new HyperlinkMouseOverListener(loggedInHead);
+				final IImage image = panel.add().image()
+						.resource("more_white_10x16.png");
+				IClickListener clickListener = new IClickListener() {
+
+					@Override
+					public void onClick() {
+						final IPopUp popUp = PopUp.showPopUp(true).width(140)
+								.autoHide(true);
+						popUp.offset(image.offsetX() - 140 + 12,
+								image.offsetY() + 25);
+						IVerticalPanel p = popUp.container().panel().vertical()
+								.spacing(8);
+						p.margin().top(2);
+						boolean addLine = false;
+						for (Decorator d : decorators) {
+							if (d.isVisible()) {
+								d.decorate(p.add().panel().horizontal());
+								addLine = true;
+							}
+						}
+						if (addLine)
+							p.add().line();
+						ImageButton ib = new ImageButton(p.add());
+						ib.imageResource("logout.png").text("Logout")
+								.addClickListener(listener);
+						ib.label().hyperlink();
+						popUp.visible(true);
+					}
+				};
+				prefix.addClickListener(clickListener);
+				loggedInHead.addClickListener(clickListener);
+				image.addClickListener(clickListener);
 			}
 		};
-	}
-
-	// @Override
-	// public IStyle background(IPanel<?> panel) {
-	// throw new UnsupportedOperationException();
-	// }
-
-	// @Override
-	// public IStyle hyperlink(ILabel label) {
-	// throw new UnsupportedOperationException();
-	// }
-	//
-	// @Override
-	// public IStyle side(ILinearPanel<?> panel) {
-	// throw new UnsupportedOperationException();
-	// }
-
-	@Override
-	public IStyle activate(boolean activate) {
-		return this;
 	}
 
 	@Override
 	public IApplicationPanel applicationPanel() {
 		return new IApplicationPanel() {
+
 			@Override
-			public void background(IPanel<?> background) {
-				background.color().rgb(29, 59, 89).gradient().vertical()
+			public ILinearPanel<?>[] create(IContainer c) {
+				IGridPanel grid = c.panel().grid().spacing(1);
+				grid.color().rgb(29, 59, 89).gradient().vertical()
 						.rgb(57, 84, 110);
-				background.border().style().bottom();
+				grid.border().style().bottom();
+				grid.column(0).expand();
+				ILinearPanel<?> v = grid.cell(0, 0).valign().center().panel()
+						.vertical();
+				ILinearPanel<?> end = grid.cell(1, 0).valign().center().align()
+						.end().panel().horizontal().align().end();
+				end.padding().top(1);
+				return new ILinearPanel<?>[] { v, end };
 			}
 
 			@Override
-			public boolean containsUserPanel() {
-				return true;
+			public void itemPanel(IHorizontalPanel p) {
+			}
+		};
+	}
+
+	@Override
+	public IUserPanel userPanel() {
+		return new IUserPanel() {
+
+			@Override
+			public void background(IHorizontalPanel panel) {
+				panel.margin().right(10);
+			}
+
+			@Override
+			public IClickable<?> profileButton(IPanel<?> panel) {
+				ImageButton ib = new ImageButton(panel.add());
+				ib.label().hyperlink();
+				return ib.imageResource("user.png").text("My Profile");
+			}
+
+			@Override
+			public IClickable<?> enterAdminButton(IPanel<?> panel) {
+				ImageButton text = new ImageButton(panel.add());
+				text.imageResource("settings.png").text("Administration");
+				text.label().font().pixel(fontSize()).weight().bold().color()
+						.white();
+				new HyperlinkMouseOverListener(text.label());
+				return text;
+			}
+
+			@Override
+			public IClickable<?> exitAdminButton(IPanel<?> panel) {
+				panel.add().image().resource("settings.png");
+				ILabel l = panel.add().label().text("Administration");
+				l.font().weight().bold();
+				l.font().pixel(fontSize()).color().lightgray();
+				ILabel text = panel.add().label().text("Back to Application");
+				text.font().pixel(fontSize()).weight().bold().color().white();
+				new HyperlinkMouseOverListener(text);
+				return text;
+			}
+
+			@Override
+			public IClickable<?> traceButton(IContainer c) {
+				ImageButton ib = new ImageButton(c).imageResource("trace.png");
+				ib.text("Show Trace");
+				ib.label().hyperlink();
+				return ib;
 			}
 		};
 	}

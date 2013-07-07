@@ -70,9 +70,7 @@ public class UserPanel {
 
 	public UserPanel container(IContainer container) {
 		panel = container.panel().horizontal().spacing(4).align().end();
-		if (Style.ENABLED
-				&& Style.instance().applicationPanel().containsUserPanel())
-			panel.margin().right(10);
+		Style.instance().userPanel().background(panel);
 		return this;
 	}
 
@@ -86,10 +84,7 @@ public class UserPanel {
 			if (!d.decorator.isVisible())
 				continue;
 			if (!first) {
-				if (Style.ENABLED && !Style.instance().login().addSeparators())
-					panel.addSpace(10);
-				else
-					panel.add().label().text("|").font().color().gray();
+				Style.instance().login().addSeparator(panel);
 			}
 			first = false;
 			d.decorator.decorate(panel);

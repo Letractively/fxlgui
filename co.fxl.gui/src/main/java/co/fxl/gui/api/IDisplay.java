@@ -21,11 +21,6 @@ package co.fxl.gui.api;
 public interface IDisplay extends IColored, IServiceRegistry<IDisplay>,
 		IResizeRegistry<IDisplay>, IShell {
 
-	// public interface IElementListener {
-	//
-	// void notifyElement(IElement<?> e);
-	// }
-
 	public interface IRuntime {
 
 		String name();
@@ -44,8 +39,6 @@ public interface IDisplay extends IColored, IServiceRegistry<IDisplay>,
 	}
 
 	public interface IResizeConfiguration {
-
-		// IResizeConfiguration singleton();
 
 		IResizeConfiguration linkLifecycle(IElement<?> element);
 
@@ -102,5 +95,6 @@ public interface IDisplay extends IColored, IServiceRegistry<IDisplay>,
 
 	IDisplay clear();
 
-	// IDisplay addElementListener(IElementListener elementListener);
+	IDisplay font(String fontFamily, int fontSize);
+
 }

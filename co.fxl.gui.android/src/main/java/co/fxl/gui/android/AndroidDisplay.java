@@ -195,4 +195,12 @@ public class AndroidDisplay extends DisplayTemplate implements Parent {
 		return widgetProviders.get(clazz);
 	}
 
+	@Override
+	public IDisplay font(String fontFamily, int fontSize) {
+
+		// TODO ...
+
+		return this;
+	}
+
 }

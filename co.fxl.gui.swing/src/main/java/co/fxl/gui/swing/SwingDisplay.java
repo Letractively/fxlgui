@@ -352,4 +352,12 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 		return null;
 	}
 
+	@Override
+	public IDisplay font(String fontFamily, int fontSize) {
+
+		// TODO ...
+
+		return this;
+	}
+
 }
