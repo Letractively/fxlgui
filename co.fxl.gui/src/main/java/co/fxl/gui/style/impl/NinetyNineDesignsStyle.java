@@ -266,7 +266,7 @@ class NinetyNineDesignsStyle implements IStyle {
 
 			@Override
 			public int offsetX() {
-				return 257;
+				return 263;
 			}
 		};
 	}
