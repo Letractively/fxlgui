@@ -32,7 +32,7 @@ public class Style {
 	static {
 		register(NinetyNineDesignsStyle.NAME, new NinetyNineDesignsStyle());
 		register(GrayScaleStyle.NAME, new GrayScaleStyle());
-		activate(GrayScaleStyle.NAME);
+		activate(NinetyNineDesignsStyle.NAME);
 	}
 
 	public static void register(String name, IStyle instance) {

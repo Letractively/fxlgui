@@ -214,4 +214,9 @@ public class GrayScaleStyle implements IStyle {
 		};
 	}
 
+	@Override
+	public String logo() {
+		return "logo_xoricon.png";
+	}
+
 }
