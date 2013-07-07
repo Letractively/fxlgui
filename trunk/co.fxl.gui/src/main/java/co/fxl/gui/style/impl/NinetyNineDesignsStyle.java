@@ -207,12 +207,12 @@ class NinetyNineDesignsStyle implements IStyle {
 
 			@Override
 			public String activeRefreshImage() {
-				return "refresh_white_new.png";
+				return "loading_white.gif";
 			}
 
 			@Override
 			public String inactiveRefreshImage() {
-				return "refresh_blue_new.png";
+				return "loading_black.gif";
 			}
 
 			@Override
