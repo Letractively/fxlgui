@@ -26,7 +26,7 @@ import co.fxl.gui.style.api.IStyle;
 
 public class Style {
 
-	private static IStyle instance = new GrayScaleStyle();
+	private static IStyle instance = new NinetyNineDesignsStyle();
 	private static Map<String, IStyle> styles = new HashMap<String, IStyle>();
 
 	static {
