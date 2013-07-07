@@ -31,6 +31,16 @@ import co.fxl.gui.impl.UserPanel.Decorator;
 
 public interface IStyle {
 
+	public interface ILogoPanel {
+
+		String resource();
+
+		int marginLeft();
+
+		void background(IPanel<?> panel);
+
+	}
+
 	public interface INavigation {
 
 		void background(IColored colored);
@@ -49,9 +59,16 @@ public interface IStyle {
 
 		void group(ILabel header);
 
-		void activeMore(IHorizontalPanel buttonPanel, ILabel button, IImage refresh);
+		void activeMore(IHorizontalPanel buttonPanel, ILabel button,
+				IImage refresh);
 
 		boolean isActiveMoreDark();
+
+		void backgroundRegisters(IPanel<?> panel);
+
+		void backgroundCards(IPanel<?> history);
+
+		int offsetX();
 
 	}
 
@@ -74,6 +91,8 @@ public interface IStyle {
 		ILinearPanel<?>[] create(IContainer c);
 
 		void itemPanel(IHorizontalPanel p);
+
+		int marginLeft();
 	}
 
 	public interface ILogin {
@@ -99,6 +118,6 @@ public interface IStyle {
 
 	INavigation navigation();
 
-	String logo();
+	ILogoPanel logoPanel();
 
 }
