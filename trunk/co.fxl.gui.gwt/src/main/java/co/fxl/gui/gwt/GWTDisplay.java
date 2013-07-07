@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.gwt;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import co.fxl.data.format.gwt.GWTFormat;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IContainer;
@@ -80,6 +83,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	private Scheduler scheduler = new SchedulerImpl();
 	private IRuntime runtime;
 	private boolean scrolling = true;
+	private List<Element> styles = new LinkedList<Element>();
 
 	public static void notifyEvent(DomEvent<?> event) {
 		if (event != null) {
@@ -130,6 +134,14 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		Element newChild = DOM.createElement("style");
 		newChild.setInnerText(text);
 		bodyElement.getParentElement().insertBefore(newChild, bodyElement);
+		styles.add(newChild);
+	}
+
+	void clearStyles() {
+		for (Element e : styles) {
+			RootPanel.getBodyElement().getParentElement().removeChild(e);
+		}
+		styles.clear();
 	}
 
 	// public static boolean isChromeZoomActive() {
@@ -547,6 +559,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	public IDisplay font(String fontFamily, int fontSize) {
 		String font = "font-family: " + fontFamily + " !important; font-size: "
 				+ fontSize + "px;";
+		clearStyles();
 		addStyle("body, table td, select, input { " + font + "}");
 		addStyle(".gwt-TextArea-FXL { height: 100px; padding: 3px; " + font
 				+ "}");
