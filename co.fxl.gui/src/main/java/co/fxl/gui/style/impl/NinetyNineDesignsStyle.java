@@ -188,28 +188,16 @@ class NinetyNineDesignsStyle implements IStyle {
 		return new INavigation() {
 
 			@Override
-			public void activeBackground(IHorizontalPanel buttonPanel) {
+			public void active(IHorizontalPanel buttonPanel,
+					ILabel button) {
 
 				// TODO ...
 
 			}
 
 			@Override
-			public void inactiveBackground(IHorizontalPanel buttonPanel) {
-
-				// TODO ...
-
-			}
-
-			@Override
-			public void inactiveLabel(ILabel button) {
-
-				// TODO ...
-
-			}
-
-			@Override
-			public void activeLabel(ILabel button) {
+			public void inactive(IHorizontalPanel buttonPanel,
+					ILabel button) {
 
 				// TODO ...
 

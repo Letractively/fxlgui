@@ -143,16 +143,11 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 		button.visible(true);
 		buttonPanel.spacing(5);
 		refresh.visible(false);
-		Style.instance().navigation().inactiveLabel(button);
-		showBackgroundInactive();
+		Style.instance().navigation().inactive(buttonPanel, button);
+		clickable(true);
 		// if (notify)
 		// for (INavigationListener l : listeners)
 		// l.onActive(false);
-	}
-
-	void showBackgroundInactive() {
-		clickable(true);
-		Style.instance().navigation().inactiveBackground(buttonPanel);
 	}
 
 	@Override
@@ -407,8 +402,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 
 	private void showLabelAsActive() {
 		labelAsActive = true;
-		Style.instance().navigation().activeLabel(button);
-		Style.instance().navigation().activeBackground(buttonPanel);
+		Style.instance().navigation().active(buttonPanel, button);
 		clickable(false);
 		button.visible(true);
 		refresh.visible(false);
