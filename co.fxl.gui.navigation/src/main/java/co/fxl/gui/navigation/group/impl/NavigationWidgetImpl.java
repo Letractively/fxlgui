@@ -359,7 +359,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	}
 
 	void activeBackground(IColored panel0) {
-		Style.instance().navigation().activeBackground(panel0);
+		Style.instance().navigation().background(panel0);
 	}
 
 	private void notifyListeners(final NavigationItemImpl activeItem,

@@ -107,13 +107,23 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 			};
 			button.addClickListener(clickListener);
 			refresh = subPanel.add().image().visible(false).size(16, 16);
-			refreshResource("loading_white.gif");
+			refreshResource(refreshInactive());
 			refresh.addClickListener(clickListener);
 			buttonPanel.addSpace(1);
 			buttonPanel.addClickListener(clickListener);
 			showLabelAsInactive();
 			flipPage = widget.flipPage().newPage();
 		}
+	}
+
+	private String refreshInactive() {
+		return Style.instance().navigation().isActiveBackgroundDark() ? "loading_black.gif"
+				: "loading_white.gif";
+	}
+
+	private String refreshActive() {
+		return !Style.instance().navigation().isActiveBackgroundDark() ? "loading_black.gif"
+				: "loading_white.gif";
 	}
 
 	@Override
@@ -400,8 +410,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	private void showLabelAsActive() {
 		labelAsActive = true;
 		Style.instance().navigation().activeLabel(button);
-		buttonPanel.border().color().gray();
-		widget.activeBackground(buttonPanel);
+		Style.instance().navigation().activeBackground(buttonPanel);
 		clickable(false);
 		button.visible(true);
 		refresh.visible(false);
@@ -490,8 +499,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 
 	@Override
 	public INavigationItem toggleLoading(boolean t) {
-		String resource = labelAsActive ? "loading_black.gif"
-				: "loading_white.gif";
+		String resource = labelAsActive ? refreshActive() : refreshInactive();
 		refreshResource(resource);
 		refresh.visible(t).size(16, 16);
 		button.visible(!t);

@@ -32,13 +32,17 @@ public interface IStyle {
 
 	public interface INavigation {
 
-		void activeBackground(IColored panel);
+		void background(IColored colored);
+
+		void activeBackground(IHorizontalPanel buttonPanel);
 
 		void inactiveBackground(IHorizontalPanel buttonPanel);
 
 		void inactiveLabel(ILabel button);
 
 		void activeLabel(ILabel button);
+
+		boolean isActiveBackgroundDark();
 
 	}
 

@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.style.impl;
 
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored;
@@ -134,24 +135,31 @@ public class GrayScaleStyle implements IStyle {
 		return new INavigation() {
 
 			@Override
-			public void activeBackground(IColored panel) {
-				IColor color = panel.color();
+			public void background(IColored colored) {
+				IColor color = colored.color();
 				color.remove();
 				color.rgb(colorActive[0], colorActive[1], colorActive[2]);
+			}
 
+			@Override
+			public void activeBackground(IHorizontalPanel buttonPanel) {
+				background((IColored) buttonPanel);
+				IBorder border = buttonPanel.border();
+				border.color().gray();
+				border.style().noBottom();
 			}
 
 			@Override
 			public void inactiveBackground(IHorizontalPanel buttonPanel) {
-				buttonPanel
-						.border()
-						.color()
+				IBorder border = buttonPanel.border();
+				border.color()
 						.mix()
 						.rgb(colorInactive[0], colorInactive[1],
 								colorInactive[2])
 						.rgb(colorInactiveGradient[0],
 								colorInactiveGradient[1],
 								colorInactiveGradient[2]);
+				border.style().noBottom();
 				buttonPanel
 						.color()
 						.rgb(colorInactive[0], colorInactive[1],
@@ -171,6 +179,11 @@ public class GrayScaleStyle implements IStyle {
 			@Override
 			public void activeLabel(ILabel button) {
 				button.font().color().black();
+			}
+
+			@Override
+			public boolean isActiveBackgroundDark() {
+				return false;
 			}
 		};
 	}
