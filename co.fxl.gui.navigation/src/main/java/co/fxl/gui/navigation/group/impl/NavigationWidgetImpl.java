@@ -363,12 +363,9 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	}
 
 	void activeBackground(IColored panel0) {
-		applyColor(panel0.color(), colorActive);
-	}
-
-	void applyColor(IColor color, int[] rgb) {
+		IColor color = panel0.color();
 		color.remove();
-		color.rgb(rgb[0], rgb[1], rgb[2]);
+		color.rgb(colorActive[0], colorActive[1], colorActive[2]);
 	}
 
 	private void notifyListeners(final NavigationItemImpl activeItem,
