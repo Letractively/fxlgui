@@ -158,17 +158,21 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		boolean hasActiveItem = active != null && active.buttonPanel != null;
 		int offsetX = 0;
 		int width = 0;
-		leftPartBorder.visible(hasActiveItem);
-		middlePartBorder.visible(hasActiveItem);
-		if (hasActiveItem && Style.instance().navigation().hasSegmentedBorder()) {
+		boolean hasSegments = hasActiveItem
+				&& Style.instance().navigation().hasSegmentedBorder();
+		leftPartBorder.visible(hasSegments);
+		middlePartBorder.visible(hasSegments);
+		int w = Shell.instance().width(mainPanel) - width - offsetX;
+		if (hasSegments) {
 			int scrollOffset = Shell.instance().scrollOffset();
 			offsetX = scrollOffset + active.buttonPanel.offsetX() + 1;
 			leftPartBorder.size(offsetX, 1);
 			width = active.buttonPanel.width() - 2;
 			middlePartBorder.size(width, 1);
-		}
-		rightPartBorder.size(Shell.instance().width(mainPanel) - width
-				- offsetX, 1);
+			hasSegments = true;
+		} else
+			w--;
+		rightPartBorder.size(w, 1);
 	}
 
 	void setUpSeparatorBorder() {

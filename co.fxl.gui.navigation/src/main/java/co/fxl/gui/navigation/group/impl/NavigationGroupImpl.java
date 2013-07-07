@@ -27,6 +27,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.navigation.group.api.INavigationGroup;
 import co.fxl.gui.navigation.group.api.INavigationItem;
+import co.fxl.gui.style.impl.Style;
 
 class NavigationGroupImpl implements INavigationGroup {
 
@@ -53,6 +54,7 @@ class NavigationGroupImpl implements INavigationGroup {
 		headerPanel.margin().left(widget.groups.isEmpty() ? 3 : 8).right(1);
 		header = headerPanel.addSpace(2).add().label();
 		header.font().weight().bold().pixel(11);
+		Style.instance().navigation().group(header);
 		// panel.addSpace(1);
 		itemPanel = panel.add().panel().horizontal();
 		updateVisibilityLabel();

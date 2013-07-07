@@ -27,6 +27,8 @@ public interface IBordered {
 			public interface IRoundBorder {
 
 				IRoundBorder bottom(boolean bottom);
+
+				IRoundBorder width(int width);
 			}
 
 			IBorder shadow();
