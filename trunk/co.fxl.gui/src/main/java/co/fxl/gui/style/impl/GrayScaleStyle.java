@@ -142,15 +142,18 @@ public class GrayScaleStyle implements IStyle {
 			}
 
 			@Override
-			public void activeBackground(IHorizontalPanel buttonPanel) {
+			public void active(IHorizontalPanel buttonPanel,
+					ILabel button) {
 				background((IColored) buttonPanel);
 				IBorder border = buttonPanel.border();
 				border.color().gray();
 				border.style().noBottom();
+				button.font().color().black();
 			}
 
 			@Override
-			public void inactiveBackground(IHorizontalPanel buttonPanel) {
+			public void inactive(IHorizontalPanel buttonPanel,
+					ILabel button) {
 				IBorder border = buttonPanel.border();
 				border.color()
 						.mix()
@@ -169,16 +172,7 @@ public class GrayScaleStyle implements IStyle {
 						.rgb(colorInactiveGradient[0],
 								colorInactiveGradient[1],
 								colorInactiveGradient[2]);
-			}
-
-			@Override
-			public void inactiveLabel(ILabel button) {
 				button.font().color().white();
-			}
-
-			@Override
-			public void activeLabel(ILabel button) {
-				button.font().color().black();
 			}
 
 			@Override

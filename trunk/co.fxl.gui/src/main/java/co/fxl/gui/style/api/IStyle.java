@@ -34,13 +34,9 @@ public interface IStyle {
 
 		void background(IColored colored);
 
-		void activeBackground(IHorizontalPanel buttonPanel);
+		void active(IHorizontalPanel buttonPanel, ILabel button);
 
-		void inactiveBackground(IHorizontalPanel buttonPanel);
-
-		void inactiveLabel(ILabel button);
-
-		void activeLabel(ILabel button);
+		void inactive(IHorizontalPanel buttonPanel, ILabel button);
 
 		String activeRefreshImage();
 
