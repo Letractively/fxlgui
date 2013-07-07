@@ -189,6 +189,14 @@ public class GrayScaleStyle implements IStyle {
 			public String inactiveRefreshImage() {
 				return "loading_white.gif";
 			}
+
+			@Override
+			public void init(IHorizontalPanel buttonPanel, ILabel button) {
+			}
+
+			@Override
+			public void group(ILabel header) {
+			}
 		};
 	}
 

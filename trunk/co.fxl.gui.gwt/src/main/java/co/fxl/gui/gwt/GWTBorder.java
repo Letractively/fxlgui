@@ -92,6 +92,13 @@ public abstract class GWTBorder implements IBorder {
 					update();
 					return this;
 				}
+
+				@Override
+				public IRoundBorder width(int width) {
+					roundWidth = width;
+					update();
+					return this;
+				}
 			};
 		}
 
@@ -122,6 +129,7 @@ public abstract class GWTBorder implements IBorder {
 	String style = "solid";
 	String borderType = "border";
 	boolean roundBottom = true;
+	int roundWidth = 3;
 	boolean top = false;
 	boolean bottom = false;
 	boolean left = false;

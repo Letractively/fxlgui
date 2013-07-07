@@ -34,6 +34,8 @@ public interface IStyle {
 
 		void background(IColored colored);
 
+		void init(IHorizontalPanel buttonPanel, ILabel button);
+
 		void active(IHorizontalPanel buttonPanel, ILabel button);
 
 		void inactive(IHorizontalPanel buttonPanel, ILabel button);
@@ -43,6 +45,8 @@ public interface IStyle {
 		String inactiveRefreshImage();
 
 		boolean hasSegmentedBorder();
+
+		void group(ILabel header);
 
 	}
 

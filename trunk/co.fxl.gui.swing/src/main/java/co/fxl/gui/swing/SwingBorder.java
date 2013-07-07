@@ -52,6 +52,11 @@ class SwingBorder implements IBorder {
 					return this;
 				}
 
+				@Override
+				public IRoundBorder width(int width) {
+					return this;
+				}
+
 			};
 		}
 

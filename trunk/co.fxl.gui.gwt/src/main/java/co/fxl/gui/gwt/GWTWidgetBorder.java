@@ -99,12 +99,12 @@ public class GWTWidgetBorder extends GWTBorder {
 			DOM.setStyleAttribute(element, borderType, width + "px " + color
 					+ " " + style);
 			String attr = "borderRadius";
-			if (Env.runtime().leq(Env.FIREFOX,12))
+			if (Env.runtime().leq(Env.FIREFOX, 12))
 				attr = "-moz-border-radius";
 			// TODO Look: Firefox/IE/Opera: Rounded Corners in
 			// Firefox/Opera/Firefox dont work, use style
 			try {
-				DOM.setStyleAttribute(element, attr, "3px");
+				DOM.setStyleAttribute(element, attr, roundWidth + "px");
 			} catch (AssertionError e) {
 			}
 			if (!roundBottom) {

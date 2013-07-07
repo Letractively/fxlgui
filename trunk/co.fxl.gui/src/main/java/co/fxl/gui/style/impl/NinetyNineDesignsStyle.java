@@ -188,29 +188,31 @@ class NinetyNineDesignsStyle implements IStyle {
 		return new INavigation() {
 
 			@Override
-			public void active(IHorizontalPanel buttonPanel,
-					ILabel button) {
-
-				// TODO ...
-
+			public void init(IHorizontalPanel buttonPanel, ILabel button) {
 			}
 
 			@Override
-			public void inactive(IHorizontalPanel buttonPanel,
-					ILabel button) {
+			public void active(IHorizontalPanel buttonPanel, ILabel button) {
+				buttonPanel.color().rgb(28, 59, 89);
+				button.font().color().white();
+				buttonPanel.border().remove().style().rounded().width(6);
+			}
 
-				// TODO ...
-
+			@Override
+			public void inactive(IHorizontalPanel buttonPanel, ILabel button) {
+				buttonPanel.color().remove();
+				button.font().color().rgb(28, 59, 89);
+				buttonPanel.border().remove().style().rounded().width(6);
 			}
 
 			@Override
 			public String activeRefreshImage() {
-				return "loading_white.gif";
+				return "refresh_white_new.png";
 			}
 
 			@Override
 			public String inactiveRefreshImage() {
-				return "loading_black.gif";
+				return "refresh_blue_new.png";
 			}
 
 			@Override
@@ -223,6 +225,11 @@ class NinetyNineDesignsStyle implements IStyle {
 			@Override
 			public boolean hasSegmentedBorder() {
 				return false;
+			}
+
+			@Override
+			public void group(ILabel header) {
+				header.font().color().gray();
 			}
 		};
 	}
