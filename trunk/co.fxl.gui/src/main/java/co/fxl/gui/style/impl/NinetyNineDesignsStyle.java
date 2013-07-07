@@ -188,7 +188,7 @@ class NinetyNineDesignsStyle implements IStyle {
 		return new INavigation() {
 
 			@Override
-			public void activeBackground(IColored panel) {
+			public void activeBackground(IHorizontalPanel buttonPanel) {
 
 				// TODO ...
 
@@ -210,6 +210,18 @@ class NinetyNineDesignsStyle implements IStyle {
 
 			@Override
 			public void activeLabel(ILabel button) {
+
+				// TODO ...
+
+			}
+
+			@Override
+			public boolean isActiveBackgroundDark() {
+				return true;
+			}
+
+			@Override
+			public void background(IColored colored) {
 
 				// TODO ...
 
