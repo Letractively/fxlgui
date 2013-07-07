@@ -220,12 +220,10 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 
 						@Override
 						public void onSuccess(Void result) {
-							buttonPanel.border().color().gray();
 							// border.style().shadow();
-							buttonPanel.color().remove();
-							buttonPanel.color().white();
-							button.font().color().black();
 							refreshResource("more_black.png");
+							Style.instance().navigation()
+									.activeMore(buttonPanel, button, refresh);
 							// refresh.resource("more_black.png");
 							int x = basicPanel.offsetX()
 									- getLeftPartPopUpWidth();

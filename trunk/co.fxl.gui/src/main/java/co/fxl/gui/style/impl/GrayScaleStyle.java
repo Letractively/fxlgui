@@ -25,6 +25,7 @@ import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
@@ -142,8 +143,7 @@ public class GrayScaleStyle implements IStyle {
 			}
 
 			@Override
-			public void active(IHorizontalPanel buttonPanel,
-					ILabel button) {
+			public void active(IHorizontalPanel buttonPanel, ILabel button) {
 				background((IColored) buttonPanel);
 				IBorder border = buttonPanel.border();
 				border.color().gray();
@@ -152,8 +152,7 @@ public class GrayScaleStyle implements IStyle {
 			}
 
 			@Override
-			public void inactive(IHorizontalPanel buttonPanel,
-					ILabel button) {
+			public void inactive(IHorizontalPanel buttonPanel, ILabel button) {
 				IBorder border = buttonPanel.border();
 				border.color()
 						.mix()
@@ -196,6 +195,21 @@ public class GrayScaleStyle implements IStyle {
 
 			@Override
 			public void group(ILabel header) {
+			}
+
+			@Override
+			public void activeMore(IHorizontalPanel buttonPanel, ILabel button,
+					IImage refresh) {
+				buttonPanel.color().remove();
+				buttonPanel.color().white();
+				IBorder border = buttonPanel.border();
+				border.style().noBottom();
+				border.color().gray();
+			}
+
+			@Override
+			public boolean isActiveMoreDark() {
+				return false;
 			}
 		};
 	}
