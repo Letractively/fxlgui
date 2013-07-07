@@ -209,6 +209,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 				public void onUpdate(Boolean value) {
 					if (!value) {
 						hidePopUp();
+						button.font().color().black();
 					}
 				}
 			});
