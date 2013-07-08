@@ -76,7 +76,7 @@ class NinetyNineDesignsStyle implements IStyle {
 						popUp.offset(image.offsetX() - 140 + 12,
 								image.offsetY() + 25);
 						IVerticalPanel p = popUp.container().panel().vertical()
-								.spacing(16);
+								.spacing(12);
 						p.margin().top(2);
 						boolean addLine = false;
 						for (Decorator d : decorators) {
