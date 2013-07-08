@@ -80,6 +80,8 @@ class Link implements IClickable<Link> {
 		String imageR = string.toLowerCase();
 		if (imageR.equals("remove"))
 			imageR = "cancel";
+		if (imageR.equals("more"))
+			imageR = "zoom_in_16x16";
 		if (imageR.equals("edit") || imageR.equals("show"))
 			imageR = "detail";
 		IImage image = p.add().image().resource(imageR + ".png");
