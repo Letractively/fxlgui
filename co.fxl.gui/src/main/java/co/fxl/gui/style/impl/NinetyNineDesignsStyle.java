@@ -228,7 +228,7 @@ class NinetyNineDesignsStyle implements IStyle {
 			@Override
 			public void activeMore(IHorizontalPanel buttonPanel, ILabel button,
 					IImage refresh) {
-				moreItem(button);
+				color(buttonPanel);
 				button.font().color().white();
 				buttonPanel.border().style().rounded().width(6).bottom(false);
 				refresh.resource("more_white.png");
