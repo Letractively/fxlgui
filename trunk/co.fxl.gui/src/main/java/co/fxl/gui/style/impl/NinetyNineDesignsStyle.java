@@ -64,17 +64,17 @@ class NinetyNineDesignsStyle implements IStyle {
 
 	private static final Map<ViewType, String> ACTIVE_IMAGES = new HashMap<ViewType, String>();
 	static {
-		ACTIVE_IMAGES.put(ViewType.TABLE, "table.png");
-		ACTIVE_IMAGES.put(ViewType.LIST, "list.png");
-		ACTIVE_IMAGES.put(ViewType.GRID, "grid.png");
-		ACTIVE_IMAGES.put(ViewType.DETAILS, "details.png");
+		ACTIVE_IMAGES.put(ViewType.TABLE, "view_table_active.png");
+		ACTIVE_IMAGES.put(ViewType.LIST, "view_list_active.png");
+		ACTIVE_IMAGES.put(ViewType.GRID, "view_grid_active.png");
+		ACTIVE_IMAGES.put(ViewType.DETAILS, "view_detail_active.png");
 	}
 	private static final Map<ViewType, String> INACTIVE_IMAGES = new HashMap<ViewType, String>();
 	static {
-		INACTIVE_IMAGES.put(ViewType.TABLE, "table.png");
-		INACTIVE_IMAGES.put(ViewType.LIST, "list.png");
-		INACTIVE_IMAGES.put(ViewType.GRID, "grid.png");
-		INACTIVE_IMAGES.put(ViewType.DETAILS, "details.png");
+		INACTIVE_IMAGES.put(ViewType.TABLE, "view_table_inactive.png");
+		INACTIVE_IMAGES.put(ViewType.LIST, "view_list_inactive.png");
+		INACTIVE_IMAGES.put(ViewType.GRID, "view_grid_inactive.png");
+		INACTIVE_IMAGES.put(ViewType.DETAILS, "view_detail_inactive.png");
 	}
 
 	private class ViewSelection implements IViewSelection {
@@ -87,10 +87,12 @@ class NinetyNineDesignsStyle implements IStyle {
 			private IImage image;
 			private ILabel label;
 			private ViewType type;
+			private IClickListener clickListener;
 
 			private View(String text, ViewType type, IClickListener c,
 					boolean active, boolean isLast) {
 				this.type = type;
+				clickListener = c;
 				int column = views.size();
 				IGridCell cell = grid.cell(column, 0).align().center().valign()
 						.center();
@@ -98,14 +100,15 @@ class NinetyNineDesignsStyle implements IStyle {
 						.height(VIEW_SELECTION_HEIGHT);
 				IBorder border = cell.border();
 				border.color().gray(218);
+				if (!isLast)
+					border.style().top().style().bottom().style().left();
 				if (views.isEmpty())
 					border.style().rounded().width(6).right(false);
 				else if (isLast)
 					border.style().rounded().width(6).left(false);
-				if (!isLast)
-					border.style().top().style().bottom().style().left();
+				border.width(1);
 				IHorizontalPanel hp = panel.add().panel().horizontal();
-				hp.margin().top(15);
+				hp.margin().top((VIEW_SELECTION_HEIGHT - 16) / 2);
 				image = hp.add().image();
 				label = hp.addSpace(4).add().label().text(text);
 				blue(label);
@@ -118,20 +121,23 @@ class NinetyNineDesignsStyle implements IStyle {
 
 			@Override
 			protected void onAllowedClick() {
-				throw new UnsupportedOperationException();
+				for (View view : views) {
+					view.decorate(view == this);
+				}
+				clickListener.onClick();
 			}
 
 			private void decorate(boolean active) {
 				if (active) {
-					panel.color().remove().gray(241).gradient().vertical()
+					panel.color().remove().gray(231).gradient().vertical()
 							.gray(248);
 					label.font().weight().bold();
-					image.resource(ACTIVE_IMAGES.get(type));
+					image.resource(INACTIVE_IMAGES.get(type));
 				} else {
 					panel.color().remove().gray(248).gradient().vertical()
-							.gray(241);
+							.gray(231);
 					label.font().weight().plain();
-					image.resource(INACTIVE_IMAGES.get(type));
+					image.resource(ACTIVE_IMAGES.get(type));
 				}
 				panel.clickable(!active);
 				label.clickable(!active);

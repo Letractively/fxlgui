@@ -96,8 +96,9 @@ public class GWTWidgetBorder extends GWTBorder {
 			DOM.setStyleAttribute(element, "borderRight", width + "px " + color
 					+ " " + style);
 		} else if (borderType.equals(GWTBorder.BORDER_ROUNDED)) {
-			DOM.setStyleAttribute(element, "border", width + "px " + color
-					+ " " + style);
+			if (!top && !left && !right && !bottom)
+				DOM.setStyleAttribute(element, "border", width + "px " + color
+						+ " " + style);
 			String attr = "borderRadius";
 			if (Env.runtime().leq(Env.FIREFOX, 12))
 				attr = "-moz-border-radius";
