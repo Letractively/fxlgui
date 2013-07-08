@@ -18,12 +18,21 @@
  */
 package co.fxl.gui.style.impl;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IFontElement;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
@@ -33,11 +42,119 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
 import co.fxl.gui.impl.ImageButton;
+import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.style.api.IStyle;
+import co.fxl.gui.style.api.IStyle.IViewSelection.ViewType;
 
 class NinetyNineDesignsStyle implements IStyle {
+
+	private IColor blue(IFontElement element) {
+		return blue(element.font());
+	}
+
+	private IColor blue(IColored colored) {
+		return blue(colored.color());
+	}
+
+	private IColor blue(IColor color) {
+		return color.rgb(29, 59, 89);
+	}
+
+	private static final Map<ViewType, String> ACTIVE_IMAGES = new HashMap<ViewType, String>();
+	static {
+		ACTIVE_IMAGES.put(ViewType.TABLE, "table.png");
+		ACTIVE_IMAGES.put(ViewType.LIST, "list.png");
+		ACTIVE_IMAGES.put(ViewType.GRID, "grid.png");
+		ACTIVE_IMAGES.put(ViewType.DETAILS, "details.png");
+	}
+	private static final Map<ViewType, String> INACTIVE_IMAGES = new HashMap<ViewType, String>();
+	static {
+		INACTIVE_IMAGES.put(ViewType.TABLE, "table.png");
+		INACTIVE_IMAGES.put(ViewType.LIST, "list.png");
+		INACTIVE_IMAGES.put(ViewType.GRID, "grid.png");
+		INACTIVE_IMAGES.put(ViewType.DETAILS, "details.png");
+	}
+
+	private class ViewSelection implements IViewSelection {
+
+		private static final int VIEW_SELECTION_HEIGHT = 47;
+
+		private class View extends LazyClickListener {
+
+			private IPanel<?> panel;
+			private IImage image;
+			private ILabel label;
+			private ViewType type;
+
+			private View(String text, ViewType type, IClickListener c,
+					boolean active, boolean isLast) {
+				this.type = type;
+				int column = views.size();
+				IGridCell cell = grid.cell(column, 0).align().center().valign()
+						.center();
+				panel = cell.panel().vertical().align().center()
+						.height(VIEW_SELECTION_HEIGHT);
+				IBorder border = cell.border();
+				border.color().gray(218);
+				if (views.isEmpty())
+					border.style().rounded().width(6).right(false);
+				else if (isLast)
+					border.style().rounded().width(6).left(false);
+				if (!isLast)
+					border.style().top().style().bottom().style().left();
+				IHorizontalPanel hp = panel.add().panel().horizontal();
+				hp.margin().top(15);
+				image = hp.add().image();
+				label = hp.addSpace(4).add().label().text(text);
+				blue(label);
+				grid.column(column).expand();
+				decorate(active);
+				panel.addClickListener(this);
+				image.addClickListener(this);
+				label.addClickListener(this);
+			}
+
+			@Override
+			protected void onAllowedClick() {
+				throw new UnsupportedOperationException();
+			}
+
+			private void decorate(boolean active) {
+				if (active) {
+					panel.color().remove().gray(241).gradient().vertical()
+							.gray(248);
+					label.font().weight().bold();
+					image.resource(ACTIVE_IMAGES.get(type));
+				} else {
+					panel.color().remove().gray(248).gradient().vertical()
+							.gray(241);
+					label.font().weight().plain();
+					image.resource(INACTIVE_IMAGES.get(type));
+				}
+				panel.clickable(!active);
+				label.clickable(!active);
+				image.clickable(!active);
+			}
+		}
+
+		private IGridPanel grid;
+		private List<View> views = new LinkedList<View>();
+
+		public ViewSelection(IContainer c) {
+			grid = c.panel().grid().height(VIEW_SELECTION_HEIGHT);
+			grid.margin().bottom(10);
+		}
+
+		@Override
+		public IViewSelection addView(String label, ViewType type,
+				IClickListener c, boolean active, boolean isLast) {
+			View view = new View(label, type, c, active, isLast);
+			views.add(view);
+			return this;
+		}
+	}
 
 	public static final String NAME = "Standard";
 
@@ -108,8 +225,7 @@ class NinetyNineDesignsStyle implements IStyle {
 			@Override
 			public ILinearPanel<?>[] create(IContainer c) {
 				IGridPanel grid = c.panel().grid().spacing(1);
-				grid.color().rgb(29, 59, 89).gradient().vertical()
-						.rgb(57, 84, 110);
+				blue(grid).gradient().vertical().rgb(57, 84, 110);
 				grid.border().style().bottom();
 				grid.column(0).expand();
 				ILinearPanel<?> v = grid.cell(0, 0).valign().center().panel()
@@ -215,14 +331,16 @@ class NinetyNineDesignsStyle implements IStyle {
 			public void active(IHorizontalPanel buttonPanel, ILabel button) {
 				color(buttonPanel);
 				button.font().color().white();
-				buttonPanel.border().remove().style().rounded().width(6);
+				buttonPanel.border().remove().width(0).style().rounded()
+						.width(6);
 			}
 
 			@Override
 			public void inactive(IHorizontalPanel buttonPanel, ILabel button) {
 				buttonPanel.color().remove();
 				moreItem(button);
-				buttonPanel.border().remove().style().rounded().width(6);
+				buttonPanel.border().remove().width(0).style().rounded()
+						.width(6);
 			}
 
 			@Override
@@ -300,6 +418,20 @@ class NinetyNineDesignsStyle implements IStyle {
 				return 6;
 			}
 		};
+	}
+
+	@Override
+	public IViewSelection createSelection(IContainer c) {
+		return new ViewSelection(c);
+	}
+
+	@Override
+	public void background(IPanel<?> panel) {
+	}
+
+	@Override
+	public void display(IDisplay display) {
+		display.color().white();
 	}
 
 }

@@ -29,6 +29,10 @@ public interface IBordered {
 				IRoundBorder bottom(boolean bottom);
 
 				IRoundBorder width(int width);
+
+				IRoundBorder right(boolean right);
+
+				IRoundBorder left(boolean left);
 			}
 
 			IBorder shadow();

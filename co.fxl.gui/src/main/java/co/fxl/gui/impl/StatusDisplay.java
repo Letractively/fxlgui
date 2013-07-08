@@ -34,6 +34,7 @@ import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IShell;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.log.impl.Log;
+import co.fxl.gui.style.impl.Style;
 
 public class StatusDisplay implements IResizeListener, Runnable,
 		IScrollListener, IShell {
@@ -287,7 +288,8 @@ public class StatusDisplay implements IResizeListener, Runnable,
 	}
 
 	public void stylePanel(IPanel<?> panel) {
-		panel.color().rgb(245, 245, 245);
+		Style.instance().background(panel);
+//		panel.color().rgb(245, 245, 245);
 	}
 
 	public void visible(boolean b) {
