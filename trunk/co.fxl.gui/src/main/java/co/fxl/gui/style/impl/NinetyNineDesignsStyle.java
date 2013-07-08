@@ -39,7 +39,7 @@ import co.fxl.gui.style.api.IStyle;
 
 class NinetyNineDesignsStyle implements IStyle {
 
-	public static final String NAME = "Colors";
+	public static final String NAME = "Standard";
 
 	@Override
 	public ILogin login() {
