@@ -82,6 +82,7 @@ public abstract class GWTBorder implements IBorder {
 
 		@Override
 		public IRoundBorder rounded() {
+			GWTBorder.this.width(0);
 			borderType = BORDER_ROUNDED;
 			update();
 			return new IRoundBorder() {
