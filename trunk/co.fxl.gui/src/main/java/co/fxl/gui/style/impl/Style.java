@@ -46,6 +46,7 @@ public class Style {
 		if (name == null)
 			name = DEFAULT_STYLE;
 		instance = styles.get(name);
+		instance.display(Display.instance());
 		Display.instance().font(instance.fontFamily(), instance.fontSize());
 	}
 

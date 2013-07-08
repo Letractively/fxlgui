@@ -24,6 +24,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
@@ -32,7 +33,17 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.style.api.IStyle;
 
-public class GrayScaleStyle implements IStyle {
+class GrayScaleStyle implements IStyle {
+
+	private class ViewSelection implements IViewSelection {
+
+		@Override
+		public IViewSelection addView(String label, ViewType viewType,
+				IClickListener c, boolean active, boolean isLast) {
+			return ViewSelection.this;
+		}
+
+	}
 
 	public static final String NAME = "Grayscale";
 
@@ -259,6 +270,21 @@ public class GrayScaleStyle implements IStyle {
 				return 0;
 			}
 		};
+	}
+
+	@Override
+	public IViewSelection createSelection(IContainer c) {
+		return new ViewSelection();
+	}
+
+	@Override
+	public void background(IPanel<?> panel) {
+		panel.color().gray(245);
+	}
+
+	@Override
+	public void display(IDisplay display) {
+		display.color().gray(245);
 	}
 
 }

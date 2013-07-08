@@ -96,7 +96,7 @@ public class GWTWidgetBorder extends GWTBorder {
 			DOM.setStyleAttribute(element, "borderRight", width + "px " + color
 					+ " " + style);
 		} else if (borderType.equals(GWTBorder.BORDER_ROUNDED)) {
-			DOM.setStyleAttribute(element, borderType, width + "px " + color
+			DOM.setStyleAttribute(element, "border", width + "px " + color
 					+ " " + style);
 			String attr = "borderRadius";
 			if (Env.runtime().leq(Env.FIREFOX, 12))
@@ -110,6 +110,14 @@ public class GWTWidgetBorder extends GWTBorder {
 			if (!roundBottom) {
 				element.getStyle().clearProperty("borderBottomLeftRadius");
 				element.getStyle().clearProperty("borderBottomRightRadius");
+			}
+			if (!roundLeft) {
+				element.getStyle().clearProperty("borderBottomLeftRadius");
+				element.getStyle().clearProperty("borderTopLeftRadius");
+			}
+			if (!roundRight) {
+				element.getStyle().clearProperty("borderBottomRightRadius");
+				element.getStyle().clearProperty("borderTopRightRadius");
 			}
 		} else {
 			DOM.setStyleAttribute(element, borderType, width + "px " + color

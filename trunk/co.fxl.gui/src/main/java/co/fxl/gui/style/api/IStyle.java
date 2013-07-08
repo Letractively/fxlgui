@@ -22,6 +22,7 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
@@ -30,6 +31,18 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.impl.UserPanel.Decorator;
 
 public interface IStyle {
+
+	public interface IViewSelection {
+
+		public enum ViewType {
+
+			TABLE, GRID, LIST, DETAILS;
+		}
+
+		IViewSelection addView(String label, ViewType viewType,
+				IClickListener c, boolean active, boolean isLast);
+
+	}
 
 	public interface ILogoPanel {
 
@@ -121,5 +134,11 @@ public interface IStyle {
 	INavigation navigation();
 
 	ILogoPanel logoPanel();
+
+	IViewSelection createSelection(IContainer c);
+
+	void background(IPanel<?> panel);
+
+	void display(IDisplay display);
 
 }
