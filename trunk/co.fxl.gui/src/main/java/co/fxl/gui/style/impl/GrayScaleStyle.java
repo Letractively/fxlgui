@@ -232,6 +232,10 @@ public class GrayScaleStyle implements IStyle {
 			public int offsetX() {
 				return 0;
 			}
+
+			@Override
+			public void moreItem(ILabel label) {
+			}
 		};
 	}
 
