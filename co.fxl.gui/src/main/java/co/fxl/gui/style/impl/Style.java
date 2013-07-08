@@ -33,8 +33,8 @@ public class Style {
 
 	static {
 		register(NinetyNineDesignsStyle.NAME, new NinetyNineDesignsStyle());
-		register(DEFAULT_STYLE, new GrayScaleStyle());
-		activate(NinetyNineDesignsStyle.NAME);
+		register(GrayScaleStyle.NAME, new GrayScaleStyle());
+		activate(DEFAULT_STYLE);
 	}
 
 	public static void register(String name, IStyle instance) {
