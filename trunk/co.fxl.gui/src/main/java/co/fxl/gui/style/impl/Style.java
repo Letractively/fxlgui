@@ -41,6 +41,8 @@ public class Style {
 
 	public static void activate(String name) {
 		instance = styles.get(name);
+		if (name == null)
+			name = GrayScaleStyle.NAME;
 		Display.instance().font(instance.fontFamily(), instance.fontSize());
 	}
 
