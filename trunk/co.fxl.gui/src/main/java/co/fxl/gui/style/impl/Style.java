@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.style.api.IStyle;
 
 public class Style {
@@ -41,6 +42,7 @@ public class Style {
 	}
 
 	public static void activate(String name) {
+		Log.instance().debug("Activating style " + name);
 		if (name == null)
 			name = DEFAULT_STYLE;
 		instance = styles.get(name);
