@@ -40,9 +40,9 @@ public class Style {
 	}
 
 	public static void activate(String name) {
-		instance = styles.get(name);
 		if (name == null)
 			name = GrayScaleStyle.NAME;
+		instance = styles.get(name);
 		Display.instance().font(instance.fontFamily(), instance.fontSize());
 	}
 
