@@ -70,6 +70,8 @@ public interface IStyle {
 
 		int offsetX();
 
+		void moreItem(ILabel label);
+
 	}
 
 	public interface IUserPanel {

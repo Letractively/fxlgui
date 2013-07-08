@@ -48,6 +48,7 @@ import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.ErrorDialog;
 import co.fxl.gui.impl.HorizontalScalingPanel;
+import co.fxl.gui.impl.HyperlinkMouseOverListener;
 import co.fxl.gui.impl.IServerListener;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.ResizableWidgetTemplate;
@@ -480,9 +481,8 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		for (final Action action : actions) {
 			if (action.c != null && !action.c.satisfied(active))
 				continue;
-			ILabel li = actionPanel.add().label().text(action.c.label())
-					.hyperlink();
-			li.font().pixel(14).weight().bold();
+			String label = action.c.label();
+			ILabel li = addLabel(actionPanel, label);
 			li.addClickListener(new LazyClickListener() {
 				@Override
 				protected void onAllowedClick() {
@@ -492,6 +492,14 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 				}
 			});
 		}
+	}
+
+	private ILabel addLabel(IPanel<?> actionPanel, String label) {
+		ILabel li = actionPanel.add().label().text(label);
+		li.font().pixel(14).weight().bold();
+		Style.instance().navigation().moreItem(li);
+		new HyperlinkMouseOverListener(li);
+		return li;
 	}
 
 	boolean addLabelsToGridPanel(IVerticalPanel p) {
@@ -536,8 +544,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			for (final NavigationItemImpl i : g.items) {
 				if (i.displayed() || !i.visible())
 					continue;
-				ILabel li = v.add().label().text(i.name()).hyperlink();
-				li.font().pixel(14).weight().bold();
+				ILabel li = addLabel(v, i.name());
 				li.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
