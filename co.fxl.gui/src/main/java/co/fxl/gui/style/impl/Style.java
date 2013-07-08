@@ -26,12 +26,13 @@ import co.fxl.gui.style.api.IStyle;
 
 public class Style {
 
+	private static final String DEFAULT_STYLE = NinetyNineDesignsStyle.NAME;
 	private static IStyle instance;
 	private static Map<String, IStyle> styles = new HashMap<String, IStyle>();
 
 	static {
 		register(NinetyNineDesignsStyle.NAME, new NinetyNineDesignsStyle());
-		register(GrayScaleStyle.NAME, new GrayScaleStyle());
+		register(DEFAULT_STYLE, new GrayScaleStyle());
 		activate(NinetyNineDesignsStyle.NAME);
 	}
 
@@ -41,7 +42,7 @@ public class Style {
 
 	public static void activate(String name) {
 		if (name == null)
-			name = GrayScaleStyle.NAME;
+			name = DEFAULT_STYLE;
 		instance = styles.get(name);
 		Display.instance().font(instance.fontFamily(), instance.fontSize());
 	}

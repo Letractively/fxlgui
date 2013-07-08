@@ -34,7 +34,7 @@ import co.fxl.gui.style.api.IStyle;
 
 public class GrayScaleStyle implements IStyle {
 
-	public static final String NAME = "Standard";
+	public static final String NAME = "Grayscale";
 
 	@Override
 	public IApplicationPanel applicationPanel() {
