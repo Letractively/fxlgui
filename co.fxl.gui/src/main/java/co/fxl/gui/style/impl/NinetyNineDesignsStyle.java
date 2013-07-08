@@ -76,7 +76,7 @@ class NinetyNineDesignsStyle implements IStyle {
 						popUp.offset(image.offsetX() - 140 + 12,
 								image.offsetY() + 25);
 						IVerticalPanel p = popUp.container().panel().vertical()
-								.spacing(8);
+								.spacing(16);
 						p.margin().top(2);
 						boolean addLine = false;
 						for (Decorator d : decorators) {
@@ -90,7 +90,7 @@ class NinetyNineDesignsStyle implements IStyle {
 						ImageButton ib = new ImageButton(p.add());
 						ib.imageResource("logout.png").text("Logout")
 								.addClickListener(listener);
-						ib.label().hyperlink();
+						ib.label().hyperlink().font().weight().bold();
 						popUp.visible(true);
 					}
 				};
