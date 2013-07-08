@@ -100,6 +100,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	private GWTDisplay() {
 		// GWTDisplayClientBundle.INSTANCE.css().ensureInjected();
 		Display.instance(this);
+		co.fxl.gui.style.impl.Style.instance();
 		container = new GWTContainer<Widget>(this) {
 			public void setComponent(Widget component) {
 				widget = component;
