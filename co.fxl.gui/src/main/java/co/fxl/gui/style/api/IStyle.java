@@ -24,6 +24,7 @@ import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
@@ -58,6 +59,11 @@ public interface IStyle {
 		void showButton(CommandLink commandLink);
 
 		void button(CommandLink commandLink);
+
+		void headerPanel(IGridPanel headerPanel, boolean sideWidget);
+
+		void backgroundPanel(IGridPanel panel, boolean addBorder,
+				boolean plainContent, boolean sideWidget);
 
 	}
 
