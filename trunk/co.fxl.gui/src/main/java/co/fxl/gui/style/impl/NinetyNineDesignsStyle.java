@@ -172,7 +172,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		public ViewSelection(IContainer c, boolean isDiscardChangesDialog) {
 			this.isDiscardChangesDialog = isDiscardChangesDialog;
 			grid = c.panel().grid().height(VIEW_SELECTION_HEIGHT);
-			// grid.margin().bottom(10);
+			grid.margin().top(ADD_DISTANCE_MDT_FIRST_ROW);
 		}
 
 		@Override
@@ -204,6 +204,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 	}
 
 	public static final String NAME = "Standard";
+	private static final int ADD_DISTANCE_MDT_FIRST_ROW = 3;
 
 	@Override
 	public ILogin login() {
@@ -538,7 +539,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public void headerPanel(IGridPanel headerPanel, boolean sideWidget) {
 				if (!sideWidget)
-					headerPanel.padding().bottom(7);
+					headerPanel.padding()
+							.bottom(7 + ADD_DISTANCE_MDT_FIRST_ROW);
 			}
 
 			@Override
@@ -561,7 +563,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public void quickSearch(ISuggestField sf) {
 				sf.height(28);
-				sf.margin().top(5);
+				sf.margin().top(4);
 				sf.padding().left(27).right(3);
 				IBorder border = sf.border();
 				border.style().rounded();
