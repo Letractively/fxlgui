@@ -549,11 +549,11 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			public void quickSearch(ISuggestField sf) {
 				sf.height(28);
 				sf.margin().top(5);
-				sf.padding().left(3).right(3);
+				sf.padding().left(27).right(3);
 				IBorder border = sf.border();
 				border.style().rounded();
 				border.width(1).color().lightgray();
-				border.style().roundShadow();
+				sf.addStyle("quickSearchShadow");
 			}
 		};
 	}

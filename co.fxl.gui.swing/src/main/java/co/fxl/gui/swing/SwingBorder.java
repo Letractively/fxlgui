@@ -115,12 +115,6 @@ class SwingBorder implements IBorder {
 		}
 
 		@Override
-		public IBorder roundShadow() {
-			// TODO SWING-FXL: IMPL: ...
-			return SwingBorder.this;
-		}
-
-		@Override
 		public IBorder right() {
 			ensurePartialBorder().right = true;
 			return SwingBorder.this;

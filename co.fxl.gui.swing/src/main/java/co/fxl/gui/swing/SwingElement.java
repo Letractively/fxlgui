@@ -574,4 +574,10 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public R addStyle(String style) {
+		return (R) this;
+	}
+
 }

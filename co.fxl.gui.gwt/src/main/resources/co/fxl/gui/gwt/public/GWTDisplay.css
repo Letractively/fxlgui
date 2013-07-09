@@ -15,7 +15,8 @@ box-shadow: 4px 4px 5px #000000;
 -moz-box-shadow: 4px 4px 5px #000000; 
 filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=4, offY=4, positive=true);
 }
-.quicksearchshadow{ 
+.quickSearchShadow{ 
+background: url(images/ico-search.png) no-repeat scroll 7px 7px;
 box-shadow: 0px 0px 6px #4BE1FF;
 -webkit-box-shadow: 0px 0px 6px #4BE1FF;
 -moz-box-shadow: 0px 0px 6px #4BE1FF;

@@ -94,11 +94,6 @@ public class BorderMemento implements IBorder {
 			return setPartial();
 		}
 
-		@Override
-		public IBorder roundShadow() {
-			throw new UnsupportedOperationException();
-		}
-
 	}
 
 	public BorderStyleMemento style = new BorderStyleMemento();

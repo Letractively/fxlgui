@@ -861,4 +861,11 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 			return find(parent);
 		}
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R addStyle(String style) {
+		container.widget.addStyleName(style);
+		return (R) this;
+	}
 }
