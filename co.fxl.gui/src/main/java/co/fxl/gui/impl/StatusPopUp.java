@@ -180,7 +180,7 @@ public class StatusPopUp implements IResizeListener, Runnable {
 			panel = popUp.container().panel().horizontal().spacing(5);
 			yellow(panel);
 			label = panel.addSpace(4).add().label();
-			label.font().pixel(11);
+			label.font().pixel(11).family().arial();
 			panel.addSpace(4);
 		}
 		return popUp;
