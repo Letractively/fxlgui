@@ -36,7 +36,7 @@ public interface IStyle {
 
 		public enum ViewType {
 
-			TABLE, GRID, LIST, DETAILS;
+			TABLE, GRID, LIST, DETAIL;
 		}
 
 		IViewSelection addView(String label, ViewType viewType,

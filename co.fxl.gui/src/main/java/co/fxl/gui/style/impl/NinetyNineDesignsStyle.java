@@ -18,10 +18,8 @@
  */
 package co.fxl.gui.style.impl;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
@@ -46,7 +44,6 @@ import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.style.api.IStyle;
-import co.fxl.gui.style.api.IStyle.IViewSelection.ViewType;
 
 class NinetyNineDesignsStyle implements IStyle {
 
@@ -62,24 +59,9 @@ class NinetyNineDesignsStyle implements IStyle {
 		return color.rgb(29, 59, 89);
 	}
 
-	private static final Map<ViewType, String> ACTIVE_IMAGES = new HashMap<ViewType, String>();
-	static {
-		ACTIVE_IMAGES.put(ViewType.TABLE, "view_table_active.png");
-		ACTIVE_IMAGES.put(ViewType.LIST, "view_list_active.png");
-		ACTIVE_IMAGES.put(ViewType.GRID, "view_grid_active.png");
-		ACTIVE_IMAGES.put(ViewType.DETAILS, "view_detail_active.png");
-	}
-	private static final Map<ViewType, String> INACTIVE_IMAGES = new HashMap<ViewType, String>();
-	static {
-		INACTIVE_IMAGES.put(ViewType.TABLE, "view_table_inactive.png");
-		INACTIVE_IMAGES.put(ViewType.LIST, "view_list_inactive.png");
-		INACTIVE_IMAGES.put(ViewType.GRID, "view_grid_inactive.png");
-		INACTIVE_IMAGES.put(ViewType.DETAILS, "view_detail_inactive.png");
-	}
-
 	private class ViewSelection implements IViewSelection {
 
-		private static final int VIEW_SELECTION_HEIGHT = 47;
+		private static final int VIEW_SELECTION_HEIGHT = 40;
 
 		private class View extends LazyClickListener {
 
@@ -132,16 +114,17 @@ class NinetyNineDesignsStyle implements IStyle {
 					panel.color().remove().gray(231).gradient().vertical()
 							.gray(248);
 					label.font().weight().bold();
-					image.resource(INACTIVE_IMAGES.get(type));
 				} else {
 					panel.color().remove().gray(248).gradient().vertical()
 							.gray(231);
 					label.font().weight().plain();
-					image.resource(ACTIVE_IMAGES.get(type));
 				}
+				String res = "view_" + type.name().toLowerCase() + "_"
+						+ (active ? "active" : "inactive") + ".png";
 				panel.clickable(!active);
 				label.clickable(!active);
 				image.clickable(!active);
+				image.resource(res).opacity(1.0);
 			}
 		}
 
