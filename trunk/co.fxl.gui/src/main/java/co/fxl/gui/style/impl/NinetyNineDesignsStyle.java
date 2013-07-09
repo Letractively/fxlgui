@@ -143,6 +143,11 @@ class NinetyNineDesignsStyle implements IStyle {
 			views.add(view);
 			return this;
 		}
+
+		@Override
+		public boolean containsQuerySelection() {
+			return false;
+		}
 	}
 
 	public static final String NAME = "Standard";

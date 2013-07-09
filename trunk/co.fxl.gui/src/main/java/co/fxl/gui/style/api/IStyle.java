@@ -42,6 +42,8 @@ public interface IStyle {
 		IViewSelection addView(String label, ViewType viewType,
 				IClickListener c, boolean active, boolean isLast);
 
+		boolean containsQuerySelection();
+
 	}
 
 	public interface ILogoPanel {

@@ -27,6 +27,7 @@ import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
@@ -41,7 +42,6 @@ import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IGrouping;
-import co.fxl.gui.table.scroll.api.IScrollTableWidget.IRowListener;
 import co.fxl.gui.table.util.api.IDragDropListener;
 
 public interface IScrollTableWidget<T> extends IResizableWidget, IHasButtons {
@@ -129,7 +129,8 @@ public interface IScrollTableWidget<T> extends IResizableWidget, IHasButtons {
 
 		ICommandButtons<T> listenOnEdit(IRowListener<IRows<T>> l);
 
-		ICommandButtons<T> listenOnExpand(IRowListener<IRows<Object>> iRowListener);
+		ICommandButtons<T> listenOnExpand(
+				IRowListener<IRows<Object>> iRowListener);
 	}
 
 	public interface IButtonPanelDecorator {
@@ -274,6 +275,8 @@ public interface IScrollTableWidget<T> extends IResizableWidget, IHasButtons {
 	IScrollTableWidget<T> addLargeTitle(String string);
 
 	IScrollTableWidget<T> title(String title);
+
+	void add2Title(IHorizontalPanel panel);
 
 	// IVerticalPanel editPanel();
 }

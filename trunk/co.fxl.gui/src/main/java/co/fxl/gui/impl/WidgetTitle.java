@@ -91,6 +91,7 @@ public class WidgetTitle implements IClickListener, IColored {
 	private int spaceBottom;
 	private List<CommandLink> links = new LinkedList<CommandLink>();
 	private IHorizontalPanel oneTimeRefresh;
+	private IHorizontalPanel basicTitlePanel;
 
 	public WidgetTitle() {
 	}
@@ -113,7 +114,21 @@ public class WidgetTitle implements IClickListener, IColored {
 		panel.color().white();
 		this.addBorder = addBorder;
 		this.plainContent = plainContent;
-		setUp();
+		headerFocusPanel = panel.cell(0, 0).panel().focus();
+		headerPanel = headerFocusPanel.add().panel().grid();
+		headerPanel.color().rgb(136, 136, 136).gradient().vertical()
+				.rgb(113, 113, 113);
+		if (plainContent)
+			headerPanel.visible(false);
+		bPanel = panel.cell(0, 1).panel().grid();
+		if (!plainContent) {
+			IBorder border = headerPanel.border();
+			border.color().rgb(172, 197, 213);
+			border.style().bottom();
+		}
+		headerPanel.visible(false);
+		if (addBorder && !plainContent)
+			panel.border().color().rgb(172, 197, 213);
 	}
 
 	public IColor background() {
@@ -139,24 +154,6 @@ public class WidgetTitle implements IClickListener, IColored {
 		if (plainContent)
 			spacing(0);
 		return this;
-	}
-
-	private void setUp() {
-		headerFocusPanel = panel.cell(0, 0).panel().focus();
-		headerPanel = headerFocusPanel.add().panel().grid();
-		headerPanel.color().rgb(136, 136, 136).gradient().vertical()
-				.rgb(113, 113, 113);
-		if (plainContent)
-			headerPanel.visible(false);
-		bPanel = panel.cell(0, 1).panel().grid();
-		if (!plainContent) {
-			IBorder border = headerPanel.border();
-			border.color().rgb(172, 197, 213);
-			border.style().bottom();
-		}
-		headerPanel.visible(false);
-		if (addBorder && !plainContent)
-			panel.border().color().rgb(172, 197, 213);
 	}
 
 	// public void styleHeader(IPanel<?> headerPanel) {
@@ -196,9 +193,8 @@ public class WidgetTitle implements IClickListener, IColored {
 		if (hasHeaderPanel)
 			return;
 		headerPanel.visible(!plainContent);
-		IHorizontalPanel horizontal = headerPanel.cell(0, 0).panel()
-				.horizontal();// .addSpace(3);
-		titlePanel = horizontal.add().panel().horizontal();
+		basicTitlePanel = headerPanel.cell(0, 0).panel().horizontal();
+		titlePanel = basicTitlePanel.add().panel().horizontal();
 		titlePanel.spacing().left(10).top(6).bottom(6).right(6);
 		hasHeaderPanel = true;
 	}
@@ -633,6 +629,11 @@ public class WidgetTitle implements IClickListener, IColored {
 	public void fireClick(String buttonLabel) {
 		for (CommandLink l : links)
 			l.fireClick(buttonLabel);
+	}
+
+	public void add2Title(IHorizontalPanel panel) {
+		initHeader();
+		basicTitlePanel.add().element(panel);
 	}
 
 }

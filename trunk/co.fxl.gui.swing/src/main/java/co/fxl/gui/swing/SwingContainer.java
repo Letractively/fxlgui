@@ -67,6 +67,9 @@ public class SwingContainer<T extends JComponent> implements IContainer {
 	private String uID;
 	private Class<JScrollPane> clazz;
 
+	SwingContainer() {
+	}
+
 	SwingContainer(ComponentParent parent) {
 		this.parent = parent;
 	}

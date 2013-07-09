@@ -360,4 +360,10 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 		return this;
 	}
 
+	@SuppressWarnings("rawtypes")
+	@Override
+	public IContainer newContainer() {
+		return new SwingContainer();
+	}
+
 }

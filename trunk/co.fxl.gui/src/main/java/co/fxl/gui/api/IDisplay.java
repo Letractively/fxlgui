@@ -72,6 +72,8 @@ public interface IDisplay extends IColored, IServiceRegistry<IDisplay>,
 	IDialog showDialog();
 
 	IWebsite showWebsite();
+	
+	IContainer newContainer();
 
 	IPopUp showPopUp();
 
