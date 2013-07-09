@@ -534,6 +534,19 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			private IFont fontSize(CommandLink commandLink) {
 				return commandLink.label().font().pixel(13);
 			}
+
+			@Override
+			public void headerPanel(IGridPanel headerPanel, boolean sideWidget) {
+				if (!sideWidget)
+					headerPanel.padding().bottom(7);
+			}
+
+			@Override
+			public void backgroundPanel(IGridPanel panel, boolean addBorder,
+					boolean plainContent, boolean sideWidget) {
+				if (addBorder && !plainContent && sideWidget)
+					panel.border().color().rgb(172, 197, 213);
+			}
 		};
 	}
 

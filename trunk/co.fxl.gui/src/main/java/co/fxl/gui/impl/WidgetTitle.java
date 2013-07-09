@@ -80,7 +80,7 @@ public class WidgetTitle implements IClickListener, IColored {
 	private boolean hyperlinkVisible = true;
 	private IDockPanel footer;
 	private IImage more;
-//	private boolean addBorder;
+	// private boolean addBorder;
 	private boolean plainContent = false;
 	private boolean center;
 	private static Map<String, Boolean> foldStatus = new HashMap<String, Boolean>();
@@ -113,7 +113,7 @@ public class WidgetTitle implements IClickListener, IColored {
 		baseFocusPanel = layout.focus().width(-1);
 		panel = baseFocusPanel.add().panel().grid();
 		panel.color().white();
-//		this.addBorder = addBorder;
+		// this.addBorder = addBorder;
 		this.plainContent = plainContent;
 		headerFocusPanel = panel.cell(0, 0).panel().focus();
 		headerPanel = headerFocusPanel.add().panel().grid();
@@ -122,13 +122,14 @@ public class WidgetTitle implements IClickListener, IColored {
 			headerPanel.visible(false);
 		bPanel = panel.cell(0, 1).panel().grid();
 		if (!plainContent) {
+			Style.instance().window().headerPanel(headerPanel, sideWidget);
 			IBorder border = headerPanel.border();
 			border.color().rgb(172, 197, 213);
 			border.style().bottom();
 		}
 		headerPanel.visible(false);
-		if (addBorder && !plainContent)
-			panel.border().color().rgb(172, 197, 213);
+		Style.instance().window()
+				.backgroundPanel(panel, addBorder, plainContent, sideWidget);
 	}
 
 	public IColor background() {

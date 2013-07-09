@@ -28,6 +28,7 @@ import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
@@ -461,6 +462,18 @@ class GrayScaleStyle extends StyleTemplate {
 			@Override
 			public void button(CommandLink commandLink) {
 			}
+
+			@Override
+			public void headerPanel(IGridPanel headerPanel, boolean sideWidget) {
+			}
+
+			@Override
+			public void backgroundPanel(IGridPanel panel, boolean addBorder,
+					boolean plainContent, boolean sideWidget) {
+				if (addBorder && !plainContent)
+					panel.border().color().rgb(172, 197, 213);
+			}
+
 		};
 	}
 
