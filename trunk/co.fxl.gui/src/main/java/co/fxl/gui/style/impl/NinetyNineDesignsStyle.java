@@ -157,7 +157,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		public ViewSelection(IContainer c, boolean isDiscardChangesDialog) {
 			this.isDiscardChangesDialog = isDiscardChangesDialog;
 			grid = c.panel().grid().height(VIEW_SELECTION_HEIGHT);
-			grid.margin().bottom(10);
+//			grid.margin().bottom(10);
 		}
 
 		@Override
