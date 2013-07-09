@@ -37,9 +37,11 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
+import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
 import co.fxl.gui.impl.ImageButton;
@@ -111,9 +113,20 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
-			void style(IComboBox cb) {
+			void style(final IComboBox cb) {
 				cb.width(150).border().remove();
 				cb.color().white();
+				cb.addMouseOverListener(new IMouseOverListener() {
+					@Override
+					public void onMouseOver() {
+						cb.border().color().lightgray();
+					}
+
+					@Override
+					public void onMouseOut() {
+						cb.border().remove();
+					}
+				});
 			}
 
 			@Override
@@ -157,7 +170,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		public ViewSelection(IContainer c, boolean isDiscardChangesDialog) {
 			this.isDiscardChangesDialog = isDiscardChangesDialog;
 			grid = c.panel().grid().height(VIEW_SELECTION_HEIGHT);
-//			grid.margin().bottom(10);
+			// grid.margin().bottom(10);
 		}
 
 		@Override
@@ -465,6 +478,27 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 	@Override
 	public void display(IDisplay display) {
 		display.color().white();
+	}
+
+	@Override
+	public IWindow window() {
+		return new IWindow() {
+			@Override
+			public void background(IPanel<?> panel) {
+			}
+
+			@Override
+			public void title(ILabel label) {
+				blue(label);
+				label.font().weight().bold();
+			}
+
+			@Override
+			public void moreButton(CommandLink more) {
+				more.label().font().color().black();
+				more.image("more_small_black.png");
+			}
+		};
 	}
 
 }

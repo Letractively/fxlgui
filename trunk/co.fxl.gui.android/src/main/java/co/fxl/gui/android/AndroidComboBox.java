@@ -127,4 +127,10 @@ class AndroidComboBox extends AndroidElement<Spinner, IComboBox> implements
 	public IComboBox removeText(String... texts) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public IComboBox addMouseOverListener(
+			co.fxl.gui.api.IMouseOverElement.IMouseOverListener l) {
+		throw new UnsupportedOperationException();
+	}
 }

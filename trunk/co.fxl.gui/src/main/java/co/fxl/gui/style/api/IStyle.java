@@ -30,10 +30,21 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IUpdateable;
+import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.impl.WidgetTitle;
 
 public interface IStyle {
+
+	public interface IWindow {
+
+		void background(IPanel<?> panel);
+
+		void title(ILabel label);
+
+		void moreButton(CommandLink label);
+
+	}
 
 	public interface IViewSelection {
 
@@ -174,5 +185,7 @@ public interface IStyle {
 	void background(IPanel<?> panel);
 
 	void display(IDisplay display);
+
+	IWindow window();
 
 }
