@@ -483,6 +483,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 				continue;
 			String label = action.c.label();
 			ILabel li = addLabel(actionPanel, label);
+			li.font().weight().plain();
 			li.addClickListener(new LazyClickListener() {
 				@Override
 				protected void onAllowedClick() {
