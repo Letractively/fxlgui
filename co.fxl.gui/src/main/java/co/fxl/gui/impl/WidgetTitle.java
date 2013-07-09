@@ -40,6 +40,7 @@ import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.ContextMenu.Group;
+import co.fxl.gui.style.impl.Style;
 
 public class WidgetTitle implements IClickListener, IColored {
 
@@ -79,7 +80,7 @@ public class WidgetTitle implements IClickListener, IColored {
 	private boolean hyperlinkVisible = true;
 	private IDockPanel footer;
 	private IImage more;
-	private boolean addBorder;
+//	private boolean addBorder;
 	private boolean plainContent = false;
 	private boolean center;
 	private static Map<String, Boolean> foldStatus = new HashMap<String, Boolean>();
@@ -112,12 +113,11 @@ public class WidgetTitle implements IClickListener, IColored {
 		baseFocusPanel = layout.focus().width(-1);
 		panel = baseFocusPanel.add().panel().grid();
 		panel.color().white();
-		this.addBorder = addBorder;
+//		this.addBorder = addBorder;
 		this.plainContent = plainContent;
 		headerFocusPanel = panel.cell(0, 0).panel().focus();
 		headerPanel = headerFocusPanel.add().panel().grid();
-		headerPanel.color().rgb(136, 136, 136).gradient().vertical()
-				.rgb(113, 113, 113);
+		Style.instance().window().background(headerPanel);
 		if (plainContent)
 			headerPanel.visible(false);
 		bPanel = panel.cell(0, 1).panel().grid();
@@ -345,7 +345,7 @@ public class WidgetTitle implements IClickListener, IColored {
 
 	// @Style(window = Window.SIDE, outline = Outline.HEADER)
 	public void styleHeaderTitleSide(ILabel label) {
-		label.font().weight().bold().pixel(12).color().white();
+		Style.instance().window().title(label);
 	}
 
 	public CommandLink addHyperlink(String text) {

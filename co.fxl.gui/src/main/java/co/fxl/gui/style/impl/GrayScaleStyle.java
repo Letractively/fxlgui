@@ -34,6 +34,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.impl.WidgetTitle;
@@ -427,6 +428,27 @@ class GrayScaleStyle extends StyleTemplate {
 	@Override
 	public void display(IDisplay display) {
 		display.color().gray(245);
+	}
+
+	@Override
+	public IWindow window() {
+		return new IWindow() {
+			@Override
+			public void background(IPanel<?> panel) {
+				panel.color().rgb(136, 136, 136).gradient().vertical()
+						.rgb(113, 113, 113);
+			}
+
+			@Override
+			public void title(ILabel label) {
+				label.font().weight().bold().color().white();
+			}
+
+			@Override
+			public void moreButton(CommandLink more) {
+				more.label().font().color().white();
+			}
+		};
 	}
 
 }

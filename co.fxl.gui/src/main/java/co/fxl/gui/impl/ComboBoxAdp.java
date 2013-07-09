@@ -65,4 +65,11 @@ public class ComboBoxAdp extends TextElementAdp<IComboBox> implements IComboBox 
 		return this;
 	}
 
+	@Override
+	public IComboBox addMouseOverListener(
+			co.fxl.gui.api.IMouseOverElement.IMouseOverListener l) {
+		element().addMouseOverListener(l);
+		return this;
+	}
+
 }
