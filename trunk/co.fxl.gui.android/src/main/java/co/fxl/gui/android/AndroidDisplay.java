@@ -208,4 +208,8 @@ public class AndroidDisplay extends DisplayTemplate implements Parent {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public void reload() {
+	}
+
 }

@@ -26,6 +26,7 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IFontElement;
@@ -39,14 +40,14 @@ import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
 import co.fxl.gui.impl.ImageButton;
-import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.UserPanel.Decorator;
-import co.fxl.gui.style.api.IStyle;
+import co.fxl.gui.impl.WidgetTitle;
 
-class NinetyNineDesignsStyle implements IStyle {
+class NinetyNineDesignsStyle extends StyleTemplate {
 
 	private IColor blue(IFontElement element) {
 		return blue(element.font());
@@ -63,19 +64,20 @@ class NinetyNineDesignsStyle implements IStyle {
 	private class ViewSelection implements IViewSelection {
 
 		private static final int VIEW_SELECTION_HEIGHT = 40;
+		private IHorizontalPanel comboBoxPanel = Display.instance()
+				.newContainer().panel().horizontal();
 
-		private class View extends LazyClickListener {
+		private class View extends ViewTemplate implements IView {
 
 			private IPanel<?> panel;
 			private IImage image;
 			private ILabel label;
 			private ViewType type;
-			private IClickListener clickListener;
 
-			private View(String text, ViewType type, IClickListener c,
-					boolean active, boolean isLast) {
+			private View(String text, ViewType type, boolean isLast) {
+				super(comboBoxPanel.add().panel().horizontal(),
+						isDiscardChangesDialog);
 				this.type = type;
-				clickListener = c;
 				int column = views.size();
 				IGridCell cell = grid.cell(column, 0).align().center().valign()
 						.center();
@@ -96,21 +98,27 @@ class NinetyNineDesignsStyle implements IStyle {
 				label = hp.addSpace(4).add().label().text(text);
 				blue(label);
 				grid.column(column).expand();
-				decorate(active);
+				// decorate(active);
 				panel.addClickListener(this);
 				image.addClickListener(this);
 				label.addClickListener(this);
+				addEntry(text, title(), image.resource());
 			}
 
 			@Override
-			protected void onAllowedClick() {
-				for (View view : views) {
-					view.decorate(view == this);
-				}
-				clickListener.onClick();
+			int space() {
+				return 0;
 			}
 
-			private void decorate(boolean active) {
+			@Override
+			void style(IComboBox cb) {
+				cb.width(150).border().remove();
+				cb.color().white();
+			}
+
+			@Override
+			public IView clickable(boolean clickable) {
+				boolean active = !clickable;
 				panel.color().remove().gray(active ? 231 : 248).gradient()
 						.vertical().gray(active ? 248 : 231);
 				IWeight weight = label.font().weight();
@@ -125,28 +133,58 @@ class NinetyNineDesignsStyle implements IStyle {
 				label.clickable(!active);
 				image.clickable(!active);
 				image.resource(res).opacity(1.0);
+				panel0().visible(!clickable);
+				return super.clickable(clickable);
+			}
+
+			@Override
+			public boolean clickable() {
+				return panel.clickable();
+			}
+
+			@Override
+			public void showActive() {
+				for (View view : views) {
+					view.clickable(view != View.this);
+				}
 			}
 		}
 
 		private IGridPanel grid;
 		private List<View> views = new LinkedList<View>();
+		private boolean isDiscardChangesDialog;
 
-		public ViewSelection(IContainer c) {
+		public ViewSelection(IContainer c, boolean isDiscardChangesDialog) {
+			this.isDiscardChangesDialog = isDiscardChangesDialog;
 			grid = c.panel().grid().height(VIEW_SELECTION_HEIGHT);
 			grid.margin().bottom(10);
 		}
 
 		@Override
-		public IViewSelection addView(String label, ViewType type,
-				IClickListener c, boolean active, boolean isLast) {
-			View view = new View(label, type, c, active, isLast);
+		public IView addView(String label, ViewType type, boolean isLast) {
+			View view = new View(label, type, isLast);
 			views.add(view);
-			return this;
+			return view;
 		}
 
 		@Override
-		public boolean containsQuerySelection() {
-			return false;
+		public String title() {
+			return VIEWS;
+		}
+
+		@Override
+		public WidgetTitle widgetTitle() {
+			return null;
+		}
+
+		@Override
+		public IHorizontalPanel comboBoxPanel() {
+			return comboBoxPanel;
+		}
+
+		@Override
+		public void visible(boolean b) {
+			grid.visible(b);
 		}
 	}
 
@@ -415,8 +453,9 @@ class NinetyNineDesignsStyle implements IStyle {
 	}
 
 	@Override
-	public IViewSelection createSelection(IContainer c) {
-		return new ViewSelection(c);
+	public IViewSelection createSelection(IContainer c,
+			boolean isDiscardChangesDialog) {
+		return new ViewSelection(c, isDiscardChangesDialog);
 	}
 
 	@Override

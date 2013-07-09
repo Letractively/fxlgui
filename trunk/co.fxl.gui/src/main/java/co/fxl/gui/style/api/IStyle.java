@@ -21,6 +21,7 @@ package co.fxl.gui.style.api;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored;
+import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -28,7 +29,9 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.impl.UserPanel.Decorator;
+import co.fxl.gui.impl.WidgetTitle;
 
 public interface IStyle {
 
@@ -39,10 +42,39 @@ public interface IStyle {
 			TABLE, GRID, LIST, DETAIL;
 		}
 
-		IViewSelection addView(String label, ViewType viewType,
-				IClickListener c, boolean active, boolean isLast);
+		public interface IView extends IClickable<IView>, IUpdateable<String> {
 
-		boolean containsQuerySelection();
+			IComboBox addComboBox();
+
+			void removeLoadingIcon();
+
+			IHorizontalPanel panel0();
+
+			void comboBox(IComboBox cb, IHorizontalPanel p, boolean b);
+
+			void showActive();
+
+			IComboBox cb();
+
+			String cbText();
+
+			boolean firstTimeLoad();
+
+			void showLoadingIcon();
+
+			boolean isActive();
+
+		}
+
+		IView addView(String label, ViewType viewType, boolean isLast);
+
+		WidgetTitle widgetTitle();
+
+		IHorizontalPanel comboBoxPanel();
+
+		String title();
+
+		void visible(boolean b);
 
 	}
 
@@ -137,7 +169,7 @@ public interface IStyle {
 
 	ILogoPanel logoPanel();
 
-	IViewSelection createSelection(IContainer c);
+	IViewSelection createSelection(IContainer c, boolean noDiscardChangesDialog);
 
 	void background(IPanel<?> panel);
 

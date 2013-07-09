@@ -72,7 +72,7 @@ public interface IDisplay extends IColored, IServiceRegistry<IDisplay>,
 	IDialog showDialog();
 
 	IWebsite showWebsite();
-	
+
 	IContainer newContainer();
 
 	IPopUp showPopUp();
@@ -98,5 +98,7 @@ public interface IDisplay extends IColored, IServiceRegistry<IDisplay>,
 	IDisplay clear();
 
 	IDisplay font(String fontFamily, int fontSize);
+
+	void reload();
 
 }
