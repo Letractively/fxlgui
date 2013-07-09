@@ -448,6 +448,28 @@ class GrayScaleStyle extends StyleTemplate {
 			public void moreButton(CommandLink more) {
 				more.label().font().color().white();
 			}
+
+			@Override
+			public void newButton(CommandLink commandLink) {
+			}
+
+			@Override
+			public void showButton(CommandLink commandLink) {
+			}
+
+			@Override
+			public void button(CommandLink commandLink) {
+			}
+		};
+	}
+
+	@Override
+	public IMDT mdt() {
+		return new IMDT() {
+			@Override
+			public boolean showQuickSearchOnTop() {
+				return false;
+			}
 		};
 	}
 

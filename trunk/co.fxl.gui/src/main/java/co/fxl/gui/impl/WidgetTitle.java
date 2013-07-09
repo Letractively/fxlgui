@@ -464,7 +464,7 @@ public class WidgetTitle implements IClickListener, IColored {
 			IImage image, ILabel label) {
 		labels.add(label);
 		CommandLink cl = new CommandLink(this, fp, backgroundPanel, iPanel0,
-				image, label);
+				image, label, commandsOnTop);
 		cl.clickable(hyperlinkVisible);
 		if (addToContextMenu && title != null)
 			cl.addToContextMenu(title);
