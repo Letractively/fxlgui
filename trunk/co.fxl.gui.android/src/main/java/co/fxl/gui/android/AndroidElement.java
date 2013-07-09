@@ -267,4 +267,9 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 	public IShell shell() {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public T addStyle(String style) {
+		throw new UnsupportedOperationException();
+	}
 }

@@ -74,8 +74,8 @@ public class GWTWidgetBorder extends GWTBorder {
 	@Override
 	protected void update() {
 		remove();
-		if (roundShadow)
-			element.addClassName("quicksearchshadow");
+//		if (roundShadow)
+//			element.addClassName("quicksearchshadow");
 		if (!top || !left || !right || !bottom) {
 			if (top)
 				DOM.setStyleAttribute(element, "borderTop", width + "px "

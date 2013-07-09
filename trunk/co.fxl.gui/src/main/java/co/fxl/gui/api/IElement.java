@@ -50,4 +50,6 @@ public interface IElement<T> extends ILocated<T> {
 
 	IShell shell();
 
+	T addStyle(String style);
+
 }
