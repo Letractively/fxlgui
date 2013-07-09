@@ -572,4 +572,14 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 		};
 	}
+
+	@Override
+	public IPopUpWindow popUp() {
+		return new IPopUpWindow() {
+
+			@Override
+			public void background(IColored popUp) {
+			}
+		};
+	}
 }
