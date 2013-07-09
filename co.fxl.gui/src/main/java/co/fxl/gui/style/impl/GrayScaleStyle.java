@@ -43,6 +43,11 @@ class GrayScaleStyle implements IStyle {
 			return ViewSelection.this;
 		}
 
+		@Override
+		public boolean containsQuerySelection() {
+			return true;
+		}
+
 	}
 
 	public static final String NAME = "Grayscale";

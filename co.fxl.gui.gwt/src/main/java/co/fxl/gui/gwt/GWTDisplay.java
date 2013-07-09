@@ -569,4 +569,10 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 			addStyle("html, body { -webkit-font-smoothing: subpixel-antialiased !important; -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -ms-backface-visibility:     hidden; }");
 		return this;
 	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public IContainer newContainer() {
+		return new GWTContainer();
+	}
 }

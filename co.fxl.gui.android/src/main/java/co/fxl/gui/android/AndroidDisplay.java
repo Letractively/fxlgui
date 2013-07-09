@@ -203,4 +203,9 @@ public class AndroidDisplay extends DisplayTemplate implements Parent {
 		return this;
 	}
 
+	@Override
+	public IContainer newContainer() {
+		throw new UnsupportedOperationException();
+	}
+
 }
