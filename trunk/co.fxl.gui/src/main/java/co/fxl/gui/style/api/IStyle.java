@@ -29,6 +29,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.UserPanel.Decorator;
@@ -39,6 +40,8 @@ public interface IStyle {
 	public interface IMDT {
 
 		boolean showQuickSearchOnTop();
+
+		void quickSearch(ISuggestField sf);
 
 	}
 

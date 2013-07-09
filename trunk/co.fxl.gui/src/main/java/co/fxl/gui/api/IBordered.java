@@ -37,6 +37,8 @@ public interface IBordered {
 
 			IBorder shadow();
 
+			IBorder roundShadow();
+
 			IBorder shadow(int pixel);
 
 			IBorder dotted();

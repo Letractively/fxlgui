@@ -350,4 +350,8 @@ public class CommandLink implements IClickListener, ButtonAdp {
 	public ILabel addHyperlink(String string) {
 		throw new UnsupportedOperationException();
 	}
+
+	public IPanel<?> iPanel() {
+		return iPanel;
+	}
 }
