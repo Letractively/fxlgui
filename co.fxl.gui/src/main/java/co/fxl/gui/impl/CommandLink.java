@@ -33,6 +33,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.impl.ContextMenu.Entry;
 import co.fxl.gui.impl.ContextMenu.Group;
+import co.fxl.gui.style.impl.Style;
 
 public class CommandLink implements IClickListener, ButtonAdp {
 
@@ -52,10 +53,11 @@ public class CommandLink implements IClickListener, ButtonAdp {
 	private boolean hide;
 	private boolean setup;
 	public boolean styleDialogButtom = true;
+	private boolean commandsOnTop;
 
 	public CommandLink(WidgetTitle widgetTitle, IFocusPanel fp,
 			IHorizontalPanel backgroundPanel, IHorizontalPanel iPanel,
-			IImage image, ILabel headerLabel) {
+			IImage image, ILabel headerLabel, boolean commandsOnTop) {
 		this.fp = fp;
 		this.widgetTitle = widgetTitle;
 		this.backgroundPanel = backgroundPanel;
@@ -71,6 +73,17 @@ public class CommandLink implements IClickListener, ButtonAdp {
 			headerLabel.margin().right(2);
 		}
 		noDoubleClicks(label);
+		this.commandsOnTop = commandsOnTop;
+		if (commandsOnTop)
+			Style.instance().window().button(this);
+	}
+
+	public void newButton() {
+		Style.instance().window().newButton(this);
+	}
+
+	public void showButton() {
+		Style.instance().window().showButton(this);
 	}
 
 	private void noDoubleClicks(IClickable<?> c) {
@@ -119,12 +132,12 @@ public class CommandLink implements IClickListener, ButtonAdp {
 	public void styleDialogButton(ILabel label) {
 		// Styles.instance().style(label, Style.Window.DIALOG,
 		// Style.Element.BUTTON);
-		if (label == null)
-			return;
-		if (label.clickable())
-			label.font().color().black();
-		else
-			label.font().color().gray();
+		// if (label == null)
+		// return;
+		// if (label.clickable())
+		// label.font().color().black();
+		// else
+		// label.font().color().gray();
 	}
 
 	@Override
@@ -267,7 +280,8 @@ public class CommandLink implements IClickListener, ButtonAdp {
 	}
 
 	private boolean beforeHide = true;
-	private boolean showAlways;
+
+	// private boolean showAlways;
 
 	public void hide(boolean b) {
 		if (hide == b)
@@ -308,7 +322,7 @@ public class CommandLink implements IClickListener, ButtonAdp {
 
 	@Override
 	public ButtonAdp showAlways(boolean b) {
-		showAlways = b;
+		// showAlways = b;
 		return this;
 	}
 

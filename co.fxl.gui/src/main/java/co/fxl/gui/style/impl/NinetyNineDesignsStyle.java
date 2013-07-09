@@ -30,6 +30,7 @@ import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IFontElement;
+import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IFontElement.IFont.IWeight;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
@@ -498,7 +499,49 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				more.label().font().color().black();
 				more.image("more_small_black.png");
 			}
+
+			@Override
+			public void newButton(CommandLink commandLink) {
+				commandLink.border().color().rgb(14, 151, 35);
+				commandLink.background().rgb(40, 194, 64).gradient().vertical()
+						.rgb(25, 173, 48);
+				white(commandLink);
+			}
+
+			private void white(CommandLink commandLink) {
+				commandLink.label().font().color().white();
+			}
+
+			@Override
+			public void showButton(CommandLink commandLink) {
+				commandLink.border().color().rgb(147, 131, 24);
+				commandLink.background().rgb(217, 189, 54).gradient()
+						.vertical().rgb(179, 162, 29);
+				white(commandLink);
+			}
+
+			@Override
+			public void button(CommandLink commandLink) {
+				commandLink.border().color().gray(195);
+				commandLink.background().gray(254).gradient().vertical()
+						.gray(222);
+				fontSize(commandLink);
+				commandLink.panel().padding().left(4).right(4);
+			}
+
+			private IFont fontSize(CommandLink commandLink) {
+				return commandLink.label().font().pixel(13);
+			}
 		};
 	}
 
+	@Override
+	public IMDT mdt() {
+		return new IMDT() {
+			@Override
+			public boolean showQuickSearchOnTop() {
+				return true;
+			}
+		};
+	}
 }

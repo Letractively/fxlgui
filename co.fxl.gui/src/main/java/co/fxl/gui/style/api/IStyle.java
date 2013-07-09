@@ -36,6 +36,12 @@ import co.fxl.gui.impl.WidgetTitle;
 
 public interface IStyle {
 
+	public interface IMDT {
+
+		boolean showQuickSearchOnTop();
+
+	}
+
 	public interface IWindow {
 
 		void background(IPanel<?> panel);
@@ -43,6 +49,12 @@ public interface IStyle {
 		void title(ILabel label);
 
 		void moreButton(CommandLink label);
+
+		void newButton(CommandLink commandLink);
+
+		void showButton(CommandLink commandLink);
+
+		void button(CommandLink commandLink);
 
 	}
 
@@ -187,5 +199,7 @@ public interface IStyle {
 	void display(IDisplay display);
 
 	IWindow window();
+
+	IMDT mdt();
 
 }
