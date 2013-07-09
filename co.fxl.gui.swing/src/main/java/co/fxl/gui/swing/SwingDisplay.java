@@ -43,6 +43,7 @@ import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
+import co.fxl.gui.api.IWidgetProvider.IAsyncWidgetProvider;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
@@ -364,6 +365,10 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 	@Override
 	public IContainer newContainer() {
 		return new SwingContainer();
+	}
+
+	@Override
+	public void reload() {
 	}
 
 }

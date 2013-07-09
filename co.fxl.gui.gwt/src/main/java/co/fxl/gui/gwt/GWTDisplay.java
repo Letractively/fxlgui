@@ -575,4 +575,9 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	public IContainer newContainer() {
 		return new GWTContainer();
 	}
+
+	@Override
+	public void reload() {
+		Window.Location.reload();
+	}
 }

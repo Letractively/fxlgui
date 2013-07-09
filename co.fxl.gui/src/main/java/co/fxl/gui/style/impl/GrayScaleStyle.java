@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.style.impl;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -30,22 +33,156 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.UserPanel.Decorator;
-import co.fxl.gui.style.api.IStyle;
+import co.fxl.gui.impl.WidgetTitle;
 
-class GrayScaleStyle implements IStyle {
+class GrayScaleStyle extends StyleTemplate {
 
 	private class ViewSelection implements IViewSelection {
 
-		@Override
-		public IViewSelection addView(String label, ViewType viewType,
-				IClickListener c, boolean active, boolean isLast) {
-			return ViewSelection.this;
+		public boolean noDiscardChangesDialog;
+
+		public class View extends ViewTemplate {
+
+			private IImage image;
+			private ILabel label;
+			private IHorizontalPanel panel;
+			private List<ILabel> additionalLabels = new LinkedList<ILabel>();
+
+			private View(IHorizontalPanel panel0, IHorizontalPanel panel,
+					IImage image, ILabel textLabel) {
+				super(panel0, noDiscardChangesDialog);
+				this.panel = panel;
+				this.image = image;
+				this.label = textLabel;
+				label.addClickListener(this);
+				if (image != null)
+					image.addClickListener(this);
+				panel.addClickListener(this);
+			}
+
+			private View text(String text) {
+				label.text(text);
+				addEntry(text, title(), image.resource());
+				return this;
+			}
+
+			@Override
+			public IView clickable(boolean clickable) {
+				if (image != null)
+					image.clickable(clickable);
+				label.clickable(clickable);
+				styleMDTView(label);
+				for (ILabel l : additionalLabels)
+					l.clickable(clickable);
+				panel.clickable(clickable);
+				if (cb != null) {
+					cb.visible(comboBoxVisible && !clickable);
+				}
+				if (cancelP != null) {
+					cancelP.visible(comboBoxVisible
+							&& !clickable
+							&& !cb.text().equals(
+									StyleTemplate.PLEASE_CHOOSE_FILTER_STRING));
+				}
+				return super.clickable(clickable);
+			}
+
+			private void styleMDTView(ILabel label) {
+				// Styles.instance().style(label, Style.MDT.VIEW);
+				if (!label.clickable()) {
+					label.font().weight().bold().color().black();
+				} else {
+					label.font().weight().plain();
+				}
+			}
+
+			@Override
+			public boolean clickable() {
+				return label.clickable();
+			}
+
+			@Override
+			public void showActive() {
+				for (View l : links)
+					l.clickable(l != View.this);
+			}
+		}
+
+		private WidgetTitle widgetTitle;
+		private IVerticalPanel panel;
+		private List<View> links = new LinkedList<View>();
+
+		private ViewSelection(IContainer c, boolean noDiscardChanges) {
+			widgetTitle = new WidgetTitle(c.panel(), true).sideWidget(true);
+			widgetTitle.addToContextMenu(true);
+			widgetTitle.spacing(2);
+			widgetTitle.addTitle(VIEWS);
+			panel = widgetTitle.content().panel().vertical().spacing(6);
+			noDiscardChangesDialog = noDiscardChanges;
+		}
+
+		private IImage addImage(IHorizontalPanel panel, String imageResource) {
+			IImage image = null;
+			image = panel.add().image().resource(imageResource);
+			panel.addSpace(4);
+			return image;
+		}
+
+		private ILabel addTextLabel(IHorizontalPanel panel) {
+			return panel.add().label().hyperlink();
 		}
 
 		@Override
-		public boolean containsQuerySelection() {
-			return true;
+		public IView addView(String label, ViewType viewType, boolean isLast) {
+			IVerticalPanel p = panel.add().panel().vertical().height(24);
+			IHorizontalPanel panel2 = p.add().panel().horizontal();
+			IHorizontalPanel panel = panel2;
+			IHorizontalPanel panel1 = panel.add().panel().horizontal();
+			IImage image = addImage(panel1, imageResource(viewType));
+			ILabel textLabel = addTextLabel(panel);
+			View l = new View(panel, panel1, image, textLabel);
+			l.text(label);
+			IPanel<?> dummy = panel.add().panel().horizontal().width(1);
+			Heights.INSTANCE.decorate(dummy);
+			links.add(l);
+			return l;
+		}
+
+		private String imageResource(ViewType viewType) {
+			switch (viewType) {
+			case TABLE:
+				return "grid.png";
+			case GRID:
+				return "treetable.png";
+			case LIST:
+				return "listtemplate.png";
+			case DETAIL:
+				return "listdetail.png";
+			}
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public WidgetTitle widgetTitle() {
+			return widgetTitle;
+		}
+
+		@Override
+		public IHorizontalPanel comboBoxPanel() {
+			return null;
+		}
+
+		@Override
+		public String title() {
+			return VIEWS;
+		}
+
+		@Override
+		public void visible(boolean b) {
+			panel.visible(b);
 		}
 
 	}
@@ -278,8 +415,8 @@ class GrayScaleStyle implements IStyle {
 	}
 
 	@Override
-	public IViewSelection createSelection(IContainer c) {
-		return new ViewSelection();
+	public IViewSelection createSelection(IContainer c, boolean noDiscardChanges) {
+		return new ViewSelection(c, noDiscardChanges);
 	}
 
 	@Override
