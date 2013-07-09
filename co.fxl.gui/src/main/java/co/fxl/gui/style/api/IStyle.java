@@ -38,6 +38,12 @@ import co.fxl.gui.impl.WidgetTitle;
 
 public interface IStyle {
 
+	public interface IPopUpWindow {
+
+		void background(IColored colored);
+
+	}
+
 	public interface IMDT {
 
 		boolean showQuickSearchOnTop();
@@ -210,5 +216,7 @@ public interface IStyle {
 	IWindow window();
 
 	IMDT mdt();
+
+	IPopUpWindow popUp();
 
 }

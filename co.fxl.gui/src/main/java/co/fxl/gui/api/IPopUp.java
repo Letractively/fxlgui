@@ -18,10 +18,9 @@
  */
 package co.fxl.gui.api;
 
-import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 
-public interface IPopUp extends IBordered, ILocated<IPopUp>, IShell {
+public interface IPopUp extends IBordered, ILocated<IPopUp>, IShell, IColored {
 
 	IPopUp modal(boolean modal);
 
@@ -46,8 +45,6 @@ public interface IPopUp extends IBordered, ILocated<IPopUp>, IShell {
 	IPopUp glass(boolean glass);
 
 	IPopUp opacity(double opacity);
-
-	IColor color();
 
 	IPopUp transparent(boolean transparent);
 

@@ -29,6 +29,7 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.style.impl.Style;
 
 public class PopUp {
 
@@ -114,7 +115,7 @@ public class PopUp {
 		}
 		if (!ALLOW_CLOSABLE_POPUP || !closable) {
 			popUp.border().remove().style().shadow();
-			popUp.color().gray(245);
+			Style.instance().popUp().background(popUp);
 			return new TransparentPopUp() {
 
 				@Override
@@ -138,7 +139,7 @@ public class PopUp {
 				.cell(0, Env.runtime().leq(Env.IE, 8) ? 1 : 0).panel()
 				.vertical();
 		p.border().remove().style().shadow();
-		p.color().gray(245);
+		Style.instance().popUp().background(p);
 		panel.cell(1, 0).align().end().valign().begin()
 				.image()
 				.resource("close_24x24.png")
