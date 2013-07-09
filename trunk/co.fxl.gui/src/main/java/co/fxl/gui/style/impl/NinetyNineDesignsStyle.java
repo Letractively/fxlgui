@@ -563,7 +563,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public void quickSearch(ISuggestField sf) {
 				sf.height(28);
-				sf.margin().top(4);
+				sf.margin().top(4).left(3);
 				sf.padding().left(27).right(3);
 				IBorder border = sf.border();
 				border.style().rounded();
