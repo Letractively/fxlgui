@@ -123,6 +123,13 @@ public abstract class GWTBorder implements IBorder {
 		}
 
 		@Override
+		public IBorder roundShadow() {
+			roundShadow = true;
+			update();
+			return GWTBorder.this;
+		}
+
+		@Override
 		public IBorder shadow(int pixel) {
 			if (pixel != 4 && pixel != 2)
 				throw new UnsupportedOperationException();
@@ -151,6 +158,7 @@ public abstract class GWTBorder implements IBorder {
 	boolean bottom = false;
 	boolean left = false;
 	boolean right = false;
+	boolean roundShadow;
 
 	@Override
 	public abstract IBorder remove();

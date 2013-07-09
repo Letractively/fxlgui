@@ -15,6 +15,12 @@ box-shadow: 4px 4px 5px #000000;
 -moz-box-shadow: 4px 4px 5px #000000; 
 filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=4, offY=4, positive=true);
 }
+.quicksearchshadow{ 
+box-shadow: 0px 0px 6px #4BE1FF;
+-webkit-box-shadow: 0px 0px 6px #4BE1FF;
+-moz-box-shadow: 0px 0px 6px #4BE1FF;
+filter: progid:DXImageTransform.Microsoft.dropShadow(color=#4BE1FF, offX=0, offY=0, positive=true);
+}
 .shadowblurLight{ 
 box-shadow: 2px 2px 3px #000000; 
 -webkit-box-shadow: 2px 2px 3px #000000;

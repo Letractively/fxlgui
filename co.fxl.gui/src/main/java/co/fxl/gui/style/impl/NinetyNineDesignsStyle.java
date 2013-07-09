@@ -41,6 +41,7 @@ import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Display;
@@ -526,7 +527,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				commandLink.background().gray(254).gradient().vertical()
 						.gray(222);
 				fontSize(commandLink);
-				commandLink.panel().padding().left(4).right(4);
+				commandLink.panel().padding().left(4);
+				// commandLink.iPanel().padding().left(4).right(4);
 			}
 
 			private IFont fontSize(CommandLink commandLink) {
@@ -541,6 +543,17 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public boolean showQuickSearchOnTop() {
 				return true;
+			}
+
+			@Override
+			public void quickSearch(ISuggestField sf) {
+				sf.height(28);
+				sf.margin().top(5);
+				sf.padding().left(3).right(3);
+				IBorder border = sf.border();
+				border.style().rounded();
+				border.width(1).color().lightgray();
+				border.style().roundShadow();
 			}
 		};
 	}

@@ -33,6 +33,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Heights;
@@ -469,6 +470,11 @@ class GrayScaleStyle extends StyleTemplate {
 			@Override
 			public boolean showQuickSearchOnTop() {
 				return false;
+			}
+
+			@Override
+			public void quickSearch(ISuggestField sf) {
+				sf.height(26);
 			}
 		};
 	}
