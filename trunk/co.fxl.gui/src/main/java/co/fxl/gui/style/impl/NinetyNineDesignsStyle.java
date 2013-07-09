@@ -578,7 +578,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		return new IPopUpWindow() {
 
 			@Override
-			public void background(IColored popUp) {
+			public void background(IColored c) {
+				c.color().white();
 			}
 		};
 	}
