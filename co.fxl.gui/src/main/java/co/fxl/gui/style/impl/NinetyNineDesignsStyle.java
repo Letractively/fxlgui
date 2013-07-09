@@ -29,6 +29,7 @@ import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IFontElement;
+import co.fxl.gui.api.IFontElement.IFont.IWeight;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -110,14 +111,13 @@ class NinetyNineDesignsStyle implements IStyle {
 			}
 
 			private void decorate(boolean active) {
+				panel.color().remove().gray(active ? 231 : 248).gradient()
+						.vertical().gray(active ? 248 : 231);
+				IWeight weight = label.font().weight();
 				if (active) {
-					panel.color().remove().gray(231).gradient().vertical()
-							.gray(248);
-					label.font().weight().bold();
+					weight.bold();
 				} else {
-					panel.color().remove().gray(248).gradient().vertical()
-							.gray(231);
-					label.font().weight().plain();
+					weight.plain();
 				}
 				String res = "view_" + type.name().toLowerCase() + "_"
 						+ (active ? "active" : "inactive") + ".png";
