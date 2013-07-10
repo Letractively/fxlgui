@@ -43,6 +43,13 @@ import co.fxl.gui.impl.WidgetTitle;
 
 class GrayScaleStyle extends StyleTemplate {
 
+	private final class FilterPanel extends Heights implements IFilterPanel {
+
+		FilterPanel() {
+			super(0);
+		}
+	}
+
 	private class ViewSelection implements IViewSelection {
 
 		public boolean noDiscardChangesDialog;
@@ -518,6 +525,11 @@ class GrayScaleStyle extends StyleTemplate {
 				popUp.color().gray(245);
 			}
 		};
+	}
+
+	@Override
+	public IFilterPanel filter() {
+		return new FilterPanel();
 	}
 
 }

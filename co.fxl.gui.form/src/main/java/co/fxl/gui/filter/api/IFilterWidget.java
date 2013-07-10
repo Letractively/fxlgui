@@ -23,6 +23,7 @@ import java.util.List;
 
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.WidgetTitle;

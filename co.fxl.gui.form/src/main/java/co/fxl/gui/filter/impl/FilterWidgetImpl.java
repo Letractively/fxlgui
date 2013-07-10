@@ -49,6 +49,8 @@ import co.fxl.gui.impl.Icons;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.input.impl.TooltipTextInput;
+import co.fxl.gui.style.api.IStyle.IFilterPanel;
+import co.fxl.gui.style.impl.Style;
 
 public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> {
 
@@ -128,7 +130,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	private String firstConfiguration = IFilterConstraints.COMMON;
 	private String configuration = IFilterConstraints.COMMON;
 	private boolean showConfiguration = true;
-	Heights heights = new Heights(0);
+	IFilterPanel heights = Style.instance().filter();
 	private ClearClickListener clearClickListener;
 	private FilterPanel title;
 	private boolean hyperlinksAdded;

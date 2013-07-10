@@ -32,10 +32,10 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.filter.impl.CellImpl.ExpliciteRangeField;
-import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.impl.WidgetTitle;
+import co.fxl.gui.style.api.IStyle.IFilterPanel;
 
 class MiniFilterPanel implements FilterPanel {
 
@@ -257,7 +257,7 @@ class MiniFilterPanel implements FilterPanel {
 		}
 
 		@Override
-		public Heights heights() {
+		public IFilterPanel heights() {
 			return widget.heights;
 		}
 

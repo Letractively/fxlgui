@@ -57,7 +57,7 @@ class CellImpl implements ICell {
 			ITextField textField1 = textField
 					.width(FilterTemplate.WIDTH_RANGE_CELL
 							- (useDateField ? 24 : 0));
-			Heights.INSTANCE.decorate(textField1);
+			widget.heights.decorate(textField1);
 			if (useDateField)
 				textField.font().pixel(9);
 			widget.register(textField1);

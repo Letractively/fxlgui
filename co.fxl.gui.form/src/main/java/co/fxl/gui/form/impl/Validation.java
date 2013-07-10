@@ -39,6 +39,7 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.rtf.api.IHTMLArea;
+import co.fxl.gui.style.impl.Style;
 
 public class Validation {
 
@@ -450,7 +451,7 @@ public class Validation {
 		if (hasError) {
 			textField.color().mix().red().white().white();
 		} else {
-			textField.color().rgb(249, 249, 249);
+			Style.instance().filter().decorate(textField);
 		}
 	}
 

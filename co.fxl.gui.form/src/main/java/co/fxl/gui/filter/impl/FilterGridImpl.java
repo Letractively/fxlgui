@@ -26,7 +26,7 @@ import co.fxl.gui.api.ITextField;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.filter.impl.FilterPanel.ICell;
 import co.fxl.gui.impl.Env;
-import co.fxl.gui.impl.Heights;
+import co.fxl.gui.style.api.IStyle.IFilterPanel;
 
 class FilterGridImpl implements FilterGrid {
 
@@ -71,7 +71,7 @@ class FilterGridImpl implements FilterGrid {
 	}
 
 	@Override
-	public Heights heights() {
+	public IFilterPanel heights() {
 		return this.filterPanelImpl.widget.heights;
 	}
 

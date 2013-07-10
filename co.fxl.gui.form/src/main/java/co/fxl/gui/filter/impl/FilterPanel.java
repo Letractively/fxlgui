@@ -24,8 +24,8 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextField;
-import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.WidgetTitle;
+import co.fxl.gui.style.api.IStyle.IFilterPanel;
 
 interface FilterPanel {
 
@@ -44,7 +44,7 @@ interface FilterPanel {
 
 		FilterGrid rowInc(int rowInc);
 
-		Heights heights();
+		IFilterPanel heights();
 
 		ICell cell(int row);
 
