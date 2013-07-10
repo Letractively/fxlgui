@@ -77,25 +77,23 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			private IImage image;
 			private ILabel label;
 			private ViewType type;
+			private IGridCell cell;
 
 			private View(String text, ViewType type, boolean isLast) {
 				super(comboBoxPanel.add().panel().horizontal(),
 						isDiscardChangesDialog);
 				this.type = type;
 				int column = views.size();
-				IGridCell cell = grid.cell(column, 0).align().center().valign()
-						.center();
+				cell = grid.cell(column, 0).align().center().valign().center();
 				panel = cell.panel().vertical().align().center()
 						.height(VIEW_SELECTION_HEIGHT);
 				IBorder border = cell.border();
 				border.color().gray(218);
 				if (!isLast)
 					border.style().top().style().bottom().style().left();
-				if (views.isEmpty())
-					border.style().rounded().width(6).right(false);
-				else if (isLast)
-					border.style().rounded().width(6).left(false);
+				setBorderRounding(isLast, border);
 				border.width(1);
+				setBorderRounding(isLast, panel.border());
 				IHorizontalPanel hp = panel.add().panel().horizontal();
 				hp.margin().top((VIEW_SELECTION_HEIGHT - 16) / 2);
 				image = hp.add().image();
@@ -107,6 +105,13 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				image.addClickListener(this);
 				label.addClickListener(this);
 				addEntry(text, title(), image.resource());
+			}
+
+			private void setBorderRounding(boolean isLast, IBorder border) {
+				if (views.isEmpty())
+					border.style().rounded().width(6).right(false);
+				else if (isLast)
+					border.style().rounded().width(6).left(false);
 			}
 
 			@Override
@@ -486,14 +491,13 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 	@Override
 	public IWindow window() {
 		return new IWindow() {
-			@Override
-			public void background(IPanel<?> panel) {
-			}
 
 			@Override
-			public void title(ILabel label) {
+			public void title(ILabel label, boolean sideWidget) {
 				blue(label);
 				label.font().weight().bold();
+				if (sideWidget)
+					label.font().pixel(14);
 			}
 
 			@Override
@@ -539,16 +543,37 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
-			public void headerPanel(IGridPanel headerPanel, boolean sideWidget) {
+			public void header(IGridPanel headerPanel, boolean sideWidget) {
+				if (sideWidget)
+					background(headerPanel);
+				else
+					headerPanel.color().remove();
 				headerPanel.padding().bottom(
 						sideWidget ? 0 : 7 + ADD_DISTANCE_MDT_FIRST_ROW);
+				if (sideWidget)
+					headerPanel.border().remove();
 			}
 
 			@Override
-			public void backgroundPanel(IGridPanel panel, boolean addBorder,
+			public void background(IGridPanel panel, boolean addBorder,
 					boolean plainContent, boolean sideWidget) {
-				if (addBorder && !plainContent && sideWidget)
-					panel.border().color().rgb(172, 197, 213);
+				if (!plainContent && sideWidget) {
+					if (addBorder) {
+						IBorder border = panel.border();
+						border.style().rounded().width(6);
+						border.width(1).color().rgb(172, 197, 213);
+					}
+					panel.padding(3);
+					background(panel);
+				}
+			}
+
+			private void background(IGridPanel panel) {
+				panel.color().gray(248);
+			}
+
+			@Override
+			public void footer(IPanel<?> vertical, boolean sideWidget) {
 			}
 		};
 	}

@@ -39,7 +39,7 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 
 		@Override
 		public IColor vertical() {
-			return new GWTStyleColor(getWidget(), new Style() {
+			return new GWTStyleColor(new Style() {
 
 				@Override
 				public void addStyleName(String style) {
@@ -125,18 +125,19 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 
 	private Style style;
 	private String color;
-	private Widget widget;
+
+	// private Widget widget;
 
 	public GWTStyleColor(Style style) {
 		this.style = style;
-		if (style != null && style instanceof GWTWidgetStyle)
-			widget = getWidget();
+		// if (style != null && style instanceof GWTWidgetStyle)
+		// widget = getWidget();
 	}
 
-	public GWTStyleColor(Widget widget, Style style2) {
-		this.widget = widget;
-		this.style = style2;
-	}
+	// public GWTStyleColor(Widget widget, Style style2) {
+	// this.widget = widget;
+	// this.style = style2;
+	// }
 
 	@Override
 	public IColor setRGB(int r, int g, int b) {
@@ -161,6 +162,8 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 
 	protected Widget getWidget() {
 		GWTWidgetStyle gwtWidgetStyle = (GWTWidgetStyle) style;
+		if (style == null)
+			return null;
 		Widget widget = gwtWidgetStyle.widget;
 		return widget;
 	}

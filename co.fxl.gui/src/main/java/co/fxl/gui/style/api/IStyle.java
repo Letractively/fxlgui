@@ -54,9 +54,7 @@ public interface IStyle {
 
 	public interface IWindow {
 
-		void background(IPanel<?> panel);
-
-		void title(ILabel label);
+		void title(ILabel label, boolean sideWidget);
 
 		void moreButton(CommandLink label);
 
@@ -66,10 +64,12 @@ public interface IStyle {
 
 		void button(CommandLink commandLink);
 
-		void headerPanel(IGridPanel headerPanel, boolean sideWidget);
+		void header(IGridPanel headerPanel, boolean sideWidget);
 
-		void backgroundPanel(IGridPanel panel, boolean addBorder,
+		void background(IGridPanel panel, boolean addBorder,
 				boolean plainContent, boolean sideWidget);
+
+		void footer(IPanel<?> vertical, boolean sideWidget);
 
 	}
 

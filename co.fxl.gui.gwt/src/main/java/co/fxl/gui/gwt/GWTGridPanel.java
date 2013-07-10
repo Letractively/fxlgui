@@ -190,6 +190,7 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 		public IGridCell size(int width, int height) {
 			return width(width).height(height);
 		}
+
 	}
 
 	private GridCellContainer<GridCell> cells = new GridCellContainer<GridCell>();

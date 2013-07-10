@@ -435,14 +435,9 @@ class GrayScaleStyle extends StyleTemplate {
 	@Override
 	public IWindow window() {
 		return new IWindow() {
-			@Override
-			public void background(IPanel<?> panel) {
-				panel.color().rgb(136, 136, 136).gradient().vertical()
-						.rgb(113, 113, 113);
-			}
 
 			@Override
-			public void title(ILabel label) {
+			public void title(ILabel label, boolean sideWidget) {
 				label.font().weight().bold().color().white();
 			}
 
@@ -464,14 +459,26 @@ class GrayScaleStyle extends StyleTemplate {
 			}
 
 			@Override
-			public void headerPanel(IGridPanel headerPanel, boolean sideWidget) {
+			public void header(IGridPanel headerPanel, boolean sideWidget) {
+				headerPanel.color().rgb(136, 136, 136).gradient().vertical()
+						.rgb(113, 113, 113);
 			}
 
 			@Override
-			public void backgroundPanel(IGridPanel panel, boolean addBorder,
+			public void background(IGridPanel panel, boolean addBorder,
 					boolean plainContent, boolean sideWidget) {
 				if (addBorder && !plainContent)
 					panel.border().color().rgb(172, 197, 213);
+			}
+
+			@Override
+			public void footer(IPanel<?> vertical, boolean sideWidget) {
+				vertical.color().rgb(249, 249, 249).gradient().vertical()
+						.rgb(216, 216, 216);
+				IBorder border2 = vertical.border();
+				IColor c = border2.color();
+				WidgetTitle.decorateBorder(c);
+				border2.style().top();
 			}
 
 		};

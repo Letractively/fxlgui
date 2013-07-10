@@ -121,4 +121,5 @@ class AndroidGridCell extends AndroidContainer implements IGridCell {
 	public IGridCell size(int width, int height) {
 		throw new UnsupportedOperationException();
 	}
+
 }
