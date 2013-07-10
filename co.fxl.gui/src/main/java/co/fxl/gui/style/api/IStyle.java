@@ -60,7 +60,7 @@ public interface IStyle {
 
 		void moreButton(CommandLink label);
 
-		void newButton(CommandLink commandLink);
+		void newButton(CommandLink commandLink, int index);
 
 		void showButton(CommandLink commandLink);
 
