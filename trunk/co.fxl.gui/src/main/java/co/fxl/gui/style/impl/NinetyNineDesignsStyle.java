@@ -540,9 +540,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 			@Override
 			public void headerPanel(IGridPanel headerPanel, boolean sideWidget) {
-				if (!sideWidget)
-					headerPanel.padding()
-							.bottom(7 + ADD_DISTANCE_MDT_FIRST_ROW);
+				headerPanel.padding().bottom(
+						sideWidget ? 0 : 7 + ADD_DISTANCE_MDT_FIRST_ROW);
 			}
 
 			@Override
