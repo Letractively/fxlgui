@@ -65,6 +65,7 @@ import co.fxl.gui.impl.ResizableWidgetTemplate;
 import co.fxl.gui.impl.Shell;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.impl.WidgetTitle;
+import co.fxl.gui.style.impl.Style;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn;
@@ -220,6 +221,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			widgetTitle.hyperlinkVisible(false);
 			widgetTitle.spacing(0);
 			container = widgetTitle.content().panel().vertical();
+			Style.instance().table().background(container);
 			// editPanel = container.add().panel().vertical().visible(false);
 			if (add2Title != null)
 				widgetTitle.add2Title(add2Title);
@@ -843,10 +845,10 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		grid.horizontalLines(horizontalLines);
 		grid.fixLayout(fixLayout);
 		grid.cellPadding(cellPadding);
-		grid.marginTop(plainContent ? 0 : 6);
+		grid.marginTop(plainContent ? 0 : Style.instance().table().marginTop());
 		grid.addToContextMenu(addToContextMenu);
 		final int heightMinusTopPanel = heightCenterPanel();
-		grid.height(heightMinusTopPanel - 6);
+		grid.height(heightMinusTopPanel - Style.instance().table().marginTop());
 		for (IRowIndexListener rowIndexL : scrollListeners)
 			rowIndexL.onScroll(rowOffset);
 		updateHeaderRow(grid);

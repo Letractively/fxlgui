@@ -34,6 +34,7 @@ import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextInputElement;
 import co.fxl.gui.api.IUpdateable;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.impl.WidgetTitle;
@@ -43,6 +44,16 @@ public interface IStyle {
 	public interface ITable {
 
 		boolean isTitleUpperCase();
+
+		String headerRowStyle();
+
+		int paddingSide();
+
+		String contentRowStyle();
+
+		int marginTop();
+
+		void background(IVerticalPanel container);
 
 	}
 

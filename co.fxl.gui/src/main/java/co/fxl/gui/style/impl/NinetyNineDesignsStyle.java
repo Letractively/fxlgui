@@ -710,9 +710,37 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 	@Override
 	public ITable table() {
 		return new ITable() {
+
 			@Override
 			public boolean isTitleUpperCase() {
 				return false;
+			}
+
+			@Override
+			public void background(IVerticalPanel container) {
+				IBorder b = container.border();
+				b.style().left().style().right();
+				b.color().rgb(172, 197, 213);
+			}
+
+			@Override
+			public int paddingSide() {
+				return 5;
+			}
+
+			@Override
+			public int marginTop() {
+				return 0;
+			}
+
+			@Override
+			public String headerRowStyle() {
+				return "headerRowHL99D";
+			}
+
+			@Override
+			public String contentRowStyle() {
+				return "contentRowHL99D";
 			}
 		};
 	}
