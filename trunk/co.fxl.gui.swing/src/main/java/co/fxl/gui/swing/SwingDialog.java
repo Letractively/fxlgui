@@ -19,7 +19,6 @@
 package co.fxl.gui.swing;
 
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.IVerticalPanel;
@@ -27,8 +26,8 @@ import co.fxl.gui.impl.DialogImpl;
 
 class SwingDialog extends DialogImpl {
 
-	SwingDialog(IDisplay display) {
-		super(display);
+	SwingDialog() {
+		super();
 	}
 
 	@Override

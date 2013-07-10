@@ -24,7 +24,6 @@ import java.util.List;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDialog;
-import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.ILabel;
@@ -119,7 +118,6 @@ public class DialogImpl implements IDialog {
 		}
 	}
 
-	private IDisplay display;
 	private boolean modal = true;
 	private String title = "Dialog";
 	protected String message;
@@ -137,8 +135,7 @@ public class DialogImpl implements IDialog {
 	private boolean glass;
 	private List<IUpdateListener<Boolean>> visibleListeners = new LinkedList<IUpdateListener<Boolean>>();
 
-	public DialogImpl(IDisplay display) {
-		this.display = display;
+	public DialogImpl() {
 		confirm();
 	}
 
@@ -235,7 +232,7 @@ public class DialogImpl implements IDialog {
 			IVerticalPanel panel = popUp.container().panel().vertical();
 			WidgetTitle.decorateBorder(panel.spacing(1).border().color());
 			WidgetTitle t = new WidgetTitle(panel.add().panel())
-					.foldable(false).spacing(0);
+					.sideWidget(true).foldable(false).spacing(0);
 			t.addTitle(title.toUpperCase());
 			t.addTitleSpace();
 			if (message != null && buttons.isEmpty()) {

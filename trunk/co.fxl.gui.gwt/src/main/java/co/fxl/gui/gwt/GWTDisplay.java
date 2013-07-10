@@ -293,7 +293,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	@Override
 	public IDialog showDialog() {
-		return new DialogImpl(this) {
+		return new DialogImpl() {
 			@Override
 			protected void decorate(IGridPanel grid) {
 				GWTGridPanel gridPanel = (GWTGridPanel) grid;
