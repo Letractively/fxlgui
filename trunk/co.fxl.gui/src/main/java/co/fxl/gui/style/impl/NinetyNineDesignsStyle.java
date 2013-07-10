@@ -104,7 +104,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				panel.addClickListener(this);
 				image.addClickListener(this);
 				label.addClickListener(this);
-				addEntry(text, title(), image.resource());
+				addEntry(text, title(), image(true));
 			}
 
 			private void setBorderRounding(boolean isLast, IBorder border) {
@@ -147,14 +147,18 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				} else {
 					weight.plain();
 				}
-				String res = "view_" + type.name().toLowerCase() + "_"
-						+ (active ? "active" : "inactive") + ".png";
+				String res = image(active);
 				panel.clickable(!active);
 				label.clickable(!active);
 				image.clickable(!active);
 				image.resource(res).opacity(1.0);
 				panel0().visible(!clickable);
 				return super.clickable(clickable);
+			}
+
+			private String image(boolean active) {
+				return "view_" + type.name().toLowerCase() + "_"
+						+ (active ? "active" : "inactive") + ".png";
 			}
 
 			@Override
