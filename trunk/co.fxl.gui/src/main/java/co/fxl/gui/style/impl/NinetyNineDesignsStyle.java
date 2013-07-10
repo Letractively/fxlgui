@@ -472,6 +472,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 			@Override
 			public void background(IPanel<?> panel) {
+				panel.padding().top(4).bottom(4);
 				panel.color().rgb(253, 254, 254).gradient()
 						.fallback(242, 246, 249).vertical().rgb(247, 250, 251);
 			}
