@@ -615,7 +615,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 					if (addBorder) {
 						IBorder border = panel.border();
 						border.style().rounded().width(6);
-						border.width(1).color().rgb(172, 197, 213);
+						border.width(1).color().gray(218);//.rgb(172, 197, 213);
 					}
 					panel.padding(3);
 					background(panel);
