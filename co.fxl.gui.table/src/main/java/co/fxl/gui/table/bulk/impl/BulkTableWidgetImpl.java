@@ -45,6 +45,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.AlignmentMemento;
 import co.fxl.gui.impl.ContextMenu;
 import co.fxl.gui.impl.DummyKeyRecipientKeyTemplate;
+import co.fxl.gui.style.impl.Style;
 import co.fxl.gui.table.bulk.api.IBulkTableCell;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
 
@@ -85,7 +86,8 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 				label.font().pixel(11).weight().bold().color().rgb(31, 31, 31);
 				align.forward(cell.align());
 			}
-			String t = title.toUpperCase();
+			String t = Style.instance().table().isTitleUpperCase() ? title
+					.toUpperCase() : title;
 			if (sortUp != null)
 				t += " " + (sortUp ? ARROW_UP : ARROW_DOWN);
 			label.text(t);

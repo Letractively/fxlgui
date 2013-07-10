@@ -557,4 +557,14 @@ class GrayScaleStyle extends StyleTemplate {
 		return new FilterPanel();
 	}
 
+	@Override
+	public ITable table() {
+		return new ITable() {
+			@Override
+			public boolean isTitleUpperCase() {
+				return true;
+			}
+		};
+	}
+
 }
