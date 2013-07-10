@@ -88,10 +88,18 @@ public class DateField extends TextFieldAdp {
 	private PopUp popUp;
 
 	public DateField(IContainer c) {
-		this(c, true);
+		this(c, true, 2);
+	}
+
+	public DateField(IContainer c, int cellSpacing) {
+		this(c, true, cellSpacing);
 	}
 
 	public DateField(IContainer c, boolean addC) {
+		this(c, addC, 2);
+	}
+
+	public DateField(IContainer c, boolean addC, int cellSpacing) {
 		IGridPanel g = c.panel().grid();
 		ITextField tf = g.cell(0, 0).textField();
 		g.column(0).expand();
@@ -100,7 +108,7 @@ public class DateField extends TextFieldAdp {
 			IGridCell cell2 = g.cell(1, 0).align().center().valign().center();
 			g.column(1).width(24);
 			// Heights.INSTANCE.decorate(cell2);
-			IHorizontalPanel spacing = cell2.panel().horizontal().spacing(2);
+			IHorizontalPanel spacing = cell2.panel().horizontal().spacing(cellSpacing);
 			Heights.INSTANCE.styleColor(spacing);
 			IBorder border = spacing.border();
 			border.color().rgb(211, 211, 211);

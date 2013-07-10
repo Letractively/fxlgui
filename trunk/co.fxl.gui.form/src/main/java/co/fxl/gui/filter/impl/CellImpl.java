@@ -52,7 +52,7 @@ class CellImpl implements ICell {
 
 		ITextField addTextField(IHorizontalPanel p, boolean isDateField) {
 			boolean useDateField = isDateField && !Env.is(Env.SWING);
-			ITextField textField = useDateField ? new DateField(p.add()) : p
+			ITextField textField = useDateField ? new DateField(p.add(), 3) : p
 					.add().textField();
 			ITextField textField1 = textField
 					.width(FilterTemplate.WIDTH_RANGE_CELL
