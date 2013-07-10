@@ -21,6 +21,7 @@ package co.fxl.gui.style.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IBordered;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -42,9 +43,12 @@ import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.ISuggestField;
+import co.fxl.gui.api.ITextElement;
+import co.fxl.gui.api.ITextInputElement;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
 import co.fxl.gui.impl.ImageButton;
 import co.fxl.gui.impl.PopUp;
@@ -622,6 +626,35 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			public void background(IColored c) {
 				c.color().white();
 			}
+		};
+	}
+
+	@Override
+	public IFilterPanel filter() {
+		return new IFilterPanel() {
+
+			@Override
+			public void decorate(IGridCell cell) {
+				Heights.INSTANCE.decorate(cell);
+			}
+
+			@Override
+			public void decorate(IComboBox input) {
+				decorate((ITextElement<?>) input);
+			}
+
+			private void decorate(ITextElement<?> input) {
+				input.height(Heights.COMBOBOX_HEIGHT);
+				IBorder border = ((IBordered) input).border();
+				border.style().rounded();
+				border.width(1).color().gray(223);
+			}
+
+			@Override
+			public void decorate(ITextInputElement<?> input) {
+				decorate((ITextElement<?>) input);
+			}
+
 		};
 	}
 }

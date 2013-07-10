@@ -25,18 +25,30 @@ import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.ISuggestField;
+import co.fxl.gui.api.ITextInputElement;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.impl.WidgetTitle;
 
 public interface IStyle {
+
+	public interface IFilterPanel {
+
+		void decorate(IGridCell cell);
+
+		void decorate(IComboBox input);
+
+		void decorate(ITextInputElement<?> input);
+
+	}
 
 	public interface IPopUpWindow {
 
@@ -222,5 +234,7 @@ public interface IStyle {
 	IMDT mdt();
 
 	IPopUpWindow popUp();
+
+	IFilterPanel filter();
 
 }
