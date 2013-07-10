@@ -73,6 +73,8 @@ public interface IStyle {
 
 		boolean useUpperCase(boolean sideWidget);
 
+		String moreImage();
+
 	}
 
 	public interface IViewSelection {

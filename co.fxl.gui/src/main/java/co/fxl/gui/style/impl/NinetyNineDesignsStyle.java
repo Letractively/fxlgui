@@ -501,6 +501,11 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
+			public String moreImage() {
+				return "more_black.png";
+			}
+
+			@Override
 			public boolean useUpperCase(boolean sideWidget) {
 				return false;
 			}
