@@ -27,7 +27,7 @@ class NumberFilter extends RangeFilter<Number> {
 	private Double upperBound = null;
 
 	NumberFilter(FilterGrid parent, String name, int filterIndex) {
-		super(parent, name, filterIndex);
+		super(parent, name, filterIndex, false);
 	}
 
 	@Override

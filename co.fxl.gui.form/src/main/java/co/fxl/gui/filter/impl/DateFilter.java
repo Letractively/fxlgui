@@ -32,7 +32,7 @@ class DateFilter extends RangeFilter<Date> {
 	Date upperBound = null;
 
 	DateFilter(FilterGrid parent, String name, int filterIndex) {
-		super(parent, name, filterIndex);
+		super(parent, name, filterIndex, true);
 	}
 
 	@Override

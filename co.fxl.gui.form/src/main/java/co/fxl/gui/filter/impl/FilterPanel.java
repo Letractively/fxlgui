@@ -33,7 +33,7 @@ interface FilterPanel {
 
 		IComboBox comboBox();
 
-		RangeField horizontal();
+		RangeField horizontal(boolean isDateField);
 
 		ITextField textField();
 

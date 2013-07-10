@@ -33,12 +33,13 @@ abstract class RangeFilter<T> extends FilterTemplate<ITextField, T> {
 
 	// private FilterGrid parent;
 
-	RangeFilter(FilterGrid parent, String name, int filterIndex) {
+	RangeFilter(FilterGrid parent, String name, int filterIndex,
+			boolean isDateField) {
 		super(parent, name, filterIndex);
 		// this.parent = parent;
 		ICell cell = parent.cell(filterIndex);
 		// cell.width(WIDTH_RANGE_CELL);// , HEIGHT);
-		panel = cell.horizontal();
+		panel = cell.horizontal(isDateField);
 		// input = addTextField(0);
 	}
 
