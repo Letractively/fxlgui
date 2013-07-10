@@ -350,7 +350,8 @@ class MiniFilterPanel implements FilterPanel {
 	}
 
 	@Override
-	public IClickable<?> addHyperlink(String imageResource, String string) {
+	public IClickable<?> addHyperlink(String imageResource, String string,
+			boolean isApply) {
 		final IImage resource = getContainer(hyperLinkPanel).image().resource(
 				imageResource);
 		return resource;/*

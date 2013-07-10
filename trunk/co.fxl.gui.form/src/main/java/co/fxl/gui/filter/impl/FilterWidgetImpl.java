@@ -377,9 +377,10 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 
 	private void addHyperlinks() {
 		if (!hyperlinksAdded) {
-			apply = title.addHyperlink(Icons.ACCEPT, "Update");
+			apply = title.addHyperlink(Style.instance().filter().acceptImage(),
+					Style.instance().filter().acceptTitle(), true);
 			validation.linkClickable(apply);
-			clear = title.addHyperlink(Icons.CANCEL, "Clear");
+			clear = title.addHyperlink(Icons.CANCEL, Style.instance().filter().clearTitle(), false);
 			apply.addClickListener(new ApplyClickListener());
 			clear.addClickListener(clearClickListener = new ClearClickListener());
 			clear.clickable(false);
@@ -487,7 +488,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 
 	@Override
 	public IFilterWidget addCancelListener(IClickListener cancelListener) {
-		title.addHyperlink("cancel.png", "Cancel").addClickListener(
+		title.addHyperlink("cancel.png", "Cancel", false).addClickListener(
 				cancelListener);
 		return this;
 	}

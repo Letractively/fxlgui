@@ -224,9 +224,11 @@ public class WidgetTitle implements IClickListener, IColored {
 		} else {
 			if (commandPanel != null)
 				return;
-			footer = bottom().panel().dock().height(28);
+			footer = bottom().panel().dock()
+					.height(Style.instance().window().heightFooter());
 			footer.visible(!plainContent);
-			footer.center().panel().vertical().height(28);
+			footer.center().panel().vertical()
+					.height(Style.instance().window().heightFooter());
 			IContainer cell = footer.right();
 			commandPanel = cell.panel().horizontal().padding(6);
 			// commandPanel.add().image().resource("empty_1x1.png");
@@ -262,7 +264,8 @@ public class WidgetTitle implements IClickListener, IColored {
 
 	public ILabel addTitle(String title) {
 		initHeader();
-		String text = Style.instance().window().useUpperCase(sideWidget) ? title.toUpperCase() : title;
+		String text = Style.instance().window().useUpperCase(sideWidget) ? title
+				.toUpperCase() : title;
 		ILabel label = titlePanel.add().label().text(text);
 		String r = Style.instance().window().moreImage();
 		addMoreIcon(r);
@@ -391,6 +394,8 @@ public class WidgetTitle implements IClickListener, IColored {
 			cl = createCommandLink(iPanel0, backgroundPanel, iPanel, image,
 					label);
 		}
+		if (!commandsOnTop)
+			Style.instance().window().buttonFooter(cl);
 		links.add(cl);
 		return cl;
 	}
