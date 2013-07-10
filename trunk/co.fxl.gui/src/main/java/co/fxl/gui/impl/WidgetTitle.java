@@ -132,10 +132,9 @@ public class WidgetTitle implements IClickListener, IColored {
 	}
 
 	private void style() {
-		Style.instance().window().background(headerPanel);
-		Style.instance().window().headerPanel(headerPanel, sideWidget);
+		Style.instance().window().header(headerPanel, sideWidget);
 		Style.instance().window()
-				.backgroundPanel(panel, addBorder, plainContent, sideWidget);
+				.background(panel, addBorder, plainContent, sideWidget);
 	}
 
 	public IColor background() {
@@ -237,12 +236,7 @@ public class WidgetTitle implements IClickListener, IColored {
 
 	// @Style(window = Window.SIDE, outline = Outline.FOOTER)
 	public void styleFooter(IPanel<?> vertical) {
-		vertical.color().rgb(249, 249, 249).gradient().vertical()
-				.rgb(216, 216, 216);
-		IBorder border2 = vertical.border();
-		IColor c = border2.color();
-		decorateBorder(c);
-		border2.style().top();
+		Style.instance().window().footer(vertical, sideWidget);
 	}
 
 	public static void decorateBorder(IColor c) {
@@ -352,7 +346,7 @@ public class WidgetTitle implements IClickListener, IColored {
 
 	// @Style(window = Window.SIDE, outline = Outline.HEADER)
 	public void styleHeaderTitleSide(ILabel label) {
-		Style.instance().window().title(label);
+		Style.instance().window().title(label, sideWidget);
 	}
 
 	public CommandLink addHyperlink(String text) {

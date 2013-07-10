@@ -137,7 +137,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 
 	FilterWidgetImpl(IContainer panel) {
 		title = newFilterPanel(panel);
-		titleLabel = title.addTitle("Filter");
+		titleLabel = title.addTitle("Search Filter");
 		mainPanel = title;
 	}
 
