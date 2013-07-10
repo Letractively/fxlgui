@@ -125,7 +125,7 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=2, offY
 right: 0; margin: 20px; border: 2px solid rgba(0, 0, 0, 0.2); overflow:
 auto; background-color: whiteSmoke; } .scrollbar-container .inner {
 height: 2011px; width: 1985px; padding: 1em; background-color: white;
- } ::-webkit-scrollbar { background: transparent;
+ } ::-webkit-scrollbar { background: rgb(235,235,235);
 } ::-webkit-scrollbar-corner { background: transparent; }
 ::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.2); border:
 solid whiteSmoke 2px; } ::-webkit-scrollbar-thumb:hover {

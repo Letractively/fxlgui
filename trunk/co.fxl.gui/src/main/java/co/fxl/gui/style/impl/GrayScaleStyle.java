@@ -566,7 +566,7 @@ class GrayScaleStyle extends StyleTemplate {
 			}
 
 			@Override
-			public String headerRowStyle() {
+			public String headerRowStyle(boolean isTreeTable) {
 				return "headerRowHL";
 			}
 
@@ -576,7 +576,7 @@ class GrayScaleStyle extends StyleTemplate {
 			}
 
 			@Override
-			public String contentRowStyle() {
+			public String contentRowStyle(boolean isTreeTable) {
 				return "contentRowHL";
 			}
 

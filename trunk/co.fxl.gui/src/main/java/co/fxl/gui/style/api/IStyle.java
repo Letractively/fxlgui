@@ -45,11 +45,11 @@ public interface IStyle {
 
 		boolean isTitleUpperCase();
 
-		String headerRowStyle();
+		String headerRowStyle(boolean isTreeTable);
 
 		int paddingSide();
 
-		String contentRowStyle();
+		String contentRowStyle(boolean isTreeTable);
 
 		int marginTop();
 
