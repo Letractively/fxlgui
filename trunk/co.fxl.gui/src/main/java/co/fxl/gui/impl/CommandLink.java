@@ -78,8 +78,8 @@ public class CommandLink implements IClickListener, ButtonAdp {
 			Style.instance().window().button(this);
 	}
 
-	public void newButton() {
-		Style.instance().window().newButton(this);
+	public void newButton(int index) {
+		Style.instance().window().newButton(this, index);
 	}
 
 	public void showButton() {
