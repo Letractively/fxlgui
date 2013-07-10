@@ -501,6 +501,11 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
+			public boolean useUpperCase(boolean sideWidget) {
+				return false;
+			}
+
+			@Override
 			public void moreButton(CommandLink more) {
 				more.label().font().color().black();
 				more.image("more_small_black.png");
@@ -558,6 +563,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			public void background(IGridPanel panel, boolean addBorder,
 					boolean plainContent, boolean sideWidget) {
 				if (!plainContent && sideWidget) {
+					panel.margin().top(4);
 					if (addBorder) {
 						IBorder border = panel.border();
 						border.style().rounded().width(6);

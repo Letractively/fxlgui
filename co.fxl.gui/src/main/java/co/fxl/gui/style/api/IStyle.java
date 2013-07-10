@@ -71,6 +71,8 @@ public interface IStyle {
 
 		void footer(IPanel<?> vertical, boolean sideWidget);
 
+		boolean useUpperCase(boolean sideWidget);
+
 	}
 
 	public interface IViewSelection {
