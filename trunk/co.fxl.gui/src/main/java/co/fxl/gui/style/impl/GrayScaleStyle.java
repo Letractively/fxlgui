@@ -486,6 +486,11 @@ class GrayScaleStyle extends StyleTemplate {
 				return sideWidget;
 			}
 
+			@Override
+			public String moreImage() {
+				return "more.png";
+			}
+
 		};
 	}
 
