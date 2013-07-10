@@ -735,7 +735,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 			@Override
 			public String headerRowStyle(boolean isTreeTable) {
-				return "headerRowHL99D";
+				return isTreeTable ? "headerRowHL99DTreeTable"
+						: "headerRowHL99D";
 			}
 
 			@Override
