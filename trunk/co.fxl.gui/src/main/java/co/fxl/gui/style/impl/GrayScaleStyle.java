@@ -564,6 +564,30 @@ class GrayScaleStyle extends StyleTemplate {
 			public boolean isTitleUpperCase() {
 				return true;
 			}
+
+			@Override
+			public String headerRowStyle() {
+				return "headerRowHL";
+			}
+
+			@Override
+			public int paddingSide() {
+				return 5;
+			}
+
+			@Override
+			public String contentRowStyle() {
+				return "contentRowHL";
+			}
+
+			@Override
+			public int marginTop() {
+				return 6;
+			}
+
+			@Override
+			public void background(IVerticalPanel container) {
+			}
 		};
 	}
 
