@@ -127,7 +127,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 			@Override
 			void style(final IComboBox cb) {
-				cb.width(150).border().color().white();
+				cb.width(120).border().color().white();
 				cb.color().white();
 				cb.addMouseOverListener(new IMouseOverListener() {
 					@Override
