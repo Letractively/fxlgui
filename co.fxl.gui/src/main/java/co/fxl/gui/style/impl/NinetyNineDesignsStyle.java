@@ -57,6 +57,8 @@ import co.fxl.gui.impl.WidgetTitle;
 
 class NinetyNineDesignsStyle extends StyleTemplate {
 
+	private static final String CLEAR_FILTERS = "Clear Filters";
+
 	private IColor blue(IFontElement element) {
 		return blue(element.font());
 	}
@@ -509,6 +511,27 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
+			public int heightFooter() {
+				return 40;
+			}
+
+			@Override
+			public void buttonFooter(CommandLink cl) {
+				if (cl.label().text().equals(CLEAR_FILTERS)) {
+					cl.image().remove();
+					blue(cl.label());
+					cl.label().font().weight().bold().underline(true);
+					return;
+				}
+				button(cl);
+				cl.iPanel().padding(4);
+				// cl.iPanel().margin().top(-3).bottom(-3);
+				IBorder border = cl.border();
+				border.style().rounded();
+				border.width(1).color().lightgray();
+			}
+
+			@Override
 			public String moreImage() {
 				return "more_black.png";
 			}
@@ -636,6 +659,21 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public void decorate(IGridCell cell) {
 				Heights.INSTANCE.decorate(cell);
+			}
+
+			@Override
+			public String acceptImage() {
+				return "search_white.png";
+			}
+
+			@Override
+			public String acceptTitle() {
+				return "Filter results";
+			}
+
+			@Override
+			public String clearTitle() {
+				return CLEAR_FILTERS;
 			}
 
 			@Override

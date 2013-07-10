@@ -69,8 +69,6 @@ interface FilterPanel {
 
 	ILabel addTitle(String string);
 
-	IClickable<?> addHyperlink(String imageResource, String string);
-
 	ViewComboBox viewComboBox();
 
 	IContainer top();
@@ -84,4 +82,7 @@ interface FilterPanel {
 	void clearRowIterator();
 
 	void linksVisible(boolean b);
+
+	IClickable<?> addHyperlink(String imageResource, String string,
+			boolean isApply);
 }

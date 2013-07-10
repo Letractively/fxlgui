@@ -48,6 +48,12 @@ public interface IStyle {
 
 		void decorate(ITextInputElement<?> input);
 
+		String acceptImage();
+
+		String acceptTitle();
+
+		String clearTitle();
+
 	}
 
 	public interface IPopUpWindow {
@@ -86,6 +92,10 @@ public interface IStyle {
 		boolean useUpperCase(boolean sideWidget);
 
 		String moreImage();
+
+		void buttonFooter(CommandLink cl);
+
+		int heightFooter();
 
 	}
 

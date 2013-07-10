@@ -38,6 +38,7 @@ import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Heights;
+import co.fxl.gui.impl.Icons;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.impl.WidgetTitle;
 
@@ -47,6 +48,21 @@ class GrayScaleStyle extends StyleTemplate {
 
 		FilterPanel() {
 			super(0);
+		}
+
+		@Override
+		public String acceptImage() {
+			return Icons.ACCEPT;
+		}
+
+		@Override
+		public String acceptTitle() {
+			return "Update";
+		}
+
+		@Override
+		public String clearTitle() {
+			return "Clear";
 		}
 	}
 
@@ -496,6 +512,15 @@ class GrayScaleStyle extends StyleTemplate {
 			@Override
 			public String moreImage() {
 				return "more.png";
+			}
+
+			@Override
+			public void buttonFooter(CommandLink cl) {
+			}
+
+			@Override
+			public int heightFooter() {
+				return 28;
 			}
 
 		};

@@ -354,4 +354,8 @@ public class CommandLink implements IClickListener, ButtonAdp {
 	public IPanel<?> iPanel() {
 		return iPanel;
 	}
+
+	public IImage image() {
+		return image;
+	}
 }

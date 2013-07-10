@@ -23,6 +23,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.WidgetTitle;
 
 public class FilterPanelImpl implements FilterPanel {
@@ -52,8 +53,12 @@ public class FilterPanelImpl implements FilterPanel {
 	}
 
 	@Override
-	public IClickable<?> addHyperlink(String imageResource, String string) {
-		return title.addHyperlink(imageResource, string);
+	public IClickable<?> addHyperlink(String imageResource, String string,
+			boolean isApply) {
+		CommandLink addHyperlink = title.addHyperlink(imageResource, string);
+		if (isApply)
+			addHyperlink.showButton();
+		return addHyperlink;
 	}
 
 	@Override
