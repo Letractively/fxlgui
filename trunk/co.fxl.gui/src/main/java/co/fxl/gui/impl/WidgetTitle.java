@@ -262,7 +262,7 @@ public class WidgetTitle implements IClickListener, IColored {
 
 	public ILabel addTitle(String title) {
 		initHeader();
-		String text = sideWidget ? title.toUpperCase() : title;
+		String text = Style.instance().window().useUpperCase(sideWidget) ? title.toUpperCase() : title;
 		ILabel label = titlePanel.add().label().text(text);
 		String r = "more.png";
 		addMoreIcon(r);

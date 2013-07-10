@@ -481,6 +481,11 @@ class GrayScaleStyle extends StyleTemplate {
 				border2.style().top();
 			}
 
+			@Override
+			public boolean useUpperCase(boolean sideWidget) {
+				return sideWidget;
+			}
+
 		};
 	}
 
