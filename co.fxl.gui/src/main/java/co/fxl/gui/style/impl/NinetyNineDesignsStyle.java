@@ -734,13 +734,13 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
-			public String headerRowStyle() {
+			public String headerRowStyle(boolean isTreeTable) {
 				return "headerRowHL99D";
 			}
 
 			@Override
-			public String contentRowStyle() {
-				return "contentRowHL99D";
+			public String contentRowStyle(boolean isTreeTable) {
+				return isTreeTable ? "contentRowHL" : "contentRowHL99D";
 			}
 		};
 	}
