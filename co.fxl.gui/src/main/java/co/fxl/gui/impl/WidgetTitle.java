@@ -93,6 +93,7 @@ public class WidgetTitle implements IClickListener, IColored {
 	private List<CommandLink> links = new LinkedList<CommandLink>();
 	private IHorizontalPanel oneTimeRefresh;
 	private IHorizontalPanel basicTitlePanel;
+	private boolean addBorder;
 
 	public WidgetTitle() {
 	}
@@ -110,6 +111,7 @@ public class WidgetTitle implements IClickListener, IColored {
 	}
 
 	public WidgetTitle(ILayout layout, boolean addBorder, boolean plainContent) {
+		this.addBorder = addBorder;
 		baseFocusPanel = layout.focus().width(-1);
 		panel = baseFocusPanel.add().panel().grid();
 		panel.color().white();
@@ -117,17 +119,21 @@ public class WidgetTitle implements IClickListener, IColored {
 		this.plainContent = plainContent;
 		headerFocusPanel = panel.cell(0, 0).panel().focus();
 		headerPanel = headerFocusPanel.add().panel().grid();
-		Style.instance().window().background(headerPanel);
 		if (plainContent)
 			headerPanel.visible(false);
 		bPanel = panel.cell(0, 1).panel().grid();
 		if (!plainContent) {
-			Style.instance().window().headerPanel(headerPanel, sideWidget);
 			IBorder border = headerPanel.border();
 			border.color().rgb(172, 197, 213);
 			border.style().bottom();
 		}
 		headerPanel.visible(false);
+		style();
+	}
+
+	private void style() {
+		Style.instance().window().background(headerPanel);
+		Style.instance().window().headerPanel(headerPanel, sideWidget);
 		Style.instance().window()
 				.backgroundPanel(panel, addBorder, plainContent, sideWidget);
 	}
@@ -581,6 +587,7 @@ public class WidgetTitle implements IClickListener, IColored {
 
 	public WidgetTitle sideWidget(boolean sideWidget) {
 		this.sideWidget = sideWidget;
+		style();
 		return this;
 	}
 
