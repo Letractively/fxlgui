@@ -28,7 +28,9 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.filter.impl.FilterPanel.ICell;
+import co.fxl.gui.form.impl.DateField;
 import co.fxl.gui.form.impl.Validation;
+import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.Heights;
 
 class CellImpl implements ICell {
@@ -39,18 +41,25 @@ class CellImpl implements ICell {
 		private final ITextField tf2;
 		private FilterWidgetImpl widget;
 
-		ExpliciteRangeField(FilterWidgetImpl widget, IContainer cell) {
+		ExpliciteRangeField(FilterWidgetImpl widget, IContainer cell,
+				boolean isDateField) {
 			this.widget = widget;
 			IHorizontalPanel p = cell.panel().horizontal();
-			tf1 = addTextField(p);
+			tf1 = addTextField(p, isDateField);
 			p.add().label().text("-").margin().left(4).right(4);
-			tf2 = addTextField(p);
+			tf2 = addTextField(p, isDateField);
 		}
 
-		ITextField addTextField(IHorizontalPanel p) {
-			ITextField textField1 = p.add().textField()
-					.width(FilterTemplate.WIDTH_RANGE_CELL);
+		ITextField addTextField(IHorizontalPanel p, boolean isDateField) {
+			boolean useDateField = isDateField && !Env.is(Env.SWING);
+			ITextField textField = useDateField ? new DateField(p.add()) : p
+					.add().textField();
+			ITextField textField1 = textField
+					.width(FilterTemplate.WIDTH_RANGE_CELL
+							- (useDateField ? 24 : 0));
 			Heights.INSTANCE.decorate(textField1);
+			if (useDateField)
+				textField.font().pixel(9);
 			widget.register(textField1);
 			return textField1;
 		}
@@ -112,8 +121,9 @@ class CellImpl implements ICell {
 	}
 
 	@Override
-	public RangeField horizontal() {
-		return new ExpliciteRangeField(filterPanelImpl.widget, cell);
+	public RangeField horizontal(boolean isDateField) {
+		return new ExpliciteRangeField(filterPanelImpl.widget, cell,
+				isDateField);
 	}
 
 	@Override
