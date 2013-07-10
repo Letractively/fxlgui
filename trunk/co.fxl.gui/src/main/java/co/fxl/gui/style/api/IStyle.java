@@ -40,6 +40,12 @@ import co.fxl.gui.impl.WidgetTitle;
 
 public interface IStyle {
 
+	public interface ITable {
+
+		boolean isTitleUpperCase();
+
+	}
+
 	public interface IFilterPanel {
 
 		void decorate(IGridCell cell);
@@ -246,5 +252,7 @@ public interface IStyle {
 	IPopUpWindow popUp();
 
 	IFilterPanel filter();
+
+	ITable table();
 
 }

@@ -706,4 +706,14 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 		};
 	}
+
+	@Override
+	public ITable table() {
+		return new ITable() {
+			@Override
+			public boolean isTitleUpperCase() {
+				return false;
+			}
+		};
+	}
 }
