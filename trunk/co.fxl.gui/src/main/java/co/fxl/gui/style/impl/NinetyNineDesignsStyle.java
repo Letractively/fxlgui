@@ -504,7 +504,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 			@Override
 			public void newButton(CommandLink commandLink, int index) {
-				int inc = index * 20;
+				int inc = index * 14;
 				commandLink.border().color().rgb(14 + inc, 151 + inc, 35 + inc);
 				commandLink.background().rgb(40 + inc, 194 + inc, 64 + inc)
 						.gradient().vertical()
