@@ -735,6 +735,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public void selectedColumn(IHorizontalPanel b, boolean visible,
 					boolean isFirst, boolean isLast) {
+				visible = !visible;
 				if (visible)
 					b.color().remove().gray(121);
 				else
@@ -749,6 +750,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 			@Override
 			public void selectedColumn(ILabel l, boolean visible) {
+				visible = !visible;
 				if (visible)
 					l.font().color().white();
 				else
@@ -813,7 +815,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			public IClickable<?> selectLink(IHorizontalPanel p, final boolean b) {
 				final IHorizontalPanel panel = p.add().panel().horizontal()
 						.spacing(5);
-				if(b)
+				if (b)
 					panel.margin().left(5);
 				final ILabel select = panel.add().label();
 				decorate(select.text(b ? "ALL" : "NONE"));
@@ -821,8 +823,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 					@Override
 					public Object clickable(boolean clickable) {
-						selectedColumn(panel, !clickable, b, !b);
-						selectedColumn(select, !clickable);
+						selectedColumn(panel, clickable, b, !b);
+						selectedColumn(select, clickable);
 						panel.clickable(clickable);
 						select.clickable(clickable);
 						return this;
