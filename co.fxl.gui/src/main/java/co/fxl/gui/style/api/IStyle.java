@@ -38,6 +38,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.impl.WidgetTitle;
+import co.fxl.gui.style.api.IStyle.ITree;
 
 public interface IStyle {
 
@@ -94,6 +95,11 @@ public interface IStyle {
 
 		void background(IColored colored);
 
+	}
+
+	public interface ITree {
+
+		void statusPanel(IPanel<?> panel);
 	}
 
 	public interface IMDT {
@@ -284,5 +290,7 @@ public interface IStyle {
 	IFilterPanel filter();
 
 	ITable table();
+
+	ITree tree();
 
 }
