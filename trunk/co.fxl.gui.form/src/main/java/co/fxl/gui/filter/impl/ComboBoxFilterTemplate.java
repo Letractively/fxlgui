@@ -25,6 +25,7 @@ import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter.IGlobalValue;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.form.impl.Validation;
+import co.fxl.gui.impl.LazyUpdateListener;
 
 abstract class ComboBoxFilterTemplate<T> extends FilterTemplate<IComboBox, T> {
 
@@ -65,9 +66,9 @@ abstract class ComboBoxFilterTemplate<T> extends FilterTemplate<IComboBox, T> {
 		if (v != null)
 			return;
 		validation.linkInput(input);
-		input.addUpdateListener(new IUpdateListener<String>() {
+		input.addUpdateListener(new LazyUpdateListener<String>() {
 			@Override
-			public void onUpdate(String value) {
+			public void onAllowedUpdate(String value) {
 				if (updateListeningActive && directApply)
 					panel.notifyComboBoxChange(clearClickable());
 			}
@@ -76,9 +77,9 @@ abstract class ComboBoxFilterTemplate<T> extends FilterTemplate<IComboBox, T> {
 
 	@Override
 	public final void addUpdateListener(final FilterListener l) {
-		input.addUpdateListener(new IUpdateListener<String>() {
+		input.addUpdateListener(new LazyUpdateListener<String>() {
 			@Override
-			public void onUpdate(String value) {
+			public void onAllowedUpdate(String value) {
 				if (updateListeningActive)
 					l.onActive(!input.text().trim().equals(""));
 			}
