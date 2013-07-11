@@ -553,7 +553,8 @@ class GrayScaleStyle extends StyleTemplate {
 			}
 
 			@Override
-			public void stylishButton(StylishButton button, boolean green) {
+			public void stylishButton(StylishButton button, boolean green,
+					int blue) {
 				button.buttonPanel().color().remove().rgb(111, 111, 111)
 						.gradient().vertical().rgb(63, 63, 63);
 			}
@@ -801,6 +802,11 @@ class GrayScaleStyle extends StyleTemplate {
 			}
 
 		};
+	}
+
+	@Override
+	public void hyperlink(ILabel label) {
+		label.font().color().rgb(0, 87, 141);
 	}
 
 }

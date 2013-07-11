@@ -19,6 +19,7 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.style.impl.Style;
 
 public class HyperlinkDecorator extends HyperlinkMouseOverListener {
 
@@ -28,7 +29,7 @@ public class HyperlinkDecorator extends HyperlinkMouseOverListener {
 	}
 
 	public static void styleHyperlinkActive(ILabel label) {
-		label.font().color().rgb(0, 87, 141);
+		Style.instance().hyperlink(label);
 	}
 
 	public static void styleHyperlinkInactive(ILabel label) {

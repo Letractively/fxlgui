@@ -63,6 +63,11 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 	private static final int COMMENT_PANEL_INDENT = 6;
 	private static final String CLEAR_FILTERS = "Clear Filters";
 
+	@Override
+	public void hyperlink(ILabel label) {
+		blue(label);
+	}
+
 	private IColor blue(IFontElement element) {
 		return blue(element.font());
 	}
@@ -516,10 +521,19 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
-			public void stylishButton(StylishButton button, boolean green) {
+			public void stylishButton(StylishButton button, boolean green,
+					int blue) {
 				if (green) {
 					newButton(0, button.buttonPanel().border().remove(), button
 							.buttonPanel().color().remove());
+					button.buttonPanel().margin(-1);
+				} else if (blue > 0) {
+					int inc = (blue - 1) * 14;
+					button.buttonPanel().border().remove().color()
+							.rgb(14 + inc, 151 + inc, 35 + inc);
+					button.buttonPanel().color().remove()
+							.rgb(79 + inc, 122 + inc, 201 + inc).gradient()
+							.vertical().rgb(63 + inc, 106 + inc, 188 + inc);
 					button.buttonPanel().margin(-1);
 				} else {
 					button.buttonPanel().color().remove().rgb(111, 111, 111)

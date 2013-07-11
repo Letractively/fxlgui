@@ -189,7 +189,7 @@ public interface IStyle {
 
 		void moreButtonActive(CommandLink more);
 
-		void stylishButton(StylishButton button, boolean green);
+		void stylishButton(StylishButton button, boolean green, int blue);
 
 	}
 
@@ -350,5 +350,7 @@ public interface IStyle {
 	IFormStyle form();
 
 	IN2MStyle n2m();
+
+	void hyperlink(ILabel label);
 
 }
