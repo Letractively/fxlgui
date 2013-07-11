@@ -790,7 +790,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public ILabel statusHeader(IPanel<?> p, String text) {
 				ILabel l = p.add().label().text(text);
-				l.font().pixel(TABLE_SELECTION_PIXEL).weight().bold();
+				l.font().pixel(TABLE_SELECTION_PIXEL);//.weight().bold();
 				statusHeader(l);
 				return l;
 			}
