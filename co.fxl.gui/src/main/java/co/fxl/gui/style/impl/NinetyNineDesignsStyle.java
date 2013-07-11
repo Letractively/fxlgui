@@ -820,6 +820,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 					public Object clickable(boolean clickable) {
 						selectedColumn(panel, !clickable, b, !b);
 						selectedColumn(select, !clickable);
+						panel.clickable(clickable);
+						select.clickable(clickable);
 						return this;
 					}
 
