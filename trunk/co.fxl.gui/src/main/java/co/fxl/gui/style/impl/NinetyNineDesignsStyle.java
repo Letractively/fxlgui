@@ -736,11 +736,12 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			public void selectedColumn(IHorizontalPanel b, boolean visible,
 					boolean isFirst, boolean isLast) {
 				visible = !visible;
+				b.padding().left(8).right(8);
 				if (visible)
 					b.color().remove().gray(121);
 				else
 					b.color().remove().gray(248).gradient().vertical()
-							.gray(224);
+							.gray(230);
 				if (isFirst)
 					b.border().style().rounded().right(false);
 				else if (isLast)
@@ -813,10 +814,12 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 			@Override
 			public IClickable<?> selectLink(IHorizontalPanel p, final boolean b) {
-				final IHorizontalPanel panel = p.add().panel().horizontal()
-						.spacing(5);
+				final IHorizontalPanel panel = p.add().panel().horizontal();
+				panel.padding().top(3).bottom(3);
 				if (b)
 					panel.margin().left(5);
+				else
+					panel.margin().right(5);
 				final ILabel select = panel.add().label();
 				decorate(select.text(b ? "ALL" : "NONE"));
 				IClickable<Object> c = new IClickable<Object>() {
