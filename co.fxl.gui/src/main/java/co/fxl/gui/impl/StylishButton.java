@@ -20,8 +20,10 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.style.impl.Style;
 
 public class StylishButton extends ClickableMultiplexer {
 
@@ -29,6 +31,7 @@ public class StylishButton extends ClickableMultiplexer {
 	private IHorizontalPanel buttonPanel;
 	private ILabel button;
 	private IHorizontalPanel backPanel;
+	private boolean green;
 
 	public StylishButton(IHorizontalPanel p, String text) {
 		this(p, text, true);
@@ -56,6 +59,11 @@ public class StylishButton extends ClickableMultiplexer {
 		cs = new IClickable<?>[] { buttonPanel, button };
 	}
 
+	public StylishButton green() {
+		green = true;
+		return this;
+	}
+
 	@Override
 	public Object clickable(boolean clickable) {
 		if (changeBackground) {
@@ -73,11 +81,15 @@ public class StylishButton extends ClickableMultiplexer {
 	}
 
 	private void styleActive() {
-		buttonPanel.color().remove().rgb(111, 111, 111).gradient().vertical()
-				.rgb(63, 63, 63);
+		Style.instance().window().stylishButton(this, green);
 	}
 
 	public IHorizontalPanel panel() {
 		return backPanel;
 	}
+
+	public IHorizontalPanel buttonPanel() {
+		return buttonPanel;
+	}
+
 }

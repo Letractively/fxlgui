@@ -43,6 +43,7 @@ import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.ISuggestField;
+import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.ITextInputElement;
 import co.fxl.gui.api.IVerticalPanel;
@@ -53,6 +54,7 @@ import co.fxl.gui.impl.HyperlinkDecorator;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
 import co.fxl.gui.impl.ImageButton;
 import co.fxl.gui.impl.PopUp;
+import co.fxl.gui.impl.StylishButton;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.impl.WidgetTitle;
 
@@ -513,6 +515,19 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
+			public void stylishButton(StylishButton button, boolean green) {
+				if (green) {
+					newButton(0, button.buttonPanel().border().remove(), button
+							.buttonPanel().color().remove());
+					button.buttonPanel().margin(-1);
+				} else {
+					button.buttonPanel().color().remove().rgb(111, 111, 111)
+							.gradient().vertical().rgb(63, 63, 63);
+					button.buttonPanel().border().remove();
+				}
+			}
+
+			@Override
 			public void moreButtonActive(CommandLink more) {
 				border(more).gray(113);
 				blue(more.background());
@@ -595,12 +610,17 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public int[] newButton(CommandLink commandLink, int index) {
 				int inc = index * 10;
-				commandLink.border().color().rgb(14 + inc, 151 + inc, 35 + inc);
-				commandLink.background().rgb(40 + inc, 194 + inc, 64 + inc)
-						.gradient().vertical()
-						.rgb(25 + inc, 173 + inc, 48 + inc);
+				IBorder border = commandLink.border();
+				IColor background = commandLink.background();
+				newButton(inc, border, background);
 				white(commandLink);
 				return new int[] { 19 + inc, 161 + inc, 61 + inc };
+			}
+
+			private void newButton(int inc, IBorder border, IColor background) {
+				border.color().rgb(14 + inc, 151 + inc, 35 + inc);
+				background.rgb(40 + inc, 194 + inc, 64 + inc).gradient()
+						.vertical().rgb(25 + inc, 173 + inc, 48 + inc);
 			}
 
 			private void white(CommandLink commandLink) {
@@ -972,6 +992,12 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public void inputField(IBordered input) {
 				inputBorder(input);
+			}
+
+			@Override
+			public void commentField(ITextArea valuePanel) {
+				inputField(valuePanel);
+				valuePanel.color().white().gradient().vertical().gray(244);
 			}
 
 			@Override
