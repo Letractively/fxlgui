@@ -32,6 +32,7 @@ import co.fxl.gui.api.ILayout;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.style.impl.Style;
 
 public class NavigationView implements IColored {
 
@@ -219,9 +220,7 @@ public class NavigationView implements IColored {
 	}
 
 	private void addBorder(IVerticalPanel p) {
-		IBorder border = p.border();
-		border.color().rgb(172, 197, 213);
-		border.style().top();
+		Style.instance().window().listItemPanel(p);
 	}
 
 	public boolean updateSeparatorBorders() {
