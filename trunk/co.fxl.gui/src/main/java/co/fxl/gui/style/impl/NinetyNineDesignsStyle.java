@@ -748,7 +748,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				visible = !visible;
 				b.padding().left(6).right(6);
 				if (visible)
-					b.color().remove().gray(121);
+					b.color().remove().gray(161);
 				else
 					b.color().remove().gray(248).gradient().vertical()
 							.gray(230);
