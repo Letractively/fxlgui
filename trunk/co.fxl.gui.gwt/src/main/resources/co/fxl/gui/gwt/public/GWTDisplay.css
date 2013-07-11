@@ -117,7 +117,7 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=2, offY
 .gwt-Label-FXL { white-space: nowrap; }
 .gwt-SuggestBoxPopup-FXL {
     background-color: white;
-    border: 1px darkblue solid;
+    border: 1px gray solid;
     padding: 2px;
 }
 .gwt-SplitLayoutPanel-HDragger { background-color: lightgray }
