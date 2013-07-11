@@ -733,6 +733,22 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
+			public void selectedColumn(IHorizontalPanel b, boolean visible) {
+				if (visible)
+					b.color().gray();
+				else
+					b.color().white();
+			}
+
+			@Override
+			public void selectedColumn(ILabel l, boolean visible) {
+				if (visible)
+					l.font().color().white();
+				else
+					l.font().color().rgb(102, 102, 102);
+			}
+
+			@Override
 			public void background(IVerticalPanel container) {
 				IBorder b = container.border();
 				b.style().left().style().right();
