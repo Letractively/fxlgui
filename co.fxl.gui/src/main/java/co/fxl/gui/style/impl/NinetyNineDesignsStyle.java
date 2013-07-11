@@ -513,6 +513,11 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
+			public int headerSpacingLeft(boolean sideWidget) {
+				return sideWidget ? 10 : 0;
+			}
+
+			@Override
 			public int heightFooter() {
 				return 40;
 			}

@@ -201,7 +201,9 @@ public class WidgetTitle implements IClickListener, IColored {
 		headerPanel.visible(!plainContent);
 		basicTitlePanel = headerPanel.cell(0, 0).panel().horizontal();
 		titlePanel = basicTitlePanel.add().panel().horizontal();
-		titlePanel.spacing().left(10).top(6).bottom(6).right(6);
+		titlePanel.spacing()
+				.left(Style.instance().window().headerSpacingLeft(sideWidget))
+				.top(6).bottom(6).right(6);
 		hasHeaderPanel = true;
 	}
 

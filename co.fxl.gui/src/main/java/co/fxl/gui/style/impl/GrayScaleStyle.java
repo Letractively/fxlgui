@@ -524,6 +524,11 @@ class GrayScaleStyle extends StyleTemplate {
 				return 28;
 			}
 
+			@Override
+			public int headerSpacingLeft(boolean sideWidget) {
+				return 10;
+			}
+
 		};
 	}
 

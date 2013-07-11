@@ -120,6 +120,8 @@ public interface IStyle {
 
 		int heightFooter();
 
+		int headerSpacingLeft(boolean sideWidget);
+
 	}
 
 	public interface IViewSelection {
