@@ -829,8 +829,10 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 						selectedColumn(panel, clickable, b, !b);
 						selectedColumn(select, clickable);
 						panel.clickable(clickable);
-						if (!clickable)
-							panel.color().remove().gray(218);
+						if (!clickable) {
+							panel.color().remove().gray(250);
+							select.font().color().gray(190);
+						}
 						select.clickable(clickable);
 						return this;
 					}
