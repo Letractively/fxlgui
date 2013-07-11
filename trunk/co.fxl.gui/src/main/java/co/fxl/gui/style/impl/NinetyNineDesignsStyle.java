@@ -723,7 +723,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				IBorder border2 = statusPanel.border();
 				border2.color().rgb(172, 197, 213);
 				border2.style().top().style().bottom();
-				statusPanel.color().gray(249);
+				statusPanel.color().remove().gray(249);
 			}
 
 			@Override
@@ -760,6 +760,11 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				l.font().pixel(TABLE_SELECTION_PIXEL).weight().bold().color()
 						.gray(97);
 				return l;
+			}
+
+			@Override
+			public void statusHeader(ILabel l) {
+				l.font().color().gray(97);
 			}
 
 		};
