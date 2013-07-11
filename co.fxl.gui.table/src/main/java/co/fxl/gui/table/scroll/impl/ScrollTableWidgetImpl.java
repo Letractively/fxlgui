@@ -194,11 +194,17 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private boolean showConfiguration = true;
 	private IColumnWidthInjector columnWidths = ColumnWidths.newInstance(true);
 	private IHorizontalPanel add2Title;
+	private boolean hasBorder = true;
 
 	// private IVerticalPanel editPanel;
 
 	ScrollTableWidgetImpl(IContainer container) {
 		c0 = container;
+	}
+
+	@Override
+	public void hasBorder(boolean hasBorder) {
+		this.hasBorder = hasBorder;
 	}
 
 	@Override
@@ -220,7 +226,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			widgetTitle.commandsOnTop();
 			widgetTitle.hyperlinkVisible(false);
 			widgetTitle.spacing(0);
-			container = widgetTitle.content(true).panel().vertical();
+			container = widgetTitle.content(hasBorder).panel().vertical();
 			// editPanel = container.add().panel().vertical().visible(false);
 			if (add2Title != null)
 				widgetTitle.add2Title(add2Title);
