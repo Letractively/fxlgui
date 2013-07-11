@@ -733,11 +733,17 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
-			public void selectedColumn(IHorizontalPanel b, boolean visible) {
+			public void selectedColumn(IHorizontalPanel b, boolean visible,
+					boolean isFirst, boolean isLast) {
 				if (visible)
-					b.color().gray();
+					b.color().gray(121);
 				else
-					b.color().white();
+					b.color().gray(248).gradient().vertical().gray(230);
+				if (isFirst)
+					b.border().style().rounded().right(false);
+				else if (isLast)
+					b.border().style().rounded().left(false);
+				b.border().width(1).color().gray(218);
 			}
 
 			@Override
@@ -745,7 +751,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				if (visible)
 					l.font().color().white();
 				else
-					l.font().color().rgb(102, 102, 102);
+					l.font().color().gray(102);
 			}
 
 			@Override

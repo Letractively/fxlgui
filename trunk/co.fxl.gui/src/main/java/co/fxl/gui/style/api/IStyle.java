@@ -61,7 +61,8 @@ public interface IStyle {
 
 		void statusLink(ILabel l, boolean active);
 
-		void selectedColumn(IHorizontalPanel b, boolean visible);
+		void selectedColumn(IHorizontalPanel b, boolean visible,
+				boolean isFirst, boolean isLast);
 
 		void selectedColumn(ILabel l, boolean visible);
 

@@ -282,6 +282,7 @@ class SelectionImpl implements ISelection<Object> {
 						.spacing(5);
 				Style.instance().table().statusHeader(p, "Select");
 				selectAll = p.add().label();
+//				Style.instance().table().selectAllNone(selectAll, false);
 				decorate(selectAll.text("ALL"));
 				selectAll.hyperlink().addClickListener(
 						new SelectAllClickListener());
