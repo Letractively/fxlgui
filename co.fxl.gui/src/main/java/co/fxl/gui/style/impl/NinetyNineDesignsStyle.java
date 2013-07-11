@@ -527,18 +527,19 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				if (cl.label().text().equals(CLEAR_FILTERS)) {
 					// cl.image().remove();
 					blue(cl.label());
-					cl.label().font().weight().bold().underline(true);
-					cl.label().addMouseOverListener(new IMouseOverListener() {
-
-						@Override
-						public void onMouseOver() {
-						}
-
-						@Override
-						public void onMouseOut() {
-							cl.label().font().underline(true);
-						}
-					});
+					cl.label().font().weight().bold();// .underline(true);
+					// cl.label().addMouseOverListener(new IMouseOverListener()
+					// {
+					//
+					// @Override
+					// public void onMouseOver() {
+					// }
+					//
+					// @Override
+					// public void onMouseOut() {
+					// cl.label().font().underline(true);
+					// }
+					// });
 					return;
 				}
 				button(cl);
