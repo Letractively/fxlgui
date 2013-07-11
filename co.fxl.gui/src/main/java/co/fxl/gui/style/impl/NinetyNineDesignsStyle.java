@@ -736,7 +736,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			public void selectedColumn(IHorizontalPanel b, boolean visible,
 					boolean isFirst, boolean isLast) {
 				visible = !visible;
-				b.padding().left(8).right(8);
+				b.padding().left(6).right(6);
 				if (visible)
 					b.color().remove().gray(121);
 				else
@@ -790,7 +790,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public ILabel statusHeader(IPanel<?> p, String text) {
 				ILabel l = p.add().label().text(text);
-				l.font().pixel(TABLE_SELECTION_PIXEL);//.weight().bold();
+				l.font().pixel(TABLE_SELECTION_PIXEL);// .weight().bold();
 				statusHeader(l);
 				return l;
 			}
@@ -829,6 +829,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 						selectedColumn(panel, clickable, b, !b);
 						selectedColumn(select, clickable);
 						panel.clickable(clickable);
+						if (!clickable)
+							panel.color().remove().gray(218);
 						select.clickable(clickable);
 						return this;
 					}
