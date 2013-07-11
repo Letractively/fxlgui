@@ -18,9 +18,9 @@
  */
 package co.fxl.gui.navigation.menu.impl;
 
-import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.register.api.IRegister.ITitle;
 import co.fxl.gui.register.impl.RegisterWidgetImpl;
+import co.fxl.gui.style.impl.Style;
 
 public class RootRegisterStyle extends RegisterStyle {
 
@@ -36,22 +36,15 @@ public class RootRegisterStyle extends RegisterStyle {
 
 	@Override
 	public void onBack(ITitle title) {
-		title.color().rgb(112, 112, 112).gradient().vertical().rgb(63, 63, 63);
-		title.border().color().rgb(87, 87, 87);
-		IFont f = title.font().underline(false).weight().plain();
-		if (!title.isClickable()) {
-			f.color().gray();
-		} else if (title.isEmpty()) {
-			f.color().lightgray();
-		} else
-			f.color().white();// .color().black();
+		Style.instance()
+				.register()
+				.inactive(title.color(), title.border(), title.font(),
+						title.isClickable(), title.isEmpty());
 	}
 
 	@Override
 	public void onFront(ITitle title) {
-		title.color().rgb(255, 255, 255).gradient().vertical()
-				.rgb(245, 245, 245);
-		title.border().color().gray();
-		title.font().underline(false).weight().plain().color().black();// .color().white();
+		Style.instance().register()
+				.active(title.color(), title.border(), title.font());
 	}
 }
