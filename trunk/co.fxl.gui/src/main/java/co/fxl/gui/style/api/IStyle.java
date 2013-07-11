@@ -18,12 +18,15 @@
  */
 package co.fxl.gui.style.api;
 
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -38,9 +41,19 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.impl.WidgetTitle;
-import co.fxl.gui.style.api.IStyle.ITree;
 
 public interface IStyle {
+
+	public interface IRegisterStyle {
+
+		void background(IColor color);
+
+		void inactive(IColor color, IBorder border, IFont font,
+				boolean clickable, boolean empty);
+
+		void active(IColor color, IBorder border, IFont font);
+
+	}
 
 	public interface ITable {
 
@@ -100,6 +113,10 @@ public interface IStyle {
 	public interface ITree {
 
 		void statusPanel(IPanel<?> panel);
+
+		void background(IVerticalPanel vertical);
+
+		String backgroundColor();
 	}
 
 	public interface IMDT {
@@ -292,5 +309,7 @@ public interface IStyle {
 	ITable table();
 
 	ITree tree();
+
+	IRegisterStyle register();
 
 }

@@ -668,6 +668,49 @@ class GrayScaleStyle extends StyleTemplate {
 			@Override
 			public void statusPanel(IPanel<?> panel) {
 			}
+
+			@Override
+			public void background(IVerticalPanel vertical) {
+			}
+
+			@Override
+			public String backgroundColor() {
+				return "white";
+			}
+		};
+	}
+
+	@Override
+	public IRegisterStyle register() {
+		return new IRegisterStyle() {
+			@Override
+			public void background(IColor color) {
+				color.rgb(249, 249, 249).gradient().fallback(215, 215, 215)
+						.vertical().rgb(215, 215, 215);
+			}
+
+			@Override
+			public void inactive(IColor color, IBorder border, IFont font,
+					boolean isClickable, boolean isEmpty) {
+				color.rgb(112, 112, 112).gradient().vertical().rgb(63, 63, 63);
+				border.color().rgb(87, 87, 87);
+				IFont f = font.underline(false).weight().plain();
+				if (!isClickable) {
+					f.color().gray();
+				} else if (isEmpty) {
+					f.color().lightgray();
+				} else
+					f.color().white();// .color().black();
+
+			}
+
+			@Override
+			public void active(IColor color, IBorder border, IFont font) {
+				color.rgb(255, 255, 255).gradient().vertical()
+						.rgb(245, 245, 245);
+				border.color().gray();
+				font.underline(false).weight().plain().color().black();// .color().white();
+			}
 		};
 	}
 

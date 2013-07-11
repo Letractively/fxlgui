@@ -27,6 +27,7 @@ import co.fxl.gui.navigation.menu.api.IMenuItem;
 import co.fxl.gui.navigation.menu.api.IMenuWidget;
 import co.fxl.gui.register.impl.RegisterWidgetImpl;
 import co.fxl.gui.register.impl.RegisterWidgetImpl.ColorDecorator;
+import co.fxl.gui.style.impl.Style;
 
 class MenuWidgetImpl implements IMenuWidget, ITabGroup<IMenuItem> {
 
@@ -38,8 +39,7 @@ class MenuWidgetImpl implements IMenuWidget, ITabGroup<IMenuItem> {
 		registerWidget.background(new ColorDecorator() {
 			@Override
 			public void decorate(IColor color) {
-				color.rgb(249, 249, 249).gradient().fallback(215, 215, 215)
-						.vertical().rgb(215, 215, 215);
+				Style.instance().register().background(color);
 			}
 		});
 		registerWidget.spacing = 3;
