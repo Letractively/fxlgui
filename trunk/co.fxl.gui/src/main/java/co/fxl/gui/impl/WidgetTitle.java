@@ -537,9 +537,14 @@ public class WidgetTitle implements IClickListener, IColored {
 	}
 
 	public IContainer content() {
+		return content(false);
+	}
+
+	public IContainer content(boolean border) {
 		if (contentContainer != null)
 			return contentContainer;
 		IVerticalPanel vertical = bPanel.cell(0, 0).panel().vertical();
+		Style.instance().table().background(vertical, border);
 		if (center)
 			vertical.align().center();
 		IVerticalPanel v = vertical;

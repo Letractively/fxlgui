@@ -138,7 +138,10 @@ public class PopUp {
 		final IVerticalPanel p = panel
 				.cell(0, Env.runtime().leq(Env.IE, 8) ? 1 : 0).panel()
 				.vertical();
-		p.border().remove().style().shadow();
+		IBorder b = p.border().remove();
+		b.style().shadow();
+		b.style().rounded().width(6);
+		b.width(1).color().gray();
 		Style.instance().popUp().background(p);
 		panel.cell(1, 0).align().end().valign().begin()
 				.image()
