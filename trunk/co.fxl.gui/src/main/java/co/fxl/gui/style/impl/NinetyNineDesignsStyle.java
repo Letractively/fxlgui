@@ -812,6 +812,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			public IClickable<?> selectLink(IHorizontalPanel p, final boolean b) {
 				final IHorizontalPanel panel = p.add().panel().horizontal()
 						.spacing(5);
+				if(b)
+					panel.margin().left(5);
 				final ILabel select = panel.add().label();
 				decorate(select.text(b ? "ALL" : "NONE"));
 				IClickable<Object> c = new IClickable<Object>() {
