@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.style.api;
 
+import co.fxl.gui.api.IBordered;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -43,6 +44,12 @@ import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.impl.WidgetTitle;
 
 public interface IStyle {
+
+	public interface IFormStyle {
+
+		void inputField(IBordered valuePanel);
+
+	}
 
 	public interface IRegisterStyle {
 
@@ -315,5 +322,7 @@ public interface IStyle {
 	ITree tree();
 
 	IRegisterStyle register();
+
+	IFormStyle form();
 
 }

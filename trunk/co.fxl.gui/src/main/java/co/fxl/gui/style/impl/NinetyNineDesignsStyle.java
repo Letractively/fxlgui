@@ -725,9 +725,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 			private void decorate(ITextElement<?> input) {
 				input.height(Heights.COMBOBOX_HEIGHT);
-				IBorder border = ((IBordered) input).border();
-				border.style().rounded();
-				border.width(1).color().gray(223);
+				inputBorder((IBordered) input);
 			}
 
 			@Override
@@ -931,6 +929,22 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public String loadingBlack() {
 				return "loading_white.gif";
+			}
+		};
+	}
+
+	private void inputBorder(IBordered input) {
+		IBorder border = input.border();
+		border.style().rounded();
+		border.width(1).color().gray(211);
+	}
+
+	@Override
+	public IFormStyle form() {
+		return new IFormStyle() {
+			@Override
+			public void inputField(IBordered input) {
+				inputBorder(input);
 			}
 		};
 	}
