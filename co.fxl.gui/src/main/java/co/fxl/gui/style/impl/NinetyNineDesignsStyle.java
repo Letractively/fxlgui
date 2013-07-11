@@ -922,6 +922,16 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				border.style().rounded();
 				font.underline(false).color().white();// .color().white();
 			}
+
+			@Override
+			public String loadingWhite() {
+				return "loading_black.gif";
+			}
+
+			@Override
+			public String loadingBlack() {
+				return "loading_white.gif";
+			}
 		};
 	}
 }

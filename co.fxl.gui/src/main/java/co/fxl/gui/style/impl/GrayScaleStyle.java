@@ -711,6 +711,16 @@ class GrayScaleStyle extends StyleTemplate {
 				border.color().gray();
 				font.underline(false).weight().plain().color().black();// .color().white();
 			}
+
+			@Override
+			public String loadingWhite() {
+				return "loading_white.gif";
+			}
+
+			@Override
+			public String loadingBlack() {
+				return "loading_black.gif";
+			}
 		};
 	}
 

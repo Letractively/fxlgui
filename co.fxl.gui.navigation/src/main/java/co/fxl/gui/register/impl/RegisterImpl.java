@@ -35,6 +35,7 @@ import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.register.api.IRegister;
+import co.fxl.gui.style.impl.Style;
 
 public class RegisterImpl extends LazyClickListener implements IRegister {
 
@@ -109,7 +110,8 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 		// buttonPanel.margin().left(6).top(3).bottom(3).right(3);
 		// buttonPanel.spacing(widget.spacing);// .align().center();
 		subPanel = buttonPanel.add().panel().horizontal().align().center();
-		buttonImage = subPanel.add().image().resource("loading_white.gif")
+		buttonImage = subPanel.add().image()
+				.resource(Style.instance().register().loadingWhite())
 				.visible(false);
 		buttonPanel.padding().left(6).right(6);
 		buttonLabel = subPanel.add().label();
@@ -140,9 +142,9 @@ public class RegisterImpl extends LazyClickListener implements IRegister {
 		else
 			buttonPanel.size(width, 24);
 		if (isActive()) {
-			buttonImage.resource("loading_black.gif");
+			buttonImage.resource(Style.instance().register().loadingBlack());
 		} else {
-			buttonImage.resource("loading_white.gif");
+			buttonImage.resource(Style.instance().register().loadingWhite());
 		}
 		return this;
 	}

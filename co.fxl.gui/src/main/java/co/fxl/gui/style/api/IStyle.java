@@ -53,6 +53,10 @@ public interface IStyle {
 
 		void active(IColor color, IBorder border, IFont font);
 
+		String loadingWhite();
+
+		String loadingBlack();
+
 	}
 
 	public interface ITable {
