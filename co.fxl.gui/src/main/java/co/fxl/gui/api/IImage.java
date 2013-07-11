@@ -21,7 +21,7 @@ package co.fxl.gui.api;
 import co.fxl.gui.api.IBordered.IBorder;
 
 public interface IImage extends IClickable<IImage>, IElement<IImage>,
-		IMouseOverElement<IImage> {
+		IMouseOverElement<IImage>, IColored {
 
 	IImage localURI(String uRI);
 

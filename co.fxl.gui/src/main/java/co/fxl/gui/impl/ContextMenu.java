@@ -24,6 +24,7 @@ import java.util.List;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPopUp;
@@ -39,6 +40,7 @@ public class ContextMenu {
 		private String imageResource = null;
 		private char key;
 		private Group group;
+		private int[] buttonColor;
 
 		private Entry(Group group, String text) {
 			this.group = group;
@@ -86,6 +88,10 @@ public class ContextMenu {
 		public void remove() {
 			group.list.remove(this);
 		}
+
+		public void buttonColor(int[] buttonColor) {
+			this.buttonColor = buttonColor;
+		}
 	}
 
 	public class Group {
@@ -96,7 +102,7 @@ public class ContextMenu {
 		public Group(String name) {
 			this.name = name;
 		}
-		
+
 		public Entry addEntry(String text) {
 			for (Entry o : list) {
 				if (text.equals(o.text)) {
@@ -193,9 +199,14 @@ public class ContextMenu {
 							}
 						};
 						if (e.imageResource != null) {
-							h2.add().image().resource(e.imageResource)
+							IImage image = h2.add().image()
+									.resource(e.imageResource)
 									.addClickListener(clickListener)
 									.mouseLeft().clickable(e.clickable);
+							if (e.buttonColor != null) {
+								image.color().rgb(e.buttonColor);
+								image.border().color().gray();
+							}
 							h2.addSpace(4);
 						}
 						ILabel l = h2.add().label().text(e.text).hyperlink();

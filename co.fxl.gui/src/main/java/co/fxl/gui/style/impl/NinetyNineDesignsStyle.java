@@ -579,13 +579,14 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
-			public void newButton(CommandLink commandLink, int index) {
+			public int[] newButton(CommandLink commandLink, int index) {
 				int inc = index * 10;
 				commandLink.border().color().rgb(14 + inc, 151 + inc, 35 + inc);
 				commandLink.background().rgb(40 + inc, 194 + inc, 64 + inc)
 						.gradient().vertical()
 						.rgb(25 + inc, 173 + inc, 48 + inc);
 				white(commandLink);
+				return new int[] { 19 + inc, 161 + inc, 61 + inc };
 			}
 
 			private void white(CommandLink commandLink) {
@@ -593,11 +594,12 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
-			public void showButton(CommandLink commandLink) {
+			public int[] showButton(CommandLink commandLink) {
 				commandLink.border().color().rgb(147, 131, 24);
 				commandLink.background().rgb(217, 189, 54).gradient()
 						.vertical().rgb(179, 162, 29);
 				white(commandLink);
+				return new int[] { 203, 175, 41 };
 			}
 
 			@Override

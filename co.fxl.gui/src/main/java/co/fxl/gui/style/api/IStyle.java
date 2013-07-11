@@ -144,9 +144,9 @@ public interface IStyle {
 
 		void moreButton(CommandLink label);
 
-		void newButton(CommandLink commandLink, int index);
+		int[] newButton(CommandLink commandLink, int index);
 
-		void showButton(CommandLink commandLink);
+		int[] showButton(CommandLink commandLink);
 
 		void button(CommandLink commandLink);
 

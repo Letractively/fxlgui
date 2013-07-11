@@ -54,6 +54,7 @@ public class CommandLink implements IClickListener, ButtonAdp {
 	private boolean setup;
 	public boolean styleDialogButtom = true;
 	private boolean commandsOnTop;
+	private int[] buttonColor;
 
 	public CommandLink(WidgetTitle widgetTitle, IFocusPanel fp,
 			IHorizontalPanel backgroundPanel, IHorizontalPanel iPanel,
@@ -79,11 +80,15 @@ public class CommandLink implements IClickListener, ButtonAdp {
 	}
 
 	public void newButton(int index) {
-		Style.instance().window().newButton(this, index);
+		buttonColor = Style.instance().window().newButton(this, index);
+		if (contextMenuEntry != null)
+			contextMenuEntry.buttonColor(buttonColor);
 	}
 
 	public void showButton() {
-		Style.instance().window().showButton(this);
+		buttonColor = Style.instance().window().showButton(this);
+		if (contextMenuEntry != null)
+			contextMenuEntry.buttonColor(buttonColor);
 	}
 
 	private void noDoubleClicks(IClickable<?> c) {
@@ -185,6 +190,7 @@ public class CommandLink implements IClickListener, ButtonAdp {
 			String resource = image.resource();
 			contextMenuEntry.imageResource(resource);
 		}
+		contextMenuEntry.buttonColor(buttonColor);
 		contextMenuEntry.addClickListener(getFire());
 		return this;
 	}
