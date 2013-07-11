@@ -31,6 +31,7 @@ public class StylishButton extends ClickableMultiplexer {
 	private ILabel button;
 	private IHorizontalPanel backPanel;
 	private boolean green;
+	private int blue;
 
 	public StylishButton(IHorizontalPanel p, String text) {
 		this(p, text, true);
@@ -63,13 +64,20 @@ public class StylishButton extends ClickableMultiplexer {
 		return this;
 	}
 
+	public StylishButton blue(int blue) {
+		this.blue = blue;
+		return this;
+	}
+
 	@Override
 	public Object clickable(boolean clickable) {
 		if (changeBackground) {
 			if (clickable)
 				styleActive();
-			else
+			else {
 				buttonPanel.color().remove().rgb(140, 140, 140);
+				buttonPanel.border().remove();
+			}
 		} else {
 			if (clickable)
 				button.font().color().white();
@@ -80,7 +88,7 @@ public class StylishButton extends ClickableMultiplexer {
 	}
 
 	private void styleActive() {
-		Style.instance().window().stylishButton(this, green);
+		Style.instance().window().stylishButton(this, green, blue);
 	}
 
 	public IHorizontalPanel panel() {
