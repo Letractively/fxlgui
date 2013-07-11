@@ -34,6 +34,7 @@ public abstract class StyleTemplate implements IStyle {
 	public static String PLEASE_CHOOSE_FILTER_STRING = "Click to choose filter";
 	static final String VIEWS = "Views";
 	static int WIDTH_COMBOBOX = 200;
+	static final int TABLE_SELECTION_PIXEL = 10;
 
 	abstract class ViewTemplate extends LazyClickListener implements IView {
 

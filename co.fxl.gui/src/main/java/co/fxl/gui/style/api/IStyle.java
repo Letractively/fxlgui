@@ -55,6 +55,10 @@ public interface IStyle {
 
 		void background(IVerticalPanel container);
 
+		void statusPanel(IGridPanel statusPanel);
+
+		ILabel statusHeader(IPanel<?> panel, String text);
+
 	}
 
 	public interface IFilterPanel {
