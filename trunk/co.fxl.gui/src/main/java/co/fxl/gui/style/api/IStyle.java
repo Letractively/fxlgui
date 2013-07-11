@@ -49,6 +49,8 @@ public interface IStyle {
 
 		void inputField(IBordered valuePanel);
 
+		void commentHeader(ILabel upperLabel);
+
 	}
 
 	public interface IRegisterStyle {
