@@ -604,6 +604,10 @@ class GrayScaleStyle extends StyleTemplate {
 				l.font().pixel(TABLE_SELECTION_PIXEL).weight().bold();
 				return l;
 			}
+
+			@Override
+			public void statusHeader(ILabel l) {
+			}
 		};
 	}
 

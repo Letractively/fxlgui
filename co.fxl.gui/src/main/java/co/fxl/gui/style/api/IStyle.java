@@ -59,6 +59,8 @@ public interface IStyle {
 
 		ILabel statusHeader(IPanel<?> panel, String text);
 
+		void statusHeader(ILabel l);
+
 	}
 
 	public interface IFilterPanel {

@@ -209,7 +209,7 @@ public class ColumnSelection {
 
 				@Override
 				public void onMouseOver() {
-					HyperlinkDecorator.styleHyperlinkActive(l);
+					Style.instance().table().statusHeader(l);
 					l.font().underline(true);
 				}
 

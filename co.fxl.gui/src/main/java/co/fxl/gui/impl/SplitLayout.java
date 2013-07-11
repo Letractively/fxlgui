@@ -30,6 +30,8 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 
 	// TODO SWING-FXL: minimize doesn't work
 
+	private static final int H_SPACE = 14;
+	private static final int V_SPACE = 10;
 	public static final int DECREMENT = 23;
 	public static int SCROLLBAR_WIDTH = 20;
 	public static int WIDTH_SIDE_PANEL = 320 - DECREMENT;
@@ -66,15 +68,17 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 		panel = layout.grid().spacing(0);
 		int width = width();
 		cell0 = panel.cell(0, 0).width(width);
-		mainPanel = addMainPanel(cell0.valign().begin().panel().vertical()
-				.padding(10));
+		IVerticalPanel vertical = cell0.valign().begin().panel().vertical();
+		vertical.padding().top(V_SPACE).bottom(V_SPACE).left(H_SPACE)
+				.right(H_SPACE);
+		mainPanel = addMainPanel(vertical);
 		cell1 = panel.cell(1, 0).width(WIDTH_SIDE_PANEL).valign().begin()
 				.align().end();
 		sideBasePanel = cell1.panel().vertical();
-		sideBasePanel.padding().top(10);
+		sideBasePanel.padding().top(V_SPACE);
 		sideScrollPanel = sideBasePanel.add().scrollPane();
 		sidePanel = sideScrollPanel.viewPort().panel().vertical();
-		sidePanel.spacing().right(10);
+		sidePanel.spacing().right(H_SPACE);
 		Shell.instance().fire(this);
 	}
 
@@ -91,7 +95,7 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 	}
 
 	private int width() {
-		return rwidth() - WIDTH_SIDE_PANEL - 3 * 10;
+		return rwidth() - WIDTH_SIDE_PANEL - 3 * H_SPACE;
 	}
 
 	public void detachSidePanel() {
