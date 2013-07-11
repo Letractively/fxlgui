@@ -736,9 +736,10 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			public void selectedColumn(IHorizontalPanel b, boolean visible,
 					boolean isFirst, boolean isLast) {
 				if (visible)
-					b.color().gray(121);
+					b.color().remove().gray(121);
 				else
-					b.color().gray(248).gradient().vertical().gray(230);
+					b.color().remove().gray(248).gradient().vertical()
+							.gray(230);
 				if (isFirst)
 					b.border().style().rounded().right(false);
 				else if (isLast)
@@ -801,6 +802,52 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				} else
 					statusHeader(l);
 				l.font().underline(active);
+			}
+
+			private IFont decorate(ILabel text) {
+				return text.font().weight().bold().pixel(TABLE_SELECTION_PIXEL);
+			}
+
+			@Override
+			public IClickable<?> selectLink(IHorizontalPanel p, final boolean b) {
+				final IHorizontalPanel panel = p.add().panel().horizontal()
+						.spacing(5);
+				final ILabel select = panel.add().label();
+				decorate(select.text(b ? "ALL" : "NONE"));
+				IClickable<Object> c = new IClickable<Object>() {
+
+					@Override
+					public Object clickable(boolean clickable) {
+						selectedColumn(panel, !clickable, b, !b);
+						selectedColumn(select, !clickable);
+						return this;
+					}
+
+					@Override
+					public boolean clickable() {
+						return panel.clickable();
+					}
+
+					@Override
+					public IKey<Object> addClickListener(
+							IClickListener clickListener) {
+						panel.addClickListener(clickListener);
+						select.addClickListener(clickListener);
+						return null;
+					}
+				};
+				if (b)
+					c.clickable(true);
+				return c;
+			}
+
+			@Override
+			public void selectAllNoneBackground(IHorizontalPanel p) {
+			}
+
+			@Override
+			public boolean separateSelectAllNone() {
+				return false;
 			}
 		};
 	}
