@@ -621,7 +621,8 @@ class GrayScaleStyle extends StyleTemplate {
 			}
 
 			@Override
-			public void selectedColumn(IHorizontalPanel b, boolean visible) {
+			public void selectedColumn(IHorizontalPanel b, boolean visible,
+					boolean isFirst, boolean isLast) {
 				if (visible)
 					b.color().gray();
 				else

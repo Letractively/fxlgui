@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.table.scroll.impl;
 
+import java.util.List;
+
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDraggable.IDragStartListener;
@@ -29,6 +31,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.HorizontalScalingPanel;
+import co.fxl.gui.style.impl.Style;
 
 public class ScalingColumnSelection {
 
@@ -96,11 +99,12 @@ public class ScalingColumnSelection {
 			final IClickListener clickListener) {
 		ColumnSelection.addTitle(widget, p.add());
 		p.addSpace(4);
-		for (final ScrollTableColumnImpl c : widget.columnList()) {
+		List<ScrollTableColumnImpl> columnList = widget.columnList();
+		for (final ScrollTableColumnImpl c : columnList) {
 			IFocusPanel fp = p.add().panel().focus();
 			IHorizontalPanel h0 = fp.add().panel().horizontal().width(1.0)
 					.spacing(3);
-			decoratePanel(p, clickListener, c, fp, h0);
+			decoratePanel(p, clickListener, c, fp, h0, columnList);
 		}
 		// p.addSpace(4);
 		// dummyFocusPanel = p.add().panel().focus();
@@ -112,7 +116,8 @@ public class ScalingColumnSelection {
 
 	ILabel decoratePanel(final HorizontalScalingPanel p,
 			final IClickListener clickListener, final ScrollTableColumnImpl c,
-			final IFocusPanel fp, final IHorizontalPanel b) {
+			final IFocusPanel fp, final IHorizontalPanel b,
+			List<ScrollTableColumnImpl> columnList) {
 		fp.addDragStartListener(new IDragStartListener() {
 
 			@Override
@@ -149,10 +154,13 @@ public class ScalingColumnSelection {
 			b.border().color().rgb(172, 197, 213);
 		if (c.index == -1)
 			b.color().white();
-		else if (c.visible)
-			b.color().gray(120);
-		else
-			b.color().gray(200);
+		else {
+			int indexOf = columnList.indexOf(c);
+			Style.instance()
+					.table()
+					.selectedColumn(b, c.visible, indexOf == 0,
+							indexOf == columnList.size() - 1);
+		}
 		String label = c.name.equals("") ? COLUMN + " "
 				+ String.valueOf(widget.columnList().indexOf(c) + 1) : c.name();
 		ILabel l = b.add().label().text(label).autoWrap(false).breakWord(false);
@@ -190,7 +198,7 @@ public class ScalingColumnSelection {
 
 	void decorateLabel(final ScrollTableColumnImpl c, ILabel l) {
 		// if (c.visible)
-		l.font().color().white();
+		Style.instance().table().selectedColumn(l, c.visible);
 		// else
 		// l.font().color().rgb(192, 192, 192);
 	}

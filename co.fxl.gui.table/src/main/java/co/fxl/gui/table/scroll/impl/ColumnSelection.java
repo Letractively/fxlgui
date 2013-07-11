@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.table.scroll.impl;
 
+import java.util.List;
+
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDraggable.IDragStartListener;
@@ -85,7 +87,8 @@ public class ColumnSelection {
 	void addToPanel(@SuppressWarnings("rawtypes") ILinearPanel p,
 			final IClickListener clickListener) {
 		addTitle(p);
-		for (final ScrollTableColumnImpl c : widget.columnList()) {
+		List<ScrollTableColumnImpl> columnList = widget.columnList();
+		for (final ScrollTableColumnImpl c : columnList) {
 			p.addSpace(4);
 			IFocusPanel fp = p.add().panel().focus();
 			IHorizontalPanel b = fp.add().panel().horizontal().spacing(4);
@@ -138,7 +141,7 @@ public class ColumnSelection {
 		if (c.index == -1)
 			b.color().white();
 		else
-			Style.instance().table().selectedColumn(b, c.visible);
+			Style.instance().table().selectedColumn(b, c.visible, false, false);
 		ILabel l = b
 				.add()
 				.label()
