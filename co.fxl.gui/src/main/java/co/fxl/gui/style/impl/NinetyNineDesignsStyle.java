@@ -49,6 +49,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Heights;
+import co.fxl.gui.impl.HyperlinkDecorator;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
 import co.fxl.gui.impl.ImageButton;
 import co.fxl.gui.impl.PopUp;
@@ -757,16 +758,23 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public ILabel statusHeader(IPanel<?> p, String text) {
 				ILabel l = p.add().label().text(text);
-				l.font().pixel(TABLE_SELECTION_PIXEL).weight().bold().color()
-						.gray(97);
+				l.font().pixel(TABLE_SELECTION_PIXEL).weight().bold();
+				statusHeader(l);
 				return l;
 			}
 
-			@Override
-			public void statusHeader(ILabel l) {
+			private void statusHeader(ILabel l) {
 				l.font().color().gray(97);
 			}
 
+			@Override
+			public void statusLink(ILabel l, boolean active) {
+				if (active) {
+					HyperlinkDecorator.styleHyperlinkActive(l);
+				} else
+					statusHeader(l);
+				l.font().underline(active);
+			}
 		};
 	}
 }
