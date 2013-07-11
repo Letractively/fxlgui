@@ -554,8 +554,8 @@ class GrayScaleStyle extends StyleTemplate {
 
 			@Override
 			public void stylishButton(StylishButton button, boolean green) {
-				button.buttonPanel().color().remove().rgb(111, 111, 111).gradient()
-						.vertical().rgb(63, 63, 63);
+				button.buttonPanel().color().remove().rgb(111, 111, 111)
+						.gradient().vertical().rgb(63, 63, 63);
 			}
 
 		};
@@ -766,6 +766,30 @@ class GrayScaleStyle extends StyleTemplate {
 			@Override
 			public void commentHeader(ILabel upperLabel) {
 			}
+		};
+	}
+
+	@Override
+	public IN2MStyle n2m() {
+		return new IN2MStyle() {
+
+			@Override
+			public void title(IVerticalPanel p, ILabel l) {
+				p.color().rgb(136, 136, 136).gradient().vertical()
+						.rgb(113, 113, 113);
+				l.font().color().white();
+			}
+
+			@Override
+			public void item(IVerticalPanel p, boolean editable) {
+				if (editable)
+					p.color().rgb(248, 248, 248).gradient().vertical()
+							.rgb(216, 216, 216);
+				else
+					p.color().remove().rgb(248, 248, 248).gradient().vertical()
+							.rgb(240, 240, 240);
+			}
+
 		};
 	}
 

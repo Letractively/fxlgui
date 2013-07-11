@@ -987,6 +987,28 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 	}
 
 	@Override
+	public IN2MStyle n2m() {
+		return new IN2MStyle() {
+
+			@Override
+			public void title(IVerticalPanel p, ILabel l) {
+				p.color().gray(248).gradient().vertical().gray(230);
+				blue(l);
+			}
+
+			@Override
+			public void item(IVerticalPanel p, boolean editable) {
+				IColor c = p.color().remove();
+				if (editable)
+					c.gray(252);
+				else
+					c.gray(244);
+			}
+
+		};
+	}
+
+	@Override
 	public IFormStyle form() {
 		return new IFormStyle() {
 			@Override
