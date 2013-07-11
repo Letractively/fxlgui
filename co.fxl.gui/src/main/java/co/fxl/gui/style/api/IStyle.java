@@ -169,6 +169,8 @@ public interface IStyle {
 
 		String editImage();
 
+		void listItemPanel(IVerticalPanel p);
+
 	}
 
 	public interface IViewSelection {

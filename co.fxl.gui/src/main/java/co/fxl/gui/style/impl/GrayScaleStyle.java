@@ -536,6 +536,13 @@ class GrayScaleStyle extends StyleTemplate {
 				return "edit_white.png";
 			}
 
+			@Override
+			public void listItemPanel(IVerticalPanel p) {
+				IBorder border = p.border();
+				border.color().rgb(172, 197, 213);
+				border.style().top();
+			}
+
 		};
 	}
 

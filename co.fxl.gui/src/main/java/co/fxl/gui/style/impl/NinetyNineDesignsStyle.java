@@ -513,6 +513,13 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
+			public void listItemPanel(IVerticalPanel p) {
+				IBorder border = p.border();
+				border.color().rgb(222, 227, 213);
+				border.style().top();
+			}
+
+			@Override
 			public String editImage() {
 				return "edit_gray.png";
 			}
