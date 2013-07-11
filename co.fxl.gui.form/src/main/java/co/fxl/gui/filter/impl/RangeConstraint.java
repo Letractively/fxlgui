@@ -52,7 +52,7 @@ public abstract class RangeConstraint<T> implements IRangeConstraint<T> {
 
 	@Override
 	public String toString() {
-		return wNull(lowerBound) + "-" + wNull(upperBound);
+		return wNull(lowerBound) + " - " + wNull(upperBound);
 	}
 
 	String wNull(T lowerBound) {
