@@ -173,6 +173,8 @@ public interface IStyle {
 
 		void listItemPanel(IVerticalPanel p);
 
+		void moreButtonActive(CommandLink more);
+
 	}
 
 	public interface IViewSelection {
