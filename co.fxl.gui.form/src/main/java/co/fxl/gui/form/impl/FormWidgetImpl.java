@@ -52,6 +52,7 @@ import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.rtf.api.IHTMLArea;
+import co.fxl.gui.style.impl.Style;
 
 public class FormWidgetImpl implements IFormWidget {
 
@@ -130,6 +131,7 @@ public class FormWidgetImpl implements IFormWidget {
 	ITextField addFormValueTextField(int gridIndex, boolean withFocus) {
 		ITextField valuePanel = container(gridIndex).textField();
 		heights.decorate(valuePanel);
+		Style.instance().form().inputField(valuePanel);
 		valuePanel.editable(saveListener != null);
 		if (withFocus)
 			setFocus(valuePanel);
@@ -157,6 +159,7 @@ public class FormWidgetImpl implements IFormWidget {
 	IPasswordField addFormValuePasswordField(int gridIndex) {
 		IPasswordField valuePanel = container(gridIndex).passwordField();
 		heights.decorate(valuePanel);
+		Style.instance().form().inputField(valuePanel);
 		valuePanel.editable(saveListener != null);
 		setFocus(valuePanel);
 		setCRListener(valuePanel);
@@ -165,6 +168,7 @@ public class FormWidgetImpl implements IFormWidget {
 
 	ITextArea addFormValueTextArea(int gridIndex) {
 		ITextArea valuePanel = container(gridIndex).textArea();
+		Style.instance().form().inputField(valuePanel);
 		valuePanel.editable(saveListener != null);
 		setFocus(valuePanel);
 		decorateCell(grid.cell(1, gridIndex));
@@ -173,6 +177,7 @@ public class FormWidgetImpl implements IFormWidget {
 
 	IHTMLArea addFormValueRichTextArea(int gridIndex) {
 		IHTMLArea valuePanel = container(gridIndex).widget(IHTMLArea.class);
+		Style.instance().form().inputField(valuePanel);
 		valuePanel.editable(saveListener != null);
 		setFocus(valuePanel);
 		decorateCell(grid.cell(1, gridIndex));
@@ -186,6 +191,7 @@ public class FormWidgetImpl implements IFormWidget {
 	IComboBox addFormValueComboBox(int gridIndex, boolean withFocus) {
 		IComboBox valuePanel = container(gridIndex).comboBox();
 		heights.decorate(valuePanel);
+		Style.instance().form().inputField(valuePanel);
 		valuePanel.editable(saveListener != null);
 		if (withFocus)
 			setFocus(valuePanel);

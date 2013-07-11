@@ -21,6 +21,7 @@ package co.fxl.gui.style.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IBordered;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -720,6 +721,15 @@ class GrayScaleStyle extends StyleTemplate {
 			@Override
 			public String loadingBlack() {
 				return "loading_black.gif";
+			}
+		};
+	}
+
+	@Override
+	public IFormStyle form() {
+		return new IFormStyle() {
+			@Override
+			public void inputField(IBordered valuePanel) {
 			}
 		};
 	}
