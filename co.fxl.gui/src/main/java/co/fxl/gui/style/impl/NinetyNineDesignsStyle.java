@@ -646,7 +646,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 			@Override
 			public void statusPanel(IPanel<?> panel) {
-				NinetyNineDesignsStyle.this.statusPanel(panel);
+				panel.border().color().rgb(172, 197, 213);
+				panel.color().gray(249);
 			}
 		};
 	}
