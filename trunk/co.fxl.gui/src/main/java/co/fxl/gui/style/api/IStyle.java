@@ -47,6 +47,14 @@ import co.fxl.gui.impl.WidgetTitle;
 
 public interface IStyle {
 
+	public interface IN2MStyle {
+
+		void title(IVerticalPanel p, ILabel l);
+
+		void item(IVerticalPanel p, boolean editable);
+
+	}
+
 	public interface IFormStyle {
 
 		void inputField(IBordered valuePanel);
@@ -338,5 +346,7 @@ public interface IStyle {
 	IRegisterStyle register();
 
 	IFormStyle form();
+
+	IN2MStyle n2m();
 
 }
