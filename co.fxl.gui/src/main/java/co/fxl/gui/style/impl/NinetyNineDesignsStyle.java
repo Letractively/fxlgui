@@ -513,6 +513,11 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
+			public String editImage() {
+				return "edit_gray.png";
+			}
+
+			@Override
 			public int headerSpacingLeft(boolean sideWidget) {
 				return sideWidget ? 10 : 0;
 			}

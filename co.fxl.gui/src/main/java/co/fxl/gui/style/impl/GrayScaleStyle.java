@@ -531,6 +531,11 @@ class GrayScaleStyle extends StyleTemplate {
 				return 10;
 			}
 
+			@Override
+			public String editImage() {
+				return "edit_white.png";
+			}
+
 		};
 	}
 
