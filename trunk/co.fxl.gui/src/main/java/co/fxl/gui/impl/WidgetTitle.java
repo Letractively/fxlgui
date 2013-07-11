@@ -421,7 +421,7 @@ public class WidgetTitle implements IClickListener, IColored {
 	IClickable<?> addLabel(String text, boolean underline) {
 		if (USE_CONFIGURE_IMAGE) {
 			IImage e = configurePanel().add().image()
-					.resource("edit_white.png");
+					.resource(Style.instance().window().editImage());
 			e.tooltip(text);
 			addFadeInOutEffect(e);
 			return e;

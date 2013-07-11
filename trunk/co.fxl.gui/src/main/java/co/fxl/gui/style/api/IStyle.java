@@ -167,6 +167,8 @@ public interface IStyle {
 
 		int headerSpacingLeft(boolean sideWidget);
 
+		String editImage();
+
 	}
 
 	public interface IViewSelection {
