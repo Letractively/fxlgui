@@ -960,6 +960,11 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			public void inputField(IBordered input) {
 				inputBorder(input);
 			}
+
+			@Override
+			public void commentHeader(ILabel upperLabel) {
+				blue(upperLabel);
+			}
 		};
 	}
 }

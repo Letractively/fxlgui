@@ -745,6 +745,10 @@ class GrayScaleStyle extends StyleTemplate {
 			@Override
 			public void inputField(IBordered valuePanel) {
 			}
+
+			@Override
+			public void commentHeader(ILabel upperLabel) {
+			}
 		};
 	}
 
