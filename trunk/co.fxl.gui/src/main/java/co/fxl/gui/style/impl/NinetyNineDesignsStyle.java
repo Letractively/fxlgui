@@ -907,18 +907,18 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			public void inactive(IColor color, IBorder border, IFont font,
 					boolean isClickable, boolean isEmpty) {
 				color.remove();
-				IFont f = font.underline(false).weight().plain();
+				IFont f = font.underline(false);
 				if (!isClickable) {
 					f.color().gray();
 				} else if (isEmpty) {
 					f.color().gray(190);
 				} else
-					f.color().black();// .color().black();
+					blue(f.color());// .color().black();
 			}
 
 			@Override
 			public void active(IColor color, IBorder border, IFont font) {
-				color.rgb(29, 59, 89);
+				blue(color);
 				border.style().rounded();
 				font.underline(false).color().white();// .color().white();
 			}
