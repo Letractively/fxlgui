@@ -619,6 +619,22 @@ class GrayScaleStyle extends StyleTemplate {
 				} else
 					l.font().underline(false).color().black();
 			}
+
+			@Override
+			public void selectedColumn(IHorizontalPanel b, boolean visible) {
+				if (visible)
+					b.color().gray();
+				else
+					b.color().white();
+			}
+
+			@Override
+			public void selectedColumn(ILabel l, boolean visible) {
+				if (visible)
+					l.font().color().white();
+				else
+					l.font().color().rgb(102, 102, 102);
+			}
 		};
 	}
 

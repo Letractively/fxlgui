@@ -30,7 +30,6 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.impl.Env;
-import co.fxl.gui.impl.HyperlinkDecorator;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
 import co.fxl.gui.style.impl.Style;
 
@@ -138,10 +137,8 @@ public class ColumnSelection {
 			b.border().color().rgb(172, 197, 213);
 		if (c.index == -1)
 			b.color().white();
-		else if (c.visible)
-			b.color().gray();
 		else
-			b.color().white();
+			Style.instance().table().selectedColumn(b, c.visible);
 		ILabel l = b
 				.add()
 				.label()
@@ -190,10 +187,7 @@ public class ColumnSelection {
 	}
 
 	void decorateLabel(final ScrollTableColumnImpl c, ILabel l) {
-		if (c.visible)
-			l.font().color().white();
-		else
-			l.font().color().rgb(102, 102, 102);
+		Style.instance().table().selectedColumn(l, c.visible);
 	}
 
 	void addTitle(ILinearPanel<?> p) {

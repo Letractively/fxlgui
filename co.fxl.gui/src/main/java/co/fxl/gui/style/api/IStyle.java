@@ -61,6 +61,10 @@ public interface IStyle {
 
 		void statusLink(ILabel l, boolean active);
 
+		void selectedColumn(IHorizontalPanel b, boolean visible);
+
+		void selectedColumn(ILabel l, boolean visible);
+
 	}
 
 	public interface IFilterPanel {
