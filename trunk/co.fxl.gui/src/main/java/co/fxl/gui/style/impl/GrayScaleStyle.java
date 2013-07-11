@@ -608,7 +608,7 @@ class GrayScaleStyle extends StyleTemplate {
 			@Override
 			public ILabel statusHeader(IPanel<?> p, String text) {
 				ILabel l = p.add().label().text(text.toUpperCase());
-				l.font().pixel(TABLE_SELECTION_PIXEL).weight().bold();
+				l.font().pixel(TABLE_SELECTION_PIXEL).weight().bold().color().gray();
 				return l;
 			}
 
