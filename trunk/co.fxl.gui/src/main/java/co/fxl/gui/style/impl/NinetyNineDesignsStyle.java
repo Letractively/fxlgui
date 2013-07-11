@@ -641,6 +641,17 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 	}
 
 	@Override
+	public ITree tree() {
+		return new ITree() {
+
+			@Override
+			public void statusPanel(IPanel<?> panel) {
+				NinetyNineDesignsStyle.this.statusPanel(panel);
+			}
+		};
+	}
+
+	@Override
 	public IMDT mdt() {
 		return new IMDT() {
 			@Override
@@ -727,10 +738,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 			@Override
 			public void statusPanel(IGridPanel statusPanel) {
-				IBorder border2 = statusPanel.border();
-				border2.color().rgb(172, 197, 213);
-				border2.style().top().style().bottom();
-				statusPanel.color().remove().gray(249);
+				NinetyNineDesignsStyle.this.statusPanel(statusPanel);
 			}
 
 			@Override
@@ -867,5 +875,12 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				return false;
 			}
 		};
+	}
+
+	private void statusPanel(IPanel<?> statusPanel) {
+		IBorder border2 = statusPanel.border();
+		border2.color().rgb(172, 197, 213);
+		border2.style().top().style().bottom();
+		statusPanel.color().remove().gray(249);
 	}
 }

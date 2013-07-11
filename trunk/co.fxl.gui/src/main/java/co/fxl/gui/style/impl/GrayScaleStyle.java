@@ -608,7 +608,8 @@ class GrayScaleStyle extends StyleTemplate {
 			@Override
 			public ILabel statusHeader(IPanel<?> p, String text) {
 				ILabel l = p.add().label().text(text.toUpperCase());
-				l.font().pixel(TABLE_SELECTION_PIXEL).weight().bold().color().gray();
+				l.font().pixel(TABLE_SELECTION_PIXEL).weight().bold().color()
+						.gray();
 				return l;
 			}
 
@@ -657,6 +658,15 @@ class GrayScaleStyle extends StyleTemplate {
 			@Override
 			public void selectAllNoneBackground(IHorizontalPanel p) {
 				p.spacing(5);
+			}
+		};
+	}
+
+	@Override
+	public ITree tree() {
+		return new ITree() {
+			@Override
+			public void statusPanel(IPanel<?> panel) {
 			}
 		};
 	}
