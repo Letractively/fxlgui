@@ -739,7 +739,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 					b.color().remove().gray(121);
 				else
 					b.color().remove().gray(248).gradient().vertical()
-							.gray(230);
+							.gray(224);
 				if (isFirst)
 					b.border().style().rounded().right(false);
 				else if (isLast)
@@ -753,6 +753,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 					l.font().color().white();
 				else
 					l.font().color().gray(102);
+				l.font().weight().bold();
 			}
 
 			@Override
