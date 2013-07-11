@@ -29,6 +29,7 @@ import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPoint;
+import co.fxl.gui.style.impl.Style;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IRow;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.ITableClickListener;
@@ -279,7 +280,7 @@ class SelectionImpl implements ISelection<Object> {
 						.// width(120).
 						panel().horizontal().add().panel().horizontal()
 						.spacing(5);
-				decorate(p.add().label().text("SELECT"));
+				Style.instance().table().statusHeader(p, "Select");
 				selectAll = p.add().label();
 				decorate(selectAll.text("ALL"));
 				selectAll.hyperlink().addClickListener(

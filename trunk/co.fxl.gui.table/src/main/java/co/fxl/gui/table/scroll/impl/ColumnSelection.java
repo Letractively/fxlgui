@@ -32,12 +32,13 @@ import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.HyperlinkDecorator;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
+import co.fxl.gui.style.impl.Style;
 
 public class ColumnSelection {
 
-	private static final String SHOW_COLUMNS = "COLUMN SELECTION";
+	private static final String SHOW_COLUMNS = "Column Selection";
 	private static final String COLUMN = "Column";
-	private static final String COLUMN_SELECTION = "Column Selection";
+	private static final String COLUMN_SELECTION_ID = "Column Selection";
 	static final String TOOLTIP = "Click on column to toggle visibility. Use drag & drop to reorder.";
 	TableWidgetAdp widget;
 	private ScrollTableColumnImpl dragged;
@@ -111,7 +112,7 @@ public class ColumnSelection {
 				dummyFocusPanel.visible(true);
 				dummyLabel.text("Drop here");
 				event.dragImage(fp);
-				event.iD(COLUMN_SELECTION);
+				event.iD(COLUMN_SELECTION_ID);
 			}
 
 			@Override
@@ -124,7 +125,8 @@ public class ColumnSelection {
 
 			@Override
 			public void onDropOn(IDragEvent point) {
-				if (point.iD() == null || !point.iD().equals(COLUMN_SELECTION))
+				if (point.iD() == null
+						|| !point.iD().equals(COLUMN_SELECTION_ID))
 					return;
 				dropOnTo(c);
 				dragged = null;
@@ -225,11 +227,7 @@ public class ColumnSelection {
 	}
 
 	static ILabel addText(IHorizontalPanel horizontal, String text) {
-		ILabel l = horizontal.add().label().text(text);
-		l.font().pixel(SelectionImpl.PIXEL);
-		if (SelectionImpl.USE_BOLD)
-			l.font().weight().bold();
-		return l;
+		return Style.instance().table().statusHeader(horizontal, text);
 	}
 
 	public static void newInstance(TableWidgetAdp tableWidgetAdp,

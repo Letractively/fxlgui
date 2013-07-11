@@ -788,11 +788,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 				statusPanel.visible(false).remove();
 			else {
 				statusPanel.spacing(4);
-				IBorder border2 = statusPanel.border();
-				border2.color().rgb(172, 197, 213);
-				border2.style().top();
-				statusPanel.color().rgb(249, 249, 249).gradient()
-						.fallback(240, 240, 240).vertical().rgb(216, 216, 216);
+				Style.instance().table().statusPanel(statusPanel);
 			}
 		}
 		return statusPanel;
@@ -1069,10 +1065,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 							DummyCallback.voidInstance());
 				}
 			});
-			String in = "DISPLAYING ROWS";
-			ILabel label = p.add().label();
-			label.text(in);
-			label.font().pixel(10);
+			Style.instance().table().statusHeader(p, "Displaying Rows");
 			statusRangeLabel = p.addSpace(4).add().label()
 					.text(getStatusRange(paintedRows()));
 			statusRangeLabel.font().weight().bold().pixel(10);

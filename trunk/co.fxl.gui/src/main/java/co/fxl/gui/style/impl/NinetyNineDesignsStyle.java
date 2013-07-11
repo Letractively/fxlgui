@@ -615,7 +615,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 					if (addBorder) {
 						IBorder border = panel.border();
 						border.style().rounded().width(6);
-						border.width(1).color().gray(218);//.rgb(172, 197, 213);
+						border.width(1).color().gray(218);// .rgb(172, 197,
+															// 213);
 					}
 					panel.padding(3);
 					background(panel);
@@ -718,6 +719,16 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
+			public void statusPanel(IGridPanel statusPanel) {
+				// IBorder border2 = statusPanel.border();
+				// border2.color().rgb(172, 197, 213);
+				// border2.style().top();
+				// statusPanel.color().rgb(249, 249, 249).gradient()
+				// .fallback(240, 240, 240).vertical().rgb(216, 216, 216);
+				statusPanel.color().gray(249);
+			}
+
+			@Override
 			public void background(IVerticalPanel container) {
 				IBorder b = container.border();
 				b.style().left().style().right();
@@ -744,6 +755,15 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			public String contentRowStyle(boolean isTreeTable) {
 				return isTreeTable ? "contentRowHL" : "contentRowHL99D";
 			}
+
+			@Override
+			public ILabel statusHeader(IPanel<?> p, String text) {
+				ILabel l = p.add().label().text(text);
+				l.font().pixel(TABLE_SELECTION_PIXEL).weight().bold().color()
+						.gray(97);
+				return l;
+			}
+
 		};
 	}
 }
