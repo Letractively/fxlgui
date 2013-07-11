@@ -755,7 +755,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 					l.font().color().white();
 				else
 					l.font().color().gray(102);
-				l.font().weight().bold();
+				l.font().weight().bold().pixel(TABLE_SELECTION_PIXEL);
 			}
 
 			@Override
