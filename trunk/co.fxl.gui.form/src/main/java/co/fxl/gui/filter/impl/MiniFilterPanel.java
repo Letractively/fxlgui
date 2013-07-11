@@ -181,7 +181,7 @@ class MiniFilterPanel implements FilterPanel {
 				// if (Env.is(Env.FIREFOX))
 				// return new CombinedRangeField(container);
 				// else
-				return new ExpliciteRangeField(widget, container, isDateField);
+				return new ExpliciteRangeField(widget, container, false);
 			}
 
 			@Override
