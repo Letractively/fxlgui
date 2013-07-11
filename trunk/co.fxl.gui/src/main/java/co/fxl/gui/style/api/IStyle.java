@@ -63,6 +63,8 @@ public interface IStyle {
 
 		void commentField(ITextArea commentField);
 
+		int commentItem(IVerticalPanel vertical, int i);
+
 	}
 
 	public interface IRegisterStyle {

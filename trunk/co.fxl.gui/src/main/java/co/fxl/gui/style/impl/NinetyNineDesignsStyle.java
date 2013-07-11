@@ -60,6 +60,7 @@ import co.fxl.gui.impl.WidgetTitle;
 
 class NinetyNineDesignsStyle extends StyleTemplate {
 
+	private static final int COMMENT_PANEL_INDENT = 6;
 	private static final String CLEAR_FILTERS = "Clear Filters";
 
 	private IColor blue(IFontElement element) {
@@ -1020,6 +1021,19 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			public void commentField(ITextArea valuePanel) {
 				inputField(valuePanel);
 				valuePanel.color().white().gradient().vertical().gray(244);
+			}
+
+			@Override
+			public int commentItem(IVerticalPanel vertical, int i) {
+				if (i % 2 == 1) {
+					IBorder border = vertical.border();
+					border.color().gray(237);
+					border.style().top().style().bottom();
+					vertical.color().gray(247);
+					vertical.padding().bottom(4);
+				}
+				vertical.padding().left(COMMENT_PANEL_INDENT);
+				return COMMENT_PANEL_INDENT;
 			}
 
 			@Override
