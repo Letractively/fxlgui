@@ -36,10 +36,12 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.ISuggestField;
+import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextInputElement;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CommandLink;
+import co.fxl.gui.impl.StylishButton;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.impl.WidgetTitle;
 
@@ -50,6 +52,8 @@ public interface IStyle {
 		void inputField(IBordered valuePanel);
 
 		void commentHeader(ILabel upperLabel);
+
+		void commentField(ITextArea commentField);
 
 	}
 
@@ -174,6 +178,8 @@ public interface IStyle {
 		void listItemPanel(IVerticalPanel p);
 
 		void moreButtonActive(CommandLink more);
+
+		void stylishButton(StylishButton button, boolean green);
 
 	}
 

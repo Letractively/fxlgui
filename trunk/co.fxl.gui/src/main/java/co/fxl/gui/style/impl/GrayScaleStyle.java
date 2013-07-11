@@ -37,11 +37,13 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.ISuggestField;
+import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.HyperlinkDecorator;
 import co.fxl.gui.impl.Icons;
+import co.fxl.gui.impl.StylishButton;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.impl.WidgetTitle;
 
@@ -550,6 +552,12 @@ class GrayScaleStyle extends StyleTemplate {
 			public void moreButtonActive(CommandLink more) {
 			}
 
+			@Override
+			public void stylishButton(StylishButton button, boolean green) {
+				button.buttonPanel().color().remove().rgb(111, 111, 111).gradient()
+						.vertical().rgb(63, 63, 63);
+			}
+
 		};
 	}
 
@@ -749,6 +757,10 @@ class GrayScaleStyle extends StyleTemplate {
 		return new IFormStyle() {
 			@Override
 			public void inputField(IBordered valuePanel) {
+			}
+
+			@Override
+			public void commentField(ITextArea valuePanel) {
 			}
 
 			@Override
