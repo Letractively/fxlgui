@@ -766,6 +766,16 @@ class GrayScaleStyle extends StyleTemplate {
 			@Override
 			public void commentHeader(ILabel upperLabel) {
 			}
+
+			@Override
+			public int commentItem(IVerticalPanel vertical, int i) {
+				if (i > 0) {
+					IBorder border = vertical.border();
+					border.color().gray();
+					border.style().top();
+				}
+				return 0;
+			}
 		};
 	}
 
