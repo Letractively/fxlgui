@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.swing;
 
+import java.awt.Color;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -81,5 +82,15 @@ class SwingImage extends SwingElement<JLabel, IImage> implements IImage {
 	@Override
 	public String resource() {
 		return resource;
+	}
+
+	@Override
+	public IColor color() {
+		return new SwingColor() {
+			@Override
+			protected void setColor(Color color) {
+				container.component.setBackground(color);
+			}
+		};
 	}
 }

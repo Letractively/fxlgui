@@ -473,11 +473,13 @@ class GrayScaleStyle extends StyleTemplate {
 			}
 
 			@Override
-			public void newButton(CommandLink commandLink, int index) {
+			public int[] newButton(CommandLink commandLink, int index) {
+				return null;
 			}
 
 			@Override
-			public void showButton(CommandLink commandLink) {
+			public int[] showButton(CommandLink commandLink) {
+				return null;
 			}
 
 			@Override
