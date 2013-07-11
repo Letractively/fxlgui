@@ -66,6 +66,12 @@ public interface IStyle {
 
 		void selectedColumn(ILabel l, boolean visible);
 
+		IClickable<?> selectLink(IHorizontalPanel p, boolean b);
+
+		boolean separateSelectAllNone();
+
+		void selectAllNoneBackground(IHorizontalPanel p);
+
 	}
 
 	public interface IFilterPanel {

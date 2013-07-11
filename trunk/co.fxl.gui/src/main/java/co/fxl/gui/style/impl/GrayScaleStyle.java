@@ -28,6 +28,7 @@ import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
@@ -635,6 +636,27 @@ class GrayScaleStyle extends StyleTemplate {
 					l.font().color().white();
 				else
 					l.font().color().rgb(102, 102, 102);
+			}
+
+			private IFont decorate(ILabel text) {
+				return text.font().weight().bold().pixel(TABLE_SELECTION_PIXEL);
+			}
+
+			@Override
+			public boolean separateSelectAllNone() {
+				return true;
+			}
+
+			@Override
+			public IClickable<?> selectLink(IHorizontalPanel p, boolean b) {
+				ILabel select = p.add().label().hyperlink();
+				decorate(select.text(b ? "ALL" : "NONE"));
+				return select;
+			}
+
+			@Override
+			public void selectAllNoneBackground(IHorizontalPanel p) {
+				p.spacing(5);
 			}
 		};
 	}

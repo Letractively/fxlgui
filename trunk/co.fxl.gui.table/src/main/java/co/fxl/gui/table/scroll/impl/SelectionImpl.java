@@ -23,11 +23,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
-import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IHorizontalPanel;
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPoint;
 import co.fxl.gui.style.impl.Style;
 import co.fxl.gui.table.api.ISelection;
@@ -135,8 +134,8 @@ class SelectionImpl implements ISelection<Object> {
 		private static final boolean USE_CTRL_CLICK_FOR_MULTI_SELECTION = true;
 		private static final boolean ALLOW_RANGE_SELECTION = true;
 		private List<IChangeListener<Object>> listeners = new LinkedList<IChangeListener<Object>>();
-		private ILabel selectAll;
-		private ILabel removeSelection;
+		private IClickable<?> selectAll;
+		private IClickable<?> removeSelection;
 
 		@Override
 		public IMultiSelection<Object> addChangeListener(
@@ -278,29 +277,22 @@ class SelectionImpl implements ISelection<Object> {
 				IHorizontalPanel p = widget.statusPanel().cell(0, 0).valign()
 						.center()
 						.// width(120).
-						panel().horizontal().add().panel().horizontal()
-						.spacing(5);
+						panel().horizontal().add().panel().horizontal();
+				Style.instance().table().selectAllNoneBackground(p);
 				Style.instance().table().statusHeader(p, "Select");
-				selectAll = p.add().label();
-//				Style.instance().table().selectAllNone(selectAll, false);
-				decorate(selectAll.text("ALL"));
-				selectAll.hyperlink().addClickListener(
-						new SelectAllClickListener());
-				decorate(p.add().label().text("|")).color().gray();
-				removeSelection = p.add().label();
-				decorate(removeSelection.text("NONE"));
-				removeSelection.hyperlink().addClickListener(
-						new RemoveSelectionClickListener());
+				selectAll = Style.instance().table().selectLink(p, true);
+				// Style.instance().table().selectAllNone(selectAll, false);
+				selectAll.addClickListener(new SelectAllClickListener());
+				if (Style.instance().table().separateSelectAllNone())
+					p.add().label().text("|").font().weight().bold()
+							.pixel(PIXEL).color().gray();
+				removeSelection = Style.instance().table().selectLink(p, false);
+				removeSelection
+						.addClickListener(new RemoveSelectionClickListener());
 				removeSelection.clickable(!widget.rows.selectedIdentifiers()
 						.isEmpty());
 				widget.selectionIsSetup = true;
 			}
-		}
-
-		private IFont decorate(ILabel text) {
-			if (USE_BOLD)
-				text.font().weight().bold();
-			return text.font().pixel(PIXEL);
 		}
 
 		ISelection<Object> add(Object object) {
@@ -329,7 +321,7 @@ class SelectionImpl implements ISelection<Object> {
 	}
 
 	static final int PIXEL = 10;
-	static final boolean USE_BOLD = true;
+	// static final boolean USE_BOLD = true;
 	private ScrollTableWidgetImpl widget;
 	private SingleSelectionImpl single;
 	private MultiSelectionImpl multi;
