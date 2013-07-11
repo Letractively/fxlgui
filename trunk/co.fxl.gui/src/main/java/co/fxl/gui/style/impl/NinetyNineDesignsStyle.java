@@ -519,7 +519,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public void buttonFooter(final CommandLink cl) {
 				if (cl.label().text().equals(CLEAR_FILTERS)) {
-					cl.image().remove();
+					// cl.image().remove();
 					blue(cl.label());
 					cl.label().font().weight().bold().underline(true);
 					cl.label().addMouseOverListener(new IMouseOverListener() {
@@ -720,11 +720,9 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 			@Override
 			public void statusPanel(IGridPanel statusPanel) {
-				// IBorder border2 = statusPanel.border();
-				// border2.color().rgb(172, 197, 213);
-				// border2.style().top();
-				// statusPanel.color().rgb(249, 249, 249).gradient()
-				// .fallback(240, 240, 240).vertical().rgb(216, 216, 216);
+				IBorder border2 = statusPanel.border();
+				border2.color().rgb(172, 197, 213);
+				border2.style().top().style().bottom();
 				statusPanel.color().gray(249);
 			}
 
