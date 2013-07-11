@@ -761,10 +761,12 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
-			public void background(IVerticalPanel container) {
-				IBorder b = container.border();
-				b.style().left().style().right();
-				b.color().rgb(172, 197, 213);
+			public void background(IVerticalPanel container, boolean border) {
+				if (border) {
+					IBorder b = container.border();
+					b.style().left().style().right();
+					b.color().rgb(172, 197, 213);
+				}
 			}
 
 			@Override

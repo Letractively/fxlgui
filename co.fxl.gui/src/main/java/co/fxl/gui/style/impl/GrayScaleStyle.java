@@ -593,7 +593,7 @@ class GrayScaleStyle extends StyleTemplate {
 			}
 
 			@Override
-			public void background(IVerticalPanel container) {
+			public void background(IVerticalPanel container, boolean border) {
 			}
 
 			@Override

@@ -53,7 +53,7 @@ public interface IStyle {
 
 		int marginTop();
 
-		void background(IVerticalPanel container);
+		void background(IVerticalPanel container, boolean border);
 
 		void statusPanel(IGridPanel statusPanel);
 

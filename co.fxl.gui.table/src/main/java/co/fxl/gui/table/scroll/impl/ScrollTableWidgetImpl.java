@@ -220,8 +220,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			widgetTitle.commandsOnTop();
 			widgetTitle.hyperlinkVisible(false);
 			widgetTitle.spacing(0);
-			container = widgetTitle.content().panel().vertical();
-			Style.instance().table().background(container);
+			container = widgetTitle.content(true).panel().vertical();
 			// editPanel = container.add().panel().vertical().visible(false);
 			if (add2Title != null)
 				widgetTitle.add2Title(add2Title);
