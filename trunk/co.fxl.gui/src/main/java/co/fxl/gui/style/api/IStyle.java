@@ -59,7 +59,7 @@ public interface IStyle {
 
 		ILabel statusHeader(IPanel<?> panel, String text);
 
-		void statusHeader(ILabel l);
+		void statusLink(ILabel l, boolean active);
 
 	}
 

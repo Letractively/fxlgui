@@ -209,13 +209,12 @@ public class ColumnSelection {
 
 				@Override
 				public void onMouseOver() {
-					Style.instance().table().statusHeader(l);
-					l.font().underline(true);
+					Style.instance().table().statusLink(l, true);
 				}
 
 				@Override
 				public void onMouseOut() {
-					l.font().underline(false).color().black();
+					Style.instance().table().statusLink(l, false);
 				}
 			});
 			horizontal.addSpace(4).add().image().resource("edit_gray.png")
