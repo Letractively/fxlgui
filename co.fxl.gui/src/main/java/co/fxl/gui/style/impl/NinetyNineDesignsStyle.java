@@ -529,7 +529,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 					button.buttonPanel().margin(-1);
 				} else if (blue > 0) {
 					int inc = (blue - 1) * 14;
-					button.buttonPanel().border().remove().color().black();
+					button.buttonPanel().border().remove().color().gray(50);
 					button.buttonPanel().color().remove()
 							.rgb(79 + inc, 122 + inc, 201 + inc).gradient()
 							.vertical().rgb(63 + inc, 106 + inc, 188 + inc);
