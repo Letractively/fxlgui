@@ -470,6 +470,7 @@ class GrayScaleStyle extends StyleTemplate {
 			@Override
 			public void moreButton(CommandLink more) {
 				more.label().font().color().white();
+				more.border().remove().style().rounded().bottom(false);
 			}
 
 			@Override
@@ -543,6 +544,10 @@ class GrayScaleStyle extends StyleTemplate {
 				IBorder border = p.border();
 				border.color().rgb(172, 197, 213);
 				border.style().top();
+			}
+
+			@Override
+			public void moreButtonActive(CommandLink more) {
 			}
 
 		};

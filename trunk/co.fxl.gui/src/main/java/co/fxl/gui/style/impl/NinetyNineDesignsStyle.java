@@ -513,6 +513,26 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
+			public void moreButtonActive(CommandLink more) {
+				border(more).gray(113);
+				blue(more.background());
+				more.image().resource("more_small_white.png");
+				more.label().font().color().white();
+			}
+
+			private IColor border(CommandLink more) {
+				more.border().remove().style().rounded().bottom(false);
+				return more.border().width(1).color();
+			}
+
+			@Override
+			public void moreButton(CommandLink more) {
+				border(more).white();
+				more.label().font().color().black();
+				more.image("more_small_black.png");
+			}
+
+			@Override
 			public void listItemPanel(IVerticalPanel p) {
 				IBorder border = p.border();
 				border.color().rgb(222, 227, 213);
@@ -573,12 +593,6 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
-			public void moreButton(CommandLink more) {
-				more.label().font().color().black();
-				more.image("more_small_black.png");
-			}
-
-			@Override
 			public int[] newButton(CommandLink commandLink, int index) {
 				int inc = index * 10;
 				commandLink.border().color().rgb(14 + inc, 151 + inc, 35 + inc);
@@ -632,14 +646,13 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			public void background(IGridPanel panel, boolean addBorder,
 					boolean plainContent, boolean sideWidget) {
 				if (!plainContent && sideWidget) {
-					panel.margin().top(4);
 					if (addBorder) {
 						IBorder border = panel.border();
 						border.style().rounded().width(6);
 						border.width(1).color().gray(218);// .rgb(172, 197,
 															// 213);
 					}
-					panel.padding(3);
+					panel.padding().top(7).bottom(3).left(3).right(3);
 					background(panel);
 				}
 			}
