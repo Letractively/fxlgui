@@ -661,7 +661,7 @@ class GrayScaleStyle extends StyleTemplate {
 					HyperlinkDecorator.styleHyperlinkActive(l);
 					l.font().underline(true);
 				} else
-					l.font().underline(false).color().black();
+					l.font().underline(false).color().gray();
 			}
 
 			@Override
@@ -701,6 +701,11 @@ class GrayScaleStyle extends StyleTemplate {
 			public void selectAllNoneBackground(IHorizontalPanel p) {
 				p.spacing(5);
 			}
+
+			@Override
+			public boolean useColoredButtons() {
+				return false;
+			}
 		};
 	}
 
@@ -710,6 +715,11 @@ class GrayScaleStyle extends StyleTemplate {
 			@Override
 			public void statusPanel(IPanel<?> panel) {
 				GrayScaleStyle.this.statusPanel(panel);
+			}
+
+			@Override
+			public boolean useColoredButtons() {
+				return false;
 			}
 
 			@Override

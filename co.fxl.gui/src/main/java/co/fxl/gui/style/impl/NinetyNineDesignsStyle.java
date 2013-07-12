@@ -717,6 +717,11 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		return new ITree() {
 
 			@Override
+			public boolean useColoredButtons() {
+				return true;
+			}
+
+			@Override
 			public void statusPanel(IPanel<?> panel) {
 				panel.border().color().rgb(172, 197, 213);
 				panel.color().gray(249);
@@ -820,6 +825,11 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public boolean isTitleUpperCase() {
 				return false;
+			}
+
+			@Override
+			public boolean useColoredButtons() {
+				return true;
 			}
 
 			@Override

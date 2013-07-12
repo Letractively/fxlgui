@@ -115,6 +115,8 @@ public interface IStyle {
 
 		void selectAllNoneBackground(IHorizontalPanel p);
 
+		boolean useColoredButtons();
+
 	}
 
 	public interface IFilterPanel {
@@ -148,6 +150,8 @@ public interface IStyle {
 		void background(IVerticalPanel vertical);
 
 		String backgroundColor();
+
+		boolean useColoredButtons();
 	}
 
 	public interface IMDT {
