@@ -55,6 +55,7 @@ import co.fxl.gui.impl.HyperlinkDecorator;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
 import co.fxl.gui.impl.Icons;
 import co.fxl.gui.impl.ImageButton;
+import co.fxl.gui.impl.NavigationView;
 import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.StylishButton;
 import co.fxl.gui.impl.UserPanel.Decorator;
@@ -770,9 +771,16 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 	@Override
 	public IMDT mdt() {
 		return new IMDT() {
+
 			@Override
 			public boolean showQuickSearchOnTop() {
 				return true;
+			}
+
+			@Override
+			public void actionPanel(NavigationView navigationView) {
+				navigationView.widgetTitle.background().white();
+				navigationView.widgetTitle.border().remove().color().black();
 			}
 
 			@Override

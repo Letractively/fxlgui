@@ -45,6 +45,7 @@ import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.HyperlinkDecorator;
 import co.fxl.gui.impl.Icons;
+import co.fxl.gui.impl.NavigationView;
 import co.fxl.gui.impl.StylishButton;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.impl.WidgetTitle;
@@ -607,6 +608,10 @@ class GrayScaleStyle extends StyleTemplate {
 			@Override
 			public void quickSearch(ISuggestField sf) {
 				sf.height(26);
+			}
+
+			@Override
+			public void actionPanel(NavigationView navigationView) {
 			}
 		};
 	}

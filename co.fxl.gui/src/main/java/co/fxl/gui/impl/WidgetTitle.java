@@ -143,6 +143,10 @@ public class WidgetTitle implements IClickListener, IColored {
 				.background(panel, addBorder, plainContent, sideWidget);
 	}
 
+	public IBorder border() {
+		return panel.border();
+	}
+
 	public IColor background() {
 		return panel.color();
 	}
