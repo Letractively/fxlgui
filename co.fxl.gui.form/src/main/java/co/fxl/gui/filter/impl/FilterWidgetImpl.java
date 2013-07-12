@@ -357,7 +357,8 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 				}
 			}
 			if (constraints.size() != (Integer) DEFAULT_SIZES.get(0)
-					&& constraints.size() != Integer.MAX_VALUE) {
+					&& constraints.size() != Integer.MAX_VALUE
+					&& constraints.size() != -1) {
 				if (sizeFilter != null) {
 					sizeFilter.set(constraints.size());
 					validation.update();
