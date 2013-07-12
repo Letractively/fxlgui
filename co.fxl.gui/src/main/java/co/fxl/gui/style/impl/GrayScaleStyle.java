@@ -69,6 +69,11 @@ class GrayScaleStyle extends StyleTemplate {
 		public String clearTitle() {
 			return "Clear";
 		}
+
+		@Override
+		public boolean containsRefreshButton() {
+			return false;
+		}
 	}
 
 	private class ViewSelection implements IViewSelection {
