@@ -19,6 +19,7 @@
 package co.fxl.gui.filter.impl;
 
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.ILabel;
@@ -103,6 +104,11 @@ public class FilterPanelImpl implements FilterPanel {
 
 	@Override
 	public void linksVisible(boolean b) {
+	}
+
+	@Override
+	public void refreshButton(IClickListener clickListener) {
+		title.topButton("refresh_large_green.png", clickListener);
 	}
 
 }

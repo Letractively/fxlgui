@@ -132,4 +132,6 @@ public interface IFilterWidget {
 
 	IFilterWidget updateFilters();
 
+	void refreshButton(IClickListener clickListener);
+
 }

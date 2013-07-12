@@ -148,6 +148,11 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	}
 
 	@Override
+	public void refreshButton(IClickListener clickListener) {
+		title.refreshButton(clickListener);
+	}
+
+	@Override
 	public void onUpdate(String value) {
 		configuration = value;
 		if (value == null)
@@ -380,7 +385,8 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			apply = title.addHyperlink(Style.instance().filter().acceptImage(),
 					Style.instance().filter().acceptTitle(), true);
 			validation.linkClickable(apply);
-			clear = title.addHyperlink(Icons.CANCEL, Style.instance().filter().clearTitle(), false);
+			clear = title.addHyperlink(Icons.CANCEL, Style.instance().filter()
+					.clearTitle(), false);
 			apply.addClickListener(new ApplyClickListener());
 			clear.addClickListener(clearClickListener = new ClearClickListener());
 			clear.clickable(false);
