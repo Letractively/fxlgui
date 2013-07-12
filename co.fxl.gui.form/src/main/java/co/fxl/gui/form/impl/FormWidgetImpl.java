@@ -583,7 +583,7 @@ public class FormWidgetImpl implements IFormWidget {
 	public IFormWidget buttonPanelIndent(int buttonPanelIndent) {
 		this.buttonPanelIndent = buttonPanelIndent;
 		if (buttonPanelWithIndent != null)
-			buttonPanelWithIndent.margin().left(buttonPanelIndent);
+			buttonPanelWithIndent.margin().left(buttonPanelIndent - 5);
 		return this;
 	}
 
