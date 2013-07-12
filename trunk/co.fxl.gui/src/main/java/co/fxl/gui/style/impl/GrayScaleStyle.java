@@ -36,6 +36,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextArea;
@@ -570,6 +571,11 @@ class GrayScaleStyle extends StyleTemplate {
 				scrollPane.border().color().lightgray();
 			}
 
+			@Override
+			public IContainer logPanel(IPopUp popUp) {
+				return popUp.container();
+			}
+
 		};
 	}
 
@@ -638,11 +644,7 @@ class GrayScaleStyle extends StyleTemplate {
 
 			@Override
 			public void statusPanel(IGridPanel statusPanel) {
-				IBorder border2 = statusPanel.border();
-				border2.color().rgb(172, 197, 213);
-				border2.style().top();
-				statusPanel.color().rgb(249, 249, 249).gradient()
-						.fallback(240, 240, 240).vertical().rgb(216, 216, 216);
+				GrayScaleStyle.this.statusPanel(statusPanel);
 			}
 
 			@Override
@@ -707,6 +709,7 @@ class GrayScaleStyle extends StyleTemplate {
 		return new ITree() {
 			@Override
 			public void statusPanel(IPanel<?> panel) {
+				GrayScaleStyle.this.statusPanel(panel);
 			}
 
 			@Override
@@ -818,6 +821,14 @@ class GrayScaleStyle extends StyleTemplate {
 	@Override
 	public void hyperlink(ILabel label) {
 		label.font().color().rgb(0, 87, 141);
+	}
+
+	void statusPanel(IPanel<?> statusPanel) {
+		IBorder border2 = statusPanel.border();
+		border2.color().rgb(172, 197, 213);
+		border2.style().top();
+		statusPanel.color().rgb(249, 249, 249).gradient()
+				.fallback(240, 240, 240).vertical().rgb(216, 216, 216);
 	}
 
 }

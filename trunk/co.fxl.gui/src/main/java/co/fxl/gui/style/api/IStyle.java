@@ -35,6 +35,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextArea;
@@ -195,6 +196,8 @@ public interface IStyle {
 		void stylishButton(StylishButton button, boolean green, int blue);
 
 		void scrollPane(IScrollPane scrollPane);
+
+		IContainer logPanel(IPopUp popUp);
 
 	}
 
