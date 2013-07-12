@@ -129,6 +129,8 @@ public interface IStyle {
 
 		String clearTitle();
 
+		boolean containsRefreshButton();
+
 	}
 
 	public interface IPopUpWindow {

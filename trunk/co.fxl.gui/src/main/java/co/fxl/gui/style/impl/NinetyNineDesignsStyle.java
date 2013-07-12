@@ -770,6 +770,11 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
+			public boolean containsRefreshButton() {
+				return true;
+			}
+
+			@Override
 			public String acceptTitle() {
 				return "Filter results";
 			}
