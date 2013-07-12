@@ -515,6 +515,11 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		return new IWindow() {
 
 			@Override
+			public IContainer logPanel(IPopUp popUp) {
+				return popUp.container().panel().vertical().spacing(15).add();
+			}
+
+			@Override
 			public void title(ILabel label, boolean sideWidget) {
 				blue(label);
 				label.font().weight().bold();
