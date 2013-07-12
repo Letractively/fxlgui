@@ -88,4 +88,6 @@ interface FilterPanel {
 			boolean isApply);
 
 	void refreshButton(IClickListener clickListener);
+
+	boolean isMiniFilter();
 }

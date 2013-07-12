@@ -103,6 +103,11 @@ public class FilterPanelImpl implements FilterPanel {
 	}
 
 	@Override
+	public boolean isMiniFilter() {
+		return true;
+	}
+
+	@Override
 	public void linksVisible(boolean b) {
 	}
 

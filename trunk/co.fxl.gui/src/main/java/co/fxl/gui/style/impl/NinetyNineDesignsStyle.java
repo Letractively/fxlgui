@@ -52,6 +52,7 @@ import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.HyperlinkDecorator;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
+import co.fxl.gui.impl.Icons;
 import co.fxl.gui.impl.ImageButton;
 import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.StylishButton;
@@ -765,8 +766,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
-			public String acceptImage() {
-				return "search_white.png";
+			public String acceptImage(boolean isMiniFilter) {
+				return isMiniFilter ? Icons.ACCEPT : "search_white.png";
 			}
 
 			@Override
