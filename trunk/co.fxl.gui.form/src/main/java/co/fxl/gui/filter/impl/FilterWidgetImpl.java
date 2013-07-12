@@ -569,4 +569,9 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		return this;
 	}
 
+	@Override
+	public void hideApply() {
+		apply.clickable(false);
+	}
+
 }
