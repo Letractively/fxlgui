@@ -43,6 +43,7 @@ import co.fxl.gui.api.ITextInputElement;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CommandLink;
+import co.fxl.gui.impl.NavigationView;
 import co.fxl.gui.impl.StylishButton;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.impl.WidgetTitle;
@@ -159,6 +160,8 @@ public interface IStyle {
 		boolean showQuickSearchOnTop();
 
 		void quickSearch(ISuggestField sf);
+
+		void actionPanel(NavigationView navigationView);
 
 	}
 
