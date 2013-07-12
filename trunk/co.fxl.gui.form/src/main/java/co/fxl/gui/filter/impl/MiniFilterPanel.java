@@ -23,6 +23,7 @@ import java.util.Map;
 
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
@@ -410,6 +411,11 @@ class MiniFilterPanel implements FilterPanel {
 
 	@Override
 	public IContainer top() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void refreshButton(IClickListener clickListener) {
 		throw new UnsupportedOperationException();
 	}
 

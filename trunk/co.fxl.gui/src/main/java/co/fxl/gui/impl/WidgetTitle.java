@@ -131,6 +131,12 @@ public class WidgetTitle implements IClickListener, IColored {
 		style();
 	}
 
+	public void topButton(String string, IClickListener clickListener) {
+		headerPanel.cell(1, 0).align().end().valign().center().image()
+				.resource(string).addClickListener(clickListener).mouseLeft()
+				.margin().right(7);
+	}
+
 	private void style() {
 		Style.instance().window().header(headerPanel, sideWidget);
 		Style.instance().window()

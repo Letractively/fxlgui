@@ -19,6 +19,7 @@
 package co.fxl.gui.filter.impl;
 
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
@@ -85,4 +86,6 @@ interface FilterPanel {
 
 	IClickable<?> addHyperlink(String imageResource, String string,
 			boolean isApply);
+
+	void refreshButton(IClickListener clickListener);
 }
