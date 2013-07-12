@@ -522,7 +522,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 			@Override
 			public int logPanelSpacing() {
-				return 15;
+				return 10;
 			}
 
 			@Override
