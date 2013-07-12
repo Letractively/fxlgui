@@ -656,7 +656,7 @@ class GrayScaleStyle extends StyleTemplate {
 			public ILabel statusHeader(IPanel<?> p, String text) {
 				ILabel l = p.add().label().text(text.toUpperCase());
 				l.font().pixel(TABLE_SELECTION_PIXEL).weight().bold().color()
-						.gray();
+						.mix().black().gray();
 				return l;
 			}
 
@@ -666,7 +666,7 @@ class GrayScaleStyle extends StyleTemplate {
 					HyperlinkDecorator.styleHyperlinkActive(l);
 					l.font().underline(true);
 				} else
-					l.font().underline(false).color().gray();
+					l.font().underline(false).color().mix().black().gray();
 			}
 
 			@Override
