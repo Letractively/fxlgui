@@ -95,7 +95,7 @@ class SaveButtonPanel implements IClickable<Object> {
 			saveAndBackClickListener = new ClickListener(widget,
 					cancelButtonElement, subPanel, true, saveAndBackButton);
 			saveAndBackButton.addClickListener(saveAndBackClickListener);
-			subPanel.addSpace(4);
+			subPanel.addSpace(8);
 		}
 		saveButton = new StylishButton(subPanel.add().panel().horizontal(),
 				widget.saveTitle, true, 3, false);

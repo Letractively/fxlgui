@@ -561,9 +561,13 @@ class GrayScaleStyle extends StyleTemplate {
 
 			@Override
 			public void stylishButton(StylishButton button, boolean green,
-					int blue) {
-				button.buttonPanel().color().remove().rgb(111, 111, 111)
-						.gradient().vertical().rgb(63, 63, 63);
+					int blue, boolean clickable) {
+				IColor newColor = button.buttonPanel().color().remove();
+				if (clickable)
+					newColor.rgb(111, 111, 111).gradient().vertical()
+							.rgb(63, 63, 63);
+				else
+					newColor.rgb(140, 140, 140);
 			}
 
 			@Override
@@ -579,6 +583,14 @@ class GrayScaleStyle extends StyleTemplate {
 			@Override
 			public int logPanelSpacing() {
 				return 0;
+			}
+
+			@Override
+			public void prepareStylishButton(StylishButton stylishButton) {
+			}
+
+			@Override
+			public void addImageToStylishButton(StylishButton button, int blue) {
 			}
 
 		};

@@ -21,6 +21,7 @@ package co.fxl.gui.impl;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.style.impl.Style;
 
@@ -32,6 +33,7 @@ public class StylishButton extends ClickableMultiplexer {
 	private IHorizontalPanel backPanel;
 	private boolean green;
 	private int blue;
+	private IImage image;
 
 	public StylishButton(IHorizontalPanel p, String text) {
 		this(p, text, true);
@@ -46,17 +48,25 @@ public class StylishButton extends ClickableMultiplexer {
 		this.changeBackground = changeBackground;
 		backPanel = p;
 		buttonPanel = backPanel.add().panel().horizontal().spacing(spacing);
-		styleActive();
+		image = buttonPanel.add().image().resource("empty_1x1.png")
+				.visible(false);
 		IBorder br = buttonPanel.border();
 		br.color().black();
 		br.style().rounded();
-		button = buttonPanel.addSpace(4).add().label().text(text);
+		button = buttonPanel.add().label().text(text);
+		button.margin().left(4);
 		if (bold)
 			button.font().weight().bold();
 		button.font().color().white();
 		buttonPanel.addSpace(4);
 		new HyperlinkMouseOverListener(button);
 		cs = new IClickable<?>[] { buttonPanel, button };
+		Style.instance().window().prepareStylishButton(this);
+	}
+
+	public void image(String res) {
+		image.resource(res).size(12, 13).visible(true);
+		image.margin().left(4);
 	}
 
 	public StylishButton green() {
@@ -66,18 +76,15 @@ public class StylishButton extends ClickableMultiplexer {
 
 	public StylishButton blue(int blue) {
 		this.blue = blue;
+		Style.instance().window().addImageToStylishButton(this, blue);
 		return this;
 	}
 
 	@Override
 	public Object clickable(boolean clickable) {
 		if (changeBackground) {
-			if (clickable)
-				styleActive();
-			else {
-				buttonPanel.color().remove().rgb(140, 140, 140);
-				buttonPanel.border().remove();
-			}
+			Style.instance().window()
+					.stylishButton(this, green, blue, clickable);
 		} else {
 			if (clickable)
 				button.font().color().white();
@@ -85,10 +92,6 @@ public class StylishButton extends ClickableMultiplexer {
 				button.font().color().rgb(240, 240, 240);
 		}
 		return super.clickable(clickable);
-	}
-
-	private void styleActive() {
-		Style.instance().window().stylishButton(this, green, blue);
 	}
 
 	public IHorizontalPanel panel() {

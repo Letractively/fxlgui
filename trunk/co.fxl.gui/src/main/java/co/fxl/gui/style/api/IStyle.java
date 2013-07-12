@@ -197,13 +197,18 @@ public interface IStyle {
 
 		void moreButtonActive(CommandLink more);
 
-		void stylishButton(StylishButton button, boolean green, int blue);
+		void stylishButton(StylishButton button, boolean green, int blue,
+				boolean clickable);
 
 		void scrollPane(IScrollPane scrollPane);
 
 		IContainer logPanel(IPopUp popUp);
 
 		int logPanelSpacing();
+
+		void prepareStylishButton(StylishButton stylishButton);
+
+		void addImageToStylishButton(StylishButton button, int blue);
 
 	}
 
