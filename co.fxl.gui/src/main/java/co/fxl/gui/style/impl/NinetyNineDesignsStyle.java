@@ -516,7 +516,13 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 			@Override
 			public IContainer logPanel(IPopUp popUp) {
-				return popUp.container().panel().vertical().spacing(15).add();
+				return popUp.container().panel().vertical()
+						.spacing(logPanelSpacing()).add();
+			}
+
+			@Override
+			public int logPanelSpacing() {
+				return 15;
 			}
 
 			@Override

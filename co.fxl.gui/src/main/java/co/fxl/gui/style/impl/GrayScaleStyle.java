@@ -576,6 +576,11 @@ class GrayScaleStyle extends StyleTemplate {
 				return popUp.container();
 			}
 
+			@Override
+			public int logPanelSpacing() {
+				return 0;
+			}
+
 		};
 	}
 
