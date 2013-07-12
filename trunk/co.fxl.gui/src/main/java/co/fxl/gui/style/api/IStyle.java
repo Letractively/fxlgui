@@ -203,6 +203,8 @@ public interface IStyle {
 
 		IContainer logPanel(IPopUp popUp);
 
+		int logPanelSpacing();
+
 	}
 
 	public interface IViewSelection {
