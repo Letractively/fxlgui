@@ -277,7 +277,10 @@ public class StatusDisplay implements IResizeListener, Runnable,
 	@Override
 	public void run() {
 		panel.size(width(), height());
-		scrollPane.size(display.width(), display.height());
+		int width = display.width();
+		if (Env.is(Env.FIREFOX))
+			width += 2;
+		scrollPane.size(width, display.height());
 		if (sidePanel != null)
 			sidePanel.height(display.height());
 	}
@@ -289,7 +292,7 @@ public class StatusDisplay implements IResizeListener, Runnable,
 
 	public void stylePanel(IPanel<?> panel) {
 		Style.instance().background(panel);
-//		panel.color().rgb(245, 245, 245);
+		// panel.color().rgb(245, 245, 245);
 	}
 
 	public void visible(boolean b) {
