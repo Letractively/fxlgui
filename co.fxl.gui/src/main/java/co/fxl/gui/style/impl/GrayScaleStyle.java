@@ -56,7 +56,7 @@ class GrayScaleStyle extends StyleTemplate {
 		}
 
 		@Override
-		public String acceptImage() {
+		public String acceptImage(boolean isMiniFilter) {
 			return Icons.ACCEPT;
 		}
 

@@ -123,7 +123,7 @@ public interface IStyle {
 
 		void decorate(ITextInputElement<?> input);
 
-		String acceptImage();
+		String acceptImage(boolean isMiniFilter);
 
 		String acceptTitle();
 

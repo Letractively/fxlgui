@@ -382,8 +382,11 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 
 	private void addHyperlinks() {
 		if (!hyperlinksAdded) {
-			apply = title.addHyperlink(Style.instance().filter().acceptImage(),
-					Style.instance().filter().acceptTitle(), true);
+			apply = title
+					.addHyperlink(
+							Style.instance().filter()
+									.acceptImage(title.isMiniFilter()), Style
+									.instance().filter().acceptTitle(), true);
 			validation.linkClickable(apply);
 			clear = title.addHyperlink(Icons.CANCEL, Style.instance().filter()
 					.clearTitle(), false);

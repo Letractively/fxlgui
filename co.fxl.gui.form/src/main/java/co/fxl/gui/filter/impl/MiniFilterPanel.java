@@ -419,4 +419,9 @@ class MiniFilterPanel implements FilterPanel {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public boolean isMiniFilter() {
+		return true;
+	}
+
 }
