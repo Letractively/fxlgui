@@ -103,7 +103,7 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 		autoResize(e, 0, id);
 	}
 
-	private void autoResize(final IElement<?> e, final int dec, String id) {
+	public void autoResize(final IElement<?> e, final int dec, String id) {
 		autoResize(e, dec, false, id);
 	}
 
