@@ -538,24 +538,41 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
+			public void addImageToStylishButton(StylishButton button, int blue) {
+				if (blue > 0)
+					button.image("save_blue.png");
+			}
+
+			@Override
 			public void stylishButton(StylishButton button, boolean green,
-					int blue) {
-				if (green) {
-					newButton(0, button.buttonPanel().border().remove(), button
-							.buttonPanel().color().remove());
-					button.buttonPanel().margin(-1);
-				} else if (blue > 0) {
-					int inc = (blue - 1) * 14;
-					button.buttonPanel().border().remove().color().gray(50);
-					button.buttonPanel().color().remove()
-							.rgb(79 + inc, 122 + inc, 201 + inc).gradient()
-							.vertical().rgb(63 + inc, 106 + inc, 188 + inc);
-					button.buttonPanel().margin(-1);
+					int blue, boolean clickable) {
+				IColor newColor = button.buttonPanel().color().remove();
+				if (clickable) {
+					addBorder(button, 120);
+					if (green) {
+						newButton(0, button.buttonPanel().color().remove());
+					} else if (blue > 0) {
+						int inc = (blue - 1) * 14;
+						button.buttonPanel().color().remove()
+								.rgb(79 + inc, 122 + inc, 201 + inc).gradient()
+								.vertical().rgb(63 + inc, 106 + inc, 188 + inc);
+					} else {
+						button.buttonPanel().color().remove().gray(111)
+								.gradient().vertical().gray(63);
+					}
 				} else {
-					button.buttonPanel().color().remove().rgb(111, 111, 111)
-							.gradient().vertical().rgb(63, 63, 63);
-					button.buttonPanel().border().remove();
+					addBorder(button, 160);
+					newColor.gray(140);
 				}
+			}
+
+			@Override
+			public void prepareStylishButton(StylishButton stylishButton) {
+				stylishButton.buttonPanel().margin(-1);
+			}
+
+			private void addBorder(StylishButton button, int gray) {
+				button.buttonPanel().border().color().gray(gray);
 			}
 
 			@Override
@@ -650,6 +667,10 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 			private void newButton(int inc, IBorder border, IColor background) {
 				border.color().rgb(14 + inc, 151 + inc, 35 + inc);
+				newButton(inc, background);
+			}
+
+			void newButton(int inc, IColor background) {
 				background.rgb(40 + inc, 194 + inc, 64 + inc).gradient()
 						.vertical().rgb(25 + inc, 173 + inc, 48 + inc);
 			}
@@ -715,6 +736,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public void footer(IPanel<?> vertical, boolean sideWidget) {
 			}
+
 		};
 	}
 
