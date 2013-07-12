@@ -36,6 +36,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.IVerticalPanel;
@@ -562,6 +563,11 @@ class GrayScaleStyle extends StyleTemplate {
 					int blue) {
 				button.buttonPanel().color().remove().rgb(111, 111, 111)
 						.gradient().vertical().rgb(63, 63, 63);
+			}
+
+			@Override
+			public void scrollPane(IScrollPane scrollPane) {
+				scrollPane.border().color().lightgray();
 			}
 
 		};

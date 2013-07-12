@@ -42,6 +42,7 @@ import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextElement;
@@ -519,6 +520,10 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				label.font().weight().bold();
 				if (sideWidget)
 					label.font().pixel(14);
+			}
+
+			@Override
+			public void scrollPane(IScrollPane scrollPane) {
 			}
 
 			@Override
