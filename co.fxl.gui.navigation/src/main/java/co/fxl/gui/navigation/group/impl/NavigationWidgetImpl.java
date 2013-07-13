@@ -353,7 +353,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			candidates.get(i).displayed(false);
 			hidden = true;
 		}
-		if ((!hidden && actions.isEmpty())) {
+		if (!hidden && (actions.isEmpty() || !showConfigure)) {
 			moreGroup.visible(false);
 		}
 		if (moreItem.popUp != null)
