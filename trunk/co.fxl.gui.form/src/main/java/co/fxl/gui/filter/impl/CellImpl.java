@@ -31,7 +31,6 @@ import co.fxl.gui.filter.impl.FilterPanel.ICell;
 import co.fxl.gui.form.impl.DateField;
 import co.fxl.gui.form.impl.Validation;
 import co.fxl.gui.impl.Env;
-import co.fxl.gui.impl.Heights;
 
 class CellImpl implements ICell {
 
@@ -95,8 +94,8 @@ class CellImpl implements ICell {
 				validation.validateDate(tf1);
 				validation.validateDate(tf2);
 			} else if (type.equals(Long.class)) {
-				validation.linkInput(tf1);
-				validation.linkInput(tf2);
+				validation.validateLong(tf1, false);
+				validation.validateLong(tf2, false);
 			}
 		}
 
