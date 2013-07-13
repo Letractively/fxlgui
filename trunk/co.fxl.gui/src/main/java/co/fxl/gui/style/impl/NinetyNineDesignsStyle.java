@@ -893,7 +893,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 			private void decorate(ITextElement<?> input) {
 				input.height(Heights.COMBOBOX_HEIGHT);
-				inputBorder((IBordered) input);
+				inputBorder((IBordered) input, true);
 			}
 
 			@Override
@@ -1014,7 +1014,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				else
 					panel.margin().right(5);
 				final ILabel select = panel.add().label();
-				decorate(select.text(b ? "ALL" : "NONE"));
+				decorate(select.text(b ? "All" : "None"));
 				IClickable<Object> c = new IClickable<Object>() {
 
 					@Override
@@ -1106,10 +1106,13 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		};
 	}
 
-	private void inputBorder(IBordered input) {
+	private void inputBorder(IBordered input, boolean round) {
 		IBorder border = input.border();
-		border.style().rounded();
-		border.width(1).color().gray(211);
+		if (round) {
+			border.style().rounded();
+			border.width(1);
+		}
+		border.color().gray(211);
 	}
 
 	@Override
@@ -1139,7 +1142,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		return new IFormStyle() {
 			@Override
 			public void inputField(IBordered input) {
-				inputBorder(input);
+				inputBorder(input, false);
 			}
 
 			@Override
