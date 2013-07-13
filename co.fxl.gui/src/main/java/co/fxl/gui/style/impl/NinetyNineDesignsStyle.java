@@ -862,6 +862,11 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		return new IFilterPanel() {
 
 			@Override
+			public String title() {
+				return "Search Filter";
+			}
+
+			@Override
 			public void decorate(IGridCell cell) {
 				Heights.INSTANCE.decorate(cell);
 			}

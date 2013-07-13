@@ -77,6 +77,11 @@ class GrayScaleStyle extends StyleTemplate {
 		public boolean containsRefreshButton() {
 			return false;
 		}
+
+		@Override
+		public String title() {
+			return "SEARCH FILTER";
+		}
 	}
 
 	private class ViewSelection implements IViewSelection {

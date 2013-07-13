@@ -138,6 +138,8 @@ public interface IStyle {
 
 		boolean containsRefreshButton();
 
+		String title();
+
 	}
 
 	public interface IPopUpWindow {
