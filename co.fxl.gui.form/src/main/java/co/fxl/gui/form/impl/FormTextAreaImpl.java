@@ -65,6 +65,11 @@ class FormTextAreaImpl extends FormFieldImpl<ITextArea, String> {
 	}
 
 	@Override
+	void clearTextAreaWidth() {
+		valueElement().width(1.0);
+	}
+
+	@Override
 	public ITextArea valueElement() {
 		return textArea;
 	}

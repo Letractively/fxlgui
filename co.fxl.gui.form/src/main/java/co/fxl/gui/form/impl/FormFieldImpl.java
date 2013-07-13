@@ -248,4 +248,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	public void maxLength(int maxLength) {
 		this.maxLength = maxLength;
 	}
+
+	void clearTextAreaWidth() {
+	}
 }

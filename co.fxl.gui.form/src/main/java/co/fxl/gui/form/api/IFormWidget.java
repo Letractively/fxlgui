@@ -134,4 +134,6 @@ public interface IFormWidget extends IResizable<IFormWidget> {
 
 	IFormWidget width(int width);
 
+	void clearTextAreaWidths();
+
 }
