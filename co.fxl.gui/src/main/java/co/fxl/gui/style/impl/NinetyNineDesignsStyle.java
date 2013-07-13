@@ -55,6 +55,7 @@ import co.fxl.gui.impl.HyperlinkDecorator;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
 import co.fxl.gui.impl.Icons;
 import co.fxl.gui.impl.ImageButton;
+import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.NavigationView;
 import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.StylishButton;
@@ -232,6 +233,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 	public static final String NAME = "Standard";
 	private static final int ADD_DISTANCE_MDT_FIRST_ROW = 3;
+	private static final boolean ADD_MORE_TO_ADMIN_BUTTON = true;
 
 	@Override
 	public ILogin login() {
@@ -245,7 +247,6 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public void addSeparator(ILinearPanel<?> panel) {
 				panel.addSpace(10);
-
 			}
 
 			@Override
@@ -339,12 +340,42 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
-			public IClickable<?> enterAdminButton(IPanel<?> panel) {
+			public IClickable<?> enterAdminButton(IPanel<?> panel,
+					final List<IAdminRight> rights) {
 				ImageButton text = new ImageButton(panel.add());
 				text.imageResource("settings.png").text("Administration");
 				text.label().font().pixel(fontSize()).weight().bold().color()
 						.white();
 				new HyperlinkMouseOverListener(text.label());
+				if (!ADD_MORE_TO_ADMIN_BUTTON)
+					return text;
+				final IImage more = panel.add().image()
+						.resource("more_white_10x16.png");
+				more.margin().left(4);
+				more.addClickListener(new IClickListener() {
+					@Override
+					public void onClick() {
+						final IPopUp popUp = PopUp.showPopUp(true).width(200)
+								.autoHide(true);
+						popUp.offset(more.offsetX() - 200 + 10,
+								more.offsetY() + 25);
+						IVerticalPanel p = popUp.container().panel().vertical()
+								.spacing(12);
+						p.margin().top(2);
+						for (final IAdminRight right : rights)
+							new ImageButton(p.add())
+									.imageResource(right.image())
+									.text(right.label())
+									.addClickListener(new LazyClickListener() {
+										@Override
+										protected void onAllowedClick() {
+											popUp.visible(false);
+											right.onClick();
+										}
+									});
+						popUp.visible(true);
+					}
+				});
 				return text;
 			}
 

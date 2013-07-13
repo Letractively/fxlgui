@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.style.api;
 
+import java.util.List;
+
 import co.fxl.gui.api.IBordered;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
@@ -303,11 +305,18 @@ public interface IStyle {
 
 	public interface IUserPanel {
 
+		public interface IAdminRight extends IClickListener {
+
+			String image();
+
+			String label();
+		}
+
 		void background(IHorizontalPanel panel);
 
 		IClickable<?> profileButton(IPanel<?> panel);
 
-		IClickable<?> enterAdminButton(IPanel<?> panel);
+		IClickable<?> enterAdminButton(IPanel<?> panel, List<IAdminRight> rights);
 
 		IClickable<?> exitAdminButton(IPanel<?> panel);
 
