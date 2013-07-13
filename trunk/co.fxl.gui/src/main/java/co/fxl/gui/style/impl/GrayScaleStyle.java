@@ -616,11 +616,6 @@ class GrayScaleStyle extends StyleTemplate {
 				navigationView.widgetTitle.panel.border().remove().color()
 						.gray(113);
 			}
-
-			@Override
-			public void actionPanel(IPopUp popUp) {
-				popUp.border().remove().color().gray(190);
-			}
 		};
 	}
 
@@ -869,6 +864,11 @@ class GrayScaleStyle extends StyleTemplate {
 		border2.style().top();
 		statusPanel.color().rgb(249, 249, 249).gradient()
 				.fallback(240, 240, 240).vertical().rgb(216, 216, 216);
+	}
+
+	@Override
+	public void popUp(IBorder border) {
+		border.color().black();
 	}
 
 }
