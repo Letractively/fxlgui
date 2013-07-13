@@ -165,8 +165,6 @@ public interface IStyle {
 
 		void actionPanel(NavigationView navigationView);
 
-		void actionPanel(IPopUp popUp);
-
 	}
 
 	public interface IWindow {
@@ -393,5 +391,7 @@ public interface IStyle {
 	IN2MStyle n2m();
 
 	void hyperlink(ILabel label);
+
+	void popUp(IBorder border);
 
 }

@@ -83,7 +83,7 @@ public class PopUp {
 		if (withBorder) {
 			IBorder border = popUp.border();
 			border.remove().style().shadow();
-			border.color().black();
+			Style.instance().popUp(border);
 		}
 		return popUp;
 	}

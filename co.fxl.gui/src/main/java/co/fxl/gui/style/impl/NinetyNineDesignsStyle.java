@@ -829,13 +829,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			public void actionPanel(NavigationView navigationView) {
 				navigationView.widgetTitle.background().white();
 				IBorder border = navigationView.widgetTitle.border();
-				blue(border.remove());
+				border.remove();
 				border.style().rounded().remove();
-			}
-
-			@Override
-			public void actionPanel(IPopUp popUp) {
-				blue(popUp.border());
 			}
 
 			@Override
@@ -1171,5 +1166,10 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				blue(upperLabel);
 			}
 		};
+	}
+
+	@Override
+	public void popUp(IBorder border) {
+		blue(border);
 	}
 }
