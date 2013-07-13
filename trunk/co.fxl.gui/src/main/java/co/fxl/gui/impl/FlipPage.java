@@ -106,7 +106,7 @@ public class FlipPage implements IContentPage, IColored {
 
 	@Override
 	public void back() {
-		assert previewCalled;
+//		assert previewCalled;
 		previewCalled = false;
 		if (flipImmediatelyAfterNext())
 			return;
