@@ -61,6 +61,7 @@ import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.StylishButton;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.impl.WidgetTitle;
+import co.fxl.gui.style.api.IStyle.IUserPanel.IAdminRightGroup.IAdminRight;
 
 class NinetyNineDesignsStyle extends StyleTemplate {
 
@@ -341,7 +342,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 			@Override
 			public IClickable<?> enterAdminButton(IPanel<?> panel,
-					final List<IAdminRight> rights) {
+					final List<IAdminRightGroup> rights) {
 				ImageButton text = new ImageButton(panel.add());
 				text.imageResource("settings.png").text("Administration");
 				text.label().font().pixel(fontSize()).weight().bold().color()
@@ -359,20 +360,34 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 								.autoHide(true);
 						popUp.offset(more.offsetX() - 200 + 10,
 								more.offsetY() + 25);
-						IVerticalPanel p = popUp.container().panel().vertical()
-								.spacing(12);
-//						p.margin().top(2);
-						for (final IAdminRight right : rights)
-							new ImageButton(p.add())
-									.imageResource(right.image())
-									.text(right.label())
-									.addClickListener(new LazyClickListener() {
-										@Override
-										protected void onAllowedClick() {
-											popUp.visible(false);
-											right.onClick();
-										}
-									});
+						IVerticalPanel p = popUp.container().panel().vertical();
+						p.spacing().left(12).top(12).right(12).bottom(12)
+								.inner(4);
+						// p.margin().top(2);
+						boolean first = true;
+						for (IAdminRightGroup g : rights) {
+							if (!first) {
+								p.addSpace(4);
+								p.add().line().color().lightgray();
+								p.addSpace(4);
+							}
+							p.add().label().text(g.label().toUpperCase())
+									.font().weight().bold().pixel(10).color()
+									.gray();
+							for (final IAdminRight right : g.rights())
+								new ImageButton(p.add())
+										.imageResource(right.image())
+										.text(right.label())
+										.addClickListener(
+												new LazyClickListener() {
+													@Override
+													protected void onAllowedClick() {
+														popUp.visible(false);
+														right.onClick();
+													}
+												});
+							first = false;
+						}
 						popUp.visible(true);
 					}
 				});
