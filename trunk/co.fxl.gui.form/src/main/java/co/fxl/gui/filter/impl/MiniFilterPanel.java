@@ -337,7 +337,7 @@ class MiniFilterPanel implements FilterPanel {
 	@Override
 	public ILabel addTitle(String string) {
 		IToolbar tb = titlePanel;
-		ILabel l = getContainer(tb).label().text(string.toUpperCase());
+		ILabel l = getContainer(tb).label().text(string);
 		l.font().weight().bold();
 		return l;
 		// l.margin().top(-4);
