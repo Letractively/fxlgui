@@ -267,6 +267,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 					public void onClick() {
 						final IPopUp popUp = PopUp.showPopUp(true).width(140)
 								.autoHide(true);
+						popUp.border().color().gray(190);
 						popUp.offset(image.offsetX() - 140 + 12,
 								image.offsetY() + 25);
 						IVerticalPanel p = popUp.container().panel().vertical()
@@ -358,6 +359,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 					public void onClick() {
 						final IPopUp popUp = PopUp.showPopUp(true).width(200)
 								.autoHide(true);
+						popUp.border().color().gray(190);
 						popUp.offset(more.offsetX() - 200 + 10,
 								more.offsetY() + 25);
 						IVerticalPanel p = popUp.container().panel().vertical();
