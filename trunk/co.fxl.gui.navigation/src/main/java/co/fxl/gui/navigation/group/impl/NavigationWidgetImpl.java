@@ -273,8 +273,8 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 					if (!Style.instance().navigation().isActiveMoreDark())
 						p.border().style().left().style().right().style()
 								.bottom().color().gray();
-					else
-						p.border().color().gray();
+//					else
+//						p.border().color().gray();
 					boolean nonEmpty = addLabelsToGridPanel(p);
 					addActionsToPanel(p, nonEmpty);
 					cb.onSuccess(null);

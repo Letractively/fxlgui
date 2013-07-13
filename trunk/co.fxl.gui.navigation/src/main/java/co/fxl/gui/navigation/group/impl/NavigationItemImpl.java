@@ -200,9 +200,8 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	private void setUpMoreTab() {
 		if (popUp == null) {
 			clickable(false);
-			popUp = PopUp.showPopUp().autoHide(true);
-			popUp.border().remove();
-			popUp.border().style().shadow();
+			popUp = PopUp.showPopUp(true).autoHide(true);
+			// popUp.border().width(0);
 			popUp.width(280);
 			popUp.addVisibleListener(new IUpdateListener<Boolean>() {
 				@Override
@@ -227,7 +226,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 									.activeMore(buttonPanel, button, refresh);
 							// refresh.resource("more_black.png");
 							int x = basicPanel.offsetX()
-									- getLeftPartPopUpWidth();
+									- getLeftPartPopUpWidth() - 2;
 							if (x < 10) {
 								x = buttonPanel.offsetX();
 							}
