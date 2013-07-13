@@ -828,7 +828,14 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public void actionPanel(NavigationView navigationView) {
 				navigationView.widgetTitle.background().white();
-				navigationView.widgetTitle.border().remove().color().black();
+				IBorder border = navigationView.widgetTitle.border();
+				blue(border.remove());
+				border.style().rounded().remove();
+			}
+
+			@Override
+			public void actionPanel(IPopUp popUp) {
+				blue(popUp.border());
 			}
 
 			@Override

@@ -497,7 +497,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 
 	private ILabel addLabel(IPanel<?> actionPanel, String label) {
 		ILabel li = actionPanel.add().label().text(label);
-		li.font().pixel(14).weight().bold();
+		li.font().pixel(12).weight().bold();
 		Style.instance().navigation().moreItem(li);
 		new HyperlinkMouseOverListener(li);
 		return li;
@@ -521,7 +521,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			final ILabel lg = gp.cell(0, r).valign().begin().panel().vertical()
 					.addSpace(1).add().label()
 					.text(!g.showGroupLabel ? "" : g.name());
-			lg.margin().top(2);
+//			lg.margin().top(2);
 			lg.addMouseOverListener(new IMouseOverListener() {
 
 				@Override

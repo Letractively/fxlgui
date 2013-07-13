@@ -165,6 +165,8 @@ public interface IStyle {
 
 		void actionPanel(NavigationView navigationView);
 
+		void actionPanel(IPopUp popUp);
+
 	}
 
 	public interface IWindow {

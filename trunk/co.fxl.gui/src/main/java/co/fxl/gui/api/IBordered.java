@@ -33,11 +33,13 @@ public interface IBordered {
 				IRoundBorder right(boolean right);
 
 				IRoundBorder left(boolean left);
+
+				IRoundBorder remove();
 			}
 
 			IBorder shadow();
 
-//			IBorder roundShadow();
+			// IBorder roundShadow();
 
 			IBorder shadow(int pixel);
 
