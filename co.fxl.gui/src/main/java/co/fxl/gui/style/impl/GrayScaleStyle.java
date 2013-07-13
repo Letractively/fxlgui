@@ -40,6 +40,7 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextArea;
+import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Heights;
@@ -81,6 +82,11 @@ class GrayScaleStyle extends StyleTemplate {
 		@Override
 		public String title() {
 			return "SEARCH FILTER";
+		}
+
+		@Override
+		public void removeErrorColor(ITextElement<?> textField) {
+			((IColored) textField).color().rgb(249, 249, 249);
 		}
 	}
 

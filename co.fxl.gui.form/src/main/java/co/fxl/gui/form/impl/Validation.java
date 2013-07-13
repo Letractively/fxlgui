@@ -28,6 +28,7 @@ import co.fxl.data.format.impl.Format;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ISuggestField;
@@ -248,6 +249,15 @@ public class Validation {
 	private boolean isSpecified = false;
 	private boolean showDiscardChanges = false;
 	private boolean isNew = false;
+	private boolean isFilter;
+
+	public Validation() {
+		this(false);
+	}
+
+	public Validation(boolean isFilter) {
+		this.isFilter = isFilter;
+	}
 
 	void updateClickables() {
 		boolean error = false;
@@ -427,15 +437,22 @@ public class Validation {
 		if (hasError) {
 			textField.color().rgb(255, 170, 170);
 		} else {
-			textField.color().rgb(249, 249, 249);
+			removeErrorColor(textField);
 		}
+	}
+
+	void removeErrorColor(ITextElement<?> textField) {
+		if (isFilter) {
+			Style.instance().filter().removeErrorColor(textField);
+		} else
+			((IColored) textField).color().rgb(249, 249, 249);
 	}
 
 	private void errorColor(ISuggestField textField, boolean hasError) {
 		if (hasError) {
 			textField.color().mix().red().white().white();
 		} else {
-			textField.color().rgb(249, 249, 249);
+			removeErrorColor(textField);
 		}
 	}
 
@@ -443,7 +460,7 @@ public class Validation {
 		if (hasError) {
 			textField.color().mix().red().white().white();
 		} else {
-			textField.color().rgb(249, 249, 249);
+			removeErrorColor(textField);
 		}
 	}
 
@@ -451,7 +468,7 @@ public class Validation {
 		if (hasError) {
 			textField.color().mix().red().white().white();
 		} else {
-			Style.instance().filter().decorate(textField);
+			removeErrorColor(textField);
 		}
 	}
 
@@ -459,7 +476,7 @@ public class Validation {
 		if (hasError) {
 			textField.color().mix().red().white().white();
 		} else {
-			textField.color().rgb(249, 249, 249);
+			removeErrorColor(textField);
 		}
 	}
 

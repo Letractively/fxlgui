@@ -41,6 +41,7 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextArea;
+import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.ITextInputElement;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
@@ -139,6 +140,8 @@ public interface IStyle {
 		boolean containsRefreshButton();
 
 		String title();
+
+		void removeErrorColor(ITextElement<?> textField);
 
 	}
 

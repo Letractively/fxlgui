@@ -862,6 +862,11 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		return new IFilterPanel() {
 
 			@Override
+			public void removeErrorColor(ITextElement<?> textField) {
+				((IColored) textField).color().white();
+			}
+
+			@Override
 			public String title() {
 				return "Search Filter";
 			}
