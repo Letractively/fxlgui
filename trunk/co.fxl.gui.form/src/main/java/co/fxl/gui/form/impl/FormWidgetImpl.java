@@ -606,4 +606,11 @@ public class FormWidgetImpl implements IFormWidget {
 		widgetTitle.baseFocusPanel.width(width);
 		return this;
 	}
+
+	@Override
+	public void clearTextAreaWidths() {
+		for (FormFieldImpl<?, ?> f : fields) {
+			f.clearTextAreaWidth();
+		}
+	}
 }
