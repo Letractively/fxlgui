@@ -613,6 +613,13 @@ class GrayScaleStyle extends StyleTemplate {
 
 			@Override
 			public void actionPanel(NavigationView navigationView) {
+				navigationView.widgetTitle.panel.border().remove().color()
+						.gray(113);
+			}
+
+			@Override
+			public void actionPanel(IPopUp popUp) {
+				popUp.border().remove().color().gray(190);
 			}
 		};
 	}

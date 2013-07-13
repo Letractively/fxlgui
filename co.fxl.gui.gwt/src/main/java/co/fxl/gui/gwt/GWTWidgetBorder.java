@@ -74,8 +74,8 @@ public class GWTWidgetBorder extends GWTBorder {
 	@Override
 	protected void update() {
 		remove();
-//		if (roundShadow)
-//			element.addClassName("quicksearchshadow");
+		// if (roundShadow)
+		// element.addClassName("quicksearchshadow");
 		if (!top || !left || !right || !bottom) {
 			if (top)
 				DOM.setStyleAttribute(element, "borderTop", width + "px "
@@ -120,6 +120,10 @@ public class GWTWidgetBorder extends GWTBorder {
 			}
 			if (!roundRight) {
 				element.getStyle().clearProperty("borderBottomRightRadius");
+				element.getStyle().clearProperty("borderTopRightRadius");
+			}
+			if (!roundTop) {
+				element.getStyle().clearProperty("borderTopLeftRadius");
 				element.getStyle().clearProperty("borderTopRightRadius");
 			}
 		} else {

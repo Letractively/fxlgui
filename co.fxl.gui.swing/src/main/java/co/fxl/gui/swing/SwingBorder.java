@@ -67,6 +67,11 @@ class SwingBorder implements IBorder {
 					return this;
 				}
 
+				@Override
+				public IRoundBorder remove() {
+					return this;
+				}
+
 			};
 		}
 
