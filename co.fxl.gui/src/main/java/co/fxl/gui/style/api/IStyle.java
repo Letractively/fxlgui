@@ -305,18 +305,26 @@ public interface IStyle {
 
 	public interface IUserPanel {
 
-		public interface IAdminRight extends IClickListener {
+		public interface IAdminRightGroup {
 
-			String image();
+			public interface IAdminRight extends IClickListener {
+
+				String image();
+
+				String label();
+			}
 
 			String label();
+
+			List<IAdminRight> rights();
 		}
 
 		void background(IHorizontalPanel panel);
 
 		IClickable<?> profileButton(IPanel<?> panel);
 
-		IClickable<?> enterAdminButton(IPanel<?> panel, List<IAdminRight> rights);
+		IClickable<?> enterAdminButton(IPanel<?> panel,
+				List<IAdminRightGroup> rights);
 
 		IClickable<?> exitAdminButton(IPanel<?> panel);
 
