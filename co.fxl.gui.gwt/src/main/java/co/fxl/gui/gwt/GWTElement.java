@@ -232,6 +232,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	private boolean focusListenerSet;
 	private List<IUpdateListener<Boolean>> focusListeners = new LinkedList<IUpdateListener<Boolean>>();
 	private IShell shell;
+	private IBorder border;
 
 	public GWTElement() {
 	}
@@ -261,7 +262,9 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	// }
 
 	public IBorder border() {
-		return new GWTWidgetBorder(container.widget);
+		if (border != null)
+			return border;
+		return border = new GWTWidgetBorder(container.widget);
 	}
 
 	@SuppressWarnings("unchecked")
