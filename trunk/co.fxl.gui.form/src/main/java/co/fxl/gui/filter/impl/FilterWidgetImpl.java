@@ -119,7 +119,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	private List<Boolean> activeFlags = new LinkedList<Boolean>();
 	private FilterGrid grid;
 	boolean holdFilterClicks = false;
-	Validation validation = new Validation();
+	Validation validation = new Validation(true);
 	private List<IFilterListener> listeners = new LinkedList<IFilterListener>();
 	private Map<String, List<FilterImpl>> filterList = new HashMap<String, List<FilterImpl>>();
 	private ComboBoxIntegerFilter sizeFilter;
