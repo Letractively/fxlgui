@@ -304,7 +304,8 @@ class GrayScaleStyle extends StyleTemplate {
 			}
 
 			@Override
-			public IClickable<?> enterAdminButton(IPanel<?> panel) {
+			public IClickable<?> enterAdminButton(IPanel<?> panel,
+					List<IAdminRight> rights) {
 				return panel.add().label().text("Administration").hyperlink();
 			}
 
