@@ -361,7 +361,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 								more.offsetY() + 25);
 						IVerticalPanel p = popUp.container().panel().vertical()
 								.spacing(12);
-						p.margin().top(2);
+//						p.margin().top(2);
 						for (final IAdminRight right : rights)
 							new ImageButton(p.add())
 									.imageResource(right.image())
