@@ -740,8 +740,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public void button(CommandLink commandLink) {
 				commandLink.border().color().gray(195);
-				commandLink.background().gray(254).gradient().vertical()
-						.gray(222);
+				commandLink.background().gray(254).gradient()
+						.fallback(238, 238, 238).vertical().gray(222);
 				fontSize(commandLink);
 				commandLink.panel().padding().left(4);
 				// commandLink.iPanel().padding().left(4).right(4);
