@@ -273,8 +273,8 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 					if (!Style.instance().navigation().isActiveMoreDark())
 						p.border().style().left().style().right().style()
 								.bottom().color().gray();
-//					else
-//						p.border().color().gray();
+					// else
+					// p.border().color().gray();
 					boolean nonEmpty = addLabelsToGridPanel(p);
 					addActionsToPanel(p, nonEmpty);
 					cb.onSuccess(null);
@@ -482,7 +482,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			if (action.c != null && !action.c.satisfied(active))
 				continue;
 			String label = action.c.label();
-			ILabel li = addLabel(actionPanel, label);
+			ILabel li = addLabel(actionPanel, label, false);
 			li.font().weight().plain();
 			li.addClickListener(new LazyClickListener() {
 				@Override
@@ -495,10 +495,11 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		}
 	}
 
-	private ILabel addLabel(IPanel<?> actionPanel, String label) {
+	private ILabel addLabel(IPanel<?> actionPanel, String label,
+			boolean isEntityLink) {
 		ILabel li = actionPanel.add().label().text(label);
 		li.font().pixel(12).weight().bold();
-		Style.instance().navigation().moreItem(li);
+		Style.instance().navigation().moreItem(li, isEntityLink);
 		new HyperlinkMouseOverListener(li);
 		return li;
 	}
@@ -521,7 +522,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			final ILabel lg = gp.cell(0, r).valign().begin().panel().vertical()
 					.addSpace(1).add().label()
 					.text(!g.showGroupLabel ? "" : g.name());
-//			lg.margin().top(2);
+			lg.margin().top(2);
 			lg.addMouseOverListener(new IMouseOverListener() {
 
 				@Override
@@ -546,7 +547,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			for (final NavigationItemImpl i : g.items) {
 				if (i.displayed() || !i.visible())
 					continue;
-				ILabel li = addLabel(v, i.name());
+				ILabel li = addLabel(v, i.name(), true);
 				li.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {

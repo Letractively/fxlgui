@@ -442,8 +442,10 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
-			public void moreItem(ILabel label) {
+			public void moreItem(ILabel label, boolean isEntityLink) {
 				color(label.font());
+				if (isEntityLink)
+					label.font().pixel(14);
 			}
 
 			private void color(IColored colored) {
@@ -466,7 +468,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public void inactive(IHorizontalPanel buttonPanel, ILabel button) {
 				buttonPanel.color().remove();
-				moreItem(button);
+				moreItem(button, false);
 				buttonPanel.border().remove().width(0).style().rounded()
 						.width(6);
 			}

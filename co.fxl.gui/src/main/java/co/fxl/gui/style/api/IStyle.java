@@ -307,7 +307,7 @@ public interface IStyle {
 
 		int offsetX();
 
-		void moreItem(ILabel label);
+		void moreItem(ILabel label, boolean isEntityLink);
 
 		void morePopUp(IPopUp popUp);
 

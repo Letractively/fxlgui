@@ -439,7 +439,7 @@ class GrayScaleStyle extends StyleTemplate {
 			}
 
 			@Override
-			public void moreItem(ILabel label) {
+			public void moreItem(ILabel label, boolean isEntityLink) {
 				label.hyperlink();
 			}
 
