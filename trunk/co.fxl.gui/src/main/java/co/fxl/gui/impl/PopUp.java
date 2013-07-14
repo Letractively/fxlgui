@@ -67,8 +67,12 @@ public class PopUp {
 	}
 
 	public static IPopUp showPopUp(boolean withBorder) {
+		return showPopUp(withBorder, true);
+	}
+
+	public static IPopUp showPopUp(boolean withBorder, boolean bulkClose) {
 		final IPopUp popUp = display.showPopUp();
-		if (active) {
+		if (active && bulkClose) {
 			visiblePopUps.add(popUp);
 			popUp.addVisibleListener(new IUpdateListener<Boolean>() {
 				@Override
