@@ -201,7 +201,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 		if (popUp == null) {
 			clickable(false);
 			popUp = PopUp.showPopUp(true).autoHide(true);
-			// popUp.border().width(0);
+			popUp.border().width(0);
 			popUp.width(280);
 			popUp.addVisibleListener(new IUpdateListener<Boolean>() {
 				@Override
@@ -226,7 +226,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 									.activeMore(buttonPanel, button, refresh);
 							// refresh.resource("more_black.png");
 							int x = basicPanel.offsetX()
-									- getLeftPartPopUpWidth() - 2;
+									- getLeftPartPopUpWidth();
 							if (x < 10) {
 								x = buttonPanel.offsetX();
 							}
