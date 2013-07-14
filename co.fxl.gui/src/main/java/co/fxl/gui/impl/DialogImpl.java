@@ -197,7 +197,7 @@ public class DialogImpl implements IDialog {
 			if (title != null || !buttons.isEmpty())
 				getPopUp();
 			else {
-				popUp = PopUp.showPopUp().modal(modal);
+				popUp = PopUp.showPopUp(true, false).modal(modal);
 				decorateBorder();
 				container = popUp.container();
 			}
