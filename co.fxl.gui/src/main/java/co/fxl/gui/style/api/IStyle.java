@@ -139,7 +139,7 @@ public interface IStyle {
 
 		boolean containsRefreshButton();
 
-		String title();
+		String title(boolean isMini);
 
 		void removeErrorColor(ITextElement<?> textField);
 

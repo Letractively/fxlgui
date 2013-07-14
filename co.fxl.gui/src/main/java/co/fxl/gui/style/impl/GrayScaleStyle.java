@@ -80,7 +80,7 @@ class GrayScaleStyle extends StyleTemplate {
 		}
 
 		@Override
-		public String title() {
+		public String title(boolean isMini) {
 			return "SEARCH FILTER";
 		}
 

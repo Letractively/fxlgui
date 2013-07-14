@@ -139,7 +139,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 
 	FilterWidgetImpl(IContainer panel) {
 		title = newFilterPanel(panel);
-		titleLabel = title.addTitle(Style.instance().filter().title());
+		titleLabel = title.addTitle(title());
 		mainPanel = title;
 	}
 
@@ -541,7 +541,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	@Override
 	public IFilterWidget suggestionAdp(final ISuggestionAdp suggestionAdp) {
 		if (suggestionAdp != null) {
-			titleLabel.text(Style.instance().filter().title());
+			titleLabel.text(title());
 			ISuggestField sf = title.top().suggestField();
 			Heights.INSTANCE.decorate(sf);
 			final TooltipTextInput t = new TooltipTextInput(sf,
@@ -560,6 +560,10 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			// sf.color().white();
 		}
 		return this;
+	}
+
+	String title() {
+		return Style.instance().filter().title(this instanceof MiniFilterWidgetImpl);
 	}
 
 	@Override

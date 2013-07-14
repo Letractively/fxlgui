@@ -201,7 +201,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		public ViewSelection(IContainer c, boolean isDiscardChangesDialog) {
 			this.isDiscardChangesDialog = isDiscardChangesDialog;
 			grid = c.panel().grid().height(VIEW_SELECTION_HEIGHT);
-			grid.margin().top(ADD_DISTANCE_MDT_FIRST_ROW);
+			grid.margin().top(ADD_DISTANCE_MDT_FIRST_ROW).bottom(4);
 		}
 
 		@Override
@@ -867,8 +867,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
-			public String title() {
-				return "Search Filter";
+			public String title(boolean isMini) {
+				return isMini ? "FILTER:" : "Search Filter";
 			}
 
 			@Override
