@@ -463,6 +463,10 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 
 	@Override
 	public IFilterWidget setConfiguration(String config) {
+		if (configuration == null && config == null)
+			return this;
+		if (configuration != null && configuration.equals(config))
+			return this;
 		onUpdate(config);
 		return this;
 	}
@@ -563,7 +567,8 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	}
 
 	String title() {
-		return Style.instance().filter().title(this instanceof MiniFilterWidgetImpl);
+		return Style.instance().filter()
+				.title(this instanceof MiniFilterWidgetImpl);
 	}
 
 	@Override
