@@ -434,6 +434,10 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		return new INavigation() {
 
 			@Override
+			public void morePopUp(IPopUp popUp) {
+			}
+
+			@Override
 			public void init(IHorizontalPanel buttonPanel, ILabel button) {
 			}
 

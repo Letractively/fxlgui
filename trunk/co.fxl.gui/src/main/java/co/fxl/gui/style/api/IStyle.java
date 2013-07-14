@@ -309,6 +309,8 @@ public interface IStyle {
 
 		void moreItem(ILabel label);
 
+		void morePopUp(IPopUp popUp);
+
 	}
 
 	public interface IUserPanel {
