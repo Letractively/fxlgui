@@ -405,7 +405,7 @@ public class FormWidgetImpl implements IFormWidget {
 		return panel;
 	}
 
-	void addSaveButton(final IHorizontalPanel subPanel,
+	SaveButtonPanel addSaveButton(final IHorizontalPanel subPanel,
 			CancelButtonPanel cancelButtonElement) {
 		saveButton = new SaveButtonPanel(this, subPanel, cancelButtonElement);
 		// new HyperlinkMouseOverListener(saveButton);
@@ -413,6 +413,7 @@ public class FormWidgetImpl implements IFormWidget {
 			validation.setClickable(saveButton);
 		if (!saveListener.allowsCancel())
 			cancelButtonElement.visible(false);
+		return saveButton;
 	}
 
 	void removeInput(final FormFieldImpl<?, ?> formField) {
