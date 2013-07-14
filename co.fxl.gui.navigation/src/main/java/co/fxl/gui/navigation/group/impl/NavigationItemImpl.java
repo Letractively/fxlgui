@@ -201,7 +201,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 		if (popUp == null) {
 			clickable(false);
 			popUp = PopUp.showPopUp(true).autoHide(true);
-			popUp.border().width(0);
+			Style.instance().navigation().morePopUp(popUp);
 			popUp.width(280);
 			popUp.addVisibleListener(new IUpdateListener<Boolean>() {
 				@Override

@@ -442,6 +442,11 @@ class GrayScaleStyle extends StyleTemplate {
 			public void moreItem(ILabel label) {
 				label.hyperlink();
 			}
+
+			@Override
+			public void morePopUp(IPopUp popUp) {
+				popUp.border().width(0);
+			}
 		};
 	}
 
