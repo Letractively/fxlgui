@@ -68,7 +68,7 @@ class SaveButtonPanel implements IClickable<Object> {
 
 						private void resetButton() {
 							widget.addSaveButton(subPanel.clear(),
-									cancelButtonElement);
+									cancelButtonElement).clickable(false);
 						}
 
 						@Override
