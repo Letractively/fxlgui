@@ -439,6 +439,7 @@ class GrayScaleStyle extends StyleTemplate {
 
 			@Override
 			public void moreItem(ILabel label) {
+				label.hyperlink();
 			}
 		};
 	}
