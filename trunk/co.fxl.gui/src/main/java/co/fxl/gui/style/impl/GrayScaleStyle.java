@@ -29,6 +29,7 @@ import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -742,6 +743,10 @@ class GrayScaleStyle extends StyleTemplate {
 			@Override
 			public boolean useColoredButtons() {
 				return false;
+			}
+
+			@Override
+			public void gridPlainContent(IElement<?> element) {
 			}
 		};
 	}

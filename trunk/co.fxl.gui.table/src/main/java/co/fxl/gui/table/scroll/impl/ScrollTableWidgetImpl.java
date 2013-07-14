@@ -1586,6 +1586,9 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	@Override
 	public IScrollTableWidget<Object> plainContent(boolean plainContent) {
 		this.plainContent = plainContent;
+		if (plainContent) {
+			Style.instance().table().gridPlainContent(grid.element());
+		}
 		return this;
 	}
 
