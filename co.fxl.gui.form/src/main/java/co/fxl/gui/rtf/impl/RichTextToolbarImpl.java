@@ -364,7 +364,7 @@ public class RichTextToolbarImpl {
 
 	public RichTextToolbarImpl(IContainer c, final IHTMLArea htmlArea) {
 		grid = c.panel().grid();
-		panel = new ToolbarImpl(grid.cell(0, 0)).height(28).spacing(2);
+		panel = new ToolbarImpl(grid.cell(0, 0)).height(32).spacing(2);
 		grid.color().white();
 		grid.border().style().noBottom().color().gray(211);
 		this.htmlArea = htmlArea;
