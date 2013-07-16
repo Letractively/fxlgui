@@ -196,11 +196,15 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		}
 	}
 
-	public static Link clickable(IToolbarElement c, String string,
+	public static Link clickableLabel(IToolbarElement c, String string,
 			boolean showLabel) {
 		Link link = new Link();
 		link = link.clickableLink(c, string).showLabel(showLabel);
 		return link;
+	}
+
+	public Link clickable(IToolbarElement c, String string, boolean showLabel) {
+		return clickableLabel(c, string, showLabel && showLabels);
 	}
 
 	// private static IClickable<?> clickable(IClickable<?> c, String string) {
@@ -253,6 +257,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	private Entry downContext;
 	private Entry bottomContext;
 	private IRowListener<IRows<Object>> listenOnExpand;
+	private boolean showLabels = true;
 
 	CommandButtonsImpl(ScrollTableWidgetImpl widget) {
 		this.widget = widget;
@@ -292,6 +297,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	@Override
 	public ICommandButtons<Object> listenOnMoveUp(
 			IMoveRowListener<IRows<Object>> l) {
+		showLabels = false;
 		listenOnMoveUp = true;
 		listenOnMoveUpListener = l;
 		return this;
@@ -300,6 +306,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	@Override
 	public ICommandButtons<Object> listenOnMoveDown(
 			IMoveRowListener<IRows<Object>> l) {
+		showLabels = false;
 		listenOnMoveDown = true;
 		listenOnMoveDownListener = l;
 		return this;
