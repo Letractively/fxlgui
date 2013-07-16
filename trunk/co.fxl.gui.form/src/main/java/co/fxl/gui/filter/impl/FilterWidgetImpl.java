@@ -326,11 +326,15 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		// if (configurationComboBox != null)
 		// validation.linkInput(configurationComboBox);
 		configuration = firstConfiguration;
-		return update();
+		return update(true);
+	}
+
+	private IFilterWidget update() {
+		return update(false);
 	}
 
 	@SuppressWarnings("rawtypes")
-	private IFilterWidget update() {
+	private IFilterWidget update(boolean isInit) {
 		grid = mainPanel.filterGrid();
 		addHyperlinks();
 		guiFilterElements.clear();
@@ -374,7 +378,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 				constrained = true;
 		}
 		// constrained |= !firstConfiguration.equals(configuration);
-		apply.clickable(constrained);
+		apply.clickable(constrained && !isInit);
 		clear.clickable(constrained);
 		mainPanel.visible();
 		grid.show(firstConstraint);
@@ -579,9 +583,9 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		return this;
 	}
 
-	@Override
-	public void hideApply() {
-		apply.clickable(false);
-	}
+	// @Override
+	// public void hideApply() {
+	// apply.clickable(false);
+	// }
 
 }
