@@ -23,8 +23,6 @@ import co.fxl.gui.form.api.IFormField;
 
 class FormCheckBoxImpl extends FormFieldImpl<ICheckBox, Boolean> {
 
-	private ICheckBox checkBox;
-
 	FormCheckBoxImpl(FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
 	}
@@ -41,13 +39,8 @@ class FormCheckBoxImpl extends FormFieldImpl<ICheckBox, Boolean> {
 	}
 
 	@Override
-	public ICheckBox valueElement() {
-		return checkBox;
-	}
-
-	@Override
 	void createContentColumn(int index) {
-		checkBox = widget.addFormValueCheckBox(index);
+		valueElement = widget.addFormValueCheckBox(index);
 		editable(widget.saveListener != null);
 	}
 }

@@ -23,16 +23,14 @@ import co.fxl.gui.rtf.api.IHTMLArea;
 
 public class FormRichTextAreaImpl extends FormFieldImpl<IHTMLArea, String> {
 
-	private IHTMLArea textArea;
-
 	FormRichTextAreaImpl(FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
 	}
 
 	@Override
 	void createContentColumn(int index) {
-		textArea = widget.addFormValueRichTextArea(index);
-		FormTextAreaImpl.format(textArea, 200);
+		valueElement = widget.addFormValueRichTextArea(index);
+		FormTextAreaImpl.format(valueElement, 200);
 		editable(widget.saveListener != null);
 	}
 
@@ -42,8 +40,4 @@ public class FormRichTextAreaImpl extends FormFieldImpl<IHTMLArea, String> {
 		return super.editable(editable);
 	}
 
-	@Override
-	public IHTMLArea valueElement() {
-		return textArea;
-	}
 }

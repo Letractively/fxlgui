@@ -23,8 +23,6 @@ import co.fxl.gui.form.api.IFormField;
 
 class FormPasswordFieldImpl extends FormFieldImpl<IPasswordField, String> {
 
-	IPasswordField passwordField;
-
 	FormPasswordFieldImpl(FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
 	}
@@ -36,13 +34,8 @@ class FormPasswordFieldImpl extends FormFieldImpl<IPasswordField, String> {
 	}
 
 	@Override
-	public IPasswordField valueElement() {
-		return passwordField;
-	}
-
-	@Override
 	void createContentColumn(int index) {
-		passwordField = widget.addFormValuePasswordField(index);
+		valueElement = widget.addFormValuePasswordField(index);
 		editable(widget.saveListener != null);
 	}
 }
