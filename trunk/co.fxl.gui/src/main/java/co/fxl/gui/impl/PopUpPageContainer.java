@@ -60,6 +60,10 @@ public class PopUpPageContainer implements PageContainer {
 
 	@Override
 	public void visible(boolean visible) {
+		if (visible && !added) {
+			widget.addResizableWidgetToDisplay(popUp);
+			added = true;
+		}
 		if (popUp.visible() == visible)
 			return;
 		if (visible) {
@@ -73,10 +77,6 @@ public class PopUpPageContainer implements PageContainer {
 			});
 		}
 		popUp.visible(visible);
-		if (visible && !added) {
-			widget.addResizableWidgetToDisplay(popUp);
-			added = true;
-		}
 	}
 
 	@Override
