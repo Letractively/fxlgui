@@ -54,6 +54,14 @@ import co.fxl.gui.impl.WidgetTitle;
 
 public interface IStyle {
 
+	public interface IExportHtml {
+
+		int decrementX();
+
+		int decrementY();
+
+	}
+
 	public interface IN2MStyle {
 
 		void title(IVerticalPanel p, ILabel l);
@@ -403,5 +411,7 @@ public interface IStyle {
 	void hyperlink(ILabel label);
 
 	void popUp(IBorder border);
+
+	IExportHtml exportHtml();
 
 }

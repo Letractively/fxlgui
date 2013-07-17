@@ -62,6 +62,7 @@ import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.StylishButton;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.impl.WidgetTitle;
+import co.fxl.gui.style.api.IStyle.IExportHtml;
 import co.fxl.gui.style.api.IStyle.IUserPanel.IAdminRightGroup.IAdminRight;
 
 class NinetyNineDesignsStyle extends StyleTemplate {
@@ -1189,6 +1190,22 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public void commentHeader(ILabel upperLabel) {
 				blue(upperLabel);
+			}
+		};
+	}
+
+	@Override
+	public IExportHtml exportHtml() {
+		return new IExportHtml() {
+			
+			@Override
+			public int decrementY() {
+				return 13;
+			}
+			
+			@Override
+			public int decrementX() {
+				return 6;
 			}
 		};
 	}
