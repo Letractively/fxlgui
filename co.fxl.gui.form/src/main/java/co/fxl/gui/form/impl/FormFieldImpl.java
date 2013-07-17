@@ -20,6 +20,7 @@ package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
@@ -85,10 +86,13 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 
 	@Override
 	public IFormField<T, R> editable(boolean editable) {
-		if (editable)
+		if (editable) {
 			label.font().color().black();
-		else
+		} else {
 			label.font().color().gray();
+		}
+		if (valueElement instanceof IColored)
+			((IColored) valueElement).color().gray(editable ? 253 : 244);
 		// checkFocus(editable);
 		return this;
 	}
