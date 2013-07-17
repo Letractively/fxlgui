@@ -27,6 +27,7 @@ import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.style.impl.Style;
 
 public class FullscreenPopUp {
 
@@ -44,9 +45,9 @@ public class FullscreenPopUp {
 	public FullscreenPopUp(String title) {
 		updateSpacingLeft();
 		d = Display.instance();
-		popUp = co.fxl.gui.impl.PopUp.showPopUp().modal(true)
+		popUp = co.fxl.gui.impl.PopUp.showPopUp(true).modal(true)
 				.offset(spacingLeft, spacingTop).autoHide(true);
-		popUp.border().remove().style().shadow().color().black();
+		// popUp.border().remove().style().shadow().color().black();
 		panel = new WidgetTitle(popUp.container()).spacing(0).sideWidget(true)
 				.commandsOnTop().spacing(0);
 		panel.addTitle(title);
@@ -108,10 +109,13 @@ public class FullscreenPopUp {
 		updateSpacingLeft();
 		popUp.offset(spacingLeft, spacingTop);
 		popUp.size(d.width() - spacingLeft * 2, d.height() - spacingTop * 2);
-		scrollPane.size(d.width() - spacingLeft * 2, d.height() - spacingTop
-				* 2 - HEIGHT_TOP);
+		scrollPane.size(d.width() - spacingLeft * 2
+				- Style.instance().exportHtml().decrementX(), d.height()
+				- spacingTop * 2 - HEIGHT_TOP
+				- Style.instance().exportHtml().decrementY());
 		if (ta != null) {
-			ta.height(d.height() - spacingTop * 2 - HEIGHT_TOP - 15);
+			ta.height(d.height() - spacingTop * 2 - HEIGHT_TOP - 15
+					- Style.instance().exportHtml().decrementY());
 		}
 	}
 

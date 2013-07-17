@@ -893,4 +893,20 @@ class GrayScaleStyle extends StyleTemplate {
 		border.color().black();
 	}
 
+	@Override
+	public IExportHtml exportHtml() {
+		return new IExportHtml() {
+			
+			@Override
+			public int decrementY() {
+				return 0;
+			}
+			
+			@Override
+			public int decrementX() {
+				return 0;
+			}
+		};
+	}
+
 }
