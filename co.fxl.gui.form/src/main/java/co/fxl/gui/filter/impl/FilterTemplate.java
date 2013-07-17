@@ -33,7 +33,7 @@ abstract class FilterTemplate<R extends IElement<R>, T> implements
 	R input;
 	static final int WIDTH_SINGLE_CELL = 200 - SplitLayout.DECREMENT + 1;
 	static final int WIDTH_COMBOBOX_CELL = 192 - SplitLayout.DECREMENT + 1;
-	static final int WIDTH_RANGE_CELL = 98 - (SplitLayout.DECREMENT / 2);
+	static final int WIDTH_RANGE_CELL = (98 - SplitLayout.DECREMENT / 2);
 	String name;
 
 	FilterTemplate(FilterGrid panel, String name, int filterIndex) {
