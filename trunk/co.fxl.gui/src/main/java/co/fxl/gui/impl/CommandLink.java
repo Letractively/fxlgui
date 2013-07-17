@@ -231,6 +231,7 @@ public class CommandLink implements IClickListener, ButtonAdp {
 	}
 
 	public void visible(boolean b) {
+		b &= !hide;
 		if (fp != null)
 			fp.visible(b);
 		iPanel.visible(b);
@@ -286,20 +287,21 @@ public class CommandLink implements IClickListener, ButtonAdp {
 	}
 
 	private boolean beforeHide = true;
-//	private boolean activeMouseOverListener = true;
+
+	// private boolean activeMouseOverListener = true;
 
 	// private boolean showAlways;
 
 	public void hide(boolean b) {
 		if (hide == b)
 			return;
+		hide = b;
 		if (b) {
 			beforeHide = iPanel.visible();
 			visible(false);
 		} else {
 			visible(beforeHide);
 		}
-		hide = b;
 	}
 
 	public void tooltip(String string) {
