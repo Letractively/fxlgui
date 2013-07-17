@@ -124,7 +124,7 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 		if (maxFromDisplay > 0) {
 			if (resizeMainPanel)
 				mainPanel.height(maxFromDisplay);
-			sideScrollPanel.height(maxFromDisplay);
+			sideScrollPanel.height(maxFromDisplay + 3);
 		}
 	}
 
