@@ -1169,7 +1169,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public void commentField(ITextArea valuePanel) {
 				inputField(valuePanel);
-				valuePanel.color().white().gradient().vertical().gray(244);
+				valuePanel.color().white().gradient().fallback(249, 249, 249)
+						.vertical().gray(244);
 			}
 
 			@Override
