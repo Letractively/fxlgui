@@ -286,7 +286,7 @@ public class CommandLink implements IClickListener, ButtonAdp {
 	}
 
 	private boolean beforeHide = true;
-	private boolean activeMouseOverListener = true;
+//	private boolean activeMouseOverListener = true;
 
 	// private boolean showAlways;
 
