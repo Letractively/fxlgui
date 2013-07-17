@@ -30,6 +30,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.ITextField;
+import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.TextFieldAdp;
 import co.fxl.gui.input.api.ICalendarWidget;
@@ -95,9 +96,9 @@ public class DateField extends TextFieldAdp {
 		this(c, true, cellSpacing);
 	}
 
-	public DateField(IContainer c, boolean addC) {
-		this(c, addC, 2);
-	}
+//	private DateField(IContainer c, boolean addC) {
+//		this(c, addC, 2);
+//	}
 
 	public DateField(IContainer c, boolean addC, int cellSpacing) {
 		IGridPanel g = c.panel().grid();
@@ -106,9 +107,11 @@ public class DateField extends TextFieldAdp {
 		IContainer c1 = null;
 		if (addC) {
 			IGridCell cell2 = g.cell(1, 0).align().center().valign().center();
-			g.column(1).width(24);
+			if (!Env.runtime().geq(Env.IE, 10))
+				g.column(1).width(24);
 			// Heights.INSTANCE.decorate(cell2);
-			IHorizontalPanel spacing = cell2.panel().horizontal().spacing(cellSpacing);
+			IHorizontalPanel spacing = cell2.panel().horizontal()
+					.spacing(cellSpacing);
 			Heights.INSTANCE.styleColor(spacing);
 			IBorder border = spacing.border();
 			border.color().rgb(211, 211, 211);

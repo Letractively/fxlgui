@@ -213,10 +213,16 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		if (isInternetExplorer()) {
 			if (isInternetExplorer8OrBelow())
 				return 8;
-			else
+			else if (isInternetExplorer9())
 				return 9;
+			else
+				return 10;
 		}
 		return -1;
+	}
+
+	public static boolean isInternetExplorer9() {
+		return getUserAgent().toLowerCase().contains("msie 9.0");
 	}
 
 	private static double getBrowserVersionFirefox() {
@@ -410,9 +416,10 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	}
 
 	public static boolean isInternetExplorer8OrBelow() {
-		return getUserAgent().toLowerCase().contains("msie 8.0")
-				|| getUserAgent().toLowerCase().contains("msie 7.0")
-				|| getUserAgent().toLowerCase().contains("msie 6.0");
+		String lowerCase = getUserAgent().toLowerCase();
+		return lowerCase.contains("msie 8.0") || lowerCase.contains("msie 7.0")
+				|| lowerCase.contains("msie 6.0")
+				|| lowerCase.contains("msie 5.0");
 	}
 
 	public static boolean isOpera() {

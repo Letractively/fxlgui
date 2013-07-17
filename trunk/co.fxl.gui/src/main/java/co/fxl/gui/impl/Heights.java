@@ -35,10 +35,12 @@ import co.fxl.gui.api.ITextInputElement;
 
 public class Heights {
 
-	public static boolean IGNORE_HEIGHTS = Env.is(Env.IE);
+	public static boolean IGNORE_HEIGHTS = Env.runtime().leq(Env.IE, 9);
 	public static final int CELL_HEIGHT = 28;
-	public static int TEXTFIELD_HEIGHT = Env.is(Env.IE) ? 21 : 24;
-	public static final int COMBOBOX_HEIGHT = 24;
+	public static int TEXTFIELD_HEIGHT = Env.runtime().leq(Env.IE, 9) ? 21
+			: 24 - (Env.runtime().geq(Env.IE, 10) ? 2 : 0);
+	public static final int COMBOBOX_HEIGHT = 24 - (Env.runtime().geq(Env.IE,
+			10) ? 2 : 0);
 	public static final Heights INSTANCE = new Heights(0);
 	private int inc;
 

@@ -131,7 +131,8 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 		}
 		IHorizontalPanel spacing = cell2.panel().horizontal();
 		if (decorate) {
-			spacing.spacing(Env.is(Env.IE) ? 2 : 4);
+			spacing.spacing(Env.is(Env.IE) ? (Env.runtime().geq(10) ? 3 : 2)
+					: 4);
 			widget.heights.styleColor(spacing);
 			IBorder border = spacing.border();
 			border.color().rgb(211, 211, 211);

@@ -32,7 +32,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
-import co.fxl.gui.filter.impl.CellImpl.ExpliciteRangeField;
+import co.fxl.gui.filter.impl.CellImpl.ExplicitRangeField;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.impl.WidgetTitle;
@@ -182,7 +182,7 @@ class MiniFilterPanel implements FilterPanel {
 				// if (Env.is(Env.FIREFOX))
 				// return new CombinedRangeField(container);
 				// else
-				return new ExpliciteRangeField(widget, container, false);
+				return new ExplicitRangeField(widget, container, false);
 			}
 
 			@Override
