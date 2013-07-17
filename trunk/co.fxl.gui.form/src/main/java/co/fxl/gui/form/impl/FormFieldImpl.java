@@ -48,6 +48,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	private String name;
 	boolean validate = true;
 	int maxLength = -1;
+	T valueElement;
 
 	public FormFieldImpl(FormWidgetImpl widget, int index, String name) {
 		this.widget = widget;
@@ -56,6 +57,11 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 		createLabelColumn(index);
 		this.row = index;
 		createContentColumn(index);
+	}
+
+	@Override
+	public final T valueElement() {
+		return valueElement;
 	}
 
 	void createLabelColumn(int index) {

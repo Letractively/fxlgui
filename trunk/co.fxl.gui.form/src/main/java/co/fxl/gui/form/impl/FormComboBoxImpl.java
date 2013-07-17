@@ -24,8 +24,6 @@ import co.fxl.gui.impl.ITooltipResolver;
 
 class FormComboBoxImpl extends FormFieldImpl<IComboBox, String> {
 
-	private IComboBox comboBox;
-
 	// private boolean withFocus = true;
 
 	FormComboBoxImpl(FormWidgetImpl widget, int index, String name) {
@@ -45,22 +43,17 @@ class FormComboBoxImpl extends FormFieldImpl<IComboBox, String> {
 	}
 
 	@Override
-	public IComboBox valueElement() {
-		return comboBox;
-	}
-
-	@Override
 	void createContentColumn(int index) {
-		comboBox = widget.addFormValueComboBox(index, true);// withFocus);
+		valueElement = widget.addFormValueComboBox(index, true);// withFocus);
 		editable(widget.saveListener != null);
 	}
 
 	@Override
 	public IFormField<IComboBox, String> tooltip(final ITooltipResolver tooltip) {
-		comboBox.addUpdateListener(new IUpdateListener<String>() {
+		valueElement.addUpdateListener(new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(String value) {
-				comboBox.tooltip(tooltip.tooltip(value));
+				valueElement.tooltip(tooltip.tooltip(value));
 			}
 		});
 		return this;

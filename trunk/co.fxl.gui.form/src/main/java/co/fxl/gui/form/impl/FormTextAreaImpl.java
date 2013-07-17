@@ -24,18 +24,16 @@ import co.fxl.gui.form.api.IFormField;
 
 class FormTextAreaImpl extends FormFieldImpl<ITextArea, String> {
 
-	private ITextArea textArea;
-
 	FormTextAreaImpl(FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
 	}
 
 	@Override
 	void createContentColumn(int index) {
-		textArea = widget.addFormValueTextArea(index);
-		format(textArea, 100);
+		valueElement = widget.addFormValueTextArea(index);
+		format(valueElement, 100);
 		for (IResizeListener l : widget.resizeListeners)
-			textArea.addResizeListener(l);
+			valueElement.addResizeListener(l);
 		editable(widget.saveListener != null);
 	}
 
@@ -69,8 +67,4 @@ class FormTextAreaImpl extends FormFieldImpl<ITextArea, String> {
 		valueElement().width(1.0);
 	}
 
-	@Override
-	public ITextArea valueElement() {
-		return textArea;
-	}
 }

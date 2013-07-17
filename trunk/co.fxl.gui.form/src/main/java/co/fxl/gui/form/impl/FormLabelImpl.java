@@ -23,8 +23,6 @@ import co.fxl.gui.form.api.IFormField;
 
 class FormLabelImpl extends FormFieldImpl<ILabel, String> {
 
-	private ILabel textField;
-
 	FormLabelImpl(FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
 	}
@@ -39,12 +37,7 @@ class FormLabelImpl extends FormFieldImpl<ILabel, String> {
 	}
 
 	@Override
-	public ILabel valueElement() {
-		return textField;
-	}
-
-	@Override
 	void createContentColumn(int index) {
-		textField = addLabel(widget);
+		valueElement = addLabel(widget);
 	}
 }

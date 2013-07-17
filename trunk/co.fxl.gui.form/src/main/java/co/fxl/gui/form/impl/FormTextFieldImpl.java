@@ -23,8 +23,6 @@ import co.fxl.gui.form.api.IFormField;
 
 class FormTextFieldImpl<R> extends FormFieldImpl<ITextField, R> {
 
-	ITextField textField;
-
 	FormTextFieldImpl(FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name);
 	}
@@ -44,13 +42,8 @@ class FormTextFieldImpl<R> extends FormFieldImpl<ITextField, R> {
 	}
 
 	@Override
-	public ITextField valueElement() {
-		return textField;
-	}
-
-	@Override
 	void createContentColumn(int index) {
-		textField = addTextField(widget, index);
+		valueElement = addTextField(widget, index);
 		editable(widget.saveListener != null);
 	}
 }
