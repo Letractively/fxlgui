@@ -46,7 +46,7 @@ public class PopUpPageContainer implements PageContainer {
 	}
 
 	@Override
-	public IVerticalPanel panel(Runnable cl) {
+	public IVerticalPanel panel(Runnable cl, boolean visible) {
 		this.cl = cl;
 		TransparentPopUp closablePopUp = PopUp.showClosablePopUp(true, cl);
 		popUp = closablePopUp.popUp().glass(true).autoHide(true);
@@ -54,7 +54,8 @@ public class PopUpPageContainer implements PageContainer {
 			popUp.modal(true);
 		panel = closablePopUp.panel();
 		resize();
-		popUp.visible(true);
+		if (visible)
+			popUp.visible(true);
 		return panel;
 	}
 
@@ -66,16 +67,16 @@ public class PopUpPageContainer implements PageContainer {
 		}
 		if (popUp.visible() == visible)
 			return;
-		if (visible) {
-			PopUp.adp.notifyShowPopUp(new Runnable() {
-				@Override
-				public void run() {
-					popUp.visible(false);
-					if (cl != null)
-						cl.run();
-				}
-			});
-		}
+		// if (visible) {
+		// PopUp.adp.notifyShowPopUp(new Runnable() {
+		// @Override
+		// public void run() {
+		// popUp.visible(false);
+		// if (cl != null)
+		// cl.run();
+		// }
+		// });
+		// }
 		popUp.visible(visible);
 	}
 
