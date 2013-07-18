@@ -45,7 +45,7 @@ public class FullscreenPopUp {
 	public FullscreenPopUp(String title) {
 		updateSpacingLeft();
 		d = Display.instance();
-		popUp = co.fxl.gui.impl.PopUp.showClosablePopUp(true, null).popUp()
+		popUp = co.fxl.gui.impl.PopUp.showClosablePopUp(true, null).popUp
 				.modal(true).offset(spacingLeft, spacingTop).autoHide(true);
 		popUp.border().remove().style().shadow().color().black();
 		panel = new WidgetTitle(popUp.container()).spacing(0).sideWidget(true)

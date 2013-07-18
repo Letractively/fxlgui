@@ -40,11 +40,11 @@ public class PopUp {
 		void notifyClosePopUp();
 	}
 
-	public interface TransparentPopUp {
+	public static class TransparentPopUp {
 
-		IPopUp popUp();
-
-		IVerticalPanel panel();
+		private boolean ignoreNotify = false;
+		public IPopUp popUp;
+		public IVerticalPanel panel;
 	}
 
 	private static final boolean ALLOW_CLOSABLE_POPUP = true;
@@ -92,10 +92,9 @@ public class PopUp {
 		return popUp;
 	}
 
-	private static boolean ignoreNotify = false;
-
 	public static TransparentPopUp showClosablePopUp(boolean closable,
 			final Runnable closeListener) {
+		final TransparentPopUp t = new TransparentPopUp();
 		final IPopUp popUp = display.showPopUp();
 		if (adp != null) {
 			adp.notifyShowPopUp(closeListener != null ? closeListener
@@ -111,7 +110,7 @@ public class PopUp {
 
 				@Override
 				public void onUpdate(Boolean value) {
-					if (!value && !ignoreNotify) {
+					if (!value && !t.ignoreNotify) {
 						adp.notifyClosePopUp();
 					}
 				}
@@ -120,18 +119,9 @@ public class PopUp {
 		if (!ALLOW_CLOSABLE_POPUP || !closable) {
 			popUp.border().remove().style().shadow();
 			Style.instance().popUp().background(popUp);
-			return new TransparentPopUp() {
-
-				@Override
-				public IPopUp popUp() {
-					return popUp;
-				}
-
-				@Override
-				public IVerticalPanel panel() {
-					return popUp.container().panel().vertical();
-				}
-			};
+			t.popUp = popUp;
+			t.panel = popUp.container().panel().vertical();
+			return t;
 		}
 		// popUp.color().remove();
 		popUp.border().remove();
@@ -154,9 +144,9 @@ public class PopUp {
 				.addClickListener(new LazyClickListener() {
 					@Override
 					protected void onAllowedClick() {
-						ignoreNotify = true;
+						t.ignoreNotify = true;
 						popUp.visible(false);
-						ignoreNotify = false;
+						t.ignoreNotify = false;
 						if (adp != null) {
 							adp.notifyClosePopUp();
 						}
@@ -167,17 +157,9 @@ public class PopUp {
 				}).mouseLeft().margin()
 				.top(Env.runtime().leq(Env.IE, 8) ? 0 : -12)
 				.left(Env.runtime().leq(Env.IE, 8) ? 0 : -12);// .font().underline(true).pixel(13).color().white();
-		return new TransparentPopUp() {
-			@Override
-			public IVerticalPanel panel() {
-				return p;
-			}
-
-			@Override
-			public IPopUp popUp() {
-				return popUp;
-			}
-		};
+		t.popUp = popUp;
+		t.panel = p;
+		return t;
 	}
 
 	public static IDialog showDialog() {
