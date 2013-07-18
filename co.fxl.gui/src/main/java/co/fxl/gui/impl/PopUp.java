@@ -45,6 +45,19 @@ public class PopUp {
 		public boolean ignoreNotify = false;
 		public IPopUp popUp;
 		public IVerticalPanel panel;
+		public Runnable closeListener;
+
+		public void show() {
+			if (adp != null) {
+				adp.notifyShowPopUp(closeListener != null ? closeListener
+						: new Runnable() {
+							@Override
+							public void run() {
+								popUp.visible(false);
+							}
+						});
+			}
+		}
 	}
 
 	private static final boolean ALLOW_CLOSABLE_POPUP = true;
@@ -94,17 +107,16 @@ public class PopUp {
 
 	public static TransparentPopUp showClosablePopUp(boolean closable,
 			final Runnable closeListener) {
+		return showClosablePopUp(closable, closeListener, true);
+	}
+
+	public static TransparentPopUp showClosablePopUp(boolean closable,
+			final Runnable closeListener, boolean pushState) {
 		final TransparentPopUp t = new TransparentPopUp();
+		t.closeListener = closeListener;
 		final IPopUp popUp = display.showPopUp();
-		if (adp != null) {
-			adp.notifyShowPopUp(closeListener != null ? closeListener
-					: new Runnable() {
-						@Override
-						public void run() {
-							popUp.visible(false);
-						}
-					});
-		}
+		if (pushState)
+			t.show();
 		if (closeListener == null) {
 			popUp.addVisibleListener(new IUpdateListener<Boolean>() {
 
