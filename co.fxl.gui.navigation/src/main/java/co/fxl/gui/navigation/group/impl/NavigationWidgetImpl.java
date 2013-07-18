@@ -18,10 +18,8 @@
  */
 package co.fxl.gui.navigation.group.impl;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import co.fxl.gui.api.IAbsolutePanel;
 import co.fxl.gui.api.IBordered.IBorder;
@@ -49,9 +47,9 @@ import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.ErrorDialog;
 import co.fxl.gui.impl.HorizontalScalingPanel;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
-import co.fxl.gui.impl.IServerListener;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.ResizableWidgetTemplate;
+import co.fxl.gui.impl.ServerCallCounter;
 import co.fxl.gui.impl.ServerListener;
 import co.fxl.gui.impl.Shell;
 import co.fxl.gui.navigation.api.ITabWidget;
@@ -62,7 +60,7 @@ import co.fxl.gui.navigation.impl.TabDecoratorTemplate;
 import co.fxl.gui.style.impl.Style;
 
 public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
-		INavigationWidget, IServerListener {
+		INavigationWidget {
 
 	private class Action {
 
@@ -96,13 +94,11 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	private boolean setUpDynamicResize;
 	private NavigationItemImpl moreItem;
 	private IVerticalPanel borderTop;
-	private boolean listeningOnServerCalls;
 	private boolean holdUpdate;
 	private INavigationGroup defaultGroup;
 	private IFocusPanel focus;
 	// private boolean loading;
 	public static NavigationWidgetImpl instance;
-	private Set<Integer> serverCallCounter = new HashSet<Integer>();
 	private IVerticalPanel top;
 	private IImage configureIcon;
 	private IPanel<?> separatorBorder;
@@ -115,6 +111,18 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	boolean isLoading;
 	private IContainer layout;
 	private int externalTopPanelIndent;
+	private ServerCallCounter serverCallCounter = new ServerCallCounter() {
+
+		@Override
+		protected void notifyCallPending() {
+			flipPage().back();
+		}
+
+		@Override
+		protected void notifyAllReturned() {
+			flipPage().preview();
+		}
+	};
 
 	public NavigationWidgetImpl(IContainer layout) {
 		this.layout = layout;
@@ -142,7 +150,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 		panel1 = history.add().panel().vertical();
 		history.show(panel0);
 		instance = this;
-		ServerListener.instance = this;
+		ServerListener.instance = serverCallCounter;
 		addResizableWidgetToDisplay(mainPanel);
 		ErrorDialog.exceptionListener = new Runnable() {
 			@Override
@@ -582,34 +590,13 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	}
 
 	@Override
-	public void notifyServerCallStart(int id) {
-		if (listeningOnServerCalls) {
-			serverCallCounter.add(id);
-			if (serverCallCounter.size() == 1) {
-				flipPage().back();
-			}
-		}
-	}
-
-	@Override
-	public void notifyServerCallReturn(int id) {
-		if (listeningOnServerCalls) {
-			serverCallCounter.remove(id);
-			if (serverCallCounter.isEmpty()) {
-				flipPage().preview();
-			}
-		}
-	}
-
-	@Override
 	public INavigationWidget holdUpdate(boolean b) {
 		holdUpdate = b;
 		return this;
 	}
 
 	void listeningOnServerCalls(boolean b) {
-		serverCallCounter.clear();
-		listeningOnServerCalls = b;
+		serverCallCounter.listeningOnServerCalls(b);
 	}
 
 	public void updateAfterResize() {
