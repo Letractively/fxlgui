@@ -32,6 +32,7 @@ public class PopUpPageContainer implements PageContainer {
 	private Size popUpSize;
 	private boolean isModal;
 	private boolean added;
+	private IServerListener oldListener;
 
 	// private Runnable cl;
 
@@ -58,6 +59,7 @@ public class PopUpPageContainer implements PageContainer {
 		resize();
 		if (visible) {
 			popUp.visible(true);
+			oldListener = ServerListener.instance;
 			ServerListener.instance = new ServerCallCounter(true) {
 
 				@Override
@@ -79,7 +81,7 @@ public class PopUpPageContainer implements PageContainer {
 	@Override
 	public void visible(boolean visible) {
 		if (visible)
-			ServerListener.instance = null;
+			ServerListener.instance = oldListener;
 		if (visible && !added) {
 			widget.addResizableWidgetToDisplay(popUp);
 			added = true;
