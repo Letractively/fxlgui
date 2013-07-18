@@ -22,7 +22,7 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public interface PageContainer {
 
-	IVerticalPanel panel(Runnable cl, boolean visible);
+	IVerticalPanel panel(Runnable cl);
 
 	void visible(boolean visible);
 

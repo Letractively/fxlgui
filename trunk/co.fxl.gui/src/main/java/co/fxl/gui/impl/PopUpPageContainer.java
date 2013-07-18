@@ -48,7 +48,7 @@ public class PopUpPageContainer implements PageContainer {
 	}
 
 	@Override
-	public IVerticalPanel panel(Runnable cl, boolean visible) {
+	public IVerticalPanel panel(Runnable cl) {
 		// this.cl = cl;
 		final TransparentPopUp closablePopUp = PopUp
 				.showClosablePopUp(true, cl);
@@ -57,24 +57,22 @@ public class PopUpPageContainer implements PageContainer {
 			popUp.modal(true);
 		panel = closablePopUp.panel;
 		resize();
-		if (visible) {
-			popUp.visible(true);
-			oldListener = ServerListener.instance;
-			ServerListener.instance = new ServerCallCounter(true) {
+		popUp.visible(true);
+		oldListener = ServerListener.instance;
+		ServerListener.instance = new ServerCallCounter(true) {
 
-				@Override
-				protected void notifyCallPending() {
-					closablePopUp.ignoreNotify = true;
-					popUp.visible(false);
-					closablePopUp.ignoreNotify = false;
-				}
+			@Override
+			protected void notifyCallPending() {
+				closablePopUp.ignoreNotify = true;
+				popUp.visible(false);
+				closablePopUp.ignoreNotify = false;
+			}
 
-				@Override
-				protected void notifyAllReturned() {
-					popUp.visible(true);
-				}
-			};
-		}
+			@Override
+			protected void notifyAllReturned() {
+				popUp.visible(true);
+			}
+		};
 		return panel;
 	}
 
