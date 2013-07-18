@@ -30,7 +30,7 @@ class FormPasswordFieldImpl extends FormFieldImpl<IPasswordField, String> {
 	@Override
 	public IFormField<IPasswordField, String> editable(boolean editable) {
 		valueElement().editable(editable);
-		return this;
+		return super.editable(editable);
 	}
 
 	@Override
