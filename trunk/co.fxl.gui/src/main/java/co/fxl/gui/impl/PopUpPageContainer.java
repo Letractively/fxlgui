@@ -33,6 +33,7 @@ public class PopUpPageContainer implements PageContainer {
 	private boolean isModal;
 	private boolean added;
 	private IServerListener oldListener;
+	private TransparentPopUp closablePopUp;
 
 	// private Runnable cl;
 
@@ -49,9 +50,7 @@ public class PopUpPageContainer implements PageContainer {
 
 	@Override
 	public IVerticalPanel panel(Runnable cl) {
-		// this.cl = cl;
-		final TransparentPopUp closablePopUp = PopUp
-				.showClosablePopUp(true, cl);
+		closablePopUp = PopUp.showClosablePopUp(true, cl, false);
 		popUp = closablePopUp.popUp.glass(true).autoHide(true);
 		if (isModal)
 			popUp.modal(true);
@@ -78,11 +77,13 @@ public class PopUpPageContainer implements PageContainer {
 
 	@Override
 	public void visible(boolean visible) {
-		if (visible)
+		if (visible) {
 			ServerListener.instance = oldListener;
-		if (visible && !added) {
-			widget.addResizableWidgetToDisplay(popUp);
-			added = true;
+			closablePopUp.show();
+			if (!added) {
+				widget.addResizableWidgetToDisplay(popUp);
+				added = true;
+			}
 		}
 		if (popUp.visible() == visible)
 			return;
