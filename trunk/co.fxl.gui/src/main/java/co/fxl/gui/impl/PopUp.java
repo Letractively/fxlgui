@@ -42,7 +42,7 @@ public class PopUp {
 
 	public static class TransparentPopUp {
 
-		private boolean ignoreNotify = false;
+		public boolean ignoreNotify = false;
 		public IPopUp popUp;
 		public IVerticalPanel panel;
 	}

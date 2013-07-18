@@ -26,6 +26,14 @@ public abstract class ServerCallCounter implements IServerListener {
 	private boolean listeningOnServerCalls;
 	private Set<Integer> serverCallCounter = new HashSet<Integer>();
 
+	public ServerCallCounter() {
+		this(false);
+	}
+
+	public ServerCallCounter(boolean active) {
+		listeningOnServerCalls = active;
+	}
+
 	public void listeningOnServerCalls(boolean b) {
 		serverCallCounter.clear();
 		listeningOnServerCalls = b;
