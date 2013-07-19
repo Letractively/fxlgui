@@ -62,7 +62,6 @@ import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.StylishButton;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.impl.WidgetTitle;
-import co.fxl.gui.style.api.IStyle.IExportHtml;
 import co.fxl.gui.style.api.IStyle.IUserPanel.IAdminRightGroup.IAdminRight;
 
 class NinetyNineDesignsStyle extends StyleTemplate {
@@ -355,7 +354,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 					return text;
 				final IImage more = panel.add().image()
 						.resource("more_white_10x16.png");
-				more.margin().left(4);
+				more.margin().right(4);
 				more.addClickListener(new IClickListener() {
 					@Override
 					public void onClick() {
@@ -1197,12 +1196,12 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 	@Override
 	public IExportHtml exportHtml() {
 		return new IExportHtml() {
-			
+
 			@Override
 			public int decrementY() {
 				return 13;
 			}
-			
+
 			@Override
 			public int decrementX() {
 				return 6;
