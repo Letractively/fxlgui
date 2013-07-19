@@ -445,7 +445,7 @@ public class Validation {
 		if (isFilter) {
 			Style.instance().filter().removeErrorColor(textField);
 		} else
-			((IColored) textField).color().rgb(249, 249, 249);
+			((IColored) textField).color().gray(253);
 	}
 
 	private void errorColor(ISuggestField textField, boolean hasError) {
