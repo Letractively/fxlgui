@@ -91,6 +91,7 @@ class SaveButtonPanel implements IClickable<Object> {
 		if (widget.saveListener.allowsSaveAndBack()) {
 			saveAndBackButton = new StylishButton(subPanel.add().panel()
 					.horizontal(), "Save & Back", true, 3, false);
+			saveAndBackButton.panel().margin().top(-1).bottom(-1);
 			saveAndBackButton.blue(1);
 			saveAndBackClickListener = new ClickListener(widget,
 					cancelButtonElement, subPanel, true, saveAndBackButton);
@@ -99,6 +100,7 @@ class SaveButtonPanel implements IClickable<Object> {
 		}
 		saveButton = new StylishButton(subPanel.add().panel().horizontal(),
 				widget.saveTitle, true, 3, false);
+		saveButton.panel().margin().top(-1).bottom(-1);
 		saveButton.blue(2);
 		saveClickListener = new ClickListener(widget, cancelButtonElement,
 				subPanel, false, saveButton);
