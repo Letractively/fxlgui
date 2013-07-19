@@ -58,20 +58,21 @@ public class PopUpPageContainer implements PageContainer {
 		resize();
 		popUp.visible(true);
 		oldListener = ServerListener.instance;
-		ServerListener.instance = new ServerCallCounter(true) {
+		if (!Env.is(Env.SWING))
+			ServerListener.instance = new ServerCallCounter(true) {
 
-			@Override
-			protected void notifyCallPending() {
-				closablePopUp.ignoreNotify = true;
-				popUp.visible(false);
-				closablePopUp.ignoreNotify = false;
-			}
+				@Override
+				protected void notifyCallPending() {
+					closablePopUp.ignoreNotify = true;
+					popUp.visible(false);
+					closablePopUp.ignoreNotify = false;
+				}
 
-			@Override
-			protected void notifyAllReturned() {
-				popUp.visible(true);
-			}
-		};
+				@Override
+				protected void notifyAllReturned() {
+					popUp.visible(true);
+				}
+			};
 		return panel;
 	}
 
