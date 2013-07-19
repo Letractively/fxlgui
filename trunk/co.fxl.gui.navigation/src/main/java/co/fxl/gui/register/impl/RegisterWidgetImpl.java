@@ -169,7 +169,7 @@ public class RegisterWidgetImpl implements IRegisterWidget {
 
 	void active(IContainer container) {
 		headerPanel.active(container);
-		if (lastWidth != 0)
+		if (lastWidth > 0)
 			updateWidth(lastWidth);
 	}
 }
