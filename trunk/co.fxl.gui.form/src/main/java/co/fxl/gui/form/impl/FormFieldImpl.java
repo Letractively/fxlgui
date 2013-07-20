@@ -50,6 +50,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	boolean validate = true;
 	int maxLength = -1;
 	T valueElement;
+	boolean useAssignButton;
 
 	public FormFieldImpl(FormWidgetImpl widget, int index, String name) {
 		this.widget = widget;
@@ -58,6 +59,11 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 		createLabelColumn(index);
 		this.row = index;
 		createContentColumn(index);
+	}
+
+	@Override
+	public void useAssignButton() {
+		useAssignButton = true;
 	}
 
 	@Override

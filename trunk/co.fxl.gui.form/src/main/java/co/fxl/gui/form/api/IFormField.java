@@ -63,4 +63,6 @@ public interface IFormField<T, R> extends IUpdateable<R> {
 	IContainer addContainer();
 
 	void maxLength(int maxLength);
+
+	void useAssignButton();
 }
