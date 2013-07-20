@@ -29,7 +29,7 @@ class FormTextFieldImpl<R> extends FormFieldImpl<ITextField, R> {
 
 	@Override
 	public IFormField<ITextField, R> editable(boolean editable) {
-		valueElement().editable(editable);
+		valueElement().editable(editable && !useAssignButton);
 		return super.editable(editable);
 	}
 
