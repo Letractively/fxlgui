@@ -571,6 +571,11 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		return new IWindow() {
 
 			@Override
+			public int bulkUpdateDecrement() {
+				return 48;
+			}
+
+			@Override
 			public IContainer logPanel(IPopUp popUp) {
 				return popUp.container().panel().vertical()
 						.spacing(logPanelSpacing()).add();

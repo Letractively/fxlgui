@@ -618,6 +618,11 @@ class GrayScaleStyle extends StyleTemplate {
 				return true;
 			}
 
+			@Override
+			public int bulkUpdateDecrement() {
+				return 40;
+			}
+
 		};
 	}
 

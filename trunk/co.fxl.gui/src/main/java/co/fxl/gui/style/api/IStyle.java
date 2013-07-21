@@ -233,6 +233,8 @@ public interface IStyle {
 
 		boolean editPageHasBorder();
 
+		int bulkUpdateDecrement();
+
 	}
 
 	public interface IViewSelection {
