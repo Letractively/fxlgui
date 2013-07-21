@@ -577,6 +577,11 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
+			public boolean editPageHasBorder() {
+				return true;
+			}
+
+			@Override
 			public int logPanelSpacing() {
 				return 10;
 			}

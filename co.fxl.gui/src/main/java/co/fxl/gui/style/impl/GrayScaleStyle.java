@@ -613,6 +613,11 @@ class GrayScaleStyle extends StyleTemplate {
 			public void addImageToStylishButton(StylishButton button, int blue) {
 			}
 
+			@Override
+			public boolean editPageHasBorder() {
+				return true;
+			}
+
 		};
 	}
 
@@ -896,12 +901,12 @@ class GrayScaleStyle extends StyleTemplate {
 	@Override
 	public IExportHtml exportHtml() {
 		return new IExportHtml() {
-			
+
 			@Override
 			public int decrementY() {
 				return 0;
 			}
-			
+
 			@Override
 			public int decrementX() {
 				return 0;
