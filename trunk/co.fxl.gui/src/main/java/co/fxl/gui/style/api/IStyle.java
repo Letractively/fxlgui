@@ -231,6 +231,8 @@ public interface IStyle {
 
 		void addImageToStylishButton(StylishButton button, int blue);
 
+		boolean editPageHasBorder();
+
 	}
 
 	public interface IViewSelection {
