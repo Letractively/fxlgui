@@ -407,7 +407,7 @@ public class RichTextToolbarImpl {
 					closeListener.onClick();
 					return;
 				}
-				final IPopUp p = PopUp.showPopUp().autoHide(true);
+				final IPopUp p = PopUp.showPopUp().autoHide(true).glass(true);
 				p.border().remove();
 				p.border().style().shadow();
 				final IHTMLArea ha = p.container().widget(IHTMLArea.class);
