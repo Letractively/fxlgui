@@ -208,7 +208,7 @@ public class RichTextToolbarImpl {
 		@Override
 		void editable(boolean editable) {
 			this.editable = editable;
-			image.clickable(editable);
+			image.visible(editable);
 		}
 
 		void setImage(IToolbar panel, String resource) {
