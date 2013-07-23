@@ -295,7 +295,8 @@ public class FilterConstraintsImpl implements IFilterConstraints {
 
 	@Override
 	public boolean isContentRestricted() {
-		return isConstraintSpecified() || size != Integer.MAX_VALUE;
+		return isConstraintSpecified()
+				|| (size != Integer.MAX_VALUE && size != -1);
 	}
 
 	@Override
