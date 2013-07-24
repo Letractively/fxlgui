@@ -31,6 +31,7 @@ import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.FocusListener;
+import com.google.gwt.user.client.ui.HasFocus;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
 import com.google.gwt.user.client.ui.SuggestOracle;
@@ -46,7 +47,7 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 
 		@Override
 		public void requestSuggestions(final Request arg0, final Callback arg1) {
-			if (!arg0.getQuery().equals(""))
+			if (!arg0.getQuery().equals("") || element.requestOnFocus)
 				element.source.query(arg0.getQuery(),
 						new CallbackTemplate<List<ISuggestion>>() {
 
@@ -82,6 +83,7 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 
 	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();
 	private ISource source;
+	private boolean requestOnFocus = false;
 
 	GWTSuggestField(final GWTContainer<SuggestBox> container) {
 		super(container);
@@ -90,9 +92,26 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 				.getSuggestionDisplay();
 		sd.setPopupStyleName("gwt-SuggestBoxPopup-FXL");
 		container.widget.getTextBox().setStyleName("gwt-TextBox");
+		((HasFocus) container.widget).addFocusListener(new FocusListener() {
+			@Override
+			public void onFocus(Widget sender) {
+				if (requestOnFocus)
+					container.widget.showSuggestionList();
+			}
+
+			@Override
+			public void onLostFocus(Widget sender) {
+			}
+		});
 		// defaultFont();
 		// oracle = (MultiWordSuggestOracle) ((SuggestBox) container.widget)
 		// .getSuggestOracle();
+	}
+
+	@Override
+	public ISuggestField requestOnFocus(boolean requestOnFocus) {
+		this.requestOnFocus = requestOnFocus;
+		return this;
 	}
 
 	@Override

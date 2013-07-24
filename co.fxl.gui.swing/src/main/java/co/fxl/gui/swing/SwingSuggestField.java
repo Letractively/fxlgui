@@ -104,4 +104,9 @@ class SwingSuggestField extends SwingTextInput<JTextField, ISuggestField>
 		return this;
 	}
 
+	@Override
+	public ISuggestField requestOnFocus(boolean requestOnFocus) {
+		return this;
+	}
+
 }
