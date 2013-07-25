@@ -48,6 +48,7 @@ import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextElement;
 import co.fxl.gui.api.ITextInputElement;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Display;
@@ -264,10 +265,29 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 						.resource("more_white_10x16.png");
 				IClickListener clickListener = new IClickListener() {
 
+					private boolean clickable = true;
+
 					@Override
 					public void onClick() {
+						if (!clickable)
+							return;
 						final IPopUp popUp = PopUp.showPopUp(true).width(140)
 								.autoHide(true);
+						popUp.addVisibleListener(new IUpdateListener<Boolean>() {
+							@Override
+							public void onUpdate(Boolean value) {
+								if (!value) {
+									clickable = false;
+									Display.instance().invokeLater(
+											new Runnable() {
+												@Override
+												public void run() {
+													clickable = true;
+												}
+											}, 300);
+								}
+							}
+						});
 						popUp.border().color().gray(190);
 						popUp.offset(image.offsetX() - 140 + 12,
 								image.offsetY() + 25);
@@ -356,10 +376,30 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 						.resource("more_white_10x16.png");
 				more.margin().right(4);
 				more.addClickListener(new IClickListener() {
+					
+					private boolean clickable = true;
+
 					@Override
 					public void onClick() {
+						if (!clickable)
+							return;
 						final IPopUp popUp = PopUp.showPopUp(true).width(200)
 								.autoHide(true);
+						popUp.addVisibleListener(new IUpdateListener<Boolean>() {
+							@Override
+							public void onUpdate(Boolean value) {
+								if (!value) {
+									clickable = false;
+									Display.instance().invokeLater(
+											new Runnable() {
+												@Override
+												public void run() {
+													clickable = true;
+												}
+											}, 300);
+								}
+							}
+						});
 						popUp.border().color().gray(190);
 						popUp.offset(more.offsetX() - 200 + 10,
 								more.offsetY() + 25);
