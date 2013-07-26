@@ -173,16 +173,18 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				}
 				p.add().label().text(g.label().toUpperCase()).font().weight()
 						.bold().pixel(10).color().gray();
-				for (final IAdminRight right : g.rights())
-					new ImageButton(p.add()).imageResource(right.image())
-							.text(right.label())
-							.addClickListener(new LazyClickListener() {
-								@Override
-								protected void onAllowedClick() {
-									popUp.visible(false);
-									right.onClick();
-								}
-							});
+				for (final IAdminRight right : g.rights()) {
+					ImageButton text = new ImageButton(p.add());
+					text.imageResource(right.image()).text(right.label());
+					text.addClickListener(new LazyClickListener() {
+						@Override
+						protected void onAllowedClick() {
+							popUp.visible(false);
+							right.onClick();
+						}
+					});
+					new HyperlinkMouseOverListener(text.label());
+				}
 				first = false;
 			}
 			popUp.visible(true);
