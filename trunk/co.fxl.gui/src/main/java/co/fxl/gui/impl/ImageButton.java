@@ -25,11 +25,13 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.IMouseOverElement;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.ContextMenu.Entry;
 
 public class ImageButton implements ButtonAdp,
-		co.fxl.gui.api.IClickable.IClickListener {
+		co.fxl.gui.api.IClickable.IClickListener,
+		IMouseOverElement<ImageButton> {
 
 	private static final int SPACE = 4;
 	IImage image;
@@ -198,6 +200,20 @@ public class ImageButton implements ButtonAdp,
 
 	public ButtonAdp showAlways(boolean b) {
 		showAlways = b;
+		return this;
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public ImageButton addMouseOverListener(
+			co.fxl.gui.api.IMouseOverElement.IMouseOverListener l) {
+		label.addMouseOverListener(l);
+		if (image != null)
+			image.addMouseOverListener(l);
+		if (p0 != null && p0 instanceof IMouseOverElement)
+			((IMouseOverElement) p0).addMouseOverListener(l);
+		else if (panel instanceof IMouseOverElement)
+			((IMouseOverElement) panel).addMouseOverListener(l);
 		return this;
 	}
 }

@@ -31,6 +31,7 @@ import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IFontElement;
 import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IFontElement.IFont.IWeight;
@@ -63,6 +64,7 @@ import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.StylishButton;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.impl.WidgetTitle;
+import co.fxl.gui.style.api.IStyle.IUserPanel.IAdminRightGroup;
 import co.fxl.gui.style.api.IStyle.IUserPanel.IAdminRightGroup.IAdminRight;
 
 class NinetyNineDesignsStyle extends StyleTemplate {
@@ -85,6 +87,106 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 	private IColor blue(IColor color) {
 		return color.rgb(29, 59, 89);
+	}
+
+	private final class AdminPopUp implements IClickListener,
+			IMouseOverListener {
+
+		private final List<IAdminRightGroup> rights;
+		private final IImage more;
+		private IPopUp popUp;
+		private boolean scheduledClose;
+
+		private AdminPopUp(List<IAdminRightGroup> rights, IImage more) {
+			this.rights = rights;
+			this.more = more;
+		}
+
+		@Override
+		public void onMouseOver() {
+			scheduledClose = false;
+			onClick();
+		}
+
+		@Override
+		public void onMouseOut() {
+			scheduleClose();
+		}
+
+		private void scheduleClose() {
+			if (scheduledClose)
+				return;
+			scheduledClose = true;
+			Display.instance().invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					if (scheduledClose && popUp != null) {
+						popUp.visible(false);
+					}
+				}
+			}, 500);
+		}
+
+		@Override
+		public void onClick() {
+			if (popUp != null)
+				return;
+			popUp = PopUp.showPopUp(true).width(200).autoHide(true);
+			popUp.addVisibleListener(new IUpdateListener<Boolean>() {
+				@Override
+				public void onUpdate(Boolean value) {
+					if (!value) {
+						Display.instance().invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								scheduledClose = false;
+								popUp = null;
+							}
+						}, 300);
+					}
+				}
+			});
+			popUp.border().color().gray(190);
+			popUp.offset(more.offsetX() - 200 + 10, more.offsetY() + 25);
+			IFocusPanel focus = popUp.container().panel().focus();
+			focus.addMouseOverListener(new IMouseOverListener() {
+
+				@Override
+				public void onMouseOver() {
+					scheduledClose = false;
+				}
+
+				@Override
+				public void onMouseOut() {
+					scheduleClose();
+				}
+			});
+			IVerticalPanel p = focus.add().panel().vertical();
+			p.spacing().left(12).top(12).right(12).bottom(12).inner(4);
+			// p.margin().top(2);
+			boolean first = true;
+			for (IAdminRightGroup g : rights) {
+				if (!first) {
+					p.addSpace(4);
+					p.add().line().color().lightgray();
+					p.addSpace(4);
+				}
+				p.add().label().text(g.label().toUpperCase()).font().weight()
+						.bold().pixel(10).color().gray();
+				for (final IAdminRight right : g.rights())
+					new ImageButton(p.add()).imageResource(right.image())
+							.text(right.label())
+							.addClickListener(new LazyClickListener() {
+								@Override
+								protected void onAllowedClick() {
+									popUp.visible(false);
+									right.onClick();
+								}
+							});
+				first = false;
+			}
+			popUp.visible(true);
+		}
 	}
 
 	private class ViewSelection implements IViewSelection {
@@ -236,7 +338,6 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 	public static final String NAME = "Standard";
 	private static final int ADD_DISTANCE_MDT_FIRST_ROW = 3;
-	private static final boolean ADD_MORE_TO_ADMIN_BUTTON = true;
 
 	@Override
 	public ILogin login() {
@@ -370,70 +471,13 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				text.label().font().pixel(fontSize()).weight().bold().color()
 						.white();
 				new HyperlinkMouseOverListener(text.label());
-				if (!ADD_MORE_TO_ADMIN_BUTTON)
-					return text;
 				final IImage more = panel.add().image()
 						.resource("more_white_10x16.png");
 				more.margin().right(4);
-				more.addClickListener(new IClickListener() {
-					
-					private boolean clickable = true;
-
-					@Override
-					public void onClick() {
-						if (!clickable)
-							return;
-						final IPopUp popUp = PopUp.showPopUp(true).width(200)
-								.autoHide(true);
-						popUp.addVisibleListener(new IUpdateListener<Boolean>() {
-							@Override
-							public void onUpdate(Boolean value) {
-								if (!value) {
-									clickable = false;
-									Display.instance().invokeLater(
-											new Runnable() {
-												@Override
-												public void run() {
-													clickable = true;
-												}
-											}, 300);
-								}
-							}
-						});
-						popUp.border().color().gray(190);
-						popUp.offset(more.offsetX() - 200 + 10,
-								more.offsetY() + 25);
-						IVerticalPanel p = popUp.container().panel().vertical();
-						p.spacing().left(12).top(12).right(12).bottom(12)
-								.inner(4);
-						// p.margin().top(2);
-						boolean first = true;
-						for (IAdminRightGroup g : rights) {
-							if (!first) {
-								p.addSpace(4);
-								p.add().line().color().lightgray();
-								p.addSpace(4);
-							}
-							p.add().label().text(g.label().toUpperCase())
-									.font().weight().bold().pixel(10).color()
-									.gray();
-							for (final IAdminRight right : g.rights())
-								new ImageButton(p.add())
-										.imageResource(right.image())
-										.text(right.label())
-										.addClickListener(
-												new LazyClickListener() {
-													@Override
-													protected void onAllowedClick() {
-														popUp.visible(false);
-														right.onClick();
-													}
-												});
-							first = false;
-						}
-						popUp.visible(true);
-					}
-				});
+				AdminPopUp clickListener = new AdminPopUp(rights, more);
+				more.addClickListener(clickListener);
+				text.addMouseOverListener(clickListener);
+				more.addMouseOverListener(clickListener);
 				return text;
 			}
 
