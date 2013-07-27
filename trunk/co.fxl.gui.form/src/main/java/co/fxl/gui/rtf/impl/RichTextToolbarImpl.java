@@ -36,6 +36,7 @@ import co.fxl.gui.api.IResizable.IResizeListener;
 import co.fxl.gui.api.ISuggestField.ISource;
 import co.fxl.gui.api.ITextInputElement;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.IToolbar;
@@ -355,6 +356,7 @@ public class RichTextToolbarImpl {
 	private static final String OPEN_IMAGE_PREFIX = "tag_open_";
 	private static String[] TAGS = new String[] {};// "Section", "Title" };
 	private static final int SPACING = 200;
+	private static final int SPACING_TOP = 100;
 	private IToolbar panel;
 	private List<ToolbarElement> buttons = new LinkedList<ToolbarElement>();
 	private IHTMLArea htmlArea;
@@ -410,7 +412,10 @@ public class RichTextToolbarImpl {
 				final IPopUp p = PopUp.showPopUp().autoHide(true).glass(true);
 				p.border().remove();
 				p.border().style().shadow();
-				final IHTMLArea ha = p.container().widget(IHTMLArea.class);
+				IVerticalPanel spacing2 = p.container().panel().vertical()
+						.spacing(10);
+				spacing2.border().color().gray();
+				final IHTMLArea ha = spacing2.add().widget(IHTMLArea.class);
 				copy(htmlArea, ha);
 				Heights.INSTANCE.decorate(ha);
 				ha.closeListener(new IClickListener() {
@@ -444,10 +449,11 @@ public class RichTextToolbarImpl {
 			}
 
 			private void adjust(IPopUp p, IHTMLArea ha) {
-				p.offset(SPACING / 2, SPACING / 2).size(
-						Display.instance().width() - SPACING,
-						Display.instance().height() - SPACING);
-				ha.height(Display.instance().height() - SPACING);
+				int width = Math.max(100, Display.instance().width() - SPACING);
+				int height = Math.max(100, Display.instance().height()
+						- SPACING_TOP);
+				p.offset(SPACING / 2, SPACING_TOP / 2).size(width, height);
+				ha.height(height - 45);
 			}
 
 			@Override
