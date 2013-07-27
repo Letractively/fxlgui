@@ -97,7 +97,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		private IPopUp popUp;
 		private boolean scheduledClose;
 
-		private AdminPopUp(List<IAdminRightGroup> rights, IImage more) {
+		private AdminPopUp(List<IAdminRightGroup> rights,
+				IImage more) {
 			this.rights = rights;
 			this.more = more;
 		}
@@ -147,7 +148,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				}
 			});
 			popUp.border().color().gray(190);
-			popUp.offset(more.offsetX() - 200 + 10, more.offsetY() + 25);
+			popUp.offset(more.offsetX() - 200 + 10, applicationPanel.height());
 			IFocusPanel focus = popUp.container().panel().focus();
 			focus.addMouseOverListener(new IMouseOverListener() {
 
@@ -356,7 +357,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			}
 
 			@Override
-			public void logout(ILinearPanel<?> panel, String userName,
+			public void logout(final ILinearPanel<?> panel, String userName,
 					final Decorator[] decorators, final IClickListener listener) {
 				IClickable<?> prefix = panel.add().image()
 						.resource("user_white.png");
@@ -393,7 +394,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 						});
 						popUp.border().color().gray(190);
 						popUp.offset(image.offsetX() - 140 + 12,
-								image.offsetY() + 25);
+								applicationPanel.height());
 						IVerticalPanel p = popUp.container().panel().vertical()
 								.spacing(12);
 						p.margin().top(2);
@@ -420,20 +421,23 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		};
 	}
 
+	private IGridPanel applicationPanel;
+
 	@Override
 	public IApplicationPanel applicationPanel() {
 		return new IApplicationPanel() {
 
 			@Override
 			public ILinearPanel<?>[] create(IContainer c) {
-				IGridPanel grid = c.panel().grid().spacing(1);
-				blue(grid).gradient().vertical().rgb(57, 84, 110);
-				grid.border().style().bottom();
-				grid.column(0).expand();
-				ILinearPanel<?> v = grid.cell(0, 0).valign().center().panel()
-						.vertical();
-				ILinearPanel<?> end = grid.cell(1, 0).valign().center().align()
-						.end().panel().horizontal().align().end();
+				applicationPanel = c.panel().grid().spacing(1);
+				blue(applicationPanel).gradient().vertical().rgb(57, 84, 110);
+				applicationPanel.border().style().bottom();
+				applicationPanel.column(0).expand();
+				ILinearPanel<?> v = applicationPanel.cell(0, 0).valign()
+						.center().panel().vertical();
+				ILinearPanel<?> end = applicationPanel.cell(1, 0).valign()
+						.center().align().end().panel().horizontal().align()
+						.end();
 				end.padding().top(1);
 				return new ILinearPanel<?>[] { v, end };
 			}
