@@ -24,8 +24,11 @@ import java.util.Set;
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IPadding;
 import co.fxl.gui.impl.GridCellContainer;
 
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTMLTable;
@@ -84,6 +87,40 @@ public class GWTGridPanel extends GWTPanel<HTMLTable, IGridPanel> implements
 		public IGridCell height(int height) {
 			formatter().setHeight(row, column, height + "px");
 			return this;
+		}
+
+		@Override
+		public IPadding padding() {
+			return new co.fxl.gui.api.IPadding() {
+
+				@Override
+				public IPadding left(int pixel) {
+					style().setPaddingLeft(pixel, Unit.PX);
+					return this;
+				}
+
+				private Style style() {
+					return formatter().getElement(row, column).getStyle();
+				}
+
+				@Override
+				public IPadding right(int pixel) {
+					style().setPaddingRight(pixel, Unit.PX);
+					return this;
+				}
+
+				@Override
+				public IPadding top(int pixel) {
+					style().setPaddingTop(pixel, Unit.PX);
+					return this;
+				}
+
+				@Override
+				public IPadding bottom(int pixel) {
+					style().setPaddingBottom(pixel, Unit.PX);
+					return this;
+				}
+			};
 		}
 
 		@Override

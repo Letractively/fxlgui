@@ -24,6 +24,7 @@ import java.util.List;
 import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.IPadding;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.Env;
 
@@ -46,20 +47,23 @@ class FlowFormGrid implements FormGrid {
 		}
 
 		private void updateWidth() {
+			IPadding padding = grid.cell(1, 0).padding();
 			if (!expand) {
 				if (nonExpandedWidth < 0) {
 					grid.width(1.0);
 				} else {
 					grid.width(nonExpandedWidth);
 					if (Env.is(Env.FIREFOX))
-						grid.column(1).width(nonExpandedWidth - _120);
+						grid.column(1).width(nonExpandedWidth - _120 - 4);
 				}
+				padding.right(0);
 			} else {
 				if (Env.is(Env.FIREFOX)) {
 					if (width4Layout > 0)
-						grid.column(1).width(width4Layout - _120);
+						grid.column(1).width(width4Layout - _120 - 4);
 					grid.width(width4Layout);
 				}
+				padding.right(paddingRight);
 			}
 		}
 	}
@@ -70,6 +74,7 @@ class FlowFormGrid implements FormGrid {
 	private List<Row> panels = new LinkedList<Row>();
 	private int nonExpandedWidth = MIN_WIDTH_COLUMN;
 	private int width4Layout;
+	private int paddingRight = 0;
 
 	FlowFormGrid(FormWidgetImpl widget, IVerticalPanel content) {
 		panel = content.add().panel().flow().spacing(SPACING);
@@ -77,6 +82,7 @@ class FlowFormGrid implements FormGrid {
 
 	@Override
 	public void setWidth4Layout(int width4Layout) {
+		paddingRight = 0;
 		if (width4Layout < 0) {
 			this.width4Layout = -1;
 			nonExpandedWidth = -1;
@@ -89,9 +95,12 @@ class FlowFormGrid implements FormGrid {
 				c--;
 			if (c == 1)
 				nonExpandedWidth = -1;
-			else
+			else {
 				nonExpandedWidth = MIN_WIDTH_COLUMN
 						+ (width4Layout - minWidth(c)) / c;
+				paddingRight = width4Layout - nonExpandedWidth * c - (c - 1)
+						* SPACING;
+			}
 		}
 		for (Row r : panels) {
 			r.updateWidth();
