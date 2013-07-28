@@ -560,7 +560,7 @@ public class WidgetTitle implements IClickListener, IColored {
 		IVerticalPanel v = vertical;
 		if (space() == 0 && spaceBottom() == 0)
 			return contentContainer = v.add();
-		IVerticalPanel vertical2 = v.add().panel().vertical();
+		IVerticalPanel vertical2 = v;
 		vertical2.margin().top(space());
 		contentContainer = vertical2.add();
 		if (spaceBottom() != 0)
