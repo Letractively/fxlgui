@@ -53,8 +53,15 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	boolean useAssignButton;
 
 	public FormFieldImpl(FormWidgetImpl widget, int index, String name) {
+		this(widget, index, name, null);
+	}
+
+	public FormFieldImpl(FormWidgetImpl widget, int index, String name,
+			IFieldType type) {
 		this.widget = widget;
 		this.name = name;
+		if (type != null)
+			this.type = (FieldTypeImpl) type;
 		widget.fields.add(this);
 		createLabelColumn(index);
 		this.row = index;
@@ -205,6 +212,11 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 	@Override
 	public IFieldType type() {
 		return type;
+	}
+
+	@Override
+	public void type(IFieldType type) {
+		this.type = (FieldTypeImpl) type;
 	}
 
 	@Override

@@ -32,7 +32,7 @@ class FormDateFieldImpl extends FormTextFieldImpl<Date> {
 
 	FormDateFieldImpl(final FormWidgetImpl widget, int index, String name,
 			boolean addCalendar) {
-		super(widget, index, name);
+		super(widget, index, name, null);
 		dateField = new DateField(valueElement(), addCalendar ? addContainer()
 				: null, addCalendar);
 		editable(widget.saveListener != null);
@@ -50,6 +50,11 @@ class FormDateFieldImpl extends FormTextFieldImpl<Date> {
 				return super.time();
 			}
 		};
+	}
+
+	@Override
+	boolean isExpand() {
+		return false;
 	}
 
 	@Override

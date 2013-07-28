@@ -31,6 +31,7 @@ import co.fxl.gui.api.IResizable;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.rtf.api.IHTMLArea;
 
@@ -78,7 +79,7 @@ public interface IFormWidget extends IResizable<IFormWidget> {
 
 	IFormField<ILabel, String> addLabel(String name);
 
-	IFormField<ITextField, String> addTextField(String name);
+	IFormField<ITextField, String> addTextField(String name, IFieldType type);
 
 	IFormField<ITextField, Date> addDateField(String name, boolean addCalendar);
 
@@ -134,6 +135,8 @@ public interface IFormWidget extends IResizable<IFormWidget> {
 
 	IFormWidget width(int width);
 
-	void clearTextAreaWidths();
+	void notifyWidthChange();
+
+	void setWidth4Layout(int setWidth4Layout);
 
 }

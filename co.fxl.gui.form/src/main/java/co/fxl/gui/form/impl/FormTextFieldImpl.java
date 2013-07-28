@@ -20,11 +20,13 @@ package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.form.api.IFormField;
+import co.fxl.gui.impl.IFieldType;
 
 class FormTextFieldImpl<R> extends FormFieldImpl<ITextField, R> {
 
-	FormTextFieldImpl(FormWidgetImpl widget, int index, String name) {
-		super(widget, index, name);
+	FormTextFieldImpl(FormWidgetImpl widget, int index, String name,
+			IFieldType type) {
+		super(widget, index, name,type);
 	}
 
 	@Override
@@ -34,7 +36,14 @@ class FormTextFieldImpl<R> extends FormFieldImpl<ITextField, R> {
 	}
 
 	ITextField addTextField(FormWidgetImpl widget, int index) {
-		return widget.addFormValueTextField(index, withFocus());
+		return widget.addFormValueTextField(index, withFocus(), isExpand());
+	}
+
+	boolean isExpand() {
+		boolean b = !type.isShort && !type.isRelation
+				&& !type.clazz.equals(Long.class)
+				&& !type.clazz.equals(Integer.class);
+		return b;
 	}
 
 	boolean withFocus() {
