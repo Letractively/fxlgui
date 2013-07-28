@@ -323,7 +323,6 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			button.imageResource(image + ".png").text(label);
 			button.label().font().pixel(fontSize()).weight().bold().color()
 					.white();
-			new HyperlinkMouseOverListener(button.label());
 			more = panel.add().image().resource("more_white_10x16.png");
 			more.margin().right(4);
 			more.addClickListener(this);
@@ -332,6 +331,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		}
 
 		public IClickable<?> tooltip(String string) {
+			new HyperlinkMouseOverListener(button.label());
 			button.tooltip(string);
 			more.tooltip(string);
 			return this;
