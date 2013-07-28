@@ -56,7 +56,8 @@ import co.fxl.gui.style.impl.Style;
 public class FormWidgetImpl implements IFormWidget {
 
 	private static final boolean USE_BUTTON_PANEL = !Env.is(Env.SWING);
-	private static final boolean ALLOW_MULTI_COLUMNS = true;
+	private static final boolean ALLOW_MULTI_COLUMNS = !Env.is(Env.IE)
+			&& !Env.is(Env.SWING);
 
 	class FormEntryLabel {
 
@@ -432,9 +433,8 @@ public class FormWidgetImpl implements IFormWidget {
 	FormGrid grid() {
 		if (grid == null) {
 			contentPanel = widgetTitle.content().panel().vertical();
-			grid = Env.is(Env.SWING) || setWidth4Layout <= 0
-					|| !ALLOW_MULTI_COLUMNS ? new FormGridImpl(this,
-					contentPanel) : new FlowFormGrid(this, contentPanel);
+			grid = setWidth4Layout <= 0 || !ALLOW_MULTI_COLUMNS ? new FormGridImpl(
+					this, contentPanel) : new FlowFormGrid(this, contentPanel);
 			grid.setWidth4Layout(setWidth4Layout);
 		}
 		return grid;
