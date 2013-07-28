@@ -317,21 +317,23 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		private IPopUp popUp;
 		private boolean scheduledClose;
 		private ImageButton button;
+		private boolean openedByMouseOver;
 
 		private UserPanelImageButton(IPanel<?> panel, String image, String label) {
 			button = new ImageButton(panel.add());
 			button.imageResource(image + ".png").text(label);
 			button.label().font().pixel(fontSize()).weight().bold().color()
 					.white();
+			new HyperlinkMouseOverListener(button.label());
 			more = panel.add().image().resource("more_white_10x16.png");
 			more.margin().right(4);
+			button.addClickListener(this);
 			more.addClickListener(this);
 			button.addMouseOverListener(this);
 			more.addMouseOverListener(this);
 		}
 
 		public IClickable<?> tooltip(String string) {
-			new HyperlinkMouseOverListener(button.label());
 			button.tooltip(string);
 			more.tooltip(string);
 			return this;
@@ -340,7 +342,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		@Override
 		public void onMouseOver() {
 			scheduledClose = false;
-			onClick();
+			showPopUp(true);
 		}
 
 		@Override
@@ -349,6 +351,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		}
 
 		private void scheduleClose() {
+			if (!openedByMouseOver)
+				return;
 			if (scheduledClose)
 				return;
 			scheduledClose = true;
@@ -364,6 +368,15 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 		@Override
 		public void onClick() {
+			showPopUp(false);
+		}
+
+		private void showPopUp(boolean openedByMouseOver) {
+			if (popUp != null && this.openedByMouseOver && !openedByMouseOver) {
+				scheduledClose = false;
+				popUp = null;
+			}
+			this.openedByMouseOver = openedByMouseOver;
 			if (popUp != null)
 				return;
 			popUp = PopUp.showPopUp(true).width(200).autoHide(true);
@@ -1265,8 +1278,12 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public void commentField(ITextArea valuePanel) {
 				inputField(valuePanel);
-				valuePanel.color().white().gradient().fallback(249, 249, 249)
-						.vertical().gray(244);
+				valuePanel.color().remove().gray(253);/*
+													 * .white().gradient().fallback
+													 * (249, 249, 249)
+													 * .vertical().gray(244);
+													 */
+				valuePanel.font().color().gray();
 			}
 
 			@Override
