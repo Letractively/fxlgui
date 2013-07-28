@@ -118,7 +118,7 @@ class FlowFormGrid implements FormGrid {
 
 	@Override
 	public void removeRow(int index) {
-		panels.get(index).grid.remove();
+		panels.remove(index).grid.remove();
 	}
 
 	@Override
@@ -129,7 +129,7 @@ class FlowFormGrid implements FormGrid {
 			removed.grid.remove();
 			toReAdd.add(removed);
 		}
-		getGridPanel(index);
+		getGridPanel(index).width(1.0);
 		for (Row g : toReAdd) {
 			panels.add(g);
 			panel.add(g.grid);
