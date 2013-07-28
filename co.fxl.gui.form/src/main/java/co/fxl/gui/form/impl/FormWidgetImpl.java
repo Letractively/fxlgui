@@ -56,8 +56,7 @@ import co.fxl.gui.style.impl.Style;
 public class FormWidgetImpl implements IFormWidget {
 
 	private static final boolean USE_BUTTON_PANEL = !Env.is(Env.SWING);
-	private static final boolean ALLOW_MULTI_COLUMNS = Env.is(Env.CHROME)
-			|| Env.is(Env.IE);
+	private static final boolean ALLOW_MULTI_COLUMNS = !Env.is(Env.SWING);
 
 	class FormEntryLabel {
 

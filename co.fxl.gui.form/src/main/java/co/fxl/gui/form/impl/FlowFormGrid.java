@@ -29,6 +29,8 @@ import co.fxl.gui.impl.Env;
 
 class FlowFormGrid implements FormGrid {
 
+	private static final int _120 = 120;
+
 	private class Row {
 
 		private IGridPanel grid;
@@ -45,10 +47,19 @@ class FlowFormGrid implements FormGrid {
 
 		private void updateWidth() {
 			if (!expand) {
-				if (nonExpandedWidth < 0)
+				if (nonExpandedWidth < 0) {
 					grid.width(1.0);
-				else
+				} else {
 					grid.width(nonExpandedWidth);
+					if (Env.is(Env.FIREFOX))
+						grid.column(1).width(nonExpandedWidth - _120);
+				}
+			} else {
+				if (Env.is(Env.FIREFOX)) {
+					if (width4Layout > 0)
+						grid.column(1).width(width4Layout - _120);
+					grid.width(width4Layout);
+				}
 			}
 		}
 	}
@@ -58,6 +69,7 @@ class FlowFormGrid implements FormGrid {
 	private IFlowPanel panel;
 	private List<Row> panels = new LinkedList<Row>();
 	private int nonExpandedWidth = MIN_WIDTH_COLUMN;
+	private int width4Layout;
 
 	FlowFormGrid(FormWidgetImpl widget, IVerticalPanel content) {
 		panel = content.add().panel().flow().spacing(SPACING);
@@ -65,9 +77,11 @@ class FlowFormGrid implements FormGrid {
 
 	@Override
 	public void setWidth4Layout(int width4Layout) {
-		if (width4Layout < 0)
+		if (width4Layout < 0) {
+			this.width4Layout = -1;
 			nonExpandedWidth = -1;
-		else {
+		} else {
+			this.width4Layout = width4Layout;
 			int c = 1;
 			while (minWidth(c) < width4Layout)
 				c++;
@@ -96,10 +110,10 @@ class FlowFormGrid implements FormGrid {
 	private IGridPanel getGridPanel(int row) {
 		while (row >= panels.size()) {
 			IGridPanel g = panel.add().panel().grid();
-			if (Env.is(Env.IE))
-				g.indent(4);
+			if (Env.is(Env.IE) || Env.is(Env.FIREFOX))
+				g.indent(1);
 			panels.add(new Row(g));
-			g.column(0).width(120);
+			g.column(0).width(_120);
 		}
 		return panels.get(row).grid;
 	}
