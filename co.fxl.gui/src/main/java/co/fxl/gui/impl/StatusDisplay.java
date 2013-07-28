@@ -260,8 +260,7 @@ public class StatusDisplay implements IResizeListener, Runnable,
 		panel = grid.cell(0, 0).panel().vertical().align().begin();
 		run();
 		stylePanel(panel);
-		p0 = panel.add().panel().vertical().align().begin().add().panel()
-				.vertical().align().begin();
+		p0 = panel.add().panel().vertical().align().begin();
 		return this;
 	}
 
