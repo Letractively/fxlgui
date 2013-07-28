@@ -85,8 +85,8 @@ public class UploadWidgetImpl implements IUploadWidget {
 			}
 		});
 		form.addLargeTitle("Add Attachment");
-		textField = form.addTextField("Name").required().valueElement();
-		uRLField = form.addTextField("URL").required();
+		textField = form.addTextField("Name", null).required().valueElement();
+		uRLField = form.addTextField("URL", null).required();
 		url = uRLField.valueElement();
 		textArea = form.addTextArea("Description").valueElement();
 		form.visible(true);

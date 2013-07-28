@@ -26,9 +26,14 @@ class FormColorFieldImpl extends FormTextFieldImpl<String> {
 	private ColorField dateField;
 
 	FormColorFieldImpl(final FormWidgetImpl widget, int index, String name) {
-		super(widget, index, name);
+		super(widget, index, name, null);
 		dateField = new ColorField(valueElement(), addContainer());
 		editable(widget.saveListener != null);
+	}
+
+	@Override
+	boolean isExpand() {
+		return false;
 	}
 
 	@Override
