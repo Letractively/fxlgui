@@ -216,4 +216,14 @@ public class ImageButton implements ButtonAdp,
 			((IMouseOverElement) panel).addMouseOverListener(l);
 		return this;
 	}
+
+	public void tooltip(String string) {
+		label.tooltip(string);
+		if (image != null)
+			image.tooltip(string);
+		if (p0 != null)
+			p0.tooltip(string);
+		else
+			panel.tooltip(string);
+	}
 }

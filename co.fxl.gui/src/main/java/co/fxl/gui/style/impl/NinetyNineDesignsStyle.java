@@ -64,7 +64,6 @@ import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.StylishButton;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.impl.WidgetTitle;
-import co.fxl.gui.style.api.IStyle.IUserPanel.IAdminRightGroup;
 import co.fxl.gui.style.api.IStyle.IUserPanel.IAdminRightGroup.IAdminRight;
 
 class NinetyNineDesignsStyle extends StyleTemplate {
@@ -87,109 +86,6 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 	private IColor blue(IColor color) {
 		return color.rgb(29, 59, 89);
-	}
-
-	private final class AdminPopUp implements IClickListener,
-			IMouseOverListener {
-
-		private final List<IAdminRightGroup> rights;
-		private final IImage more;
-		private IPopUp popUp;
-		private boolean scheduledClose;
-
-		private AdminPopUp(List<IAdminRightGroup> rights,
-				IImage more) {
-			this.rights = rights;
-			this.more = more;
-		}
-
-		@Override
-		public void onMouseOver() {
-			scheduledClose = false;
-			onClick();
-		}
-
-		@Override
-		public void onMouseOut() {
-			scheduleClose();
-		}
-
-		private void scheduleClose() {
-			if (scheduledClose)
-				return;
-			scheduledClose = true;
-			Display.instance().invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					if (scheduledClose && popUp != null) {
-						popUp.visible(false);
-					}
-				}
-			}, 500);
-		}
-
-		@Override
-		public void onClick() {
-			if (popUp != null)
-				return;
-			popUp = PopUp.showPopUp(true).width(200).autoHide(true);
-			popUp.addVisibleListener(new IUpdateListener<Boolean>() {
-				@Override
-				public void onUpdate(Boolean value) {
-					if (!value) {
-						Display.instance().invokeLater(new Runnable() {
-							@Override
-							public void run() {
-								scheduledClose = false;
-								popUp = null;
-							}
-						}, 300);
-					}
-				}
-			});
-			popUp.border().color().gray(190);
-			popUp.offset(more.offsetX() - 200 + 10, applicationPanel.height());
-			IFocusPanel focus = popUp.container().panel().focus();
-			focus.addMouseOverListener(new IMouseOverListener() {
-
-				@Override
-				public void onMouseOver() {
-					scheduledClose = false;
-				}
-
-				@Override
-				public void onMouseOut() {
-					scheduleClose();
-				}
-			});
-			IVerticalPanel p = focus.add().panel().vertical();
-			p.spacing().left(12).top(12).right(12).bottom(12).inner(4);
-			// p.margin().top(2);
-			boolean first = true;
-			for (IAdminRightGroup g : rights) {
-				if (!first) {
-					p.addSpace(4);
-					p.add().line().color().lightgray();
-					p.addSpace(4);
-				}
-				p.add().label().text(g.label().toUpperCase()).font().weight()
-						.bold().pixel(10).color().gray();
-				for (final IAdminRight right : g.rights()) {
-					ImageButton text = new ImageButton(p.add());
-					text.imageResource(right.image()).text(right.label());
-					text.addClickListener(new LazyClickListener() {
-						@Override
-						protected void onAllowedClick() {
-							popUp.visible(false);
-							right.onClick();
-						}
-					});
-					new HyperlinkMouseOverListener(text.label());
-				}
-				first = false;
-			}
-			popUp.visible(true);
-		}
 	}
 
 	private class ViewSelection implements IViewSelection {
@@ -359,45 +255,10 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public void logout(final ILinearPanel<?> panel, String userName,
 					final Decorator[] decorators, final IClickListener listener) {
-				IClickable<?> prefix = panel.add().image()
-						.resource("user_white.png");
-				ILabel loggedInHead = panel.add().label().text(userName);
-				loggedInHead.font().pixel(fontSize()).weight().bold().color()
-						.white();
-				new HyperlinkMouseOverListener(loggedInHead);
-				final IImage image = panel.add().image()
-						.resource("more_white_10x16.png");
-				IClickListener clickListener = new IClickListener() {
-
-					private boolean clickable = true;
-
+				new UserPanelImageButton(panel, "user_white", userName) {
 					@Override
-					public void onClick() {
-						if (!clickable)
-							return;
-						final IPopUp popUp = PopUp.showPopUp(true).width(140)
-								.autoHide(true);
-						popUp.addVisibleListener(new IUpdateListener<Boolean>() {
-							@Override
-							public void onUpdate(Boolean value) {
-								if (!value) {
-									clickable = false;
-									Display.instance().invokeLater(
-											new Runnable() {
-												@Override
-												public void run() {
-													clickable = true;
-												}
-											}, 300);
-								}
-							}
-						});
-						popUp.border().color().gray(190);
-						popUp.offset(image.offsetX() - 140 + 12,
-								applicationPanel.height());
-						IVerticalPanel p = popUp.container().panel().vertical()
-								.spacing(12);
-						p.margin().top(2);
+					void decorate(IVerticalPanel p) {
+						p.spacing(12).margin().top(2);
 						boolean addLine = false;
 						for (Decorator d : decorators) {
 							if (d.isVisible()) {
@@ -411,12 +272,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 						ib.imageResource("logout.png").text("Logout")
 								.addClickListener(listener);
 						ib.label().hyperlink().font().weight().bold();
-						popUp.visible(true);
 					}
 				};
-				prefix.addClickListener(clickListener);
-				loggedInHead.addClickListener(clickListener);
-				image.addClickListener(clickListener);
 			}
 		};
 	}
@@ -453,6 +310,124 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		};
 	}
 
+	private abstract class UserPanelImageButton implements IClickListener,
+			IMouseOverListener, IClickable<UserPanelImageButton> {
+
+		private final IImage more;
+		private IPopUp popUp;
+		private boolean scheduledClose;
+		private ImageButton button;
+
+		private UserPanelImageButton(IPanel<?> panel, String image, String label) {
+			button = new ImageButton(panel.add());
+			button.imageResource(image + ".png").text(label);
+			button.label().font().pixel(fontSize()).weight().bold().color()
+					.white();
+			new HyperlinkMouseOverListener(button.label());
+			more = panel.add().image().resource("more_white_10x16.png");
+			more.margin().right(4);
+			more.addClickListener(this);
+			button.addMouseOverListener(this);
+			more.addMouseOverListener(this);
+		}
+
+		public IClickable<?> tooltip(String string) {
+			button.tooltip(string);
+			more.tooltip(string);
+			return this;
+		}
+
+		@Override
+		public void onMouseOver() {
+			scheduledClose = false;
+			onClick();
+		}
+
+		@Override
+		public void onMouseOut() {
+			scheduleClose();
+		}
+
+		private void scheduleClose() {
+			if (scheduledClose)
+				return;
+			scheduledClose = true;
+			Display.instance().invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					if (scheduledClose && popUp != null) {
+						popUp.visible(false);
+					}
+				}
+			}, 500);
+		}
+
+		@Override
+		public void onClick() {
+			if (popUp != null)
+				return;
+			popUp = PopUp.showPopUp(true).width(200).autoHide(true);
+			popUp.addVisibleListener(new IUpdateListener<Boolean>() {
+				@Override
+				public void onUpdate(Boolean value) {
+					if (!value) {
+						Display.instance().invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								scheduledClose = false;
+								popUp = null;
+							}
+						}, 300);
+					}
+				}
+			});
+			popUp.border().color().gray(190);
+			IFocusPanel focus = popUp.container().panel().focus();
+			focus.addMouseOverListener(new IMouseOverListener() {
+
+				@Override
+				public void onMouseOver() {
+					scheduledClose = false;
+				}
+
+				@Override
+				public void onMouseOut() {
+					scheduleClose();
+				}
+			});
+			IVerticalPanel p = focus.add().panel().vertical();
+			decorate(p);
+			popUp.visible(true);
+			popUp.offset(more.offsetX() - p.width() + 10,
+					applicationPanel.height());
+		}
+
+		void closePopUp() {
+			popUp.visible(false);
+		}
+
+		abstract void decorate(IVerticalPanel panel);
+
+		@Override
+		public UserPanelImageButton clickable(boolean clickable) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean clickable() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public co.fxl.gui.api.IClickable.IKey<UserPanelImageButton> addClickListener(
+				co.fxl.gui.api.IClickable.IClickListener clickListener) {
+			button.addClickListener(clickListener);
+			more.addClickListener(clickListener);
+			return null;
+		}
+
+	}
+
 	@Override
 	public IUserPanel userPanel() {
 		return new IUserPanel() {
@@ -472,19 +447,40 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			@Override
 			public IClickable<?> enterAdminButton(IPanel<?> panel,
 					final List<IAdminRightGroup> rights) {
-				ImageButton text = new ImageButton(panel.add());
-				text.imageResource("settings.png").text("Administration");
-				text.label().font().pixel(fontSize()).weight().bold().color()
-						.white();
-				new HyperlinkMouseOverListener(text.label());
-				final IImage more = panel.add().image()
-						.resource("more_white_10x16.png");
-				more.margin().right(4);
-				AdminPopUp clickListener = new AdminPopUp(rights, more);
-				more.addClickListener(clickListener);
-				text.addMouseOverListener(clickListener);
-				more.addMouseOverListener(clickListener);
-				return text;
+				return new UserPanelImageButton(panel, "settings",
+						"Administration") {
+					@Override
+					void decorate(IVerticalPanel p) {
+						p.spacing().left(12).top(12).right(12).bottom(12)
+								.inner(4);
+						// p.margin().top(2);
+						boolean first = true;
+						for (IAdminRightGroup g : rights) {
+							if (!first) {
+								p.addSpace(4);
+								p.add().line().color().lightgray();
+								p.addSpace(4);
+							}
+							p.add().label().text(g.label().toUpperCase())
+									.font().weight().bold().pixel(10).color()
+									.gray();
+							for (final IAdminRight right : g.rights()) {
+								ImageButton text = new ImageButton(p.add());
+								text.imageResource(right.image()).text(
+										right.label());
+								text.addClickListener(new LazyClickListener() {
+									@Override
+									protected void onAllowedClick() {
+										closePopUp();
+										right.onClick();
+									}
+								});
+								new HyperlinkMouseOverListener(text.label());
+							}
+							first = false;
+						}
+					}
+				}.tooltip("Click to go to Administration Area for complex operations");
 			}
 
 			@Override
