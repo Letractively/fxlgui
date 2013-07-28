@@ -317,7 +317,6 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		private IPopUp popUp;
 		private boolean scheduledClose;
 		private ImageButton button;
-		private boolean openedByMouseOver;
 
 		private UserPanelImageButton(IPanel<?> panel, String image, String label) {
 			button = new ImageButton(panel.add());
@@ -342,7 +341,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		@Override
 		public void onMouseOver() {
 			scheduledClose = false;
-			showPopUp(true);
+			showPopUp();
 		}
 
 		@Override
@@ -351,8 +350,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		}
 
 		private void scheduleClose() {
-			if (!openedByMouseOver)
-				return;
+			// if (!openedByMouseOver)
+			// return;
 			if (scheduledClose)
 				return;
 			scheduledClose = true;
@@ -368,15 +367,11 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 		@Override
 		public void onClick() {
-			showPopUp(false);
+			scheduledClose = false;
+			showPopUp();
 		}
 
-		private void showPopUp(boolean openedByMouseOver) {
-			if (popUp != null && this.openedByMouseOver && !openedByMouseOver) {
-				scheduledClose = false;
-				popUp = null;
-			}
-			this.openedByMouseOver = openedByMouseOver;
+		private void showPopUp() {
 			if (popUp != null)
 				return;
 			popUp = PopUp.showPopUp(true).width(200).autoHide(true);
@@ -384,13 +379,17 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				@Override
 				public void onUpdate(Boolean value) {
 					if (!value) {
-						Display.instance().invokeLater(new Runnable() {
+						final Runnable runnable = new Runnable() {
 							@Override
 							public void run() {
 								scheduledClose = false;
 								popUp = null;
 							}
-						}, 300);
+						};
+						if (!scheduledClose)
+							runnable.run();
+						else
+							Display.instance().invokeLater(runnable, 300);
 					}
 				}
 			});
