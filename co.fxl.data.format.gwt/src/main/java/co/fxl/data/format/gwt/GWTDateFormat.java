@@ -24,18 +24,22 @@ import co.fxl.data.format.api.IFormat;
 import co.fxl.data.format.impl.Format;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 
 class GWTDateFormat implements IFormat<Date> {
 
 	private DateTimeFormat impl;
 	private String locale = Format.LOCALE_EN;
-	private PredefinedFormat predef;
+	private DateTimeFormat predef;
+	static DateTimeFormat TIME_PATTERN = DateTimeFormat
+			.getFormat("hh:mm:ss aaa");
+	static DateTimeFormat DATE_PATTERN = DateTimeFormat.getFormat("yyyy-MM-dd");
+	static DateTimeFormat DATE_TIME_PATTERN = DateTimeFormat
+			.getFormat("yyyy-MM-dd hh:mm:ss aaa");
 
-	GWTDateFormat(PredefinedFormat predef) {
+	GWTDateFormat(DateTimeFormat predef) {
 		try {
+			impl = predef;
 			this.predef = predef;
-			this.impl = DateTimeFormat.getFormat(predef);
 		} catch (Throwable lThrowable) {
 			lThrowable.printStackTrace();
 		}
@@ -56,11 +60,11 @@ class GWTDateFormat implements IFormat<Date> {
 			return null;
 		try {
 			if (locale.equals(Format.LOCALE_DE)) {
-				if (predef.equals(PredefinedFormat.TIME_MEDIUM))
+				if (predef.equals(TIME_PATTERN))
 					return getTime(new Date(), format);
-				if (predef.equals(PredefinedFormat.DATE_TIME_MEDIUM))
+				if (predef.equals(DATE_TIME_PATTERN))
 					return getTime(getDate(format), format);
-				if (predef.equals(PredefinedFormat.DATE_SHORT))
+				if (predef.equals(DATE_PATTERN))
 					return getDate(format);
 			}
 			return impl.parse(format);
@@ -107,11 +111,11 @@ class GWTDateFormat implements IFormat<Date> {
 		if (object == null)
 			return "";
 		if (locale.equals(Format.LOCALE_DE)) {
-			if (predef.equals(PredefinedFormat.TIME_LONG))
+			if (predef.equals(TIME_PATTERN))
 				return getTimeString(object);
-			if (predef.equals(PredefinedFormat.DATE_TIME_MEDIUM))
+			if (predef.equals(DATE_TIME_PATTERN))
 				return getDateString(object) + " " + getTimeString(object);
-			if (predef.equals(PredefinedFormat.DATE_SHORT))
+			if (predef.equals(DATE_PATTERN))
 				return getDateString(object);
 		}
 		return impl.format(object);

@@ -22,16 +22,14 @@ import java.util.Date;
 
 import co.fxl.data.format.impl.Format;
 
-import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
-
 public class GWTFormat {
 
 	public static void setUp() {
 		Format.registerDateTime(new GWTDateFormat(
-				PredefinedFormat.DATE_TIME_MEDIUM));
+				GWTDateFormat.DATE_TIME_PATTERN));
 		Format.register(Date.class, new GWTDateFormat(
-				PredefinedFormat.DATE_SHORT));
-		Format.registerTime(new GWTDateFormat(PredefinedFormat.TIME_MEDIUM));
+				GWTDateFormat.DATE_PATTERN));
+		Format.registerTime(new GWTDateFormat(GWTDateFormat.TIME_PATTERN));
 		Format.register(Long.class, new GWTNumberFormat<Long>() {
 			@Override
 			Long convert(Double d) {

@@ -29,6 +29,7 @@ import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IColored;
+import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ISuggestField;
@@ -435,7 +436,7 @@ public class Validation {
 
 	private void errorColor(ITextArea textField, boolean hasError) {
 		if (hasError) {
-			textField.color().rgb(255, 170, 170);
+			errorColor(textField);
 		} else {
 			removeErrorColor(textField);
 		}
@@ -450,7 +451,7 @@ public class Validation {
 
 	private void errorColor(ISuggestField textField, boolean hasError) {
 		if (hasError) {
-			textField.color().mix().red().white().white();
+			errorColor(textField);
 		} else {
 			removeErrorColor(textField);
 		}
@@ -458,7 +459,7 @@ public class Validation {
 
 	private void errorColor(IComboBox textField, boolean hasError) {
 		if (hasError) {
-			textField.color().mix().red().white().white();
+			errorColor(textField);
 		} else {
 			removeErrorColor(textField);
 		}
@@ -466,15 +467,19 @@ public class Validation {
 
 	private void errorColor(ITextField textField, boolean hasError) {
 		if (hasError) {
-			textField.color().mix().red().white().white();
+			errorColor(textField);
 		} else {
 			removeErrorColor(textField);
 		}
 	}
 
+	private IColor errorColor(IColored textField) {
+		return textField.color().mix().red().white().white();
+	}
+
 	private void errorColor(final IPasswordField textField, boolean hasError) {
 		if (hasError) {
-			textField.color().mix().red().white().white();
+			errorColor(textField);
 		} else {
 			removeErrorColor(textField);
 		}
