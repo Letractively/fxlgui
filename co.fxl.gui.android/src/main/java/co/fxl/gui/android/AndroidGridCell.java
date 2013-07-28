@@ -24,6 +24,7 @@ import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.IPadding;
 
 class AndroidGridCell extends AndroidContainer implements IGridCell {
 
@@ -119,6 +120,11 @@ class AndroidGridCell extends AndroidContainer implements IGridCell {
 
 	@Override
 	public IGridCell size(int width, int height) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IPadding padding() {
 		throw new UnsupportedOperationException();
 	}
 

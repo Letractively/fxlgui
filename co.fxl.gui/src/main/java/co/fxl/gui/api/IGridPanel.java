@@ -68,6 +68,8 @@ public interface IGridPanel extends IPanel<IGridPanel> {
 		IGridCell clear();
 
 		IBorder border();
+
+		IPadding padding();
 	}
 
 	int columns();
