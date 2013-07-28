@@ -25,6 +25,7 @@ import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.Env;
 
 class FlowFormGrid implements FormGrid {
 
@@ -95,6 +96,8 @@ class FlowFormGrid implements FormGrid {
 	private IGridPanel getGridPanel(int row) {
 		while (row >= panels.size()) {
 			IGridPanel g = panel.add().panel().grid();
+			if (Env.is(Env.IE))
+				g.indent(4);
 			panels.add(new Row(g));
 			g.column(0).width(120);
 		}
