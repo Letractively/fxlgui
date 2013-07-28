@@ -32,7 +32,6 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFocusable;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
-import co.fxl.gui.api.IGridPanel.IGridColumn;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IKeyRecipient;
@@ -45,7 +44,6 @@ import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IImageField;
 import co.fxl.gui.impl.CallbackTemplate;
-import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.FieldTypeImpl;
@@ -69,11 +67,9 @@ public class FormWidgetImpl implements IFormWidget {
 		}
 	}
 
-	private static final boolean FIXED_WIDTH = Constants.get(
-			"FormWidgetImpl.FIXED_WIDTH", false);
 	private int gridIndex0 = -1;
 	private WidgetTitle widgetTitle;
-	protected IGridPanel grid;
+	protected FormGrid grid;
 	private IVerticalPanel contentPanel;
 	ISaveListener saveListener = null;
 	List<FormFieldImpl<?, ?>> fields = new LinkedList<FormFieldImpl<?, ?>>();
@@ -87,7 +83,6 @@ public class FormWidgetImpl implements IFormWidget {
 	boolean isNew;
 	boolean alwaysAllowCancel = false;
 	private List<IFocusable<?>> focusables = new LinkedList<IFocusable<?>>();
-	private int spacing = 0;
 	SaveButtonPanel saveButton;
 	private IGridPanel bottomPanel;
 	List<IGridPanel> internalPanels = new LinkedList<IGridPanel>();
@@ -99,22 +94,20 @@ public class FormWidgetImpl implements IFormWidget {
 	}
 
 	FormEntryLabel addFormEntryLabel(String name, int gridIndex) {
-		IGridPanel grid = grid();
-		int column = 0;
-		IGridCell cell = grid.cell(column, gridIndex).align().end();
+		FormGrid grid = grid();
+		IGridCell cell = grid.label(gridIndex).align().end();
 		if (fixLabelWidth != -1)
 			cell.width(fixLabelWidth);
-		ILabel l = cell.label().autoWrap(FIXED_WIDTH).text(name);
+		ILabel l = cell.label().autoWrap(true).text(name);
 		l.font().pixel(11);
 		l.margin().right(4);
 		return new FormEntryLabel(cell, l);
 	}
 
 	private IContainer container(int gridIndex) {
-		IGridPanel grid = grid();
-		int column = 1;
-		IGridCell cell = grid.cell(column, gridIndex);
-		if (fixValueWidth != -column)
+		FormGrid grid = grid();
+		IGridCell cell = grid.value(gridIndex);
+		if (fixValueWidth != -1)
 			cell.width(fixValueWidth);
 		heights.decorate(cell);
 		IGridPanel subGrid = cell.panel().grid();
@@ -125,7 +118,7 @@ public class FormWidgetImpl implements IFormWidget {
 		return c;
 	}
 
-	protected void decorateCell(IGridCell cell) {
+	protected void decorateCell(IGridPanel grid, IGridCell cell) {
 	}
 
 	ITextField addFormValueTextField(int gridIndex, boolean withFocus) {
@@ -171,7 +164,7 @@ public class FormWidgetImpl implements IFormWidget {
 		Style.instance().form().inputField(valuePanel);
 		valuePanel.editable(saveListener != null);
 		setFocus(valuePanel);
-		decorateCell(grid.cell(1, gridIndex));
+		decorateCell(grid.grid(gridIndex), grid.value(gridIndex));
 		return valuePanel;
 	}
 
@@ -180,7 +173,7 @@ public class FormWidgetImpl implements IFormWidget {
 		Style.instance().form().inputField(valuePanel);
 		valuePanel.editable(saveListener != null);
 		setFocus(valuePanel);
-		decorateCell(grid.cell(1, gridIndex));
+		decorateCell(grid.grid(gridIndex), grid.value(gridIndex));
 		return valuePanel;
 	}
 
@@ -430,31 +423,18 @@ public class FormWidgetImpl implements IFormWidget {
 		validation.validate(valueElement, required, type, formField.maxLength);
 	}
 
-	IGridPanel grid() {
+	FormGrid grid() {
 		if (grid == null) {
-			contentPanel = widgetTitle.content().panel().vertical()
-					.spacing(spacing);
-			grid = contentPanel.add().panel().grid();
-			grid.indent(1);
-			grid.spacing(1);
-			grid.resize(2, 1);
-			int column = 1;
-			if (FIXED_WIDTH)
-				grid.column(0).width(120);
-			else
-				expand(column);
-			decorate(grid);
+			contentPanel = widgetTitle.content().panel().vertical();
+			grid = new FormGridImpl(this, contentPanel);
 		}
 		return grid;
 	}
 
-	protected void decorate(IGridPanel grid) {
-	}
-
-	void expand(int column) {
-		IGridColumn c = grid.column(column);
-		c.expand();
-	}
+	// void expand(int column) {
+	// IGridColumn c = grid.column(column);
+	// c.expand();
+	// }
 
 	@Override
 	public IClickable<?> addHyperlink(String name) {
@@ -469,7 +449,7 @@ public class FormWidgetImpl implements IFormWidget {
 
 	void prepareAddTitle() {
 		widgetTitle.spacing(0);
-		spacing = 8;
+		// spacing = 8;
 	}
 
 	@Override
@@ -613,5 +593,8 @@ public class FormWidgetImpl implements IFormWidget {
 		for (FormFieldImpl<?, ?> f : fields) {
 			f.clearTextAreaWidth();
 		}
+	}
+
+	protected void decorate(IGridPanel grid) {
 	}
 }

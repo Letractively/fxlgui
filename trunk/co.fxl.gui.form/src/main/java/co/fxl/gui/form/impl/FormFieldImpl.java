@@ -209,7 +209,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 
 	@Override
 	public void remove() {
-		widget.grid.row(getVisibleIndex()).remove();
+		widget.grid.removeRow(getVisibleIndex());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -233,7 +233,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 			widget.removeInput(this);
 		int index = getVisibleIndex();
 		if (visible) {
-			widget.grid.row(index).insert();
+			widget.grid.insertRow(index);
 			createLabelColumn(index);
 			createContentColumn(index);
 		} else {

@@ -480,7 +480,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 							first = false;
 						}
 					}
-				}.tooltip("Click to go to Administration Area for complex operations");
+				}.tooltip("Click 'Administration' for complex operations");
 			}
 
 			@Override
