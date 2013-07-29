@@ -261,6 +261,8 @@ public class StatusDisplay implements IResizeListener, Runnable,
 		run();
 		stylePanel(panel);
 		p0 = panel.add().panel().vertical().align().begin();
+		if (Env.is(Env.IE))
+			p0 = p0.add().panel().vertical().align().begin();
 		return this;
 	}
 
