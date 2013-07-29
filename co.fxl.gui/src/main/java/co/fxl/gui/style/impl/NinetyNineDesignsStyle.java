@@ -491,7 +491,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 							first = false;
 						}
 					}
-				}.tooltip("Click 'Administration' for complex operations");
+				}.tooltip("Click Administration for complex operations");
 			}
 
 			@Override
