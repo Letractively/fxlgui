@@ -29,7 +29,6 @@ import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
@@ -130,7 +129,7 @@ public interface IStyle {
 
 		boolean useColoredButtons();
 
-		void gridPlainContent(IElement<?> element);
+		void gridPlainContent(IBordered element);
 
 	}
 

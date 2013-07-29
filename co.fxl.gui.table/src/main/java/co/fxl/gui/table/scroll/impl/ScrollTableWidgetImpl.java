@@ -26,6 +26,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import co.fxl.gui.api.IBordered;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable;
@@ -840,6 +841,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		IBulkTableWidget lastGrid = grid;
 		IVerticalPanel vpanel = contentPanel.add().panel().vertical();
 		grid = (IBulkTableWidget) vpanel.add().widget(IBulkTableWidget.class);
+		updateGridStyle();
 		if (RELATION_REGISTER_CONTEXT_MENU && commandButtons != null) {
 			commandButtons.addContextMenu(grid.addToContextMenu(true));
 		}
@@ -1586,10 +1588,14 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	@Override
 	public IScrollTableWidget<Object> plainContent(boolean plainContent) {
 		this.plainContent = plainContent;
-		if (plainContent) {
-			Style.instance().table().gridPlainContent(grid.element());
-		}
+		updateGridStyle();
 		return this;
+	}
+
+	private void updateGridStyle() {
+		if (plainContent && grid != null && grid instanceof IBordered) {
+			Style.instance().table().gridPlainContent((IBordered) grid);
+		}
 	}
 
 	@Override

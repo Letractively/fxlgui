@@ -30,7 +30,6 @@ import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IFontElement;
 import co.fxl.gui.api.IFontElement.IFont;
@@ -1034,9 +1033,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		return new ITable() {
 
 			@Override
-			public void gridPlainContent(IElement<?> element) {
-				blue(((IBordered) element).border().style().top().style()
-						.bottom());
+			public void gridPlainContent(IBordered element) {
+				blue(element.border().style().top().style().bottom());
 			}
 
 			@Override
