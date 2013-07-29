@@ -1034,7 +1034,9 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 
 			@Override
 			public void gridPlainContent(IBordered element) {
-				blue(element.border().style().top().style().bottom());
+				IBorder border = element.border();
+				blue(border);
+				border.style().top().style().bottom();
 			}
 
 			@Override
