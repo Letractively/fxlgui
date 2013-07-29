@@ -410,7 +410,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			decorate(p);
 			popUp.visible(true);
 			popUp.offset(more.offsetX() - p.width() + 10,
-					applicationPanel.height());
+					applicationPanel.offsetY() + applicationPanel.height());
 		}
 
 		void closePopUp() {
