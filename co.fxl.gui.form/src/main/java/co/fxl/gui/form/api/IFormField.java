@@ -42,8 +42,6 @@ public interface IFormField<T, R> extends IUpdateable<R> {
 
 	void type(IFieldType type);
 
-	// ILabel addButton(String title);
-
 	IClickable<?> addImage(String resource);
 
 	IContainer addContainer(boolean decorate);
