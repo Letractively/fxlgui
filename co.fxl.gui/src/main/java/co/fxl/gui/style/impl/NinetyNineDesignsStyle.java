@@ -433,7 +433,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		public co.fxl.gui.api.IClickable.IKey<UserPanelImageButton> addClickListener(
 				co.fxl.gui.api.IClickable.IClickListener clickListener) {
 			button.addClickListener(clickListener);
-//			more.addClickListener(clickListener);
+			// more.addClickListener(clickListener);
 			return null;
 		}
 
@@ -1031,6 +1031,16 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 	@Override
 	public ITable table() {
 		return new ITable() {
+
+			@Override
+			public int fontSizeHeader() {
+				return 12;
+			}
+
+			@Override
+			public boolean headerCapitals() {
+				return false;
+			}
 
 			@Override
 			public void gridPlainContent(IBordered element) {
