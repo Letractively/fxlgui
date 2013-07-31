@@ -762,6 +762,16 @@ class GrayScaleStyle extends StyleTemplate {
 			@Override
 			public void gridPlainContent(IBordered element) {
 			}
+
+			@Override
+			public int fontSizeHeader() {
+				return 11;
+			}
+
+			@Override
+			public boolean headerCapitals() {
+				return true;
+			}
 		};
 	}
 

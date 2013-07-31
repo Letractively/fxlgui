@@ -131,6 +131,10 @@ public interface IStyle {
 
 		void gridPlainContent(IBordered element);
 
+		int fontSizeHeader();
+
+		boolean headerCapitals();
+
 	}
 
 	public interface IFilterPanel {
