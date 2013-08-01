@@ -438,7 +438,7 @@ public class FormWidgetImpl implements IFormWidget {
 	}
 
 	void linkInput(final FormFieldImpl<?, ?> formField) {
-		if (validation == null)
+		if (validation == null || formField instanceof FormRelationFieldImpl)
 			return;
 		Object valueElement = formField.valueElement();
 		boolean required = formField.required;
