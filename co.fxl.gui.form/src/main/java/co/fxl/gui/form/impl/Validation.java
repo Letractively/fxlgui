@@ -596,7 +596,6 @@ public class Validation {
 					validateDate((ITextField) valueElement, Format.time(),
 							required);
 				} else
-
 					validateDate((ITextField) valueElement, required);
 			} else if (type.clazz.equals(Integer.class)) {
 				validateLong((ITextField) valueElement, required);
