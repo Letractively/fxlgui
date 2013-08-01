@@ -871,4 +871,5 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		container.widget.addStyleName(style);
 		return (R) this;
 	}
+
 }
