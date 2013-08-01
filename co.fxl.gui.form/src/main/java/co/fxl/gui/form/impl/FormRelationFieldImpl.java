@@ -18,10 +18,12 @@
  */
 package co.fxl.gui.form.impl;
 
+import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.filter.api.ISuggestionAdp;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IRelationField;
+import co.fxl.gui.impl.Display;
 
 class FormRelationFieldImpl extends FormFieldImpl<ISuggestField, String>
 		implements IRelationField {
@@ -57,8 +59,10 @@ class FormRelationFieldImpl extends FormFieldImpl<ISuggestField, String>
 		valueElement.addFocusListener(new IUpdateListener<Boolean>() {
 			@Override
 			public void onUpdate(Boolean value) {
-				if (!value)
-					valueElement.text(adp.text());
+				if (!value) {
+					String text = adp.text();
+					valueElement.text(text);
+				}
 			}
 		});
 	}
