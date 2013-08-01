@@ -29,4 +29,6 @@ public interface ISuggestionAdp extends ISource, IUpdateListener<ISuggestion> {
 
 	String text();
 
+	void listener(IUpdateListener<Boolean> iUpdateListener);
+
 }
