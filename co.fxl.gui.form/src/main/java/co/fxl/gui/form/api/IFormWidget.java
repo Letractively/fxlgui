@@ -83,6 +83,8 @@ public interface IFormWidget extends IResizable<IFormWidget> {
 
 	IFormField<ITextField, Date> addDateField(String name, boolean addCalendar);
 
+	IRelationField addRelationField(String name);
+
 	IFormField<ITextField, String> addColorField(String name);
 
 	IFormField<IPasswordField, String> addPasswordField(String name);

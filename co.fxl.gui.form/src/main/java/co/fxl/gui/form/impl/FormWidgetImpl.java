@@ -37,12 +37,14 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IKeyRecipient;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
+import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IImageField;
+import co.fxl.gui.form.api.IRelationField;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.Env;
@@ -131,6 +133,16 @@ public class FormWidgetImpl implements IFormWidget {
 		valuePanel.editable(saveListener != null);
 		if (withFocus)
 			setFocus(valuePanel);
+		setCRListener(valuePanel);
+		return valuePanel;
+	}
+
+	ISuggestField addFormValueSuggestField(int gridIndex) {
+		ISuggestField valuePanel = container(gridIndex, false).suggestField()
+				.autoSelect(true).requestOnFocus(true);
+		heights.decorate(valuePanel);
+		Style.instance().form().inputField(valuePanel);
+		valuePanel.editable(saveListener != null);
 		setCRListener(valuePanel);
 		return valuePanel;
 	}
@@ -230,6 +242,11 @@ public class FormWidgetImpl implements IFormWidget {
 	public IFormField<ITextField, String> addTextField(String name,
 			IFieldType type) {
 		return new FormTextFieldImpl<String>(this, nextGridIndex(), name, type);
+	}
+
+	@Override
+	public IRelationField addRelationField(String name) {
+		return new FormRelationFieldImpl(this, nextGridIndex(), name);
 	}
 
 	@Override
