@@ -401,6 +401,12 @@ public class Validation {
 		return this;
 	}
 
+	public Validation linkInput(ISuggestField textField, boolean required) {
+		Field field = new Field(textField, required);
+		textField.addUpdateListener(field);
+		return this;
+	}
+
 	public Validation linkInput(final IHTMLArea textField, boolean required,
 			final int maxLength) {
 		final Field field = new Field(textField, required);
@@ -577,6 +583,8 @@ public class Validation {
 			FieldTypeImpl type, int maxLength) {
 		if (valueElement instanceof IHTMLArea) {
 			linkInput((IHTMLArea) valueElement, required, maxLength);
+		} else if (valueElement instanceof ISuggestField) {
+			linkInput((ISuggestField) valueElement, required);
 		} else if (valueElement instanceof ITextArea) {
 			linkInput((ITextArea) valueElement, required);
 		} else if (valueElement instanceof ITextField) {
