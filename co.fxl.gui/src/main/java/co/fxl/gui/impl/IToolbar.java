@@ -23,7 +23,6 @@ import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMargin;
 
 public interface IToolbar {
