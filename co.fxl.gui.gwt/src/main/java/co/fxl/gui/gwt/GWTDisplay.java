@@ -415,7 +415,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	}
 
 	public static boolean isChrome() {
-		return getUserAgent().toLowerCase().contains("Chrome/");
+		return getUserAgent().contains("Chrome/");
 	}
 
 	public static boolean isInternetExplorer() {
