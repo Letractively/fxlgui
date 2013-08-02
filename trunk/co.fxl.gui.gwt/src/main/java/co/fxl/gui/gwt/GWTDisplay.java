@@ -407,7 +407,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	public static boolean isSafari() {
 		return getUserAgent().contains("Safari/")
-				&& getUserAgent().contains("AppleWebKit/");
+				&& !getUserAgent().contains("Chrome/");
 	}
 
 	public static boolean isFirefox3() {
@@ -415,7 +415,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	}
 
 	public static boolean isChrome() {
-		return getUserAgent().toLowerCase().contains("webkit");
+		return getUserAgent().toLowerCase().contains("Chrome/");
 	}
 
 	public static boolean isInternetExplorer() {
