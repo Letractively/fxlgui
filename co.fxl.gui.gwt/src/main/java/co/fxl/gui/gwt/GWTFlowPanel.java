@@ -69,7 +69,7 @@ public class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 		this.margin = spacing / 2;
 		// TODO Look: GWT: Firefox: Margin doesn't work if items are
 		// displayed in more than one row
-		if (!GWTDisplay.isChrome())
+		if (!GWTDisplay.isChrome)
 			container.widget.getElement().getStyle()
 					.setPadding(spacing, Unit.PX);
 		for (int i = 0; i < container.widget.getWidgetCount(); i++) {

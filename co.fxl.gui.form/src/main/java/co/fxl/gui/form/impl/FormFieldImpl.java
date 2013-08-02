@@ -31,13 +31,15 @@ import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.impl.FormWidgetImpl.FormEntryLabel;
 import co.fxl.gui.impl.ClickableMultiplexer;
-import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.ITooltipResolver;
+import co.fxl.gui.impl.RuntimeConstants;
 
-public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
+public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
+		RuntimeConstants {
 
+	private static final int SPACING = IE ? (IE_LEQ_10 ? 3 : 2) : 4;
 	FormWidgetImpl widget;
 	private ILabel label;
 	private IGridCell cell;
@@ -146,16 +148,15 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R> {
 		g.column(0).expand();
 		IGridCell cell2 = g.cell(containerInPanelIndex++, 0).align().center()
 				.valign().center();
-		if (Env.is(Env.SWING))
+		if (SWING)
 			cell2.align().begin();
 		if (decorate) {
-			g.column(1).width(24);// - (Env.is(Env.IE) ? 4 : 0));
+			g.column(1).width(24);// - (IE ? 4 : 0));
 			widget.heights.decorate(cell2);
 		}
 		IHorizontalPanel spacing = cell2.panel().horizontal();
 		if (decorate) {
-			spacing.spacing(Env.is(Env.IE) ? (Env.runtime().geq(10) ? 3 : 2)
-					: 4);
+			spacing.spacing(SPACING);
 			widget.heights.styleColor(spacing);
 			IBorder border = spacing.border();
 			border.color().rgb(211, 211, 211);

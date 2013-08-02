@@ -47,18 +47,18 @@ import co.fxl.gui.form.api.IImageField;
 import co.fxl.gui.form.api.IRelationField;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.DummyCallback;
-import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.IFieldType;
+import co.fxl.gui.impl.RuntimeConstants;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.rtf.api.IHTMLArea;
 import co.fxl.gui.style.impl.Style;
 
-public class FormWidgetImpl implements IFormWidget {
+public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 
-	private static final boolean USE_BUTTON_PANEL = !Env.is(Env.SWING);
-	private static final boolean ALLOW_MULTI_COLUMNS = !Env.is(Env.SWING);
+	private static final boolean USE_BUTTON_PANEL = NOT_SWING;
+	private static final boolean ALLOW_MULTI_COLUMNS = NOT_SWING;
 
 	class FormEntryLabel {
 

@@ -77,13 +77,32 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	static GWTDisplay instance;
 	private GWTContainer<Widget> container;
 	private GWTUncaughtExceptionHandler uncaughtExceptionHandler;
-	// GWTDisplay.waiting-delta public static boolean waiting = false;
+	// waiting-delta public static boolean waiting = false;
 	static int lastClickX = 0;
 	static int lastClickY = 0;
 	private Scheduler scheduler = new SchedulerImpl();
 	private IRuntime runtime;
 	private boolean scrolling = true;
 	private List<Element> styles = new LinkedList<Element>();
+	private static String userAgent = Window.Navigator.getUserAgent();
+	private static final String USER_AGENT_LOWER_CASE = userAgent.toLowerCase();
+	public static boolean isFirefox = userAgent.contains("Gecko/")
+			&& userAgent.contains("Firefox/");
+	static boolean isSafari = userAgent.contains("Safari/")
+			&& !userAgent.contains("Chrome/");
+	public static boolean isFirefox3 = isFirefox
+			&& userAgent.contains("Firefox/3.");
+	static boolean isChrome = userAgent.contains("Chrome/");
+	public static boolean isInternetExplorer = USER_AGENT_LOWER_CASE
+			.contains("msie");
+	public static boolean isInternetExplorer8OrBelow = USER_AGENT_LOWER_CASE
+			.contains("msie 8.0")
+			|| USER_AGENT_LOWER_CASE.contains("msie 7.0")
+			|| USER_AGENT_LOWER_CASE.contains("msie 6.0")
+			|| USER_AGENT_LOWER_CASE.contains("msie 5.0");
+	public static boolean isOpera = USER_AGENT_LOWER_CASE.contains("opera");
+	static boolean isInternetExplorer9 = USER_AGENT_LOWER_CASE
+			.contains("msie 9.0");
 
 	public static void notifyEvent(DomEvent<?> event) {
 		if (event != null) {
@@ -109,7 +128,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 			}
 		};
 		// TODO AOPC: Aspect Log.instance(new GWTLog());
-		ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL = !(isChrome() && getBrowserVersion() <= 13);
+		ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL = !(isChrome && getBrowserVersion() <= 13);
 		Window.addResizeHandler(new ResizeHandler() {
 			@Override
 			public void onResize(ResizeEvent event) {
@@ -146,7 +165,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	}
 
 	// public static boolean isChromeZoomActive() {
-	// return Env.is(Env.CHROME)
+	// return CHROME
 	// && Display.instance().width() < (getOuterWidth() / 1.05);
 	// }
 
@@ -154,27 +173,25 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 		// TODO replace with Env.is(...) declarations in the respective widgets
 
-		Constants
-				.put("TableViewTemplate.CORRECT_HEIGHT", !isInternetExplorer());
+		Constants.put("TableViewTemplate.CORRECT_HEIGHT", !isInternetExplorer);
 		// if (isInternetExplorer()) {
 		// Constants.put("DashboardPagePage.HEIGHT_DECREMENT", 3);
 		// Constants.put("DashboardPagePage.HEIGHT_CONTENT_DECREMENT", 30);
 		// }
-		if (isFirefox()) {
+		if (isFirefox) {
 			Constants.put("ScrollTableWidgetImpl.ADD_TOP_PANEL_TOP_PADDING",
 					true);
-			if (isFirefox3()) {
+			if (isFirefox3) {
 				Constants.put("FormWidgetImpl.FIXED_WIDTH", true);
 				Constants.put("NavigationItemImpl.USE_TEMP_FLIP", false);
 			}
 		}
-		if (isOpera())
+		if (isOpera)
 			Constants.put("ScrollTableWidgetImpl.ADD_TOP_PANEL_SPACING", true);
 		// if (isFirefox() || isOpera()) {
 		// Constants.put("MiniFilterPanel.MODIFIED_TITLE_ADD", true);
 		// }
-		final boolean isChrome15Plus = isChrome()
-				&& GWTDisplay.getBrowserVersion() >= 15;
+		final boolean isChrome15Plus = isChrome && getBrowserVersion() >= 15;
 		final String imagePath = Constants.get("GWTLazyTreeWidget.IMAGE_PATH",
 				(isChrome15Plus ? "" : GWT.getModuleBaseURL()) + "images/");
 		Constants.put("ImagePathResolver", new ImagePathResolver() {
@@ -191,31 +208,30 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	}
 
 	private String getBrowserName() {
-		if (GWTDisplay.isChrome())
+		if (isChrome)
 			return co.fxl.gui.impl.Env.CHROME;
-		else if (GWTDisplay.isOpera())
+		else if (isOpera)
 			return co.fxl.gui.impl.Env.OPERA;
-		else if (GWTDisplay.isInternetExplorer())
+		else if (isInternetExplorer)
 			return co.fxl.gui.impl.Env.IE;
-		else if (GWTDisplay.isFirefox())
+		else if (isFirefox)
 			return co.fxl.gui.impl.Env.FIREFOX;
-		else if (GWTDisplay.isSafari())
+		else if (isSafari)
 			return co.fxl.gui.impl.Env.SAFARI;
 		return co.fxl.gui.impl.Env.OTHER_BROWSER;
 	}
 
 	public static double getBrowserVersion() {
-		if (GWTDisplay.isFirefox()) {
+		if (isFirefox) {
 			return getBrowserVersionFirefox();
 		}
-		if (isChrome()) {
-			String userAgent = getUserAgent();
+		if (isChrome) {
 			return getBrowserVersionChrome(userAgent);
 		}
-		if (isInternetExplorer()) {
-			if (isInternetExplorer8OrBelow())
+		if (isInternetExplorer) {
+			if (isInternetExplorer8OrBelow)
 				return 8;
-			else if (isInternetExplorer9())
+			else if (isInternetExplorer9)
 				return 9;
 			else
 				return 10;
@@ -223,12 +239,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		return -1;
 	}
 
-	public static boolean isInternetExplorer9() {
-		return getUserAgent().toLowerCase().contains("msie 9.0");
-	}
-
 	private static double getBrowserVersionFirefox() {
-		String userAgent = getUserAgent();
 		if (userAgent.contains(FIREFOX)) {
 			int index = userAgent.indexOf(FIREFOX) + FIREFOX.length();
 			int index2 = userAgent.indexOf(".", index);
@@ -395,47 +406,9 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	private static native int getOuterWidth()
 	/*-{ return window.outerWidth; }-*/;
 
-	public static String getUserAgent() {
-		String userAgent = Window.Navigator.getUserAgent();
-		return userAgent;
-	}
-
-	public static boolean isFirefox() {
-		return getUserAgent().contains("Gecko/")
-				&& getUserAgent().contains("Firefox/");
-	}
-
-	public static boolean isSafari() {
-		return getUserAgent().contains("Safari/")
-				&& !getUserAgent().contains("Chrome/");
-	}
-
-	public static boolean isFirefox3() {
-		return isFirefox() && getUserAgent().contains("Firefox/3.");
-	}
-
-	public static boolean isChrome() {
-		return getUserAgent().contains("Chrome/");
-	}
-
-	public static boolean isInternetExplorer() {
-		return getUserAgent().toLowerCase().contains("msie");
-	}
-
-	public static boolean isInternetExplorer8OrBelow() {
-		String lowerCase = getUserAgent().toLowerCase();
-		return lowerCase.contains("msie 8.0") || lowerCase.contains("msie 7.0")
-				|| lowerCase.contains("msie 6.0")
-				|| lowerCase.contains("msie 5.0");
-	}
-
-	public static boolean isOpera() {
-		return getUserAgent().toLowerCase().contains("opera");
-	}
-
 	@Override
 	public IDisplay block(boolean waiting) {
-		// GWTDisplay.waiting-delta GWTDisplay.waiting = waiting;
+		// waiting-delta waiting = waiting;
 		DOM.setStyleAttribute(RootPanel.get().getElement(), "cursor",
 				waiting ? "wait" : "default");
 		return this;
@@ -554,7 +527,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	}
 
 	void resetScrollPanelTop() {
-		if (isChrome() && !scrolling && Window.getScrollTop() != 0) {
+		if (isChrome && !scrolling && Window.getScrollTop() != 0) {
 			Window.scrollTo(Window.getScrollLeft(), 0);
 		}
 	}

@@ -23,8 +23,9 @@ import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IVerticalPanel;
 
-public class FlipPage implements IContentPage, IColored {
+public class FlipPage implements IContentPage, IColored, RuntimeConstants {
 
+	private static boolean flipImmediatelyAfterNext = OPERA;
 	private ICardPanel cardPanel;
 	private IVerticalPanel page1;
 	private IVerticalPanel page2;
@@ -51,13 +52,9 @@ public class FlipPage implements IContentPage, IColored {
 		} else {
 			container = page2.clear().add();
 		}
-		if (flipImmediatelyAfterNext())
+		if (flipImmediatelyAfterNext)
 			flipNow();
 		return container;
-	}
-
-	private boolean flipImmediatelyAfterNext() {
-		return Env.is(Env.OPERA);
 	}
 
 	@Override
@@ -65,7 +62,7 @@ public class FlipPage implements IContentPage, IColored {
 		if (!nextCalled)
 			return;
 		nextCalled = false;
-		if (flipImmediatelyAfterNext())
+		if (flipImmediatelyAfterNext)
 			return;
 		flipNow();
 	}
@@ -94,7 +91,7 @@ public class FlipPage implements IContentPage, IColored {
 	@Override
 	public void preview() {
 		previewCalled = true;
-		if (flipImmediatelyAfterNext())
+		if (flipImmediatelyAfterNext)
 			return;
 		if (active == null)
 			return;
@@ -106,9 +103,9 @@ public class FlipPage implements IContentPage, IColored {
 
 	@Override
 	public void back() {
-//		assert previewCalled;
+		// assert previewCalled;
 		previewCalled = false;
-		if (flipImmediatelyAfterNext())
+		if (flipImmediatelyAfterNext)
 			return;
 		if (active == null)
 			return;

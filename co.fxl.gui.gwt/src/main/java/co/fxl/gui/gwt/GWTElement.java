@@ -774,7 +774,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public R opacity(double opacity) {
-		if (!GWTDisplay.isInternetExplorer8OrBelow())
+		if (!GWTDisplay.isInternetExplorer8OrBelow)
 			container.widget.getElement().getStyle().setOpacity(opacity);
 		return (R) this;
 	}

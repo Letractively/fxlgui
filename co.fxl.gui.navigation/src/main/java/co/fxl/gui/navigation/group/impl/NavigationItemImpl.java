@@ -37,6 +37,7 @@ import co.fxl.gui.impl.IContentPage;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.ResizableWidgetTemplate;
+import co.fxl.gui.impl.RuntimeConstants;
 import co.fxl.gui.impl.ServerCallCache;
 import co.fxl.gui.impl.Shell;
 import co.fxl.gui.log.api.ILog.IMeasurement;
@@ -47,7 +48,7 @@ import co.fxl.gui.navigation.impl.BufferedPanelImpl;
 import co.fxl.gui.style.impl.Style;
 
 public class NavigationItemImpl extends ResizableWidgetTemplate implements
-		INavigationItem, IClickListener {
+		INavigationItem, IClickListener, RuntimeConstants {
 
 	static final int POPUP_WIDTH = 280;
 	protected static final boolean ALLOW_CACHING = true;
@@ -276,17 +277,17 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 		final boolean requiresResize = cachingActiveTemp
 				&& (lastWidth != Shell.instance().width(itemPanel) || lastHeight != Shell
 						.instance().height(itemPanel));
-		if (requiresResize && Env.is(Env.IE)) {
+		if (requiresResize && IE) {
 			cachingActiveTemp = false;
 		}
 		final boolean cachingActive = cachingActiveTemp;
-		if (!Env.is(Env.SWING))
+		if (NOT_SWING)
 			startLoading(cachingActive);
 		forkLabelAsActive(viaClick, new CallbackTemplate<Void>(cb0) {
 
 			@Override
 			public void onSuccess(Void result) {
-				if (Env.is(Env.SWING))
+				if (SWING)
 					startLoading(cachingActive);
 				widget.flipPage().active(flipPage);
 				final CallbackTemplate<Void> cb = new CallbackTemplate<Void>(

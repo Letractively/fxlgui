@@ -31,11 +31,11 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ILinearPanel;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
-import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
+import co.fxl.gui.impl.RuntimeConstants;
 import co.fxl.gui.style.impl.Style;
 
-public class ColumnSelection {
+public class ColumnSelection implements RuntimeConstants {
 
 	private static final String SHOW_COLUMNS = "Column Selection";
 	private static final String COLUMN = "Column";
@@ -228,7 +228,7 @@ public class ColumnSelection {
 
 	public static void newInstance(TableWidgetAdp tableWidgetAdp,
 			boolean allowsEmptySelection) {
-		if (Env.is(Env.SWING))
+		if (SWING)
 			new ColumnSelection(tableWidgetAdp, allowsEmptySelection);
 		else
 			new ScalingColumnSelection(tableWidgetAdp, allowsEmptySelection);

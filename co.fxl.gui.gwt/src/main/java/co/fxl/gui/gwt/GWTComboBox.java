@@ -41,7 +41,7 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 	GWTComboBox(GWTContainer<ListBox> container) {
 		super(container);
 		container.widget.addStyleName("gwt-ComboBox-FXL");
-		defaultHeight = GWTDisplay.isFirefox() ? 18 : height();
+		defaultHeight = GWTDisplay.isFirefox ? 18 : height();
 		if (defaultHeight < 18)
 			defaultHeight = 18;
 		height(24);
@@ -51,7 +51,7 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 				notifyChange();
 			}
 		});
-		if (GWTDisplay.isOpera()) {
+		if (GWTDisplay.isOpera) {
 			style().setPaddingLeft(5, Unit.PX);
 			style().setPaddingRight(5, Unit.PX);
 		}
@@ -59,7 +59,7 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 
 	@Override
 	public IComboBox height(int height) {
-		if (GWTDisplay.isFirefox() && height >= 1) {
+		if (GWTDisplay.isFirefox && height >= 1) {
 			// TODO Look: GWT: Firefox: ComboBox has inline padding
 			// (displayed if has focus), should be aligned
 			int padding = (height - defaultHeight) / 2;

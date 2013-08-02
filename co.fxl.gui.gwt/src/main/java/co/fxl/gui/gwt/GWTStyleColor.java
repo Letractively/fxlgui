@@ -53,8 +53,8 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 					String attribute = "background";
 					String gradient = "-webkit-gradient(linear, left top, left bottom, from("
 							+ original.color + "), to(" + color + "))";
-					if (GWTDisplay.isInternetExplorer()) {
-						// if (!GWTDisplay.isInternetExplorer8OrBelow()) {
+					if (GWTDisplay.isInternetExplorer) {
+						// if (!GWTDisplay.isInternetExplorer8OrBelow) {
 						// attribute = "filter";
 						// gradient =
 						// "progid:DXImageTransform.Microsoft.gradient(startColorstr='"
@@ -66,10 +66,10 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 						setImageGradient(element);
 						attribute = null;
 						// }
-					} else if (GWTDisplay.isFirefox()) {
+					} else if (GWTDisplay.isFirefox) {
 						gradient = "-moz-linear-gradient(top, "
 								+ original.color + ", " + color + ")";
-					} else if (GWTDisplay.isOpera()) {
+					} else if (GWTDisplay.isOpera) {
 						setImageGradient(element);
 						attribute = null;
 					}
@@ -185,7 +185,7 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 
 	@Override
 	public IColor remove() {
-		if (!GWTDisplay.isInternetExplorer8OrBelow())
+		if (!GWTDisplay.isInternetExplorer8OrBelow)
 			stylable().clearProperty("filter");
 		stylable().clearProperty("background");
 		setBackgroundNone();
@@ -198,7 +198,7 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 		GWTWidgetStyle gwtWidgetStyle = (GWTWidgetStyle) style;
 		Element element = gwtWidgetStyle.widget.getElement();
 		DOM.setStyleAttribute(element, "background", "none");
-		if (!GWTDisplay.isInternetExplorer8OrBelow())
+		if (!GWTDisplay.isInternetExplorer8OrBelow)
 			DOM.setStyleAttribute(element, "filter", "none");
 	}
 

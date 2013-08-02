@@ -27,7 +27,7 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IResizable.IResizeListener;
 
-public class StatusPopUp implements IResizeListener, Runnable {
+public class StatusPopUp implements IResizeListener, Runnable, RuntimeConstants {
 
 	static final int[] NEW_COLOR = new int[] { 160, 255, 160 };
 	static final int[] YELLOW = new int[] { 249, 237, 190 };
@@ -157,7 +157,7 @@ public class StatusPopUp implements IResizeListener, Runnable {
 			label.text(active.message);
 			panel.tooltip(active.tooltip);
 			label.tooltip(active.tooltip);
-			if (!Env.is(Env.SWING))
+			if (NOT_SWING)
 				popUp.visible(true);
 			updateSize();
 			popUp.visible(true);

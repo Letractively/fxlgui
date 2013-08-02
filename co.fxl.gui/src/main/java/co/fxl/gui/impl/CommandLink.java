@@ -35,9 +35,9 @@ import co.fxl.gui.impl.ContextMenu.Entry;
 import co.fxl.gui.impl.ContextMenu.Group;
 import co.fxl.gui.style.impl.Style;
 
-public class CommandLink implements IClickListener, ButtonAdp {
+public class CommandLink implements IClickListener, ButtonAdp, RuntimeConstants {
 
-	static final boolean HIDE_NON_CLICKABLE = !Env.is(Env.SWING);
+	static final boolean HIDE_NON_CLICKABLE = NOT_SWING;
 	final WidgetTitle widgetTitle;
 	private IHorizontalPanel iPanel;
 	private ILabel label;

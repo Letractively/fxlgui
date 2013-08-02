@@ -24,7 +24,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.IResizableWidget.Size;
 import co.fxl.gui.impl.PopUp.TransparentPopUp;
 
-public class PopUpPageContainer implements PageContainer {
+public class PopUpPageContainer implements PageContainer, RuntimeConstants {
 
 	private IPopUp popUp;
 	private IVerticalPanel panel;
@@ -58,7 +58,7 @@ public class PopUpPageContainer implements PageContainer {
 		resize();
 		popUp.visible(true);
 		oldListener = ServerListener.instance;
-		if (!Env.is(Env.SWING))
+		if (NOT_SWING)
 			ServerListener.instance = new ServerCallCounter(true) {
 
 				@Override

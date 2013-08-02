@@ -33,11 +33,11 @@ import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextInputElement;
 
-public class Heights {
+public class Heights implements RuntimeConstants {
 
-	public static boolean IGNORE_HEIGHTS = Env.runtime().leq(Env.IE, 9);
+	public static boolean IGNORE_HEIGHTS = IE_LEQ_9;
 	public static final int CELL_HEIGHT = 28;
-	public static int TEXTFIELD_HEIGHT = Env.runtime().leq(Env.IE, 9) ? 21
+	public static int TEXTFIELD_HEIGHT = IE_LEQ_9 ? 21
 			: 24 - (Env.runtime().geq(Env.IE, 10) ? 2 : 0);
 	public static final int COMBOBOX_HEIGHT = 24 - (Env.runtime().geq(Env.IE,
 			10) ? 2 : 0);

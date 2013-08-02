@@ -31,6 +31,7 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.HorizontalScalingPanel;
+import co.fxl.gui.impl.RuntimeConstants;
 import co.fxl.gui.table.scroll.impl.ScrollTableWidgetImpl;
 import co.fxl.gui.table.util.api.IDragDropListener;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
@@ -38,7 +39,7 @@ import co.fxl.gui.table.util.api.IUpDownIndex;
 import co.fxl.gui.table.util.impl.DragAndDrop.DragAndDropAdapter;
 
 public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
-		DragAndDropAdapter {
+		DragAndDropAdapter, RuntimeConstants {
 
 	// TODO Usability: Relation-Register-Easy-Add: Klick auf Add: untere
 	// H�lfte
@@ -56,7 +57,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	// g-like-design, fallback (IE, etc.): alte implementierung
 
 	public static int WIDTH_SCROLL_PANEL = 35;
-	public static final int HEIGHT_SCROLL_BAR = Env.is(Env.FIREFOX) ? 21 : 17;
+	public static final int HEIGHT_SCROLL_BAR = FIREFOX ? 21 : 17;
 	private static final int HEIGHT_CORRECTION = 7;
 	private int widthScrollPanel = WIDTH_SCROLL_PANEL;
 	IDecorator decorator;
@@ -187,7 +188,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		if (!plainContent && addToContextMenu)
 			co.fxl.gui.impl.Page.instance().contextMenu()
 					.decorate((IClickable<?>) v);
-//		v.color().white();
+		// v.color().white();
 		if (dragDropListener != null && !useDecoratorReturnForDND)
 			new DragAndDrop(this, v);
 		// if (size > 0 && size <= 50) {
@@ -220,7 +221,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		scrollPane = ctr.scrollPane();
 		scrollPane.size(widthScrollPanel, height);
 		scrollContentPanel = scrollPane.viewPort().panel().vertical();
-		if (Env.is(Env.IE))
+		if (IE)
 			HorizontalScalingPanel.addDummyIE(scrollContentPanel);
 		else
 			scrollContentPanel.add().label().text("&#160;");
@@ -390,8 +391,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		}
 		assert storeLastIndex == lastIndex : "last index changed concurrently: "
 				+ lastIndex + "!=" + storeLastIndex;
-//		assert lastIndex >= rowIndex : "illegal range " + rowIndex + "-"
-//				+ lastIndex;
+		// assert lastIndex >= rowIndex : "illegal range " + rowIndex + "-"
+		// + lastIndex;
 		decorate(rowIndex, isCalibration, c);
 		// treeScrollPanelContainer.flip();
 		holdScroll = false;
