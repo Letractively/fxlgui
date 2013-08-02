@@ -375,8 +375,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			if (popUp != null)
 				return;
 			popUp = PopUp.showPopUp(true).autoHide(true);
-			if (!Env.is(Env.SAFARI))
-				popUp.width(200);
+			// if (!Env.is(Env.SAFARI))
+			popUp.width(200);
 			popUp.addVisibleListener(new IUpdateListener<Boolean>() {
 				@Override
 				public void onUpdate(Boolean value) {
@@ -397,6 +397,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			});
 			popUp.border().color().gray(190);
 			IFocusPanel focus = popUp.container().panel().focus();
+			if (Env.is(Env.SAFARI))
+				focus.width(200);
 			focus.addMouseOverListener(new IMouseOverListener() {
 
 				@Override
@@ -410,6 +412,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				}
 			});
 			IVerticalPanel p = focus.add().panel().vertical();
+			if (Env.is(Env.SAFARI))
+				p.width(200);
 			decorate(p);
 			popUp.visible(true);
 			popUp.offset(more.offsetX() - p.width() + 10,

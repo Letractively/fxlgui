@@ -19,6 +19,7 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IDisplay.IRuntime;
+import co.fxl.gui.log.impl.Log;
 
 public class RuntimeTemplate implements IRuntime {
 
@@ -28,6 +29,8 @@ public class RuntimeTemplate implements IRuntime {
 	public RuntimeTemplate(String name, double version) {
 		this.name = name;
 		this.version = version;
+		Log.instance().debug(
+				"Compatibility runtime is " + name + " ~" + version);
 	}
 
 	@Override
