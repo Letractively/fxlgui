@@ -358,7 +358,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 			Display.instance().invokeLater(new Runnable() {
 				@Override
 				public void run() {
-					if (scheduledClose && popUp != null) {
+					if (scheduledClose && popUp != null && !SWING) {
 						popUp.visible(false);
 					}
 				}
@@ -415,9 +415,16 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 			if (SAFARI)
 				p.width(200);
 			decorate(p);
+			if (IE)
+				setOffset(p);
 			popUp.visible(true);
-			popUp.offset(more.offsetX() - p.width() + 10,
-					applicationPanel.offsetY() + applicationPanel.height());
+			setOffset(p);
+		}
+
+		void setOffset(IVerticalPanel p) {
+			int x = more.offsetX() - p.width() + 10;
+			int y = applicationPanel.offsetY() + applicationPanel.height();
+			popUp.offset(x, y);
 		}
 
 		void closePopUp() {
