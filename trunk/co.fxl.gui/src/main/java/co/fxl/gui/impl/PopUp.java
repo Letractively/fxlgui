@@ -33,6 +33,8 @@ import co.fxl.gui.style.impl.Style;
 
 public class PopUp {
 
+	private static final int POPUP_ROW = Env.runtime().leq(Env.IE, 8) ? 1 : 0;
+
 	public interface HistoryAdp {
 
 		void notifyShowPopUp(Runnable l);
@@ -142,7 +144,7 @@ public class PopUp {
 		panel.color().remove();
 		// panel.addSpace(LABEL_DISTANCE);
 		final IVerticalPanel p = panel
-				.cell(0, Env.runtime().leq(Env.IE, 8) ? 1 : 0).panel()
+				.cell(0, POPUP_ROW).panel()
 				.vertical();
 		IBorder b = p.border().remove();
 		b.style().shadow();

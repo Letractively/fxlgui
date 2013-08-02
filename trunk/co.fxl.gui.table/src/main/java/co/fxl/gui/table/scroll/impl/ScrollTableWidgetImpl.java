@@ -62,6 +62,7 @@ import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.KeyAdapter;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.ResizableWidgetTemplate;
+import co.fxl.gui.impl.RuntimeConstants;
 import co.fxl.gui.impl.Shell;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.impl.WidgetTitle;
@@ -83,7 +84,8 @@ import co.fxl.gui.table.util.api.IDragDropListener.IDragArea;
 import co.fxl.gui.table.util.api.ILazyScrollPane;
 
 public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
-		IScrollTableWidget<Object>, ILabelMouseListener, TableWidgetAdp {
+		IScrollTableWidget<Object>, ILabelMouseListener, TableWidgetAdp,
+		RuntimeConstants {
 
 	// TODO Usability: editable table: if illegal value has been inserted (e.g.
 	// 25.13.2002), then ignore input, reset to original and show fading error
@@ -755,7 +757,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			if (ADD_TOP_PANEL_TOP_PADDING) {
 				topPanelContainer = container().add().panel().vertical();
 				topPanelContainer.padding().top(5);
-				if (Env.is(Env.FIREFOX))
+				if (FIREFOX)
 					topPanelContainer.padding().bottom(4);
 				topPanelContainer.color().rgb(255, 255, 255).gradient()
 						.fallback(250, 250, 250).vertical().rgb(245, 245, 245);
@@ -941,7 +943,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	}
 
 	private void addColumnSelection() {
-		if (hasColumnSelection && !Env.is(Env.SWING))
+		if (hasColumnSelection && NOT_SWING)
 			return;
 		ColumnSelection.newInstance(this, false);
 		hasColumnSelection = true;
@@ -1053,7 +1055,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private void addDisplayingNote() {
 		if (!showDisplayedRange)
 			return;
-		if (statusRangeLabel == null || Env.is(Env.SWING)) {
+		if (statusRangeLabel == null || SWING) {
 			IGridPanel.IGridCell clear = statusPanel().cell(2, 0).clear()
 					.valign().center();
 			clear.align().end();

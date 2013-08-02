@@ -31,8 +31,9 @@ import co.fxl.gui.filter.impl.FilterPanel.ICell;
 import co.fxl.gui.form.impl.DateField;
 import co.fxl.gui.form.impl.Validation;
 import co.fxl.gui.impl.Env;
+import co.fxl.gui.impl.RuntimeConstants;
 
-class CellImpl implements ICell {
+class CellImpl implements ICell, RuntimeConstants {
 
 	static final class ExplicitRangeField implements RangeField {
 
@@ -50,7 +51,7 @@ class CellImpl implements ICell {
 		}
 
 		ITextField addTextField(IHorizontalPanel p, boolean isDateField) {
-			boolean useDateField = isDateField && !Env.is(Env.SWING);
+			boolean useDateField = isDateField && NOT_SWING;
 			ITextField textField = useDateField ? new DateField(p.add(), Env
 					.runtime().geq(Env.IE, 10) ? 2 : 3) : p.add().textField();
 			ITextField textField1 = textField

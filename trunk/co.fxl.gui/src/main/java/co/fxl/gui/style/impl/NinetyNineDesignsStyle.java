@@ -52,7 +52,6 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Display;
-import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.HyperlinkDecorator;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
@@ -61,12 +60,13 @@ import co.fxl.gui.impl.ImageButton;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.NavigationView;
 import co.fxl.gui.impl.PopUp;
+import co.fxl.gui.impl.RuntimeConstants;
 import co.fxl.gui.impl.StylishButton;
 import co.fxl.gui.impl.UserPanel.Decorator;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.style.api.IStyle.IUserPanel.IAdminRightGroup.IAdminRight;
 
-class NinetyNineDesignsStyle extends StyleTemplate {
+class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 
 	private static final int COMMENT_PANEL_INDENT = 6;
 	private static final String CLEAR_FILTERS = "Clear Filters";
@@ -397,7 +397,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			});
 			popUp.border().color().gray(190);
 			IFocusPanel focus = popUp.container().panel().focus();
-			if (Env.is(Env.SAFARI))
+			if (SAFARI)
 				focus.width(200);
 			focus.addMouseOverListener(new IMouseOverListener() {
 
@@ -412,7 +412,7 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				}
 			});
 			IVerticalPanel p = focus.add().panel().vertical();
-			if (Env.is(Env.SAFARI))
+			if (SAFARI)
 				p.width(200);
 			decorate(p);
 			popUp.visible(true);

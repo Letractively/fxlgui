@@ -27,9 +27,9 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IVerticalPanel;
 
-public class ViewImpl extends LazyClickListener {
+public class ViewImpl extends LazyClickListener implements RuntimeConstants {
 
-	private static boolean FLIP_BEFORE = Env.is(Env.IE);
+	private static boolean FLIP_BEFORE = IE;
 	private final ViewList viewList;
 	private ILabel label;
 	private IGridPanel grid;
@@ -37,7 +37,7 @@ public class ViewImpl extends LazyClickListener {
 	private ViewDecorator decorator;
 	private FlipPage content;
 	private Object bo;
-//	private IImage removeImage;
+	// private IImage removeImage;
 	private IImage image;
 	private IHorizontalPanel labelPanel;
 	private String imageResource;
@@ -246,9 +246,9 @@ public class ViewImpl extends LazyClickListener {
 	public void clickable() {
 		// grid.color().remove();
 		styleViewlistEntryInactive(label);
-//		if (removeImage != null) {
-//			removeImage.visible(false);
-//		}
+		// if (removeImage != null) {
+		// removeImage.visible(false);
+		// }
 	}
 
 	public void styleViewlistEntryInactive(ILabel label) {

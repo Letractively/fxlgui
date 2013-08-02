@@ -37,7 +37,7 @@ import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.style.impl.Style;
 
 public class StatusDisplay implements IResizeListener, Runnable,
-		IScrollListener, IShell {
+		IScrollListener, IShell, RuntimeConstants {
 
 	public interface RefreshListener {
 
@@ -261,7 +261,7 @@ public class StatusDisplay implements IResizeListener, Runnable,
 		run();
 		stylePanel(panel);
 		p0 = panel.add().panel().vertical().align().begin();
-		if (Env.is(Env.IE))
+		if (IE)
 			p0 = p0.add().panel().vertical().align().begin();
 		return this;
 	}
@@ -269,7 +269,7 @@ public class StatusDisplay implements IResizeListener, Runnable,
 	public void resetPanelDimensions() {
 		if (panel != null) {
 			run();
-			if (Env.is(Env.CHROME)) {
+			if (CHROME) {
 				Display.instance().invokeLater(this);
 			}
 		}
@@ -279,7 +279,7 @@ public class StatusDisplay implements IResizeListener, Runnable,
 	public void run() {
 		panel.size(width(), height());
 		int width = display.width();
-		if (Env.is(Env.FIREFOX))
+		if (FIREFOX)
 			width += 2;
 		scrollPane.size(width, display.height());
 		if (sidePanel != null)

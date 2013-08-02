@@ -31,7 +31,7 @@ import com.google.gwt.user.client.ui.Image;
 public class GWTImage extends GWTElement<Image, IImage> implements IImage {
 
 	private static final String IMAGES = "images/";
-	public static boolean IS_CHROME_15_PLUS = GWTDisplay.isChrome()
+	public static boolean IS_CHROME_15_PLUS = GWTDisplay.isChrome
 			&& GWTDisplay.getBrowserVersion() >= 15;
 	public static String IMAGE_PATH = Constants.get(
 			"GWTLazyTreeWidget.IMAGE_PATH",
@@ -71,7 +71,7 @@ public class GWTImage extends GWTElement<Image, IImage> implements IImage {
 
 	@Override
 	public IImage clickable(boolean enable) {
-		if (GWTDisplay.isInternetExplorer8OrBelow()) {
+		if (GWTDisplay.isInternetExplorer8OrBelow) {
 			ImageResource resolve = resolve(resource);
 			if (resource != null && resolve != null && !enable) {
 				String p50resource = resource.substring(0,

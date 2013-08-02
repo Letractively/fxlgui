@@ -25,12 +25,11 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.filter.impl.FilterPanel.ICell;
-import co.fxl.gui.impl.Env;
+import co.fxl.gui.impl.RuntimeConstants;
 import co.fxl.gui.style.api.IStyle.IFilterPanel;
 
-class FilterGridImpl implements FilterGrid {
+class FilterGridImpl implements FilterGrid, RuntimeConstants {
 
-	private static final boolean ACTIVE_SET_WIDTH_COLUMN_1 = Env.is(Env.SWING);
 	private final FilterPanelImpl filterPanelImpl;
 	private IGridPanel grid;
 
@@ -38,7 +37,7 @@ class FilterGridImpl implements FilterGrid {
 		this.filterPanelImpl = filterPanelImpl;
 		grid = gridContainer.panel().vertical().align().end().spacing(5).add()
 				.panel().grid().spacing(3);
-		if (ACTIVE_SET_WIDTH_COLUMN_1)
+		if (SWING)
 			grid.column(1).width(FilterTemplate.WIDTH_SINGLE_CELL);
 	}
 

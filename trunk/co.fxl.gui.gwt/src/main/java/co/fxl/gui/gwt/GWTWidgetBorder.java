@@ -19,14 +19,14 @@
 package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IBordered.IBorder;
-import co.fxl.gui.impl.Env;
+import co.fxl.gui.impl.RuntimeConstants;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 
-public class GWTWidgetBorder extends GWTBorder {
+public class GWTWidgetBorder extends GWTBorder implements RuntimeConstants {
 
 	private Element element;
 	private String lastBorderType;
@@ -47,7 +47,7 @@ public class GWTWidgetBorder extends GWTBorder {
 
 			// antialiasing is missing
 
-			if (GWTDisplay.isInternetExplorer8OrBelow()) {
+			if (GWTDisplay.isInternetExplorer8OrBelow) {
 				width(1);
 			} else
 				widget.addStyleName(pixel == 4 ? "shadowblur"
@@ -102,7 +102,7 @@ public class GWTWidgetBorder extends GWTBorder {
 				DOM.setStyleAttribute(element, "border", width + "px " + color
 						+ " " + style);
 			String attr = "borderRadius";
-			if (Env.runtime().leq(Env.FIREFOX, 12))
+			if (FIREFOX_LEQ_12)
 				attr = "-moz-border-radius";
 			// TODO Look: Firefox/IE/Opera: Rounded Corners in
 			// Firefox/Opera/Firefox dont work, use style

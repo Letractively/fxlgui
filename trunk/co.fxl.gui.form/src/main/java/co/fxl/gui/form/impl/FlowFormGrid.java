@@ -26,9 +26,9 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IPadding;
 import co.fxl.gui.api.IVerticalPanel;
-import co.fxl.gui.impl.Env;
+import co.fxl.gui.impl.RuntimeConstants;
 
-class FlowFormGrid implements FormGrid {
+class FlowFormGrid implements FormGrid, RuntimeConstants {
 
 	private static final int _120 = 120;
 
@@ -53,12 +53,12 @@ class FlowFormGrid implements FormGrid {
 					grid.width(1.0);
 				} else {
 					grid.width(nonExpandedWidth);
-					if (Env.is(Env.FIREFOX))
+					if (FIREFOX)
 						grid.column(1).width(nonExpandedWidth - _120 - 4);
 				}
 				padding.right(0);
 			} else {
-				if (Env.is(Env.FIREFOX)) {
+				if (FIREFOX) {
 					if (width4Layout > 0)
 						grid.column(1).width(width4Layout - _120 - 4);
 					grid.width(width4Layout);
@@ -119,7 +119,7 @@ class FlowFormGrid implements FormGrid {
 	private IGridPanel getGridPanel(int row) {
 		while (row >= panels.size()) {
 			IGridPanel g = panel.add().panel().grid();
-			if (Env.is(Env.IE) || Env.is(Env.FIREFOX))
+			if (IE_OR_FIREFOX)
 				g.indent(1);
 			panels.add(new Row(g));
 			g.column(0).width(_120);

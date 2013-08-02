@@ -30,12 +30,11 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.api.IHorizontalPanel;
-import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMargin;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
 
-public class ToolbarImpl implements IToolbar {
+public class ToolbarImpl implements IToolbar, RuntimeConstants {
 
 	public static boolean ADJUST_HEIGHTS = false;
 	private static int SPACING = 4;
@@ -100,12 +99,12 @@ public class ToolbarImpl implements IToolbar {
 		} else {
 			IHorizontalPanel childPanel0 = root.panel.add().panel()
 					.horizontal().height(height).align().center();
-			if (!Env.is(Env.FIREFOX))
+			if (NOT_FIREFOX)
 				childPanel0.margin().top(-4);
 			rootPanel = childPanel0;
 			childPanel0.spacing().left(root.hasContent ? 0 : spacing)
 					.top(spacing).right(spacing);
-			if (!Env.is(Env.CHROME))
+			if (NOT_CHROME)
 				childPanel0.spacing().bottom(spacing);
 			childPanel = childPanel0.add().panel().horizontal().align()
 					.center();
@@ -127,16 +126,16 @@ public class ToolbarImpl implements IToolbar {
 		};
 	}
 
-//	@Override
-//	public ILabel addLabel() {
-//		ToolbarImpl root = root();
-//		IHorizontalPanel childPanel0 = root.panel.add().panel().horizontal()
-//				.height(height).align().center();
-//		childPanel0.spacing().left(root.hasContent ? 0 : spacing).top(spacing)
-//				.right(spacing);
-//		content.add(childPanel0);
-//		return childPanel0.add().label();
-//	}
+	// @Override
+	// public ILabel addLabel() {
+	// ToolbarImpl root = root();
+	// IHorizontalPanel childPanel0 = root.panel.add().panel().horizontal()
+	// .height(height).align().center();
+	// childPanel0.spacing().left(root.hasContent ? 0 : spacing).top(spacing)
+	// .right(spacing);
+	// content.add(childPanel0);
+	// return childPanel0.add().label();
+	// }
 
 	@Override
 	public IToolbar addGroup() {

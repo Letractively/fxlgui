@@ -35,7 +35,7 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 
-public class HorizontalScalingPanel implements IClickListener {
+public class HorizontalScalingPanel implements IClickListener, RuntimeConstants {
 
 	private static final int SPACING_POPUP = 6;
 	private IHorizontalPanel basic;
@@ -232,7 +232,7 @@ public class HorizontalScalingPanel implements IClickListener {
 	}
 
 	public static void addDummyIE(IPanel<?> leftPartBorder) {
-		if (Env.is(Env.IE))
+		if (IE)
 			addDummy(leftPartBorder);
 	}
 

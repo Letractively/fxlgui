@@ -49,6 +49,7 @@ import co.fxl.gui.impl.HorizontalScalingPanel;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
 import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.ResizableWidgetTemplate;
+import co.fxl.gui.impl.RuntimeConstants;
 import co.fxl.gui.impl.ServerCallCounter;
 import co.fxl.gui.impl.ServerListener;
 import co.fxl.gui.impl.Shell;
@@ -60,7 +61,7 @@ import co.fxl.gui.navigation.impl.TabDecoratorTemplate;
 import co.fxl.gui.style.impl.Style;
 
 public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
-		INavigationWidget {
+		INavigationWidget, RuntimeConstants {
 
 	private class Action {
 
@@ -74,9 +75,9 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	}
 
 	private static final boolean DYNAMIC_RESIZE = true;
-	protected static final boolean DRAW_MORE_TOP = !Env.is(Env.IE);
-	private static final boolean FIX_SEPARATOR_BORDER = Env.is(Env.IE);
-	private static boolean ADD_SEPARATORBORDER = !Env.is(Env.SWING);
+	protected static final boolean DRAW_MORE_TOP = !IE;
+	private static final boolean FIX_SEPARATOR_BORDER = IE;
+	private static boolean ADD_SEPARATORBORDER = NOT_SWING;
 	protected IDockPanel mainPanel;
 	IHorizontalPanel navigationPanel;
 	private ICardPanel history;

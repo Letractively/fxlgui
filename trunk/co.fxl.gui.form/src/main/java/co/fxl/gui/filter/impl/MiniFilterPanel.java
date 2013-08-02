@@ -179,7 +179,7 @@ class MiniFilterPanel implements FilterPanel {
 
 			@Override
 			public RangeField horizontal(boolean isDateField) {
-				// if (Env.is(Env.FIREFOX))
+				// if (FIREFOX)
 				// return new CombinedRangeField(container);
 				// else
 				return new ExplicitRangeField(widget, container, false);
