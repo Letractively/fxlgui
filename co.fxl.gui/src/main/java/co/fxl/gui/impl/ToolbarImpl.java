@@ -104,7 +104,7 @@ public class ToolbarImpl implements IToolbar, RuntimeConstants {
 			rootPanel = childPanel0;
 			childPanel0.spacing().left(root.hasContent ? 0 : spacing)
 					.top(spacing).right(spacing);
-			if (NOT_CHROME)
+			if (NOT_CHROME_OR_SAFARI)
 				childPanel0.spacing().bottom(spacing);
 			childPanel = childPanel0.add().panel().horizontal().align()
 					.center();
