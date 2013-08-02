@@ -20,8 +20,10 @@ package co.fxl.gui.impl;
 
 public interface RuntimeConstants {
 
+	public static final boolean SAFARI = Env.is(Env.SAFARI);
 	public static final boolean CHROME = Env.is(Env.CHROME);
-	public static final boolean NOT_CHROME = !CHROME;
+	public static final boolean CHROME_OR_SAFARI = CHROME || SAFARI;
+	public static final boolean NOT_CHROME_OR_SAFARI = !CHROME_OR_SAFARI;
 	public static final boolean OPERA = Env.is(Env.OPERA);
 	public static final boolean IE = Env.is(Env.IE);
 	public static final boolean SWING = Env.is(Env.SWING);
@@ -30,7 +32,6 @@ public interface RuntimeConstants {
 	public static final boolean NOT_FIREFOX = !FIREFOX;
 	public static final boolean IE_OR_FIREFOX = IE || FIREFOX;
 	public static final boolean IE_LEQ_10 = Env.runtime().geq(10);
-	public static final boolean SAFARI = Env.is(Env.SAFARI);
 	public static final boolean FIREFOX_LEQ_12 = Env.runtime().leq(Env.FIREFOX,
 			12);
 	public static final boolean IE_LEQ_9 = Env.runtime().leq(Env.IE, 9);

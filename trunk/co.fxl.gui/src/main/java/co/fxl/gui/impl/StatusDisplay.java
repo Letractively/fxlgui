@@ -269,7 +269,7 @@ public class StatusDisplay implements IResizeListener, Runnable,
 	public void resetPanelDimensions() {
 		if (panel != null) {
 			run();
-			if (CHROME) {
+			if (CHROME_OR_SAFARI) {
 				Display.instance().invokeLater(this);
 			}
 		}
