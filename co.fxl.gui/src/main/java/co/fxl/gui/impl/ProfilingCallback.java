@@ -22,14 +22,16 @@ import co.fxl.gui.api.ICallback;
 import co.fxl.gui.log.api.ILog.IMeasurement;
 import co.fxl.gui.log.impl.Log;
 
-public class ProfilingCallback<T> extends CallbackTemplate<T> {
+public class ProfilingCallback<T> extends CallbackTemplate<T> implements
+		RuntimeConstants {
 
 	private static final boolean ACTIVE = true;
 	private IMeasurement measurement;
 
 	private ProfilingCallback(ICallback<T> callback) {
 		super(callback);
-		String signature = new Exception().getStackTrace()[2].toString();
+		String signature = new Exception().getStackTrace()[2]
+				.toString();
 		measurement = Log.instance().start(signature);
 	}
 

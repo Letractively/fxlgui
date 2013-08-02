@@ -397,8 +397,8 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 			});
 			popUp.border().color().gray(190);
 			IFocusPanel focus = popUp.container().panel().focus();
-//			if (SAFARI)
-				focus.width(200);
+			// if (SAFARI)
+			focus.width(200);
 			focus.addMouseOverListener(new IMouseOverListener() {
 
 				@Override
@@ -412,10 +412,10 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 				}
 			});
 			IVerticalPanel p = focus.add().panel().vertical();
-//			if (SAFARI)
-				p.width(200);
+			// if (SAFARI)
+			p.width(200);
 			decorate(p);
-			if (IE)
+			if (SWING)
 				setOffset(p);
 			popUp.visible(true);
 			setOffset(p);

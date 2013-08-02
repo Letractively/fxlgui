@@ -50,6 +50,8 @@ class FormRelationFieldImpl extends FormFieldImpl<ISuggestField, String>
 
 	@Override
 	public void suggestionAdp(final ISuggestionAdp adp) {
+		if (adp == null)
+			return;
 		adp.suggestField(valueElement.source(adp));
 		valueElement.addSuggestionListener(adp);
 		this.adp = adp;
