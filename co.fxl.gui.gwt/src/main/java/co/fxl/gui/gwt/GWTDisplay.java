@@ -89,7 +89,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	private static final String USER_AGENT_LOWER_CASE = userAgent.toLowerCase();
 	public static boolean isFirefox = userAgent.contains("Gecko/")
 			&& userAgent.contains("Firefox/");
-	static boolean isSafari = userAgent.contains("Safari/")
+	public static boolean isSafari = userAgent.contains("Safari/")
 			&& !userAgent.contains("Chrome/");
 	public static boolean isFirefox3 = isFirefox
 			&& userAgent.contains("Firefox/3.");
