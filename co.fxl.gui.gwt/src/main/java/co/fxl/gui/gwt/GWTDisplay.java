@@ -40,6 +40,7 @@ import co.fxl.gui.impl.DisplayTemplate;
 import co.fxl.gui.impl.ImagePathResolver;
 import co.fxl.gui.impl.RuntimeTemplate;
 import co.fxl.gui.impl.ToolbarImpl;
+import co.fxl.gui.log.impl.Log;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -92,7 +93,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 			&& !userAgent.contains("Chrome/");
 	public static boolean isFirefox3 = isFirefox
 			&& userAgent.contains("Firefox/3.");
-	static boolean isChrome = userAgent.contains("Chrome/");
+	static boolean isChrome = userAgent.contains("Chrome/")
+			&& !userAgent.contains("Safari/");
 	public static boolean isInternetExplorer = USER_AGENT_LOWER_CASE
 			.contains("msie");
 	public static boolean isInternetExplorer8OrBelow = USER_AGENT_LOWER_CASE
@@ -208,16 +210,22 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	}
 
 	private String getBrowserName() {
-		if (isChrome)
+		if (isChrome) {
+			assert !isSafari && !isInternetExplorer && !isOpera && !isFirefox;
 			return co.fxl.gui.impl.Env.CHROME;
-		else if (isOpera)
+		} else if (isOpera) {
+			assert !isSafari && !isInternetExplorer && !isChrome && !isFirefox;
 			return co.fxl.gui.impl.Env.OPERA;
-		else if (isInternetExplorer)
+		} else if (isInternetExplorer) {
+			assert !isSafari && !isChrome && !isOpera && !isFirefox;
 			return co.fxl.gui.impl.Env.IE;
-		else if (isFirefox)
+		} else if (isFirefox) {
+			assert !isSafari && !isChrome && !isOpera && !isInternetExplorer;
 			return co.fxl.gui.impl.Env.FIREFOX;
-		else if (isSafari)
+		} else if (isSafari) {
+			assert !isInternetExplorer && !isChrome && !isOpera && !isFirefox;
 			return co.fxl.gui.impl.Env.SAFARI;
+		}
 		return co.fxl.gui.impl.Env.OTHER_BROWSER;
 	}
 
@@ -552,8 +560,10 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		addStyle(".gwt-TextArea-FXL { height: 100px; padding: 3px; " + font
 				+ "}");
 		addStyle(".gwt-TextBox-FXL { padding: 3px; " + font + "}");
-		if (fontFamily.contains("'Open Sans'"))
+		if (fontFamily.contains("'Open Sans'") && isChrome) {
+			Log.instance().debug("Adding font-smoothing");
 			addStyle("html, body { -webkit-font-smoothing: subpixel-antialiased !important; -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -ms-backface-visibility:     hidden; }");
+		}
 		return this;
 	}
 
