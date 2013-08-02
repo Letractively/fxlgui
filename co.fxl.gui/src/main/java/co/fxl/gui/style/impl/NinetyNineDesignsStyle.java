@@ -52,6 +52,7 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.HyperlinkDecorator;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
@@ -396,8 +397,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 			});
 			popUp.border().color().gray(190);
 			IFocusPanel focus = popUp.container().panel().focus();
-			// if (Env.is(Env.SAFARI))
-			focus.width(200);
+			if (Env.is(Env.SAFARI))
+				focus.width(200);
 			focus.addMouseOverListener(new IMouseOverListener() {
 
 				@Override
@@ -411,8 +412,8 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 				}
 			});
 			IVerticalPanel p = focus.add().panel().vertical();
-			// if (Env.is(Env.SAFARI))
-			p.width(200);
+			if (Env.is(Env.SAFARI))
+				p.width(200);
 			decorate(p);
 			popUp.visible(true);
 			popUp.offset(more.offsetX() - p.width() + 10,
