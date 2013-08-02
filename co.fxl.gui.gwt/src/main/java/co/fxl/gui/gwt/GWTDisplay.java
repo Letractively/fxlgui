@@ -199,6 +199,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 			return co.fxl.gui.impl.Env.IE;
 		else if (GWTDisplay.isFirefox())
 			return co.fxl.gui.impl.Env.FIREFOX;
+		else if (GWTDisplay.isSafari())
+			return co.fxl.gui.impl.Env.SAFARI;
 		return co.fxl.gui.impl.Env.OTHER_BROWSER;
 	}
 
@@ -399,12 +401,17 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	}
 
 	public static boolean isFirefox() {
-		return !isChrome() && !isOpera() && !isInternetExplorer();
+		return getUserAgent().contains("Gecko/")
+				&& getUserAgent().contains("Firefox/");
+	}
+
+	public static boolean isSafari() {
+		return getUserAgent().contains("Safari/")
+				&& getUserAgent().contains("AppleWebKit/");
 	}
 
 	public static boolean isFirefox3() {
-		return !isChrome() && !isOpera() && !isInternetExplorer()
-				&& getUserAgent().contains("Firefox/3.");
+		return isFirefox() && getUserAgent().contains("Firefox/3.");
 	}
 
 	public static boolean isChrome() {
