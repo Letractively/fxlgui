@@ -64,6 +64,7 @@ public class Env {
 	public static String FIREFOX = "Firefox";
 	public static String CHROME = "Chrome";
 	public static String IE = "IE";
+	public static final String SAFARI = "Safari";
 	public static String OPERA = "Opera";
 	public static String OTHER_BROWSER = "Other Browser";
 	public static final int HEIGHT_SCROLLBAR = 17;

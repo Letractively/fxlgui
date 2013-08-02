@@ -52,6 +52,7 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Display;
+import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.HyperlinkDecorator;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
@@ -373,7 +374,9 @@ class NinetyNineDesignsStyle extends StyleTemplate {
 		private void showPopUp() {
 			if (popUp != null)
 				return;
-			popUp = PopUp.showPopUp(true).width(200).autoHide(true);
+			popUp = PopUp.showPopUp(true).autoHide(true);
+			if (!Env.is(Env.SAFARI))
+				popUp.width(200);
 			popUp.addVisibleListener(new IUpdateListener<Boolean>() {
 				@Override
 				public void onUpdate(Boolean value) {
