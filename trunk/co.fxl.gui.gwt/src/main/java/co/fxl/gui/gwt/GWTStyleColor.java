@@ -21,12 +21,14 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IColored.IGradient;
 import co.fxl.gui.impl.ColorTemplate;
+import co.fxl.gui.impl.RuntimeConstants;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 
-public class GWTStyleColor extends ColorTemplate implements IColor {
+public class GWTStyleColor extends ColorTemplate implements IColor,
+		RuntimeConstants {
 
 	public class Gradient implements IGradient {
 
@@ -54,18 +56,14 @@ public class GWTStyleColor extends ColorTemplate implements IColor {
 					String gradient = "-webkit-gradient(linear, left top, left bottom, from("
 							+ original.color + "), to(" + color + "))";
 					if (GWTDisplay.isInternetExplorer) {
-						// if (!GWTDisplay.isInternetExplorer8OrBelow) {
-						// attribute = "filter";
-						// gradient =
-						// "progid:DXImageTransform.Microsoft.gradient(startColorstr='"
-						// + original.color
-						// + "', endColorstr='"
-						// + color + "')";
-						// DOM.setStyleAttribute(element, "zoom", "1");
-						// } else {
-						setImageGradient(element);
-						attribute = null;
-						// }
+						if (!IE_LEQ_9) {
+							gradient = "-ms-linear-gradient(top, "
+									+ original.color + ", " + color + ")";
+							DOM.setStyleAttribute(element, "zoom", "1");
+						} else {
+							setImageGradient(element);
+							attribute = null;
+						}
 					} else if (GWTDisplay.isFirefox) {
 						gradient = "-moz-linear-gradient(top, "
 								+ original.color + ", " + color + ")";
