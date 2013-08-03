@@ -130,7 +130,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 			}
 		};
 		// TODO AOPC: Aspect Log.instance(new GWTLog());
-		ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL = !(isChrome && getBrowserVersion() <= 13);
+		ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL = !isSafari
+				&& !(isChrome && getBrowserVersion() <= 13);
 		Window.addResizeHandler(new ResizeHandler() {
 			@Override
 			public void onResize(ResizeEvent event) {

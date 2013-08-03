@@ -222,8 +222,8 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			return clickable(c.addElement(), string, true);
 		}
 	};
-	private static boolean ALIGN_END = Constants.get(
-			"CommandButtonsImpl.ALIGN_END", false);
+	private static boolean ALIGN_END = ToolbarImpl.ALLOW_ALIGN_END_FOR_FLOW_PANEL
+			&& Constants.get("CommandButtonsImpl.ALIGN_END", false);
 	private ScrollTableWidgetImpl widget;
 	private boolean listenOnAdd;
 	private boolean listenOnRemove;
