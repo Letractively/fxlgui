@@ -31,6 +31,7 @@ import co.fxl.gui.impl.ContextMenu.Entry;
 import co.fxl.gui.impl.ContextMenu.Group;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.IToolbar.IToolbarElement;
+import co.fxl.gui.impl.RuntimeConstants;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.table.api.ISelection.IMultiSelection.IChangeListener;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
@@ -44,7 +45,7 @@ import co.fxl.gui.table.scroll.api.IScrollTableWidget.IRowListener;
 import co.fxl.gui.table.scroll.api.IScrollTableWidget.IScrollTableClickListener;
 
 public class CommandButtonsImpl implements ICommandButtons<Object>,
-		IButtonPanelDecorator, IChangeListener<Object> {
+		IButtonPanelDecorator, IChangeListener<Object>, RuntimeConstants {
 
 	// class Edit {
 	//
