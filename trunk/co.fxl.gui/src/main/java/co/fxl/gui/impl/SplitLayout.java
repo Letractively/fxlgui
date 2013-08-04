@@ -83,8 +83,12 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 	}
 
 	public int mainPanelWidth() {
-		if (adHocWidth)
-			return mainPanel.width() - 4;
+		if (adHocWidth) {
+			int width = mainPanel.width();
+			if (width == 0)
+				width = width() - 20;
+			return width - 4;
+		}
 		return width();
 	}
 
