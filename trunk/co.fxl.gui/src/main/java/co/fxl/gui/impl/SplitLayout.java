@@ -47,9 +47,11 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 	private IVerticalPanel sideBasePanel;
 	private boolean isDetached;
 	private boolean adHocWidth = false;
+	private boolean hasSidePanel = true;
 
-	public SplitLayout(boolean adHocWidth) {
+	public SplitLayout(boolean adHocWidth, boolean hasSidePanel) {
 		this.adHocWidth = adHocWidth;
+		this.hasSidePanel = hasSidePanel;
 	}
 
 	public SplitLayout(ILayout layout, IResizableWidget widget) {
@@ -85,7 +87,7 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 	public int mainPanelWidth() {
 		if (adHocWidth) {
 			int width = mainPanel.width();
-			if (width == 0)
+			if (width == 0 || !hasSidePanel)
 				width = rwidth() - 2 * H_SPACE;
 			return width - 4;
 		}
