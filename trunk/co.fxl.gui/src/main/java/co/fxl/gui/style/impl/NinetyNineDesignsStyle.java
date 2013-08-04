@@ -645,7 +645,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 
 			@Override
 			public String resource() {
-				return "xoricon_requirements.png";
+				return "xoricon_testlab.png";
 			}
 
 			@Override
