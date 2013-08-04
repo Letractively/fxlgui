@@ -93,7 +93,8 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 	@Override
 	public void onResize(int width, int height) {
 		resizeSidePanel();
-		cell0.width(width());
+		if (cell0 != null)
+			cell0.width(width());
 	}
 
 	private int width() {
@@ -126,7 +127,8 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 		if (maxFromDisplay > 0) {
 			if (resizeMainPanel)
 				mainPanel.height(maxFromDisplay);
-			sideScrollPanel.height(maxFromDisplay + 3);
+			if (sideScrollPanel != null)
+				sideScrollPanel.height(maxFromDisplay + 3);
 		}
 	}
 
