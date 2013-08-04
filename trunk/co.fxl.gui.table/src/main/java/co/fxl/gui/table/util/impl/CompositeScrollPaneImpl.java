@@ -23,6 +23,7 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IScrollPane.IScrollListener;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.ScrollPaneAdp;
 import co.fxl.gui.table.util.api.ICompositeScrollPane;
@@ -122,7 +123,7 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 	@Override
 	public ICompositeScrollPane visible(boolean visible) {
 		if (visible)
-			run();
+			Display.instance().invokeLater(this);
 		return (ICompositeScrollPane) super.visible(visible);
 	}
 
