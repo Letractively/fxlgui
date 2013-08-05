@@ -21,7 +21,6 @@ package co.fxl.gui.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IComboBox;
@@ -51,6 +50,9 @@ public class NavigationView implements IColored {
 	private boolean addToContextMenu = false;
 	private String title;
 	private List<IVerticalPanel> parts = new LinkedList<IVerticalPanel>();
+	public boolean separatorLines = true;
+	public int padding = 6;
+	public int spacing = 2;
 
 	public NavigationView(ILayout layout) {
 		this(layout, true);
@@ -195,12 +197,12 @@ public class NavigationView implements IColored {
 	protected IPanel<?>[] addPanel() {
 		IVerticalPanel p = panel.add().panel().vertical();
 		parts.add(p);
-		spacing(p, 2, 6);
+		spacing(p, spacing, padding);
 		// if (hasLinks) {
 		// p.addSpace(3);
 		// }
 		IHorizontalPanel panel = p.add().panel().horizontal();
-		if (hasLinks) {
+		if (hasLinks && separatorLines) {
 			addBorder(p);
 		}
 		hasLinks = true;
