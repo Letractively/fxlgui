@@ -337,6 +337,8 @@ public interface IStyle {
 				String image();
 
 				String label();
+
+				String entityName();
 			}
 
 			String label();
