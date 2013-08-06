@@ -123,4 +123,9 @@ class GWTPasswordField extends GWTTextInput<PasswordTextBox, IPasswordField>
 		container.widget.setTitle(text);
 		return this;
 	}
+
+	@Override
+	public boolean editable() {
+		return container.widget.isEnabled();
+	}
 }

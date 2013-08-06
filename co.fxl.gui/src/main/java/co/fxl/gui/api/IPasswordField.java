@@ -20,9 +20,7 @@ package co.fxl.gui.api;
 
 public interface IPasswordField extends ITextElement<IPasswordField>, IColored,
 		IBordered, IUpdateable<String>, IFocusable<IPasswordField>,
-		IKeyRecipient<IPasswordField> {
-
-	IPasswordField editable(boolean editable);
+		IKeyRecipient<IPasswordField>, IEditable<IPasswordField> {
 
 	IPasswordField columns(int rows);
 }
