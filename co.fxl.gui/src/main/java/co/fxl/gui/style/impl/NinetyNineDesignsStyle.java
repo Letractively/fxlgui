@@ -255,7 +255,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 			@Override
 			public void logout(final ILinearPanel<?> panel, String userName,
 					final Decorator[] decorators, final IClickListener listener) {
-				new UserPanelImageButton(panel, "user_white", userName) {
+				new UserPanelImageButton(panel, "user_white", userName, true) {
 					@Override
 					void decorate(IVerticalPanel p) {
 						p.spacing(12).margin().top(2);
@@ -318,7 +318,8 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 		private boolean scheduledClose;
 		private ImageButton button;
 
-		private UserPanelImageButton(IPanel<?> panel, String image, String label) {
+		private UserPanelImageButton(IPanel<?> panel, String image,
+				String label, boolean hasPopUp) {
 			button = new ImageButton(panel.add());
 			button.imageResource(image + ".png").text(label);
 			button.label().font().pixel(fontSize()).weight().bold().color()
@@ -326,10 +327,13 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 			new HyperlinkMouseOverListener(button.label());
 			more = panel.add().image().resource("more_white_10x16.png");
 			more.margin().right(4);
-			button.addClickListener(this);
-			more.addClickListener(this);
-			button.addMouseOverListener(this);
-			more.addMouseOverListener(this);
+			if (hasPopUp) {
+				button.addClickListener(this);
+				more.addClickListener(this);
+				button.addMouseOverListener(this);
+				more.addMouseOverListener(this);
+			} else
+				more.visible(false);
 		}
 
 		public IClickable<?> tooltip(String string) {
@@ -473,7 +477,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 			public IClickable<?> enterAdminButton(IPanel<?> panel,
 					final List<IAdminRightGroup> rights) {
 				return new UserPanelImageButton(panel, "settings",
-						"Administration") {
+						"Administration", !IE_LEQ_8) {
 					@Override
 					void decorate(IVerticalPanel p) {
 						p.spacing().left(12).top(12).right(12).bottom(12)

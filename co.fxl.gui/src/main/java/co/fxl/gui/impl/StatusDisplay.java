@@ -279,7 +279,7 @@ public class StatusDisplay implements IResizeListener, Runnable,
 	public void run() {
 		panel.size(width(), height());
 		int width = display.width();
-		if (FIREFOX)
+		if (FIREFOX_GEQ_13)
 			width += 2;
 		scrollPane.size(width, display.height());
 		if (sidePanel != null)
