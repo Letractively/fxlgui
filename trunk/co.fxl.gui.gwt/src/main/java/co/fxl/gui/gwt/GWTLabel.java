@@ -49,9 +49,10 @@ public class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel,
 		container.widget.addStyleName("gwt-Label-FXL");
 		if (IE_LEQ_8) {
 			container.widget.getElement().getStyle().setFontSize(12, Unit.PX);
+		}
+		if (IE)
 			container.widget.getElement().getStyle()
 					.setWhiteSpace(WhiteSpace.NOWRAP);
-		}
 		// defaultFont();
 	}
 
