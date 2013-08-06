@@ -39,7 +39,7 @@ import co.fxl.gui.impl.RuntimeConstants;
 public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
 		RuntimeConstants {
 
-	private static final int SPACING = IE ? (IE_LEQ_10 ? 3 : 2) : 4;
+	private static final int SPACING = IE ? (IE_GEQ_10 ? 3 : 2) : 4;
 	FormWidgetImpl widget;
 	private ILabel label;
 	private IGridCell cell;
