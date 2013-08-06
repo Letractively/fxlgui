@@ -23,8 +23,6 @@ import co.fxl.gui.api.ILabel;
 import co.fxl.gui.impl.HTMLText;
 import co.fxl.gui.impl.HyperlinkDecorator;
 
-import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.dom.client.Style.WhiteSpace;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -45,12 +43,12 @@ public class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 	GWTLabel(GWTContainer<HTML> container) {
 		super(container);
 		container.widget.addStyleName("gwt-Label-FXL");
-		if (GWTDisplay.isInternetExplorer8OrBelow) {
-			container.widget.getElement().getStyle().setFontSize(12, Unit.PX);
-		}
-		if (GWTDisplay.isInternetExplorer)
-			container.widget.getElement().getStyle()
-					.setWhiteSpace(WhiteSpace.NOWRAP);
+		// if (GWTDisplay.isInternetExplorer8OrBelow) {
+		// container.widget.getElement().getStyle().setFontSize(12, Unit.PX);
+		// }
+		// if (GWTDisplay.isInternetExplorer)
+		// container.widget.getElement().getStyle()
+		// .setWhiteSpace(WhiteSpace.NOWRAP);
 		// defaultFont();
 	}
 
