@@ -29,6 +29,7 @@ import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.api.WidgetProviderNotFoundException;
@@ -39,6 +40,8 @@ import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DisplayTemplate;
 import co.fxl.gui.impl.ImagePathResolver;
 import co.fxl.gui.impl.RuntimeTemplate;
+import co.fxl.gui.impl.StatusDisplay;
+import co.fxl.gui.impl.StatusDisplay.Fix;
 import co.fxl.gui.impl.ToolbarImpl;
 
 import com.google.gwt.core.client.GWT;
@@ -56,6 +59,7 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class GWTDisplay extends DisplayTemplate implements IDisplay,
@@ -149,6 +153,17 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		// + Display.instance().width() + " inner-width vs "
 		// + getOuterWidth() + " outer-width");
 		// }
+		StatusDisplay.FIX = new Fix() {
+
+			@Override
+			public void apply(IScrollPane p, boolean small) {
+				ScrollPanel e = p.nativeElement();
+				if (!small)
+					e.getElement().getStyle().setOverflowX(Overflow.HIDDEN);
+				else
+					e.getElement().getStyle().setOverflowX(Overflow.AUTO);
+			}
+		};
 	}
 
 	void addStyle(String text) {

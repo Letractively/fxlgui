@@ -44,8 +44,14 @@ public class StatusDisplay implements IResizeListener, Runnable,
 		public void refresh(ICallback<Void> cb);
 	}
 
+	public interface Fix {
+
+		void apply(IScrollPane p, boolean small);
+	}
+
 	// private static final int RESIZE_INTERVALL_MS = 250;
 	private static final boolean LOG_ILLEGAL_SIZES = false;
+	public static Fix FIX = null;
 	// public static boolean SINGLE_RESIZE_LISTENER = false;
 	private static StatusDisplay instance = new StatusDisplay();
 	private IDisplay display = Display.instance();
@@ -284,6 +290,9 @@ public class StatusDisplay implements IResizeListener, Runnable,
 		scrollPane.size(width, display.height());
 		if (sidePanel != null)
 			sidePanel.height(display.height());
+		if (FIREFOX_LEQ_12 && FIX != null) {
+			FIX.apply(scrollPane, display.width() < 1024);
+		}
 	}
 
 	@Override
