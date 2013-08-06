@@ -19,6 +19,8 @@
 package co.fxl.gui.gwt;
 
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.layout.client.Layout.AnimationCallback;
+import com.google.gwt.layout.client.Layout.Layer;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -39,13 +41,22 @@ class ObservableSplitLayoutPanel extends SplitLayoutPanel {
 	void updatePosition() {
 		if (getWidgetCount() == 0)
 			return;
-		Widget left = getWidget(0);
+		final Widget left = getWidget(0);
 		LayoutData layout = (LayoutData) left.getLayoutData();
 		layout.oldSize = layout.size;
 		layout.size = owner.splitPosition;
-		animate(500);
-		left.getElement().getParentElement().getStyle()
-				.setWidth(owner.splitPosition, Unit.PX);
-		left.setWidth(owner.splitPosition + "px");
+		animate(500, new AnimationCallback() {
+
+			@Override
+			public void onLayout(Layer layer, double progress) {
+			}
+
+			@Override
+			public void onAnimationComplete() {
+				left.getElement().getParentElement().getStyle()
+						.setWidth(owner.splitPosition, Unit.PX);
+				left.setWidth(owner.splitPosition + "px");
+			}
+		});
 	}
 }
