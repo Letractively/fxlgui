@@ -31,6 +31,9 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=2, offY
 .mozBorderRadius {
   -moz-border-radius: 3px;
 }
+.mozBorderRadius6 {
+  -moz-border-radius: 6px;
+}
 .noOverflowX {
   overflow-x: hidden;
 }
