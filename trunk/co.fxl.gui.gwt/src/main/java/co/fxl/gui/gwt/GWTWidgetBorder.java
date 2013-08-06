@@ -101,15 +101,17 @@ public class GWTWidgetBorder extends GWTBorder implements RuntimeConstants {
 			if (!top && !left && !right && !bottom)
 				DOM.setStyleAttribute(element, "border", width + "px " + color
 						+ " " + style);
-			String attr = "borderRadius";
-			if (FIREFOX_LEQ_12)
-				attr = "-moz-border-radius";
-			// TODO Look: Firefox/IE/Opera: Rounded Corners in
-			// Firefox/Opera/Firefox dont work, use style
-			try {
-				DOM.setStyleAttribute(element, attr, roundWidth + "px");
-			} catch (AssertionError e) {
-			}
+			if (FIREFOX_LEQ_12) {
+				// attr = "-moz-border-radius";
+				element.addClassName(roundWidth == 3 ? "mozBorderRadius"
+						: "mozBorderRadius6");
+			} else
+				// TODO Look: Firefox/IE/Opera: Rounded Corners in
+				// Firefox/Opera/Firefox dont work, use style
+				try {
+					DOM.setStyleAttribute(element, "borderRadius", roundWidth + "px");
+				} catch (AssertionError e) {
+				}
 			if (!roundBottom) {
 				element.getStyle().clearProperty("borderBottomLeftRadius");
 				element.getStyle().clearProperty("borderBottomRightRadius");
