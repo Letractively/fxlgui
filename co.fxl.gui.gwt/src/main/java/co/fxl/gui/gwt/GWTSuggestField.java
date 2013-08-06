@@ -41,6 +41,9 @@ import com.google.gwt.user.client.ui.Widget;
 class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 		ISuggestField {
 
+	// private static final boolean FIREFOX_LEQ_12 = GWTDisplay.isFirefox &&
+	// GWTDisplay.getBrowserVersion() <= 12;
+
 	static class OracleAdapter extends SuggestOracle {
 
 		GWTSuggestField element;
