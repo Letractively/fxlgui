@@ -3,6 +3,7 @@ html, body {
 	height:100%; 
 	width:100%;
 }
+body, table td, select, input { font-size:12px ) 
 ::selection {
     background-color: transparent;
 }
@@ -118,6 +119,8 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=2, offY
 .gwt-Combobox-FXL { height: 24px; }
 .gwt-RichTextArea { }
 .gwt-Label-FXL { white-space: nowrap; }
+.gwt-TextArea-FXL { height: 100px; padding: 3px; font-size:12px );
+.gwt-TextBox-FXL { padding: 3px; font-size:12px );
 .gwt-SuggestBoxPopup-FXL {
     background-color: white;
     border: 1px solid rgb(188,188,188);
