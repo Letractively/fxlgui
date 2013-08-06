@@ -40,7 +40,6 @@ import co.fxl.gui.impl.DisplayTemplate;
 import co.fxl.gui.impl.ImagePathResolver;
 import co.fxl.gui.impl.RuntimeTemplate;
 import co.fxl.gui.impl.ToolbarImpl;
-import co.fxl.gui.log.impl.Log;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -554,16 +553,17 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	@Override
 	public IDisplay font(String fontFamily, int fontSize) {
-		String font = "font-family: " + fontFamily + " !important; font-size: "
-				+ fontSize + "px;";
-		clearStyles();
-		addStyle("body, table td, select, input { " + font + "}");
-		addStyle(".gwt-TextArea-FXL { height: 100px; padding: 3px; " + font
-				+ "}");
-		addStyle(".gwt-TextBox-FXL { padding: 3px; " + font + "}");
-		if (fontFamily.contains("'Open Sans'") && isChrome) {
-			Log.instance().debug("Adding font-smoothing");
-			addStyle("html, body { -webkit-font-smoothing: subpixel-antialiased !important; -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -ms-backface-visibility:     hidden; }");
+		if (!isInternetExplorer8OrBelow && !isOpera) {
+			String font = "font-family: " + fontFamily
+					+ " !important; font-size: " + fontSize + "px;";
+			clearStyles();
+			addStyle("body, table td, select, input { " + font + "}");
+			addStyle(".gwt-TextArea-FXL { height: 100px; padding: 3px; " + font
+					+ "}");
+			addStyle(".gwt-TextBox-FXL { padding: 3px; " + font + "}");
+			if (fontFamily.contains("'Open Sans'") && isChrome) {
+				addStyle("html, body { -webkit-font-smoothing: subpixel-antialiased !important; -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -ms-backface-visibility:     hidden; }");
+			}
 		}
 		return this;
 	}

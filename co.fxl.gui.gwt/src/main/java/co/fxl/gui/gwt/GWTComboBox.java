@@ -22,13 +22,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IComboBox;
+import co.fxl.gui.impl.RuntimeConstants;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.ListBox;
 
-class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
+class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox,
+		RuntimeConstants {
 
 	private List<String> constraints = new LinkedList<String>();
 	private boolean hasNull = false;
@@ -41,6 +43,8 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox {
 	GWTComboBox(GWTContainer<ListBox> container) {
 		super(container);
 		container.widget.addStyleName("gwt-ComboBox-FXL");
+		if (IE_LEQ_8)
+			container.widget.getElement().getStyle().setFontSize(12, Unit.PX);
 		defaultHeight = GWTDisplay.isFirefox ? 18 : height();
 		if (defaultHeight < 18)
 			defaultHeight = 18;
