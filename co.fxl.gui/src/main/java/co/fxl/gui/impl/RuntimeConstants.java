@@ -31,7 +31,7 @@ public interface RuntimeConstants {
 	public static final boolean FIREFOX = Env.is(Env.FIREFOX);
 	public static final boolean NOT_FIREFOX = !FIREFOX;
 	public static final boolean IE_OR_FIREFOX = IE || FIREFOX;
-	public static final boolean IE_LEQ_10 = Env.runtime().geq(10);
+	public static final boolean IE_GEQ_10 = Env.runtime().geq(10);
 	public static final boolean FIREFOX_LEQ_12 = Env.runtime().leq(Env.FIREFOX,
 			12);
 	public static final boolean IE_LEQ_9 = Env.runtime().leq(Env.IE, 9);
