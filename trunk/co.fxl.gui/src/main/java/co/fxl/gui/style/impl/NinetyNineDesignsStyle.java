@@ -1136,7 +1136,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 
 			@Override
 			public String contentRowStyle(boolean isTreeTable) {
-				return isTreeTable ? "contentRowHL" : "contentRowHL99D";
+				return isTreeTable ? "contentRowHL99" : "contentRowHL99D";
 			}
 
 			@Override
