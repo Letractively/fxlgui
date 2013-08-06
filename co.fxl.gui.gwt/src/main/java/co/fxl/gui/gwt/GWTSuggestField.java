@@ -106,7 +106,8 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 		// assert container != null : "GWTTextField.new: container is null";
 		DefaultSuggestionDisplay sd = (DefaultSuggestionDisplay) container.widget
 				.getSuggestionDisplay();
-		sd.setPopupStyleName("gwt-SuggestBoxPopup-FXL");
+		if (!GWTDisplay.isInternetExplorer && !GWTDisplay.isFirefox)
+			sd.setPopupStyleName("gwt-SuggestBoxPopup-FXL");
 		container.widget.getTextBox().setStyleName("gwt-TextBox");
 		((HasFocus) container.widget).addFocusListener(new FocusListener() {
 			@Override
