@@ -22,7 +22,6 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.impl.HTMLText;
 import co.fxl.gui.impl.HyperlinkDecorator;
-import co.fxl.gui.impl.RuntimeConstants;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.WhiteSpace;
@@ -32,8 +31,7 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.ui.HTML;
 
-public class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel,
-		RuntimeConstants {
+public class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel {
 
 	private HTMLText html = new HTMLText();
 	// private boolean selectionDisabled = false;
@@ -47,10 +45,10 @@ public class GWTLabel extends GWTElement<HTML, ILabel> implements ILabel,
 	GWTLabel(GWTContainer<HTML> container) {
 		super(container);
 		container.widget.addStyleName("gwt-Label-FXL");
-		if (IE_LEQ_8) {
+		if (GWTDisplay.isInternetExplorer8OrBelow) {
 			container.widget.getElement().getStyle().setFontSize(12, Unit.PX);
 		}
-		if (IE)
+		if (GWTDisplay.isInternetExplorer)
 			container.widget.getElement().getStyle()
 					.setWhiteSpace(WhiteSpace.NOWRAP);
 		// defaultFont();
