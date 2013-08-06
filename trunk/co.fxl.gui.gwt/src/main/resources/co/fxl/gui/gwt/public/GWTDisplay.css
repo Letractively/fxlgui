@@ -29,15 +29,17 @@ box-shadow: 2px 2px 3px #000000;
 -moz-box-shadow: 2px 2px 3px #000000; 
 filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=2, offY=2, positive=true);
 }
-.mozBorderRadius {
-  -moz-border-radius: 3px;
-}
-.mozBorderRadius6 {
-  -moz-border-radius: 6px;
-}
-.noOverflowX {
-  overflow-x: hidden;
-}
+.mozBorderRadius { -moz-border-radius: 3px; }
+.mozBorderRadius6 { -moz-border-radius: 6px; }
+.mozBorderRadiusTopLeft { -moz-border-radius-topleft: 3px; }
+.mozBorderRadiusTopLeft6 { -moz-border-radius-topleft: 6px; }
+.mozBorderRadiusTopRight { -moz-border-radius-topright: 3px; }
+.mozBorderRadiusTopRight6 { -moz-border-radius-topright: 6px; }
+.mozBorderRadiusBottomLeft { -moz-border-radius-bottomleft: 3px; }
+.mozBorderRadiusBottomLeft6 { -moz-border-radius-bottomleft: 6px; }
+.mozBorderRadiusBottomRight { -moz-border-radius-bottomright: 3px; }
+.mozBorderRadiusBottomRight6 { -moz-border-radius-bottomright: 6px; }
+.noOverflowX { overflow-x: hidden; }
 .font-weight-bold { font-weight: bold }
 .font-weight-normal { font-weight: normal }
 .font-weight-light { font-weight: light }

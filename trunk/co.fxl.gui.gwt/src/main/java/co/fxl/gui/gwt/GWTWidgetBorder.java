@@ -102,14 +102,34 @@ public class GWTWidgetBorder extends GWTBorder implements RuntimeConstants {
 				DOM.setStyleAttribute(element, "border", width + "px " + color
 						+ " " + style);
 			if (FIREFOX_LEQ_12) {
-				// attr = "-moz-border-radius";
-				element.addClassName(roundWidth == 3 ? "mozBorderRadius"
-						: "mozBorderRadius6");
+				element.removeClassName("mozBorderRadius");
+				element.removeClassName("mozBorderRadius6");
+				element.removeClassName("mozBorderRadiusTopLeft");
+				element.removeClassName("mozBorderRadiusTopLeft6");
+				element.removeClassName("mozBorderRadiusTopRight");
+				element.removeClassName("mozBorderRadiusTopRight6");
+				element.removeClassName("mozBorderRadiusBottomLeft");
+				element.removeClassName("mozBorderRadiusBottomLeft6");
+				element.removeClassName("mozBorderRadiusBottomRight");
+				element.removeClassName("mozBorderRadiusBottomRight6");
+				if (roundBottom && roundLeft && roundRight && roundTop)
+					radiusFirefox("mozBorderRadius");
+				else {
+					if (roundBottom && roundLeft)
+						radiusFirefox("mozBorderRadiusBottomLeft");
+					if (roundBottom && roundRight)
+						radiusFirefox("mozBorderRadiusBottomRight");
+					if (roundTop && roundLeft)
+						radiusFirefox("mozBorderRadiusTopLeft");
+					if (roundTop && roundRight)
+						radiusFirefox("mozBorderRadiusTopRight");
+				}
 			} else
 				// TODO Look: Firefox/IE/Opera: Rounded Corners in
 				// Firefox/Opera/Firefox dont work, use style
 				try {
-					DOM.setStyleAttribute(element, "borderRadius", roundWidth + "px");
+					DOM.setStyleAttribute(element, "borderRadius", roundWidth
+							+ "px");
 				} catch (AssertionError e) {
 				}
 			if (!roundBottom) {
@@ -133,5 +153,9 @@ public class GWTWidgetBorder extends GWTBorder implements RuntimeConstants {
 					+ " " + style);
 		}
 		lastBorderType = borderType;
+	}
+
+	void radiusFirefox(String prefix) {
+		element.addClassName(roundWidth == 3 ? prefix : prefix + "6");
 	}
 }
