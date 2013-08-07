@@ -42,6 +42,7 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.gwt.GWTClickHandler.ClickEventAdp;
 import co.fxl.gui.gwt.GWTClickHandler.DoubleClickEventAdp;
 import co.fxl.gui.gwt.GWTClickHandler.KeyPressAdp;
+import co.fxl.gui.impl.RuntimeConstants;
 import co.fxl.gui.impl.StatusDisplay;
 import co.fxl.gui.log.impl.Log;
 
@@ -86,7 +87,8 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class GWTElement<T extends Widget, R> implements IElement<R> {
+public class GWTElement<T extends Widget, R> implements IElement<R>,
+		RuntimeConstants {
 
 	public interface Injector {
 
@@ -218,10 +220,8 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		}
 	}
 
-	static final int IEDECREMENTW = GWTDisplay.isInternetExplorer9OrBelow ? 8
-			: 0;
-	static final int IEDECREMENTH = GWTDisplay.isInternetExplorer9OrBelow ? 8
-			: 0;
+	static final int IEDECREMENTW = IE_STANDARD ? 8 : 0;
+	static final int IEDECREMENTH = IE_STANDARD ? 8 : 0;
 	private static final boolean LOG_ILLEGAL_SIZES = true;
 	public GWTContainer<T> container;
 	protected HandlerRegistration registration;

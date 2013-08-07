@@ -146,7 +146,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
 	private boolean panelsAdded;
 
 	private void paddingRight(int p) {
-		if (IE_FIXES && requiresPaddingRight()) {
+		if (IE_STANDARD && requiresPaddingRight()) {
 			widget.internalPanels.get(row).cell(0, 0).padding().right(p);
 		}
 	}
@@ -164,7 +164,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
 			widget.heights.decorate(cell2);
 		}
 		IHorizontalPanel spacing = cell2.panel().horizontal();
-		if (IE_FIXES && !panelsAdded && !(this instanceof FormComboBoxImpl))
+		if (IE_STANDARD && !panelsAdded && !(this instanceof FormComboBoxImpl))
 			spacing.addSpace(5);
 		if (decorate) {
 			spacing.spacing(SPACING);

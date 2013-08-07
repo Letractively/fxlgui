@@ -20,6 +20,8 @@ package co.fxl.gui.impl;
 
 public interface RuntimeConstants {
 
+	public static final boolean USE_QUIRKS_MODE = false;
+
 	public static final boolean SAFARI = Env.is(Env.SAFARI);
 	public static final boolean CHROME = Env.is(Env.CHROME);
 	public static final boolean CHROME_OR_SAFARI = CHROME || SAFARI;
@@ -31,13 +33,15 @@ public interface RuntimeConstants {
 	public static final boolean FIREFOX = Env.is(Env.FIREFOX);
 	public static final boolean NOT_FIREFOX = !FIREFOX;
 	public static final boolean IE_OR_FIREFOX = IE || FIREFOX;
-	public static final boolean IE_GEQ_10 = Env.runtime().geq(10);
+	public static final boolean IE_GEQ_10 = Env.runtime().geq(Env.IE, 10);
 	public static final boolean FIREFOX_LEQ_12 = Env.runtime().leq(Env.FIREFOX,
 			12);
 	public static final boolean IE_LEQ_9 = Env.runtime().leq(Env.IE, 9);
 	public static final boolean IE_LEQ_8 = Env.runtime().leq(Env.IE, 8);
+	public static final boolean IE9 = IE_LEQ_9 && !IE_LEQ_8;
 	public static final boolean FIREFOX_GEQ_13 = Env.runtime().geq(Env.FIREFOX,
 			13);
-	public static final boolean IE_FIXES = IE_LEQ_9;
+	public static final boolean IE_STANDARD = !USE_QUIRKS_MODE && IE_LEQ_9;
+	public static final boolean IE_QUIRKS = USE_QUIRKS_MODE && IE_LEQ_9;
 
 }
