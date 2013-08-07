@@ -85,16 +85,6 @@ class GWTTextField extends GWTTextInput<TextBox, ITextField> implements
 	}
 
 	@Override
-	public int width() {
-		return super.width() + 8;
-	}
-
-	@Override
-	public ITextField width(int width) {
-		return (ITextField) super.width(width - 8);
-	}
-
-	@Override
 	public ITextField maxLength(int rows) {
 		container.widget.setMaxLength(rows);
 		return this;
