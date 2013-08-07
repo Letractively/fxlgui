@@ -35,9 +35,8 @@ import co.fxl.gui.api.ITextInputElement;
 
 public class Heights implements RuntimeConstants {
 
-	public static boolean IGNORE_HEIGHTS = IE_LEQ_9;
 	public static final int CELL_HEIGHT = 28;
-	public static int TEXTFIELD_HEIGHT = IE_LEQ_9 ? 23 : 24 - (Env.runtime()
+	public static int TEXTFIELD_HEIGHT = IE_FIXES ? 23 : 24 - (Env.runtime()
 			.geq(Env.IE, 10) ? 2 : 0);
 	public static final int COMBOBOX_HEIGHT = 24 - (Env.runtime().geq(Env.IE,
 			10) ? 2 : 0);
@@ -46,8 +45,6 @@ public class Heights implements RuntimeConstants {
 
 	public Heights(int inc) {
 		this.inc = inc;
-		// if (IGNORE_HEIGHTS)
-		// this.inc = 0;
 	}
 
 	public void decorate(IComboBox textField) {

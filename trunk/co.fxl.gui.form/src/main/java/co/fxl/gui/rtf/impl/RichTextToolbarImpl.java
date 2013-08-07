@@ -215,7 +215,7 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 
 		void setImage(IToolbar panel, String resource) {
 			image = panel.add().image().resource(resource).size(20, 20);
-			if (IE_LEQ_9)
+			if (IE_FIXES)
 				image.margin().top(4);
 			image.addClickListener(new IClickListener() {
 
