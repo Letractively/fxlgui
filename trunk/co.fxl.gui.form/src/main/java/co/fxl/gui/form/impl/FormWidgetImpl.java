@@ -83,7 +83,7 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 	private ILabel requiredAttributeLabel;
 	private boolean validate = true;
 	Validation validation;
-	Heights heights = new Heights(2);
+	Heights heights = new Heights(2 + (IE_LEQ_8 ? 2 : 0));
 	boolean isNew;
 	boolean alwaysAllowCancel = false;
 	private List<IFocusable<?>> focusables = new LinkedList<IFocusable<?>>();

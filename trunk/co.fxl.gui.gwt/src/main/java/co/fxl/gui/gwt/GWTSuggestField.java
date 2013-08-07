@@ -33,7 +33,6 @@ import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.HasFocus;
 import com.google.gwt.user.client.ui.SuggestBox;
-import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
@@ -104,10 +103,14 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 	GWTSuggestField(final GWTContainer<SuggestBox> container) {
 		super(container);
 		// assert container != null : "GWTTextField.new: container is null";
-//		DefaultSuggestionDisplay sd = (DefaultSuggestionDisplay) container.widget
-//				.getSuggestionDisplay();
-//		if (!GWTDisplay.isInternetExplorer && !GWTDisplay.isFirefox)
-//			sd.setPopupStyleName("gwt-SuggestBoxPopup-FXL");
+		// DefaultSuggestionDisplay sd = (DefaultSuggestionDisplay)
+		// container.widget
+		// .getSuggestionDisplay();
+		// if (!GWTDisplay.isInternetExplorer && !GWTDisplay.isFirefox)
+		// sd.setPopupStyleName("gwt-SuggestBoxPopup-FXL");
+		// if (GWTDisplay.isInternetExplorer8OrBelow) {
+		// container.widget.getElement().getStyle().setPaddingTop(2, Unit.PX);
+		// }
 		container.widget.getTextBox().setStyleName("gwt-TextBox");
 		((HasFocus) container.widget).addFocusListener(new FocusListener() {
 			@Override
@@ -230,6 +233,17 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 					}
 				});
 		return this;
+	}
+
+	@Override
+	public int height() {
+		return super.height() + (GWTDisplay.isInternetExplorer8OrBelow ? 8 : 0);
+	}
+
+	@Override
+	public final ISuggestField height(int height) {
+		return (ISuggestField) super.height(height
+				- (GWTDisplay.isInternetExplorer8OrBelow ? 8 : 0));
 	}
 
 	@Override

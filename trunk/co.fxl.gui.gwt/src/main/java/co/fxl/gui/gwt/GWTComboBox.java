@@ -48,6 +48,7 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox,
 			Style style = container.widget.getElement().getStyle();
 			style.setPaddingBottom(2, Unit.PX);
 			style.setPaddingTop(2, Unit.PX);
+			style.setPaddingRight(2, Unit.PX);
 		}
 		defaultHeight = GWTDisplay.isFirefox ? 18 : height();
 		if (defaultHeight < 18)
