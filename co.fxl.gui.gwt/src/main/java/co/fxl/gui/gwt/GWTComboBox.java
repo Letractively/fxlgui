@@ -44,12 +44,12 @@ class GWTComboBox extends GWTElement<ListBox, IComboBox> implements IComboBox,
 	GWTComboBox(GWTContainer<ListBox> container) {
 		super(container);
 		container.widget.addStyleName("gwt-ComboBox-FXL");
-		if (IE_LEQ_8) {
-			Style style = container.widget.getElement().getStyle();
-			style.setPaddingBottom(2, Unit.PX);
-			style.setPaddingTop(2, Unit.PX);
-			style.setPaddingRight(2, Unit.PX);
-		}
+//		if (IE_LEQ_8) {
+//			Style style = container.widget.getElement().getStyle();
+//			style.setPaddingBottom(2, Unit.PX);
+//			style.setPaddingTop(2, Unit.PX);
+//			style.setPaddingRight(2, Unit.PX);
+//		}
 		defaultHeight = GWTDisplay.isFirefox ? 18 : height();
 		if (defaultHeight < 18)
 			defaultHeight = 18;
