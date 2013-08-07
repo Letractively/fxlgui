@@ -38,5 +38,6 @@ public interface RuntimeConstants {
 	public static final boolean IE_LEQ_8 = Env.runtime().leq(Env.IE, 8);
 	public static final boolean FIREFOX_GEQ_13 = Env.runtime().geq(Env.FIREFOX,
 			13);
+	public static final boolean IE_FIXES = IE_LEQ_9;
 
 }
