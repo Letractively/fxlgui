@@ -237,13 +237,12 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 
 	@Override
 	public int height() {
-		return super.height() + (GWTDisplay.isInternetExplorer8OrBelow ? 8 : 0);
+		return super.height() + IEDECREMENTH;
 	}
 
 	@Override
 	public final ISuggestField height(int height) {
-		return (ISuggestField) super.height(height
-				- (GWTDisplay.isInternetExplorer8OrBelow ? 8 : 0));
+		return (ISuggestField) super.height(height - IEDECREMENTH);
 	}
 
 	@Override
