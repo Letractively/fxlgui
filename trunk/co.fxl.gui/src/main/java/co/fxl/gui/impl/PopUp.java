@@ -26,14 +26,16 @@ import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.style.impl.Style;
 
-public class PopUp {
+public class PopUp implements RuntimeConstants {
 
-	private static final int POPUP_ROW = Env.runtime().leq(Env.IE, 8) ? 1 : 0;
+	// private static final int POPUP_ROW = Env.runtime().leq(Env.IE, 8) ? 1 :
+	// 0;
 
 	public interface HistoryAdp {
 
@@ -143,16 +145,21 @@ public class PopUp {
 		final IGridPanel panel = popUp.container().panel().grid();
 		panel.color().remove();
 		// panel.addSpace(LABEL_DISTANCE);
-		final IVerticalPanel p = panel
-				.cell(0, POPUP_ROW).panel()
-				.vertical();
+		final IVerticalPanel p = panel.cell(0, 0).panel().vertical();
 		IBorder b = p.border().remove();
 		b.style().shadow();
 		b.style().rounded().width(6);
 		b.width(1).color().gray();
 		Style.instance().popUp().background(p);
-		panel.cell(1, 0).align().end().valign().begin()
-				.image()
+		IGridCell cell = panel.cell(1, 0).align().end().valign().begin();
+		if (IE_LEQ_8) {
+			cell.padding().left(2).top(2).right(2);
+			b = cell.border();
+			b.style().top().style().right().style().bottom();
+			b.width(1).color().gray();
+			cell.color().gray(222);
+		}
+		cell.image()
 				.resource("close_24x24.png")
 				// .label().text("Close")
 				.addClickListener(new LazyClickListener() {
