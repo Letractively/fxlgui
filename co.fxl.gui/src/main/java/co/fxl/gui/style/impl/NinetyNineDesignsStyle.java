@@ -509,7 +509,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 							first = false;
 						}
 					}
-				}.tooltip("Click Administration for complex operations");
+				}.tooltip("Click on administration to enter admin area");
 			}
 
 			@Override
