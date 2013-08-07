@@ -108,8 +108,9 @@ public class PopUpPageContainer implements PageContainer, RuntimeConstants {
 		int h = Math.max(popUpSize.minHeight, Shell.instance().dheight()
 				- popUpSize.heightDecrement);
 		panel.size(w, h);
-		popUp.size(w, h).offset((Shell.instance().dwidth() - w) / 2,
-				(Shell.instance().dheight() - h) / 2);
+		int x = (Shell.instance().dwidth() - w) / 2;
+		int y = (Shell.instance().dheight() - h) / 2;
+		popUp.size(w, h).offset(x, y);
 	}
 
 	public void addCloseListener(final Runnable runnable) {
