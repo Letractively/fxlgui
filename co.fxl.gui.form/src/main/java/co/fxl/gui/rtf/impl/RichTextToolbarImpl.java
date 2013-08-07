@@ -41,12 +41,13 @@ import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.PopUp;
+import co.fxl.gui.impl.RuntimeConstants;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.rtf.api.IHTMLArea;
 import co.fxl.gui.rtf.api.IHTMLArea.Formatting;
 import co.fxl.gui.rtf.api.IHTMLArea.IHTMLAreaButton;
 
-public class RichTextToolbarImpl {
+public class RichTextToolbarImpl implements RuntimeConstants {
 
 	private class PushButton extends ToolbarButton {
 
@@ -214,6 +215,8 @@ public class RichTextToolbarImpl {
 
 		void setImage(IToolbar panel, String resource) {
 			image = panel.add().image().resource(resource).size(20, 20);
+			if (IE_LEQ_9)
+				image.margin().top(4);
 			image.addClickListener(new IClickListener() {
 
 				@Override
@@ -366,7 +369,8 @@ public class RichTextToolbarImpl {
 
 	public RichTextToolbarImpl(IContainer c, final IHTMLArea htmlArea) {
 		grid = c.panel().grid();
-		panel = new ToolbarImpl(grid.cell(0, 0)).height(32).spacing(2);
+		panel = new ToolbarImpl(grid.cell(0, 0).align().begin()).align()
+				.begin().height(32).spacing(2);
 		grid.color().gray(240);
 		grid.border().style().noBottom().color().gray(211);
 		this.htmlArea = htmlArea;
