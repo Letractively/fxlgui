@@ -108,6 +108,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	public static boolean isOpera = USER_AGENT_LOWER_CASE.contains("opera");
 	static boolean isInternetExplorer9 = USER_AGENT_LOWER_CASE
 			.contains("msie 9.0");
+	static boolean isInternetExplorer9OrBelow = isInternetExplorer9 || isInternetExplorer8OrBelow;
 
 	public static void notifyEvent(DomEvent<?> event) {
 		if (event != null) {
