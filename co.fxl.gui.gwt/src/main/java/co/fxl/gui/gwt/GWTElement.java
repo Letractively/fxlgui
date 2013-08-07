@@ -218,6 +218,10 @@ public class GWTElement<T extends Widget, R> implements IElement<R> {
 		}
 	}
 
+	static final int IEDECREMENTW = GWTDisplay.isInternetExplorer9OrBelow ? 8
+			: 0;
+	static final int IEDECREMENTH = GWTDisplay.isInternetExplorer9OrBelow ? 8
+			: 0;
 	private static final boolean LOG_ILLEGAL_SIZES = true;
 	public GWTContainer<T> container;
 	protected HandlerRegistration registration;

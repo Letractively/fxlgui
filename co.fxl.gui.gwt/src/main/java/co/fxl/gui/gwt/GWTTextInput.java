@@ -32,24 +32,22 @@ public class GWTTextInput<T extends Widget, R> extends GWTElement<T, R> {
 
 	@Override
 	public final int width() {
-		return super.width() + (GWTDisplay.isInternetExplorer9OrBelow ? 16 : 8);
+		return super.width() + 8 + IEDECREMENTW;
 	}
 
 	@Override
 	public final R width(int width) {
-		return (R) super.width(width
-				- (GWTDisplay.isInternetExplorer9OrBelow ? 16 : 8));
+		return (R) super.width(width - 8 - IEDECREMENTW);
 	}
 
 	@Override
 	public int height() {
-		return super.height() + (GWTDisplay.isInternetExplorer9OrBelow ? 8 : 0);
+		return super.height() + IEDECREMENTH;
 	}
 
 	@Override
 	public final R height(int height) {
-		return (R) super.height(height
-				- (GWTDisplay.isInternetExplorer9OrBelow ? 8 : 0));
+		return (R) super.height(height - IEDECREMENTH);
 	}
 
 }
