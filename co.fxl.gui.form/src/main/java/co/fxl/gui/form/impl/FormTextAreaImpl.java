@@ -63,6 +63,11 @@ class FormTextAreaImpl extends FormFieldImpl<ITextArea, String> {
 	}
 
 	@Override
+	boolean requiresPaddingRight() {
+		return true;
+	}
+
+	@Override
 	void clearTextAreaWidth() {
 		valueElement().width(1.0);
 	}

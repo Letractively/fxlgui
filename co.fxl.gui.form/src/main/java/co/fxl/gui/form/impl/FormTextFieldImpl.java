@@ -51,6 +51,11 @@ class FormTextFieldImpl<R> extends FormFieldImpl<ITextField, R> {
 	}
 
 	@Override
+	boolean requiresPaddingRight() {
+		return true;
+	}
+
+	@Override
 	void createContentColumn(int index) {
 		valueElement = addTextField(widget, index);
 		editable(widget.saveListener != null);
