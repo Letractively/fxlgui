@@ -142,6 +142,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
 	}
 
 	private int containerInPanelIndex = 1;
+	private boolean panelsAdded;
 
 	private Object[] addContainerInPanel(boolean decorate) {
 		IGridPanel g = widget.internalPanels.get(row).width(1d);
@@ -155,6 +156,8 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
 			widget.heights.decorate(cell2);
 		}
 		IHorizontalPanel spacing = cell2.panel().horizontal();
+		if (IE_LEQ_9 && !panelsAdded && !(this instanceof FormComboBoxImpl))
+			spacing.addSpace(5);
 		if (decorate) {
 			spacing.spacing(SPACING);
 			widget.heights.styleColor(spacing);
@@ -164,6 +167,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
 		}
 		IContainer c = spacing.add();
 		widget.prepareButtonColumn(g, column);
+		panelsAdded = true;
 		return new Object[] { spacing, c };
 	}
 
