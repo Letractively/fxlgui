@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.form.impl;
 
+import co.fxl.gui.api.IBordered;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IColored;
