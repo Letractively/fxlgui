@@ -68,6 +68,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
 		createLabelColumn(index);
 		this.row = index;
 		createContentColumn(index);
+		paddingRight(8);
 	}
 
 	@Override
@@ -144,7 +145,14 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
 	private int containerInPanelIndex = 1;
 	private boolean panelsAdded;
 
+	private void paddingRight(int p) {
+		if (IE_LEQ_9 && requiresPaddingRight()) {
+			widget.internalPanels.get(row).cell(0, 0).padding().right(p);
+		}
+	}
+
 	private Object[] addContainerInPanel(boolean decorate) {
+		paddingRight(0);
 		IGridPanel g = widget.internalPanels.get(row).width(1d);
 		g.column(0).expand();
 		IGridCell cell2 = g.cell(containerInPanelIndex++, 0).align().center()
@@ -258,6 +266,10 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
 		}
 		this.visible = visible;
 		return true;
+	}
+
+	boolean requiresPaddingRight() {
+		return false;
 	}
 
 	private int getVisibleIndex() {
