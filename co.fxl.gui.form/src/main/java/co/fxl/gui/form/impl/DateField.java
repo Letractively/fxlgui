@@ -32,10 +32,11 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.Heights;
+import co.fxl.gui.impl.RuntimeConstants;
 import co.fxl.gui.impl.TextFieldAdp;
 import co.fxl.gui.input.api.ICalendarWidget;
 
-public class DateField extends TextFieldAdp {
+public class DateField extends TextFieldAdp implements RuntimeConstants {
 
 	private class PopUp implements IClickListener {
 
@@ -96,9 +97,9 @@ public class DateField extends TextFieldAdp {
 		this(c, true, cellSpacing);
 	}
 
-//	private DateField(IContainer c, boolean addC) {
-//		this(c, addC, 2);
-//	}
+	// private DateField(IContainer c, boolean addC) {
+	// this(c, addC, 2);
+	// }
 
 	public DateField(IContainer c, boolean addC, int cellSpacing) {
 		IGridPanel g = c.panel().grid();
@@ -115,7 +116,10 @@ public class DateField extends TextFieldAdp {
 			Heights.INSTANCE.styleColor(spacing);
 			IBorder border = spacing.border();
 			border.color().rgb(211, 211, 211);
-			border.style().bottom().style().top().style().right();
+			if (IE_LEQ_8)
+				border.width(1);
+			else
+				border.style().bottom().style().top().style().right();
 			c1 = spacing.add();
 		}
 		setUp(tf, c1, addC);

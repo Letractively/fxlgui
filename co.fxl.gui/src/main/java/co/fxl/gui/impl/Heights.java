@@ -46,8 +46,8 @@ public class Heights implements RuntimeConstants {
 
 	public Heights(int inc) {
 		this.inc = inc;
-		if (IGNORE_HEIGHTS)
-			this.inc = 0;
+//		if (IGNORE_HEIGHTS)
+//			this.inc = 0;
 	}
 
 	public void decorate(IComboBox textField) {
