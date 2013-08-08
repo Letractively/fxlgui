@@ -57,7 +57,6 @@ import co.fxl.gui.impl.CommandLink;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DummyCallback;
-import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.KeyAdapter;
 import co.fxl.gui.impl.LazyClickListener;
@@ -1469,7 +1468,10 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		if (columnImpl.sortable) {
 			resetHasBottomInfos();
 			if (rows.size() <= MAX_CLIENT_SORT_SIZE || sortListener == null) {
-				sortColumn = columns.indexOf(columnImpl);
+				int newSortColumn = columns.indexOf(columnImpl);
+				if (newSortColumn != sortColumn)
+					columnWidths.notifyColumnSelectionChange();
+				sortColumn = newSortColumn;
 				sortNegator = rows.sort(columnImpl);
 				updateFilterConstraints(columnImpl, sortNegator);
 				if (sortListener != null)
