@@ -970,6 +970,8 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 				sf.height(28);
 				sf.margin().top(4).left(3);
 				sf.padding().left(27).right(3);
+				if(IE_QUIRKS)
+					sf.padding().top(5).bottom(1);
 				IBorder border = sf.border();
 				border.style().rounded();
 				border.width(1).color().lightgray();
