@@ -149,10 +149,22 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 	public class NumberDecorator extends DefaultDecorator<Number> {
 
+		private final IFormat format;
+
+		NumberDecorator(FieldTypeImpl type) {
+			if (type.clazz.equals(Double.class)) {
+				format = Format.doubleValue();
+			} else if (type.isLong) {
+				format = Format.longInt();
+			} else {
+				format = Format.integer();
+			}
+		}
+
 		@Override
 		public void decorate(Object identifier, IBulkTableCell cell,
 				Number value) {
-			String text = value == null ? null : String.valueOf(value);
+			String text = value == null ? null : format.format(value);
 			if (text == null || !STYLE_NUMBERS_AND_DATES)
 				cell.text(text);
 			else
@@ -388,7 +400,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 				decorator = new ImageDecorator();
 			} else if (type.clazz.equals(Long.class)
 					|| type.clazz.equals(Integer.class)) {
-				decorator = new NumberDecorator();
+				decorator = new NumberDecorator(type);
 			} else if (type.clazz.equals(Date.class)) {
 				decorator = new DateDecorator(type.isLong, type.isShort);
 			} else if (type.clazz.equals(Timestamp.class)) {
@@ -396,7 +408,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 			} else if (type.clazz.equals(Boolean.class)) {
 				decorator = new BooleanDecorator();
 			} else if (type.clazz.equals(Double.class)) {
-				decorator = new NumberDecorator();
+				decorator = new NumberDecorator(type);
 			} else
 				throw new UnsupportedOperationException(type.clazz.getName());
 		}
