@@ -20,7 +20,7 @@ package co.fxl.gui.impl;
 
 public interface RuntimeConstants {
 
-	public static final boolean USE_QUIRKS_MODE = false;
+	public static final boolean USE_QUIRKS_MODE = true;
 
 	public static final boolean SAFARI = Env.is(Env.SAFARI);
 	public static final boolean CHROME = Env.is(Env.CHROME);
