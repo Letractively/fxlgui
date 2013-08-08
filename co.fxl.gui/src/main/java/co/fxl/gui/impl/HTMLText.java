@@ -42,6 +42,11 @@ public class HTMLText {
 	}
 
 	public static String html(String toString) {
+		String string = plain(toString);
+		return "<html>" + string + "</html>";
+	}
+
+	public static String plain(String toString) {
 		toString = toString.replace("\n", "<br/>");
 		StringBuilder b = new StringBuilder();
 		for (int i = 0; i < toString.length(); i++) {
@@ -70,7 +75,8 @@ public class HTMLText {
 				break;
 			}
 		}
-		return "<html>" + b.toString() + "</html>";
+		String string = b.toString();
+		return string;
 	}
 
 	private String underline(String toString) {
