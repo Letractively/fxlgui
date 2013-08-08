@@ -477,7 +477,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 			public IClickable<?> enterAdminButton(IPanel<?> panel,
 					final List<IAdminRightGroup> rights) {
 				return new UserPanelImageButton(panel, "settings",
-						"Administration", !IE_LEQ_8) {
+						"Administration", !IE_QUIRKS) {
 					@Override
 					void decorate(IVerticalPanel p) {
 						p.spacing().left(12).top(12).right(12).bottom(12)
@@ -509,7 +509,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 							first = false;
 						}
 					}
-				}.tooltip("Click on administration to enter admin area");
+				}.tooltip("Click on Administration to enter admin area");
 			}
 
 			@Override
