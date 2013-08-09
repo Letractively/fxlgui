@@ -146,6 +146,8 @@ public class HorizontalScalingPanel implements IClickListener, RuntimeConstants 
 				.top(SPACING_POPUP - (scrollDown ? 3 : 0));
 		morePanel.clickable(false);
 		popUp = PopUp.showPopUp().autoHide(true);
+		if (scrollDown)
+			popUp.border().style().shadow();
 		IVerticalPanel base = popUp.container().panel().vertical();
 		int maxWidth = morePanel.width();
 		int innerWidth = 0;
