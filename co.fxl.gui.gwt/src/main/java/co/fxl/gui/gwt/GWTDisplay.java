@@ -72,6 +72,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	// (eventuell
 	// in Grid einbetten)
 
+	private static final String OPERA_PREFIX = "Opera/";
 	private static final String FIREFOX = "Firefox/";
 	private static final String CHROME = "Chrome/";
 	public static final String BROWSER_WARNING_IE8 = "You are using an outdated browser with a slow javascript engine! If possible: Update to Internet Explorer 9+ or switch to another browser like Firefox or Chrome. This will significantly improve application response time.";
@@ -88,16 +89,17 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	private IRuntime runtime;
 	private boolean scrolling = true;
 	private List<Element> styles = new LinkedList<Element>();
-	private static String userAgent = Window.Navigator.getUserAgent();
-	private static final String USER_AGENT_LOWER_CASE = userAgent.toLowerCase();
-	public static boolean isFirefox = userAgent.contains("Gecko/")
-			&& userAgent.contains("Firefox/");
-	public static boolean isSafari = userAgent.contains("Safari/")
-			&& !userAgent.contains("Chrome/");
+	private static String USER_AGENT = Window.Navigator.getUserAgent();
+	private static final String USER_AGENT_LOWER_CASE = USER_AGENT
+			.toLowerCase();
+	public static boolean isFirefox = USER_AGENT.contains("Gecko/")
+			&& USER_AGENT.contains("Firefox/");
+	public static boolean isSafari = USER_AGENT.contains("Safari/")
+			&& !USER_AGENT.contains("Chrome/");
 	public static boolean isFirefox3 = isFirefox
-			&& userAgent.contains("Firefox/3.");
-	static boolean isChrome = userAgent.contains("Chrome/")
-			&& !userAgent.contains("Safari/");
+			&& USER_AGENT.contains("Firefox/3.");
+	static boolean isChrome = USER_AGENT.contains("Chrome/")
+			&& !USER_AGENT.contains("Safari/");
 	public static boolean isInternetExplorer = USER_AGENT_LOWER_CASE
 			.contains("msie");
 	public static boolean isInternetExplorer8OrBelow = USER_AGENT_LOWER_CASE
@@ -105,7 +107,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 			|| USER_AGENT_LOWER_CASE.contains("msie 7.0")
 			|| USER_AGENT_LOWER_CASE.contains("msie 6.0")
 			|| USER_AGENT_LOWER_CASE.contains("msie 5.0");
-	public static boolean isOpera = USER_AGENT_LOWER_CASE.contains("opera");
+	public static boolean isOpera = USER_AGENT.startsWith(OPERA_PREFIX);
 	static boolean isInternetExplorer9 = USER_AGENT_LOWER_CASE
 			.contains("msie 9.0");
 	static boolean isInternetExplorer9OrBelow = isInternetExplorer9
@@ -251,7 +253,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 			return getBrowserVersionFirefox();
 		}
 		if (isChrome) {
-			return getBrowserVersionChrome(userAgent);
+			return getBrowserVersionChrome(USER_AGENT);
 		}
 		if (isInternetExplorer) {
 			if (isInternetExplorer8OrBelow)
@@ -261,17 +263,31 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 			else
 				return 10;
 		}
+		if (isOpera) {
+			return getBrowserVersionOpera();
+		}
 		return -1;
 	}
 
 	private static double getBrowserVersionFirefox() {
-		if (userAgent.contains(FIREFOX)) {
-			int index = userAgent.indexOf(FIREFOX) + FIREFOX.length();
-			int index2 = userAgent.indexOf(".", index);
-			String substring = userAgent.substring(index, index2);
+		if (USER_AGENT.contains(FIREFOX)) {
+			int index = USER_AGENT.indexOf(FIREFOX) + FIREFOX.length();
+			int index2 = USER_AGENT.indexOf(".", index);
+			String substring = USER_AGENT.substring(index, index2);
 			return Double.valueOf(substring);
 		}
 		return 4;
+	}
+
+	private static double getBrowserVersionOpera() {
+		try {
+			int index = OPERA_PREFIX.length();
+			int index2 = OPERA_PREFIX.indexOf(".", index);
+			String substring = USER_AGENT.substring(index, index2);
+			return Double.valueOf(substring);
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 
 	private static int getBrowserVersionChrome(String userAgent) {
