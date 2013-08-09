@@ -37,7 +37,7 @@ import co.fxl.gui.api.IVerticalPanel;
 
 public class HorizontalScalingPanel implements IClickListener, RuntimeConstants {
 
-	private static final int SPACING_POPUP = 6;
+	private static final int SPACING_POPUP = 4;
 	private IHorizontalPanel basic;
 	private IHorizontalPanel panel;
 	private IHorizontalPanel morePanel;
@@ -146,7 +146,6 @@ public class HorizontalScalingPanel implements IClickListener, RuntimeConstants 
 				.top(SPACING_POPUP - (scrollDown ? 3 : 0));
 		morePanel.clickable(false);
 		popUp = PopUp.showPopUp().autoHide(true);
-		popUp.border().style().shadow();
 		IVerticalPanel base = popUp.container().panel().vertical();
 		int maxWidth = morePanel.width();
 		int innerWidth = 0;
