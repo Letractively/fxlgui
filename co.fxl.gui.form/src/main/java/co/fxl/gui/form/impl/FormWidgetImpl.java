@@ -58,7 +58,7 @@ import co.fxl.gui.style.impl.Style;
 public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 
 	private static final boolean USE_BUTTON_PANEL = NOT_SWING;
-	private static final boolean ALLOW_MULTI_COLUMNS = false;
+	private static final boolean ALLOW_MULTI_COLUMNS = true;
 
 	class FormEntryLabel {
 
