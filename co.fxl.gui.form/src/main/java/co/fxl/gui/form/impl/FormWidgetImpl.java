@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.data.format.api.IFormat;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -58,7 +59,7 @@ import co.fxl.gui.style.impl.Style;
 public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 
 	private static final boolean USE_BUTTON_PANEL = NOT_SWING;
-	private static final boolean ALLOW_MULTI_COLUMNS = true;
+	private static final boolean ALLOW_MULTI_COLUMNS = NOT_SWING;
 
 	class FormEntryLabel {
 
@@ -251,8 +252,9 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 
 	@Override
 	public IFormField<ITextField, Date> addDateField(String name,
-			boolean addCalendar) {
-		return new FormDateFieldImpl(this, nextGridIndex(), name, addCalendar);
+			boolean addCalendar, IFormat<Date> f) {
+		return new FormDateFieldImpl(this, nextGridIndex(), name, addCalendar,
+				f);
 	}
 
 	@Override

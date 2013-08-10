@@ -20,6 +20,7 @@ package co.fxl.gui.form.impl;
 
 import java.util.Date;
 
+import co.fxl.data.format.api.IFormat;
 import co.fxl.data.format.impl.Format;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.form.api.IFormField;
@@ -31,10 +32,10 @@ class FormDateFieldImpl extends FormTextFieldImpl<Date> {
 	private DateField dateField;
 
 	FormDateFieldImpl(final FormWidgetImpl widget, int index, String name,
-			boolean addCalendar) {
+			boolean addCalendar, IFormat<Date> f) {
 		super(widget, index, name, null);
 		dateField = new DateField(valueElement(), addCalendar ? addContainer()
-				: null, addCalendar);
+				: null, addCalendar, f);
 		editable(widget.saveListener != null);
 		type = new FieldTypeImpl() {
 

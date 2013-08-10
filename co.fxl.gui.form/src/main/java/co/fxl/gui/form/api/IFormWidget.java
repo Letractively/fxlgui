@@ -20,6 +20,7 @@ package co.fxl.gui.form.api;
 
 import java.util.Date;
 
+import co.fxl.data.format.api.IFormat;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable;
@@ -81,7 +82,8 @@ public interface IFormWidget extends IResizable<IFormWidget> {
 
 	IFormField<ITextField, String> addTextField(String name, IFieldType type);
 
-	IFormField<ITextField, Date> addDateField(String name, boolean addCalendar);
+	IFormField<ITextField, Date> addDateField(String name, boolean addCalendar,
+			IFormat<Date> f);
 
 	IRelationField addRelationField(String name);
 
