@@ -20,6 +20,7 @@ package co.fxl.gui.filter.impl;
 
 import java.util.Date;
 
+import co.fxl.data.format.impl.Format;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
@@ -53,7 +54,7 @@ class CellImpl implements ICell, RuntimeConstants {
 		ITextField addTextField(IHorizontalPanel p, boolean isDateField) {
 			boolean useDateField = isDateField && NOT_SWING;
 			ITextField textField = useDateField ? new DateField(p.add(), IE ? 2
-					: 3) : p.add().textField();
+					: 3, Format.date()) : p.add().textField();
 			ITextField textField1 = textField
 					.width(FilterTemplate.WIDTH_RANGE_CELL
 							- (useDateField ? (Env.runtime().geq(Env.IE, 10) ? 21

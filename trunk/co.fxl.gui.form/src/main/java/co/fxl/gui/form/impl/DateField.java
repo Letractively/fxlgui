@@ -89,19 +89,32 @@ public class DateField extends TextFieldAdp implements RuntimeConstants {
 	private IFormat<Date> format = Format.date();
 	private PopUp popUp;
 
-	public DateField(IContainer c) {
-		this(c, true, 2);
+	public DateField(ITextField tf, IContainer c, IFormat<Date> format) {
+		setUp(tf, c, true);
+		this.format = format;
 	}
 
-	public DateField(IContainer c, int cellSpacing) {
-		this(c, true, cellSpacing);
+	public DateField(ITextField tf, IContainer c, boolean addCalendar,
+			IFormat<Date> format) {
+		setUp(tf, c, addCalendar);
+		this.format = format;
+	}
+
+	public DateField(IContainer c, IFormat<Date> format) {
+		this(c, true, 2, format);
+	}
+
+	public DateField(IContainer c, int cellSpacing, IFormat<Date> format) {
+		this(c, true, cellSpacing, format);
 	}
 
 	// private DateField(IContainer c, boolean addC) {
 	// this(c, addC, 2);
 	// }
 
-	public DateField(IContainer c, boolean addC, int cellSpacing) {
+	public DateField(IContainer c, boolean addC, int cellSpacing,
+			IFormat<Date> format) {
+		this.format = format;
 		IGridPanel g = c.panel().grid();
 		ITextField tf = g.cell(0, 0).textField();
 		g.column(0).expand();
@@ -136,14 +149,6 @@ public class DateField extends TextFieldAdp implements RuntimeConstants {
 	}
 
 	protected void decorate(IGridPanel g) {
-	}
-
-	public DateField(ITextField tf, IContainer c) {
-		setUp(tf, c, true);
-	}
-
-	public DateField(ITextField tf, IContainer c, boolean addCalendar) {
-		setUp(tf, c, addCalendar);
 	}
 
 	public DateField clickable(boolean clickable) {
