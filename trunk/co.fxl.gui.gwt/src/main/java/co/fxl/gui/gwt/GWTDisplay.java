@@ -43,6 +43,7 @@ import co.fxl.gui.impl.RuntimeTemplate;
 import co.fxl.gui.impl.StatusDisplay;
 import co.fxl.gui.impl.StatusDisplay.Fix;
 import co.fxl.gui.impl.ToolbarImpl;
+import co.fxl.gui.log.impl.Log;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -98,8 +99,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 			&& !USER_AGENT.contains("Chrome/");
 	public static boolean isFirefox3 = isFirefox
 			&& USER_AGENT.contains("Firefox/3.");
-	static boolean isChrome = USER_AGENT.contains("Chrome/")
-			&& !USER_AGENT.contains("Safari/");
+	static boolean isChrome = USER_AGENT.contains("Chrome/");
 	public static boolean isInternetExplorer = USER_AGENT_LOWER_CASE
 			.contains("msie");
 	public static boolean isInternetExplorer8OrBelow = USER_AGENT_LOWER_CASE
@@ -148,6 +148,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 				notifyResizeListeners();
 			}
 		});
+		Log.instance().debug("User agent: " + Window.Navigator.getUserAgent());
 		runtime = new RuntimeTemplate(getBrowserName(), getBrowserVersion());
 		declareConstants();
 		GWTFormat.setUp();
