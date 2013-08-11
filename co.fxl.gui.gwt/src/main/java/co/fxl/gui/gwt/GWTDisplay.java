@@ -249,7 +249,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		return co.fxl.gui.impl.Env.OTHER_BROWSER;
 	}
 
-	public static double getBrowserVersion() {
+	public static int getBrowserVersion() {
 		if (isFirefox) {
 			return getBrowserVersionFirefox();
 		}
@@ -270,22 +270,22 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		return -1;
 	}
 
-	private static double getBrowserVersionFirefox() {
+	private static int getBrowserVersionFirefox() {
 		if (USER_AGENT.contains(FIREFOX)) {
 			int index = USER_AGENT.indexOf(FIREFOX) + FIREFOX.length();
 			int index2 = USER_AGENT.indexOf(".", index);
 			String substring = USER_AGENT.substring(index, index2);
-			return Double.valueOf(substring);
+			return Integer.valueOf(substring);
 		}
 		return 4;
 	}
 
-	private static double getBrowserVersionOpera() {
+	private static int getBrowserVersionOpera() {
 		try {
 			int index = OPERA_PREFIX.length();
 			int index2 = OPERA_PREFIX.indexOf(".", index);
 			String substring = USER_AGENT.substring(index, index2);
-			return Double.valueOf(substring);
+			return Integer.valueOf(substring);
 		} catch (Exception e) {
 			return -1;
 		}
