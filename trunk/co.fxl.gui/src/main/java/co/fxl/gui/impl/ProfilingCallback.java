@@ -25,7 +25,7 @@ import co.fxl.gui.log.impl.Log;
 public class ProfilingCallback<T> extends CallbackTemplate<T> implements
 		RuntimeConstants {
 
-	private static final boolean ACTIVE = false;
+	private static final boolean ACTIVE = true;
 	private IMeasurement measurement;
 
 	private ProfilingCallback(ICallback<T> callback, String id) {
