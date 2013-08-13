@@ -28,9 +28,9 @@ public class ProfilingCallback<T> extends CallbackTemplate<T> implements
 	private static final boolean ACTIVE = false;
 	private IMeasurement measurement;
 
-	private ProfilingCallback(ICallback<T> callback) {
+	private ProfilingCallback(ICallback<T> callback, String id) {
 		super(callback);
-		String signature = new Exception().getStackTrace()[2]
+		String signature = id != null ? id : new Exception().getStackTrace()[2]
 				.toString();
 		measurement = Log.instance().start(signature);
 	}
@@ -49,8 +49,12 @@ public class ProfilingCallback<T> extends CallbackTemplate<T> implements
 	}
 
 	public static <R> ICallback<R> adapt(ICallback<R> callback) {
+		return adapt(callback, null);
+	}
+
+	public static <R> ICallback<R> adapt(ICallback<R> callback, String id) {
 		if (!ACTIVE)
 			return callback;
-		return new ProfilingCallback<R>(callback);
+		return new ProfilingCallback<R>(callback, id);
 	}
 }
