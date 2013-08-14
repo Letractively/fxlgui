@@ -423,23 +423,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	}
 
 	@Override
-	public ICursor cursor() {
-		return new ICursor() {
-
-			@Override
-			public ICursor waiting() {
-				DOM.setStyleAttribute(RootPanel.get().getElement(), "cursor",
-						"wait");
-				return this;
-			}
-
-			@Override
-			public ICursor pointer() {
-				DOM.setStyleAttribute(RootPanel.get().getElement(), "cursor",
-						"default");
-				return this;
-			}
-		};
+	public ICursor<IDisplay> cursor() {
+		return new GWTCursor<IDisplay>(this, RootPanel.get());
 	}
 
 	// public static native String getUserAgent()

@@ -16,13 +16,41 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.api;
+package co.fxl.gui.gwt;
 
-public interface ICursor<T> {
+import co.fxl.gui.api.ICursor;
 
-	T waiting();
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.ui.Widget;
 
-	T hand();
+class GWTCursor<R> implements ICursor<R> {
 
-	T pointer();
+	private R owner;
+	private Widget widget;
+
+	GWTCursor(R owner, Widget widget) {
+		this.owner = owner;
+		this.widget = widget;
+	}
+
+	@Override
+	public R waiting() {
+		return symbol("wait");
+	}
+
+	private R symbol(String symbol) {
+		DOM.setStyleAttribute(widget.getElement(), "cursor", symbol);
+		return owner;
+
+	}
+
+	@Override
+	public R hand() {
+		return symbol("hand");
+	}
+
+	@Override
+	public R pointer() {
+		return symbol("pointer");
+	}
 }

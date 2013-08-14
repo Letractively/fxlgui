@@ -83,7 +83,7 @@ public interface IDisplay extends IColored, IServiceRegistry<IDisplay>,
 
 	int height();
 
-	ICursor cursor();
+	ICursor<IDisplay> cursor();
 
 	IDisplay block(boolean waiting);
 

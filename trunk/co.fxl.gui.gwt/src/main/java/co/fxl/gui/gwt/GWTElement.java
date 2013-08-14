@@ -25,6 +25,7 @@ import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.IColored.IColor;
+import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDraggable;
 import co.fxl.gui.api.IDraggable.IDragStartListener.IDragStartEvent;
@@ -874,6 +875,12 @@ public class GWTElement<T extends Widget, R> implements IElement<R>,
 	public R addStyle(String style) {
 		container.widget.addStyleName(style);
 		return (R) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ICursor<R> cursor() {
+		return new GWTCursor<R>((R) this, container.widget);
 	}
 
 }
