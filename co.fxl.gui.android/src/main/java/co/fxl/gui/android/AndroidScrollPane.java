@@ -21,6 +21,7 @@ package co.fxl.gui.android;
 import android.view.View;
 import android.widget.ScrollView;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IMargin;
@@ -239,6 +240,29 @@ class AndroidScrollPane implements IScrollPane, Parent {
 	@Override
 	public IScrollPane addStyle(String style) {
 		throw new UnsupportedOperationException();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ICursor<IScrollPane> cursor() {
+		return new ICursor<IScrollPane>() {
+
+			@Override
+			public IScrollPane waiting() {
+				return (IScrollPane) AndroidScrollPane.this;
+			}
+
+			@Override
+			public IScrollPane hand() {
+				return (IScrollPane) AndroidScrollPane.this;
+			}
+
+			@Override
+			public IScrollPane pointer() {
+				return (IScrollPane) AndroidScrollPane.this;
+			}
+
+		};
 	}
 
 	// @Override

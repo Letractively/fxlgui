@@ -52,4 +52,6 @@ public interface IElement<T> extends ILocated<T> {
 
 	T addStyle(String style);
 
+	ICursor<T> cursor();
+
 }

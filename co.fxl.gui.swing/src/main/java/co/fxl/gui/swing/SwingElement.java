@@ -42,6 +42,7 @@ import javax.swing.border.EmptyBorder;
 import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
+import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDropTarget.IDragMoveListener;
 import co.fxl.gui.api.IDropTarget.IDropListener;
@@ -578,6 +579,29 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 	@Override
 	public R addStyle(String style) {
 		return (R) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ICursor<R> cursor() {
+		return new ICursor<R>() {
+
+			@Override
+			public R waiting() {
+				return (R) SwingElement.this;
+			}
+
+			@Override
+			public R hand() {
+				return (R) SwingElement.this;
+			}
+
+			@Override
+			public R pointer() {
+				return (R) SwingElement.this;
+			}
+
+		};
 	}
 
 }

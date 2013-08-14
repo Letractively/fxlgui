@@ -28,6 +28,7 @@ import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IClickable.IKey;
+import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IMargin;
@@ -272,4 +273,28 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 	public T addStyle(String style) {
 		throw new UnsupportedOperationException();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ICursor<T> cursor() {
+		return new ICursor<T>() {
+
+			@Override
+			public T waiting() {
+				return (T) AndroidElement.this;
+			}
+
+			@Override
+			public T hand() {
+				return (T) AndroidElement.this;
+			}
+
+			@Override
+			public T pointer() {
+				return (T) AndroidElement.this;
+			}
+
+		};
+	}
+
 }

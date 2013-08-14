@@ -20,6 +20,7 @@ package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IBordered;
 import co.fxl.gui.api.IColored;
+import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IEditable;
 import co.fxl.gui.api.IElement;
@@ -243,6 +244,32 @@ public class ElementAdp<T extends IElement<T>> implements IElement<T>,
 	public T addStyle(String style) {
 		element().addStyle(style);
 		return (T) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ICursor<T> cursor() {
+		return new ICursor<T>() {
+
+			@Override
+			public T waiting() {
+				element().cursor().waiting();
+				return (T) ElementAdp.this;
+			}
+
+			@Override
+			public T hand() {
+				element().cursor().hand();
+				return (T) ElementAdp.this;
+			}
+
+			@Override
+			public T pointer() {
+				element().cursor().pointer();
+				return (T) ElementAdp.this;
+			}
+
+		};
 	}
 
 }
