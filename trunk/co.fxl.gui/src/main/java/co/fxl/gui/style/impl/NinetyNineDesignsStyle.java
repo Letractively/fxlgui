@@ -317,6 +317,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 		private IPopUp popUp;
 		private boolean scheduledClose;
 		private ImageButton button;
+		private boolean scheduledOpen;
 
 		private UserPanelImageButton(IPanel<?> panel, String image,
 				String label, boolean hasPopUp) {
@@ -345,11 +346,23 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 		@Override
 		public void onMouseOver() {
 			scheduledClose = false;
-			showPopUp();
+			if (!scheduledOpen) {
+				scheduledOpen = true;
+				Display.instance().invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						if (scheduledOpen) {
+							scheduledOpen = false;
+							showPopUp();
+						}
+					}
+				}, 200);
+			}
 		}
 
 		@Override
 		public void onMouseOut() {
+			scheduledOpen = false;
 			scheduleClose();
 		}
 
@@ -970,7 +983,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 				sf.height(28);
 				sf.margin().top(4).left(3);
 				sf.padding().left(27).right(3);
-				if(IE_QUIRKS)
+				if (IE_QUIRKS)
 					sf.padding().top(5).bottom(1);
 				IBorder border = sf.border();
 				border.style().rounded();
