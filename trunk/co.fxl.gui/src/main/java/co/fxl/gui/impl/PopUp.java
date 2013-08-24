@@ -109,13 +109,13 @@ public class PopUp implements RuntimeConstants {
 		return popUp;
 	}
 
-	public static TransparentPopUp showClosablePopUp(boolean closable,
-			final Runnable closeListener) {
-		return showClosablePopUp(closable, closeListener, true);
+	public static TransparentPopUp showClosablePopUpDiscard(boolean closable,
+			final Runnable closeListener, boolean noDiscardChangesDialog) {
+		return showClosablePopUpDiscard(closable, closeListener, true, noDiscardChangesDialog);
 	}
 
-	public static TransparentPopUp showClosablePopUp(boolean closable,
-			final Runnable closeListener, boolean pushState) {
+	public static TransparentPopUp showClosablePopUpDiscard(boolean closable,
+			final Runnable closeListener, boolean pushState, boolean noDiscardChangesDialog) {
 		final TransparentPopUp t = new TransparentPopUp();
 		t.closeListener = closeListener;
 		final IPopUp popUp = display.showPopUp();
@@ -162,7 +162,7 @@ public class PopUp implements RuntimeConstants {
 		cell.image()
 				.resource("close_24x24.png")
 				// .label().text("Close")
-				.addClickListener(new LazyClickListener() {
+				.addClickListener(new LazyClickListener(noDiscardChangesDialog) {
 					@Override
 					protected void onAllowedClick() {
 						t.ignoreNotify = true;
