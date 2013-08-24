@@ -1012,7 +1012,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void updateHeaderRow(IBulkTableWidget grid) {
-		columnWidths.columns((List) columns);
+		columnWidths.columns((List) originalOrder(columns));
 		int current = 0;
 		int wctr = Shell.instance().width(container);
 		int w = width != -1 ? width : wctr;
@@ -1035,6 +1035,19 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			column.title(name, sortUp);
 			prepare(columnWidths, columnImpl, column);
 		}
+	}
+
+	private List originalOrder(List<ScrollTableColumnImpl> columns) {
+		List<ScrollTableColumnImpl> c = new LinkedList<ScrollTableColumnImpl>(
+				columns);
+		Collections.sort(columns, new Comparator<ScrollTableColumnImpl>() {
+			@Override
+			public int compare(ScrollTableColumnImpl arg0,
+					ScrollTableColumnImpl arg1) {
+				return arg0.index - arg1.index;
+			}
+		});
+		return c;
 	}
 
 	public static void prepare(IColumnWidthInjector cw,
