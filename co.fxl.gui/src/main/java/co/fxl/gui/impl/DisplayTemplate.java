@@ -44,7 +44,7 @@ public abstract class DisplayTemplate extends ServiceRegistryImpl<IDisplay>
 	}
 
 	@Override
-	public final IDisplay notifyResizeListeners() {
+	public IDisplay notifyResizeListeners() {
 		return resizeRegistry.notifyResizeListeners();
 	}
 
