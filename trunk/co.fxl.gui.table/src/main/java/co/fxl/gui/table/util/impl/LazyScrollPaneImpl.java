@@ -290,28 +290,33 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 			forkScrollToRowIndex();
 			update(false);
 			treeDockPanel.visible(true);
+			runnable.run();
 		} else {
 			forkScrollToRowIndex();
 			scrollPane.addScrollListener(LazyScrollPaneImpl.this);
 			update(false);
 			treeDockPanel.visible(true);
+			runnable.run();
 		}
 		allowRepaint = false;
 	}
 
+	private Runnable runnable = new Runnable() {
+		@Override
+		public void run() {
+			holdScroll = true;
+			int y = convertRowIndex2ScrollOffset(rowIndex);
+			scrollPane.scrollTo(y);
+			// TODO style="overflow:auto" on body element
+			// FocusPanel around Widget to scroll into view
+			holdScroll = false;
+		}
+	};
+
 	private void forkScrollToRowIndex() {
 		if (rowIndex > 0) {
-			Display.instance().invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					holdScroll = true;
-					int y = convertRowIndex2ScrollOffset(rowIndex);
-					scrollPane.scrollTo(y);
-					// TODO style="overflow:auto" on body element
-					// FocusPanel around Widget to scroll into view
-					holdScroll = false;
-				}
-			});
+			runnable.run();
+//			Display.instance().invokeLater(runnable);
 		}
 	}
 
