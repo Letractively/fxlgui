@@ -90,6 +90,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	private IRuntime runtime;
 	private boolean scrolling = true;
 	private List<Element> styles = new LinkedList<Element>();
+	private boolean blocked;
+	private boolean queueNotifyResizeListener;
 	private static String USER_AGENT = Window.Navigator.getUserAgent();
 	private static final String USER_AGENT_LOWER_CASE = USER_AGENT
 			.toLowerCase();
@@ -435,10 +437,25 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	@Override
 	public IDisplay block(boolean waiting) {
+		blocked = waiting;
 		// waiting-delta waiting = waiting;
 		DOM.setStyleAttribute(RootPanel.get().getElement(), "cursor",
 				waiting ? "wait" : "default");
+		if (!waiting && queueNotifyResizeListener) {
+			notifyResizeListeners();
+		}
 		return this;
+	}
+
+	@Override
+	public IDisplay notifyResizeListeners() {
+		if (blocked) {
+			queueNotifyResizeListener = true;
+			return this;
+		} else {
+			queueNotifyResizeListener = false;
+			return super.notifyResizeListeners();
+		}
 	}
 
 	@Override
