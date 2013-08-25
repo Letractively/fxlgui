@@ -70,6 +70,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 
 	private static final int COMMENT_PANEL_INDENT = 6;
 	private static final String CLEAR_FILTERS = "Clear Filters";
+	private IGridPanel applicationPanel;
 
 	@Override
 	public void hyperlink(ILabel label) {
@@ -278,8 +279,6 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 		};
 	}
 
-	private IGridPanel applicationPanel;
-
 	@Override
 	public IApplicationPanel applicationPanel() {
 		return new IApplicationPanel() {
@@ -287,6 +286,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 			@Override
 			public ILinearPanel<?>[] create(IContainer c) {
 				applicationPanel = c.panel().grid().spacing(1);
+				applicationPanel.visible(!Style.instance().embedded());
 				blue(applicationPanel).gradient().vertical().rgb(57, 84, 110);
 				applicationPanel.border().style().bottom();
 				applicationPanel.column(0).expand();
@@ -644,6 +644,8 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 
 			@Override
 			public void backgroundCards(IPanel<?> history) {
+				if (embedded())
+					return;
 				IBorder b = history.border();
 				b.style().top();
 				b.color().lightgray();

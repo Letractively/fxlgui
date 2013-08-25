@@ -70,4 +70,5 @@ public interface INavigationWidget extends
 	INavigationWidget clearConfigureActions();
 
 	INavigationWidget topPanel(IHorizontalPanel panel);
+
 }
