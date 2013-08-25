@@ -46,6 +46,7 @@ import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.rtf.api.IHTMLArea;
 import co.fxl.gui.rtf.api.IHTMLArea.Formatting;
 import co.fxl.gui.rtf.api.IHTMLArea.IHTMLAreaButton;
+import co.fxl.gui.style.impl.Style;
 
 public class RichTextToolbarImpl implements RuntimeConstants {
 
@@ -413,7 +414,7 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 					closeListener.onClick();
 					return;
 				}
-				final IPopUp p = PopUp.showPopUp().autoHide(true).glass(true);
+				final IPopUp p = PopUp.showPopUp().autoHide(true).glass(Style.instance().glass());
 				p.border().remove();
 				p.border().style().shadow();
 				IVerticalPanel spacing2 = p.container().panel().vertical()

@@ -1,6 +1,5 @@
 package co.fxl.gui.gwt;
 
-import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;

@@ -427,4 +427,6 @@ public interface IStyle {
 
 	void embedded(boolean embedded);
 
+	boolean glass();
+
 }
