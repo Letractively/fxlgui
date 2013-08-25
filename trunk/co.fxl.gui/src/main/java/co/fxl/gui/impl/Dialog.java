@@ -19,10 +19,11 @@
 package co.fxl.gui.impl;
 
 import co.fxl.gui.api.IDialog;
+import co.fxl.gui.style.impl.Style;
 
 public class Dialog {
 
 	public static IDialog newInstance() {
-		return PopUp.showDialog().modal(true).glass(true);
+		return PopUp.showDialog().modal(true).glass(Style.instance().glass());
 	}
 }

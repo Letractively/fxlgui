@@ -24,6 +24,7 @@ import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.style.impl.Style;
 
 public class ErrorDialog {
 
@@ -63,7 +64,7 @@ public class ErrorDialog {
 			final String pStacktrace) {
 		showing = true;
 		StatusPopUp.instance().close();
-		IDialog dialog = PopUp.showDialog().glass(true).width(DEFAULT_WIDTH)
+		IDialog dialog = PopUp.showDialog().glass(Style.instance().glass()).width(DEFAULT_WIDTH)
 				.title(pTitle).message(pMessage).error();
 		if (pStacktrace != null) {
 			dialog.addButton().text("Details").imageResource(Icons.DETAIL)

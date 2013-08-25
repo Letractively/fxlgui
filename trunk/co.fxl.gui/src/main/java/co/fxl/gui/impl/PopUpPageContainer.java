@@ -23,6 +23,7 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.IResizableWidget.Size;
 import co.fxl.gui.impl.PopUp.TransparentPopUp;
+import co.fxl.gui.style.impl.Style;
 
 public class PopUpPageContainer implements PageContainer, RuntimeConstants {
 
@@ -51,7 +52,7 @@ public class PopUpPageContainer implements PageContainer, RuntimeConstants {
 	@Override
 	public IVerticalPanel panel(Runnable cl, boolean noDiscardChanges) {
 		closablePopUp = PopUp.showClosablePopUpDiscard(true, cl, false, noDiscardChanges);
-		popUp = closablePopUp.popUp.glass(true).autoHide(true);
+		popUp = closablePopUp.popUp.glass(Style.instance().glass()).autoHide(true);
 		if (isModal)
 			popUp.modal(true);
 		panel = closablePopUp.panel;
