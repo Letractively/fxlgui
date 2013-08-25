@@ -43,7 +43,6 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DummyCallback;
-import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.ErrorDialog;
 import co.fxl.gui.impl.HorizontalScalingPanel;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
@@ -251,6 +250,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 	@Override
 	public ITabWidget<INavigationGroup, INavigationItem> visible(
 			boolean visible, ICallback<Void> cb) {
+		focus.visible(!Style.instance().embedded());
 		setUpDynamicResize();
 		cb.onSuccess(null);
 		return this;

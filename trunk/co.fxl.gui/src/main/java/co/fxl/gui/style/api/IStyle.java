@@ -423,4 +423,8 @@ public interface IStyle {
 
 	IExportHtml exportHtml();
 
+	boolean embedded();
+
+	void embedded(boolean embedded);
+
 }

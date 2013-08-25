@@ -31,7 +31,6 @@ import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DummyCallback;
-import co.fxl.gui.impl.Env;
 import co.fxl.gui.impl.HyperlinkMouseOverListener;
 import co.fxl.gui.impl.IContentPage;
 import co.fxl.gui.impl.LazyClickListener;
