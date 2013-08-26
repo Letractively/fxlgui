@@ -573,7 +573,7 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 			e.editable(editable);
 	}
 
-	ITokenButton addTokenButton() {
+	public ITokenButton addTokenButton() {
 		TokenButtonImpl b = new TokenButtonImpl();
 		buttons.add(b);
 		return b;
