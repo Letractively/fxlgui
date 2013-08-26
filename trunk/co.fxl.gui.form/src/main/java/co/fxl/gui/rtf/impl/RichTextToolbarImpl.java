@@ -41,14 +41,48 @@ import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.PopUp;
+import co.fxl.gui.impl.PopUp.TransparentPopUp;
 import co.fxl.gui.impl.RuntimeConstants;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.rtf.api.IHTMLArea;
 import co.fxl.gui.rtf.api.IHTMLArea.Formatting;
 import co.fxl.gui.rtf.api.IHTMLArea.IHTMLAreaButton;
+import co.fxl.gui.rtf.api.IHTMLArea.ITokenButton;
 import co.fxl.gui.style.impl.Style;
 
 public class RichTextToolbarImpl implements RuntimeConstants {
+
+	private class TokenButtonImpl extends ToolbarButton implements ITokenButton {
+
+		private String[] values;
+
+		@Override
+		public ITokenButton imageResource(String imageResource) {
+			setImage(panel, imageResource);
+			return this;
+		}
+
+		@Override
+		public ITokenButton values(String... values) {
+			this.values = values;
+			return this;
+		}
+
+		@Override
+		void handleClick() {
+			TransparentPopUp p = PopUp.showClosablePopUpDiscard(true, null,
+					true);
+			for (final String v : values)
+				p.panel.add().label().text(v)
+						.addClickListener(new IClickListener() {
+							@Override
+							public void onClick() {
+								htmlArea.insertHTML("${" + v + "}");
+							}
+						});
+		}
+
+	}
 
 	private class PushButton extends ToolbarButton {
 
@@ -414,7 +448,8 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 					closeListener.onClick();
 					return;
 				}
-				final IPopUp p = PopUp.showPopUp().autoHide(true).glass(Style.instance().glass());
+				final IPopUp p = PopUp.showPopUp().autoHide(true)
+						.glass(Style.instance().glass());
 				p.border().remove();
 				p.border().style().shadow();
 				IVerticalPanel spacing2 = p.container().panel().vertical()
@@ -536,6 +571,12 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 	public void editable(boolean editable) {
 		for (ToolbarElement e : buttons)
 			e.editable(editable);
+	}
+
+	ITokenButton addTokenButton() {
+		TokenButtonImpl b = new TokenButtonImpl();
+		buttons.add(b);
+		return b;
 	}
 
 }
