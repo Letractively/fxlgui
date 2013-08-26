@@ -27,7 +27,7 @@ abstract class GWTNumberFormat<T> implements IFormat<T> {
 	private NumberFormat impl;
 
 	GWTNumberFormat() {
-		this.impl = NumberFormat.getDecimalFormat();
+		impl = NumberFormat.getDecimalFormat();
 	}
 
 	@Override
