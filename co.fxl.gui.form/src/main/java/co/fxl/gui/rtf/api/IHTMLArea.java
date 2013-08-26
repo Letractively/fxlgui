@@ -23,6 +23,14 @@ import co.fxl.gui.api.ITextArea;
 
 public interface IHTMLArea extends ITextArea {
 
+	public interface ITokenButton {
+		
+		ITokenButton imageResource(String imageResource);
+		
+		ITokenButton values(String... values);
+
+	}
+
 	public interface IHTMLAreaButton {
 
 		IHTMLAreaButton title(String title);
@@ -77,5 +85,7 @@ public interface IHTMLArea extends ITextArea {
 	IHTMLArea insertHyperlink(String link);
 
 	IHTMLAreaButton addButton();
+
+	ITokenButton addTokenButton();
 
 }

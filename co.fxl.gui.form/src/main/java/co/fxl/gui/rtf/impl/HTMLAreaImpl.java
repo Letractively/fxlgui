@@ -47,6 +47,7 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 			}
 		});
 		toolbar.updateStatus();
+//		addTokenButton().imageResource("cancel.png").values("Test");
 	}
 
 	@Override
@@ -221,6 +222,11 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
 	@Override
 	public IHTMLAreaButton addButton() {
 		return toolbar.addButton();
+	}
+
+	@Override
+	public ITokenButton addTokenButton() {
+		return toolbar.addTokenButton();
 	}
 
 }
