@@ -85,12 +85,13 @@ public class TemplateTextFieldImpl extends TextFieldAdp implements
 
 	@Override
 	public IHTMLArea insertHTML(String html) {
-		int index = cursorPosition() + html.length();
+		int cursorPosition = cursorPosition();
+		final int index = cursorPosition + html.length();
 		StringBuilder text = new StringBuilder(text());
-		text.insert(cursorPosition(), html);
+		text.insert(cursorPosition, html);
 		text(text.toString());
 		focus(true);
-		cursorPosition(index >= text().length() ? text().length() - 1 : index);
+		cursorPosition(index);
 		return null;
 	}
 
