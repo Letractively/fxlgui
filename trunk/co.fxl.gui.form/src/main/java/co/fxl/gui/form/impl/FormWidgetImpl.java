@@ -54,6 +54,7 @@ import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.RuntimeConstants;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.rtf.api.IHTMLArea;
+import co.fxl.gui.rtf.api.ITemplateTextField;
 import co.fxl.gui.style.impl.Style;
 
 public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
@@ -127,8 +128,10 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 	}
 
 	ITextField addFormValueTextField(int gridIndex, boolean withFocus,
-			boolean expand) {
-		ITextField valuePanel = container(gridIndex, expand).textField();
+			boolean expand, boolean template) {
+		IContainer container = container(gridIndex, expand);
+		ITextField valuePanel = template ? container
+				.widget(ITemplateTextField.class) : container.textField();
 		heights.decorate(valuePanel);
 		Style.instance().form().inputField(valuePanel);
 		valuePanel.editable(saveListener != null);

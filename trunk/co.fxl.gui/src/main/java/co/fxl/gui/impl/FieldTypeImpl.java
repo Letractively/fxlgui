@@ -40,6 +40,7 @@ public class FieldTypeImpl implements IFieldType {
 	public boolean enumType = false;
 	private IDynamicConstraints dynamicConstraints;
 	public String nullValue = null;
+	public boolean template;
 
 	@Override
 	public boolean equals(Object o) {

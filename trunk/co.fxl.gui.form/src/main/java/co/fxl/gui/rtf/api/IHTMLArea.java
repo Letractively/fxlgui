@@ -23,14 +23,6 @@ import co.fxl.gui.api.ITextArea;
 
 public interface IHTMLArea extends ITextArea {
 
-	public interface ITokenButton {
-
-		ITokenButton title(String title);
-
-		ITokenButton values(String... values);
-
-	}
-
 	public interface IHTMLAreaButton {
 
 		IHTMLAreaButton title(String title);
