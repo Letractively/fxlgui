@@ -378,7 +378,8 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 				constrained = true;
 		}
 		// constrained |= !firstConfiguration.equals(configuration);
-		apply.clickable(constrained && !isInit);
+		boolean clickable = constrained && !isInit;
+		apply.clickable(clickable);
 		clear.clickable(constrained);
 		mainPanel.visible();
 		grid.show(firstConstraint);
