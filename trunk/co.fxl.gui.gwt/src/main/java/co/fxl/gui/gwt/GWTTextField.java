@@ -97,7 +97,7 @@ class GWTTextField extends GWTTextInput<TextBox, ITextField> implements
 
 	@Override
 	public ITextField cursorPosition(int position) {
-		position = Math.max(position, text().length());
+		position = Math.min(position, text().length());
 		container.widget.setCursorPos(position);
 		return this;
 	}
