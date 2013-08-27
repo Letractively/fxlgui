@@ -30,6 +30,7 @@ import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.IKeyRecipient;
+import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IResizable.IResizeListener;
@@ -55,11 +56,54 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 	private class TokenButtonImpl extends ToolbarButton implements ITokenButton {
 
 		private String[] values;
+		private String title;
+		private ILabel label;
+		private IHorizontalPanel labelPanel;
 
 		@Override
-		public ITokenButton imageResource(String imageResource) {
-			setImage(panel, imageResource);
+		public ITokenButton title(String title) {
+			this.title = title;
+			labelPanel = panel.add().panel().horizontal();
+			labelPanel.padding().left(3).right(3).top(1).bottom(2);
+			label = labelPanel.add().label().text(title);
+			if (IE_STANDARD)
+				label.margin().top(4);
+			label.addClickListener(new IClickListener() {
+
+				@Override
+				public void onClick() {
+					handleClick();
+					update();
+					htmlArea.notifyChange();
+				}
+			});
+			labelPanel.border().color().white();
+			label.addMouseOverListener(new IMouseOverListener() {
+
+				@Override
+				public void onMouseOver() {
+					if (editable)
+						labelPanel.border().color().rgb(219, 180, 104);
+				}
+
+				@Override
+				public void onMouseOut() {
+					update();
+				}
+			});
+			label.tooltip(tooltip());
 			return this;
+		}
+
+		@Override
+		void editable(boolean editable) {
+			this.editable = editable;
+			labelPanel.visible(editable);
+		}
+
+		@Override
+		void update() {
+			labelPanel.border().color().white();
 		}
 
 		@Override
@@ -69,17 +113,27 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 		}
 
 		@Override
+		String tooltip() {
+			return title;
+		}
+
+		@Override
 		void handleClick() {
-			TransparentPopUp p = PopUp.showClosablePopUp(true, null,
-					true);
+			final TransparentPopUp p = PopUp
+					.showClosablePopUp(true, null, true);
+			p.panel.padding(10);
+			p.popUp.offset(labelPanel.offsetX() - 4, labelPanel.offsetY()
+					+ labelPanel.height());
 			for (final String v : values)
-				p.panel.add().label().text(v)
+				p.panel.add().label().text(v).hyperlink()
 						.addClickListener(new IClickListener() {
 							@Override
 							public void onClick() {
+								p.popUp.visible(false);
 								htmlArea.insertHTML("${" + v + "}");
 							}
 						});
+			p.popUp.modal(false).autoHide(true).visible(true);
 		}
 
 	}
@@ -231,7 +285,7 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 
 		IImage image;
 		Formatting f;
-		private boolean editable = true;
+		boolean editable = true;
 
 		private ToolbarButton() {
 		}
@@ -257,7 +311,7 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 				@Override
 				public void onClick() {
 					handleClick();
-					updateImage();
+					update();
 					htmlArea.notifyChange();
 				}
 			});
@@ -272,7 +326,7 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 
 				@Override
 				public void onMouseOut() {
-					updateImage();
+					update();
 				}
 			});
 			image.tooltip(tooltip());
@@ -288,7 +342,7 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 
 		abstract void handleClick();
 
-		void updateImage() {
+		void update() {
 			image.border().color().white();
 		}
 
@@ -334,15 +388,15 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 		@Override
 		void updateStatus() {
 			active = htmlArea.is(f);
-			updateImage();
+			update();
 		}
 
 		@Override
-		void updateImage() {
+		void update() {
 			if (active)
 				image.border().color().gray();
 			else
-				super.updateImage();
+				super.update();
 		}
 	}
 
@@ -359,15 +413,15 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 		@Override
 		void updateStatus() {
 			active = htmlArea.is(tag);
-			updateImage();
+			update();
 		}
 
 		@Override
-		void updateImage() {
+		void update() {
 			if (active)
 				image.border().color().gray();
 			else
-				super.updateImage();
+				super.update();
 			image.tooltip(tooltip());
 		}
 
