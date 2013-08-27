@@ -48,7 +48,7 @@ import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.rtf.api.IHTMLArea;
 import co.fxl.gui.rtf.api.IHTMLArea.Formatting;
 import co.fxl.gui.rtf.api.IHTMLArea.IHTMLAreaButton;
-import co.fxl.gui.rtf.api.IHTMLArea.ITokenButton;
+import co.fxl.gui.rtf.api.ITokenButton;
 import co.fxl.gui.style.impl.Style;
 
 public class RichTextToolbarImpl implements RuntimeConstants {
@@ -457,12 +457,13 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 	private static final int SPACING_TOP = 100;
 	private IToolbar panel;
 	private List<ToolbarElement> buttons = new LinkedList<ToolbarElement>();
-	private IHTMLArea htmlArea;
+	private RichTextToolbarTextAdp htmlArea;
 	private ToolbarButton zoomButton;
 	private IClickListener closeListener;
 	private IGridPanel grid;
 
-	public RichTextToolbarImpl(IContainer c, final IHTMLArea htmlArea) {
+	public RichTextToolbarImpl(IContainer c,
+			final RichTextToolbarTextAdp htmlArea) {
 		grid = c.panel().grid();
 		panel = new ToolbarImpl(grid.cell(0, 0).align().begin()).align()
 				.begin().height(32).spacing(2);
@@ -489,7 +490,8 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 			buttons.add(b);
 		}
 		grid.column(0).expand();
-		addZoomButton(htmlArea);
+		if (htmlArea instanceof IHTMLArea)
+			addZoomButton((IHTMLArea) htmlArea);
 	}
 
 	public IHTMLAreaButton addButton() {

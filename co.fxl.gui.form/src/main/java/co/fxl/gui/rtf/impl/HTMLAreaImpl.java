@@ -22,8 +22,10 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.TextAreaAdp;
 import co.fxl.gui.rtf.api.IHTMLArea;
+import co.fxl.gui.rtf.api.ITokenButton;
 
-public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea {
+public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea,
+		RichTextToolbarTextAdp {
 
 	private IVerticalPanel panel;
 	private RichTextToolbarImpl toolbar;
