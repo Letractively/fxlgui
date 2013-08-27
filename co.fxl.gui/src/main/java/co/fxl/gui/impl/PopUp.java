@@ -79,7 +79,7 @@ public class PopUp implements RuntimeConstants {
 			popUp.visible(false);
 	}
 
-	public static IPopUp showPopUp() {
+	public static IPopUp showClosablePopUp() {
 		return showPopUp(false);
 	}
 
@@ -109,12 +109,12 @@ public class PopUp implements RuntimeConstants {
 		return popUp;
 	}
 
-	public static TransparentPopUp showClosablePopUpDiscard(boolean closable,
+	public static TransparentPopUp showClosablePopUp(boolean closable,
 			final Runnable closeListener, boolean noDiscardChangesDialog) {
-		return showClosablePopUpDiscard(closable, closeListener, true, noDiscardChangesDialog);
+		return showClosablePopUp(closable, closeListener, true, noDiscardChangesDialog);
 	}
 
-	public static TransparentPopUp showClosablePopUpDiscard(boolean closable,
+	public static TransparentPopUp showClosablePopUp(boolean closable,
 			final Runnable closeListener, boolean pushState, boolean noDiscardChangesDialog) {
 		final TransparentPopUp t = new TransparentPopUp();
 		t.closeListener = closeListener;
