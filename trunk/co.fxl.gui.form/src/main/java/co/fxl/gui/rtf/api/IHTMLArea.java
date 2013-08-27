@@ -24,9 +24,9 @@ import co.fxl.gui.api.ITextArea;
 public interface IHTMLArea extends ITextArea {
 
 	public interface ITokenButton {
-		
-		ITokenButton imageResource(String imageResource);
-		
+
+		ITokenButton title(String title);
+
 		ITokenButton values(String... values);
 
 	}
