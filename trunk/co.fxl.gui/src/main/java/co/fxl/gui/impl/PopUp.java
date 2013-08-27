@@ -28,6 +28,7 @@ import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IResizable.IResizeListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.style.impl.Style;
@@ -111,11 +112,13 @@ public class PopUp implements RuntimeConstants {
 
 	public static TransparentPopUp showClosablePopUp(boolean closable,
 			final Runnable closeListener, boolean noDiscardChangesDialog) {
-		return showClosablePopUp(closable, closeListener, true, noDiscardChangesDialog);
+		return showClosablePopUp(closable, closeListener, true,
+				noDiscardChangesDialog);
 	}
 
 	public static TransparentPopUp showClosablePopUp(boolean closable,
-			final Runnable closeListener, boolean pushState, boolean noDiscardChangesDialog) {
+			final Runnable closeListener, boolean pushState,
+			boolean noDiscardChangesDialog) {
 		final TransparentPopUp t = new TransparentPopUp();
 		t.closeListener = closeListener;
 		final IPopUp popUp = display.showPopUp();
@@ -162,20 +165,21 @@ public class PopUp implements RuntimeConstants {
 		cell.image()
 				.resource("close_24x24.png")
 				// .label().text("Close")
-				.addClickListener(new LazyClickListener(noDiscardChangesDialog) {
-					@Override
-					protected void onAllowedClick() {
-						t.ignoreNotify = true;
-						popUp.visible(false);
-						t.ignoreNotify = false;
-						if (adp != null) {
-							adp.notifyClosePopUp();
-						}
-						// if (closeListener != null)
-						// closeListener.run();
-						// else
-					}
-				}).mouseLeft().margin()
+				.addClickListener(
+						new LazyClickListener(noDiscardChangesDialog) {
+							@Override
+							protected void onAllowedClick() {
+								t.ignoreNotify = true;
+								popUp.visible(false);
+								t.ignoreNotify = false;
+								if (adp != null) {
+									adp.notifyClosePopUp();
+								}
+								// if (closeListener != null)
+								// closeListener.run();
+								// else
+							}
+						}).mouseLeft().margin()
 				.top(Env.runtime().leq(Env.IE, 8) ? 0 : -12)
 				.left(Env.runtime().leq(Env.IE, 8) ? 0 : -12);// .font().underline(true).pixel(13).color().white();
 		t.popUp = popUp;
@@ -185,5 +189,14 @@ public class PopUp implements RuntimeConstants {
 
 	public static IDialog showDialog() {
 		return display.showDialog();
+	}
+
+	public static void autoHideOnResize(final TransparentPopUp p) {
+		Display.instance().addResizeListener(new IResizeListener() {
+			@Override
+			public void onResize(int width, int height) {
+				p.popUp.visible(false);
+			}
+		}).linkLifecycle(p.popUp);
 	}
 }
