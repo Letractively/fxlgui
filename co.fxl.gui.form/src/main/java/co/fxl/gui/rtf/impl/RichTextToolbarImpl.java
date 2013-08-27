@@ -517,6 +517,11 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 				spacing2.border().color().gray();
 				final IHTMLArea ha = spacing2.add().widget(IHTMLArea.class);
 				copy(htmlArea, ha);
+				for (ToolbarElement e : buttons)
+					if (e instanceof TokenButtonImpl) {
+						TokenButtonImpl t = (TokenButtonImpl) e;
+						ha.addTokenButton().title(t.title).values(t.values);
+					}
 				Heights.INSTANCE.decorate(ha);
 				ha.closeListener(new IClickListener() {
 					@Override
