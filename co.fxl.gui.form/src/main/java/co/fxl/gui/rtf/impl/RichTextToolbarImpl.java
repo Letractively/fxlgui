@@ -122,10 +122,11 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 			final TransparentPopUp p = PopUp
 					.showClosablePopUp(true, null, true);
 			p.panel.padding(10);
-			p.popUp.offset(labelPanel.offsetX() - 4, labelPanel.offsetY()
-					+ labelPanel.height());
+			int y = labelPanel.offsetY() + labelPanel.height();
+			p.popUp.offset(labelPanel.offsetX() - 4, y);
+			IVerticalPanel holder = p.panel.add().panel().vertical();
 			for (final String v : values)
-				p.panel.add().label().text(v).hyperlink()
+				holder.add().label().text(v).hyperlink()
 						.addClickListener(new IClickListener() {
 							@Override
 							public void onClick() {
@@ -134,8 +135,13 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 							}
 						});
 			p.popUp.modal(false).autoHide(true).visible(true);
+			if (y + p.panel.height() > Display.instance().height() - 30) {
+				p.panel.clear().add().scrollPane()
+						.height(Display.instance().height() - 30 - y)
+						.viewPort().element(holder);
+			}
+			PopUp.autoHideOnResize(p);
 		}
-
 	}
 
 	private class PushButton extends ToolbarButton {
