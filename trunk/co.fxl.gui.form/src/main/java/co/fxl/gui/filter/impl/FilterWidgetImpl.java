@@ -154,14 +154,18 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 
 	@Override
 	public void onUpdate(String value) {
+		update(value, false);
+		// else
+		// throw new UnsupportedOperationException("filter configuration "
+		// + value + " has not been set up");
+	}
+
+	private void update(String value, boolean isInit) {
 		configuration = value;
 		if (value == null)
 			return;
 		if (filterList.get(configuration) != null)
-			update();
-		// else
-		// throw new UnsupportedOperationException("filter configuration "
-		// + value + " has not been set up");
+			update(isInit);
 	}
 
 	@Override
@@ -472,7 +476,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			return this;
 		if (configuration != null && configuration.equals(config))
 			return this;
-		onUpdate(config);
+		update(config, true);
 		return this;
 	}
 
