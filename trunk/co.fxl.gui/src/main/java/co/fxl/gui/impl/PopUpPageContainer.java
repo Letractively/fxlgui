@@ -51,7 +51,7 @@ public class PopUpPageContainer implements PageContainer, RuntimeConstants {
 
 	@Override
 	public IVerticalPanel panel(Runnable cl, boolean noDiscardChanges) {
-		closablePopUp = PopUp.showClosablePopUpDiscard(true, cl, false, noDiscardChanges);
+		closablePopUp = PopUp.showClosablePopUp(true, cl, false, noDiscardChanges);
 		popUp = closablePopUp.popUp.glass(Style.instance().glass()).autoHide(true);
 		if (isModal)
 			popUp.modal(true);

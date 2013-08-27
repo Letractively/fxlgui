@@ -70,7 +70,7 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 
 		@Override
 		void handleClick() {
-			TransparentPopUp p = PopUp.showClosablePopUpDiscard(true, null,
+			TransparentPopUp p = PopUp.showClosablePopUp(true, null,
 					true);
 			for (final String v : values)
 				p.panel.add().label().text(v)
@@ -175,7 +175,7 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 
 		@Override
 		void handleClick() {
-			final IPopUp p = PopUp.showPopUp().center().autoHide(true)
+			final IPopUp p = PopUp.showClosablePopUp().center().autoHide(true)
 					.atLastClick();
 			p.border().remove().style().shadow().color().gray();
 			IHorizontalPanel h = p.container().panel().horizontal().spacing(4);
@@ -448,7 +448,7 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 					closeListener.onClick();
 					return;
 				}
-				final IPopUp p = PopUp.showPopUp().autoHide(true)
+				final IPopUp p = PopUp.showClosablePopUp().autoHide(true)
 						.glass(Style.instance().glass());
 				p.border().remove();
 				p.border().style().shadow();
