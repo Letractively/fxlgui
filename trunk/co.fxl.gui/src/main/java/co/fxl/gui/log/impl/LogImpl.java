@@ -155,7 +155,7 @@ class LogImpl implements ILog, IClickListener {
 	public void onClick() {
 		PopUp.closeAll();
 		final IPopUp popUp = PopUp.showPopUp().modal(true).glass(!Style.instance().embedded())
-				.offset(SPACING, SPACING).autoHide(true);
+				.offset(SPACING, SPACING).autoHide(false);
 		popUp.border().remove().style().shadow().color().black();
 		IContainer container = Style.instance().window().logPanel(popUp);
 		WidgetTitle panel = new WidgetTitle(container).spacing(0)
