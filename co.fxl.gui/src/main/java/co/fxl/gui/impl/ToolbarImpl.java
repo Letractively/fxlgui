@@ -50,8 +50,12 @@ public class ToolbarImpl implements IToolbar, RuntimeConstants {
 	private int height = 40;
 
 	public ToolbarImpl(IContainer container) {
+		this(container, -4);
+	}
+
+	public ToolbarImpl(IContainer container, int m) {
 		panel = container.panel().flow();
-		panel.margin().bottom(-4);
+		panel.margin().bottom(m);
 	}
 
 	ToolbarImpl root() {
