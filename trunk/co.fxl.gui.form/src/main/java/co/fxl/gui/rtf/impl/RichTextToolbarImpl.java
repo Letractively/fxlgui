@@ -465,7 +465,7 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 	public RichTextToolbarImpl(IContainer c,
 			final RichTextToolbarTextAdp htmlArea) {
 		grid = c.panel().grid();
-		panel = new ToolbarImpl(grid.cell(0, 0).align().begin()).align()
+		panel = new ToolbarImpl(grid.cell(0, 0).align().begin(), -2).align()
 				.begin().height(32).spacing(2);
 		grid.color().gray(240);
 		grid.border().style().noBottom().color().gray(211);
