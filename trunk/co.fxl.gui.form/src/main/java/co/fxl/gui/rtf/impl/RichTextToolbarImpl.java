@@ -501,7 +501,7 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 	}
 
 	private void addZoomButton(final IHTMLArea htmlArea) {
-		IToolbar panelRight = new ToolbarImpl(grid.cell(1, 0).align().end())
+		IToolbar panelRight = new ToolbarImpl(grid.cell(1, 0).align().end(), -2)
 				.height(28).spacing(2);
 		zoomButton = new ToolbarButton() {
 			@Override
