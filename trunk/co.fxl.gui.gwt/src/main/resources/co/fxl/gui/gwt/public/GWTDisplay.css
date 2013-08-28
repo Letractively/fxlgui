@@ -116,6 +116,7 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=2, offY
 .nooutline { outline:none; }
 .nooutlineIE { outline:none; outline:expression(this.onFocus=this.blur()); }
 .gwt-TextBox  { padding: 3px; }
+.gwt-Button-FXL { border-radius: 3px; }
 .gwt-PasswordTextBox { padding: 3px; }
 .gwt-Checkbox { color: black }
 .gwt-Combobox-FXL { height: 24px; }
