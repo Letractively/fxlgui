@@ -593,7 +593,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 			String font = "font-family: " + fontFamily
 					+ " !important; font-size: " + fontSize + "px;";
 			clearStyles();
-			addStyle("body, table td, select, input { " + font + "}");
+			addStyle("body, table td, select, input, button { " + font + "}");
 			addStyle(".gwt-TextArea-FXL { height: 100px; padding: 3px; " + font
 					+ "}");
 			addStyle(".gwt-TextBox-FXL { padding: 3px; " + font + "}");
