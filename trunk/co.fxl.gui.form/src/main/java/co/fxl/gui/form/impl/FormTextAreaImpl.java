@@ -21,16 +21,18 @@ package co.fxl.gui.form.impl;
 import co.fxl.gui.api.IResizable.IResizeListener;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.form.api.IFormField;
+import co.fxl.gui.form.api.IFormWidget.IInputElementFactory;
 
 class FormTextAreaImpl extends FormFieldImpl<ITextArea, String> {
 
-	FormTextAreaImpl(FormWidgetImpl widget, int index, String name) {
-		super(widget, index, name);
+	FormTextAreaImpl(FormWidgetImpl widget, int index, String name,
+			IInputElementFactory f) {
+		super(widget, index, name, f);
 	}
 
 	@Override
 	void createContentColumn(int index) {
-		valueElement = widget.addFormValueTextArea(index);
+		valueElement = widget.addFormValueTextArea(index, f);
 		format(valueElement, 100);
 		for (IResizeListener l : widget.resizeListeners)
 			valueElement.addResizeListener(l);

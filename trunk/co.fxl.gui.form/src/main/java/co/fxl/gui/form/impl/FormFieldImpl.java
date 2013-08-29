@@ -29,6 +29,7 @@ import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.form.api.IFormField;
+import co.fxl.gui.form.api.IFormWidget.IInputElementFactory;
 import co.fxl.gui.form.impl.FormWidgetImpl.FormEntryLabel;
 import co.fxl.gui.impl.ClickableMultiplexer;
 import co.fxl.gui.impl.FieldTypeImpl;
@@ -53,15 +54,17 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
 	int maxLength = -1;
 	T valueElement;
 	boolean useAssignButton;
+	IInputElementFactory f;
 
 	public FormFieldImpl(FormWidgetImpl widget, int index, String name) {
-		this(widget, index, name, null);
+		this(widget, index, name, null, null);
 	}
 
 	public FormFieldImpl(FormWidgetImpl widget, int index, String name,
-			IFieldType type) {
+			IFieldType type, IInputElementFactory f) {
 		this.widget = widget;
 		this.name = name;
+		this.f = f;
 		if (type != null)
 			this.type = (FieldTypeImpl) type;
 		widget.fields.add(this);
@@ -69,6 +72,11 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
 		this.row = index;
 		createContentColumn(index);
 		paddingRight(8);
+	}
+
+	public FormFieldImpl(FormWidgetImpl widget, int index, String name,
+			IInputElementFactory f) {
+		this(widget, index, name, null, f);
 	}
 
 	@Override

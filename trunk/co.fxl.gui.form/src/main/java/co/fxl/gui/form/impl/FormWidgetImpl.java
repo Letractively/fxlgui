@@ -178,8 +178,10 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 		return valuePanel;
 	}
 
-	ITextArea addFormValueTextArea(int gridIndex) {
-		ITextArea valuePanel = container(gridIndex, true).textArea();
+	ITextArea addFormValueTextArea(int gridIndex, IInputElementFactory f) {
+		IContainer container = container(gridIndex, true);
+		ITextArea valuePanel = f == null ? container.textArea() : (ITextArea) f
+				.create(container, null);
 		Style.instance().form().inputField(valuePanel);
 		valuePanel.editable(saveListener != null);
 		setFocus(valuePanel);
@@ -239,7 +241,13 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 
 	@Override
 	public IFormField<ITextArea, String> addTextArea(String name) {
-		return new FormTextAreaImpl(this, nextGridIndex(), name);
+		return new FormTextAreaImpl(this, nextGridIndex(), name, null);
+	}
+
+	@Override
+	public IFormField<ITextArea, String> addTextArea(String name,
+			IInputElementFactory f) {
+		return new FormTextAreaImpl(this, nextGridIndex(), name, f);
 	}
 
 	@Override
