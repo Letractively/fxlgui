@@ -31,6 +31,7 @@ import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IMargin;
+import co.fxl.gui.api.IPadding;
 import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
 
@@ -244,6 +245,11 @@ public class ToolbarImpl implements IToolbar, RuntimeConstants {
 	public IToolbar spacing(int i) {
 		spacing = i;
 		return this;
+	}
+
+	@Override
+	public IPadding padding() {
+		return panel.padding();
 	}
 
 }

@@ -24,6 +24,7 @@ import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IMargin;
+import co.fxl.gui.api.IPadding;
 
 public interface IToolbar {
 
@@ -57,6 +58,8 @@ public interface IToolbar {
 	IToolbarElement addElement();
 
 	IMargin margin();
+
+	IPadding padding();
 
 //	ILabel addLabel();
 
