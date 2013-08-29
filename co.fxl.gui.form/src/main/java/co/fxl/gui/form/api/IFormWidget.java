@@ -26,6 +26,7 @@ import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.IResizable;
@@ -37,6 +38,11 @@ import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.rtf.api.IHTMLArea;
 
 public interface IFormWidget extends IResizable<IFormWidget> {
+
+	public interface IInputElementFactory {
+
+		<T> T create(IContainer c, Object node);
+	}
 
 	public interface IFormContainer {
 
@@ -90,6 +96,9 @@ public interface IFormWidget extends IResizable<IFormWidget> {
 	IFormField<ITextField, String> addColorField(String name);
 
 	IFormField<IPasswordField, String> addPasswordField(String name);
+
+	IFormField<ITextArea, String> addTextArea(String name,
+			IInputElementFactory f);
 
 	IFormField<ITextArea, String> addTextArea(String name);
 

@@ -26,7 +26,7 @@ class FormTextFieldImpl<R> extends FormFieldImpl<ITextField, R> {
 
 	FormTextFieldImpl(FormWidgetImpl widget, int index, String name,
 			IFieldType type) {
-		super(widget, index, name, type);
+		super(widget, index, name, type, null);
 	}
 
 	@Override
