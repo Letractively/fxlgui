@@ -85,8 +85,11 @@ public class ImageButton implements ButtonAdp,
 	}
 
 	public ImageButton clickable(boolean clickable) {
-		if (CommandLink.HIDE_NON_CLICKABLE && !showAlways && p0 != null) {
-			p0.visible(clickable);
+		if (CommandLink.HIDE_NON_CLICKABLE && !showAlways) {
+			if (p0 != null)
+				p0.visible(clickable);
+			else
+				panel.visible(clickable);
 		}
 		label.font().weight().plain();
 		if (image != null)

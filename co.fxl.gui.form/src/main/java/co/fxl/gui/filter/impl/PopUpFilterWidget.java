@@ -62,7 +62,7 @@ public class PopUpFilterWidget extends FilterWidgetImpl implements
 						+ SplitLayout.SCROLLBAR_WIDTH + 20);
 				p.popUp.modal(false).autoHide(true).visible(true);
 				p.panel.add().element(element);
-				p.panel.padding(10);
+				p.panel.padding().left(10).right(10).bottom(10);
 				if (y + p.panel.height() > Display.instance().height() - 30) {
 					p.panel.clear().add().scrollPane()
 							.height(Display.instance().height() - 30 - y)
@@ -79,7 +79,7 @@ public class PopUpFilterWidget extends FilterWidgetImpl implements
 				});
 			}
 		});
-		clearButton = new ImageButton(p.add());
+		clearButton = new ImageButton(p.addSpace(8).add());
 		clearButton.imageResource("cancel.png").text("Clear");
 		clearButton.hyperlink();
 		clearButton.addClickListener(new LazyClickListener() {
