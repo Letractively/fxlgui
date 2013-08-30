@@ -85,6 +85,12 @@ public class CommandLink implements IClickListener, ButtonAdp, RuntimeConstants 
 			contextMenuEntry.buttonColor(buttonColor);
 	}
 
+	public void saveButton(int index) {
+		buttonColor = Style.instance().window().saveButton(this, index);
+		if (contextMenuEntry != null)
+			contextMenuEntry.buttonColor(buttonColor);
+	}
+
 	public void showButton() {
 		buttonColor = Style.instance().window().showButton(this);
 		if (contextMenuEntry != null)

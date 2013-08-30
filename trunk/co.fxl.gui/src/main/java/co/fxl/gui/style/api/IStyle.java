@@ -53,6 +53,14 @@ import co.fxl.gui.impl.WidgetTitle;
 
 public interface IStyle {
 
+	public interface IButtonImage {
+
+		String run();
+
+		String continueRun();
+
+	}
+
 	public interface IExportHtml {
 
 		int decrementX();
@@ -193,6 +201,8 @@ public interface IStyle {
 		void moreButton(CommandLink label);
 
 		int[] newButton(CommandLink commandLink, int index);
+
+		int[] saveButton(CommandLink commandLink, int index);
 
 		int[] showButton(CommandLink commandLink);
 
@@ -428,5 +438,7 @@ public interface IStyle {
 	void embedded(boolean embedded);
 
 	boolean glass();
+
+	IButtonImage button();
 
 }

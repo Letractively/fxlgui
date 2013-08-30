@@ -507,6 +507,11 @@ class GrayScaleStyle extends StyleTemplate {
 			}
 
 			@Override
+			public int[] saveButton(CommandLink commandLink, int index) {
+				return null;
+			}
+
+			@Override
 			public int[] showButton(CommandLink commandLink) {
 				return null;
 			}
@@ -925,6 +930,23 @@ class GrayScaleStyle extends StyleTemplate {
 			public int decrementX() {
 				return 0;
 			}
+		};
+	}
+
+	@Override
+	public IButtonImage button() {
+		return new IButtonImage() {
+
+			@Override
+			public String run() {
+				return "run.png";
+			}
+
+			@Override
+			public String continueRun() {
+				return "continue_run.png";
+			}
+
 		};
 	}
 
