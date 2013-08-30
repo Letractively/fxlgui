@@ -852,6 +852,26 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 			}
 
 			@Override
+			public int[] saveButton(CommandLink commandLink, int index) {
+				int inc = index * 10;
+				IBorder border = commandLink.border();
+				IColor background = commandLink.background();
+				saveButton(inc, border, background);
+				white(commandLink);
+				return new int[] { 19 + inc, 161 + inc, 61 + inc };
+			}
+
+			private void saveButton(int inc, IBorder border, IColor background) {
+				border.color().gray(120);
+				saveButton(inc, background);
+			}
+
+			void saveButton(int inc, IColor background) {
+				background.rgb(79 + inc, 122 + inc, 201 + inc).gradient()
+						.vertical().rgb(63 + inc, 106 + inc, 188 + inc);
+			}
+
+			@Override
 			public int[] newButton(CommandLink commandLink, int index) {
 				int inc = index * 10;
 				IBorder border = commandLink.border();
@@ -1369,5 +1389,22 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 	@Override
 	public void popUp(IBorder border) {
 		blue(border);
+	}
+
+	@Override
+	public IButtonImage button() {
+		return new IButtonImage() {
+
+			@Override
+			public String run() {
+				return "run_white.png";
+			}
+
+			@Override
+			public String continueRun() {
+				return "continue_run_white.png";
+			}
+
+		};
 	}
 }
