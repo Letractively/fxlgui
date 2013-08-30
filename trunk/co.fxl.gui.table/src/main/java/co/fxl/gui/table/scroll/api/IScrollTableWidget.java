@@ -280,5 +280,7 @@ public interface IScrollTableWidget<T> extends IResizableWidget, IHasButtons {
 
 	void hasBorder(boolean hasBorder);
 
+	IScrollTableWidget<Object> showLabels(boolean showLabels);
+
 	// IVerticalPanel editPanel();
 }

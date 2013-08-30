@@ -285,6 +285,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private int width = -1;
 	private boolean horizontalLines = true;
 	String title;
+	boolean showLabels;
 
 	// private boolean nextTimeShowPopUp;
 
@@ -302,6 +303,12 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	@Override
 	public IScrollTableWidget<Object> title(String title) {
 		this.title = title;
+		return this;
+	}
+
+	@Override
+	public IScrollTableWidget<Object> showLabels(boolean showLabels) {
+		this. showLabels =  showLabels;
 		return this;
 	}
 
