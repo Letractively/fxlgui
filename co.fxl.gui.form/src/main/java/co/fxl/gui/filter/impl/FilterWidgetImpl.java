@@ -395,7 +395,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		List<FilterImpl> l = filterList.get(cfg);
 		if (l != null) {
 			grid.resize(l.size() + (addSizeFilter ? 1 : 0));
-			for (FilterImpl filter : l) {
+			for (final FilterImpl filter : l) {
 				List<Object> list = new LinkedList<Object>(
 						filter.type.getConstraints());
 				if (!filter.required && !list.isEmpty())
@@ -418,9 +418,18 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 					((ComboBoxFilterTemplate) fp).directApply = false;
 				holdFilterClicks = false;
 				if (filter.updateListener != null)
-					fp.addUpdateListener(filter.updateListener);
+					fp.addUpdateListener(new IUpdateListener<String>() {
+						@Override
+						public void onUpdate(String value) {
+							notifyDirectUpdate();
+							filter.updateListener.onUpdate(value);
+						}
+					});
 			}
 		}
+	}
+
+	void notifyDirectUpdate() {
 	}
 
 	boolean alwaysUseDirectApply() {
