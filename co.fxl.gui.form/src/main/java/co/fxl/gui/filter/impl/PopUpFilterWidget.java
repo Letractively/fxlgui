@@ -45,6 +45,7 @@ public class PopUpFilterWidget extends FilterWidgetImpl implements
 
 	PopUpFilterWidget(IContainer panel) {
 		p = panel.panel().horizontal();
+		p.padding().top(3);
 		element = setUp(p.add());
 		element.remove();
 		button = new ImageButton(p.add());
