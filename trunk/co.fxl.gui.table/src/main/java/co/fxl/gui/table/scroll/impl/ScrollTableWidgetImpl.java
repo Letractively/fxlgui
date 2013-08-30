@@ -50,6 +50,7 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
 import co.fxl.gui.filter.api.IFilterWidget.IFilterListener;
+import co.fxl.gui.filter.api.IMiniFilterWidget;
 import co.fxl.gui.filter.api.IPopUpFilterWidget;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.ColorTemplate;
@@ -727,7 +728,9 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 				decorateToggleButtonCell(h.add().panel().horizontal());
 				h.addSpace(8);
 			}
-			filter = (IFilterWidget) h.add().widget(IPopUpFilterWidget.class);
+			filter = (IFilterWidget) h.add().widget(
+					showLabels ? IMiniFilterWidget.class
+							: IPopUpFilterWidget.class);
 			filter.showConfiguration(showConfiguration);
 			if (showConfiguration)
 				filter.firstConfiguration(viewComboBoxChoice);
