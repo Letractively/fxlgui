@@ -414,13 +414,17 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 				if (filter.text != null) {
 					((ComboBoxStringFilter) fp).input.text(filter.text);
 				}
-				if (!filter.directApply)
+				if (!filter.directApply && !alwaysUseDirectApply())
 					((ComboBoxFilterTemplate) fp).directApply = false;
 				holdFilterClicks = false;
 				if (filter.updateListener != null)
 					fp.addUpdateListener(filter.updateListener);
 			}
 		}
+	}
+
+	boolean alwaysUseDirectApply() {
+		return false;
 	}
 
 	@Override
@@ -487,9 +491,20 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	}
 
 	@Override
-	public IFilterWidget addConfigurationListener(IUpdateListener<String> l) {
-		mainPanel.viewComboBox().addUpdateListener(l);
+	public IFilterWidget addConfigurationListener(
+			final IUpdateListener<String> l) {
+		mainPanel.viewComboBox().addUpdateListener(
+				new IUpdateListener<String>() {
+					@Override
+					public void onUpdate(String value) {
+						notifyViewComboBoxUpdate();
+						l.onUpdate(value);
+					}
+				});
 		return this;
+	}
+
+	void notifyViewComboBoxUpdate() {
 	}
 
 	@Override
@@ -590,8 +605,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		}
 		clearClickable(false);
 		apply.clickable(false);
-		if (configuration != null
-				&& !configuration.equals(firstConfiguration)
+		if (configuration != null && !configuration.equals(firstConfiguration)
 				&& configurationComboBox != null)
 			configurationComboBox.text(firstConfiguration);
 		else
