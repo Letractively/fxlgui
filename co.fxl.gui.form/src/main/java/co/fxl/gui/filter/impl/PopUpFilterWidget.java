@@ -44,7 +44,7 @@ public class PopUpFilterWidget extends FilterWidgetImpl implements
 	private IPopUp popUp;
 
 	PopUpFilterWidget(IContainer panel) {
-		p.add().panel().horizontal();
+		p = panel.panel().horizontal();
 		element = setUp(p.add());
 		element.remove();
 		button = new ImageButton(p.add());
@@ -59,11 +59,10 @@ public class PopUpFilterWidget extends FilterWidgetImpl implements
 				int y = labelPanel.offsetY() + labelPanel.height();
 				p.popUp.offset(labelPanel.offsetX() - 4, y);
 				p.popUp.width(SplitLayout.WIDTH_SIDE_PANEL
-						+ SplitLayout.SCROLLBAR_WIDTH);
+						+ SplitLayout.SCROLLBAR_WIDTH + 20);
 				p.popUp.modal(false).autoHide(true).visible(true);
 				p.panel.add().element(element);
-				p.panel.color().remove();
-				p.panel.border().remove();
+				p.panel.padding(10);
 				if (y + p.panel.height() > Display.instance().height() - 30) {
 					p.panel.clear().add().scrollPane()
 							.height(Display.instance().height() - 30 - y)
