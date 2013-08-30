@@ -308,7 +308,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 
 	@Override
 	public IScrollTableWidget<Object> showLabels(boolean showLabels) {
-		this. showLabels =  showLabels;
+		this.showLabels = showLabels;
 		return this;
 	}
 
@@ -727,8 +727,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 				decorateToggleButtonCell(h.add().panel().horizontal());
 				h.addSpace(8);
 			}
-			filter = (IMiniFilterWidget) h.add()
-					.widget(IMiniFilterWidget.class);
+			filter = (IFilterWidget) h.add().widget(IMiniFilterWidget.class);
 			filter.showConfiguration(showConfiguration);
 			if (showConfiguration)
 				filter.firstConfiguration(viewComboBoxChoice);

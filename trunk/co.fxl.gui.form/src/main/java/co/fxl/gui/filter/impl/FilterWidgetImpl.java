@@ -29,6 +29,7 @@ import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.ISuggestField;
@@ -137,10 +138,18 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	private boolean noDiscardChangesDialog;
 	private ILabel titleLabel;
 
+	FilterWidgetImpl() {
+	}
+
 	FilterWidgetImpl(IContainer panel) {
+		setUp(panel);
+	}
+
+	IElement<?> setUp(IContainer panel) {
 		title = newFilterPanel(panel);
 		titleLabel = title.addTitle(title());
 		mainPanel = title;
+		return panel.element();
 	}
 
 	FilterPanel newFilterPanel(IContainer panel) {
