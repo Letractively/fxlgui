@@ -1405,6 +1405,16 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 				return "continue_run_white.png";
 			}
 
+			@Override
+			public String add() {
+				return "add_white.png";
+			}
+
+			@Override
+			public String unassign() {
+				return "unassign_white.png";
+			}
+
 		};
 	}
 }

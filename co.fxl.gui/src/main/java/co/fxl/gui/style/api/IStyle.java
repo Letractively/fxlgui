@@ -59,6 +59,10 @@ public interface IStyle {
 
 		String continueRun();
 
+		String add();
+
+		String unassign();
+
 	}
 
 	public interface IExportHtml {

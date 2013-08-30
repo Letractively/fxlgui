@@ -947,6 +947,16 @@ class GrayScaleStyle extends StyleTemplate {
 				return "continue_run.png";
 			}
 
+			@Override
+			public String add() {
+				return "add.png";
+			}
+
+			@Override
+			public String unassign() {
+				return "cancel.png";
+			}
+
 		};
 	}
 
