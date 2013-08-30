@@ -124,7 +124,7 @@ public class HTMLText {
 	}
 
 	public static String escape(String text) {
-		return text.replaceAll("<", "&#060;").replaceAll("\"", "&#34;");
+		return text.replaceAll("<", "&#060;").replaceAll(">", "&#062;").replaceAll("\"", "&#34;");
 	}
 
 	public static String removeHTML(String text) {
