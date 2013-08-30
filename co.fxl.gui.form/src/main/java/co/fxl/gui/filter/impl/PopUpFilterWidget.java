@@ -91,12 +91,22 @@ public class PopUpFilterWidget extends FilterWidgetImpl implements
 	}
 
 	@Override
+	public void onUpdate(String value) {
+		hidePopUp();
+		super.onUpdate(value);
+	}
+
+	@Override
 	void notifyListeners(ICallback<Void> cb) {
+		hidePopUp();
+		super.notifyListeners(cb);
+	}
+
+	void hidePopUp() {
 		if (popUp != null) {
 			popUp.visible(false);
 			popUp = null;
 		}
-		super.notifyListeners(cb);
 	}
 
 	@Override
