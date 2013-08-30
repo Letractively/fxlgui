@@ -91,6 +91,10 @@ public class PopUpFilterWidget extends FilterWidgetImpl implements
 		});
 	}
 
+	void notifyDirectUpdate() {
+		hidePopUp();
+	}
+
 	@Override
 	boolean alwaysUseDirectApply() {
 		return false;
