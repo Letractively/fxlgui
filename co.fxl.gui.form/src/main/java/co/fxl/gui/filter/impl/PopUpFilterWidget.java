@@ -81,7 +81,7 @@ public class PopUpFilterWidget extends FilterWidgetImpl implements
 			}
 		});
 		clearButton = new ImageButton(p.addSpace(8).add());
-		clearButton.imageResource("cancel.png").text("Clear");
+		clearButton.imageResource("clear_filter.png").text("Clear");
 		clearButton.hyperlink();
 		clearButton.addClickListener(new LazyClickListener() {
 			@Override
