@@ -262,6 +262,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 
 	CommandButtonsImpl(ScrollTableWidgetImpl widget) {
 		this.widget = widget;
+		showLabels = widget.showLabels;
 		widget.buttonPanel(this);
 		selectionList(widget.preselectedList);
 	}
