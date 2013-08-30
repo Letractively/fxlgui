@@ -49,7 +49,7 @@ public class PopUpFilterWidget extends FilterWidgetImpl implements
 		element = setUp(p.add());
 		element.remove();
 		button = new ImageButton(p.add());
-		button.imageResource("filter.png").text("Filter");
+		button.imageResource("filter.png");//.text("Filter");
 		button.hyperlink();
 		button.addClickListener(new IClickListener() {
 			@Override
@@ -81,7 +81,7 @@ public class PopUpFilterWidget extends FilterWidgetImpl implements
 			}
 		});
 		clearButton = new ImageButton(p.addSpace(8).add());
-		clearButton.imageResource("clear_filter.png").text("Clear");
+		clearButton.imageResource("clear_filter.png");//.text("Clear");
 		clearButton.hyperlink();
 		clearButton.addClickListener(new LazyClickListener() {
 			@Override
