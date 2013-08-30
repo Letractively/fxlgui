@@ -68,37 +68,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 
 		@Override
 		public void onAllowedClick() {
-			if (holdFilterClicks)
-				return;
-			title.linksVisible(false);
-			if (constraints != null)
-				constraints.clear();
-			for (List<FilterImpl> l : filterList.values()) {
-				Iterator<FilterImpl> it = l.iterator();
-				while (it.hasNext()) {
-					if (it.next() instanceof RelationFilterImpl) {
-						it.remove();
-					}
-				}
-			}
-			for (int i = guiFilterElements.size() - 1; i >= 0; i--) {
-				guiFilterElements.get(i).clear();
-			}
-			clear.clickable(false);
-			apply.clickable(false);
-			if (configuration != null
-					&& !configuration.equals(firstConfiguration)
-					&& configurationComboBox != null)
-				configurationComboBox.text(firstConfiguration);
-			else
-				update();
-			validation.update();
-			notifyListeners(new CallbackTemplate<Void>() {
-				@Override
-				public void onSuccess(Void result) {
-					title.linksVisible(true);
-				}
-			});
+			clearClick();
 		}
 	}
 
@@ -393,10 +363,14 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		// constrained |= !firstConfiguration.equals(configuration);
 		boolean clickable = constrained && !isInit;
 		apply.clickable(clickable);
-		clear.clickable(constrained);
+		clearClickable(constrained);
 		mainPanel.visible();
 		grid.show(firstConstraint);
 		return this;
+	}
+
+	void clearClickable(boolean constrained) {
+		clear.clickable(constrained);
 	}
 
 	private void addHyperlinks() {
@@ -411,7 +385,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 					.clearTitle(), false);
 			apply.addClickListener(new ApplyClickListener());
 			clear.addClickListener(clearClickListener = new ClearClickListener());
-			clear.clickable(false);
+			clearClickable(false);
 			hyperlinksAdded = true;
 		}
 	}
@@ -507,7 +481,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		validation.update();
 		if (clickableClear) {
 			IFilterConstraints c = constraints();
-			clear.clickable(c != null && c.isSpecified());
+			clearClickable(c != null && c.isSpecified());
 		}
 		notifyListeners(DummyCallback.voidInstance());
 	}
@@ -595,6 +569,40 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			f.updateFilter();
 		}
 		return this;
+	}
+
+	void clearClick() {
+		if (holdFilterClicks)
+			return;
+		title.linksVisible(false);
+		if (constraints != null)
+			constraints.clear();
+		for (List<FilterImpl> l : filterList.values()) {
+			Iterator<FilterImpl> it = l.iterator();
+			while (it.hasNext()) {
+				if (it.next() instanceof RelationFilterImpl) {
+					it.remove();
+				}
+			}
+		}
+		for (int i = guiFilterElements.size() - 1; i >= 0; i--) {
+			guiFilterElements.get(i).clear();
+		}
+		clearClickable(false);
+		apply.clickable(false);
+		if (configuration != null
+				&& !configuration.equals(firstConfiguration)
+				&& configurationComboBox != null)
+			configurationComboBox.text(firstConfiguration);
+		else
+			update();
+		validation.update();
+		notifyListeners(new CallbackTemplate<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				title.linksVisible(true);
+			}
+		});
 	}
 
 	// @Override
