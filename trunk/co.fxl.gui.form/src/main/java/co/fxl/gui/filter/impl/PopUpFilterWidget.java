@@ -18,52 +18,92 @@
  */
 package co.fxl.gui.filter.impl;
 
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IElement;
-import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.IPanel;
+import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.filter.api.IPopUpFilterWidget;
-import co.fxl.gui.impl.ButtonAdp;
 import co.fxl.gui.impl.Display;
-import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ImageButton;
+import co.fxl.gui.impl.LazyClickListener;
 import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.impl.PopUp.TransparentPopUp;
-import co.fxl.gui.impl.ToolbarImpl;
+import co.fxl.gui.impl.SplitLayout;
 
 public class PopUpFilterWidget extends FilterWidgetImpl implements
 		IPopUpFilterWidget {
 
-	private IToolbar p;
+	private IHorizontalPanel p;
 	private IElement<?> element;
-	private ButtonAdp button;
+	private ImageButton button;
+	private ImageButton clearButton;
+	private IPopUp popUp;
 
 	PopUpFilterWidget(IContainer panel) {
-		p = new ToolbarImpl(panel);
+		p.add().panel().horizontal();
 		element = setUp(p.add());
 		element.remove();
-		button = new ImageButton(p.add()).imageResource("filter.png").text(
-				"Filter");
+		button = new ImageButton(p.add());
+		button.imageResource("filter.png").text("Filter");
+		button.hyperlink();
 		button.addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
 				final TransparentPopUp p = PopUp.showClosablePopUp(true, null,
 						true);
-				p.panel.padding(10);
-				IVerticalPanel labelPanel = p.panel;
+				IPanel<?> labelPanel = button.panel();
 				int y = labelPanel.offsetY() + labelPanel.height();
 				p.popUp.offset(labelPanel.offsetX() - 4, y);
-				IVerticalPanel holder = p.panel.add().panel().vertical();
-				holder.add().element(element);
+				p.popUp.width(SplitLayout.WIDTH_SIDE_PANEL
+						+ SplitLayout.SCROLLBAR_WIDTH);
 				p.popUp.modal(false).autoHide(true).visible(true);
+				p.panel.add().element(element);
+				p.panel.color().remove();
+				p.panel.border().remove();
 				if (y + p.panel.height() > Display.instance().height() - 30) {
 					p.panel.clear().add().scrollPane()
 							.height(Display.instance().height() - 30 - y)
-							.viewPort().element(holder);
+							.viewPort().element(element);
 				}
 				PopUp.autoHideOnResize(p);
+				popUp = p.popUp;
+				popUp.addVisibleListener(new IUpdateListener<Boolean>() {
+					@Override
+					public void onUpdate(Boolean value) {
+						if (!value)
+							popUp = null;
+					}
+				});
 			}
 		});
+		clearButton = new ImageButton(p.add());
+		clearButton.imageResource("cancel.png").text("Clear");
+		clearButton.hyperlink();
+		clearButton.addClickListener(new LazyClickListener() {
+			@Override
+			protected void onAllowedClick() {
+				clearClick();
+			}
+		});
+	}
+
+	@Override
+	void notifyListeners(ICallback<Void> cb) {
+		if (popUp != null) {
+			popUp.visible(false);
+			popUp = null;
+		}
+		super.notifyListeners(cb);
+	}
+
+	@Override
+	void clearClickable(boolean constrained) {
+		clearButton.clickable(constrained);
+		super.clearClickable(constrained);
 	}
 
 }

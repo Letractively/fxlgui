@@ -26,6 +26,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IMouseOverElement;
+import co.fxl.gui.api.IPanel;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.ContextMenu.Entry;
 
@@ -196,6 +197,10 @@ public class ImageButton implements ButtonAdp,
 
 	public ILabel label() {
 		return label;
+	}
+
+	public IPanel<?> panel() {
+		return panel;
 	}
 
 	public ButtonAdp showAlways(boolean b) {
