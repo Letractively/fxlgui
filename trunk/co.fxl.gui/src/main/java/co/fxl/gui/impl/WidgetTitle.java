@@ -27,6 +27,7 @@ import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IColored;
+import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IElement;
@@ -658,6 +659,13 @@ public class WidgetTitle implements IClickListener, IColored {
 	public void add2Title(IHorizontalPanel panel) {
 		initHeader();
 		basicTitlePanel.add().element(panel);
+	}
+
+	public IComboBox addComboBox(String label) {
+		commandPanel().add().label().text(label + ":");
+		IComboBox cb = commandPanel().addSpace(4).add().comboBox();
+		Heights.INSTANCE.decorate(cb);
+		return cb;
 	}
 
 }
