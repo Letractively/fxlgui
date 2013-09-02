@@ -467,10 +467,10 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	}
 
 	@Override
-	public IFilterWidget setConfiguration(String config) {
+	public IFilterWidget setConfiguration(String config, boolean ignoreAlreadySet) {
 		if (configuration == null && config == null)
 			return this;
-		if (configuration != null && configuration.equals(config))
+		if (!ignoreAlreadySet && configuration != null && configuration.equals(config))
 			return this;
 		update(config, true);
 		return this;

@@ -94,7 +94,7 @@ public interface IFilterWidget {
 
 	IFilterWidget showConfiguration(boolean show);
 
-	IFilterWidget setConfiguration(String config);
+	IFilterWidget setConfiguration(String config, boolean ignoreAlreadySet);
 
 	IFilter addFilter();
 
