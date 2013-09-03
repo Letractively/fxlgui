@@ -249,4 +249,14 @@ public class NavigationView implements IColored {
 	public IColor color() {
 		return widgetTitle.color();
 	}
+
+	private List<Object> added = new LinkedList<Object>();
+
+	public boolean isAlreadyAdded(Object cbl) {
+		return added.contains(cbl);
+	}
+
+	public void add(Object cbl) {
+		added.add(cbl);
+	}
 }
