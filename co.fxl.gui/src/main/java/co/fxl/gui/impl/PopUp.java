@@ -51,6 +51,7 @@ public class PopUp implements RuntimeConstants {
 		public IPopUp popUp;
 		public IVerticalPanel panel;
 		public Runnable closeListener;
+		protected boolean destroyed;
 
 		public void show() {
 			if (adp != null) {
@@ -58,7 +59,8 @@ public class PopUp implements RuntimeConstants {
 						: new Runnable() {
 							@Override
 							public void run() {
-								popUp.visible(false);
+								if (!destroyed)
+									popUp.visible(false);
 							}
 						});
 			}
@@ -129,7 +131,7 @@ public class PopUp implements RuntimeConstants {
 
 				@Override
 				public void onUpdate(Boolean value) {
-					if (!value && !t.ignoreNotify) {
+					if (!value && !t.ignoreNotify && !t.destroyed) {
 						adp.notifyClosePopUp();
 					}
 				}
@@ -172,7 +174,7 @@ public class PopUp implements RuntimeConstants {
 								t.ignoreNotify = true;
 								popUp.visible(false);
 								t.ignoreNotify = false;
-								if (adp != null) {
+								if (adp != null && !t.destroyed) {
 									adp.notifyClosePopUp();
 								}
 								// if (closeListener != null)

@@ -27,4 +27,6 @@ public interface PageContainer {
 	void visible(boolean visible);
 
 	void resize();
+
+	void destroy();
 }
