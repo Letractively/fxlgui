@@ -124,7 +124,7 @@ public class PopUpPageContainer implements PageContainer, RuntimeConstants {
 		popUp.addVisibleListener(new IUpdateListener<Boolean>() {
 			@Override
 			public void onUpdate(Boolean value) {
-				if (!value) {
+				if (!value && !closablePopUp.destroyed) {
 					runnable.run();
 				}
 			}
@@ -133,5 +133,12 @@ public class PopUpPageContainer implements PageContainer, RuntimeConstants {
 
 	public boolean visible() {
 		return popUp.visible();
+	}
+
+	@Override
+	public void destroy() {
+		ServerListener.instance = oldListener;
+		closablePopUp.destroyed = true;
+		popUp.visible(false);
 	}
 }
