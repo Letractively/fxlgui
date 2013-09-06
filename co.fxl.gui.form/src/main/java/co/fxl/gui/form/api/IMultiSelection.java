@@ -18,10 +18,28 @@
  */
 package co.fxl.gui.form.api;
 
-import co.fxl.gui.api.ISuggestField;
-import co.fxl.gui.filter.api.ISuggestionAdp;
+import java.util.List;
 
-public interface IRelationField extends IFormField<ISuggestField, String> {
+import co.fxl.gui.api.ICallback;
+import co.fxl.gui.api.IUpdateable;
 
-	void suggestionAdp(ISuggestionAdp adp);
+public interface IMultiSelection<T> extends IUpdateable<List<T>> {
+
+	public interface IMultiSelectionAdapter<T> {
+
+		String icon(T object);
+
+		String label(T object);
+
+		String text(T object);
+
+		void query(String text, ICallback<List<T>> cb);
+	}
+
+	IMultiSelection<T> adapter(IMultiSelectionAdapter<T> adapter);
+
+	String text();
+
+	void text(String text);
+
 }
