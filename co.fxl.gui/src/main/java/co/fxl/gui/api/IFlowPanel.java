@@ -28,4 +28,6 @@ public interface IFlowPanel extends IPanel<IFlowPanel> {
 
 	IAlignment<IFlowPanel> align();
 
+//	IContainer insert(int index);
+
 }
