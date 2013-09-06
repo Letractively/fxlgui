@@ -40,11 +40,9 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 	private IPasswordField confirmPassword;
 	// private String currentPasswordText;
 	private List<IPasswordListener> listeners = new LinkedList<IPasswordListener>();
-	private IContainer display;
 	private boolean requiresCurrent = true;
 
 	public ChangePasswordWidgetImpl(IContainer display) {
-		this.display = display;
 		widget = (IFormWidget) display.widget(IFormWidget.class);
 		widget.saveListener("Submit", new SaveListenerTemplate() {
 

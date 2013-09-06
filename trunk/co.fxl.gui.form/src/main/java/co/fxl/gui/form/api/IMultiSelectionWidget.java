@@ -21,9 +21,8 @@ package co.fxl.gui.form.api;
 import java.util.List;
 
 import co.fxl.gui.api.ICallback;
-import co.fxl.gui.api.IUpdateable;
 
-public interface IMultiSelectionWidget<T> extends IUpdateable<List<T>> {
+public interface IMultiSelectionWidget<T> {
 
 	public interface IMultiSelectionAdapter<T> {
 
@@ -31,15 +30,9 @@ public interface IMultiSelectionWidget<T> extends IUpdateable<List<T>> {
 
 		String label(T object);
 
-		List<T> selection();
-
 		void query(String text, ICallback<List<T>> cb);
 	}
 
 	IMultiSelectionWidget<T> adapter(IMultiSelectionAdapter<T> adapter);
-
-	String text();
-
-	void text(String text);
 
 }

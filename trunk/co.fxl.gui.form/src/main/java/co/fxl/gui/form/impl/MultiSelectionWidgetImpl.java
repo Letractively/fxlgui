@@ -18,38 +18,87 @@
  */
 package co.fxl.gui.form.impl;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.ICallback;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
-import co.fxl.gui.api.IUpdateable;
+import co.fxl.gui.api.IFlowPanel;
+import co.fxl.gui.api.ISuggestField;
+import co.fxl.gui.api.ISuggestField.ISource;
+import co.fxl.gui.api.ISuggestField.ISource.ISuggestion;
+import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.form.api.IMultiSelectionWidget;
+import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.Heights;
 
 class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
 
-	MultiSelectionWidgetImpl(IContainer container) {
-		throw new UnsupportedOperationException();
+	private final class Suggestion implements ISuggestion {
+
+		private final Object o;
+
+		private Suggestion(Object o) {
+			this.o = o;
+		}
+
+		@Override
+		public String insertText() {
+			return adapter.icon(o) + ":" + adapter.label(o);
+		}
+
+		@Override
+		public String displayText() {
+			return adapter.icon(o) + ":" + adapter.label(o);
+		}
 	}
 
-	@Override
-	public IUpdateable<List<Object>> addUpdateListener(
-			IUpdateListener<List<Object>> listener) {
-		throw new UnsupportedOperationException();
+	private IFlowPanel panel;
+	private ISuggestField input;
+	private IMultiSelectionAdapter<Object> adapter;
+
+	MultiSelectionWidgetImpl(IContainer container) {
+		panel = container.panel().flow().spacing(2);
+		Heights.INSTANCE.decorate(panel);
+		input = panel.add().suggestField().width(100);
+		Heights.INSTANCE.decorate(input);
+		input.source(new ISource() {
+			@Override
+			public void query(String prefix,
+					final ICallback<List<ISuggestion>> callback) {
+				adapter.query(prefix, new CallbackTemplate<List<Object>>(
+						callback) {
+					@Override
+					public void onSuccess(List<Object> result) {
+						List<ISuggestion> sgs = new LinkedList<ISuggestion>();
+						for (final Object o : result) {
+							sgs.add(new Suggestion(o));
+						}
+						callback.onSuccess(sgs);
+					}
+				});
+			}
+		});
+		input.addSuggestionListener(new IUpdateListener<ISuggestField.ISource.ISuggestion>() {
+			@Override
+			public void onUpdate(ISuggestion value) {
+				Object o = ((Suggestion) value).o;
+				throw new UnsupportedOperationException();
+			}
+		});
+		input.addKeyListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				throw new UnsupportedOperationException();
+			}
+		});
 	}
 
 	@Override
 	public IMultiSelectionWidget<Object> adapter(
 			IMultiSelectionAdapter<Object> adapter) {
-		throw new UnsupportedOperationException();
+		this.adapter = adapter;
+		return this;
 	}
-
-	@Override
-	public String text() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void text(String text) {
-		throw new UnsupportedOperationException();
-	}
-
 }

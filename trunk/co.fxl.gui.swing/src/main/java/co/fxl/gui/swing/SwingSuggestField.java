@@ -24,18 +24,42 @@ import java.util.List;
 
 import javax.swing.JTextField;
 
+import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ISuggestField.ISource.ISuggestion;
 import co.fxl.gui.api.IUpdateable;
+import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.Display;
 
+@SuppressWarnings("unchecked")
 class SwingSuggestField extends SwingTextInput<JTextField, ISuggestField>
 		implements ISuggestField {
 
 	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();
+	private IPopUp popup;
+	private IVerticalPanel panel;
+	private List<IUpdateListener<ISuggestion>> l = new LinkedList<IUpdateListener<ISuggestion>>();
 
 	SwingSuggestField(SwingContainer<JTextField> container) {
 		super(container);
+		addFocusListener(new IUpdateListener<Boolean>() {
+			@Override
+			public void onUpdate(Boolean value) {
+				if (!value) {
+					hidePopUp();
+				}
+			}
+		});
+	}
+
+	private void hidePopUp() {
+		if (popup != null) {
+			popup.visible(false);
+			popup = null;
+			panel = null;
+		}
 	}
 
 	@Override
@@ -61,7 +85,7 @@ class SwingSuggestField extends SwingTextInput<JTextField, ISuggestField>
 
 	@Override
 	public IUpdateable<String> addUpdateListener(
-			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
+			IUpdateListener<String> listener) {
 		updateListeners.add(listener);
 		return super.addStringUpdateListener(listener);
 	}
@@ -73,28 +97,50 @@ class SwingSuggestField extends SwingTextInput<JTextField, ISuggestField>
 	@Override
 	public ISuggestField source(final ISource source) {
 		addUpdateListener(new IUpdateListener<String>() {
-
 			@Override
 			public void onUpdate(String value) {
-				if (!value.equals(""))
-					source.query(value,
-							new CallbackTemplate<List<ISuggestion>>() {
+				source.query(value, new CallbackTemplate<List<ISuggestion>>() {
 
-								@Override
-								public void onSuccess(List<ISuggestion> result) {
-									System.out.println(result.toString());
-								}
-							});
+					@Override
+					public void onSuccess(List<ISuggestion> result) {
+						if (result.isEmpty()) {
+							hidePopUp();
+						} else {
+							if (popup == null) {
+								popup = Display.instance().showPopUp();
+								panel = popup.container().panel().vertical()
+										.spacing(4);
+							}
+							panel.clear();
+							for (final ISuggestion sg : result) {
+								panel.add().label().text(sg.displayText())
+										.addClickListener(new IClickListener() {
+											@Override
+											public void onClick() {
+												notifyClick(sg);
+											}
+										});
+							}
+							popup.offset(offsetX(), offsetY() + height());
+							popup.visible(true);
+						}
+					}
+				});
 			}
 		});
 		// TODO SWING-FXL: IMPL: ...
 		return this;
 	}
 
+	private void notifyClick(ISuggestion sg) {
+		for (IUpdateListener<ISuggestion> s : l)
+			s.onUpdate(sg);
+	}
+
 	@Override
 	public ISuggestField addSuggestionListener(
-			co.fxl.gui.api.IUpdateable.IUpdateListener<ISuggestion> selection) {
-		// TODO SWING-FXL: IMPL: ...
+			IUpdateListener<ISuggestion> selection) {
+		l.add(selection);
 		return this;
 	}
 
