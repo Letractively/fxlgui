@@ -16,30 +16,24 @@
  * You should have received a copy of the GNU General Public License
  * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.fxl.gui.form.api;
+package co.fxl.gui.form.impl;
 
-import java.util.List;
+import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IWidgetProvider;
+import co.fxl.gui.form.api.IMultiSelectionWidget;
 
-import co.fxl.gui.api.ICallback;
-import co.fxl.gui.api.IUpdateable;
+@SuppressWarnings("rawtypes")
+public class MultiSelectionWidgetImplProvider implements
+		IWidgetProvider<IMultiSelectionWidget> {
 
-public interface IMultiSelection<T> extends IUpdateable<List<T>> {
-
-	public interface IMultiSelectionAdapter<T> {
-
-		String icon(T object);
-
-		String label(T object);
-
-		String text(T object);
-
-		void query(String text, ICallback<List<T>> cb);
+	@Override
+	public Class<IMultiSelectionWidget> widgetType() {
+		return IMultiSelectionWidget.class;
 	}
 
-	IMultiSelection<T> adapter(IMultiSelectionAdapter<T> adapter);
-
-	String text();
-
-	void text(String text);
+	@Override
+	public IMultiSelectionWidget createWidget(IContainer container) {
+		return new MultiSelectionWidgetImpl(container);
+	}
 
 }
