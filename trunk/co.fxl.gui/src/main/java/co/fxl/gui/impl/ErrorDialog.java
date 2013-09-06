@@ -29,6 +29,7 @@ import co.fxl.gui.style.impl.Style;
 public class ErrorDialog {
 
 	private static final int DEFAULT_WIDTH = 420;
+	private static final int DEFAULT_WIDTH_DETAILS = 840;
 	private static boolean showing = false;
 	public static Runnable exceptionListener = null;
 	private Runnable runnable;
@@ -72,7 +73,7 @@ public class ErrorDialog {
 						@Override
 						public void onClick() {
 							IDialog detailDialog = Dialog.newInstance();
-							detailDialog.width(DEFAULT_WIDTH);
+							detailDialog.width(DEFAULT_WIDTH_DETAILS);
 							detailDialog.title("Error Details");
 							detailDialog.addButton().close()
 									.addClickListener(new IClickListener() {
@@ -96,7 +97,7 @@ public class ErrorDialog {
 							if (trace.trim().equals("null"))
 								trace = pTitle;
 							ITextArea textArea = panel.add().textArea()
-									.size(400, 100).text(trace);
+									.size(DEFAULT_WIDTH_DETAILS-20, 300).text(trace);
 							styleInputBorder(textArea);
 							detailDialog.visible(true);
 						}
