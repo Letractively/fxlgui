@@ -83,7 +83,8 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
 		panel = container.panel().flow().spacing(2);
 		Heights.INSTANCE.decorate(panel);
 		panel.border().width(1).color().gray();
-		input = panel.add().suggestField().width(100);
+		input = panel.add().suggestField().width(100).autoSelect(true)
+				.requestOnFocus(true);
 		input.border().remove();
 		input.source(new ISource() {
 			@Override
