@@ -95,6 +95,8 @@ public interface IFormWidget extends IResizable<IFormWidget> {
 
 	IFormField<ITextField, String> addColorField(String name);
 
+	IFormField<IMultiSelectionWidget<?>, String> addMultiSelection(String name);
+
 	IFormField<IPasswordField, String> addPasswordField(String name);
 
 	IFormField<ITextArea, String> addTextArea(String name,
