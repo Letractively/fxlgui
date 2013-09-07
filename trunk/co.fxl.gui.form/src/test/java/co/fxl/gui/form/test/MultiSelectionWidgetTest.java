@@ -51,20 +51,24 @@ class MultiSelectionWidgetTest {
 			@Override
 			public void query(String text, ICallback<List<String>> cb) {
 				List<String> l = new LinkedList<String>();
-				l.add("u1");
-				l.add("u2");
-				l.add("u3");
+				l.add("usergroup:u1");
+				l.add("user:u2");
 				cb.onSuccess(l);
 			}
 
 			@Override
 			public String label(String object) {
-				return object;
+				return object.substring(object.indexOf(":") + 1);
 			}
 
 			@Override
 			public String icon(String object) {
-				return object;
+				return "cancel.png";
+			}
+
+			@Override
+			public String create(String text) {
+				return "email:" + text;
 			}
 		});
 		display.fullscreen().visible(true);

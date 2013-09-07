@@ -25,6 +25,7 @@ import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IFlowPanel;
+import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ISuggestField.ISource;
 import co.fxl.gui.api.ISuggestField.ISource.ISuggestion;
@@ -61,8 +62,9 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
 	MultiSelectionWidgetImpl(IContainer container) {
 		panel = container.panel().flow().spacing(2);
 		Heights.INSTANCE.decorate(panel);
+		panel.border().width(1).color().gray();
 		input = panel.add().suggestField().width(100);
-		Heights.INSTANCE.decorate(input);
+		input.border().remove();
 		input.source(new ISource() {
 			@Override
 			public void query(String prefix,
@@ -84,15 +86,41 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
 			@Override
 			public void onUpdate(ISuggestion value) {
 				Object o = ((Suggestion) value).o;
-				throw new UnsupportedOperationException();
+				append(o);
 			}
 		});
 		input.addKeyListener(new IClickListener() {
 			@Override
 			public void onClick() {
-				throw new UnsupportedOperationException();
+				Object create = adapter.create(input.text());
+				append(create);
 			}
-		});
+		}).enter();
+	}
+
+	private void append(Object o) {
+		input.text("");
+		if (o == null)
+			return;
+		input.remove();
+		final IHorizontalPanel hp = panel.add().panel().horizontal().spacing(4);
+		hp.border().style().rounded();
+		hp.color().gray(248);
+		hp.add().image().resource(adapter.icon(o));
+		String label = adapter.label(o);
+		hp.add()
+				.label()
+				.text(label.length() < 32 ? label : label.substring(0, 28)
+						+ "...");
+		hp.add().image().resource("cancel.png")
+				.addClickListener(new IClickListener() {
+					@Override
+					public void onClick() {
+						hp.remove();
+					}
+				});
+		panel.add().element(input);
+		input.focus(true);
 	}
 
 	@Override
