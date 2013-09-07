@@ -45,6 +45,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IImageField;
+import co.fxl.gui.form.api.IMultiSelectionWidget;
 import co.fxl.gui.form.api.IRelationField;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.DummyCallback;
@@ -641,5 +642,11 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 		this.setWidth4Layout = setWidth4Layout;
 		if (grid != null)
 			grid.setWidth4Layout(setWidth4Layout);
+	}
+
+	@Override
+	public IFormField<IMultiSelectionWidget<?>, String> addMultiSelection(
+			String name) {
+		throw new UnsupportedOperationException();
 	}
 }
