@@ -138,10 +138,11 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
 		hp.color().gray(248);
 		hp.add().image().resource(adapter.icon(o));
 		String label = adapter.label(o);
+		String text = label.length() < 32 ? label : label.substring(0, 28)
+				+ "...";
 		hp.add()
 				.label()
-				.text(label.length() < 32 ? label : label.substring(0, 28)
-						+ "...");
+				.text(text);
 		hp.add().image().resource("cancel.png").addClickListener(e);
 		panel.add().element(input);
 		input.focus(true);
