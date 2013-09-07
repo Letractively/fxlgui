@@ -104,6 +104,13 @@ public class GWTKeyRecipientKeyTemplate implements IKey<Object>,
 	}
 
 	@Override
+	public Object backspace() {
+		nativeKeyCode = KeyCodes.KEY_BACKSPACE;
+		repeat = true;
+		return element;
+	}
+
+	@Override
 	public co.fxl.gui.api.IKeyRecipient.IKey<Object> addKeyListener(
 			IClickListener listener) {
 		ls.add(listener);

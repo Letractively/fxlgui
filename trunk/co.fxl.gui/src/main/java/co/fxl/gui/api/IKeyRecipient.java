@@ -39,6 +39,8 @@ public interface IKeyRecipient<T> {
 		T right();
 
 		T character(char c);
+
+		T backspace();
 	}
 
 	IKey<T> addKeyListener(IClickListener listener);

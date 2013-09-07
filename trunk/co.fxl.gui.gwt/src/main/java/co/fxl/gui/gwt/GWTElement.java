@@ -201,6 +201,11 @@ public class GWTElement<T extends Widget, R> implements IElement<R>,
 		}
 
 		@Override
+		public R backspace() {
+			return listenOnKeyDown(KeyCodes.KEY_BACKSPACE);
+		}
+
+		@Override
 		public R left() {
 			return listenOnKeyDown(KeyCodes.KEY_LEFT);
 		}

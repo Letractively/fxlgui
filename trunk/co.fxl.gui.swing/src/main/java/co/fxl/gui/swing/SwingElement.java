@@ -329,6 +329,11 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 			public R character(char c) {
 				throw new UnsupportedOperationException();
 			}
+
+			@Override
+			public R backspace() {
+				return (R) this;
+			}
 		};
 	}
 

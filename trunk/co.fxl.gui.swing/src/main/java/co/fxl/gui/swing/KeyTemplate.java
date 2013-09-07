@@ -69,6 +69,12 @@ class KeyTemplate<T extends IElement<T>> implements IKeyRecipient.IKey<T> {
 	}
 
 	@Override
+	public T backspace() {
+		addListener(KeyEvent.VK_BACK_SPACE);
+		return holder;
+	}
+
+	@Override
 	public T right() {
 		addListener(KeyEvent.VK_RIGHT);
 		return holder;

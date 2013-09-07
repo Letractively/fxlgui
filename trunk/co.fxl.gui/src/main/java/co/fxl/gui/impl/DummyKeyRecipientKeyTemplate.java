@@ -64,4 +64,9 @@ public class DummyKeyRecipientKeyTemplate<T> implements IKeyRecipient.IKey<T> {
 		return (T) this;
 	}
 
+	@Override
+	public T backspace() {
+		return (T) this;
+	}
+
 }

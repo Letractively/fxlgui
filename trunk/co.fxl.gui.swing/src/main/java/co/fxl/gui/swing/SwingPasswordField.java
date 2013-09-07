@@ -93,6 +93,11 @@ class SwingPasswordField extends SwingTextInput<JPasswordField, IPasswordField>
 			public IPasswordField character(char c) {
 				throw new UnsupportedOperationException();
 			}
+
+			@Override
+			public IPasswordField backspace() {
+				throw new UnsupportedOperationException();
+			}
 		};
 	}
 
