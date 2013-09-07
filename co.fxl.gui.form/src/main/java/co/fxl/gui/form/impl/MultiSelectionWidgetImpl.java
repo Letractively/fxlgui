@@ -69,7 +69,8 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
 
 		@Override
 		public String displayText() {
-			return adapter.icon(o) + ":" + adapter.label(o);
+			return "<span><img style='margin-right:4px' src='"
+					+ adapter.icon(o) + "'/>" + adapter.label(o) + "</span>";
 		}
 	}
 
