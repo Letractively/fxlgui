@@ -31,6 +31,8 @@ public interface IMultiSelectionWidget<T> {
 		String label(T object);
 
 		void query(String text, ICallback<List<T>> cb);
+
+		T create(String text);
 	}
 
 	IMultiSelectionWidget<T> adapter(IMultiSelectionAdapter<T> adapter);
