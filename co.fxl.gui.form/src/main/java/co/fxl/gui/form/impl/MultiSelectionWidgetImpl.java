@@ -36,6 +36,24 @@ import co.fxl.gui.impl.Heights;
 
 class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
 
+	private class Entry implements IClickListener {
+
+		private IHorizontalPanel hp;
+		private Object o;
+
+		public Entry(IHorizontalPanel hp, Object o) {
+			this.hp = hp;
+			this.o = o;
+		}
+
+		@Override
+		public void onClick() {
+			tokens.remove(this);
+			hp.remove();
+		}
+
+	}
+
 	private final class Suggestion implements ISuggestion {
 
 		private final Object o;
@@ -58,6 +76,7 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
 	private IFlowPanel panel;
 	private ISuggestField input;
 	private IMultiSelectionAdapter<Object> adapter;
+	private List<Entry> tokens = new LinkedList<Entry>();
 
 	MultiSelectionWidgetImpl(IContainer container) {
 		panel = container.panel().flow().spacing(2);
@@ -96,14 +115,23 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
 				append(create);
 			}
 		}).enter();
+		input.addKeyListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				if (!tokens.isEmpty() && input.text().length() == 0)
+					tokens.get(tokens.size() - 1).onClick();
+			}
+		}).backspace();
 	}
 
-	private void append(Object o) {
+	private void append(final Object o) {
 		input.text("");
 		if (o == null)
 			return;
 		input.remove();
 		final IHorizontalPanel hp = panel.add().panel().horizontal().spacing(4);
+		final Entry e = new Entry(hp, o);
+		tokens.add(e);
 		hp.border().style().rounded();
 		hp.color().gray(248);
 		hp.add().image().resource(adapter.icon(o));
@@ -112,13 +140,7 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
 				.label()
 				.text(label.length() < 32 ? label : label.substring(0, 28)
 						+ "...");
-		hp.add().image().resource("cancel.png")
-				.addClickListener(new IClickListener() {
-					@Override
-					public void onClick() {
-						hp.remove();
-					}
-				});
+		hp.add().image().resource("cancel.png").addClickListener(e);
 		panel.add().element(input);
 		input.focus(true);
 	}
