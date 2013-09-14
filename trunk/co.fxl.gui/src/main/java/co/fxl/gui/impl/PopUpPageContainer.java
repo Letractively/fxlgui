@@ -92,6 +92,8 @@ public class PopUpPageContainer implements PageContainer, RuntimeConstants {
 				widget.addResizableWidgetToDisplay(popUp);
 				added = true;
 			}
+		} else {
+			statePushed = false;
 		}
 		if (popUp.visible() == visible)
 			return;
@@ -123,8 +125,9 @@ public class PopUpPageContainer implements PageContainer, RuntimeConstants {
 	public void addCloseListener(final Runnable runnable) {
 		popUp.addVisibleListener(new IUpdateListener<Boolean>() {
 			@Override
-			public void onUpdate(Boolean value) {
+			public void onUpdate(Boolean value) {			
 				if (!value && !closablePopUp.destroyed) {
+					statePushed = false;
 					runnable.run();
 				}
 			}
@@ -139,6 +142,7 @@ public class PopUpPageContainer implements PageContainer, RuntimeConstants {
 	public void destroy() {
 		ServerListener.instance = oldListener;
 		closablePopUp.destroyed = true;
+		statePushed = false;
 		popUp.visible(false);
 	}
 }
