@@ -24,13 +24,16 @@ import co.fxl.data.format.api.IFormat;
 import co.fxl.data.format.impl.Format;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.TimeZone;
+import com.google.gwt.i18n.client.TimeZoneInfo;
 
 class GWTDateFormat implements IFormat<Date> {
 
+	private TimeZone utcTimeZone;
 	private DateTimeFormat impl;
 	private String defaultFormatStyle = null;
 //	private String locale = Format.LOCALE_EN;
-	private DateTimeFormat predef;
+//	private DateTimeFormat predef;
 	static DateTimeFormat TIME_PATTERN = DateTimeFormat
 			.getFormat("hh:mm:ss aaa");
 	static DateTimeFormat DATE_PATTERN = DateTimeFormat.getFormat("yyyy-MM-dd");
@@ -40,7 +43,8 @@ class GWTDateFormat implements IFormat<Date> {
 	GWTDateFormat(DateTimeFormat predef) {
 		try {
 			impl = predef;
-			this.predef = predef;
+//			this.predef = predef;
+			utcTimeZone = TimeZone.createTimeZone(0);
 		} catch (Throwable lThrowable) {
 			lThrowable.printStackTrace();
 		}
@@ -85,11 +89,11 @@ class GWTDateFormat implements IFormat<Date> {
 	// "10.02.2012 14:55:11"));
 	// }
 
-	static Date getDate(String format) {
-		int[] s = getPart(format, 0, "\\.");
-		assert s.length == 3;
-		return new Date(s[2] - 1900, s[1] - 1, s[0]);
-	}
+//	static Date getDate(String format) {
+//		int[] s = getPart(format, 0, "\\.");
+//		assert s.length == 3;
+//		return new Date(s[2] - 1900, s[1] - 1, s[0]);
+//	}
 
 	static int[] getPart(String format, int i, String split) {
 		if (!format.contains(" "))
@@ -104,36 +108,36 @@ class GWTDateFormat implements IFormat<Date> {
 		return a;
 	}
 
-	static Date getTime(Date date, String format) {
-		int[] s = getPart(format, 1, ":");
-		assert s.length == 3;
-		return new Date(date.getYear(), date.getMonth(), date.getDate(), s[0],
-				s[1], s[2]);
-	}
+//	static Date getTime(Date date, String format) {
+//		int[] s = getPart(format, 1, ":");
+//		assert s.length == 3;
+//		return new Date(date.getYear(), date.getMonth(), date.getDate(), s[0],
+//				s[1], s[2]);
+//	}
 
-	private String getTimeString(Date object) {
-		return l(object.getHours(), 2) + ":" + l(object.getMinutes(), 2) + ":"
-				+ l(object.getSeconds(), 2);
-	}
+//	private String getTimeString(Date object) {
+//		return l(object.getHours(), 2) + ":" + l(object.getMinutes(), 2) + ":"
+//				+ l(object.getSeconds(), 2);
+//	}
+//
+//	private String getDateString(Date object) {
+//		return l(object.getDate(), 2) + "." + l(object.getMonth() + 1, 2) + "."
+//				+ l(object.getYear() + 1900, 4);
+//	}
 
-	private String getDateString(Date object) {
-		return l(object.getDate(), 2) + "." + l(object.getMonth() + 1, 2) + "."
-				+ l(object.getYear() + 1900, 4);
-	}
-
-	private String l(int date, int i) {
-		String s = String.valueOf(date);
-		while (s.length() < i)
-			s = "0" + s;
-		return s;
-	}
+//	private String l(int date, int i) {
+//		String s = String.valueOf(date);
+//		while (s.length() < i)
+//			s = "0" + s;
+//		return s;
+//	}
 	
 	@Override
 	public String format(Date object) {
 		if (object == null)
 			return "";
 		if (defaultFormatStyle == null) {
-			return impl.format(object);	
+			return impl.format(object, utcTimeZone);	
 		} else {
 			return format(object, defaultFormatStyle);
 		}
@@ -154,7 +158,7 @@ class GWTDateFormat implements IFormat<Date> {
 			return "";
 		}
 		DateTimeFormat lDateTimeFormat = DateTimeFormat.getFormat(pFormatStyle);
-		return lDateTimeFormat.format(object);
+		return lDateTimeFormat.format(object, utcTimeZone);
 	}
 	
 	@Override
