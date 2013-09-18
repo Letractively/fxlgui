@@ -23,11 +23,11 @@ import co.fxl.gui.form.api.IFormField;
 
 class FormColorFieldImpl extends FormTextFieldImpl<String> {
 
-	private ColorField dateField;
+	private ColorField colorField;
 
 	FormColorFieldImpl(final FormWidgetImpl widget, int index, String name) {
 		super(widget, index, name, null);
-		dateField = new ColorField(valueElement(), addContainer());
+		colorField = new ColorField(valueElement(), addContainer());
 		editable(widget.saveListener != null);
 	}
 
@@ -38,8 +38,8 @@ class FormColorFieldImpl extends FormTextFieldImpl<String> {
 
 	@Override
 	public IFormField<ITextField, String> editable(boolean editable) {
-		if (dateField != null)
-			dateField.clickable(editable);
+		if (colorField != null)
+			colorField.clickable(editable);
 		return super.editable(editable);
 	}
 }
