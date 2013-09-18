@@ -24,17 +24,28 @@ import com.google.gwt.i18n.client.NumberFormat;
 
 abstract class GWTNumberFormat<T> implements IFormat<T> {
 
-	private NumberFormat impl;
+	private String defaultFormatStyle = null;
+//	private NumberFormat impl;
 
 	GWTNumberFormat() {
-		impl = NumberFormat.getDecimalFormat();
+//		impl = NumberFormat.get 
+				// NumberFormat.getDecimalFormat();
+	}
+	
+	protected NumberFormat getNumberFormat() {
+		if (defaultFormatStyle == null) {
+			return NumberFormat.getDecimalFormat();
+		} else {
+			return NumberFormat.getFormat(defaultFormatStyle);
+		}
 	}
 
 	@Override
 	public String format(T object) {
 		if (object == null)
 			return "";
-		return impl.format(((Number) object));
+	
+		return getNumberFormat().format(((Number) object));
 	}
 
 	@Override
@@ -47,7 +58,7 @@ abstract class GWTNumberFormat<T> implements IFormat<T> {
 		if (format == null)
 			return null;
 		try {
-			return convert(new Double(impl.parse(format)));
+			return convert(new Double(getNumberFormat().parse(format)));
 		} catch (Exception e) {
 			return null;
 		}
@@ -60,8 +71,15 @@ abstract class GWTNumberFormat<T> implements IFormat<T> {
 
 	abstract T convert(Double d);
 
+//	@Override
+//	public IFormat<T> setLocale(String locale) {
+//		return (IFormat<T>) this;
+//	}
+	
 	@Override
-	public IFormat<T> setLocale(String locale) {
-		return (IFormat<T>) this;
+	public IFormat<T> defaultFormatStyle(String pDefaultFormatStyle) {
+		defaultFormatStyle = pDefaultFormatStyle;
+		return this;
 	}
+	
 }

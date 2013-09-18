@@ -28,5 +28,8 @@ public interface IFormat<T> {
 
 	T parse(String text, String formatStyle);
 
-	IFormat<T> setLocale(String locale);
+//	IFormat<T> setLocale(String locale);
+	
+	IFormat<T> defaultFormatStyle(String defaultFormatStyle);
+	
 }

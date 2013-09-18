@@ -28,7 +28,8 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 class GWTDateFormat implements IFormat<Date> {
 
 	private DateTimeFormat impl;
-	private String locale = Format.LOCALE_EN;
+	private String defaultFormatStyle = null;
+//	private String locale = Format.LOCALE_EN;
 	private DateTimeFormat predef;
 	static DateTimeFormat TIME_PATTERN = DateTimeFormat
 			.getFormat("hh:mm:ss aaa");
@@ -59,15 +60,19 @@ class GWTDateFormat implements IFormat<Date> {
 		if (format == null)
 			return null;
 		try {
-			if (locale.equals(Format.LOCALE_DE)) {
-				if (predef.equals(TIME_PATTERN))
-					return getTime(new Date(), format);
-				if (predef.equals(DATE_TIME_PATTERN))
-					return getTime(getDate(format), format);
-				if (predef.equals(DATE_PATTERN))
-					return getDate(format);
+//			if (locale.equals(Format.LOCALE_DE)) {
+//				if (predef.equals(TIME_PATTERN))
+//					return getTime(new Date(), format);
+//				if (predef.equals(DATE_TIME_PATTERN))
+//					return getTime(getDate(format), format);
+//				if (predef.equals(DATE_PATTERN))
+//					return getDate(format);
+//			}
+			if (defaultFormatStyle == null) {
+				return impl.parse(format);
+			} else {
+				return parse(format, defaultFormatStyle);
 			}
-			return impl.parse(format);
 		} catch (Exception e) {
 			return null;
 		}
@@ -106,21 +111,6 @@ class GWTDateFormat implements IFormat<Date> {
 				s[1], s[2]);
 	}
 
-	@Override
-	public String format(Date object) {
-		if (object == null)
-			return "";
-		if (locale.equals(Format.LOCALE_DE)) {
-			if (predef.equals(TIME_PATTERN))
-				return getTimeString(object);
-			if (predef.equals(DATE_TIME_PATTERN))
-				return getDateString(object) + " " + getTimeString(object);
-			if (predef.equals(DATE_PATTERN))
-				return getDateString(object);
-		}
-		return impl.format(object);
-	}
-
 	private String getTimeString(Date object) {
 		return l(object.getHours(), 2) + ":" + l(object.getMinutes(), 2) + ":"
 				+ l(object.getSeconds(), 2);
@@ -137,6 +127,26 @@ class GWTDateFormat implements IFormat<Date> {
 			s = "0" + s;
 		return s;
 	}
+	
+	@Override
+	public String format(Date object) {
+		if (object == null)
+			return "";
+		if (defaultFormatStyle == null) {
+			return impl.format(object);	
+		} else {
+			return format(object, defaultFormatStyle);
+		}
+//		if (locale.equals(Format.LOCALE_DE)) {
+//			if (predef.equals(TIME_PATTERN))
+//				return getTimeString(object);
+//			if (predef.equals(DATE_TIME_PATTERN))
+//				return getDateString(object) + " " + getTimeString(object);
+//			if (predef.equals(DATE_PATTERN))
+//				return getDateString(object);
+//		}
+		
+	}
 
 	@Override
 	public String format(Date object, String pFormatStyle) {
@@ -146,10 +156,16 @@ class GWTDateFormat implements IFormat<Date> {
 		DateTimeFormat lDateTimeFormat = DateTimeFormat.getFormat(pFormatStyle);
 		return lDateTimeFormat.format(object);
 	}
-
+	
 	@Override
-	public IFormat<Date> setLocale(String locale) {
-		this.locale = locale;
+	public IFormat<Date> defaultFormatStyle(String pDefaultFormatStyle) {
+		defaultFormatStyle = pDefaultFormatStyle;
 		return this;
 	}
+
+//	@Override
+//	public IFormat<Date> setLocale(String locale) {
+//		this.locale = locale;
+//		return this;
+//	}
 }
