@@ -21,11 +21,9 @@ package co.fxl.data.format.gwt;
 import java.util.Date;
 
 import co.fxl.data.format.api.IFormat;
-import co.fxl.data.format.impl.Format;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.TimeZone;
-import com.google.gwt.i18n.client.TimeZoneInfo;
 
 class GWTDateFormat implements IFormat<Date> {
 
