@@ -41,6 +41,7 @@ public class FieldTypeImpl implements IFieldType {
 	private IDynamicConstraints dynamicConstraints;
 	public String nullValue = null;
 	public boolean template;
+	public boolean multiSelectionAllowed = false;
 
 	@Override
 	public boolean equals(Object o) {
@@ -70,6 +71,17 @@ public class FieldTypeImpl implements IFieldType {
 	@Override
 	public int hashCode() {
 		return clazz.hashCode();
+	}
+
+	@Override
+	public IFieldType multiSelectionAllowed(boolean multiSelectionAllowed) {
+		this.multiSelectionAllowed = multiSelectionAllowed;
+		return this;
+	}
+
+	@Override
+	public boolean multiSelectionAllowed() {
+		return multiSelectionAllowed;
 	}
 
 	@Override

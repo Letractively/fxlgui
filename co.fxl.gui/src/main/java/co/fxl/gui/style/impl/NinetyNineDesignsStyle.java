@@ -653,7 +653,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 
 			@Override
 			public int offsetX() {
-				return 263;
+				return 273;
 			}
 		};
 	}

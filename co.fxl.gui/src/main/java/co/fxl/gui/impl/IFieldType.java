@@ -86,4 +86,8 @@ public interface IFieldType {
 	IFieldType rows(int rows);
 
 	IFieldType enumType();
+
+	IFieldType multiSelectionAllowed(boolean multiSelectionAllowed);
+
+	boolean multiSelectionAllowed();
 }
