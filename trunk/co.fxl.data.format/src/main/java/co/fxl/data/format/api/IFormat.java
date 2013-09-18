@@ -32,4 +32,28 @@ public interface IFormat<T> {
 	
 	IFormat<T> defaultFormatStyle(String defaultFormatStyle);
 	
+	IFormat<T> timeZone(TimeZone pTimeZone);
+	
+	public class TimeZone {
+		private String name;
+		private int offsetToUtcInMinutes;
+		
+		public TimeZone(String pName, int pOffset) {
+			name = pName;
+			offsetToUtcInMinutes = pOffset;
+		}
+		public void setName(String pName) {
+			name = pName;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setOffsetToUtcInMinutes(int pOffset) {
+			offsetToUtcInMinutes = pOffset;
+		}
+		public int getOffsetToUtcInMinutes() {
+			return offsetToUtcInMinutes;
+		}
+	}
+	
 }

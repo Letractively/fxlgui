@@ -82,4 +82,9 @@ abstract class GWTNumberFormat<T> implements IFormat<T> {
 		return this;
 	}
 	
+	@Override
+	public IFormat<T> timeZone(TimeZone pTimeZone) {
+		return this;
+	}
+	
 }

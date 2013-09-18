@@ -24,10 +24,11 @@ import co.fxl.data.format.api.IFormat;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.TimeZone;
+import com.google.gwt.i18n.client.DefaultDateTimeFormatInfo;
 
 class GWTDateFormat implements IFormat<Date> {
 
-	private TimeZone utcTimeZone;
+	private com.google.gwt.i18n.client.TimeZone timeZone;
 	private DateTimeFormat impl;
 	private String defaultFormatStyle = null;
 //	private String locale = Format.LOCALE_EN;
@@ -42,7 +43,7 @@ class GWTDateFormat implements IFormat<Date> {
 		try {
 			impl = predef;
 //			this.predef = predef;
-			utcTimeZone = TimeZone.createTimeZone(0);
+			timeZone = com.google.gwt.i18n.client.TimeZone.createTimeZone(0);
 		} catch (Throwable lThrowable) {
 			lThrowable.printStackTrace();
 		}
@@ -135,7 +136,7 @@ class GWTDateFormat implements IFormat<Date> {
 		if (object == null)
 			return "";
 		if (defaultFormatStyle == null) {
-			return impl.format(object, utcTimeZone);	
+			return impl.format(object, timeZone);	
 		} else {
 			return format(object, defaultFormatStyle);
 		}
@@ -156,12 +157,18 @@ class GWTDateFormat implements IFormat<Date> {
 			return "";
 		}
 		DateTimeFormat lDateTimeFormat = DateTimeFormat.getFormat(pFormatStyle);
-		return lDateTimeFormat.format(object, utcTimeZone);
+		return lDateTimeFormat.format(object, timeZone);
 	}
 	
 	@Override
 	public IFormat<Date> defaultFormatStyle(String pDefaultFormatStyle) {
 		defaultFormatStyle = pDefaultFormatStyle;
+		return this;
+	}
+	
+	@Override
+	public IFormat<Date> timeZone(TimeZone pTimeZone) {
+		timeZone = com.google.gwt.i18n.client.TimeZone.createTimeZone(pTimeZone.getOffsetToUtcInMinutes());
 		return this;
 	}
 
