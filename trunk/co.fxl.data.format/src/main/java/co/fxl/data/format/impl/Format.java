@@ -27,19 +27,19 @@ import co.fxl.data.format.api.IFormat;
 
 public class Format {
 
-	public static String LOCALE_DE = "DE";
-	public static String LOCALE_EN = "EN";
+//	public static String LOCALE_DE = "DE";
+//	public static String LOCALE_EN = "EN";
 	private static Map<String, IFormat<?>> formats = new HashMap<String, IFormat<?>>();
 	private static IFormat<Date> dateTimeFormat;
 	private static IFormat<Date> timeFormat;
-	private static String locale = LOCALE_EN;
+//	private static String locale = LOCALE_EN;
 	static {
 		setUp();
 	}
 
-	public static String dateRangeSeparator() {
-		return locale.equals(LOCALE_DE) ? "-" : " ";
-	}
+//	public static String dateRangeSeparator() {
+//		return locale.equals(LOCALE_DE) ? "-" : " ";
+//	}
 
 	public static void register(Class<?> clazz, IFormat<?> format) {
 		formats.put(clazz.getName(), format);
@@ -158,9 +158,9 @@ public class Format {
 		return (IFormat<Double>) get(Double.class);
 	}
 
-	public static void setLocale(String locale) {
-		Format.locale = locale;
-		for (IFormat<?> f : formats.values())
-			f.setLocale(locale);
-	}
+//	public static void setLocale(String locale) {
+//		Format.locale = locale;
+//		for (IFormat<?> f : formats.values())
+//			f.setLocale(locale);
+//	}
 }

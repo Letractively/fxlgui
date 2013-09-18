@@ -26,17 +26,28 @@ import co.fxl.data.format.api.IFormat;
 
 class DateFormatImpl implements IFormat<Date> {
 
+	private String defaultFormatStyle = null;
 	private DateFormat impl;
 
 	DateFormatImpl(DateFormat impl) {
 		this.impl = impl;
 	}
-
+	
+	@Override
+	public IFormat<Date> defaultFormatStyle(String pDefaultFormatStyle) {
+		defaultFormatStyle = pDefaultFormatStyle;
+		return this;
+	}
+	
 	@Override
 	public String format(Date object) {
 		if (object == null)
 			return "";
-		return impl.format(object);
+		if (defaultFormatStyle == null) {
+			return impl.format(object);
+		} else {
+			return format(object, defaultFormatStyle);
+		}
 	}
 
 	@Override
@@ -47,10 +58,14 @@ class DateFormatImpl implements IFormat<Date> {
 
 	@Override
 	public Date parse(String format) {
-		try {
-			return impl.parse(format);
-		} catch (Exception e) {
-			return null;
+		if (defaultFormatStyle == null) {
+			try {
+				return impl.parse(format);
+			} catch (Exception e) {
+				return null;
+			}
+		} else {
+			return parse(format, defaultFormatStyle);
 		}
 	}
 
@@ -64,8 +79,8 @@ class DateFormatImpl implements IFormat<Date> {
 		}
 	}
 
-	@Override
-	public IFormat<Date> setLocale(String locale) {
-		return this;
-	}
+//	@Override
+//	public IFormat<Date> setLocale(String locale) {
+//		return this;
+//	}
 }
