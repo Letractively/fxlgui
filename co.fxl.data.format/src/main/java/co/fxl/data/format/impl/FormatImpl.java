@@ -59,6 +59,11 @@ abstract class FormatImpl<T> implements IFormat<T> {
 		defaultFormatStyle = pDefaultFormatStyle;
 		return this;
 	}
+	
+	@Override
+	public IFormat<T> timeZone(TimeZone pTimeZone) {
+		return this;
+	}
 
 //	@Override
 //	public IFormat<T> setLocale(String locale) {

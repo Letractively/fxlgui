@@ -27,6 +27,7 @@ import co.fxl.data.format.api.IFormat;
 class DateFormatImpl implements IFormat<Date> {
 
 	private String defaultFormatStyle = null;
+	private java.util.TimeZone timeZone = java.util.TimeZone.getDefault();
 	private DateFormat impl;
 
 	DateFormatImpl(DateFormat impl) {
@@ -77,6 +78,11 @@ class DateFormatImpl implements IFormat<Date> {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+	
+	@Override
+	public IFormat<Date> timeZone(TimeZone pTimeZone) {
+		return this;
 	}
 
 //	@Override
