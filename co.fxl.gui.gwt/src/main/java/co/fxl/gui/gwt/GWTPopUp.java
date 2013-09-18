@@ -100,7 +100,7 @@ class GWTPopUp implements IPopUp, WidgetParent {
 				});
 			} else
 				popUp.show();
-		} else
+		} else if (popUp != null)
 			popUp.hide();
 		return this;
 	}
@@ -130,7 +130,7 @@ class GWTPopUp implements IPopUp, WidgetParent {
 	@Override
 	public IPopUp modal(boolean modal) {
 		popUp.setModal(modal);
-//		popUp.setGlassEnabled(modal);
+		// popUp.setGlassEnabled(modal);
 		popUp.setAutoHideEnabled(!modal);
 		return this;
 	}
