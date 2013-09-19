@@ -36,6 +36,7 @@ class GWTPasswordField extends GWTTextInput<PasswordTextBox, IPasswordField>
 		super(container);
 	}
 
+	@Override
 	public IPasswordField text(String text) {
 		if (text == null)
 			text = "";
