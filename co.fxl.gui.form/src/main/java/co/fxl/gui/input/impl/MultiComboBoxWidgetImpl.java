@@ -31,14 +31,15 @@ import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.form.impl.Validation;
 import co.fxl.gui.form.impl.Validation.IValidation;
+import co.fxl.gui.impl.ComboBoxAdp;
 import co.fxl.gui.impl.ElementPopUp;
 import co.fxl.gui.input.api.IMultiComboBoxWidget;
 
-class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
+class MultiComboBoxWidgetImpl extends ComboBoxAdp implements
+		IMultiComboBoxWidget,
 		co.fxl.gui.api.IUpdateable.IUpdateListener<Boolean> {
 
-	private List<IUpdateListener<String[]>> listeners = new LinkedList<IUpdateListener<String[]>>();
-	private List<IUpdateListener<String>> textListeners = new LinkedList<IUpdateListener<String>>();
+	private List<IUpdateListener<String>> listeners = new LinkedList<IUpdateListener<String>>();
 	private List<String> texts = new LinkedList<String>();
 	private List<String> selection = new LinkedList<String>();
 	private ITextField textField;
@@ -47,12 +48,13 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	private boolean editable;
 
 	MultiComboBoxWidgetImpl(IContainer container) {
+		super(container.comboBox().visible(false));
 		textField = container.textField().visible(false);
 		textField.addFocusListener(this);
 		textField.addUpdateListener(new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(String value) {
-				for (IUpdateListener<String> l : textListeners)
+				for (IUpdateListener<String> l : listeners)
 					l.onUpdate(value);
 				if (!texts.isEmpty()) {
 					List<String> result = new LinkedList<String>(Arrays
@@ -91,16 +93,9 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	}
 
 	@Override
-	public IUpdateable<String[]> addUpdateListener(
-			co.fxl.gui.api.IUpdateable.IUpdateListener<String[]> listener) {
-		listeners.add(listener);
-		return this;
-	}
-
-	@Override
-	public IUpdateable<String[]> addTextUpdateListener(
+	public IUpdateable<String> addUpdateListener(
 			co.fxl.gui.api.IUpdateable.IUpdateListener<String> listener) {
-		textListeners.add(listener);
+		listeners.add(listener);
 		return this;
 	}
 
@@ -119,9 +114,7 @@ class MultiComboBoxWidgetImpl implements IMultiComboBoxWidget,
 	}
 
 	private void notifyListeners() {
-		for (IUpdateListener<String[]> l : listeners)
-			l.onUpdate(selection());
-		for (IUpdateListener<String> l : textListeners)
+		for (IUpdateListener<String> l : listeners)
 			l.onUpdate(textField.text());
 	}
 
