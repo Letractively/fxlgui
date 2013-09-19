@@ -20,12 +20,14 @@ package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.form.api.IFormField;
+import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.ITooltipResolver;
 
 class FormComboBoxImpl extends FormFieldImpl<IComboBox, String> {
 
-	FormComboBoxImpl(FormWidgetImpl widget, int index, String name) {
-		super(widget, index, name);
+	FormComboBoxImpl(FormWidgetImpl widget, int index, String name,
+			IFieldType type) {
+		super(widget, index, name, type, null);
 	}
 
 	@Override
@@ -36,7 +38,7 @@ class FormComboBoxImpl extends FormFieldImpl<IComboBox, String> {
 
 	@Override
 	void createContentColumn(int index) {
-		valueElement = widget.addFormValueComboBox(index, true);// withFocus);
+		valueElement = widget.addFormValueComboBox(index, true, type);// withFocus);
 		editable(widget.saveListener != null);
 	}
 

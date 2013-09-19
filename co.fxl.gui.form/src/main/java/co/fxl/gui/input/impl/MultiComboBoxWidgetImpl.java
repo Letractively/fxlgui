@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.api.ICheckBox;
+import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable;
@@ -81,6 +82,11 @@ class MultiComboBoxWidgetImpl extends ComboBoxAdp implements
 		});
 		ElementPopUp.HEIGHTS.decorate(textField);
 		popUp = new ElementPopUp(textField).rowHeight(23);
+	}
+
+	@Override
+	protected IComboBox element() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

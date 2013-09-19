@@ -54,6 +54,7 @@ import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.RuntimeConstants;
 import co.fxl.gui.impl.WidgetTitle;
+import co.fxl.gui.input.api.IMultiComboBoxWidget;
 import co.fxl.gui.rtf.api.IHTMLArea;
 import co.fxl.gui.rtf.api.ITemplateTextField;
 import co.fxl.gui.style.impl.Style;
@@ -201,11 +202,14 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 	}
 
 	IComboBox addFormValueComboBox(int gridIndex) {
-		return addFormValueComboBox(gridIndex, true);
+		return addFormValueComboBox(gridIndex, true, null);
 	}
 
-	IComboBox addFormValueComboBox(int gridIndex, boolean withFocus) {
-		IComboBox valuePanel = container(gridIndex, false).comboBox();
+	IComboBox addFormValueComboBox(int gridIndex, boolean withFocus,
+			IFieldType type) {
+		IContainer container = container(gridIndex, false);
+		IComboBox valuePanel = type != null && type.multiSelectionAllowed() ? container
+				.widget(IMultiComboBoxWidget.class) : container.comboBox();
 		heights.decorate(valuePanel);
 		Style.instance().form().inputField(valuePanel);
 		valuePanel.editable(saveListener != null);
@@ -289,8 +293,9 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 	}
 
 	@Override
-	public IFormField<IComboBox, String> addComboBox(String name) {
-		return new FormComboBoxImpl(this, nextGridIndex(), name);
+	public IFormField<IComboBox, String> addComboBox(String name,
+			IFieldType type) {
+		return new FormComboBoxImpl(this, nextGridIndex(), name, type);
 	}
 
 	@Override
