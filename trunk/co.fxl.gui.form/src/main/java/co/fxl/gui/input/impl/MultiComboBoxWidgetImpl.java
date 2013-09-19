@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import co.fxl.gui.api.ICheckBox;
+import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ITextField;
@@ -33,6 +34,7 @@ import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.form.impl.Validation;
 import co.fxl.gui.form.impl.Validation.IValidation;
 import co.fxl.gui.impl.ComboBoxAdp;
+import co.fxl.gui.impl.DummyKeyRecipientKeyTemplate;
 import co.fxl.gui.impl.ElementPopUp;
 import co.fxl.gui.input.api.IMultiComboBoxWidget;
 
@@ -49,8 +51,8 @@ class MultiComboBoxWidgetImpl extends ComboBoxAdp implements
 	private boolean editable;
 
 	MultiComboBoxWidgetImpl(IContainer container) {
-		super(container.comboBox().visible(false));
-		textField = container.textField().visible(false);
+		super(null);
+		textField = container.textField();
 		textField.addFocusListener(this);
 		textField.addUpdateListener(new IUpdateListener<String>() {
 			@Override
@@ -85,8 +87,39 @@ class MultiComboBoxWidgetImpl extends ComboBoxAdp implements
 	}
 
 	@Override
-	protected IComboBox element() {
-		throw new UnsupportedOperationException();
+	public IBorder border() {
+		return textField.border();
+	}
+
+	@Override
+	public IColor color() {
+		return textField.color();
+	}
+
+	@Override
+	public IComboBox text(String text) {
+		textField.text(text);
+		return null;
+	}
+
+	@Override
+	public co.fxl.gui.api.IKeyRecipient.IKey<IComboBox> addKeyListener(
+			IClickListener listener) {
+		final co.fxl.gui.api.IKeyRecipient.IKey<ITextField> l = textField
+				.addKeyListener(listener);
+		return new DummyKeyRecipientKeyTemplate<IComboBox>() {
+			@Override
+			public IComboBox enter() {
+				l.enter();
+				return null;
+			}
+		};
+	}
+
+	@Override
+	public IComboBox height(int h) {
+		textField.height(h);
+		return this;
 	}
 
 	@Override
