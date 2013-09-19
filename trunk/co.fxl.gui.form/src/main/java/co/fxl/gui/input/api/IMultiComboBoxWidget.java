@@ -1,9 +1,9 @@
 package co.fxl.gui.input.api;
 
-import co.fxl.gui.api.IUpdateable;
+import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.form.impl.Validation;
 
-public interface IMultiComboBoxWidget extends IUpdateable<String[]> {
+public interface IMultiComboBoxWidget extends IComboBox {
 
 	IMultiComboBoxWidget width(int width);
 
@@ -20,8 +20,6 @@ public interface IMultiComboBoxWidget extends IUpdateable<String[]> {
 	IMultiComboBoxWidget visible(boolean visible);
 
 	String text();
-
-	IUpdateable<String[]> addTextUpdateListener(IUpdateListener<String> listener);
 
 	IMultiComboBoxWidget editable(boolean editable);
 

@@ -19,7 +19,6 @@
 package co.fxl.gui.input.test;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
 
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
@@ -37,11 +36,11 @@ class MultiComboBoxWidgetTest {
 				.widget(IMultiComboBoxWidget.class);
 		for (int i = 0; i < 3; i++)
 			widget.addText("Item " + i);
-		widget.addUpdateListener(new IUpdateListener<String[]>() {
+		widget.addUpdateListener(new IUpdateListener<String>() {
 
 			@Override
-			public void onUpdate(String[] value) {
-				vertical.add().label().text(Arrays.asList(value).toString());
+			public void onUpdate(String value) {
+				vertical.add().label().text(value);
 			}
 		});
 		display.fullscreen().visible(true);
