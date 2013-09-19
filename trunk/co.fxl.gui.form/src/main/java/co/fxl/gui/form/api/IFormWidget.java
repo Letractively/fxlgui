@@ -106,7 +106,7 @@ public interface IFormWidget extends IResizable<IFormWidget> {
 
 	IFormField<ICheckBox, Boolean> addCheckBox(String name);
 
-	IFormField<IComboBox, String> addComboBox(String name);
+	IFormField<IComboBox, String> addComboBox(String name, IFieldType type);
 
 	IImageField addImage(String name);
 
