@@ -99,7 +99,7 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		textArea.addUpdateListener(new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(String value) {
-				if (!ignore)
+				if (!ignore && !value.trim().equals(""))
 					for (String v : value.trim().split(SEPARATOR)) {
 						append(v.trim());
 					}
