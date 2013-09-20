@@ -80,6 +80,7 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 	private IMultiSelectionAdapter adapter;
 	private List<Entry> tokens = new LinkedList<Entry>();
 	private ITextArea textArea;
+	private boolean ignore;
 
 	MultiSelectionWidgetImpl(IContainer container) {
 		panel = container.panel().flow().spacing(2);
@@ -92,9 +93,10 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		textArea.addUpdateListener(new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(String value) {
-				for (String v : value.trim().split(SEPARATOR)) {
-					append(v.trim());
-				}
+				if (!ignore)
+					for (String v : value.trim().split(SEPARATOR)) {
+						append(v.trim());
+					}
 			}
 		});
 		input.border().remove();
@@ -166,7 +168,9 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 				b.append(SEPARATOR);
 			b.append(token.o);
 		}
+		ignore = true;
 		textArea.text(b.toString());
+		ignore = false;
 	}
 
 	@Override
