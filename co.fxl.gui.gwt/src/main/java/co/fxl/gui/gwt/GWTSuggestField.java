@@ -255,4 +255,26 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 	public boolean editable() {
 		return container.widget.isEnabled();
 	}
+
+	public static void removeOutline(Widget p) {
+		if (GWTDisplay.isInternetExplorer) {
+			p.addStyleName("nooutlineIE");
+		} else {
+			p.addStyleName("nooutline");
+		}
+	}
+
+	@Override
+	public ISuggestField outline(boolean outline) {
+		if (outline) {
+			if (GWTDisplay.isInternetExplorer) {
+				container.widget.removeStyleName("nooutlineIE");
+			} else {
+				container.widget.removeStyleName("nooutline");
+			}
+		} else {
+			removeOutline(container.widget);
+		}
+		return this;
+	}
 }
