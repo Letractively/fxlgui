@@ -29,6 +29,7 @@ import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ISuggestField.ISource;
 import co.fxl.gui.api.ISuggestField.ISource.ISuggestion;
+import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.form.api.IMultiSelectionWidget;
 import co.fxl.gui.impl.CallbackTemplate;
@@ -78,9 +79,11 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
 	private ISuggestField input;
 	private IMultiSelectionAdapter<Object> adapter;
 	private List<Entry> tokens = new LinkedList<Entry>();
+	private ITextArea textArea;
 
 	MultiSelectionWidgetImpl(IContainer container) {
 		panel = container.panel().flow().spacing(2);
+		textArea = panel.add().textArea().visible(false);
 		Heights.INSTANCE.decorate(panel);
 		panel.border().width(1).color().gray();
 		input = panel.add().suggestField().width(100).autoSelect(true)
@@ -140,12 +143,21 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
 		String label = adapter.label(o);
 		String text = label.length() < 32 ? label : label.substring(0, 28)
 				+ "...";
-		hp.add()
-				.label()
-				.text(text);
+		hp.add().label().text(text);
 		hp.add().image().resource("cancel.png").addClickListener(e);
 		panel.add().element(input);
+		notifyTextArea();
 		input.focus(true);
+	}
+
+	private void notifyTextArea() {
+		StringBuilder b = new StringBuilder();
+		for (Entry token : tokens) {
+			if (b.length() > 0)
+				b.append(";");
+			b.append(adapter.id(token.o));
+		}
+		textArea.text(b.toString());
 	}
 
 	@Override
@@ -153,5 +165,10 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
 			IMultiSelectionAdapter<Object> adapter) {
 		this.adapter = adapter;
 		return this;
+	}
+
+	@Override
+	public ITextArea invisibleTextArea() {
+		return textArea;
 	}
 }
