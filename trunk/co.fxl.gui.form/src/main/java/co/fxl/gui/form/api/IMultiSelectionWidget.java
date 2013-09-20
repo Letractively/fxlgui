@@ -23,22 +23,22 @@ import java.util.List;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.ITextArea;
 
-public interface IMultiSelectionWidget<T> {
+public interface IMultiSelectionWidget {
 
-	public interface IMultiSelectionAdapter<T> {
+	public String SEPARATOR = ";";
 
-		String id(T object);
+	public interface IMultiSelectionAdapter {
 
-		String icon(T object);
+		String icon(String object);
 
-		String label(T object);
+		String label(String object);
 
-		void query(String text, ICallback<List<T>> cb);
+		void query(String text, ICallback<List<String>> cb);
 
-		T create(String text);
+		String create(String text);
 	}
 
-	IMultiSelectionWidget<T> adapter(IMultiSelectionAdapter<T> adapter);
+	IMultiSelectionWidget adapter(IMultiSelectionAdapter adapter);
 
 	ITextArea invisibleTextArea();
 

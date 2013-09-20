@@ -35,7 +35,7 @@ import co.fxl.gui.form.api.IMultiSelectionWidget;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Heights;
 
-class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
+class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 
 	private class Entry implements IClickListener {
 
@@ -57,9 +57,9 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
 
 	private final class Suggestion implements ISuggestion {
 
-		private final Object o;
+		private final String o;
 
-		private Suggestion(Object o) {
+		private Suggestion(String o) {
 			this.o = o;
 		}
 
@@ -77,7 +77,7 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
 
 	private IFlowPanel panel;
 	private ISuggestField input;
-	private IMultiSelectionAdapter<Object> adapter;
+	private IMultiSelectionAdapter adapter;
 	private List<Entry> tokens = new LinkedList<Entry>();
 	private ITextArea textArea;
 
@@ -89,17 +89,25 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
 				.width(3);
 		input = panel.add().suggestField().width(100).autoSelect(true)
 				.requestOnFocus(true).outline(false);
+		textArea.addUpdateListener(new IUpdateListener<String>() {
+			@Override
+			public void onUpdate(String value) {
+				for (String v : value.trim().split(SEPARATOR)) {
+					append(v.trim());
+				}
+			}
+		});
 		input.border().remove();
 		input.source(new ISource() {
 			@Override
 			public void query(String prefix,
 					final ICallback<List<ISuggestion>> callback) {
-				adapter.query(prefix, new CallbackTemplate<List<Object>>(
+				adapter.query(prefix, new CallbackTemplate<List<String>>(
 						callback) {
 					@Override
-					public void onSuccess(List<Object> result) {
+					public void onSuccess(List<String> result) {
 						List<ISuggestion> sgs = new LinkedList<ISuggestion>();
-						for (final Object o : result) {
+						for (final String o : result) {
 							sgs.add(new Suggestion(o));
 						}
 						callback.onSuccess(sgs);
@@ -110,14 +118,14 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
 		input.addSuggestionListener(new IUpdateListener<ISuggestField.ISource.ISuggestion>() {
 			@Override
 			public void onUpdate(ISuggestion value) {
-				Object o = ((Suggestion) value).o;
+				String o = ((Suggestion) value).o;
 				append(o);
 			}
 		});
 		input.addKeyListener(new IClickListener() {
 			@Override
 			public void onClick() {
-				Object create = adapter.create(input.text());
+				String create = adapter.create(input.text());
 				append(create);
 			}
 		}).enter();
@@ -130,7 +138,7 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
 		}).backspace();
 	}
 
-	private void append(final Object o) {
+	private void append(final String o) {
 		input.text("");
 		if (o == null)
 			return;
@@ -155,15 +163,14 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget<Object> {
 		StringBuilder b = new StringBuilder();
 		for (Entry token : tokens) {
 			if (b.length() > 0)
-				b.append(";");
-			b.append(adapter.id(token.o));
+				b.append(SEPARATOR);
+			b.append(token.o);
 		}
 		textArea.text(b.toString());
 	}
 
 	@Override
-	public IMultiSelectionWidget<Object> adapter(
-			IMultiSelectionAdapter<Object> adapter) {
+	public IMultiSelectionWidget adapter(IMultiSelectionAdapter adapter) {
 		this.adapter = adapter;
 		return this;
 	}

@@ -43,10 +43,9 @@ class MultiSelectionWidgetTest {
 
 	private void run(IDisplay display) {
 		Display.instance().register(new MultiSelectionWidgetImplProvider());
-		@SuppressWarnings("unchecked")
-		IMultiSelectionWidget<String> widget = Display.instance().container()
+		IMultiSelectionWidget widget = Display.instance().container()
 				.widget(IMultiSelectionWidget.class);
-		widget.adapter(new IMultiSelectionAdapter<String>() {
+		widget.adapter(new IMultiSelectionAdapter() {
 
 			@Override
 			public void query(String text, ICallback<List<String>> cb) {
@@ -71,10 +70,6 @@ class MultiSelectionWidgetTest {
 				return "email:" + text;
 			}
 
-			@Override
-			public String id(String object) {
-				return object;
-			}
 		});
 		display.fullscreen().visible(true);
 	}
