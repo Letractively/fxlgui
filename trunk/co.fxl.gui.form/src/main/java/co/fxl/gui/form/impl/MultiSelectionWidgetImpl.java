@@ -84,6 +84,12 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 
 	MultiSelectionWidgetImpl(IContainer container) {
 		panel = container.panel().flow().spacing(2);
+		panel.addClickListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				input.focus(true);
+			}
+		});
 		textArea = panel.add().textArea().visible(false);
 		Heights.INSTANCE.decorate(panel);
 		Heights.INSTANCE.styleInputBorder(panel).width(1).style().rounded()
