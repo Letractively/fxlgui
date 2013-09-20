@@ -45,4 +45,6 @@ public interface ISuggestField extends ITextInputElement<ISuggestField>,
 
 	ISuggestField requestOnFocus(boolean requestOnFocus);
 
+	ISuggestField outline(boolean outline);
+
 }

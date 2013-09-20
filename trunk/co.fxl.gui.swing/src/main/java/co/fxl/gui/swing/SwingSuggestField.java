@@ -155,4 +155,9 @@ class SwingSuggestField extends SwingTextInput<JTextField, ISuggestField>
 		return this;
 	}
 
+	@Override
+	public ISuggestField outline(boolean outline) {
+		return this;
+	}
+
 }
