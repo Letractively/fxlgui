@@ -21,6 +21,7 @@ package co.fxl.gui.form.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IContainer;
@@ -92,8 +93,9 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		});
 		textArea = panel.add().textArea().visible(false);
 		Heights.INSTANCE.decorate(panel);
-		Heights.INSTANCE.styleInputBorder(panel).width(1).style().rounded()
-				.width(3);
+		IBorder border = panel.border().width(1);
+		border.color().rgb(211, 211, 211);
+		border.style().rounded().width(3);
 		input = panel.add().suggestField().width(100).autoSelect(true)
 				.requestOnFocus(true).outline(false);
 		textArea.addUpdateListener(new IUpdateListener<String>() {
