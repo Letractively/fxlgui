@@ -70,6 +70,11 @@ class MultiSelectionWidgetTest {
 			public String create(String text) {
 				return "email:" + text;
 			}
+
+			@Override
+			public String id(String object) {
+				return object;
+			}
 		});
 		display.fullscreen().visible(true);
 	}

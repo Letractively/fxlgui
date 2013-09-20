@@ -21,10 +21,13 @@ package co.fxl.gui.form.api;
 import java.util.List;
 
 import co.fxl.gui.api.ICallback;
+import co.fxl.gui.api.ITextArea;
 
 public interface IMultiSelectionWidget<T> {
 
 	public interface IMultiSelectionAdapter<T> {
+
+		String id(T object);
 
 		String icon(T object);
 
@@ -36,5 +39,7 @@ public interface IMultiSelectionWidget<T> {
 	}
 
 	IMultiSelectionWidget<T> adapter(IMultiSelectionAdapter<T> adapter);
+
+	ITextArea invisibleTextArea();
 
 }
