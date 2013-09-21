@@ -127,8 +127,8 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 	}
 
 	private void showDialog(String string) {
-		PopUp.showDialog().title("Change Password Error")
-				.message(string).error().visible(true)
+		PopUp.showDialog().title("Change Password Error").message(string)
+				.error().visible(true)
 				.addVisibleListener(new IUpdateListener<Boolean>() {
 					@Override
 					public void onUpdate(Boolean value) {
@@ -141,7 +141,8 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 	}
 
 	private void clear() {
-		currentPassword.text("");
+		if (currentPassword != null)
+			currentPassword.text("");
 		newPassword.text("");
 		confirmPassword.text("");
 	}
