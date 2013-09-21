@@ -99,6 +99,7 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		border.width(1);
 		input = panel.add().suggestField().width(100).autoSelect(true)
 				.requestOnFocus(true).outline(false);
+		input.color().gray(249);
 		textArea.addUpdateListener(new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(String value) {
