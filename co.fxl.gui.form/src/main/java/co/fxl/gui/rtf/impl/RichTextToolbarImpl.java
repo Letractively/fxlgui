@@ -131,7 +131,7 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 							@Override
 							public void onClick() {
 								p.popUp.visible(false);
-								htmlArea.insertHTML("${" + v + "}");
+								htmlArea.insertHTML("{" + v + "}");
 							}
 						});
 			p.popUp.modal(false).autoHide(true).visible(true);
