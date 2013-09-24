@@ -575,6 +575,8 @@ public class Validation {
 			linkInput((IComboBox) valueElement, status);
 		else if (valueElement instanceof ITextField)
 			linkInput((ITextField) valueElement, status);
+		else if (valueElement instanceof ISuggestField)
+			linkInput((ISuggestField) valueElement, status);
 		else
 			throw new UnsupportedOperationException(valueElement.getClass()
 					.getName());
