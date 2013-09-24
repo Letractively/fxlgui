@@ -576,7 +576,8 @@ public class Validation {
 		else if (valueElement instanceof ITextField)
 			linkInput((ITextField) valueElement, status);
 		else
-			throw new UnsupportedOperationException();
+			throw new UnsupportedOperationException(valueElement.getClass()
+					.getName());
 	}
 
 	public void validate(Object valueElement, boolean required,
