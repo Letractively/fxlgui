@@ -885,30 +885,32 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			updateSingleContentRow(grid, r, index);
 		}
 		grid.visible(true);
-		if (addDragAndDropDirectly && ADD_DRAG_AND_DROP
-				&& dragDropListener != null) {
-			new DragAndDropGridAdapter(this);
-		}
-		if (sp != null)
-			grid.addMouseWheelListener(new IMouseWheelListener() {
+		if (!isCalibration) {
+			if (addDragAndDropDirectly && ADD_DRAG_AND_DROP
+					&& dragDropListener != null) {
+				new DragAndDropGridAdapter(this);
+			}
+			if (sp != null)
+				grid.addMouseWheelListener(new IMouseWheelListener() {
 
-				@Override
-				public void onUp(int turns) {
-					sp.onUp(turns);
-				}
+					@Override
+					public void onUp(int turns) {
+						sp.onUp(turns);
+					}
 
-				@Override
-				public void onDown(int turns) {
-					sp.onDown(turns);
-				}
-			});
-		if (addClickListeners) {
-			int current = 0;
-			for (ScrollTableColumnImpl c : columns)
-				if (!c.clickListeners.isEmpty() && c.visible)
-					grid.labelMouseListener(current++, this);
+					@Override
+					public void onDown(int turns) {
+						sp.onDown(turns);
+					}
+				});
+			if (addClickListeners) {
+				int current = 0;
+				for (ScrollTableColumnImpl c : columns)
+					if (!c.clickListeners.isEmpty() && c.visible)
+						grid.labelMouseListener(current++, this);
+			}
+			grid.element().tooltip(tooltip);
 		}
-		grid.element().tooltip(tooltip);
 		if (lastGrid != null)
 			lastGrid.remove();
 		for (int r = 0; r < paintedRows; r++) {
@@ -925,14 +927,15 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		if (allowColumnSelection) {
 			addColumnSelection();
 		}
-		for (ITableClickListener l : listeners.keySet()) {
-			KeyAdapter<Object> adp = listeners.get(l);
-			@SuppressWarnings("unchecked")
-			IKey<Object> key = (IKey<Object>) grid.addTableListener(l);
-			adp.forward(key);
-		}
+		if (!isCalibration)
+			for (ITableClickListener l : listeners.keySet()) {
+				KeyAdapter<Object> adp = listeners.get(l);
+				@SuppressWarnings("unchecked")
+				IKey<Object> key = (IKey<Object>) grid.addTableListener(l);
+				adp.forward(key);
+			}
 		updating = false;
-		if (hiddenColumnListener != null) {
+		if (!isCalibration && hiddenColumnListener != null) {
 			List<String> hiddenColumns = new LinkedList<String>();
 			for (ScrollTableColumnImpl c : columns)
 				if (!c.visible)
@@ -945,7 +948,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		// Log.instance().error(
 		// "Scroll-Table-Widget: grid-heights are 0: " + h1 + " vs. "
 		// + h2 + ", " + vpanel.visible());
-		if (updateListener != null)
+		if (!isCalibration && updateListener != null)
 			addCellUpdateListener();
 		return h1 < h2;
 	}
@@ -1447,7 +1450,8 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		columnWidths.notifyColumnSelectionChange();
 		if (result != null)
 			rows(result);
-		visible(true);
+		if (!visible)
+			visible(true);
 	}
 
 	@Override
