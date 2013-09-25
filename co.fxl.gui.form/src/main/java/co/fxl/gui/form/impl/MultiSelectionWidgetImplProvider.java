@@ -22,7 +22,6 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.form.api.IMultiSelectionWidget;
 
-@SuppressWarnings("rawtypes")
 public class MultiSelectionWidgetImplProvider implements
 		IWidgetProvider<IMultiSelectionWidget> {
 

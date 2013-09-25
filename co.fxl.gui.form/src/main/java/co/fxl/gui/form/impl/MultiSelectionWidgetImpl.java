@@ -36,7 +36,7 @@ import co.fxl.gui.form.api.IMultiSelectionWidget;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Heights;
 
-class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
+public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 
 	private class Entry implements IClickListener {
 
@@ -72,7 +72,8 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		@Override
 		public String displayText() {
 			return "<span><img style='margin-right:4px' src='"
-					+ adapter.icon(o) + "'/>" + adapter.label(o) + "</span>";
+					+ getImageURL(adapter.icon(o)) + "'/>" + adapter.label(o)
+					+ "</span>";
 		}
 	}
 
@@ -83,7 +84,7 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 	private ITextArea textArea;
 	private boolean ignore;
 
-	MultiSelectionWidgetImpl(IContainer container) {
+	protected MultiSelectionWidgetImpl(IContainer container) {
 		panel = container.panel().flow().spacing(2);
 		panel.addClickListener(new IClickListener() {
 			@Override
@@ -130,24 +131,28 @@ class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		input.addSuggestionListener(new IUpdateListener<ISuggestField.ISource.ISuggestion>() {
 			@Override
 			public void onUpdate(ISuggestion value) {
-				String o = ((Suggestion) value).o;
+				String o = value.insertText();
 				append(o);
 			}
 		});
-		input.addKeyListener(new IClickListener() {
-			@Override
-			public void onClick() {
-				String create = adapter.create(input.text());
-				append(create);
-			}
-		}).enter();
-		input.addKeyListener(new IClickListener() {
-			@Override
-			public void onClick() {
-				if (!tokens.isEmpty() && input.text().length() == 0)
-					tokens.get(tokens.size() - 1).onClick();
-			}
-		}).backspace();
+		// input.addKeyListener(new IClickListener() {
+		// @Override
+		// public void onClick() {
+		// String create = adapter.create(input.text());
+		// append(create);
+		// }
+		// }).enter();
+		// input.addKeyListener(new IClickListener() {
+		// @Override
+		// public void onClick() {
+		// if (!tokens.isEmpty() && input.text().length() == 0)
+		// tokens.get(tokens.size() - 1).onClick();
+		// }
+		// }).backspace();
+	}
+
+	protected String getImageURL(String icon) {
+		return icon;
 	}
 
 	private void append(final String o) {
