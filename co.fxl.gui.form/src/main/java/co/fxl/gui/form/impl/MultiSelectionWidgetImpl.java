@@ -34,6 +34,7 @@ import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.form.api.IMultiSelectionWidget;
 import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Heights;
 
 public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
@@ -176,8 +177,17 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		hp.add().label().text(text);
 		hp.add().image().resource("cancel.png").addClickListener(e);
 		panel.add().element(input);
+		update();
+	}
+
+	private void update() {
 		notifyTextArea();
-		input.focus(true);
+		Display.instance().invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				input.focus(true);
+			}
+		});
 	}
 
 	private String image(final String o) {
