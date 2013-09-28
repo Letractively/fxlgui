@@ -52,6 +52,8 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		public void onClick() {
 			tokens.remove(this);
 			hp.remove();
+			notifyTextArea();
+			input.focus(true);
 		}
 
 	}
@@ -66,7 +68,7 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 
 		@Override
 		public String insertText() {
-			return adapter.icon(o) + ":" + adapter.label(o);
+			return o;
 		}
 
 		@Override
