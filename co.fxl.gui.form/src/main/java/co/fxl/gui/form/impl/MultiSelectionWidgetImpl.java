@@ -164,16 +164,18 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		input.text("");
 		if (o == null)
 			return;
+		String label = adapter.label(o);
+		if (label.equals(""))
+			return;
 		input.remove();
 		final IHorizontalPanel hp = panel.add().panel().horizontal().spacing(4);
 		final Entry e = new Entry(hp, o);
 		tokens.add(e);
 		IBorder border = hp.border();
-		border.width(1).style().rounded();
-		border.color().gray();
-		hp.color().gray(248);
+		border.style().rounded();
+		border.width(1).color().lightgray();
+		hp.color().rgb(24, 243, 243);
 		hp.add().image().resource(adapter.icon(o));
-		String label = adapter.label(o);
 		String text = label.length() < 32 ? label : label.substring(0, 28)
 				+ "...";
 		hp.add().label().text(text);
