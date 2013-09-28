@@ -71,9 +71,8 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 
 		@Override
 		public String displayText() {
-			return "<span><img style='margin-right:4px' src='"
-					+ getImageURL(adapter.icon(o)) + "'/>" + adapter.label(o)
-					+ "</span>";
+			return "<span><img style='margin-right:4px' src='" + image(o)
+					+ "'/>" + adapter.label(o) + "</span>";
 		}
 	}
 
@@ -93,7 +92,7 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 			}
 		});
 		textArea = panel.add().textArea().visible(false);
-		Heights.INSTANCE.decorate(panel);
+		Heights.INSTANCE.styleColor(panel);
 		IBorder border = panel.border().width(1);
 		border.color().rgb(211, 211, 211);
 		border.style().rounded().width(3);
@@ -135,20 +134,23 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 				append(o);
 			}
 		});
-		// input.addKeyListener(new IClickListener() {
-		// @Override
-		// public void onClick() {
-		// String create = adapter.create(input.text());
-		// append(create);
-		// }
-		// }).enter();
-		// input.addKeyListener(new IClickListener() {
-		// @Override
-		// public void onClick() {
-		// if (!tokens.isEmpty() && input.text().length() == 0)
-		// tokens.get(tokens.size() - 1).onClick();
-		// }
-		// }).backspace();
+		addKeyListeners(input, new IClickListener() {
+			@Override
+			public void onClick() {
+				String create = adapter.create(input.text());
+				append(create);
+			}
+		}, new IClickListener() {
+			@Override
+			public void onClick() {
+				if (!tokens.isEmpty() && input.text().length() == 0)
+					tokens.get(tokens.size() - 1).onClick();
+			}
+		});
+	}
+
+	protected void addKeyListeners(ISuggestField input, IClickListener cr,
+			IClickListener backspace) {
 	}
 
 	protected String getImageURL(String icon) {
@@ -174,6 +176,10 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		panel.add().element(input);
 		notifyTextArea();
 		input.focus(true);
+	}
+
+	private String image(final String o) {
+		return getImageURL(adapter.icon(o));
 	}
 
 	private void notifyTextArea() {
