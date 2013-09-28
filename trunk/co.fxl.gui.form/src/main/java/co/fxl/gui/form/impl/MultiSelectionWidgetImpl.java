@@ -111,6 +111,8 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 					}
 			}
 		});
+		input.padding().bottom(0);
+		input.margin().bottom(4);
 		input.border().remove();
 		input.source(new ISource() {
 			@Override
@@ -167,7 +169,7 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		if (label.equals(""))
 			return;
 		input.remove();
-		final IHorizontalPanel hp = panel.add().panel().horizontal().spacing(4);
+		final IHorizontalPanel hp = panel.add().panel().horizontal().spacing(2);
 		final Entry e = new Entry(hp, o);
 		tokens.add(e);
 		IBorder border = hp.border();
