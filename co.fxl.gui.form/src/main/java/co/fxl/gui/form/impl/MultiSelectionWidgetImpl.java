@@ -35,7 +35,6 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.form.api.IMultiSelectionWidget;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Display;
-import co.fxl.gui.impl.Heights;
 
 public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 
@@ -95,7 +94,7 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 			}
 		});
 		textArea = panel.add().textArea().visible(false);
-		Heights.INSTANCE.styleColor(panel);
+		panel.color().gray(253);
 		IBorder border = panel.border().width(1);
 		border.color().rgb(211, 211, 211);
 		border.style().rounded().width(3);
@@ -174,7 +173,7 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		IBorder border = hp.border();
 		border.style().rounded();
 		border.width(1).color().lightgray();
-		hp.color().rgb(24, 243, 243);
+		hp.color().rgb(230, 230, 230);
 		hp.add().image().resource(adapter.icon(o));
 		String text = label.length() < 32 ? label : label.substring(0, 28)
 				+ "...";
