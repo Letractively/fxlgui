@@ -168,7 +168,9 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		final IHorizontalPanel hp = panel.add().panel().horizontal().spacing(4);
 		final Entry e = new Entry(hp, o);
 		tokens.add(e);
-		hp.border().style().rounded();
+		IBorder border = hp.border();
+		border.width(1).style().rounded();
+		border.color().gray();
 		hp.color().gray(248);
 		hp.add().image().resource(adapter.icon(o));
 		String label = adapter.label(o);
