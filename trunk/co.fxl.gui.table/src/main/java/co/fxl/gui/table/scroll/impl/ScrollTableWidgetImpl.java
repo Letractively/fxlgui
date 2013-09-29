@@ -160,7 +160,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private IContainer c0;
 	private boolean addBorders;
 	private boolean updating = false;
-	private Map<ITableClickListener, KeyAdapter<Object>> listeners = new HashMap<ITableClickListener, KeyAdapter<Object>>();
+	Map<ITableClickListener, KeyAdapter<Object>> listeners = new HashMap<ITableClickListener, KeyAdapter<Object>>();
 	boolean selectionIsSetup = false;
 	private ILazyScrollPane sp;
 	private ISortListener sortListener;
