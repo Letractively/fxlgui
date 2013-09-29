@@ -1277,7 +1277,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			grid.element().tooltip(tooltip);
 		return this;
 	}
-
+	
 	@Override
 	public IScrollTableWidget<Object> sortListener(
 			co.fxl.gui.table.scroll.api.IScrollTableWidget.ISortListener l) {
