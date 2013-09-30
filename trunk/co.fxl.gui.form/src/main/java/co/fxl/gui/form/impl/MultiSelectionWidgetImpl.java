@@ -221,4 +221,9 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 	public ITextArea invisibleTextArea() {
 		return textArea;
 	}
+
+	@Override
+	public ISuggestField suggestField() {
+		return input;
+	}
 }
