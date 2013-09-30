@@ -155,7 +155,7 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 		for (int i = panels.size() - 1; i >= index; i--) {
 			Row removed = panels.remove(index);
 			removed.grid.remove();
-			toReAdd.add(0, removed);
+			toReAdd.add(removed);
 		}
 		getGridPanel(index).width(1.0);
 		for (Row g : toReAdd) {
