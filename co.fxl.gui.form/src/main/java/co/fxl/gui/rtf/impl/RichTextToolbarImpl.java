@@ -58,14 +58,12 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 		private String[] values;
 		private String title;
 		private ILabel label;
-		private IHorizontalPanel labelPanel;
 
 		@Override
 		public ITokenButton title(String title) {
 			this.title = title;
-			labelPanel = panel.add().panel().horizontal();
-			labelPanel.padding().left(3).right(3).top(1).bottom(2);
-			label = labelPanel.add().label().text(title);
+			label = panel.add().label().text(title);
+			label.padding().left(3).right(3).top(1).bottom(2);
 			if (IE_STANDARD)
 				label.margin().top(4);
 			label.addClickListener(new IClickListener() {
@@ -77,13 +75,13 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 					htmlArea.notifyChange();
 				}
 			});
-			labelPanel.border().color().white();
+			label.border().color().white();
 			label.addMouseOverListener(new IMouseOverListener() {
 
 				@Override
 				public void onMouseOver() {
 					if (editable)
-						labelPanel.border().color().rgb(219, 180, 104);
+						label.border().color().rgb(219, 180, 104);
 				}
 
 				@Override
@@ -98,12 +96,12 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 		@Override
 		void editable(boolean editable) {
 			this.editable = editable;
-			labelPanel.visible(editable);
+			label.visible(editable);
 		}
 
 		@Override
 		void update() {
-			labelPanel.border().color().white();
+			label.border().color().white();
 		}
 
 		@Override
@@ -122,8 +120,8 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 			final TransparentPopUp p = PopUp
 					.showClosablePopUp(true, null, true);
 			p.panel.padding(10);
-			int y = labelPanel.offsetY() + labelPanel.height();
-			p.popUp.offset(labelPanel.offsetX() - 4, y);
+			int y = label.offsetY() + label.height();
+			p.popUp.offset(label.offsetX() - 4, y);
 			IVerticalPanel holder = p.panel.add().panel().vertical();
 			for (final String v : values)
 				holder.add().label().text(v).hyperlink()

@@ -18,6 +18,8 @@
  */
 package co.fxl.gui.api;
 
+import co.fxl.gui.api.IBordered.IBorder;
+
 public interface ILabel extends IClickable<ILabel>, ITextElement<ILabel>,
 		IMouseOverElement<ILabel>, IDraggable<ILabel>, IDropTarget<ILabel> {
 
@@ -28,5 +30,7 @@ public interface ILabel extends IClickable<ILabel>, ITextElement<ILabel>,
 	ILabel hyperlink();
 
 	ILabel breakWord(boolean breakWord);
+
+	IBorder border();
 
 }
