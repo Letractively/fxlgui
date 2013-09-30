@@ -21,6 +21,7 @@ package co.fxl.gui.form.api;
 import java.util.List;
 
 import co.fxl.gui.api.ICallback;
+import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextArea;
 
 public interface IMultiSelectionWidget {
@@ -41,5 +42,7 @@ public interface IMultiSelectionWidget {
 	IMultiSelectionWidget adapter(IMultiSelectionAdapter adapter);
 
 	ITextArea invisibleTextArea();
+
+	ISuggestField suggestField();
 
 }

@@ -99,6 +99,7 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();
 	private ISource source;
 	private boolean requestOnFocus = false;
+	private boolean deactivatedFocus;
 
 	GWTSuggestField(final GWTContainer<SuggestBox> container) {
 		super(container);
@@ -115,8 +116,9 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 		((HasFocus) container.widget).addFocusListener(new FocusListener() {
 			@Override
 			public void onFocus(Widget sender) {
-				if (requestOnFocus)
+				if (requestOnFocus || deactivatedFocus)
 					container.widget.showSuggestionList();
+				deactivatedFocus = false;
 			}
 
 			@Override
@@ -126,6 +128,15 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 		// defaultFont();
 		// oracle = (MultiWordSuggestOracle) ((SuggestBox) container.widget)
 		// .getSuggestOracle();
+	}
+
+	@Override
+	public ISuggestField focus(final boolean focus) {
+		if (!focus) {
+			deactivatedFocus = true;
+			container.widget.hideSuggestionList();
+		}
+		return super.focus(focus);
 	}
 
 	@Override

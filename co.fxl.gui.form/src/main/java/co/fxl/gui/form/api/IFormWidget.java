@@ -30,6 +30,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.IResizable;
+import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
@@ -40,6 +41,8 @@ import co.fxl.gui.rtf.api.IHTMLArea;
 public interface IFormWidget extends IResizable<IFormWidget> {
 
 	public interface IInputElementFactory {
+
+		ISuggestField suggestField();
 
 		<T> T create(IContainer c, Object node);
 	}
