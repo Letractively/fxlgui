@@ -47,6 +47,15 @@ class LogImpl implements ILog, IClickListener {
 			return debug(message + " executed", System.currentTimeMillis()
 					- start);
 		}
+
+		@Override
+		public ILog stop(int threshold) {
+			stopped = true;
+			long duration = System.currentTimeMillis() - start;
+			if (duration > threshold)
+				debug(message + " executed", duration);
+			return LogImpl.this;
+		}
 	}
 
 	private static final String WARNING = "WARNING";
@@ -154,8 +163,9 @@ class LogImpl implements ILog, IClickListener {
 	@Override
 	public void onClick() {
 		PopUp.closeAll();
-		final IPopUp popUp = PopUp.showClosablePopUp().modal(true).glass(!Style.instance().embedded())
-				.offset(SPACING, SPACING).autoHide(false);
+		final IPopUp popUp = PopUp.showClosablePopUp().modal(true)
+				.glass(!Style.instance().embedded()).offset(SPACING, SPACING)
+				.autoHide(false);
 		popUp.border().remove().style().shadow().color().black();
 		IContainer container = Style.instance().window().logPanel(popUp);
 		WidgetTitle panel = new WidgetTitle(container).spacing(0)
