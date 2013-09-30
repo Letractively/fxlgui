@@ -8,6 +8,8 @@ public interface ILog {
 	public interface IMeasurement {
 
 		ILog stop();
+
+		ILog stop(int threshold);
 	}
 
 	public interface IDeobfuscator {
