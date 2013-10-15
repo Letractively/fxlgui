@@ -55,7 +55,7 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 
 	private class TokenButtonImpl extends ToolbarButton implements ITokenButton {
 
-		private String[] values;
+		private IValues values;
 		private String title;
 		private ILabel label;
 
@@ -105,7 +105,7 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 		}
 
 		@Override
-		public ITokenButton values(String... values) {
+		public ITokenButton values(IValues values) {
 			this.values = values;
 			return this;
 		}
@@ -123,7 +123,7 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 			int y = label.offsetY() + label.height();
 			p.popUp.offset(label.offsetX() - 4, y);
 			IVerticalPanel holder = p.panel.add().panel().vertical();
-			for (final String v : values)
+			for (final String v : values.get())
 				holder.add().label().text(v).hyperlink()
 						.addClickListener(new IClickListener() {
 							@Override
