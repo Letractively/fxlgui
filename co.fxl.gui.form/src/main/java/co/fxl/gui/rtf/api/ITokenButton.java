@@ -20,8 +20,13 @@ package co.fxl.gui.rtf.api;
 
 public interface ITokenButton {
 
+	public interface IValues {
+
+		String[] get();
+	}
+
 	ITokenButton title(String title);
 
-	ITokenButton values(String... values);
+	ITokenButton values(IValues values);
 
 }
