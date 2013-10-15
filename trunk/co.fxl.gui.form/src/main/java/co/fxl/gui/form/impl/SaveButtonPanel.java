@@ -32,16 +32,18 @@ class SaveButtonPanel implements IClickable<Object> {
 		private final IHorizontalPanel subPanel;
 		private boolean isAndBack;
 		private StylishButton sButton;
+		private int inc;
 
 		private ClickListener(FormWidgetImpl widget,
 				CancelButtonPanel cancelButtonElement,
 				IHorizontalPanel subPanel, boolean isAndBack,
-				StylishButton sButton) {
+				StylishButton sButton, int inc) {
 			this.widget = widget;
 			this.cancelButtonElement = cancelButtonElement;
 			this.subPanel = subPanel;
 			this.isAndBack = isAndBack;
 			this.sButton = sButton;
+			this.inc = inc;
 		}
 
 		@Override
@@ -51,7 +53,7 @@ class SaveButtonPanel implements IClickable<Object> {
 			int v = (iElement.width() - 16) / 2;
 			iElement.clear();
 			iElement.add().image().resource("saving.gif").margin().left(v)
-					.right(v + (iElement.width() % 2)).top(h).bottom(h);
+					.right(v + inc + (iElement.width() % 2)).top(h).bottom(h);
 			widget.saveListener.save(isAndBack,
 					new CallbackTemplate<Boolean>() {
 
@@ -94,7 +96,7 @@ class SaveButtonPanel implements IClickable<Object> {
 			saveAndBackButton.panel().margin().top(-1).bottom(-1);
 			saveAndBackButton.blue(1);
 			saveAndBackClickListener = new ClickListener(widget,
-					cancelButtonElement, subPanel, true, saveAndBackButton);
+					cancelButtonElement, subPanel, true, saveAndBackButton, 1);
 			saveAndBackButton.addClickListener(saveAndBackClickListener);
 			subPanel.addSpace(8);
 		}
@@ -103,7 +105,7 @@ class SaveButtonPanel implements IClickable<Object> {
 		saveButton.panel().margin().top(-1).bottom(-1);
 		saveButton.blue(2);
 		saveClickListener = new ClickListener(widget, cancelButtonElement,
-				subPanel, false, saveButton);
+				subPanel, false, saveButton, 0);
 		saveButton.addClickListener(saveClickListener);
 	}
 
