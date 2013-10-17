@@ -600,7 +600,8 @@ public class Validation {
 							required);
 				} else
 					validateDate((ITextField) valueElement, required);
-			} else if (type.clazz.equals(Integer.class)) {
+			} else if (type.clazz.equals(Integer.class)
+					|| type.clazz.equals(Long.class)) {
 				validateLong((ITextField) valueElement, required);
 			} else {
 				linkInput((ITextField) valueElement, required);
