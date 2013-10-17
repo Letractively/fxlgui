@@ -79,6 +79,10 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 		return h < size.minHeight ? size.minHeight : h;
 	}
 
+	public final void resize() {
+		recursiveResize(rwidth(), rheight());
+	}
+
 	@Override
 	public IResizableWidget setResizableWidget(IResizableWidget widget,
 			String id) {
