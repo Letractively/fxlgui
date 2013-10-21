@@ -20,6 +20,11 @@ package co.fxl.gui.impl;
 
 public class Icons {
 
+	public interface IIconProvider {
+
+		boolean useDefaultImage(String resource);
+	}
+
 	public static String DETAIL = "detail.png";
 	public static String NAVIGATION_BACK = "arrow_back.png";
 	public static String NAVIGATION_FORWARD = "arrow_forward.png";
@@ -29,4 +34,11 @@ public class Icons {
 	public static String SKIP = "skip.png";
 	public static String CANCEL = "cancel.png";
 	public static String LINK = "link.png";
+
+	public static IIconProvider ICON_PROVIDER = new IIconProvider() {
+		@Override
+		public boolean useDefaultImage(String resource) {
+			return false;
+		}
+	};
 }

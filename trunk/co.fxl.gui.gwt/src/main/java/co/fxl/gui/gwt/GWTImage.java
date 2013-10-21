@@ -23,6 +23,7 @@ import java.util.Map;
 
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.impl.Constants;
+import co.fxl.gui.impl.Icons.IIconProvider;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ImageResource;
@@ -138,5 +139,14 @@ public class GWTImage extends GWTElement<Image, IImage> implements IImage {
 
 	public static String getImagePath() {
 		return GWT.getModuleBaseURL() + IMAGES;
+	}
+
+	public static IIconProvider iconProvider() {
+		return new IIconProvider() {
+			@Override
+			public boolean useDefaultImage(String resource) {
+				return !map.containsKey(resource);
+			}
+		};
 	}
 }
