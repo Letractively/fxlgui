@@ -328,7 +328,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 						removeRegistrations();
 						resetLabel();
 						stopLoading(cachingActive);
-						checkResize();
+//						checkResize();
 						flipPage.revert();
 						cached = null;
 						super.onFail(t);
