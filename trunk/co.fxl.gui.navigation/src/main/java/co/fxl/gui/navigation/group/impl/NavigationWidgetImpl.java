@@ -262,6 +262,7 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			moreGroup = new NavigationGroupImpl(this, masterPanel)
 					.visible(false);
 			moreItem = (NavigationItemImpl) moreGroup.addTab().moreTab();
+			moreItem.disregardLazyClick = true;
 			moreItem.decorator(new TabDecoratorTemplate() {
 				@Override
 				public void refresh(ICallback<Void> cb) {

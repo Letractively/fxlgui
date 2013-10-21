@@ -77,6 +77,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 	private IVerticalPanel cached;
 	private int lastWidth;
 	private int lastHeight;
+	protected boolean disregardLazyClick;
 
 	NavigationItemImpl(NavigationGroupImpl group) {
 		this.group = group;
@@ -99,6 +100,15 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 			new HyperlinkMouseOverListener(button);
 			button.font().pixel(14).weight().bold();
 			LazyClickListener clickListener = new LazyClickListener() {
+
+				@Override
+				public void onClick() {
+					if (disregardLazyClick)
+						onAllowedClick();
+					else
+						super.onClick();
+				}
+
 				@Override
 				protected void onAllowedClick() {
 					if (buttonPanel.clickable())
@@ -328,7 +338,7 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 						removeRegistrations();
 						resetLabel();
 						stopLoading(cachingActive);
-//						checkResize();
+						// checkResize();
 						flipPage.revert();
 						cached = null;
 						super.onFail(t);
