@@ -501,7 +501,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 				new UserPanelImageButton(panel, "help", "Help", true, 300, 1) {
 					@Override
 					void decorate(IVerticalPanel p) {
-						String productName = "<b>" + pn + "</b>";
+						String productName = pn;
 						p.spacing().left(12).top(12).right(12).bottom(12)
 								.inner(12);
 						addButton(p, "support.png", productName + " Support",
