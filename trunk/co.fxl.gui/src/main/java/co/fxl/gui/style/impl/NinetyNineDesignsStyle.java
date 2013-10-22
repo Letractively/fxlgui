@@ -322,12 +322,12 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 
 		private UserPanelImageButton(IPanel<?> panel, String image,
 				String label, boolean hasPopUp) {
-			this(panel, image, label, hasPopUp, 200);
+			this(panel, image, label, hasPopUp, 200, 4);
 		}
 
 		private UserPanelImageButton(IPanel<?> panel, String image,
-				String label, boolean hasPopUp, int w) {
-			button = new ImageButton(panel.add());
+				String label, boolean hasPopUp, int w, int s) {
+			button = new ImageButton(panel.add(), s);
 			button.imageResource(image + ".png").text(label);
 			button.label().font().pixel(fontSize()).weight().bold().color()
 					.white();
@@ -498,7 +498,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 			@Override
 			public void helpButton(IPanel<?> panel, final String productName,
 					final String supportPage, final String overviewPage) {
-				new UserPanelImageButton(panel, "help", "Help", true, 300) {
+				new UserPanelImageButton(panel, "help", "Help", true, 300, 1) {
 					@Override
 					void decorate(IVerticalPanel p) {
 						p.spacing().left(12).top(12).right(12).bottom(12)
