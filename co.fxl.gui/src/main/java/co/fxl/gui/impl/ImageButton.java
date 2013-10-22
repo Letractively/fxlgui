@@ -48,9 +48,13 @@ public class ImageButton implements ButtonAdp,
 	private boolean showAlways;
 
 	public ImageButton(IContainer c) {
+		this(c, SPACE);
+	}
+
+	public ImageButton(IContainer c, int space) {
 		this.panel = c.panel().horizontal();
 		this.image = panel.add().image().size(16, 16);
-		this.label = panel.addSpace(SPACE).add().label();
+		this.label = panel.addSpace(space).add().label();
 		clickable(true);
 	}
 
