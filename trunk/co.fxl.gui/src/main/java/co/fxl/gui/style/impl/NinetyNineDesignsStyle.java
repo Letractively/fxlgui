@@ -541,7 +541,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 								cl.onClick();
 							}
 						});
-						new HyperlinkMouseOverListener(text.label());
+						text.label().hyperlink();
 					}
 				};
 			}
