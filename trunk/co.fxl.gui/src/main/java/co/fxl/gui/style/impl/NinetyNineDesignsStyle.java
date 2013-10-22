@@ -310,7 +310,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 		};
 	}
 
-	private abstract class UserPanelImageButton implements IClickListener,
+	private class UserPanelImageButton implements IClickListener,
 			IMouseOverListener, IClickable<UserPanelImageButton> {
 
 		private final IImage more;
@@ -318,9 +318,15 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 		private boolean scheduledClose;
 		private ImageButton button;
 		private boolean scheduledOpen;
+		private double width;
 
 		private UserPanelImageButton(IPanel<?> panel, String image,
 				String label, boolean hasPopUp) {
+			this(panel, image, label, hasPopUp, 200);
+		}
+
+		private UserPanelImageButton(IPanel<?> panel, String image,
+				String label, boolean hasPopUp, int w) {
 			button = new ImageButton(panel.add());
 			button.imageResource(image + ".png").text(label);
 			button.label().font().pixel(fontSize()).weight().bold().color()
@@ -335,6 +341,11 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 				more.addMouseOverListener(this);
 			} else
 				more.visible(false);
+			width = w;
+		}
+
+		void decorate(IVerticalPanel panel) {
+			throw new UnsupportedOperationException();
 		}
 
 		public IClickable<?> tooltip(String string) {
@@ -393,7 +404,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 				return;
 			popUp = PopUp.showPopUp(true).autoHide(true);
 			// if (!Env.is(Env.SAFARI))
-			popUp.width(200);
+			popUp.width(width);
 			popUp.addVisibleListener(new IUpdateListener<Boolean>() {
 				@Override
 				public void onUpdate(Boolean value) {
@@ -415,7 +426,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 			popUp.border().color().gray(190);
 			IFocusPanel focus = popUp.container().panel().focus();
 			// if (SAFARI)
-			focus.width(200);
+			focus.width(width);
 			focus.addMouseOverListener(new IMouseOverListener() {
 
 				@Override
@@ -430,7 +441,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 			});
 			IVerticalPanel p = focus.add().panel().vertical();
 			// if (SAFARI)
-			p.width(200);
+			p.width(width);
 			decorate(p);
 			if (SWING)
 				setOffset(p);
@@ -447,8 +458,6 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 		void closePopUp() {
 			popUp.visible(false);
 		}
-
-		abstract void decorate(IVerticalPanel panel);
 
 		@Override
 		public UserPanelImageButton clickable(boolean clickable) {
@@ -484,6 +493,57 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 				ImageButton ib = new ImageButton(panel.add());
 				ib.label().hyperlink();
 				return ib.imageResource("user.png").text("My Profile");
+			}
+
+			@Override
+			public void helpButton(IPanel<?> panel, final String productName,
+					final String supportPage, final String overviewPage) {
+				new UserPanelImageButton(panel, "help", "Help", true, 300) {
+					@Override
+					void decorate(IVerticalPanel p) {
+						p.spacing().left(12).top(12).right(12).bottom(12)
+								.inner(8);
+						addButton(p, "support.png", productName + " Support",
+								new IClickListener() {
+									@Override
+									public void onClick() {
+										Display.instance().showWebsite()
+												.uRI("http://" + supportPage);
+									}
+								});
+						addButton(p, "html.png", productName + " on the web",
+								new IClickListener() {
+									@Override
+									public void onClick() {
+										Display.instance().showWebsite()
+												.uRI("http://" + overviewPage);
+									}
+								});
+						p.addSpace(4).add().line().color().lightgray();
+						p.addSpace(4);
+						addButton(p, "info.png", "About " + productName,
+								new IClickListener() {
+									@Override
+									public void onClick() {
+										throw new UnsupportedOperationException();
+									}
+								});
+					}
+
+					private void addButton(IVerticalPanel p, String image,
+							String label, final IClickListener cl) {
+						ImageButton text = new ImageButton(p.add());
+						text.imageResource(image).text(label);
+						text.addClickListener(new LazyClickListener() {
+							@Override
+							protected void onAllowedClick() {
+								closePopUp();
+								cl.onClick();
+							}
+						});
+						new HyperlinkMouseOverListener(text.label());
+					}
+				};
 			}
 
 			@Override

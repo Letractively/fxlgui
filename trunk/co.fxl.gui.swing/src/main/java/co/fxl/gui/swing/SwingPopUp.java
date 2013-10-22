@@ -259,7 +259,8 @@ class SwingPopUp implements IPopUp, ComponentParent {
 
 	@Override
 	public IPopUp width(double width) {
-		throw new UnsupportedOperationException();
+		// TODO SWING-FXL: IMPL: ...
+		return this;
 	}
 
 	@Override

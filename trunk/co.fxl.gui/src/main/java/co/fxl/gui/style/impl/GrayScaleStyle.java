@@ -321,6 +321,13 @@ class GrayScaleStyle extends StyleTemplate {
 			}
 
 			@Override
+			public void helpButton(IPanel<?> panel, String productName,
+					String supportPage, String overviewPage) {
+				// panel.add().label().text("Help").hyperlink();
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
 			public IClickable<?> exitAdminButton(IPanel<?> panel) {
 				ILabel l = panel.add().label().text("Administration");
 				l.font().weight().bold();

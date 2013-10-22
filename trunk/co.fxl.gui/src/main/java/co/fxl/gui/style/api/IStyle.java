@@ -371,6 +371,9 @@ public interface IStyle {
 
 		IClickable<?> traceButton(IContainer c);
 
+		void helpButton(IPanel<?> panel, String productName,
+				String supportPage, String overviewPage);
+
 	}
 
 	public interface IApplicationPanel {

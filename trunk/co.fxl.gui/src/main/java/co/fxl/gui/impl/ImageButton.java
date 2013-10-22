@@ -153,7 +153,8 @@ public class ImageButton implements ButtonAdp,
 	}
 
 	public ImageButton imageResource(String string) {
-		image.resource(string);
+		if (string != null)
+			image.resource(string);
 		return this;
 	}
 
