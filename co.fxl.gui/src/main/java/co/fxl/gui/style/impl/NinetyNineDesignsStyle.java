@@ -318,7 +318,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 		private boolean scheduledClose;
 		private ImageButton button;
 		private boolean scheduledOpen;
-		private double width;
+		private int width;
 
 		private UserPanelImageButton(IPanel<?> panel, String image,
 				String label, boolean hasPopUp) {
