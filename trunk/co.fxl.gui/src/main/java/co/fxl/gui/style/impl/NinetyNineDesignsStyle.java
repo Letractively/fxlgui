@@ -498,7 +498,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 			@Override
 			public void helpButton(IPanel<?> panel, final String pn,
 					final String supportPage, final String overviewPage) {
-				new UserPanelImageButton(panel, "help", "Help", true, 300, 1) {
+				new UserPanelImageButton(panel, "help", "Help", true, 300, 4) {
 					@Override
 					void decorate(IVerticalPanel p) {
 						String productName = pn;
