@@ -496,12 +496,12 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 			}
 
 			@Override
-			public void helpButton(IPanel<?> panel, final String p,
+			public void helpButton(IPanel<?> panel, final String pn,
 					final String supportPage, final String overviewPage) {
 				new UserPanelImageButton(panel, "help", "Help", true, 300, 1) {
 					@Override
 					void decorate(IVerticalPanel p) {
-						String productName = "<b>" + p + "</b>";
+						String productName = "<b>" + pn + "</b>";
 						p.spacing().left(12).top(12).right(12).bottom(12)
 								.inner(12);
 						addButton(p, "support.png", productName + " Support",
@@ -512,7 +512,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 												.uRI("http://" + supportPage);
 									}
 								});
-						addButton(p, "html.png", productName + " on the web",
+						addButton(p, "html.png", productName + " on the Web",
 								new IClickListener() {
 									@Override
 									public void onClick() {
@@ -534,7 +534,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 					private void addButton(IVerticalPanel p, String image,
 							String label, final IClickListener cl) {
 						ImageButton text = new ImageButton(p.add());
-						text.imageResource(image).text(label);
+						text.imageResource(image);
 						text.addClickListener(new LazyClickListener() {
 							@Override
 							protected void onAllowedClick() {
@@ -542,7 +542,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 								cl.onClick();
 							}
 						});
-						text.label().hyperlink();
+						text.label().html(label).hyperlink();
 					}
 				};
 			}
