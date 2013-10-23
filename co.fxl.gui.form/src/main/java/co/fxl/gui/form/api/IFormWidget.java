@@ -45,6 +45,8 @@ public interface IFormWidget extends IResizable<IFormWidget> {
 		ISuggestField suggestField();
 
 		<T> T create(IContainer c, Object node);
+
+		boolean mayChangeSizeOfForm();
 	}
 
 	public interface IFormContainer {
