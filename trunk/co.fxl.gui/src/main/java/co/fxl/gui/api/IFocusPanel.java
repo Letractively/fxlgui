@@ -28,4 +28,6 @@ public interface IFocusPanel extends IPanel<IFocusPanel>,
 	ISpacing spacing();
 
 	IFocusPanel outline(boolean outline);
+
+	IFocusPanel spacing(int spacing);
 }
