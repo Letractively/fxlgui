@@ -20,6 +20,8 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IFrame;
 
+import com.google.gwt.event.dom.client.LoadEvent;
+import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.user.client.ui.Frame;
 
 class GWTFrame extends GWTElement<Frame, IFrame> implements IFrame {
@@ -31,6 +33,17 @@ class GWTFrame extends GWTElement<Frame, IFrame> implements IFrame {
 	@Override
 	public IFrame uRI(String uRI) {
 		container.widget.setUrl(uRI);
+		return this;
+	}
+
+	@Override
+	public IFrame addLoadListener(final ILoadListener l) {
+		container.widget.addLoadHandler(new LoadHandler() {
+			@Override
+			public void onLoad(LoadEvent event) {
+				l.onLoad();
+			}
+		});
 		return this;
 	}
 }
