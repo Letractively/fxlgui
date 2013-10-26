@@ -24,6 +24,7 @@ import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IFrame;
 import co.fxl.gui.api.IHorizontalLine;
 import co.fxl.gui.api.IHyperlink;
 import co.fxl.gui.api.IImage;
@@ -41,6 +42,7 @@ import co.fxl.gui.api.IWidgetProvider;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.ListBox;
@@ -83,6 +85,12 @@ public class GWTContainer<T extends Widget> implements IContainer {
 	public IButton button() {
 		setComponent((T) new Button());
 		return (IButton) (element = new GWTButton((GWTContainer<Button>) this));
+	}
+
+	@Override
+	public IFrame frame() {
+		setComponent((T) new Frame());
+		return (IFrame) (element = new GWTFrame((GWTContainer<Frame>) this));
 	}
 
 	@Override
@@ -238,12 +246,12 @@ public class GWTContainer<T extends Widget> implements IContainer {
 		return GWTDisplay.instance;
 	}
 
-//	@Override
-//	public IRichTextArea richTextArea() {
-//		setComponent((T) new RichTextArea());
-//		return (IRichTextArea) (element = new GWTRichTextArea(
-//				(GWTContainer<RichTextArea>) this));
-//	}
+	// @Override
+	// public IRichTextArea richTextArea() {
+	// setComponent((T) new RichTextArea());
+	// return (IRichTextArea) (element = new GWTRichTextArea(
+	// (GWTContainer<RichTextArea>) this));
+	// }
 
 	// @SuppressWarnings("hiding")
 	// @Override

@@ -52,6 +52,8 @@ public interface IContainer {
 
 	ISplitPane splitPane();
 
+	IFrame frame();
+
 	IHyperlink hyperlink();
 
 	IElement<?> element(IElement<?> element);
