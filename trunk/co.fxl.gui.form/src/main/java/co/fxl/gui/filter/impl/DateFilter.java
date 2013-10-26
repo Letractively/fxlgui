@@ -20,19 +20,24 @@ package co.fxl.gui.filter.impl;
 
 import java.util.Date;
 
+import co.fxl.data.format.api.IFormat;
 import co.fxl.data.format.impl.Format;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterConstraints.IRange;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
+import co.fxl.gui.impl.FieldTypeImpl;
 
 class DateFilter extends RangeFilter<Date> {
 
 	Date lowerBound = null;
 	Date upperBound = null;
+	private IFormat<Date> format;
 
-	DateFilter(FilterGrid parent, String name, int filterIndex) {
+	DateFilter(FilterGrid parent, String name, int filterIndex,
+			FieldTypeImpl type) {
 		super(parent, name, filterIndex, true);
+		this.format = type.isLong ? Format.dateTime() : Format.date();
 	}
 
 	@Override
@@ -48,14 +53,14 @@ class DateFilter extends RangeFilter<Date> {
 	private String format(Date bound) {
 		if (bound == null)
 			return "";
-		return Format.date().format(bound);
+		return format.format(bound);
 	}
 
 	private Date getDate(String split, String prefix) {
 		split = split.trim();
 		if (split.length() == 4)
 			split = prefix + split;
-		return Format.date().parse(split);
+		return format.parse(split);
 	}
 
 	@Override
