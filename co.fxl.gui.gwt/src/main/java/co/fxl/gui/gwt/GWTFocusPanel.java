@@ -20,6 +20,7 @@ package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.IFocusPanel;
 
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -75,6 +76,12 @@ public class GWTFocusPanel extends GWTPanel<FocusPanel, IFocusPanel> implements
 		} else {
 			removeOutline(container.widget);
 		}
+		return this;
+	}
+
+	@Override
+	public IFocusPanel spacing(int pixel) {
+		container.widget.getElement().getStyle().setPadding(pixel, Unit.PX);
 		return this;
 	}
 }

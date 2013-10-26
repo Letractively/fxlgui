@@ -65,4 +65,9 @@ class SwingFocusPanel extends SwingPanel<IFocusPanel> implements IFocusPanel {
 		return this;
 	}
 
+	@Override
+	public IFocusPanel spacing(int spacing) {
+		throw new UnsupportedOperationException();
+	}
+
 }
