@@ -321,7 +321,7 @@ public class Validation {
 
 	public Validation validateDate(final ITextField textField,
 			IFormat<Date> format) {
-		return validateDate(textField, false);
+		return validateDate(textField, format, false);
 	}
 
 	public Validation validateDate(final ITextField textField,

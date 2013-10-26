@@ -18,9 +18,11 @@
  */
 package co.fxl.gui.filter.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.fxl.data.format.api.IFormat;
 import co.fxl.gui.api.ICardPanel;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
@@ -178,11 +180,11 @@ class MiniFilterPanel implements FilterPanel {
 			}
 
 			@Override
-			public RangeField horizontal(boolean isDateField) {
+			public RangeField horizontal(boolean isDateField, IFormat<Date> f) {
 				// if (FIREFOX)
 				// return new CombinedRangeField(container);
 				// else
-				return new ExplicitRangeField(widget, container, false);
+				return new ExplicitRangeField(widget, container, false, f);
 			}
 
 			@Override
