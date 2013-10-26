@@ -249,7 +249,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		} else if (contentType.equals(String.class))
 			filter = new StringFilter(grid, name, guiFilterElements.size());
 		else if (contentType.equals(Date.class))
-			filter = new DateFilter(grid, name, guiFilterElements.size());
+			filter = new DateFilter(grid, name, guiFilterElements.size(), type);
 		else if (contentType.equals(Integer.class)
 				|| contentType.equals(Long.class))
 			filter = new NumberFilter(grid, name, guiFilterElements.size());
@@ -467,10 +467,12 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	}
 
 	@Override
-	public IFilterWidget setConfiguration(String config, boolean ignoreAlreadySet) {
+	public IFilterWidget setConfiguration(String config,
+			boolean ignoreAlreadySet) {
 		if (configuration == null && config == null)
 			return this;
-		if (!ignoreAlreadySet && configuration != null && configuration.equals(config))
+		if (!ignoreAlreadySet && configuration != null
+				&& configuration.equals(config))
 			return this;
 		update(config, true);
 		return this;
