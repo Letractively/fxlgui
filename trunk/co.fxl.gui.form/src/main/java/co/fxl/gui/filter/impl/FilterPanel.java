@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.filter.impl;
 
+import java.util.Date;
+
+import co.fxl.data.format.api.IFormat;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
@@ -34,7 +37,7 @@ interface FilterPanel {
 
 		IComboBox comboBox();
 
-		RangeField horizontal(boolean isDateField);
+		RangeField horizontal(boolean isDateField, IFormat<Date> format);
 
 		ITextField textField();
 

@@ -32,12 +32,15 @@ class DateFilter extends RangeFilter<Date> {
 
 	Date lowerBound = null;
 	Date upperBound = null;
-	private IFormat<Date> format;
 
 	DateFilter(FilterGrid parent, String name, int filterIndex,
 			FieldTypeImpl type) {
-		super(parent, name, filterIndex, true);
-		this.format = type.isLong ? Format.dateTime() : Format.date();
+		super(parent, name, filterIndex, true, type.isLong ? Format.dateTime()
+				: Format.date());
+	}
+
+	IFormat<Date> format() {
+		return format;
 	}
 
 	@Override

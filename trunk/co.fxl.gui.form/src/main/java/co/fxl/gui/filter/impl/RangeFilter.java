@@ -18,6 +18,9 @@
  */
 package co.fxl.gui.filter.impl;
 
+import java.util.Date;
+
+import co.fxl.data.format.api.IFormat;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterConstraints.IRange;
@@ -30,16 +33,18 @@ abstract class RangeFilter<T> extends FilterTemplate<ITextField, T> {
 	String lowerBoundText = "";
 	String upperBoundText = "";
 	protected RangeField panel;
+	public IFormat<Date> format;
 
 	// private FilterGrid parent;
 
 	RangeFilter(FilterGrid parent, String name, int filterIndex,
-			boolean isDateField) {
+			boolean isDateField, IFormat<Date> f) {
 		super(parent, name, filterIndex);
 		// this.parent = parent;
 		ICell cell = parent.cell(filterIndex);
+		format = f;
 		// cell.width(WIDTH_RANGE_CELL);// , HEIGHT);
-		panel = cell.horizontal(isDateField);
+		panel = cell.horizontal(isDateField, format);
 		// input = addTextField(0);
 	}
 

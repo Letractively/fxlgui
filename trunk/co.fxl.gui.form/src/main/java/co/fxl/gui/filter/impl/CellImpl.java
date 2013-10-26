@@ -20,7 +20,7 @@ package co.fxl.gui.filter.impl;
 
 import java.util.Date;
 
-import co.fxl.data.format.impl.Format;
+import co.fxl.data.format.api.IFormat;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDockPanel;
@@ -41,10 +41,12 @@ class CellImpl implements ICell, RuntimeConstants {
 		private final ITextField tf1;
 		private final ITextField tf2;
 		private FilterWidgetImpl widget;
+		private IFormat<Date> format;
 
 		ExplicitRangeField(FilterWidgetImpl widget, IContainer cell,
-				boolean isDateField) {
+				boolean isDateField, IFormat<Date> format) {
 			this.widget = widget;
+			this.format = format;
 			IHorizontalPanel p = cell.panel().horizontal();
 			tf1 = addTextField(p, isDateField);
 			p.add().label().text("-").margin().left(4).right(4);
@@ -54,7 +56,7 @@ class CellImpl implements ICell, RuntimeConstants {
 		ITextField addTextField(IHorizontalPanel p, boolean isDateField) {
 			boolean useDateField = isDateField && NOT_SWING;
 			ITextField textField = useDateField ? new DateField(p.add(), IE ? 2
-					: 3, Format.date()) : p.add().textField();
+					: 3, format) : p.add().textField();
 			ITextField textField1 = textField
 					.width(FilterTemplate.WIDTH_RANGE_CELL
 							- (useDateField ? (Env.runtime().geq(Env.IE, 10) ? 21
@@ -95,8 +97,8 @@ class CellImpl implements ICell, RuntimeConstants {
 		@Override
 		public void validation(Validation validation, Class<?> type) {
 			if (type.equals(Date.class)) {
-				validation.validateDate(tf1);
-				validation.validateDate(tf2);
+				validation.validateDate(tf1, format);
+				validation.validateDate(tf2, format);
 			} else if (type.equals(Long.class)) {
 				validation.validateLong(tf1, false);
 				validation.validateLong(tf2, false);
@@ -124,8 +126,9 @@ class CellImpl implements ICell, RuntimeConstants {
 	}
 
 	@Override
-	public RangeField horizontal(boolean isDateField) {
-		return new ExplicitRangeField(filterPanelImpl.widget, cell, isDateField);
+	public RangeField horizontal(boolean isDateField, IFormat<Date> f) {
+		return new ExplicitRangeField(filterPanelImpl.widget, cell,
+				isDateField, f);
 	}
 
 	@Override
