@@ -25,6 +25,7 @@ import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IFrame;
 import co.fxl.gui.api.IHorizontalLine;
 import co.fxl.gui.api.IHyperlink;
 import co.fxl.gui.api.IImage;
@@ -173,6 +174,11 @@ public class AndroidContainer implements IContainer {
 		IWidgetProvider<?> provider = parent.androidDisplay().widgetProvider(
 				interfaceClass);
 		return (T) provider.createWidget(this);
+	}
+
+	@Override
+	public IFrame frame() {
+		throw new UnsupportedOperationException();
 	}
 
 	// @Override
