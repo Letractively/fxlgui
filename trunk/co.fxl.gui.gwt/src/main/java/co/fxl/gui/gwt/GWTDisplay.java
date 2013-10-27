@@ -38,6 +38,7 @@ import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.DialogImpl;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DisplayTemplate;
+import co.fxl.gui.impl.ILocalStorage;
 import co.fxl.gui.impl.ImagePathResolver;
 import co.fxl.gui.impl.RuntimeTemplate;
 import co.fxl.gui.impl.StatusDisplay;
@@ -56,6 +57,7 @@ import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
@@ -171,6 +173,20 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 					e.getElement().getStyle().setOverflowX(Overflow.AUTO);
 			}
 		};
+		if (Storage.isLocalStorageSupported()) {
+			register(new IServiceProvider<ILocalStorage>() {
+
+				@Override
+				public Class<ILocalStorage> serviceType() {
+					return ILocalStorage.class;
+				}
+
+				@Override
+				public ILocalStorage getService() {
+					return new GWTLocalStorage();
+				}
+			});
+		}
 	}
 
 	void addStyle(String text) {

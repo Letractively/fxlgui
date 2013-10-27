@@ -47,6 +47,7 @@ import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DisplayTemplate;
+import co.fxl.gui.impl.ILocalStorage;
 import co.fxl.gui.impl.RuntimeTemplate;
 import co.fxl.gui.impl.ToolbarImpl;
 
@@ -99,6 +100,18 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 		// TODO SWING-FXL: IMPL: remove hack
 		declareConstants();
 		SwingFormat.setUp();
+		register(new IServiceProvider<ILocalStorage>() {
+
+			@Override
+			public Class<ILocalStorage> serviceType() {
+				return ILocalStorage.class;
+			}
+
+			@Override
+			public ILocalStorage getService() {
+				return SwingLocalStorage.instance;
+			}
+		});
 	}
 
 	private void declareConstants() {
