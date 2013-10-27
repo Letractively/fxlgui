@@ -62,7 +62,6 @@ class SwingLocalStorage implements ILocalStorage {
 				} catch (IOException e) {
 					CallbackTemplate.rethrow(e);
 				}
-
 			}
 		});
 	}
