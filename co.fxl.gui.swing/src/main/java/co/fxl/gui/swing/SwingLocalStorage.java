@@ -32,7 +32,14 @@ import co.fxl.gui.impl.ILocalStorage;
 
 class SwingLocalStorage implements ILocalStorage {
 
-	static final SwingLocalStorage instance = new SwingLocalStorage();
+	private static SwingLocalStorage instance;
+
+	public static SwingLocalStorage getInstance() {
+		if (instance == null)
+			instance = new SwingLocalStorage();
+		return instance;
+	}
+
 	private Map<String, String> map = new HashMap<String, String>();
 
 	@SuppressWarnings("unchecked")
