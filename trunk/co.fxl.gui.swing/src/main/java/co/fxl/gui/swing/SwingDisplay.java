@@ -109,7 +109,7 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 
 			@Override
 			public ILocalStorage getService() {
-				return SwingLocalStorage.instance;
+				return SwingLocalStorage.getInstance();
 			}
 		});
 	}
