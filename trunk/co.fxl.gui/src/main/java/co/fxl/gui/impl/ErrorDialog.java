@@ -65,8 +65,8 @@ public class ErrorDialog {
 			final String pStacktrace) {
 		showing = true;
 		StatusPopUp.instance().close();
-		IDialog dialog = PopUp.showDialog().glass(Style.instance().glass()).width(DEFAULT_WIDTH)
-				.title(pTitle).message(pMessage).error();
+		IDialog dialog = PopUp.showDialog().glass(Style.instance().glass())
+				.width(DEFAULT_WIDTH).title(pTitle).message(pMessage).error();
 		if (pStacktrace != null) {
 			dialog.addButton().text("Details").imageResource(Icons.DETAIL)
 					.addClickListener(new IClickListener() {
@@ -97,7 +97,8 @@ public class ErrorDialog {
 							if (trace.trim().equals("null"))
 								trace = pTitle;
 							ITextArea textArea = panel.add().textArea()
-									.size(DEFAULT_WIDTH_DETAILS-20, 300).text(trace);
+									.size(DEFAULT_WIDTH_DETAILS - 20, 300)
+									.text(trace).editable(false);
 							styleInputBorder(textArea);
 							detailDialog.visible(true);
 						}
