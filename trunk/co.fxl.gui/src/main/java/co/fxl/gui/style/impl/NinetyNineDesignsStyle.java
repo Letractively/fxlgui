@@ -503,7 +503,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 					@Override
 					void decorate(IVerticalPanel p) {
 						String productName = pn;
-						p.spacing(12);
+						p.padding(6).spacing(6);
 						p.add().label().text(productName).font().weight()
 								.bold();
 						addButton(p, "support.png", "Support",
