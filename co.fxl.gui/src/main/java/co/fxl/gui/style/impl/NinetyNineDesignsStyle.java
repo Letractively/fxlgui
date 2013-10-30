@@ -503,9 +503,10 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 					@Override
 					void decorate(IVerticalPanel p) {
 						String productName = pn;
-						p.spacing().left(12).top(12).right(12).bottom(12)
-								.inner(12);
-						addButton(p, "support.png", productName + " Support",
+						p.spacing(12);
+						p.add().label().text(productName).font().weight()
+								.bold();
+						addButton(p, "support.png", "Support",
 								new IClickListener() {
 									@Override
 									public void onClick() {
@@ -513,7 +514,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 												.uRI("http://" + supportPage);
 									}
 								});
-						addButton(p, "html.png", productName + " on the Web",
+						addButton(p, "html.png", "... on the Web",
 								new IClickListener() {
 									@Override
 									public void onClick() {
@@ -523,7 +524,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 								});
 						p.addSpace(4).add().line().color().lightgray();
 						p.addSpace(4);
-						addButton(p, "info.png", "About " + productName, cl);
+						addButton(p, "info.png", "About", cl);
 					}
 
 					private void addButton(IVerticalPanel p, String image,
