@@ -107,7 +107,7 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 			public void onUpdate(String value) {
 				if (!ignore && !value.trim().equals(""))
 					for (String v : value.trim().split(SEPARATOR)) {
-						append(v.trim());
+						append(v.trim(), false);
 					}
 			}
 		});
@@ -135,14 +135,14 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 			@Override
 			public void onUpdate(ISuggestion value) {
 				String o = value.insertText();
-				append(o);
+				append(o, true);
 			}
 		});
 		addKeyListeners(input, new IClickListener() {
 			@Override
 			public void onClick() {
 				String create = adapter.create(input.text());
-				append(create);
+				append(create, true);
 			}
 		}, new IClickListener() {
 			@Override
@@ -161,7 +161,7 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		return icon;
 	}
 
-	private void append(final String o) {
+	private void append(final String o, boolean b) {
 		input.text("");
 		if (o == null)
 			return;
@@ -182,7 +182,8 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		hp.add().label().text(text);
 		hp.add().image().resource("cancel.png").addClickListener(e);
 		panel.add().element(input);
-		update();
+		if (b)
+			update();
 	}
 
 	private void update() {
