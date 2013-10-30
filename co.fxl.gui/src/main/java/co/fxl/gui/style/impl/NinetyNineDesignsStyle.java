@@ -514,7 +514,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 												.uRI("http://" + supportPage);
 									}
 								});
-						addButton(p, "html.png", "... on the Web",
+						addButton(p, "html.png", "Homepage",
 								new IClickListener() {
 									@Override
 									public void onClick() {
