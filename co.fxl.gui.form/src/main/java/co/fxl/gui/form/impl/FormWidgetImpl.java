@@ -352,7 +352,7 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 				bottomPanel.margin().top(8);
 			}
 			if (saveListener != null) {
-				addSaveCancelButtons(bottomPanel);
+				addSaveCancelButtons(bottomPanel.clear());
 			}
 			if (hasRequiredAttributes()) {
 				if (requiredAttributeLabel == null) {
