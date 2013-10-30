@@ -497,7 +497,8 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 
 			@Override
 			public void helpButton(IPanel<?> panel, final String pn,
-					final String supportPage, final String overviewPage) {
+					final String supportPage, final String overviewPage,
+					final IClickListener cl) {
 				new UserPanelImageButton(panel, "help", "Help", true, 300, 4) {
 					@Override
 					void decorate(IVerticalPanel p) {
@@ -522,13 +523,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 								});
 						p.addSpace(4).add().line().color().lightgray();
 						p.addSpace(4);
-						addButton(p, "info.png", "About " + productName,
-								new IClickListener() {
-									@Override
-									public void onClick() {
-										throw new UnsupportedOperationException();
-									}
-								});
+						addButton(p, "info.png", "About " + productName, cl);
 					}
 
 					private void addButton(IVerticalPanel p, String image,
