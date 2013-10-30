@@ -322,7 +322,7 @@ class GrayScaleStyle extends StyleTemplate {
 
 			@Override
 			public void helpButton(IPanel<?> panel, String productName,
-					String supportPage, String overviewPage) {
+					String supportPage, String overviewPage, IClickListener cl) {
 				// panel.add().label().text("Help").hyperlink();
 				throw new UnsupportedOperationException();
 			}
