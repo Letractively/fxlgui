@@ -499,13 +499,12 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 			public void helpButton(IPanel<?> panel, final String pn,
 					final String supportPage, final String overviewPage,
 					final IClickListener cl) {
-				new UserPanelImageButton(panel, "help", "Help", true, 300, 4) {
+				new UserPanelImageButton(panel, "help", "Help", true, 200, 4) {
 					@Override
 					void decorate(IVerticalPanel p) {
 						String productName = pn;
-						p.padding(6).spacing(6);
-						p.add().label().text(productName).font().weight()
-								.bold();
+						p.padding(4).spacing(8);
+						header(p.add().label().text(productName.toUpperCase()));
 						addButton(p, "support.png", "Support",
 								new IClickListener() {
 									@Override
@@ -522,8 +521,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 												.uRI("http://" + overviewPage);
 									}
 								});
-						p.addSpace(4).add().line().color().lightgray();
-						p.addSpace(4);
+						p.add().line().color().lightgray();
 						addButton(p, "info.png", "About", cl);
 					}
 
@@ -560,9 +558,9 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 								p.add().line().color().lightgray();
 								p.addSpace(4);
 							}
-							p.add().label().text(g.label().toUpperCase())
-									.font().weight().bold().pixel(10).color()
-									.gray();
+							ILabel l = p.add().label()
+									.text(g.label().toUpperCase());
+							header(l);
 							for (final IAdminRight right : g.rights()) {
 								ImageButton text = new ImageButton(p.add());
 								text.imageResource(right.image()).text(
@@ -600,6 +598,10 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 				ib.text("Show Trace");
 				ib.label().hyperlink();
 				return ib;
+			}
+
+			private void header(ILabel l) {
+				l.font().weight().bold().pixel(10).color().gray();
 			}
 		};
 	}
