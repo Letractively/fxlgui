@@ -1052,7 +1052,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private List originalOrder(List<ScrollTableColumnImpl> columns) {
 		List<ScrollTableColumnImpl> c = new LinkedList<ScrollTableColumnImpl>(
 				columns);
-		Collections.sort(columns, new Comparator<ScrollTableColumnImpl>() {
+		Collections.sort(c, new Comparator<ScrollTableColumnImpl>() {
 			@Override
 			public int compare(ScrollTableColumnImpl arg0,
 					ScrollTableColumnImpl arg1) {
