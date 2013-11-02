@@ -36,6 +36,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 import co.fxl.data.format.swing.SwingFormat;
+import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDialog;
@@ -100,7 +101,7 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 		// TODO SWING-FXL: IMPL: remove hack
 		declareConstants();
 		SwingFormat.setUp();
-		register(new IServiceProvider<ILocalStorage>() {
+		register(new IAsyncServiceProvider<ILocalStorage>() {
 
 			@Override
 			public Class<ILocalStorage> serviceType() {
@@ -108,8 +109,21 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 			}
 
 			@Override
-			public ILocalStorage getService() {
-				return SwingLocalStorage.getInstance();
+			public void loadAsync(
+					ICallback<co.fxl.gui.api.IServiceRegistry.IServiceProvider<ILocalStorage>> callback) {
+				callback.onSuccess(new IServiceProvider<ILocalStorage>() {
+
+					@Override
+					public Class<ILocalStorage> serviceType() {
+						return ILocalStorage.class;
+					}
+
+					@Override
+					public ILocalStorage getService() {
+						return SwingLocalStorage.getInstance();
+					}
+
+				});
 			}
 		});
 	}
