@@ -316,7 +316,9 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	private void forkScrollToRowIndex() {
 		if (rowIndex > 0) {
 			runnable.run();
-//			Display.instance().invokeLater(runnable);
+			// IShell shell = container.element().shell();
+			// if (shell instanceof IPopUp)
+			Display.instance().invokeLater(runnable);
 		}
 	}
 
