@@ -128,10 +128,9 @@ class SwingPopUp implements IPopUp, ComponentParent {
 				}
 				dialog = factory.getPopup(panel.frame, p, x, y + 20);
 			}
-		assert dialog != null;
 		if (visible) {
 			dialog.show();
-		} else {
+		} else if (dialog != null) {
 			dialog.hide();
 			SwingDisplay.popUp(null);
 		}
