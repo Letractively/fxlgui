@@ -318,7 +318,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 			runnable.run();
 			// IShell shell = container.element().shell();
 			// if (shell instanceof IPopUp)
-			Display.instance().invokeLater(runnable);
+			if (!Env.is(Env.SWING))
+				Display.instance().invokeLater(runnable);
 		}
 	}
 
