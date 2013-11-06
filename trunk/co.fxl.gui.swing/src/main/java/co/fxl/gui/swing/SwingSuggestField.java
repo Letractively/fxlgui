@@ -99,33 +99,40 @@ class SwingSuggestField extends SwingTextInput<JTextField, ISuggestField>
 		addStringUpdateListener(new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(String value) {
-				source.query(value, new CallbackTemplate<List<ISuggestion>>() {
+				if (!value.trim().equals(""))
+					source.query(value,
+							new CallbackTemplate<List<ISuggestion>>() {
 
-					@Override
-					public void onSuccess(List<ISuggestion> result) {
-						if (result.isEmpty()) {
-							hidePopUp();
-						} else {
-							if (popup == null) {
-								popup = Display.instance().showPopUp();
-								panel = popup.container().panel().vertical()
-										.spacing(4);
-							}
-							panel.clear();
-							for (final ISuggestion sg : result) {
-								panel.add().label().text(sg.displayText())
-										.addClickListener(new IClickListener() {
-											@Override
-											public void onClick() {
-												notifyClick(sg);
-											}
-										});
-							}
-							popup.offset(offsetX(), offsetY() + height());
-							popup.visible(true);
-						}
-					}
-				});
+								@Override
+								public void onSuccess(List<ISuggestion> result) {
+									if (result.isEmpty()) {
+										hidePopUp();
+									} else {
+										if (popup == null) {
+											popup = Display.instance()
+													.showPopUp();
+											panel = popup.container().panel()
+													.vertical().spacing(4);
+										}
+										panel.clear();
+										for (final ISuggestion sg : result) {
+											panel.add()
+													.label()
+													.text(sg.displayText())
+													.addClickListener(
+															new IClickListener() {
+																@Override
+																public void onClick() {
+																	notifyClick(sg);
+																}
+															});
+										}
+										popup.offset(offsetX(), offsetY()
+												+ height());
+										popup.visible(true);
+									}
+								}
+							});
 			}
 		});
 		// TODO SWING-FXL: IMPL: ...
