@@ -25,6 +25,7 @@ import java.util.List;
 import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ISuggestField.ISource.ISuggestion;
 import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.Env;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -87,7 +88,7 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 
 		boolean isRequest(final Request arg0) {
 			return !(arg0.getQuery() == null || arg0.getQuery().equals(""))
-					|| element.requestOnFocus;
+					|| (element.requestOnFocus && !Env.is(Env.SWING));
 		}
 
 		@Override
