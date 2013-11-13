@@ -38,6 +38,7 @@ import co.fxl.gui.filter.impl.CellImpl.ExplicitRangeField;
 import co.fxl.gui.impl.IToolbar;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.impl.WidgetTitle;
+import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.style.api.IStyle.IFilterPanel;
 
 class MiniFilterPanel implements FilterPanel {
@@ -252,7 +253,7 @@ class MiniFilterPanel implements FilterPanel {
 		public void onUpdate(String value) {
 			Integer key = name2index.get(value);
 			if (key == null)
-				throw new UnsupportedOperationException(value
+				Log.instance().error(value
 						+ " not found in " + name2index.keySet());
 			CellImpl c = index2cell.get(key);
 			if (c == null)
