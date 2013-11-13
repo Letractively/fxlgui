@@ -250,8 +250,15 @@ class MiniFilterPanel implements FilterPanel {
 
 		@Override
 		public void onUpdate(String value) {
-			cardPanel.show(index2cell.get(name2index.get(value)).container
-					.element());
+			Integer key = name2index.get(value);
+			if (key == null)
+				throw new UnsupportedOperationException(value
+						+ " not found in " + name2index.keySet());
+			CellImpl c = index2cell.get(key);
+			if (c == null)
+				throw new UnsupportedOperationException(key + " not found in "
+						+ index2cell.keySet());
+			cardPanel.show(c.container.element());
 		}
 
 		@Override
