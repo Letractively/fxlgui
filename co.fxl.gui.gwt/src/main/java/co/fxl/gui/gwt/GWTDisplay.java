@@ -189,6 +189,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 				}
 			});
 		}
+		if (!isInternetExplorer11Plus)
+			addStyle("::selection { background-color:transparent; }");
 	}
 
 	void addStyle(String text) {
@@ -454,6 +456,11 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	private static native int getOuterWidth()
 	/*-{ return window.outerWidth; }-*/;
+
+	// private static native int setUpMouseWheel()
+	// /*-{
+	// window.onmousewheel = document.onmousewheel;
+	// }-*/;
 
 	@Override
 	public IDisplay block(boolean waiting) {
