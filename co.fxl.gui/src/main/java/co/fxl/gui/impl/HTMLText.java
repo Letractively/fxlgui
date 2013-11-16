@@ -99,15 +99,15 @@ public class HTMLText {
 		if (!autoWrap)
 			toString = noWrap(toString);
 		toString = html(toString);
-		if (!selectable)
-			toString = unselectable(toString);
+//		if (!selectable)
+//			toString = unselectable(toString);
 		return toString;
 	}
 
-	private String unselectable(String toString) {
-		return "<div unselectable=\"on\" class=\"unselectable\">" + toString
-				+ "</div>";
-	}
+//	private String unselectable(String toString) {
+//		return "<div unselectable=\"on\" class=\"unselectable\">" + toString
+//				+ "</div>";
+//	}
 
 	public static String textInput(String text, int width, String align) {
 		return textInput(text, width, align, "");
