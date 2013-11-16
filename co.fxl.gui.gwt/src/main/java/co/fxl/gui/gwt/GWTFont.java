@@ -30,7 +30,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class GWTFont extends GWTWidgetStyle implements IFont {
 
-	private Style style;
+	Style style;
 
 	public GWTFont(Widget label) {
 		super("font-size-", label);
