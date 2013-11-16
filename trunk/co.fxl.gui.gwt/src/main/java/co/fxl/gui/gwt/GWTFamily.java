@@ -21,79 +21,79 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IFontElement.IFont.IFamily;
 
-class GWTFamily extends GWTWidgetStyle implements IFamily {
+class GWTFamily implements IFamily {
 
 	// TODO Optimization: use font.style.setFontFamily(...)
 
 	private GWTFont font;
 
 	GWTFamily(GWTFont font) {
-		super("font-family-", font.widget);
 		this.font = font;
 	}
 
 	@Override
 	public IFont arial() {
-		addStyleName("arial");
+		name("Arial");
 		return font;
 	}
 
 	@Override
 	public IFont openSans() {
-		addStyleName("openSans");
+		name("'Open Sans'");
 		return font;
 	}
 
 	@Override
 	public IFont timesNewRoman() {
-		addStyleName("times");
+		name("times");
 		return font;
 	}
 
 	@Override
 	public IFont verdana() {
-		addStyleName("verdana");
+		name("verdana");
 		return font;
 	}
 
 	@Override
 	public IFont name(String font) {
-		throw new UnsupportedOperationException();
+		this.font.style.setProperty("fontFamily", font);
+		return this.font;
 	}
 
 	@Override
 	public IFont courier() {
-		addStyleName("courier");
+		name("courier");
 		return font;
 	}
 
 	@Override
 	public IFont georgia() {
-		addStyleName("georgia");
+		name("georgia");
 		return font;
 	}
 
 	@Override
 	public IFont garamond() {
-		addStyleName("garamond");
+		name("garamond");
 		return font;
 	}
 
 	@Override
 	public IFont calibri() {
-		addStyleName("calibri");
+		name("calibri");
 		return font;
 	}
 
 	@Override
 	public IFont helvetica() {
-		addStyleName("helvetica");
+		name("helvetica");
 		return font;
 	}
 
 	@Override
 	public IFont lucinda() {
-		addStyleName("lucinda");
+		name("'Lucinda Sans'");
 		return font;
 	}
 }
