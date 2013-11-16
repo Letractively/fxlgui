@@ -4,9 +4,6 @@ html, body {
 	width:100%;
 }
 body, table td, select, input { font-size:12px }
-::selection {
-    background-color: transparent;
-}
 hr { margin:0px; border:none; width:100%; border-top: 1px solid #E00060; color: #FFFFFF; background-color: #FFFFFF; height: 1px; }
 *.unselectable {
 }
