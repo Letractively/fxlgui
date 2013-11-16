@@ -54,6 +54,7 @@ import com.google.gwt.core.client.impl.SchedulerImpl;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.DomEvent;
+import com.google.gwt.event.dom.client.MouseWheelEvent;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.resources.client.ImageResource;
@@ -118,6 +119,15 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 			.contains("rv:");
 	static boolean isInternetExplorer9OrBelow = isInternetExplorer9
 			|| isInternetExplorer8OrBelow;
+
+	public static int deltaY(MouseWheelEvent event) {
+		return isInternetExplorer11Plus ? -eventGetMouseWheelVelocityY(event
+				.getNativeEvent()) / 40 : event.getDeltaY();
+	}
+
+	public native static int eventGetMouseWheelVelocityY(NativeEvent evt) /*-{
+																			return evt.wheelDelta;
+																			}-*/;
 
 	public static void notifyEvent(DomEvent<?> event) {
 		if (event != null) {
@@ -456,11 +466,6 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	private static native int getOuterWidth()
 	/*-{ return window.outerWidth; }-*/;
-
-	// private static native int setUpMouseWheel()
-	// /*-{
-	// window.onmousewheel = document.onmousewheel;
-	// }-*/;
 
 	@Override
 	public IDisplay block(boolean waiting) {
