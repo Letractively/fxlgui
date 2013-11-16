@@ -105,7 +105,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 			&& USER_AGENT.contains("Firefox/3.");
 	static boolean isChrome = USER_AGENT.contains("Chrome/");
 	public static boolean isInternetExplorer = USER_AGENT_LOWER_CASE
-			.contains("msie");
+			.contains("msie") || USER_AGENT_LOWER_CASE.contains("rv:");
 	public static boolean isInternetExplorer8OrBelow = USER_AGENT_LOWER_CASE
 			.contains("msie 8.0")
 			|| USER_AGENT_LOWER_CASE.contains("msie 7.0")
@@ -114,6 +114,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	public static boolean isOpera = USER_AGENT.startsWith(OPERA_PREFIX);
 	static boolean isInternetExplorer9 = USER_AGENT_LOWER_CASE
 			.contains("msie 9.0");
+	static boolean isInternetExplorer11Plus = USER_AGENT_LOWER_CASE
+			.contains("rv:");
 	static boolean isInternetExplorer9OrBelow = isInternetExplorer9
 			|| isInternetExplorer8OrBelow;
 
@@ -279,6 +281,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 				return 8;
 			else if (isInternetExplorer9)
 				return 9;
+			else if (isInternetExplorer11Plus)
+				return 11;
 			else
 				return 10;
 		}
