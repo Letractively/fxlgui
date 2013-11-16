@@ -1,31 +1,10 @@
 html {overflow-y: hidden; overflow: -moz-scrollbars-none; overflow-x: hidden; }
-html, body {
-	height:100%; 
-	width:100%;
-}
+html, body { height:100%; width:100%; }
 body, table td, select, input { font-size:12px }
 hr { margin:0px; border:none; width:100%; border-top: 1px solid #E00060; color: #FFFFFF; background-color: #FFFFFF; height: 1px; }
-*.unselectable {
-}
-.shadowblur{ 
-box-shadow: 4px 4px 5px #000000; 
--webkit-box-shadow: 4px 4px 5px #000000;
--moz-box-shadow: 4px 4px 5px #000000; 
-filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=4, offY=4, positive=true);
-}
-.quickSearchShadow{ 
-background: url(images/ico-search.png) no-repeat scroll 7px 7px;
-box-shadow: 0px 0px 6px #4BE1FF;
--webkit-box-shadow: 0px 0px 6px #4BE1FF;
--moz-box-shadow: 0px 0px 6px #4BE1FF;
-filter: progid:DXImageTransform.Microsoft.dropShadow(color=#4BE1FF, offX=0, offY=0, positive=true);
-}
-.shadowblurLight{ 
-box-shadow: 2px 2px 3px #000000; 
--webkit-box-shadow: 2px 2px 3px #000000;
--moz-box-shadow: 2px 2px 3px #000000; 
-filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=2, offY=2, positive=true);
-}
+.shadowblur{ box-shadow: 4px 4px 5px #000000; -webkit-box-shadow: 4px 4px 5px #000000; -moz-box-shadow: 4px 4px 5px #000000; filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=4, offY=4, positive=true); }
+.quickSearchShadow{ background: url(images/ico-search.png) no-repeat scroll 7px 7px; box-shadow: 0px 0px 6px #4BE1FF; -webkit-box-shadow: 0px 0px 6px #4BE1FF; -moz-box-shadow: 0px 0px 6px #4BE1FF; filter: progid:DXImageTransform.Microsoft.dropShadow(color=#4BE1FF, offX=0, offY=0, positive=true); }
+.shadowblurLight{ box-shadow: 2px 2px 3px #000000; -webkit-box-shadow: 2px 2px 3px #000000; -moz-box-shadow: 2px 2px 3px #000000; filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=2, offY=2, positive=true); }
 .mozBorderRadius { -moz-border-radius: 3px; }
 .mozBorderRadius6 { -moz-border-radius: 6px; }
 .mozBorderRadiusTopLeft { -moz-border-radius-topleft: 3px; }
@@ -121,25 +100,14 @@ filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=2, offY
 .gwt-Label-FXL { white-space: nowrap; }
 .gwt-TextArea-FXL { height: 100px; padding: 3px; font-size:12px };
 .gwt-TextBox-FXL { padding: 3px; font-size:12px };
-.gwt-SuggestBoxPopup-FXL {
-    background-color: white;
-    border: 1px solid rgb(188,188,188);
-    padding: 2px 6px 2px 6px;
-	box-shadow: 2px 2px 3px #000000; 
-	-webkit-box-shadow: 2px 2px 3px #000000;
-	-moz-box-shadow: 2px 2px 3px #000000; 
-	filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=2, offY=2, positive=true);
-}
+.gwt-SuggestBoxPopup-FXL { background-color: white; border: 1px solid rgb(188,188,188); padding: 2px 6px 2px 6px; box-shadow: 2px 2px 3px #000000; -webkit-box-shadow: 2px 2px 3px #000000; -moz-box-shadow: 2px 2px 3px #000000; filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=2, offY=2, positive=true); }
 .gwt-SplitLayoutPanel-HDragger { background-color: lightgray }
-.scrollbar-container { position: absolute; top: 0; bottom: 0; left: 0;
-right: 0; margin: 20px; border: 2px solid rgba(0, 0, 0, 0.2); overflow:
-auto; background-color: whiteSmoke; } .scrollbar-container .inner {
-height: 2011px; width: 1985px; padding: 1em; background-color: white;
- } ::-webkit-scrollbar { background: rgb(235,235,235);
-} ::-webkit-scrollbar-corner { background: transparent; }
-::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.2); border:
-solid whiteSmoke 2px; } ::-webkit-scrollbar-thumb:hover {
-background-color: rgba(0, 0, 0, 0.3); }
+.scrollbar-container { position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: 20px; border: 2px solid rgba(0, 0, 0, 0.2); overflow: auto; background-color: whiteSmoke; }
+.scrollbar-container .inner { height: 2011px; width: 1985px; padding: 1em; background-color: white;  }
+::-webkit-scrollbar { background: rgb(235,235,235); }
+::-webkit-scrollbar-corner { background: transparent; }
+::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.2); border: solid whiteSmoke 2px; }
+::-webkit-scrollbar-thumb:hover { background-color: rgba(0, 0, 0, 0.3); }
 .gwt-TextInputBox  { border-bottom:none;padding:3px;margin-top:-2px;margin-bottom:-2px;background-color:transparent;border:none;height:23px;}
 .gwttreetable { border-spacing:0px;table-layout:fixed;margin:1px; }
 .gwttreecell { padding:0px;overflow:hidden;white-space:nowrap; }
