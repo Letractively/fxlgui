@@ -52,6 +52,8 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		public void onClick() {
 			tokens.remove(this);
 			hp.remove();
+			if (tokens.isEmpty())
+				panel.height(25);
 			notifyTextArea();
 			input.focus(true);
 		}
@@ -86,7 +88,7 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 	private boolean ignore;
 
 	protected MultiSelectionWidgetImpl(IContainer container) {
-		panel = container.panel().flow().spacing(2);
+		panel = container.panel().flow().spacing(2).height(25);
 		panel.addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {
@@ -169,7 +171,8 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		if (label.equals(""))
 			return;
 		input.remove();
-		final IHorizontalPanel hp = panel.add().panel().horizontal().spacing(2);
+		final IHorizontalPanel hp = panel.height(-1).add().panel().horizontal()
+				.spacing(2);
 		final Entry e = new Entry(hp, o);
 		tokens.add(e);
 		IBorder border = hp.border();
