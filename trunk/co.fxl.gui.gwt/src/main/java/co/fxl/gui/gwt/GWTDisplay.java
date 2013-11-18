@@ -199,15 +199,14 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 				}
 			});
 		}
-		if (!isInternetExplorer11Plus)
-			addStyle("::selection { background-color:transparent; }");
 	}
 
 	void addStyle(String text) {
 		Element bodyElement = RootPanel.getBodyElement();
 		Element newChild = DOM.createElement("style");
 		newChild.setInnerText(text);
-		bodyElement.getParentElement().insertBefore(newChild, bodyElement);
+		com.google.gwt.dom.client.Element parentElement = bodyElement.getParentElement();
+		parentElement.insertBefore(newChild, bodyElement);
 		styles.add(newChild);
 	}
 
@@ -633,6 +632,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 				addStyle("html, body { -webkit-font-smoothing: subpixel-antialiased !important; -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -ms-backface-visibility:     hidden; }");
 			}
 		}
+		if (!isInternetExplorer11Plus)
+			addStyle("::selection { background-color:transparent; }");
 		return this;
 	}
 
