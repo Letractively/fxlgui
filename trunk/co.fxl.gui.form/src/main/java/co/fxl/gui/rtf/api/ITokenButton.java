@@ -23,6 +23,8 @@ public interface ITokenButton {
 	public interface IValues {
 
 		String[] get();
+
+		String emptyTooltip();
 	}
 
 	ITokenButton title(String title);

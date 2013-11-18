@@ -123,15 +123,20 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 			int y = label.offsetY() + label.height();
 			p.popUp.offset(label.offsetX() - 4, y);
 			IVerticalPanel holder = p.panel.add().panel().vertical();
-			for (final String v : values.get())
-				holder.add().label().text(v).hyperlink()
-						.addClickListener(new IClickListener() {
-							@Override
-							public void onClick() {
-								p.popUp.visible(false);
-								htmlArea.insertHTML("{" + v + "}");
-							}
-						});
+			String[] strings = values.get();
+			if (strings.length == 0) {
+				holder.add().label().text(values.emptyTooltip()).font()
+						.weight().italic().color().gray();
+			} else
+				for (final String v : strings)
+					holder.add().label().text(v).hyperlink()
+							.addClickListener(new IClickListener() {
+								@Override
+								public void onClick() {
+									p.popUp.visible(false);
+									htmlArea.insertHTML("{" + v + "}");
+								}
+							});
 			p.popUp.modal(false).autoHide(true).visible(true);
 			if (y + p.panel.height() > Display.instance().height() - 30) {
 				p.panel.clear().add().scrollPane()
