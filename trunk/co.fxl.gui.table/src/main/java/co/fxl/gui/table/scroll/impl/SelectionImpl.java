@@ -321,7 +321,6 @@ class SelectionImpl implements ISelection<Object> {
 	}
 
 	static final int PIXEL = 10;
-	// static final boolean USE_BOLD = true;
 	private ScrollTableWidgetImpl widget;
 	private SingleSelectionImpl single;
 	private MultiSelectionImpl multi;
