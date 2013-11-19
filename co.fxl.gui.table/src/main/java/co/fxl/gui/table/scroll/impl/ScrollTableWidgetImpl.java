@@ -366,13 +366,20 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		return visible(visible, false);
 	}
 
-	private IScrollTableWidget<Object> visible(boolean visible, boolean sort) {
+	private IScrollTableWidget<Object> visible(boolean visible,
+			boolean restoreSortAndSelection) {
 		statusRangeLabel = null;
 		resetHasBottomInfos();
 		if (visible) {
+			List<Object> ids = null;
+			if (restoreSortAndSelection && rows != null)
+				ids = rows.selectedIdentifiers();
 			rows = new RowAdapter(this, actualRows);
-			if (sort)
+			if (restoreSortAndSelection) {
 				rows.sort();
+				if (ids != null)
+					rows.selected(ids);
+			}
 			drawAll();
 		} else {
 			this.visible = false;
