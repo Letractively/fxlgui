@@ -100,8 +100,12 @@ class RowAdapter implements IRows<Object>, IComparableList {
 					* -1
 					: 1;
 		}
-		quickSort.sort(this);
+		sort();
 		return widget.sortNegator;
+	}
+
+	void sort() {
+		quickSort.sort(this);
 	}
 
 	@Override
