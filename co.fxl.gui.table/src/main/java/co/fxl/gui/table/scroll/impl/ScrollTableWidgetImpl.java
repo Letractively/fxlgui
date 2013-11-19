@@ -335,7 +335,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 				return this;
 			} else {
 				drawing = true;
-				visible(true);
+				visible(true, true);
 				drawing = false;
 				// cb.onSuccess(null);
 			}
@@ -363,10 +363,16 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 
 	@Override
 	public IScrollTableWidget<Object> visible(boolean visible) {
+		return visible(visible, false);
+	}
+
+	private IScrollTableWidget<Object> visible(boolean visible, boolean sort) {
 		statusRangeLabel = null;
 		resetHasBottomInfos();
 		if (visible) {
 			rows = new RowAdapter(this, actualRows);
+			if (sort)
+				rows.sort();
 			drawAll();
 		} else {
 			this.visible = false;
@@ -831,7 +837,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	@Override
 	public boolean updateTable() {
 		columnWidths.notifyColumnSelectionChange();
-		visible(true);
+		visible(true, true);
 		return true;
 	}
 
@@ -1277,7 +1283,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			grid.element().tooltip(tooltip);
 		return this;
 	}
-	
+
 	@Override
 	public IScrollTableWidget<Object> sortListener(
 			co.fxl.gui.table.scroll.api.IScrollTableWidget.ISortListener l) {
