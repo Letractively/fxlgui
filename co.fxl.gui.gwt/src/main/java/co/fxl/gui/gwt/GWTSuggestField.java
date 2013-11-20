@@ -171,16 +171,20 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 		if (text == null)
 			text = "";
 		container.widget.setText(text);
+		notifyListeners(text);
+		return this;
+	}
+
+	private void notifyListeners(String text) {
 		for (IUpdateListener<String> l : updateListeners)
 			l.onUpdate(text);
-		return this;
 	}
 
 	@Override
 	public ISuggestField addUpdateListener(
 			final IUpdateListener<String> changeListener) {
 		updateListeners.add(changeListener);
-		container.widget.getTextBox().addChangeHandler(new ChangeHandler() {
+		container.widget.getValueBox().addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent arg0) {
 				changeListener.onUpdate(container.widget.getText());
@@ -239,8 +243,10 @@ class GWTSuggestField extends GWTElement<SuggestBox, ISuggestField> implements
 							public String displayText() {
 								return arg0.getSelectedItem()
 										.getDisplayString();
+
 							}
 						});
+						notifyListeners(text());
 					}
 				});
 		return this;

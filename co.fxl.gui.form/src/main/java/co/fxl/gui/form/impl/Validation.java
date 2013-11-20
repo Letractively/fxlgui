@@ -39,6 +39,7 @@ import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.ITextInputElement;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.impl.DiscardChangesDialog;
+import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.rtf.api.IHTMLArea;
 import co.fxl.gui.style.impl.Style;
@@ -192,7 +193,7 @@ public class Validation {
 				} else if (textElement instanceof ISuggestField) {
 					ISuggestField tf = (ISuggestField) textElement;
 					if (wColors)
-						errorColor(tf, isNull);
+						errorColor(this, tf, isNull);
 				} else
 					throw new UnsupportedOperationException(textElement
 							.getClass().getName()
@@ -455,9 +456,16 @@ public class Validation {
 			((IColored) textField).color().gray(253);
 	}
 
-	private void errorColor(ISuggestField textField, boolean hasError) {
+	private void errorColor(final Field field, final ISuggestField textField,
+			boolean hasError) {
 		if (hasError) {
-			errorColor(textField);
+			Display.instance().invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					if (field.isNull)
+						errorColor(textField);
+				}
+			}, 50);
 		} else {
 			removeErrorColor(textField);
 		}
