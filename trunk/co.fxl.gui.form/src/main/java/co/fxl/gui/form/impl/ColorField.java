@@ -19,6 +19,7 @@
 package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.IClickable.IClickListener;
+import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridClickListener;
@@ -123,28 +124,28 @@ public class ColorField {
 		}
 	}
 
-	private int hex(String colorValue, int i1, int i2) {
+	public static int hex(String colorValue, int i1, int i2) {
 		int n = hex(colorValue, i1);
 		int m = hex(colorValue, i2);
 		return n * 16 + m;
 	}
 
-	private int hex(String colorValue, int i1) {
+	public static int hex(String colorValue, int i1) {
 		char c = colorValue.charAt(i1);
 		if (c >= '0' && c <= '9')
 			return c - '0';
 		return c - 'A' + 10;
 	}
 
-	private int b(String colorValue) {
+	public static int b(String colorValue) {
 		return hex(colorValue, 5, 6);
 	}
 
-	private int r(String colorValue) {
+	public static int r(String colorValue) {
 		return hex(colorValue, 1, 2);
 	}
 
-	private int g(String colorValue) {
+	public static int g(String colorValue) {
 		return hex(colorValue, 3, 4);
 	}
 
@@ -159,5 +160,9 @@ public class ColorField {
 
 	public void visible(boolean editable) {
 		button.visible(editable);
+	}
+
+	public IColored border() {
+		return button.border();
 	}
 }

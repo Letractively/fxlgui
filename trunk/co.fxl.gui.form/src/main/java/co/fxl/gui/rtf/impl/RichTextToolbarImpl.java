@@ -40,6 +40,7 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.form.impl.ColorField;
 import co.fxl.gui.form.impl.ColorField.Adapter;
+import co.fxl.gui.impl.ColorTemplate;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.IToolbar;
@@ -313,10 +314,6 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 			image.visible(editable);
 		}
 
-		void setImage(String resource) {
-			setImage(panel, resource);
-		}
-
 		void setImage(IToolbar panel, String resource) {
 			image = panel.add().image().resource(resource).size(20, 20);
 			if (IE_STANDARD)
@@ -415,23 +412,36 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 		}
 	}
 
+	private static final String PATTERN = "rgb\\(([0-9]*), ([0-9]*), ([0-9])*\\)";
+
 	private class ColorButton extends ToolbarElement implements Adapter {
 
 		private ColorField c;
 
 		private ColorButton() {
 			c = new ColorField(this, panel.add(), 22);
+			c.border().color().white();
+			c.updateColor("#000000");
 		}
 
 		@Override
 		void updateStatus() {
 			String textColor = htmlArea.textColor();
-			c.updateColor(textColor);
+			if (textColor.matches(PATTERN)) {
+				String[] cs = textColor.substring("rgb(".length(),
+						textColor.length() - 1).split(", ");
+				textColor = ColorTemplate.getHexColor(Integer.valueOf(cs[0]),
+						Integer.valueOf(cs[1]), Integer.valueOf(cs[2]));
+				c.updateColor(textColor);
+			}
 		}
 
 		@Override
 		public void text(String text) {
-			htmlArea.textColor(text);
+			int r = ColorField.r(text);
+			int g = ColorField.g(text);
+			int b = ColorField.b(text);
+			htmlArea.textColor("rgb(" + r + ", " + g + ", " + b + ")");
 			htmlArea.notifyChange();
 		}
 
