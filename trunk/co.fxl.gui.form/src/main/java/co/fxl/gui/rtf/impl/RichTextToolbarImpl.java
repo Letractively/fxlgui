@@ -38,6 +38,8 @@ import co.fxl.gui.api.ISuggestField.ISource;
 import co.fxl.gui.api.ITextInputElement;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.form.impl.ColorField;
+import co.fxl.gui.form.impl.ColorField.Adapter;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.Heights;
 import co.fxl.gui.impl.IToolbar;
@@ -311,6 +313,10 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 			image.visible(editable);
 		}
 
+		void setImage(String resource) {
+			setImage(panel, resource);
+		}
+
 		void setImage(IToolbar panel, String resource) {
 			image = panel.add().image().resource(resource).size(20, 20);
 			if (IE_STANDARD)
@@ -409,6 +415,30 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 		}
 	}
 
+	private class ColorButton extends ToolbarElement implements Adapter {
+
+		private ColorField c;
+
+		private ColorButton() {
+			c = new ColorField(this, panel.add(), 20);
+		}
+
+		@Override
+		void updateStatus() {
+			c.updateColor(htmlArea.textColor());
+		}
+
+		@Override
+		public void text(String text) {
+			htmlArea.textColor(text);
+		}
+
+		@Override
+		void editable(boolean editable) {
+			c.visible(editable);
+		}
+	}
+
 	private class TagButton extends ToolbarButton {
 
 		private boolean active;
@@ -492,6 +522,8 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 			TagButton b = new TagButton(tag);
 			buttons.add(b);
 		}
+		if (htmlArea.supportsColor())
+			buttons.add(new ColorButton());
 		grid.column(0).expand();
 		if (htmlArea instanceof IHTMLArea)
 			addZoomButton((IHTMLArea) htmlArea);

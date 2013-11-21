@@ -109,4 +109,19 @@ public class TemplateTextFieldImpl extends TextFieldAdp implements
 		return toolbar.addTokenButton();
 	}
 
+	@Override
+	public boolean supportsColor() {
+		return false;
+	}
+
+	@Override
+	public String textColor() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void textColor(String color) {
+		throw new UnsupportedOperationException();
+	}
+
 }
