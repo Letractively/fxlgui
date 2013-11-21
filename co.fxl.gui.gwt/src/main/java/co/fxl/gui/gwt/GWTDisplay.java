@@ -205,9 +205,11 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		Element bodyElement = RootPanel.getBodyElement();
 		Element newChild = DOM.createElement("style");
 		newChild.setInnerText(text);
-		com.google.gwt.dom.client.Element parentElement = bodyElement.getParentElement();
+		com.google.gwt.dom.client.Element parentElement = bodyElement
+				.getParentElement();
 		parentElement.insertBefore(newChild, bodyElement);
 		styles.add(newChild);
+		Log.instance().debug("Adding style: " + text);
 	}
 
 	void clearStyles() {
