@@ -111,8 +111,9 @@ class RowAdapter implements IRows<Object>, IComparableList {
 	@Override
 	public int compare(int firstIndex, int secondIndex) {
 		ScrollTableColumnImpl sortColumn = widget.sortColumn();
-		return widget.sortNegator
-				* sortColumn.compare(row(firstIndex), row(secondIndex));
+		Object[] l = row(firstIndex);
+		Object[] r = row(secondIndex);
+		return widget.sortNegator * sortColumn.compare(l, r);
 	}
 
 	@Override
