@@ -376,7 +376,8 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 				ids = rows.selectedIdentifiers();
 			rows = new RowAdapter(this, actualRows);
 			if (restoreSortAndSelection) {
-				rows.sort();
+				if (sortColumn() != null)
+					rows.sort();
 				if (ids != null)
 					rows.selected(ids);
 			}
