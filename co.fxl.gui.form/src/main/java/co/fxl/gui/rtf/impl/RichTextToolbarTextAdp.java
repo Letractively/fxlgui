@@ -41,4 +41,10 @@ public interface RichTextToolbarTextAdp {
 
 	boolean supports(Formatting f);
 
+	String textColor();
+
+	void textColor(String color);
+
+	boolean supportsColor();
+
 }

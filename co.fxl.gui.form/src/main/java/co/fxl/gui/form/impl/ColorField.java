@@ -30,6 +30,11 @@ import co.fxl.gui.impl.Display;
 
 public class ColorField {
 
+	public interface Adapter {
+
+		void text(String text);
+	}
+
 	private static final String[] COLORS = new String[] { "black", "#000000",
 			"gray", "#808080", "maroon", "#800000", "red", "#FF0000", "green",
 			"#008000", "lime", "#00FF00", "olive", "#808000", "yellow",
@@ -71,7 +76,7 @@ public class ColorField {
 					p.addGridClickListener(new IGridClickListener() {
 						@Override
 						public void onClick(int column, int row) {
-							tf.text(colorValue);
+							a.text(colorValue);
 							updateColor(colorValue);
 							popUp.visible(false);
 						}
@@ -82,21 +87,31 @@ public class ColorField {
 		}
 	}
 
-	private ITextField tf;
 	private IVerticalPanel button;
+	private Adapter a;
 
-	public ColorField(ITextField tf, IContainer c) {
-		this.tf = tf;
-		button = c.panel().vertical().size(16, 16);
-		button.add().image().resource("empty_14x14.png").size(14, 14);
-		button.border().width(1);
-		button.addClickListener(new PopUp());
+	public ColorField(final ITextField tf, IContainer c) {
+		this(new Adapter() {
+			@Override
+			public void text(String text) {
+				tf.text(text);
+			}
+		}, c, 16);
 		tf.addUpdateListener(new IUpdateListener<String>() {
 			@Override
 			public void onUpdate(String value) {
 				updateColor(value);
 			}
 		});
+	}
+
+	public ColorField(Adapter a, IContainer c, int size) {
+		this.a = a;
+		button = c.panel().vertical().size(size, size);
+		button.add().image().resource("empty_14x14.png")
+				.size(size - 2, size - 2);
+		button.border().width(1);
+		button.addClickListener(new PopUp());
 	}
 
 	public void updateColor(String colorValue) {
@@ -140,5 +155,9 @@ public class ColorField {
 		else
 			button.border().color().lightgray();
 		return this;
+	}
+
+	public void visible(boolean editable) {
+		button.visible(editable);
 	}
 }

@@ -31,6 +31,7 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea,
 	private IVerticalPanel panel;
 	private RichTextToolbarImpl toolbar;
 	private boolean ignore;
+	private String color = "black";
 
 	public HTMLAreaImpl(IContainer element) {
 		panel = element.panel().vertical();
@@ -229,6 +230,22 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea,
 	@Override
 	public ITokenButton addTokenButton() {
 		return toolbar.addTokenButton();
+	}
+
+	@Override
+	public String textColor() {
+		return color;
+	}
+
+	@Override
+	public void textColor(String color) {
+		this.color = color;
+		insert("<color='" + color + "'/>");
+	}
+
+	@Override
+	public boolean supportsColor() {
+		return true;
 	}
 
 }
