@@ -420,17 +420,19 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 		private ColorField c;
 
 		private ColorButton() {
-			c = new ColorField(this, panel.add(), 20);
+			c = new ColorField(this, panel.add(), 22);
 		}
 
 		@Override
 		void updateStatus() {
-			c.updateColor(htmlArea.textColor());
+			String textColor = htmlArea.textColor();
+			c.updateColor(textColor);
 		}
 
 		@Override
 		public void text(String text) {
 			htmlArea.textColor(text);
+			htmlArea.notifyChange();
 		}
 
 		@Override
