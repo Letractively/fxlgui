@@ -3,6 +3,7 @@ html, body { height:100%; width:100%; }
 body, table td, select, input { font-size:12px }
 hr { margin:0px; border:none; width:100%; border-top: 1px solid #E00060; color: #FFFFFF; background-color: #FFFFFF; height: 1px; }
 .shadowblur{ box-shadow: 4px 4px 5px #000000; -webkit-box-shadow: 4px 4px 5px #000000; -moz-box-shadow: 4px 4px 5px #000000; filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=4, offY=4, positive=true); }
+.embeddedpopup{ box-shadow: -2px 8px 54px #000000; -webkit-box-shadow: -2px 8px 54px #000000; -moz-box-shadow: -2px 8px 54px #000000; filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=-2, offY=8, positive=true); }
 .quickSearchShadow{ background: url(images/ico-search.png) no-repeat scroll 7px 7px; box-shadow: 0px 0px 6px #4BE1FF; -webkit-box-shadow: 0px 0px 6px #4BE1FF; -moz-box-shadow: 0px 0px 6px #4BE1FF; filter: progid:DXImageTransform.Microsoft.dropShadow(color=#4BE1FF, offX=0, offY=0, positive=true); }
 .shadowblurLight{ box-shadow: 2px 2px 3px #000000; -webkit-box-shadow: 2px 2px 3px #000000; -moz-box-shadow: 2px 2px 3px #000000; filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000000, offX=2, offY=2, positive=true); }
 .mozBorderRadius { -moz-border-radius: 3px; }
