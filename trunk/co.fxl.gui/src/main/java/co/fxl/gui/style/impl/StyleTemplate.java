@@ -35,7 +35,7 @@ public abstract class StyleTemplate implements IStyle {
 	static final String VIEWS = "Views";
 	static int WIDTH_COMBOBOX = 200;
 	static final int TABLE_SELECTION_PIXEL = 10;
-	private static final boolean USE_GLASS_WHEN_EMBEDDED = true;
+	private static final boolean USE_GLASS_WHEN_EMBEDDED = false;
 	private boolean embedded;
 
 	abstract class ViewTemplate extends LazyClickListener implements IView {
