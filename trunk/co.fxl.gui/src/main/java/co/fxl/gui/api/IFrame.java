@@ -1,6 +1,6 @@
 package co.fxl.gui.api;
 
-public interface IFrame extends IElement<IFrame> {
+public interface IFrame extends IElement<IFrame>, IBordered {
 
 	public interface ILoadListener {
 
