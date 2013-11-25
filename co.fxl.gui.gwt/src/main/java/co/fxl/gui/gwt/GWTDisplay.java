@@ -105,8 +105,9 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	public static boolean isFirefox3 = isFirefox
 			&& USER_AGENT.contains("Firefox/3.");
 	static boolean isChrome = USER_AGENT.contains("Chrome/");
-	public static boolean isInternetExplorer = USER_AGENT_LOWER_CASE
-			.contains("msie") || USER_AGENT_LOWER_CASE.contains("rv:");
+	public static boolean isInternetExplorer = !isFirefox
+			&& (USER_AGENT_LOWER_CASE.contains("msie") || USER_AGENT_LOWER_CASE
+					.contains("rv:"));
 	public static boolean isInternetExplorer8OrBelow = USER_AGENT_LOWER_CASE
 			.contains("msie 8.0")
 			|| USER_AGENT_LOWER_CASE.contains("msie 7.0")
