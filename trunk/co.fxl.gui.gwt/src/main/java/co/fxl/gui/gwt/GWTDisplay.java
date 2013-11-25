@@ -265,19 +265,19 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	private String getBrowserName() {
 		if (isChrome) {
-			assert !isSafari && !isInternetExplorer && !isOpera && !isFirefox;
+//			assert !isSafari && !isInternetExplorer && !isOpera && !isFirefox;
 			return co.fxl.gui.impl.Env.CHROME;
 		} else if (isOpera) {
-			assert !isSafari && !isInternetExplorer && !isChrome && !isFirefox;
+//			assert !isSafari && !isInternetExplorer && !isChrome && !isFirefox;
 			return co.fxl.gui.impl.Env.OPERA;
 		} else if (isInternetExplorer) {
-			assert !isSafari && !isChrome && !isOpera && !isFirefox;
+//			assert !isSafari && !isChrome && !isOpera && !isFirefox;
 			return co.fxl.gui.impl.Env.IE;
 		} else if (isFirefox) {
-			assert !isSafari && !isChrome && !isOpera && !isInternetExplorer;
+//			assert !isSafari && !isChrome && !isOpera && !isInternetExplorer;
 			return co.fxl.gui.impl.Env.FIREFOX;
 		} else if (isSafari) {
-			assert !isInternetExplorer && !isChrome && !isOpera && !isFirefox;
+//			assert !isInternetExplorer && !isChrome && !isOpera && !isFirefox;
 			return co.fxl.gui.impl.Env.SAFARI;
 		}
 		return co.fxl.gui.impl.Env.OTHER_BROWSER;
