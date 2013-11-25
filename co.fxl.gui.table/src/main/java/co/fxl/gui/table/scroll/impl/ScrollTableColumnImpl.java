@@ -58,10 +58,10 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 				column.align().center();
 		}
 
-		@Override
-		public int maxTokens() {
-			return name.length();
-		}
+//		@Override
+//		public int maxTokens() {
+//			return name.length();
+//		}
 	}
 
 	public class BooleanDecorator extends DefaultDecorator<Boolean> {
@@ -141,10 +141,10 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 			return weight;
 		}
 
-		@Override
-		public int maxTokens() {
-			return Math.max(isLong ? 24 : 12, super.maxTokens());
-		}
+//		@Override
+//		public int maxTokens() {
+//			return Math.max(isLong ? 24 : 12, super.maxTokens());
+//		}
 	}
 
 	public class NumberDecorator extends DefaultDecorator<Number> {
@@ -186,7 +186,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 
 		double defaultWeight();
 
-		int maxTokens();
+//		int maxTokens();
 	}
 
 	private static final boolean STYLE_NUMBERS_AND_DATES = false;
@@ -264,16 +264,16 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 			return weight;
 		}
 
-		@Override
-		public int maxTokens() {
-			if (isShort && type.getConstraints() != null) {
-				int max = super.maxTokens();
-				for (Object v : type.getConstraints())
-					max = Math.max(max, String.valueOf(v).length());
-				return name.length();
-			}
-			return -1;
-		}
+//		@Override
+//		public int maxTokens() {
+//			if (isShort && type.getConstraints() != null) {
+//				int max = super.maxTokens();
+//				for (Object v : type.getConstraints())
+//					max = Math.max(max, String.valueOf(v).length());
+//				return name.length();
+//			}
+//			return -1;
+//		}
 	}
 
 	public class HTMLDecorator implements Decorator<String> {
@@ -295,10 +295,10 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 			return WEIGHT_HTML;
 		}
 
-		@Override
-		public int maxTokens() {
-			return -1;
-		}
+//		@Override
+//		public int maxTokens() {
+//			return -1;
+//		}
 	}
 
 	public class ImageDecorator implements Decorator<String> {
@@ -319,10 +319,10 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 			return WEIGHT_IMAGE;
 		}
 
-		@Override
-		public int maxTokens() {
-			return -1;
-		}
+//		@Override
+//		public int maxTokens() {
+//			return -1;
+//		}
 	}
 
 	private static final double WEIGHT_BOOLEAN = 1;
