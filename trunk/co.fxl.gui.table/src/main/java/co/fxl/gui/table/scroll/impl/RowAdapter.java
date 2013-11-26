@@ -108,6 +108,7 @@ class RowAdapter implements IRows<Object>, IComparableList {
 	}
 
 	void sort() {
+		cached.clear();
 		quickSort.sort(this);
 	}
 
