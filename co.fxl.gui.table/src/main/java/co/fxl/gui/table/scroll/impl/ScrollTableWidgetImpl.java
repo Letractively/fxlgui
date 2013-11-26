@@ -138,6 +138,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private static final boolean ADD_TOP_PANEL_SPACING = Constants.get(
 			"ScrollTableWidgetImpl.ADD_TOP_PANEL_SPACING", false);
 	private static final boolean RELATION_REGISTER_CONTEXT_MENU = true;
+	private static final boolean USE_ROW_CACHING = true;
 	public static int MAX_CLIENT_SORT_SIZE = IFilterWidget.MIN_FILTER_SIZE - 1;
 	IVerticalPanel container;
 	private int height = 400;
@@ -896,9 +897,21 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			});
 		for (int r = 0; r < paintedRows; r++) {
 			int index = r + rowOffset;
-			updateSingleContentRow(grid, r, index);
+			if (rows.cached.get(index) == null || !USE_ROW_CACHING)
+				updateSingleContentRow(grid, r, index);
 		}
 		grid.visible(true);
+		if (USE_ROW_CACHING) {
+			for (int r = 0; r < paintedRows; r++) {
+				int index = r + rowOffset;
+				String html = rows.cached.get(index);
+				if (html != null)
+					grid.rowHtml(r, html);
+				else
+					rows.cached.put(index, grid.rowHtml(r));
+			}
+			grid.finishStyle();
+		}
 		if (!isCalibration) {
 			if (addDragAndDropDirectly && ADD_DRAG_AND_DROP
 					&& dragDropListener != null) {

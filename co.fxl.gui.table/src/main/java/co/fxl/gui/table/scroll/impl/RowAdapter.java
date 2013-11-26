@@ -18,8 +18,10 @@
  */
 package co.fxl.gui.table.scroll.impl;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.gui.table.impl.sort.IComparableList;
 import co.fxl.gui.table.impl.sort.QuickSort;
@@ -32,6 +34,7 @@ class RowAdapter implements IRows<Object>, IComparableList {
 	private int[] indices;
 	private boolean[] selected;
 	private ScrollTableWidgetImpl widget;
+	Map<Integer, String> cached = new HashMap<Integer, String>();
 
 	RowAdapter(ScrollTableWidgetImpl widget, IRows<Object> rows) {
 		this.widget = widget;
