@@ -66,6 +66,7 @@ import co.fxl.gui.impl.RuntimeConstants;
 import co.fxl.gui.impl.Shell;
 import co.fxl.gui.impl.ToolbarImpl;
 import co.fxl.gui.impl.WidgetTitle;
+import co.fxl.gui.log.impl.Log;
 import co.fxl.gui.style.impl.Style;
 import co.fxl.gui.table.api.ISelection;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget;
@@ -138,7 +139,6 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private static final boolean ADD_TOP_PANEL_SPACING = Constants.get(
 			"ScrollTableWidgetImpl.ADD_TOP_PANEL_SPACING", false);
 	private static final boolean RELATION_REGISTER_CONTEXT_MENU = true;
-	private static final boolean USE_ROW_CACHING = true;
 	public static int MAX_CLIENT_SORT_SIZE = IFilterWidget.MIN_FILTER_SIZE - 1;
 	IVerticalPanel container;
 	private int height = 400;
@@ -895,6 +895,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 				}
 
 			});
+		long s = System.currentTimeMillis();
 		for (int r = 0; r < paintedRows; r++) {
 			int index = r + rowOffset;
 			if (rows.cached.get(index) == null || !USE_ROW_CACHING)
@@ -912,6 +913,9 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			}
 			grid.finishStyle();
 		}
+		if (MEASURE_ROW_CACHING)
+			Log.instance().debug(
+					"Row drawn in " + (System.currentTimeMillis() - s) + "ms");
 		if (!isCalibration) {
 			if (addDragAndDropDirectly && ADD_DRAG_AND_DROP
 					&& dragDropListener != null) {
