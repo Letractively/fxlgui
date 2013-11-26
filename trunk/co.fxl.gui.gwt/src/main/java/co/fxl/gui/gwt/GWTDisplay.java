@@ -186,20 +186,20 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 					e.getElement().getStyle().setOverflowX(Overflow.AUTO);
 			}
 		};
-		if (Storage.isLocalStorageSupported()) {
-			register(new IServiceProvider<ILocalStorage>() {
-
-				@Override
-				public Class<ILocalStorage> serviceType() {
-					return ILocalStorage.class;
-				}
-
-				@Override
-				public ILocalStorage getService() {
-					return new GWTLocalStorage();
-				}
-			});
-		}
+//		if (Storage.isLocalStorageSupported()) {
+//			register(new IServiceProvider<ILocalStorage>() {
+//
+//				@Override
+//				public Class<ILocalStorage> serviceType() {
+//					return ILocalStorage.class;
+//				}
+//
+//				@Override
+//				public ILocalStorage getService() {
+//					return new GWTLocalStorage();
+//				}
+//			});
+//		}
 	}
 
 	void addStyle(String text) {
