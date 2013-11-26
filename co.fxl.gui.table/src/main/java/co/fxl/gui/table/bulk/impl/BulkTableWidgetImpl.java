@@ -567,7 +567,6 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 
 	@Override
 	public void finishStyle() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
