@@ -155,4 +155,10 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 	ContextMenu contextMenu();
 
 	IBulkTableWidget contextMenu(ContextMenu cm);
+
+	void finishStyle();
+
+	String rowHtml(int r);
+
+	void rowHtml(int r, String html);
 }

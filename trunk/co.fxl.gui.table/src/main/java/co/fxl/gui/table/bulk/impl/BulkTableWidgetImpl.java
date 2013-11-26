@@ -564,4 +564,18 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 		contextMenu = cm;
 		return this;
 	}
+
+	@Override
+	public void finishStyle() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String rowHtml(int r) {
+		return null;
+	}
+
+	@Override
+	public void rowHtml(int r, String html) {
+	}
 }
