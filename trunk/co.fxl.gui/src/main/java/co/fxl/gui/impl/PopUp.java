@@ -92,6 +92,7 @@ public class PopUp implements RuntimeConstants {
 
 	public static IPopUp showPopUp(boolean withBorder, boolean bulkClose) {
 		final IPopUp popUp = display.showPopUp();
+		Style.instance().popUp().background(popUp);
 		if (active && bulkClose) {
 			visiblePopUps.add(popUp);
 			popUp.addVisibleListener(new IUpdateListener<Boolean>() {

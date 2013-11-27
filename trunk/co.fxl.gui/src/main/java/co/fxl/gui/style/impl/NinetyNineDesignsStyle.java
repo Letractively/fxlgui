@@ -1082,8 +1082,11 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 			@Override
 			public void background(IColored c) {
 				c.color().white();
-				if (embedded())
+				if (embedded()) {
 					((IElement<?>) c).addStyle("embeddedpopup");
+					if (c instanceof IBordered)
+						((IBordered) c).border().style().rounded().width(6);
+				}
 			}
 		};
 	}
