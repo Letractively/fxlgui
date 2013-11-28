@@ -453,7 +453,8 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 		void setOffset(IVerticalPanel p) {
 			int x = more.offsetX() - p.width() + 10;
 			int y = applicationPanel.offsetY() + applicationPanel.height();
-			popUp.offset(x, y);
+			if (popUp != null)
+				popUp.offset(x, y);
 		}
 
 		void closePopUp() {
