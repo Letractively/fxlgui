@@ -36,6 +36,7 @@ import co.fxl.gui.impl.Display;
 class SwingPopUp implements IPopUp, ComponentParent {
 
 	private static final int _12 = 0;
+	private static final boolean AUTO_HIDE_PREVIOUS = false;
 	private SwingDisplay panel;
 	private Popup dialog;
 	private int x = 0;
@@ -93,7 +94,7 @@ class SwingPopUp implements IPopUp, ComponentParent {
 	@Override
 	public IPopUp visible(boolean visible) {
 		this.visible = visible;
-		if (autoHide) {
+		if (autoHide && AUTO_HIDE_PREVIOUS) {
 			if (SwingDisplay.popUp() != null && SwingDisplay.popUp() != this) {
 				SwingDisplay.popUp().visible(false);
 				SwingDisplay.popUp(null);
