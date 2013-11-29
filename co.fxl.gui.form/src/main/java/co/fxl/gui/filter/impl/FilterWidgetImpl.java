@@ -107,6 +107,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	private boolean hyperlinksAdded;
 	private boolean noDiscardChangesDialog;
 	private ILabel titleLabel;
+	private String nextConfigurationToConfigure;
 
 	FilterWidgetImpl() {
 	}
@@ -145,6 +146,9 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			return;
 		if (filterList.get(configuration) != null)
 			update(isInit);
+		else
+			throw new UnsupportedOperationException("Filter configuration "
+					+ value + " has not been set");
 	}
 
 	@Override
@@ -158,7 +162,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			configurationComboBox.addText(config);
 		if (firstConfiguration.equals(IFilterConstraints.COMMON))
 			firstConfiguration = config;
-		configuration = config;
+		nextConfigurationToConfigure = config;
 		return this;
 	}
 
@@ -272,10 +276,10 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	}
 
 	private void addFilterImpl(FilterImpl filter) {
-		List<FilterImpl> l = filterList.get(configuration);
+		List<FilterImpl> l = filterList.get(nextConfigurationToConfigure);
 		if (l == null) {
 			l = new LinkedList<FilterImpl>();
-			filterList.put(configuration, l);
+			filterList.put(nextConfigurationToConfigure, l);
 		}
 		l.add(filter);
 	}
