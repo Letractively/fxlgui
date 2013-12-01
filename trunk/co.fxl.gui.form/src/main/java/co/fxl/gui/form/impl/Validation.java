@@ -114,6 +114,11 @@ public class Validation {
 		@Override
 		public void required(boolean status) {
 		}
+
+		@Override
+		public boolean visible() {
+			return valueElement.visible();
+		}
 	}
 
 	public interface IField {
@@ -135,6 +140,8 @@ public class Validation {
 		boolean matches(Object valueElement);
 
 		void required(boolean status);
+
+		boolean visible();
 
 	}
 
@@ -241,6 +248,11 @@ public class Validation {
 		public void required(boolean status) {
 			required = status;
 		}
+
+		@Override
+		public boolean visible() {
+			return textElement.visible();
+		}
 	}
 
 	private final static IFormat<Date> DATE_FORMAT = Format.date();
@@ -266,6 +278,8 @@ public class Validation {
 		isSpecified = isNew;
 		boolean allRequiredSpecified = true;
 		for (IField field : fields) {
+			if (!field.visible())
+				continue;
 			if (field.isSpecified())
 				isSpecified = true;
 			if (allRequiredSpecified)
