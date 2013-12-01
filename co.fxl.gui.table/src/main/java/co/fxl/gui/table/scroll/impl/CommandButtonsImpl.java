@@ -149,7 +149,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		}
 
 		private void execute(IRows<Object> result) {
-			widget.listeners.clear();
+//			widget.listeners.clear();
 			widget.visible(result);
 		}
 	}
