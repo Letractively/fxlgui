@@ -1082,8 +1082,8 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 			@Override
 			public void background(IPopUp p) {
 				p.color().white();
-				if (embedded())
-					p.border().style().rounded().width(6);
+				// if (embedded())
+				// p.border().style().rounded().width(6);
 			}
 
 			@Override
