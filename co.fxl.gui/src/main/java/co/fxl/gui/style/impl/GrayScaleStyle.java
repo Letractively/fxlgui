@@ -663,8 +663,13 @@ class GrayScaleStyle extends StyleTemplate {
 		return new IPopUpWindow() {
 
 			@Override
-			public void background(IColored popUp) {
-				popUp.color().gray(245);
+			public void background(IPopUp p) {
+				p.color().gray(245);
+			}
+
+			@Override
+			public void background(IVerticalPanel p) {
+				p.color().gray(245);
 			}
 		};
 	}

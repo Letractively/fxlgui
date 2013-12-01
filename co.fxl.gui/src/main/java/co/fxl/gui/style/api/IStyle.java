@@ -173,7 +173,9 @@ public interface IStyle {
 
 	public interface IPopUpWindow {
 
-		void background(IColored colored);
+		void background(IPopUp p);
+
+		void background(IVerticalPanel p);
 
 	}
 

@@ -30,7 +30,6 @@ import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IDisplay;
-import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IFontElement;
 import co.fxl.gui.api.IFontElement.IFont;
@@ -1081,12 +1080,18 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 		return new IPopUpWindow() {
 
 			@Override
-			public void background(IColored c) {
-				c.color().white();
+			public void background(IPopUp p) {
+				p.color().white();
+				if (embedded())
+					p.border().style().rounded().width(6);
+			}
+
+			@Override
+			public void background(IVerticalPanel p) {
+				p.color().white();
 				if (embedded()) {
-					((IElement<?>) c).addStyle("embeddedpopup");
-					if (c instanceof IBordered)
-						((IBordered) c).border().style().rounded().width(6);
+					p.addStyle("embeddedpopup");
+					p.border().style().rounded().width(6);
 				}
 			}
 		};
