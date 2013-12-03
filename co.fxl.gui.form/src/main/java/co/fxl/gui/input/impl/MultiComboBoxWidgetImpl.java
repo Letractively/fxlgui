@@ -92,6 +92,11 @@ class MultiComboBoxWidgetImpl extends ComboBoxAdp implements
 	}
 
 	@Override
+	public boolean visible() {
+		return textField.visible();
+	}
+
+	@Override
 	public IColor color() {
 		return textField.color();
 	}
