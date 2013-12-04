@@ -21,6 +21,7 @@ package co.fxl.gui.impl;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IDisplay.IResizeConfiguration;
+import co.fxl.gui.api.IFrame;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IResizable.IResizeListener;
 import co.fxl.gui.api.IScrollPane;
@@ -41,12 +42,14 @@ public class FullscreenPopUp {
 	private IScrollPane scrollPane;
 	private WidgetTitle panel;
 	private ITextArea ta;
+	private IFrame frame;
 
 	public FullscreenPopUp(String title) {
 		updateSpacingLeft();
 		d = Display.instance();
 		popUp = co.fxl.gui.impl.PopUp.showClosablePopUp(true, null, false).popUp
-				.modal(true).offset(spacingLeft, spacingTop).autoHide(true).glass(Style.instance().glass());
+				.modal(true).offset(spacingLeft, spacingTop).autoHide(true)
+				.glass(Style.instance().glass());
 		popUp.border().remove().style().shadow().color().black();
 		panel = new WidgetTitle(popUp.container()).spacing(0).sideWidget(true)
 				.commandsOnTop().spacing(0);
@@ -77,6 +80,13 @@ public class FullscreenPopUp {
 		ta.margin().left(10).top(10);
 		setUp();
 		return ta;
+	}
+
+	public IFrame frame() {
+		frame = scrollPane.viewPort().frame().width(FIXED_WIDTH - 20);
+		frame.margin().left(10).top(10);
+		setUp();
+		return frame;
 	}
 
 	private void setUp() {
@@ -115,6 +125,10 @@ public class FullscreenPopUp {
 				- Style.instance().exportHtml().decrementY());
 		if (ta != null) {
 			ta.height(d.height() - spacingTop * 2 - HEIGHT_TOP - 15
+					- Style.instance().exportHtml().decrementY());
+		}
+		if (frame != null) {
+			frame.height(d.height() - spacingTop * 2 - HEIGHT_TOP - 15
 					- Style.instance().exportHtml().decrementY());
 		}
 	}
