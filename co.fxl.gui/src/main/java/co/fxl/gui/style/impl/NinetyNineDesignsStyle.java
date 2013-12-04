@@ -927,8 +927,17 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 			}
 
 			void saveButton(int inc, IColor background) {
-				background.rgb(79 + inc, 122 + inc, 201 + inc).gradient()
-						.vertical().rgb(63 + inc, 106 + inc, 188 + inc);
+				background
+						.rgb(colorRange(79 + inc), colorRange(122 + inc),
+								colorRange(201 + inc))
+						.gradient()
+						.vertical()
+						.rgb(colorRange(63 + inc), colorRange(106 + inc),
+								colorRange(188 + inc));
+			}
+
+			private int colorRange(int i) {
+				return Math.min(i, 255);
 			}
 
 			@Override
