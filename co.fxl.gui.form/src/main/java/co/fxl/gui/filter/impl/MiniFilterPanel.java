@@ -169,7 +169,7 @@ class MiniFilterPanel implements FilterPanel {
 			// }
 			// }
 
-			private IContainer container;
+			private IContainer container = null;
 
 			CellImpl() {
 				container = cardPanel.add();
@@ -196,6 +196,11 @@ class MiniFilterPanel implements FilterPanel {
 			@Override
 			public IDockPanel dock() {
 				return container.panel().dock();
+			}
+
+			public IContainer container() {
+				assert container != null;
+				return container;
 			}
 		}
 
@@ -226,7 +231,10 @@ class MiniFilterPanel implements FilterPanel {
 		}
 
 		void visible() {
-			cardPanel.show(index2cell.get(0).container.element());
+			CellImpl cellImpl = index2cell.get(0);
+			assert cellImpl != null : index2cell.toString();
+			IContainer container = cellImpl.container();
+			cardPanel.show(container.element());
 			if (index2cell.size() == 1)
 				comboBox.editable(false);
 			else
@@ -253,8 +261,8 @@ class MiniFilterPanel implements FilterPanel {
 		public void onUpdate(String value) {
 			Integer key = name2index.get(value);
 			if (key == null)
-				Log.instance().error(value
-						+ " not found in " + name2index.keySet());
+				Log.instance().error(
+						value + " not found in " + name2index.keySet());
 			CellImpl c = index2cell.get(key);
 			if (c == null)
 				throw new UnsupportedOperationException(key + " not found in "
