@@ -107,7 +107,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	private boolean hyperlinksAdded;
 	private boolean noDiscardChangesDialog;
 	private ILabel titleLabel;
-	private String nextConfigurationToConfigure;
+	private String nextConfigurationToConfigure = IFilterConstraints.COMMON;
 
 	FilterWidgetImpl() {
 	}
