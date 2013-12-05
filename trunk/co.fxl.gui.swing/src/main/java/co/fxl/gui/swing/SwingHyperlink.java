@@ -89,4 +89,10 @@ class SwingHyperlink implements IHyperlink {
 			}
 		};
 	}
+
+	@Override
+	public IHyperlink openNewWindow(boolean openNewWindow) {
+		// TODO ... throw new UnsupportedOperationException();
+		return this;
+	}
 }

@@ -25,4 +25,6 @@ public interface IHyperlink extends IClickable<IHyperlink> {
 	IHyperlink uRI(String uRI);
 
 	IHyperlink localURI(String string);
+
+	IHyperlink openNewWindow(boolean openNewWindow);
 }
