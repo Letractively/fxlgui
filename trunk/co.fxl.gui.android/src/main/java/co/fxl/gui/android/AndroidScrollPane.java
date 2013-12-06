@@ -265,6 +265,11 @@ class AndroidScrollPane implements IScrollPane, Parent {
 		};
 	}
 
+	@Override
+	public IScrollPane removeStyle(String style) {
+		throw new UnsupportedOperationException();
+	}
+
 	// @Override
 	// public IScrollbar scrollbar() {
 	// throw new UnsupportedOperationException();

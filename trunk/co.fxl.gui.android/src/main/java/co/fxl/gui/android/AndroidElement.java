@@ -297,4 +297,9 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 		};
 	}
 
+	@Override
+	public T removeStyle(String style) {
+		throw new UnsupportedOperationException();
+	}
+
 }

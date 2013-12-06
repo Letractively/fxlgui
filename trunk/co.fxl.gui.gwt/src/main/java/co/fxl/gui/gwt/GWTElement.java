@@ -884,6 +884,13 @@ public class GWTElement<T extends Widget, R> implements IElement<R>,
 
 	@SuppressWarnings("unchecked")
 	@Override
+	public R removeStyle(String style) {
+		container.widget.removeStyleName(style);
+		return (R) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
 	public ICursor<R> cursor() {
 		return new GWTCursor<R>((R) this, container.widget);
 	}
