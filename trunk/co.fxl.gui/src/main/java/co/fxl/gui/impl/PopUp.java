@@ -68,6 +68,7 @@ public class PopUp implements RuntimeConstants {
 
 		public TransparentPopUp removeBlurredShadow() {
 			panel.removeStyle("embeddedpopup");
+			panel.border().style().solid().color().black();
 			return this;
 		}
 	}
