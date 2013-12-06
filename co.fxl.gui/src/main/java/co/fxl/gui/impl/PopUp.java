@@ -65,6 +65,11 @@ public class PopUp implements RuntimeConstants {
 						});
 			}
 		}
+
+		public TransparentPopUp removeBlurredShadow() {
+			panel.removeStyle("embeddedpopup");
+			return this;
+		}
 	}
 
 	private static final boolean ALLOW_CLOSABLE_POPUP = true;

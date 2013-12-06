@@ -272,4 +272,11 @@ public class ElementAdp<T extends IElement<T>> implements IElement<T>,
 		};
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public T removeStyle(String style) {
+		element().removeStyle(style);
+		return (T) this;
+	}
+
 }

@@ -121,7 +121,7 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 		@Override
 		void handleClick() {
 			final TransparentPopUp p = PopUp
-					.showClosablePopUp(true, null, true);
+					.showClosablePopUp(true, null, true).removeBlurredShadow();
 			p.panel.padding(10);
 			int y = label.offsetY() + label.height();
 			p.popUp.offset(label.offsetX() - 4, y);
