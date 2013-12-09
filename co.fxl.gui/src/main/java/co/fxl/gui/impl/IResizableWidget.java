@@ -26,8 +26,9 @@ public interface IResizableWidget extends IResizeListener {
 
 	public class Size {
 
+		private static final int MIN_WIDTH = StatusDisplay.MIN_WIDTH - 54;
 		public int widthDecrement;
-		public int minWidth;
+		private int minWidth;
 		public int heightDecrement;
 		public int minHeight;
 
@@ -47,6 +48,9 @@ public interface IResizableWidget extends IResizeListener {
 			return heightDecrement != 0 || widthDecrement != 0;
 		}
 
+		public int minWidth() {
+			return minWidth > MIN_WIDTH ? MIN_WIDTH : minWidth;
+		}
 		// public boolean defined() {
 		// return widthDecrement != 0 || heightDecrement != 0;
 		// }
