@@ -112,7 +112,7 @@ public class PopUpPageContainer implements PageContainer, RuntimeConstants {
 
 	@Override
 	public void resize() {
-		int w = Math.max(popUpSize.minWidth, Shell.instance().dwidth()
+		int w = Math.max(popUpSize.minWidth(), Shell.instance().dwidth()
 				- popUpSize.widthDecrement);
 		int h = Math.max(popUpSize.minHeight, Shell.instance().dheight()
 				- popUpSize.heightDecrement);

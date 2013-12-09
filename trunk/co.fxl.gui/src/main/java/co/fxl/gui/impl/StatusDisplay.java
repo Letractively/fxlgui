@@ -39,7 +39,7 @@ import co.fxl.gui.style.impl.Style;
 public class StatusDisplay implements IResizeListener, Runnable,
 		IScrollListener, IShell, RuntimeConstants {
 
-	private static final int MIN_WIDTH = 954;
+	public static final int MIN_WIDTH = 954;
 
 	public interface RefreshListener {
 
