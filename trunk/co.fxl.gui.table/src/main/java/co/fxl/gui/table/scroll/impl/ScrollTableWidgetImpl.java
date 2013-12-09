@@ -288,6 +288,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	private boolean horizontalLines = true;
 	String title;
 	boolean showLabels;
+	private boolean useRowCaching = USE_ROW_CACHING;
 
 	// private boolean nextTimeShowPopUp;
 
@@ -898,11 +899,11 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		long s = System.currentTimeMillis();
 		for (int r = 0; r < paintedRows; r++) {
 			int index = r + rowOffset;
-			if (rows.cached.get(index) == null || !USE_ROW_CACHING)
+			if (rows.cached.get(index) == null || !useRowCaching)
 				updateSingleContentRow(grid, r, index);
 		}
 		grid.visible(true);
-		if (USE_ROW_CACHING) {
+		if (useRowCaching) {
 			for (int r = 0; r < paintedRows; r++) {
 				int index = r + rowOffset;
 				String html = rows.cached.get(index);
@@ -1813,6 +1814,11 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		} else if (columns.indexOf(dragged) == sortColumn) {
 			sortColumn = columnList().indexOf(c);
 		}
+	}
+
+	@Override
+	public void useRowCaching(boolean b) {
+		useRowCaching = b;
 	}
 
 }

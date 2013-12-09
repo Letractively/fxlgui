@@ -26,6 +26,8 @@ public interface TableWidgetAdp {
 
 	void notifySwap(ScrollTableColumnImpl c, ScrollTableColumnImpl dragged);
 
+	void useRowCaching(boolean b);
+
 	// void nextTimeShowPopUp(boolean b);widget.columnList()
 	//
 	// boolean nextTimeShowPopUp();
