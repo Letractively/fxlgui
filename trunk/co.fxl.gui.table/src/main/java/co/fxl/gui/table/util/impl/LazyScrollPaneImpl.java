@@ -87,6 +87,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	IDragDropListener dragDropListener;
 	private IUpDownIndex upDownIndex;
 	private boolean addToContextMenu = true;
+	private int headerHeight;
 
 	LazyScrollPaneImpl(IContainer container) {
 		this.container = container;
@@ -164,6 +165,19 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 			v.visible(false);
 		}
 		return this;
+	}
+
+	private int headerHeight() {
+		int hHeight = decorator.headerHeight();
+		if (adjustHeights) {
+			if (hHeight > headerHeight) {
+				int inc = hHeight - headerHeight;
+				headerHeight = hHeight;
+				heightEstimate += inc;
+				updateScrollPanelHeight();
+			}
+		}
+		return hHeight;
 	}
 
 	@Override
@@ -252,7 +266,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 			return;
 		}
 		treeDockPanel.visible(true);
-		int h = hasHeader ? decorator.headerHeight() : 0;
+		int h = hasHeader ? headerHeight() : 0;
 		h += adjustHeights ? rowHeight(lastIndex) : minRowHeight;
 		assert lastIndex >= 0;
 		maxRowIndex = lastIndex;
