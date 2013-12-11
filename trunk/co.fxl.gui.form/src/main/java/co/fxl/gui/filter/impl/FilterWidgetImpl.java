@@ -148,7 +148,8 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 			update(isInit);
 		else
 			throw new UnsupportedOperationException("Filter configuration "
-					+ value + " has not been set");
+					+ value + " has not been set, not found in "
+					+ filterList.keySet());
 	}
 
 	@Override
