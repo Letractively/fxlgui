@@ -149,7 +149,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 		}
 
 		private void execute(IRows<Object> result) {
-//			widget.listeners.clear();
+			// widget.listeners.clear();
 			widget.visible(result);
 		}
 	}
@@ -260,6 +260,7 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 	private Entry bottomContext;
 	private IRowListener<IRows<Object>> listenOnExpand;
 	private boolean showLabels = true;
+	private boolean tableClickListenerAdded;
 
 	CommandButtonsImpl(ScrollTableWidgetImpl widget) {
 		this.widget = widget;
@@ -373,16 +374,19 @@ public class CommandButtonsImpl implements ICommandButtons<Object>,
 			final Update clickListener = editListener();
 			edit.addClickListener(clickListener);
 			edit.clickable(!widget.preselectedList.isEmpty());
-			widget.addTableClickListener(new IScrollTableClickListener() {
+			if (!tableClickListenerAdded) {
+				widget.addTableClickListener(new IScrollTableClickListener() {
 
-				@Override
-				public void onClick(Object identifier, int rowIndex) {
-					widget.rows.selected(rowIndex);
-					selectionList.add(identifier);
-					// selectionIndex = rowIndex;
-					clickListener.onClick();
-				}
-			}).doubleClick();
+					@Override
+					public void onClick(Object identifier, int rowIndex) {
+						widget.rows.selected(rowIndex);
+						selectionList.add(identifier);
+						// selectionIndex = rowIndex;
+						clickListener.onClick();
+					}
+				}).doubleClick();
+				tableClickListenerAdded = true;
+			}
 		}
 		if (listenOnMoveUp) {
 			imageUpMax = addMoveImage(IBulkTableWidget.ARROW_UP,
