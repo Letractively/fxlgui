@@ -22,6 +22,7 @@ public class Page {
 
 	private static Page active = null;
 	private ContextMenu contextMenu;
+	private Boolean discardChangesState;
 
 	private Page() {
 		activate();
@@ -33,10 +34,21 @@ public class Page {
 	}
 
 	public static Page newInstance() {
+		if (active != null)
+			active.deactivate();
 		return new Page();
 	}
 
+	private void deactivate() {
+		discardChangesState = DiscardChangesDialog.active();
+		DiscardChangesDialog.active(false);
+	}
+
 	public void activate() {
+		if (discardChangesState != null) {
+			DiscardChangesDialog.active(discardChangesState);
+			discardChangesState = null;
+		}
 		active = this;
 		if (contextMenu != null)
 			contextMenu.activate();
