@@ -95,4 +95,8 @@ public class DiscardChangesDialog {
 		active(false);
 		listener = null;
 	}
+
+	public static boolean active() {
+		return active;
+	}
 }
