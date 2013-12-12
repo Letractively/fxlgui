@@ -37,6 +37,7 @@ public abstract class StyleTemplate implements IStyle {
 	static final int TABLE_SELECTION_PIXEL = 10;
 	private static final boolean USE_GLASS_WHEN_EMBEDDED = false;
 	private boolean embedded;
+	private boolean allowDetailView = true;
 
 	abstract class ViewTemplate extends LazyClickListener implements IView {
 
@@ -200,6 +201,16 @@ public abstract class StyleTemplate implements IStyle {
 	@Override
 	public boolean glass() {
 		return USE_GLASS_WHEN_EMBEDDED || !embedded;
+	}
+
+	@Override
+	public boolean allowDetailView() {
+		return allowDetailView;
+	}
+
+	@Override
+	public void allowDetailView(boolean allowDetailView) {
+		this.allowDetailView = allowDetailView;
 	}
 
 }
