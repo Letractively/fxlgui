@@ -450,4 +450,8 @@ public interface IStyle {
 
 	IButtonImage button();
 
+	boolean allowDetailView();
+
+	void allowDetailView(boolean allowDetailView);
+
 }
