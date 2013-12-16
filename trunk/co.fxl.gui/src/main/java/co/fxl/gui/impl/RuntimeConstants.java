@@ -20,9 +20,6 @@ package co.fxl.gui.impl;
 
 public interface RuntimeConstants {
 
-	public static final boolean USE_ROW_CACHING = true;
-	public static final boolean MEASURE_ROW_CACHING = false;
-
 	public static final boolean USE_QUIRKS_MODE = true;
 	public static final boolean USE_STANDARDS_MODE = !USE_QUIRKS_MODE;
 
@@ -49,5 +46,9 @@ public interface RuntimeConstants {
 			13);
 	public static final boolean IE_STANDARD = !USE_QUIRKS_MODE && IE_LEQ_9;
 	public static final boolean IE_QUIRKS = USE_QUIRKS_MODE && IE_LEQ_9;
+
+	public static final boolean USE_ROW_CACHING = !IE_LEQ_8;
+	public static final boolean MEASURE_ROW_CACHING = false;
+
 
 }
