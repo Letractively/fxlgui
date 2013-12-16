@@ -50,5 +50,4 @@ public interface RuntimeConstants {
 	public static final boolean USE_ROW_CACHING = !IE_LEQ_8;
 	public static final boolean MEASURE_ROW_CACHING = false;
 
-
 }
