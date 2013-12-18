@@ -20,12 +20,17 @@ package co.fxl.gui.api;
 
 public interface IFlowPanel extends IPanel<IFlowPanel> {
 
+	public interface ILineBreak {
+
+		void remove();
+	}
+
 	IFlowPanel spacing(int spacing);
 
 	IFlowPanel addSpace(int space);
 
 	IAlignment<IFlowPanel> align();
 
-	IFlowPanel addLineBreak();
+	ILineBreak addLineBreak();
 
 }
