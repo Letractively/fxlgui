@@ -1821,4 +1821,14 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		useRowCaching = b;
 	}
 
+	@Override
+	public int size() {
+		return rows.size();
+	}
+
+	@Override
+	public Object get(int i) {
+		return rows.identifier(i);
+	}
+
 }
