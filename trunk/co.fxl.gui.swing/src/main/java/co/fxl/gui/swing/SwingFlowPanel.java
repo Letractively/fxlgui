@@ -74,7 +74,11 @@ class SwingFlowPanel extends SwingPanel<IFlowPanel> implements IFlowPanel,
 	}
 
 	@Override
-	public IFlowPanel addLineBreak() {
-		return this;
+	public ILineBreak addLineBreak() {
+		return new ILineBreak() {
+			@Override
+			public void remove() {
+			}
+		};
 	}
 }

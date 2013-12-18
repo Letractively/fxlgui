@@ -134,12 +134,17 @@ public class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 	}
 
 	@Override
-	public IFlowPanel addLineBreak() {
-		ParagraphElement e = Document.get().createPElement();
+	public ILineBreak addLineBreak() {
+		final ParagraphElement e = Document.get().createPElement();
 		Style style = e.getStyle();
 		style.setHeight(0, Unit.PX);
 		style.setMargin(0, Unit.PX);
 		container.widget.getElement().appendChild(e);
-		return this;
+		return new ILineBreak() {
+			@Override
+			public void remove() {
+				e.removeFromParent();
+			}
+		};
 	}
 }
