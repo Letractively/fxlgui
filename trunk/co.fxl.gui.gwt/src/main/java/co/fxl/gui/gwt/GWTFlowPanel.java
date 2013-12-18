@@ -21,6 +21,9 @@ package co.fxl.gui.gwt;
 import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IFlowPanel;
 
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.ParagraphElement;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -128,5 +131,15 @@ public class GWTFlowPanel extends GWTPanel<FlowPanel, IFlowPanel> implements
 	private void updateFloatValueWidget(Widget widget) {
 		if (SET_FLOAT_LEFT)
 			widget.getElement().getStyle().setProperty("float", floatValue);
+	}
+
+	@Override
+	public IFlowPanel addLineBreak() {
+		ParagraphElement e = Document.get().createPElement();
+		Style style = e.getStyle();
+		style.setHeight(0, Unit.PX);
+		style.setMargin(0, Unit.PX);
+		container.widget.getElement().appendChild(e);
+		return this;
 	}
 }
