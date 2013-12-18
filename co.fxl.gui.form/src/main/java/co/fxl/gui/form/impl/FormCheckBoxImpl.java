@@ -23,8 +23,9 @@ import co.fxl.gui.form.api.IFormField;
 
 class FormCheckBoxImpl extends FormFieldImpl<ICheckBox, Boolean> {
 
-	FormCheckBoxImpl(FormWidgetImpl widget, int index, String name) {
-		super(widget, index, name);
+	FormCheckBoxImpl(boolean newLine, FormWidgetImpl widget, int index,
+			String name) {
+		super(newLine, widget, index, name);
 	}
 
 	@Override

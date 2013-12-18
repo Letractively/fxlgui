@@ -25,8 +25,9 @@ class FormColorFieldImpl extends FormTextFieldImpl<String> {
 
 	private ColorField colorField;
 
-	FormColorFieldImpl(final FormWidgetImpl widget, int index, String name) {
-		super(widget, index, name, null);
+	FormColorFieldImpl(boolean newLine, final FormWidgetImpl widget, int index,
+			String name) {
+		super(newLine, widget, index, name, null);
 		colorField = new ColorField(valueElement(), addContainer());
 		editable(widget.saveListener != null);
 	}

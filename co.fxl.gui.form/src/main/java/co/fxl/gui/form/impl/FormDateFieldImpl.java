@@ -31,9 +31,9 @@ class FormDateFieldImpl extends FormTextFieldImpl<Date> {
 
 	private DateField dateField;
 
-	FormDateFieldImpl(final FormWidgetImpl widget, int index, String name,
-			boolean addCalendar, IFormat<Date> f) {
-		super(widget, index, name, null);
+	FormDateFieldImpl(boolean newLine, final FormWidgetImpl widget, int index,
+			String name, boolean addCalendar, IFormat<Date> f) {
+		super(newLine, widget, index, name, null);
 		dateField = new DateField(valueElement(), addCalendar ? addContainer()
 				: null, addCalendar, f);
 		editable(widget.saveListener != null);

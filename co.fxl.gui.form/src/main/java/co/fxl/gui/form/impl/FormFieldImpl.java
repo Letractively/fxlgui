@@ -55,13 +55,16 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
 	T valueElement;
 	boolean useAssignButton;
 	IInputElementFactory f;
+	private boolean newLine;
 
-	public FormFieldImpl(FormWidgetImpl widget, int index, String name) {
-		this(widget, index, name, null, null);
+	public FormFieldImpl(boolean newLine, FormWidgetImpl widget, int index,
+			String name) {
+		this(newLine, widget, index, name, null, null);
 	}
 
-	public FormFieldImpl(FormWidgetImpl widget, int index, String name,
-			IFieldType type, IInputElementFactory f) {
+	public FormFieldImpl(boolean newLine, FormWidgetImpl widget, int index,
+			String name, IFieldType type, IInputElementFactory f) {
+		this.newLine = newLine;
 		this.widget = widget;
 		this.name = name;
 		this.f = f;
@@ -74,9 +77,9 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
 		paddingRight(8);
 	}
 
-	public FormFieldImpl(FormWidgetImpl widget, int index, String name,
-			IInputElementFactory f) {
-		this(widget, index, name, null, f);
+	public FormFieldImpl(boolean newLine, FormWidgetImpl widget, int index,
+			String name, IInputElementFactory f) {
+		this(newLine, widget, index, name, null, f);
 	}
 
 	@Override
@@ -90,7 +93,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
 	}
 
 	void createLabelColumn(int index) {
-		FormEntryLabel formEntryLabel = widget.addFormEntryLabel(name, index);
+		FormEntryLabel formEntryLabel = widget.addFormEntryLabel(newLine, name, index);
 		cell = formEntryLabel.cell;
 		label = formEntryLabel.formEntryLabel;
 	}

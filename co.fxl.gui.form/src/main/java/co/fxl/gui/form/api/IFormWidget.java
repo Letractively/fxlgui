@@ -85,33 +85,36 @@ public interface IFormWidget extends IResizable<IFormWidget> {
 
 	ILabel addTitle(String title);
 
-	IFormContainer add(String name);
+	// IFormContainer add(String name);
 
-	IFormContainer insert(int index, String name);
+	// IFormContainer insert(int index, String name);
 
-	IFormField<ILabel, String> addLabel(String name);
+	// IFormField<ILabel, String> addLabel(String name);
 
-	IFormField<ITextField, String> addTextField(String name, IFieldType type);
+	IFormField<ITextField, String> addTextField(boolean newLine, String name,
+			IFieldType type);
 
-	IFormField<ITextField, Date> addDateField(String name, boolean addCalendar,
-			IFormat<Date> f);
+	IFormField<ITextField, Date> addDateField(boolean newLine, String name,
+			boolean addCalendar, IFormat<Date> f);
 
-	IRelationField addRelationField(String name);
+	IRelationField addRelationField(boolean newLine, String name);
 
-	IFormField<ITextField, String> addColorField(String name);
+	IFormField<ITextField, String> addColorField(boolean newLine, String name);
 
-	IFormField<IPasswordField, String> addPasswordField(String name);
+	IFormField<IPasswordField, String> addPasswordField(boolean newLine,
+			String name);
 
 	IFormField<ITextArea, String> addTextArea(String name,
 			IInputElementFactory f);
 
 	IFormField<ITextArea, String> addTextArea(String name);
 
-	IFormField<ICheckBox, Boolean> addCheckBox(String name);
+	IFormField<ICheckBox, Boolean> addCheckBox(boolean newLine, String name);
 
-	IFormField<IComboBox, String> addComboBox(String name, IFieldType type);
+	IFormField<IComboBox, String> addComboBox(boolean newLine, String name,
+			IFieldType type);
 
-	IImageField addImage(String name);
+	// IImageField addImage(String name);
 
 	IClickable<?> addOKHyperlink();
 

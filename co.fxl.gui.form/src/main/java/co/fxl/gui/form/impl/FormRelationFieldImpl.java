@@ -28,8 +28,9 @@ class FormRelationFieldImpl extends FormFieldImpl<ISuggestField, String>
 
 	private ISuggestionAdp adp;
 
-	FormRelationFieldImpl(FormWidgetImpl widget, int index, String name) {
-		super(widget, index, name);
+	FormRelationFieldImpl(boolean newLine, FormWidgetImpl widget, int index,
+			String name) {
+		super(newLine, widget, index, name);
 	}
 
 	@Override

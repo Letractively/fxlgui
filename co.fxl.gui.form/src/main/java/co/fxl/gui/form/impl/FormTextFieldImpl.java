@@ -24,9 +24,9 @@ import co.fxl.gui.impl.IFieldType;
 
 class FormTextFieldImpl<R> extends FormFieldImpl<ITextField, R> {
 
-	FormTextFieldImpl(FormWidgetImpl widget, int index, String name,
-			IFieldType type) {
-		super(widget, index, name, type, null);
+	FormTextFieldImpl(boolean newLine, FormWidgetImpl widget, int index,
+			String name, IFieldType type) {
+		super(newLine, widget, index, name, type, null);
 	}
 
 	@Override

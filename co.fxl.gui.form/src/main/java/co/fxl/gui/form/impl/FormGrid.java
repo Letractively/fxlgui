@@ -23,7 +23,7 @@ import co.fxl.gui.api.IGridPanel.IGridCell;
 
 interface FormGrid {
 
-	IGridCell label(int row);
+	IGridCell label(boolean newLine, int row);
 
 	IGridCell value(int row, boolean expand);
 

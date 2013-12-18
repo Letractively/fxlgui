@@ -37,7 +37,7 @@ class FormGridImpl implements FormGrid {
 	}
 
 	@Override
-	public IGridCell label(int row) {
+	public IGridCell label(boolean newLine, int row) {
 		return grid.cell(0, row);
 	}
 

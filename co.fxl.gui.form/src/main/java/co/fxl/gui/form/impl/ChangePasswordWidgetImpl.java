@@ -77,15 +77,16 @@ class ChangePasswordWidgetImpl implements IChangePasswordWidget, IClickListener 
 	@Override
 	public IChangePasswordWidget visible(boolean visible) {
 		if (requiresCurrent) {
-			IFormField<IPasswordField, String> pw = widget
-					.addPasswordField("Current");
+			IFormField<IPasswordField, String> pw = widget.addPasswordField(
+					false, "Current");
 			currentPassword = pw.valueElement();
 			pw.required();
 		}
 		newPassword = widget
-				.addPasswordField(requiresCurrent ? "New" : "New Password")
-				.required().valueElement();
-		confirmPassword = widget.addPasswordField("Confirm").required()
+				.addPasswordField(false,
+						requiresCurrent ? "New" : "New Password").required()
+				.valueElement();
+		confirmPassword = widget.addPasswordField(false, "Confirm").required()
 				.valueElement();
 		widget.visible(true);
 		return this;
