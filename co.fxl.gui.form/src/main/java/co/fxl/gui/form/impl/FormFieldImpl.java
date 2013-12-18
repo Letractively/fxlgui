@@ -93,7 +93,8 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
 	}
 
 	void createLabelColumn(int index) {
-		FormEntryLabel formEntryLabel = widget.addFormEntryLabel(newLine, name, index);
+		FormEntryLabel formEntryLabel = widget.addFormEntryLabel(newLine, name,
+				index);
 		cell = formEntryLabel.cell;
 		label = formEntryLabel.formEntryLabel;
 	}
@@ -269,7 +270,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
 			widget.removeInput(this);
 		int index = getVisibleIndex();
 		if (visible) {
-			widget.grid.insertRow(index);
+			widget.grid.insertRow(newLine, index);
 			createLabelColumn(index);
 			createContentColumn(index);
 		} else {

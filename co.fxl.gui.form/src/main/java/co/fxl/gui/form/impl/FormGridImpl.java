@@ -61,7 +61,7 @@ class FormGridImpl implements FormGrid {
 	}
 
 	@Override
-	public void insertRow(int index) {
+	public void insertRow(boolean newLine, int index) {
 		row(index).insert();
 	}
 
