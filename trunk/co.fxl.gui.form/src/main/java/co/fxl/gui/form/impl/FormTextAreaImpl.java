@@ -27,7 +27,7 @@ class FormTextAreaImpl extends FormFieldImpl<ITextArea, String> {
 
 	FormTextAreaImpl(FormWidgetImpl widget, int index, String name,
 			IInputElementFactory f) {
-		super(widget, index, name, f);
+		super(false, widget, index, name, f);
 	}
 
 	@Override

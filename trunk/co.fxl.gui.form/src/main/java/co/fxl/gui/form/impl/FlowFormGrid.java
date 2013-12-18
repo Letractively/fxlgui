@@ -117,7 +117,10 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 	}
 
 	@Override
-	public IGridCell label(int row) {
+	public IGridCell label(boolean newLine, int row) {
+
+		// TODO ... new line
+
 		return getGridPanel(row).cell(0, 0);
 	}
 

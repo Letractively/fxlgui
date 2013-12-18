@@ -24,7 +24,7 @@ import co.fxl.gui.rtf.api.IHTMLArea;
 public class FormRichTextAreaImpl extends FormFieldImpl<IHTMLArea, String> {
 
 	FormRichTextAreaImpl(FormWidgetImpl widget, int index, String name) {
-		super(widget, index, name);
+		super(false, widget, index, name);
 	}
 
 	@Override

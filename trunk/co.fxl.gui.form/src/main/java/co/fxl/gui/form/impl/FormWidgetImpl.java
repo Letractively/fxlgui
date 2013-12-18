@@ -100,9 +100,9 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 		widgetTitle.foldable(false);
 	}
 
-	FormEntryLabel addFormEntryLabel(String name, int gridIndex) {
+	FormEntryLabel addFormEntryLabel(boolean newLine, String name, int gridIndex) {
 		FormGrid grid = grid();
-		IGridCell cell = grid.label(gridIndex).align().end();
+		IGridCell cell = grid.label(newLine, gridIndex).align().end();
 		if (fixLabelWidth != -1)
 			cell.width(fixLabelWidth);
 		ILabel l = cell.label().autoWrap(true).text(name);
@@ -239,8 +239,8 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 	}
 
 	@Override
-	public IFormField<ICheckBox, Boolean> addCheckBox(String name) {
-		return new FormCheckBoxImpl(this, nextGridIndex(), name);
+	public IFormField<ICheckBox, Boolean> addCheckBox(boolean newLine, String name) {
+		return new FormCheckBoxImpl(newLine, this, nextGridIndex(), name);
 	}
 
 	@Override
@@ -255,52 +255,52 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 	}
 
 	@Override
-	public IFormField<ITextField, String> addTextField(String name,
+	public IFormField<ITextField, String> addTextField(boolean newLine, String name,
 			IFieldType type) {
-		return new FormTextFieldImpl<String>(this, nextGridIndex(), name, type);
+		return new FormTextFieldImpl<String>(newLine, this, nextGridIndex(), name, type);
 	}
 
 	@Override
-	public IRelationField addRelationField(String name) {
-		return new FormRelationFieldImpl(this, nextGridIndex(), name);
+	public IRelationField addRelationField(boolean newLine, String name) {
+		return new FormRelationFieldImpl(newLine, this, nextGridIndex(), name);
 	}
 
 	@Override
-	public IFormField<ITextField, Date> addDateField(String name,
+	public IFormField<ITextField, Date> addDateField(boolean newLine, String name,
 			boolean addCalendar, IFormat<Date> f) {
-		return new FormDateFieldImpl(this, nextGridIndex(), name, addCalendar,
+		return new FormDateFieldImpl(newLine, this, nextGridIndex(), name, addCalendar,
 				f);
 	}
 
 	@Override
-	public IFormField<ITextField, String> addColorField(String name) {
-		return new FormColorFieldImpl(this, nextGridIndex(), name);
+	public IFormField<ITextField, String> addColorField(boolean newLine, String name) {
+		return new FormColorFieldImpl(newLine, this, nextGridIndex(), name);
 	}
 
 	@Override
-	public IFormField<IPasswordField, String> addPasswordField(String name) {
-		return new FormPasswordFieldImpl(this, nextGridIndex(), name);
+	public IFormField<IPasswordField, String> addPasswordField(boolean newLine, String name) {
+		return new FormPasswordFieldImpl(newLine, this, nextGridIndex(), name);
 	}
 
-	@Override
-	public IImageField addImage(String name) {
-		return new ImageFieldImpl(this, nextGridIndex(), name);
-	}
+//	@Override
+//	public IImageField addImage(String name) {
+//		return new ImageFieldImpl(this, nextGridIndex(), name);
+//	}
 
 	private int nextGridIndex() {
 		return ++gridIndex0;
 	}
 
 	@Override
-	public IFormField<IComboBox, String> addComboBox(String name,
+	public IFormField<IComboBox, String> addComboBox(boolean newLine, String name,
 			IFieldType type) {
-		return new FormComboBoxImpl(this, nextGridIndex(), name, type);
+		return new FormComboBoxImpl(newLine, this, nextGridIndex(), name, type);
 	}
 
-	@Override
-	public IFormField<ILabel, String> addLabel(String name) {
-		return new FormLabelImpl(this, nextGridIndex(), name);
-	}
+//	@Override
+//	public IFormField<ILabel, String> addLabel(String name) {
+//		return new FormLabelImpl(this, nextGridIndex(), name);
+//	}
 
 	@Override
 	public IClickable<?> addOKHyperlink() {
@@ -559,16 +559,6 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 	// if (focus != null)
 	// focus.focus(true);
 	// }
-
-	@Override
-	public IFormContainer add(String name) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public IFormContainer insert(int index, String name) {
-		throw new UnsupportedOperationException();
-	}
 
 	@Override
 	public IFormField<IHTMLArea, String> addRichTextArea(String name) {
