@@ -44,7 +44,8 @@ import co.fxl.gui.table.bulk.api.IBulkTableWidget.IColumn;
 import co.fxl.gui.table.bulk.api.IBulkTableWidget.IGrouping;
 import co.fxl.gui.table.util.api.IDragDropListener;
 
-public interface IScrollTableWidget<T> extends IResizableWidget, IHasButtons {
+public interface IScrollTableWidget<T> extends IResizableWidget, IHasButtons,
+		INavigationList<T> {
 
 	public interface IColumnWidthInjector {
 
