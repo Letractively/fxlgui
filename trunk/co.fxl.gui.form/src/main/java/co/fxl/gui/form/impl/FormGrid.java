@@ -31,7 +31,7 @@ interface FormGrid {
 
 	void removeRow(int index);
 
-	void insertRow(int index);
+	void insertRow(boolean newLine, int index);
 
 	void setWidth4Layout(int setWidth4Layout);
 

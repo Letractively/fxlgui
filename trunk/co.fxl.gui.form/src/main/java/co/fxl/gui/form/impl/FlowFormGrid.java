@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.IFlowPanel;
+import co.fxl.gui.api.IFlowPanel.ILineBreak;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IPadding;
@@ -36,8 +37,10 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 
 		private IGridPanel grid;
 		private boolean expand;
+		private ILineBreak br;
 
-		private Row(IGridPanel g) {
+		private Row(ILineBreak br, IGridPanel g) {
+			this.br = br;
 			grid = g;
 		}
 
@@ -70,6 +73,12 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 					grid.column(1).width(width4Layout - _120 - 4);
 				grid.width(width4Layout);
 			}
+		}
+
+		public void remove() {
+			if (br != null)
+				br.remove();
+			grid.remove();
 		}
 	}
 
@@ -118,21 +127,27 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 
 	@Override
 	public IGridCell label(boolean newLine, int row) {
-
-		// TODO ... new line
-
-		return getGridPanel(row).cell(0, 0);
+		return gridPanel(newLine, row).cell(0, 0);
 	}
 
-	private IGridPanel getGridPanel(int row) {
+	private IGridPanel gridPanel(boolean lineBreak, int row) {
+		Row r = row(lineBreak, row);
+		return r.grid;
+	}
+
+	private Row row(boolean lineBreak, int row) {
 		while (row >= panels.size()) {
+			ILineBreak br = null;
+			if (lineBreak)
+				br = panel.addLineBreak();
 			IGridPanel g = panel.add().panel().grid();
 			if (IE_OR_FIREFOX)
 				g.indent(1);
-			panels.add(new Row(g));
+			panels.add(new Row(br, g));
 			g.column(0).width(_120);
 		}
-		return panels.get(row).grid;
+		Row r = panels.get(row);
+		return r;
 	}
 
 	@Override
@@ -144,7 +159,7 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 
 	@Override
 	public IGridPanel grid(int row) {
-		return getGridPanel(row);
+		return panels.get(row).grid;
 	}
 
 	@Override
@@ -153,16 +168,19 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 	}
 
 	@Override
-	public void insertRow(int index) {
+	public void insertRow(boolean newLine, int index) {
 		List<Row> toReAdd = new LinkedList<Row>();
 		for (int i = panels.size() - 1; i >= index; i--) {
 			Row removed = panels.remove(index);
-			removed.grid.remove();
+			removed.remove();
 			toReAdd.add(removed);
 		}
-		getGridPanel(index).width(1.0);
+		gridPanel(newLine, index).width(1.0);
 		for (Row g : toReAdd) {
 			panels.add(g);
+			if (g.br != null) {
+				g.br = panel.addLineBreak();
+			}
 			panel.add(g.grid);
 		}
 	}
