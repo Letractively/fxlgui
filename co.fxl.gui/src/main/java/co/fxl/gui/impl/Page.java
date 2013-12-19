@@ -18,11 +18,14 @@
  */
 package co.fxl.gui.impl;
 
+import co.fxl.gui.impl.DiscardChangesDialog.DiscardChangesListener;
+
 public class Page {
 
 	private static Page active = null;
 	private ContextMenu contextMenu;
 	private Boolean discardChangesState;
+	private DiscardChangesListener discardChangesListener;
 
 	private Page() {
 		activate();
@@ -41,13 +44,17 @@ public class Page {
 
 	private void deactivate() {
 		discardChangesState = DiscardChangesDialog.active();
+		discardChangesListener = DiscardChangesDialog.listener;
 		DiscardChangesDialog.active(false);
+		DiscardChangesDialog.listener = null;
 	}
 
 	public void activate() {
 		if (discardChangesState != null) {
 			DiscardChangesDialog.active(discardChangesState);
+			DiscardChangesDialog.listener = discardChangesListener;
 			discardChangesState = null;
+			discardChangesListener = null;
 		}
 		active = this;
 		if (contextMenu != null)
