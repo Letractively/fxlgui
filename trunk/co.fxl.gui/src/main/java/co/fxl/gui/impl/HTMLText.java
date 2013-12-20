@@ -127,7 +127,7 @@ public class HTMLText {
 		return text.replaceAll("<", "&#060;").replaceAll(">", "&#062;").replaceAll("\"", "&#34;");
 	}
 
-	public static String removeHTML(String text) {
+	public static String removeMarkUp(String text) {
 		StringBuilder b = new StringBuilder();
 		boolean open = false;
 		for (int i = 0; i < text.length(); i++) {
