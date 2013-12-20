@@ -67,7 +67,7 @@ class SwingButton extends SwingTextElement<JButton, IButton> implements IButton 
 
 	@Override
 	public String text() {
-		return HTMLText.removeHTML(container.component.getText());
+		return HTMLText.removeMarkUp(container.component.getText());
 	}
 
 	@Override
