@@ -42,11 +42,13 @@ public class Page {
 		return new Page();
 	}
 
-	private void deactivate() {
-		discardChangesState = DiscardChangesDialog.active();
-		discardChangesListener = DiscardChangesDialog.listener;
-		DiscardChangesDialog.active(false);
-		DiscardChangesDialog.listener = null;
+	public void deactivate() {
+		if (DiscardChangesDialog.active()) {
+			discardChangesState = true;
+			discardChangesListener = DiscardChangesDialog.listener;
+			DiscardChangesDialog.active(false);
+			DiscardChangesDialog.listener = null;
+		}
 	}
 
 	public void activate() {
