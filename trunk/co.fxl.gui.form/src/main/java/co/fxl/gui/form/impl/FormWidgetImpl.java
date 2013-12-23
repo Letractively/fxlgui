@@ -44,7 +44,6 @@ import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
-import co.fxl.gui.form.api.IImageField;
 import co.fxl.gui.form.api.IRelationField;
 import co.fxl.gui.impl.CallbackTemplate;
 import co.fxl.gui.impl.DummyCallback;
@@ -105,9 +104,8 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 		IGridCell cell = grid.label(newLine, gridIndex).align().end();
 		if (fixLabelWidth != -1)
 			cell.width(fixLabelWidth);
-		ILabel l = cell.label().autoWrap(true).text(name);
-		l.font().pixel(11);
-		l.margin().right(4);
+		ILabel l = cell.label().text(name);
+		Style.instance().form().label(l);
 		return new FormEntryLabel(cell, l);
 	}
 
@@ -239,7 +237,8 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 	}
 
 	@Override
-	public IFormField<ICheckBox, Boolean> addCheckBox(boolean newLine, String name) {
+	public IFormField<ICheckBox, Boolean> addCheckBox(boolean newLine,
+			String name) {
 		return new FormCheckBoxImpl(newLine, this, nextGridIndex(), name);
 	}
 
@@ -255,9 +254,10 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 	}
 
 	@Override
-	public IFormField<ITextField, String> addTextField(boolean newLine, String name,
-			IFieldType type) {
-		return new FormTextFieldImpl<String>(newLine, this, nextGridIndex(), name, type);
+	public IFormField<ITextField, String> addTextField(boolean newLine,
+			String name, IFieldType type) {
+		return new FormTextFieldImpl<String>(newLine, this, nextGridIndex(),
+				name, type);
 	}
 
 	@Override
@@ -266,41 +266,43 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 	}
 
 	@Override
-	public IFormField<ITextField, Date> addDateField(boolean newLine, String name,
-			boolean addCalendar, IFormat<Date> f) {
-		return new FormDateFieldImpl(newLine, this, nextGridIndex(), name, addCalendar,
-				f);
+	public IFormField<ITextField, Date> addDateField(boolean newLine,
+			String name, boolean addCalendar, IFormat<Date> f) {
+		return new FormDateFieldImpl(newLine, this, nextGridIndex(), name,
+				addCalendar, f);
 	}
 
 	@Override
-	public IFormField<ITextField, String> addColorField(boolean newLine, String name) {
+	public IFormField<ITextField, String> addColorField(boolean newLine,
+			String name) {
 		return new FormColorFieldImpl(newLine, this, nextGridIndex(), name);
 	}
 
 	@Override
-	public IFormField<IPasswordField, String> addPasswordField(boolean newLine, String name) {
+	public IFormField<IPasswordField, String> addPasswordField(boolean newLine,
+			String name) {
 		return new FormPasswordFieldImpl(newLine, this, nextGridIndex(), name);
 	}
 
-//	@Override
-//	public IImageField addImage(String name) {
-//		return new ImageFieldImpl(this, nextGridIndex(), name);
-//	}
+	// @Override
+	// public IImageField addImage(String name) {
+	// return new ImageFieldImpl(this, nextGridIndex(), name);
+	// }
 
 	private int nextGridIndex() {
 		return ++gridIndex0;
 	}
 
 	@Override
-	public IFormField<IComboBox, String> addComboBox(boolean newLine, String name,
-			IFieldType type) {
+	public IFormField<IComboBox, String> addComboBox(boolean newLine,
+			String name, IFieldType type) {
 		return new FormComboBoxImpl(newLine, this, nextGridIndex(), name, type);
 	}
 
-//	@Override
-//	public IFormField<ILabel, String> addLabel(String name) {
-//		return new FormLabelImpl(this, nextGridIndex(), name);
-//	}
+	// @Override
+	// public IFormField<ILabel, String> addLabel(String name) {
+	// return new FormLabelImpl(this, nextGridIndex(), name);
+	// }
 
 	@Override
 	public IClickable<?> addOKHyperlink() {

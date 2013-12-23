@@ -22,6 +22,7 @@ import co.fxl.gui.api.IResizable.IResizeListener;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget.IInputElementFactory;
+import co.fxl.gui.style.impl.Style;
 
 class FormTextAreaImpl extends FormFieldImpl<ITextArea, String> {
 
@@ -41,8 +42,7 @@ class FormTextAreaImpl extends FormFieldImpl<ITextArea, String> {
 
 	static void format(final ITextArea textArea, final int height) {
 		textArea.height(height);
-		textArea.border().color().rgb(211, 211, 211);
-		textArea.color().rgb(249, 249, 249);
+		Style.instance().form().textArea(textArea);
 		// textArea.addFocusListener(new IUpdateListener<Boolean>() {
 		//
 		// @Override
