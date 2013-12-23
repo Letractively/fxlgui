@@ -23,6 +23,8 @@ import java.util.List;
 
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IHorizontalPanel;
+import co.fxl.gui.api.ILabel;
+import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.impl.ContextMenu.Entry;
 import co.fxl.gui.impl.LazyClickListener;
@@ -38,6 +40,30 @@ public abstract class StyleTemplate implements IStyle {
 	private static final boolean USE_GLASS_WHEN_EMBEDDED = false;
 	private boolean embedded;
 	private boolean allowDetailView = true;
+
+	abstract class FilterPanelTemplate implements IFilterPanel {
+
+		@Override
+		public final void label(ILabel text) {
+			text.autoWrap(true).font().pixel(10);
+		}
+	}
+
+	abstract class FormStyleTemplate implements IFormStyle {
+
+		@Override
+		public final void label(ILabel l) {
+			l.autoWrap(true);
+			l.font().pixel(11);
+			l.margin().right(4);
+		}
+
+		@Override
+		public final void textArea(ITextArea textArea) {
+			textArea.border().color().rgb(211, 211, 211);
+			textArea.color().rgb(249, 249, 249);
+		}
+	}
 
 	abstract class ViewTemplate extends LazyClickListener implements IView {
 

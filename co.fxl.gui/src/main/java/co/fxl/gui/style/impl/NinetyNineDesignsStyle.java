@@ -1108,7 +1108,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 
 	@Override
 	public IFilterPanel filter() {
-		return new IFilterPanel() {
+		return new FilterPanelTemplate() {
 
 			@Override
 			public void removeErrorColor(ITextElement<?> textField) {
@@ -1413,7 +1413,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 
 	@Override
 	public IFormStyle form() {
-		return new IFormStyle() {
+		return new FormStyleTemplate() {
 			@Override
 			public void inputField(IBordered input) {
 				inputBorder(input);
@@ -1422,11 +1422,7 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 			@Override
 			public void commentField(ITextArea valuePanel) {
 				inputField(valuePanel);
-				valuePanel.color().remove().gray(253);/*
-													 * .white().gradient().fallback
-													 * (249, 249, 249)
-													 * .vertical().gray(244);
-													 */
+				valuePanel.color().remove().gray(253);
 				valuePanel.font().color().gray();
 			}
 

@@ -88,6 +88,11 @@ class GrayScaleStyle extends StyleTemplate {
 		public void removeErrorColor(ITextElement<?> textField) {
 			((IColored) textField).color().rgb(249, 249, 249);
 		}
+
+		@Override
+		public void label(ILabel text) {
+			text.autoWrap(true).font().pixel(10);
+		}
 	}
 
 	private class ViewSelection implements IViewSelection {
@@ -862,7 +867,7 @@ class GrayScaleStyle extends StyleTemplate {
 
 	@Override
 	public IFormStyle form() {
-		return new IFormStyle() {
+		return new FormStyleTemplate() {
 			@Override
 			public void inputField(IBordered valuePanel) {
 			}

@@ -33,6 +33,7 @@ import co.fxl.gui.api.IDockPanel;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFocusPanel;
 import co.fxl.gui.api.IGridPanel;
+import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
@@ -230,10 +231,11 @@ public class WidgetTitle implements IClickListener, IColored {
 		if (commandsOnTop) {
 			if (commandPanelTop != null)
 				return;
-			IContainer cell = headerPanel.cell(2, 0).align().end().valign()
-					.center();
-			commandPanelTop = cell.panel().horizontal().spacing(4).align()
-					.end().add().panel().horizontal().align().end();
+			IGridCell cell = headerPanel.cell(2, 0);
+			cell.align().end().valign().center();
+			commandPanelTop = cell.panel().horizontal();
+			commandPanelTop.spacing(4).align().end().add().panel().horizontal()
+					.align().end();
 		} else {
 			if (commandPanel != null)
 				return;

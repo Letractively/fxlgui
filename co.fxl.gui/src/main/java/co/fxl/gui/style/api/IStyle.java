@@ -91,6 +91,10 @@ public interface IStyle {
 
 		int commentItem(IVerticalPanel vertical, int i);
 
+		void label(ILabel l);
+
+		void textArea(ITextArea textArea);
+
 	}
 
 	public interface IRegisterStyle {
@@ -168,6 +172,8 @@ public interface IStyle {
 		String title(boolean isMini);
 
 		void removeErrorColor(ITextElement<?> textField);
+
+		void label(ILabel text);
 
 	}
 

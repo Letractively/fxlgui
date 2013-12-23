@@ -27,6 +27,7 @@ import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.filter.impl.FilterPanel.ICell;
 import co.fxl.gui.impl.RuntimeConstants;
 import co.fxl.gui.style.api.IStyle.IFilterPanel;
+import co.fxl.gui.style.impl.Style;
 
 class FilterGridImpl implements FilterGrid, RuntimeConstants {
 
@@ -60,8 +61,9 @@ class FilterGridImpl implements FilterGrid, RuntimeConstants {
 		// alignment ist of no effect in Swing - in contrast to the GWT
 		// implementation, there it works
 
-		ILabel text = cell.align().end().label().autoWrap(true);
-		text.text(name).font().pixel(10);
+		ILabel text = cell.align().end().label();
+		Style.instance().filter().label(text);
+		text.text(name);
 	}
 
 	@Override
