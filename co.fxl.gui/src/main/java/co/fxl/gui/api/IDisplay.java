@@ -99,6 +99,8 @@ public interface IDisplay extends IColored, IServiceRegistry<IDisplay>,
 
 	IDisplay font(String fontFamily, int fontSize);
 
+//	<T extends IElement<T>> IDecorator<T> adoptStyle(IDecorator<T> style);
+
 	void reload();
 
 }

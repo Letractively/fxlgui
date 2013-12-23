@@ -25,8 +25,10 @@ import co.fxl.data.format.gwt.GWTFormat;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
+import co.fxl.gui.api.IDecorator;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IScrollPane;
@@ -38,7 +40,6 @@ import co.fxl.gui.impl.Constants;
 import co.fxl.gui.impl.DialogImpl;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.DisplayTemplate;
-import co.fxl.gui.impl.ILocalStorage;
 import co.fxl.gui.impl.ImagePathResolver;
 import co.fxl.gui.impl.RuntimeTemplate;
 import co.fxl.gui.impl.StatusDisplay;
@@ -58,7 +59,6 @@ import com.google.gwt.event.dom.client.MouseWheelEvent;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.storage.client.Storage;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
@@ -186,20 +186,20 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 					e.getElement().getStyle().setOverflowX(Overflow.AUTO);
 			}
 		};
-//		if (Storage.isLocalStorageSupported()) {
-//			register(new IServiceProvider<ILocalStorage>() {
-//
-//				@Override
-//				public Class<ILocalStorage> serviceType() {
-//					return ILocalStorage.class;
-//				}
-//
-//				@Override
-//				public ILocalStorage getService() {
-//					return new GWTLocalStorage();
-//				}
-//			});
-//		}
+		// if (Storage.isLocalStorageSupported()) {
+		// register(new IServiceProvider<ILocalStorage>() {
+		//
+		// @Override
+		// public Class<ILocalStorage> serviceType() {
+		// return ILocalStorage.class;
+		// }
+		//
+		// @Override
+		// public ILocalStorage getService() {
+		// return new GWTLocalStorage();
+		// }
+		// });
+		// }
 	}
 
 	void addStyle(String text) {
@@ -265,19 +265,22 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 
 	private String getBrowserName() {
 		if (isChrome) {
-//			assert !isSafari && !isInternetExplorer && !isOpera && !isFirefox;
+			// assert !isSafari && !isInternetExplorer && !isOpera &&
+			// !isFirefox;
 			return co.fxl.gui.impl.Env.CHROME;
 		} else if (isOpera) {
-//			assert !isSafari && !isInternetExplorer && !isChrome && !isFirefox;
+			// assert !isSafari && !isInternetExplorer && !isChrome &&
+			// !isFirefox;
 			return co.fxl.gui.impl.Env.OPERA;
 		} else if (isInternetExplorer) {
-//			assert !isSafari && !isChrome && !isOpera && !isFirefox;
+			// assert !isSafari && !isChrome && !isOpera && !isFirefox;
 			return co.fxl.gui.impl.Env.IE;
 		} else if (isFirefox) {
-//			assert !isSafari && !isChrome && !isOpera && !isInternetExplorer;
+			// assert !isSafari && !isChrome && !isOpera && !isInternetExplorer;
 			return co.fxl.gui.impl.Env.FIREFOX;
 		} else if (isSafari) {
-//			assert !isInternetExplorer && !isChrome && !isOpera && !isFirefox;
+			// assert !isInternetExplorer && !isChrome && !isOpera &&
+			// !isFirefox;
 			return co.fxl.gui.impl.Env.SAFARI;
 		}
 		return co.fxl.gui.impl.Env.OTHER_BROWSER;
@@ -650,4 +653,39 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	public void reload() {
 		Window.Location.reload();
 	}
+
+//	private int styleCounter = 0;
+//
+//	@Override
+//	public <T extends IElement<T>> IDecorator<T> adoptStyle(
+//			final IDecorator<T> style) {
+//		return new IDecorator<T>() {
+//
+//			private String name;
+//
+//			@Override
+//			public void decorate(T element) {
+//				@SuppressWarnings("unchecked")
+//				Element e = ((GWTElement<?, T>) element).container.widget
+//						.getElement();
+//				if (name == null) {
+//					// String before = getStyleString(e);
+//					style.decorate(element);
+//					String after = getStyleString(e);
+//					// String delta = after.substring(before.length());
+//					name = "S" + styleCounter++;
+//					addStyle("." + name + " { " + after + "}");
+//				} else {
+//					e.setPropertyString("style", "");
+//					element.addStyle(name);
+//				}
+//			}
+//
+//			private String getStyleString(Element e) {
+//				String t = e.toString();
+//				int index = t.indexOf("style=\"") + "style=\"".length();
+//				return t.substring(index, t.indexOf("\"", index));
+//			}
+//		};
+//	}
 }
