@@ -22,8 +22,10 @@ import android.app.Activity;
 import android.view.View;
 import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.ICursor;
+import co.fxl.gui.api.IDecorator;
 import co.fxl.gui.api.IDialog;
 import co.fxl.gui.api.IDisplay;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IWebsite;
 import co.fxl.gui.api.IWidgetProvider;
@@ -211,5 +213,10 @@ public class AndroidDisplay extends DisplayTemplate implements Parent {
 	@Override
 	public void reload() {
 	}
+
+//	@Override
+//	public <T extends IElement<T>> IDecorator<T> adoptStyle(IDecorator<T> style) {
+//		throw new UnsupportedOperationException();
+//	}
 
 }
