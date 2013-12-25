@@ -234,7 +234,8 @@ public class WidgetTitle implements IClickListener, IColored {
 			IGridCell cell = headerPanel.cell(2, 0);
 			cell.align().end().valign().center();
 			commandPanelTop = cell.panel().horizontal();
-			commandPanelTop.spacing(4).align().end().add().panel().horizontal()
+			commandPanelTop//.spacing(4)
+			.align().end().add().panel().horizontal()
 					.align().end();
 		} else {
 			if (commandPanel != null)
