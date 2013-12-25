@@ -1117,8 +1117,8 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			clear.align().end();
 			IHorizontalPanel p = clear.panel().horizontal().align().end().add()
 					.panel().horizontal().align().end();
-			if (Style.instance().mobile())
-				p.width(125);
+//			if (Style.instance().mobile())
+//				p.width(125);
 			leftPaging = p.add().label().text("<<");
 			leftPaging.margin().right(4);
 			leftPaging.clickable(true);
