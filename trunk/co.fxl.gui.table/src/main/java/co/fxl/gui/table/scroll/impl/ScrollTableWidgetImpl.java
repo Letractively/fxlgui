@@ -1244,7 +1244,8 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	@Override
 	public ILabel addTitle(String text) {
 		addBorders = true;
-		return widgetTitle().addTitle(text);
+		ILabel t = widgetTitle().addTitle(text);
+		return t;
 	}
 
 	@Override
@@ -1802,7 +1803,9 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	@Override
 	public IScrollTableWidget<Object> addLargeTitle(String string) {
 		addBorders = true;
-		widgetTitle().addLargeTitle(string);
+		ILabel l = widgetTitle().addLargeTitle(string);
+		if (Style.instance().mobile())
+			l.remove();
 		return this;
 	}
 

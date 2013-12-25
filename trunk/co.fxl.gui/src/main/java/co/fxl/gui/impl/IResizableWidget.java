@@ -26,7 +26,8 @@ public interface IResizableWidget extends IResizeListener {
 
 	public class Size {
 
-		private static final int MIN_WIDTH = StatusDisplay.MIN_WIDTH - 54;
+		private static final int MIN_WIDTH = StatusDisplay.instance()
+				.minWidth() - 54;
 		public int widthDecrement;
 		private int minWidth;
 		public int heightDecrement;
