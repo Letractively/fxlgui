@@ -113,9 +113,9 @@ public class PopUpPageContainer implements PageContainer, RuntimeConstants {
 	@Override
 	public void resize() {
 		int w = Math.max(popUpSize.minWidth(), Shell.instance().dwidth()
-				- popUpSize.widthDecrement);
-		int h = Math.max(popUpSize.minHeight, Shell.instance().dheight()
-				- popUpSize.heightDecrement);
+				- popUpSize.widthDecrement());
+		int h = Math.max(popUpSize.minHeight(), Shell.instance().dheight()
+				- popUpSize.heightDecrement());
 		panel.size(w, h);
 		int x = (Shell.instance().dwidth() - w) / 2;
 		int y = (Shell.instance().dheight() - h) / 2;
@@ -125,7 +125,7 @@ public class PopUpPageContainer implements PageContainer, RuntimeConstants {
 	public void addCloseListener(final Runnable runnable) {
 		popUp.addVisibleListener(new IUpdateListener<Boolean>() {
 			@Override
-			public void onUpdate(Boolean value) {			
+			public void onUpdate(Boolean value) {
 				if (!value && !closablePopUp.destroyed) {
 					statePushed = false;
 					runnable.run();

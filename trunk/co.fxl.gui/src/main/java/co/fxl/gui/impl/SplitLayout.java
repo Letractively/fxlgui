@@ -77,12 +77,18 @@ public class SplitLayout extends ResizableWidgetTemplate implements
 		mainPanel = addMainPanel(vertical);
 		cell1 = panel.cell(1, 0).width(WIDTH_SIDE_PANEL).valign().begin()
 				.align().end();
+		if (Style.instance().mobile())
+			cell1.visible(false);
 		sideBasePanel = cell1.panel().vertical();
 		sideBasePanel.padding().top(V_SPACE);
 		sideScrollPanel = sideBasePanel.add().scrollPane();
 		sidePanel = sideScrollPanel.viewPort().panel().vertical();
 		sidePanel.spacing().right(H_SPACE);
 		Shell.instance().fire(this);
+	}
+
+	public IVerticalPanel sidePanelPopUp() {
+		return sideBasePanel;
 	}
 
 	public int mainPanelWidth() {

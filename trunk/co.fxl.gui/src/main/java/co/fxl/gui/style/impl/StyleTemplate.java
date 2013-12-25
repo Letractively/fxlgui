@@ -123,7 +123,9 @@ public abstract class StyleTemplate implements IStyle {
 			this.comboBoxVisible = comboBoxVisible;
 			cb.visible(comboBoxVisible);
 			if (p != null) {
-				p.addSpace(4).add().image().resource("cancel.png").size(16, 16)
+				if (!mobile())
+					p.addSpace(4);
+				p.add().image().resource("cancel.png").size(16, 16)
 						.addClickListener(new IClickListener() {
 							@Override
 							public void onClick() {

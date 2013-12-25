@@ -21,6 +21,7 @@ package co.fxl.gui.impl;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IResizable.IResizeListener;
+import co.fxl.gui.style.impl.Style;
 
 public interface IResizableWidget extends IResizeListener {
 
@@ -28,10 +29,10 @@ public interface IResizableWidget extends IResizeListener {
 
 		private static final int MIN_WIDTH = StatusDisplay.instance()
 				.minWidth() - 54;
-		public int widthDecrement;
+		private int widthDecrement;
 		private int minWidth;
-		public int heightDecrement;
-		public int minHeight;
+		private int heightDecrement;
+		private int minHeight;
 
 		public Size() {
 			this(320, 240, 720, 360);
@@ -49,9 +50,30 @@ public interface IResizableWidget extends IResizeListener {
 			return heightDecrement != 0 || widthDecrement != 0;
 		}
 
+		public int widthDecrement() {
+			if (Style.instance().mobile())
+				return 30;
+			return widthDecrement;
+		}
+
+		public int heightDecrement() {
+			if (Style.instance().mobile())
+				return 30;
+			return heightDecrement;
+		}
+
 		public int minWidth() {
+			if (Style.instance().mobile())
+				return StatusDisplay.instance().width() - 60;
 			return minWidth > MIN_WIDTH ? MIN_WIDTH : minWidth;
 		}
+
+		public int minHeight() {
+			if (Style.instance().mobile())
+				return StatusDisplay.instance().height() - 80;
+			return minHeight;
+		}
+
 		// public boolean defined() {
 		// return widthDecrement != 0 || heightDecrement != 0;
 		// }

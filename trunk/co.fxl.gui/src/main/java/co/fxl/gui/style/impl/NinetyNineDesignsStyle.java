@@ -704,7 +704,8 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 
 			@Override
 			public void backgroundRegisters(IPanel<?> panel) {
-				panel.margin().top(20).bottom(20);
+				if (!Style.instance().mobile())
+					panel.margin().top(20).bottom(20);
 			}
 
 			@Override
