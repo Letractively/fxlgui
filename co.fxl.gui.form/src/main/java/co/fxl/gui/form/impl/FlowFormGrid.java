@@ -28,6 +28,7 @@ import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IPadding;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.RuntimeConstants;
+import co.fxl.gui.style.impl.Style;
 
 class FlowFormGrid implements FormGrid, RuntimeConstants {
 
@@ -154,7 +155,8 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 	public IGridCell value(int row, boolean expand) {
 		Row r = panels.get(row);
 		r.expand(expand);
-		return r.grid.cell(1, 0);
+		return r.grid.cell(Style.instance().mobile() ? 0 : 1, Style.instance()
+				.mobile() ? 1 : 0);
 	}
 
 	@Override

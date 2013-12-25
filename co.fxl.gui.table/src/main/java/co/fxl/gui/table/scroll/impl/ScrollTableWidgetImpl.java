@@ -1117,6 +1117,8 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			clear.align().end();
 			IHorizontalPanel p = clear.panel().horizontal().align().end().add()
 					.panel().horizontal().align().end();
+			if (Style.instance().mobile())
+				p.width(125);
 			leftPaging = p.add().label().text("<<");
 			leftPaging.margin().right(4);
 			leftPaging.clickable(true);
@@ -1131,7 +1133,12 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 							DummyCallback.voidInstance());
 				}
 			});
-			Style.instance().table().statusHeader(p, "Displaying Rows");
+			Style.instance()
+					.table()
+					.statusHeader(
+							p,
+							Style.instance().mobile() ? "Rows"
+									: "Displaying Rows");
 			statusRangeLabel = p.addSpace(4).add().label()
 					.text(getStatusRange(paintedRows()));
 			statusRangeLabel.font().weight().bold().pixel(10);

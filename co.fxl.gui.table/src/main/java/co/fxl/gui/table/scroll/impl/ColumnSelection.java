@@ -37,7 +37,8 @@ import co.fxl.gui.style.impl.Style;
 
 public class ColumnSelection implements RuntimeConstants {
 
-	private static final String SHOW_COLUMNS = "Column Selection";
+	private static final String SHOW_COLUMNS = Style.instance().mobile() ? "Columns"
+			: "Column Selection";
 	private static final String COLUMN = "Column";
 	private static final String COLUMN_SELECTION_ID = "Column Selection";
 	static final String TOOLTIP = "Click on column to toggle visibility. Use drag & drop to reorder.";
