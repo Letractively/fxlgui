@@ -338,13 +338,17 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 			return false;
 		if (!alwaysAdjust && width() > masterPanel.width())
 			return false;
+		int visibleItemCount = 0;
 		for (NavigationGroupImpl g : groups)
-			for (NavigationItemImpl i : g.items)
+			for (NavigationItemImpl i : g.items) {
 				i.displayed(true);
+				visibleItemCount++;
+			}
 		moreGroup.visible(true);
 		boolean hidden = false;
 		List<NavigationItemImpl> candidates = new LinkedList<NavigationItemImpl>();
-		for (int i = groups.size() - 1; i >= 0 && width() < masterPanel.width(); i--) {
+		for (int i = groups.size() - 1; i >= 0 && width() < masterPanel.width()
+				&& visibleItemCount > 1; i--) {
 			NavigationGroupImpl g = groups.get(i);
 			for (int j = g.items.size() - 1; j >= 0
 					&& width() < masterPanel.width(); j--) {
@@ -356,11 +360,14 @@ public class NavigationWidgetImpl extends ResizableWidgetTemplate implements
 					continue;
 				}
 				ni.displayed(false);
+				visibleItemCount--;
 				hidden = true;
 			}
 		}
-		for (int i = 0; i < candidates.size() && width() < masterPanel.width(); i++) {
+		for (int i = 0; i < candidates.size() && width() < masterPanel.width()
+				&& visibleItemCount > 1; i++) {
 			candidates.get(i).displayed(false);
+			visibleItemCount--;
 			hidden = true;
 		}
 		if (!hidden && (actions.isEmpty() || !showConfigure)) {
