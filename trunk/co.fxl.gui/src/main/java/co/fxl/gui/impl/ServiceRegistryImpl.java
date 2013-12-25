@@ -103,7 +103,6 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 				@Override
 				void registerResult(IWidgetProvider result) {
 					register(result);
-					callback.onSuccess(null);
 				}
 			});
 			return (T) this;
@@ -114,7 +113,6 @@ public class ServiceRegistryImpl<T> implements IServiceRegistry<T> {
 				@Override
 				void registerResult(IServiceProvider result) {
 					register(result);
-					callback.onSuccess(null);
 				}
 			});
 			return (T) this;
