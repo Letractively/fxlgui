@@ -328,11 +328,16 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 		private UserPanelImageButton(IPanel<?> panel, String image,
 				String label, boolean hasPopUp, int w, int s) {
 			button = new ImageButton(panel.add(), s);
-			button.imageResource(image + ".png").text(label);
+			button.imageResource(image + ".png");
+			button.text(label);
 			button.label().font().pixel(fontSize()).weight().bold().color()
 					.white();
 			new HyperlinkMouseOverListener(button.label());
 			more = panel.add().image().resource("more_white_10x16.png");
+			if (mobile()) {
+				button.label().remove();
+				more.remove();
+			}
 			more.margin().right(4);
 			if (hasPopUp) {
 				button.addClickListener(this);

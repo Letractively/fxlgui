@@ -39,7 +39,13 @@ import co.fxl.gui.style.impl.Style;
 public class StatusDisplay implements IResizeListener, Runnable,
 		IScrollListener, IShell, RuntimeConstants {
 
-	public static final int MIN_WIDTH = 954;
+	public int minWidth = -1;
+
+	public int minWidth() {
+		if (minWidth == -1)
+			minWidth = Style.instance().mobile() ? 320 : 954;
+		return minWidth;
+	}
 
 	public interface RefreshListener {
 
@@ -244,14 +250,14 @@ public class StatusDisplay implements IResizeListener, Runnable,
 
 	@Override
 	public int width() {
-		int w = hasHorizontalScrollbar() ? MIN_WIDTH : display.width();
+		int w = hasHorizontalScrollbar() ? minWidth() : display.width();
 		if (sidePanelContainer != null)
 			w -= sidePanelContainer.width();
 		return w;
 	}
 
 	private boolean hasHorizontalScrollbar() {
-		return display.width() < MIN_WIDTH;
+		return display.width() < minWidth();
 	}
 
 	@Override
@@ -293,7 +299,7 @@ public class StatusDisplay implements IResizeListener, Runnable,
 		if (sidePanel != null)
 			sidePanel.height(display.height());
 		if (FIREFOX_LEQ_12 && FIX != null) {
-			FIX.apply(scrollPane, display.width() < MIN_WIDTH);
+			FIX.apply(scrollPane, display.width() < minWidth());
 		}
 	}
 

@@ -546,6 +546,8 @@ public class NavigationItemImpl extends ResizableWidgetTemplate implements
 		refreshResource("more_black.png");
 		refresh.visible(true);
 		button.text("More").font().color().black();
+		if (Style.instance().mobile())
+			button.remove();
 		buttonPanel.spacing(SPACING_LOADING);
 		// IMouseOverListener mol = new IMouseOverListener() {
 		//

@@ -460,4 +460,8 @@ public interface IStyle {
 
 	void allowDetailView(boolean allowDetailView);
 
+	void mobile(boolean mobile);
+
+	boolean mobile();
+
 }

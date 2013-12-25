@@ -40,6 +40,7 @@ public abstract class StyleTemplate implements IStyle {
 	private static final boolean USE_GLASS_WHEN_EMBEDDED = false;
 	private boolean embedded;
 	private boolean allowDetailView = true;
+	private boolean mobile;
 
 	abstract class FilterPanelTemplate implements IFilterPanel {
 
@@ -237,6 +238,16 @@ public abstract class StyleTemplate implements IStyle {
 	@Override
 	public void allowDetailView(boolean allowDetailView) {
 		this.allowDetailView = allowDetailView;
+	}
+
+	@Override
+	public boolean mobile() {
+		return mobile;
+	}
+
+	@Override
+	public void mobile(boolean mobile) {
+		this.mobile = mobile;
 	}
 
 }
