@@ -25,6 +25,7 @@ import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.api.IFlowPanel.ILineBreak;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
+import co.fxl.gui.api.IGridPanel.IGridColumn;
 import co.fxl.gui.api.IPadding;
 import co.fxl.gui.api.IVerticalPanel;
 import co.fxl.gui.impl.RuntimeConstants;
@@ -32,7 +33,7 @@ import co.fxl.gui.style.impl.Style;
 
 class FlowFormGrid implements FormGrid, RuntimeConstants {
 
-	private static final int _120 = 120;
+	private static final int _120 = Style.instance().mobile() ? 0 : 120;
 
 	private class Row {
 
@@ -51,7 +52,8 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 		}
 
 		private void updateWidth() {
-			IPadding padding = grid.cell(1, 0).padding();
+			IPadding padding = grid.cell(Style.instance().mobile() ? 0 : 1,
+					Style.instance().mobile() ? 1 : 0).padding();
 			if (!expand) {
 				if (nonExpandedWidth < 0) {
 					grid.width(1.0);
@@ -59,7 +61,7 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 				} else {
 					grid.width(nonExpandedWidth);
 					if (FIREFOX)
-						grid.column(1).width(nonExpandedWidth - _120 - 4);
+						column().width(nonExpandedWidth - _120 - 4);
 				}
 				padding.right(0);
 			} else {
@@ -68,10 +70,14 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 			}
 		}
 
+		private IGridColumn column() {
+			return grid.column(Style.instance().mobile() ? 0 : 1);
+		}
+
 		void expandIfFirefox() {
 			if (FIREFOX) {
 				if (width4Layout > 0)
-					grid.column(1).width(width4Layout - _120 - 4);
+					column().width(width4Layout - _120 - 4);
 				grid.width(width4Layout);
 			}
 		}
@@ -145,7 +151,8 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 			if (IE_OR_FIREFOX)
 				g.indent(1);
 			panels.add(new Row(br, g));
-			g.column(0).width(_120);
+			if (!Style.instance().mobile())
+				g.column(0).width(_120);
 		}
 		Row r = panels.get(row);
 		return r;

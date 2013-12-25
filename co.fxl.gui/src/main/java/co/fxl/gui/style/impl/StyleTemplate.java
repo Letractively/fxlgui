@@ -123,8 +123,6 @@ public abstract class StyleTemplate implements IStyle {
 			this.comboBoxVisible = comboBoxVisible;
 			cb.visible(comboBoxVisible);
 			if (p != null) {
-				if (!mobile())
-					p.addSpace(4);
 				p.add().image().resource("cancel.png").size(16, 16)
 						.addClickListener(new IClickListener() {
 							@Override
@@ -194,7 +192,9 @@ public abstract class StyleTemplate implements IStyle {
 
 		@Override
 		public IComboBox addComboBox() {
-			return cb = panel0.addSpace(space()).add().comboBox();
+			if (!mobile())
+				panel0.addSpace(space());
+			return cb = panel0.add().comboBox();
 		}
 
 		int space() {
