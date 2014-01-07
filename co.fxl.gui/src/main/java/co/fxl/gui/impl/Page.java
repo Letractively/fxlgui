@@ -32,7 +32,6 @@ public class Page {
 	}
 
 	public static Page instance() {
-		assert active != null;
 		return active;
 	}
 
