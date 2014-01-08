@@ -158,6 +158,12 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 						cb.border().color().white();
 					}
 				});
+				cb.addUpdateListener(new IUpdateListener<String>() {
+					@Override
+					public void onUpdate(String value) {
+						cb.border().color().white();
+					}
+				});
 			}
 
 			@Override
