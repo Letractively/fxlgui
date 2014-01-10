@@ -85,9 +85,11 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 		return height(height);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T visible(boolean visible) {
-		throw new UnsupportedOperationException();
+		view.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+		return (T) this;
 	}
 
 	@Override
