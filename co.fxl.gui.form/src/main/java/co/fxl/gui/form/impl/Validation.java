@@ -486,11 +486,11 @@ public class Validation {
 	}
 
 	private void errorColor(IComboBox textField, boolean hasError) {
-//		if (hasError) {
-//			errorColor(textField);
-//		} else {
-//			removeErrorColor(textField);
-//		}
+		// if (hasError) {
+		// errorColor(textField);
+		// } else {
+		// removeErrorColor(textField);
+		// }
 	}
 
 	private void errorColor(ITextField textField, boolean hasError) {

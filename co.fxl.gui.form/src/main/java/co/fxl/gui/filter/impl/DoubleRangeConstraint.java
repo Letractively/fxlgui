@@ -23,7 +23,8 @@ import co.fxl.gui.filter.impl.IFilterConstraint.IDoubleRangeConstraint;
 public class DoubleRangeConstraint extends RangeConstraint<Double> implements
 		IDoubleRangeConstraint {
 
-	public DoubleRangeConstraint(String name, Double lowerBound, Double upperBound) {
+	public DoubleRangeConstraint(String name, Double lowerBound,
+			Double upperBound) {
 		super(name, lowerBound, upperBound);
 	}
 

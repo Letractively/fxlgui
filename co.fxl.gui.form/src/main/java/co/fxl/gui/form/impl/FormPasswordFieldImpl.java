@@ -23,7 +23,8 @@ import co.fxl.gui.form.api.IFormField;
 
 class FormPasswordFieldImpl extends FormFieldImpl<IPasswordField, String> {
 
-	FormPasswordFieldImpl(boolean newLine, FormWidgetImpl widget, int index, String name) {
+	FormPasswordFieldImpl(boolean newLine, FormWidgetImpl widget, int index,
+			String name) {
 		super(newLine, widget, index, name);
 	}
 

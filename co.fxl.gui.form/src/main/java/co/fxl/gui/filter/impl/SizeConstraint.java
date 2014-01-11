@@ -7,7 +7,7 @@ class SizeConstraint implements ISizeConstraint {
 	private int text;
 
 	SizeConstraint(int text) {
-		this.text=text;
+		this.text = text;
 	}
 
 	@Override

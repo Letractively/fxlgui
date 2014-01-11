@@ -33,7 +33,8 @@ class CancelButtonPanel implements IClickable<Object> {
 	CancelButtonPanel(FormWidgetImpl widget, IHorizontalPanel panel) {
 		this.widget = widget;
 		if (widget.saveListener.allowsSaveAndBack() || widget.isNew)
-			cbAndBack = addButton(panel, "Cancel & Back", widget.saveListener.allowsSaveAndBack());
+			cbAndBack = addButton(panel, "Cancel & Back",
+					widget.saveListener.allowsSaveAndBack());
 		if (!widget.isNew)
 			cb = addButton(panel, "Cancel", false);
 	}
