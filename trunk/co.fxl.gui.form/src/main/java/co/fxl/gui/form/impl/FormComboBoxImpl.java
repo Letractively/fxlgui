@@ -25,8 +25,8 @@ import co.fxl.gui.impl.ITooltipResolver;
 
 class FormComboBoxImpl extends FormFieldImpl<IComboBox, String> {
 
-	FormComboBoxImpl(boolean newLine, FormWidgetImpl widget, int index, String name,
-			IFieldType type) {
+	FormComboBoxImpl(boolean newLine, FormWidgetImpl widget, int index,
+			String name, IFieldType type) {
 		super(newLine, widget, index, name, type, null);
 	}
 

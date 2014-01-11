@@ -55,7 +55,7 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 			if (tokens.isEmpty())
 				panel.height(25);
 			notifyTextArea();
-			input.focus(true);
+			// input.focus(true);
 		}
 
 	}

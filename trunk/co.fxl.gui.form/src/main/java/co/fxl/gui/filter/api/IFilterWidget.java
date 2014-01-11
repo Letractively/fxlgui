@@ -133,6 +133,6 @@ public interface IFilterWidget {
 
 	void refreshButton(IClickListener clickListener);
 
-//	void hideApply();
+	// void hideApply();
 
 }

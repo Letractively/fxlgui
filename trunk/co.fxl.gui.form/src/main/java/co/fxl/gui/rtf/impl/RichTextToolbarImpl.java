@@ -431,7 +431,8 @@ public class RichTextToolbarImpl implements RuntimeConstants {
 				String[] cs = textColor.substring("rgb(".length(),
 						textColor.length() - 1).split(", ");
 				textColor = ColorTemplate.getHexColor(Integer.valueOf(cs[0]),
-						Integer.valueOf(cs[1]), Integer.valueOf(cs[2])).toUpperCase();
+						Integer.valueOf(cs[1]), Integer.valueOf(cs[2]))
+						.toUpperCase();
 				c.updateColor(textColor);
 			}
 		}
