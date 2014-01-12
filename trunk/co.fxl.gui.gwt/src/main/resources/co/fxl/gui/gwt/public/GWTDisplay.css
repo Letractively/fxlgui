@@ -45,3 +45,23 @@ hr { margin:0px; border:none; width:100%; border-top: 1px solid #E00060; color: 
 .gwtlazytreediv { white-space:nowrap;-moz-user-select:none;cursor:pointer;  }
 .gwtlazytreeblock { position:relative;overflow:hidden;width:2px;height:1px; }
 .gwtlazytreeindent { position:relative;overflow:hidden;height:1px; }
+.gwt-SuggestBox { }
+.gwt-SuggestBoxPopup { border:none !important }
+.gwt-SuggestBoxPopup .item { }
+.gwt-SuggestBoxPopup .item-selected { }
+.gwt-SuggestBoxPopup .suggestPopupTopLeft { padding:0px !important;margin:0px !important;width:1px !important;height:1px !important;}
+.gwt-SuggestBoxPopup .suggestPopupTopLeftInner { padding:0px !important;margin:0px !important;width:1px !important;height:1px !important;}
+.gwt-SuggestBoxPopup .suggestPopupTopCenter { padding:0px !important;margin:0px !important;width:1px !important;height:1px !important;}
+.gwt-SuggestBoxPopup .suggestPopupTopCenterInner { padding:0px !important;margin:0px !important;width:1px !important;height:1px !important;}
+.gwt-SuggestBoxPopup .suggestPopupTopRight { padding:0px !important;margin:0px !important;width:1px !important;height:1px !important;}
+.gwt-SuggestBoxPopup .suggestPopupTopRightInner { padding:0px !important;margin:0px !important;width:1px !important;height:1px !important;}
+.gwt-SuggestBoxPopup .suggestPopupMiddleLeft { padding:0px !important;margin:0px !important;width:1px !important;height:1px !important;}
+.gwt-SuggestBoxPopup .suggestPopupMiddleLeftInner { padding:0px !important;margin:0px !important;width:1px !important;height:1px !important;}
+.gwt-SuggestBoxPopup .suggestPopupMiddleRight { padding:0px !important;margin:0px !important;width:1px !important;height:1px !important;}
+.gwt-SuggestBoxPopup .suggestPopupMiddleRightInner { padding:0px !important;margin:0px !important;width:1px !important;height:1px !important;}
+.gwt-SuggestBoxPopup .suggestPopupBottomLeft { padding:0px !important;margin:0px !important;width:1px !important;height:1px !important;}
+.gwt-SuggestBoxPopup .suggestPopupBottomLeftInner { padding:0px !important;margin:0px !important;width:1px !important;height:1px !important;}
+.gwt-SuggestBoxPopup .suggestPopupBottomCenter { padding:0px !important;margin:0px !important;width:1px !important;height:1px !important;}
+.gwt-SuggestBoxPopup .suggestPopupBottomCenterInner { padding:0px !important;margin:0px !important;width:1px !important;height:1px !important;}
+.gwt-SuggestBoxPopup .suggestPopupBottomRight { padding:0px !important;margin:0px !important;width:1px !important;height:1px !important;}
+.gwt-SuggestBoxPopup .suggestPopupBottomRightInner { padding:0px !important;margin:0px !important;width:1px !important;height:1px !important;}
