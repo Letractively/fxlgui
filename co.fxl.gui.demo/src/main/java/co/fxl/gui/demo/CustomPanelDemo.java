@@ -34,8 +34,11 @@ class CustomPanelDemo extends DemoTemplate implements Decorator {
 		panel.add().label().text("Custom/Extension Panels").font().weight()
 				.bold().pixel(14);
 		panel.add().label().text("To use custom panels, we can use the method");
-		panel.add().label().text("IPanel<?> ILayout.plugIn(Class<?> layoutType);").font()
+		panel.add().label()
+				.text("IPanel<?> ILayout.plugIn(Class<?> layoutType);").font()
 				.family().courier();
-		panel.add().label().text("If available, the employed GUI API implementation returns an instance of the input panel type.");
+		panel.add()
+				.label()
+				.text("If available, the employed GUI API implementation returns an instance of the input panel type.");
 	}
 }

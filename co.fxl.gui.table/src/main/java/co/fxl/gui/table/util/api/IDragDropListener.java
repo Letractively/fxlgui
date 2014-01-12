@@ -43,6 +43,7 @@ public interface IDragDropListener {
 
 	void out(IDragArea element, int dragIndex, int dropIndex, Where where);
 
-	void drop(IDragEvent point, int dragIndex, int dropIndex, Where where, ICallback<Void> cb);
+	void drop(IDragEvent point, int dragIndex, int dropIndex, Where where,
+			ICallback<Void> cb);
 
 }

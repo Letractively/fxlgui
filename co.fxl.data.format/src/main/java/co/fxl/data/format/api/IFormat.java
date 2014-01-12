@@ -28,32 +28,36 @@ public interface IFormat<T> {
 
 	T parse(String text, String formatStyle);
 
-//	IFormat<T> setLocale(String locale);
-	
+	// IFormat<T> setLocale(String locale);
+
 	IFormat<T> defaultFormatStyle(String defaultFormatStyle);
-	
+
 	IFormat<T> timeZone(TimeZone pTimeZone);
-	
+
 	public class TimeZone {
 		private String name;
 		private int offsetToUtcInMinutes;
-		
+
 		public TimeZone(String pName, int pOffset) {
 			name = pName;
 			offsetToUtcInMinutes = pOffset;
 		}
+
 		public void setName(String pName) {
 			name = pName;
 		}
+
 		public String getName() {
 			return name;
 		}
+
 		public void setOffsetToUtcInMinutes(int pOffset) {
 			offsetToUtcInMinutes = pOffset;
 		}
+
 		public int getOffsetToUtcInMinutes() {
 			return offsetToUtcInMinutes;
 		}
 	}
-	
+
 }

@@ -32,7 +32,7 @@ public interface ICanvas extends IElement<ICanvas>, IBordered,
 		IMouseEventType move();
 
 		IMouseEventType up();
-		
+
 		IMouseEventType shift();
 	}
 

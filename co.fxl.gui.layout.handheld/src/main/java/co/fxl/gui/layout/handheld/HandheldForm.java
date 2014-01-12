@@ -31,7 +31,7 @@ class HandheldForm implements IFormLayout {
 
 	@Override
 	public IGridCell outerCell(IGridPanel grid, int gridIndex) {
-		return  grid.cell(1, gridIndex * 2 + 1);
+		return grid.cell(1, gridIndex * 2 + 1);
 	}
 
 	@Override

@@ -22,7 +22,8 @@ import java.util.Date;
 
 import co.fxl.data.format.api.IFormat;
 
-public abstract class TimeFormatImpl extends DateFormatImpl implements IFormat<Date> {
+public abstract class TimeFormatImpl extends DateFormatImpl implements
+		IFormat<Date> {
 
 	public TimeFormatImpl() {
 		super();

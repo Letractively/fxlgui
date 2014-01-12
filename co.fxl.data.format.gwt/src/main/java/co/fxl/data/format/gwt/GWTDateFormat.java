@@ -30,9 +30,11 @@ class GWTDateFormat implements IFormat<Date> {
 	private int timeZoneOffset;
 	private DateTimeFormat printFormat;
 	private DateTimeFormat parseFormat;
-	static DateTimeFormat TIME_PATTERN = DateTimeFormat.getFormat("hh:mm:ss aaa");
+	static DateTimeFormat TIME_PATTERN = DateTimeFormat
+			.getFormat("hh:mm:ss aaa");
 	static DateTimeFormat DATE_PATTERN = DateTimeFormat.getFormat("yyyy-MM-dd");
-	static DateTimeFormat DATE_TIME_PATTERN = DateTimeFormat.getFormat("yyyy-MM-dd hh:mm:ss aaa");
+	static DateTimeFormat DATE_TIME_PATTERN = DateTimeFormat
+			.getFormat("yyyy-MM-dd hh:mm:ss aaa");
 
 	GWTDateFormat(DateTimeFormat pDateTimeFormat) {
 		printFormat = pDateTimeFormat;
@@ -60,27 +62,28 @@ class GWTDateFormat implements IFormat<Date> {
 			return null;
 		}
 	}
-	
-	protected Date internalParse(DateTimeFormat dateTimeFormat, String pDateString) {
+
+	protected Date internalParse(DateTimeFormat dateTimeFormat,
+			String pDateString) {
 		// Parse Date for utc timezone
-		Date date = dateTimeFormat.parse(pDateString+" UTC");
+		Date date = dateTimeFormat.parse(pDateString + " UTC");
 		// Convert date to timezone
 		return addTimezoneOffset(date);
 	}
-	
+
 	protected Date addTimezoneOffset(Date pDate) {
 		if (pDate == null) {
 			return null;
 		} else {
-			return new Date(pDate.getTime()-(timeZoneOffset*1000*60));
+			return new Date(pDate.getTime() - (timeZoneOffset * 1000 * 60));
 		}
 	}
-	
+
 	@Override
 	public String format(Date object) {
 		if (object == null)
 			return "";
-		return printFormat.format(object, timeZone);		
+		return printFormat.format(object, timeZone);
 	}
 
 	@Override
@@ -91,20 +94,22 @@ class GWTDateFormat implements IFormat<Date> {
 		DateTimeFormat lDateTimeFormat = DateTimeFormat.getFormat(pFormatStyle);
 		return lDateTimeFormat.format(object, timeZone);
 	}
-	
+
 	@Override
 	public IFormat<Date> defaultFormatStyle(String pDefaultFormatStyle) {
 		printFormat = DateTimeFormat.getFormat(pDefaultFormatStyle);
 		// Important, 'v' adds timezone
-		parseFormat = DateTimeFormat.getFormat(pDefaultFormatStyle+" v");
+		parseFormat = DateTimeFormat.getFormat(pDefaultFormatStyle + " v");
 		return this;
 	}
-	
+
 	@Override
 	public IFormat<Date> timeZone(TimeZone pTimeZone) {
 		int lOffset = pTimeZone.getOffsetToUtcInMinutes();
-		// @see http://stackoverflow.com/questions/5068701/gwt-datetimeformat-reverses-timezone-value		
-		timeZone = com.google.gwt.i18n.client.TimeZone.createTimeZone(-1*lOffset);		
+		// @see
+		// http://stackoverflow.com/questions/5068701/gwt-datetimeformat-reverses-timezone-value
+		timeZone = com.google.gwt.i18n.client.TimeZone.createTimeZone(-1
+				* lOffset);
 		timeZoneOffset = lOffset;
 		return this;
 	}

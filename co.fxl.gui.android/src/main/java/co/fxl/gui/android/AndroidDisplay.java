@@ -212,9 +212,10 @@ public class AndroidDisplay extends DisplayTemplate implements Parent {
 	public void reload() {
 	}
 
-//	@Override
-//	public <T extends IElement<T>> IDecorator<T> adoptStyle(IDecorator<T> style) {
-//		throw new UnsupportedOperationException();
-//	}
+	// @Override
+	// public <T extends IElement<T>> IDecorator<T> adoptStyle(IDecorator<T>
+	// style) {
+	// throw new UnsupportedOperationException();
+	// }
 
 }

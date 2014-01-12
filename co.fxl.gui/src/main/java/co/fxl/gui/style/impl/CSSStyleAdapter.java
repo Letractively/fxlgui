@@ -218,4 +218,4 @@
 //		style.allowDetailView(allowDetailView);
 //	}
 //
-//}
+// }

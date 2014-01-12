@@ -207,8 +207,8 @@ public class DialogImpl implements IDialog {
 
 	IPopUp getPopUp() {
 		if (popUp == null) {
-			popUp = PopUp.showPopUp(true, false).modal(modal).autoHide(autoHide)
-					.glass(glass);
+			popUp = PopUp.showPopUp(true, false).modal(modal)
+					.autoHide(autoHide).glass(glass);
 			popUp.addVisibleListener(new IUpdateListener<Boolean>() {
 				@Override
 				public void onUpdate(Boolean value) {

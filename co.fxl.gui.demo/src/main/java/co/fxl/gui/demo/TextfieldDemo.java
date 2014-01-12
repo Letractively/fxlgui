@@ -34,7 +34,8 @@ class TextfieldDemo extends DemoTemplate implements Decorator {
 		example = new ExampleComposite(decorator, panel);
 		IContainer container = example.title("Textfield");
 		textField = container.textField();
-		textField.text(TEXTFIELD_INIT).width(200).font().family().arial().weight().bold();
+		textField.text(TEXTFIELD_INIT).width(200).font().family().arial()
+				.weight().bold();
 		example.codeFragment("panel.add().textField().text(\"Textfield...\").addUpdateListener(new IUpdateListener<String>() {"
 				+ "\n&nbsp;&nbsp;@Override"
 				+ "\n&nbsp;&nbsp;public void onUpdate(String value) {"

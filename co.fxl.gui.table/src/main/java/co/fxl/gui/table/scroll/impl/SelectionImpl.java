@@ -275,8 +275,7 @@ class SelectionImpl implements ISelection<Object> {
 		private void setUp() {
 			if (!widget.selectionIsSetup) {
 				IHorizontalPanel p = widget.statusPanel().cell(0, 0).valign()
-						.center()
-						.// width(120).
+						.center().// width(120).
 						panel().horizontal().add().panel().horizontal();
 				Style.instance().table().selectAllNoneBackground(p);
 				Style.instance().table().statusHeader(p, "Select");

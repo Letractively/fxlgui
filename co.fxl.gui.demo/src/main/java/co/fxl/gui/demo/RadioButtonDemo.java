@@ -32,18 +32,18 @@ class RadioButtonDemo extends DemoTemplate implements Decorator {
 		example = new ExampleComposite(decorator, vpanel);
 		IContainer container = example.title("Radiobutton");
 		IVerticalPanel verticalPanel = container.panel().vertical();
-		IRadioButton button1 = verticalPanel.add().radioButton().text(
-				"Radiobutton 1");
-		IRadioButton button2 = verticalPanel.add().radioButton().text(
-				"Radiobutton 2");
-		IRadioButton button3 = verticalPanel.add().radioButton().text(
-				"Radiobutton 3");
+		IRadioButton button1 = verticalPanel.add().radioButton()
+				.text("Radiobutton 1");
+		IRadioButton button2 = verticalPanel.add().radioButton()
+				.text("Radiobutton 2");
+		IRadioButton button3 = verticalPanel.add().radioButton()
+				.text("Radiobutton 3");
 		IGroup group = button1.group();
 		group.add(button2, button3);
 		example.codeFragment("IRadioButton button1 = panel.add().radioButton().text(\"Radiobutton 1\");"
-						+ "\nIRadioButton button2 = panel.add().radioButton().text(\"Radiobutton 2\");"
-						+ "\nIRadioButton button3 = panel.add().radioButton().text(\"Radiobutton 3\");"
-						+ "\nIGroup group = button1.group();"
-						+ "\ngroup.add(button2, button3);");
+				+ "\nIRadioButton button2 = panel.add().radioButton().text(\"Radiobutton 2\");"
+				+ "\nIRadioButton button3 = panel.add().radioButton().text(\"Radiobutton 3\");"
+				+ "\nIGroup group = button1.group();"
+				+ "\ngroup.add(button2, button3);");
 	}
 }

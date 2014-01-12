@@ -84,9 +84,9 @@ public class DynamicHeightGrid implements IScrollGrid {
 	public IScrollGrid addGridClickListener(IGridClickListener listener,
 			String key) {
 		IKey<IGridPanel> k = grid.addGridClickListener(listener);
-		if (key!=null && key.equals(SHIFT))
+		if (key != null && key.equals(SHIFT))
 			k.shiftPressed();
-		if (key!=null && key.equals(CTRL))
+		if (key != null && key.equals(CTRL))
 			k.ctrlPressed();
 		return this;
 	}

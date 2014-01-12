@@ -34,10 +34,10 @@ class ImageDemo extends DemoTemplate implements Decorator {
 		IImage button = container.image();
 		button.resource("monalisa.jpg");
 		example.codeFragment("panel.add().image().resource(\"monalisa.jpg\").addClickListener(new IClickListener() {"
-						+ "\n&nbsp;&nbsp;@Override"
-						+ "\n&nbsp;&nbsp;public void onClick() {"
-						+ "\n&nbsp;&nbsp;&nbsp;&nbsp;output.add().label().text(\"Image clicked!\");"
-						+ "\n&nbsp;&nbsp;}" + "\n});");
+				+ "\n&nbsp;&nbsp;@Override"
+				+ "\n&nbsp;&nbsp;public void onClick() {"
+				+ "\n&nbsp;&nbsp;&nbsp;&nbsp;output.add().label().text(\"Image clicked!\");"
+				+ "\n&nbsp;&nbsp;}" + "\n});");
 		button.addClickListener(new IClickListener() {
 			@Override
 			public void onClick() {

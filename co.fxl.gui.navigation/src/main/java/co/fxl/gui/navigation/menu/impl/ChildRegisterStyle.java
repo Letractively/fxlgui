@@ -43,7 +43,7 @@ class ChildRegisterStyle extends RegisterStyle {
 	void init(ITitle title) {
 		onBack(title);
 		title.border().width(1).color().lightgray();
-//		title.color().white();
+		// title.color().white();
 	}
 
 	@Override

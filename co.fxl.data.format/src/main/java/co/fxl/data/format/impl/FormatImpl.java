@@ -23,7 +23,7 @@ import co.fxl.data.format.api.IFormat;
 abstract class FormatImpl<T> implements IFormat<T> {
 
 	protected String defaultFormatStyle;
-	
+
 	@Override
 	public String format(T object) {
 		if (object == null)
@@ -53,20 +53,20 @@ abstract class FormatImpl<T> implements IFormat<T> {
 	public T parse(String format, String style) {
 		return parse(format);
 	}
-	
+
 	@Override
 	public IFormat<T> defaultFormatStyle(String pDefaultFormatStyle) {
 		defaultFormatStyle = pDefaultFormatStyle;
 		return this;
 	}
-	
+
 	@Override
 	public IFormat<T> timeZone(TimeZone pTimeZone) {
 		return this;
 	}
 
-//	@Override
-//	public IFormat<T> setLocale(String locale) {
-//		return (IFormat<T>) this;
-//	}
+	// @Override
+	// public IFormat<T> setLocale(String locale) {
+	// return (IFormat<T>) this;
+	// }
 }
