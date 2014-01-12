@@ -335,7 +335,7 @@ class LogImpl implements ILog, IClickListener {
 
 	@Override
 	public IMeasurement start(String message) {
-//		debug("Start " + message);
+		// debug("Start " + message);
 		return new Measurement(message);
 	}
 

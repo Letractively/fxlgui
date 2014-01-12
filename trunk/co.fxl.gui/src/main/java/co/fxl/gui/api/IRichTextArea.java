@@ -21,4 +21,4 @@
 //public interface IRichTextArea extends ITextInputElement<IRichTextArea> {
 //
 //	// TODO remove, replace with IHTMLArea
-//}
+// }

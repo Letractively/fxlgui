@@ -100,7 +100,7 @@ class GWTPopUp implements IPopUp, WidgetParent {
 				});
 			} else
 				popUp.show();
-		} else 
+		} else
 			popUp.hide();
 		return this;
 	}

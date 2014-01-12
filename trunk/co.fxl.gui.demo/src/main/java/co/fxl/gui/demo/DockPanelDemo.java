@@ -27,7 +27,8 @@ class DockPanelDemo extends DemoTemplate implements Decorator {
 
 	@Override
 	public void decorate(ExampleDecorator decorator, final IVerticalPanel vpanel) {
-		ExampleComposite example = new ExampleComposite(decorator, vpanel, true, true);
+		ExampleComposite example = new ExampleComposite(decorator, vpanel,
+				true, true);
 		IContainer container = example.title("Dock Panel");
 		IDockPanel panel = container.panel().dock();
 		panel(panel.top(), "Top").green();

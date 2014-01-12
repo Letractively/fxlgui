@@ -31,8 +31,7 @@ class VerticalPanelDemo extends DemoTemplate implements Decorator {
 		panel.spacing(10).color().lightgray();
 		panel.add().label().text("Label");
 		panel.add().checkBox().text("Checkbox");
-		panel.add().comboBox().addText("Combobox 1")
-				.addText("Combobox 2");
+		panel.add().comboBox().addText("Combobox 1").addText("Combobox 2");
 		panel.add().radioButton().text("Radio Button");
 		StringBuffer b = new StringBuffer();
 		b.append("IVerticalPanel verticalPanel = panel.add().panel().vertical();");

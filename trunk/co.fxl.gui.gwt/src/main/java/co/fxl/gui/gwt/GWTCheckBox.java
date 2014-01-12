@@ -55,7 +55,7 @@ public class GWTCheckBox extends GWTElement<CheckBox, ICheckBox> implements
 
 	@Override
 	public ICheckBox focus(boolean focus) {
-		if(editable()) {
+		if (editable()) {
 			return super.focus(focus);
 		}
 		return this;

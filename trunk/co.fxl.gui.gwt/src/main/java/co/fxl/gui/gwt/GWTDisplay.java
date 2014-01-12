@@ -652,38 +652,38 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 		Window.Location.reload();
 	}
 
-//	private int styleCounter = 0;
-//
-//	@Override
-//	public <T extends IElement<T>> IDecorator<T> adoptStyle(
-//			final IDecorator<T> style) {
-//		return new IDecorator<T>() {
-//
-//			private String name;
-//
-//			@Override
-//			public void decorate(T element) {
-//				@SuppressWarnings("unchecked")
-//				Element e = ((GWTElement<?, T>) element).container.widget
-//						.getElement();
-//				if (name == null) {
-//					// String before = getStyleString(e);
-//					style.decorate(element);
-//					String after = getStyleString(e);
-//					// String delta = after.substring(before.length());
-//					name = "S" + styleCounter++;
-//					addStyle("." + name + " { " + after + "}");
-//				} else {
-//					e.setPropertyString("style", "");
-//					element.addStyle(name);
-//				}
-//			}
-//
-//			private String getStyleString(Element e) {
-//				String t = e.toString();
-//				int index = t.indexOf("style=\"") + "style=\"".length();
-//				return t.substring(index, t.indexOf("\"", index));
-//			}
-//		};
-//	}
+	// private int styleCounter = 0;
+	//
+	// @Override
+	// public <T extends IElement<T>> IDecorator<T> adoptStyle(
+	// final IDecorator<T> style) {
+	// return new IDecorator<T>() {
+	//
+	// private String name;
+	//
+	// @Override
+	// public void decorate(T element) {
+	// @SuppressWarnings("unchecked")
+	// Element e = ((GWTElement<?, T>) element).container.widget
+	// .getElement();
+	// if (name == null) {
+	// // String before = getStyleString(e);
+	// style.decorate(element);
+	// String after = getStyleString(e);
+	// // String delta = after.substring(before.length());
+	// name = "S" + styleCounter++;
+	// addStyle("." + name + " { " + after + "}");
+	// } else {
+	// e.setPropertyString("style", "");
+	// element.addStyle(name);
+	// }
+	// }
+	//
+	// private String getStyleString(Element e) {
+	// String t = e.toString();
+	// int index = t.indexOf("style=\"") + "style=\"".length();
+	// return t.substring(index, t.indexOf("\"", index));
+	// }
+	// };
+	// }
 }

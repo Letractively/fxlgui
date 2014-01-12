@@ -33,13 +33,13 @@ class DateFormatImpl implements IFormat<Date> {
 	DateFormatImpl(DateFormat impl) {
 		this.impl = impl;
 	}
-	
+
 	@Override
 	public IFormat<Date> defaultFormatStyle(String pDefaultFormatStyle) {
 		defaultFormatStyle = pDefaultFormatStyle;
 		return this;
 	}
-	
+
 	@Override
 	public String format(Date object) {
 		if (object == null)
@@ -79,14 +79,14 @@ class DateFormatImpl implements IFormat<Date> {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public IFormat<Date> timeZone(TimeZone pTimeZone) {
 		return this;
 	}
 
-//	@Override
-//	public IFormat<Date> setLocale(String locale) {
-//		return this;
-//	}
+	// @Override
+	// public IFormat<Date> setLocale(String locale) {
+	// return this;
+	// }
 }

@@ -99,15 +99,15 @@ public class HTMLText {
 		if (!autoWrap)
 			toString = noWrap(toString);
 		toString = html(toString);
-//		if (!selectable)
-//			toString = unselectable(toString);
+		// if (!selectable)
+		// toString = unselectable(toString);
 		return toString;
 	}
 
-//	private String unselectable(String toString) {
-//		return "<div unselectable=\"on\" class=\"unselectable\">" + toString
-//				+ "</div>";
-//	}
+	// private String unselectable(String toString) {
+	// return "<div unselectable=\"on\" class=\"unselectable\">" + toString
+	// + "</div>";
+	// }
 
 	public static String textInput(String text, int width, String align) {
 		return textInput(text, width, align, "");
@@ -117,14 +117,14 @@ public class HTMLText {
 			String style) {
 		return "<input class=\"gwt-TextInputBox\" style=\"width:"
 				+ (width == -1 ? "100%;" : width + "px;")
-				+ (align != null ? "text-align:" + align : "")
-				+ style
+				+ (align != null ? "text-align:" + align : "") + style
 				+ "\" type=\"text\" value=\""
 				+ (text != null ? escape(text) : "") + "\" readonly/>";
 	}
 
 	public static String escape(String text) {
-		return text.replaceAll("<", "&#060;").replaceAll(">", "&#062;").replaceAll("\"", "&#34;");
+		return text.replaceAll("<", "&#060;").replaceAll(">", "&#062;")
+				.replaceAll("\"", "&#34;");
 	}
 
 	public static String removeMarkUp(String text) {

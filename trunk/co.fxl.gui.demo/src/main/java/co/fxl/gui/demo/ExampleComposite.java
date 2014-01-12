@@ -69,8 +69,10 @@ class ExampleComposite {
 	IContainer title(String name) {
 		panel.add().label().text(name + " Example").font().weight().bold()
 				.pixel(14);
-		panel.add().label().text(
-				"The " + (isComposite ? "composite " : "") + "GUI element ");
+		panel.add()
+				.label()
+				.text("The " + (isComposite ? "composite " : "")
+						+ "GUI element ");
 		if (decorator != null) {
 			decorator.decorate(sidePanel, name);
 		}

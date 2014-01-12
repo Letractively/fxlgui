@@ -22,8 +22,7 @@ import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IWidgetProvider;
 import co.fxl.gui.navigation.menu.api.IMenuWidget;
 
-public class MenuWidgetImplProvider implements
-		IWidgetProvider<IMenuWidget> {
+public class MenuWidgetImplProvider implements IWidgetProvider<IMenuWidget> {
 
 	@Override
 	public IMenuWidget createWidget(IContainer panel) {

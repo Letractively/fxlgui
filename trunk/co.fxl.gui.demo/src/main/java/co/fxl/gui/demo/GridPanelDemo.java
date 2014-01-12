@@ -27,7 +27,8 @@ class GridPanelDemo extends DemoTemplate implements Decorator {
 	@Override
 	public void decorate(ExampleDecorator decorator, final IVerticalPanel vpanel) {
 		vpanel.stretch(false);
-		ExampleComposite example = new ExampleComposite(decorator, vpanel, true, false);
+		ExampleComposite example = new ExampleComposite(decorator, vpanel,
+				true, false);
 		IContainer container = example.title("Grid Panel");
 		IGridPanel panel = container.panel().grid();
 		panel.spacing(10).color().lightgray();

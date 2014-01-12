@@ -32,7 +32,8 @@ import co.fxl.gui.form.impl.LoginWidgetImpl;
 import co.fxl.gui.impl.PopUp;
 import co.fxl.gui.layout.api.ILoginLayout;
 
-class HandheldLogin implements ILoginLayout, IClickListener, IUpdateListener<String> {
+class HandheldLogin implements ILoginLayout, IClickListener,
+		IUpdateListener<String> {
 
 	private IDialog dialog;
 	private IClickListener loginListener;

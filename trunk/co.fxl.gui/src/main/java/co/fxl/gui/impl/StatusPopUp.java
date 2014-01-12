@@ -174,7 +174,8 @@ public class StatusPopUp implements IResizeListener, Runnable, RuntimeConstants 
 
 	private IPopUp ensurePopUp() {
 		if (popUp == null) {
-			popUp = PopUp.showClosablePopUp().modal(false).autoHide(false).glass(false);
+			popUp = PopUp.showClosablePopUp().modal(false).autoHide(false)
+					.glass(false);
 			popUp.border().remove().style().shadow(2).color()
 					.rgb(240, 195, 109);
 			panel = popUp.container().panel().horizontal().spacing(5);

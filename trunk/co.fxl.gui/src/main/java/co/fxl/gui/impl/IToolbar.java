@@ -61,6 +61,6 @@ public interface IToolbar {
 
 	IPadding padding();
 
-//	ILabel addLabel();
+	// ILabel addLabel();
 
 }

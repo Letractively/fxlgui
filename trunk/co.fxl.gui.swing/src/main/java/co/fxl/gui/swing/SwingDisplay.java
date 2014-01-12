@@ -397,9 +397,10 @@ public class SwingDisplay extends DisplayTemplate implements IDisplay,
 	public void reload() {
 	}
 
-//	@Override
-//	public <T extends IElement<T>> IDecorator<T> adoptStyle(IDecorator<T> style) {
-//		return style;
-//	}
+	// @Override
+	// public <T extends IElement<T>> IDecorator<T> adoptStyle(IDecorator<T>
+	// style) {
+	// return style;
+	// }
 
 }

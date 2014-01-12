@@ -93,7 +93,8 @@ class FilterTableWidgetImpl extends TableWidgetImpl implements
 	}
 
 	@Override
-	public IFilterTableWidget<Object> addFilterListener(IFilterListener<Object> listener) {
+	public IFilterTableWidget<Object> addFilterListener(
+			IFilterListener<Object> listener) {
 		this.filterListener = listener;
 		return this;
 	}
@@ -112,7 +113,7 @@ class FilterTableWidgetImpl extends TableWidgetImpl implements
 			filter.filterWidget.visible(visible);
 		if (rows.isEmpty()) {
 			if (filter != null) {
-				filter.apply();	
+				filter.apply();
 			}
 		}
 		return this;

@@ -19,6 +19,6 @@
 package co.fxl.gui.table.impl.sort;
 
 public interface ISort {
-	
+
 	void sort(IComparableList list);
 }
