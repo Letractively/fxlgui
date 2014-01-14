@@ -429,7 +429,7 @@ public class Validation {
 			@Override
 			public void onUpdate(String value) {
 				field.isError = false;
-				if (value.length() > maxLength) {
+				if (maxLength != -1 && value.length() > maxLength) {
 					field.isError = true;
 				}
 				field.onUpdate(value);
