@@ -39,7 +39,6 @@ class GWTTextField extends GWTTextInput<TextBox, ITextField> implements
 
 	GWTTextField(GWTContainer<TextBox> container) {
 		super(container);
-		assert container != null : "GWTTextField.new: container is null";
 		container.widget.addChangeHandler(this);
 		container.widget.addDropHandler(this);
 		container.widget.addKeyUpHandler(this);
