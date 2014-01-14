@@ -55,7 +55,7 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea,
 	}
 
 	@Override
-	public IHTMLArea visibleToolbar(boolean toolbarVisible) {
+	public IHTMLArea toolbar(boolean toolbarVisible) {
 		assert !toolbarVisible;
 		toolbarContainer.element().remove();
 		return this;
