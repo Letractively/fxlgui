@@ -32,10 +32,11 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea,
 	private RichTextToolbarImpl toolbar;
 	private boolean ignore;
 	private String color = "black";
+	private IContainer toolbarContainer;
 
 	public HTMLAreaImpl(IContainer element) {
 		panel = element.panel().vertical();
-		toolbar = new RichTextToolbarImpl(panel.add(), this);
+		toolbar = new RichTextToolbarImpl(toolbarContainer = panel.add(), this);
 		element(panel.add().textArea());
 		element().addUpdateListener(new IUpdateListener<String>() {
 			@Override
@@ -51,6 +52,13 @@ public class HTMLAreaImpl extends TextAreaAdp implements IHTMLArea,
 			}
 		});
 		toolbar.updateStatus();
+	}
+
+	@Override
+	public IHTMLArea visibleToolbar(boolean toolbarVisible) {
+		assert !toolbarVisible;
+		toolbarContainer.element().remove();
+		return this;
 	}
 
 	@Override
