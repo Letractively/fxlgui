@@ -19,9 +19,11 @@
 package co.fxl.gui.form.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import co.fxl.data.format.api.IFormat;
 import co.fxl.data.format.impl.Format;
@@ -31,6 +33,7 @@ import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IComboBox;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextArea;
@@ -48,11 +51,46 @@ public class Validation {
 
 	// TODO Code Quality Fine-Tuning: extract validation to component
 
+	private Map<IElement<?>, Runnable> updateQueue = new HashMap<IElement<?>, Runnable>();
+	private boolean updateQueueActive = false;
+
+	private void forkUpdateQueue() {
+		updateQueueActive = true;
+		Display.instance().invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				updateQueueActive = false;
+				if (!updateQueue.isEmpty()) {
+					IElement<?> e = updateQueue.keySet().iterator().next();
+					Runnable r = updateQueue.remove(e);
+					r.run();
+					if (!updateQueue.isEmpty()) {
+						forkUpdateQueue();
+					}
+				}
+			}
+		}, 25);
+	}
+
 	abstract class AsyncUpdateListener<T> implements IUpdateListener<T> {
 
+		private IElement<?> element;
+
+		AsyncUpdateListener(IElement<?> element) {
+			this.element = element;
+		}
+
 		@Override
-		public final void onUpdate(T value) {
-			onAsyncUpdate(value);
+		public final void onUpdate(final T value) {
+			updateQueue.put(element, new Runnable() {
+				@Override
+				public void run() {
+					onAsyncUpdate(value);
+				}
+			});
+			if (!updateQueueActive) {
+				forkUpdateQueue();
+			}
 		}
 
 		abstract void onAsyncUpdate(T value);
@@ -71,6 +109,7 @@ public class Validation {
 		private boolean originalValue;
 
 		CheckBoxField(ICheckBox valueElement) {
+			super(valueElement);
 			this.valueElement = valueElement;
 			originalValue = valueElement.checked();
 			fields.add(this);
@@ -166,6 +205,7 @@ public class Validation {
 		private boolean isNull = false;
 
 		Field(ITextElement<?> textElement, boolean required) {
+			super(textElement);
 			assert textElement != null : "Illegal call to Validation.Field.new";
 			this.textElement = textElement;
 			this.required = required;
@@ -353,7 +393,7 @@ public class Validation {
 	public Validation validateDate(final ITextField textField,
 			final IFormat<Date> format, boolean required) {
 		final Field field = new Field(textField, required);
-		textField.addUpdateListener(new AsyncUpdateListener<String>() {
+		textField.addUpdateListener(new AsyncUpdateListener<String>(textField) {
 			@Override
 			public void onAsyncUpdate(String value) {
 				field.isError = false;
@@ -377,7 +417,7 @@ public class Validation {
 
 	public Validation validateLong(final ITextField textField, boolean required) {
 		final Field field = new Field(textField, required);
-		textField.addUpdateListener(new AsyncUpdateListener<String>() {
+		textField.addUpdateListener(new AsyncUpdateListener<String>(textField) {
 			@Override
 			public void onAsyncUpdate(String value) {
 				field.isError = false;
@@ -436,7 +476,7 @@ public class Validation {
 	public Validation linkInput(final IHTMLArea textField, boolean required,
 			final int maxLength) {
 		final Field field = new Field(textField, required);
-		textField.addUpdateListener(new AsyncUpdateListener<String>() {
+		textField.addUpdateListener(new AsyncUpdateListener<String>(textField) {
 			@Override
 			public void onAsyncUpdate(String value) {
 				field.isError = false;
@@ -560,7 +600,7 @@ public class Validation {
 
 	public void validate(final ITextField textField, final IValidation<String> v) {
 		final Field field = new Field(textField, false);
-		textField.addUpdateListener(new AsyncUpdateListener<String>() {
+		textField.addUpdateListener(new AsyncUpdateListener<String>(textField) {
 			@Override
 			public void onAsyncUpdate(String value) {
 				field.isError = false;
