@@ -48,13 +48,24 @@ public class Validation {
 
 	// TODO Code Quality Fine-Tuning: extract validation to component
 
+	abstract class AsyncUpdateListener<T> implements IUpdateListener<T> {
+
+		@Override
+		public final void onUpdate(T value) {
+			onAsyncUpdate(value);
+		}
+
+		abstract void onAsyncUpdate(T value);
+
+	}
+
 	public interface IValidation<T> {
 
 		boolean validate(String trim);
 
 	}
 
-	class CheckBoxField implements IField, IUpdateListener<Boolean> {
+	class CheckBoxField extends AsyncUpdateListener<Boolean> implements IField {
 
 		private ICheckBox valueElement;
 		private boolean originalValue;
@@ -97,7 +108,7 @@ public class Validation {
 		}
 
 		@Override
-		public void onUpdate(Boolean value) {
+		public void onAsyncUpdate(Boolean value) {
 			updateClickables();
 		}
 
@@ -145,7 +156,7 @@ public class Validation {
 
 	}
 
-	private class Field implements IField, IUpdateListener<String> {
+	private class Field extends AsyncUpdateListener<String> implements IField {
 
 		private ITextElement<?> textElement;
 		private String originalValue;
@@ -171,7 +182,7 @@ public class Validation {
 		}
 
 		@Override
-		public void onUpdate(String value) {
+		public void onAsyncUpdate(String value) {
 			update(value, true);
 		}
 
@@ -342,9 +353,9 @@ public class Validation {
 	public Validation validateDate(final ITextField textField,
 			final IFormat<Date> format, boolean required) {
 		final Field field = new Field(textField, required);
-		textField.addUpdateListener(new IUpdateListener<String>() {
+		textField.addUpdateListener(new AsyncUpdateListener<String>() {
 			@Override
-			public void onUpdate(String value) {
+			public void onAsyncUpdate(String value) {
 				field.isError = false;
 				if (value.trim().length() > 0) {
 					try {
@@ -366,9 +377,9 @@ public class Validation {
 
 	public Validation validateLong(final ITextField textField, boolean required) {
 		final Field field = new Field(textField, required);
-		textField.addUpdateListener(new IUpdateListener<String>() {
+		textField.addUpdateListener(new AsyncUpdateListener<String>() {
 			@Override
-			public void onUpdate(String value) {
+			public void onAsyncUpdate(String value) {
 				field.isError = false;
 				if (value.length() > 0) {
 					try {
@@ -425,9 +436,9 @@ public class Validation {
 	public Validation linkInput(final IHTMLArea textField, boolean required,
 			final int maxLength) {
 		final Field field = new Field(textField, required);
-		textField.addUpdateListener(new IUpdateListener<String>() {
+		textField.addUpdateListener(new AsyncUpdateListener<String>() {
 			@Override
-			public void onUpdate(String value) {
+			public void onAsyncUpdate(String value) {
 				field.isError = false;
 				if (maxLength != -1 && value.length() > maxLength) {
 					field.isError = true;
@@ -549,9 +560,9 @@ public class Validation {
 
 	public void validate(final ITextField textField, final IValidation<String> v) {
 		final Field field = new Field(textField, false);
-		textField.addUpdateListener(new IUpdateListener<String>() {
+		textField.addUpdateListener(new AsyncUpdateListener<String>() {
 			@Override
-			public void onUpdate(String value) {
+			public void onAsyncUpdate(String value) {
 				field.isError = false;
 				if (value.trim().length() > 0) {
 					try {
