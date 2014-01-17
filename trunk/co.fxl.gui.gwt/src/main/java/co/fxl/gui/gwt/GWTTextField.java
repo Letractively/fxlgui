@@ -29,16 +29,19 @@ import com.google.gwt.event.dom.client.DropEvent;
 import com.google.gwt.event.dom.client.DropHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.user.client.ui.TextBox;
 
 class GWTTextField extends GWTTextInput<TextBox, ITextField> implements
-		ITextField, ChangeHandler, DropHandler, KeyUpHandler {
+		ITextField, ChangeHandler, DropHandler, KeyUpHandler, MouseUpHandler {
 
 	private List<IUpdateListener<String>> updateListeners = new LinkedList<IUpdateListener<String>>();
 	private String lastNotifiedValue = null;
 
 	GWTTextField(GWTContainer<TextBox> container) {
 		super(container);
+		container.widget.addMouseUpHandler(this);
 		container.widget.addChangeHandler(this);
 		container.widget.addDropHandler(this);
 		container.widget.addKeyUpHandler(this);
@@ -118,6 +121,11 @@ class GWTTextField extends GWTTextInput<TextBox, ITextField> implements
 
 	@Override
 	public void onDrop(DropEvent event) {
+		notifyChange();
+	}
+
+	@Override
+	public void onMouseUp(MouseUpEvent event) {
 		notifyChange();
 	}
 }
