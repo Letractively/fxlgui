@@ -53,6 +53,7 @@ public class Validation {
 
 	private Map<IElement<?>, Runnable> updateQueue = new HashMap<IElement<?>, Runnable>();
 	private boolean updateQueueActive = false;
+	private boolean active = false;
 
 	private void forkUpdateQueue() {
 		updateQueueActive = true;
@@ -89,6 +90,8 @@ public class Validation {
 					onAsyncUpdate(value);
 				}
 			});
+			if (!active)
+				return;
 			if (!updateQueueActive) {
 				forkUpdateQueue();
 			}
@@ -326,6 +329,8 @@ public class Validation {
 	}
 
 	void updateClickables() {
+		if (!active)
+			return;
 		boolean error = false;
 		isSpecified = isNew;
 		boolean allRequiredSpecified = true;
@@ -691,6 +696,13 @@ public class Validation {
 		} else
 			throw new UnsupportedOperationException(valueElement.getClass()
 					.getName());
+	}
+
+	public void activate() {
+		for (Runnable r : updateQueue.values())
+			r.run();
+		active = true;
+		updateClickables();
 	}
 
 }

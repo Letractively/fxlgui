@@ -331,6 +331,7 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 	public FormWidgetImpl visible(boolean visible) {
 		setUpBottomPanel();
 		focus();
+		validation.activate();
 		return this;
 	}
 
