@@ -59,15 +59,16 @@ public class Validation {
 		Display.instance().invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				updateQueueActive = false;
 				if (!updateQueue.isEmpty()) {
 					IElement<?> e = updateQueue.keySet().iterator().next();
 					Runnable r = updateQueue.remove(e);
 					r.run();
 					if (!updateQueue.isEmpty()) {
 						forkUpdateQueue();
-					}
-				}
+					} else
+						updateQueueActive = false;
+				} else
+					updateQueueActive = false;
 			}
 		}, 25);
 	}
