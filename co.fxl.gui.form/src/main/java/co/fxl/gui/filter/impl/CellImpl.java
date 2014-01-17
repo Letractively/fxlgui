@@ -44,29 +44,29 @@ class CellImpl implements ICell, RuntimeConstants {
 		private IFormat<Date> format;
 
 		ExplicitRangeField(FilterWidgetImpl widget, IContainer cell,
-				boolean isDateField, IFormat<Date> format) {
+				boolean isDateField, IFormat<Date> format, int absoluteWidth) {
 			this.widget = widget;
 			this.format = format;
 			IHorizontalPanel p = cell.panel().horizontal();
-			tf1 = addTextField(p, isDateField);
+			tf1 = addTextField(p, isDateField, absoluteWidth);
 			p.add().label().text("-").margin().left(4).right(4);
-			tf2 = addTextField(p, isDateField);
+			tf2 = addTextField(p, isDateField, absoluteWidth);
 		}
 
-		ITextField addTextField(IHorizontalPanel p, boolean isDateField) {
+		ITextField addTextField(IHorizontalPanel p, boolean isDateField,
+				int absoluteWidth) {
 			boolean useDateField = isDateField && NOT_SWING;
 			ITextField textField = useDateField ? new DateField(p.add(), IE ? 2
-					: 3, format) : p.add().textField();
-			ITextField textField1 = textField
-					.width(FilterTemplate.WIDTH_RANGE_CELL
-							- (useDateField ? (Env.runtime().geq(Env.IE, 10) ? 21
-									: 24)
-									: 0));
-			widget.heights.decorate(textField1);
+					: 3, format, absoluteWidth) : p.add().textField();
+			if (absoluteWidth == -1)
+				textField.width(FilterTemplate.WIDTH_RANGE_CELL
+						- (useDateField ? (Env.runtime().geq(Env.IE, 10) ? 21
+								: 24) : 0));
+			widget.heights.decorate(textField);
 			if (useDateField)
 				textField.font().pixel(9);
-			widget.register(textField1);
-			return textField1;
+			widget.register(textField);
+			return textField;
 		}
 
 		@Override
@@ -128,7 +128,7 @@ class CellImpl implements ICell, RuntimeConstants {
 	@Override
 	public RangeField horizontal(boolean isDateField, IFormat<Date> f) {
 		return new ExplicitRangeField(filterPanelImpl.widget, cell,
-				isDateField, f);
+				isDateField, f, -1);
 	}
 
 	@Override

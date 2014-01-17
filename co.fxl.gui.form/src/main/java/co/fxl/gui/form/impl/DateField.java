@@ -101,11 +101,12 @@ public class DateField extends TextFieldAdp implements RuntimeConstants {
 	}
 
 	public DateField(IContainer c, IFormat<Date> format) {
-		this(c, true, 2, format);
+		this(c, true, 2, format, -1);
 	}
 
-	public DateField(IContainer c, int cellSpacing, IFormat<Date> format) {
-		this(c, true, cellSpacing, format);
+	public DateField(IContainer c, int cellSpacing, IFormat<Date> format,
+			int width) {
+		this(c, true, cellSpacing, format, width);
 	}
 
 	// private DateField(IContainer c, boolean addC) {
@@ -113,11 +114,14 @@ public class DateField extends TextFieldAdp implements RuntimeConstants {
 	// }
 
 	public DateField(IContainer c, boolean addC, int cellSpacing,
-			IFormat<Date> format) {
+			IFormat<Date> format, int width) {
 		this.format = format;
 		IGridPanel g = c.panel().grid();
 		ITextField tf = g.cell(0, 0).textField();
-		g.column(0).expand();
+		if (width != -1)
+			g.column(0).width(width);
+		else
+			g.column(0).expand();
 		IContainer c1 = null;
 		if (addC) {
 			IGridCell cell2 = g.cell(1, 0).align().center().valign().center();
