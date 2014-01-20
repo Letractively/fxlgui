@@ -43,4 +43,6 @@ public interface IBulkTableCell {
 	Object nativeElement();
 
 	IBulkTableCell styledText(String text, String color);
+
+	IBulkTableCell html(String html, boolean checkLineBreak);
 }
