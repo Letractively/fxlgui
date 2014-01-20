@@ -128,8 +128,16 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 	}
 
 	@Override
-	public void refreshButton(IClickListener clickListener) {
-		title.refreshButton(clickListener);
+	public void refreshButton(final IClickListener clickListener) {
+		title.refreshButton(new IClickListener() {
+			@Override
+			public void onClick() {
+				if (apply.clickable())
+					onApplyClick(true);
+				else
+					clickListener.onClick();
+			}
+		});
 	}
 
 	@Override
