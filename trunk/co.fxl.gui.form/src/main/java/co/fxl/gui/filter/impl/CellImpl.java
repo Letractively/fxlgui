@@ -62,6 +62,8 @@ class CellImpl implements ICell, RuntimeConstants {
 				textField.width(FilterTemplate.WIDTH_RANGE_CELL
 						- (useDateField ? (Env.runtime().geq(Env.IE, 10) ? 21
 								: 24) : 0));
+			if (Env.is(Env.SWING))
+				textField.width(80);
 			widget.heights.decorate(textField);
 			if (useDateField)
 				textField.font().pixel(9);
