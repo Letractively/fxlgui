@@ -51,7 +51,10 @@ public class ColumnImpl implements IColumn<Object> {
 	public Class<?> contentType = String.class;
 	private boolean sortable = false;
 	IColumnUpdateListener<Object, Object> updateListener;
-	int width = -1;
+	public int widthInt = -1;
+	public double widthDouble = -1;
+	public double fixedWidthDouble = -1;
+	public int fixedWidthInt = -1;
 
 	ColumnImpl(TableWidgetImpl table, int columnIndex) {
 		this.table = table;
@@ -72,8 +75,8 @@ public class ColumnImpl implements IColumn<Object> {
 	}
 
 	IGridCell size(IGridCell cell) {
-		if (width != -1)
-			cell.width(width);
+		if (widthInt != -1)
+			cell.width(widthInt);
 		return cell;
 	}
 
@@ -140,12 +143,6 @@ public class ColumnImpl implements IColumn<Object> {
 	}
 
 	@Override
-	public IColumn<Object> width(int width) {
-		this.width = width;
-		return this;
-	}
-
-	@Override
 	public IColumn<Object> tagSortOrder(boolean up) {
 		throw new UnsupportedOperationException();
 	}
@@ -156,7 +153,25 @@ public class ColumnImpl implements IColumn<Object> {
 	}
 
 	@Override
+	public IColumn<Object> fixedWidth(int width) {
+		fixedWidthInt = width;
+		return this;
+	}
+
+	@Override
+	public IColumn<Object> fixedWidth(double width) {
+		fixedWidthDouble = width;
+		return this;
+	}
+
+	@Override
 	public IColumn<Object> width(double width) {
+		widthDouble = width;
+		return this;
+	}
+
+	@Override
+	public IColumn<Object> width(int width) {
 		throw new UnsupportedOperationException();
 	}
 }

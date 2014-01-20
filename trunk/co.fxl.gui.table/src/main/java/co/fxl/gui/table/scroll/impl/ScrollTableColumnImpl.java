@@ -354,6 +354,8 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	private IColorAdapter<Object, Object> colorAdapter;
 	boolean forceSort = false;
 	private boolean required;
+	public double fixedWidthDouble = -1;
+	public int fixedWidthInt = -1;
 
 	public ScrollTableColumnImpl(int index) {
 		this(null, index);
@@ -362,6 +364,20 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	ScrollTableColumnImpl(TableWidgetAdp widget, int index) {
 		this.widget = widget;
 		this.index = index;
+	}
+
+	@Override
+	public IColumn<Object> fixedWidth(int width) {
+		fixedWidthInt = width;
+		width(width);
+		return this;
+	}
+
+	@Override
+	public IColumn<Object> fixedWidth(double width) {
+		fixedWidthDouble = width;
+		width(width);
+		return this;
 	}
 
 	private void injectColor(Object identifier, IBulkTableCell cell,
@@ -597,5 +613,15 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		if (isShort) {
 			column.align().center();
 		}
+	}
+
+	@Override
+	public double fixedWidthDouble() {
+		return fixedWidthDouble;
+	}
+
+	@Override
+	public int fixedWidthInt() {
+		return fixedWidthInt;
 	}
 }
