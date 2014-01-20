@@ -40,15 +40,19 @@ public interface IColumn<T> {
 
 	IFieldType type();
 
-	IColumn<Object> type(IFieldType type);
+	IColumn<T> type(IFieldType type);
 
-	IColumn<T> width(int width);
+	IColumn<T> fixedWidth(int width);
 
-	IColumn<Object> width(double width);
+	IColumn<T> fixedWidth(double width);
 
 	IColumn<T> decorator(IDecorator<?, ?> decorator);
 
 	IColumn<T> tagSortOrder(boolean up);
 
 	IColumn<T> updateListener(IColumnUpdateListener<T, ?> updateListener);
+
+	IColumn<T> width(double width);
+
+	IColumn<T> width(int width);
 }

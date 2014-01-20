@@ -65,4 +65,8 @@ public interface IScrollTableColumn<T> extends IColumn<T> {
 
 	int contentIndex();
 
+	double fixedWidthDouble();
+
+	int fixedWidthInt();
+
 }
