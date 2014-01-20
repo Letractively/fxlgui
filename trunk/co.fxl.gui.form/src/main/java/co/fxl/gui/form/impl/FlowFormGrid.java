@@ -21,13 +21,16 @@ package co.fxl.gui.form.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFlowPanel;
 import co.fxl.gui.api.IFlowPanel.ILineBreak;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IGridPanel.IGridColumn;
 import co.fxl.gui.api.IPadding;
+import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.RuntimeConstants;
 import co.fxl.gui.style.impl.Style;
 
@@ -99,6 +102,17 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 
 	FlowFormGrid(FormWidgetImpl widget, IVerticalPanel content) {
 		panel = content.add().panel().flow().spacing(SPACING);
+		Display.instance().invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				for (Row row : panels) {
+					IElement<?> e = ((IGridPanel) row.grid.cell(valueColumn(),
+							valueRow()).element()).cell(0, 0).element();
+					if (e instanceof ITextArea)
+						e.width(e.width());
+				}
+			}
+		});
 	}
 
 	@Override
@@ -162,8 +176,15 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 	public IGridCell value(int row, boolean expand) {
 		Row r = panels.get(row);
 		r.expand(expand);
-		return r.grid.cell(Style.instance().mobile() ? 0 : 1, Style.instance()
-				.mobile() ? 1 : 0);
+		return r.grid.cell(valueColumn(), valueRow());
+	}
+
+	private int valueRow() {
+		return Style.instance().mobile() ? 1 : 0;
+	}
+
+	private int valueColumn() {
+		return Style.instance().mobile() ? 0 : 1;
 	}
 
 	@Override

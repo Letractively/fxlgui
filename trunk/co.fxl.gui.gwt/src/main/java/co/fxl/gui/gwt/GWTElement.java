@@ -314,7 +314,7 @@ public class GWTElement<T extends Widget, R> implements IElement<R>,
 	}
 
 	@SuppressWarnings("unchecked")
-	private R width(boolean isNegative, String widthString) {
+	R width(boolean isNegative, String widthString) {
 		if (isUndefined())
 			return (R) this;
 		if (isNegative)
