@@ -282,7 +282,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 		public void decorate(Object identifier, IBulkTableCell cell,
 				String value) {
 			String text = (String) value;
-			cell.html(text);
+			cell.html(text, true);
 		}
 
 		@Override

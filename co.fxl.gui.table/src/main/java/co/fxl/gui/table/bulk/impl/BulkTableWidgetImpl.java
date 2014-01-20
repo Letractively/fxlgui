@@ -311,6 +311,11 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 						+ text + "</div>";
 				return html(html);
 			}
+
+			@Override
+			public IBulkTableCell html(String html, boolean checkLineBreak) {
+				return html(html);
+			}
 		};
 	}
 
