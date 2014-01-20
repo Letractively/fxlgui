@@ -84,6 +84,10 @@ public class Validation {
 
 		@Override
 		public final void onUpdate(final T value) {
+			if (element instanceof IComboBox || element instanceof ICheckBox) {
+				onAsyncUpdate(value);
+				return;
+			}
 			updateQueue.put(element, new Runnable() {
 				@Override
 				public void run() {
@@ -701,6 +705,7 @@ public class Validation {
 	public void activate() {
 		for (Runnable r : updateQueue.values())
 			r.run();
+		updateQueue.clear();
 		active = true;
 		updateClickables();
 	}
