@@ -314,8 +314,9 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		// if (configurationComboBox != null)
 		// validation.linkInput(configurationComboBox);
 		configuration = firstConfiguration;
+		update(true);
 		validation.activate();
-		return update(true);
+		return this;
 	}
 
 	private IFilterWidget update() {
