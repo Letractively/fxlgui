@@ -21,6 +21,7 @@ package co.fxl.data.format.gwt;
 import java.util.Date;
 
 import co.fxl.data.format.api.IFormat;
+import co.fxl.data.format.impl.Format;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 
@@ -30,7 +31,6 @@ class GWTDateFormat implements IFormat<Date> {
 	private int timeZoneOffset;
 	private DateTimeFormat printFormat;
 	private DateTimeFormat parseFormat;
-	private DateTimeFormat otherParseFormat;
 	static DateTimeFormat TIME_PATTERN = DateTimeFormat
 			.getFormat("hh:mm:ss aaa");
 	static DateTimeFormat DATE_PATTERN = DateTimeFormat.getFormat("yyyy-MM-dd");
@@ -38,13 +38,8 @@ class GWTDateFormat implements IFormat<Date> {
 			.getFormat("yyyy-MM-dd hh:mm:ss aaa");
 
 	GWTDateFormat(DateTimeFormat pDateTimeFormat) {
-		this(pDateTimeFormat, null);
-	}
-
-	GWTDateFormat(DateTimeFormat pDateTimeFormat, DateTimeFormat otherFormat) {
 		printFormat = pDateTimeFormat;
 		parseFormat = pDateTimeFormat;
-		otherParseFormat = otherFormat;
 		timeZone = com.google.gwt.i18n.client.TimeZone.createTimeZone(0);
 		timeZoneOffset = 0;
 	}
@@ -63,8 +58,12 @@ class GWTDateFormat implements IFormat<Date> {
 		if (format == null)
 			return null;
 		Date parsed = internalParse(parseFormat, format);
-		if (parsed == null && otherParseFormat != null)
-			parsed = otherParseFormat.parse(format);
+		if (parsed == null) {
+			IFormat<Date> lIFormat = Format.date();
+			if (lIFormat != this) {
+				return lIFormat.parse(format);
+			}
+		}
 		return parsed;
 	}
 
