@@ -74,7 +74,8 @@ public class PopUpPageContainer implements PageContainer, RuntimeConstants {
 
 				@Override
 				protected void notifyAllReturned() {
-					popUp.visible(true);
+					if (!closablePopUp.destroyed)
+						popUp.visible(true);
 				}
 			};
 		return panel;
