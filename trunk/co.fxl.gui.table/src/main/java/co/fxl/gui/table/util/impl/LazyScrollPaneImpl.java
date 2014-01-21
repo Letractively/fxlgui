@@ -59,6 +59,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	public static int WIDTH_SCROLL_PANEL = 35;
 	public static final int HEIGHT_SCROLL_BAR = FIREFOX ? 21 : 17;
 	private static final int HEIGHT_CORRECTION = 7;
+	private static final String DRAG_DROP_TOOLTIP = "Drag & drop to reassign, reorder (ALT), or copy (SHIFT) tree nodes";
 	private int widthScrollPanel = WIDTH_SCROLL_PANEL;
 	IDecorator decorator;
 	private int minRowHeight = 22;
@@ -199,6 +200,8 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 	private void draw() {
 		hasScrollbar = true;
 		v = container.panel().focus();
+		if (dragDropListener != null)
+			v.tooltip(DRAG_DROP_TOOLTIP);
 		if (!plainContent && addToContextMenu)
 			co.fxl.gui.impl.Page.instance().contextMenu()
 					.decorate((IClickable<?>) v);
