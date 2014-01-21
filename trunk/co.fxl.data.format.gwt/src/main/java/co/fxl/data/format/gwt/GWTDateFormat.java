@@ -30,6 +30,7 @@ class GWTDateFormat implements IFormat<Date> {
 	private int timeZoneOffset;
 	private DateTimeFormat printFormat;
 	private DateTimeFormat parseFormat;
+	private DateTimeFormat otherParseFormat;
 	static DateTimeFormat TIME_PATTERN = DateTimeFormat
 			.getFormat("hh:mm:ss aaa");
 	static DateTimeFormat DATE_PATTERN = DateTimeFormat.getFormat("yyyy-MM-dd");
@@ -37,8 +38,13 @@ class GWTDateFormat implements IFormat<Date> {
 			.getFormat("yyyy-MM-dd hh:mm:ss aaa");
 
 	GWTDateFormat(DateTimeFormat pDateTimeFormat) {
+		this(pDateTimeFormat, null);
+	}
+
+	GWTDateFormat(DateTimeFormat pDateTimeFormat, DateTimeFormat otherFormat) {
 		printFormat = pDateTimeFormat;
 		parseFormat = pDateTimeFormat;
+		otherParseFormat = otherFormat;
 		timeZone = com.google.gwt.i18n.client.TimeZone.createTimeZone(0);
 		timeZoneOffset = 0;
 	}
@@ -56,19 +62,21 @@ class GWTDateFormat implements IFormat<Date> {
 	public Date parse(String format) {
 		if (format == null)
 			return null;
+		Date parsed = internalParse(parseFormat, format);
+		if (parsed == null && otherParseFormat != null)
+			parsed = otherParseFormat.parse(format);
+		return parsed;
+	}
+
+	private Date internalParse(DateTimeFormat dateTimeFormat, String pDateString) {
 		try {
-			return internalParse(parseFormat, format);
+			// Parse Date for utc timezone
+			Date date = dateTimeFormat.parse(pDateString + " UTC");
+			// Convert date to timezone
+			return addTimezoneOffset(date);
 		} catch (Exception e) {
 			return null;
 		}
-	}
-
-	protected Date internalParse(DateTimeFormat dateTimeFormat,
-			String pDateString) {
-		// Parse Date for utc timezone
-		Date date = dateTimeFormat.parse(pDateString + " UTC");
-		// Convert date to timezone
-		return addTimezoneOffset(date);
 	}
 
 	protected Date addTimezoneOffset(Date pDate) {

@@ -26,7 +26,7 @@ public class GWTFormat {
 
 	public static void setUp() {
 		Format.registerDateTime(new GWTDateFormat(
-				GWTDateFormat.DATE_TIME_PATTERN));
+				GWTDateFormat.DATE_TIME_PATTERN, GWTDateFormat.DATE_PATTERN));
 		Format.register(Date.class, new GWTDateFormat(
 				GWTDateFormat.DATE_PATTERN));
 		Format.registerTime(new GWTDateFormat(GWTDateFormat.TIME_PATTERN));
