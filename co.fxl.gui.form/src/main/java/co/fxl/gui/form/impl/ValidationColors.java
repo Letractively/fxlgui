@@ -112,7 +112,7 @@ class ValidationColors {
 
 	private void errorColorAbsolute(boolean required, IColored c) {
 		if (!isEmptyColor(required, (ITextElement<?>) c))
-			c.color().mix().red().white().white();
+			c.color().rgb(255, 200, 200);
 	}
 
 }
