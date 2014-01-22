@@ -102,7 +102,8 @@ class ValidationColors {
 
 	private boolean isEmptyColor(boolean required, ITextElement<?> t) {
 		IColored c = (IColored) t;
-		if (required && t.text().equals("")) {
+		String text = t.text();
+		if (required && (text == null || text.equals(""))) {
 			c.color().rgb(255, 255, 204);
 			return true;
 		}
