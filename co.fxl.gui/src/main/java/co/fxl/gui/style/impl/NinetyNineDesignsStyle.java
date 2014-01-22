@@ -541,9 +541,9 @@ class NinetyNineDesignsStyle extends StyleTemplate implements RuntimeConstants {
 							String label, final IClickListener cl) {
 						ImageButton text = new ImageButton(p.add());
 						text.imageResource(image);
-						text.addClickListener(new LazyClickListener() {
+						text.addClickListener(new IClickListener() {
 							@Override
-							protected void onAllowedClick() {
+							public void onClick() {
 								closePopUp();
 								cl.onClick();
 							}
