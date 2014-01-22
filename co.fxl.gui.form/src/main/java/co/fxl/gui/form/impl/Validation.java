@@ -30,8 +30,6 @@ import co.fxl.data.format.impl.Format;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.ICheckBox;
 import co.fxl.gui.api.IClickable;
-import co.fxl.gui.api.IColored;
-import co.fxl.gui.api.IColored.IColor;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IPasswordField;
@@ -45,7 +43,6 @@ import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.rtf.api.IHTMLArea;
-import co.fxl.gui.style.impl.Style;
 
 public class Validation {
 
@@ -177,6 +174,11 @@ public class Validation {
 		public boolean visible() {
 			return valueElement.visible();
 		}
+
+		@Override
+		public ITextElement<?> textElement() {
+			return valueElement;
+		}
 	}
 
 	public interface IField {
@@ -201,16 +203,18 @@ public class Validation {
 
 		boolean visible();
 
+		ITextElement<?> textElement();
+
 	}
 
-	private class Field extends AsyncUpdateListener<String> implements IField {
+	class Field extends AsyncUpdateListener<String> implements IField {
 
 		private ITextElement<?> textElement;
 		private String originalValue;
 		boolean isSpecified = false;
 		boolean isError = false;
 		private boolean required = false;
-		private boolean isNull = false;
+		boolean isNull = false;
 
 		Field(ITextElement<?> textElement, boolean required) {
 			super(textElement);
@@ -243,23 +247,23 @@ public class Validation {
 				if (textElement instanceof ITextField) {
 					ITextField tf = (ITextField) textElement;
 					if (wColors)
-						errorColor(tf, isNull);
+						colors.errorColor(required, tf, isNull);
 				} else if (textElement instanceof ITextArea) {
 					ITextArea tf = (ITextArea) textElement;
 					if (wColors)
-						errorColor(tf, isNull);
+						colors.errorColor(required, tf, isNull);
 				} else if (textElement instanceof IPasswordField) {
 					IPasswordField tf = (IPasswordField) textElement;
 					if (wColors)
-						errorColor(tf, isNull);
+						colors.errorColor(required, tf, isNull);
 				} else if (textElement instanceof IComboBox) {
 					IComboBox tf = (IComboBox) textElement;
 					if (wColors)
-						errorColor(tf, isNull);
+						colors.errorColor(required, tf, isNull);
 				} else if (textElement instanceof ISuggestField) {
 					ISuggestField tf = (ISuggestField) textElement;
 					if (wColors)
-						errorColor(this, tf, isNull);
+						colors.errorColor(this, tf, isNull);
 				} else
 					throw new UnsupportedOperationException(textElement
 							.getClass().getName()
@@ -312,6 +316,11 @@ public class Validation {
 		public boolean visible() {
 			return textElement.visible();
 		}
+
+		@Override
+		public ITextElement<?> textElement() {
+			return textElement;
+		}
 	}
 
 	private final static IFormat<Date> DATE_FORMAT = Format.date();
@@ -322,14 +331,14 @@ public class Validation {
 	private boolean isSpecified = false;
 	private boolean showDiscardChanges = false;
 	private boolean isNew = false;
-	private boolean isFilter;
+	private ValidationColors colors;
 
 	public Validation() {
 		this(false);
 	}
 
 	public Validation(boolean isFilter) {
-		this.isFilter = isFilter;
+		colors = new ValidationColors(isFilter);
 	}
 
 	void updateClickables() {
@@ -401,7 +410,7 @@ public class Validation {
 	}
 
 	public Validation validateDate(final ITextField textField,
-			final IFormat<Date> format, boolean required) {
+			final IFormat<Date> format, final boolean required) {
 		final Field field = new Field(textField, required);
 		textField.addUpdateListener(new AsyncUpdateListener<String>(textField) {
 			@Override
@@ -419,13 +428,14 @@ public class Validation {
 					field.isError = field.required;
 				}
 				field.onUpdate(value);
-				errorColor(textField, field.isError);
+				colors.errorColor(required, textField, field.isError);
 			}
 		});
 		return this;
 	}
 
-	public Validation validateLong(final ITextField textField, boolean required) {
+	public Validation validateLong(final ITextField textField,
+			final boolean required) {
 		final Field field = new Field(textField, required);
 		textField.addUpdateListener(new AsyncUpdateListener<String>(textField) {
 			@Override
@@ -441,7 +451,7 @@ public class Validation {
 					field.isError = field.required;
 				}
 				field.onUpdate(value);
-				errorColor(textField, field.isError);
+				colors.errorColor(required, textField, field.isError);
 			}
 		});
 		return this;
@@ -483,8 +493,8 @@ public class Validation {
 		return this;
 	}
 
-	public Validation linkInput(final IHTMLArea textField, boolean required,
-			final int maxLength) {
+	public Validation linkInput(final IHTMLArea textField,
+			final boolean required, final int maxLength) {
 		final Field field = new Field(textField, required);
 		textField.addUpdateListener(new AsyncUpdateListener<String>(textField) {
 			@Override
@@ -494,7 +504,7 @@ public class Validation {
 					field.isError = true;
 				}
 				field.onUpdate(value);
-				errorColor(textField, field.isError);
+				colors.errorColor(required, textField, field.isError);
 			}
 		});
 		return this;
@@ -514,64 +524,6 @@ public class Validation {
 		Field field = new Field(comboBox, required);
 		comboBox.addUpdateListener(field);
 		return this;
-	}
-
-	private void errorColor(ITextArea textField, boolean hasError) {
-		if (hasError) {
-			errorColor(textField);
-		} else {
-			removeErrorColor(textField);
-		}
-	}
-
-	void removeErrorColor(ITextElement<?> textField) {
-		if (isFilter) {
-			Style.instance().filter().removeErrorColor(textField);
-		} else
-			((IColored) textField).color().gray(253);
-	}
-
-	private void errorColor(final Field field, final ISuggestField textField,
-			boolean hasError) {
-		if (hasError) {
-			Display.instance().invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					if (field.isNull)
-						errorColor(textField);
-				}
-			}, 50);
-		} else {
-			removeErrorColor(textField);
-		}
-	}
-
-	private void errorColor(IComboBox textField, boolean hasError) {
-		// if (hasError) {
-		// errorColor(textField);
-		// } else {
-		// removeErrorColor(textField);
-		// }
-	}
-
-	private void errorColor(ITextField textField, boolean hasError) {
-		if (hasError) {
-			errorColor(textField);
-		} else {
-			removeErrorColor(textField);
-		}
-	}
-
-	private IColor errorColor(IColored textField) {
-		return textField.color().mix().red().white().white();
-	}
-
-	private void errorColor(final IPasswordField textField, boolean hasError) {
-		if (hasError) {
-			errorColor(textField);
-		} else {
-			removeErrorColor(textField);
-		}
 	}
 
 	public void reset() {
@@ -624,7 +576,7 @@ public class Validation {
 					field.isError = field.required;
 				}
 				field.onUpdate(value);
-				errorColor(textField, field.isError);
+				colors.errorColor(field.required, textField, field.isError);
 			}
 		});
 	}
@@ -705,6 +657,8 @@ public class Validation {
 	public void activate() {
 		for (Runnable r : updateQueue.values())
 			r.run();
+		for (IField f : fields)
+			colors.removeErrorColorAbsolute(f.required(), f.textElement());
 		updateQueue.clear();
 		active = true;
 		updateClickables();
