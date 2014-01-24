@@ -215,8 +215,11 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 	}
 
 	private void text(ILabel l, final String text) {
-		l.html(text == null ? null : HTMLText.styledText(text,
-				colorAdapter == null ? null : colorAdapter.color(text)));
+		if (text == null || text.equals(""))
+			l.text("");
+		else
+			l.html(HTMLText.styledText(text, colorAdapter == null ? null
+					: colorAdapter.color(text)));
 	}
 
 	public static IComboBox create(IContainer c, IColorAdapter colorAdapter,
