@@ -33,7 +33,7 @@ import co.fxl.gui.api.IUpdateable.IUpdateListener;
 public class ElementAdp<T extends IElement<T>> implements IElement<T>,
 		IColored, IBordered, IFocusable<T>, IEditable<T> {
 
-	private T element;
+	protected IElement<?> element;
 
 	ElementAdp() {
 	}
@@ -42,7 +42,12 @@ public class ElementAdp<T extends IElement<T>> implements IElement<T>,
 		this.element = element;
 	}
 
+	@SuppressWarnings("unchecked")
 	protected T element() {
+		return (T) element;
+	}
+
+	protected IElement<?> basicElement() {
 		return element;
 	}
 
@@ -52,186 +57,190 @@ public class ElementAdp<T extends IElement<T>> implements IElement<T>,
 
 	@Override
 	public int offsetX() {
-		return element().offsetX();
+		return basicElement().offsetX();
 	}
 
 	@Override
 	public int offsetY() {
-		return element().offsetY();
+		return basicElement().offsetY();
 	}
 
 	@Override
 	public int width() {
-		return element().width();
+		return basicElement().width();
 	}
 
 	@Override
 	public int height() {
-		return element().height();
+		return basicElement().height();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T offset(int x, int y) {
-		element().offset(x, y);
+		basicElement().offset(x, y);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T width(int width) {
-		element().width(width);
+		basicElement().width(width);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T height(int height) {
-		element().height(height);
+		basicElement().height(height);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T size(int width, int height) {
-		element().size(width, height);
+		basicElement().size(width, height);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T visible(boolean visible) {
-		element().visible(visible);
+		basicElement().visible(visible);
 		return (T) this;
 	}
 
 	@Override
 	public boolean visible() {
-		return element().visible();
+		return basicElement().visible();
 	}
 
 	@Override
 	public void remove() {
-		element().remove();
+		basicElement().remove();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T tooltip(String tooltip) {
-		element().tooltip(tooltip);
+		basicElement().tooltip(tooltip);
 		return (T) this;
 	}
 
 	@Override
 	public IDisplay display() {
-		return element().display();
+		return basicElement().display();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public <N> N nativeElement() {
-		return (N) element().nativeElement();
+		return (N) basicElement().nativeElement();
 	}
 
 	@Override
 	public IPadding padding() {
-		return element().padding();
+		return basicElement().padding();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T padding(int padding) {
-		element().padding(padding);
+		basicElement().padding(padding);
 		return (T) this;
 	}
 
 	@Override
 	public IMargin margin() {
-		return element().margin();
+		return basicElement().margin();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T margin(int margin) {
-		element().margin(margin);
+		basicElement().margin(margin);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T opacity(double opacity) {
-		element().opacity(opacity);
+		basicElement().opacity(opacity);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public <N> T nativeElement(N nativeElement) {
-		element().nativeElement(nativeElement);
+		basicElement().nativeElement(nativeElement);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T width(double width) {
-		element().width(width);
+		basicElement().width(width);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T height(double height) {
-		element().height(height);
+		basicElement().height(height);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T iD(String iD) {
-		element().iD(iD);
+		basicElement().iD(iD);
 		return (T) this;
 	}
 
 	@Override
 	public String iD() {
-		return element().iD();
+		return basicElement().iD();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T editable(boolean editable) {
-		((IEditable<T>) element()).editable(editable);
+		((IEditable<T>) basicElement()).editable(editable);
 		return (T) this;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean editable() {
-		return ((IEditable<T>) element()).editable();
+		return ((IEditable<T>) basicElement()).editable();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T focus(boolean focus) {
-		((IFocusable<T>) element()).focus(focus);
+		focusElement().focus(focus);
 		return (T) this;
+	}
+
+	protected IFocusable<?> focusElement() {
+		return (IFocusable<?>) element;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T addFocusListener(IUpdateListener<Boolean> hasFocus) {
-		((IFocusable<T>) element()).addFocusListener(hasFocus);
+		focusElement().addFocusListener(hasFocus);
 		return (T) this;
 	}
 
 	@Override
 	public IBorder border() {
-		return ((IBordered) element()).border();
+		return ((IBordered) basicElement()).border();
 	}
 
 	@Override
 	public IColor color() {
-		return ((IColored) element()).color();
+		return ((IColored) basicElement()).color();
 	}
 
 	@Override
@@ -242,7 +251,7 @@ public class ElementAdp<T extends IElement<T>> implements IElement<T>,
 	@SuppressWarnings("unchecked")
 	@Override
 	public T addStyle(String style) {
-		element().addStyle(style);
+		basicElement().addStyle(style);
 		return (T) this;
 	}
 
@@ -253,19 +262,19 @@ public class ElementAdp<T extends IElement<T>> implements IElement<T>,
 
 			@Override
 			public T waiting() {
-				element().cursor().waiting();
+				basicElement().cursor().waiting();
 				return (T) ElementAdp.this;
 			}
 
 			@Override
 			public T hand() {
-				element().cursor().hand();
+				basicElement().cursor().hand();
 				return (T) ElementAdp.this;
 			}
 
 			@Override
 			public T pointer() {
-				element().cursor().pointer();
+				basicElement().cursor().pointer();
 				return (T) ElementAdp.this;
 			}
 
@@ -275,7 +284,7 @@ public class ElementAdp<T extends IElement<T>> implements IElement<T>,
 	@SuppressWarnings("unchecked")
 	@Override
 	public T removeStyle(String style) {
-		element().removeStyle(style);
+		basicElement().removeStyle(style);
 		return (T) this;
 	}
 
