@@ -88,7 +88,7 @@ public class ColoredComboBox extends ComboBoxAdp implements RuntimeConstants {
 						.offset(focus.offsetX(),
 								focus.offsetY() + focus.height())
 						.width(grid.width() - 2);
-				popup.border().remove().color().gray(211);
+				popup.border().remove().color().rgb(127, 157, 185);
 				IVerticalPanel vertical = popup.container().panel().vertical();
 				for (final String text : texts) {
 					IFocusPanel f = vertical.add().panel().focus();
