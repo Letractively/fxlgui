@@ -20,7 +20,7 @@ package co.fxl.gui.filter.impl;
 
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
-import co.fxl.gui.impl.ColoredComboBox.IColorAdapter;
+import co.fxl.gui.impl.ComboBox.IColorAdapter;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.IFieldType;
 

@@ -46,8 +46,8 @@ import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget;
 import co.fxl.gui.form.api.IRelationField;
 import co.fxl.gui.impl.CallbackTemplate;
-import co.fxl.gui.impl.ColoredComboBox;
-import co.fxl.gui.impl.ColoredComboBox.IColorAdapter;
+import co.fxl.gui.impl.ComboBox;
+import co.fxl.gui.impl.ComboBox.IColorAdapter;
 import co.fxl.gui.impl.DummyCallback;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.Heights;
@@ -209,7 +209,7 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 		IContainer container = container(gridIndex, false);
 		IComboBox valuePanel = type != null && type.multiSelectionAllowed() ? container
 				.widget(IMultiComboBoxWidget.class)
-				: (ca != null ? ColoredComboBox.create(container, ca, false)
+				: (ca != null ? ComboBox.create(container, ca, false)
 						: container.comboBox());
 		heights.decorate(valuePanel);
 		Style.instance().form().inputField(valuePanel);
