@@ -22,6 +22,7 @@ public class HTMLText implements RuntimeConstants {
 
 	private static final String BORDER_RADIUS_ATTRIBUTE = FIREFOX_LEQ_12 ? "-moz-border-radius"
 			: "border-radius";
+	private static final boolean WHITE_BG_IF_NOT_DEFINED = false;
 	public String text = "";
 	public boolean center = false;
 	public boolean underline = false;
@@ -152,7 +153,8 @@ public class HTMLText implements RuntimeConstants {
 	public static String styledText(String text, String color) {
 		String fontColor = "white";
 		if (color == null) {
-			color = "";
+			color = WHITE_BG_IF_NOT_DEFINED ? ""
+					: "background-color:rgb(235,235,235);";
 			fontColor = "black";
 		} else {
 			color = "background-color: " + color;
