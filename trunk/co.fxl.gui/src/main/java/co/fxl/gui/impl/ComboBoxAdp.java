@@ -24,6 +24,10 @@ import co.fxl.gui.api.IUpdateable;
 
 public class ComboBoxAdp extends TextElementAdp<IComboBox> implements IComboBox {
 
+	public ComboBoxAdp() {
+		super();
+	}
+
 	public ComboBoxAdp(IComboBox c) {
 		super(c);
 	}

@@ -20,6 +20,7 @@ package co.fxl.gui.filter.impl;
 
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter;
+import co.fxl.gui.impl.ColoredComboBox.IColorAdapter;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.IFieldType;
 
@@ -32,6 +33,7 @@ class FilterImpl implements IFilter {
 	String text;
 	boolean directApply = true;
 	IGlobalValue value;
+	IColorAdapter colorAdapter;
 
 	@Override
 	public IFilter name(String name) {
@@ -78,6 +80,12 @@ class FilterImpl implements IFilter {
 	@Override
 	public IFilter globalValue(IGlobalValue value) {
 		this.value = value;
+		return this;
+	}
+
+	@Override
+	public IFilter colorAdapter(IColorAdapter colorAdapter) {
+		this.colorAdapter = colorAdapter;
 		return this;
 	}
 }

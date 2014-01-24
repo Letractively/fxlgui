@@ -32,6 +32,7 @@ import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget.IInputElementFactory;
 import co.fxl.gui.form.impl.FormWidgetImpl.FormEntryLabel;
 import co.fxl.gui.impl.ClickableMultiplexer;
+import co.fxl.gui.impl.ColoredComboBox.IColorAdapter;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.ITooltipResolver;
@@ -56,18 +57,21 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
 	boolean useAssignButton;
 	IInputElementFactory f;
 	private boolean newLine;
+	IColorAdapter ca;
 
 	public FormFieldImpl(boolean newLine, FormWidgetImpl widget, int index,
 			String name) {
-		this(newLine, widget, index, name, null, null);
+		this(newLine, widget, index, name, null, null, null);
 	}
 
 	public FormFieldImpl(boolean newLine, FormWidgetImpl widget, int index,
-			String name, IFieldType type, IInputElementFactory f) {
+			String name, IFieldType type, IInputElementFactory f,
+			IColorAdapter ca) {
 		this.newLine = newLine;
 		this.widget = widget;
 		this.name = name;
 		this.f = f;
+		this.ca = ca;
 		if (type != null)
 			this.type = (FieldTypeImpl) type;
 		widget.fields.add(this);
@@ -79,7 +83,7 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
 
 	public FormFieldImpl(boolean newLine, FormWidgetImpl widget, int index,
 			String name, IInputElementFactory f) {
-		this(newLine, widget, index, name, null, f);
+		this(newLine, widget, index, name, null, f, null);
 	}
 
 	@Override

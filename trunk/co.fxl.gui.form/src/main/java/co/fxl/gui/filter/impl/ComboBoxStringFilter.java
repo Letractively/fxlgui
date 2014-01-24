@@ -26,6 +26,7 @@ import co.fxl.gui.filter.api.IFilterConstraints;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter.IGlobalValue;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.impl.CallbackTemplate;
+import co.fxl.gui.impl.ColoredComboBox.IColorAdapter;
 import co.fxl.gui.impl.DiscardChangesDialog;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.LazyUpdateListener;
@@ -41,8 +42,9 @@ class ComboBoxStringFilter extends ComboBoxFilterTemplate<String> {
 
 	ComboBoxStringFilter(final FilterGrid panel, String name,
 			FieldTypeImpl type, List<Object> values, int filterIndex,
-			final IGlobalValue v, boolean required, String nullValue) {
-		super(panel, name, values, filterIndex, v, nullValue);
+			final IGlobalValue v, boolean required, String nullValue,
+			IColorAdapter c) {
+		super(panel, name, values, filterIndex, v, nullValue, c);
 		this.required = required;
 		this.type = type;
 		this.v = v;

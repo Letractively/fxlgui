@@ -34,6 +34,7 @@ import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextArea;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IVerticalPanel;
+import co.fxl.gui.impl.ColoredComboBox.IColorAdapter;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.WidgetTitle;
 import co.fxl.gui.rtf.api.IHTMLArea;
@@ -49,24 +50,24 @@ public interface IFormWidget extends IResizable<IFormWidget> {
 		boolean mayChangeSizeOfForm();
 	}
 
-	public interface IFormContainer {
-
-		IFormField<ILabel, String> label();
-
-		IFormField<ITextField, String> textField();
-
-		IFormField<ITextField, Date> dateField();
-
-		IFormField<IPasswordField, String> passwordField();
-
-		IFormField<ITextArea, String> textArea();
-
-		IFormField<ICheckBox, Boolean> checkBox();
-
-		IFormField<IComboBox, String> comboBox();
-
-		IImageField image();
-	}
+	// public interface IFormContainer {
+	//
+	// IFormField<ILabel, String> label();
+	//
+	// IFormField<ITextField, String> textField();
+	//
+	// IFormField<ITextField, Date> dateField();
+	//
+	// IFormField<IPasswordField, String> passwordField();
+	//
+	// IFormField<ITextArea, String> textArea();
+	//
+	// IFormField<ICheckBox, Boolean> checkBox();
+	//
+	// IFormField<IComboBox, String> comboBox(IColorAdapter ca);
+	//
+	// IImageField image();
+	// }
 
 	public interface ISaveListener {
 
@@ -112,7 +113,7 @@ public interface IFormWidget extends IResizable<IFormWidget> {
 	IFormField<ICheckBox, Boolean> addCheckBox(boolean newLine, String name);
 
 	IFormField<IComboBox, String> addComboBox(boolean newLine, String name,
-			IFieldType type);
+			IFieldType type, IColorAdapter ca);
 
 	// IImageField addImage(String name);
 

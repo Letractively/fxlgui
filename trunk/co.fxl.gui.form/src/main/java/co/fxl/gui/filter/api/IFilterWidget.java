@@ -24,6 +24,7 @@ import java.util.List;
 import co.fxl.gui.api.ICallback;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IUpdateable.IUpdateListener;
+import co.fxl.gui.impl.ColoredComboBox.IColorAdapter;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.WidgetTitle;
 
@@ -53,6 +54,8 @@ public interface IFilterWidget {
 		IFieldType type();
 
 		IFilter type(IFieldType type);
+
+		IFilter colorAdapter(IColorAdapter colorAdapter);
 
 		IFilter updateListener(IUpdateListener<String> l);
 
