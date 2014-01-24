@@ -19,11 +19,12 @@
 package co.fxl.gui.gwt;
 
 import co.fxl.gui.api.ICursor;
+import co.fxl.gui.impl.RuntimeConstants;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Widget;
 
-class GWTCursor<R> implements ICursor<R> {
+class GWTCursor<R> implements ICursor<R>, RuntimeConstants {
 
 	private R owner;
 	private Widget widget;
@@ -46,11 +47,11 @@ class GWTCursor<R> implements ICursor<R> {
 
 	@Override
 	public R hand() {
-		return symbol("hand");
+		return symbol(FIREFOX ? "pointer" : "hand");
 	}
 
 	@Override
 	public R pointer() {
-		return symbol("pointer");
+		return symbol(FIREFOX ? "default" : "pointer");
 	}
 }
