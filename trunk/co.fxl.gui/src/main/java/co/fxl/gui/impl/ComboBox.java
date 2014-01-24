@@ -44,6 +44,7 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 	}
 
 	private static final boolean ACTIVE = true;
+	private static final boolean ALWAYS_USE_COLORED_COMBOBOX = false;
 	private IGridPanel grid;
 	private ILabel label;
 	private IColorAdapter colorAdapter;
@@ -223,10 +224,17 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 		if (ACTIVE)
 			return new ComboBox(c, colorAdapter, center);
 		else
-			return create(c);
+			return create(c, center);
+	}
+
+	public static IComboBox create(IContainer c, boolean center) {
+		if (ALWAYS_USE_COLORED_COMBOBOX)
+			return new ComboBox(c, null, center);
+		else
+			return c.comboBox();
 	}
 
 	public static IComboBox create(IContainer c) {
-		return c.comboBox();
+		return create(c, false);
 	}
 }
