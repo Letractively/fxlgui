@@ -142,4 +142,9 @@ class CellImpl implements ICell, RuntimeConstants {
 	public IDockPanel dock() {
 		return cell.panel().dock();
 	}
+
+	@Override
+	public IContainer container() {
+		return cell;
+	}
 }

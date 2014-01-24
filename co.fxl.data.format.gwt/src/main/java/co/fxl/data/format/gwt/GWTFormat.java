@@ -25,8 +25,10 @@ import co.fxl.data.format.impl.Format;
 public class GWTFormat {
 
 	public static void setUp() {
-		Format.registerDateTime(new GWTDateFormat(GWTDateFormat.DATE_TIME_PATTERN));
-		Format.register(Date.class, new GWTDateFormat(GWTDateFormat.DATE_PATTERN));
+		Format.registerDateTime(new GWTDateFormat(
+				GWTDateFormat.DATE_TIME_PATTERN));
+		Format.register(Date.class, new GWTDateFormat(
+				GWTDateFormat.DATE_PATTERN));
 		Format.registerTime(new GWTDateFormat(GWTDateFormat.TIME_PATTERN));
 		Format.register(Long.class, new GWTNumberFormat<Long>() {
 			@Override

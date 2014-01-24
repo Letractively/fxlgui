@@ -168,4 +168,12 @@ public abstract class ColorTemplate implements IColor {
 			hexString = "0" + hexString;
 		return hexString;
 	}
+
+	public static int[] parse(String value) {
+		return new int[] { dec(value, 1), dec(value, 3), dec(value, 5) };
+	}
+
+	static int dec(String value, int offset) {
+		return Integer.parseInt(value.substring(offset, offset + 2), 16);
+	}
 }

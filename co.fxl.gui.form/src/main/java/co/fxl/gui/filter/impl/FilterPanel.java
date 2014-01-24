@@ -42,6 +42,8 @@ interface FilterPanel {
 		ITextField textField();
 
 		IDockPanel dock();
+
+		IContainer container();
 	}
 
 	interface FilterGrid {

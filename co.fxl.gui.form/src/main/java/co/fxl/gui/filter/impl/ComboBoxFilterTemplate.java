@@ -21,10 +21,13 @@ package co.fxl.gui.filter.impl;
 import java.util.List;
 
 import co.fxl.gui.api.IComboBox;
+import co.fxl.gui.api.IContainer;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter.IGlobalValue;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.form.impl.Validation;
+import co.fxl.gui.impl.ColoredComboBox;
+import co.fxl.gui.impl.ColoredComboBox.IColorAdapter;
 import co.fxl.gui.impl.LazyUpdateListener;
 
 abstract class ComboBoxFilterTemplate<T> extends FilterTemplate<IComboBox, T> {
@@ -35,12 +38,14 @@ abstract class ComboBoxFilterTemplate<T> extends FilterTemplate<IComboBox, T> {
 	private IGlobalValue v;
 
 	ComboBoxFilterTemplate(FilterGrid panel, String name, List<Object> values,
-			int filterIndex, IGlobalValue v, String nullValue) {
+			int filterIndex, IGlobalValue v, String nullValue, IColorAdapter c) {
 		super(panel, name, filterIndex);
 		this.v = v;
 		this.panel = panel;
-		IComboBox width = panel.cell(filterIndex).comboBox()
-				.width(WIDTH_COMBOBOX_CELL);
+		IContainer container = panel.cell(filterIndex).container();
+		IComboBox width = c != null ? new ColoredComboBox(container)
+				.colorAdapter(c) : container.comboBox();
+		width.width(WIDTH_COMBOBOX_CELL);
 		input = nullValue != null ? new FilterComboBoxAdp(width, nullValue)
 				: width;
 		panel.heights().decorate(input);
