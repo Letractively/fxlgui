@@ -26,8 +26,8 @@ import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.filter.api.IFilterWidget.IFilter.IGlobalValue;
 import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 import co.fxl.gui.form.impl.Validation;
-import co.fxl.gui.impl.ColoredComboBox;
-import co.fxl.gui.impl.ColoredComboBox.IColorAdapter;
+import co.fxl.gui.impl.ComboBox;
+import co.fxl.gui.impl.ComboBox.IColorAdapter;
 import co.fxl.gui.impl.LazyUpdateListener;
 
 abstract class ComboBoxFilterTemplate<T> extends FilterTemplate<IComboBox, T> {
@@ -43,7 +43,7 @@ abstract class ComboBoxFilterTemplate<T> extends FilterTemplate<IComboBox, T> {
 		this.v = v;
 		this.panel = panel;
 		IContainer container = panel.cell(filterIndex).container();
-		IComboBox width = c != null ? ColoredComboBox.create(container, c,
+		IComboBox width = c != null ? ComboBox.create(container, c,
 				false) : container.comboBox();
 		width.width(WIDTH_COMBOBOX_CELL);
 		input = nullValue != null ? new FilterComboBoxAdp(width, nullValue)

@@ -20,7 +20,7 @@ package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.form.api.IFormField;
-import co.fxl.gui.impl.ColoredComboBox.IColorAdapter;
+import co.fxl.gui.impl.ComboBox.IColorAdapter;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.ITooltipResolver;
 

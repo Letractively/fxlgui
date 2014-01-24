@@ -32,7 +32,7 @@ import co.fxl.gui.form.api.IFormField;
 import co.fxl.gui.form.api.IFormWidget.IInputElementFactory;
 import co.fxl.gui.form.impl.FormWidgetImpl.FormEntryLabel;
 import co.fxl.gui.impl.ClickableMultiplexer;
-import co.fxl.gui.impl.ColoredComboBox.IColorAdapter;
+import co.fxl.gui.impl.ComboBox.IColorAdapter;
 import co.fxl.gui.impl.FieldTypeImpl;
 import co.fxl.gui.impl.IFieldType;
 import co.fxl.gui.impl.ITooltipResolver;

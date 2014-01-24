@@ -36,7 +36,7 @@ import co.fxl.gui.api.IPopUp;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
 
-public class ColoredComboBox extends ComboBoxAdp implements RuntimeConstants {
+public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 
 	public interface IColorAdapter {
 
@@ -53,7 +53,7 @@ public class ColoredComboBox extends ComboBoxAdp implements RuntimeConstants {
 	private IFocusPanel focus;
 	private List<String> texts = new LinkedList<String>();
 
-	private ColoredComboBox(IContainer container, IColorAdapter colorAdapter,
+	private ComboBox(IContainer container, IColorAdapter colorAdapter,
 			final boolean center) {
 		focus = container.panel().focus();
 		addFocusListener(new IUpdateListener<Boolean>() {
@@ -215,13 +215,13 @@ public class ColoredComboBox extends ComboBoxAdp implements RuntimeConstants {
 
 	private void text(ILabel l, final String text) {
 		l.html(text == null ? null : HTMLText.styledText(text,
-				colorAdapter.color(text)));
+				colorAdapter == null ? null : colorAdapter.color(text)));
 	}
 
 	public static IComboBox create(IContainer c, IColorAdapter colorAdapter,
 			boolean center) {
 		if (ACTIVE)
-			return new ColoredComboBox(c, colorAdapter, center);
+			return new ComboBox(c, colorAdapter, center);
 		else
 			return create(c);
 	}
