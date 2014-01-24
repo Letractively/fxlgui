@@ -18,8 +18,10 @@
  */
 package co.fxl.gui.impl;
 
-public class HTMLText {
+public class HTMLText implements RuntimeConstants {
 
+	private static final String BORDER_RADIUS_ATTRIBUTE = FIREFOX_LEQ_12 ? "-moz-border-radius"
+			: "border-radius";
 	public String text = "";
 	public boolean center = false;
 	public boolean underline = false;
@@ -145,5 +147,24 @@ public class HTMLText {
 			}
 		}
 		return b.toString();
+	}
+
+	public static String styledText(String text, String color) {
+		String fontColor = "white";
+		if (color == null) {
+			color = "";
+			fontColor = "black";
+		} else {
+			color = "background-color: " + color;
+		}
+		String html = "<div class=\"gwt-HTML gwt-Label-FXL\" style=\"font-weight:bold; display: inline-block; color:"
+				+ fontColor
+				+ "; "
+				+ BORDER_RADIUS_ATTRIBUTE
+				+ ": 3px; "
+				+ color
+				+ "; padding: 2px 5px 2px 5px; font-size: 10px; \">"
+				+ text + "</div>";
+		return html;
 	}
 }

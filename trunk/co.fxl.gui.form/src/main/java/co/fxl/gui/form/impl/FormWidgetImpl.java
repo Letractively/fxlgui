@@ -209,7 +209,7 @@ public class FormWidgetImpl implements IFormWidget, RuntimeConstants {
 		IContainer container = container(gridIndex, false);
 		IComboBox valuePanel = type != null && type.multiSelectionAllowed() ? container
 				.widget(IMultiComboBoxWidget.class)
-				: (ca != null ? new ColoredComboBox(container).colorAdapter(ca)
+				: (ca != null ? ColoredComboBox.create(container, ca, false)
 						: container.comboBox());
 		heights.decorate(valuePanel);
 		Style.instance().form().inputField(valuePanel);
