@@ -141,6 +141,28 @@ public class ColoredComboBox extends ComboBoxAdp implements RuntimeConstants {
 	}
 
 	@Override
+	public IColor color() {
+		return new ColorTemplate() {
+
+			@Override
+			public IColor remove() {
+				grid.color().remove();
+				grid.cell(0, 0).color().remove();
+				grid.cell(1, 0).color().remove();
+				return this;
+			}
+
+			@Override
+			protected IColor setRGB(int r, int g, int b) {
+				grid.color().rgb(r, g, b);
+				grid.cell(0, 0).color().rgb(r, g, b);
+				grid.cell(1, 0).color().rgb(r, g, b);
+				return this;
+			}
+		};
+	}
+
+	@Override
 	protected IFocusable<?> focusElement() {
 		return focus;
 	}
