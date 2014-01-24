@@ -153,7 +153,7 @@ public class HTMLText implements RuntimeConstants {
 	public static String styledText(String text, String color) {
 		String fontColor = "white";
 		if (color == null) {
-			color = WHITE_BG_IF_NOT_DEFINED ? ""
+			color = (WHITE_BG_IF_NOT_DEFINED || text == null || text.equals("")) ? ""
 					: "background-color:rgb(235,235,235);";
 			fontColor = "black";
 		} else {
