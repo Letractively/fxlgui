@@ -76,4 +76,11 @@ public class ComboBoxAdp extends TextElementAdp<IComboBox> implements IComboBox 
 		return this;
 	}
 
+	@Override
+	public IComboBox addKeyListener(
+			co.fxl.gui.api.IKeyRecipient.IKeyListener listener) {
+		element().addKeyListener(listener);
+		return this;
+	}
+
 }

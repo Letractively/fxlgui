@@ -22,6 +22,18 @@ import co.fxl.gui.api.IClickable.IClickListener;
 
 public interface IKeyRecipient<T> {
 
+	public enum ControlKey {
+
+		UP, DOWN, OTHER
+	}
+
+	public interface IKeyListener {
+
+		void onCharacterKey(char character);
+
+		void onControlKey(ControlKey key);
+	}
+
 	public interface IKey<T> {
 
 		IKey<T> ctrl();
@@ -44,4 +56,6 @@ public interface IKeyRecipient<T> {
 	}
 
 	IKey<T> addKeyListener(IClickListener listener);
+
+	T addKeyListener(IKeyListener listener);
 }

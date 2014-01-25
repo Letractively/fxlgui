@@ -48,6 +48,7 @@ import co.fxl.gui.api.IDropTarget.IDragMoveListener;
 import co.fxl.gui.api.IDropTarget.IDropListener;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IKeyRecipient;
+import co.fxl.gui.api.IKeyRecipient.IKeyListener;
 import co.fxl.gui.api.IMargin;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPadding;
@@ -276,6 +277,12 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 			});
 		}
 		focusListeners.add(l);
+		return (R) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public R addKeyListener(IKeyListener changeListener) {
+		// TODO ...
 		return (R) this;
 	}
 

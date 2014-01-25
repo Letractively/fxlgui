@@ -582,4 +582,10 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 	@Override
 	public void rowHtml(int r, String html) {
 	}
+
+	@Override
+	public Object addKeyListener(
+			co.fxl.gui.api.IKeyRecipient.IKeyListener listener) {
+		throw new UnsupportedOperationException();
+	}
 }

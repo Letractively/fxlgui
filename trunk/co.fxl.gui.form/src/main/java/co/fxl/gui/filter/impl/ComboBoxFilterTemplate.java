@@ -43,8 +43,8 @@ abstract class ComboBoxFilterTemplate<T> extends FilterTemplate<IComboBox, T> {
 		this.v = v;
 		this.panel = panel;
 		IContainer container = panel.cell(filterIndex).container();
-		IComboBox width = c != null ? ComboBox.create(container, c,
-				false) : container.comboBox();
+		IComboBox width = c != null ? ComboBox
+				.create(container, c, false, true) : container.comboBox();
 		width.width(WIDTH_COMBOBOX_CELL);
 		input = nullValue != null ? new FilterComboBoxAdp(width, nullValue)
 				: width;
