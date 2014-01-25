@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IBordered;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.IComboBox;
 import co.fxl.gui.api.IContainer;
@@ -56,16 +57,16 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 
 	private ComboBox(IContainer container, IColorAdapter colorAdapter,
 			final boolean center) {
-		focus = container.panel().focus();
-		addFocusListener(new IUpdateListener<Boolean>() {
-			@Override
-			public void onUpdate(Boolean value) {
-				if (value)
-					border().color().rgb(70, 184, 255);
-				else
-					border().color().gray(211);
-			}
-		});
+		focus = container.panel().focus().outline(true);
+		// addFocusListener(new IUpdateListener<Boolean>() {
+		// @Override
+		// public void onUpdate(Boolean value) {
+		// if (value)
+		// border().color().rgb(70, 184, 255);
+		// else
+		// border().color().gray(211);
+		// }
+		// });
 		grid = focus.add().panel().grid();
 		grid.column(0).expand();
 		IGridCell cell = grid.cell(0, 0);
@@ -82,13 +83,12 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 			@Override
 			public void onClick() {
 				focus(true);
-				final IPopUp popup = Display
-						.instance()
-						.showPopUp()
+				int width = grid.width() - 2;
+				final IPopUp popup = PopUp
+						.showPopUp(false)
 						.autoHide(true)
 						.offset(focus.offsetX(),
-								focus.offsetY() + focus.height())
-						.width(grid.width() - 2);
+								focus.offsetY() + focus.height()).width(width);
 				popup.border().remove().color().rgb(127, 157, 185);
 				IVerticalPanel vertical = popup.container().panel().vertical();
 				for (final String text : texts) {
@@ -124,9 +124,11 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 				popup.visible(true);
 				if (popup.offsetY() + popup.height() > Display.instance()
 						.height()) {
-					int height = Display.instance().height() - popup.offsetY();
-					popup.container().scrollPane().height(height).viewPort()
-							.element(vertical);
+					int height = Display.instance().height() - popup.offsetY()
+							- 10;
+					if (height > 0)
+						popup.container().scrollPane().width(width)
+								.height(height).viewPort().element(vertical);
 				}
 
 			}
@@ -139,6 +141,11 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 	@Override
 	protected IElement<?> basicElement() {
 		return grid;
+	}
+
+	@Override
+	protected IBordered borderElement() {
+		return focus;
 	}
 
 	@Override

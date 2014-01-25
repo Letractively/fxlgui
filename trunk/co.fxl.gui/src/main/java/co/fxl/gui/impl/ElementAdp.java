@@ -235,7 +235,11 @@ public class ElementAdp<T extends IElement<T>> implements IElement<T>,
 
 	@Override
 	public IBorder border() {
-		return ((IBordered) basicElement()).border();
+		return borderElement().border();
+	}
+
+	protected IBordered borderElement() {
+		return (IBordered) basicElement();
 	}
 
 	@Override
