@@ -35,6 +35,8 @@ import co.fxl.gui.api.IDropTarget.IDropListener;
 import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IFontElement.IFont;
 import co.fxl.gui.api.IKeyRecipient;
+import co.fxl.gui.api.IKeyRecipient.ControlKey;
+import co.fxl.gui.api.IKeyRecipient.IKeyListener;
 import co.fxl.gui.api.IMargin;
 import co.fxl.gui.api.IMouseOverElement.IMouseOverListener;
 import co.fxl.gui.api.IPadding;
@@ -68,6 +70,7 @@ import com.google.gwt.event.dom.client.DropHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.dom.client.HasDoubleClickHandlers;
 import com.google.gwt.event.dom.client.HasKeyPressHandlers;
+import com.google.gwt.event.dom.client.HasKeyUpHandlers;
 import com.google.gwt.event.dom.client.HasMouseOutHandlers;
 import com.google.gwt.event.dom.client.HasMouseOverHandlers;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -136,12 +139,18 @@ public class GWTElement<T extends Widget, R> implements IElement<R>,
 	private final class KeyPressHandlerAdapter implements KeyPressHandler,
 			KeyUpHandler, IKeyRecipient.IKey<R> {
 
-		private final IClickListener listener;
+		private IClickListener listener;
 		private char targetCode = '\r';
 		private int nativeKeyCode = -1;
+		private IKeyListener keyListener = null;
 
 		private KeyPressHandlerAdapter(IClickListener listener) {
 			this.listener = listener;
+		}
+
+		private KeyPressHandlerAdapter(IKeyListener listener) {
+			this.keyListener = listener;
+			listenOnKeyup();
 		}
 
 		@SuppressWarnings("unchecked")
@@ -153,11 +162,15 @@ public class GWTElement<T extends Widget, R> implements IElement<R>,
 		}
 
 		@SuppressWarnings("unchecked")
-		public R listenOnKeyDown(int keyRight) {
-			DOM.sinkEvents(container.widget.getElement(),
-					com.google.gwt.user.client.Event.ONKEYDOWN);
+		public R listenOnKeyUp(int keyRight) {
+			listenOnKeyup();
 			nativeKeyCode = keyRight;
 			return (R) GWTElement.this;
+		}
+
+		protected void listenOnKeyup() {
+			DOM.sinkEvents(container.widget.getElement(),
+					com.google.gwt.user.client.Event.ONKEYUP);
 		}
 
 		@Override
@@ -165,18 +178,35 @@ public class GWTElement<T extends Widget, R> implements IElement<R>,
 			if (nativeKeyCode != -1)
 				return;
 			char charCode = event.getCharCode();
-			if (charCode == targetCode) {
+			if (keyListener != null) {
+				keyListener.onCharacterKey(charCode);
+			} else if (charCode == targetCode) {
 				listener.onClick();
 			}
 		}
 
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
+			int charCode = event.getNativeKeyCode();
+			if (keyListener != null) {
+				keyListener.onControlKey(key(charCode));
+				return;
+			}
 			if (nativeKeyCode == -1)
 				return;
-			int charCode = event.getNativeKeyCode();
 			if (charCode == nativeKeyCode) {
 				listener.onClick();
+			}
+		}
+
+		private ControlKey key(int charCode) {
+			switch (charCode) {
+			case KeyCodes.KEY_UP:
+				return ControlKey.UP;
+			case KeyCodes.KEY_DOWN:
+				return ControlKey.DOWN;
+			default:
+				return ControlKey.OTHER;
 			}
 		}
 
@@ -192,27 +222,27 @@ public class GWTElement<T extends Widget, R> implements IElement<R>,
 
 		@Override
 		public R up() {
-			return listenOnKeyDown(KeyCodes.KEY_UP);
+			return listenOnKeyUp(KeyCodes.KEY_UP);
 		}
 
 		@Override
 		public R down() {
-			return listenOnKeyDown(KeyCodes.KEY_DOWN);
+			return listenOnKeyUp(KeyCodes.KEY_DOWN);
 		}
 
 		@Override
 		public R backspace() {
-			return listenOnKeyDown(KeyCodes.KEY_BACKSPACE);
+			return listenOnKeyUp(KeyCodes.KEY_BACKSPACE);
 		}
 
 		@Override
 		public R left() {
-			return listenOnKeyDown(KeyCodes.KEY_LEFT);
+			return listenOnKeyUp(KeyCodes.KEY_LEFT);
 		}
 
 		@Override
 		public R right() {
-			return listenOnKeyDown(KeyCodes.KEY_RIGHT);
+			return listenOnKeyUp(KeyCodes.KEY_RIGHT);
 		}
 
 		@Override
@@ -542,10 +572,22 @@ public class GWTElement<T extends Widget, R> implements IElement<R>,
 		return (R) this;
 	}
 
-	public IKeyRecipient.IKey<R> addKeyListener(final IClickListener listener) {
+	public IKeyRecipient.IKey<R> addKeyListener(IClickListener listener) {
 		KeyPressHandlerAdapter adp = new KeyPressHandlerAdapter(listener);
-		((HasKeyPressHandlers) container.widget).addKeyPressHandler(adp);
+		addKeyPressHandler(adp);
 		return adp;
+	}
+
+	@SuppressWarnings("unchecked")
+	public R addKeyListener(IKeyListener listener) {
+		KeyPressHandlerAdapter adp = new KeyPressHandlerAdapter(listener);
+		addKeyPressHandler(adp);
+		return (R) this;
+	}
+
+	protected void addKeyPressHandler(KeyPressHandlerAdapter adp) {
+		((HasKeyPressHandlers) container.widget).addKeyPressHandler(adp);
+		((HasKeyUpHandlers) container.widget).addKeyUpHandler(adp);
 	}
 
 	@Override

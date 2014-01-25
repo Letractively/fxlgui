@@ -36,12 +36,26 @@ public class FocusPanelKeyAdapter implements IKeyRecipient<Object> {
 	}
 
 	@Override
-	public co.fxl.gui.api.IKeyRecipient.IKey<Object> addKeyListener(
-			IClickListener listener) {
-		GWTKeyRecipientKeyTemplate l = new GWTKeyRecipientKeyTemplate(listener);
+	public Object addKeyListener(
+			co.fxl.gui.api.IKeyRecipient.IKeyListener listener) {
+		throw new UnsupportedOperationException();
+		// GWTKeyRecipientKeyTemplate l = new
+		// GWTKeyRecipientKeyTemplate(listener);
+		// add(l);
+		// return focusPanel;
+	}
+
+	protected GWTKeyRecipientKeyTemplate add(GWTKeyRecipientKeyTemplate l) {
 		l.element = focusPanel;
 		listeners.add(l);
 		return l;
+	}
+
+	@Override
+	public co.fxl.gui.api.IKeyRecipient.IKey<Object> addKeyListener(
+			IClickListener listener) {
+		GWTKeyRecipientKeyTemplate l = new GWTKeyRecipientKeyTemplate(listener);
+		return add(l);
 	}
 
 	public void setFocus(boolean b) {

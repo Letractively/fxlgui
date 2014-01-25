@@ -49,4 +49,11 @@ public class TextFieldAdp extends TextInputAdp<ITextField> implements
 		return this;
 	}
 
+	@Override
+	public ITextField addKeyListener(
+			co.fxl.gui.api.IKeyRecipient.IKeyListener listener) {
+		element().addKeyListener(listener);
+		return this;
+	}
+
 }

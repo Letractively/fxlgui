@@ -31,6 +31,7 @@ import co.fxl.gui.api.IClickable.IKey;
 import co.fxl.gui.api.ICursor;
 import co.fxl.gui.api.IDisplay;
 import co.fxl.gui.api.IElement;
+import co.fxl.gui.api.IKeyRecipient.IKeyListener;
 import co.fxl.gui.api.IMargin;
 import co.fxl.gui.api.IPadding;
 import co.fxl.gui.api.IPopUp;
@@ -301,6 +302,10 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 
 	@Override
 	public T removeStyle(String style) {
+		throw new UnsupportedOperationException();
+	}
+
+	public T addKeyListener(IKeyListener listener) {
 		throw new UnsupportedOperationException();
 	}
 

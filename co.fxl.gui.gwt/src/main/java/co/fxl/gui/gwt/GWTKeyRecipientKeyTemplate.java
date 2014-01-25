@@ -168,4 +168,10 @@ public class GWTKeyRecipientKeyTemplate implements IKey<Object>,
 		nativeKeyCode = c;
 		return this;
 	}
+
+	@Override
+	public Object addKeyListener(
+			co.fxl.gui.api.IKeyRecipient.IKeyListener listener) {
+		throw new UnsupportedOperationException();
+	}
 }
