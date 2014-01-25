@@ -64,7 +64,7 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 				} else {
 					grid.width(nonExpandedWidth);
 					if (FIREFOX)
-						column().width(nonExpandedWidth - _120 - 4);
+						column().width(nonExpandedWidth - _120);
 				}
 				padding.right(0);
 			} else {
@@ -80,7 +80,7 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 		void expandIfFirefox() {
 			if (FIREFOX) {
 				if (width4Layout > 0)
-					column().width(width4Layout - _120 - 4);
+					column().width(width4Layout - _120);
 				grid.width(width4Layout);
 			}
 		}
