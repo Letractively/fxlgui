@@ -185,7 +185,7 @@ class MiniFilterPanel implements FilterPanel {
 				// if (FIREFOX)
 				// return new CombinedRangeField(container);
 				// else
-				return new ExplicitRangeField(widget, container, true, f, 55);
+				return new ExplicitRangeField(widget, container, isDateField, f, 55);
 			}
 
 			@Override
