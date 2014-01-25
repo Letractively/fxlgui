@@ -58,10 +58,12 @@ class CellImpl implements ICell, RuntimeConstants {
 			boolean useDateField = isDateField && NOT_SWING;
 			ITextField textField = useDateField ? new DateField(p.add(), IE ? 2
 					: 3, format, absoluteWidth) : p.add().textField();
-			if (absoluteWidth == -1)
+			int dec = Env.runtime().geq(Env.IE, 10) ? 21 : 24;
+			if (absoluteWidth == -1) {
 				textField.width(FilterTemplate.WIDTH_RANGE_CELL
-						- (useDateField ? (Env.runtime().geq(Env.IE, 10) ? 21
-								: 24) : 0));
+						- (useDateField ? dec : 0));
+			} else if (!isDateField)
+				textField.width(absoluteWidth + dec);
 			if (Env.is(Env.SWING))
 				textField.width(80);
 			widget.heights.decorate(textField);
