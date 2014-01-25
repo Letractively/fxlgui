@@ -36,8 +36,6 @@ import co.fxl.gui.style.impl.Style;
 
 class FlowFormGrid implements FormGrid, RuntimeConstants {
 
-	private static final int _120 = Style.instance().mobile() ? 0 : 120;
-
 	private class Row {
 
 		private IGridPanel grid;
@@ -64,7 +62,7 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 				} else {
 					grid.width(nonExpandedWidth);
 					if (FIREFOX)
-						column().width(nonExpandedWidth - _120);
+						column().width(nonExpandedWidth - _120 - FIREFOX_DEC);
 				}
 				padding.right(0);
 			} else {
@@ -80,7 +78,7 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 		void expandIfFirefox() {
 			if (FIREFOX) {
 				if (width4Layout > 0)
-					column().width(width4Layout - _120);
+					column().width(width4Layout - _120 - FIREFOX_DEC);
 				grid.width(width4Layout);
 			}
 		}
@@ -92,6 +90,8 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 		}
 	}
 
+	private static final int FIREFOX_DEC = 0;
+	private static final int _120 = Style.instance().mobile() ? 0 : 120;
 	private static final int MIN_WIDTH_COLUMN = 300;
 	private static final int SPACING = 4;
 	private IFlowPanel panel;
