@@ -20,6 +20,7 @@ package co.fxl.gui.form.impl;
 
 import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IComboBox;
+import co.fxl.gui.api.IEditable;
 import co.fxl.gui.api.IPasswordField;
 import co.fxl.gui.api.ISuggestField;
 import co.fxl.gui.api.ITextArea;
@@ -93,7 +94,7 @@ class ValidationColors {
 	}
 
 	void removeErrorColorAbsolute(boolean required, ITextElement<?> t) {
-		if (t instanceof IColored) {
+		if (t instanceof IColored && t instanceof IEditable && ((IEditable<?>) t).editable()) {
 			IColored c = (IColored) t;
 			if (!isEmptyColor(required, t))
 				c.color().gray(253);
