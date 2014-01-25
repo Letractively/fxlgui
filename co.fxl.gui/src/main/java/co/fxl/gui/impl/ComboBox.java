@@ -244,7 +244,7 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 		IGridCell cell = grid.cell(0, 0);
 		if (center) {
 			cell.align().center();
-			cell.padding().left(14);
+			cell.padding().left(13);
 		}
 		label = cell.valign().center().label();
 		label.margin().left(3);
