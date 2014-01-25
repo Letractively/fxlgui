@@ -90,7 +90,7 @@ class FlowFormGrid implements FormGrid, RuntimeConstants {
 		}
 	}
 
-	private static final int FIREFOX_DEC = 0;
+	private static final int FIREFOX_DEC = 2;
 	private static final int _120 = Style.instance().mobile() ? 0 : 120;
 	private static final int MIN_WIDTH_COLUMN = 300;
 	private static final int SPACING = 4;
