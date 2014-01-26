@@ -1,0 +1,5 @@
+<module>
+	<inherits name='co.fxl.data.format.api.IFormat' />
+	<inherits name='co.fxl.data.format.impl.FormatImpl' />
+	<source path='' />
+</module>
