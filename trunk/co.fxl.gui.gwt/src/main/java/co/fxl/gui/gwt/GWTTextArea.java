@@ -109,7 +109,7 @@ class GWTTextArea extends GWTTextAreaTemplate<TextArea, ITextArea> implements
 		}
 	}
 
-	protected void notifyChange() {
+	private void notifyChange() {
 		String text = text();
 		if (lastNotifiedValue == null || !lastNotifiedValue.equals(text)) {
 			lastNotifiedValue = text;
