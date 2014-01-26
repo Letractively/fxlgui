@@ -324,7 +324,6 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		// validation.linkInput(configurationComboBox);
 		configuration = firstConfiguration;
 		update(true);
-		validation.activate();
 		return this;
 	}
 
@@ -382,6 +381,7 @@ public class FilterWidgetImpl implements IFilterWidget, IUpdateListener<String> 
 		clearClickable(constrained);
 		mainPanel.visible();
 		grid.show(firstConstraint);
+		validation.activate();
 		return this;
 	}
 
