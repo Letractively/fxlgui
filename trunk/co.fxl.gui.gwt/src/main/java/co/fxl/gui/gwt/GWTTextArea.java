@@ -85,19 +85,20 @@ class GWTTextArea extends GWTTextAreaTemplate<TextArea, ITextArea> implements
 	}
 
 	@Override
-	ITextArea width(boolean isNegative, String widthString) {
+	ITextArea width(boolean isNegative, boolean isDouble, String widthString) {
 		if (Env.is(Env.CHROME, Env.SAFARI, Env.OPERA)) {
 			if (isUndefined())
 				return (ITextArea) this;
-			if (isNegative) {
+			if (isNegative || isDouble) {
 				style().clearProperty("maxWidth");
 				style().clearProperty("minWidth");
-			} else {
+			}
+			if (!isNegative) {
 				style().setProperty("maxWidth", widthString);
 				style().setProperty("minWidth", widthString);
 			}
 		}
-		return super.width(isNegative, widthString);
+		return super.width(isNegative, isDouble, widthString);
 	}
 
 	private void checkResize() {
