@@ -90,7 +90,7 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 								popup = null;
 								clearLines();
 							}
-						}, 100);
+						}, 250);
 					}
 				}
 			});
@@ -121,9 +121,7 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 
 					@Override
 					public void onClick() {
-						closePopUp();
-						focus(true);
-						text(text);
+						submit(text);
 					}
 				};
 				line.addClickListener(clickListener);
@@ -145,6 +143,17 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 
 		}
 
+		private void notifyEnter() {
+			if (lastLine != null)
+				submit(lastLineText);
+		}
+
+		private void submit(String text) {
+			closePopUp();
+			focus(true);
+			text(text);
+		}
+
 		private boolean isNull(String text) {
 			return text == null || text.equals("");
 		}
@@ -157,7 +166,7 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 					public void run() {
 						closePopUp();
 					}
-				}, 500);
+				}, 250);
 		}
 
 		@Override
@@ -206,7 +215,7 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 			ComboBox.this.text(text);
 		}
 
-		protected void closePopUp() {
+		private void closePopUp() {
 			if (popup != null)
 				popup.visible(false);
 		}
@@ -239,6 +248,12 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 		focus.border().style().rounded().width(3);
 		addFocusListener(cbp);
 		focus.addKeyListener((IKeyListener) cbp);
+		focus.addKeyListener(new IClickListener() {
+			@Override
+			public void onClick() {
+				cbp.notifyEnter();
+			}
+		}).enter();
 		grid = focus.add().panel().grid();
 		grid.border().style().rounded().width(3);
 		grid.column(0).expand();
