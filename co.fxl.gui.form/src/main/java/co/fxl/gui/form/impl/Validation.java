@@ -332,6 +332,7 @@ public class Validation {
 	private boolean showDiscardChanges = false;
 	private boolean isNew = false;
 	private ValidationColors colors;
+	private boolean cancelable;
 
 	public Validation() {
 		this(false);
@@ -361,6 +362,7 @@ public class Validation {
 				error = true;
 		}
 		clickable = isSpecified && !error && allRequiredSpecified;
+		cancelable = isSpecified;
 		for (IClickable<?> c : clickables) {
 			c.clickable(clickable);
 		}
@@ -662,6 +664,10 @@ public class Validation {
 		updateQueue.clear();
 		active = true;
 		updateClickables();
+	}
+
+	public boolean isCancelable() {
+		return cancelable;
 	}
 
 }
