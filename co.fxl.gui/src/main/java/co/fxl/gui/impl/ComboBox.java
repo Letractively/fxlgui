@@ -67,7 +67,8 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 				lastLine = null;
 			}
 			lastLine = line;
-			line.color().rgb(70, 184, 255);
+			if (line != null)
+				line.color().rgb(70, 184, 255);
 		}
 
 		@Override
