@@ -173,14 +173,18 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 		public void onCharacterKey(char character) {
 			if (character == ' ' && texts.size() > 0 && isNull(texts.get(0)))
 				ComboBox.this.text(null);
-			else
-				for (String text : texts) {
+			else {
+				int index = texts.indexOf(text()) + 1;
+				int num = texts.size();
+				for (int i = 0; i < num; i++) {
+					String text = texts.get(index++ % num);
 					if (text != null && text.trim().length() > 0
 							&& text.trim().toLowerCase().charAt(0) == character) {
 						setText(text);
 						return;
 					}
 				}
+			}
 		}
 
 		@Override
