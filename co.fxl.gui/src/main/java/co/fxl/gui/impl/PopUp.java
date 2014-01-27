@@ -200,12 +200,16 @@ public class PopUp implements RuntimeConstants {
 		return display.showDialog();
 	}
 
-	public static void autoHideOnResize(final TransparentPopUp p) {
+	public static void autoHideOnResize(TransparentPopUp p) {
+		autoHideOnResize(p.popUp);
+	}
+
+	public static void autoHideOnResize(final IPopUp popUp) {
 		Display.instance().addResizeListener(new IResizeListener() {
 			@Override
 			public void onResize(int width, int height) {
-				p.popUp.visible(false);
+				popUp.visible(false);
 			}
-		}).linkLifecycle(p.popUp);
+		}).linkLifecycle(popUp);
 	}
 }

@@ -80,6 +80,7 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 			popup = PopUp.showPopUp(false).autoHide(true)
 					.offset(focus.offsetX(), focus.offsetY() + focus.height())
 					.width(width);
+			PopUp.autoHideOnResize(popup);
 			popup.addVisibleListener(new IUpdateListener<Boolean>() {
 				@Override
 				public void onUpdate(Boolean value) {
