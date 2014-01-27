@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+  <classpathentry kind="src" path="src/main/java" including="**/*.java"/>
+  <classpathentry kind="src" path="src/main/resources" excluding="**/*.java"/>
+  <classpathentry kind="output" path="bin"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="src" path="/fxl-gui"/>
+  <classpathentry kind="src" path="/fxl-gui-canvas"/>
+  <classpathentry kind="src" path="/fxl-data-format"/>
+  <classpathentry kind="src" path="/fxl-gui-gwt"/>
+  <classpathentry kind="src" path="/fxl-data-format-gwt"/>
+  <classpathentry kind="var" path="M2_REPO/com/google/gwt/gwt-user/2.5.1-xn2/gwt-user-2.5.1-xn2.jar"/>
+</classpath>
