@@ -274,7 +274,7 @@ public class Validation {
 		@Override
 		public void notifyChange() {
 			String text = textElement.text();
-			update(text, false);
+			update(text, true);
 		}
 
 		@Override
