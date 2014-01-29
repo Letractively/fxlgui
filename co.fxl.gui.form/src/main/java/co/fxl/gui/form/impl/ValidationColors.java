@@ -30,7 +30,7 @@ import co.fxl.gui.form.impl.Validation.Field;
 import co.fxl.gui.impl.Display;
 import co.fxl.gui.style.impl.Style;
 
-class ValidationColors {
+public class ValidationColors {
 
 	private boolean isFilter;
 
@@ -94,14 +94,20 @@ class ValidationColors {
 	}
 
 	void removeErrorColorAbsolute(boolean required, ITextElement<?> t) {
-		if (t instanceof IColored && t instanceof IEditable && ((IEditable<?>) t).editable()) {
-			IColored c = (IColored) t;
-			if (!isEmptyColor(required, t))
-				c.color().gray(253);
+		if (t instanceof IColored && t instanceof IEditable
+				&& ((IEditable<?>) t).editable()) {
+			staticRemoveErrorAbsolute(required, t);
 		}
 	}
 
-	private boolean isEmptyColor(boolean required, ITextElement<?> t) {
+	public static void staticRemoveErrorAbsolute(boolean required,
+			ITextElement<?> t) {
+		IColored c = (IColored) t;
+		if (!isEmptyColor(required, t))
+			c.color().gray(253);
+	}
+
+	public static boolean isEmptyColor(boolean required, ITextElement<?> t) {
 		IColored c = (IColored) t;
 		String text = t.text();
 		if (required && (text == null || text.equals(""))) {
