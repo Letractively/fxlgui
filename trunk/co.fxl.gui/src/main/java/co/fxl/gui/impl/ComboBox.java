@@ -371,7 +371,9 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 	private void text(ILabel l, final String text) {
 		if (text == null || text.equals(""))
 			l.text("");
-		else
+		else if (colorAdapter == null) {
+			l.text(text);
+		} else
 			l.html(HTMLText.styledText(text, colorAdapter == null ? null
 					: colorAdapter.color(text)));
 	}
