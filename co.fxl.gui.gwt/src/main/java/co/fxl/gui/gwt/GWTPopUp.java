@@ -107,7 +107,7 @@ class GWTPopUp implements IPopUp, WidgetParent {
 
 	@Override
 	public void add(Widget widget) {
-		if (popUp.w > 0)
+		if (popUp.w > 16)
 			widget.setWidth((popUp.w - 16) + "px");
 		// if (h > 0)
 		// widget.setHeight(h + "px");
