@@ -231,7 +231,7 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 		String color(String value);
 	}
 
-	public static final boolean ACTIVE = false;
+	public static final boolean ACTIVE = true;
 	private static final boolean ALWAYS_USE_COLORED_COMBOBOX = false;
 	private IGridPanel grid;
 	private ILabel label;
@@ -360,6 +360,11 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 		cbp.highlight(text);
 		for (IUpdateListener<String> l : listeners)
 			l.onUpdate(text);
+		return this;
+	}
+
+	public ComboBox open() {
+		cbp.onClick();
 		return this;
 	}
 
