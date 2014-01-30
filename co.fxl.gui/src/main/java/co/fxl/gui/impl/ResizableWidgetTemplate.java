@@ -113,11 +113,19 @@ public class ResizableWidgetTemplate implements IResizableWidget {
 
 	public void autoResize(final IElement<?> e, final int dec, boolean b,
 			String id) {
+		autoResize(e, dec, b, id, false);
+	}
+
+	public void autoResize(final IElement<?> e, final int dec, boolean b,
+			String id, final boolean onlyIfVisible) {
 		final IResizeListener listener = new IResizeListener() {
 			@Override
 			public void onResize(int width, int height) {
+				if (onlyIfVisible && !e.visible())
+					return;
 				int offsetY = Shell.instance().offsetY(e, 100);
-				int h = rheight() - offsetY - 10 - dec;
+				int rheight = rheight();
+				int h = rheight - offsetY - 10 - dec;
 				if (h > 0)
 					e.height(h);
 			}
