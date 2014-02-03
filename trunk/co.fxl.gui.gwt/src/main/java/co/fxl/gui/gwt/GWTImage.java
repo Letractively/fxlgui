@@ -34,6 +34,8 @@ public class GWTImage extends GWTElement<Image, IImage> implements IImage {
 	private static final String IMAGES = "images/";
 	public static boolean IS_CHROME_15_PLUS = GWTDisplay.isChrome
 			&& GWTDisplay.getBrowserVersion() >= 15;
+	public static boolean USE_IMAGE_RESOURCES = IS_CHROME_15_PLUS
+			|| !GWTDisplay.isChrome;
 	public static String IMAGE_PATH = Constants.get(
 			"GWTLazyTreeWidget.IMAGE_PATH",
 			(IS_CHROME_15_PLUS ? "" : GWT.getModuleBaseURL()) + "images/");
@@ -48,7 +50,7 @@ public class GWTImage extends GWTElement<Image, IImage> implements IImage {
 	}
 
 	public static String getImageURL(String path, String treeIcon) {
-		if (IS_CHROME_15_PLUS) {
+		if (USE_IMAGE_RESOURCES) {
 			ImageResource ir = GWTImage.resolve(treeIcon);
 			if (ir != null)
 				return ir.getURL();
