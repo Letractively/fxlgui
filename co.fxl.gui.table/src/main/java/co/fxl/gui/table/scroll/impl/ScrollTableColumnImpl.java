@@ -345,7 +345,7 @@ public class ScrollTableColumnImpl implements IScrollTableColumn<Object>,
 	private TableWidgetAdp widget;
 	List<IScrollTableListener<Object>> clickListeners = new LinkedList<IScrollTableListener<Object>>();
 	boolean filterable;
-	AlignmentMemento<IScrollTableColumn<Object>> alignment = new AlignmentMemento<IScrollTableColumn<Object>>(
+	public AlignmentMemento<IScrollTableColumn<Object>> alignment = new AlignmentMemento<IScrollTableColumn<Object>>(
 			this);
 	boolean visible = true;
 	public int widthInt = -1;
