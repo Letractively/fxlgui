@@ -350,6 +350,13 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 	}
 
 	@Override
+	public IComboBox clear() {
+		texts.clear();
+		text = null;
+		return this;
+	}
+
+	@Override
 	public String text() {
 		return text;
 	}
