@@ -21,6 +21,7 @@ package co.fxl.gui.gwt;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.ITextField;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -32,6 +33,7 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.ValueBoxBase.TextAlignment;
 
 class GWTTextField extends GWTTextInput<TextBox, ITextField> implements
 		ITextField, ChangeHandler, DropHandler, KeyUpHandler, MouseUpHandler {
@@ -127,5 +129,32 @@ class GWTTextField extends GWTTextInput<TextBox, ITextField> implements
 	@Override
 	public void onMouseUp(MouseUpEvent event) {
 		notifyChange();
+	}
+
+	@Override
+	public IAlignment<ITextField> align() {
+		return new IAlignment<ITextField>() {
+
+			@Override
+			public ITextField begin() {
+				return align(TextAlignment.LEFT);
+			}
+
+			private ITextField align(TextAlignment align) {
+				container.widget.setAlignment(align);
+				return GWTTextField.this;
+			}
+
+			@Override
+			public ITextField center() {
+				return align(TextAlignment.CENTER);
+			}
+
+			@Override
+			public ITextField end() {
+				return align(TextAlignment.RIGHT);
+			}
+
+		};
 	}
 }

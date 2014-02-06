@@ -18,6 +18,7 @@
  */
 package co.fxl.gui.impl;
 
+import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.IClickable.IClickListener;
 import co.fxl.gui.api.ITextField;
 
@@ -54,6 +55,11 @@ public class TextFieldAdp extends TextInputAdp<ITextField> implements
 			co.fxl.gui.api.IKeyRecipient.IKeyListener listener) {
 		element().addKeyListener(listener);
 		return this;
+	}
+
+	@Override
+	public IAlignment<ITextField> align() {
+		return element().align();
 	}
 
 }

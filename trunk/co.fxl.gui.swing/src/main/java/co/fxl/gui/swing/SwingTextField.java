@@ -24,6 +24,7 @@ import java.util.List;
 
 import javax.swing.JTextField;
 
+import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable;
 
@@ -78,6 +79,11 @@ class SwingTextField extends SwingTextInput<JTextField, ITextField> implements
 		container.component.setCaretPosition(position);
 		container.component.requestFocus();
 		return this;
+	}
+
+	@Override
+	public IAlignment<ITextField> align() {
+		throw new UnsupportedOperationException();
 	}
 
 }
