@@ -232,7 +232,7 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 		String color(String value);
 	}
 
-	public static final boolean ACTIVE = false;
+	public static final boolean ACTIVE = true;
 	private static final boolean ALWAYS_USE_COLORED_COMBOBOX = true;
 	private IGridPanel grid;
 	private ILabel label;
