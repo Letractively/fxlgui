@@ -22,7 +22,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.fxl.gui.api.ITextArea;
-import co.fxl.gui.impl.Env;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -86,17 +85,17 @@ class GWTTextArea extends GWTTextAreaTemplate<TextArea, ITextArea> implements
 
 	@Override
 	ITextArea width(boolean isNegative, String widthString) {
-		if (Env.is(Env.CHROME, Env.SAFARI, Env.OPERA)) {
-			if (isUndefined())
-				return (ITextArea) this;
-			if (isNegative) {
-				style().clearProperty("maxWidth");
-				style().clearProperty("minWidth");
-			} else {
-				style().setProperty("maxWidth", widthString);
-				style().setProperty("minWidth", widthString);
-			}
+		// if (Env.is(Env.CHROME, Env.SAFARI, Env.OPERA)) {
+		if (isUndefined())
+			return (ITextArea) this;
+		if (isNegative) {
+			style().clearProperty("maxWidth");
+			style().clearProperty("minWidth");
+		} else {
+			style().setProperty("maxWidth", widthString);
+			style().setProperty("minWidth", widthString);
 		}
+		// }
 		return super.width(isNegative, widthString);
 	}
 
