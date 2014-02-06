@@ -23,6 +23,7 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import co.fxl.gui.api.IAlignment;
 import co.fxl.gui.api.ITextField;
 import co.fxl.gui.api.IUpdateable;
 
@@ -115,6 +116,11 @@ class AndroidTextField extends AndroidElement<EditText, ITextField> implements
 
 	@Override
 	public ITextField cursorPosition(int position) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IAlignment<ITextField> align() {
 		throw new UnsupportedOperationException();
 	}
 }

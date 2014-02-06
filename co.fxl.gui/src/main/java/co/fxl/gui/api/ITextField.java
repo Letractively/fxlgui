@@ -21,4 +21,6 @@ package co.fxl.gui.api;
 public interface ITextField extends ITextInputElement<ITextField>,
 		IKeyRecipient<ITextField>, IHasCursor<ITextField> {
 
+	IAlignment<ITextField> align();
+
 }
