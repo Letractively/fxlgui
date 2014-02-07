@@ -389,10 +389,12 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 		if (text == null || text.equals(""))
 			l.text("");
 		else if (colorAdapter == null) {
-			l.text(text);
-		} else
+			l.text(text).font().color().rgb(29, 59, 89);
+		} else {
+			l.font().color().remove();
 			l.html(HTMLText.styledText(text, colorAdapter == null ? null
 					: colorAdapter.color(text)));
+		}
 	}
 
 	public static IComboBox create(IContainer c, IColorAdapter colorAdapter,
