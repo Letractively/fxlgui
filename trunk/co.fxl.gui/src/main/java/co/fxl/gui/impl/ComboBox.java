@@ -36,6 +36,7 @@ import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IImage;
 import co.fxl.gui.api.ILabel;
 import co.fxl.gui.api.IPopUp;
+import co.fxl.gui.api.IScrollPane;
 import co.fxl.gui.api.IUpdateable;
 import co.fxl.gui.api.IVerticalPanel;
 
@@ -49,6 +50,7 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 		private String lastLineText;
 		private IVerticalPanel nullLine;
 		private Map<String, IVerticalPanel> lines = new HashMap<String, IVerticalPanel>();
+		private IScrollPane scrollPane;
 
 		protected void clearLines() {
 			lastLine = null;
@@ -67,8 +69,11 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 				lastLine = null;
 			}
 			lastLine = line;
-			if (line != null)
+			if (line != null) {
 				line.color().rgb(70, 184, 255);
+				if (scrollPane != null)
+					scrollPane.scrollIntoView(line);
+			}
 		}
 
 		@Override
@@ -136,13 +141,15 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 			}
 			highlight(ComboBox.this.text());
 			popup.visible(true);
+			scrollPane = null;
 			if (popup.offsetY() + popup.height() > Display.instance().height()) {
 				int height = Display.instance().height() - popup.offsetY() - 10;
-				if (height > 0)
-					popup.container().scrollPane().width(width).height(height)
-							.viewPort().element(vertical);
+				if (height > 0) {
+					scrollPane = popup.container().scrollPane().width(width)
+							.height(height);
+					scrollPane.viewPort().element(vertical);
+				}
 			}
-
 		}
 
 		private void notifyEnter() {
