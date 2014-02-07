@@ -257,7 +257,9 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 			boolean center, boolean closePopUpOnChange) {
 		this.center = center;
 		this.closePopUpOnChange = closePopUpOnChange;
-		focus = container.panel().focus().outline(true);
+		focus = container.panel().focus();
+		if (!IE)
+			focus.outline(true);
 		focus.border().style().rounded().width(3);
 		addFocusListener(cbp);
 		focus.addKeyListener((IKeyListener) cbp);
