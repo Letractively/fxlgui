@@ -70,7 +70,7 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 			}
 			lastLine = line;
 			if (line != null) {
-				line.color().rgb(70, 184, 255);
+				line.color().rgb(208, 228, 246);
 				if (scrollPane != null)
 					scrollPane.scrollIntoView(line);
 			}
