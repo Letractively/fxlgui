@@ -22,6 +22,7 @@ import co.fxl.gui.api.IBordered.IBorder;
 import co.fxl.gui.api.IClickable;
 import co.fxl.gui.api.IColored;
 import co.fxl.gui.api.IContainer;
+import co.fxl.gui.api.IElement;
 import co.fxl.gui.api.IGridPanel;
 import co.fxl.gui.api.IGridPanel.IGridCell;
 import co.fxl.gui.api.IHorizontalPanel;
@@ -84,6 +85,14 @@ public abstract class FormFieldImpl<T, R> implements IFormField<T, R>,
 	public FormFieldImpl(boolean newLine, FormWidgetImpl widget, int index,
 			String name, IInputElementFactory f) {
 		this(newLine, widget, index, name, null, f, null);
+	}
+
+	@Override
+	public void description(String description) {
+		label.tooltip(description);
+		if (valueElement instanceof IElement<?>) {
+			((IElement<?>) valueElement).tooltip(description);
+		}
 	}
 
 	@Override
