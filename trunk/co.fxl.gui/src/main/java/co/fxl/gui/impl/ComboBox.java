@@ -102,7 +102,7 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 				}
 			});
 			popup.border().remove().color().rgb(127, 157, 185);
-			IVerticalPanel vertical = popup.container().panel().vertical();
+			IVerticalPanel vertical = popup.container().panel().vertical().minWidth(width);
 			clearLines();
 			for (final String text : texts) {
 				IFocusPanel f = vertical.add().panel().focus();
