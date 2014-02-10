@@ -294,4 +294,10 @@ class SwingPopUp implements IPopUp, ComponentParent {
 	public boolean transparent() {
 		return transparent;
 	}
+
+	@Override
+	public IPopUp minWidth(int minWidth) {
+		// TODO ...
+		return this;
+	}
 }

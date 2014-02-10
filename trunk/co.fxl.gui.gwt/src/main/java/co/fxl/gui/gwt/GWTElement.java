@@ -334,6 +334,19 @@ public class GWTElement<T extends Widget, R> implements IElement<R>,
 		return width(width < 0, width + "px");
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public R minWidth(int minWidth) {
+		if (isUndefined())
+			return (R) this;
+		if (minWidth < 0)
+			style().clearProperty("minWidth");
+		else {
+			style().setProperty("minWidth", minWidth + "px");
+		}
+		return (R) this;
+	}
+
 	@Override
 	public R width(double width) {
 		return width(width < 0, percent(width) + "%");

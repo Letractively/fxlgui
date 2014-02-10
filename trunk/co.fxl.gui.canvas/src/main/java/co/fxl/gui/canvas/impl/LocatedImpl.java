@@ -93,4 +93,9 @@ public class LocatedImpl<T> implements ILocated<T> {
 		return (T) this;
 	}
 
+	@Override
+	public T minWidth(int minWidth) {
+		throw new UnsupportedOperationException();
+	}
+
 }

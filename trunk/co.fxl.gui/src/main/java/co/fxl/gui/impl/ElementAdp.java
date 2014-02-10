@@ -292,4 +292,11 @@ public class ElementAdp<T extends IElement<T>> implements IElement<T>,
 		return (T) this;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public T minWidth(int minWidth) {
+		basicElement().minWidth(minWidth);
+		return (T) this;
+	}
+
 }
