@@ -196,6 +196,12 @@ class GWTPopUp implements IPopUp, WidgetParent {
 	}
 
 	@Override
+	public IPopUp minWidth(int minWidth) {
+		popUp.minWidth(minWidth);
+		return this;
+	}
+
+	@Override
 	public IPopUp height(int height) {
 		popUp.height(height);
 		return this;

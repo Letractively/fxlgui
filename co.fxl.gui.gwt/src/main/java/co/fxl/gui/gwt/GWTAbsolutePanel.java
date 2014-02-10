@@ -60,4 +60,5 @@ class GWTAbsolutePanel extends GWTPanel<AbsolutePanel, IAbsolutePanel>
 		// widget.setWidth("100%");
 		container.widget.add(widget, x, y);
 	}
+
 }

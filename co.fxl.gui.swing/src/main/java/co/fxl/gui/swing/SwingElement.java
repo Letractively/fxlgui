@@ -622,4 +622,11 @@ class SwingElement<T extends JComponent, R> implements IElement<R>, HasUID {
 		return (R) this;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public R minWidth(int minWidth) {
+		container.component.getMinimumSize().width = minWidth;
+		return (R) this;
+	}
+
 }

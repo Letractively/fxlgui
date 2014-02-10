@@ -58,4 +58,8 @@ class PopUpPanelWidget extends PopupPanel {
 		return getPopupTop();
 	}
 
+	void minWidth(int minWidth) {
+		getElement().getStyle().setProperty("minWidth", minWidth + "px");
+	}
+
 }

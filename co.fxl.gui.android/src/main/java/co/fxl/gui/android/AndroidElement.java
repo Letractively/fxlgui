@@ -309,4 +309,9 @@ class AndroidElement<R extends View, T> implements IElement<T> {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public T minWidth(int minWidth) {
+		throw new UnsupportedOperationException();
+	}
+
 }

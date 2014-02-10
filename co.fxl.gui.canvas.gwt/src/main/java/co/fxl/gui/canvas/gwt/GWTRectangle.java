@@ -88,4 +88,9 @@ class GWTRectangle extends RectangleImpl implements Drawable {
 		context.clearRect(x, y, w, h);
 		return this;
 	}
+
+	@Override
+	public IRectangle minWidth(int minWidth) {
+		throw new UnsupportedOperationException();
+	}
 }

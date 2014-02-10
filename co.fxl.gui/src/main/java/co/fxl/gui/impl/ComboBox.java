@@ -84,7 +84,7 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 			int width = grid.width() - 2;
 			popup = PopUp.showPopUp(false).autoHide(true)
 					.offset(focus.offsetX(), focus.offsetY() + focus.height())
-					.width(width);
+					.minWidth(width);
 			popup.border().style().shadow();
 			PopUp.autoHideOnResize(popup);
 			popup.addVisibleListener(new IUpdateListener<Boolean>() {
@@ -145,7 +145,7 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 			if (popup.offsetY() + popup.height() > Display.instance().height()) {
 				int height = Display.instance().height() - popup.offsetY() - 10;
 				if (height > 0) {
-					scrollPane = popup.container().scrollPane().width(width)
+					scrollPane = popup.container().scrollPane().minWidth(width)
 							.height(height);
 					scrollPane.viewPort().element(vertical);
 				}

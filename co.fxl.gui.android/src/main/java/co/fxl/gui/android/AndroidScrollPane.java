@@ -270,6 +270,11 @@ class AndroidScrollPane implements IScrollPane, Parent {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public IScrollPane minWidth(int minWidth) {
+		throw new UnsupportedOperationException();
+	}
+
 	// @Override
 	// public IScrollbar scrollbar() {
 	// throw new UnsupportedOperationException();

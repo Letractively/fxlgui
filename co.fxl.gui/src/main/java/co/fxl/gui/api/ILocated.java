@@ -28,6 +28,8 @@ public interface ILocated<T> extends IPoint, IHasSize {
 
 	T width(int width);
 
+	T minWidth(int minWidth);
+
 	T height(int height);
 
 	T size(int width, int height);
