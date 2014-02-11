@@ -75,8 +75,10 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 
 		@Override
 		public String displayText() {
-			return "<table cellspacing='0'><tbody><tr><td><img src='"
-					+ image(o) + "'/>" + "</td><td>" + adapter.label(o)
+			String image = image(o);
+			return "<table cellspacing='0'><tbody><tr>"
+					+ (image != null ? "<td><img src='" + image(o) + "'/>"
+							+ "</td>" : "") + "<td>" + adapter.label(o)
 					+ "</td></tr></tbody></table>";
 		}
 	}
@@ -181,7 +183,9 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		border.style().rounded();
 		border.width(1).color().lightgray();
 		hp.color().rgb(230, 230, 230);
-		hp.add().image().resource(adapter.icon(o));
+		String icon = adapter.icon(o);
+		if (icon != null)
+			hp.add().image().resource(icon);
 		String text = label.length() < 32 ? label : label.substring(0, 28)
 				+ "...";
 		hp.add().label().text(text).font().weight().bold().pixel(10);
