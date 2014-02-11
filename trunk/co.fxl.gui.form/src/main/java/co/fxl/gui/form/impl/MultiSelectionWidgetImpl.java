@@ -75,8 +75,9 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 
 		@Override
 		public String displayText() {
-			return "<span><img style='margin-right:4px' src='" + image(o)
-					+ "'/>" + adapter.label(o) + "</span>";
+			return "<table cellspacing='0'><tbody><tr><td><img src='"
+					+ image(o) + "'/>" + "</td><td>" + adapter.label(o)
+					+ "</td></tr></tbody></table>";
 		}
 	}
 
@@ -102,7 +103,7 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		border.style().rounded().width(3);
 		border.width(1);
 		input = panel.add().suggestField().width(100).autoSelect(true)
-//				.requestOnFocus(true)
+		// .requestOnFocus(true)
 				.outline(false);
 		input.color().gray(253);
 		textArea.addUpdateListener(new IUpdateListener<String>() {
@@ -183,8 +184,8 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		hp.add().image().resource(adapter.icon(o));
 		String text = label.length() < 32 ? label : label.substring(0, 28)
 				+ "...";
-		hp.add().label().text(text);
-		hp.add().image().resource("cancel.png").addClickListener(e);
+		hp.add().label().text(text).font().weight().bold().pixel(10);
+		hp.add().image().resource("cancel_gray_small.png").addClickListener(e);
 		panel.add().element(input);
 		if (b)
 			update();
