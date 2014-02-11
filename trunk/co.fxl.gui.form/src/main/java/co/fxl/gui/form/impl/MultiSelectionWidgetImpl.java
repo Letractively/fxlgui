@@ -53,7 +53,7 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 			tokens.remove(this);
 			hp.remove();
 			if (tokens.isEmpty())
-				panel.height(24);
+				panel.height(25);
 			notifyTextArea();
 			// input.focus(true);
 		}
@@ -177,6 +177,7 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		input.remove();
 		final IHorizontalPanel hp = panel.height(-1).add().panel().horizontal()
 				.spacing(2);
+		hp.spacing().bottom(1);
 		final Entry e = new Entry(hp, o);
 		tokens.add(e);
 		IBorder border = hp.border();
