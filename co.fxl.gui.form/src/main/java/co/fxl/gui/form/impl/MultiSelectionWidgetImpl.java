@@ -89,6 +89,7 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 	private List<Entry> tokens = new LinkedList<Entry>();
 	private ITextArea textArea;
 	private boolean ignore;
+	private boolean allowsCreate = true;
 
 	protected MultiSelectionWidgetImpl(IContainer container) {
 		panel = container.panel().flow().spacing(2).height(25);
@@ -147,8 +148,10 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 		addKeyListeners(input, new IClickListener() {
 			@Override
 			public void onClick() {
-				String create = adapter.create(input.text());
-				append(create, true);
+				if (allowsCreate) {
+					String create = adapter.create(input.text());
+					append(create, true);
+				}
 			}
 		}, new IClickListener() {
 			@Override
@@ -236,5 +239,11 @@ public class MultiSelectionWidgetImpl implements IMultiSelectionWidget {
 	@Override
 	public ISuggestField suggestField() {
 		return input;
+	}
+
+	@Override
+	public IMultiSelectionWidget allowsCreate(boolean allowsCreate) {
+		this.allowsCreate = allowsCreate;
+		return this;
 	}
 }

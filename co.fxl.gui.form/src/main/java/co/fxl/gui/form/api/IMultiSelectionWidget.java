@@ -26,7 +26,7 @@ import co.fxl.gui.api.ITextArea;
 
 public interface IMultiSelectionWidget {
 
-	public String SEPARATOR = ";";
+	public String SEPARATOR = "\n";
 
 	public interface IMultiSelectionAdapter {
 
@@ -38,6 +38,8 @@ public interface IMultiSelectionWidget {
 
 		String create(String text);
 	}
+
+	IMultiSelectionWidget allowsCreate(boolean allowsCreate);
 
 	IMultiSelectionWidget adapter(IMultiSelectionAdapter adapter);
 
