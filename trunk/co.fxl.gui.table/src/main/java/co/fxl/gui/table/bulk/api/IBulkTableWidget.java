@@ -161,4 +161,6 @@ public interface IBulkTableWidget extends IKeyRecipient<Object> {
 	String rowHtml(int r);
 
 	void rowHtml(int r, String html);
+
+	IBulkTableWidget focus(boolean focus);
 }

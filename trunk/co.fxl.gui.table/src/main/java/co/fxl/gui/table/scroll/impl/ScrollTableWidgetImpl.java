@@ -206,6 +206,12 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	}
 
 	@Override
+	public IScrollTableWidget<Object> focus(boolean focus) {
+		this.focus = focus;
+		return this;
+	}
+
+	@Override
 	public void hasBorder(boolean hasBorder) {
 		this.hasBorder = hasBorder;
 	}
@@ -289,6 +295,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	String title;
 	boolean showLabels;
 	private boolean useRowCaching = USE_ROW_CACHING;
+	private boolean focus = true;
 
 	// private boolean nextTimeShowPopUp;
 
@@ -869,6 +876,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		IBulkTableWidget lastGrid = grid;
 		IVerticalPanel vpanel = contentPanel.add().panel().vertical();
 		grid = (IBulkTableWidget) vpanel.add().widget(IBulkTableWidget.class);
+		grid.focus(focus);
 		if (RELATION_REGISTER_CONTEXT_MENU && commandButtons != null) {
 			commandButtons.addContextMenu(grid.addToContextMenu(true));
 		}

@@ -588,4 +588,10 @@ public class BulkTableWidgetImpl implements IBulkTableWidget {
 			co.fxl.gui.api.IKeyRecipient.IKeyListener listener) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public IBulkTableWidget focus(boolean focus) {
+		// TODO ...
+		return this;
+	}
 }
