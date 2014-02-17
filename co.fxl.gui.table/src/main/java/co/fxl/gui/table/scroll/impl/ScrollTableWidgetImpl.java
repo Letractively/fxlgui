@@ -1548,17 +1548,22 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 				sortColumn = newSortColumn;
 				sortNegator = rows.sort(columnImpl);
 				updateFilterConstraints(columnImpl, sortNegator);
+				List<Object> selectionList = null;
+				if (commandButtons != null)
+					selectionList = new LinkedList<Object>(
+							commandButtons.selectionList);
+				final List<Object> sl = selectionList;
 				if (sortListener != null)
 					sortListener.onSort(columnImpl.name, sortNegator == 1,
 							false, new CallbackTemplate<Void>() {
 								@Override
 								public void onSuccess(Void result) {
 									if (update)
-										updateAfterSort();
+										updateAfterSort(sl);
 								}
 							});
 				else {
-					updateAfterSort();
+					updateAfterSort(sl);
 				}
 			} else {
 				if (sortColumn != -1) {
@@ -1580,7 +1585,8 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 		}
 	}
 
-	private void updateAfterSort() {
+	private void updateAfterSort(List<Object> selectionList) {
+		preselectedList = selectionList;
 		drawAll();
 	}
 
