@@ -50,7 +50,8 @@ class CancelButtonPanel implements IClickable<Object> {
 						new CallbackTemplate<Boolean>() {
 							@Override
 							public void onSuccess(Boolean result) {
-								widget.validation.reset();
+								if (!andBack)
+									widget.validation.reset();
 								widget.saveButton.clickable(false);
 								if (!widget.alwaysAllowCancel)
 									clickable(false);
