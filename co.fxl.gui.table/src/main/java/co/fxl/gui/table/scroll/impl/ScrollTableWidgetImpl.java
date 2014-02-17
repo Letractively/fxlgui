@@ -1123,7 +1123,7 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			IGridPanel.IGridCell clear = statusPanel().cell(2, 0).clear()
 					.valign().center();
 			clear.align().end();
-			IHorizontalPanel p = clear.panel().horizontal().width(145).align().end().add()
+			IHorizontalPanel p = clear.panel().horizontal().minWidth(145).align().end().add()
 					.panel().horizontal().align().end();
 			// if (Style.instance().mobile())
 			// p.width(125);
