@@ -50,13 +50,30 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 		addDummyImage(dummy = element().viewPort().panel().vertical());
 		center = grid.cell(0, 0).valign().begin().scrollPane().scrollBars()
 				.never();
+		center.addScrollListener(partScrollListener());
 		right = grid.cell(1, 0).valign().begin().scrollPane().scrollBars()
 				.never();
+		right.addScrollListener(partScrollListener());
 		// addDummyImage(grid.cell(2, 0).width(Env.HEIGHT_SCROLLBAR).panel()
 		// .vertical().width(Env.HEIGHT_SCROLLBAR));
 		// grid.column(2).width(Env.HEIGHT_SCROLLBAR);
 		grid.column(0).expand();
 		addScrollListener(this);
+	}
+
+	private IScrollListener partScrollListener() {
+		return new IScrollListener() {
+
+			private int index = -1;
+
+			@Override
+			public void onScroll(int maxOffset) {
+				if (index != maxOffset) {
+					index = maxOffset;
+					element().scrollTo(maxOffset);
+				}
+			}
+		};
 	}
 
 	protected IContainer decorate(IContainer c) {
