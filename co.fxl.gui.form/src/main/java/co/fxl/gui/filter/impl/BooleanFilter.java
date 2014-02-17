@@ -26,8 +26,8 @@ import co.fxl.gui.filter.impl.FilterPanel.FilterGrid;
 
 class BooleanFilter extends ComboBoxStringFilter {
 
-	private static final String FALSE = "no";
-	static final String TRUE = "yes";
+	private static final String FALSE = "No";
+	static final String TRUE = "Yes";
 
 	BooleanFilter(FilterGrid panel, String name, int filterIndex) {
 		super(panel, name, null, values(), filterIndex, null, false, null, null);
