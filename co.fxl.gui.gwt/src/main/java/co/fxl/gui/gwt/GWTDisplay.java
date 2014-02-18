@@ -636,8 +636,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 				addStyle("html, body { -webkit-font-smoothing: subpixel-antialiased !important; -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -ms-backface-visibility:     hidden; }");
 			}
 		}
-		// if (!isInternetExplorer11Plus && !isInternetExplorer8OrBelow)
-		// addStyle("::selection { background-color:transparent; }");
+		if (!isInternetExplorer11Plus && !isInternetExplorer8OrBelow)
+			addStyle("::selection { background-color:transparent; }");
 		return this;
 	}
 
