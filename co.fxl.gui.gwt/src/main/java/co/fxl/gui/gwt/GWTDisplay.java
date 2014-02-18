@@ -115,7 +115,7 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	static boolean isInternetExplorer9 = USER_AGENT_LOWER_CASE
 			.contains("msie 9.0");
 	static boolean isInternetExplorer11Plus = USER_AGENT_LOWER_CASE
-			.contains("rv:");
+			.contains("rv:") && !USER_AGENT_LOWER_CASE.contains(" firefox/");
 	static boolean isInternetExplorer9OrBelow = isInternetExplorer9
 			|| isInternetExplorer8OrBelow;
 
@@ -125,8 +125,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 	}
 
 	public native static int eventGetMouseWheelVelocityY(NativeEvent evt) /*-{
-																			return evt.wheelDelta;
-																			}-*/;
+																				return evt.wheelDelta;
+																				}-*/;
 
 	public static void notifyEvent(DomEvent<?> event) {
 		if (event != null) {
@@ -636,8 +636,8 @@ public class GWTDisplay extends DisplayTemplate implements IDisplay,
 				addStyle("html, body { -webkit-font-smoothing: subpixel-antialiased !important; -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -ms-backface-visibility:     hidden; }");
 			}
 		}
-//		if (!isInternetExplorer11Plus && !isInternetExplorer8OrBelow)
-//			addStyle("::selection { background-color:transparent; }");
+		// if (!isInternetExplorer11Plus && !isInternetExplorer8OrBelow)
+		// addStyle("::selection { background-color:transparent; }");
 		return this;
 	}
 

@@ -61,7 +61,7 @@ public class GWTFocusPanel extends GWTPanel<FocusPanel, IFocusPanel> implements
 		if (IE_LEQ_10) {
 			p.addStyleName("nooutlineIE");
 		} else {
-			p.addStyleName("nooutline");
+//			p.addStyleName("nooutline");
 		}
 	}
 
@@ -71,7 +71,7 @@ public class GWTFocusPanel extends GWTPanel<FocusPanel, IFocusPanel> implements
 			if (IE_LEQ_10) {
 				container.widget.removeStyleName("nooutlineIE");
 			} else {
-				container.widget.removeStyleName("nooutline");
+//				container.widget.removeStyleName("nooutline");
 			}
 		} else {
 			removeOutline(container.widget);
