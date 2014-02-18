@@ -1123,8 +1123,8 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 			IGridPanel.IGridCell clear = statusPanel().cell(2, 0).clear()
 					.valign().center();
 			clear.align().end();
-			IHorizontalPanel p = clear.panel().horizontal().minWidth(145).align().end().add()
-					.panel().horizontal().align().end();
+			IHorizontalPanel p = clear.panel().horizontal().minWidth(145)
+					.align().end().add().panel().horizontal().align().end();
 			// if (Style.instance().mobile())
 			// p.width(125);
 			leftPaging = p.add().label().text("<<");
@@ -1586,7 +1586,8 @@ public class ScrollTableWidgetImpl extends ResizableWidgetTemplate implements
 	}
 
 	private void updateAfterSort(List<Object> selectionList) {
-		preselectedList = selectionList;
+		if (selectionList != null)
+			preselectedList = selectionList;
 		drawAll();
 	}
 
