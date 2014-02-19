@@ -274,7 +274,7 @@ public class LazyScrollPaneImpl implements ILazyScrollPane, IScrollListener,
 		assert lastIndex >= 0;
 		maxRowIndex = lastIndex;
 		int maxHeight = height
-				- (horizontalScrollPane && correctMaxRowIndex ? Env.HEIGHT_SCROLLBAR
+				- (horizontalScrollPane && correctMaxRowIndex ? Env.SPAN_SCROLLBAR
 						: 0);
 		for (int i = lastIndex - 1; i >= firstIndex && h < maxHeight; i--) {
 			if (adjustHeights && !decorator.checkIndex(lastIndex)) {

@@ -45,8 +45,8 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 				.height(1.0).resize(3, 1);
 		panel.column(0).expand();
 		element(panel.cell(1, 0).valign().begin().scrollPane()
-				.width(Env.HEIGHT_SCROLLBAR).height(1.0));
-		grid.margin().right(Env.HEIGHT_SCROLLBAR);
+				.width(Env.SPAN_SCROLLBAR).height(1.0));
+		grid.margin().right(Env.SPAN_SCROLLBAR);
 		addDummyImage(dummy = element().viewPort().panel().vertical());
 		center = grid.cell(0, 0).valign().begin().scrollPane().scrollBars()
 				.never();
@@ -95,7 +95,7 @@ public class CompositeScrollPaneImpl extends ScrollPaneAdp implements
 	public ICompositeScrollPane width(int width) {
 		if (width != -1) {
 			panel.width(width);
-			grid.width(width - Env.HEIGHT_SCROLLBAR);
+			grid.width(width - Env.SPAN_SCROLLBAR);
 		}
 		return this;
 	}

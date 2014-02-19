@@ -263,7 +263,7 @@ public class StatusDisplay implements IResizeListener, Runnable,
 	@Override
 	public int height() {
 		return display.height()
-				- (hasHorizontalScrollbar() ? Env.HEIGHT_SCROLLBAR : 0);
+				- (hasHorizontalScrollbar() ? Env.SPAN_SCROLLBAR : 0);
 	}
 
 	public StatusDisplay reset() {
