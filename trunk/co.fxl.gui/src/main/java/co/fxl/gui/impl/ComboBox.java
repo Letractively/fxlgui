@@ -102,7 +102,8 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 				}
 			});
 			popup.border().remove().color().rgb(127, 157, 185);
-			IVerticalPanel vertical = popup.container().panel().vertical().minWidth(width);
+			IVerticalPanel vertical = popup.container().panel().vertical()
+					.minWidth(width);
 			clearLines();
 			for (final String text : texts) {
 				IFocusPanel f = vertical.add().panel().focus();
@@ -147,7 +148,8 @@ public class ComboBox extends ComboBoxAdp implements RuntimeConstants {
 				if (height > 0) {
 					scrollPane = popup.container().scrollPane().minWidth(width)
 							.height(height);
-					scrollPane.viewPort().element(vertical);
+					scrollPane.viewPort().element(vertical)
+							.minWidth(width - Env.SPAN_SCROLLBAR);
 				}
 			}
 		}
