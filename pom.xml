@@ -126,24 +126,14 @@
 	</dependencyManagement> 
   <build>
 		<sourceDirectory>${srcDir}</sourceDirectory> 
+		
+		<!-- To define the plugin version in your parent POM -->				
   	<pluginManagement>
 		 <plugins>
-		 		<plugin>
-         <artifactId>maven-release-plugin</artifactId>
-         <version>2.3.2</version>
-         <configuration>
-         		<username>${scm-username}</username>
-         		<password>${scm-password}</password>
-         </configuration>         
-        </plugin>
         <plugin>
          <artifactId>maven-scm-plugin</artifactId>
           <version>1.8.1</version>
         </plugin>
-<!--   	<plugin>
-        	<artifactId>exec-maven-plugin</artifactId>
-        	<version>1.2.1</version>
-				</plugin>                -->
 		 		<plugin>
          <artifactId>maven-assembly-plugin</artifactId>
           <version>2.3</version>
@@ -165,44 +155,9 @@
           <version>2.9</version>        
         </plugin>         
         <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>2.5.1</version>
-          <configuration>
-  					<source>${java_compliance_source_level}</source>
-  					<target>${java_compliance_target_level}</target>	
-  				</configuration>	
-        </plugin>
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.7</version>
-          <dependencies>
-          	<dependency>
-            	<groupId>com.google.code.maven-svn-wagon</groupId>
-              <artifactId>maven-svn-wagon</artifactId>
-              <version>1.4</version>
-            </dependency>
-          </dependencies>
-        </plugin>
-        <plugin>
           <artifactId>maven-install-plugin</artifactId>
           <version>2.4</version>
         </plugin>                
-        <plugin>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>2.4</version>
-					<inherited>true</inherited>
-					<configuration>
-						<archive>                   
-            	<manifest>
-              	<addDefaultImplementationEntries>false</addDefaultImplementationEntries>
-                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-            	</manifest>
-            	<manifestEntries>
-                <Build-Time>${maven.build.timestamp}</Build-Time>
-            	</manifestEntries>
-		        </archive>
-    			</configuration>
-        </plugin>
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <version>2.6</version>
@@ -219,13 +174,7 @@
           <artifactId>maven-dependency-plugin</artifactId>
           <version>2.5.1</version>
         </plugin>
-        <plugin>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>2.9</version>
-          <configuration>
-          	<skip>true</skip>          
-					</configuration>          	
-        </plugin>       
+
   			<plugin>
         	<groupId>org.codehaus.mojo</groupId>
         	<artifactId>gwt-maven-plugin</artifactId>
@@ -255,7 +204,62 @@
       	</plugin>         
   		</plugins>	
   	</pluginManagement>		
+  	
+  	<!-- To use the plugin goals in your POM or parent POM -->
   	<plugins>
+  		
+  		
+  		<!-- Maven Compiler Plugin -->
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+ 					<source>${java_compliance_source_level}</source>
+ 					<target>${java_compliance_target_level}</target>	
+ 				</configuration>	
+      </plugin>
+  		
+  		<!-- Maven Jar Plugin -->
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+				<inherited>true</inherited>
+				<configuration>
+					<archive>                   
+           	<manifest>
+             	<addDefaultImplementationEntries>false</addDefaultImplementationEntries>
+               <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+           	</manifest>
+           	<manifestEntries>
+               <Build-Time>${maven.build.timestamp}</Build-Time>
+           	</manifestEntries>
+	        </archive>
+   			</configuration>
+      </plugin>
+      
+      <!-- Maven JavaDoc Plugin -->
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9</version>
+        <configuration>
+         	<skip>true</skip>          
+				</configuration>          	
+     	</plugin>       
+      
+      <!-- Maven Deploy Plugin -->
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.7</version>
+        <dependencies>
+        	<dependency>
+          	<groupId>com.google.code.maven-svn-wagon</groupId>
+            <artifactId>maven-svn-wagon</artifactId>
+            <version>1.4</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+  		
+  		<!-- Maven Source Plugin -->
   		<plugin>
   			<groupId>org.apache.maven.plugins</groupId>
   			<artifactId>maven-source-plugin</artifactId>
@@ -271,6 +275,8 @@
             <attach>true</attach>
         </configuration>			  
 			</plugin>  		
+			
+			<!-- Maven Eclise Plugin -->
   		<plugin>
   			<groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-eclipse-plugin</artifactId>
@@ -286,6 +292,37 @@
           </additionalbuildcommands>
         </configuration>
       </plugin>
+      
+      <!-- Maven Enforcer -->
+   		<plugin>
+      	<groupId>org.apache.maven.plugins</groupId>
+      	<artifactId>maven-enforcer-plugin</artifactId>
+				<version>1.3.1</version>
+      	<executions>
+	       	<execution>
+         		<id>enforce-dependencies</id>          		
+         		<goals> 
+	           	<goal>enforce</goal>
+         		</goals>
+         		<phase>validate</phase>
+						<configuration>
+							<rules>
+	      				<DependencyConvergence /> 
+       				</rules>
+	         		<fail>true</fail>
+	         		<failFast>true</failFast>
+	         		<skip>false</skip>
+	         		<ignoreCache>true</ignoreCache>		         		
+     				</configuration>       				
+       		</execution>	
+     		</executions>
+     		<configuration>
+					<rules>
+         		<DependencyConvergence />
+       		</rules>
+       		<fail>true</fail>
+     		</configuration>          		             
+    	</plugin>  
   	</plugins>	
   </build>	  	
  	<scm>
