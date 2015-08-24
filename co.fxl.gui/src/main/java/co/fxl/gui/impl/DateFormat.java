@@ -16,7 +16,7 @@ package co.fxl.gui.impl;
 // * You should have received a copy of the GNU General Public License
 // * along with FXL GUI API.  If not, see <http://www.gnu.org/licenses/>.
 // *
-// * Copyright (c) 2010 Dangelmayr IT GmbH. All rights reserved.
+// * Copyright (c) 2010-2015 Dangelmayr IT GmbH. All rights reserved.
 // */
 //package co.fxl.gui.api.template;
 //
