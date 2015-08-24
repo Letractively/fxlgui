@@ -467,7 +467,7 @@ class GrayScaleStyle extends StyleTemplate {
 
 			@Override
 			public String resource() {
-				return "logo_xoricon.png";
+				return null;
 			}
 
 			@Override
