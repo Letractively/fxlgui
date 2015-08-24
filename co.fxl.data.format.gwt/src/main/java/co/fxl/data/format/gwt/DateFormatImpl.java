@@ -31,8 +31,7 @@ public abstract class DateFormatImpl implements IFormat<Date> {
 	public DateFormatImpl() {
 	}
 
-	public DateFormatImpl(int yearIncrement, int monthIncrement,
-			int dayIncrement) {
+	public DateFormatImpl(int yearIncrement, int monthIncrement, int dayIncrement) {
 		this.yearIncrement = yearIncrement;
 		this.monthIncrement = monthIncrement;
 		this.dayIncrement = dayIncrement;
@@ -54,8 +53,7 @@ public abstract class DateFormatImpl implements IFormat<Date> {
 			Integer day = Integer.valueOf(s[0]);
 			if (day < 1 || day > 31)
 				return null;
-			return new Date(year - yearIncrement, month - monthIncrement, day
-					- dayIncrement);
+			return new Date(year - yearIncrement, month - monthIncrement, day - dayIncrement);
 		} catch (Exception e) {
 			return null;
 		}

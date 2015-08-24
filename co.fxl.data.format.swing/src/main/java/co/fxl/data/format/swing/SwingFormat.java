@@ -26,10 +26,8 @@ import co.fxl.data.format.impl.Format;
 public class SwingFormat {
 
 	public static void setUp() {
-		Format.register(Date.class,
-				new DateFormatImpl(DateFormat.getDateInstance()));
-		Format.registerDateTime(new DateFormatImpl(DateFormat
-				.getDateTimeInstance()));
+		Format.register(Date.class, new DateFormatImpl(DateFormat.getDateInstance()));
+		Format.registerDateTime(new DateFormatImpl(DateFormat.getDateTimeInstance()));
 		Format.registerTime(new DateFormatImpl(DateFormat.getTimeInstance()));
 	}
 }

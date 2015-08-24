@@ -31,11 +31,9 @@ class GWTDateFormat implements IFormat<Date> {
 	private int timeZoneOffset;
 	private DateTimeFormat printFormat;
 	private DateTimeFormat parseFormat;
-	static DateTimeFormat TIME_PATTERN = DateTimeFormat
-			.getFormat("hh:mm:ss aaa");
+	static DateTimeFormat TIME_PATTERN = DateTimeFormat.getFormat("hh:mm:ss aaa");
 	static DateTimeFormat DATE_PATTERN = DateTimeFormat.getFormat("yyyy-MM-dd");
-	static DateTimeFormat DATE_TIME_PATTERN = DateTimeFormat
-			.getFormat("yyyy-MM-dd hh:mm:ss aaa");
+	static DateTimeFormat DATE_TIME_PATTERN = DateTimeFormat.getFormat("yyyy-MM-dd hh:mm:ss aaa");
 
 	GWTDateFormat(DateTimeFormat pDateTimeFormat) {
 		printFormat = pDateTimeFormat;
@@ -115,8 +113,7 @@ class GWTDateFormat implements IFormat<Date> {
 		int lOffset = pTimeZone.getOffsetToUtcInMinutes();
 		// @see
 		// http://stackoverflow.com/questions/5068701/gwt-datetimeformat-reverses-timezone-value
-		timeZone = com.google.gwt.i18n.client.TimeZone.createTimeZone(-1
-				* lOffset);
+		timeZone = com.google.gwt.i18n.client.TimeZone.createTimeZone(-1 * lOffset);
 		timeZoneOffset = lOffset;
 		return this;
 	}
