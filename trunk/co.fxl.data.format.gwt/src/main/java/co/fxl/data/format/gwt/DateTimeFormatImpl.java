@@ -22,15 +22,13 @@ import java.util.Date;
 
 import co.fxl.data.format.api.IFormat;
 
-public abstract class DateTimeFormatImpl extends DateFormatImpl implements
-		IFormat<Date> {
+public abstract class DateTimeFormatImpl extends DateFormatImpl implements IFormat<Date> {
 
 	public DateTimeFormatImpl() {
 		super();
 	}
 
-	public DateTimeFormatImpl(int yearIncrement, int monthIncrement,
-			int dayIncrement) {
+	public DateTimeFormatImpl(int yearIncrement, int monthIncrement, int dayIncrement) {
 		super(yearIncrement, monthIncrement, dayIncrement);
 	}
 
